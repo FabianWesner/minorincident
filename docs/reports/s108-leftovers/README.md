@@ -66,3 +66,5 @@ Additional corrected LOW originals opened at corridor start, combat telegraph, l
 Matched checkpoint entry coverage now includes x2949→3170 at HIGH then LOW and zoom 1/1.5. Four original entry views opened: paving tiles, puddles and corn rows meet supported ground; no floating tile seen. Genuine checkpoint snapshot was resumed as current state, with no coordinate edits. Spaced stills do not yet close temporal z-fighting.
 
 Ground-layer source audit confirms explicit depth separation: baked layers ≤12, runtime paving 13, puddles 14, footprints 15, light pools 16, with four polygon-offset depth units per layer. Authored road asphalt is y0.002 over base ground y0. This explains intended overlaps; it is supporting evidence, not a replacement for temporal visual inspection.
+
+HIGH temporal entry burst records eight consecutive simulation/render ticks per zoom. Opened first/last originals at both zooms: road markings, dark edge strip and tile paving remain coherent, with no alternating surface patch seen. This short burst is bounded evidence; whole-route temporal coverage and matched LOW burst remain open.
