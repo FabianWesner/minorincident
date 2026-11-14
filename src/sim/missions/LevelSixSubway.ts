@@ -198,7 +198,11 @@ export class LevelSixSubway {
       const candidates=l6SpawnCandidates(requested,wave,(this.s.entries??[]).filter(e=>e.closedAt&&!e.brokenAt).map(e=>e.door));
       if(!candidates.length){this.s.spawnRefusals.hatch=(this.s.spawnRefusals.hatch??0)+1;continue;}
       // Both tunnel walls emit inward. The old fixed -Z offset put north-side arrivals in the unbuilt void.
-      const mouth=(index:number,breachOffset=20)=>{const base=index===8?{x:Math.min(l6PressureExitDoor.x,player.x+18),z:l6PressureExitDoor.z}:l6Doors[index];
+      const mouth=(index:number,breachOffset=20)=>{const original=index===8?{x:Math.min(l6PressureExitDoor.x,player.x+(wave===3?12:18)),z:l6PressureExitDoor.z}:l6Doors[index];
+        // Breach two falls back from the watched shelter doors to tunnel mouths.
+        // Keep the first corridor access near the tunnel entrance so its lead
+        // runner reaches the courier before the cohort is swallowed by the retreat.
+        const base=wave===2&&index<2?{...original,z:-14}:original;
         const rank=wave===4?this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length%2:0;
         const inward=wave===4?1.4+rank*1.4:1.4;
         return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
@@ -459,7 +463,8 @@ export class LevelSixSubway {
     if(t>=s.nextWave){
       s.nextWave=t+ticks(l6.pressure.intervalS);
       const pressureDoors=[...l6Doors.map((d,i)=>({d,i})),{d:{x:Math.min(l6PressureExitDoor.x,p.x+18),z:l6PressureExitDoor.z},i:8}];
-      const ahead=pressureDoors.filter(({d,i})=>i>1&&d.x>=s.leaderX+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
+      const aheadM=s.phase==='exit'?8:l6.pressure.aheadM;
+      const ahead=pressureDoors.filter(({d,i})=>i>1&&d.x>=s.leaderX+aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
       const fallback=pressureDoors.filter(({i})=>i>1).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
       // Replenishing pressure comes from ahead when possible. Sending every
       // other cohort behind a same-speed retreating group created safe gaps;
@@ -503,7 +508,7 @@ export class LevelSixSubway {
     if(!s.mid&&p.x>=150&&tail>=p.x-l6.follow.columnM&&!behind&&through(p.x-l6.follow.columnM)){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     const exitThrough=(x:number)=>live.length===0||live.filter(r=>w.entities.get(r.id)!.transform.x>x+2).length*2>live.length;
     const exitBehind=live.some(r=>w.entities.get(r.id)!.transform.x<=240+2);
-    if(!s.platform&&p.x>=240&&!exitBehind&&exitThrough(240)){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
+    if(!s.platform&&p.x>=240&&!exitBehind&&exitThrough(240)){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';s.nextWave=t;}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
       const streetClear=s.survivors.filter(r=>r.status==='out').every(r=>w.entities.get(r.id)!.transform.x>=266);
       if(live.length===0&&streetClear){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';s.phase='done';this.mission.setState('exited',true);}}
