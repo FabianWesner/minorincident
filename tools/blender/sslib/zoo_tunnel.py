@@ -9,7 +9,7 @@ Door leaves are the animated joints `door_main` / `door_main_right` (same contra
 """
 from . import sockets, colliders
 
-BRICK, STONE, DARK, HAZARD = 'brick', 'sidewalk', 'uiDark', 'schoolBusYellow'
+BRICK, STONE, DARK, HAZARD = 'brick', 'sidewalk', 'uiDark', 'sidewalk'
 X0, X1 = -3.1, 3.1         # back wall outer face .. door plane (front wall outer face)
 HALF = 2.6                 # half width
 H = 3.4                    # wall height
@@ -20,20 +20,24 @@ DOOR_TOP = 2.5
 def tunnel_mouth(s):
     s.physics('fixed', 0, False, 'prop.stone-heavy')
     # Interior floor and the sill (top just above the district paving so the edges never z-fight).
-    s.box('floor', ((X0 + X1) / 2, 0, .06), (X1 - X0, 2 * HALF, .12), DARK, bevel=0)
+    # Keep the threshold interior legible under night lighting.
+    s.box('floor', ((X0 + X1) / 2, 0, .06), (X1 - X0, 2 * HALF, .12), STONE, bevel=0)
     s.box('threshold', (X1 - .1, 0, .09), (.5, 2 * APERTURE, .06), STONE, bevel=0)
     # Masonry shell: front piers + lintel around the 1.8 m opening, side/back walls, flat roof with a drip overhang.
     for sign in (-1, 1):
         lo, hi = (APERTURE, HALF) if sign > 0 else (-HALF, -APERTURE)
         s.box('front pier', (X1 - .2, (lo + hi) / 2, H / 2 + .06), (.4, hi - lo, H), BRICK)
-        s.box('side wall', ((X0 + X1 - .4) / 2, sign * (HALF - .2), H / 2 + .06), (X1 - X0 - .4, .4, H), BRICK)
+        # Open the near corner as a covered service vestibule: the game camera
+        # sees the threshold and a walker leaving the unchanged west-facing door.
+        side_end = X0 + 1.4 if sign > 0 else X1 - .4
+        s.box('side wall', ((X0 + side_end) / 2, sign * (HALF - .2), H / 2 + .06), (side_end - X0, .4, H), BRICK)
     s.box('lintel', (X1 - .2, 0, (DOOR_TOP + H) / 2 + .06), (.4, 2 * APERTURE, H - DOOR_TOP), BRICK)
     s.box('back wall', (X0 + .2, 0, H / 2 + .06), (.4, 2 * HALF - .8, H), BRICK)
     s.box('roof', ((X0 + X1) / 2, 0, H + .2), (X1 - X0 + .4, 2 * HALF + .4, .3), STONE)
     s.box('roof curb', ((X0 + X1) / 2, 0, H + .42), (X1 - X0 + .1, 2 * HALF + .1, .14), BRICK, d=1)
     # Interior: partition facing the door leaves a 1.3 m passage on the +Y side to the tunnel chamber at the back.
-    s.box('partition', (X0 + 3.4, -.85, H / 2 + .06), (.4, 2.9, H), DARK, d=1)
-    s.box('chamber arch', (X0 + .45, 1.0, 1.35), (.12, 1.7, 2.5), DARK, d=1)
+    s.box('partition', (X0 + 3.4, -.85, H / 2 + .06), (.4, 2.9, H), STONE, d=1)
+    s.box('chamber arch', (X0 + .45, 1.0, 1.35), (.12, 1.7, 2.5), STONE, d=1)
     # Roof vent (kept at every tier so the silhouette and envelope never change).
     s.box('roof vent', (X0 + 2.2, 1.2, H + .85), (1.1, .9, .7), STONE)
     s.box('vent cap', (X0 + 2.2, 1.2, H + 1.28), (1.3, 1.1, .16), DARK)
@@ -50,6 +54,16 @@ def tunnel_mouth(s):
     # Service sign above the door.
     s.box('sign plate', (X1 + .04, 0, DOOR_TOP + .5), (.06, 1.7, .5), HAZARD, bevel=0, d=1)
     s.text('SERVICE', (X1 + .085, 0, DOOR_TOP + .5), .3, DARK, d=1)
+    # Warm lamp above the aperture plus a runtime light anchor define the opening.
+    s.box('door lamp', (X1 + .02, 0, DOOR_TOP + .12), (.08, .72, .12), 'glow', d=2)
+    s.light('service', (X1 + .18, 0, DOOR_TOP + .05), kind='point', color='light_window_warm',
+            intensity=2.5, rng=5, group='self', emissive=['body_emi_windowGlow'])
+    # Stone jamb and head define the open covered service bay at every LOD.
+    s.box('vestibule jamb', (X0 + 1.4, HALF + .05, 1.4), (.2, .24, 2.8), STONE)
+    s.box('vestibule head', (1.0, HALF + .05, DOOR_TOP + .3), (3.8, .24, .3), STONE)
+    s.box('vestibule lamp', (X1 - .8, HALF + .14, DOOR_TOP - .15), (.72, .08, .12), 'glow', d=2)
+    s.light('vestibule', (X1 - .8, HALF + .18, DOOR_TOP - .2), kind='point',
+            intensity=2.5, rng=5, group='self', emissive=['body_emi_windowGlow'])
     # Steel double door: two leaves on hinge joints, outward-opening (same pivots/contract as the clinic annex doors).
     for name, sign in (('door_main', -1), ('door_main_right', 1)):
         hinge = s.joint(name, (X1 - .05, sign * APERTURE, .12))
@@ -59,3 +73,23 @@ def tunnel_mouth(s):
     sockets.empty('outletTunnel', (X0 + 1.3, 1.45, .12), s.root)
     sockets.empty('outletThreshold', (X1, 0, .12), s.root)
     colliders.cuboid('hull', (X1 - X0 + .4, 2 * HALF + .4, H + .4), ((X0 + X1) / 2, 0, (H + .4) / 2), s.root)
+
+    # Recess the rear, tank-facing corner while keeping the full entrance apron.
+    # The open service bay remains deep on the camera side; tank A stays clear.
+    import bpy
+    cutter = s.box('tank clearance cutter', (-4.05, -5.25, 3), (11.9, 9.5, 10), DARK, bevel=0)
+    bpy.context.view_layer.update()
+    for index, obj in enumerate(list(s.root.children_recursive)):
+        if obj.type != 'MESH' or obj == cutter:
+            continue
+        cutter.location.x = -4.05 - index * .003
+        cutter.location.y = -5.25 + index * .003
+        bpy.context.view_layer.update()
+        obj.data = obj.data.copy()
+        modifier = obj.modifiers.new('tank-side recess', 'BOOLEAN')
+        modifier.operation = 'DIFFERENCE'
+        modifier.solver = 'EXACT'
+        modifier.object = cutter
+        bpy.context.view_layer.objects.active = obj
+        bpy.ops.object.modifier_apply(modifier=modifier.name)
+    bpy.data.objects.remove(cutter, do_unlink=True)
