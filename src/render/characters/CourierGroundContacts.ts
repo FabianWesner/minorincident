@@ -172,7 +172,7 @@ export class CourierGroundContacts {
       if (foot.hold && (p <= stance || !moving)) foot.hold = false;
       if (moving && foot.locked && (p > stance && !foot.hold || stretched)) {
         gaitPlant(foot, stance, this.landing);
-        foot.swing = { from: foot.target.clone(), fromYaw: foot.yaw, fromPitch: foot.pitch, offset: foot.target.clone().sub(this.landing), start: this.time, duration: 0, gait: true, u: 0, knee0: kneeNow(foot), dip: 0, land: undefined, releaseP: Math.min(p, .9) };
+        foot.swing = { from: foot.target.clone(), fromYaw: foot.yaw, fromPitch: foot.pitch, offset: foot.target.clone().sub(this.landing), start: this.time, duration: .12, gait: p <= .9, u: 0, knee0: kneeNow(foot), dip: 0, land: undefined, releaseP: p };
         foot.locked = false;
       }
     }
