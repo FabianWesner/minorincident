@@ -6896,6 +6896,48 @@
             }
           ]
         }
+      },
+      "matchedBaseL9Low": {
+        "sourceHash": "02cea1e30eb74c7fe4a760a554b80b648b3eb2bc6abfe3a55d6f775d131f2a08",
+        "sourceStable": true,
+        "pass": true,
+        "contextCoverage": [
+          {
+            "context": "driving",
+            "frames": 1107,
+            "actors": 43,
+            "contacts": 89,
+            "maxCm": 1.2,
+            "p95Cm": 1
+          },
+          {
+            "context": "detour",
+            "frames": 1107,
+            "actors": 43,
+            "contacts": 89,
+            "maxCm": 1.2,
+            "p95Cm": 1
+          },
+          {
+            "context": "hatch",
+            "frames": 157,
+            "actors": 5,
+            "contacts": 11,
+            "maxCm": 1,
+            "p95Cm": 1
+          },
+          {
+            "context": "rail-stall",
+            "frames": 157,
+            "actors": 5,
+            "contacts": 11,
+            "maxCm": 1,
+            "p95Cm": 1
+          }
+        ],
+        "contextsProven": true,
+        "correctionsProven": true,
+        "errors": []
       }
     }
   }
