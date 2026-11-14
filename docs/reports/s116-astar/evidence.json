@@ -2540,5 +2540,62 @@
         ]
       }
     ]
+  },
+  "currentStaticChecks": {
+    "revision": "5c0a3dd0",
+    "typecheck": "pass",
+    "lint": "pass"
+  },
+  "l3Comparison": {
+    "base": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 4,
+          "attacksPerMinute": 21.533277169334458
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 3,
+          "attacksPerMinute": 10.875
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 34.30631868131868
+        }
+      ],
+      "measured": 3,
+      "within": 2,
+      "pass": true
+    },
+    "candidate": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 2,
+          "attacksPerMinute": 33.88654941788457
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 1,
+          "attacksPerMinute": 30.1255230125523
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 18.842882512384335
+        }
+      ],
+      "measured": 3,
+      "within": 1,
+      "pass": false
+    }
   }
 }
