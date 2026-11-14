@@ -50,6 +50,7 @@ const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.h
 
 /** L9's physical road challenges, exposed hatch defense and visible bridgehead handoff. */
 export class LevelNineDriving {
+  private readonly busTrail: { x: number; z: number; yaw: number }[] = [];
   private readonly rampHandles: number[] = [];
   readonly setPieces: LevelNineSetPieces;
   constructor(private readonly mission: Mission) {
@@ -522,13 +523,34 @@ export class LevelNineDriving {
         } else { mega.hidden = true; mega.infected!.hidden = true; w.spatial.delete(mega.id); delete s.megaSighting; }
       }
     }
+    if (s.busLineAt === null && w.tick % 6 === 0) {
+      const last = this.busTrail.at(-1);
+      if (last && distance(last, p) > 25) this.busTrail.length = 0;
+      if (!last || distance(last, p) >= 1) {
+        this.busTrail.push({ x: p.x, z: p.z, yaw: p.yaw });
+        if (this.busTrail.length > 180) this.busTrail.shift();
+      }
+    }
     if (s.busLineAt === null && p.x > 110 && p.x < 330) {
-      const at = { x: p.x - Math.cos(p.yaw) * 110, z: p.z + Math.sin(p.yaw) * 110 };
+      // Follow the driven lane: projecting a transient dodge heading behind
+      // the APC can place the pursuing bus off-road against the verge.
+      let behind = 0, trail = this.busTrail.at(-1);
+      for (let i = this.busTrail.length - 2; i >= 0 && behind < 110; i--) {
+        const older = this.busTrail[i], newer = this.busTrail[i + 1], length = distance(newer, older);
+        if (behind + length >= 110) {
+          const t = (110 - behind) / length;
+          trail = { x: newer.x + (older.x - newer.x) * t, z: newer.z + (older.z - newer.z) * t, yaw: -Math.atan2(newer.z - older.z, newer.x - older.x) };
+          behind = 110; break;
+        }
+        behind += length; trail = older;
+      }
+      if (!trail || behind < 110) return;
+      const at = { x: trail.x, z: trail.z };
       if (!w.chunks?.resident(at.x, at.z) || !w.infected!.nav.clear(at.x, at.z, 2)) return;
       const bus = w.vehicles!.cars.get(s.busId)!;
-      const pose = { ...at, y: bus.physics.def.suspension + bus.physics.def.wheelRadius + .15, yaw: p.yaw };
+      const pose = { ...at, y: bus.physics.def.suspension + bus.physics.def.wheelRadius + .15, yaw: trail.yaw };
       Object.assign(bus.entity.transform, pose); Object.assign(bus.physics.previous, pose); bus.physics.body.setTranslation(pose, true);
-      bus.physics.body.setRotation({ x: 0, y: Math.sin(p.yaw / 2), z: 0, w: Math.cos(p.yaw / 2) }, true);
+      bus.physics.body.setRotation({ x: 0, y: Math.sin(trail.yaw / 2), z: 0, w: Math.cos(trail.yaw / 2) }, true);
       bus.physics.body.setEnabled(true); bus.entity.hidden = false; bus.entity.vehicle!.braced = false;
       w.vehicles!.autopilot.set(s.busId, this.busIntent); s.busLineAt = w.tick;
       if (s.roster.some(id => alive(w.entities.get(id)) && w.entities.get(id)!.civilian?.survivor?.key === 'dale')) { this.line('L9.bus.dale'); this.line('L9.bus.dale-beat', 180); }

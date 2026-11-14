@@ -2127,7 +2127,7 @@ export class InfectedSystem {
       // The nearest cell can lie across a thin doorway wall. Start on a
       // cell reachable from the actual body, including after crowd separation.
       const from = nav.nearestCell(e.transform.x, e.transform.z, e.combat!.radius), to0 = nav.nearestCell(x, z, armyApproach ? e.combat!.radius : undefined), to = to0 < 0 && nav === this.wideNav ? nav.nearestCell(x, z) : to0;
-      if (armyApproach && !useFlow && b.pathIndex < b.path.length) {
+      if (!useFlow && b.pathIndex < b.path.length) {
         const cell = b.path[b.pathIndex]; this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
         // Separation can carry a body past a doorway while its cached route
         // still starts on the other side. Rebuild from the reachable side.

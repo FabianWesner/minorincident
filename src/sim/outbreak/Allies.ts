@@ -176,6 +176,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         const victim = victimId ? world.entities.get(victimId) : undefined;
         if (candidate?.infected?.state === 'attack' && victim && victim.health.current > 0 &&
             (victim.id === 1 || victim.civilian?.ally || victim.escort || victim.companion)) return 4;
+        const heldId = candidate?.infected?.l1?.mode === 'bite' ? candidate.infected.l1.biteTargetId : undefined;
+        const held = heldId ? world.entities.get(heldId) : undefined;
+        if (a.role === 'officer' && held && held.health.current > 0 && (held.id === 1 || held.civilian?.ally || held.escort || held.companion)) return 4;
         if (a.role !== 'soldier') return 0;
         // The evacuation detail rescues an active grab before returning to its Alpha target.
         if (world.scenario === 'L7' && candidate?.infected?.l1?.mode === 'bite' &&

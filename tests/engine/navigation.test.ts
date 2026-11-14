@@ -119,6 +119,7 @@ test('capsule moves: a body inside the wall margin slides out and never moves de
 });
 
 test('A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard', async () => {
+  checkInterleavedPaths();
   {
   const nav = new NavGrid({ width: 30, depth: 30 }, [{ x: 0, z: 0, y: 1, halfX: .3, halfZ: 3, halfY: 1 }]);
   nav.flow(5, 0, 100_000);
@@ -271,3 +272,62 @@ test('chasers path through a maze and an offset district without ever overlappin
   for (let i = 0; i < 450; i++) { o.update(); expect(ai.nav.clear(r.transform.x, r.transform.z, r.combat!.radius)).toBe(true); }
   expect(Math.hypot(r.transform.x - 105, r.transform.z - 50)).toBeLessThan(1.2);
 });
+
+function checkInterleavedPaths(): void {
+  {
+    const nav = new NavGrid({ width: 20, depth: 20 }, [], .1);
+    const from = nav.cell(-8, 0), to = nav.cell(8, 0), path: number[] = [], other: number[] = [];
+    expect(nav.path(from, to, path, 8)).toBe(false);
+    nav.path(to, from, other, 8);
+    nav.setBlocker(1, { x: 0, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: 10 }, true);
+    expect(nav.path(from, to, path, Infinity), 'a saved frontier must not cross a new wall').toBe(false);
+    expect(path).toEqual([]);
+    nav.setBlocker(1, { x: 0, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: 10 }, false);
+    expect(nav.path(from, to, path, 8)).toBe(false);
+    nav.path(to, from, other, 8);
+    const changed = nav.cell(-8, 3);
+    expect(nav.path(from, changed, path, Infinity)).toBe(true);
+    expect(path.at(-1)).toBe(changed);
+    expect(path.length).toBe(6);
+  }
+  // Compare resumed routes with uninterrupted A* on varied obstacle layouts.
+  for (let pattern = 0; pattern < 12; pattern++) {
+    const nav = new NavGrid({ width: 20, depth: 20 }, [], .1);
+    for (let cell = 0; cell < nav.blocked.length; cell++) {
+      if ((cell * 31 + pattern * 17) % 19 === 0) nav.blocked[cell] = 1;
+    }
+    const from = nav.nearestCell(-8, -8), to = nav.nearestCell(8, 8);
+    const expected: number[] = [], route: number[] = [], competing: number[] = [];
+    const found = nav.path(from, to, expected, Infinity);
+    let completed = false;
+    for (let retry = 0; retry < nav.blocked.length && !completed; retry++) {
+      completed = nav.path(from, to, route, 8);
+      expect(nav.expansions).toBeLessThanOrEqual(8);
+      if (!completed && !nav.pending(from, to)) break;
+      nav.path(to, from, competing, 8);
+    }
+    expect(completed, `layout ${pattern}`).toBe(found);
+    if (completed) expect(route, `layout ${pattern}`).toEqual(expected);
+  }
+  const nav = new NavGrid({ width: 40, depth: 40 }, [], .1);
+  const requests = [
+    { from: nav.cell(-18, -18), to: nav.cell(18, 18), path: [] as number[], done: false },
+    { from: nav.cell(18, -18), to: nav.cell(-18, 18), path: [] as number[], done: false },
+  ];
+  for (let retry = 0; retry < 100 && requests.some(request => !request.done); retry++) {
+    for (const request of requests) {
+      if (request.done) continue;
+      request.done = nav.path(request.from, request.to, request.path, 8);
+      expect(nav.expansions).toBeLessThanOrEqual(8);
+    }
+  }
+  for (const request of requests) {
+    expect(request.done).toBe(true);
+    expect(request.path.at(-1)).toBe(request.to);
+    let previous = request.from;
+    for (const cell of request.path) {
+      expect(Math.abs(nav.x(cell) - nav.x(previous)) + Math.abs(nav.z(cell) - nav.z(previous))).toBe(nav.cellSize);
+      previous = cell;
+    }
+  }
+}
