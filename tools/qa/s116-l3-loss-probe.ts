@@ -7,10 +7,16 @@ import { preset } from '../../src/sim/progression/Campaign';
 const campaign = preset('L3-default'); campaign.seed = 2; campaign.settings.quality = 'low';
 const hits: unknown[] = [];
 const routes: unknown[] = [];
+const restores: unknown[] = [];
 let probeWorld: SimWorld | undefined;
 const path = NavGrid.prototype.path;
 NavGrid.prototype.path = function(from, to, result, budget) {
+  const pendingBefore = this.pending(from, to);
   const found = path.call(this, from, to, result, budget);
+  if (probeWorld && !pendingBefore && this.searchSize > this.expansions && restores.length < 100) {
+    const owner = probeWorld.infected?.active.find(e => e.infected?.path === result);
+    restores.push({ tick: probeWorld.tick, actor: owner?.id, archetype: owner?.archetype, from, to, expansions: this.expansions, total: this.searchSize, found, pending: this.pending(from, to), stack: new Error().stack });
+  }
   const actor = probeWorld?.infected?.active.find(e => [691, 1136, 835].includes(e.id) && e.infected?.path === result);
   if (actor && probeWorld!.tick >= 7000) routes.push({ tick: probeWorld!.tick, actor: actor.id, from, to, found, pending: this.pending(from, to), expansions: this.expansions, total: this.searchSize, position: { ...actor.transform } });
   return found;
@@ -30,5 +36,5 @@ const world = await loadLevel('L3', 2, campaign, 0, { quality: 'low', beforeBegi
 } });
 try {
   const report = runL3(world, world.missions!, 'complete', { seed: 2, maxSeconds: 1200, street: 'auto' });
-  writeFileSync(process.argv[2] ?? 'test-results/s116-l3-loss.json', JSON.stringify({ report, hits, routes }, null, 2));
+  writeFileSync(process.argv[2] ?? 'test-results/s116-l3-loss.json', JSON.stringify({ report, hits, routes, restores }, null, 2));
 } finally { NavGrid.prototype.path = path; world.dispose(); }
