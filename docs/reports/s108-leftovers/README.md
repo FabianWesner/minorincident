@@ -52,3 +52,5 @@ Static-prop broad-phase audit identifies three conservative swept-bus AABB candi
 Current-source authored road audit samples **1368 points per tier** at approximately 1 m spacing across every R6/R7 route segment. Both tiers retain **410 corn blocks**, minimum crop-AABB clearance **4.5191 m**, and finite ground height at every sample. This confirms authored crop exclusion and simulation ground coverage, but does not alone prove rendered surface continuity or no z-fighting. Full numeric samples are in `evidence.json`.
 
 The unchanged prescribed remote `npm test` now PASS on 46.225.66.90; full terminal output is retained in `validation.remoteNpmTest.log` in `evidence.json`. This supersedes the earlier unavailable-runner result. No check remains running.
+
+Further original review: HIGH corridor z1 frame40 and z1.5 frame35 show supported dark roadside ground beside intact gray road slab. LOW forward z1 frame5 shows ground under a combat telegraph; z1.5 frame10 is almost fully fogged. No void is established, but LOW fog and temporal z-fighting coverage remain insufficient for a complete visual PASS.
