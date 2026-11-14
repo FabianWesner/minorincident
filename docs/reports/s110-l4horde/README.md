@@ -6,7 +6,7 @@ L4-06 remains failing. Browser QA needed. Time box exceeded; unsuccessful gamepl
 
 The task baseline HIGH census was 44 alive at first breach, plaza minimum 17; final-b documented HIGH 65/minimum 54 and LOW 67/minimum 52. Final-b source revision: `4e570db8499bd1d76dcc17f9d13d1949d5cf2096`.
 
-`16bf032c` removed L4's repeat-downing retirement rule and arrival-specific allied-damage resistance. These are strong regression candidates; restoring retirement experimentally improved the sustained HIGH count, but the complete commit-by-commit bisect is unfinished. The resistance override was not restored because the task forbids zombie stat differences. Retirement also changes recovery behavior, so that experiment is removed from the delivered source.
+`16bf032c` removed L4's repeat-downing retirement rule and arrival-specific allied-damage resistance. `SpawnDirector.count` in the same commit also removed the L4 LOW living-only exception: LOW now counts recoverable downed actors against its strict cap, whereas before it counted living infected only. This is a separate cap-admission regression candidate and must be isolated from damage resistance and retirement in the bisect. These are strong regression candidates; restoring retirement experimentally improved the sustained HIGH count, but the complete commit-by-commit bisect is unfinished. The resistance override was not restored because the task forbids zombie stat differences. Retirement also changes recovery behavior, so that experiment is removed from the delivered source.
 
 A residency cap bypass experiment did not change the measured HIGH/LOW census, providing evidence against reserved-slot sleep as the cause in the tested run. It is not a general proof about residency.
 
@@ -24,4 +24,4 @@ Allowing supplemental pressure to bypass the corpse-field stop increased LOW min
 - Prove both clauses on HIGH and LOW, then run the full threat audit and compare flags across every level.
 - Run lint and the remote unit suite: `sh tools/remote/run.sh "$PWD" -- npm test` (rerun unchanged on runner timeout).
 
-The final full audit, lint and remote suite have not been run. Earlier typecheck passed before the final cleanup; final cleanup typecheck is recorded in the handoff result. No deployment, push, or main movement was performed.
+The final full audit and remote suite have not been run. Typecheck and lint passed after removal of the unsuccessful gameplay trials. No deployment, push, or main movement was performed.
