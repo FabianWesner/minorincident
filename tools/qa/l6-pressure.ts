@@ -7,7 +7,7 @@ import { observeAttackStarts } from './threat/attackStarts';
 type QAPolicy = L6Profile | 'passive';
 type Start = { sourceId: number; targetId: number; tick: number };
 type Row = {
-  seed: number; tier: 'high' | 'low'; policy: QAPolicy; outcome: string; completed: boolean; initialSurvivors: number; survivorsSaved: number; savedPercent: number; firstHatchClosed: number | null; exit: number | null;
+  seed: number; tier: 'high' | 'low'; policy: QAPolicy; outcome: string; completed: boolean; initialSurvivors: number; survivorsSaved: number; savedPercent: number; firstHatchClosed: number | null; exit: number | null; exitLullS: number | null;
   windows: { from: number; to: number; attacks: number }[]; spawnRefusals: { cap: number; reserved: number; offscreen: number; snap: number; hatch: number };
   waveCounts: Record<number, number>; closed: number[]; broken: number[]; maxAttackGapS: number | null;
   distantRecycled: number;
@@ -55,6 +55,8 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
     const s = world.missions!.state.l6!, end = exit ?? world.tick;
     const from = firstHatchClosed ?? end, windows: Row['windows'] = [];
     const relevant = starts.filter(x => x.tick >= from && x.tick < end && (x.targetId === 1 || initial.has(x.targetId))).sort((a,b)=>a.tick-b.tick);
+    const allRelevant = starts.filter(x => x.tick >= from && x.tick < world.tick && (x.targetId === 1 || initial.has(x.targetId))).sort((a,b)=>a.tick-b.tick);
+    const exitLullS = exit === null ? null : (world.tick - (allRelevant.at(-1)?.tick ?? exit)) / 60;
     const maxAttackGapS = firstHatchClosed === null ? null : relevant.length ? Math.max(relevant[0].tick-from, end-relevant.at(-1)!.tick,
       ...relevant.slice(1).map((x,i)=>x.tick-relevant[i].tick)) / 60 : (end-from)/60;
     for (let a = from; a < end; a += 1800) {
@@ -66,7 +68,7 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
     const player=world.entities.get(1)!;
     const pressureIds=new Set(s.spawnLog.filter(entry=>entry.wave===3).map(entry=>entry.id));
     const survivorsSaved=s.survivors.filter(r=>r.status==='out').length;
-    rows.push({ seed, tier, policy, outcome: world.missions!.state.phase, completed: world.missions!.state.phase==='result'||world.missions!.state.phase==='progression', initialSurvivors: initial.size, survivorsSaved, savedPercent: 100*survivorsSaved/initial.size, firstHatchClosed, exit, windows,
+    rows.push({ seed, tier, policy, outcome: world.missions!.state.phase, completed: world.missions!.state.phase==='result'||world.missions!.state.phase==='progression', initialSurvivors: initial.size, survivorsSaved, savedPercent: 100*survivorsSaved/initial.size, firstHatchClosed, exit, exitLullS, windows,
       spawnRefusals: { cap: s.spawnRefusals.cap, reserved: s.spawnRefusals.reserved ?? 0, offscreen: s.spawnRefusals.offscreen, snap: s.spawnRefusals.snap, hatch: s.spawnRefusals.hatch ?? 0 }, waveCounts, maxAttackGapS,
       closed: (s.entries ?? []).filter(e => e.closedAt).map(e => e.door), broken: (s.entries ?? []).filter(e => e.brokenAt).map(e => e.door), distantRecycled:s.distantRecycled??0,
       pressureAdmissions:s.spawnLog.filter(entry=>entry.wave===3).map(({tick,door,x,z})=>({tick,door,x,z})),
@@ -82,6 +84,7 @@ const completeRows = rows.filter(row => row.policy === 'complete');
 const measuredRows = completeRows.length ? completeRows : rows;
 const savedAverage = measuredRows.length ? measuredRows.reduce((sum, row) => sum + row.savedPercent, 0) / measuredRows.length : 0;
 const failures = rows.filter(row => row.policy === 'early-close' && (row.exit === null || row.maxAttackGapS === null || row.maxAttackGapS >= 30)
+  || row.policy === 'complete' && (row.exitLullS === null || row.exitLullS >= 12)
   || row.policy === 'complete' && (!row.completed || row.deaths > maxDeaths || row.savedPercent < minSavedPercent
     || row.windows.some(window => window.to - window.from === 1800 && window.attacks < 2))) ;
 if (completeRows.length !== expectedRuns || completeRows.reduce((sum, row) => sum + row.savedPercent, 0) / (completeRows.length || 1) < averageSavedPercent) failures.push(...completeRows);
