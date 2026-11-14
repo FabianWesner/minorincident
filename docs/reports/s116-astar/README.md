@@ -78,3 +78,7 @@ The first restored searches in native L3 seed 2 occur at tick 2337 for runner 12
 A diagnostic that disables retention for wander/search probes while keeping directed routes retained clears the L10 passive flag but worsens L3 army counts to 0/0/1. It was discarded: narrowing the fix to directed routes would not meet the original scope and still fails L3. This distinguishes the L10 exploratory-retention effect from L3’s separate directed-route effect.
 
 L10 actor 120 uses seek (no L1 brain), remains chase with a nine-node path at index 8, and stays near (3999.05,-29.67) for the hold while the courier is near (4002.54,-28.64). seek only rechecks cached-waypoint visibility for armyApproach, so this chaser never enters that recovery check. The next implementation experiment should validate cached path waypoints for ordinary chase too; this is a concrete motion issue independent of budget increases or stats.
+
+## Cached-waypoint correction
+
+seek now validates visibility of its cached waypoint for every non-flow route, extending the existing army-approach recovery to ordinary chasers. A fresh L3/L10 diagnostic clears L10’s passive stuck-chaser flag; L3 still fails both aggregate criteria, with army counts 3/1/0. L10 retains its raw skilled wave flag, which is not included in the aggregate audit failure list. Typecheck and lint pass. Full all-level and vehicle evidence predates this gameplay correction and must be renewed for a final accepted revision.

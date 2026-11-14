@@ -3408,5 +3408,20 @@
       "pathIndex": 8,
       "hasL1Brain": false
     }
-  ]
+  ],
+  "cachedWaypointValidation": {
+    "sourceHash": "b0e8221972f5d4576c85292708d81cccc0239fe8b4890cb09158c735fd27ce00",
+    "seconds": 38.741986,
+    "flags": [
+      "L3/criterion/L3-06 squad counts/losses:FAIL",
+      "L3/criterion/L3-11 native competent rate:FAIL",
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "l10PassiveFlags": [],
+    "l10RawSkilledFlags": [
+      "wave/dispersal-assault:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+    ],
+    "typecheck": "pass",
+    "lint": "pass"
+  }
 }
