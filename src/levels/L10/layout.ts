@@ -31,7 +31,10 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push(p); return p;
     };
     const service = finale.serviceEntry.at, console = cure.anchors['cure-console'];
-    place('kit.zoo-tunnel-mouth:l10-service', 'kit.zoo-tunnel-mouth', console[0] + service[0], console[1] + service[1], [4.5, 3, 3], Math.PI);
+    layout.lightGroups.push({ id: 'l10-service', offAt: 6 });
+    const serviceDoor = place('kit.zoo-tunnel-mouth:l10-service', 'kit.zoo-tunnel-mouth', console[0] + service[0], console[1] + service[1], [4.5, 3, 3], Math.PI);
+    serviceDoor.lightGroup = 'l10-service';
+    serviceDoor.decorLights = true;
     // Existing open vehicle-bay shell provides a roof and steel posts. Reviewed wall boxes leave the interior enterable.
     const shell = place('l10-hangar-shell', 'bld.cure-motor-shelter', h.centre.x, h.centre.z, [17.85, 3.65, 13.1], Math.PI / 2, [3, 1.6, 3], true);
     shell.position[1] = -.256; // The scaled shelter pad ends at the existing ground floor, under the cast's feet.
