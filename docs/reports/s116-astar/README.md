@@ -30,3 +30,7 @@ Browser QA needed.
 - Full threat audit, current-base/final HIGH and LOW starvation measurements, vehicle campaign motion and remote unit suite: outstanding. This is not a completion claim.
 
 Remote suite first attempt stopped at manifest admission (151/150 cases), before running tests. The interleaving regression is now included in the existing A* test so all coverage remains within the unchanged 150-case budget. A fresh remote run remains required.
+
+## Full validation attempt at 8abc091c
+
+Remote unit suite passed on 46.225.66.90: 27 files, 106 passed / 1 skipped; 217.6 s within 240 s. Full threat audit completed in 438.0 s with three aggregate flags: L3-06 squad counts/losses, L3-11 native competent rate, and L10 hold STUCK_CHASER_OVER_30_SECONDS. L4 has zero flags. These failures require current-base comparison and investigation; no no-regression claim is made. Compact receipts are in evidence.json.

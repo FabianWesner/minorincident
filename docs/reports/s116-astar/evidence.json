@@ -1,0 +1,412 @@
+{
+  "revision": "8abc091c",
+  "remoteUnit": {
+    "passed": 106,
+    "skipped": 1,
+    "files": 27,
+    "seconds": 217.6,
+    "runner": "46.225.66.90"
+  },
+  "audit": {
+    "revision": "8abc091cbd11abe6e8a6ae2db4350081feadd5da",
+    "sourceHash": "f16471c1497a52a8edb2a85a15347cb103870854b27b878e2d684b7898007466",
+    "observerHash": "b8dcd5fd4180aa0610f1cedbff7b7564aff6d78d027d58cf624a09801c158cb8",
+    "seconds": 438.00518241699996,
+    "flags": [
+      "L3/criterion/L3-06 squad counts/losses:FAIL",
+      "L3/criterion/L3-11 native competent rate:FAIL",
+      "L10/step/hold:STUCK_CHASER_OVER_30_SECONDS"
+    ]
+  },
+  "l4": {
+    "flags": [],
+    "highHold": {
+      "tier": "high",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 72,
+      "peakAlive": 99,
+      "peakPlazaAlive": 98,
+      "stranded": [
+        {
+          "x": -36.963359487197614,
+          "z": 19.183598569082957,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -37.255522658900716,
+          "z": 4.74325838993016,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -53.62748176449251,
+          "z": 42.59965057191137,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -23.7396251914583,
+          "z": -37.24377511487499,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -18.599999999999998
+          }
+        },
+        {
+          "x": -37.78349745347579,
+          "z": 18.521139094123733,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -37.037910220159574,
+          "z": 18.473332393629974,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "directorCountAtEnd": 159,
+      "recoverableDownedAtEnd": 45,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 48,
+      "minimumInsideRing": 41,
+      "playerAtMinimumPlaza": {
+        "x": -22.86793327331543,
+        "z": 0.7321518063545227
+      },
+      "minPlazaAliveAfter45Seconds": 42,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 296,
+          "x": -37.255522658900716,
+          "z": 4.74325838993016,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 9.65,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    "lowHold": {
+      "tier": "low",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 46,
+      "peakAlive": 59,
+      "peakPlazaAlive": 59,
+      "stranded": [
+        {
+          "x": -36.74689305515577,
+          "z": 4.256640915669103,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -52.42557425719659,
+          "z": 36.65704859143374,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -53.013121006529865,
+          "z": 36.25736952918325,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -5.74749439698941,
+          "z": 41.24195311195087,
+          "state": "attracted",
+          "scripted": {
+            "x": -21,
+            "z": 38
+          }
+        }
+      ],
+      "directorCountAtEnd": 80,
+      "recoverableDownedAtEnd": 24,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 19,
+      "minimumInsideRing": 15,
+      "playerAtMinimumPlaza": {
+        "x": -22.852705001831055,
+        "z": 0.7364528179168701
+      },
+      "minPlazaAliveAfter45Seconds": 15,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 228,
+          "x": -36.74689305515577,
+          "z": 4.256640915669103,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 8.55,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    "highStationary": {
+      "tier": "high",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 72,
+      "peakAlive": 99,
+      "peakPlazaAlive": 98,
+      "stranded": [
+        {
+          "x": -36.963359487197614,
+          "z": 19.183598569082957,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -37.255522658900716,
+          "z": 4.74325838993016,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -53.62748176449251,
+          "z": 42.59965057191137,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -23.7396251914583,
+          "z": -37.24377511487499,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -18.599999999999998
+          }
+        },
+        {
+          "x": -37.78349745347579,
+          "z": 18.521139094123733,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -37.037910220159574,
+          "z": 18.473332393629974,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "directorCountAtEnd": 154,
+      "recoverableDownedAtEnd": 40,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 48,
+      "minimumInsideRing": 41,
+      "playerAtMinimumPlaza": {
+        "x": -22.86793327331543,
+        "z": 0.7321518063545227
+      },
+      "minPlazaAliveAfter45Seconds": 42,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 296,
+          "x": -37.255522658900716,
+          "z": 4.74325838993016,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 9.65,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    "lowStationary": {
+      "tier": "low",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 46,
+      "peakAlive": 59,
+      "peakPlazaAlive": 59,
+      "stranded": [
+        {
+          "x": -36.74689305515577,
+          "z": 4.256640915669103,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -52.42557425719659,
+          "z": 36.65704859143374,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -53.013121006529865,
+          "z": 36.25736952918325,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -5.74749439698941,
+          "z": 41.24195311195087,
+          "state": "attracted",
+          "scripted": {
+            "x": -21,
+            "z": 38
+          }
+        }
+      ],
+      "directorCountAtEnd": 78,
+      "recoverableDownedAtEnd": 15,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 19,
+      "minimumInsideRing": 15,
+      "playerAtMinimumPlaza": {
+        "x": -22.852705001831055,
+        "z": 0.7364528179168701
+      },
+      "minPlazaAliveAfter45Seconds": 15,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 228,
+          "x": -36.74689305515577,
+          "z": 4.256640915669103,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 8.55,
+      "lineBreakAfterTurnSeconds": 190
+    }
+  }
+}
