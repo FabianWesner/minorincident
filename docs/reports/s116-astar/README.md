@@ -58,3 +58,7 @@ A retention variant that saves only requests which have already accumulated at l
 ## Restored route correctness
 
 The existing A* regression now compares interrupted routes against uninterrupted A* on twelve deterministic obstacle layouts, with a competing reverse request between each eight-expansion slice. Every resumed route exactly matches the uninterrupted route and respects the supplied expansion budget. The focused A* test passes. This strengthens evidence for correct restoration on those layouts; it does not explain the native L3/L10 behavior changes or clear the audit failures.
+
+## Vehicle campaign gate
+
+All eight HIGH/LOW vehicle campaign motion cases pass: L9, L7 bus, L4 parked, L4 tank. Run once on the current candidate through tools/e2e-lock.sh and the browser pool, one serial headless browser, ten-minute reservation, E2E_PORT/SCENE_PORT 4961/4962. Every case reports sourceStable=true. Receipts are retained in evidence.json. The L3/L10 threat regressions remain open.
