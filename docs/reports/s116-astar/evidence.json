@@ -3866,5 +3866,542 @@
         }
       ]
     }
-  ]
+  ],
+  "baseDirectProbeMeasurementAudit": {
+    "limitation": "Cached-goal reset cancellation hides consecutive same-destination retries. Prior zero-starvation claim withdrawn; observer branch removed. Final reruns required.",
+    "tiers": [
+      {
+        "quality": "high",
+        "overdueUnderInvalidationObserver": 0,
+        "actor298": [
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3011,
+            "last": 3026,
+            "calls": 2,
+            "expansions": 3516,
+            "cancelled": 3030,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3041,
+            "last": 3507,
+            "calls": 32,
+            "expansions": 63821,
+            "cancelled": 3510,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3522,
+            "last": 3537,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 3540,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3552,
+            "last": 3567,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 3570,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3582,
+            "last": 3597,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 3600,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3612,
+            "last": 3627,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 3630,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3642,
+            "last": 4198,
+            "calls": 38,
+            "expansions": 75968,
+            "cancelled": 4200,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4213,
+            "last": 4228,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 4230,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4243,
+            "last": 4288,
+            "calls": 4,
+            "expansions": 8000,
+            "cancelled": 4290,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4303,
+            "last": 4318,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 4320,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4333,
+            "last": 4348,
+            "calls": 2,
+            "expansions": 3907,
+            "cancelled": 4350,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4363,
+            "last": 4378,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 4380,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4393,
+            "last": 4393,
+            "calls": 1,
+            "expansions": 2000,
+            "cancelled": 4403,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4408,
+            "last": 4408,
+            "calls": 1,
+            "expansions": 2000,
+            "cancelled": 4410,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4423,
+            "last": 4468,
+            "calls": 4,
+            "expansions": 8000,
+            "cancelled": 4470,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4483,
+            "last": 4619,
+            "calls": 10,
+            "expansions": 19966,
+            "cancelled": 4620,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4634,
+            "last": 4979,
+            "calls": 24,
+            "expansions": 47909,
+            "cancelled": 4980,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 4994,
+            "last": 5009,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 5010,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5024,
+            "last": 5069,
+            "calls": 4,
+            "expansions": 8000,
+            "cancelled": 5070,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5084,
+            "last": 5099,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 5100,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5114,
+            "last": 5114,
+            "calls": 1,
+            "expansions": 2000,
+            "cancelled": 5114,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5129,
+            "last": 5129,
+            "calls": 1,
+            "expansions": 2000,
+            "cancelled": 5130,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5144,
+            "last": 5160,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 5160,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5175,
+            "last": 5250,
+            "calls": 6,
+            "expansions": 12000,
+            "cancelled": 5250,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5265,
+            "last": 5280,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 5280,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5295,
+            "last": 5310,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 5317,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5325,
+            "last": 5550,
+            "calls": 16,
+            "expansions": 32000,
+            "cancelled": 5550,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5565,
+            "last": 5595,
+            "calls": 3,
+            "expansions": 6000,
+            "cancelled": 5602,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5610,
+            "last": 5670,
+            "calls": 5,
+            "expansions": 10000,
+            "cancelled": 5670,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5685,
+            "last": 5700,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 5700,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5715,
+            "last": 5790,
+            "calls": 6,
+            "expansions": 12000,
+            "cancelled": 5790,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5805,
+            "last": 5820,
+            "calls": 2,
+            "expansions": 4000,
+            "cancelled": 5820,
+            "reason": "cached route goal invalidated"
+          },
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 5835,
+            "last": 6135,
+            "calls": 21,
+            "expansions": 42000,
+            "cancelled": 6149,
+            "reason": "cached route goal invalidated"
+          }
+        ],
+        "census": {
+          "tier": "high",
+          "holdComplete": true,
+          "firstBreachLevelSeconds": 50.083333333333336,
+          "firstBreachAfterTurnSeconds": 17.266666666666666,
+          "aliveAtFirstBreach": 72,
+          "peakAlive": 95,
+          "peakPlazaAlive": 94,
+          "stranded": [
+            {
+              "x": 4.67339740998763,
+              "z": 2.627663040263356,
+              "state": "idle",
+              "scripted": {
+                "x": -20.02307692307693,
+                "z": -19
+              },
+              "approach": "outside"
+            },
+            {
+              "x": -53.39011901529036,
+              "z": -18.924326216705555,
+              "state": "chase",
+              "scripted": {
+                "x": -32.1,
+                "z": 6.105882352941178
+              }
+            },
+            {
+              "x": -53.67608405854579,
+              "z": 41.50558560519307,
+              "state": "idle",
+              "scripted": {
+                "x": -37.2,
+                "z": 6.105882352941178
+              },
+              "approach": "outside"
+            },
+            {
+              "x": -19.873597228599902,
+              "z": -27.647066544046826,
+              "state": "attracted",
+              "scripted": {
+                "x": -20.02307692307693,
+                "z": -24.4
+              }
+            }
+          ],
+          "directorCountAtEnd": 154,
+          "recoverableDownedAtEnd": 38,
+          "alarmPendingAtEnd": 0,
+          "alarmCursorAtEnd": 36,
+          "aliveAtMinimumPlaza": 44,
+          "minimumInsideRing": 39,
+          "playerAtMinimumPlaza": {
+            "x": -22.871883392333984,
+            "z": 0.6911589503288269
+          },
+          "minPlazaAliveAfter45Seconds": 40,
+          "samplesAfter45Seconds": 8700,
+          "peakStationaryOutsidePlazaAfter30Seconds": 2,
+          "stationaryOutsidePlazaAtPeak": [
+            {
+              "id": 298,
+              "x": -36.25316887340822,
+              "z": -18.26168921611568,
+              "samples": 30,
+              "state": "alerted",
+              "scripted": {
+                "x": -37.2,
+                "z": 6.105882352941178
+              },
+              "approach": "outside"
+            },
+            {
+              "id": 325,
+              "x": -24.257950539418633,
+              "z": 40.73673314711851,
+              "samples": 30,
+              "state": "alerted",
+              "scripted": {
+                "x": -37.2,
+                "z": 6.105882352941178
+              },
+              "approach": "outside"
+            }
+          ],
+          "arrivalEdges": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "threeDirectionsAtLeast60Degrees": true,
+          "maxGroupAtOneSourcePerTick": 5,
+          "firstAttackSeconds": 9.65,
+          "lineBreakAfterTurnSeconds": 190
+        }
+      },
+      {
+        "quality": "low",
+        "overdueUnderInvalidationObserver": 3,
+        "actor298": [],
+        "census": {
+          "tier": "low",
+          "holdComplete": true,
+          "firstBreachLevelSeconds": 50.083333333333336,
+          "firstBreachAfterTurnSeconds": 17.266666666666666,
+          "aliveAtFirstBreach": 47,
+          "peakAlive": 57,
+          "peakPlazaAlive": 56,
+          "stranded": [
+            {
+              "x": -36.73347543829347,
+              "z": 4.255184667096517,
+              "state": "chase",
+              "scripted": {
+                "x": -32.1,
+                "z": 6.105882352941178
+              }
+            }
+          ],
+          "directorCountAtEnd": 78,
+          "recoverableDownedAtEnd": 23,
+          "alarmPendingAtEnd": 0,
+          "alarmCursorAtEnd": 36,
+          "aliveAtMinimumPlaza": 17,
+          "minimumInsideRing": 16,
+          "playerAtMinimumPlaza": {
+            "x": -22.852705001831055,
+            "z": 0.7364528179168701
+          },
+          "minPlazaAliveAfter45Seconds": 16,
+          "samplesAfter45Seconds": 8700,
+          "peakStationaryOutsidePlazaAfter30Seconds": 1,
+          "stationaryOutsidePlazaAtPeak": [
+            {
+              "id": 228,
+              "x": -36.73347543829347,
+              "z": 4.255184667096517,
+              "samples": 30,
+              "state": "chase",
+              "scripted": {
+                "x": -32.1,
+                "z": 6.105882352941178
+              }
+            }
+          ],
+          "arrivalEdges": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "threeDirectionsAtLeast60Degrees": true,
+          "maxGroupAtOneSourcePerTick": 5,
+          "firstAttackSeconds": 8.55,
+          "lineBreakAfterTurnSeconds": 190
+        }
+      }
+    ]
+  }
 }
