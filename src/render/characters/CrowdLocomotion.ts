@@ -463,6 +463,21 @@ export class CrowdLocomotion {
       if (blend[1] < 1) { const row = poses.correct(id, frame, blend[0], blend[1], () => {}); blend[1] = 1; return row; }
       return frame;
     }
+    if (clip === 'get-up' && !this.animal && phase > .8 && this.sole && this.rig.footL && this.rig.footR) {
+      const row = poses.correct(id, frame, blend[0], blend[1], pose => {
+        this.load(pose, instance, layers, phase, style);
+        let bottom = Infinity;
+        for (const [side, foot] of [this.rig.footL!, this.rig.footR!].entries()) {
+          if (this.solePoints) for (const point of this.solePoints[side]) bottom = Math.min(bottom, this.point.copy(point).applyMatrix4(foot.matrixWorld).y);
+          else for (const x of [-.05, .085]) bottom = Math.min(bottom, this.point.set(x, -this.sole!, 0).applyMatrix4(foot.matrixWorld).y);
+        }
+        const settle = Math.min(1, (phase - .8) / .15);
+        this.rig.hip.position.y += (this.frame.matrixWorld.elements[13] - bottom) * settle / this.scale.setFromMatrixScale(this.rig.hip.parent!.matrixWorld).y;
+        updateWorldTranslation(this.rig.hip);
+        this.store(pose, instance);
+      });
+      blend[1] = 1; return row;
+    }
     const grounded = !this.animal && !!this.reach && (!!gaitStyles[clip] || standingClips.has(clip));
     let state = this.footwork.states.get(id);
     if (state && (time < state.time || time - state.time > .3)) { this.footwork.states.delete(id); state = undefined; }

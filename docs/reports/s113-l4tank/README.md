@@ -57,3 +57,9 @@ The required unchanged remote unit suite subsequently passed: 27 files, 106 test
 ## Current focused fix
 
 The shared separation budget is now applied only within 0.5 m of solid geometry. It permits up to 6 cm of total crowd correction per tick there, preventing accumulated neighbor pushes from producing a large cleanup shove; ordinary separation away from obstacles is retained. Both HIGH and LOW tank fixtures pass in the latest locked run (exit 0). Full batch, final audit and source checks must be refreshed for this version. Earlier receipts above describe superseded variants. The remote suite passed before this final contact-budget refinement.
+
+## Depenetration refinement
+
+The displacement budget was removed because it changed native horde outcomes. The smaller candidate instead skips nav-grid depenetration when the exact solid registry proves the body already fits: a conservative parked-hull navigation footprint must not repeatedly eject a clear body. The exact-solid separation proposal guard remains.
+
+HIGH then exposed a separate final get-up sole gap in the shipped pose path. Runtime presentation now settles the final 20% of humanoid get-up onto the floor plane, reaching full planting over 15% of clip duration. This corrects actual rendered soles without changing gate thresholds or classification. Both focused tank tiers pass; actor 214 now has two measured contacts, zero slide and zero sink. Typecheck and lint pass. Full gate/audit and final remote validation remain pending for this refinement.

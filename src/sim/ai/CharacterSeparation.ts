@@ -41,12 +41,8 @@ export function installCharacterSeparation(world: SimWorld): void {
   } };
   const settled = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   const courierShifts = new Map<number, number>();
-  const crowdShifts = new Map<number, number>();
   const separationMove = (body: Body, dx: number, dz: number): void => {
     const { entity: e, point: p } = body;
-    const requested = Math.hypot(dx, dz), remaining = world.solids.clear(p, body.physical + .5, e.id, false) ? Infinity : Math.max(0, 3.6 * FIXED_DT - (crowdShifts.get(e.id) ?? 0));
-    if (!remaining || !requested) return;
-    if (requested > remaining) { dx *= remaining / requested; dz *= remaining / requested; }
     const start = { x: p.x, y: p.y, z: p.z, yaw: p.yaw };
     const move = (x: number, z: number) => {
       const target = { ...start };
@@ -66,13 +62,13 @@ export function installCharacterSeparation(world: SimWorld): void {
         if (travelled > 1e-6 && (!accepted || travelled > Math.hypot(accepted.x - start.x, accepted.z - start.z))) accepted = candidate;
       }
     }
-    if (accepted) { p.x = accepted.x; p.z = accepted.z; crowdShifts.set(e.id, (crowdShifts.get(e.id) ?? 0) + Math.hypot(p.x - start.x, p.z - start.z)); }
+    if (accepted) { p.x = accepted.x; p.z = accepted.z; }
   };
   const ground = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
     narrowQueue = !!world.missions?.state.l5?.metroAt;
-    courierShifts.clear(); crowdShifts.clear();
+    courierShifts.clear();
     // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
