@@ -2887,5 +2887,185 @@
         }
       }
     ]
+  },
+  "l3AttackerRouteComparison": {
+    "base": {
+      "691": {
+        "calls": 8,
+        "pending": 0,
+        "found": 8,
+        "maxSearchSize": 990,
+        "firstCalls": [
+          {
+            "tick": 7207,
+            "actor": 691,
+            "from": 130649,
+            "to": 30636,
+            "found": true,
+            "pending": false,
+            "expansions": 762,
+            "total": 762,
+            "position": {
+              "x": 52.598060519881756,
+              "z": 31.698949629467606,
+              "y": 0.83,
+              "yaw": 1.6506002455021545
+            }
+          },
+          {
+            "tick": 7423,
+            "actor": 691,
+            "from": 128968,
+            "to": 30628,
+            "found": true,
+            "pending": false,
+            "expansions": 990,
+            "total": 990,
+            "position": {
+              "x": 52.360923311486665,
+              "z": 30.822545564289324,
+              "y": 0.83,
+              "yaw": 1.9698168861612073
+            }
+          }
+        ]
+      },
+      "1136": {
+        "calls": 0,
+        "pending": 0,
+        "found": 0,
+        "maxSearchSize": 0,
+        "firstCalls": []
+      },
+      "835": {
+        "calls": 0,
+        "pending": 0,
+        "found": 0,
+        "maxSearchSize": 0,
+        "firstCalls": []
+      }
+    },
+    "candidate": {
+      "691": {
+        "calls": 44,
+        "pending": 0,
+        "found": 41,
+        "maxSearchSize": 10000,
+        "firstCalls": [
+          {
+            "tick": 7184,
+            "actor": 691,
+            "from": 84447,
+            "to": 39042,
+            "found": true,
+            "pending": false,
+            "expansions": 358,
+            "total": 358,
+            "position": {
+              "x": 51.85940367003325,
+              "z": 4.6014487249396,
+              "y": 0.7,
+              "yaw": 2.291590845512505
+            }
+          },
+          {
+            "tick": 7199,
+            "actor": 691,
+            "from": 84447,
+            "to": 75206,
+            "found": true,
+            "pending": false,
+            "expansions": 17,
+            "total": 17,
+            "position": {
+              "x": 51.85940367003325,
+              "z": 4.591005546352143,
+              "y": 0.7,
+              "yaw": 1.6194288305822364
+            }
+          }
+        ]
+      },
+      "1136": {
+        "calls": 46,
+        "pending": 11,
+        "found": 35,
+        "maxSearchSize": 4000,
+        "firstCalls": [
+          {
+            "tick": 8365,
+            "actor": 1136,
+            "from": 22316,
+            "to": 32522,
+            "found": true,
+            "pending": false,
+            "expansions": 139,
+            "total": 139,
+            "position": {
+              "x": 66.24823377544664,
+              "z": -32.59987696859731,
+              "y": 0.83,
+              "yaw": 4.853967905555208
+            }
+          },
+          {
+            "tick": 8373,
+            "actor": 1136,
+            "from": 22316,
+            "to": 32522,
+            "found": true,
+            "pending": false,
+            "expansions": 139,
+            "total": 139,
+            "position": {
+              "x": 66.27472013511095,
+              "z": -32.60136858309782,
+              "y": 0.83,
+              "yaw": 4.9473012388885405
+            }
+          }
+        ]
+      },
+      "835": {
+        "calls": 23,
+        "pending": 2,
+        "found": 21,
+        "maxSearchSize": 2000,
+        "firstCalls": [
+          {
+            "tick": 7504,
+            "actor": 835,
+            "from": 70956,
+            "to": 34020,
+            "found": true,
+            "pending": false,
+            "expansions": 69,
+            "total": 69,
+            "position": {
+              "x": 26.347605143741394,
+              "z": -3.6001954657382105,
+              "y": 0.83,
+              "yaw": 2.962283141566029
+            }
+          },
+          {
+            "tick": 7655,
+            "actor": 835,
+            "from": 70135,
+            "to": 50816,
+            "found": true,
+            "pending": false,
+            "expansions": 25,
+            "total": 25,
+            "position": {
+              "x": 35.61689919618305,
+              "z": -4.382874526788124,
+              "y": 0.83,
+              "yaw": 1.3543198403384833
+            }
+          }
+        ]
+      }
+    }
   }
 }
