@@ -6808,7 +6808,95 @@
       "serial": true,
       "headless": true,
       "reservationSeconds": 600,
-      "limitation": "L9 LOW lacks hatch and rail-stall motion context coverage; no correction failures or browser errors."
+      "limitation": "L9 LOW lacks hatch and rail-stall motion context coverage; no correction failures or browser errors.",
+      "unchangedL9LowRetry": {
+        "sourceHash": "f8db9b36e92bc804904b06d0b644e6d6f710fecfaad8a0d14f4900196f713354",
+        "sourceStable": true,
+        "pass": false,
+        "contextCoverage": [
+          {
+            "context": "driving",
+            "frames": 920,
+            "actors": 38,
+            "contacts": 85,
+            "maxCm": 1.2,
+            "p95Cm": 0.6
+          },
+          {
+            "context": "detour",
+            "frames": 920,
+            "actors": 38,
+            "contacts": 85,
+            "maxCm": 1.2,
+            "p95Cm": 0.6
+          }
+        ],
+        "contextsProven": false,
+        "correctionsProven": true,
+        "errors": [],
+        "lastProgress": {
+          "frame": 9000,
+          "tick": 9000,
+          "scenario": "L9",
+          "phase": "playing",
+          "l9Phase": "driving",
+          "stallAt": 5984,
+          "restarted": true,
+          "hatch": false,
+          "bot": {
+            "running": true,
+            "policy": "complete"
+          },
+          "figures": 7,
+          "drawn": 7,
+          "livingInfected": 29,
+          "hulls": [
+            {
+              "id": "667",
+              "asset": "vehicle.military-apc",
+              "source": "dynamic"
+            },
+            {
+              "id": "682",
+              "asset": "veh.military-truck",
+              "source": "dynamic"
+            },
+            {
+              "id": "683",
+              "asset": "veh.military-truck",
+              "source": "dynamic"
+            },
+            {
+              "id": "684",
+              "asset": "veh.military-truck",
+              "source": "dynamic"
+            },
+            {
+              "id": "675",
+              "asset": "vehicle.school-bus",
+              "source": "dynamic"
+            }
+          ],
+          "cars": [
+            {
+              "id": 667,
+              "x": 453.1738586425781,
+              "y": 0.9954347014427185,
+              "z": 4.1581034660339355,
+              "yaw": -1.173155483939099,
+              "speed": 2.234179149659841e-22
+            },
+            {
+              "id": 675,
+              "x": 3.7609703540802,
+              "z": -321.9103698730469,
+              "y": 0.7354346513748169,
+              "yaw": -0.07515680219376007,
+              "speed": 4.054442343789228e-10
+            }
+          ]
+        }
+      }
     }
   }
 }
