@@ -3,7 +3,7 @@ import { LevelNineBot } from '../../src/debug/bot/LevelNineBot';
 import { LevelEightBot } from '../../src/debug/bot/LevelEightBot';
 import { LevelSixBot, type L6Profile } from '../../src/debug/bot/LevelSixBot';
 import { LevelThreeBot, type L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
-import { LevelFourBot } from '../../src/debug/bot/LevelFourBot';
+import { LevelFourBot, type L4Profile } from '../../src/debug/bot/LevelFourBot';
 import { LevelFiveBot } from '../../src/debug/bot/LevelFiveBot';
 import { runL2 } from './l2Bots';
 import { followFrustum } from './l3Bots';
@@ -57,6 +57,8 @@ export interface LevelRunHooks {
   beforeDispose?: (world: SimWorld) => void;
   /** Native L6 adversarial QA policy; gameplay runs keep the ordinary policy. */
   l6Profile?: L6Profile;
+  /** Native L4 stationary QA policy; gameplay runs keep the ordinary policy. */
+  l4Profile?: L4Profile;
 }
 /** Internal signal used to end an intentionally partial observer route. */
 export class LevelRunStopped extends Error {
@@ -159,7 +161,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L4') {
       // E22: the shared L4 policy (ordinary inputs only), same as the browser bot.
-      const bot = new LevelFourBot(world, generalPolicy);
+      const bot = new LevelFourBot(world, hooks?.l4Profile ?? generalPolicy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { followFrustum(world); world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L3') {
       // E21: the shared L3 policy (ordinary inputs only), same as the browser bot.

@@ -72,7 +72,7 @@ export const l4 = {
     /** Civilians already in the city before the convoy arrives, and the evacuees who step off the buses. */
     residents: { high: 40, low: 20 }, evacuees: { high: 24, low: 12 },
     /** PO 2026-10-13: new infected at the alarm, preserving the previous pressure count without converting evacuees. */
-    alarmInfected: { high: 18, low: 18 },
+    alarmInfected: { high: 36, low: 36 },
     /** Where the evacuees beyond the eight queue slots wait: two rows between the armory table and the tents, facing the registration. */
     waiting: [5.8, 10].flatMap(z => [-31, -29.5, -28, -24.5, -23, -21.5, -18.5, -17, -15.5].map(x => [x, z] as P)) as readonly P[],
     soldiers: { high: 20, low: 10 },
@@ -108,7 +108,7 @@ export const l4 = {
     heap: { cellM: 4 },
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 120,
-    caps: { infected: { high: 120, low: 80 }, characters: { high: 190, low: 120 } },
+    caps: { infected: { high: 160, low: 144 }, characters: { high: 230, low: 184 } },
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread

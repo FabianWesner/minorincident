@@ -11,7 +11,7 @@ import type { FollowerPaceSeed } from './followerPace';
 import { installKitingPolicy, finishKitingReceipt, type KitingReceipt, type KitingStyle } from './kiting';
 
 export interface StageJob {
-  id: string; level: RunnerLevel; kind: 'native' | 'follower' | 'l3' | 'high-hold' | 'early-close'; seed: number; passive: boolean;
+  id: string; level: RunnerLevel; kind: 'native' | 'follower' | 'l3' | 'high-hold' | 'low-hold' | 'high-stationary' | 'low-stationary' | 'early-close'; seed: number; passive: boolean;
 }
 export interface NativeStage {
   run: LevelReport | null; observation: ReturnType<ThreatObserver['finish']> | null;
@@ -22,7 +22,8 @@ export interface StageResult {
   job: StageJob; seconds: number; startedAt: number; endedAt: number; error?: string;
   /** Diagnostic split of `seconds`, kept out of the receipts. */
   split?: { skilledSeconds?: number; kitingSeconds?: number; observerSeconds?: number; simSeconds?: number };
-  native?: NativeStage; l3?: L3SharedSeed; follower?: FollowerPaceSeed; highHold?: ReturnType<L4HoldCensus['finish']>;
+  native?: NativeStage; l3?: L3SharedSeed; follower?: FollowerPaceSeed; highHold?: ReturnType<L4HoldCensus['finish']>; lowHold?: ReturnType<L4HoldCensus['finish']>;
+  highStationary?: ReturnType<L4HoldCensus['finish']>; lowStationary?: ReturnType<L4HoldCensus['finish']>;
 }
 export interface ShardSpec { index: number; count: number }
 export const stageId = (level: RunnerLevel, passive: boolean, seed = 1): string => `${level}/${passive ? 'passive' : 'skilled'}/${seed}`;
@@ -38,10 +39,16 @@ async function execute(job: StageJob): Promise<StageResult> {
   try {
     if (job.kind === 'follower') result.follower = await runSeed({ ...job, tier: 'low' });
     else if (job.kind === 'l3') result.l3 = (await l3SharedSeeds('low', campaignFor('L3', job.seed), [job.seed]))[0];
-    else if (job.kind === 'high-hold') {
+    else if (job.kind === 'high-hold' || job.kind === 'low-hold' || job.kind === 'high-stationary' || job.kind === 'low-stationary') {
       let census: L4HoldCensus | undefined;
-      await runLevel('L4', 'complete', 1, 250, 'auto', undefined, undefined, 0, { quality: 'high', passive: true,
+      const quality = job.kind === 'high-hold' || job.kind === 'high-stationary' ? 'high' : 'low';
+      const stationary = job.kind === 'high-stationary' || job.kind === 'low-stationary';
+      await runLevel('L4', 'complete', 1, 250, 'auto', undefined, undefined, 0, { quality, passive: true,
+        ...(stationary ? { l4Profile: 'idle' as const } : {}),
         beforeBegin: world => { census = new L4HoldCensus(world); }, beforeDispose: () => { result.highHold = census!.finish(); } });
+      if (job.kind === 'low-hold') { result.lowHold = result.highHold; delete result.highHold; }
+      if (job.kind === 'high-stationary') { result.highStationary = result.highHold; delete result.highHold; }
+      if (job.kind === 'low-stationary') { result.lowStationary = result.highHold; delete result.highHold; }
     } else {
       let observer: ThreatObserver | undefined;
       const native: NativeStage = { run: null, observation: null, definitions: [], quality: 'missing', nativeStateHash: null };
@@ -89,7 +96,12 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
     jobs.push({ id: stageId(level, false), level, kind: level === 'L3' ? 'l3' : 'native', seed: 1, passive: false });
     jobs.push({ id: stageId(level, true), level, kind: 'native', seed: 1, passive: true });
     if (level === 'L6') jobs.push({ id: 'L6/early-close/1', level, kind: 'early-close', seed: 1, passive: false });
-    if (level === 'L4') jobs.push({ id: 'L4/high-hold', level, kind: 'high-hold', seed: 1, passive: true });
+    if (level === 'L4') {
+      jobs.push({ id: 'L4/high-hold', level, kind: 'high-hold', seed: 1, passive: true });
+      jobs.push({ id: 'L4/low-hold', level, kind: 'low-hold', seed: 1, passive: true });
+      jobs.push({ id: 'L4/high-stationary', level, kind: 'high-stationary', seed: 1, passive: true });
+      jobs.push({ id: 'L4/low-stationary', level, kind: 'low-stationary', seed: 1, passive: true });
+    }
     if (level === 'L3') for (const seed of [2, 3]) jobs.push({ id: stageId(level, false, seed), level, kind: 'l3', seed, passive: false });
     if (level === 'L5' || level === 'L7') for (const passive of [false, true]) for (const seed of [2, 3])
       jobs.push({ id: stageId(level, passive, seed), level, kind: 'follower', seed, passive });
@@ -99,7 +111,8 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
   // old guesses put L7 passive seed 1 (240 s) and L8 skilled (454 s) last or in the middle and left two workers idle.
   const measured: Record<string, number> = {
     'L8/skilled/1': 454, 'L5/passive/1': 297, 'L5/passive/2': 277, 'L7/passive/1': 240, 'L9/skilled/1': 238, 'L5/passive/3': 232,
-    'L7/passive/2': 227, 'L7/passive/3': 224, 'L4/skilled/1': 154, 'L10/skilled/1': 137, 'L4/high-hold': 130, 'L3/skilled/2': 108,
+    'L7/passive/2': 227, 'L7/passive/3': 224, 'L4/skilled/1': 154, 'L10/skilled/1': 137, 'L4/high-hold': 130, 'L4/low-hold': 130,
+    'L4/high-stationary': 130, 'L4/low-stationary': 130, 'L3/skilled/2': 108,
     'L4/passive/1': 107, 'L9/passive/1': 94, 'L2/passive/1': 92, 'L10/passive/1': 77, 'L5/skilled/1': 77, 'L3/skilled/1': 75,
     'L2/skilled/1': 72, 'L8/passive/1': 66, 'L5/skilled/2': 64, 'L3/skilled/3': 64, 'L5/skilled/3': 59, 'L1/skilled/1': 49,
     'L7/skilled/1': 49, 'L7/skilled/3': 48, 'L7/skilled/2': 40, 'L6/skilled/1': 32, 'L1/passive/1': 29, 'L3/passive/1': 19, 'L6/passive/1': 13,

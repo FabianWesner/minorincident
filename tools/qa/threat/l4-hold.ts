@@ -11,6 +11,10 @@ export class L4HoldCensus {
   private peakAlive = 0;
   private peakPlaza = 0;
   private minimumPlaza: number | null = null;
+  private minimumRing: number | null = null;
+  private aliveAtMinimumPlaza: number | null = null;
+  private playerAtMinimumPlaza: { x: number; z: number } | null = null;
+  private stranded: unknown[] = [];
   private samples = 0;
   private groupMax = 0;
   private firstAttack: number | null = null;
@@ -38,10 +42,18 @@ export class L4HoldCensus {
     this.groupMax = Math.max(this.groupMax, 0, ...groups.values());
     const alive = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.pendingAdmission);
     const p = l4.map.plaza, plaza = alive.filter(e => e.transform.x > p.x0 && e.transform.x < p.x1 && e.transform.z > p.z0 && e.transform.z < p.z1).length;
+    const r = l4.perimeter, ring = alive.filter(e => e.transform.x > r.x0 && e.transform.x < r.x1 && e.transform.z > r.z0 && e.transform.z < r.z1).length;
     this.peakAlive = Math.max(this.peakAlive, alive.length); this.peakPlaza = Math.max(this.peakPlaza, plaza);
     const opened = Object.values(s.breaches ?? {}).flatMap(b => b?.openAt ? [b.openAt] : []);
     if (this.firstBreach === null && opened.length) { this.firstBreach = Math.min(...opened); this.aliveAtBreach = alive.length; }
-    if (w.tick >= s.warAt + 45 * 60) { this.minimumPlaza = Math.min(this.minimumPlaza ?? Infinity, plaza); this.samples++; }
+    if (w.tick >= s.warAt + 45 * 60) {
+      if (this.minimumPlaza === null || plaza < this.minimumPlaza) {
+        this.stranded = alive.filter(e => !(e.transform.x > p.x0 && e.transform.x < p.x1 && e.transform.z > p.z0 && e.transform.z < p.z1)).map(e => ({ x: e.transform.x, z: e.transform.z, state: e.infected?.state, scripted: e.infected?.scripted, approach: e.infected?.breachApproach }));
+        this.minimumPlaza = plaza; this.minimumRing = ring; this.aliveAtMinimumPlaza = alive.length;
+        const player = w.entities.get(1)!.transform; this.playerAtMinimumPlaza = { x: player.x, z: player.z };
+      }
+      this.samples++;
+    }
   }
   finish() {
     const s = this.world.missions!.state.l4!, angles = [...this.angles.values()];
@@ -51,6 +63,11 @@ export class L4HoldCensus {
       firstBreachLevelSeconds: this.firstBreach === null ? null : this.firstBreach / 60,
       firstBreachAfterTurnSeconds: this.firstBreach === null ? null : (this.firstBreach - s.warAt) / 60,
       aliveAtFirstBreach: this.aliveAtBreach, peakAlive: this.peakAlive, peakPlazaAlive: this.peakPlaza,
+      stranded: this.stranded,
+      directorCountAtEnd: this.world.infected!.director.count,
+      recoverableDownedAtEnd: this.world.infected!.active.filter(e => e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0).length,
+      alarmPendingAtEnd: s.alarmPending, alarmCursorAtEnd: s.alarmCursor,
+      aliveAtMinimumPlaza: this.aliveAtMinimumPlaza, minimumInsideRing: this.minimumRing, playerAtMinimumPlaza: this.playerAtMinimumPlaza,
       minPlazaAliveAfter45Seconds: this.minimumPlaza, samplesAfter45Seconds: this.samples,
       arrivalEdges: [...this.edges].sort(), threeDirectionsAtLeast60Degrees: threeDirections, maxGroupAtOneSourcePerTick: this.groupMax,
       firstAttackSeconds: this.firstAttack, lineBreakAfterTurnSeconds: s.lineBreakAt ? (s.lineBreakAt - s.warAt) / 60 : null };

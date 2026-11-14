@@ -23,6 +23,9 @@ export interface LevelReceipt {
   passiveRun: LevelReport | null; passiveObservation: ReturnType<ThreatObserver['finish']> | null; passiveFlags: string[];
   l6EarlyClose?: { run: LevelReport | null; observation: ReturnType<ThreatObserver['finish']> | null };
   highHold?: ReturnType<L4HoldCensus['finish']>;
+  lowHold?: ReturnType<L4HoldCensus['finish']>;
+  highStationary?: ReturnType<L4HoldCensus['finish']>;
+  lowStationary?: ReturnType<L4HoldCensus['finish']>;
   /** L3-06 army line over seeds 1–3 (tools/qa/threat/l3ArmyLine.ts). */
   l3Army?: ArmyLineVerdict;
   l3SurvivalSeeds?: L3SurvivalSeed[];
@@ -170,6 +173,18 @@ for (const level of selected) {
     if (hold.error || !hold.highHold) throw new Error(`Missing L4 high hold: ${hold.error ?? 'no census'}`);
     receipt.highHold = hold.highHold;
     console.log(`[qa:threat] L4 high hold: ${JSON.stringify(receipt.highHold)}`);
+    const lowHold = stage('L4/low-hold');
+    if (lowHold.error || !lowHold.lowHold) throw new Error(`Missing L4 low hold: ${lowHold.error ?? 'no census'}`);
+    receipt.lowHold = lowHold.lowHold;
+    console.log(`[qa:threat] L4 low hold: ${JSON.stringify(receipt.lowHold)}`);
+    const highStationary = stage('L4/high-stationary');
+    if (highStationary.error || !highStationary.highStationary) throw new Error(`Missing L4 high stationary census: ${highStationary.error ?? 'no census'}`);
+    receipt.highStationary = highStationary.highStationary;
+    console.log(`[qa:threat] L4 high stationary: ${JSON.stringify(receipt.highStationary)}`);
+    const lowStationary = stage('L4/low-stationary');
+    if (lowStationary.error || !lowStationary.lowStationary) throw new Error(`Missing L4 low stationary census: ${lowStationary.error ?? 'no census'}`);
+    receipt.lowStationary = lowStationary.lowStationary;
+    console.log(`[qa:threat] L4 low stationary: ${JSON.stringify(receipt.lowStationary)}`);
   }
   if (level === 'L3') {
     receipt.l3Army = armyLineVerdict([1, 2, 3].map(seed => stage(stageId(level, false, seed)).l3?.army
