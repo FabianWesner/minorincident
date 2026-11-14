@@ -67,3 +67,11 @@ HIGH then exposed a separate final get-up sole gap in the shipped pose path. Run
 ## Validation of a80b1fb5
 
 Full locked `npm run qa:vehicle-campaign-motion` passed (ports 4931/4932). Refreshed unchanged remote unit suite passed, exit 0, 222.5 s / 240 s. Full threat audit: HIGH L4 first breach 68, sustained plaza minimum 44, peak living 104; LOW informational first breach 45, plaza minimum 19, stationary peak living 57. The audit still has two flags: `L4/wave/breach-south:WAVE_FIRST_ATTACK_OVER_20_SECONDS` and `L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS`. South breach timing remains open; goal is not complete.
+
+## Current retained solution (supersedes simulation experiments)
+
+The original simulation separation and depenetration implementations are restored. The visible slide was traced to detailed footwork: when a slow planted foot released after phase 0.9, `releaseP = min(p, 0.9)` advanced the first swing pose deep into its arc. LOW actor 210's root moved only millimetres while the shoe target jumped about 16 cm. Late releases now use a timed step starting at the locked target. The shared runtime get-up settling correction is retained.
+
+Tank observation is extended from 1200 to 1320 frames to include a recovery that previously ended beyond the observation boundary. Correction slices now include an active heavy reaction through its actual end plus the existing 30-frame margin. This adds samples; it changes no actor inclusion, threshold, classification, or stats. Actor 196 previously had a single shamble sample at frame 1 and get-up frames 1154–1200; its measured landing is now included.
+
+Both focused tank tiers pass with all actor/correction tracks passing; typecheck and lint pass. Focused L4 audit has no gameplay flags: HIGH first breach 72, plaza minimum 42; LOW stationary peak 57. Full gate, full audit and remote suite need refreshing for this final source. Earlier simulation proposals and their receipts are superseded and not completion evidence.

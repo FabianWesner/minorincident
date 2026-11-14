@@ -239,8 +239,10 @@ try {
     const actors = new Map<number, Set<number>>();
     for (const sample of samples) if (sample.correction[kind] > 0) {
       let frames = actors.get(sample.id); if (!frames) actors.set(sample.id, frames = new Set());
-      // Half a second either side includes the landing after a lifted recovery step.
-      for (let frame = sample.frame - 30; frame <= sample.frame + 30; frame++) frames.add(frame);
+      // Retain the full heavy recovery and its landing, not just an airborne
+      // half-second slice. Every earlier correction sample remains measured.
+      const recovery = sample.reaction?.heavy ? Math.max(0, sample.reaction.until - sample.tick) : 0;
+      for (let frame = sample.frame - 30; frame <= sample.frame + recovery + 30; frame++) frames.add(frame);
     }
     for (const [id, frames] of actors) correctionRows.push(checkTrack(`${kind}/${id}`, samples.filter(s => s.id === id && frames.has(s.frame))));
   }

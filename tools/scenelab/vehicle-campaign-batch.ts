@@ -2,7 +2,7 @@
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
-const modes = { L9: { level: 'L9', frames: 9000 }, 'l7-bus': { level: 'L7', frames: 1200 }, 'l4-parked': { level: 'L4', frames: 1200 }, 'l4-tank': { level: 'L4', frames: 1200 } };
+const modes = { L9: { level: 'L9', frames: 9000 }, 'l7-bus': { level: 'L7', frames: 1200 }, 'l4-parked': { level: 'L4', frames: 1200 }, 'l4-tank': { level: 'L4', frames: 1320 } };
 const requested = process.argv[2] ?? 'all';
 if (requested !== 'all' && !Object.hasOwn(modes, requested)) throw new Error('Expected all, L9, l7-bus, l4-parked or l4-tank');
 const selected = requested === 'all' ? Object.keys(modes) as (keyof typeof modes)[] : [requested as keyof typeof modes];

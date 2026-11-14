@@ -815,7 +815,7 @@ export class InfectedSystem {
    */
   private depenetrate(e: EntitySnapshot): void {
     const t = e.transform, r = e.combat!.radius, nav = this.infectedNav;
-    if (nav.clear(t.x, t.z, r - 0.001) || this.world.solids.clear(t, r, e.id, false)) return;
+    if (nav.clear(t.x, t.z, r - 0.001)) return;
     for (let d = 0.25; d <= 3; d += 0.25) for (let k = 0; k < 16; k++) {
       const a = (k + (e.id % 16) * 0.5) * Math.PI / 8, x = t.x + Math.cos(a) * d, z = t.z + Math.sin(a) * d;
       if (!nav.clear(x, z, r)) continue;
