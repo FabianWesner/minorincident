@@ -1,0 +1,13 @@
+diff --git a/src/sim/ai/Perception.ts b/src/sim/ai/Perception.ts
+index 19a85ada..432dd6d0 100644
+--- a/src/sim/ai/Perception.ts
++++ b/src/sim/ai/Perception.ts
+@@ -229,7 +229,7 @@ export class Perception {
+       // The L6 escort must remain the threat's centre of gravity: treating the courier as
+       // several metres closer keeps tunnel runners from peeling off onto the slower column.
+       // This changes only target selection; infected movement, attacks and damage stay authored.
+-      const playerPriorityM = this.world.scenario === 'L6' ? -6 : this.playerBiasM;
++      const playerPriorityM = this.playerBiasM;
+       const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? playerPriorityM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
+       if (isCurrent) { current = h; currentDistance = distance; }
+       if (distance < bestDistance) { best = h; bestDistance = distance; }
