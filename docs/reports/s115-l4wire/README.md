@@ -38,3 +38,5 @@ Search interruption confirmed by wrapping the existing nav.path call read-only: 
 Routing candidate: courier-bound outside breach approaches now share the existing courier flow field. Fresh native holds measure 1 HIGH / 5 LOW stationary peaks, HIGH plaza minimum 40. Typecheck/lint pass. Full threat and vehicle motion gates must be repeated for this gameplay candidate; earlier gate results apply to the telemetry-only revision.
 
 Candidate rejected: LOW stationary peak increased to 5 (limit 3). Reverted the exterior flow gameplay change; retained its evidence. Current gameplay returns to the validated 2 HIGH / 1 LOW baseline.
+
+Current routing candidate: outside actors switch to an open breach at least 3 m closer than their assigned waypoint, clearing the obsolete cached path. Native HIGH/LOW holds complete with stationary peaks 2 / 1 and HIGH plaza minimum 40 (72 alive at first breach). Typecheck/lint pass. Full threat and vehicle motion regression checks remain required on this gameplay revision.
