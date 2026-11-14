@@ -5329,5 +5329,54 @@
         "actor330": []
       }
     ]
+  },
+  "l3FirstPathReceiptDivergence": {
+    "identicalCalls": 218,
+    "base": {
+      "tick": 2337,
+      "actor": 129,
+      "from": 27753,
+      "to": 52135,
+      "budget": 2000,
+      "found": false,
+      "expansions": 2000,
+      "total": 2000,
+      "pending": true
+    },
+    "candidate": {
+      "tick": 2337,
+      "actor": 129,
+      "from": 27753,
+      "to": 52135,
+      "budget": 2000,
+      "found": false,
+      "expansions": 2000,
+      "total": 4000,
+      "pending": true
+    },
+    "precedingBaseCalls": [
+      {
+        "tick": 2320,
+        "actor": 172,
+        "from": 26915,
+        "to": 73990,
+        "budget": 2000,
+        "found": false,
+        "expansions": 2000,
+        "total": 2000,
+        "pending": true
+      },
+      {
+        "tick": 2324,
+        "actor": 164,
+        "from": 22715,
+        "to": 48775,
+        "budget": 2000,
+        "found": false,
+        "expansions": 2000,
+        "total": 2000,
+        "pending": true
+      }
+    ]
   }
 }
