@@ -25,3 +25,7 @@ Allowing supplemental pressure to bypass the corpse-field stop increased LOW min
 - Run lint and the remote unit suite: `sh tools/remote/run.sh "$PWD" -- npm test` (rerun unchanged on runner timeout).
 
 The final full audit and remote suite have not been run. Typecheck and lint passed after removal of the unsuccessful gameplay trials. No deployment, push, or main movement was performed.
+
+## Isolated LOW cap experiment
+
+Restoring only the former L4 LOW living-only `SpawnDirector.count` exception (otherwise delivered gameplay unchanged) measured 54 alive at breach at level 50.233 s, plaza minimum 56, peak alive 129, and 39 recoverable downed at the end. This supports strict downed-slot admission as a cause of the sustained LOW failure. It does not solve first-breach population. The 129 peak exceeds the authored LOW infected cap of 80 because recoveries can overlap new admissions; this trial was reverted, with no performance claim. A bounded solution must reserve recovery capacity or otherwise reconcile authored arrivals and recovery without per-level zombie stat changes. The JSON contains this isolated receipt.
