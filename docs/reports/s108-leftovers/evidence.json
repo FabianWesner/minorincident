@@ -264757,5 +264757,14 @@
     ],
     "finding": "Gray wash and frozen projectile strings disappear when render clock advances1/60s per sim tick. Prior fog/clear-look diagnostics were confounded by frozen VFX clock. Visible supported dark ground, building/rubble breach and field edges; no missing ground in these reviewed points.",
     "method": "Production weather/look retained; only render clock synchronized with elapsed sim time. No presentation settings override."
+  },
+  "correctedLowFurtherReview": {
+    "opened": [
+      "clock-low-destroyed-corridor-z1-0.jpg",
+      "clock-low-destroyed-corridor-z1-5.jpg",
+      "clock-low-destroyed-corridor-z1-30.jpg",
+      "clock-low-destroyed-corridor-z1.5-55.jpg"
+    ],
+    "observations": "Crop tile margins remain beside flat supported open ground; orange shape is combat telegraph. Complex has gray tile paving interspersed with dark authored rectangular insets and puddles. No floating crop tile seen. Entry x2917\u20133073 and temporal z-fighting still require direct capture/review."
   }
 }
