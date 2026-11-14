@@ -43,8 +43,6 @@ for (const quality of ['high', 'low'] as const) {
           const actor = w.entities.get(request.actor);
           if (!actor || actor.health.current <= 0 || actor.hidden || actor.infected?.path !== path) {
             request.cancelled = w.tick; request.reason = 'actor no longer requests navigation'; active.delete(path);
-          } else if (actor.infected.goal !== request.to) {
-            request.cancelled = w.tick; request.reason = 'cached route goal invalidated'; active.delete(path);
           }
         }
       };
