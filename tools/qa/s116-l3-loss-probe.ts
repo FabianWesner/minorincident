@@ -8,6 +8,7 @@ const campaign = preset('L3-default'); campaign.seed = 2; campaign.settings.qual
 const hits: unknown[] = [];
 const routes: unknown[] = [];
 const restores: unknown[] = [];
+const squadMotion: unknown[] = [];
 let probeWorld: SimWorld | undefined;
 const path = NavGrid.prototype.path;
 NavGrid.prototype.path = function(from, to, result, budget) {
@@ -23,6 +24,16 @@ NavGrid.prototype.path = function(from, to, result, budget) {
 };
 const world = await loadLevel('L3', 2, campaign, 0, { quality: 'low', beforeBegin: w => {
   probeWorld = w;
+  const update = w.update.bind(w);
+  w.update = () => {
+    update();
+    if (w.tick >= 8400 && w.tick <= 9600 && w.tick % 60 === 0) {
+      squadMotion.push({ tick: w.tick, player: { ...w.entities.get(1)!.transform }, officers: [30, 31, 32, 33].map(id => {
+        const e = w.entities.get(id);
+        return e ? { id, position: { ...e.transform }, health: e.health.current, infected: !!e.infected, civilian: e.civilian ? structuredClone(e.civilian) : undefined } : { id, missing: true };
+      }) });
+    }
+  };
   w.events.on('outbreak.bite', event => { hits.push({ type: event.type, tick: w.tick, event }); });
   w.events.on('l3.squad-lost', event => { hits.push({ type: event.type, tick: w.tick, event }); });
   w.events.on('civilian.turned', event => { hits.push({ type: event.type, tick: w.tick, event }); });
@@ -36,5 +47,5 @@ const world = await loadLevel('L3', 2, campaign, 0, { quality: 'low', beforeBegi
 } });
 try {
   const report = runL3(world, world.missions!, 'complete', { seed: 2, maxSeconds: 1200, street: 'auto' });
-  writeFileSync(process.argv[2] ?? 'test-results/s116-l3-loss.json', JSON.stringify({ report, hits, routes, restores }, null, 2));
+  writeFileSync(process.argv[2] ?? 'test-results/s116-l3-loss.json', JSON.stringify({ report, hits, routes, restores, squadMotion }, null, 2));
 } finally { NavGrid.prototype.path = path; world.dispose(); }

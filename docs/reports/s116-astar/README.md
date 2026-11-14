@@ -82,3 +82,5 @@ L10 actor 120 uses seek (no L1 brain), remains chase with a nine-node path at in
 ## Cached-waypoint correction
 
 seek now validates visibility of its cached waypoint for every non-flow route, extending the existing army-approach recovery to ordinary chasers. A fresh L3/L10 diagnostic clears L10’s passive stuck-chaser flag; L3 still fails both aggregate criteria, with army counts 3/1/0. L10 retains its raw skilled wave flag, which is not included in the aggregate audit failure list. Typecheck and lint pass. Full all-level and vehicle evidence predates this gameplay correction and must be renewed for a final accepted revision.
+
+L3 seed-2 squad motion sampling shows the extra losses involve repeated outbreak grabs near x=114–116. At tick 8940 officers 30/32 are grabbed while the courier is at x=128.3; by 9120 officer 31 is grabbed too. The trapped officers lose health until their recorded bite-loss events. The evidence does not support a simple cached-route stall as the L3 cause; next inspect native grab/ally recovery handling, without tuning speeds, health or damage.
