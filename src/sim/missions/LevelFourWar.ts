@@ -109,19 +109,33 @@ export class LevelFourWar {
     for (const side of ['west', 'north', 'south'] as const) { const b = s.breaches?.[side]; if (b?.openAt) need += Math.max(0, 3 - (b.arrivals ?? 0)); }
     return need;
   }
-  /** fix69-r: a breach still without its spearhead two seconds after opening at a full cap retires distant, off-screen,
-   * idle infected (never Alphas or scripted/authored arrivals) for it, as L6 does for its announced cohorts. */
+  /** fix69-r: a breach still without its spearhead two seconds after opening at a full cap retires distant,
+   * off-screen, non-engaged ordinary infected (never Alphas or authored collapse set pieces) for it, as L6 does. */
   private retireIdleForSpearhead(fresh: readonly ('west' | 'north' | 'south')[]): void {
     const { world } = this.mission, s = this.s, ai = this.infected, player = world.entities.get(1)!.transform;
     if (!fresh.some(side => world.tick - s.breaches![side]!.openAt >= ticks(2))) return;
-    const capacity = ai.director.cap - this.spearheadNeed();
+    // Match the ceiling used by emergenceRoom() for an owed breach slot.
+    // Retiring against the raw cap leaves the staged alive-share and other
+    // reservations untouched, so a full early phase can still reject all but
+    // a stray spearhead despite having three slots reserved for this breach.
+    const reservedAdmission = Math.min(1, ai.director.reserved);
+    const capacity = this.low
+      // LOW cannot retain a reservation once the hard cap is full. In that
+      // case, make one slot before retrying the first member of its cohort.
+      ? Math.floor(ai.director.cap * this.director.aliveShare()) - (ai.director.reserved - reservedAdmission)
+        - ai.director.pendingTurns - (s.director.cutOffPending ?? 0) - (reservedAdmission ? 0 : 1)
+      : ai.director.cap - this.spearheadNeed();
     if (ai.director.count + ai.director.pendingTurns <= capacity) return;
-    const authored = new Set<number>([...s.alphaIds, ...s.emergedIds, ...s.collapseIds]);
+    // `emergedIds` is the ordinary dynamic horde as well as breach arrivals;
+    // protecting the whole list left no reclaimable population at the cap.
+    // Only authored set pieces and collapse encounters are exempt.
+    const authored = new Set<number>([...s.alphaIds, ...s.collapseIds, ...(!this.low ? s.emergedIds : [])]);
     for (const e of [...ai.active]) {
       if (ai.director.count + ai.director.pendingTurns <= capacity) break;
       const b = e.infected;
-      if (!b || authored.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 || b.scripted || b.breachApproach ||
-        b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || b.specialAttack ||
+      if (!b || authored.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 ||
+        !this.low && (b.scripted || b.breachApproach || b.state !== 'idle' && b.state !== 'wander') ||
+        ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || b.specialAttack ||
         e.archetype === 'infected.alpha' || dist(e.transform, player) <= 25 || !ai.director.offscreen(e.transform, e.transform.y - .7)) continue;
       ai.release(e);
     }
@@ -923,7 +937,11 @@ export class LevelFourWar {
     // Callers keep their pending count when no source is safe, so the group is
     // retried at a later eligible mouth instead of being dropped.
     if (!(ai.director.offscreen(at) || ai.director.occluded(at))) return 0;
-    if (!this.spawnRoom(this.low ? 0 : ai.director.reserved) || !this.emergenceRoom(push, headroom, reservedSlot, authored) || !ai.pool.length || this.inGap(at)) return 0;
+    // A reserved breach arrival consumes one character-cap reservation too;
+    // otherwise the director slot is available but the parallel character
+    // guard still holds it back.
+    const characterReserve = this.low ? 0 : Math.max(0, ai.director.reserved - (reservedSlot ? 1 : 0));
+    if (!this.spawnRoom(characterReserve) || !this.emergenceRoom(push, headroom, reservedSlot, authored) || !ai.pool.length || this.inGap(at)) return 0;
     // These arrivals were already infected before entering the district.
     // Use the existing infected pool/model batches; real camp civilians still
     // turn in place with their own identity, clothes and accessories.
