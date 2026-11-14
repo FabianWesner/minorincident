@@ -1,0 +1,2975 @@
+{
+  "before": [
+    {
+      "seed": 1,
+      "policy": "typical",
+      "completed": true,
+      "survivorsSaved": 10,
+      "initialSurvivors": 29,
+      "savedPercent": 34.48275862068966,
+      "deaths": 0,
+      "windows": [
+        {
+          "from": 5490,
+          "to": 7290,
+          "attacks": 23
+        },
+        {
+          "from": 7290,
+          "to": 9090,
+          "attacks": 33
+        },
+        {
+          "from": 9090,
+          "to": 10890,
+          "attacks": 19
+        },
+        {
+          "from": 10890,
+          "to": 11378,
+          "attacks": 5
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 2129,
+          "seconds": 35.483333333333334,
+          "phase": "first",
+          "status": "turned",
+          "x": 8.326036256463363,
+          "z": -10.943981172521825,
+          "bites": [
+            {
+              "tick": 2129,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 9.189368304586921,
+              "z": -10.01008492588563
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "tick": 3434,
+          "seconds": 57.233333333333334,
+          "phase": "fails",
+          "status": "turned",
+          "x": -8.996967034995038,
+          "z": -7.728659401507509,
+          "bites": [
+            {
+              "tick": 3434,
+              "sourceId": 74,
+              "source": "infected.runner",
+              "x": -9.594796122619139,
+              "z": -8.5336322581786
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 25,
+          "key": "shelter-9",
+          "tick": 3461,
+          "seconds": 57.68333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -5.6970235778832725,
+          "z": -8.499153674402224,
+          "bites": [
+            {
+              "tick": 3461,
+              "sourceId": 67,
+              "source": "infected.runner",
+              "x": -6.658415239355232,
+              "z": -8.772518923242101
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "tick": 3617,
+          "seconds": 60.28333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -4.370537689203368,
+          "z": -5.4172913207443205,
+          "bites": [
+            {
+              "tick": 3617,
+              "sourceId": 74,
+              "source": "infected.runner",
+              "x": -5.310588348212507,
+              "z": -5.756027066474212
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4017,
+          "seconds": 66.95,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.93889176018182,
+          "z": 7.980506543684361,
+          "bites": [
+            {
+              "tick": 4017,
+              "sourceId": 81,
+              "source": "infected.runner",
+              "x": 22.59324416831419,
+              "z": 7.147998339707281
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 30,
+          "key": "shelter-14",
+          "tick": 5135,
+          "seconds": 85.58333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 33.54407053752066,
+          "z": 15.663470293301176,
+          "bites": [
+            {
+              "tick": 5135,
+              "sourceId": 90,
+              "source": "infected.runner",
+              "x": 32.61641851946206,
+              "z": 16.060978738433448
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "tick": 5365,
+          "seconds": 89.41666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 41.795341780327256,
+          "z": 16.09983717621397,
+          "bites": [
+            {
+              "tick": 5365,
+              "sourceId": 25,
+              "source": "infected.runner",
+              "x": 40.80063099684369,
+              "z": 16.203521636098284
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "tick": 5824,
+          "seconds": 97.06666666666666,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 66.08527211501587,
+          "z": 14.07765726267644,
+          "bites": [
+            {
+              "tick": 5824,
+              "sourceId": 118,
+              "source": "infected.runner",
+              "x": 67.17052148523125,
+              "z": 14.194624899799038
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "tick": 5915,
+          "seconds": 98.58333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 67.56806086540911,
+          "z": 13.487223821514368,
+          "bites": [
+            {
+              "tick": 5915,
+              "sourceId": 118,
+              "source": "infected.runner",
+              "x": 68.58999185681814,
+              "z": 13.809770423128716
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "tick": 5941,
+          "seconds": 99.01666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 58.02260394219779,
+          "z": 14.440188751221356,
+          "bites": [
+            {
+              "tick": 5941,
+              "sourceId": 82,
+              "source": "infected.runner",
+              "x": 57.93915009680317,
+              "z": 12.88251238367571
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 19,
+          "key": "shelter-3",
+          "tick": 6040,
+          "seconds": 100.66666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 65.11888065317669,
+          "z": 13.797583252027076,
+          "bites": [
+            {
+              "tick": 6040,
+              "sourceId": 103,
+              "source": "infected.runner",
+              "x": 64.18503352572878,
+              "z": 13.437916601780499
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "tick": 6576,
+          "seconds": 109.6,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 84.32251744663263,
+          "z": 14.20485252868492,
+          "bites": [
+            {
+              "tick": 6576,
+              "sourceId": 101,
+              "source": "infected.runner",
+              "x": 83.32353156401294,
+              "z": 14.18592697682934
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 33,
+          "key": "shelter-17",
+          "tick": 8166,
+          "seconds": 136.1,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 134.89621253856035,
+          "z": 15.642718360797012,
+          "bites": [
+            {
+              "tick": 8166,
+              "sourceId": 17,
+              "source": "infected.runner",
+              "x": 133.94888115803275,
+              "z": 16.066320863054674
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 37,
+          "key": "shelter-21",
+          "tick": 8322,
+          "seconds": 138.7,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 143.26834099910184,
+          "z": 14.079741801711604,
+          "bites": [
+            {
+              "tick": 8322,
+              "sourceId": 30,
+              "source": "infected.runner",
+              "x": 142.37688934410122,
+              "z": 13.536445151870755
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 34,
+          "key": "shelter-18",
+          "tick": 8449,
+          "seconds": 140.81666666666666,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 148.52722482149272,
+          "z": 14.400375761710729,
+          "bites": [
+            {
+              "tick": 8449,
+              "sourceId": 25,
+              "source": "infected.runner",
+              "x": 148.80490842064418,
+              "z": 15.52885099643258
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "tick": 8458,
+          "seconds": 140.96666666666667,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 147.43643343169703,
+          "z": 14.134475551193523,
+          "bites": [
+            {
+              "tick": 8458,
+              "sourceId": 17,
+              "source": "infected.runner",
+              "x": 146.85340530587314,
+              "z": 15.127093892314535
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 39,
+          "key": "shelter-23",
+          "tick": 8477,
+          "seconds": 141.28333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 149.7271687747759,
+          "z": 15.140241580251663,
+          "bites": [
+            {
+              "tick": 8477,
+              "sourceId": 118,
+              "source": "infected.runner",
+              "x": 149.28994441042153,
+              "z": 16.422926750110744
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 44,
+          "key": "sam",
+          "tick": 10242,
+          "seconds": 170.7,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 212.19962127183365,
+          "z": 14.85592850375342,
+          "bites": [
+            {
+              "tick": 10242,
+              "sourceId": 162,
+              "source": "infected.runner",
+              "x": 211.24119386949644,
+              "z": 14.570592010382638
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "tick": 10314,
+          "seconds": 171.9,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 213.50631763412414,
+          "z": 16.06140829347931,
+          "bites": [
+            {
+              "tick": 10314,
+              "sourceId": 113,
+              "source": "infected.runner",
+              "x": 212.53109791710736,
+              "z": 16.32071630701579
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "typical",
+      "completed": true,
+      "survivorsSaved": 7,
+      "initialSurvivors": 29,
+      "savedPercent": 24.137931034482758,
+      "deaths": 0,
+      "windows": [
+        {
+          "from": 5871,
+          "to": 7671,
+          "attacks": 20
+        },
+        {
+          "from": 7671,
+          "to": 9471,
+          "attacks": 37
+        },
+        {
+          "from": 9471,
+          "to": 11271,
+          "attacks": 30
+        },
+        {
+          "from": 11271,
+          "to": 11648,
+          "attacks": 1
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 2533,
+          "seconds": 42.21666666666667,
+          "phase": "first",
+          "status": "turned",
+          "x": 8.537016048821158,
+          "z": -10.975896190562246,
+          "bites": [
+            {
+              "tick": 2533,
+              "sourceId": 61,
+              "source": "infected.runner",
+              "x": 9.553214646592783,
+              "z": -11.001824265206839
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "tick": 2548,
+          "seconds": 42.46666666666667,
+          "phase": "first",
+          "status": "turned",
+          "x": -6.057298060313967,
+          "z": -10.229531238961608,
+          "bites": [
+            {
+              "tick": 2548,
+              "sourceId": 59,
+              "source": "infected.runner",
+              "x": -6.051849367626287,
+              "z": -11.23788146104101
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 25,
+          "key": "shelter-9",
+          "tick": 2858,
+          "seconds": 47.63333333333333,
+          "phase": "first",
+          "status": "turned",
+          "x": -5.6996082034952416,
+          "z": -8.499135839305726,
+          "bites": [
+            {
+              "tick": 2858,
+              "sourceId": 17,
+              "source": "infected.runner",
+              "x": -6.112224953692635,
+              "z": -9.409218428071034
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "tick": 4163,
+          "seconds": 69.38333333333334,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 5.438953289218823,
+          "z": -2.285056437536665,
+          "bites": [
+            {
+              "tick": 4163,
+              "sourceId": 88,
+              "source": "infected.runner",
+              "x": 5.393187634977429,
+              "z": -3.283567531485639
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4413,
+          "seconds": 73.55,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.99863636614548,
+          "z": 7.9998169205057215,
+          "bites": [
+            {
+              "tick": 4413,
+              "sourceId": 80,
+              "source": "infected.runner",
+              "x": 22.7386609094805,
+              "z": 8.723419786802252
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "tick": 4576,
+          "seconds": 76.26666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.47258226034099,
+          "z": 8.319810379411718,
+          "bites": [
+            {
+              "tick": 4576,
+              "sourceId": 80,
+              "source": "infected.runner",
+              "x": 20.437119718302004,
+              "z": 8.581004921888564
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "tick": 4717,
+          "seconds": 78.61666666666666,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 17.929935205945572,
+          "z": 9.630239169972374,
+          "bites": [
+            {
+              "tick": 4717,
+              "sourceId": 80,
+              "source": "infected.runner",
+              "x": 18.632771186757637,
+              "z": 8.902249885460236
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "tick": 4778,
+          "seconds": 79.63333333333334,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 17.624064408109287,
+          "z": 8.990240983601142,
+          "bites": [
+            {
+              "tick": 4778,
+              "sourceId": 61,
+              "source": "infected.runner",
+              "x": 17.437961126612972,
+              "z": 8.006317702635556
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "tick": 5253,
+          "seconds": 87.55,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 28.53093842885345,
+          "z": 15.855582730667551,
+          "bites": [
+            {
+              "tick": 5253,
+              "sourceId": 59,
+              "source": "infected.runner",
+              "x": 27.58041318982545,
+              "z": 16.187031158426937
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "tick": 6161,
+          "seconds": 102.68333333333334,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 55.091822654231535,
+          "z": 14.332009670107537,
+          "bites": [
+            {
+              "tick": 6161,
+              "sourceId": 67,
+              "source": "infected.runner",
+              "x": 54.27637591828693,
+              "z": 14.967310805937458
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 24,
+          "key": "shelter-8",
+          "tick": 8619,
+          "seconds": 143.65,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 139.0738184088472,
+          "z": 15.288250153349937,
+          "bites": [
+            {
+              "tick": 8619,
+              "sourceId": 81,
+              "source": "infected.runner",
+              "x": 139.76930818931714,
+              "z": 15.88903066448419
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 19,
+          "key": "shelter-3",
+          "tick": 8654,
+          "seconds": 144.23333333333332,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 154.83036777328374,
+          "z": 14.243151752624266,
+          "bites": [
+            {
+              "tick": 8654,
+              "sourceId": 151,
+              "source": "infected.runner",
+              "x": 154.90178032404833,
+              "z": 15.313940988341693
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 29,
+          "key": "shelter-13",
+          "tick": 8726,
+          "seconds": 145.43333333333334,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 154.59362664083807,
+          "z": 14.628398604551375,
+          "bites": [
+            {
+              "tick": 8726,
+              "sourceId": 151,
+              "source": "infected.runner",
+              "x": 155.76235445617206,
+              "z": 15.397640792193046
+            }
+          ],
+          "attacks": [
+            {
+              "tick": 5325,
+              "sourceId": 108,
+              "special": "armor"
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "tick": 8783,
+          "seconds": 146.38333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 149.15284872818913,
+          "z": 14.17495360486249,
+          "bites": [
+            {
+              "tick": 8783,
+              "sourceId": 31,
+              "source": "infected.runner",
+              "x": 148.24035713336767,
+              "z": 13.770137870059362
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "tick": 8887,
+          "seconds": 148.11666666666667,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 154.23439116454472,
+          "z": 14.971325546802678,
+          "bites": [
+            {
+              "tick": 8887,
+              "sourceId": 26,
+              "source": "infected.runner",
+              "x": 153.94462930086019,
+              "z": 13.652825064315216
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 37,
+          "key": "shelter-21",
+          "tick": 8901,
+          "seconds": 148.35,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 154.6383468016325,
+          "z": 14.373072264325184,
+          "bites": [
+            {
+              "tick": 8901,
+              "sourceId": 19,
+              "source": "infected.runner",
+              "x": 155.32206981703558,
+              "z": 13.644171096136382
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 33,
+          "key": "shelter-17",
+          "tick": 9501,
+          "seconds": 158.35,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 177.14859537612415,
+          "z": 15.93169041936811,
+          "bites": [
+            {
+              "tick": 9501,
+              "sourceId": 102,
+              "source": "infected.runner",
+              "x": 176.14939902343113,
+              "z": 15.95625640635052
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 41,
+          "key": "rosa",
+          "tick": 9731,
+          "seconds": 162.18333333333334,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 185.89133421385657,
+          "z": 15.293319048003475,
+          "bites": [
+            {
+              "tick": 9731,
+              "sourceId": 102,
+              "source": "infected.runner",
+              "x": 184.75629638918267,
+              "z": 15.446779870481116
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 28,
+          "key": "shelter-12",
+          "tick": 10421,
+          "seconds": 173.68333333333334,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 204.4557051298798,
+          "z": 14.40770867094949,
+          "bites": [
+            {
+              "tick": 10421,
+              "sourceId": 25,
+              "source": "infected.runner",
+              "x": 204.31731328658663,
+              "z": 15.470049511943438
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 34,
+          "key": "shelter-18",
+          "tick": 10523,
+          "seconds": 175.38333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 209.3053952607901,
+          "z": 14.282442625707343,
+          "bites": [
+            {
+              "tick": 10523,
+              "sourceId": 144,
+              "source": "infected.runner",
+              "x": 208.6162989492514,
+              "z": 13.481409734110894
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "tick": 10632,
+          "seconds": 177.2,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 213.86074457317838,
+          "z": 14.556493640683131,
+          "bites": [
+            {
+              "tick": 10632,
+              "sourceId": 25,
+              "source": "infected.runner",
+              "x": 212.98395048305684,
+              "z": 14.0660540943286
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 18,
+          "key": "shelter-2",
+          "tick": 10634,
+          "seconds": 177.23333333333332,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 212.79735689344434,
+          "z": 15.048491284338995,
+          "bites": [
+            {
+              "tick": 10634,
+              "sourceId": 136,
+              "source": "infected.runner",
+              "x": 212.00321881729195,
+              "z": 14.44157094812293
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "policy": "typical",
+      "completed": true,
+      "survivorsSaved": 11,
+      "initialSurvivors": 29,
+      "savedPercent": 37.93103448275862,
+      "deaths": 2,
+      "windows": [
+        {
+          "from": 7355,
+          "to": 9155,
+          "attacks": 46
+        },
+        {
+          "from": 9155,
+          "to": 10955,
+          "attacks": 37
+        },
+        {
+          "from": 10955,
+          "to": 12755,
+          "attacks": 56
+        },
+        {
+          "from": 12755,
+          "to": 13881,
+          "attacks": 2
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "tick": 3340,
+          "seconds": 55.666666666666664,
+          "phase": "first",
+          "status": "turned",
+          "x": -6.680342175707759,
+          "z": -10.358952767353415,
+          "bites": [
+            {
+              "tick": 3340,
+              "sourceId": 57,
+              "source": "infected.runner",
+              "x": -6.388649089325071,
+              "z": -11.314787289980941
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 3582,
+          "seconds": 59.7,
+          "phase": "fails",
+          "status": "turned",
+          "x": 8.050295322063546,
+          "z": -11.033728882292191,
+          "bites": [
+            {
+              "tick": 3582,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 9.050394290833166,
+              "z": -11.035165080726527
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 30,
+          "key": "shelter-14",
+          "tick": 3759,
+          "seconds": 62.65,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 5.650908469870372,
+          "z": -8.46712428198691,
+          "bites": [
+            {
+              "tick": 3759,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 6.638144038000395,
+              "z": -8.621045805219063
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 33,
+          "key": "shelter-17",
+          "tick": 3888,
+          "seconds": 64.8,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -4.071034028097879,
+          "z": -5.263707739682818,
+          "bites": [
+            {
+              "tick": 3888,
+              "sourceId": 80,
+              "source": "infected.runner",
+              "x": -4.788716597215257,
+              "z": -5.9600856780192775
+            },
+            {
+              "tick": 12032,
+              "sourceId": 146,
+              "source": "infected.runner",
+              "x": 204.94759028264005,
+              "z": 16.917885907521157
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "tick": 3920,
+          "seconds": 65.33333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -4.637515532445126,
+          "z": -4.290718164777966,
+          "bites": [
+            {
+              "tick": 3920,
+              "sourceId": 84,
+              "source": "infected.runner",
+              "x": -5.261614362696213,
+              "z": -5.072191555290543
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4299,
+          "seconds": 71.65,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.921946947391948,
+          "z": 8.019853440431849,
+          "bites": [
+            {
+              "tick": 4299,
+              "sourceId": 86,
+              "source": "infected.runner",
+              "x": 22.399332410915292,
+              "z": 9.016842388539013
+            },
+            {
+              "tick": 10314,
+              "sourceId": 101,
+              "source": "infected.runner",
+              "x": 146.0301495081223,
+              "z": 15.96101340484997
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "tick": 4428,
+          "seconds": 73.8,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.365457700334343,
+          "z": 8.273633076030778,
+          "bites": [
+            {
+              "tick": 4428,
+              "sourceId": 87,
+              "source": "infected.runner",
+              "x": 20.295088067008482,
+              "z": 7.9075710188856
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "tick": 5184,
+          "seconds": 86.4,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.399729552387715,
+          "z": 5.783614460273549,
+          "bites": [
+            {
+              "tick": 5184,
+              "sourceId": 101,
+              "source": "infected.runner",
+              "x": 20.288086269776386,
+              "z": 5.300288814411441
+            },
+            {
+              "tick": 10529,
+              "sourceId": 118,
+              "source": "infected.runner",
+              "x": 149.17274379420255,
+              "z": 13.7077382977613
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "tick": 5247,
+          "seconds": 87.45,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 17.644836672866806,
+          "z": 5.674388554794105,
+          "bites": [
+            {
+              "tick": 5247,
+              "sourceId": 99,
+              "source": "infected.runner",
+              "x": 17.71736770394429,
+              "z": 6.760449618234178
+            },
+            {
+              "tick": 12224,
+              "sourceId": 117,
+              "source": "infected.runner",
+              "x": 210.87335142862327,
+              "z": 16.015888178604577
+            },
+            {
+              "tick": 14047,
+              "sourceId": 96,
+              "source": "infected.runner",
+              "x": 260.02883713519986,
+              "z": 15.524402184822511
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "tick": 5690,
+          "seconds": 94.83333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 5.1098974863394755,
+          "z": -1.7806843098363558,
+          "bites": [
+            {
+              "tick": 5690,
+              "sourceId": 30,
+              "source": "infected.runner",
+              "x": 5.088775053850293,
+              "z": -2.779966621468264
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "tick": 6985,
+          "seconds": 116.41666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 32.81013582731073,
+          "z": 14.152688571063493,
+          "bites": [
+            {
+              "tick": 6985,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 31.94944907551868,
+              "z": 14.743105189910393
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "tick": 7913,
+          "seconds": 131.88333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 66.05105202779282,
+          "z": 14.542292900629072,
+          "bites": [
+            {
+              "tick": 7913,
+              "sourceId": 104,
+              "source": "infected.runner",
+              "x": 65.01694101597356,
+              "z": 14.359215600829607
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "tick": 8486,
+          "seconds": 141.43333333333334,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 84.79527133497288,
+          "z": 15.706781658685252,
+          "bites": [
+            {
+              "tick": 8486,
+              "sourceId": 96,
+              "source": "infected.runner",
+              "x": 83.80380289169777,
+              "z": 15.832751791101439
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 37,
+          "key": "shelter-21",
+          "tick": 8722,
+          "seconds": 145.36666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 89.28984534630759,
+          "z": 13.129426890394774,
+          "bites": [
+            {
+              "tick": 8722,
+              "sourceId": 106,
+              "source": "infected.runner",
+              "x": 88.31056114238682,
+              "z": 12.904517579247186
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 39,
+          "key": "shelter-23",
+          "tick": 10078,
+          "seconds": 167.96666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 137.6456859933852,
+          "z": 15.783349365875843,
+          "bites": [
+            {
+              "tick": 10078,
+              "sourceId": 107,
+              "source": "infected.runner",
+              "x": 136.67527455760626,
+              "z": 16.371578552476013
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 34,
+          "key": "shelter-18",
+          "tick": 10209,
+          "seconds": 170.15,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 141.65384708018365,
+          "z": 14.444327286082675,
+          "bites": [
+            {
+              "tick": 10209,
+              "sourceId": 67,
+              "source": "infected.runner",
+              "x": 140.67030871659418,
+              "z": 14.192738193615805
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 44,
+          "key": "sam",
+          "tick": 10937,
+          "seconds": 182.28333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 164.72849150903863,
+          "z": 15.17718892387892,
+          "bites": [
+            {
+              "tick": 10937,
+              "sourceId": 85,
+              "source": "infected.runner",
+              "x": 163.72926753305947,
+              "z": 15.19062828730428
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 41,
+          "key": "rosa",
+          "tick": 11896,
+          "seconds": 198.26666666666668,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 200.62232498439613,
+          "z": 15.882858797566497,
+          "bites": [
+            {
+              "tick": 11896,
+              "sourceId": 117,
+              "source": "infected.runner",
+              "x": 199.71057210283033,
+              "z": 16.320860088604032
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 27,
+          "key": "shelter-11",
+          "tick": 12129,
+          "seconds": 202.15,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 208.6032612083572,
+          "z": 16.2148587759682,
+          "bites": [
+            {
+              "tick": 12129,
+              "sourceId": 133,
+              "source": "infected.runner",
+              "x": 208.96074576093466,
+              "z": 14.953043920188952
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 28,
+          "key": "shelter-12",
+          "tick": 12201,
+          "seconds": 203.35,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 208.90951141989936,
+          "z": 13.895525961141711,
+          "bites": [
+            {
+              "tick": 12201,
+              "sourceId": 146,
+              "source": "infected.runner",
+              "x": 209.1661283102349,
+              "z": 14.982470962226193
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "tick": 12353,
+          "seconds": 205.88333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 217.03748236514664,
+          "z": 14.371643276279233,
+          "bites": [
+            {
+              "tick": 12353,
+              "sourceId": 149,
+              "source": "infected.runner",
+              "x": 216.04055370355,
+              "z": 14.449958304767534
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 18,
+          "key": "shelter-2",
+          "tick": 12442,
+          "seconds": 207.36666666666667,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 220.3721794277569,
+          "z": 16.219006267492347,
+          "bites": [
+            {
+              "tick": 12442,
+              "sourceId": 157,
+              "source": "infected.runner",
+              "x": 219.4175065407295,
+              "z": 16.514158675745186
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 38,
+          "key": "shelter-22",
+          "tick": 12571,
+          "seconds": 209.51666666666668,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 218.81533336655215,
+          "z": 15.292560547947812,
+          "bites": [
+            {
+              "tick": 12571,
+              "sourceId": 96,
+              "source": "infected.runner",
+              "x": 218.12200933663135,
+              "z": 16.034095498371595
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    }
+  ],
+  "after": [
+    {
+      "seed": 1,
+      "policy": "typical",
+      "completed": true,
+      "survivorsSaved": 19,
+      "initialSurvivors": 29,
+      "savedPercent": 65.51724137931035,
+      "deaths": 1,
+      "windows": [
+        {
+          "from": 6541,
+          "to": 8341,
+          "attacks": 25
+        },
+        {
+          "from": 8341,
+          "to": 10141,
+          "attacks": 17
+        },
+        {
+          "from": 10141,
+          "to": 11941,
+          "attacks": 17
+        },
+        {
+          "from": 11941,
+          "to": 12705,
+          "attacks": 3
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 2129,
+          "seconds": 35.483333333333334,
+          "phase": "first",
+          "status": "turned",
+          "x": 8.326036256463363,
+          "z": -10.943981172521825,
+          "bites": [
+            {
+              "tick": 2129,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 9.189368304586921,
+              "z": -10.01008492588563
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "tick": 3434,
+          "seconds": 57.233333333333334,
+          "phase": "fails",
+          "status": "turned",
+          "x": -8.996967034995038,
+          "z": -7.728659401507509,
+          "bites": [
+            {
+              "tick": 3434,
+              "sourceId": 74,
+              "source": "infected.runner",
+              "x": -9.594796122619139,
+              "z": -8.5336322581786
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 25,
+          "key": "shelter-9",
+          "tick": 3461,
+          "seconds": 57.68333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -5.6970235778832725,
+          "z": -8.499153674402224,
+          "bites": [
+            {
+              "tick": 3461,
+              "sourceId": 67,
+              "source": "infected.runner",
+              "x": -6.658415239355232,
+              "z": -8.772518923242101
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "tick": 3617,
+          "seconds": 60.28333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -4.370537689203368,
+          "z": -5.4172913207443205,
+          "bites": [
+            {
+              "tick": 3617,
+              "sourceId": 74,
+              "source": "infected.runner",
+              "x": -5.310588348212507,
+              "z": -5.756027066474212
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4007,
+          "seconds": 66.78333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.961409748061484,
+          "z": 8.003420227265584,
+          "bites": [
+            {
+              "tick": 4007,
+              "sourceId": 81,
+              "source": "infected.runner",
+              "x": 22.666658957392457,
+              "z": 8.706787325354869
+            },
+            {
+              "tick": 5116,
+              "sourceId": 81,
+              "source": "infected.runner",
+              "x": 22.247502085561848,
+              "z": 9.517664916025915
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "tick": 4125,
+          "seconds": 68.75,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.434764728081326,
+          "z": 8.422190255343647,
+          "bites": [
+            {
+              "tick": 4125,
+              "sourceId": 84,
+              "source": "infected.runner",
+              "x": 20.370829891090988,
+              "z": 8.772272305683831
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "tick": 4131,
+          "seconds": 68.85,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.269028934910267,
+          "z": 5.811964391168613,
+          "bites": [
+            {
+              "tick": 4131,
+              "sourceId": 86,
+              "source": "infected.runner",
+              "x": 19.40210175464093,
+              "z": 6.9408178584538645
+            },
+            {
+              "tick": 5232,
+              "sourceId": 86,
+              "source": "infected.runner",
+              "x": 20.115650170001,
+              "z": 6.468010109825572
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "tick": 4155,
+          "seconds": 69.25,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 17.724565032660713,
+          "z": 5.714932580698899,
+          "bites": [
+            {
+              "tick": 4155,
+              "sourceId": 82,
+              "source": "infected.runner",
+              "x": 17.581828364564586,
+              "z": 6.704199683925679
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "tick": 4859,
+          "seconds": 80.98333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 5.285371260103796,
+          "z": -4.924465519561456,
+          "bites": [
+            {
+              "tick": 4859,
+              "sourceId": 90,
+              "source": "infected.runner",
+              "x": 5.449853207254507,
+              "z": -3.938621292808574
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 18,
+          "key": "shelter-2",
+          "tick": 4996,
+          "seconds": 83.26666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 2.7660264504316006,
+          "z": -1.6645617850338703,
+          "bites": [
+            {
+              "tick": 4996,
+              "sourceId": 90,
+              "source": "infected.runner",
+              "x": 2.810265652865668,
+              "z": -2.6630450727268884
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "tick": 6909,
+          "seconds": 115.15,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 58.81030663471206,
+          "z": 14.281200600485795,
+          "bites": [
+            {
+              "tick": 6909,
+              "sourceId": 91,
+              "source": "infected.runner",
+              "x": 57.866380379628154,
+              "z": 14.612168770640102
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "tick": 7661,
+          "seconds": 127.68333333333334,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 83.69343938510858,
+          "z": 16.02088733629595,
+          "bites": [
+            {
+              "tick": 7661,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 82.69421591468954,
+              "z": 16.042092482970055
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "tick": 9285,
+          "seconds": 154.75,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 150.87154015991135,
+          "z": 14.200880977829453,
+          "bites": [
+            {
+              "tick": 9285,
+              "sourceId": 151,
+              "source": "infected.runner",
+              "x": 151.83960165914306,
+              "z": 14.509066420109198
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    },
+    {
+      "seed": 1,
+      "policy": "complete",
+      "completed": true,
+      "survivorsSaved": 22,
+      "initialSurvivors": 29,
+      "savedPercent": 75.86206896551724,
+      "deaths": 0,
+      "windows": [
+        {
+          "from": 5771,
+          "to": 7571,
+          "attacks": 4
+        },
+        {
+          "from": 7571,
+          "to": 9371,
+          "attacks": 6
+        },
+        {
+          "from": 9371,
+          "to": 11171,
+          "attacks": 27
+        },
+        {
+          "from": 11171,
+          "to": 12124,
+          "attacks": 1
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 18,
+          "key": "shelter-2",
+          "tick": 2237,
+          "seconds": 37.28333333333333,
+          "phase": "first",
+          "status": "turned",
+          "x": -3.3864139060722853,
+          "z": -10.977654749430275,
+          "bites": [
+            {
+              "tick": 2237,
+              "sourceId": 59,
+              "source": "infected.runner",
+              "x": -3.905661852409394,
+              "z": -11.831669562698163
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 3587,
+          "seconds": 59.78333333333333,
+          "phase": "fails",
+          "status": "turned",
+          "x": 7.321854912136627,
+          "z": -8.668762470937306,
+          "bites": [
+            {
+              "tick": 3587,
+              "sourceId": 79,
+              "source": "infected.runner",
+              "x": 8.313696487449954,
+              "z": -8.791435120047046
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 27,
+          "key": "shelter-11",
+          "tick": 3739,
+          "seconds": 62.31666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -1.9976117814503067,
+          "z": -8.495713931957185,
+          "bites": [
+            {
+              "tick": 3739,
+              "sourceId": 18,
+              "source": "infected.runner",
+              "x": -2.48393613125582,
+              "z": -9.368506438493592
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4337,
+          "seconds": 72.28333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.909940977007743,
+          "z": 8.010475436020267,
+          "bites": [
+            {
+              "tick": 4337,
+              "sourceId": 88,
+              "source": "infected.runner",
+              "x": 22.564823627953995,
+              "z": 8.898572792258864
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "tick": 10661,
+          "seconds": 177.68333333333334,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 205.090683296442,
+          "z": 14.121363206761979,
+          "bites": [
+            {
+              "tick": 10661,
+              "sourceId": 155,
+              "source": "infected.runner",
+              "x": 204.0938946133205,
+              "z": 14.187835403881516
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 19,
+          "key": "shelter-3",
+          "tick": 10700,
+          "seconds": 178.33333333333334,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 219.93089967649817,
+          "z": 13.922705518997073,
+          "bites": [
+            {
+              "tick": 10700,
+              "sourceId": 172,
+              "source": "infected.runner",
+              "x": 220.43990485985796,
+              "z": 13.062838008084373
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "tick": 12101,
+          "seconds": 201.68333333333334,
+          "phase": "exit",
+          "status": "dead",
+          "x": 255.4809286106291,
+          "z": 14.419210867252298,
+          "bites": [
+            {
+              "tick": 12101,
+              "sourceId": 134,
+              "source": "infected.runner",
+              "x": 254.53165374672287,
+              "z": 14.490985685668448
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "typical",
+      "completed": true,
+      "survivorsSaved": 12,
+      "initialSurvivors": 29,
+      "savedPercent": 41.37931034482759,
+      "deaths": 1,
+      "windows": [
+        {
+          "from": 5788,
+          "to": 7588,
+          "attacks": 11
+        },
+        {
+          "from": 7588,
+          "to": 9388,
+          "attacks": 66
+        },
+        {
+          "from": 9388,
+          "to": 11188,
+          "attacks": 82
+        },
+        {
+          "from": 11188,
+          "to": 12368,
+          "attacks": 11
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 2533,
+          "seconds": 42.21666666666667,
+          "phase": "first",
+          "status": "turned",
+          "x": 8.537016048821158,
+          "z": -10.975896190562246,
+          "bites": [
+            {
+              "tick": 2533,
+              "sourceId": 61,
+              "source": "infected.runner",
+              "x": 9.553214646592783,
+              "z": -11.001824265206839
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "tick": 2548,
+          "seconds": 42.46666666666667,
+          "phase": "first",
+          "status": "turned",
+          "x": -6.057298060313967,
+          "z": -10.229531238961608,
+          "bites": [
+            {
+              "tick": 2548,
+              "sourceId": 59,
+              "source": "infected.runner",
+              "x": -6.051849367626287,
+              "z": -11.23788146104101
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 25,
+          "key": "shelter-9",
+          "tick": 2858,
+          "seconds": 47.63333333333333,
+          "phase": "first",
+          "status": "turned",
+          "x": -5.6996082034952416,
+          "z": -8.499135839305726,
+          "bites": [
+            {
+              "tick": 2858,
+              "sourceId": 17,
+              "source": "infected.runner",
+              "x": -6.112224953692635,
+              "z": -9.409218428071034
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "tick": 4163,
+          "seconds": 69.38333333333334,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 5.438953289218823,
+          "z": -2.285056437536665,
+          "bites": [
+            {
+              "tick": 4163,
+              "sourceId": 88,
+              "source": "infected.runner",
+              "x": 5.393187634977429,
+              "z": -3.283567531485639
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4468,
+          "seconds": 74.46666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.705391592241373,
+          "z": 8.032399402429697,
+          "bites": [
+            {
+              "tick": 4468,
+              "sourceId": 80,
+              "source": "infected.runner",
+              "x": 21.672246944615182,
+              "z": 9.639239206480678
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "tick": 4611,
+          "seconds": 76.85,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.17295285614762,
+          "z": 8.541114418184787,
+          "bites": [
+            {
+              "tick": 4611,
+              "sourceId": 85,
+              "source": "infected.runner",
+              "x": 20.17189019837384,
+              "z": 8.505272833712647
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "tick": 4626,
+          "seconds": 77.1,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.318128772825816,
+          "z": 5.857083584878767,
+          "bites": [
+            {
+              "tick": 4626,
+              "sourceId": 80,
+              "source": "infected.runner",
+              "x": 19.975020871662657,
+              "z": 6.610531867396442
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 19,
+          "key": "shelter-3",
+          "tick": 8076,
+          "seconds": 134.6,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 133.6451256523585,
+          "z": 14.16118755461367,
+          "bites": [
+            {
+              "tick": 8076,
+              "sourceId": 129,
+              "source": "infected.runner",
+              "x": 132.55467529747673,
+              "z": 14.55410222524901
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "tick": 8162,
+          "seconds": 136.03333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 134.1004072495363,
+          "z": 15.332266532225889,
+          "bites": [
+            {
+              "tick": 8162,
+              "sourceId": 130,
+              "source": "infected.runner",
+              "x": 133.26984716921604,
+              "z": 14.755078968668997
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 33,
+          "key": "shelter-17",
+          "tick": 8662,
+          "seconds": 144.36666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 138.76024682879506,
+          "z": 15.818470203596595,
+          "bites": [
+            {
+              "tick": 8662,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 137.79981103964656,
+              "z": 16.140970380474155
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "tick": 9860,
+          "seconds": 164.33333333333334,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 178.878062776445,
+          "z": 14.113676795937916,
+          "bites": [
+            {
+              "tick": 9860,
+              "sourceId": 142,
+              "source": "infected.runner",
+              "x": 178.0263662586164,
+              "z": 13.577101179534905
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "tick": 10248,
+          "seconds": 170.8,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 191.01535318044662,
+          "z": 16.127003266105756,
+          "bites": [
+            {
+              "tick": 10248,
+              "sourceId": 125,
+              "source": "infected.runner",
+              "x": 190.19386886063836,
+              "z": 16.691755961814557
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 28,
+          "key": "shelter-12",
+          "tick": 10600,
+          "seconds": 176.66666666666666,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 209.25398227018115,
+          "z": 16.68660263102587,
+          "bites": [
+            {
+              "tick": 10600,
+              "sourceId": 130,
+              "source": "infected.runner",
+              "x": 208.25707256133452,
+              "z": 16.76143743161367
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "tick": 10602,
+          "seconds": 176.7,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 208.66267605791214,
+          "z": 15.716281382096293,
+          "bites": [
+            {
+              "tick": 10602,
+              "sourceId": 153,
+              "source": "infected.runner",
+              "x": 207.70817889958562,
+              "z": 16.023782265350256
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 41,
+          "key": "rosa",
+          "tick": 10628,
+          "seconds": 177.13333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 206.95517729037414,
+          "z": 14.091773238331355,
+          "bites": [
+            {
+              "tick": 10628,
+              "sourceId": 61,
+              "source": "infected.runner",
+              "x": 206.36285293456976,
+              "z": 14.931937794485078
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 37,
+          "key": "shelter-21",
+          "tick": 10660,
+          "seconds": 177.66666666666666,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 207.67718803000963,
+          "z": 14.024233780836624,
+          "bites": [
+            {
+              "tick": 10660,
+              "sourceId": 150,
+              "source": "infected.runner",
+              "x": 208.334619944,
+              "z": 14.771535896734846
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 29,
+          "key": "shelter-13",
+          "tick": 10775,
+          "seconds": 179.58333333333334,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 221.2574706951006,
+          "z": 15.19151189760661,
+          "bites": [
+            {
+              "tick": 10775,
+              "sourceId": 173,
+              "source": "infected.runner",
+              "x": 222.36763434087356,
+              "z": 14.798465903668864
+            }
+          ],
+          "attacks": [
+            {
+              "tick": 10632,
+              "sourceId": 172,
+              "special": "armor"
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "key": "shelter-22",
+          "tick": 10868,
+          "seconds": 181.13333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 222.09628541200422,
+          "z": 14.185202361369562,
+          "bites": [
+            {
+              "tick": 10868,
+              "sourceId": 173,
+              "source": "infected.runner",
+              "x": 223.68459292908256,
+              "z": 14.707446822704108
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 44,
+          "key": "sam",
+          "tick": 10973,
+          "seconds": 182.88333333333333,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 224.02551102168883,
+          "z": 15.475135759092012,
+          "bites": [
+            {
+              "tick": 10973,
+              "sourceId": 173,
+              "source": "infected.runner",
+              "x": 224.82195064414066,
+              "z": 14.255857144302365
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "tick": 12323,
+          "seconds": 205.38333333333333,
+          "phase": "exit",
+          "status": "dead",
+          "x": 253.4675637335107,
+          "z": 13.74057203509309,
+          "bites": [
+            {
+              "tick": 12323,
+              "sourceId": 146,
+              "source": "infected.runner",
+              "x": 252.4695927004651,
+              "z": 13.675972001983375
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "policy": "complete",
+      "completed": true,
+      "survivorsSaved": 24,
+      "initialSurvivors": 29,
+      "savedPercent": 82.75862068965517,
+      "deaths": 0,
+      "windows": [
+        {
+          "from": 6683,
+          "to": 8483,
+          "attacks": 4
+        },
+        {
+          "from": 8483,
+          "to": 10283,
+          "attacks": 6
+        },
+        {
+          "from": 10283,
+          "to": 12083,
+          "attacks": 14
+        },
+        {
+          "from": 12083,
+          "to": 12977,
+          "attacks": 3
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 4215,
+          "seconds": 70.25,
+          "phase": "fails",
+          "status": "turned",
+          "x": 8.050540866610433,
+          "z": -10.522722078575942,
+          "bites": [
+            {
+              "tick": 4215,
+              "sourceId": 65,
+              "source": "infected.runner",
+              "x": 9.06025572598175,
+              "z": -10.54686978672054
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "tick": 11701,
+          "seconds": 195.01666666666668,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 223.53020059498928,
+          "z": 15.865042690046197,
+          "bites": [
+            {
+              "tick": 11701,
+              "sourceId": 170,
+              "source": "infected.runner",
+              "x": 224.52884810441125,
+              "z": 15.838083996804658
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "tick": 12745,
+          "seconds": 212.41666666666666,
+          "phase": "exit",
+          "status": "dead",
+          "x": 246.0187679257703,
+          "z": 14.0406664621666,
+          "bites": [
+            {
+              "tick": 12745,
+              "sourceId": 169,
+              "source": "infected.runner",
+              "x": 245.02054297898346,
+              "z": 14.082771407873778
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "tick": 12919,
+          "seconds": 215.31666666666666,
+          "phase": "exit",
+          "status": "dead",
+          "x": 252.83275454990812,
+          "z": 14.420545099738321,
+          "bites": [
+            {
+              "tick": 12919,
+              "sourceId": 169,
+              "source": "infected.runner",
+              "x": 251.8649028323577,
+              "z": 14.572521341168818
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "tick": 13091,
+          "seconds": 218.18333333333334,
+          "phase": "exit",
+          "status": "dead",
+          "x": 259.7335168243067,
+          "z": 14.506518607409951,
+          "bites": [
+            {
+              "tick": 13091,
+              "sourceId": 169,
+              "source": "infected.runner",
+              "x": 258.74616408519654,
+              "z": 14.523818409238476
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "policy": "typical",
+      "completed": true,
+      "survivorsSaved": 18,
+      "initialSurvivors": 29,
+      "savedPercent": 62.06896551724138,
+      "deaths": 1,
+      "windows": [
+        {
+          "from": 7274,
+          "to": 9074,
+          "attacks": 20
+        },
+        {
+          "from": 9074,
+          "to": 10874,
+          "attacks": 17
+        },
+        {
+          "from": 10874,
+          "to": 12674,
+          "attacks": 36
+        },
+        {
+          "from": 12674,
+          "to": 13519,
+          "attacks": 7
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "tick": 3340,
+          "seconds": 55.666666666666664,
+          "phase": "first",
+          "status": "turned",
+          "x": -6.680342175707759,
+          "z": -10.358952767353415,
+          "bites": [
+            {
+              "tick": 3340,
+              "sourceId": 57,
+              "source": "infected.runner",
+              "x": -6.388649089325071,
+              "z": -11.314787289980941
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 3582,
+          "seconds": 59.7,
+          "phase": "fails",
+          "status": "turned",
+          "x": 8.050295322063546,
+          "z": -11.033728882292191,
+          "bites": [
+            {
+              "tick": 3582,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 9.050394290833166,
+              "z": -11.035165080726527
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 30,
+          "key": "shelter-14",
+          "tick": 3759,
+          "seconds": 62.65,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 5.650908469870372,
+          "z": -8.46712428198691,
+          "bites": [
+            {
+              "tick": 3759,
+              "sourceId": 69,
+              "source": "infected.runner",
+              "x": 6.638144038000395,
+              "z": -8.621045805219063
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 38,
+          "key": "shelter-22",
+          "tick": 3867,
+          "seconds": 64.45,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 4.859409930422758,
+          "z": -5.146810576447297,
+          "bites": [
+            {
+              "tick": 3867,
+              "sourceId": 82,
+              "source": "infected.runner",
+              "x": 5.742485784929068,
+              "z": -5.615120279849904
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 33,
+          "key": "shelter-17",
+          "tick": 3888,
+          "seconds": 64.8,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -4.071034028097879,
+          "z": -5.263707739682818,
+          "bites": [
+            {
+              "tick": 3888,
+              "sourceId": 80,
+              "source": "infected.runner",
+              "x": -4.788716597215257,
+              "z": -5.9600856780192775
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 32,
+          "key": "shelter-16",
+          "tick": 4008,
+          "seconds": 66.8,
+          "phase": "retreat",
+          "status": "turned",
+          "x": -4.713439933638554,
+          "z": -2.4721137203709262,
+          "bites": [
+            {
+              "tick": 4008,
+              "sourceId": 84,
+              "source": "infected.runner",
+              "x": -3.9101948842678125,
+              "z": -3.2958426273890975
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 20,
+          "key": "shelter-4",
+          "tick": 4023,
+          "seconds": 67.05,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 3.1758034905761816,
+          "z": -4.881715114148972,
+          "bites": [
+            {
+              "tick": 4023,
+              "sourceId": 23,
+              "source": "infected.runner",
+              "x": 3.8345481605144,
+              "z": -5.634156923580444
+            },
+            {
+              "tick": 12245,
+              "sourceId": 168,
+              "source": "infected.runner",
+              "x": 221.46509499410433,
+              "z": 15.10214253387337
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4304,
+          "seconds": 71.73333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.895204443948508,
+          "z": 7.988150635808525,
+          "bites": [
+            {
+              "tick": 4304,
+              "sourceId": 86,
+              "source": "infected.runner",
+              "x": 22.592080717047075,
+              "z": 7.145742576048325
+            },
+            {
+              "tick": 5806,
+              "sourceId": 85,
+              "source": "infected.runner",
+              "x": 22.887664977503338,
+              "z": 7.521595845683824
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 26,
+          "key": "shelter-10",
+          "tick": 4362,
+          "seconds": 72.7,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.496789120288184,
+          "z": 8.195800267154553,
+          "bites": [
+            {
+              "tick": 4362,
+              "sourceId": 89,
+              "source": "infected.runner",
+              "x": 19.87213129241143,
+              "z": 9.158603216450738
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 31,
+          "key": "shelter-15",
+          "tick": 4580,
+          "seconds": 76.33333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 19.420680807264585,
+          "z": 5.53804341960291,
+          "bites": [
+            {
+              "tick": 4580,
+              "sourceId": 36,
+              "source": "infected.runner",
+              "x": 20.055081751271572,
+              "z": 6.310405803382199
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 21,
+          "key": "shelter-5",
+          "tick": 5219,
+          "seconds": 86.98333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 20.995520860060196,
+          "z": 13.584856945992247,
+          "bites": [
+            {
+              "tick": 5219,
+              "sourceId": 106,
+              "source": "infected.runner",
+              "x": 21.321679054738926,
+              "z": 12.604884724827437
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 22,
+          "key": "shelter-6",
+          "tick": 5266,
+          "seconds": 87.76666666666667,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 23.941199151883556,
+          "z": 14.22357151605731,
+          "bites": [
+            {
+              "tick": 5266,
+              "sourceId": 104,
+              "source": "infected.runner",
+              "x": 24.861052644695675,
+              "z": 13.357092074607934
+            },
+            {
+              "tick": 8453,
+              "sourceId": 103,
+              "source": "infected.runner",
+              "x": 87.59840129157163,
+              "z": 15.318661189695337
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 43,
+          "key": "mia",
+          "tick": 6922,
+          "seconds": 115.36666666666666,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 32.46838158540639,
+          "z": 14.127198612415505,
+          "bites": [
+            {
+              "tick": 6922,
+              "sourceId": 61,
+              "source": "infected.runner",
+              "x": 31.716187357772572,
+              "z": 14.993032231408325
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 40,
+          "key": "dale",
+          "tick": 7842,
+          "seconds": 130.7,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 65.66767068860167,
+          "z": 13.61966855394432,
+          "bites": [
+            {
+              "tick": 7842,
+              "sourceId": 90,
+              "source": "infected.runner",
+              "x": 64.6683957380088,
+              "z": 13.630157597726539
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 42,
+          "key": "okafor",
+          "tick": 8410,
+          "seconds": 140.16666666666666,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 86.89474681530602,
+          "z": 15.940139603136627,
+          "bites": [
+            {
+              "tick": 8410,
+              "sourceId": 95,
+              "source": "infected.runner",
+              "x": 85.8996762615771,
+              "z": 15.830129776216351
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 37,
+          "key": "shelter-21",
+          "tick": 12104,
+          "seconds": 201.73333333333332,
+          "phase": "retreat",
+          "status": "dead",
+          "x": 205.32960551436216,
+          "z": 14.404622828323756,
+          "bites": [
+            {
+              "tick": 12104,
+              "sourceId": 155,
+              "source": "infected.runner",
+              "x": 204.55231189820466,
+              "z": 15.059579854232163
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 19,
+          "key": "shelter-3",
+          "tick": 13438,
+          "seconds": 223.96666666666667,
+          "phase": "exit",
+          "status": "dead",
+          "x": 250.9674156028897,
+          "z": 14.33858315536077,
+          "bites": [
+            {
+              "tick": 13438,
+              "sourceId": 138,
+              "source": "infected.runner",
+              "x": 250.66185606886276,
+              "z": 15.515721783117325
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "policy": "complete",
+      "completed": true,
+      "survivorsSaved": 26,
+      "initialSurvivors": 29,
+      "savedPercent": 89.65517241379311,
+      "deaths": 0,
+      "windows": [
+        {
+          "from": 6640,
+          "to": 8440,
+          "attacks": 9
+        },
+        {
+          "from": 8440,
+          "to": 10240,
+          "attacks": 10
+        },
+        {
+          "from": 10240,
+          "to": 12040,
+          "attacks": 10
+        },
+        {
+          "from": 12040,
+          "to": 12900,
+          "attacks": 1
+        }
+      ],
+      "survivorLosses": [
+        {
+          "id": 17,
+          "key": "shelter-1",
+          "tick": 1970,
+          "seconds": 32.833333333333336,
+          "phase": "first",
+          "status": "turned",
+          "x": -6.601618778514752,
+          "z": -10.966380007753333,
+          "bites": [
+            {
+              "tick": 1970,
+              "sourceId": 57,
+              "source": "infected.runner",
+              "x": -6.050002758188721,
+              "z": -11.801884443322075
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 23,
+          "key": "shelter-7",
+          "tick": 3642,
+          "seconds": 60.7,
+          "phase": "fails",
+          "status": "turned",
+          "x": 8.050188256252907,
+          "z": -11.081840880296502,
+          "bites": [
+            {
+              "tick": 3642,
+              "sourceId": 75,
+              "source": "infected.runner",
+              "x": 8.730621774463513,
+              "z": -10.349906810613913
+            }
+          ],
+          "attacks": []
+        },
+        {
+          "id": 36,
+          "key": "shelter-20",
+          "tick": 4904,
+          "seconds": 81.73333333333333,
+          "phase": "retreat",
+          "status": "turned",
+          "x": 21.949378417563658,
+          "z": 7.959025096537228,
+          "bites": [
+            {
+              "tick": 4904,
+              "sourceId": 87,
+              "source": "infected.runner",
+              "x": 22.053888056725825,
+              "z": 9.69946898687552
+            }
+          ],
+          "attacks": []
+        }
+      ]
+    }
+  ],
+  "threatAudit": {
+    "flags": [
+      "L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "skilledDamageTaken": 55,
+    "skilledCompleted": true,
+    "skilledKitingHits": 1,
+    "skilledKitingDamagePerMinute": 2.9999999999999782
+  }
+}

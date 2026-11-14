@@ -226,7 +226,11 @@ export class Perception {
       // r31-aggro: whoever just shot this infected is known to it for the provocation window, whatever its facing (it turns toward her).
       const shooter = h.id === focus && e.infected?.provoked?.id === h.id;
       if (!shooter && !(isCurrent ? this.tracks(e, h.position, h.id) : this.notices(e, h.position, h.id))) continue;
-      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
+      // The L6 escort must remain the threat's centre of gravity: treating the courier as
+      // several metres closer keeps tunnel runners from peeling off onto the slower column.
+      // This changes only target selection; infected movement, attacks and damage stay authored.
+      const playerPriorityM = this.world.scenario === 'L6' ? -6 : this.playerBiasM;
+      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? playerPriorityM : 0) - (h.id === focus ? brain?.focusBiasM ?? focusBiasM : 0);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }
     }
