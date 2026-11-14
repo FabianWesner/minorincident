@@ -6940,5 +6940,62 @@
         "errors": []
       }
     }
+  },
+  "s116bCandidateHatchTransitions": {
+    "transitions": [
+      {
+        "frame": 1,
+        "tick": 1,
+        "hatch": false,
+        "hatchOpen": false,
+        "deaths": 0,
+        "playerHp": 100,
+        "activeVehicle": 667,
+        "stallAt": null,
+        "restarted": false
+      },
+      {
+        "frame": 5984,
+        "tick": 5984,
+        "hatch": true,
+        "hatchOpen": true,
+        "deaths": 0,
+        "playerHp": 100,
+        "activeVehicle": 667,
+        "stallAt": 5984,
+        "restarted": false
+      },
+      {
+        "frame": 7184,
+        "tick": 7184,
+        "hatch": false,
+        "hatchOpen": false,
+        "deaths": 0,
+        "playerHp": 100,
+        "activeVehicle": 667,
+        "stallAt": 5984,
+        "restarted": true
+      }
+    ],
+    "coverage": [
+      {
+        "context": "driving",
+        "frames": 920,
+        "actors": 38,
+        "contacts": 85,
+        "maxCm": 1.2,
+        "p95Cm": 0.6
+      },
+      {
+        "context": "detour",
+        "frames": 920,
+        "actors": 38,
+        "contacts": 85,
+        "maxCm": 1.2,
+        "p95Cm": 0.6
+      }
+    ],
+    "errors": [],
+    "observationOnly": "Temporary transition logging; gate window/classification unchanged; harness restored afterward."
   }
 }
