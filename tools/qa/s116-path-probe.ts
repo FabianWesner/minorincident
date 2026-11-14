@@ -5,6 +5,7 @@ import { L4HoldCensus } from './threat/l4-hold';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 const original = NavGrid.prototype.path;
 const originalFlow = NavGrid.prototype.flowWaypoint;
+const originalVisible = NavGrid.prototype.visible;
 const receipts: unknown[] = [];
 for (const quality of ['high', 'low'] as const) {
   let world: SimWorld;
@@ -32,7 +33,17 @@ for (const quality of ['high', 'low'] as const) {
     if (actor?.infected && request) { request.cancelled = world.tick; request.reason = 'flow steering replaces A*'; active.delete(actor.infected.path); }
     return step;
   };
-  await runLevel('L4' , 'complete', 1, 250, 'auto', undefined, undefined, 0, { quality, passive: true, l4Profile: 'idle',
+  NavGrid.prototype.visible = function(from, to, radius) {
+    const visible = originalVisible.call(this, from, to, radius);
+    if (visible && world) for (const [path, request] of active) {
+      const actor = world.entities.get(request.actor), goal = request.scripted;
+      if (actor?.transform === from && goal && goal.x === to.x && goal.z === to.z) {
+        request.cancelled = world.tick; request.reason = 'direct visible route replaces A*'; active.delete(path);
+      }
+    }
+    return visible;
+  };
+  await runLevel('L4', 'complete', 1, 250, 'auto', undefined, undefined, 0, { quality, passive: true, l4Profile: 'idle',
     beforeBegin: w => {
       world = w; census = new L4HoldCensus(w);
       const update = w.update.bind(w);
@@ -66,4 +77,5 @@ for (const quality of ['high', 'low'] as const) {
 }
 NavGrid.prototype.path = original;
 NavGrid.prototype.flowWaypoint = originalFlow;
+NavGrid.prototype.visible = originalVisible;
 writeFileSync('test-results/s116-path-probe.json', JSON.stringify(receipts, null, 2));
