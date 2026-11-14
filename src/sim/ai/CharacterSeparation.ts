@@ -41,11 +41,38 @@ export function installCharacterSeparation(world: SimWorld): void {
   } };
   const settled = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   const courierShifts = new Map<number, number>();
+  const crowdShifts = new Map<number, number>();
+  const separationMove = (body: Body, dx: number, dz: number): void => {
+    const { entity: e, point: p } = body;
+    const requested = Math.hypot(dx, dz), remaining = world.solids.clear(p, body.physical + .5, e.id, false) ? Infinity : Math.max(0, 3.6 * FIXED_DT - (crowdShifts.get(e.id) ?? 0));
+    if (!remaining || !requested) return;
+    if (requested > remaining) { dx *= remaining / requested; dz *= remaining / requested; }
+    const start = { x: p.x, y: p.y, z: p.z, yaw: p.yaw };
+    const move = (x: number, z: number) => {
+      const target = { ...start };
+      (body.infected ? world.infected!.infectedNav : world.infected!.nav).move(target, x, z, body.physical, true);
+      return target;
+    };
+    const clear = (target: typeof start) => world.solids.clear(target, body.physical, e.id, false);
+    const direct = move(dx, dz);
+    let accepted = clear(direct) ? direct : undefined;
+    if (!accepted) {
+      // The nav grid has no live OBB for a moving/just-parked hull. Preserve
+      // crowd pressure along the face, while rejecting the component that
+      // would push this actor into the exact solid geometry.
+      for (const candidate of [move(dx, 0), move(0, dz)]) {
+        if (!clear(candidate)) continue;
+        const travelled = Math.hypot(candidate.x - start.x, candidate.z - start.z);
+        if (travelled > 1e-6 && (!accepted || travelled > Math.hypot(accepted.x - start.x, accepted.z - start.z))) accepted = candidate;
+      }
+    }
+    if (accepted) { p.x = accepted.x; p.z = accepted.z; crowdShifts.set(e.id, (crowdShifts.get(e.id) ?? 0) + Math.hypot(p.x - start.x, p.z - start.z)); }
+  };
   const ground = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
     narrowQueue = !!world.missions?.state.l5?.metroAt;
-    courierShifts.clear();
+    courierShifts.clear(); crowdShifts.clear();
     // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
@@ -143,7 +170,9 @@ export function installCharacterSeparation(world: SimWorld): void {
         shift = Math.min(shift, Math.max(0, 6 * FIXED_DT - used));
         courierShifts.set(e.id, used + shift);
       }
-      (body.infected ? world.infected!.infectedNav : nav).move(p, (distance ? dx / distance : Math.cos(angle)) * shift, (distance ? dz / distance : Math.sin(angle)) * shift, body.physical, true);
+      const moveX = (distance ? dx / distance : Math.cos(angle)) * shift, moveZ = (distance ? dz / distance : Math.sin(angle)) * shift;
+      if (world.scenario === 'L4') separationMove(body, moveX, moveZ);
+      else (body.infected ? world.infected!.infectedNav : nav).move(p, moveX, moveZ, body.physical, true);
       body.x = p.x; body.z = p.z;
     };
     // Keep the authored three passes for ordinary groups, friendly queues and

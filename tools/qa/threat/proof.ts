@@ -223,6 +223,11 @@ export async function proveThreatAudit(): Promise<void> {
   for (const firstBreachLevelSeconds of [29.99, 60.01]) assert(census({ ...hold, firstBreachLevelSeconds }).some(r => r.verdict === 'FAIL'));
   for (const firstBreachLevelSeconds of [30, 60]) assert(census({ ...hold, firstBreachLevelSeconds }).every(r => r.verdict === 'PASS'));
   assert(census({ ...hold, aliveAtFirstBreach: 59 }).some(r => r.verdict === 'FAIL'));
+  const highOnly = census(hold);
+  const lowDoesNotGate = focusedCriteria([{ level: 'L4', highHold: hold, lowHold: { ...hold, aliveAtFirstBreach: 0, minPlazaAliveAfter45Seconds: 0 } } as LevelReceipt]).filter(r => r.id.startsWith('L4-06'));
+  assert(lowDoesNotGate.every(r => r.verdict === 'PASS'));
+  assert(lowDoesNotGate.every(r => r.passive.includes('LOW information (not gated)')));
+  assert(highOnly.every(r => r.verdict === 'PASS'));
   const stationWaves = [15, 30, 50].map((n, i) => ({ key: `station-${i}`, expected: n, spawned: n, scheduledStreamSeconds: 17, spawnedWithinEighteenSeconds: n, visibleWithinTwoSeconds: Math.ceil(n / 4) }));
   const station = (waves: object[]) => focusedCriteria([{ level: 'L3', observation: { phases: [], waves: stationWaves }, passiveObservation: { phases: [], waves } } as unknown as LevelReceipt]).filter(r => r.id.startsWith('L3-02'));
   assert(station(stationWaves).every(r => r.verdict === 'PASS'));
