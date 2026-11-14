@@ -26,3 +26,7 @@ Fresh native complete-policy HIGH then LOW routes generated progressed corridor/
 Production QA build, typecheck, lint, JSON parse and diff checks PASS. Unchanged prescribed remote `npm test` PASS on 46.225.66.90: 27 files, 106 passed /1 skipped, 222.7 s within240 s, 150/150 budget collection. No check remains running. Initial sandbox/pool/runner failures are historical and retained in JSON.
 
 **Open:** complete continuous temporal road-surface review over the whole corridor/complex at both tiers and zooms. This report does not claim the full goal is finished.
+
+## Reproduction artifacts
+
+`evidence.json` embeds 14 temporary harness sources with SHA-256 hashes, plus a manifest of 1098 local PNG/JPEG captures. Restore harnesses under `/private/tmp` and replace the recorded worktree prefix if needed. Browser commands use `SCENE_SERVER=preview SCENE_PORT=4982 E2E_PORT=4981 E2E_UNITS=1 E2E_RESERVATION_SECONDS=600 sh tools/e2e-lock.sh node --import tsx /private/tmp/<harness>.mts`. Build first with `MI_BUILD_CACHE=off npm run build:qa`. `s108-fixtures.mts` generates genuine native resumes; `s108-clock.mts` advances presentation time alongside simulation. `S108_TIER=low` selects LOW. The retained history includes rejected/inconclusive attempts; use the corrected-clock evidence for LOW ground review. Captures remain local and their hashes establish which files were reviewed; they are not additional committed report artifacts.
