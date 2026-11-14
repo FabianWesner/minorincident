@@ -38,3 +38,5 @@ Remote unit suite passed on 46.225.66.90: 27 files, 106 passed / 1 skipped; 217.
 ## Regression isolation
 
 A diagnostic L3/L10 audit with the base e1901bb7 NavGrid passes both levels (only PARTIAL_LEVEL_SELECTION remains). This confirms the candidate introduces the L3/L10 aggregate failures. An opt-in retention variant restricted to infected callers also failed L3/L10 and added a passive flag; it was discarded. Current committed gameplay remains the initial incomplete candidate. The goal is not achieved; do not merge this candidate until the regressions and direct 10-second request lifetime checks are resolved. Vehicle campaign validation is also outstanding.
+
+The identical-endpoint sharing variant was also tested and discarded: preserving the original shared active search for callers with identical endpoints still produces L3/L10 failures. This rules out output-array ownership changes for identical endpoints as the sole regression cause. Further investigation must inspect restored-route correctness and long-route behavior in those levels.
