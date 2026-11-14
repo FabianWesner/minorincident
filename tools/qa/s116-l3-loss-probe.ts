@@ -5,6 +5,8 @@ import { preset } from '../../src/sim/progression/Campaign';
 const campaign = preset('L3-default'); campaign.seed = 2; campaign.settings.quality = 'low';
 const hits: unknown[] = [];
 const world = await loadLevel('L3', 2, campaign, 0, { quality: 'low', beforeBegin: w => {
+  w.events.on('outbreak.bite', event => { hits.push({ type: event.type, tick: w.tick, event }); });
+  w.events.on('l3.squad-lost', event => { hits.push({ type: event.type, tick: w.tick, event }); });
   w.events.on('civilian.turned', event => { hits.push({ type: event.type, tick: w.tick, event }); });
   w.events.on('combat.hit', hit => {
     if (hit.type !== 'combat.hit') return;

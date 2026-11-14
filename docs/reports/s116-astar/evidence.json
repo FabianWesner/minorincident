@@ -2617,5 +2617,265 @@
       "within": 1,
       "pass": false
     }
+  },
+  "l3Seed2LossTrace": {
+    "squad": {
+      "atFallback": 4,
+      "segmentEnds": [
+        4,
+        4,
+        4
+      ],
+      "atCheckpoint": 1,
+      "losses": [
+        {
+          "cause": "bite",
+          "t": 154.61666666666667
+        },
+        {
+          "cause": "bite",
+          "t": 156.01666666666668
+        },
+        {
+          "cause": "bite",
+          "t": 158.2
+        }
+      ],
+      "turnedInCorridor": 0,
+      "protected": 0,
+      "maxJumpM": 1.2096093821903624,
+      "near8Share": 1,
+      "followRange": [
+        {
+          "id": 30,
+          "samples": 12,
+          "within3to6": 12,
+          "minM": 4.785279432756907,
+          "medianM": 4.824677289173344,
+          "maxM": 5.05873373175471
+        },
+        {
+          "id": 31,
+          "samples": 12,
+          "within3to6": 12,
+          "minM": 4.132063834202884,
+          "medianM": 4.259247527537409,
+          "maxM": 4.752491151221655
+        },
+        {
+          "id": 32,
+          "samples": 12,
+          "within3to6": 12,
+          "minM": 4.146045723195443,
+          "medianM": 4.170313526364449,
+          "maxM": 4.34415780246095
+        },
+        {
+          "id": 33,
+          "samples": 12,
+          "within3to6": 12,
+          "minM": 4.768542610985775,
+          "medianM": 4.954919626098552,
+          "maxM": 5.680795123270531
+        }
+      ]
+    },
+    "events": [
+      {
+        "type": "outbreak.bite",
+        "tick": 1290,
+        "event": {
+          "type": "outbreak.bite",
+          "tick": 1290,
+          "sourceId": 121,
+          "targetId": 28,
+          "position": {
+            "x": -156.62694923214607,
+            "z": -18.59293537322769
+          },
+          "turns": true
+        }
+      },
+      {
+        "type": "civilian.turned",
+        "tick": 1496,
+        "event": {
+          "type": "civilian.turned",
+          "tick": 1496,
+          "id": 28,
+          "infectedId": 28,
+          "variant": "inf.jogger",
+          "position": {
+            "x": -156.64823012011462,
+            "z": -18.459427968711594
+          }
+        }
+      },
+      {
+        "type": "outbreak.bite",
+        "tick": 1944,
+        "event": {
+          "type": "outbreak.bite",
+          "tick": 1944,
+          "sourceId": 28,
+          "targetId": 24,
+          "position": {
+            "x": -131.14699867467542,
+            "z": -18.790427485358318
+          },
+          "turns": true
+        }
+      },
+      {
+        "type": "civilian.turned",
+        "tick": 2136,
+        "event": {
+          "type": "civilian.turned",
+          "tick": 2136,
+          "id": 24,
+          "infectedId": 24,
+          "variant": "inf.jogger",
+          "position": {
+            "x": -131.01383461189218,
+            "z": -18.767133590396735
+          }
+        }
+      },
+      {
+        "type": "outbreak.bite",
+        "tick": 2462,
+        "event": {
+          "type": "outbreak.bite",
+          "tick": 2462,
+          "sourceId": 24,
+          "targetId": 25,
+          "position": {
+            "x": -128.9142519765864,
+            "z": -3.0586711323482465
+          },
+          "turns": true
+        }
+      },
+      {
+        "type": "outbreak.bite",
+        "tick": 2575,
+        "event": {
+          "type": "outbreak.bite",
+          "tick": 2575,
+          "sourceId": 149,
+          "targetId": 26,
+          "position": {
+            "x": -129.14484556707185,
+            "z": 2.7725262284078744
+          },
+          "turns": true
+        }
+      },
+      {
+        "type": "civilian.turned",
+        "tick": 2632,
+        "event": {
+          "type": "civilian.turned",
+          "tick": 2632,
+          "id": 25,
+          "infectedId": 25,
+          "variant": "inf.jogger",
+          "position": {
+            "x": -129.16152304200867,
+            "z": -2.9235058403187297
+          }
+        }
+      },
+      {
+        "type": "civilian.turned",
+        "tick": 2751,
+        "event": {
+          "type": "civilian.turned",
+          "tick": 2751,
+          "id": 26,
+          "infectedId": 26,
+          "variant": "inf.jogger",
+          "position": {
+            "x": -128.98405836877237,
+            "z": 2.779313516838137
+          }
+        }
+      },
+      {
+        "type": "outbreak.bite",
+        "tick": 9277,
+        "event": {
+          "type": "outbreak.bite",
+          "tick": 9277,
+          "sourceId": 691,
+          "targetId": 30,
+          "position": {
+            "x": 114.60255426799333,
+            "z": -23.282036573488547
+          },
+          "turns": true
+        }
+      },
+      {
+        "type": "l3.squad-lost",
+        "tick": 9277,
+        "event": {
+          "type": "l3.squad-lost",
+          "tick": 9277,
+          "id": 30,
+          "cause": "bite"
+        }
+      },
+      {
+        "type": "outbreak.bite",
+        "tick": 9361,
+        "event": {
+          "type": "outbreak.bite",
+          "tick": 9361,
+          "sourceId": 1136,
+          "targetId": 32,
+          "position": {
+            "x": 113.64501468446267,
+            "z": -23.35301830015916
+          },
+          "turns": true
+        }
+      },
+      {
+        "type": "l3.squad-lost",
+        "tick": 9361,
+        "event": {
+          "type": "l3.squad-lost",
+          "tick": 9361,
+          "id": 32,
+          "cause": "bite"
+        }
+      },
+      {
+        "type": "outbreak.bite",
+        "tick": 9492,
+        "event": {
+          "type": "outbreak.bite",
+          "tick": 9492,
+          "sourceId": 835,
+          "targetId": 31,
+          "position": {
+            "x": 115.87221447169667,
+            "z": -21.75346795321381
+          },
+          "turns": false
+        }
+      },
+      {
+        "type": "l3.squad-lost",
+        "tick": 9492,
+        "event": {
+          "type": "l3.squad-lost",
+          "tick": 9492,
+          "id": 31,
+          "cause": "bite"
+        }
+      }
+    ]
   }
 }
