@@ -30,3 +30,5 @@ A corner-waypoint prototype was evaluated and removed. It did not reliably clear
 No zombie/weapon stats, caps, cohorts, living actors, audit thresholds, or corpse behavior were changed. No deployment or push.
 
 Follow-up measurement audit: corrected the observer to inspect every sliding 30-sample window. Fresh native HIGH/LOW holds confirm peaks 2 / 1. Typecheck and lint pass. The routing correction remains unfinished; this report does not claim that the requested route fix has shipped.
+
+Native navigation trace: HIGH seed1 actors 298 and 325 have admission-grid connectivity to the west breach, but repeatedly empty path arrays at +27/+37/+47 seconds. Actor 298 remains living and fixed through +67 seconds. Connectivity alone does not prove physical clearance; this narrows the next investigation to path search completion/scheduling and grid selection. Compact trace is retained in evidence.json.
