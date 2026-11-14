@@ -5463,20 +5463,21 @@
     "result": "pass"
   },
   "releaseValidation": {
-    "revision": "36ed2e4f",
+    "revision": "c5e30143",
     "typecheck": "pass",
     "lint": "pass",
     "audit": {
-      "sourceHash": "d19bb9f68121698c414839aa51fe075c436928711f783cbaa889ab2feb0d7a52",
+      "sourceHash": "9c8b8b6d1a8a841c0e57fb10b5a98ade6a099b9a0c342465ebc696ec1c37184a",
       "observerHash": "b8dcd5fd4180aa0610f1cedbff7b7564aff6d78d027d58cf624a09801c158cb8",
-      "seconds": 285.264402917,
+      "seconds": 440.587770708,
       "flags": []
     },
     "remoteUnit": {
       "files": 27,
       "passed": 106,
       "skipped": 1,
-      "seconds": 230.9,
+      "seconds": 223.7,
+      "caseBudget": "150/150",
       "runner": "46.225.66.90"
     },
     "holds": [
@@ -5813,97 +5814,112 @@
       }
     ],
     "vehicle": {
+      "passed": 8,
+      "total": 8,
+      "ports": [
+        4961,
+        4962
+      ],
+      "reservationSeconds": 600,
+      "headless": true,
+      "serial": true,
       "cases": [
         {
-          "level": "L9",
+          "mode": "L9",
           "tier": "high",
+          "code": 0,
+          "seconds": 123.909,
+          "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
           "pass": true,
-          "sourceStable": true,
-          "samples": 1238,
-          "groundedRows": 37,
-          "maxCm": 2,
-          "p95Cm": 1.8,
-          "failed": [],
-          "correctionFailures": [],
           "contextCoverage": [
             {
               "context": "driving",
-              "frames": 1238,
-              "actors": 41,
-              "contacts": 104,
-              "maxCm": 2,
+              "frames": 1479,
+              "actors": 42,
+              "contacts": 122,
+              "maxCm": 1.8,
               "p95Cm": 1.8
             },
             {
               "context": "detour",
-              "frames": 1238,
-              "actors": 41,
-              "contacts": 104,
-              "maxCm": 2,
+              "frames": 1479,
+              "actors": 42,
+              "contacts": 122,
+              "maxCm": 1.8,
               "p95Cm": 1.8
             },
             {
               "context": "hatch",
-              "frames": 262,
-              "actors": 5,
-              "contacts": 24,
-              "maxCm": 2,
-              "p95Cm": 1.5
+              "frames": 368,
+              "actors": 6,
+              "contacts": 31,
+              "maxCm": 1.2,
+              "p95Cm": 1
             },
             {
               "context": "rail-stall",
-              "frames": 262,
-              "actors": 5,
-              "contacts": 24,
-              "maxCm": 2,
-              "p95Cm": 1.5
+              "frames": 368,
+              "actors": 6,
+              "contacts": 31,
+              "maxCm": 1.2,
+              "p95Cm": 1
             }
           ],
-          "stagedCoverage": []
+          "errors": []
         },
         {
-          "level": "L9",
+          "mode": "L9",
           "tier": "low",
-          "pass": false,
-          "sourceStable": true,
-          "samples": 920,
-          "groundedRows": 34,
-          "maxCm": 1.2,
-          "p95Cm": 0.6,
-          "failed": [],
-          "correctionFailures": [],
+          "code": 0,
+          "seconds": 84.938,
+          "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
+          "pass": true,
           "contextCoverage": [
             {
               "context": "driving",
-              "frames": 920,
+              "frames": 951,
               "actors": 38,
-              "contacts": 85,
-              "maxCm": 1.2,
-              "p95Cm": 0.6
+              "contacts": 82,
+              "maxCm": 1.4,
+              "p95Cm": 1.2
             },
             {
               "context": "detour",
-              "frames": 920,
+              "frames": 951,
               "actors": 38,
-              "contacts": 85,
-              "maxCm": 1.2,
-              "p95Cm": 0.6
+              "contacts": 82,
+              "maxCm": 1.4,
+              "p95Cm": 1.2
+            },
+            {
+              "context": "hatch",
+              "frames": 129,
+              "actors": 4,
+              "contacts": 12,
+              "maxCm": 1.4,
+              "p95Cm": 1.2
+            },
+            {
+              "context": "rail-stall",
+              "frames": 129,
+              "actors": 4,
+              "contacts": 12,
+              "maxCm": 1.4,
+              "p95Cm": 1.2
             }
           ],
-          "stagedCoverage": []
+          "errors": []
         },
         {
-          "level": "L7",
-          "fixture": "l7-bus",
+          "mode": "l7-bus",
           "tier": "high",
+          "code": 0,
+          "seconds": 16.26,
+          "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
           "pass": true,
-          "sourceStable": true,
-          "samples": 481,
-          "groundedRows": 6,
-          "maxCm": 0.9,
-          "p95Cm": 0.4,
-          "failed": [],
-          "correctionFailures": [],
           "contextCoverage": [
             {
               "context": "L7",
@@ -5914,147 +5930,16 @@
               "p95Cm": 0.4
             }
           ],
-          "stagedCoverage": [
-            {
-              "id": 108,
-              "frames": 246,
-              "travelM": 6.7236517785190975,
-              "moving": true,
-              "outcome": {
-                "id": 108,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 248,
-                "motion": {
-                  "x": -79.5317162042352,
-                  "z": 50.97068653451935,
-                  "travelM": 6.7236517785190975,
-                  "movingFrames": 148,
-                  "aliveFrames": 246
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 109,
-              "frames": 9,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 109,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 918,
-                "motion": {
-                  "x": -72.795,
-                  "z": 47,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 9
-                }
-              },
-              "stationary": true,
-              "covered": true
-            },
-            {
-              "id": 110,
-              "frames": 61,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 110,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 824,
-                "motion": {
-                  "x": -78.5,
-                  "z": 49.29,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 61
-                }
-              },
-              "stationary": true,
-              "covered": true
-            },
-            {
-              "id": 111,
-              "frames": 68,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 111,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 989,
-                "motion": {
-                  "x": -78.5,
-                  "z": 44.71,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 68
-                }
-              },
-              "stationary": true,
-              "covered": true
-            },
-            {
-              "id": 112,
-              "frames": 82,
-              "travelM": 2.773882698445299,
-              "moving": true,
-              "outcome": {
-                "id": 112,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 1187,
-                "motion": {
-                  "x": -81.58731307604671,
-                  "z": 50.20768207615609,
-                  "travelM": 2.773882698445299,
-                  "movingFrames": 60,
-                  "aliveFrames": 82
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 113,
-              "frames": 15,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 113,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 17,
-                "motion": {
-                  "x": -72.795,
-                  "z": 44.71,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 15
-                }
-              },
-              "stationary": true,
-              "covered": true
-            }
-          ]
+          "errors": []
         },
         {
-          "level": "L7",
-          "fixture": "l7-bus",
+          "mode": "l7-bus",
           "tier": "low",
+          "code": 0,
+          "seconds": 14.65,
+          "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
           "pass": true,
-          "sourceStable": true,
-          "samples": 481,
-          "groundedRows": 6,
-          "maxCm": 0.8,
-          "p95Cm": 0.3,
-          "failed": [],
-          "correctionFailures": [],
           "contextCoverage": [
             {
               "context": "L7",
@@ -6065,147 +5950,16 @@
               "p95Cm": 0.3
             }
           ],
-          "stagedCoverage": [
-            {
-              "id": 108,
-              "frames": 246,
-              "travelM": 6.7236517785190975,
-              "moving": true,
-              "outcome": {
-                "id": 108,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 248,
-                "motion": {
-                  "x": -79.5317162042352,
-                  "z": 50.97068653451935,
-                  "travelM": 6.7236517785190975,
-                  "movingFrames": 148,
-                  "aliveFrames": 246
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 109,
-              "frames": 9,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 109,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 918,
-                "motion": {
-                  "x": -72.795,
-                  "z": 47,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 9
-                }
-              },
-              "stationary": true,
-              "covered": true
-            },
-            {
-              "id": 110,
-              "frames": 61,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 110,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 824,
-                "motion": {
-                  "x": -78.5,
-                  "z": 49.29,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 61
-                }
-              },
-              "stationary": true,
-              "covered": true
-            },
-            {
-              "id": 111,
-              "frames": 68,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 111,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 989,
-                "motion": {
-                  "x": -78.5,
-                  "z": 44.71,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 68
-                }
-              },
-              "stationary": true,
-              "covered": true
-            },
-            {
-              "id": 112,
-              "frames": 82,
-              "travelM": 2.773882698445299,
-              "moving": true,
-              "outcome": {
-                "id": 112,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 1187,
-                "motion": {
-                  "x": -81.58731307604671,
-                  "z": 50.20768207615609,
-                  "travelM": 2.773882698445299,
-                  "movingFrames": 60,
-                  "aliveFrames": 82
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 113,
-              "frames": 15,
-              "travelM": 0,
-              "moving": false,
-              "outcome": {
-                "id": 113,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 17,
-                "motion": {
-                  "x": -72.795,
-                  "z": 44.71,
-                  "travelM": 0,
-                  "movingFrames": 0,
-                  "aliveFrames": 15
-                }
-              },
-              "stationary": true,
-              "covered": true
-            }
-          ]
+          "errors": []
         },
         {
-          "level": "L4",
-          "fixture": "l4-parked",
+          "mode": "l4-parked",
           "tier": "high",
+          "code": 0,
+          "seconds": 34.931,
+          "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
           "pass": true,
-          "sourceStable": true,
-          "samples": 4782,
-          "groundedRows": 6,
-          "maxCm": 1.7,
-          "p95Cm": 0.9,
-          "failed": [],
-          "correctionFailures": [],
           "contextCoverage": [
             {
               "context": "L4",
@@ -6216,147 +5970,16 @@
               "p95Cm": 0.9
             }
           ],
-          "stagedCoverage": [
-            {
-              "id": 145,
-              "frames": 109,
-              "travelM": 4.756093124966606,
-              "moving": true,
-              "outcome": {
-                "id": 145,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -5.407775374360514,
-                  "z": -20.54856283551732,
-                  "travelM": 8.163554967176779,
-                  "movingFrames": 186,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 146,
-              "frames": 1200,
-              "travelM": 2.386894778322335,
-              "moving": true,
-              "outcome": {
-                "id": 146,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -7.104733293430808,
-                  "z": -21.70457695090748,
-                  "travelM": 2.586894778322335,
-                  "movingFrames": 72,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 147,
-              "frames": 1200,
-              "travelM": 0.7135155834371693,
-              "moving": true,
-              "outcome": {
-                "id": 147,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -7.5249988261487335,
-                  "z": -20.847797774486956,
-                  "travelM": 0.7135155834371693,
-                  "movingFrames": 24,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 148,
-              "frames": 401,
-              "travelM": 4.113134030499985,
-              "moving": true,
-              "outcome": {
-                "id": 148,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -14.273227592689766,
-                  "z": -17.340900564188605,
-                  "travelM": 5.511020056442383,
-                  "movingFrames": 227,
-                  "aliveFrames": 460
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 149,
-              "frames": 752,
-              "travelM": 9.968415919748715,
-              "moving": true,
-              "outcome": {
-                "id": 149,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -7.205756978525503,
-                  "z": 0.8712174850939499,
-                  "travelM": 19.79240224187867,
-                  "movingFrames": 770,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 150,
-              "frames": 1120,
-              "travelM": 15.623543473029475,
-              "moving": true,
-              "outcome": {
-                "id": 150,
-                "exists": true,
-                "health": 1,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -6.91536425472637,
-                  "z": -19.87731038630045,
-                  "travelM": 18.679210376552724,
-                  "movingFrames": 473,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            }
-          ]
+          "errors": []
         },
         {
-          "level": "L4",
-          "fixture": "l4-parked",
+          "mode": "l4-parked",
           "tier": "low",
+          "code": 0,
+          "seconds": 19.537,
+          "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
           "pass": true,
-          "sourceStable": true,
-          "samples": 4351,
-          "groundedRows": 6,
-          "maxCm": 2.1,
-          "p95Cm": 0.7,
-          "failed": [],
-          "correctionFailures": [],
           "contextCoverage": [
             {
               "context": "L4",
@@ -6367,147 +5990,16 @@
               "p95Cm": 0.7
             }
           ],
-          "stagedCoverage": [
-            {
-              "id": 102,
-              "frames": 108,
-              "travelM": 4.661703256018295,
-              "moving": true,
-              "outcome": {
-                "id": 102,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -5.366653915343717,
-                  "z": -20.909246613269723,
-                  "travelM": 8.842231410054936,
-                  "movingFrames": 224,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 103,
-              "frames": 1200,
-              "travelM": 2.2239875954139463,
-              "moving": true,
-              "outcome": {
-                "id": 103,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -7.087993193062236,
-                  "z": -21.71723522647237,
-                  "travelM": 2.2239875954139463,
-                  "movingFrames": 62,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 104,
-              "frames": 1200,
-              "travelM": 0.7109288839554609,
-              "moving": true,
-              "outcome": {
-                "id": 104,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -7.525000171661289,
-                  "z": -20.84950212698413,
-                  "travelM": 0.7109288839554609,
-                  "movingFrames": 23,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 105,
-              "frames": 323,
-              "travelM": 13.410746939715366,
-              "moving": true,
-              "outcome": {
-                "id": 105,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -5.781306509975585,
-                  "z": -19.99749861780606,
-                  "travelM": 18.04524294977091,
-                  "movingFrames": 431,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 106,
-              "frames": 386,
-              "travelM": 6.17375942741832,
-              "moving": true,
-              "outcome": {
-                "id": 106,
-                "exists": true,
-                "health": 37,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -8.347578665450781,
-                  "z": -12.999806251631354,
-                  "travelM": 6.196637596029723,
-                  "movingFrames": 172,
-                  "aliveFrames": 386
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 107,
-              "frames": 1134,
-              "travelM": 15.687202179028539,
-              "moving": true,
-              "outcome": {
-                "id": 107,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -1861,
-                "motion": {
-                  "x": -6.821619042975369,
-                  "z": -19.83729792716522,
-                  "travelM": 18.274947405901102,
-                  "movingFrames": 448,
-                  "aliveFrames": 1200
-                }
-              },
-              "stationary": false,
-              "covered": true
-            }
-          ]
+          "errors": []
         },
         {
-          "level": "L4",
-          "fixture": "l4-tank",
+          "mode": "l4-tank",
           "tier": "high",
+          "code": 0,
+          "seconds": 56.546,
+          "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
           "pass": true,
-          "sourceStable": true,
-          "samples": 12734,
-          "groundedRows": 50,
-          "maxCm": 3.6,
-          "p95Cm": 2.4,
-          "failed": [],
-          "correctionFailures": [],
           "contextCoverage": [
             {
               "context": "L4",
@@ -6518,147 +6010,16 @@
               "p95Cm": 2.4
             }
           ],
-          "stagedCoverage": [
-            {
-              "id": 359,
-              "frames": 379,
-              "travelM": 8.112620211665176,
-              "moving": true,
-              "outcome": {
-                "id": 359,
-                "exists": true,
-                "health": 27,
-                "deathFrame": -4321,
-                "motion": {
-                  "x": -14.46572128658634,
-                  "z": 26.35160041116145,
-                  "travelM": 9.26532541843672,
-                  "movingFrames": 186,
-                  "aliveFrames": 454
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 360,
-              "frames": 786,
-              "travelM": 3.9707779563677925,
-              "moving": true,
-              "outcome": {
-                "id": 360,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 807,
-                "motion": {
-                  "x": -21.186420880133355,
-                  "z": 21.5999332698677,
-                  "travelM": 5.445369545587057,
-                  "movingFrames": 83,
-                  "aliveFrames": 805
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 361,
-              "frames": 148,
-              "travelM": 2.8610979827646865,
-              "moving": true,
-              "outcome": {
-                "id": 361,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 1068,
-                "motion": {
-                  "x": -15.63741264285538,
-                  "z": 25.063475689694666,
-                  "travelM": 3.1307904020502964,
-                  "movingFrames": 50,
-                  "aliveFrames": 148
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 362,
-              "frames": 588,
-              "travelM": 14.35644553634082,
-              "moving": true,
-              "outcome": {
-                "id": 362,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 660,
-                "motion": {
-                  "x": -15.174252661227746,
-                  "z": 27.169736415549885,
-                  "travelM": 18.07430998561763,
-                  "movingFrames": 296,
-                  "aliveFrames": 658
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 363,
-              "frames": 579,
-              "travelM": 5.447296092408343,
-              "moving": true,
-              "outcome": {
-                "id": 363,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 1183,
-                "motion": {
-                  "x": -15.645791394213408,
-                  "z": 27.222190637653085,
-                  "travelM": 5.453280014600467,
-                  "movingFrames": 135,
-                  "aliveFrames": 579
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 364,
-              "frames": 400,
-              "travelM": 7.513341559842142,
-              "moving": true,
-              "outcome": {
-                "id": 364,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 844,
-                "motion": {
-                  "x": -23.798040218968307,
-                  "z": 21.6,
-                  "travelM": 25.055396876388407,
-                  "movingFrames": 184,
-                  "aliveFrames": 842
-                }
-              },
-              "stationary": false,
-              "covered": true
-            }
-          ]
+          "errors": []
         },
         {
-          "level": "L4",
-          "fixture": "l4-tank",
+          "mode": "l4-tank",
           "tier": "low",
+          "code": 0,
+          "seconds": 35.274,
+          "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+          "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
           "pass": true,
-          "sourceStable": true,
-          "samples": 11323,
-          "groundedRows": 28,
-          "maxCm": 10.7,
-          "p95Cm": 2.3,
-          "failed": [],
-          "correctionFailures": [],
           "contextCoverage": [
             {
               "context": "L4",
@@ -6669,276 +6030,9 @@
               "p95Cm": 2.3
             }
           ],
-          "stagedCoverage": [
-            {
-              "id": 250,
-              "frames": 260,
-              "travelM": 8.489110892653951,
-              "moving": true,
-              "outcome": {
-                "id": 250,
-                "exists": true,
-                "health": 45,
-                "deathFrame": -4321,
-                "motion": {
-                  "x": -14.452753614179514,
-                  "z": 26.26476677537538,
-                  "travelM": 17.372238482977448,
-                  "movingFrames": 479,
-                  "aliveFrames": 1320
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 251,
-              "frames": 806,
-              "travelM": 15.73894219298382,
-              "moving": true,
-              "outcome": {
-                "id": 251,
-                "exists": true,
-                "health": 0,
-                "deathFrame": 827,
-                "motion": {
-                  "x": -20.616243393678356,
-                  "z": 21.941778381431774,
-                  "travelM": 17.20997483042327,
-                  "movingFrames": 200,
-                  "aliveFrames": 825
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 191,
-              "frames": 1320,
-              "travelM": 2.733469591228776,
-              "moving": true,
-              "outcome": {
-                "id": 191,
-                "exists": true,
-                "health": 180,
-                "deathFrame": -4321,
-                "motion": {
-                  "x": -15.547277315489033,
-                  "z": 27.228598289367802,
-                  "travelM": 2.9452420622074746,
-                  "movingFrames": 135,
-                  "aliveFrames": 1320
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 218,
-              "frames": 42,
-              "travelM": 2.668355338905464,
-              "moving": false,
-              "outcome": {
-                "id": 218,
-                "exists": true,
-                "health": 225,
-                "deathFrame": -4321,
-                "motion": {
-                  "x": -27.507650520325026,
-                  "z": 28.881138242611524,
-                  "travelM": 5.872280829629741,
-                  "movingFrames": 137,
-                  "aliveFrames": 373
-                }
-              },
-              "stationary": false,
-              "covered": false
-            },
-            {
-              "id": 189,
-              "frames": 1292,
-              "travelM": 6.895560381120573,
-              "moving": true,
-              "outcome": {
-                "id": 189,
-                "exists": true,
-                "health": 210,
-                "deathFrame": -4321,
-                "motion": {
-                  "x": -14.77577134169647,
-                  "z": 25.372400835029797,
-                  "travelM": 6.917039015262359,
-                  "movingFrames": 271,
-                  "aliveFrames": 1320
-                }
-              },
-              "stationary": false,
-              "covered": true
-            },
-            {
-              "id": 183,
-              "frames": 871,
-              "travelM": 18.886380008119215,
-              "moving": true,
-              "outcome": {
-                "id": 183,
-                "exists": true,
-                "health": 225,
-                "deathFrame": -4321,
-                "motion": {
-                  "x": -23.475154645038682,
-                  "z": 23.071,
-                  "travelM": 38.96138937078509,
-                  "movingFrames": 400,
-                  "aliveFrames": 1320
-                }
-              },
-              "stationary": false,
-              "covered": true
-            }
-          ]
+          "errors": []
         }
-      ],
-      "passed": 7,
-      "total": 8,
-      "ports": [
-        4961,
-        4962
-      ],
-      "serial": true,
-      "headless": true,
-      "reservationSeconds": 600,
-      "limitation": "L9 LOW lacks hatch and rail-stall motion context coverage; no correction failures or browser errors.",
-      "unchangedL9LowRetry": {
-        "sourceHash": "f8db9b36e92bc804904b06d0b644e6d6f710fecfaad8a0d14f4900196f713354",
-        "sourceStable": true,
-        "pass": false,
-        "contextCoverage": [
-          {
-            "context": "driving",
-            "frames": 920,
-            "actors": 38,
-            "contacts": 85,
-            "maxCm": 1.2,
-            "p95Cm": 0.6
-          },
-          {
-            "context": "detour",
-            "frames": 920,
-            "actors": 38,
-            "contacts": 85,
-            "maxCm": 1.2,
-            "p95Cm": 0.6
-          }
-        ],
-        "contextsProven": false,
-        "correctionsProven": true,
-        "errors": [],
-        "lastProgress": {
-          "frame": 9000,
-          "tick": 9000,
-          "scenario": "L9",
-          "phase": "playing",
-          "l9Phase": "driving",
-          "stallAt": 5984,
-          "restarted": true,
-          "hatch": false,
-          "bot": {
-            "running": true,
-            "policy": "complete"
-          },
-          "figures": 7,
-          "drawn": 7,
-          "livingInfected": 29,
-          "hulls": [
-            {
-              "id": "667",
-              "asset": "vehicle.military-apc",
-              "source": "dynamic"
-            },
-            {
-              "id": "682",
-              "asset": "veh.military-truck",
-              "source": "dynamic"
-            },
-            {
-              "id": "683",
-              "asset": "veh.military-truck",
-              "source": "dynamic"
-            },
-            {
-              "id": "684",
-              "asset": "veh.military-truck",
-              "source": "dynamic"
-            },
-            {
-              "id": "675",
-              "asset": "vehicle.school-bus",
-              "source": "dynamic"
-            }
-          ],
-          "cars": [
-            {
-              "id": 667,
-              "x": 453.1738586425781,
-              "y": 0.9954347014427185,
-              "z": 4.1581034660339355,
-              "yaw": -1.173155483939099,
-              "speed": 2.234179149659841e-22
-            },
-            {
-              "id": 675,
-              "x": 3.7609703540802,
-              "z": -321.9103698730469,
-              "y": 0.7354346513748169,
-              "yaw": -0.07515680219376007,
-              "speed": 4.054442343789228e-10
-            }
-          ]
-        }
-      },
-      "matchedBaseL9Low": {
-        "sourceHash": "02cea1e30eb74c7fe4a760a554b80b648b3eb2bc6abfe3a55d6f775d131f2a08",
-        "sourceStable": true,
-        "pass": true,
-        "contextCoverage": [
-          {
-            "context": "driving",
-            "frames": 1107,
-            "actors": 43,
-            "contacts": 89,
-            "maxCm": 1.2,
-            "p95Cm": 1
-          },
-          {
-            "context": "detour",
-            "frames": 1107,
-            "actors": 43,
-            "contacts": 89,
-            "maxCm": 1.2,
-            "p95Cm": 1
-          },
-          {
-            "context": "hatch",
-            "frames": 157,
-            "actors": 5,
-            "contacts": 11,
-            "maxCm": 1,
-            "p95Cm": 1
-          },
-          {
-            "context": "rail-stall",
-            "frames": 157,
-            "actors": 5,
-            "contacts": 11,
-            "maxCm": 1,
-            "p95Cm": 1
-          }
-        ],
-        "contextsProven": true,
-        "correctionsProven": true,
-        "errors": []
-      }
+      ]
     }
   },
   "s116bCandidateHatchTransitions": {
@@ -8888,5 +7982,1484 @@
     "typecheck": "pass",
     "lint": "pass",
     "finalFullGates": "pending"
+  },
+  "previousReleaseValidation": {
+    "revision": "36ed2e4f",
+    "typecheck": "pass",
+    "lint": "pass",
+    "audit": {
+      "sourceHash": "d19bb9f68121698c414839aa51fe075c436928711f783cbaa889ab2feb0d7a52",
+      "observerHash": "b8dcd5fd4180aa0610f1cedbff7b7564aff6d78d027d58cf624a09801c158cb8",
+      "seconds": 285.264402917,
+      "flags": []
+    },
+    "remoteUnit": {
+      "files": 27,
+      "passed": 106,
+      "skipped": 1,
+      "seconds": 230.9,
+      "runner": "46.225.66.90"
+    },
+    "holds": [
+      {
+        "quality": "high",
+        "census": {
+          "tier": "high",
+          "holdComplete": true,
+          "firstBreachLevelSeconds": 50.083333333333336,
+          "firstBreachAfterTurnSeconds": 17.266666666666666,
+          "aliveAtFirstBreach": 72,
+          "peakAlive": 87,
+          "peakPlazaAlive": 86,
+          "stranded": [
+            {
+              "x": -36.963359487197614,
+              "z": 19.183598569082957,
+              "state": "idle",
+              "scripted": {
+                "x": -37.2,
+                "z": 6.105882352941178
+              },
+              "approach": "outside"
+            },
+            {
+              "x": -37.255522658900716,
+              "z": 4.74325838993016,
+              "state": "chase",
+              "scripted": {
+                "x": -32.1,
+                "z": 6.105882352941178
+              }
+            },
+            {
+              "x": -53.62748176449251,
+              "z": 42.59965057191137,
+              "state": "idle",
+              "scripted": {
+                "x": -37.2,
+                "z": 6.105882352941178
+              },
+              "approach": "outside"
+            },
+            {
+              "x": -23.7396251914583,
+              "z": -37.24377511487499,
+              "state": "attracted",
+              "scripted": {
+                "x": -20.02307692307693,
+                "z": -18.599999999999998
+              }
+            },
+            {
+              "x": -37.78349745347579,
+              "z": 18.521139094123733,
+              "state": "alerted",
+              "scripted": {
+                "x": -37.2,
+                "z": 6.105882352941178
+              },
+              "approach": "outside"
+            },
+            {
+              "x": -37.037910220159574,
+              "z": 18.473332393629974,
+              "state": "alerted",
+              "scripted": {
+                "x": -37.2,
+                "z": 6.105882352941178
+              },
+              "approach": "outside"
+            }
+          ],
+          "directorCountAtEnd": 154,
+          "recoverableDownedAtEnd": 51,
+          "alarmPendingAtEnd": 0,
+          "alarmCursorAtEnd": 36,
+          "aliveAtMinimumPlaza": 48,
+          "minimumInsideRing": 41,
+          "playerAtMinimumPlaza": {
+            "x": -22.86793327331543,
+            "z": 0.7321518063545227
+          },
+          "minPlazaAliveAfter45Seconds": 42,
+          "samplesAfter45Seconds": 8700,
+          "peakStationaryOutsidePlazaAfter30Seconds": 1,
+          "stationaryOutsidePlazaAtPeak": [
+            {
+              "id": 296,
+              "x": -37.255522658900716,
+              "z": 4.74325838993016,
+              "samples": 30,
+              "state": "chase",
+              "scripted": {
+                "x": -32.1,
+                "z": 6.105882352941178
+              }
+            }
+          ],
+          "arrivalEdges": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "threeDirectionsAtLeast60Degrees": true,
+          "maxGroupAtOneSourcePerTick": 5,
+          "firstAttackSeconds": 9.65,
+          "lineBreakAfterTurnSeconds": 190
+        },
+        "overdue": [],
+        "actor298": [
+          {
+            "actor": 298,
+            "from": 31717,
+            "to": 48375,
+            "first": 3011,
+            "last": 3086,
+            "calls": 6,
+            "expansions": 9752,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 3086
+          },
+          {
+            "actor": 298,
+            "from": 29667,
+            "to": 48375,
+            "first": 3273,
+            "last": 3333,
+            "calls": 5,
+            "expansions": 9880,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 3333
+          },
+          {
+            "actor": 298,
+            "from": 29666,
+            "to": 48375,
+            "first": 3349,
+            "last": 3394,
+            "calls": 4,
+            "expansions": 7974,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 3394
+          },
+          {
+            "actor": 298,
+            "from": 28979,
+            "to": 48375,
+            "first": 3512,
+            "last": 3602,
+            "calls": 7,
+            "expansions": 13612,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 3602
+          },
+          {
+            "actor": 298,
+            "from": 28977,
+            "to": 48375,
+            "first": 3631,
+            "last": 3676,
+            "calls": 4,
+            "expansions": 7735,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 3676
+          },
+          {
+            "actor": 298,
+            "from": 28976,
+            "to": 48375,
+            "first": 3691,
+            "last": 3751,
+            "calls": 5,
+            "expansions": 9712,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 3751
+          },
+          {
+            "actor": 298,
+            "from": 28974,
+            "to": 48375,
+            "first": 3781,
+            "last": 3826,
+            "calls": 4,
+            "expansions": 7433,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 3826
+          },
+          {
+            "actor": 298,
+            "from": 33043,
+            "to": 48375,
+            "first": 4172,
+            "last": 4277,
+            "calls": 8,
+            "expansions": 12790,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 4277
+          },
+          {
+            "actor": 298,
+            "from": 34063,
+            "to": 48375,
+            "first": 4322,
+            "last": 4382,
+            "calls": 5,
+            "expansions": 8526,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 4382
+          },
+          {
+            "actor": 298,
+            "from": 34743,
+            "to": 48375,
+            "first": 4404,
+            "last": 4479,
+            "calls": 6,
+            "expansions": 8705,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "completed": 4479
+          },
+          {
+            "actor": 298,
+            "from": 35083,
+            "to": 48375,
+            "first": 4504,
+            "last": 4504,
+            "calls": 1,
+            "expansions": 2000,
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "cancelled": 4508,
+            "reason": "actor no longer requests navigation"
+          }
+        ]
+      },
+      {
+        "quality": "low",
+        "census": {
+          "tier": "low",
+          "holdComplete": true,
+          "firstBreachLevelSeconds": 50.083333333333336,
+          "firstBreachAfterTurnSeconds": 17.266666666666666,
+          "aliveAtFirstBreach": 46,
+          "peakAlive": 57,
+          "peakPlazaAlive": 51,
+          "stranded": [
+            {
+              "x": -36.746618289232956,
+              "z": 4.2572060813748305,
+              "state": "chase",
+              "scripted": {
+                "x": -32.1,
+                "z": 6.105882352941178
+              }
+            }
+          ],
+          "directorCountAtEnd": 80,
+          "recoverableDownedAtEnd": 23,
+          "alarmPendingAtEnd": 0,
+          "alarmCursorAtEnd": 36,
+          "aliveAtMinimumPlaza": 18,
+          "minimumInsideRing": 17,
+          "playerAtMinimumPlaza": {
+            "x": -22.889812469482422,
+            "z": 0.7293210625648499
+          },
+          "minPlazaAliveAfter45Seconds": 17,
+          "samplesAfter45Seconds": 8700,
+          "peakStationaryOutsidePlazaAfter30Seconds": 1,
+          "stationaryOutsidePlazaAtPeak": [
+            {
+              "id": 228,
+              "x": -36.746618289232956,
+              "z": 4.2572060813748305,
+              "samples": 30,
+              "state": "chase",
+              "scripted": {
+                "x": -32.1,
+                "z": 6.105882352941178
+              }
+            }
+          ],
+          "arrivalEdges": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "threeDirectionsAtLeast60Degrees": true,
+          "maxGroupAtOneSourcePerTick": 5,
+          "firstAttackSeconds": 8.55,
+          "lineBreakAfterTurnSeconds": 190
+        },
+        "overdue": [],
+        "actor298": []
+      }
+    ],
+    "vehicle": {
+      "cases": [
+        {
+          "level": "L9",
+          "tier": "high",
+          "pass": true,
+          "sourceStable": true,
+          "samples": 1238,
+          "groundedRows": 37,
+          "maxCm": 2,
+          "p95Cm": 1.8,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "driving",
+              "frames": 1238,
+              "actors": 41,
+              "contacts": 104,
+              "maxCm": 2,
+              "p95Cm": 1.8
+            },
+            {
+              "context": "detour",
+              "frames": 1238,
+              "actors": 41,
+              "contacts": 104,
+              "maxCm": 2,
+              "p95Cm": 1.8
+            },
+            {
+              "context": "hatch",
+              "frames": 262,
+              "actors": 5,
+              "contacts": 24,
+              "maxCm": 2,
+              "p95Cm": 1.5
+            },
+            {
+              "context": "rail-stall",
+              "frames": 262,
+              "actors": 5,
+              "contacts": 24,
+              "maxCm": 2,
+              "p95Cm": 1.5
+            }
+          ],
+          "stagedCoverage": []
+        },
+        {
+          "level": "L9",
+          "tier": "low",
+          "pass": false,
+          "sourceStable": true,
+          "samples": 920,
+          "groundedRows": 34,
+          "maxCm": 1.2,
+          "p95Cm": 0.6,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "driving",
+              "frames": 920,
+              "actors": 38,
+              "contacts": 85,
+              "maxCm": 1.2,
+              "p95Cm": 0.6
+            },
+            {
+              "context": "detour",
+              "frames": 920,
+              "actors": 38,
+              "contacts": 85,
+              "maxCm": 1.2,
+              "p95Cm": 0.6
+            }
+          ],
+          "stagedCoverage": []
+        },
+        {
+          "level": "L7",
+          "fixture": "l7-bus",
+          "tier": "high",
+          "pass": true,
+          "sourceStable": true,
+          "samples": 481,
+          "groundedRows": 6,
+          "maxCm": 0.9,
+          "p95Cm": 0.4,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "L7",
+              "frames": 481,
+              "actors": 6,
+              "contacts": 35,
+              "maxCm": 0.9,
+              "p95Cm": 0.4
+            }
+          ],
+          "stagedCoverage": [
+            {
+              "id": 108,
+              "frames": 246,
+              "travelM": 6.7236517785190975,
+              "moving": true,
+              "outcome": {
+                "id": 108,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 248,
+                "motion": {
+                  "x": -79.5317162042352,
+                  "z": 50.97068653451935,
+                  "travelM": 6.7236517785190975,
+                  "movingFrames": 148,
+                  "aliveFrames": 246
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 109,
+              "frames": 9,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 109,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 918,
+                "motion": {
+                  "x": -72.795,
+                  "z": 47,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 9
+                }
+              },
+              "stationary": true,
+              "covered": true
+            },
+            {
+              "id": 110,
+              "frames": 61,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 110,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 824,
+                "motion": {
+                  "x": -78.5,
+                  "z": 49.29,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 61
+                }
+              },
+              "stationary": true,
+              "covered": true
+            },
+            {
+              "id": 111,
+              "frames": 68,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 111,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 989,
+                "motion": {
+                  "x": -78.5,
+                  "z": 44.71,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 68
+                }
+              },
+              "stationary": true,
+              "covered": true
+            },
+            {
+              "id": 112,
+              "frames": 82,
+              "travelM": 2.773882698445299,
+              "moving": true,
+              "outcome": {
+                "id": 112,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 1187,
+                "motion": {
+                  "x": -81.58731307604671,
+                  "z": 50.20768207615609,
+                  "travelM": 2.773882698445299,
+                  "movingFrames": 60,
+                  "aliveFrames": 82
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 113,
+              "frames": 15,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 113,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 17,
+                "motion": {
+                  "x": -72.795,
+                  "z": 44.71,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 15
+                }
+              },
+              "stationary": true,
+              "covered": true
+            }
+          ]
+        },
+        {
+          "level": "L7",
+          "fixture": "l7-bus",
+          "tier": "low",
+          "pass": true,
+          "sourceStable": true,
+          "samples": 481,
+          "groundedRows": 6,
+          "maxCm": 0.8,
+          "p95Cm": 0.3,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "L7",
+              "frames": 481,
+              "actors": 6,
+              "contacts": 33,
+              "maxCm": 0.8,
+              "p95Cm": 0.3
+            }
+          ],
+          "stagedCoverage": [
+            {
+              "id": 108,
+              "frames": 246,
+              "travelM": 6.7236517785190975,
+              "moving": true,
+              "outcome": {
+                "id": 108,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 248,
+                "motion": {
+                  "x": -79.5317162042352,
+                  "z": 50.97068653451935,
+                  "travelM": 6.7236517785190975,
+                  "movingFrames": 148,
+                  "aliveFrames": 246
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 109,
+              "frames": 9,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 109,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 918,
+                "motion": {
+                  "x": -72.795,
+                  "z": 47,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 9
+                }
+              },
+              "stationary": true,
+              "covered": true
+            },
+            {
+              "id": 110,
+              "frames": 61,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 110,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 824,
+                "motion": {
+                  "x": -78.5,
+                  "z": 49.29,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 61
+                }
+              },
+              "stationary": true,
+              "covered": true
+            },
+            {
+              "id": 111,
+              "frames": 68,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 111,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 989,
+                "motion": {
+                  "x": -78.5,
+                  "z": 44.71,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 68
+                }
+              },
+              "stationary": true,
+              "covered": true
+            },
+            {
+              "id": 112,
+              "frames": 82,
+              "travelM": 2.773882698445299,
+              "moving": true,
+              "outcome": {
+                "id": 112,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 1187,
+                "motion": {
+                  "x": -81.58731307604671,
+                  "z": 50.20768207615609,
+                  "travelM": 2.773882698445299,
+                  "movingFrames": 60,
+                  "aliveFrames": 82
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 113,
+              "frames": 15,
+              "travelM": 0,
+              "moving": false,
+              "outcome": {
+                "id": 113,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 17,
+                "motion": {
+                  "x": -72.795,
+                  "z": 44.71,
+                  "travelM": 0,
+                  "movingFrames": 0,
+                  "aliveFrames": 15
+                }
+              },
+              "stationary": true,
+              "covered": true
+            }
+          ]
+        },
+        {
+          "level": "L4",
+          "fixture": "l4-parked",
+          "tier": "high",
+          "pass": true,
+          "sourceStable": true,
+          "samples": 4782,
+          "groundedRows": 6,
+          "maxCm": 1.7,
+          "p95Cm": 0.9,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "L4",
+              "frames": 4782,
+              "actors": 6,
+              "contacts": 123,
+              "maxCm": 1.7,
+              "p95Cm": 0.9
+            }
+          ],
+          "stagedCoverage": [
+            {
+              "id": 145,
+              "frames": 109,
+              "travelM": 4.756093124966606,
+              "moving": true,
+              "outcome": {
+                "id": 145,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -5.407775374360514,
+                  "z": -20.54856283551732,
+                  "travelM": 8.163554967176779,
+                  "movingFrames": 186,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 146,
+              "frames": 1200,
+              "travelM": 2.386894778322335,
+              "moving": true,
+              "outcome": {
+                "id": 146,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -7.104733293430808,
+                  "z": -21.70457695090748,
+                  "travelM": 2.586894778322335,
+                  "movingFrames": 72,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 147,
+              "frames": 1200,
+              "travelM": 0.7135155834371693,
+              "moving": true,
+              "outcome": {
+                "id": 147,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -7.5249988261487335,
+                  "z": -20.847797774486956,
+                  "travelM": 0.7135155834371693,
+                  "movingFrames": 24,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 148,
+              "frames": 401,
+              "travelM": 4.113134030499985,
+              "moving": true,
+              "outcome": {
+                "id": 148,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -14.273227592689766,
+                  "z": -17.340900564188605,
+                  "travelM": 5.511020056442383,
+                  "movingFrames": 227,
+                  "aliveFrames": 460
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 149,
+              "frames": 752,
+              "travelM": 9.968415919748715,
+              "moving": true,
+              "outcome": {
+                "id": 149,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -7.205756978525503,
+                  "z": 0.8712174850939499,
+                  "travelM": 19.79240224187867,
+                  "movingFrames": 770,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 150,
+              "frames": 1120,
+              "travelM": 15.623543473029475,
+              "moving": true,
+              "outcome": {
+                "id": 150,
+                "exists": true,
+                "health": 1,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -6.91536425472637,
+                  "z": -19.87731038630045,
+                  "travelM": 18.679210376552724,
+                  "movingFrames": 473,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            }
+          ]
+        },
+        {
+          "level": "L4",
+          "fixture": "l4-parked",
+          "tier": "low",
+          "pass": true,
+          "sourceStable": true,
+          "samples": 4351,
+          "groundedRows": 6,
+          "maxCm": 2.1,
+          "p95Cm": 0.7,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "L4",
+              "frames": 4351,
+              "actors": 6,
+              "contacts": 108,
+              "maxCm": 2.1,
+              "p95Cm": 0.7
+            }
+          ],
+          "stagedCoverage": [
+            {
+              "id": 102,
+              "frames": 108,
+              "travelM": 4.661703256018295,
+              "moving": true,
+              "outcome": {
+                "id": 102,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -5.366653915343717,
+                  "z": -20.909246613269723,
+                  "travelM": 8.842231410054936,
+                  "movingFrames": 224,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 103,
+              "frames": 1200,
+              "travelM": 2.2239875954139463,
+              "moving": true,
+              "outcome": {
+                "id": 103,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -7.087993193062236,
+                  "z": -21.71723522647237,
+                  "travelM": 2.2239875954139463,
+                  "movingFrames": 62,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 104,
+              "frames": 1200,
+              "travelM": 0.7109288839554609,
+              "moving": true,
+              "outcome": {
+                "id": 104,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -7.525000171661289,
+                  "z": -20.84950212698413,
+                  "travelM": 0.7109288839554609,
+                  "movingFrames": 23,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 105,
+              "frames": 323,
+              "travelM": 13.410746939715366,
+              "moving": true,
+              "outcome": {
+                "id": 105,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -5.781306509975585,
+                  "z": -19.99749861780606,
+                  "travelM": 18.04524294977091,
+                  "movingFrames": 431,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 106,
+              "frames": 386,
+              "travelM": 6.17375942741832,
+              "moving": true,
+              "outcome": {
+                "id": 106,
+                "exists": true,
+                "health": 37,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -8.347578665450781,
+                  "z": -12.999806251631354,
+                  "travelM": 6.196637596029723,
+                  "movingFrames": 172,
+                  "aliveFrames": 386
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 107,
+              "frames": 1134,
+              "travelM": 15.687202179028539,
+              "moving": true,
+              "outcome": {
+                "id": 107,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -1861,
+                "motion": {
+                  "x": -6.821619042975369,
+                  "z": -19.83729792716522,
+                  "travelM": 18.274947405901102,
+                  "movingFrames": 448,
+                  "aliveFrames": 1200
+                }
+              },
+              "stationary": false,
+              "covered": true
+            }
+          ]
+        },
+        {
+          "level": "L4",
+          "fixture": "l4-tank",
+          "tier": "high",
+          "pass": true,
+          "sourceStable": true,
+          "samples": 12734,
+          "groundedRows": 50,
+          "maxCm": 3.6,
+          "p95Cm": 2.4,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "L4",
+              "frames": 12734,
+              "actors": 52,
+              "contacts": 701,
+              "maxCm": 3.6,
+              "p95Cm": 2.4
+            }
+          ],
+          "stagedCoverage": [
+            {
+              "id": 359,
+              "frames": 379,
+              "travelM": 8.112620211665176,
+              "moving": true,
+              "outcome": {
+                "id": 359,
+                "exists": true,
+                "health": 27,
+                "deathFrame": -4321,
+                "motion": {
+                  "x": -14.46572128658634,
+                  "z": 26.35160041116145,
+                  "travelM": 9.26532541843672,
+                  "movingFrames": 186,
+                  "aliveFrames": 454
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 360,
+              "frames": 786,
+              "travelM": 3.9707779563677925,
+              "moving": true,
+              "outcome": {
+                "id": 360,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 807,
+                "motion": {
+                  "x": -21.186420880133355,
+                  "z": 21.5999332698677,
+                  "travelM": 5.445369545587057,
+                  "movingFrames": 83,
+                  "aliveFrames": 805
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 361,
+              "frames": 148,
+              "travelM": 2.8610979827646865,
+              "moving": true,
+              "outcome": {
+                "id": 361,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 1068,
+                "motion": {
+                  "x": -15.63741264285538,
+                  "z": 25.063475689694666,
+                  "travelM": 3.1307904020502964,
+                  "movingFrames": 50,
+                  "aliveFrames": 148
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 362,
+              "frames": 588,
+              "travelM": 14.35644553634082,
+              "moving": true,
+              "outcome": {
+                "id": 362,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 660,
+                "motion": {
+                  "x": -15.174252661227746,
+                  "z": 27.169736415549885,
+                  "travelM": 18.07430998561763,
+                  "movingFrames": 296,
+                  "aliveFrames": 658
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 363,
+              "frames": 579,
+              "travelM": 5.447296092408343,
+              "moving": true,
+              "outcome": {
+                "id": 363,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 1183,
+                "motion": {
+                  "x": -15.645791394213408,
+                  "z": 27.222190637653085,
+                  "travelM": 5.453280014600467,
+                  "movingFrames": 135,
+                  "aliveFrames": 579
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 364,
+              "frames": 400,
+              "travelM": 7.513341559842142,
+              "moving": true,
+              "outcome": {
+                "id": 364,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 844,
+                "motion": {
+                  "x": -23.798040218968307,
+                  "z": 21.6,
+                  "travelM": 25.055396876388407,
+                  "movingFrames": 184,
+                  "aliveFrames": 842
+                }
+              },
+              "stationary": false,
+              "covered": true
+            }
+          ]
+        },
+        {
+          "level": "L4",
+          "fixture": "l4-tank",
+          "tier": "low",
+          "pass": true,
+          "sourceStable": true,
+          "samples": 11323,
+          "groundedRows": 28,
+          "maxCm": 10.7,
+          "p95Cm": 2.3,
+          "failed": [],
+          "correctionFailures": [],
+          "contextCoverage": [
+            {
+              "context": "L4",
+              "frames": 11323,
+              "actors": 28,
+              "contacts": 560,
+              "maxCm": 10.7,
+              "p95Cm": 2.3
+            }
+          ],
+          "stagedCoverage": [
+            {
+              "id": 250,
+              "frames": 260,
+              "travelM": 8.489110892653951,
+              "moving": true,
+              "outcome": {
+                "id": 250,
+                "exists": true,
+                "health": 45,
+                "deathFrame": -4321,
+                "motion": {
+                  "x": -14.452753614179514,
+                  "z": 26.26476677537538,
+                  "travelM": 17.372238482977448,
+                  "movingFrames": 479,
+                  "aliveFrames": 1320
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 251,
+              "frames": 806,
+              "travelM": 15.73894219298382,
+              "moving": true,
+              "outcome": {
+                "id": 251,
+                "exists": true,
+                "health": 0,
+                "deathFrame": 827,
+                "motion": {
+                  "x": -20.616243393678356,
+                  "z": 21.941778381431774,
+                  "travelM": 17.20997483042327,
+                  "movingFrames": 200,
+                  "aliveFrames": 825
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 191,
+              "frames": 1320,
+              "travelM": 2.733469591228776,
+              "moving": true,
+              "outcome": {
+                "id": 191,
+                "exists": true,
+                "health": 180,
+                "deathFrame": -4321,
+                "motion": {
+                  "x": -15.547277315489033,
+                  "z": 27.228598289367802,
+                  "travelM": 2.9452420622074746,
+                  "movingFrames": 135,
+                  "aliveFrames": 1320
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 218,
+              "frames": 42,
+              "travelM": 2.668355338905464,
+              "moving": false,
+              "outcome": {
+                "id": 218,
+                "exists": true,
+                "health": 225,
+                "deathFrame": -4321,
+                "motion": {
+                  "x": -27.507650520325026,
+                  "z": 28.881138242611524,
+                  "travelM": 5.872280829629741,
+                  "movingFrames": 137,
+                  "aliveFrames": 373
+                }
+              },
+              "stationary": false,
+              "covered": false
+            },
+            {
+              "id": 189,
+              "frames": 1292,
+              "travelM": 6.895560381120573,
+              "moving": true,
+              "outcome": {
+                "id": 189,
+                "exists": true,
+                "health": 210,
+                "deathFrame": -4321,
+                "motion": {
+                  "x": -14.77577134169647,
+                  "z": 25.372400835029797,
+                  "travelM": 6.917039015262359,
+                  "movingFrames": 271,
+                  "aliveFrames": 1320
+                }
+              },
+              "stationary": false,
+              "covered": true
+            },
+            {
+              "id": 183,
+              "frames": 871,
+              "travelM": 18.886380008119215,
+              "moving": true,
+              "outcome": {
+                "id": 183,
+                "exists": true,
+                "health": 225,
+                "deathFrame": -4321,
+                "motion": {
+                  "x": -23.475154645038682,
+                  "z": 23.071,
+                  "travelM": 38.96138937078509,
+                  "movingFrames": 400,
+                  "aliveFrames": 1320
+                }
+              },
+              "stationary": false,
+              "covered": true
+            }
+          ]
+        }
+      ],
+      "passed": 7,
+      "total": 8,
+      "ports": [
+        4961,
+        4962
+      ],
+      "serial": true,
+      "headless": true,
+      "reservationSeconds": 600,
+      "limitation": "L9 LOW lacks hatch and rail-stall motion context coverage; no correction failures or browser errors.",
+      "unchangedL9LowRetry": {
+        "sourceHash": "f8db9b36e92bc804904b06d0b644e6d6f710fecfaad8a0d14f4900196f713354",
+        "sourceStable": true,
+        "pass": false,
+        "contextCoverage": [
+          {
+            "context": "driving",
+            "frames": 920,
+            "actors": 38,
+            "contacts": 85,
+            "maxCm": 1.2,
+            "p95Cm": 0.6
+          },
+          {
+            "context": "detour",
+            "frames": 920,
+            "actors": 38,
+            "contacts": 85,
+            "maxCm": 1.2,
+            "p95Cm": 0.6
+          }
+        ],
+        "contextsProven": false,
+        "correctionsProven": true,
+        "errors": [],
+        "lastProgress": {
+          "frame": 9000,
+          "tick": 9000,
+          "scenario": "L9",
+          "phase": "playing",
+          "l9Phase": "driving",
+          "stallAt": 5984,
+          "restarted": true,
+          "hatch": false,
+          "bot": {
+            "running": true,
+            "policy": "complete"
+          },
+          "figures": 7,
+          "drawn": 7,
+          "livingInfected": 29,
+          "hulls": [
+            {
+              "id": "667",
+              "asset": "vehicle.military-apc",
+              "source": "dynamic"
+            },
+            {
+              "id": "682",
+              "asset": "veh.military-truck",
+              "source": "dynamic"
+            },
+            {
+              "id": "683",
+              "asset": "veh.military-truck",
+              "source": "dynamic"
+            },
+            {
+              "id": "684",
+              "asset": "veh.military-truck",
+              "source": "dynamic"
+            },
+            {
+              "id": "675",
+              "asset": "vehicle.school-bus",
+              "source": "dynamic"
+            }
+          ],
+          "cars": [
+            {
+              "id": 667,
+              "x": 453.1738586425781,
+              "y": 0.9954347014427185,
+              "z": 4.1581034660339355,
+              "yaw": -1.173155483939099,
+              "speed": 2.234179149659841e-22
+            },
+            {
+              "id": 675,
+              "x": 3.7609703540802,
+              "z": -321.9103698730469,
+              "y": 0.7354346513748169,
+              "yaw": -0.07515680219376007,
+              "speed": 4.054442343789228e-10
+            }
+          ]
+        }
+      },
+      "matchedBaseL9Low": {
+        "sourceHash": "02cea1e30eb74c7fe4a760a554b80b648b3eb2bc6abfe3a55d6f775d131f2a08",
+        "sourceStable": true,
+        "pass": true,
+        "contextCoverage": [
+          {
+            "context": "driving",
+            "frames": 1107,
+            "actors": 43,
+            "contacts": 89,
+            "maxCm": 1.2,
+            "p95Cm": 1
+          },
+          {
+            "context": "detour",
+            "frames": 1107,
+            "actors": 43,
+            "contacts": 89,
+            "maxCm": 1.2,
+            "p95Cm": 1
+          },
+          {
+            "context": "hatch",
+            "frames": 157,
+            "actors": 5,
+            "contacts": 11,
+            "maxCm": 1,
+            "p95Cm": 1
+          },
+          {
+            "context": "rail-stall",
+            "frames": 157,
+            "actors": 5,
+            "contacts": 11,
+            "maxCm": 1,
+            "p95Cm": 1
+          }
+        ],
+        "contextsProven": true,
+        "correctionsProven": true,
+        "errors": []
+      }
+    }
   }
 }

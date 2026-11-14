@@ -1,10 +1,10 @@
-# s116 — resumable infected A*
+# s116 / s116b — resumable infected A*
 
-Gameplay revision: `36ed2e4f`; base: `e1901bb7` (s114 + s115).
+**Complete.** Validated gameplay revision: `c5e30143`; base: `e1901bb7` (s114 + s115). Historical experiments in `evidence.json` are superseded by `releaseValidation`.
 
 ## Result
 
-Long requests retain their A* frontier across other callers instead of restarting. Native L4 HIGH seed 1 actor 298 requests at tick 3011 and receives its path at 3086: **1.25 s, six calls, 9752 total expansions**. The normal 2000-expansion tick allowance, wide allowance, route-slot limits and retry delays are unchanged.
+Long requests retain their A* frontier across competing callers. Native L4 HIGH seed 1 actor 298 requests at tick 3011 and receives its path at 3086: **1.25 s, six calls, 9752 total expansions**. Normal/wide per-tick expansion allowances, route-slot limits and retry delays are unchanged.
 
 | Native seed-1 alarm hold | Base HIGH | Final HIGH | Base LOW | Final LOW |
 | --- | ---: | ---: | ---: | ---: |
@@ -13,54 +13,45 @@ Long requests retain their A* frontier across other callers instead of restartin
 | Alive at first breach | 72 | **72** | 47 | **46** |
 | Sustained plaza minimum after 45 s | 40 | **42** | 16 | **17** |
 
-Full all-level threat audit: **zero flags**, 285.3 s. L4-06 HIGH passes its first-breach and sustained-horde requirements. The final source hash is `d19bb9f68121698c414839aa51fe075c436928711f783cbaa889ab2feb0d7a52`.
+L4-06 HIGH passes. Full all-level threat audit: **zero flags**, 440.6 s. All **eight vehicle campaign cases pass** on the same gameplay source.
 
 ## Implementation
 
-- `NavGrid.path` saves sparse visited-cell state and the heap under the caller's reused output array. A WeakMap lets abandoned output arrays and their saved searches be collected. Retry restoration requires matching endpoints and grid revision.
-- Ordinary infected chasers now receive the cached-waypoint visibility check previously limited to army approaches. This clears the L10 hold's stuck chaser without changing movement speed or combat values.
-- Officers recognize an L1 bite hold against the party in the existing committed-attack rescue priority. This preserves the L3 squad acceptance rule after resumed navigation changes horde arrival. Range, visibility, friendly-fire checks, damage and cadence remain unchanged. Extending that correction to other ally roles was rejected because it broke L4 pressure.
+- `NavGrid.path` saves sparse visited-cell state and the heap under each reused output array. A WeakMap allows abandoned arrays and their saved searches to be collected. Restoration requires matching endpoints and grid revision.
+- Cached-waypoint visibility checks now cover ordinary infected chasers as well as army approaches, resolving the L10 hold's stuck chaser.
+- Officers recognize L1 bite holds against the party in the existing committed-attack rescue priority. This resolves the L3 squad regression without changing range, visibility, friendly-fire checks, damage, cadence or acceptance thresholds. Other ally roles retain their previous priorities.
+- The L9 pursuing bus spawns on a bounded, distance-spaced trail of the APC's driven path instead of a 110 m backward projection of its instantaneous dodge heading. The trailing pose is interpolated within the trail and both entity and physics headings use its tangent. A teleport-sized discontinuity resets the history. This preserves the trailing distance and existing bus speed, damage, passengers and stop rules.
 
-No zombie/weapon stats, audit thresholds or policies, living-actor removal/teleportation, corpse behavior, authored specs or protected assets changed. No deployment, push or main-branch movement.
+No zombie/weapon stats, audit thresholds/policies, living-infected removal/teleportation, corpse behavior, authored specs or protected assets changed. No deployment, push or main-branch movement.
+
+## s116b L9 LOW diagnosis
+
+Exact candidate telemetry disproved the initial inference from sparse progress samples: its hatch **opens at tick 5984** and closes normally at restart **7184**, inside the unchanged 9000-frame gate. Base triggers the rail hold at **6141** and provides hatch/rail-stall contacts. There are no candidate deaths or driver-ownership changes through the hold.
+
+Resumed infected navigation changes the APC's avoidance/heading history. The old bus spawn projected its transient heading backward, putting the pursuing bus off the driven lane. Candidate bus 675 became permanently stopped near **(3.8,-321.9)**, while base bus 675 reached the rail hold near **(375.8,-218.3)**. Its passengers therefore reached the hatch defence on base but spilled far behind on the candidate. Correcting the trailing placement restores native bus arrival and grounded contact coverage; no gate change was needed.
+
+Final L9 receipts:
+
+| Tier | Rail-stall trigger | Hatch/rail-stall frames | Actors | Contacts | Maximum slide |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| HIGH | 6276 | 368 | 6 | 31 | 1.2 cm |
+| LOW | 5984 | 129 | 4 | 12 | 1.4 cm |
+
+Both tiers have all required contexts, no failed rows, no correction failures and no browser errors. Pursuit-target, leaper-range and prediction experiments were discarded; the bus placement is the only retained s116b gameplay correction.
 
 ## Verification
 
-- Typecheck and lint: PASS on final gameplay revision.
-- Full unchanged remote unit suite: PASS on 46.225.66.90, 27 files, 106 passed / 1 skipped, 230.9 s within 240 s; case budget remains 150/150.
-- Focused A* regression: competing requests complete within their supplied budgets; twelve obstacle layouts match uninterrupted A* exactly; changed blockers and destinations invalidate saved frontiers. Coverage is included in the existing test case.
-- Full threat audit: PASS, all levels, zero flags.
-- Matched base/final native HIGH/LOW observer: four overdue requests per tier on base, zero on final; current final holds independently confirm zero.
-- Final vehicle campaign motion renewal: 7/8 pass. L9 LOW lacks required hatch/rail-stall context coverage within the fixed 9000-frame window, with no correction failures or browser errors. The native drive reaches rail stall/restart; sparse progress samples do not establish whether the hatch-open interval was sampled. This remains unresolved; earlier eight-case passes do not validate final gameplay.
+- `npm run typecheck`: PASS.
+- `npm run lint`: PASS.
+- Full unchanged remote unit suite: PASS on 46.225.66.90; **27 files, 106 passed / 1 skipped, 223.7 s within 240 s**, manifest 150/150. Earlier runner timeouts were rerun unchanged; no tests were trimmed and no budget was raised.
+- Focused A* regression: competing routes complete within supplied budgets; twelve obstacle layouts match uninterrupted A*; blocker and destination changes invalidate saved frontiers. Added coverage stays within the existing test case.
+- Full `node --import tsx/esm tools/qa/threat-audit.ts`: PASS, all levels, **zero flags**.
+- Fresh final native HIGH/LOW path observer: **zero overdue requests on both tiers**. Matched base runs detect four per tier, including HIGH actor 298.
+- `npm run qa:vehicle-campaign-motion`: PASS, **all eight HIGH/LOW cases** (L9, L7 bus, L4 parked, L4 tank) through `tools/e2e-lock.sh`, one serial headless browser, ten-minute reservation, E2E_PORT/SCENE_PORT **4961/4962**. Every receipt is source-stable and all eight share the same source hash.
 - **Browser QA needed.**
 
 ## Measurement and evidence
 
-`tools/qa/s116-path-probe.ts` wraps the real path call without advancing navigation itself. It follows pending requests across retries, including cached-goal resets. It records a replacement only on a changed destination, an actual flow call, successful visibility from the actor to its exact scripted destination, exhausted search, or actor leaving navigation. Cancellation after the 600-tick deadline does not erase an overdue request. HIGH actor 330 switches to direct visible steering at tick 3128, before its deadline.
+`tools/qa/s116-path-probe.ts` wraps actual path calls without advancing navigation. It follows pending requests across cached-goal resets and records actual destination changes, flow replacement, successful direct visibility to the exact scripted destination, exhausted searches, or actors leaving navigation. Cancellation after 600 ticks does not erase an overdue request. The corrected observer detects the base failures as well as final success.
 
-An earlier observer incorrectly treated cached-goal resets as cancellation, masking base starvation. Its zero-starvation claim was withdrawn. The corrected observer detects the known base failures, including actor 298, and reports zero on the final candidate. Historical receipts and rejected variants remain in `evidence.json`; `releaseValidation` and `validatedProviderComparison` identify the accepted measurements.
-
-Native probes for the L3 squad-loss investigation and L10 stuck chaser are retained alongside the L4 probe. The L3 investigation established that resumed searches change arrival histories and expose repeated outbreak grabs; the final officer-priority correction clears the existing two-of-three army-line criterion without changing its threshold.
-
-Unchanged L9 LOW retry through the same serial headless pool reservation and 9000-frame window repeats the coverage failure. Source is stable, correctionsProven=true and errors=[]; final APC pose is (453.17,4.16), stopped in the evacuation bay, with stallAt=5984 and restarted=true but hatch=false. Context coverage remains driving/detour only. This means no required character-contact motion samples were captured during hatch/rail-stall; it does not prove the native hatch failed to open. A matched base case is needed before classifying this as pre-existing or introduced.
-
-Matched base e1901bb7 L9 LOW comparison passes the same 9000-frame case and supplies hatch/rail-stall character-contact coverage, whereas candidate retries do not. Thus missing candidate coverage is introduced by changed native encounter history, not established as a pre-existing harness failure. Candidate receipts still have correctionsProven=true and no errors. The exact task explicitly requires running the vehicle command, but whether this coverage-only failure blocks delivery has been raised for clarification; it is not waived or reported as passing.
-
-Measurement interpretation: LevelNineDriving opens the hatch at the native rail stall. The vehicle gate requires at least one character contact in each context; candidate receipts lack those contacts, not recorded motion-correction failures. Its 300-frame progress snapshots cannot prove absence of a shorter hatch interval. No gameplay or gate threshold/policy change is justified by that observation alone. Delivery clarification remains pending.
-
-## s116b — exact hatch transition trace
-
-Orchestrator clarified that the L9 LOW gate blocks merge and may not be waived or reclassified. Exact candidate LOW browser telemetry shows hatch opens at tick/frame 5984 and closes normally on restart at 7184. Driver ownership stays APC 667, deaths stay zero, and courier HP stays 100 through the complete 1200-tick exposed hold. Thus the hatch opens inside the fixed window; the failure is missing character-contact motion coverage during that hold. This was measured with temporary read-only transition logging, with the original gate restored afterward. Next inspect native infected arrival/targets at the rail stall and compare exact base transitions.
-
-Candidate stall proximity trace: at tick 5984 the nearest leaper (831) is 19.36 m from the APC; at 6000 it is 16.86 m away, then absent by 6300. The candidate settles near (379,-226.7), while base settles near (377.9,-215.4). Runner 836 also retains the pre-braking hull cue (376.7,-234) after the hatch opens. Three isolated encounter variants were tested and discarded because LOW coverage remained missing: release engine cue on exposure; refresh engine cue through exposure; approach a stopped hull when outside leaper range. No failed gameplay variant is retained. Next trace leaper launch/landing events and the moving-hull prediction during braking rather than assume it waits outside range.
-
-Exact leaper phases: candidate 831 locks target (382.10,-216.84) at 5981, launches 6011, misses at 6045, and is dead by 6216. Base 831 attaches at 6033, then pounces onto the stationary APC at 6424. Candidate hatch is open 5984–7184. Two prediction variants (refresh at takeoff; hold-aware takeoff target) produce 60/58 hatch-context frames from actor 831 but zero contacts, so still fail LOW. Their rows are mixed-unplanted-actions, and no grounded rush witness reaches the hull in the required hold context. Both incomplete prediction variants were discarded. Gate policy/window and all stats remain unchanged.
-
-## s116b — bus pursuit placement correction
-
-Root contact-coverage divergence: base bus 675 reaches the rail hold near (375.8,-218.3), while candidate bus 675 stops permanently near (3.8,-321.9), releasing its passengers far behind. Resumed infected navigation changes the APC’s avoidance/heading history. The bus was spawned 110 m behind the APC along that instantaneous heading, which can project a transient dodge off the driven lane into the verge.
-
-The bus now starts 110 m back along a bounded recent APC trail, with matching entity and physics headings from that trail. Spawn count, trailing distance, speed, health, damage, passengers, stop rules, hatch duration and gate policies/window are unchanged. A teleport-sized trail discontinuity clears the history. This is the only retained s116b gameplay change; pursuit and leaper prediction variants were discarded.
-
-Focused unchanged L9 LOW gate passes: hatch and rail-stall each have 204 frames, six actors, 18 contacts, max slide 1.1 cm; no failed rows, correction failures or browser errors. Typecheck/lint pass. Full eight-case vehicle renewal and full threat audit are pending on this correction. Earlier blocked-delivery statements are superseded by this active fix.
-
-Trail refinement: samples are retained by travelled distance (bounded history survives pauses), and the 110 m point is interpolated within its trail segment, with physics/entity yaw aligned to the trail tangent. The initial coarse-trail batch passed LOW and six other cases but HIGH had one repeatable eight-frame unproven row. Refined HIGH now passes, with 31 hatch/rail-stall contacts and no failed rows. Typecheck/lint pass. The initial trail revision’s full threat audit passes with zero flags (596.0 s); remote units pass 27 files, 106 tests / 1 skipped, 226.1 s after two unchanged runner-timeout retries. Final full vehicle/audit renewal follows on the refinement.
+An earlier cached-goal-reset cancellation rule masked base starvation; its zero-starvation claim was withdrawn and that rule removed. Historical failures and discarded variants remain in `evidence.json` for traceability. `releaseValidation` contains the final audit, native holds, unit results and eight vehicle receipts. Earlier blocked-delivery and missing-context statements describe superseded revisions, not the final result.
