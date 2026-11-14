@@ -15,7 +15,7 @@ type Row = {
   attackTicks: number[];
   player: { x: number; z: number; hp: number }; leaderX: number; deaths: number; simSeconds: number;
   phase: string; entries: { door: number; warnedAt: number; remaining: number; closedAt?: number; brokenAt?: number }[];
-  survivorLosses: { id: number; key: string; tick: number; seconds: number; phase: string; status: string; x: number; z: number; attacks: { tick: number; sourceId: number; special: string }[] }[];
+  survivorLosses: { id: number; key: string; tick: number; seconds: number; phase: string; status: string; x: number; z: number; bites: { tick: number; sourceId: number; source: string; x: number; z: number }[]; attacks: { tick: number; sourceId: number; special: string }[] }[];
 };
 const rows: Row[] = [];
 const minSavedPercent = Number(process.env.L6_MIN_SAVED_PERCENT ?? 25);
@@ -30,9 +30,14 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
     let firstHatchClosed: number | null = null, exit: number | null = null;
     const initial = new Set(world.missions!.state.l6!.survivors.map(r => r.id));
     const attackLedger = new Map<number, { tick: number; sourceId: number; special: string }[]>();
+    const biteLedger = new Map<number, { tick: number; sourceId: number; source: string; x: number; z: number }[]>();
     const survivorLosses: Row['survivorLosses'] = [], seenLosses = new Set<number>();
     world.events.on('infected.attack', e => { if (e.type === 'infected.attack' && initial.has(e.targetId)) {
       const history = attackLedger.get(e.targetId) ?? []; history.push({ tick: e.tick, sourceId: e.sourceId, special: e.special }); attackLedger.set(e.targetId, history);
+    }});
+    world.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite' && initial.has(e.targetId)) {
+      const source = world.entities.get(e.sourceId), history = biteLedger.get(e.targetId) ?? [];
+      history.push({ tick: e.tick, sourceId: e.sourceId, source: source?.archetype ?? 'removed', x: source?.transform.x ?? NaN, z: source?.transform.z ?? NaN }); biteLedger.set(e.targetId, history);
     }});
     world.events.on('l6.exit', e => { if (e.type === 'l6.exit') exit = e.tick; });
     let frame = undefined as ReturnType<typeof bot.sample> | undefined;
@@ -43,7 +48,7 @@ for (const tier of (process.env.L6_TIERS ?? 'high,low').split(',') as ('high' | 
       for (const survivor of s.survivors) if (!seenLosses.has(survivor.id) && (survivor.status === 'dead' || survivor.status === 'turned')) {
         seenLosses.add(survivor.id); const e = world.entities.get(survivor.id);
         survivorLosses.push({ id: survivor.id, key: survivor.key, tick: world.tick, seconds: world.tick / 60, phase: s.phase,
-          status: survivor.status, x: e?.transform.x ?? NaN, z: e?.transform.z ?? NaN, attacks: attackLedger.get(survivor.id) ?? [] });
+          status: survivor.status, x: e?.transform.x ?? NaN, z: e?.transform.z ?? NaN, bites: biteLedger.get(survivor.id) ?? [], attacks: attackLedger.get(survivor.id) ?? [] });
       }
       if (firstHatchClosed === null && s.entries?.some(e => e.closedAt)) firstHatchClosed = Math.min(...s.entries.filter(e => e.closedAt).map(e => e.closedAt!));
     }

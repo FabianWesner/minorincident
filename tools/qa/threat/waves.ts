@@ -134,7 +134,9 @@ export class WaveObserver {
     }
     const subway = state.l6;
     if (subway) {
-      for (const entry of subway.entries ?? []) if (entry.warnedAt) this.wave(`entry-${entry.door}@${entry.warnedAt}`, entry.warnedAt, 'L6 maintenance entry.warnedAt', entry.remaining);
+      // A maintenance warning can persist after its arrivals have already been admitted.
+      // Do not invent a zero-member wave from that historical warning on later ticks.
+      for (const entry of subway.entries ?? []) if (entry.warnedAt && entry.remaining > 0) this.wave(`entry-${entry.door}@${entry.warnedAt}`, entry.warnedAt, 'L6 maintenance entry.warnedAt', entry.remaining);
       for (const q of subway.spawnLog.slice(this.l6Cursor)) {
         let wave: Wave | undefined;
         if (q.wave <= 2) wave = this.waves.get(`l6.breach${q.wave}`);
@@ -190,6 +192,8 @@ export class WaveObserver {
       const receipt: WaveReceipt = { key: wave.key, source: wave.source, startSeconds: wave.start / 60, observedSeconds: Math.max(0, this.world.tick - wave.start) / 60,
         expected: wave.expected, spawned: wave.members.size, firstAttackSeconds: wave.firstAttack, members: [...wave.members.keys()], flags: [], outletCohorts,
         scheduledStreamSeconds: (wave.scheduledUntil - wave.start) / 60, visibleWithinTwoSeconds: wave.visible.size, spawnedWithinEighteenSeconds: [...wave.births.values()].filter(tick => tick <= wave.start + 18 * 60).length };
+      const cancelledByHatch = wave.key.startsWith('entry-') && (this.world.missions!.state.l6?.entries ?? []).some(entry =>
+        wave.key.startsWith(`entry-${entry.door}@`) && !!entry.closedAt && wave.members.size < (wave.expected ?? 0));
       const breachFlags: string[] = [];
       if (wave.key === 'tunnel-breach' && outletCohorts) {
         const minimum = this.world.infected!.director.tier === 'low' ? 3 : 6;
@@ -198,7 +202,7 @@ export class WaveObserver {
         for (let i = 0; i < outlets.length; i++) for (let j = i + 1; j < outlets.length; j++)
           if (Math.hypot(outlets[i].x - outlets[j].x, outlets[i].z - outlets[j].z) < 20) breachFlags.push('BREACH_OUTLETS_LESS_THAN_20M_APART');
       }
-      receipt.flags = wave.key.startsWith('entry-') ? l6EntryFlags(receipt) : wave.key.startsWith('hatch-reopen-') ? l6HatchReopenFlags(receipt) : acceptanceWave ? [...waveFlags(receipt), ...breachFlags] : []; return receipt;
+      receipt.flags = wave.key.startsWith('entry-') ? cancelledByHatch ? [] : l6EntryFlags(receipt) : wave.key.startsWith('hatch-reopen-') ? l6HatchReopenFlags(receipt) : acceptanceWave ? [...waveFlags(receipt), ...breachFlags] : []; return receipt;
     });
   }
 }
