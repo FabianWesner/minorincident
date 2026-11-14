@@ -106,3 +106,7 @@ Allied committed-attack priority now recognizes L1 brain bite holds against the 
 ## Officer-specific rescue priority
 
 The full audit at 09244275 clears L3/L10 but introduces three L4 failures, with HIGH plaza minimum 30. Extending the new grab priority to soldiers and armed civilians was broader than the diagnosed officer issue. The correction now applies only to role=officer. A fresh L3/L4 diagnostic passes both levels (only partial-selection marker), with HIGH/LOW plaza minima 42/17. The remote full unit suite at 09244275 passed 27 files, 106 tests / 1 skipped, 231.7 s within 240 s. Final full gates are still required for the officer-specific correction.
+
+## Release validation at 36ed2e4f
+
+Full all-level threat audit passes with zero flags in 285.3 s. Typecheck and lint pass. Remote unit suite passes: 27 files, 106 passed / 1 skipped, 230.9 s within 240 s on 46.225.66.90. Fresh provider-aware native HIGH/LOW holds both have zero overdue requests; first breach alive 72/46, sustained plaza minimum 42/17, stationary peaks 1/1. Final vehicle renewal remains outstanding because prior eight-case validation predates the waypoint and officer rescue corrections. No gameplay edits occurred during these checks.
