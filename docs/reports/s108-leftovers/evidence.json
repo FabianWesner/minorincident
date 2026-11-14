@@ -268572,5 +268572,18 @@
       "entry-low-destroyed-corridor-z1.5-10.jpg"
     ],
     "finding": "Entry x2949\u21923170 sampled at both tiers/zooms. Tiled paved lane with puddles, corn rows beside pavement, no floating patch visible in reviewed originals. Temporal z-fighting acceptance remains unproven by spaced stills."
+  },
+  "groundLayerSourceAudit": {
+    "source": "src/render/GroundLayers.ts; src/render/district/DistrictBuild.ts; src/assets/DistrictAssets.ts",
+    "depthUnitsPerLayer": 4,
+    "layers": {
+      "bakedMaximum": 12,
+      "paving": 13,
+      "puddle": 14,
+      "footprint": 15,
+      "lightPool": 16
+    },
+    "roadSurfaces": "Authored R6/R7 asphalt at y0.002 over base grass y0; runtime paving separate biased layer13.",
+    "conclusion": "Source has explicit overlay depth separation. This supports intended overlap treatment but cannot prove temporal absence of visible z-fighting in every captured route frame."
   }
 }

@@ -64,3 +64,5 @@ Accepted look diagnostic (`hazeAmount=0`, `fogNear=300`, `fogFar=600`) also leav
 Additional corrected LOW originals opened at corridor start, combat telegraph, later field margin and complex paving. Crop tiles stay beside supported open ground; complex dark rectangular insets/puddles differ from the gray tile paving. No floating crop tile is visible in these samples. The unrecorded entry stretch x2917–3073 and temporal z-fighting remain open.
 
 Matched checkpoint entry coverage now includes x2949→3170 at HIGH then LOW and zoom 1/1.5. Four original entry views opened: paving tiles, puddles and corn rows meet supported ground; no floating tile seen. Genuine checkpoint snapshot was resumed as current state, with no coordinate edits. Spaced stills do not yet close temporal z-fighting.
+
+Ground-layer source audit confirms explicit depth separation: baked layers ≤12, runtime paving 13, puddles 14, footprints 15, light pools 16, with four polygon-offset depth units per layer. Authored road asphalt is y0.002 over base ground y0. This explains intended overlaps; it is supporting evidence, not a replacement for temporal visual inspection.
