@@ -36,3 +36,5 @@ Native navigation trace: HIGH seed1 actors 298 and 325 have admission-grid conne
 Search interruption confirmed by wrapping the existing nav.path call read-only: actor 298 requests at ticks 3011/3071/3132/3192 exhaust 1516/2000/2000/2000 expansions with pendingAfter=true and pendingBefore=false each time. The shared A* workspace is replaced between retries, preventing this long route from resuming. This is direct evidence of starvation; a fix must preserve search progress while retaining fair scheduling and the current per-tick budget.
 
 Routing candidate: courier-bound outside breach approaches now share the existing courier flow field. Fresh native holds measure 1 HIGH / 5 LOW stationary peaks, HIGH plaza minimum 40. Typecheck/lint pass. Full threat and vehicle motion gates must be repeated for this gameplay candidate; earlier gate results apply to the telemetry-only revision.
+
+Candidate rejected: LOW stationary peak increased to 5 (limit 3). Reverted the exterior flow gameplay change; retained its evidence. Current gameplay returns to the validated 2 HIGH / 1 LOW baseline.
