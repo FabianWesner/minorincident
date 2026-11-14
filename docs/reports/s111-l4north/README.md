@@ -34,7 +34,7 @@ The L4 north flag is absent. Full receipt: `test-results/qa-threat/audit.json`; 
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
 - Focused L4 audit — HIGH/LOW criteria passed; LOW north cohort admitted 3.
-- Remote unit suite (`sh tools/remote/run.sh "$PWD" -- npm test`) — could not start: no healthy/provisioned Hetzner runner; the wrapper refused local fallback. No test cases ran.
+- Remote unit suite (`sh tools/remote/run.sh "$PWD" -- npm test`) — passed, exit 0: manifest 150/150; 27 files passed, 106 tests passed / 1 skipped; 222.1 s against the 240 s budget. Runner job `/srv/mi/jobs/s111-l4north-a83a52-6227-1794666872`. The earlier launch attempt had no healthy runner; the unchanged suite ran when a runner became available.
 
 ## Browser QA needed
 
@@ -42,4 +42,4 @@ No browser QA was run. Review HIGH and LOW breach presentation and horde behavio
 
 ## Delivery status
 
-Committed as `9610abbbfbe0d648b4539e35d370f706cba328b9`. The remote unit suite remains unrun because no healthy/provisioned runner was available. No push, deploy, or main movement was performed.
+Committed as `9610abbbfbe0d648b4539e35d370f706cba328b9`. The required remote unit suite passed. All coding-lane checks are complete. No push, deploy, or main movement was performed.
