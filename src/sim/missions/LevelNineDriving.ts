@@ -526,15 +526,23 @@ export class LevelNineDriving {
     if (s.busLineAt === null && w.tick % 6 === 0) {
       const last = this.busTrail.at(-1);
       if (last && distance(last, p) > 25) this.busTrail.length = 0;
-      this.busTrail.push({ x: p.x, z: p.z, yaw: p.yaw });
-      if (this.busTrail.length > 180) this.busTrail.shift();
+      if (!last || distance(last, p) >= 1) {
+        this.busTrail.push({ x: p.x, z: p.z, yaw: p.yaw });
+        if (this.busTrail.length > 180) this.busTrail.shift();
+      }
     }
     if (s.busLineAt === null && p.x > 110 && p.x < 330) {
       // Follow the driven lane: projecting a transient dodge heading behind
       // the APC can place the pursuing bus off-road against the verge.
       let behind = 0, trail = this.busTrail.at(-1);
       for (let i = this.busTrail.length - 2; i >= 0 && behind < 110; i--) {
-        behind += distance(this.busTrail[i + 1], this.busTrail[i]); trail = this.busTrail[i];
+        const older = this.busTrail[i], newer = this.busTrail[i + 1], length = distance(newer, older);
+        if (behind + length >= 110) {
+          const t = (110 - behind) / length;
+          trail = { x: newer.x + (older.x - newer.x) * t, z: newer.z + (older.z - newer.z) * t, yaw: -Math.atan2(newer.z - older.z, newer.x - older.x) };
+          behind = 110; break;
+        }
+        behind += length; trail = older;
       }
       if (!trail || behind < 110) return;
       const at = { x: trail.x, z: trail.z };

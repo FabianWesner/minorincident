@@ -8828,5 +8828,65 @@
       "z": -321.9
     },
     "allEightAndAudit": "pending"
+  },
+  "s116bTrailRefinement": {
+    "priorRevision": "e052d58d",
+    "priorFullAudit": {
+      "sourceHash": "f6058177b3fd8faf757bf940a5c5043a039d4ff57d3202993a66a723f4527853",
+      "seconds": 596.007330958,
+      "flags": []
+    },
+    "priorRemoteUnit": {
+      "passed": 106,
+      "skipped": 1,
+      "files": 27,
+      "seconds": 226.1,
+      "precedingAttempts": "Two unchanged runner timeouts; no trimming or budget changes."
+    },
+    "focusedHigh": {
+      "sourceHash": "4b5182709e756a144d8b8e038e7f19dfbd0a048b6d6d8ed9cea590c1e0ebc9e5",
+      "sourceStable": true,
+      "pass": true,
+      "contextCoverage": [
+        {
+          "context": "driving",
+          "frames": 1479,
+          "actors": 42,
+          "contacts": 122,
+          "maxCm": 1.8,
+          "p95Cm": 1.8
+        },
+        {
+          "context": "detour",
+          "frames": 1479,
+          "actors": 42,
+          "contacts": 122,
+          "maxCm": 1.8,
+          "p95Cm": 1.8
+        },
+        {
+          "context": "hatch",
+          "frames": 368,
+          "actors": 6,
+          "contacts": 31,
+          "maxCm": 1.2,
+          "p95Cm": 1
+        },
+        {
+          "context": "rail-stall",
+          "frames": 368,
+          "actors": 6,
+          "contacts": 31,
+          "maxCm": 1.2,
+          "p95Cm": 1
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "errors": []
+    },
+    "typecheck": "pass",
+    "lint": "pass",
+    "finalFullGates": "pending"
   }
 }
