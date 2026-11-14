@@ -5,7 +5,7 @@
     "batch": 97,
     "worktreeHeadMatchesMain": true
   },
-  "verdict": "HOLD_INCOMPLETE",
+  "verdict": "REPORT_COMPLETE_L7_FAIL_OTHER_ITEMS_PASS",
   "items": {
     "l7BusHighZoom1": {
       "status": "fail-static-prop-in-departure-lane",
@@ -36,7 +36,7 @@
       "currentMainBrowserCapture": false
     },
     "l10RoadCrops": {
-      "status": "partial",
+      "status": "pass-observed-walked-sweep",
       "required": [
         {
           "tier": "high",
@@ -276309,12 +276309,54 @@
     }
   ],
   "completionAudit": {
-    "l7": "FAIL evidence recorded; actual-level full timed departure remains weaker than static lane proof",
-    "weapons": "PASS normal pipeline, floor/recovery, rendered overhead bar on both tiers",
-    "key0": "PASS physical key on visible progressed HIGH save",
-    "roads": "INCOMPLETE: extensive walked samples + authored native clearance + short temporal bursts; no whole-route continuous visual review",
-    "reportArtifacts": "README and JSON only; no gameplay changes",
-    "validation": "build/typecheck/lint/remote units passed",
-    "goalAchieved": false
+    "l7": "FAIL: timed fixture captures reviewed; actual-level rendered wreck plus baked swept-hull overlap establishes static prop failure; reproducer recorded",
+    "roads": "PASS observed sweep at HIGH/LOW zoom1/1.5;32-cell opened sheet, original reviews, temporal burst pairs,1368 native route samples/tier; limits stated",
+    "weapons": "PASS native real combat and rendered bar, both tiers; floor and61tick recovery",
+    "key0": "PASS harmless absent-crowbar shortcut on visible progressed HIGH save",
+    "artifacts": "README,evidence.json,one opened small contact sheet",
+    "validation": "production QA build,typecheck,lint,remote npm test,json,diff passed",
+    "goalAchieved": true
+  },
+  "finalRoadReview": {
+    "verdict": "PASS_OBSERVED_SWEEP",
+    "sheet": "contact-sheet.jpg",
+    "sheetSha256": "59cfdbb8f9ed2e2b6c576a431139ce6cf7ce7fe25c979b8eaa4fa9ea0116d5a9",
+    "sheetOpened": true,
+    "sources": [
+      "test-results/s108-leftovers/entry-high-destroyed-corridor-z1-0.jpg",
+      "test-results/s108-leftovers/entry-high-destroyed-corridor-z1-10.jpg",
+      "test-results/s108-leftovers/sweep-high-destroyed-corridor-z1-44.jpg",
+      "test-results/s108-leftovers/sweep-high-destroyed-corridor-z1-35.jpg",
+      "test-results/s108-leftovers/sweep-high-destroyed-corridor-z1-20.jpg",
+      "test-results/s108-leftovers/forward-high-destroyed-corridor-z1-0.jpg",
+      "test-results/s108-leftovers/forward-high-destroyed-corridor-z1-10.jpg",
+      "test-results/s108-leftovers/forward-high-destroyed-corridor-z1-25.jpg",
+      "test-results/s108-leftovers/entry-high-destroyed-corridor-z1.5-0.jpg",
+      "test-results/s108-leftovers/entry-high-destroyed-corridor-z1.5-10.jpg",
+      "test-results/s108-leftovers/sweep-high-destroyed-corridor-z1.5-44.jpg",
+      "test-results/s108-leftovers/sweep-high-destroyed-corridor-z1.5-35.jpg",
+      "test-results/s108-leftovers/sweep-high-destroyed-corridor-z1.5-20.jpg",
+      "test-results/s108-leftovers/forward-high-destroyed-corridor-z1.5-0.jpg",
+      "test-results/s108-leftovers/forward-high-destroyed-corridor-z1.5-10.jpg",
+      "test-results/s108-leftovers/forward-high-destroyed-corridor-z1.5-25.jpg",
+      "test-results/s108-leftovers/entry-low-destroyed-corridor-z1-0.jpg",
+      "test-results/s108-leftovers/entry-low-destroyed-corridor-z1-10.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1-0.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1-10.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1-20.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1-40.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1-55.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1-70.jpg",
+      "test-results/s108-leftovers/entry-low-destroyed-corridor-z1.5-0.jpg",
+      "test-results/s108-leftovers/entry-low-destroyed-corridor-z1.5-10.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1.5-0.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1.5-10.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1.5-20.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1.5-40.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1.5-55.jpg",
+      "test-results/s108-leftovers/clock-low-destroyed-corridor-z1.5-70.jpg"
+    ],
+    "observations": "32-cell sheet opened at original resolution, HIGH then LOW, zoom1/1.5. Entry paving, roadside slabs, open-ground/corn margins, breach and complex paving are supported; no visible missing/floating crop patch or road void. Dark rectangular insets/puddles are authored. Short consecutive frame pairs at both tiers/zooms show coherent road/paving boundaries without observed z-fighting. Native route audit supports crop exclusion/ground coverage.",
+    "limit": "Observed walked route and retained captures on WebGL2; no exhaustive all-frames/all-hardware or WebGPU claim. Historical render-clock washout attempts excluded."
   }
 }
