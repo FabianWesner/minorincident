@@ -48,3 +48,7 @@ HIGH seed 1 actor 298 requests at tick 3011 and receives its path at tick 3086: 
 ## Cancellation-aware trace
 
 The observer now records superseded destinations, exhausted searches and actors leaving navigation. It still counts requests unresolved at their 600-tick deadline even if canceled later. HIGH retains one overdue request: actor 330 completes after 714 ticks (11.9 s), four calls. LOW retains one: actor 242 requests once at tick 3031 and leaves navigation at 3729 (698 ticks). Thus the zero-overdue requirement is not yet satisfied. Current tool typecheck and lint pass. These cases need per-tick steering inspection, including whether direct steering legitimately superseded navigation without a subsequent path call.
+
+## Goal reset observation
+
+Per-second native traces show both previously overdue actors reset their cached route goal to -1 before ten seconds. LOW actor 242 also switches from the west breach to the inside courier goal while walking. The observer now records cached-goal invalidation each tick; fresh HIGH/LOW native holds report zero requests still required and uncompleted at the ten-second deadline. These are explicit cancellations, not successful path completions; the earlier raw overdue results remain in the evidence history. The all-level audit regressions remain unresolved, and this measurement does not make the candidate mergeable.
