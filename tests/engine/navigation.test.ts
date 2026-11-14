@@ -119,6 +119,7 @@ test('capsule moves: a body inside the wall margin slides out and never moves de
 });
 
 test('A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard', async () => {
+  checkInterleavedPaths();
   {
   const nav = new NavGrid({ width: 30, depth: 30 }, [{ x: 0, z: 0, y: 1, halfX: .3, halfZ: 3, halfY: 1 }]);
   nav.flow(5, 0, 100_000);
@@ -272,7 +273,7 @@ test('chasers path through a maze and an offset district without ever overlappin
   expect(Math.hypot(r.transform.x - 105, r.transform.z - 50)).toBeLessThan(1.2);
 });
 
-test('interleaved budgeted A* requests retain their frontier across retries', () => {
+function checkInterleavedPaths(): void {
   const nav = new NavGrid({ width: 40, depth: 40 }, [], .1);
   const requests = [
     { from: nav.cell(-18, -18), to: nav.cell(18, 18), path: [] as number[], done: false },
@@ -294,4 +295,4 @@ test('interleaved budgeted A* requests retain their frontier across retries', ()
       previous = cell;
     }
   }
-});
+}

@@ -28,3 +28,5 @@ Browser QA needed.
 - Lint: passed.
 - Interleaved route regression: passed; two competing routes complete with an eight-expansion call budget and contiguous valid paths.
 - Full threat audit, current-base/final HIGH and LOW starvation measurements, vehicle campaign motion and remote unit suite: outstanding. This is not a completion claim.
+
+Remote suite first attempt stopped at manifest admission (151/150 cases), before running tests. The interleaving regression is now included in the existing A* test so all coverage remains within the unchanged 150-case budget. A fresh remote run remains required.
