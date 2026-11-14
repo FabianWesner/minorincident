@@ -1,0 +1,2136 @@
+{
+  "revision": "e7aab4aad6957a4ac640a1f8ceba4e9369f22a26",
+  "flags": [
+    "L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+  ],
+  "high": {
+    "tier": "high",
+    "holdComplete": true,
+    "firstBreachLevelSeconds": 50.083333333333336,
+    "firstBreachAfterTurnSeconds": 17.266666666666666,
+    "aliveAtFirstBreach": 72,
+    "peakAlive": 91,
+    "peakPlazaAlive": 89,
+    "stranded": [
+      {
+        "x": -37.254967712231455,
+        "z": 4.244892958946518,
+        "state": "chase",
+        "scripted": {
+          "x": -32.1,
+          "z": 6.105882352941178
+        }
+      },
+      {
+        "x": -36.25316887340822,
+        "z": -18.26168921611568,
+        "state": "alerted",
+        "scripted": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside"
+      },
+      {
+        "x": -53.61740852826825,
+        "z": 43.07469232855734,
+        "state": "idle",
+        "scripted": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside"
+      },
+      {
+        "x": 12.706892311147108,
+        "z": 6.315599953061797,
+        "state": "attracted"
+      },
+      {
+        "x": -24.257950539418633,
+        "z": 40.73673314711851,
+        "state": "alerted",
+        "scripted": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside"
+      },
+      {
+        "x": -23.7396251914583,
+        "z": -37.24377511487499,
+        "state": "attracted",
+        "scripted": {
+          "x": -20.02307692307693,
+          "z": -18.599999999999998
+        }
+      },
+      {
+        "x": -37.3625704037346,
+        "z": 8.166767531470267,
+        "state": "attracted",
+        "scripted": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside"
+      }
+    ],
+    "directorCountAtEnd": 154,
+    "recoverableDownedAtEnd": 43,
+    "alarmPendingAtEnd": 0,
+    "alarmCursorAtEnd": 36,
+    "aliveAtMinimumPlaza": 49,
+    "minimumInsideRing": 40,
+    "playerAtMinimumPlaza": {
+      "x": -22.852705001831055,
+      "z": 0.7364528179168701
+    },
+    "minPlazaAliveAfter45Seconds": 42,
+    "samplesAfter45Seconds": 8700,
+    "peakStationaryOutsidePlazaAfter30Seconds": 2,
+    "stationaryOutsidePlazaAtPeak": [
+      {
+        "id": 298,
+        "x": -36.25316887340822,
+        "z": -18.26168921611568,
+        "seconds": 34,
+        "state": "alerted",
+        "scripted": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside"
+      },
+      {
+        "id": 325,
+        "x": -24.257950539418633,
+        "z": 40.73673314711851,
+        "seconds": 30,
+        "state": "alerted",
+        "scripted": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside"
+      }
+    ],
+    "arrivalEdges": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "threeDirectionsAtLeast60Degrees": true,
+    "maxGroupAtOneSourcePerTick": 5,
+    "firstAttackSeconds": 9.65,
+    "lineBreakAfterTurnSeconds": 190
+  },
+  "low": {
+    "tier": "low",
+    "holdComplete": true,
+    "firstBreachLevelSeconds": 50.083333333333336,
+    "firstBreachAfterTurnSeconds": 17.266666666666666,
+    "aliveAtFirstBreach": 47,
+    "peakAlive": 57,
+    "peakPlazaAlive": 56,
+    "stranded": [
+      {
+        "x": -36.73347543829347,
+        "z": 4.255184667096517,
+        "state": "chase",
+        "scripted": {
+          "x": -32.1,
+          "z": 6.105882352941178
+        }
+      }
+    ],
+    "directorCountAtEnd": 78,
+    "recoverableDownedAtEnd": 22,
+    "alarmPendingAtEnd": 0,
+    "alarmCursorAtEnd": 36,
+    "aliveAtMinimumPlaza": 17,
+    "minimumInsideRing": 16,
+    "playerAtMinimumPlaza": {
+      "x": -22.852705001831055,
+      "z": 0.7364528179168701
+    },
+    "minPlazaAliveAfter45Seconds": 16,
+    "samplesAfter45Seconds": 8700,
+    "peakStationaryOutsidePlazaAfter30Seconds": 1,
+    "stationaryOutsidePlazaAtPeak": [
+      {
+        "id": 228,
+        "x": -36.73347543829347,
+        "z": 4.255184667096517,
+        "seconds": 30,
+        "state": "chase",
+        "scripted": {
+          "x": -32.1,
+          "z": 6.105882352941178
+        }
+      }
+    ],
+    "arrivalEdges": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "threeDirectionsAtLeast60Degrees": true,
+    "maxGroupAtOneSourcePerTick": 5,
+    "firstAttackSeconds": 8.55,
+    "lineBreakAfterTurnSeconds": 190
+  },
+  "vehicle": [
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "l4-tank",
+          "tier": "high",
+          "code": 0,
+          "seconds": 54.161,
+          "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        },
+        {
+          "mode": "l4-tank",
+          "tier": "low",
+          "code": 0,
+          "seconds": 32.362,
+          "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "l4-parked",
+          "tier": "high",
+          "code": 0,
+          "seconds": 33.958,
+          "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        },
+        {
+          "mode": "l4-parked",
+          "tier": "low",
+          "code": 0,
+          "seconds": 18.758,
+          "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "l7-bus",
+          "tier": "high",
+          "code": 0,
+          "seconds": 15.525,
+          "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        },
+        {
+          "mode": "l7-bus",
+          "tier": "low",
+          "code": 0,
+          "seconds": 13.934,
+          "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "L9",
+          "tier": "high",
+          "code": 0,
+          "seconds": 125.386,
+          "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        },
+        {
+          "mode": "L9",
+          "tier": "low",
+          "code": 0,
+          "seconds": 82.498,
+          "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+          "sourceHash": "68462f28a0a130953824901a7b70e413fd3cb36ca2999ff98e934069a75d58f1",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "slidingWindowCensus": {
+    "method": "Every consecutive 30 one-second samples; all positions within 0.5 m of the first sample; living outside plaza throughout.",
+    "rows": [
+      {
+        "tier": "high",
+        "holdComplete": true,
+        "firstBreachLevelSeconds": 50.083333333333336,
+        "firstBreachAfterTurnSeconds": 17.266666666666666,
+        "aliveAtFirstBreach": 72,
+        "peakAlive": 91,
+        "peakPlazaAlive": 89,
+        "stranded": [
+          {
+            "x": -37.254967712231455,
+            "z": 4.244892958946518,
+            "state": "chase",
+            "scripted": {
+              "x": -32.1,
+              "z": 6.105882352941178
+            }
+          },
+          {
+            "x": -36.25316887340822,
+            "z": -18.26168921611568,
+            "state": "alerted",
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "approach": "outside"
+          },
+          {
+            "x": -53.61740852826825,
+            "z": 43.07469232855734,
+            "state": "idle",
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "approach": "outside"
+          },
+          {
+            "x": 12.706892311147108,
+            "z": 6.315599953061797,
+            "state": "attracted"
+          },
+          {
+            "x": -24.257950539418633,
+            "z": 40.73673314711851,
+            "state": "alerted",
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "approach": "outside"
+          },
+          {
+            "x": -23.7396251914583,
+            "z": -37.24377511487499,
+            "state": "attracted",
+            "scripted": {
+              "x": -20.02307692307693,
+              "z": -18.599999999999998
+            }
+          },
+          {
+            "x": -37.3625704037346,
+            "z": 8.166767531470267,
+            "state": "attracted",
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "approach": "outside"
+          }
+        ],
+        "directorCountAtEnd": 154,
+        "recoverableDownedAtEnd": 38,
+        "alarmPendingAtEnd": 0,
+        "alarmCursorAtEnd": 36,
+        "aliveAtMinimumPlaza": 49,
+        "minimumInsideRing": 40,
+        "playerAtMinimumPlaza": {
+          "x": -22.852705001831055,
+          "z": 0.7364528179168701
+        },
+        "minPlazaAliveAfter45Seconds": 42,
+        "samplesAfter45Seconds": 8700,
+        "peakStationaryOutsidePlazaAfter30Seconds": 2,
+        "stationaryOutsidePlazaAtPeak": [
+          {
+            "id": 298,
+            "x": -36.25316887340822,
+            "z": -18.26168921611568,
+            "samples": 30,
+            "state": "alerted",
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "approach": "outside"
+          },
+          {
+            "id": 325,
+            "x": -24.257950539418633,
+            "z": 40.73673314711851,
+            "samples": 30,
+            "state": "alerted",
+            "scripted": {
+              "x": -37.2,
+              "z": 6.105882352941178
+            },
+            "approach": "outside"
+          }
+        ],
+        "arrivalEdges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "threeDirectionsAtLeast60Degrees": true,
+        "maxGroupAtOneSourcePerTick": 5,
+        "firstAttackSeconds": 9.65,
+        "lineBreakAfterTurnSeconds": 190
+      },
+      {
+        "tier": "low",
+        "holdComplete": true,
+        "firstBreachLevelSeconds": 50.083333333333336,
+        "firstBreachAfterTurnSeconds": 17.266666666666666,
+        "aliveAtFirstBreach": 47,
+        "peakAlive": 57,
+        "peakPlazaAlive": 56,
+        "stranded": [
+          {
+            "x": -36.73347543829347,
+            "z": 4.255184667096517,
+            "state": "chase",
+            "scripted": {
+              "x": -32.1,
+              "z": 6.105882352941178
+            }
+          }
+        ],
+        "directorCountAtEnd": 78,
+        "recoverableDownedAtEnd": 23,
+        "alarmPendingAtEnd": 0,
+        "alarmCursorAtEnd": 36,
+        "aliveAtMinimumPlaza": 17,
+        "minimumInsideRing": 16,
+        "playerAtMinimumPlaza": {
+          "x": -22.852705001831055,
+          "z": 0.7364528179168701
+        },
+        "minPlazaAliveAfter45Seconds": 16,
+        "samplesAfter45Seconds": 8700,
+        "peakStationaryOutsidePlazaAfter30Seconds": 1,
+        "stationaryOutsidePlazaAtPeak": [
+          {
+            "id": 228,
+            "x": -36.73347543829347,
+            "z": 4.255184667096517,
+            "samples": 30,
+            "state": "chase",
+            "scripted": {
+              "x": -32.1,
+              "z": 6.105882352941178
+            }
+          }
+        ],
+        "arrivalEdges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "threeDirectionsAtLeast60Degrees": true,
+        "maxGroupAtOneSourcePerTick": 5,
+        "firstAttackSeconds": 8.55,
+        "lineBreakAfterTurnSeconds": 190
+      }
+    ]
+  },
+  "navigationTrace": {
+    "method": "Read-only native HIGH seed1 idle hold; admission-grid reachableFrom uses separate flood buffers; observations every 10 simulation seconds.",
+    "samples": [
+      {
+        "at": 7.183333333333334,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -47.14947906396775,
+          "y": 0.7,
+          "z": -22.87327514233137,
+          "yaw": -0.1931383376067766
+        },
+        "target": {
+          "x": -36.2,
+          "z": -18
+        },
+        "approach": "wire",
+        "path": 0,
+        "index": 26,
+        "from": 28635,
+        "to": 31717,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 17.183333333333334,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -36.17364019549158,
+          "y": 0.7,
+          "z": -17.968326943849352,
+          "yaw": -0.5432771297233802
+        },
+        "target": {
+          "x": -36.2,
+          "z": -18
+        },
+        "approach": "wire",
+        "path": 0,
+        "index": 27,
+        "from": 31717,
+        "to": 31717,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 17.183333333333334,
+        "id": 325,
+        "hp": 450,
+        "position": {
+          "x": -25.128453642401986,
+          "y": 0.7,
+          "z": 42.64199200878753,
+          "yaw": 0.9779850585365761
+        },
+        "target": {
+          "x": -36.2,
+          "z": 23.1
+        },
+        "approach": "wire",
+        "path": 69,
+        "index": 7,
+        "from": 73219,
+        "to": 59936,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 27.183333333333334,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -36.25316887340822,
+          "y": 0.7,
+          "z": -18.26168921611568,
+          "yaw": 3.8763158911073754
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 0,
+        "from": 31717,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 27.183333333333334,
+        "id": 325,
+        "hp": 290,
+        "position": {
+          "x": -24.257950539418633,
+          "y": 0.83,
+          "z": 40.73673314711851,
+          "yaw": 3.852822063131706
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 71861,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 37.18333333333333,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -36.25316887340822,
+          "y": 0.7,
+          "z": -18.26168921611568,
+          "yaw": 3.8763158911073754
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 0,
+        "from": 31717,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 37.18333333333333,
+        "id": 325,
+        "hp": 170,
+        "position": {
+          "x": -24.257950539418633,
+          "y": 0.83,
+          "z": 40.73673314711851,
+          "yaw": 3.852822063131706
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 71861,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 47.18333333333333,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -36.25316887340822,
+          "y": 0.7,
+          "z": -18.26168921611568,
+          "yaw": 3.8763158911073754
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 0,
+        "from": 31717,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 47.18333333333333,
+        "id": 325,
+        "hp": 30,
+        "position": {
+          "x": -24.257950539418633,
+          "y": 0.83,
+          "z": 40.73673314711851,
+          "yaw": 3.852822063131706
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 71861,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 57.18333333333333,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -36.25316887340822,
+          "y": 0.7,
+          "z": -18.26168921611568,
+          "yaw": 3.8763158911073754
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 0,
+        "from": 31717,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 57.18333333333333,
+        "id": 325,
+        "hp": 0,
+        "position": {
+          "x": -24.257950539418633,
+          "y": 0.83,
+          "z": 40.73673314711851,
+          "yaw": 3.852822063131706
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 71861,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 67.18333333333334,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -36.25316887340822,
+          "y": 0.7,
+          "z": -18.26168921611568,
+          "yaw": 3.8763158911073754
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 0,
+        "from": 31717,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 67.18333333333334,
+        "id": 325,
+        "hp": 282,
+        "position": {
+          "x": -24.257950539418633,
+          "y": 0.83,
+          "z": 40.73673314711851,
+          "yaw": 3.852822063131706
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 71861,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 77.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -34.06558286102717,
+          "y": 0.75,
+          "z": -18.259984831802853,
+          "yaw": 6.282950446714893
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 29,
+        "from": 31721,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 77.18333333333334,
+        "id": 325,
+        "hp": 116,
+        "position": {
+          "x": -34.80294633675593,
+          "y": 0.75,
+          "z": 30.901931918699724,
+          "yaw": 2.040783732740736
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 80,
+        "index": 42,
+        "from": 65040,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 87.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -34.06558286102717,
+          "y": 0.75,
+          "z": -18.259984831802853,
+          "yaw": 6.282950446714893
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 29,
+        "from": 31721,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 87.18333333333334,
+        "id": 325,
+        "hp": 34,
+        "position": {
+          "x": -23.321254257966647,
+          "y": 0.75,
+          "z": 19.16913006914585,
+          "yaw": 0.6362419471941695
+        },
+        "target": {
+          "x": -22.852705001831055,
+          "z": 0.7364528179168701
+        },
+        "approach": "inside",
+        "path": 51,
+        "index": 2,
+        "from": 57243,
+        "to": 44664,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 97.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -34.06558286102717,
+          "y": 0.75,
+          "z": -18.259984831802853,
+          "yaw": 6.282950446714893
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 29,
+        "from": 31721,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 97.18333333333334,
+        "id": 325,
+        "hp": 0,
+        "position": {
+          "x": -20.804992144261572,
+          "y": 0.75,
+          "z": 14.940199721279022,
+          "yaw": 0.9270596974876611
+        },
+        "target": {
+          "x": -22.852705001831055,
+          "z": 0.7364528179168701
+        },
+        "approach": "inside",
+        "path": 0,
+        "index": 3,
+        "from": 54188,
+        "to": 44664,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 107.18333333333334,
+        "id": 298,
+        "hp": 37.5,
+        "position": {
+          "x": -34.06558286102717,
+          "y": 0.75,
+          "z": -18.259984831802853,
+          "yaw": 6.282950446714893
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 29,
+        "from": 31721,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 107.18333333333334,
+        "id": 325,
+        "hp": 372,
+        "position": {
+          "x": -20.804992144261572,
+          "y": 0.75,
+          "z": 14.940199721279022,
+          "yaw": 0.9270596974876611
+        },
+        "target": {
+          "x": -22.852705001831055,
+          "z": 0.7364528179168701
+        },
+        "approach": "inside",
+        "path": 0,
+        "index": 3,
+        "from": 54188,
+        "to": 44664,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 117.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -31.27940811448811,
+          "y": 0.75,
+          "z": -18.257814077142747,
+          "yaw": 6.282406190858097
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 22,
+        "from": 31727,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 117.18333333333334,
+        "id": 325,
+        "hp": 0,
+        "position": {
+          "x": -21.1461201741515,
+          "y": 0.75,
+          "z": 9.808716222028456,
+          "yaw": 2.3204682558797094
+        },
+        "target": {
+          "x": -22.852705001831055,
+          "z": 0.7364528179168701
+        },
+        "approach": "inside",
+        "path": 0,
+        "index": 12,
+        "from": 50787,
+        "to": 44664,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 127.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -31.27940811448811,
+          "y": 0.75,
+          "z": -18.257814077142747,
+          "yaw": 6.282406190858097
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 22,
+        "from": 31727,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 127.18333333333334,
+        "id": 325,
+        "hp": 270,
+        "position": {
+          "x": -23.504356913000304,
+          "y": 0.75,
+          "z": 7.864678779333195,
+          "yaw": 2.452173181631051
+        },
+        "target": {
+          "x": -22.852705001831055,
+          "z": 0.7364528179168701
+        },
+        "approach": "inside",
+        "path": 27,
+        "index": 10,
+        "from": 49422,
+        "to": 44664,
+        "connected": true,
+        "radius": 0.6
+      },
+      {
+        "at": 137.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -31.27940811448811,
+          "y": 0.75,
+          "z": -18.257814077142747,
+          "yaw": 6.282406190858097
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 22,
+        "from": 31727,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 147.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -31.117301095922524,
+          "y": 0.75,
+          "z": -18.25768777689312,
+          "yaw": 6.282406190857596
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 19,
+        "from": 31727,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 157.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -31.117301095922524,
+          "y": 0.75,
+          "z": -18.25768777689312,
+          "yaw": 6.282406190857596
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 19,
+        "from": 31727,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 167.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -25.2697469793522,
+          "y": 0.75,
+          "z": -18.2531318511155,
+          "yaw": 6.2824061908576425
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 31739,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 177.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -25.2697469793522,
+          "y": 0.75,
+          "z": -18.2531318511155,
+          "yaw": 6.2824061908576425
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 31739,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      },
+      {
+        "at": 187.18333333333334,
+        "id": 298,
+        "hp": 0,
+        "position": {
+          "x": -25.2697469793522,
+          "y": 0.75,
+          "z": -18.2531318511155,
+          "yaw": 6.2824061908576425
+        },
+        "target": {
+          "x": -37.2,
+          "z": 6.105882352941178
+        },
+        "approach": "outside",
+        "path": 0,
+        "index": 11,
+        "from": 31739,
+        "to": 48375,
+        "connected": true,
+        "radius": 0.35
+      }
+    ]
+  },
+  "searchInterruptionTrace": [
+    {
+      "kind": "search",
+      "tick": 2401,
+      "id": 298,
+      "label": "main",
+      "from": 28635,
+      "to": 31717,
+      "budget": 1542,
+      "pendingBefore": false,
+      "pendingAfter": false,
+      "found": true,
+      "expansions": 32,
+      "size": 32
+    },
+    {
+      "kind": "search",
+      "tick": 2761,
+      "id": 325,
+      "label": "wide",
+      "from": 73540,
+      "to": 59936,
+      "budget": 9650,
+      "pendingBefore": false,
+      "pendingAfter": false,
+      "found": true,
+      "expansions": 736,
+      "size": 736
+    },
+    {
+      "kind": "search",
+      "tick": 2821,
+      "id": 325,
+      "label": "wide",
+      "from": 74905,
+      "to": 59936,
+      "budget": 9626,
+      "pendingBefore": false,
+      "pendingAfter": false,
+      "found": true,
+      "expansions": 600,
+      "size": 600
+    },
+    {
+      "kind": "search",
+      "tick": 3005,
+      "id": 325,
+      "label": "wide",
+      "from": 72879,
+      "to": 59936,
+      "budget": 11297,
+      "pendingBefore": false,
+      "pendingAfter": false,
+      "found": true,
+      "expansions": 79,
+      "size": 79
+    },
+    {
+      "kind": "search",
+      "tick": 3011,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 1516,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 1516,
+      "size": 1516
+    },
+    {
+      "kind": "search",
+      "tick": 3071,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3132,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3192,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3252,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3312,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3372,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 1821,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 1821,
+      "size": 1821
+    },
+    {
+      "kind": "search",
+      "tick": 3432,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3492,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3552,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3612,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3672,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3732,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3792,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3852,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3912,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 3972,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 4032,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    },
+    {
+      "kind": "search",
+      "tick": 4093,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 1968,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 1968,
+      "size": 1968
+    },
+    {
+      "kind": "search",
+      "tick": 4153,
+      "id": 298,
+      "label": "main",
+      "from": 31717,
+      "to": 48375,
+      "budget": 2000,
+      "pendingBefore": false,
+      "pendingAfter": true,
+      "found": false,
+      "expansions": 2000,
+      "size": 2000
+    }
+  ],
+  "exteriorCourierFlowCandidate": [
+    {
+      "tier": "high",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 72,
+      "peakAlive": 90,
+      "peakPlazaAlive": 89,
+      "stranded": [
+        {
+          "x": -37.736482082946864,
+          "z": 4.754666942299655,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -53.717016258706394,
+          "z": 43.39103780484533,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -24.257950539418633,
+          "z": 40.73673314711851,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -53.74703139764593,
+          "z": -1.2942003366316763,
+          "state": "attracted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -23.7396251914583,
+          "z": -37.24377511487499,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -18.599999999999998
+          }
+        },
+        {
+          "x": -37.75848262422311,
+          "z": 17.98889079439478,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "directorCountAtEnd": 154,
+      "recoverableDownedAtEnd": 44,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 46,
+      "minimumInsideRing": 37,
+      "playerAtMinimumPlaza": {
+        "x": -22.852705001831055,
+        "z": 0.7364528179168701
+      },
+      "minPlazaAliveAfter45Seconds": 40,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 325,
+          "x": -24.257950539418633,
+          "z": 40.73673314711851,
+          "samples": 30,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 9.65,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    {
+      "tier": "low",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 47,
+      "peakAlive": 57,
+      "peakPlazaAlive": 48,
+      "stranded": [
+        {
+          "x": -36.73348270942203,
+          "z": 4.255194250346336,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -53.71306488352813,
+          "z": -20.283694560922978,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "directorCountAtEnd": 79,
+      "recoverableDownedAtEnd": 19,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 14,
+      "minimumInsideRing": 12,
+      "playerAtMinimumPlaza": {
+        "x": -22.852705001831055,
+        "z": 0.7364528179168701
+      },
+      "minPlazaAliveAfter45Seconds": 12,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 5,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 228,
+          "x": -36.7502232328699,
+          "z": 4.237154446664106,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "id": 256,
+          "x": -17.7396251914583,
+          "z": -38.24377511487499,
+          "samples": 30,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -18.599999999999998
+          }
+        },
+        {
+          "id": 264,
+          "x": -22.7396251914583,
+          "z": 42.75622488512501,
+          "samples": 30,
+          "state": "attracted",
+          "scripted": {
+            "x": -17.769230769230774,
+            "z": 23.7
+          }
+        },
+        {
+          "id": 267,
+          "x": -39.25288694746741,
+          "z": -34.7355652626629,
+          "samples": 30,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -18.599999999999998
+          }
+        },
+        {
+          "id": 270,
+          "x": 0.7373405678643337,
+          "z": -23.245780189288105,
+          "samples": 30,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -18.599999999999998
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 8.55,
+      "lineBreakAfterTurnSeconds": 190
+    }
+  ],
+  "nearestOpenBreachCandidate": [
+    {
+      "tier": "high",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 72,
+      "peakAlive": 95,
+      "peakPlazaAlive": 94,
+      "stranded": [
+        {
+          "x": 4.67339740998763,
+          "z": 2.627663040263356,
+          "state": "idle",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -19
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -53.39011901529036,
+          "z": -18.924326216705555,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -53.67608405854579,
+          "z": 41.50558560519307,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -19.873597228599902,
+          "z": -27.647066544046826,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -24.4
+          }
+        }
+      ],
+      "directorCountAtEnd": 154,
+      "recoverableDownedAtEnd": 38,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 44,
+      "minimumInsideRing": 39,
+      "playerAtMinimumPlaza": {
+        "x": -22.871883392333984,
+        "z": 0.6911589503288269
+      },
+      "minPlazaAliveAfter45Seconds": 40,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 2,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 298,
+          "x": -36.25316887340822,
+          "z": -18.26168921611568,
+          "samples": 30,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "id": 325,
+          "x": -24.257950539418633,
+          "z": 40.73673314711851,
+          "samples": 30,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 9.65,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    {
+      "tier": "low",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 47,
+      "peakAlive": 57,
+      "peakPlazaAlive": 56,
+      "stranded": [
+        {
+          "x": -36.73347543829347,
+          "z": 4.255184667096517,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "directorCountAtEnd": 78,
+      "recoverableDownedAtEnd": 23,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 17,
+      "minimumInsideRing": 16,
+      "playerAtMinimumPlaza": {
+        "x": -22.852705001831055,
+        "z": 0.7364528179168701
+      },
+      "minPlazaAliveAfter45Seconds": 16,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 228,
+          "x": -36.73347543829347,
+          "z": 4.255184667096517,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 8.55,
+      "lineBreakAfterTurnSeconds": 190
+    }
+  ],
+  "finalRoutingValidation": {
+    "revision": "0e1a5d2513c04301da81a4c1696e866cec4c2237",
+    "flags": [
+      "L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+    ],
+    "high": {
+      "tier": "high",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 72,
+      "peakAlive": 95,
+      "peakPlazaAlive": 94,
+      "stranded": [
+        {
+          "x": 4.67339740998763,
+          "z": 2.627663040263356,
+          "state": "idle",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -19
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -53.39011901529036,
+          "z": -18.924326216705555,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        },
+        {
+          "x": -53.67608405854579,
+          "z": 41.50558560519307,
+          "state": "idle",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "x": -19.873597228599902,
+          "z": -27.647066544046826,
+          "state": "attracted",
+          "scripted": {
+            "x": -20.02307692307693,
+            "z": -24.4
+          }
+        }
+      ],
+      "directorCountAtEnd": 154,
+      "recoverableDownedAtEnd": 41,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 44,
+      "minimumInsideRing": 39,
+      "playerAtMinimumPlaza": {
+        "x": -22.871883392333984,
+        "z": 0.6911589503288269
+      },
+      "minPlazaAliveAfter45Seconds": 40,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 2,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 298,
+          "x": -36.25316887340822,
+          "z": -18.26168921611568,
+          "samples": 30,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        },
+        {
+          "id": 325,
+          "x": -24.257950539418633,
+          "z": 40.73673314711851,
+          "samples": 30,
+          "state": "alerted",
+          "scripted": {
+            "x": -37.2,
+            "z": 6.105882352941178
+          },
+          "approach": "outside"
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 9.65,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    "low": {
+      "tier": "low",
+      "holdComplete": true,
+      "firstBreachLevelSeconds": 50.083333333333336,
+      "firstBreachAfterTurnSeconds": 17.266666666666666,
+      "aliveAtFirstBreach": 47,
+      "peakAlive": 57,
+      "peakPlazaAlive": 56,
+      "stranded": [
+        {
+          "x": -36.73347543829347,
+          "z": 4.255184667096517,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "directorCountAtEnd": 78,
+      "recoverableDownedAtEnd": 22,
+      "alarmPendingAtEnd": 0,
+      "alarmCursorAtEnd": 36,
+      "aliveAtMinimumPlaza": 17,
+      "minimumInsideRing": 16,
+      "playerAtMinimumPlaza": {
+        "x": -22.852705001831055,
+        "z": 0.7364528179168701
+      },
+      "minPlazaAliveAfter45Seconds": 16,
+      "samplesAfter45Seconds": 8700,
+      "peakStationaryOutsidePlazaAfter30Seconds": 1,
+      "stationaryOutsidePlazaAtPeak": [
+        {
+          "id": 228,
+          "x": -36.73347543829347,
+          "z": 4.255184667096517,
+          "samples": 30,
+          "state": "chase",
+          "scripted": {
+            "x": -32.1,
+            "z": 6.105882352941178
+          }
+        }
+      ],
+      "arrivalEdges": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "threeDirectionsAtLeast60Degrees": true,
+      "maxGroupAtOneSourcePerTick": 5,
+      "firstAttackSeconds": 8.55,
+      "lineBreakAfterTurnSeconds": 190
+    },
+    "vehicle": [
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l4-tank",
+            "tier": "high",
+            "code": 0,
+            "seconds": 56.073,
+            "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "l4-tank",
+            "tier": "low",
+            "code": 0,
+            "seconds": 35.637,
+            "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l4-parked",
+            "tier": "high",
+            "code": 0,
+            "seconds": 36.25,
+            "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "l4-parked",
+            "tier": "low",
+            "code": 0,
+            "seconds": 19.328,
+            "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l7-bus",
+            "tier": "high",
+            "code": 0,
+            "seconds": 16.928,
+            "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "l7-bus",
+            "tier": "low",
+            "code": 0,
+            "seconds": 14.397,
+            "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "L9",
+            "tier": "high",
+            "code": 0,
+            "seconds": 125.323,
+            "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          },
+          {
+            "mode": "L9",
+            "tier": "low",
+            "code": 0,
+            "seconds": 87.873,
+            "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+            "sourceHash": "f74582bb0a12b362de121f4771e4e4283e6f521feb396b1e6188ebab76712100",
+            "pass": true
+          }
+        ]
+      }
+    ]
+  }
+}

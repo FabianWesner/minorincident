@@ -600,6 +600,15 @@ export class LevelFourWar {
         b.scripted = sites.slice().sort((p, q) => dist(p.outer, e.transform) - dist(q.outer, e.transform))[0].outer;
         b.breachApproach = 'outside';
       }
+      if (b.breachApproach === 'outside' && b.scripted && !inside(e.transform)) {
+        // Later breaches can shorten an exterior detour substantially. Keeping
+        // the first west waypoint sends north/south arrivals around the camp
+        // even after the adjacent rail opens. Keep a margin to avoid oscillation.
+        const nearest = sites.reduce((best, site) => dist(site.outer, e.transform) < dist(best.outer, e.transform) ? site : best);
+        if (dist(nearest.outer, e.transform) + 3 < dist(b.scripted, e.transform)) {
+          b.scripted = nearest.outer; b.path.length = 0; b.goal = -1;
+        }
+      }
       if (b.breachApproach && b.scripted) {
         const target = this.low && !b.l4FlankTarget ? player : this.world.entities.get(b.l4FlankTarget ?? b.l1?.focusId ?? 1)?.transform ?? player;
         const followsHold = this.s.phase === 'war' && this.s.origin[e.id] >= l4Emergence.length && !b.l4FlankTarget && (!b.l1?.focusId || b.l1.focusId === 1);

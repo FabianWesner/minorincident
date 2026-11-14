@@ -16,6 +16,10 @@ export class L4HoldCensus {
   private playerAtMinimumPlaza: { x: number; z: number } | null = null;
   private stranded: unknown[] = [];
   private samples = 0;
+  private stationarySecond = -1;
+  private stationary = new Map<number, { x: number; z: number }[]>();
+  private stationaryOutsidePeak = 0;
+  private stationaryOutsideAtPeak: unknown[] = [];
   private groupMax = 0;
   private firstAttack: number | null = null;
   constructor(private readonly world: SimWorld) {
@@ -46,6 +50,33 @@ export class L4HoldCensus {
     this.peakAlive = Math.max(this.peakAlive, alive.length); this.peakPlaza = Math.max(this.peakPlaza, plaza);
     const opened = Object.values(s.breaches ?? {}).flatMap(b => b?.openAt ? [b.openAt] : []);
     if (this.firstBreach === null && opened.length) { this.firstBreach = Math.min(...opened); this.aliveAtBreach = alive.length; }
+    if (w.tick >= s.warAt) {
+      const second = Math.floor((w.tick - s.warAt) / 60);
+      if (second !== this.stationarySecond) {
+        this.stationarySecond = second;
+        const liveIds = new Set<number>(); let outsideStill = 0; const still: unknown[] = [];
+        for (const e of alive) {
+          const inPlaza = e.transform.x > p.x0 && e.transform.x < p.x1 && e.transform.z > p.z0 && e.transform.z < p.z1;
+          if (inPlaza) continue;
+          liveIds.add(e.id);
+          const window = this.stationary.get(e.id) ?? [];
+          window.push({ x: e.transform.x, z: e.transform.z });
+          if (window.length > 30) window.shift();
+          this.stationary.set(e.id, window);
+          const origin = window[0];
+          if (window.length === 30 && window.every(at => Math.hypot(at.x - origin.x, at.z - origin.z) <= .5)) {
+            outsideStill++;
+            still.push({ id: e.id, x: e.transform.x, z: e.transform.z, samples: 30, state: e.infected?.state,
+              scripted: e.infected?.scripted, approach: e.infected?.breachApproach });
+          }
+        }
+        for (const id of this.stationary.keys()) if (!liveIds.has(id)) this.stationary.delete(id);
+        if (outsideStill > this.stationaryOutsidePeak) {
+          this.stationaryOutsidePeak = outsideStill;
+          this.stationaryOutsideAtPeak = still;
+        }
+      }
+    }
     if (w.tick >= s.warAt + 45 * 60) {
       if (this.minimumPlaza === null || plaza < this.minimumPlaza) {
         this.stranded = alive.filter(e => !(e.transform.x > p.x0 && e.transform.x < p.x1 && e.transform.z > p.z0 && e.transform.z < p.z1)).map(e => ({ x: e.transform.x, z: e.transform.z, state: e.infected?.state, scripted: e.infected?.scripted, approach: e.infected?.breachApproach }));
@@ -69,6 +100,8 @@ export class L4HoldCensus {
       alarmPendingAtEnd: s.alarmPending, alarmCursorAtEnd: s.alarmCursor,
       aliveAtMinimumPlaza: this.aliveAtMinimumPlaza, minimumInsideRing: this.minimumRing, playerAtMinimumPlaza: this.playerAtMinimumPlaza,
       minPlazaAliveAfter45Seconds: this.minimumPlaza, samplesAfter45Seconds: this.samples,
+      peakStationaryOutsidePlazaAfter30Seconds: this.stationaryOutsidePeak,
+      stationaryOutsidePlazaAtPeak: this.stationaryOutsideAtPeak,
       arrivalEdges: [...this.edges].sort(), threeDirectionsAtLeast60Degrees: threeDirections, maxGroupAtOneSourcePerTick: this.groupMax,
       firstAttackSeconds: this.firstAttack, lineBreakAfterTurnSeconds: s.lineBreakAt ? (s.lineBreakAt - s.warAt) / 60 : null };
   }
