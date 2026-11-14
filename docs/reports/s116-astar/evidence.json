@@ -5378,5 +5378,39 @@
         "pending": true
       }
     ]
+  },
+  "rescuePriorityValidation": {
+    "sourceHash": "2c3828a256c3e0e304d28fdb902e6588c0fd3d06d43367f52c27b8f5a2e3bbd7",
+    "seconds": 28.824959916,
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "l3Army": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 0,
+          "attacksPerMinute": 60.18605905352568
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 2,
+          "attacksPerMinute": 16.892396288791723
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 3,
+          "attacksPerMinute": 19.19096895578551
+        }
+      ],
+      "measured": 3,
+      "within": 2,
+      "pass": true
+    },
+    "typecheck": "pass",
+    "lint": "pass"
   }
 }
