@@ -100,7 +100,7 @@ Each row is the first observed dead/turned status; the bite source position is s
 - `npm run typecheck`: PASS.
 - `npm run lint`: PASS.
 - `npm test`: PASS locally; 27 files, 107 passed, 150/150 inventory, 104 seconds within the 240 second budget.
-- Remote unit runner: unavailable (none provisioned). The runner wrapper rejected the `npm test` alias for its local fallback; the same suite passed directly on this Mac.
+- `sh tools/remote/run.sh "$PWD" -- npm test`: PASS on 46.225.66.90; 27 files, 106 passed / 1 skipped, unchanged 150/150 inventory; 220.1 seconds within the 240 second budget. The earlier restricted-network attempt was superseded by this successful run.
 - Browser QA needed; no browser run.
 
 See [evidence.json](evidence.json) for the raw before/after per-run receipts and all survivor losses.
