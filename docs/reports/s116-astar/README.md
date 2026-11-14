@@ -68,3 +68,5 @@ Current-tree typecheck and lint were rerun after the finalized observer and obst
 Two further isolated variants were tested and discarded: monotonically allocating visited stamps independently of failed-pocket restoration, and using startCell in seek instead of nearestCell. Neither changes the L3/L10 regression outcomes. Neither speculative implementation change is retained.
 
 L3 seed-2 loss probe now observes the mission-authoritative outbreak.bite and l3.squad-lost events. Candidate squad losses occur at ticks 9277 (source 691 → officer 30), 9361 (1136 → 32), and 9492 (835 → 31), around x=114–116 / z=-23–-22. The last bite has turns=false but still causes a squad loss under existing mission rules. No combat.hit ally events are emitted for these outbreak bites. This identifies the actors and encounter for the next route comparison; mission loss rules are unchanged.
+
+Explicitly canceling retained searches when infected steering invalidates b.goal was tested against L3/L10 and produced identical outcomes. That diagnostic API and caller changes were discarded. Reusing an abandoned frontier after b.goal resets does not explain the observed audit regressions.
