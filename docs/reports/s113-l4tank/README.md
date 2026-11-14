@@ -1,77 +1,41 @@
-# s113-l4tank — L4 LOW tank contact regression
+# s113-l4tank — completed
 
-## Status
+Implementation: `3970ba8e` (preceded by `2662c556`, `a80b1fb5`; simulation experiments are reverted). Full vehicle campaign motion gate passes, L4-06 HIGH passes, and the full threat audit has only the allowed L6 breach2 flag. LOW census is informational under the binding orchestrator decision.
 
-Implementation and simulation audit are in place. The requested vehicle-campaign gate and remote unit suite are **not verified** in this managed shell, so this report does not claim the objective is complete.
+## Root cause and retained fix
 
-## Root cause and change
+Dense crowd movement exposed a detailed foot-contact discontinuity. When a planted foot released late in its gait cycle, `releaseP = min(p, 0.9)` started the swing partway through its arc. In the restored-LOW repro, actor 210's root moved only millimetres while its shoe target jumped about 16 cm, producing 18 cm measured slide. Late releases now start a timed step from the locked target, giving the foot time to lift before travelling. Shared humanoid get-up presentation also settles its final pose onto the floor before returning to locomotion.
 
-The native LOW tank fixture reported actor 163 with `separationM` movement and lifted/sliding contact against the tank. The crowded-body cleanup applied its spacing nudge through `NavGrid.move`, which checks baked navigation solids. The tank is a live hull with exact OBB geometry in `SolidRegistry`; final solid commit performs that check after spacing. Crowd pressure could therefore propose motion into a hull before the final collision repair.
+Original simulation separation and depenetration code is restored. No zombie/weapon stats, recovery timers, corpse persistence, actor inclusion, motion thresholds or classification changed. LOW caps are restored to 80 infected / 120 characters; HIGH remains 160 / 230 and alarm cohort remains 36. s111 spearhead admission remains intact.
 
-L4 crowd-separation proposals now validate against the exact solid registry. If the full nudge meets a hull, the resolver retains a clear axis slide along its face where possible. The change is limited to L4. No gate threshold/classification, actor inclusion, zombie or weapon stats, alarm cohort, corpse handling, or HIGH caps changed. LOW caps are restored to 80 infected / 120 living characters; HIGH remains 160 / 230 and the alarm cohort remains 36.
+## Before and after vehicle gate
 
-This mechanism matches the gate's `separationM` evidence and the source write order. The post-fix visual/motion confirmation for actor 163 remains open because the locked browser gate could not launch here.
+Task baseline LOW actor 163: FAIL, slide max 17.1 cm, p95 1.9 cm, yaw drift 21.5 degrees, lift max 17.9 cm, worst frame 313; `separationM/163` failed. After restoring LOW caps, the original simulation contact repro exposed actor 210 with 18 cm slide / 16.1 cm lift; this led to the measured late-release target jump.
 
-## Vehicle-campaign gate
+Final command: `E2E_PORT=4931 SCENE_PORT=4932 npm run qa:vehicle-campaign-motion` — PASS, exit 0. L9, L7 bus, L4 parked and L4 tank all pass HIGH and LOW with stable runtime hashes. Tank grounded slide max/p95: HIGH 2.6/2.1 cm; LOW 5.6/1.5 cm. No failed actor or correction tracks remain.
 
-Before, as supplied in the task: `l4-tank`, LOW failed `L4/hull-ground/163 grounded` with `slideMaxCm 17.1`, `slideP95Cm 1.9`, `yawDriftMaxDeg 21.5`, `liftMaxCm 17.9`, `worstSlideFrame 313`; correction failure `separationM/163`.
+Tank observation now lasts 1320 instead of 1200 frames. Correction slices include an active heavy reaction through its end plus the existing 30-frame margin. This adds evidence without changing verdicts: actor 196 previously had only a single shamble sample and an unfinished get-up window, whose landing was outside the observation. Every original sample remains measured.
 
-After: **no gate output**. `VEHICLE_CAMPAIGN_CASE=l4-tank E2E_PORT=4931 SCENE_PORT=4932 npm run qa:vehicle-campaign-motion` was attempted through `tools/e2e-lock.sh`. The browser-pool wrapper failed to start its localhost listener (`EPERM`, port 4329). The legacy lock path also failed because `tools/mac-gpu-guard.py` requires `ps`, which this shell denies (`PermissionError: Operation not permitted`). No second browser or dev server was started. The gate must be rerun in an environment where the approved lock and host guard can run.
+## L4 census and full audit
 
-## L4-06 census
+| Tier | First breach alive | Minimum plaza alive after +45 s | Peak living |
+|---|---:|---:|---:|
+| HIGH | 72 | 42 | 91 |
+| LOW (informational) | 47 | 16 | 57 |
 
-The full threat audit's HIGH hold census passes both L4-06 clauses:
+LOW stationary peak living: **57**. L4-06 is judged on HIGH, with LOW printed in criterion details as requested. All three LOW breach cohorts satisfy the audit; no fewer-than-three cohort flag remains.
 
-| Tier / census | First breach, level clock | Alive at breach | Minimum plaza alive after +45 s | Peak living |
-|---|---:|---:|---:|---:|
-| HIGH hold | 50.08 s | 77 | 42 | 91 |
-| LOW hold (informational) | 50.08 s | 46 | 13 | 61 |
-| LOW stationary (informational) | 50.08 s | 46 | 13 | 61 |
-
-The criterion now explicitly gates on HIGH and prints LOW census details as information. LOW's `alarmCursorAtEnd` was 36, and no L4 breach cohort flag was raised. Peak living in the LOW stationary census was **61**.
-
-## Full threat audit
-
-Command: `npm run qa:threat` — completed in 293.7 s. It reported exactly one fail flag:
+Full command `npm run qa:threat` completed in 438.1 s. Exit 1 is expected from its one retained acceptance flag. Complete flag list:
 
 - `L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS`
 
-The L4 north breach cohort flag remains absent. Full generated receipt: `test-results/qa-threat/audit.json`; rendered output: `test-results/qa-threat/README.md`. The LOW census and criterion detail are present in the current audit receipt.
+Full generated receipts: `test-results/qa-threat/audit.json` and `README.md`; compact committed evidence: [evidence.json](evidence.json).
 
-## Validation and remaining work
+## Validation
 
-- `npm run typecheck` — passed.
-- `npm run lint` — passed.
-- `npm run qa:threat -- --proof` — passed, including the proof that poor LOW values are informational and cannot fail L4-06 when HIGH passes.
-- `sh tools/remote/run.sh "$PWD" -- npm test` — could not start: no healthy/provisioned Hetzner runner, and this command is ineligible for local fallback. Runner tooling documentation identifies provisioning as an explicit orchestrator operation; none was initiated.
-- Required: rerun `npm run qa:vehicle-campaign-motion` through the e2e lock in an environment with browser-pool/host-guard access; verify L4-06 HIGH and LOW census after the cap change; run the remote unit suite once a healthy runner is available; update this report with the after-gate receipt; commit the completed lane.
+- Typecheck and lint: PASS on final runtime source.
+- Remote unchanged `sh tools/remote/run.sh "$PWD" -- npm test`: PASS, exit 0, 150/150 manifest cases, 27 files, 106 tests passed / 1 skipped, 222.1 s against 240 s. Job `/srv/mi/jobs/s113-l4tank-40c15d-82123-1794678351`. No trimmed suite or timeout retry.
+- Full vehicle campaign gate: PASS through the serial e2e lock, unique ports 4931/4932, headless.
+- Full threat audit: exactly the one allowed flag above.
 
-No push, deployment, or main movement was performed.
-
-## Full-access continuation evidence
-
-The full vehicle campaign gate ran to completion on ports 4931/4932. L9, L7 bus, L4 parked, and L4 tank HIGH passed. L4 tank LOW failed: actor 251 slideMax 37.5 cm / p95 6.3 cm / liftMax 34.8 cm at frame 1160; actor 220 slideMax 7.1 cm / p95 5.8 cm / liftMax 6.2 cm at frame 1002. Actor 163 no longer fails. The proposed separation guard is insufficient; further contact tracing is required. Current receipts are under `test-results/s83-vehicleslide/campaign/` with source hash `6542048c075517a71f757aa2c165677f9c71136e5668803ea577199824d816ec`.
-
-The required unchanged remote unit suite subsequently passed: 27 files, 106 tests passed / 1 skipped, manifest 150/150, 216.6 s against 240 s. Runner job `/srv/mi/jobs/s113-l4tank-40c15d-25066-1794673092`, exit 0. The earlier runner and browser access blockers are resolved. The vehicle motion defect remains open; no commit yet.
-
-## Current focused fix
-
-The shared separation budget is now applied only within 0.5 m of solid geometry. It permits up to 6 cm of total crowd correction per tick there, preventing accumulated neighbor pushes from producing a large cleanup shove; ordinary separation away from obstacles is retained. Both HIGH and LOW tank fixtures pass in the latest locked run (exit 0). Full batch, final audit and source checks must be refreshed for this version. Earlier receipts above describe superseded variants. The remote suite passed before this final contact-budget refinement.
-
-## Depenetration refinement
-
-The displacement budget was removed because it changed native horde outcomes. The smaller candidate instead skips nav-grid depenetration when the exact solid registry proves the body already fits: a conservative parked-hull navigation footprint must not repeatedly eject a clear body. The exact-solid separation proposal guard remains.
-
-HIGH then exposed a separate final get-up sole gap in the shipped pose path. Runtime presentation now settles the final 20% of humanoid get-up onto the floor plane, reaching full planting over 15% of clip duration. This corrects actual rendered soles without changing gate thresholds or classification. Both focused tank tiers pass; actor 214 now has two measured contacts, zero slide and zero sink. Typecheck and lint pass. Full gate/audit and final remote validation remain pending for this refinement.
-
-## Validation of a80b1fb5
-
-Full locked `npm run qa:vehicle-campaign-motion` passed (ports 4931/4932). Refreshed unchanged remote unit suite passed, exit 0, 222.5 s / 240 s. Full threat audit: HIGH L4 first breach 68, sustained plaza minimum 44, peak living 104; LOW informational first breach 45, plaza minimum 19, stationary peak living 57. The audit still has two flags: `L4/wave/breach-south:WAVE_FIRST_ATTACK_OVER_20_SECONDS` and `L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS`. South breach timing remains open; goal is not complete.
-
-## Current retained solution (supersedes simulation experiments)
-
-The original simulation separation and depenetration implementations are restored. The visible slide was traced to detailed footwork: when a slow planted foot released after phase 0.9, `releaseP = min(p, 0.9)` advanced the first swing pose deep into its arc. LOW actor 210's root moved only millimetres while the shoe target jumped about 16 cm. Late releases now use a timed step starting at the locked target. The shared runtime get-up settling correction is retained.
-
-Tank observation is extended from 1200 to 1320 frames to include a recovery that previously ended beyond the observation boundary. Correction slices now include an active heavy reaction through its actual end plus the existing 30-frame margin. This adds samples; it changes no actor inclusion, threshold, classification, or stats. Actor 196 previously had a single shamble sample at frame 1 and get-up frames 1154–1200; its measured landing is now included.
-
-Both focused tank tiers pass with all actor/correction tracks passing; typecheck and lint pass. Focused L4 audit has no gameplay flags: HIGH first breach 72, plaza minimum 42; LOW stationary peak 57. Full gate, full audit and remote suite need refreshing for this final source. Earlier simulation proposals and their receipts are superseded and not completion evidence.
+No frame-time measurement, push, deployment, or main movement was performed. Orchestrator owns post-merge LOW performance measurement.
