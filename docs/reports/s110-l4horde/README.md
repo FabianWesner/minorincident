@@ -1,4 +1,27 @@
-# s110-l4horde — incomplete investigation
+# s110-l4horde — committed candidate, one new audit flag open
+
+Current gameplay commit: `d35b0f2b`. L4-06 passes HIGH and LOW, but the full requested outcome remains incomplete because the full audit reports a new L4 north breach cohort flag. No further gameplay experiments were made after the orchestrator instruction.
+
+| Tier | Breach level seconds | Alive at breach | Minimum plaza alive | Peak living |
+|---|---:|---:|---:|---:|
+| HIGH | 50.083 | 72 | 42 | 91 |
+| LOW | 50.083 | 67 | 55 | 107 |
+
+Full all-level audit: 521.1 seconds, exit 1, exactly two flags:
+
+- NEW: `L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS` (one admitted member; first attack 10.583 seconds). This is outside the allowed baseline and remains open.
+- Allowed existing: `L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS`.
+
+Both former L4-06 criterion flags are absent. L4 skilled route completed. All other levels have no fail flags. The compact final receipt is `final-audit.json`; complete generated receipts remain in `test-results/qa-threat/`.
+
+Typecheck and lint passed for the candidate. Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed, exit 0: manifest 150/150 cases, executed default project 106 passed / 1 skipped across 27 files, 221.7 seconds against 240-second budget. Runner job `/srv/mi/jobs/s110-l4horde-c91a91-59619-1794661080`. No rerun or trimmed tests. Browser QA needed. Orchestrator owns LOW frame-time measurement after merge.
+
+Root-cause evidence: commit `16bf032c` removed arrival allied-damage resistance and repeat-downing retirement, and changed LOW cap accounting to reserve recoverable downed slots. The isolated LOW accounting reversal reached minimum plaza 56 but peak living 129; reverted because unbounded recoveries make it unsuitable. Current candidate preserves strict recovery accounting and compensates through authored budgets. A complete historical per-commit bisect is still open; evidence supports this commit's admission/recovery changes as a contributor, not a proven exclusive cause. Residency bypass did not alter the tested census. Complete and stationary hold policies matched in the tested comparison.
+
+Performance note: infected slot caps increase HIGH 120→160 and LOW 80→144; character caps increase 190→230 and 120→184. Alarm cohort increases 18→36. Slots include downed actors, so they differ from peak living counts (91 HIGH / 107 LOW). Exact baseline peak-live deltas and frame-time measurements remain open. Combat stats, recovery rules, persistent corpses, audit policies and thresholds are unchanged.
+
+## Investigation history (superseded status statements below)
+
 
 L4-06 remains failing. Browser QA needed. Time box exceeded; unsuccessful gameplay trials have been removed. This commit preserves additional HIGH/LOW and stationary census diagnostics, without changing gameplay, audit thresholds, or existing policies.
 
