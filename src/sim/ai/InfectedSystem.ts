@@ -2117,9 +2117,13 @@ export class InfectedSystem {
     }
     // Only a courier chase can share its flow field; soldier and investigation goals need their own route.
     // Courier-assigned L4 breach walkers have the same destination as the
-    // shared flow. Making each compete for an individual A* search can leave
+    // shared flow, including the exterior leg after a breach opens. The flow
+    // crosses the actual open gap; individual exterior A* requests can lose
+    // their resumable workspace to other actors on every retry.
+    // Making each compete for an individual A* search can leave
     // the new cohort waiting behind the rest of the horde for its whole cue.
-    const courierApproach = b.breachApproach === 'inside' && b.pressureTarget?.id === 1 && b.pressureTarget.until > this.world.tick;
+    const courierApproach = (b.breachApproach === 'inside' || b.breachApproach === 'outside') &&
+      (b.pressureTarget?.id ?? b.l1?.focusId ?? b.l4FlankTarget ?? 1) === 1;
     // The shared flow field is only built on the admission grid; a wide body on `wideNav` would read an empty field and stand still, so it searches.
     const useFlow = nav !== this.wideNav && !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
