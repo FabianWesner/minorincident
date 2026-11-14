@@ -274,6 +274,22 @@ test('chasers path through a maze and an offset district without ever overlappin
 });
 
 function checkInterleavedPaths(): void {
+  {
+    const nav = new NavGrid({ width: 20, depth: 20 }, [], .1);
+    const from = nav.cell(-8, 0), to = nav.cell(8, 0), path: number[] = [], other: number[] = [];
+    expect(nav.path(from, to, path, 8)).toBe(false);
+    nav.path(to, from, other, 8);
+    nav.setBlocker(1, { x: 0, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: 10 }, true);
+    expect(nav.path(from, to, path, Infinity), 'a saved frontier must not cross a new wall').toBe(false);
+    expect(path).toEqual([]);
+    nav.setBlocker(1, { x: 0, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: 10 }, false);
+    expect(nav.path(from, to, path, 8)).toBe(false);
+    nav.path(to, from, other, 8);
+    const changed = nav.cell(-8, 3);
+    expect(nav.path(from, changed, path, Infinity)).toBe(true);
+    expect(path.at(-1)).toBe(changed);
+    expect(path.length).toBe(6);
+  }
   // Compare resumed routes with uninterrupted A* on varied obstacle layouts.
   for (let pattern = 0; pattern < 12; pattern++) {
     const nav = new NavGrid({ width: 20, depth: 20 }, [], .1);
