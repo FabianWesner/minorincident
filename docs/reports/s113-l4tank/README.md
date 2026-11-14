@@ -63,3 +63,7 @@ The shared separation budget is now applied only within 0.5 m of solid geometry.
 The displacement budget was removed because it changed native horde outcomes. The smaller candidate instead skips nav-grid depenetration when the exact solid registry proves the body already fits: a conservative parked-hull navigation footprint must not repeatedly eject a clear body. The exact-solid separation proposal guard remains.
 
 HIGH then exposed a separate final get-up sole gap in the shipped pose path. Runtime presentation now settles the final 20% of humanoid get-up onto the floor plane, reaching full planting over 15% of clip duration. This corrects actual rendered soles without changing gate thresholds or classification. Both focused tank tiers pass; actor 214 now has two measured contacts, zero slide and zero sink. Typecheck and lint pass. Full gate/audit and final remote validation remain pending for this refinement.
+
+## Validation of a80b1fb5
+
+Full locked `npm run qa:vehicle-campaign-motion` passed (ports 4931/4932). Refreshed unchanged remote unit suite passed, exit 0, 222.5 s / 240 s. Full threat audit: HIGH L4 first breach 68, sustained plaza minimum 44, peak living 104; LOW informational first breach 45, plaza minimum 19, stationary peak living 57. The audit still has two flags: `L4/wave/breach-south:WAVE_FIRST_ATTACK_OVER_20_SECONDS` and `L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS`. South breach timing remains open; goal is not complete.
