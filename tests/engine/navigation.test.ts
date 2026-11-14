@@ -271,3 +271,27 @@ test('chasers path through a maze and an offset district without ever overlappin
   for (let i = 0; i < 450; i++) { o.update(); expect(ai.nav.clear(r.transform.x, r.transform.z, r.combat!.radius)).toBe(true); }
   expect(Math.hypot(r.transform.x - 105, r.transform.z - 50)).toBeLessThan(1.2);
 });
+
+test('interleaved budgeted A* requests retain their frontier across retries', () => {
+  const nav = new NavGrid({ width: 40, depth: 40 }, [], .1);
+  const requests = [
+    { from: nav.cell(-18, -18), to: nav.cell(18, 18), path: [] as number[], done: false },
+    { from: nav.cell(18, -18), to: nav.cell(-18, 18), path: [] as number[], done: false },
+  ];
+  for (let retry = 0; retry < 100 && requests.some(request => !request.done); retry++) {
+    for (const request of requests) {
+      if (request.done) continue;
+      request.done = nav.path(request.from, request.to, request.path, 8);
+      expect(nav.expansions).toBeLessThanOrEqual(8);
+    }
+  }
+  for (const request of requests) {
+    expect(request.done).toBe(true);
+    expect(request.path.at(-1)).toBe(request.to);
+    let previous = request.from;
+    for (const cell of request.path) {
+      expect(Math.abs(nav.x(cell) - nav.x(previous)) + Math.abs(nav.z(cell) - nav.z(previous))).toBe(nav.cellSize);
+      previous = cell;
+    }
+  }
+});

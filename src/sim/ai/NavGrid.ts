@@ -1,5 +1,6 @@
 import type { ScenarioDefinition } from '../../levels/loader';
 export type Wall = NonNullable<ScenarioDefinition['walls']>[number];
+type PathSearch = { from: number; to: number; revision: number; size: number; heap: number[]; cells: number[]; parents: number[]; costs: number[]; states: number[] };
 type ReachMemo = { from: number; x: number; z: number; path: number[] };
 /** Coarse look-ahead offsets (path nodes) for budgeted NPC steering. */
 const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
@@ -74,6 +75,9 @@ export class NavGrid {
   private readonly heap: number[] = [];
   private readonly buckets = new Map<number, Map<number, Wall[]>>();
   private readonly routeBuckets = new Map<number, Map<number, Wall[]>>();
+  private readonly interruptedPaths = new WeakMap<number[], PathSearch>();
+  private searchResult: number[] | null = null;
+  private readonly searchCells: number[] = [];
   private searchFrom = -1;
   private searchTo = -1;
   private searching = false;
@@ -794,7 +798,32 @@ export class NavGrid {
   path(from: number, to: number, result: number[], budget: number): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
-    const resuming = this.searching && this.searchFrom === from && this.searchTo === to, fail = this.failSeen;
+    // Each reused output array owns its unfinished request. Other callers may use
+    // the shared workspace between retries without discarding this request's frontier.
+    if (this.searchResult !== result) {
+      if (this.searchResult && this.searching && this.searchRevision === this.revision) {
+        const cells = this.searchCells.slice();
+        this.interruptedPaths.set(this.searchResult, { from: this.searchFrom, to: this.searchTo, revision: this.searchRevision, size: this.searchSize, heap: this.heap.slice(), cells,
+          parents: cells.map(cell => this.parent[cell]), costs: cells.map(cell => this.cost[cell]), states: cells.map(cell => this.open[cell]) });
+      }
+      this.searching = false;
+      const saved = this.interruptedPaths.get(result);
+      this.interruptedPaths.delete(result);
+      if (saved && saved.from === from && saved.to === to && saved.revision === this.revision) {
+        this.searchFrom = from; this.searchTo = to; this.searchRevision = saved.revision; this.searchSize = saved.size;
+        this.pathStamp = (this.pathStamp + 1) >>> 0;
+        if (!this.pathStamp) { this.pathSeen.fill(0); this.pathStamp = 1; }
+        this.heap.length = 0; for (const value of saved.heap) this.heap.push(value);
+        this.searchCells.length = 0;
+        for (let i = 0; i < saved.cells.length; i++) {
+          const cell = saved.cells[i]; this.searchCells.push(cell); this.pathSeen[cell] = this.pathStamp;
+          this.parent[cell] = saved.parents[i]; this.cost[cell] = saved.costs[i]; this.open[cell] = saved.states[i];
+        }
+        this.searching = true;
+      }
+      this.searchResult = result;
+    }
+    const resuming = this.searching && this.searchRevision === this.revision && this.searchFrom === from && this.searchTo === to, fail = this.failSeen;
     if (!resuming && fail && this.failRevision === this.revision && this.failSize < budget && fail[from] === this.failStamp && fail[to] !== this.failStamp) {
       // perf-w5d: the grid is unchanged and the start lies in the pocket the last exhaustive search
       // closed without the goal. A fresh search would expand exactly that pocket again and fail; leave
@@ -805,6 +834,7 @@ export class NavGrid {
     }
     if (!resuming) {
       this.searchFrom = from; this.searchTo = to; this.searching = true; this.searchSize = 0; this.searchRevision = this.revision;
+      this.searchCells.length = 0; this.searchCells.push(from);
       this.heap.length = 0; this.push(from, 0);
       // As with reachPath, stamp visited cells instead of clearing the entire district for each agent.
       this.pathStamp = (this.pathStamp + 1) >>> 0;
@@ -827,7 +857,7 @@ export class NavGrid {
         const n = nz * this.width + nx;
         if (this.blocked[n]) continue;
         const cost = this.cost[best] + (this.movementCost?.(this.x(n), this.z(n)) ?? 1);
-        if (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && cost < this.cost[n]) { this.pathSeen[n] = this.pathStamp; this.cost[n] = cost; this.parent[n] = best; this.open[n] = 1; this.push(n, cost + (Math.abs(nx - tx) + Math.abs(nz - tz)) * 1.00001); }
+        if (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && cost < this.cost[n]) { if (this.pathSeen[n] !== this.pathStamp) this.searchCells.push(n); this.pathSeen[n] = this.pathStamp; this.cost[n] = cost; this.parent[n] = best; this.open[n] = 1; this.push(n, cost + (Math.abs(nx - tx) + Math.abs(nz - tz)) * 1.00001); }
       }
     }
     return false;
