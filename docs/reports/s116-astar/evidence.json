@@ -8773,5 +8773,60 @@
     "takeoffRefresh": "LOW fails; hatch/rail-stall 60 frames, one actor, zero contacts",
     "holdAwareTakeoff": "LOW fails; hatch/rail-stall 58 frames, one actor, zero contacts; unplanted actions",
     "retained": false
+  },
+  "s116bBusTrailFix": {
+    "focusedLow": {
+      "sourceHash": "f9d259440fc22e281a3ad86af5569f448c9d8d6b4057b4c472c087ff173b7dad",
+      "sourceStable": true,
+      "pass": true,
+      "contextCoverage": [
+        {
+          "context": "driving",
+          "frames": 1515,
+          "actors": 47,
+          "contacts": 119,
+          "maxCm": 1.2,
+          "p95Cm": 0.6
+        },
+        {
+          "context": "detour",
+          "frames": 1515,
+          "actors": 47,
+          "contacts": 119,
+          "maxCm": 1.2,
+          "p95Cm": 0.6
+        },
+        {
+          "context": "hatch",
+          "frames": 204,
+          "actors": 6,
+          "contacts": 18,
+          "maxCm": 1.1,
+          "p95Cm": 0.6
+        },
+        {
+          "context": "rail-stall",
+          "frames": 204,
+          "actors": 6,
+          "contacts": 18,
+          "maxCm": 1.1,
+          "p95Cm": 0.6
+        }
+      ],
+      "contextsProven": true,
+      "correctionsProven": true,
+      "errors": []
+    },
+    "typecheck": "pass",
+    "lint": "pass",
+    "baseBusAt7200": {
+      "x": 375.8,
+      "z": -218.3
+    },
+    "candidateBeforeFixBusAt7200": {
+      "x": 3.8,
+      "z": -321.9
+    },
+    "allEightAndAudit": "pending"
   }
 }
