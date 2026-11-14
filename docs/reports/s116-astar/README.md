@@ -44,3 +44,7 @@ The identical-endpoint sharing variant was also tested and discarded: preserving
 ## Direct native trace (preliminary)
 
 HIGH seed 1 actor 298 requests at tick 3011 and receives its path at tick 3086: 75 ticks / 1.25 s, six calls, 9752 total expansions across calls. This confirms completion of the originally traced long route under the unchanged tick budget. The preliminary full HIGH/LOW probe also records abandoned goals, so its raw unresolved episode count is not a valid starvation metric. Cancellation classification is required before claiming zero starvation. The probe is tools/qa/s116-path-probe.ts.
+
+## Cancellation-aware trace
+
+The observer now records superseded destinations, exhausted searches and actors leaving navigation. It still counts requests unresolved at their 600-tick deadline even if canceled later. HIGH retains one overdue request: actor 330 completes after 714 ticks (11.9 s), four calls. LOW retains one: actor 242 requests once at tick 3031 and leaves navigation at 3729 (698 ticks). Thus the zero-overdue requirement is not yet satisfied. Current tool typecheck and lint pass. These cases need per-tick steering inspection, including whether direct steering legitimately superseded navigation without a subsequent path call.
