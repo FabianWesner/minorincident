@@ -23,7 +23,7 @@ No infected or weapon stats, per-level zombie stats, recovery timers, corpse per
 
 Command: `node --import tsx/esm tools/qa/threat-audit.ts`
 
-Runtime revision: `94e2ee1ae2ef660f45375b642859c301b9660b1d` plus the uncommitted s111 source change. Audit duration: 302.1 s. The full flag list is:
+Audited source was committed as `9610abbbfbe0d648b4539e35d370f706cba328b9`; the audit ran against the identical working-tree source before commit. Audit duration: 302.1 s. The full flag list is:
 
 - `L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS`
 
@@ -42,4 +42,4 @@ No browser QA was run. Review HIGH and LOW breach presentation and horde behavio
 
 ## Delivery status
 
-The source and this report are ready, but the requested commit could not be created in this sandbox: Git attempted to write `.git/worktrees/s111-l4north/index.lock` outside the writable worktree and was denied. The remote unit suite also needs a healthy runner. No push, deploy, or main movement was performed.
+Committed as `9610abbbfbe0d648b4539e35d370f706cba328b9`. The remote unit suite remains unrun because no healthy/provisioned runner was available. No push, deploy, or main movement was performed.
