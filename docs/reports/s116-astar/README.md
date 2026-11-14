@@ -34,3 +34,7 @@ Remote suite first attempt stopped at manifest admission (151/150 cases), before
 ## Full validation attempt at 8abc091c
 
 Remote unit suite passed on 46.225.66.90: 27 files, 106 passed / 1 skipped; 217.6 s within 240 s. Full threat audit completed in 438.0 s with three aggregate flags: L3-06 squad counts/losses, L3-11 native competent rate, and L10 hold STUCK_CHASER_OVER_30_SECONDS. L4 has zero flags. These failures require current-base comparison and investigation; no no-regression claim is made. Compact receipts are in evidence.json.
+
+## Regression isolation
+
+A diagnostic L3/L10 audit with the base e1901bb7 NavGrid passes both levels (only PARTIAL_LEVEL_SELECTION remains). This confirms the candidate introduces the L3/L10 aggregate failures. An opt-in retention variant restricted to infected callers also failed L3/L10 and added a passive flag; it was discarded. Current committed gameplay remains the initial incomplete candidate. The goal is not achieved; do not merge this candidate until the regressions and direct 10-second request lifetime checks are resolved. Vehicle campaign validation is also outstanding.
