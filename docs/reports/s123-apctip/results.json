@@ -1,0 +1,278 @@
+{
+  "candidate": "266ec466",
+  "finding": {
+    "source": "docs/reports/s122-l9qa/README.md",
+    "nativeDefaultPath": "detour",
+    "asphaltCenterZ": -330,
+    "detourZ": -305,
+    "baseline": {
+      "quality": "high",
+      "tick": 4096,
+      "position": [
+        58.3925,
+        1.4318,
+        -304.6467
+      ],
+      "rollRadians": 0.36839,
+      "rollDegrees": 21.09,
+      "pitchRadians": -0.04299,
+      "descendingVelocityMps": -0.8345,
+      "wheelContacts": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "maxRollRadians": 0.39999,
+      "maxRollDegrees": 22.92,
+      "interpretation": "Uncontrolled chassis lean after wheel support was lost on the off-road detour; missing collision chunk was not established."
+    }
+  },
+  "correction": {
+    "file": "src/sim/vehicles/VehicleBody.ts",
+    "method": "stabilizeTilt",
+    "enabledWhen": "L9 mission APC is player-driven",
+    "boundDegrees": 20,
+    "springStartsAtFractionOfBound": 0.6,
+    "angularVelocityDeltaCapRadiansPerSecond": 3,
+    "technique": "Finite capped restorative angular impulse; no view-side rotation or blanket angular damping."
+  },
+  "primaryRoutes": {
+    "simulationTicksPerTier": 9000,
+    "qualityTiers": [
+      "low",
+      "high"
+    ],
+    "assertion": "No driving-phase roll or pitch reached 20 degrees.",
+    "rows": [
+      {
+        "route": "road",
+        "low": {
+          "maxRollDegrees": 1.99,
+          "maxPitchDegrees": 11.42,
+          "firstOver20": null
+        },
+        "high": {
+          "maxRollDegrees": 1.99,
+          "maxPitchDegrees": 11.42,
+          "firstOver20": null
+        }
+      },
+      {
+        "route": "countryside",
+        "low": {
+          "maxRollDegrees": 2.89,
+          "maxPitchDegrees": 10.6,
+          "firstOver20": null
+        },
+        "high": {
+          "maxRollDegrees": 2.89,
+          "maxPitchDegrees": 10.6,
+          "firstOver20": null
+        }
+      },
+      {
+        "route": "dry-shortcut",
+        "low": {
+          "maxRollDegrees": 14.13,
+          "maxPitchDegrees": 11.94,
+          "firstOver20": null
+        },
+        "high": {
+          "maxRollDegrees": 14.13,
+          "maxPitchDegrees": 11.94,
+          "firstOver20": null
+        }
+      }
+    ],
+    "fullHighRoadCompletion": {
+      "command": "L9_QUALITY=high L9_PROGRESS_PATH=primary L9_PROGRESS_TICKS=36000 node --import tsx/esm tools/qa/l9-progress-probe.ts 1 road --attitude-check --check",
+      "finished": true,
+      "tick": 10989,
+      "phase": "done",
+      "drivingMaxRollDegrees": 1.99,
+      "drivingMaxPitchDegrees": 11.4,
+      "firstDrivingOver20": null,
+      "positionJumps": 0,
+      "postDrivingCrashMaxRollDegrees": 90
+    },
+    "aggressiveSteering": {
+      "scenario": "10-second alternating full-steer burst during primary road drive",
+      "maxRollDegrees": 8.48,
+      "maxPitchDegrees": 12.06,
+      "firstDrivingOver20": null,
+      "routeCompleted": false
+    }
+  },
+  "busOnRoadHold": {
+    "durationSeconds": 120,
+    "samplesPerRow": 240,
+    "asphaltDistanceBoundMeters": 6,
+    "rows": [
+      {
+        "quality": "high",
+        "apcPlacement": "on-road",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.02
+      },
+      {
+        "quality": "high",
+        "apcPlacement": "corner-cut",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      },
+      {
+        "quality": "high",
+        "apcPlacement": "wide-detour",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      },
+      {
+        "quality": "low",
+        "apcPlacement": "on-road",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.003
+      },
+      {
+        "quality": "low",
+        "apcPlacement": "corner-cut",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      },
+      {
+        "quality": "low",
+        "apcPlacement": "wide-detour",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      }
+    ],
+    "method": "Native L9 sim; bus ran unassisted for 120 seconds, bus centre sampled every 30 ticks against authored asphalt route segments."
+  },
+  "gates": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "threatAudit": {
+      "command": "npm run qa:threat",
+      "exit": 0,
+      "durationSeconds": 304.3,
+      "failFlags": 0,
+      "l9Skilled": "complete, 0 flags",
+      "l9Passive": "complete, 0 flags"
+    },
+    "vehicleCampaignMotion": {
+      "command": "E2E_PORT=4983 SCENE_PORT=4984 npm run qa:vehicle-campaign-motion",
+      "status": "passed",
+      "cases": 8,
+      "batches": [
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-tank",
+              "tier": "high",
+              "code": 0,
+              "seconds": 51.841,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "l4-tank",
+              "tier": "low",
+              "code": 0,
+              "seconds": 29.724,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-parked",
+              "tier": "high",
+              "code": 0,
+              "seconds": 32.153,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "l4-parked",
+              "tier": "low",
+              "code": 0,
+              "seconds": 16.646,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l7-bus",
+              "tier": "high",
+              "code": 0,
+              "seconds": 14.443,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "l7-bus",
+              "tier": "low",
+              "code": 0,
+              "seconds": 12.896,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "L9",
+              "tier": "high",
+              "code": 0,
+              "seconds": 117.434,
+              "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "L9",
+              "tier": "low",
+              "code": 0,
+              "seconds": 77.945,
+              "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        }
+      ]
+    },
+    "remoteUnitSuite": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "status": "passed",
+      "runner": "46.225.66.90",
+      "seconds": 127.6,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1
+    }
+  },
+  "browserQaNeeded": [
+    "Repeat real-input HIGH WebGL2 road capture and review frames.",
+    "Exercise aggressive steering, kerb/ramp contact, and bus/APC contact with per-tick roll and pitch logging.",
+    "Rerun the vehicle campaign motion gate and unchanged remote unit suite.",
+    "Check WebGPU manually."
+  ],
+  "measurementAudit": "Probe maxima accumulation corrected on continuation. Earlier per-axis maxima need refreshed measurements; no completion claim."
+}

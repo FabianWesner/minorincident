@@ -135,5 +135,23 @@ export class VehicleBody {
     this.body.applyTorqueImpulse({ x: axis.x * force, y: 0, z: axis.z * force }, true);
     this.upsideDownTicks = 0; this.clearStuck(); return true;
   }
+  /** Restore excessive chassis lean with a finite suspension-like spring, preserving ordinary cornering lean. */
+  stabilizeTilt(maxAngle: number): void {
+    const q = this.body.rotation(), omega = this.body.angvel(), inertia = this.body.principalInertia();
+    const axes = [
+      { axis: { x: 1 - 2 * (q.y * q.y + q.z * q.z), y: 2 * (q.x * q.y + q.w * q.z), z: 2 * (q.x * q.z - q.w * q.y) }, angle: this.roll, inertia: inertia.x },
+      { axis: { x: 2 * (q.x * q.z + q.w * q.y), y: 2 * (q.y * q.z - q.w * q.x), z: 1 - 2 * (q.x * q.x + q.y * q.y) }, angle: Math.asin(Math.max(-1, Math.min(1, 2 * (q.w * q.z - q.x * q.y)))), inertia: inertia.z },
+    ];
+    const start = maxAngle * .6, frequency = 24, damping = 1.7;
+    const impulse = { x: 0, y: 0, z: 0 };
+    for (const { axis, angle, inertia: moment } of axes) {
+      const projection = omega.x * axis.x + omega.y * axis.y + omega.z * axis.z;
+      if (Math.abs(angle) < start && Math.abs(projection) < .45) continue;
+      const correction = Math.max(0, Math.abs(angle) - start) * Math.sign(angle);
+      const deltaRate = Math.max(-3, Math.min(3, (-damping * frequency * projection - frequency * frequency * correction) * FIXED_DT));
+      impulse.x += axis.x * moment * deltaRate; impulse.y += axis.y * moment * deltaRate; impulse.z += axis.z * moment * deltaRate;
+    }
+    if (impulse.x || impulse.y || impulse.z) this.body.applyTorqueImpulse(impulse, true);
+  }
   dispose(): void { this.world.removeVehicleController(this.controller); this.world.removeRigidBody(this.body); }
 }

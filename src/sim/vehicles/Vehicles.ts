@@ -620,6 +620,8 @@ export class Vehicles {
       if (car.entity.vehicle!.scripted || car.entity.hidden) continue;
       const beforeSpeed = car.physics.speed;
       car.physics.postPhysics();
+      if (this.world.missions?.l9?.state.carId === car.entity.id && car.entity.vehicle!.driver === 1)
+        car.physics.stabilizeTilt(20 * Math.PI / 180);
       if (beforeSpeed >= 3 && this.world.tick - car.crashAt >= 60) {
         this.world.physics.world!.contactPairsWith(car.physics.collider, collider => {
           let impulse = 0;
