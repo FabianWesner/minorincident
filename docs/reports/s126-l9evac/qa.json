@@ -195,12 +195,19 @@
   },
   "visualQA": {
     "before": "Viewed s125 QA screenshot; red pickup perched on barricade with front wheels visibly lifted.",
-    "after": "Authored placement and collision bounds put the pickup at y=0, z=-19 with no barricade overlap. Browser after-render unavailable because the pool could not bind its control port. Sheet labels the after side as an authored placement plan, not a render.",
+    "after": "Headless WebGL scene ran successfully for 120 frames, but inspection of shot-0120.png showed the courier and stray mesh fragments without the pickup. Render is inconclusive for wheel contact; missing source GLBs were also observed during layout generation.",
     "browserQAneeded": [
       "Render the after placement and inspect wheel contact and grounded rest in browser/scene QA.",
       "Run the vehicle campaign motion gate once the shared browser pool is available.",
       "Run the required remote unit suite once a healthy runner is available."
-    ]
+    ],
+    "sceneRun": {
+      "pass": true,
+      "frames": 120,
+      "seconds": 8.942,
+      "pickupVisible": false,
+      "groundingVerified": false
+    }
   },
   "limits": [
     "One explored HIGH dry-shortcut skilled run still left one living evacuee unboarded at 20 s; the failing route was outside the s125 HIGH road reproduction matrix and remains open.",

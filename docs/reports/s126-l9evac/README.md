@@ -30,3 +30,7 @@ See [wreck-before-after.jpg](./wreck-before-after.jpg). Browser QA is still need
 ## Commit status
 
 Implementation and report committed after focused tests, typecheck, lint, the required remote suite, and HIGH/LOW L9 vehicle motion passed. The separate shortcut evacuation and rendered wreck inspection remain open.
+
+## Follow-up rendered inspection
+
+The browser pool is now available. A headless WebGL D-CROSSING scene completed 120 frames in 8.94 seconds, with no reported clipping. I inspected its final capture: it shows the courier and stray mesh fragments but no pickup, so this does not prove wheel contact. Rendered wreck inspection remains open; the missing asset problem must be resolved before that capture can establish grounding.
