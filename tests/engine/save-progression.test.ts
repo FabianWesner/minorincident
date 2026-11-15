@@ -77,6 +77,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   // L5 difficulty is frozen: preserve the exact rack used by its bot fixture, including kick.
   const l5 = preset('L5-default'), l5Start = campaignLoadout(l5, 5);
   expect({ LEFT:l5Start.LEFT, RIGHT:l5Start.RIGHT }).toEqual(l5.racks);
+  const { Game } = await import('../../src/Game');
   // Native checkpoint sweep shares this campaign progression regression's case budget.
   for (let level = 1; level <= 10; level++) {
     const save = level === 1 ? newCampaign() : preset(`L${level}-default` as `L${2|3|4|5|6|7|8|9|10}-default`);
@@ -89,6 +90,11 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
         if (level === 9) candidate.l9Crash = world.missions!.l9!.save();
         if (level === 10) candidate.cureResume = { ...world.missions!.saveResume(true), cameraZoom: 1 };
         expect(validateSave(candidate), `L${level} checkpoint ${checkpoint}`).toBe(true);
+        const context = { campaign: structuredClone(save), appliedCampaign: null, world, loading: false,
+          view: { view: { getState: () => ({ targetZoom: 1 }) } }, saves: { write: (value: CampaignSave) => validateSave(value) } };
+        context.appliedCampaign = context.campaign as never;
+        expect(Game.prototype.saveCampaign.call(context as never), `L${level} actual saveCampaign at ${checkpoint}`).toBe(true);
+
       }
       if (level === 9) {
         const l9 = world.missions!.l9!;
@@ -99,6 +105,14 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
         expect(validateSave(dead), 'death interval must not be persisted as a living crash resume').toBe(false);
         dead.l9Crash = living; dead.settings.quality = 'low';
         expect(validateSave(dead), 'settings can retain the previous living resume during death').toBe(true);
+        const context = { campaign: dead, appliedCampaign: dead, world, loading: false,
+          saves: { write: (value: CampaignSave) => validateSave(value) } };
+        expect(Game.prototype.saveCampaign.call(context as never), 'actual settings save during death retains living resume').toBe(true);
+        const log = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+        context.saves.write = () => { throw new Error('storage unavailable'); };
+        expect(Game.prototype.saveCampaign.call(context as never), 'save failure returns without interrupting gameplay').toBe(false);
+        expect(log).toHaveBeenCalled(); log.mockRestore();
+
         world.entities.get(1)!.health.current = living.player.health.current;
         for (const phase of ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'] as const) {
           l9.state.phase = phase; l9.state.finished = phase === 'done';
