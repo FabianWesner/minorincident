@@ -49,3 +49,7 @@ L9 HIGH shortcut zoom 1.5 frame at tick 10821 (`test-results/b107/l9-high-shortc
 ## Close placement diagnostic
 
 Camera-only views on fresh L9 confirm the red pickup is clear of its former barricade (`test-results/b107/prompt-fixture/l9-pickup-side.jpg`). Grounding remains visually uncertain; authored y=0 is not sufficient render proof. **P2 placement concern:** a staging truck cab appears over a low road barrier (`test-results/b107/prompt-fixture/l9-staging.jpg`; tick 6). No building intersection is visible. These use a custom cinematic camera, not follow zoom 1.5, and cannot establish late evacuation actors or fence routing. The requested late checkpoint setup failed with “No active objective”; no tools/playtest patch was made.
+
+## Short prompt motion sample
+
+Six sequential frames per Gate, Push dumpster and Start car wash fixture were reviewed (`test-results/b107/prompt-fixture/motion-{gate,dumpster,carwash}-{0..5}.jpg`; ticks and rectangles in `motion.json`). Physical KeyA then KeyD were held for 100 ms intervals, with screenshot overhead between intervals. No erratic relocation was observed while a panel remained visible. Gate/dumpster panels disappeared and returned across interaction range; carwash disappeared upon activation. This brief HIGH WebGPU fixture sample does not clear all temporal behavior or the full alarm matrix in an uninterrupted campaign.

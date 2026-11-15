@@ -33,7 +33,7 @@
     "redPickupGroundedAtZoom1_5": "unverified",
     "apcTiltAndSeatedHatchShooting": "unverified",
     "l1CarAlarmPromptHighLowZoom1And1_5": "Static layout fixture reviewed all four; vitals clear; P3 objective-arrow overlap z1; uninterrupted post-outbreak approach remains unverified",
-    "otherPromptsL1ToL3": "Three L1 static fixture panels reviewed; HUD clearance passes sampled views; jumping unverified",
+    "otherPromptsL1ToL3": "Three L1 panels reviewed statically and in brief real-key movement sequence; no erratic relocation observed within sample",
     "screamerReadabilityL9AndL10WhileMoving": "Actual ordinary events captured both levels; purple thin ring visible in stills, L9 partially occluded; continuous motion noticeability not proven",
     "l9BoringHarmlessBabysittingAndVisualVerdict": "unverified",
     "webgpuCoveragePerLevel": "Confirmed renderer webgpu in L9 x3, L1 HIGH and L10 HIGH logs; L2 partial HIGH also checked"
@@ -470,5 +470,138 @@
       }
     ],
     "verdict": "Pickup clear of barricade; visual grounding remains uncertain. Staging truck cab visually overlaps low road barrier in camera view; no building intersection shown."
+  },
+  "promptMotion": {
+    "method": "Three HIGH WebGPU L1 fixtures; six screenshots each, 100 ms real movement intervals with capture overhead; KeyA then KeyD; no god mode",
+    "metadata": [
+      {
+        "name": "gate",
+        "f": 0,
+        "tick": 13,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 1,
+        "tick": 20,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 2,
+        "tick": 26,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 3,
+        "tick": 33,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 4,
+        "tick": 39,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 5,
+        "tick": 45,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "file": "test-results/b107/prompt-fixture/other-gate.jpg",
+        "tick": 45,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 55\u00a0m\nGate \u00b7 25%\nGate\nStand here \u00b7 E / middle-click"
+      },
+      {
+        "name": "dumpster",
+        "f": 0,
+        "tick": 12,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 1,
+        "tick": 18,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 2,
+        "tick": 23,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 3,
+        "tick": 30,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 4,
+        "tick": 37,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 5,
+        "tick": 43,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "file": "test-results/b107/prompt-fixture/other-dumpster.jpg",
+        "tick": 43,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 26\u00a0m"
+      },
+      {
+        "name": "carwash",
+        "f": 0,
+        "tick": 14,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 1,
+        "tick": 20,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 2,
+        "tick": 26,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 3,
+        "tick": 31,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 4,
+        "tick": 37,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 5,
+        "tick": 43,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "file": "test-results/b107/prompt-fixture/other-carwash.jpg",
+        "tick": 43,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 76\u00a0m"
+      }
+    ],
+    "reviewSheet": "/private/tmp/b107-motion.jpg",
+    "verdict": "No erratic relocation while visible in this brief sample. Gate/dumpster panels disappear and return at range boundary; carwash panel disappears on activation. No broad temporal pass."
   }
 }
