@@ -190,3 +190,7 @@ Bus target uses z3 after x450 on the final12m-wide asphalt, leaving APC passage 
 ## Final passing-space runtime sweeps and full remote suite
 
 All6 final a7a064ac skilled native drives complete with continuous every-tick bus positions,0ticks outside6m; worst3.885m. Refreshed `final-six-driven-paths.json` supersedes prior92tick failure. Required unchanged remote `npm test` passes:27files,106tests passed/1skipped,223.9s of240s budget,exit0. No suite trimming or timeout retry needed. Current browser campaign gate, L9 threat audit, E31 verification and offscreen-spawn proof remain open.
+
+## Final L9 threat subset
+
+Current runtime L9 subset completes both skilled/passive native routes with0L9 flags and0passive flags. Command exit1 comes only from audit-level `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`, expected for subset; no threshold or audit code changed. User explicitly permits L9 subset. Full receipt in `final-l9-threat.json`. This establishes L9 zero flags, not a whole-campaign threat gate.
