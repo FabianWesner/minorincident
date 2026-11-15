@@ -27,5 +27,28 @@
     "nativeVehicles": "pass",
     "threatAudit": "0 flags, 470.7s",
     "remoteUnit": "pass, 105 passed / 1 skipped, 136s"
+  },
+  "vehicleMotion": {
+    "pass": true,
+    "rows": [
+      {
+        "mode": "L9",
+        "tier": "high",
+        "code": 0,
+        "seconds": 103.941,
+        "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+        "sourceHash": "5600e7369c6c05e419ea74c1321209c9d9de7a507f8d0d62a8caaeee8d749e1f",
+        "pass": true
+      },
+      {
+        "mode": "L9",
+        "tier": "low",
+        "code": 0,
+        "seconds": 76.203,
+        "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+        "sourceHash": "5600e7369c6c05e419ea74c1321209c9d9de7a507f8d0d62a8caaeee8d749e1f",
+        "pass": true
+      }
+    ]
   }
 }
