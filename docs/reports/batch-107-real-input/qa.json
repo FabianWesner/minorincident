@@ -1,0 +1,359 @@
+{
+  "candidate": "d1101b68c71adfb36f20c31bcf0a897880a49f45",
+  "status": "incomplete progress checkpoint; L9 x3 completed; HIGH evacuation timing failed",
+  "method": "Attempted headless real-input playtest through the documented driver and browser pool; no browser session started; no source or driver changes",
+  "environment": {
+    "buildQa": "passed with MI_WORKTREE_CACHE=/private/tmp/minorincident-mi-cache; default shared cache path was not writable",
+    "tsxIpc": "failed with EPERM under default TMPDIR and under TMPDIR=/private/tmp",
+    "preview": "failed to bind/listen on 127.0.0.1:4993; playtest launcher timed out waiting for preview",
+    "browserPool": "unavailable; browser-status reported fetch failed; no listener on 4329",
+    "otherPorts": {
+      "4993": "no listener",
+      "3300": "no listener (not started)",
+      "4329": "no listener"
+    },
+    "typecheck": "passed",
+    "lint": "passed",
+    "remoteNpmTest": "passed: 105 passed, 1 skipped; 150-case collection; 130.0 seconds"
+  },
+  "attemptedRuns": [
+    {
+      "level": "L9",
+      "route": "road",
+      "quality": "high",
+      "zoom": 1,
+      "captureZooms": [
+        1,
+        1.5
+      ],
+      "backendRequested": "webgpu",
+      "screamCaptures": true,
+      "result": "finished without skipped objectives; 322 wall seconds; evacuation remained 3/4 more than 20 seconds after defense complete"
+    }
+  ],
+  "checks": {
+    "l9HighRoadEvacuationAndHandover": "unverified",
+    "l9HighShortcutEvacuationAndHandover": "unverified",
+    "l9LowRoadEvacuationAndHandover": "unverified",
+    "evacueesBoardWithin20Seconds": "unverified",
+    "northTruckStagingAndGateFence": "unverified",
+    "redPickupGroundedAtZoom1_5": "unverified",
+    "apcTiltAndSeatedHatchShooting": "unverified",
+    "l1CarAlarmPromptHighLowZoom1And1_5": "unverified",
+    "otherPromptsL1ToL3": "unverified",
+    "screamerReadabilityL9AndL10WhileMoving": "unverified",
+    "l9BoringHarmlessBabysittingAndVisualVerdict": "unverified",
+    "webgpuCoveragePerLevel": "unverified"
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "level": "L9",
+      "text": "HIGH road and HIGH shortcut evacuation exceed ~20 seconds after Defense complete; eventually complete without skips.",
+      "tick": 17447,
+      "capture": "test-results/b107/l9-high-road/captures/campaign-L9-t16237.jpg",
+      "roadIncompleteSeconds": 85.7,
+      "shortcutIncompleteSeconds": 44.2
+    }
+  ],
+  "carryOverNotRechecked": [
+    {
+      "level": "L9",
+      "severity": "P1",
+      "text": "Batch 106 recorded a contradictory fresh HIGH road repeat at 2/4 trucks 58.4 seconds after Defense complete; permanent softlock was not proven.",
+      "source": "docs/reports/batch-106-real-input/qa.json",
+      "batch107Status": "not independently observed"
+    },
+    {
+      "level": "L9",
+      "severity": "P2",
+      "text": "Batch 106 described the red evacuation truck as elevated above the barricade.",
+      "source": "docs/reports/batch-106-real-input/qa.json",
+      "batch107Status": "not independently observed"
+    },
+    {
+      "level": "L1",
+      "severity": "P3",
+      "text": "Batch 106 described the car-alarm panel overlapping the health HUD.",
+      "source": "docs/reports/batch-106-real-input/qa.json",
+      "batch107Status": "not independently observed"
+    }
+  ],
+  "captures": {
+    "rawCopiedToGit": false,
+    "newCapturePaths": [],
+    "contactSheet": "contact-sheet.jpg",
+    "contactSheetReason": "Reviewed derived sheet of L9 delay, scream and two L10 loading handovers"
+  },
+  "driverGaps": [
+    "Optional L1 alarm not exercised by standard route; no dedicated alarm capture option.",
+    "Temporal warning review and L10 remain open."
+  ],
+  "runtimeRecovery": "Host access restored; preview and GPU pool work. Earlier EPERM failures are historical.",
+  "l9Runs": [
+    {
+      "name": "l9-high-road",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 322,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 47.226,
+            "deaths": 0,
+            "assists": 1,
+            "attacks": {
+              "weapon.shotgun": 25
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0400424003601074,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "reach-outskirts",
+                "text": "",
+                "tick": 17784,
+                "marker": {
+                  "anchor": "crawl-end",
+                  "ring": {
+                    "x": 547,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": null,
+                  "playerY": 0.7200000286102295,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 1,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      }
+    },
+    {
+      "name": "l9-high-shortcut",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 236,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 11.733333333333333,
+            "deaths": 0,
+            "assists": 1,
+            "attacks": {
+              "weapon.shotgun": 36
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 4,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0347378253936768,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "reach-outskirts",
+                "text": "",
+                "tick": 12881,
+                "marker": {
+                  "anchor": "crawl-end",
+                  "ring": {
+                    "x": 547,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": null,
+                  "playerY": 0.7200000286102295,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      }
+    },
+    {
+      "name": "l9-low-road",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 215,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 4.866666666666666,
+            "deaths": 0,
+            "assists": 1,
+            "attacks": {
+              "weapon.shotgun": 35
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 8,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0141711235046387,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "reach-outskirts",
+                "text": "",
+                "tick": 11363,
+                "marker": {
+                  "anchor": "crawl-end",
+                  "ring": {
+                    "x": 547,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      }
+    }
+  ]
+}
