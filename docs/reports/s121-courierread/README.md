@@ -17,3 +17,9 @@ The requested full remote unit suite did not start: `tools/remote/run.sh` report
 ## Verdict
 
 Partial implementation only. The bar cap is a plausible, low-cost reduction to crowd clutter, but the requested one-glance courier and HP readability and artifact-free behavior remain unverified. Continue with browser-pool access, capture the four required L4 views and L6 retreat, compare open-street/L1/menu controls, exercise WebGL2 and WebGPU on HIGH and LOW, and measure L4 LOW p95 before claiming completion.
+
+## Follow-up validation
+
+Pool and Git access are restored. The source change was committed as de94c65f. The full remote unit suite passed unchanged on 46.225.66.90: 106 passed / 1 skipped, 28 files, 228.9 seconds within 240 seconds, exit 0.
+
+The L6 HIGH WebGL2 capture completed under the pool. Reviewed shot-0029: courier and HUD HP are visible, but there is no dense horde near the courier; this fixture cannot prove the requested crowd behavior. Its healthBarsMin check failed (0 versus 1). Raw frames and metrics are in test-results/s121-courierread/l6-high/. No dense-crowd or backend-parity claim is made. The earlier capture delay was pool admission behind another active exclusive job, not a renderer hang.

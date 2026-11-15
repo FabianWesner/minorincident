@@ -3,17 +3,35 @@
   "status": "incomplete",
   "change": "Limit healthy ordinary attacker bars within 6m of the courier to the six closest. Damaged and mandatory infected bars retain existing eligibility.",
   "visualEvidence": {
-    "status": "blocked",
+    "status": "incomplete",
     "contactSheet": null,
-    "reason": "Scene Lab capture did not start: browser pool loopback listener 127.0.0.1:4329 failed with EPERM.",
-    "unverified": ["L4 hold HIGH z1", "L4 hold LOW z1", "L4 hold z1.5", "L6 retreat", "WebGL2", "WebGPU", "open streets", "L1 and menus", "artefacts"]
+    "reason": "Pool access restored. L6 HIGH WebGL2 capture completed; fixture has no dense horde and failed healthBarsMin (0 vs 1), so it does not prove requested readability.",
+    "unverified": [
+      "L4 hold HIGH z1",
+      "L4 hold LOW z1",
+      "L4 hold z1.5",
+      "L6 retreat",
+      "WebGL2",
+      "WebGPU",
+      "open streets",
+      "L1 and menus",
+      "artefacts"
+    ]
   },
   "checks": {
     "focusedL4RenderContract": "passed",
     "typecheck": "passed",
     "lint": "passed",
-    "remoteUnitSuite": "not started: no healthy/provisioned Hetzner runner; wrapper refused local fallback"
+    "remoteUnitSuite": "passed on 46.225.66.90: 106 passed, 1 skipped, 28 files, 228.9s / 240s, exit 0"
   },
   "performance": "pending; no L4 LOW p95 measurement",
-  "remaining": ["Visual before/after contact sheet", "HIGH/LOW and zoom coverage", "WebGL2/WebGPU parity", "courier open-street and L1/menu controls", "artifact review", "L4 LOW p95 measurement", "full remote unit suite"]
+  "remaining": [
+    "Visual before/after contact sheet",
+    "HIGH/LOW and zoom coverage",
+    "WebGL2/WebGPU parity",
+    "courier open-street and L1/menu controls",
+    "artifact review",
+    "L4 LOW p95 measurement",
+    "full remote unit suite"
+  ]
 }
