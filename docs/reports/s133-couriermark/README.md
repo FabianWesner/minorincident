@@ -81,3 +81,9 @@ Measured draw counts: L4 126→127; L6 76→77. Triangle counts: L4 340876→340
 ## Large-corpse eligibility refinement
 
 Replaced the remaining distance-only large-corpse trigger with a conservative 3D camera-to-lower-body segment test (1.5 m body-volume radius plus the existing four-metre neighborhood). Rear/off-axis corpses no longer trigger solely by proximity. This is approximate view overlap, not a GPU occlusion query. Typecheck/lint passed; corpse-heavy matched capture completed; existing corpse gate selection passed 3/3 (close corpse LOW WebGL2, Alpha corpse HIGH WebGPU, corpse pile LOW WebGPU). The first gate request queued behind another lane's exclusive reservation, then completed normally. Raw receipts: `test-results/s133-couriermark/corpse-gate-current/`. Current source needs final dense-matrix validation after this predicate change.
+
+## Latest stable-source receipts (e4a7bba5)
+
+Complete moving L4/L6 × HIGH/LOW × zoom 1/1.5 × WebGL2/WebGPU matrices passed, sampled at frames 1/30/60. Required remote suite passed 105 tests, one skipped, 27 files in 132.7 seconds, runner 46.225.66.90. JSON matrix and unit receipts refreshed. No source mutation occurred during these checks.
+
+Native quiet retry used the correct `E2E_ADMISSION_TIMEOUT_SECONDS=120` and ended exit 75 at its deadline: host load stayed above the <3 preflight threshold. No frame-time data was collected. Independent reaction-time review of the committed before/after sheet was requested from the scheduling session; no response is yet recorded. Recognition speed and native frame-time acceptance remain open. All processes from this validation are terminal.

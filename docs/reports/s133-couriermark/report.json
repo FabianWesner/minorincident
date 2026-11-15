@@ -3,8 +3,8 @@
   "base": "49f3252a",
   "acceptance": {
     "recognition_0_3s": "unproven",
-    "marker_above_corpses": "unproven",
-    "occlusion_only_outline": "existing proximity-triggered foreground; not yet revised",
+    "marker_above_corpses": "existing stencil ordering implemented; HIGH corpse variants reviewed",
+    "occlusion_only_outline": "conservative camera/body and corpse segment overlap plus existing hull/Mega handling; not pixel-exact",
     "real_L4": "180-second HIGH zoom-1 standard combat spot completed; frames 5424/8136 opened; universal recognition still unproven",
     "scene_gate": "91/91 pass on 492bab69, plus vehicle-contact HIGH/LOW and native L9/L7/L4 vehicle motion exit 0",
     "performance": "unmeasured; structural +1 mesh draw, 96 triangles, no pass"
@@ -13,10 +13,10 @@
     "typecheck": "passed",
     "lint": "passed",
     "remote_unit": {
-      "revision": "c7ec3256",
+      "revision": "e4a7bba5",
       "passed": 105,
       "skipped": 1,
-      "seconds": 132.2,
+      "seconds": 132.7,
       "runner": "46.225.66.90"
     }
   },
@@ -84,7 +84,7 @@
         "id": "l6-high-z1",
         "backend": "webgl",
         "health": 30,
-        "share": 0.999611046285492,
+        "share": 1,
         "marker": {
           "visible": true,
           "position": [
@@ -200,7 +200,7 @@
         "id": "l6-low-z1",
         "backend": "webgl",
         "health": 30,
-        "share": 0.999611046285492,
+        "share": 1,
         "marker": {
           "visible": true,
           "position": [
@@ -2913,7 +2913,7 @@
     "errors": []
   },
   "sheet": "contact.jpg",
-  "validatedRevision": "58cd1a5c",
+  "validatedRevision": "e4a7bba5",
   "cpuMicrobenchmark": {
     "bodies": 160,
     "calls": 30000,
@@ -2944,7 +2944,8 @@
   },
   "nativeTiming": {
     "status": "unmeasured",
-    "reason": "quiet host load admission unavailable; waiting attempt cancelled",
+    "reason": "quiet admission exceeded 120 seconds; host load 3.94, required <3",
+    "exit": 75,
     "timeoutVariable": "E2E_ADMISSION_TIMEOUT_SECONDS"
   },
   "sourceComparison": {
