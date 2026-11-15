@@ -1,0 +1,535 @@
+{
+  "name": "courier-read-l4-dense",
+  "seed": 1,
+  "infectedCap": 160,
+  "time": "L4",
+  "ground": "district",
+  "hud": true,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -42,
+        -12
+      ],
+      [
+        -2,
+        28
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -22,
+        8
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -20.8,
+        8.0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.21665839278306,
+        9.114559265032838
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.816406939260336,
+        5.908040729830468
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-3",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -20.448479509811108,
+        10.023680846508169
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-4",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24.954140936120055,
+        7.477456863465116
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-5",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19.089046359855416,
+        6.148284874790669
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-6",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.01245159776815,
+        11.766290185603962
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-7",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24.004951765413082,
+        4.139602556942232
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-8",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -20.872813687877258,
+        8.411644285473672
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-9",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.52516886595569,
+        8.629571227359891
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-10",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.10992777993714,
+        6.097955982877269
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-11",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.2368199971406,
+        10.433116578225452
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-12",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24.595637776006598,
+        6.495784411805435
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-13",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -18.63047079332297,
+        7.259207906798084
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-14",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24.24299451252542,
+        11.190450691795887
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-15",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -22.559036366123376,
+        3.686071588290834
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-16",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.08241836293855,
+        8.773333006749118
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-17",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.64859072285197,
+        8.068180851611137
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-18",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -20.511464355313738,
+        6.518695968243368
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-19",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -22.117777068674044,
+        10.547278658116255
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-20",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.922138017785546,
+        5.696657767377271
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-21",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -18.58080830670433,
+        8.460030612566054
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-22",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -25.201336256706977,
+        10.227430396554148
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-23",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.045278467708776,
+        3.756062347797804
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-24",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.403377209538007,
+        9.041173014393546
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-25",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.571945962529774,
+        7.498516310448346
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-26",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -20.093643880400926,
+        7.1192013026422245
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-27",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -22.98444116901161,
+        10.35231281609293
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-28",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.015374996757732,
+        5.177055860283588
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-29",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -18.946085747999263,
+        9.605025775938435
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-30",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -25.771176169245198,
+        8.994097731874042
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-31",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19.647381895397398,
+        4.3410810266014295
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-32",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.796739898879384,
+        9.182660277210847
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-33",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.30453589774832,
+        6.989709897363147
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-34",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19.907171437947095,
+        7.82659697276124
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-35",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -23.73163728265927,
+        9.871879355435176
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-36",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -21.98538997890946,
+        5.000035575663649
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-37",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19.68197445454266,
+        10.555241196170574
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-38",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -25.88336067425413,
+        7.640125197247016
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-39",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -18.534989990357573,
+        5.370132012233734
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-40",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -22.214769450822256,
+        9.180624446212049
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-41",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -22.878812383494665,
+        6.603508397942749
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-42",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -19.974676604989806,
+        8.555036166050813
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-43",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -24.268688568613317,
+        9.164281829559862
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-44",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -20.957177976920462,
+        5.18707941310454
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-45",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -20.699169808683457,
+        11.195362391554262
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-46",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -25.524275492513148,
+        6.329825681890899
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-47",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -17.843098347540533,
+        6.718333642565372
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -22,
+      8
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "shots": [
+    1
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "courierVisibleShareMin": 0.9,
+    "courierForegroundFramesMax": 1
+  },
+  "note": "Explicit 48-actor stationary crowd fixture for deterministic occlusion review; no gameplay density or stats changed."
+}
