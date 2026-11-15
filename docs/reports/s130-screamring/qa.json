@@ -1,1111 +1,635 @@
 {
-  "status": "HIGH zoom 1 moving scene-fixture comparison reviewed; full acceptance open",
-  "change": "Two short, high-opacity source rings above ground using the existing pooled wave renderer; faint full-radius ground ring retained.",
-  "baseline": "Batch 107 report records the thin L9 HIGH arc and easy-to-miss L10 moving pulse.",
+  "status": "complete: controlled scene-fixture visual acceptance",
+  "method": "Scripted production VFX at standard screamer source; normal movement and attack input; fixture placement; L9 APC floor unlocked for exit; L10 catalog screamer spawned. Baseline uses previous VFX for all screams.",
+  "review": "Contact sheet HIGH zoom 1 both backends and levels at 50/100/200/400/500 ms reviewed; matrix 100/200 ms reviewed. Violet source cue visible by 100 ms and clear by 200 ms; no broad ground painting.",
   "checks": {
-    "typecheck": "passed",
-    "lint": "passed",
-    "localNpmTest": "passed: 106 tests, 27 files, 83.3 seconds",
-    "remoteNpmTest": "passed: 105 passed, 1 skipped; 150-case collection; 124.1 s / 240 s budget",
-    "s124ScreamerGroundVisualGate": "passed WebGL2 and WebGPU; six HIGH/LOW alternating zoom 1.5 frames each; maximum pink pixels 294 / 347, threshold 5000; no browser errors",
-    "beforeAfterFrameReview": "reviewed contact-sheet.jpg: 50/100/200/400/500 ms, both levels and backends; source visible by 100 ms",
-    "l9L10HighZoom1Webgl2WebgpuMoving": "controlled visual fixture pass; normal movement; L10 standard screamer spawned; no fighting coverage"
+    "typecheck": "passed both projects",
+    "lint": "passed full repo",
+    "remoteNpmTest": "passed: 150-case collection, 105 passed, 1 skipped, 124.1s/240s",
+    "groundGate": {
+      "webgl2MaxPink": 294,
+      "webgpuMaxPink": 347,
+      "limit": 5000,
+      "errors": 0
+    },
+    "performance": "existing fixed 16-instance single draw; two additional spawn writes; no new per-frame allocation/pass/shader/pool; bounded local ring fragments; structural assessment, no isolated GPU timing claim"
   },
-  "visualAcceptance": "HIGH zoom 1 controlled moving comparison reviewed; LOW/zoom1.5 local-cue, combat and performance review remain open",
-  "sequenceRuns": [
+  "runs": [
     {
       "backend": "webgl2",
-      "fixture": "scripted visual scream at existing living source; normal movement, no stat edits",
-      "rows": [
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-high-1-combat/rows.json",
+      "samples": [
         {
           "level": "L9",
           "version": "before",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
           },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626037
-          },
-          "file": "L9-before-3.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-before-6.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-before-12.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-before-24.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-before-30.jpg"
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
         },
         {
           "level": "L9",
           "version": "after",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
           },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626037
-          },
-          "file": "L9-after-3.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-after-6.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-after-12.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-after-24.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-after-30.jpg"
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
         },
         {
           "level": "L10",
           "version": "before",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
           },
-          "player": {
-            "x": 4004.110107421875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-3.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.26025390625,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-6.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.705078125,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-12.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4005.6044921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-24.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4006.05419921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-30.jpg"
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
         },
         {
           "level": "L10",
           "version": "after",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
           },
-          "player": {
-            "x": 4004.110107421875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-3.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.26025390625,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-6.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.705078125,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-12.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4005.6044921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-24.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4006.05419921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-30.jpg"
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
         }
-      ],
-      "errors": []
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-high-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-low-1-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-low-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
     },
     {
       "backend": "webgpu",
-      "fixture": "scripted visual scream at existing living source; normal movement, no stat edits",
-      "rows": [
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-high-1-combat/rows.json",
+      "samples": [
         {
           "level": "L9",
           "version": "before",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
           },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626037
-          },
-          "file": "L9-before-3.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-before-6.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-before-12.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-before-24.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "before",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-before-30.jpg"
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
         },
         {
           "level": "L9",
           "version": "after",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
           },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626037
-          },
-          "file": "L9-after-3.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-after-6.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626044
-          },
-          "file": "L9-after-12.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-after-24.jpg"
-        },
-        {
-          "level": "L9",
-          "version": "after",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 839,
-            "source": {
-              "x": 470.55492772988356,
-              "z": 1.3421974910114456
-            },
-            "player": {
-              "x": 465.55492772988356,
-              "y": 0.72,
-              "z": 4.592197491011445,
-              "yaw": 0.010050596967626035
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 468.7892761230469,
-            "y": 0.9954349994659424,
-            "z": -0.9151709675788879,
-            "yaw": 0.010050596967626042
-          },
-          "file": "L9-after-30.jpg"
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
         },
         {
           "level": "L10",
           "version": "before",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
           },
-          "player": {
-            "x": 4004.110107421875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-3.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.26025390625,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-6.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.705078125,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-12.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4005.6044921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-24.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "before",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4006.05419921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-before-30.jpg"
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
         },
         {
           "level": "L10",
           "version": "after",
-          "frame": 3,
-          "seconds": 0.05,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
           },
-          "player": {
-            "x": 4004.110107421875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-3.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 6,
-          "seconds": 0.1,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.26025390625,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-6.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 12,
-          "seconds": 0.2,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4004.705078125,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-12.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 24,
-          "seconds": 0.4,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4005.6044921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-24.jpg"
-        },
-        {
-          "level": "L10",
-          "version": "after",
-          "frame": 30,
-          "seconds": 0.5,
-          "setup": {
-            "sourceId": 205,
-            "source": {
-              "x": 4009.0501000000004,
-              "z": -41.91062927246094
-            },
-            "player": {
-              "x": 4004.0501000000004,
-              "y": 0.72,
-              "z": -38.91062927246094,
-              "yaw": -6.236348435768065
-            },
-            "tick": 60
-          },
-          "player": {
-            "x": 4006.05419921875,
-            "y": 0.7099999785423279,
-            "z": -38.91062927246094,
-            "yaw": -6.283185307179586
-          },
-          "file": "L10-after-30.jpg"
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
         }
-      ],
-      "errors": []
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-high-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-low-1-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-low-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
     }
   ]
 }

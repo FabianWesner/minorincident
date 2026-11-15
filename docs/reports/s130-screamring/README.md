@@ -1,34 +1,34 @@
-# s130 scream ring — implementation report
+# s130 — readable screamer source warning
 
-**Status: implementation committed; visual acceptance remains open.** The P2 symptom and baseline were reviewed in the batch 107 report: at L10 tick 6453 the pulse was easy to miss while moving; at L9 HIGH it was a thin pale arc partly concealed by HUD/APC/crowd. The local frame sequence for this change could not be captured or reviewed in this environment, so this report does not claim that the ~0.5 s noticeability requirement passed.
+The screamer now emits two short violet rings above its source, while retaining the faint full-radius ground ring. In the reviewed L9/L10 HIGH zoom 1 scene-fixture sequences on WebGL2 and WebGPU, the source cue is visible at 100 ms and conspicuous at 200 ms while the courier moves and attacks. The [reviewed before/after sheet](contact-sheet.jpg) shows 50, 100, 200, 400 and 500 ms. The previous effect is a faint ground arc; the new local strokes remain distinct from red melee warnings, yellow objective lines and gunfire. The road retains its surface colour.
 
-## Change
+## Implementation and cost
 
-`Vfx.effect('screamer')` now emits two short, bright violet rings at the scream source, 2.0 m and 2.25 m above local ground, with 2.8 m and 4.8 m maximum diameters. They use the existing pooled wave renderer. The existing low-opacity full-radius ring remains on the ground to show reach. No simulation, zombie stats, or per-frame allocation changed.
+Only `Vfx.effect('screamer')` changes game rendering: two 2.8/4.8 m diameter, 20 cm stroke rings at local ground +2/+2.25 m, lasting .34/.42 s, violet opacity .92/.82. The existing far ring remains unchanged. This is a pair of simultaneous expanding rings, not delayed emissions.
 
-## Checks
+Both use the existing 16-slot `waves` pool. `FxPool` already renders all 16 instances in one draw, with GPU growth/fade. The change adds two spawn/opacity writes per scream and local ring fragments; no new draw, render pass, shader, geometry, texture, pool, or per-frame allocation. This bounded structural cost supports the negligible-cost assessment; no isolated GPU timing claim is made. Simulation, zombie stats and corpse persistence code are untouched.
 
-- `npm run typecheck`: passed (both TypeScript projects).
-- `npm run lint`: passed.
-- `npm test`: passed locally, 106 tests across 27 files in 83.3 s.
-- Required remote `sh tools/remote/run.sh "$PWD" -- npm test`: not run; launcher exited 69 because there is no healthy Hetzner runner. This was infrastructure unavailability, not a test failure.
-- Existing `tools/qa/s124-screamer-ground.ts` visual gate: not run. The browser pool failed to bind its local service at 127.0.0.1:4329 (`EPERM`). The legacy lock path also could not run because the sandbox denies `ps` to the GPU guard (`EPERM`); it was stopped before browser launch.
-- Consequently, no after frames or contact sheet are included. L9/L10, HIGH zoom 1, WebGL2/WebGPU, movement noticeability, and no-broad-ground-painting remain unverified visually. The cited batch 107 captures provide the before observations only.
+## Evidence and method
 
-## Follow-up required
+Extended the existing `tools/qa/s124-screamer-ground.ts` with optional dense sequence capture. Run under the headless browser lock, one browser at a time, private port 4998, default 10-minute reservation:
 
-Run the existing crowded L9 visual gate and capture moving HIGH zoom 1 sequences in L9 and L10 on WebGL2 and WebGPU. Review a compact before/after sheet, retain `tools/qa/s124-screamer-ground.ts` as the broad-ground guard, and update this report with the actual visual result before treating the objective as complete.
+```sh
+SCREAM_SEQUENCE=1 SCREAM_COMBAT=1 SCENE_PORT=4998 L9_BACKEND=webgl2 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/qa/s124-screamer-ground.ts
+```
 
-## Unrestricted environment recheck
+Omit `L9_BACKEND` for WebGPU. `SCREAM_TIER=low` and `SCREAM_ZOOM=1.5` select the other views. Raw frames and metadata are retained in `test-results/s130-sequence-<backend>-none-<tier>-<zoom>-combat/`.
 
-The required remote unit suite passed: 105 passed, 1 skipped across 27 files, 150-case collection, 124.1 s within the 240 s budget. The unchanged s124 broad-ground gate passed on both WebGL2 and WebGPU with no browser errors. Maximum bright-purple pixel counts were 294 and 347 respectively (limit 5,000), across six alternating HIGH/LOW frames at zoom 1.5 per backend. Raw captures and rows remain in `test-results/s124-pulse-{webgl2,webgpu}-none/`. These sparse frames do not establish early noticeability while moving at zoom 1; the before/after sequence and sheet remain open. The earlier infrastructure failures above are historical and are resolved.
+These are controlled scene fixtures, not uninterrupted playthroughs: L9 uses its crowded late-APC save and existing screamer, unlocks the APC floor only in QA setup to permit normal vehicle exit, and places the courier near the source. L10 uses the dispersal-console save and spawns one standard catalog screamer because that save has none alive. A deliberate call to the production visual effect provides repeatable timing; normal movement and held attack input then advance simulation. The baseline substitutes the pre-change effect for every scream, including native crowd screams. No zombie stats are modified. HIGH zoom 1 records two combat attacks in L9 and one in L10 per half-second comparison; source and player transforms are recorded in JSON.
 
-## Reviewed HIGH zoom 1 moving comparison
+The first dense WebGPU implementation exposed async character-pipeline errors when replacing worlds in one context. Fresh contexts for each comparison resolved those errors; the final harness collects errors from every context. An early overlapping dev-server teardown also caused an aborted worker load; the accepted captures are sequential clean reruns.
 
-The [contact sheet](contact-sheet.jpg) contains matched before/after frames at 50, 100, 200, 400 and 500 ms for L9 and L10 on WebGL2 and WebGPU. I reviewed the full sheet and the full-size L9 100 ms after frame. By 100 ms the two violet strokes identify the source; at 200 ms they are conspicuous above the APC/crowd in L9 and above the screamer in L10. The baseline has only the faint ground arc. The local cue stays distinct from the yellow objective outline and red attack indicators. The road retains its surface colour throughout these sequences.
+## Validation
 
-Method: `SCREAM_SEQUENCE=1 SCENE_PORT=4998 L9_BACKEND=webgl2 E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/qa/s124-screamer-ground.ts` (omit L9_BACKEND for WebGPU). One headless browser, isolated contexts, HIGH zoom 1. Scene fixtures use an existing L9 screamer; the dispersal-console L10 save has no living screamer, so the tool spawns one standard catalog screamer. Courier placement and a deliberate visual scream provide repeatable framing; normal movement input advances the simulation. Baseline mode applies the previous VFX to every native scream too. No zombie stats are changed. This is controlled scene-fixture evidence, not a native scream playthrough or a fighting acceptance sample.
+- Typecheck (both projects) and full lint passed after capture-tool changes.
+- Required unchanged remote suite passed: 150-case collection, 105 passed / 1 skipped, 27 files, 124.1 s within 240 s. Local suite also passed earlier.
+- Existing s124 broad-ground gate passed WebGL2 and WebGPU, six alternating HIGH/LOW zoom 1.5 frames per backend, zero browser errors. Maximum bright-purple pixels: 294 / 347 against the 5,000 limit (old broad ground patch: 190,108).
+- HIGH zoom 1 before/after movement-and-combat sequences reviewed on both levels and backends, with zero browser errors. Contact sheet is the sole committed image; JSON is below 200 KB.
 
-Both backends completed the comparison. Courier start-to-end displacement is 6.39 m in the crowded L9 fixture (includes collision resolution after placement) and 2.00 m in L10. WebGPU initially produced asynchronous character-pipeline errors while rapidly replacing worlds in one context; isolated contexts resolved this, and the final run collected zero errors across all comparisons. Raw frames/metadata remain under `test-results/s130-sequence-{webgl2,webgpu}-none/`. Typecheck and full lint passed for the capture extension.
+The attached JSON contains the final matrix results and completion status. No deployment, push, or main-branch move occurred.
 
-Remaining scope: explicit LOW/zoom-1.5 local-cue review, moving-and-fighting coverage, and performance measurement are not established by this sheet. The main HIGH zoom 1 visual comparison is now reviewed; full task acceptance remains open for those requirements.
+Final matrix: all eight backend × tier × zoom runs passed with zero browser errors, covering L9 and L10 before/after in each run. I reviewed the 100/200 ms after views for HIGH/LOW × zoom 1/1.5 on both backends: the violet local cue stays readable in every combination, with no broad ground fill. Each comparison records normal attacks and nonzero courier movement from 50 to 500 ms (avoiding initial teleport displacement). Scene-fixture visual acceptance is complete within the method limits above.
