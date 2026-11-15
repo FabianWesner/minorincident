@@ -1151,10 +1151,10 @@ export class GameView implements Lifecycle {
       const walking = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding === undefined && !carPose;
       const nearbyBodies = bodiesOccludeCourier(this.camera.position, current, this.world.entities.iterate()) || this.nearLargeCorpse(current);
       const bodyBoss = megaOccludesCourier(this.camera.position, current, this.world.entities.iterate());
-      this.courierMark.visible = courierPinWanted(walking, !this.world.entities.get(1)?.hidden, !this.view.storyShot, nearbyBodies || bodyBoss);
+      this.courierMark.visible = courierPinWanted(walking, !this.world.entities.get(1)?.hidden, (!this.view.storyShot || __QA_HOOKS__ && this.view.spot === 'scene-lab'), nearbyBodies || bodyBoss);
       const x = lerp(previous?.x ?? current.x, current.x, alpha), z = lerp(previous?.z ?? current.z, current.z, alpha);
       const y = lerp(previous?.y ?? current.y, current.y, alpha);
-      this.courierMark.position.set(x, y + 1.95, z);
+      this.courierMark.position.set(x, y + .62, z);
       this.courierMark.quaternion.copy(this.camera.quaternion);
       const distance = this.camera.position.distanceTo(this.courierMark.position);
       this.courierMark.scale.setScalar(Math.max(.2, distance * .012));

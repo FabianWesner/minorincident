@@ -31,3 +31,11 @@ The capture produces identical-setup s133/current L4, L6, and calm L1 frames. Af
 ## Resumed evidence
 
 With unrestricted execution, the required remote suite passed on 46.225.66.90: 105 passed, one skipped, 27 files, 130.5 seconds. The pooled matched capture completed. Opened `test-results/s134-courierpin/review/l4-baseline-after.png`: teal contour visible but overhead pin absent. This frame fails recognition acceptance; diagnose marker rendering/visibility before continuing. Previous environment limitations are resolved.
+
+## Current placement and moving matrix
+
+Lowered the chevron to the courier hair rather than a rear zombie. Scene Lab uses a cinematic preset for gameplay fixtures; the named `scene-lab` debug preset is exempted from story suppression while real story shots remain suppressed. Fixed the baseline to 4dca98d8 and port 5005.
+
+Opened the latest full-size L4/L6/calm L1 after captures and [contact.jpg](contact.jpg). L4 eye lands on the teal chevron at the courier hair and follows her outlined body; L6 eye lands on her already lit body. Calm L1 has no pin and no ground ring. The small sheet compresses the pin, so full-size captures were also reviewed.
+
+Both moving matrices passed: 24 samples per backend across L4/L6, HIGH/LOW, zoom 1/1.5, frames 1/30/60. Minimum body-mask share 1.0 WebGL2 / 0.9989396 WebGPU. These masks establish visibility, not recognition speed. Final scene gate, real-play spot, counters, and broad visual review remain open.

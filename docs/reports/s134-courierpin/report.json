@@ -30,13 +30,491 @@
       "L6 dense",
       "L1 calm"
     ],
-    "sheet": null,
-    "reason": "Capture now succeeds. Opened L4 after frame: overhead pin absent; recognition acceptance fails. Diagnose visibility/rendering before final matrix."
+    "sheet": "contact.jpg",
+    "reason": "Latest placement reviewed in full-size L4/L6/L1 captures and sheet. L4 pin touches courier hair; L6 lit courier dominates; calm L1 pin hidden. Broader visual review remains open."
   },
   "open": [
     "Capture and inspect matched s133/current frames for L4 dense, L6 dense, and calm L1; record first eye landing and own recognition verdict.",
     "Run WebGL2 and WebGPU at HIGH and LOW, zoom 1 and 1.5, with moving L4/L6 fixtures.",
     "Run a real-play L4 HIGH spot and the scene gate.",
     "Measure draw/triangle delta and finish the report with one small comparison sheet."
-  ]
+  ],
+  "movingMatrix": {
+    "webgl2": {
+      "samples": 24,
+      "minBodyMaskShare": 1,
+      "rows": [
+        {
+          "id": "l4-high-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        }
+      ]
+    },
+    "webgpu": {
+      "samples": 24,
+      "minBodyMaskShare": 0.9989395546129375,
+      "rows": [
+        {
+          "id": "l4-high-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9995513683266039,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9989395546129375,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9991846718304117,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9995513683266039,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9989395546129375,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9991846718304117,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        }
+      ]
+    }
+  }
 }

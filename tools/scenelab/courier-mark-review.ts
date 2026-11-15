@@ -15,18 +15,18 @@ try {
   await session.open();
   if (process.argv.includes('--baseline')) {
     const paths = ['src/render/GameView.ts', 'src/render/PaletteMaterial.ts', 'src/render/characters/courierDepth.ts', 'src/render/courierForeground.ts'];
-    const sources = new Map(paths.map(path => [resolve(path), execFileSync('git', ['show', `HEAD:${path}`], { encoding: 'utf8' })]));
-    baselineServer = await createServer({ configFile: resolve('vite.config.ts'), cacheDir: '/private/tmp/s133-before-vite', plugins: [{ name: 's133-baseline', enforce: 'pre', load(id) { return sources.get(id.split('?')[0]); } }], server: { host: '127.0.0.1', port: 5003, strictPort: true } });
+    const sources = new Map(paths.map(path => [resolve(path), execFileSync('git', ['show', `4dca98d8:${path}`], { encoding: 'utf8' })]));
+    baselineServer = await createServer({ configFile: resolve('vite.config.ts'), cacheDir: '/private/tmp/s133-before-vite', plugins: [{ name: 's133-baseline', enforce: 'pre', load(id) { return sources.get(id.split('?')[0]); } }], server: { host: '127.0.0.1', port: 5005, strictPort: true } });
     await baselineServer.listen();
     for (const side of ['before', 'after']) {
-      await session.page.goto(`${side === 'before' ? 'http://127.0.0.1:5003' : origin}/?test=1&scenelab=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1`);
+      await session.page.goto(`${side === 'before' ? 'http://127.0.0.1:5005' : origin}/?test=1&scenelab=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1`);
       await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__, null, { timeout: 120000 });
       await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
       for (const level of ['l4', 'l6', 'l1']) {
         const spec = readSpec(level === 'l1' ? 'tests/scenes/catalog/atmosphere-l1.json' : `tests/scenes/catalog/courier-read-${level}-dense.json`); spec.camera = { mode: 'game', target: 'courier', zoom: 1 };
         for (const actor of spec.actors ?? []) if (actor.kind === 'infected') actor.state = { chase: 'courier' };
         await session.load(spec); await session.step(60); await session.screenshot(`${out}/${level}-baseline-${side}.png`);
-        rows.push({ level, side, revision: side === 'before' ? 's133 HEAD' : 's134 working tree', perf: await session.page.evaluate(() => window.__SS__!.perf()) });
+        rows.push({ level, side, state: await session.page.evaluate(() => { const lab = window.__SCENE__ as unknown as { game: { view: { view: { storyShot: boolean }, scene: import('three').Scene } } }; const pin = lab.game.view.scene.getObjectByName('courier-occlusion-pin'); return { render: window.__SS__!.getState().render.courierMark, story: lab.game.view.view.storyShot, pin: pin && { visible: pin.visible, position: pin.position.toArray(), scale: pin.scale.toArray() } }; }), revision: side === 'before' ? 's133 HEAD' : 's134 working tree', perf: await session.page.evaluate(() => window.__SS__!.perf()) });
       }
     }
   } else {
