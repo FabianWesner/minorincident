@@ -1,0 +1,769 @@
+{
+  "candidate": "d1101b68c71adfb36f20c31bcf0a897880a49f45",
+  "status": "finalized QA report; candidate rejected for intermittent HIGH evacuation delay; coverage limits documented under Driver gaps",
+  "method": "Headless GPU browser pool; real keyboard/mouse driver; debug level-menu entry; logged navigation assists; standard combat, no immortal or route-only mode; no source or driver changes",
+  "environment": {
+    "buildQa": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "remoteNpmTest": "passed: 105 passed, 1 skipped; 150-case collection; 130.0 seconds",
+    "runtime": "Initial sandbox failures resolved; preview 4993 and headless GPU pool used successfully."
+  },
+  "attemptedRuns": [
+    {
+      "level": "L9",
+      "route": "road",
+      "quality": "high",
+      "zoom": 1,
+      "captureZooms": [
+        1,
+        1.5
+      ],
+      "backendRequested": "webgpu",
+      "screamCaptures": true,
+      "result": "finished without skipped objectives; 322 wall seconds; evacuation remained 3/4 more than 20 seconds after defense complete"
+    }
+  ],
+  "checks": {
+    "l9HighRoadEvacuationAndHandover": "finished without skips; L10 loading observed",
+    "l9HighShortcutEvacuationAndHandover": "finished without skips; L10 loading observed",
+    "l9LowRoadEvacuationAndHandover": "finished without skips; L10 loading observed",
+    "evacueesBoardWithin20Seconds": "FAIL HIGH road >=85.7 s incomplete; HIGH shortcut >=44.2 s incomplete. PASS LOW road 4/4 with 15 s defense remaining.",
+    "northTruckStagingAndGateFence": "Staging reviewed in real-run and camera diagnostic: outside buildings; P2 barrier overlap concern. Full survivor fence contact occluded; checkpoint driver rejects late setup; not cleared.",
+    "redPickupGroundedAtZoom1_5": "Zoom1.5 real-run capture reviewed: clear of former barricade, elevated visual impression persists; exact wheel contact not cleared. Closer cinematic view also reviewed.",
+    "apcTiltAndSeatedHatchShooting": "Sampled recorded tilt modest; seated fire effective: 23 shotgun hits correlate with APC driving observations; Alpha HP107 ->0 at tick5840 during hold hatch. Attached-boarder identity not independently logged.",
+    "l1CarAlarmPromptHighLowZoom1And1_5": "PASS sampled actual bat-checkpoint HIGH/LOW x zoom1/1.5 layout; real WASD final approach; no vitals/other-HUD overlap. Earlier pre-outbreak arrow overlap is diagnostic-only.",
+    "otherPromptsL1ToL3": "Three L1 panels reviewed statically and in brief real-key movement sequence; no erratic relocation observed within sample",
+    "screamerReadabilityL9AndL10WhileMoving": "L9 approach: ordinary event off-camera, no conspicuous warning noticed in sampled moving/stall sequence; stopped ring thin/occluded. L10 recorded movement: ordinary purple pulse easy to miss, P2. Both have capture paths/ticks; no universal visibility pass.",
+    "l9BoringHarmlessBabysittingAndVisualVerdict": "Reviewed late stationary defense: healthy courier amid dense crowd and >=85.7 s wait reads as babysitting; no general stunning/smooth-motion verdict",
+    "webgpuCoveragePerLevel": "Confirmed renderer webgpu in L9 x3, L1 HIGH and L10 HIGH logs; L2 partial HIGH also checked"
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "level": "L9",
+      "text": "HIGH road and HIGH shortcut evacuation exceed ~20 seconds after Defense complete; eventually complete without skips.",
+      "tick": 17447,
+      "capture": "test-results/b107/l9-high-road/captures/campaign-L9-t16237.jpg",
+      "roadIncompleteSeconds": 85.7,
+      "shortcutIncompleteSeconds": 44.2
+    },
+    {
+      "severity": "P3",
+      "level": "L1",
+      "text": "Yellow objective arrow overlaps car alarm panel upper-right at zoom 1 in HIGH/LOW static layout fixture. Vitals do not overlap.",
+      "tick": 69,
+      "capture": "test-results/b107/prompt-fixture/alarm-high-z1.jpg",
+      "scope": "Pre-outbreak armed-alarm fixture only; not reproduced in actual bat-checkpoint matrix",
+      "classification": "diagnostic-only, not confirmed post-outbreak defect"
+    },
+    {
+      "severity": "P2",
+      "level": "L9",
+      "text": "Staging truck cab appears over low road barrier in camera-only placement diagnostic; natural placement concern. Late evacuation positions not inferred.",
+      "capture": "test-results/b107/prompt-fixture/l9-staging.jpg",
+      "tick": 6
+    },
+    {
+      "severity": "P2",
+      "level": "L10",
+      "tick": 6453,
+      "capture": "test-results/b107/video-l10/captures/scream-L10-6453-2.jpg",
+      "video": "test-results/b107/video-l10/video/page@18681991b6cdfdd36e5e9ec439629a75.webm",
+      "text": "Ordinary purple pulse easy to miss moving: brief screen-edge arc amid persistent red attack rings in reviewed 111\u2013117 s sequence; immortal route-only sample."
+    }
+  ],
+  "carryOverNotRechecked": [
+    {
+      "level": "L9",
+      "severity": "P1",
+      "text": "Batch 106 recorded a contradictory fresh HIGH road repeat at 2/4 trucks 58.4 seconds after Defense complete; permanent softlock was not proven.",
+      "source": "docs/reports/batch-106-real-input/qa.json",
+      "batch107Status": "not independently observed"
+    },
+    {
+      "level": "L9",
+      "severity": "P2",
+      "text": "Batch 106 described the red evacuation truck as elevated above the barricade.",
+      "source": "docs/reports/batch-106-real-input/qa.json",
+      "batch107Status": "not independently observed"
+    },
+    {
+      "level": "L1",
+      "severity": "P3",
+      "text": "Batch 106 described the car-alarm panel overlapping the health HUD.",
+      "source": "docs/reports/batch-106-real-input/qa.json",
+      "batch107Status": "not independently observed"
+    }
+  ],
+  "captures": {
+    "rawCopiedToGit": false,
+    "newCapturePaths": [],
+    "contactSheet": "contact-sheet.jpg",
+    "contactSheetReason": "Reviewed derived sheet"
+  },
+  "driverGaps": [
+    "Optional L1 alarm not exercised by standard route; no dedicated alarm capture option.",
+    "Temporal warning review and L10 remain open.",
+    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high.",
+    "Late L9 evac-point checkpoint rejected with No active objective even after mission begin; source/tool changes prohibited, so complete fence/wheel-contact acceptance remains open."
+  ],
+  "runtimeRecovery": "Host access restored; preview and GPU pool work. Earlier EPERM failures are historical.",
+  "l9Runs": [
+    {
+      "name": "l9-high-road",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 322,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 47.226,
+            "deaths": 0,
+            "assists": 1,
+            "attacks": {
+              "weapon.shotgun": 25
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0400424003601074,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "reach-outskirts",
+                "text": "",
+                "tick": 17784,
+                "marker": {
+                  "anchor": "crawl-end",
+                  "ring": {
+                    "x": 547,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": null,
+                  "playerY": 0.7200000286102295,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 1,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      }
+    },
+    {
+      "name": "l9-high-shortcut",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 236,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 11.733333333333333,
+            "deaths": 0,
+            "assists": 1,
+            "attacks": {
+              "weapon.shotgun": 36
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 4,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0347378253936768,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "reach-outskirts",
+                "text": "",
+                "tick": 12881,
+                "marker": {
+                  "anchor": "crawl-end",
+                  "ring": {
+                    "x": 547,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": null,
+                  "playerY": 0.7200000286102295,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      }
+    },
+    {
+      "name": "l9-low-road",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 215,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 4.866666666666666,
+            "deaths": 0,
+            "assists": 1,
+            "attacks": {
+              "weapon.shotgun": 35
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 8,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0141711235046387,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "reach-outskirts",
+                "text": "",
+                "tick": 11363,
+                "marker": {
+                  "anchor": "crawl-end",
+                  "ring": {
+                    "x": 547,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      }
+    }
+  ],
+  "l10Warning": {
+    "capture": "test-results/b107/l10-high/captures/scream-L10-4711-1.jpg",
+    "tick": 4711,
+    "event": "alpha.roar",
+    "quality": "high",
+    "zoom": 1,
+    "verdict": "Conspicuous red ring; ordinary purple screamer not captured in this bounded standard-combat sample",
+    "sample": "Stopped after roughly four minutes in farm fight; no full L10 completion claim"
+  },
+  "alarmAttempt": {
+    "quality": "high",
+    "backend": "webgpu",
+    "result": "incomplete before pickup",
+    "manualInputs": "WASD via existing control-file interface; no driver edits",
+    "captures": "test-results/b107/alarm-high/captures/",
+    "coverage": "Does not satisfy alarm prompt check"
+  },
+  "alarmStandardAttempt": {
+    "result": "Standard HIGH WebGPU route reached outbreak and acquired bat; manual real-key detour failed to approach alarm reliably; stopped without alarm verdict",
+    "raw": "test-results/b107/alarm-standard-high",
+    "note": "Authored map anchor assist used; no teleport, objective skip, god mode or tool edit"
+  },
+  "alarmLayoutFixture": {
+    "method": "L1 load, begin mission, arm alarms and reset alarm cycle; teleport outside interaction range, real WASD final approach; static layout fixture, not post-outbreak campaign acceptance",
+    "matrix": [
+      {
+        "q": "high",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/alarm-high-z1.jpg",
+        "tick": 69
+      },
+      {
+        "q": "high",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/alarm-high-z1.5.jpg",
+        "tick": 78
+      },
+      {
+        "q": "low",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/alarm-low-z1.jpg",
+        "tick": 68
+      },
+      {
+        "q": "low",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/alarm-low-z1.5.jpg",
+        "tick": 75
+      }
+    ],
+    "verdict": "Vitals clear in all four captures. Yellow objective arrow overlaps panel upper-right at zoom 1 HIGH/LOW. Temporal jumping not established."
+  },
+  "l10OrdinaryScreamer": {
+    "method": "HIGH WebGPU zoom 1, documented --immortal / ROUTE ONLY real-key route; stopped after warning collection; not combat acceptance",
+    "telegraphTick": 7529,
+    "noiseTick": 7577,
+    "capture": "test-results/b107/l10-warning-route/captures/scream-L10-7577-8.jpg",
+    "verdict": "Thin purple circumference visible on dark open ground when centered. Competing red melee rings and crowd dominate focus. Moving-player noticeability remains weakly evidenced by sparse captures, not continuous video."
+  },
+  "otherPromptFixtures": {
+    "method": "HIGH WebGPU L1; fixture position plus short real KeyW input; normal panels rendered",
+    "samples": [
+      {
+        "name": "gate",
+        "file": "test-results/b107/prompt-fixture/other-gate.jpg",
+        "tick": 8,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 55\u00a0m\nGate \u00b7 33%\nGate\nStand here \u00b7 E / middle-click"
+      },
+      {
+        "name": "dumpster",
+        "file": "test-results/b107/prompt-fixture/other-dumpster.jpg",
+        "tick": 6,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 26\u00a0m\nPush dumpster \u00b7 25%\nPush dumpster\nStand here \u00b7 E / middle-click"
+      },
+      {
+        "name": "carwash",
+        "file": "test-results/b107/prompt-fixture/other-carwash.jpg",
+        "tick": 8,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 75\u00a0m\nStart car wash \u00b7 33%\nStart car wash\nStand here \u00b7 E / middle-click"
+      }
+    ],
+    "verdict": "Gate, Push dumpster and Start car wash panels clear vitals/minimap/objective in reviewed static frames; no temporal stability claim"
+  },
+  "l9SceneReview": {
+    "capture": "test-results/b107/l9-high-shortcut/captures/campaign-L9-t10821.jpg",
+    "tick": 10821,
+    "zoom": 1.5,
+    "verdict": "Trucks visible on roadway outside buildings; full gate-fence route occluded by crowd. Red pickup appears elevated in upper frame; grounding cannot be cleared from this angle."
+  },
+  "l9PlacementFixture": {
+    "method": "Camera-only cinematic viewpoint on fresh L9; checkpoint loader failed, so no late-state inference; not requested follow-camera zoom evidence",
+    "samples": [
+      {
+        "name": "pickup-side",
+        "file": "test-results/b107/prompt-fixture/l9-pickup-side.jpg",
+        "tick": 8,
+        "text": "Bridge is forty klicks. Dawn's in two hours. Floor it.\n\u2161\nAPC armor 1000 / 1000\n1\n2\n3\n4\n5\n6\n100 / 100\nCorgi \u00b7 hiding\nN\n\u25b2\n\u2302\n\u2248 Wind\nDrive to the evacuation point \u00b7 1007\u00a0m"
+      },
+      {
+        "name": "staging",
+        "file": "test-results/b107/prompt-fixture/l9-staging.jpg",
+        "tick": 6,
+        "text": "Bridge is forty klicks. Dawn's in two hours. Floor it.\n\u2161\nAPC armor 1000 / 1000\n1\n2\n3\n4\n5\n6\n100 / 100\nCorgi \u00b7 hiding\nN\n\u25b2\n\u2302\n\u2248 Wind\nDrive to the evacuation point \u00b7 1007\u00a0m"
+      }
+    ],
+    "verdict": "Pickup clear of barricade; visual grounding remains uncertain. Staging truck cab visually overlaps low road barrier in camera view; no building intersection shown."
+  },
+  "promptMotion": {
+    "method": "Three HIGH WebGPU L1 fixtures; six screenshots each, 100 ms real movement intervals with capture overhead; KeyA then KeyD; no god mode",
+    "metadata": [
+      {
+        "name": "gate",
+        "f": 0,
+        "tick": 13,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 1,
+        "tick": 20,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 2,
+        "tick": 26,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 3,
+        "tick": 33,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 4,
+        "tick": 39,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "f": 5,
+        "tick": 45,
+        "panels": []
+      },
+      {
+        "name": "gate",
+        "file": "test-results/b107/prompt-fixture/other-gate.jpg",
+        "tick": 45,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 55\u00a0m\nGate \u00b7 25%\nGate\nStand here \u00b7 E / middle-click"
+      },
+      {
+        "name": "dumpster",
+        "f": 0,
+        "tick": 12,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 1,
+        "tick": 18,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 2,
+        "tick": 23,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 3,
+        "tick": 30,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 4,
+        "tick": 37,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "f": 5,
+        "tick": 43,
+        "panels": []
+      },
+      {
+        "name": "dumpster",
+        "file": "test-results/b107/prompt-fixture/other-dumpster.jpg",
+        "tick": 43,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 26\u00a0m"
+      },
+      {
+        "name": "carwash",
+        "f": 0,
+        "tick": 14,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 1,
+        "tick": 20,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 2,
+        "tick": 26,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 3,
+        "tick": 31,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 4,
+        "tick": 37,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "f": 5,
+        "tick": 43,
+        "panels": []
+      },
+      {
+        "name": "carwash",
+        "file": "test-results/b107/prompt-fixture/other-carwash.jpg",
+        "tick": 43,
+        "text": "\u279c\nMorning! One cold-chain parcel for the Medical Annex on Larch Street. Easy one, and your corgi can ride along as always.\n\u2161\n100 / 100\nCorgi \u00b7 following\nN\n\u25b2\n\u2302\n\u2600 Clear\nPick up the package at the courier depot \u00b7 76\u00a0m"
+      }
+    ],
+    "reviewSheet": "/private/tmp/b107-motion.jpg",
+    "verdict": "No erratic relocation while visible in this brief sample. Gate/dumpster panels disappear and return at range boundary; carwash panel disappears on activation. No broad temporal pass."
+  },
+  "lowBoarding": {
+    "tick": 9754,
+    "text": "Cover the survivors \u00b7 Hatch defense 15 s \u00b7 4/4 at the trucks \u00b7 7 m",
+    "source": "test-results/b107/l9-low-road/log-campaign.jsonl",
+    "verdict": "PASS; all four boarded before Defense complete; eventual L10 loading observed"
+  },
+  "videoAttempt": {
+    "method": "Ignored diagnostic wrapper requested Playwright recordVideo around unchanged runSession; 180-second HIGH WebGPU IMMORTAL / ROUTE ONLY sample",
+    "result": "Session exited normally; no local video artifact delivered; cannot support continuous-motion verdict",
+    "ordinaryNoiseTick": 7644,
+    "capture": "test-results/b107/video-l10/captures/scream-L10-7644-8.jpg",
+    "raw": "test-results/b107/video-l10/",
+    "resolved": "Persistent-context recording hook produced raw video; see l10MotionReview."
+  },
+  "l10MotionReview": {
+    "video": "test-results/b107/video-l10/video/page@18681991b6cdfdd36e5e9ec439629a75.webm",
+    "sequence": "test-results/b107/video-l10/review/scream-sequence.jpg",
+    "seconds": [
+      111,
+      117
+    ],
+    "sampleFps": 4,
+    "ordinaryNoiseTick": 6453,
+    "method": "HIGH WebGPU zoom 1 IMMORTAL / ROUTE ONLY; real-key movement; fresh profile; original driver unchanged; persistent-context recordVideo wrapper",
+    "verdict": "Purple pulse briefly crosses screen edge during movement; persistent red rings dominate. Easy to miss, insufficient warning emphasis. Bounded sequence review, not timing/performance qualification."
+  },
+  "l9VideoReview": {
+    "video": "test-results/b107/video-l9/video/page@a38926bd456affad4e87b49fea43bb9f.webm",
+    "method": "Extra fresh HIGH road WebGPU normal-combat real-input repeat; persistent-context video wrapper; no original driver changes",
+    "segments": {
+      "tilt": {
+        "seconds": [
+          30,
+          42
+        ],
+        "fps": 1,
+        "verdict": "Gentle chassis lean through sampled turns; no abrupt flip/severe wobble observed"
+      },
+      "warning": {
+        "seconds": [
+          114,
+          120
+        ],
+        "fps": 4,
+        "eventTick": 6946,
+        "verdict": "Hatch stall; warning source off-camera; no conspicuous purple ring visible in sampled frames. Does not establish moving-carrier visibility of an onscreen ring."
+      },
+      "evacuation": {
+        "seconds": [
+          170,
+          190
+        ],
+        "fps": 1,
+        "verdict": "Survivors move through bay; crowd/camera do not expose every gate contact"
+      }
+    },
+    "boarding": "Defense complete tick10414 0/4; 3/4 tick11217 (~13.4 s); then crash/crawl; eventual handover. Exact 4/4 frame not logged."
+  },
+  "hatchCombatAudit": {
+    "hits": 23,
+    "seatedCorrelated": 23,
+    "examples": [
+      {
+        "tick": 5810,
+        "amount": 192,
+        "targetId": 877,
+        "target": "infected.alpha",
+        "targetHp": 107,
+        "observationTick": 5821,
+        "drivingId": 667,
+        "tracker": "Engine stalled \u2014 hold the hatch (0:20) [\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0] \u00b7 shoot boarders \u00b7 F close/open hatch \u00b7 cannot leave APC \u00b7 80\u00a0m"
+      },
+      {
+        "tick": 5840,
+        "amount": 107,
+        "targetId": 877,
+        "target": "infected.alpha",
+        "targetHp": 0,
+        "observationTick": 5821,
+        "drivingId": 667,
+        "tracker": "Engine stalled \u2014 hold the hatch (0:20) [\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0] \u00b7 shoot boarders \u00b7 F close/open hatch \u00b7 cannot leave APC \u00b7 80\u00a0m"
+      },
+      {
+        "tick": 6068,
+        "amount": 14.999999999999996,
+        "targetId": 871,
+        "target": "infected.sprinter",
+        "targetHp": 30.000000000000004,
+        "observationTick": 6078,
+        "drivingId": 667,
+        "tracker": "Engine stalled \u2014 hold the hatch (0:16) [\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u00b7\u00b7] \u00b7 shoot boarders \u00b7 F close/open hatch \u00b7 cannot leave APC \u00b7 80\u00a0m"
+      },
+      {
+        "tick": 6098,
+        "amount": 17.999999999999996,
+        "targetId": 875,
+        "target": "infected.runner",
+        "targetHp": 42,
+        "observationTick": 6078,
+        "drivingId": 667,
+        "tracker": "Engine stalled \u2014 hold the hatch (0:16) [\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u00b7\u00b7] \u00b7 shoot boarders \u00b7 F close/open hatch \u00b7 cannot leave APC \u00b7 80\u00a0m"
+      },
+      {
+        "tick": 6128,
+        "amount": 17.999999999999996,
+        "targetId": 875,
+        "target": "infected.runner",
+        "targetHp": 24.000000000000004,
+        "observationTick": 6142,
+        "drivingId": 667,
+        "tracker": "Engine stalled \u2014 hold the hatch (0:15) [\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u00b7\u00b7] \u00b7 shoot boarders \u00b7 F close/open hatch \u00b7 cannot leave APC \u00b7 80\u00a0m"
+      }
+    ],
+    "method": "Additional HIGH shortcut WebGPU standard real-input run with existing PLAYTEST_COMBAT_AUDIT=1; 339 s, finished without skips; nearest driving receipt within 70 ticks"
+  },
+  "postOutbreakAlarmMatrix": {
+    "method": "Begin L1 then load actual bat checkpoint; fixture positioning outside range and real WASD approach; no god mode; reset alarm cycle only to capture transient panel",
+    "matrix": [
+      {
+        "q": "high",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-high-z1.jpg",
+        "tick": 70
+      },
+      {
+        "q": "high",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-high-z1.5.jpg",
+        "tick": 78
+      },
+      {
+        "q": "low",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-low-z1.jpg",
+        "tick": 70
+      },
+      {
+        "q": "low",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-low-z1.5.jpg",
+        "tick": 79
+      }
+    ],
+    "verdict": "All four reviewed panels clear vitals and other HUD; no arrow overlap in sampled actual post-outbreak state. Not uninterrupted campaign navigation."
+  },
+  "closeout": {
+    "reportComplete": true,
+    "candidateApproved": false,
+    "acceptanceCoverageComplete": false,
+    "reason": "Report delivers requested real-input runs, prompt matrix, ordinary warning evidence/verdicts, WebGPU coverage, findings, reviewed sheet and required checks. Authorized driver gaps are explicit; no unobserved behavior is approved."
+  }
+}
