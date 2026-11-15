@@ -39,3 +39,9 @@ All four HIGH/LOW × zoom 1/1.5 alarm panel captures were reviewed on WebGPU. Vi
 ## Ordinary L10 screamer
 
 A HIGH WebGPU zoom 1 real-key route used documented `--immortal` and is **IMMORTAL / ROUTE ONLY**, not combat acceptance. It reached actual ordinary screamer events: telegraph tick 7529 and noise/purple ring tick 7577 (`test-results/b107/l10-warning-route/captures/scream-L10-7577-8.jpg`). Reviewed both: the thin purple circumference is visible centered on dark open ground, but red melee rings and the dense crowd draw more attention. L9’s purple arc is more occluded by APC/HUD. Sparse captures do not prove continuous moving-player noticeability; no claim of a conspicuous warning while moving is made. The diagnostic was stopped after event collection; no L10 completion claim.
+
+## Additional prompt and staging review
+
+Three additional HIGH WebGPU L1 fixture prompts were reviewed: Gate, Push dumpster and Start car wash (`test-results/b107/prompt-fixture/other-{gate,dumpster,carwash}.jpg`, ticks in `other.json`). They clear vitals, minimap and objective text in these static views. Fixture positions plus short physical KeyW movement were used; no temporal jumping verdict follows.
+
+L9 HIGH shortcut zoom 1.5 frame at tick 10821 (`test-results/b107/l9-high-shortcut/captures/campaign-L9-t10821.jpg`) shows staging trucks on roadway outside buildings. Crowd/framing occlude complete gate-fence routing. The red pickup appears elevated in the upper frame; this angle does not clear grounding and requires a closer side view. This remains an unresolved placement concern rather than a confirmed new P2.
