@@ -166,3 +166,7 @@ Working warning range max(18,42-2*busSpeed), lateral alignment<8m, share3 and10m
 ## Delivery implementation focused qualification
 
 Current runtime: mission bus speed cap share3 (36m/s allowed straight-line cap),18m pre-bend braking to7m/s, existing5m/s turn braking, speed-aware ram eligibility preserving90tick warning,15tick exits near a held APC and guarded engine-waypoint→courier targeting. Infected stats unchanged. HIGH4near/first4.4s, LOW3near/first4.4s under disclosed ordinary no-fire rail input; full samples/windups in `participation.json`. All6 extended asphalt fixtures pass(max3.426m); focused vehicles2/2, typecheck/lint pass. This is focused qualification only: final six driven path sweeps, skilled completion, offscreen spawn, full remote suite, threat audit, E31 and browser vehicle gates remain required. Earlier current verdict predates this implementation.
+
+## Final-runtime per-tick six driven sweeps
+
+Current31e6a83b skilled drives all6 complete. Bus positions recorded every native tick continuously from spawn to completion, independent nearest-segment geometry: HIGH road1.996m/corner4.841m/wide3.885m; LOW road2.245m/wide3.873m pass. LOW corner fails92ticks outside6m, peak6.237m. See `final-six-driven-paths.json` with every tick position. This supersedes stationary-fixture and earlier-runtime asphalt passes for completion audit. Requires slightly earlier bend braking and revalidation; goal not complete.

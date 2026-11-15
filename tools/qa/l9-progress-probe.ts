@@ -86,7 +86,7 @@ try {
       else attacking.delete(e!.id);
     }
     const bus = world.entities.get(l9.driving.state.busId);
-    if (bus && !bus.hidden && world.tick % 30 === 0) busSamples.push({tick:world.tick,at:{...bus.transform},apc:{...p},busHealth:bus.health.current,busStoppedAt:l9.driving.state.busStoppedAt,passengers:passengers.map(e=>({id:e!.id,at:{...e!.transform},state:e!.infected?.state,target:e!.infected?.targetId,heard:e!.infected?.heardTargetId,scripted:e!.infected?.scripted,hp:e!.health.current})),hatch:l9.driving.hatch});
+    if (bus && !bus.hidden && world.tick % Number(process.env.L9_BUS_SAMPLE_TICKS ?? 30) === 0) busSamples.push({tick:world.tick,at:{...bus.transform},apc:{...p},busHealth:bus.health.current,busStoppedAt:l9.driving.state.busStoppedAt,passengers:passengers.map(e=>({id:e!.id,at:{...e!.transform},state:e!.infected?.state,target:e!.infected?.targetId,heard:e!.infected?.heardTargetId,scripted:e!.infected?.scripted,hp:e!.health.current})),hatch:l9.driving.hatch});
     const displacement = Math.hypot(p.x-before.x,p.z-before.z);
     if (before.driving && l9.state.phase === 'driving' && displacement > 2)
       positionJumps.push({ tick:world.tick, metres:displacement, from:[before.x,before.z], to:[p.x,p.z] });
