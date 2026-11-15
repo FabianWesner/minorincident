@@ -15,3 +15,7 @@ Raw fixture screenshots and clipping receipts remain in ignored `test-results/s1
 Typecheck passed after snapshot instrumentation. Lint passed after that instrumentation. The unchanged required remote unit command passed 105 tests, one skipped, 27 files in 127 seconds on 46.225.66.90. Browser checks use the pool, headless, one browser, ports 5003/5004.
 
 Still required: finish marker/occlusion treatment, final complete backend/tier/zoom matrix, above-corpse/below-body review, measured draw/performance comparison, scene gate rows, real-play L4 HIGH spot via tools/playtest, matched before/after review and one small sheet. This report is a progress receipt, not acceptance signoff.
+
+## Rejected occlusion experiment
+
+A camera-to-torso sphere test replaced the five-nearby-body trigger. Its focused front/rear/off-axis tests passed, but the WebGL2 HIGH L4 fixture failed the existing 90% body-visibility gate. The experiment was reverted; no regression is retained. Conservative pose-aware occlusion remains open.
