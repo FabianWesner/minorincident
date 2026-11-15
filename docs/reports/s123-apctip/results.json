@@ -6596,5 +6596,88 @@
       }
     },
     "method": "Same current L9 scenario, native physics and route input. Only car.physics.stabilizeTilt replaced with a no-op by diagnostic flag. Native detour crosses bound; native primary road does not within 7200 ticks. Does not reproduce original physical-keyboard incident."
+  },
+  "physicalKeyboardTorqueAblation": {
+    "attitude": {
+      "samples": 6987,
+      "maxRoll": 0.8577851299914937,
+      "maxPitch": 0.29733939794169734,
+      "firstOver20": {
+        "tick": 2757,
+        "roll": -0.3509923319522887,
+        "pitch": 0.13211015159732753,
+        "position": {
+          "x": -67.55856323242188,
+          "y": 1.5012526512145996,
+          "z": -333.2355651855469,
+          "yaw": -0.1205779673309092
+        },
+        "velocity": {
+          "x": 16.262800216674805,
+          "y": 2.311427593231201,
+          "z": 0.20878908038139343
+        },
+        "contacts": [
+          true,
+          false,
+          false,
+          true
+        ]
+      },
+      "wheelTravel": 0.24998604008441852
+    },
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 116,
+        "maxNoProgressSeconds": 7.333333333333333,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 5,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.029242992401123,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "method": "Same physical keyboard road harness and current runtime, only corrective torque disabled before sampling. Headless HIGH WebGL2 zoom1 120wall seconds. Diagnostic run unfinished, exit1.",
+    "maxRollDegrees": 49.14746767759328
   }
 }
