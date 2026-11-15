@@ -6,7 +6,7 @@ The reported HIGH road stall is reproduced by the s125 evidence and addressed th
 
 Six successful native runs finished with all four living evacuees aboard and the campaign handover complete. In the LOW skilled road run, the last boarding signal was 17.02 seconds after Defense complete; all other successful road runs boarded before Defense complete. The HIGH and LOW runs reached peaks of 168 and 90 living infected respectively. No collision failures occurred. Run details are in [qa.json](./qa.json).
 
-The D-CROSSING red pickup moved from `(465,-8.9)` to `(465,-19)` at `y=0`, clear of the barricade footprints. The source layout and checked-in generated placement agree. The before/after sheet includes the viewed s125 screenshot and an explicitly labeled authored placement plan; the after side is not a browser render.
+The D-CROSSING red pickup moved from `(465,-8.9)` to `(465,-19)` at `y=0`, clear of the barricade footprints. The source layout and checked-in generated placement agree. The before/after sheet includes the viewed s125 screenshot and the actual corrected-camera headless WebGL after capture. Visible front wheels meet the ground; rear wheel contact is occluded.
 
 ## Verification
 
@@ -20,19 +20,19 @@ The D-CROSSING red pickup moved from `(465,-8.9)` to `(465,-19)` at `y=0`, clear
 
 - A separate HIGH dry-shortcut skilled probe with the new north-side row still left one living evacuee unboarded at 20 seconds. That route parks the destroyed APC west of the bay and leaves Okafor circling near `x=438`. Moving the truck row west to address it prevented the shortcut run from reaching evacuation startup, so that experiment was reverted. The reported HIGH road route passes; all-route coverage remains open.
 - A LOW road passive seed-2 probe died before it reached evacuation. It is not counted among the six successful evacuation runs; no invulnerability was added.
-- Browser after-render inspection remains unverified. The L9 vehicle campaign motion gate subsequently passed HIGH and LOW with stable source and no correction failures. The shared browser pool failed to start because it could not bind `127.0.0.1:4329` (`EPERM`); another job owned that port.
+- Corrected-camera WebGL inspection shows the relocated pickup clear of barricades and its visible front wheels at ground level. Rear wheel contact remains occluded. The L9 vehicle campaign motion gate passed HIGH and LOW with stable source and no correction failures.
 - Required remote `npm test`: PASS on runner 46.225.66.90, 105 passed / 1 skipped, 129.2 seconds within the 240-second budget.
 - The full cross-level threat audit exceeded its 600-second budget during unrelated L4 stages. The focused L9 receipt itself is clean.
 - `npm run layouts:build -- D-CROSSING` cannot regenerate the layout in this worktree because `assets/kit.river-terrain/model.glb` is absent. The authored source and corresponding JSON placement were updated together; the unrelated generated hash touched by the failed build was restored.
 
-See [wreck-before-after.jpg](./wreck-before-after.jpg). Browser QA is still needed to confirm the pickup’s rendered wheel contact and resting pose, and to run the motion gate when the pool is available.
+See [wreck-before-after.jpg](./wreck-before-after.jpg). Browser QA is still needed to confirm the pickup’s rendered wheel contact and resting pose, from an additional camera angle.
 
 ## Commit status
 
 Implementation and report committed after focused tests, typecheck, lint, the required remote suite, and HIGH/LOW L9 vehicle motion passed. The separate shortcut evacuation and rendered wreck inspection remain open.
 
-## Follow-up rendered inspection
+## Follow-up evidence
 
-The browser pool is now available. A headless WebGL D-CROSSING scene completed 120 frames in 8.94 seconds, with no reported clipping. I inspected its final capture: it shows the courier and stray mesh fragments but no pickup, so this does not prove wheel contact. Rendered wreck inspection remains open; the missing asset problem must be resolved before that capture can establish grounding.
+The first scene used an incorrect actor coordinate format (`[x,y,z]` instead of `[x,z]`), placing the camera away from the wreck. Runtime GLBs are present. Correcting the camera produced the actual after capture now in the sheet; the earlier absent-pickup render is superseded.
 
-The missing pickup was a capture setup error: actor `at` expects `[x,z]`. Correcting it rendered the burning pickup clear of all barricades; visible front wheels sit at ground level. The sheet now includes that actual WebGL after capture. Rear wheel contact remains occluded from this angle.
+The existing body-clear follower corner routing was also tested for evacuating survivors. It allowed Okafor to board but left Mia alive and unboarded after the 600-second native sample, with the last boarding signal 64.48 seconds after defense. That experimental code was reverted. The failed receipt is summarized in `qa.json`; this result does not establish a complete shortcut fix.
