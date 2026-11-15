@@ -12,6 +12,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 import { followerInCombat, updateSurvivor } from '../../src/sim/outbreak/Survivors';
 import { formationBack, formationSlot } from '../../src/sim/missions/missionHelpers';
+import { updateAlly } from '../../src/sim/outbreak/Allies';
 import { idleEligible, idleLookYaw, looseSlotOffset, startDelayTicks, swayOffset } from '../../src/sim/outbreak/groupNature';
 
 const worlds: SimWorld[] = [];
@@ -58,6 +59,26 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     expect(w.events.events().find(ev => ev.type === 'civilian.turned')).toMatchObject({ variant: 'inf.cashier', position: p });
   }
   expect(timings.size).toBeGreaterThan(1);
+
+  // L9 HIGH: guards must rescue an evacuating civilian before shooting a
+  // nearby Alpha; otherwise repeated grabs pin the last passenger at the APC.
+  {
+    const w = await loadRunnerLevel('L9', 1, preset('L9-default'), 0, { quality: 'high' }); worlds.push(w);
+    const s = w.missions!.l9!.driving.state, guard = w.entities.get(s.soldiers[0])!, victim = s.roster[3];
+    delete guard.passengerOf; guard.hidden = false;
+    Object.assign(guard.transform, { x: -540, y: .7, z: 0 });
+    const ally = guard.civilian!.ally!;
+    Object.assign(ally, { engaged: true, targetId: 0, nextAttack: w.tick + 1000, post: { x: -540, z: 0 } });
+    const alpha = w.infected!.spawn('infected.alpha', { x: -537, z: 0 });
+    const biter = w.infected!.spawn('infected.runner', { x: -535, z: 0 });
+    Object.assign(w.entities.get(biter)!.infected!.l1!, { mode: 'bite', biteTargetId: victim });
+    s.evacuating.push(victim);
+    const visibility = vi.spyOn(w.combat!.query, 'shotVisible').mockReturnValue(true);
+    try {
+      updateAlly(w, guard, () => true);
+      expect(ally.targetId, `rescue ${victim} before Alpha ${alpha}`).toBe(biter);
+    } finally { visibility.mockRestore(); }
+  }
 
   const f = await world(), jogger = f.npcs!.civilians.spawn('jogger', { x: 10, z: 0 }), sourceId = f.infected!.spawn('infected.runner', { x: 2, z: 0 });
   f.events.emit({ type: 'infected.attack', tick: f.tick, sourceId, targetId: 1, amount: 10, special: 'lunge', attackId: 1 });

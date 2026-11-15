@@ -183,6 +183,8 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         // The evacuation detail rescues an active grab before returning to its Alpha target.
         if (world.scenario === 'L7' && candidate?.infected?.l1?.mode === 'bite' &&
             world.l7Encounters?.state.roster.some(r => r.status === 'following' && r.id === candidate.infected!.l1!.biteTargetId)) return 4;
+        if (world.scenario === 'L9' && candidate?.infected?.l1?.mode === 'bite' &&
+            world.missions?.l9?.driving.state.evacuating.includes(candidate.infected.l1.biteTargetId)) return 4;
         if (world.scenario === 'L7' && candidate && candidate.health.current > 0 &&
             (dist(candidate.transform, e.transform) <= 2.5 || player && dist(candidate.transform, player.transform) <= 4)) return 2;
         if (candidate?.archetype !== 'infected.alpha') return 0;
