@@ -29,7 +29,7 @@
       }
     },
     "test": "Existing vehicle-interrupted-boarding test extended with bridgehead footprint, collider, and APC-road clearance assertions.",
-    "visualAfter": "NOT RUN: sandbox denies localhost preview bind on 127.0.0.1:4995; post-change HIGH zoom-1.5 capture remains required."
+    "visualAfter": "PASS: inspected HIGH WebGPU zoom-1.5 stop road and three-truck overview; visible gaps to sandbag rows/sign/posts/gate-side fence and bridge wall."
   },
   "evacuation": {
     "status": "unresolved",
@@ -78,14 +78,37 @@
       "passed": 105,
       "skipped": 1,
       "inventoryCases": 150,
-      "seconds": 126.9,
-      "budgetSeconds": 240
+      "seconds": 127.3,
+      "budgetSeconds": 240,
+      "revision": "3515e9f8"
     },
-    "vehicleMotionGate": "NOT RUN: browser preview binding unavailable",
+    "vehicleMotionGate": {
+      "pass": true,
+      "rows": [
+        {
+          "mode": "L9",
+          "tier": "high",
+          "code": 0,
+          "seconds": 114.193,
+          "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+          "sourceHash": "9607ee5a7d28432e1435adfde216938874f67c563b57e394e9965671863ce8d8",
+          "pass": true
+        },
+        {
+          "mode": "L9",
+          "tier": "low",
+          "code": 0,
+          "seconds": 76.419,
+          "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+          "sourceHash": "9607ee5a7d28432e1435adfde216938874f67c563b57e394e9965671863ce8d8",
+          "pass": true
+        }
+      ]
+    },
     "threeHighRealInputRuns": "NOT RUN: browser preview binding unavailable"
   },
   "reportBytesUnder200KB": true,
-  "completion": "NOT MET: HIGH shortcut still exceeds 20 s; root cause and remaining gates open.",
+  "completion": "Three HIGH real-input runs, placement review and motion gate pass. Remaining: s126 fixtures, final L9 threat refresh and report finalization.",
   "browserRuns": [
     {
       "id": "repro-high-road-1",
@@ -1221,5 +1244,75 @@
       ]
     },
     "remaining": "Two HIGH road runs on rescue code, s126 fixture matrix, final remote suite, motion and visual gates"
-  }
+  },
+  "finalCodeBrowserRuns": [
+    {
+      "id": "rescue-shortcut",
+      "backend": "webgpu",
+      "tier": "high",
+      "route": "dry-shortcut",
+      "zoom": 1.5,
+      "finished": true,
+      "skipped": [],
+      "deaths": 0,
+      "issues": 0,
+      "wallSeconds": 190,
+      "evacuationAt": 7033,
+      "defenseCompleteTick": 8833,
+      "lastBoardingStartTick": 9494,
+      "boardingAnimationTicks": 45,
+      "lastBoardedTick": 9539,
+      "secondsAfterDefense": 11.766666666666667,
+      "livingEvacuees": 4,
+      "aboard": 4,
+      "hp": [
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "id": "rescue-road-1",
+      "route": "road",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "finished": true,
+      "skipped": [],
+      "deaths": 0,
+      "issues": 0,
+      "wallSeconds": 222,
+      "defenseCompleteTick": 11725,
+      "lastBoardedTick": 10961,
+      "secondsAfterDefense": -12.733333333333333,
+      "hp": [
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "id": "rescue-road-2",
+      "route": "road",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "finished": true,
+      "skipped": [],
+      "deaths": 0,
+      "issues": 0,
+      "wallSeconds": 342,
+      "defenseCompleteTick": 18801,
+      "lastBoardedTick": 18003,
+      "secondsAfterDefense": -13.3,
+      "hp": [
+        100,
+        100,
+        100,
+        100
+      ]
+    }
+  ]
 }

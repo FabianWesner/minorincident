@@ -4,7 +4,7 @@ This report records a partial P2 placement correction. The P1 HIGH evacuation de
 
 ## Staging truck overlap
 
-The archived pre-fix image in [placement-before.jpg](./placement-before.jpg) shows the old north row at z=10 crossing the low sandbag row and the `EVACUATION / STOP` sign. This was a fresh-L9 custom camera view, not the requested follow-camera zoom-1.5 review. The same fixed scene has sandbags at z=±8, light posts at z=±12, the evacuation sign at (453, 9), gate-side fences at x=440, and the APC stop centered at z=0.
+The archived pre-fix image in [placement-sheet.jpg](./placement-sheet.jpg) shows the old north row at z=10 crossing the low sandbag row and the `EVACUATION / STOP` sign. This was a fresh-L9 custom camera view, not the requested follow-camera zoom-1.5 review. The same fixed scene has sandbags at z=±8, light posts at z=±12, the evacuation sign at (453, 9), gate-side fences at x=440, and the APC stop centered at z=0.
 
 The trucks now stage at (450, 26), (459, 26), and (468, 26). Their model collision bounds are 6.9266 m by 2.858 m; at the authored π/2 yaw their world footprint is 2.858 m across x and 6.9266 m along z. The extended existing vehicle test checks all three footprints against the sandbag/sign/post/fence positions and active L9 obstacle colliders, and verifies the truck row stays outside the APC road lane. The post-change browser capture and visual inspection at HIGH zoom 1.5 are still missing because this sandbox denies localhost binds.
 
@@ -42,3 +42,11 @@ A further unchanged real-input HIGH WebGPU shortcut diagnostic used a read-only 
 The existing soldier rescue priority covered L7 evacuation grabs but omitted L9. A candidate change extends that same target priority to infected biting active L9 evacuees; validation and fresh browser acceptance are pending. Zombie statistics, bite damage, and corpse persistence remain unchanged.
 
 The rescue-priority candidate passes its first HIGH WebGPU shortcut run: 4/4 at 100 HP, last boarding tick 9539 versus defense completion 8833, **11.77 s** after defense. The run completes L9 in 190 s, no skips/deaths/issues. The existing NPC test now checks a soldier prioritizes an L9 evacuee biter over a closer Alpha; all three NPC tests pass. Two HIGH road runs on the rescue code and final fixture/motion/visual/full-suite checks remain required.
+
+## Final-code browser matrix
+
+On rescue commit `3515e9f8`, HIGH WebGPU road runs `rescue-road-1` (222 s) and `rescue-road-2` (342 s) boarded all four 12.73 s and 13.30 s **before** defense completion. Both completed with zero skips/deaths/issues. Together with the 11.77 s shortcut pass, this satisfies the three-run timing matrix. The final-code required remote suite passed again: 105 passed/one platform skip, 150-case inventory, 127.3 s.
+
+I inspected fresh HIGH WebGPU placement captures: the stop road at follow zoom 1.5 is clear between the barrier rows; the overview shows all three trucks north of the barriers and sign, with visible gaps from light posts, side fence and bridge wall. See `placement-sheet.jpg`. The fixture uses an APC pose at the stop and is labeled placement evidence, not real-input timing evidence. The retained s126 fixture matrix and final motion/threat gates are still pending.
+
+Final-code L9 vehicle campaign motion gate passes HIGH and LOW: both source-stable, zero correction failures. Raw receipts: `test-results/s83-vehicleslide/campaign/L9-{high,low}.json`. Remaining closure work is the retained s126 fixtures, final threat refresh and report rewrite.
