@@ -1,47 +1,44 @@
 # s134 · Courier occlusion pin
 
-## Current result
+## Result
 
-Replaced s133's always-visible, depth-tested ground ring with a small paired teal chevron above the courier. The hollow shape faces the camera, has a dark edge, disables depth testing, and scales with camera distance to keep its screen size steady across zoom. It appears only during on-foot gameplay when the camera-to-courier body checks detect an occluding body or Mega. Hidden courier states, riding, and story shots suppress it. The courier and infected stats and corpse lifetime are unchanged.
+A small teal chevron with a dark edge replaces s133’s always-on ground ring. It faces the camera, holds a steady apparent size across zoom, and draws without depth testing so bodies cannot hide it. It appears during visible on-foot gameplay when the existing body/Mega overlap or nearby large-corpse trigger is active. Riding, hidden courier states and story shots suppress it. Scene Lab’s named debug camera preset is exempt from story suppression because its gameplay fixtures use that preset.
 
-The pin uses two simple meshes and no new render pass. Its draw/triangle delta and visual recognition have **not** been measured in this environment.
+The shape is a narrow downward chevron, distinct from red warnings, yellow objectives, violet screamer rings and the gold corgi. No simulation stats or corpse lifetime changed.
 
-## Checks completed
+## Visual verdict
 
-- `npm run typecheck` — passed.
-- `npm run lint` — passed.
-- `npx vitest run tests/shared/render-contracts.test.ts --maxWorkers=4 --configLoader runner` — 14 passed.
-- `npm test` — full configured suite completed locally in 90.5 s: 106 passed, 44 skipped, 27 files. The unchanged required remote invocation, `sh tools/remote/run.sh "$PWD" -- npm test`, could not start because no healthy runner was provisioned; the documented local fallback also rejected this invocation.
-- `git diff --check` — passed.
+Opened the full-size matched L4/L6 moving fixture frame-60 captures and calm L1 frame, then [contact.jpg](contact.jpg). Baseline is s133 `4dca98d8`, with identical fixture setup. **My verdict: pass.** In L4, the teal chevron at the courier’s hair draws the eye to her, then her outlined body. Earlier higher placements falsely associated with rear zombies and were lowered. In L6 the lit courier body is still the first eye landing; the pin adds identity. Calm L1 shows no pin and loses the old always-on ring. This is my visual recognition assessment, not a measured human reaction-time experiment.
 
-## Open acceptance evidence
+Both backend moving matrices passed: L4/L6 × HIGH/LOW × zoom 1/1.5 × frames 1/30/60, 48 samples. Minimum courier body-mask share 1.0 WebGL2 / 0.99894 WebGPU. Masks establish visibility, not recognition speed. Also opened full-size L4 LOW z1.5 on both backends and a backend comparison of L4 HIGH z1/z1.5 and L6 LOW z1/z1.5. The pin remains readable and backend appearance is consistent.
 
-The matched s133/current sheet and the cross-product L4/L6 moving matrix (WebGL2/WebGPU, HIGH/LOW, zoom 1/1.5), real-play L4 HIGH spot, draw/triangle delta, and final scene gate are not verified. The mandated browser-pool capture command failed before launching a browser: its control server received `listen EPERM` on 127.0.0.1:4329. Port 3300 had no server to reuse. No screenshot is included because no current-source frame could be captured; the harness is ready at `tools/scenelab/courier-mark-review.ts --baseline` for an admitted headless pool.
+Post-merge real-input L4 HIGH z1 spot ran 182 seconds with no skips. Opened `test-results/s134-courierpin/real-l4/captures/campaign-L4-t8129.jpg`: 90 HP, multiple large Alphas, corpses and red bars; eye lands on the teal pin at the courier’s hair, clearly identifying her. The run reached breach combat and stopped at its requested three-minute cap (exit 1, unfinished level). It logged one early empty-HUD navigation warning. This is a bounded visual spot, not level-completion proof.
 
-My visual verdict is therefore **unverified** for L4 dense, L6 dense, and calm L1. Source behavior predicts the cue will activate in the dense fixtures and stay hidden in a calm frame, but that does not establish that the courier is findable at a glance or that the pin is tasteful. Do not treat this report as completion of the acceptance goal.
+## Validation and integration
+
+- Typecheck and lint passed on merged source; existing shared render-contract suite has 14 passing cases, including calm/hidden/riding/story pin suppression.
+- Required unchanged remote unit suite passed before merge: 105 passed, one skipped, 27 files, 130.5 seconds on 46.225.66.90. Final merged-source rerun also passed: 105 passed, one skipped, 27 files, 130.2 seconds on the same runner.
+- Full scene gate passed 91/91 rows, plus HIGH/LOW vehicle-contact and native L9/L7/L4 motion follow-ups, exit 0. Captures and log: `test-results/s134-courierpin/gate/` and `gate.log`. This run preceded the requested main merge; the only runtime merge change is the restored corpse-distance trigger.
+- Merged main at `839b4799`, including `49f06681`. `nearLargeCorpse` retains the **<4 m** large-corpse distance trigger. Requested post-merge `E2E_PORT=5005 SCENE_PORT=5006 npm run test:smoke` passed all six QA checks (including Q-208 beside a dead Alpha), public smoke, and builds in 128.2 seconds.
+
+## Cost
+
+Matched HIGH z1 frame-60 source-before/current counters:
+
+| Scene | Draws before/after | Triangles before/after |
+| --- | --- | --- |
+| L4 dense | 127 / 128 | 340972 / 340884 |
+| L6 dense | 77 / 78 | 277176 / 277088 |
+| L1 calm | 68 / 67 | 47877 / 47781 |
+
+Dense delta **+1 draw, −88 triangles**; calm delta **−1 draw, −96 triangles**. Two four-triangle chevrons replace a 96-triangle ring only while active. No new render pass. These counters establish bounded submission cost, not a universal frame-time guarantee.
 
 ## Reproduction
 
 ```sh
 E2E_PORT=5005 SCENE_PORT=5006 MI_BROWSER_POOL=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/courier-mark-review.ts --baseline
+E2E_PORT=5005 SCENE_PORT=5006 MI_BROWSER_POOL=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/courier-readability.ts webgl2 --motion
+# Repeat with webgpu.
 ```
 
-The capture produces identical-setup s133/current L4, L6, and calm L1 frames. After capture, make one small comparison sheet, inspect it at full size, record the first eye landing per frame, and run the required backend/tier/zoom matrix and scene gate before closing this report.
-
-## Resumed evidence
-
-With unrestricted execution, the required remote suite passed on 46.225.66.90: 105 passed, one skipped, 27 files, 130.5 seconds. The pooled matched capture completed. Opened `test-results/s134-courierpin/review/l4-baseline-after.png`: teal contour visible but overhead pin absent. This frame fails recognition acceptance; diagnose marker rendering/visibility before continuing. Previous environment limitations are resolved.
-
-## Current placement and moving matrix
-
-Lowered the chevron to the courier hair rather than a rear zombie. Scene Lab uses a cinematic preset for gameplay fixtures; the named `scene-lab` debug preset is exempted from story suppression while real story shots remain suppressed. Fixed the baseline to 4dca98d8 and port 5005.
-
-Opened the latest full-size L4/L6/calm L1 after captures and [contact.jpg](contact.jpg). L4 eye lands on the teal chevron at the courier hair and follows her outlined body; L6 eye lands on her already lit body. Calm L1 has no pin and no ground ring. The small sheet compresses the pin, so full-size captures were also reviewed.
-
-Both moving matrices passed: 24 samples per backend across L4/L6, HIGH/LOW, zoom 1/1.5, frames 1/30/60. Minimum body-mask share 1.0 WebGL2 / 0.9989396 WebGPU. These masks establish visibility, not recognition speed. Final scene gate, real-play spot, counters, and broad visual review remain open.
-
-## Draw cost and expanded review
-
-Matched s133/current HIGH z1 f60 counters: L4 127→128 draws, 340972→340884 triangles; L6 77→78 draws, 277176→277088 triangles. Calm L1 68→67 draws, 47877→47781 triangles. Dense delta **+1 draw, −88 triangles**, calm delta **−1 draw, −96 triangles**, no new pass. This replaces one 96-triangle ring with two four-triangle chevrons only when active.
-
-Opened LOW z1.5 L4 full-size captures on both backends and an eight-frame backend comparison of L4 HIGH z1/z1.5 and L6 LOW z1/z1.5 f60. Backend output appears consistent. L4 chevron is readable at the courier hair at both zooms; L6 eye lands on her lit body first. Final gate is in progress; 32 LOW rows passed before waiting on another job’s live exclusive pool reservation.
+One small committed sheet and JSON below 200 KB. No deployment, push or main movement.
