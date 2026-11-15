@@ -48,3 +48,7 @@ Extended the stationary native fixtures to 120 seconds. This exposed a 8.979 m r
 ## Actual HIGH primary-road drive
 
 Extended `l9-progress-probe.ts` with read-only bus samples and passenger attack-state transitions. The ordinary HIGH primary-road drive completes at tick 10711, first hatch opens at 5268, zero passengers reach 5 m during an open hatch, and zero passenger attack starts are observed. At hatch-open the bus is still near x281/z-330; it brakes around x374/z-252 and releases after the rail defense. The current fixed rail stop therefore delivers too late. Raw measured positions are committed in `high-driven-passengers.json`. Passenger arrival remains failed; this supersedes any implication that six disembarkations prove participation.
+
+## Matched LOW driven measurement
+
+The LOW primary-road native drive also completes (tick 10930), with hatch-open tick 5417, zero passenger attack starts and zero passengers within 5 m during an open hatch. Read-only geometry over the full recorded pursuit gives HIGH 237 samples, maximum asphalt distance 2.558 m; LOW 244 samples, maximum 4.983 m; zero samples outside 6 m in either drive. See `driven-summary.json` and both tier raw passenger JSON files. These complete-road drives strengthen the asphalt evidence but do not cover the required corner-cut/wide-detour driven paths. Both passenger participation gates remain failed. The bus catalog top speed is 12 m/s versus the APC road cap 18 m/s; pursuit timing must account for that gap without zombie stat changes.
