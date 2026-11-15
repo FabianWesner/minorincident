@@ -1,36 +1,41 @@
-# s122 L9 bus pursuit and hatch fight browser QA
+# s122 — L9 pursuit, hatch and save browser QA
 
-Status: **incomplete — browser QA blocked before the game opened**. Target source is batch 103, merge `2815e0d5`. No gameplay source or playtest driver was changed. No deployment, push, or main movement occurred.
+Status: **partial QA; coverage audit remains open**. Source batch 103, `2815e0d5`, production optimized QA build. Headless pooled browser, 1280×720, ports 4981/4982. No gameplay changes, deployment, push or main movement.
 
-## Current verdict
+## Measured passes
 
-There is no observed gameplay verdict yet. I did not run the required real-input route, hatch defence, ending-at-trucks, or save-fix checks. No glitch severity or fun/tense/boring judgment is claimed. No contact sheet is included because no game frame was captured; an invented or unrelated sheet would misrepresent the requested visual review.
+All passes used an L9-default progressed save and the visible Continue flow, real keyboard/mouse controls, and one logged authored-map route assist.
 
-## Blocker and reproduction
+| Pass | Result | Glitches and feel |
+| --- | --- | --- |
+| HIGH WebGL2 z1, road | 480 s; hatch reached, 22 deaths; unfinished | Invalid difficulty estimate: original driver suppressed all vehicle gunfire. Stationary-enemy flags near hull are unconfirmed collision/contact behavior; driver timeout P0 is not a game P0. |
+| HIGH WebGL2 z1.5, shortcut | 120 s; hatch reached, one death; unfinished | No driver flags. Same gunfire limitation; no reliable fight verdict. |
+| LOW WebGL2 z1, road, corrected driver | **Complete**, 213 s, 0 deaths, 26 shotgun attacks; truck defence and L10 handover | P2 known smoke/readability at trucks: broad plume and overlapping actors obscure hull. Rail view remains readable. Fight is manageable with aimed fire; not a passive safe spot. |
+| HIGH requested WebGPU z1.5, shortcut, corrected driver | **Complete**, 205 s, 0 deaths, 38 shotgun attacks; truck defence and L10 handover | Stationary-near-hull driver flags need review. Rail fight reduced courier to 50 HP before trucks: tense, not harmless. Backend was requested via driver; a recorded runtime-backend assertion is still missing. |
 
-The QA production build completed, but the browser pool could not start. Under the required wrapper, `tools/e2e-lock.sh` attempted to bring up the browser pool and its daemon failed to bind `127.0.0.1:4329` with `listen EPERM`. The wrapped preview command therefore never began listening on `4981`. A direct preview attempt on `4981` also returned `listen EPERM`. The pool log tail and command outcomes are recorded in [browser-qa.json](browser-qa.json).
+The temporary driver correction released movement and aimed/fired the physical mouse at drawn living infected while the HUD said “Engine stalled”. Original code returned before combat for every vehicle state. It was restored before commits; no final driver diff. Zero source/stat/corpse changes.
 
-The unchanged remote unit command also could not run: `sh tools/remote/run.sh "$PWD" -- npm test` exited 69 because no healthy provisioned Hetzner runner was available and `npm test` is not eligible for the Mac fallback.
+## Save fix
 
-## Checks completed
+**Controlled browser boundary check passed.** Opened pause/settings by real UI, then applied a diagnostic lethal hit while paused. At tick 8, HP 0, changed HIGH→LOW through the quality select. Resume advanced to tick 133 and 100 HP. Changed back to HIGH after respawn; tick advanced to 187. Reloaded and selected L9 through Continue: living 100 HP, HIGH, tick 45. Zero page errors. This checks the zero-HP save boundary; it is not an organic hatch-death settings interaction. Probe source and values are in JSON.
 
-- `MI_BUILD_CACHE=off npm run build:qa`: pass.
-- `npm run typecheck`: pass.
-- `npm run lint`: pass.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: not run; runner unavailable (exit 69).
-- Browser pool, preview, and all requested gameplay passes: not run; local listener bind denied (`EPERM`).
+## Visual review and provisional verdict
 
-## Open work
+Personally inspected [contact-sheet.jpg](contact-sheet.jpg), six panels at 960×870: HIGH GL rail hatch, LOW GL post-rail restart, HIGH requested GPU rail, HIGH requested GPU trucks, LOW GL trucks, L10 loading after actual handover. The last panel is a loading screen, not the ending cinematic.
 
-Resume when the browser pool can bind its loopback listener and the remote runner is healthy. Then seed an L9-default save, enter through the visible Continue flow, and run HIGH before LOW with zoom 1 and 1.5, WebGL2 and at least one WebGPU pass. Drive the authored road and an off-road shortcut by real input. Observe bus spawn/pacing/collisions, passenger disembarkation and hatch threat, smoke readability, and the truck ending. During L9 death/retry, change quality in settings and verify the game keeps running and Continue resumes. Capture and inspect a small contact sheet, then report glitches with P1/P2/P3 severities and a fun/tense/boring verdict.
+The pursuit gives the hatch a visible source of pressure; rail combat is readable in sampled frames. The truck defence is busier and smoky, with a crowd pressing around the APC. With working fire input both routes finish without deaths, while HIGH still costs health. **Provisional feel: tense and manageable, not harmless; smoke makes the truck beat harder to read.** This is an automated real-input observation, not a human playtester rating. No confirmed P1. Known smoke is P2. No new confirmed P3.
 
+Stills do not establish continuous absence of popping, bus clipping, sliding/jitter, unrealistic catch-up speed, or passenger spawn/grounding artifacts. Those checks remain open rather than being inferred from successful completion.
 
-## Resumed with unrestricted access
+## Validation
 
-Browser and preview startup now work. HIGH/WebGL2 zoom 1 road pass entered through Continue from L9-default and ran 480 seconds by real input, with one logged map route assist. It reached the hatch, recorded 22 deaths and retry recovery, and did not finish. Driver flags and captures require visual review; no final severity or fun verdict yet. Raw evidence: `test-results/s122-high-road/`. Remaining matrix, save settings check, ending and contact sheet remain open.
+Production QA build, typecheck and lint passed. Unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: runner 46.225.66.90, 127.5/240 s. Earlier EPERM listener and unavailable-runner attempts were resolved and are retained only as history in JSON. JSON is below 200 KB; one small inspected sheet is committed. Raw captures/logs: `test-results/s122-*` (local).
 
-LOW/WebGL2 zoom 1 road completed through actual L10 handover. Temporary driver correction sent real mouse fire at drawn boarders during the visible Engine stalled objective; the original driver suppressed all vehicle gunfire, explaining the earlier HIGH death loop. The driver was restored. Earlier deaths are not a valid difficulty estimate. Corrected HIGH and remaining matrix/save checks are still open.
+## Completion audit — still open
 
-## Contact sheet review
+- LOW zoom 1.5 real-input pass and runtime confirmation of WebGPU backend.
+- Continuous visual sampling of pursuit/spawn/disembarkation to judge the requested bus defects and 3× pacing.
+- Review stationary-near-hull flags before assigning a gameplay severity.
+- Organic death/retry settings navigation at the hatch, supplementing the passing controlled zero-HP check.
 
-Personally inspected `contact-sheet.jpg` (six panels, 960×870): HIGH GL rail, LOW GL post-rail restart, HIGH GPU rail, HIGH GPU trucks, LOW GL trucks, and HIGH GPU L10 loading after handover. Rail APC/courier remain readable. LOW trucks shows a broad smoke plume and overlapping attackers obscuring the hull (known smoke P2 candidate). Last panel is a loading screen, not an ending cinematic. These stills do not prove continuous absence of bus popping, clipping, jitter, or passenger spawn defects.
+The goal is not complete. No broad “all clear” claim is supported by the current evidence.

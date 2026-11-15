@@ -1,5 +1,5 @@
 {
-  "status": "in-progress",
+  "status": "partial-qa-audit-open",
   "target": {
     "batch": 103,
     "commit": "2815e0d5"
@@ -349,5 +349,21 @@
     "errors": [],
     "setup": "Opened pause/settings physically while alive, applied controlled lethal hit while paused, then physically changed quality at zero HP; resumed, changed again after respawn, reloaded and entered Continue.",
     "probeSource": "import { launchProfile } from '../browser-pool/client';\nimport { writeFileSync } from 'node:fs';\nconst c=await launchProfile('test-results/s122-high-road/profile',{headless:true,args:['--use-angle=metal'],viewport:{width:1280,height:720}});\nconst p=c.pages()[0]??await c.newPage();const errors:string[]=[];p.on('pageerror',e=>errors.push(e.message));await p.addInitScript('window.__name=f=>f');\nconst url='http://127.0.0.1:4981/?testApi=1&scenelab=1&renderer=webgl&quality=high&audio=muted';\nconst start=async()=>{await p.goto(url);await p.waitForFunction(()=>!!window.__SS__);await p.evaluate(()=>window.__SS__!.ready);await p.getByTestId('start-game').click();await p.getByTestId('level-L9').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.id==='L9');if(await p.getByTestId('mission-button').isVisible())await p.getByTestId('mission-button').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.phase==='playing');};\nconst state=()=>p.evaluate(()=>({tick:window.__SS__!.tick(),hp:window.__SS__!.getEntity(1)!.health.current,level:window.__SS__!.missions.state()?.id,quality:window.__SS__!.getState().render.quality}));\ntry{await start();const before=await state();await p.getByTestId('pause-button').click();await p.getByTestId('pause-settings').click();await p.evaluate(()=>{const g=(window as any).__SCENE__.game;g.world.player.damage(1000,g.world.tick,true);});const dead=await state();await p.getByTestId('setting-quality').selectOption('low');const changedDead=await state();await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForFunction(()=>window.__SS__!.getEntity(1)!.health.current>0,{},{timeout:30000});const alive=await state();await p.getByTestId('pause-button').click();await p.getByTestId('pause-settings').click();await p.getByTestId('setting-quality').selectOption('high');await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForTimeout(800);const after=await state();await start();await p.waitForTimeout(800);const continued=await state();writeFileSync('test-results/s122-save.json',JSON.stringify({method:'Continue existing L9-default profile; controlled lethal diagnostic hit and pause at zero HP; physical settings changes and menu reload/Continue',before,dead,changedDead,alive,after,continued,errors},null,2));}finally{await c.close();}\n"
+  },
+  "currentSummary": {
+    "lowRoadComplete": true,
+    "highShortcutComplete": true,
+    "controlledSaveBoundary": "pass",
+    "runtimeWebGPUAssertion": "missing",
+    "lowZoom1_5": "missing",
+    "continuousBusVisualReview": "missing",
+    "fun": "provisionally tense/manageable; smoke obscures truck hull",
+    "confirmedFindings": [
+      {
+        "severity": "P2",
+        "kind": "known smoke/readability",
+        "where": "LOW trucks"
+      }
+    ]
   }
 }
