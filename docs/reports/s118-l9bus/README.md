@@ -222,3 +222,7 @@ Full browser receipt shows bus already115–190m ahead at rail hatch (HIGH tick6
 ## Following-gap fix qualified in browser L9 subset
 
 Controller now brakes at12m along-road following gap so fast bus cannot run far ahead of slow APC. HIGH no-fire participation4near/7.2s; LOW3near/7.92s. Focused vehicles2/2pass30.43s; typecheck/lint pass. Unchanged fixed-source headless browser L9 subset passes both tiers, including hatch/rail-stall contact coverage (HIGH3actors/4contacts). `following-gap-browser.json` contains both verdicts. Commit this fix; then full8-row gate, six per-tick sweeps and final checks need revalidation.
+
+## Following-gap six sweeps and main merge
+
+All6bcd03efc skilled paths complete with continuous every-tick bus records,0ticks outside6m; worst3.479m. `final-six-driven-paths.json` refreshed. Then merged main92a039e1 plus7c3652d3 cleanly, retaining the unchanged interaction sweep in its separate existing main test file and runner worker policy. No new test file or slow test added by this lane. Final remote suite must run after this merge.
