@@ -36,3 +36,5 @@ The six s126 native fixtures all complete with living evacuees aboard: HIGH road
 - Final vehicle campaign motion refresh: LOW passes; HIGH is unproven because one hatch actor has only two captured frames. Both source-stable; the unchanged gate must be rerun for sufficient evidence.
 
 Final artifacts are this README, compact JSON below200 KB, and one small reviewed sheet. No deployment, push or main-branch move occurred.
+
+The unchanged motion-gate repeat reproduces one unproven HIGH track (`hatch/hull-ground/888`, two complete frames, zero measured planted contacts); LOW passes again. Existing verdict thresholds remain unchanged. The next correction is observer coverage around the hull/visibility boundary, not accepting missing contacts as zero slide.

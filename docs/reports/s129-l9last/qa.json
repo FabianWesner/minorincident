@@ -1426,5 +1426,33 @@
         "pass": true
       }
     ]
+  },
+  "motionRepeat": {
+    "sameSource": true,
+    "highPass": false,
+    "lowPass": true,
+    "failedTracks": [
+      {
+        "key": "hatch/hull-ground/888",
+        "classification": "unproven",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": false,
+        "motion": {
+          "frames": 2,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 7.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      }
+    ],
+    "nextAction": "Retain approach samples around the hull visibility boundary; preserve verdict thresholds and fail-unproven behavior."
   }
 }
