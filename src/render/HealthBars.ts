@@ -34,6 +34,23 @@ export function bossChip(from: number, current: number, age: number, widthPx: nu
   return Math.min(Math.max((from - current) * widthPx * fade, bossChipMinPx * fade), (1 - current) * widthPx);
 }
 export const followerPipSize = { width: 18, height: 3 } as const;
+/** Keep a small set of live, healthy attackers legible in a crowd; damaged and special infected retain their bars. */
+export const nearbyAttackerBarLimit = 6;
+export function nearestHealthyAttackers(entities: Iterable<EntitySnapshot>, player: { x: number; z: number }): Set<number> {
+  const nearest: { id: number; distance: number }[] = [];
+  for (const e of entities) {
+    if (e.faction !== 'infected' || e.health.current <= 0 || e.hidden || e.infected?.hidden || e.corpse || mandatoryBar(e) || e.infected?.hitByPlayer ||
+      !(e.infected?.targetId === 1 || e.infected?.heardTargetId === 1 || e.infected?.l1?.targetId === 1 || e.infected?.specialAttack?.grabbedId === 1)) continue;
+    const distance = Math.hypot(e.transform.x - player.x, e.transform.z - player.z);
+    if (distance > 6) continue;
+    let i = 0;
+    while (i < nearest.length && nearest[i].distance <= distance) i++;
+    if (i >= nearbyAttackerBarLimit) continue;
+    nearest.splice(i, 0, { id: e.id, distance });
+    if (nearest.length > nearbyAttackerBarLimit) nearest.pop();
+  }
+  return new Set(nearest.map(e => e.id));
+}
 
 /** Six pooled billboard meshes, independent of population and quality tier.
  * HP is read every presentation frame; nothing here writes simulation state. */
@@ -106,8 +123,14 @@ export class HealthBars extends Group {
         this.heroScreen.top = Math.min(this.heroScreen.top, sy); this.heroScreen.bottom = Math.max(this.heroScreen.bottom, sy);
       }
     }
+    // At L4/L6, many ordinary infected can target the courier at once. Showing
+    // every healthy nearby attacker makes a red bar thicket around the player.
+    // Keep the six closest healthy attackers; damaged and mandatory bars are
+    // still useful information and remain visible at any distance.
+    const nearbyAttackerIds = nearestHealthyAttackers(this.world.entities.iterate(), player.transform);
     for (const e of this.world.entities.iterate()) {
       if (!(squad.has(e.id) ? ally(e) : barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true))) continue;
+      if (e.faction === 'infected' && !mandatoryBar(e) && !e.infected?.hitByPlayer && !nearbyAttackerIds.has(e.id)) continue;
       // Riot/Alpha/Mega bars remain mandatory (L4-11/G-24, E32), including healthy threats.
       if (!pickBodies.bounds(e.id, this.bounds)) continue;
       const follower = ally(e), evacuee = follower && this.world.scenario === 'L7';
