@@ -27,6 +27,11 @@ export interface Eyes {
   view: { w: number; h: number };
 }
 
+export const canShootVehicleObjective = (level: string | null, objective: string): boolean => level === 'L9' && /hold the hatch/i.test(objective);
+export const captureZooms = [1, 1.5] as const;
+export const visibleBoarder = (passenger: boolean, figureDrawn: boolean, screen: { x: number; y: number }, view: { w: number; h: number }): boolean =>
+  passenger && figureDrawn && screen.x >= 0 && screen.x < view.w && screen.y >= 0 && screen.y < view.h;
+
 export function visibleGroupTarget(level: string | null, player: { x: number; z: number }, allies: { x: number; z: number; hp: number; drawn: boolean; corpse: boolean; kind?: string; following?: boolean }[], leash = 8, step?: string | null): { x: number; z: number } | null {
   if (level !== 'L7' && !(level === 'L5' && step === 'look') && !(level === 'L6' && (step === 'retreat' || step === 'exit'))) return null;
   const group = allies.filter(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion' && (level !== 'L5' || a.following));
@@ -105,7 +110,7 @@ export function look(): Eyes {
       if (enemy && m?.id === 'L4') {
         const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
         if (world.infected?.director.occluded(e.transform)) continue;
-      } else if (!a.input.visible(e.transform)) continue;
+      } else if (!(enemy && m?.id === 'L9' && /hold the hatch/i.test(document.body.innerText)) && !(m?.id === 'L9' && e.attachedTo !== undefined && figures.has(e.id)) && !a.input.visible(e.transform)) continue;
       const s = a.input.project(e.transform, 'player');
       const joints = figures.get(e.id)?.joints;
       if (enemy && !figures.has(e.id)) continue;
@@ -121,7 +126,7 @@ export function look(): Eyes {
       // The drawn chest may sit behind Home, Pause or a rack button. A mouse
       // attack there activates the UI and can leave the driver holding WASD on the title menu.
       if (document.elementFromPoint(aim.x, aim.y)?.closest('button, input, select, textarea, [role="button"], [role="dialog"]')) continue;
-      const drawn = enemy ? figures.has(e.id) : a.input.visible(e.transform) && s.x >= 0 && s.x < view.w && s.y >= 0 && s.y < view.h;
+      const drawn = enemy ? figures.has(e.id) : (a.input.visible(e.transform) || (m?.id === 'L9' && e.attachedTo !== undefined && figures.has(e.id))) && s.x >= 0 && s.x < view.w && s.y >= 0 && s.y < view.h;
       const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, archetype: e.archetype, drawn, screen: s, aim,
         moving: !!e.motion?.moving, speed: e.motion?.speed ?? 0, yaw: e.transform.yaw, vx: e.motion?.velocity.x ?? 0, vz: e.motion?.velocity.z ?? 0, corpse: !!e.corpse,
         state: e.infected?.state ?? e.escort?.state ?? e.companion?.state ?? e.civilian?.state, following: e.civilian?.survivor?.mode === 'follow', attacking: /^(windup|swing|dog-lunge-bite|zebra-rear-kick)$/.test(figures.get(e.id)?.clip ?? '') };

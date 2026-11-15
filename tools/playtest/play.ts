@@ -24,7 +24,8 @@ const { values } = parseArgs({ options: {
   weapon: { type: 'string' },
   'no-skip': { type: 'boolean', default: false },
   'session-seconds': { type: 'string' },
-  'l9-route': { type: 'string' },
+  'l9-route': { type: 'string' }, 'capture-zooms': { type: 'string' },
+  'route-only': { type: 'boolean', default: false }, immortal: { type: 'boolean', default: false }, 'scream-captures': { type: 'boolean', default: false },
   out: { type: 'string' }, entry: { type: 'string' }, 'keep-profile': { type: 'boolean', default: false },
 } });
 const range = (spec: string): string[] => {
@@ -36,6 +37,8 @@ const l9Route = values['l9-route'];
 if (l9Route && (!['road', 'countryside', 'dry-shortcut'].includes(l9Route) || !levels.includes('L9'))) throw new Error('--l9-route requires L9 and road, countryside or dry-shortcut');
 const quality = values.quality === 'high' ? 'high' : 'low';
 if (!Number.isFinite(Number(values.zoom))) throw new Error('--zoom must be finite');
+const captureZooms = values['capture-zooms']?.split(',').map(Number);
+if (captureZooms && (!captureZooms.length || captureZooms.some(z => !Number.isFinite(z) || z < .5 || z > 2))) throw new Error('--capture-zooms requires comma-separated zooms between 0.5 and 2');
 const mode = values.mode === 'continue' ? 'continue' : 'campaign';
 const sessionSeconds = values['session-seconds'] === undefined ? undefined : Number(values['session-seconds']);
 if (sessionSeconds !== undefined && (!Number.isFinite(sessionSeconds) || sessionSeconds < 60 || sessionSeconds > 480 || levels.length !== 1 || mode !== 'campaign')) throw new Error('--session-seconds requires a single-level campaign and 60–480 seconds');
@@ -66,7 +69,7 @@ const session = (options: SessionOptions): boolean => {
   sessionsOk &&= result.status === 0;
   return result.status === 0;
 };
-const base = { origin, out, quality, zoom: Number(values.zoom), weapon: values.weapon, heroine: (values.heroine === 'male' ? 'male' : 'female') as 'female' | 'male', profile, levelMinutes: Number(values['level-minutes']), noSkip: values['no-skip'], l9Route: l9Route as SessionOptions['l9Route'] } as const;
+const base = { origin, out, quality, captureZooms, zoom: Number(values.zoom), weapon: values.weapon, heroine: (values.heroine === 'male' ? 'male' : 'female') as 'female' | 'male', profile, levelMinutes: Number(values['level-minutes']), noSkip: values['no-skip'], l9Route: l9Route as SessionOptions['l9Route'], routeOnly: values['route-only'] || values.immortal, immortal: values.immortal, screamCaptures: values['scream-captures'] } as const;
 try {
   if (mode === 'campaign') {
     const deadline = Date.now() + base.levelMinutes * 60_000;
@@ -81,7 +84,7 @@ try {
     session({ ...base, levels: [level], entry, stopAfterLevel: true, tag: `continue-${level}` });
   }
 } finally { server?.kill(); }
-const summary = { mode, quality, heroine: base.heroine, zoom: base.zoom, levels, runs, issues: issues.length, bySeverity: Object.fromEntries(['P0', 'P1', 'P2', 'P3'].map(s => [s, issues.filter(x => x.severity === s).length])) };
+const summary = { mode, acceptanceMode: base.immortal ? 'IMMORTAL / ROUTE ONLY' : base.routeOnly ? 'ROUTE ONLY' : 'STANDARD', immortal: base.immortal, routeOnly: base.routeOnly, quality, heroine: base.heroine, zoom: base.zoom, levels, runs, issues: issues.length, bySeverity: Object.fromEntries(['P0', 'P1', 'P2', 'P3'].map(s => [s, issues.filter(x => x.severity === s).length])) };
 writeFileSync(join(out, 'summary.json'), JSON.stringify(summary, null, 2));
 if (!values['keep-profile']) rmSync(profile, { recursive: true, force: true });
 console.log(`playtest ${mode}: ${runs.filter(r => r.finished).length}/${levels.length} levels finished; issues ${JSON.stringify(summary.bySeverity)} → ${out}`);
