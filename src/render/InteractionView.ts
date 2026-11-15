@@ -483,7 +483,8 @@ export class InteractionView extends Group {
       const right = left + (viewport?.width ?? innerWidth), bottom = top + (viewport?.height ?? innerHeight);
       const x = (this.projection.x + 1) * innerWidth / 2, y = (1 - this.projection.y) * innerHeight / 2;
       let position = { x: Math.max(left + 8, Math.min(right - 8 - width, x - width / 2)), y: Math.max(top + 8, Math.min(bottom - 8 - height, y - height)) };
-      if (innerWidth <= 600 || document.body.classList.contains('touch-ui')) {
+      // Desktop too: near the top-left the projected prompt landed on the vitals card (s125 L1 car alarm).
+      {
         const obstacles: PromptRect[] = [...document.querySelectorAll<HTMLElement>('.hud-tracker,.hud-survivor-vitals,.hud-vitals,.hud-map,.hud-weather,.hud-weapon-rack,.mission-subtitle,.story-bubble,.onboarding,[data-touch-action],[data-testid="pause-button"],[data-testid="home-button"]')].flatMap(obstacle => {
           const style = getComputedStyle(obstacle), rect = obstacle.getBoundingClientRect();
           return obstacle.hidden || style.visibility === 'hidden' || style.opacity === '0' || !rect.width || !rect.height ? [] : [rect];
