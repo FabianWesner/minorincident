@@ -672,5 +672,121 @@
     "change": "Ordinary infected bars crossing courier silhouette are suppressed instead of relocated to a shared row. Mandatory enemy and follower bars retain relocation.",
     "checks": "existing L4 contract, typecheck, lint passed; HIGH WebGL2 moving z1.5 scene passes console/body visibility gates",
     "remaining": "full remote and visual matrix rerun after this edit"
+  },
+  "barProtectionMotionMatrix": {
+    "webgl2": {
+      "samples": 24,
+      "minShare": 0.999611046285492,
+      "healthValues": [
+        30
+      ],
+      "clipping": [
+        {
+          "case": "l6-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        }
+      ]
+    },
+    "webgpu": {
+      "samples": 24,
+      "minShare": 0.9990291262135922,
+      "healthValues": [
+        30
+      ],
+      "clipping": [
+        {
+          "case": "l6-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        }
+      ]
+    }
   }
 }

@@ -50,3 +50,7 @@ Runner now accepts --motion (infected chase the stationary courier) and --high-o
 ## Courier bar protection follow-up
 
 The moving L4 probe exposed a row of overlapping ordinary bars above the courier. Ordinary bars that cross her bounds now disappear instead of moving into that row; mandatory special-enemy bars and followers still move above her. The existing L4 test now asserts suppression and mandatory Alpha preservation. Focused test/typecheck/lint pass. Reviewed HIGH WebGL2 zoom-1.5 frame 60 under bar-protection shows one retained bar rather than a broad overlapping row; console/body-visibility gates pass. This source edit postdates the last full remote suite and requires that suite and visual matrix rerun. Existing contact sheet predates bar protection.
+
+## Bar-protection motion matrix
+
+After ordinary-bar suppression, the committed runner completed all 48 samples: both backends, HIGH/LOW, L4/L6, zoom 1/1.5, frames 1/30/60. Every sample retained 30 HP and passed the >=90% body-share/zero-console gates. Detailed clipping reports show zero courier-versus-prop records, zero gun/body hits, and zero held-prop hits in all 16 cases. The previously reported actor warnings concern infected-versus-scenery intersections; they do not establish a courier defect. These short isolated probes still do not prove artifact-free production play or transition stability. Raw files: repro-{webgl2,webgpu}-motion. Full remote suite after bar suppression and production acceptance remain open; perf pending.
