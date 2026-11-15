@@ -18,4 +18,4 @@ HIGH dry-shortcut attempt reached (436.9, -1.7), then remained at the bay approa
 
 The archived batch-108 road log confirms 3/4 aboard at tick 10569 (defense complete 8859), but contains no survivor identity/position census. Its specific straggler behavior cannot be reconstructed from that log. The separate shortcut observer records Rosa grabbed by #840, then fleeing/recovering; it cannot establish the identity in the road run. New runs include a read-only per-survivor census.
 
-Raw current logs and captures: `test-results/s132-l9finish/`. Compact receipt: `evidence.json`. A reviewed report sheet and final acceptance matrix remain to be produced. No deployment, push, or main movement performed.
+Raw current logs and captures: `test-results/s132-l9finish/`. Compact receipt: `evidence.json`. Reviewed `road-sheet.jpg` shows hatch defense, wreck/crawl, and L10 loading from the first road run. It does not show fallback activation because this run boarded everyone before defense ended. The final acceptance matrix remains incomplete. No deployment, push, or main movement performed.
