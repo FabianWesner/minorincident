@@ -1,56 +1,26 @@
-# s126 L9 evacuation and red wreck
+# s126 L9 evacuation and wreck placement
 
-## Result
+L9 evacuation is fixed through north-side truck staging and an approach around the gate side fence. Six native HIGH/LOW runs on the final code finish with every living evacuee aboard within 17.02 seconds of Defense complete. The actual archived s125 stalled save also reaches 4/4 aboard at full health within 16.15 seconds of Defense complete. Implementation, tests, fixture and this report are committed on the lane branch.
 
-The reported HIGH road stall is reproduced by the s125 evidence and addressed through level layout. The trucks now stage on the north shoulder at `(450,10)`, `(459,10)`, and `(468,10)`. The four hidden guard soldiers take posts at `z=16`, beyond the boarding lane. The previous south-side truck row at `z=-16` made evacuees cross the dense horde behind the APC; the former south-side guard posts also occupied that egress corridor. Zombies retain their existing stats, all living evacuees remain damageable, and corpses are not removed.
+## Cause and change
 
-Six successful native runs finished with all four living evacuees aboard and the campaign handover complete. In the LOW skilled road run, the last boarding signal was 17.02 seconds after Defense complete; all other successful road runs boarded before Defense complete. The HIGH and LOW runs reached peaks of 168 and 90 living infected respectively. No collision failures occurred. Run details are in [qa.json](./qa.json).
+The former truck row at z=-16 made evacuees cross the dense horde behind the APC. Trucks now stage at `(450,10)`, `(459,10)` and `(468,10)`; guard posts are north of that boarding lane at z=16. A HIGH shortcut stop discharges survivors west of the closed gate side fence, where one survivor circled indefinitely. Those survivors now first approach the fence’s north end at `(437,16)` before turning toward the trucks. Movement speed, collision, damage, zombie stats and corpse persistence are unchanged.
 
-The D-CROSSING red pickup moved from `(465,-8.9)` to `(465,-19)` at `y=0`, clear of the barricade footprints. The source layout and checked-in generated placement agree. The before/after sheet includes the viewed s125 screenshot and the actual corrected-camera headless WebGL after capture. Visible front wheels meet the ground; rear wheel contact is occluded.
+The red pickup overlapped the barricade at `(465,-8.9)`. It now sits at `(465,-19)`, y=0, clear of the blocks. I inspected front and rear headless WebGL after captures: the visible front and rear tires meet the road. Far-side contact is occluded, but the requested alternative of moving the wreck off the barricade is verified. All nine crossing wreck placements were checked against barricade/jersey visual footprints: zero overlaps. Authored layout source and runtime JSON agree.
+
+[Before/after sheet](./wreck-before-after.jpg) · [QA receipts](./qa.json)
 
 ## Verification
 
-- `tests/engine/vehicles.test.ts`: PASS (2 tests), including the native L9 truck staging assertion.
-- `npm run typecheck`: PASS.
-- `npm run lint`: PASS.
-- Focused L9 threat receipt: skilled and passive complete, 0 L9 flags in each. The command's overall status marks the one-level diagnostic as partial; the raw receipt is retained in `qa.json`.
-- Six native L9 proof runs: PASS; all four living evacuees boarded and L9 handover completed within the 20-second Defense-complete window.
+- Six final-code native runs: HIGH shortcut skilled, HIGH road skilled, LOW road skilled, HIGH road passive, LOW shortcut passive and HIGH road seed 2 skilled. All living evacuees board within 17.02 seconds; all runs complete campaign handover. HIGH road peaks at 168 living infected; LOW road peaks at 90. Zero collision failures.
+- Actual s125 state: production-decoded archived campaign, seed 1, tick 11319, 209 actors, 2/4 boarded, evacuation unfinished, APC `(468.706,-2.066)`, courier 90 HP. Preserved unchanged in `tests/fixtures/saves/qa/s126-s125-l9-stalled-trucks.json.br` (149,682 bytes). The existing headless WebGL probe restores it without actor writes or courier protection: 4/4 humans aboard at 100 HP, 105 living infected remain, no probe failures. Completion is `(300 + 2469 - 1800) / 60 = 16.15` seconds after Defense complete. I inspected its dense-horde completion capture.
+- Existing vehicle engine test extended to assert north-side staging; its interrupted-boarding checks still pass at HIGH/LOW. No registered test cases added.
+- Typecheck and lint pass. Exact required remote command `sh tools/remote/run.sh "$PWD" -- npm test` passes after the waypoint change: 105 passed, 1 skipped, 124.9 seconds within the 240-second budget, runner 46.225.66.90. The unchanged suite retains its 150-case inventory across configured test categories.
+- Refreshed L9 threat receipt: zero skilled and passive flags, both complete. The single-level diagnostic command exits nonzero solely for `PARTIAL_LEVEL_SELECTION`; no L9 criterion fails. The attempted full cross-level audit exceeded 600 seconds during unrelated L4 stages.
+- HIGH/LOW L9 vehicle motion gate passes: stable source, no correction failures. This gate was run before the final pedestrian-only fence waypoint; vehicle code and placement were unchanged by that waypoint.
 
-## Open items
+## Browser QA needed and limits
 
-- A separate HIGH dry-shortcut skilled probe with the new north-side row still left one living evacuee unboarded at 20 seconds. That route parks the destroyed APC west of the bay and leaves Okafor circling near `x=438`. Moving the truck row west to address it prevented the shortcut run from reaching evacuation startup, so that experiment was reverted. The reported HIGH road route passes; all-route coverage remains open.
-- A LOW road passive seed-2 probe died before it reached evacuation. It is not counted among the six successful evacuation runs; no invulnerability was added.
-- Corrected-camera WebGL inspection shows the relocated pickup clear of barricades and its visible front wheels at ground level. Rear wheel contact remains occluded. The L9 vehicle campaign motion gate passed HIGH and LOW with stable source and no correction failures.
-- Required remote `npm test`: PASS on runner 46.225.66.90, 105 passed / 1 skipped, 129.2 seconds within the 240-second budget.
-- The full cross-level threat audit exceeded its 600-second budget during unrelated L4 stages. The focused L9 receipt itself is clean.
-- `npm run layouts:build -- D-CROSSING` cannot regenerate the layout in this worktree because `assets/kit.river-terrain/model.glb` is absent. The authored source and corresponding JSON placement were updated together; the unrelated generated hash touched by the failed build was restored.
+WebGPU was not checked; browser evidence uses headless WebGL. Far-side pickup tires are occluded in the two captures. Archived saves retain their old truck/wreck transforms; the relocation is verified on the fresh layout. The s125 state proof is a native stepped browser fixture, while six full native runs cover fresh route behavior; it is not an input-identical replay of the original 240-second video.
 
-See [wreck-before-after.jpg](./wreck-before-after.jpg). Browser QA is still needed to confirm the pickup’s rendered wheel contact and resting pose, from an additional camera angle.
-
-## Commit status
-
-Implementation and report committed after focused tests, typecheck, lint, the required remote suite, and HIGH/LOW L9 vehicle motion passed. The separate shortcut evacuation and rendered wreck inspection remain open.
-
-## Follow-up evidence
-
-The first scene used an incorrect actor coordinate format (`[x,y,z]` instead of `[x,z]`), placing the camera away from the wreck. Runtime GLBs are present. Correcting the camera produced the actual after capture now in the sheet; the earlier absent-pickup render is superseded.
-
-The existing body-clear follower corner routing was also tested for evacuating survivors. It allowed Okafor to board but left Mia alive and unboarded after the 600-second native sample, with the last boarding signal 64.48 seconds after defense. That experimental code was reverted. The failed receipt is summarized in `qa.json`; this result does not establish a complete shortcut fix.
-
-## Rear view inspection
-
-A second headless WebGL capture (120 frames, 7.98 seconds, no reported clipping) shows the relocated pickup from the rear. I inspected both after views: the pickup is clear of barricades on the road and the visible front and rear tires meet the road. The single sheet now includes both angles. Far-side tire contact remains occluded, but the requested alternative of moving the wreck off the barricade is visually verified.
-
-## Shortcut route fix
-
-The remaining HIGH shortcut stall is resolved by an explicit approach around the north end of the closed gate side fence. Evacuees discharged west of the fence first walk to `(437,16)` before approaching their truck. This preserves ordinary body collision, movement speed, damage and boarding. The previously failing HIGH shortcut now boards all four at full health 16.75 seconds after defense and completes L10 handover. HIGH road, LOW road, HIGH passive road and LOW passive shortcut regression runs also complete within the 20-second window. Typecheck and lint pass. The exact required remote suite passes again: 105 passed / 1 skipped, 124.9 seconds. Earlier shortcut failures above describe rejected experiments and are superseded by this final waypoint result.
-
-## Final-code coverage audit
-
-Six native runs now use the final waypoint code: HIGH shortcut skilled, HIGH road skilled, LOW road skilled, HIGH road passive, LOW shortcut passive, and HIGH road seed 2 skilled. Every living evacuee boards within 17.02 seconds of Defense complete and every run completes handover. The refreshed L9 threat receipt has zero skilled/passive flags; its diagnostic command exits nonzero solely for partial level selection. Exact replay of the s125 browser input/checkpoint state remains unproven; the HIGH native road run covers its route and dense horde class but does not establish input-identical replay.
-
-The archived s125 browser profile was copied and probed headlessly. It resumes at the exact reported APC position `(468.706,-2.066)`, courier HP 90, but its first observed objective is already “Drive onto the bridge.” It therefore cannot establish replay of the pre-boarding stall. The full-route driver steered west from this late resume, so that diagnostic was stopped and is not counted as a passing run.
-
-## Actual s125 fixture validation
-
-Decoded the archived campaign using the production save decoder and preserved it unchanged as `tests/fixtures/saves/qa/s126-s125-l9-stalled-trucks.json.br` (149,682 bytes). Its source state is seed 1, tick 11319, 209 actors, evacuation started at 8850, 2/4 boarded, evacuation unfinished. The existing headless WebGL L9 probe restores it without actor writes or courier protection. At restored tick 300 all four human evacuees are boarded at 100 HP, with 105 infected still living. Its shifted evacuation clock is -2469, so the measured completion is `(300 + 2469 - 1800) / 60 = 16.15` seconds after Defense complete. The browser receipt reports no failures. I inspected the completion capture: the dense horde remains around the APC. This actual s125 state validation supersedes the earlier replay coverage gap. Old wreck and truck transforms persist in this archived save; the fresh-layout wreck placement is covered by the separate front/rear captures.
+Layout regeneration was attempted but cannot complete because source `assets/kit.river-terrain/model.glb` is absent in this worktree. The matching authored and runtime JSON coordinates were updated together; no unrelated generated hash was retained.
