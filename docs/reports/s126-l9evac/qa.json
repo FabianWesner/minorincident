@@ -195,7 +195,7 @@
   },
   "visualQA": {
     "before": "Viewed s125 QA screenshot; red pickup perched on barricade with front wheels visibly lifted.",
-    "after": "Corrected camera capture shows the burning pickup at (465,-19), clear of barricades, with visible front wheels at ground level. Rear wheels are occluded; four-wheel contact is not proven from this angle.",
+    "after": "Inspected front and rear headless WebGL captures: pickup is off the barricades on the road; visible front and rear tires meet the road. Far-side contact is occluded. This verifies the requested alternative of moving the wreck off the barricade.",
     "browserQAneeded": [
       "Render the after placement and inspect wheel contact and grounded rest in browser/scene QA.",
       "Run the vehicle campaign motion gate once the shared browser pool is available.",
@@ -208,6 +208,12 @@
       "pickupVisible": true,
       "groundingVerified": false,
       "cameraCorrection": "Actor at uses [x,z], not [x,y,z]."
+    },
+    "rearScene": {
+      "pass": true,
+      "frames": 120,
+      "seconds": 7.976,
+      "offBarricadeVerified": true
     }
   },
   "limits": [

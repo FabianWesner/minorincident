@@ -36,3 +36,7 @@ Implementation and report committed after focused tests, typecheck, lint, the re
 The first scene used an incorrect actor coordinate format (`[x,y,z]` instead of `[x,z]`), placing the camera away from the wreck. Runtime GLBs are present. Correcting the camera produced the actual after capture now in the sheet; the earlier absent-pickup render is superseded.
 
 The existing body-clear follower corner routing was also tested for evacuating survivors. It allowed Okafor to board but left Mia alive and unboarded after the 600-second native sample, with the last boarding signal 64.48 seconds after defense. That experimental code was reverted. The failed receipt is summarized in `qa.json`; this result does not establish a complete shortcut fix.
+
+## Rear view inspection
+
+A second headless WebGL capture (120 frames, 7.98 seconds, no reported clipping) shows the relocated pickup from the rear. I inspected both after views: the pickup is clear of barricades on the road and the visible front and rear tires meet the road. The single sheet now includes both angles. Far-side tire contact remains occluded, but the requested alternative of moving the wreck off the barricade is visually verified.
