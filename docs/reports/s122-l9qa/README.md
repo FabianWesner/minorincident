@@ -51,3 +51,7 @@ A further HIGH WebGL2 z1 road-driver sample captured every half-second for120s. 
 ## Focused rail sequence
 
 A150-second HIGH GL z1 road pass reached rail; near-rail capture cadence was temporarily increased, then driver restored. Reviewed20 chronological frames (t5417–8445). Bus stays parked behind APC; no bus/APC overlap or floating actor established in sampled frames. Attackers gather around hull and the no-fire driver dies. Arrival and first passenger-release remain outside useful frames; spawn popping and3× pacing remain unverified.
+
+## Arrival/release frame review
+
+Original-size review of t6584/6604/6620/6641/6681/6717/6738/6757/6776/6798 resolves part of the earlier missing view. Bus enters progressively from the top edge (6681→6717), then stops behind APC. No centre-screen pop or APC intersection in this sequence. Passengers appear beside front-left bus at6738 and move away6757–6798; legs appear grounded, no floating established. **P3 clustered release readability:** tight group and smoke overlap obscure individual exits. Short approach reads as fast catch-up then stop, not enough to judge full3× pursuit.
