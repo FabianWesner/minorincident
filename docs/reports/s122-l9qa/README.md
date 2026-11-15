@@ -43,3 +43,7 @@ The goal is not complete. No broad “all clear” claim is supported by the cur
 ## Additional LOW WebGPU review
 
 Reviewed 20 chronological approach/rail samples (ticks 3513–6016) and the final yield at original size. Rail remains readable; the bus is insufficiently visible in this off-road sample to judge pacing or disembarkation. Final trucks show known P2 smoke/crowd hull occlusion, plus **P2 broad pink/purple ground color patches** (cause unverified). The late beat feels congested and stalled rather than tense: defense is complete but the driver remains at 1/4 survivors, alive at 100 HP, when the 240-second sample ends. A longer wait or organic intervention was not measured. These observations do not establish an impossible ending.
+
+## Focused pursuit attempt
+
+A further HIGH WebGL2 z1 road-driver sample captured every half-second for120s. Reviewed20 chronological frames: APC tips visibly at tick3255, later leaves asphalt and does not reach rail in this bound. **P2 APC tipping** is observed; driver steering and capture overhead are not isolated. This run does not resolve bus pacing/disembarkation coverage. Its result is retained as a failed observation attempt, not substituted for the successful earlier route.

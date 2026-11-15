@@ -479,5 +479,65 @@
       ]
     }
   },
-  "stationaryFlagsReview": "HIGH flags actors in attack state at hull; no motion expected during planted attack, not confirmed frozen AI."
+  "stationaryFlagsReview": "HIGH flags actors in attack state at hull; no motion expected during planted attack, not confirmed frozen AI.",
+  "focusedRoadCapture": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 116,
+        "maxNoProgressSeconds": 6.616666666666666,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 7,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.018107295036316,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "review": "20 chronological samples inspected, t7\u20136109. APC tips visibly at t3255 and leaves road later; rail not reached by120s. Bus disembarkation still not observed clearly.",
+    "finding": {
+      "severity": "P2",
+      "kind": "APC tipping",
+      "capture": "test-results/s122-bus-road/captures/bus-road-L9-t3255.jpg",
+      "limits": "Capture-heavy real-input driver; steering/capture overhead contribution unisolated."
+    }
+  }
 }
