@@ -482,7 +482,16 @@ export class LevelNineDriving {
   }
   private readonly busIntent = (intent: DriveIntent, bus: EntitySnapshot): void => {
     if ((this.state.busStunUntil ?? 0) > this.w.tick) { intent.throttle = 0; intent.brake = true; intent.steer = 0; return; }
-    const target = this.busRoadTarget(bus.transform.x + 6);
+    let nearestX = bus.transform.x, nearestDistance = Infinity;
+    for (let i = 1; i < this.busRoad.length; i++) {
+      const a = this.busRoad[i - 1]!, b = this.busRoad[i]!;
+      const dx = b[0] - a[0], dz = b[1] - a[1];
+      const t = Math.max(0, Math.min(1, ((bus.transform.x - a[0]) * dx + (bus.transform.z - a[1]) * dz) / (dx * dx + dz * dz)));
+      const x = a[0] + dx * t, z = a[1] + dz * t;
+      const gap = Math.hypot(bus.transform.x - x, bus.transform.z - z);
+      if (gap < nearestDistance) { nearestDistance = gap; nearestX = x; }
+    }
+    const target = this.busRoadTarget(nearestX + 6);
     const dx = target.x - bus.transform.x, dz = target.z - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));

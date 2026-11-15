@@ -84,3 +84,7 @@ Grouped near-held-APC release with the combined delivery trial completes HIGH bu
 ## Current focused regression recheck
 
 On current committed asphalt runtime, focused `vehicles.test.ts` fails the parked-APC bus approach: closest X gap43.970642m versus required<13.845m (1passed/1failed). Earlier focused success preceded later bend steering changes and is superseded. Gate remains red. Added read-only passenger `telegraph` event observation for exact attack windup starts with attack/target IDs; typecheck/lint pass. No fresh windup-event runtime receipt yet.
+
+## Road projection correction
+
+Bus steering now projects the actual bus position onto the nearest authored asphalt segment before advancing its lookahead. This fixes the off-road initial-pose parked-APC regression without changing its threshold: focused vehicles2/2 pass (29.93s). Typecheck/lint pass. All six120-second native fixtures spawn and remain within6m (worst2.526m), releasing six passengers. JSON refreshed. Full driven pursuits, hatch participation and broader gates still need completion.
