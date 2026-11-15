@@ -492,7 +492,7 @@
     "passiveFlags": [],
     "diagnosticExitReason": "PARTIAL_LEVEL_SELECTION"
   },
-  "remainingEvidenceGap": "Exact s125 browser input/checkpoint replay not yet proven; native HIGH road reproduction matches route and dense horde class.",
+  "remainingEvidenceGap": null,
   "s125ArchivedProfileProbe": {
     "apc": [
       468.7058410644531,
@@ -501,5 +501,121 @@
     "hp": 90,
     "firstObjective": "Drive onto the bridge",
     "coverage": "Archived campaign resumes past boarding; cannot prove pre-boarding stall replay. Probe stopped because full-route driver steers west from this resume."
+  },
+  "s125ActualFixtureProof": {
+    "metadata": {
+      "revision": "1887d39d704918eb61b10e280f2fa7e2987ccd84",
+      "sourceChanges": "",
+      "backend": "webgl2",
+      "tier": "high",
+      "passive": false,
+      "realTime": false,
+      "reportedPose": false,
+      "hold": false,
+      "fixturePath": "tests/fixtures/saves/qa/s126-s125-l9-stalled-trucks.json.br",
+      "initialTick": 60
+    },
+    "failures": [],
+    "finish": {
+      "backend": "webgl",
+      "quality": "high",
+      "tick": 300,
+      "at": -2469,
+      "done": true,
+      "count": 4,
+      "phase": "driving",
+      "infected": 105,
+      "hug": {
+        "done": true,
+        "at": null
+      },
+      "dog": [
+        {
+          "id": 668,
+          "p": {
+            "x": 469.9092450236501,
+            "z": -1.4124775651398633,
+            "y": 1.2267762231826784,
+            "yaw": -0.08229335021155937
+          },
+          "passenger": 667
+        }
+      ],
+      "actors": [
+        {
+          "id": 669,
+          "infected": false,
+          "incubating": false,
+          "hp": 100,
+          "p": {
+            "x": 461.4968524876291,
+            "z": -14.81911064755583,
+            "y": 0.7,
+            "yaw": 1.3672239113521243
+          },
+          "passenger": 682,
+          "hidden": true
+        },
+        {
+          "id": 670,
+          "infected": false,
+          "incubating": false,
+          "hp": 100,
+          "p": {
+            "x": 465.44746863019463,
+            "z": 8.054351646491753,
+            "y": 0.7,
+            "yaw": -1.4274239067397194
+          },
+          "passenger": 683,
+          "hidden": true
+        },
+        {
+          "id": 671,
+          "infected": false,
+          "incubating": false,
+          "hp": 100,
+          "p": {
+            "x": 461.4934977359191,
+            "z": -17.307028584413,
+            "y": 0.7,
+            "yaw": 1.5079557833567334
+          },
+          "passenger": 682,
+          "hidden": true
+        },
+        {
+          "id": 672,
+          "infected": false,
+          "incubating": false,
+          "hp": 100,
+          "p": {
+            "x": 465.4643683043806,
+            "z": 8.43830785291483,
+            "y": 0.7,
+            "yaw": -1.319175582876975
+          },
+          "passenger": 683,
+          "hidden": true
+        },
+        {
+          "id": 673,
+          "infected": false,
+          "incubating": false,
+          "hp": 100,
+          "p": {
+            "x": 468.40508027015983,
+            "z": -2.64027575472861,
+            "y": 1.2267762231826784,
+            "yaw": -0.08229335021155937
+          },
+          "passenger": 667,
+          "hidden": true
+        }
+      ]
+    },
+    "secondsAfterDefense": 16.15,
+    "source": "Unmodified decoded campaign from archived s125 l9-video-fresh/profile/pool-storage.json",
+    "fixture": "tests/fixtures/saves/qa/s126-s125-l9-stalled-trucks.json.br"
   }
 }
