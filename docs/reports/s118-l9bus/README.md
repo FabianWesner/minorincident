@@ -88,3 +88,7 @@ On current committed asphalt runtime, focused `vehicles.test.ts` fails the parke
 ## Road projection correction
 
 Bus steering now projects the actual bus position onto the nearest authored asphalt segment before advancing its lookahead. This fixes the off-road initial-pose parked-APC regression without changing its threshold: focused vehicles2/2 pass (29.93s). Typecheck/lint pass. All six120-second native fixtures spawn and remain within6m (worst2.526m), releasing six passengers. JSON refreshed. Full driven pursuits, hatch participation and broader gates still need completion.
+
+## Current projection runtime native drives
+
+Fresh HIGH primary-road and LOW road-detour (corner-cut) ordinary drives both complete. Exact telegraph windup observer records zero bus passenger windups in each; peak hatch proximity is0 HIGH and1 LOW. Current asphalt distances and sample counts are in `current-driven-checks.json`. Participation remains failed, and full six driven path/tier coverage is not yet complete.
