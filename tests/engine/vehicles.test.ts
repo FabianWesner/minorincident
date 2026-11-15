@@ -124,8 +124,30 @@ async function l9InterruptedBoarding(): Promise<void> {
       world.update();
       s = l9.driving.state;
       expect(s.evacuationAt, 'stopped APC starts the native evacuation and checkpoint').not.toBeNull();
-      expect(s.trucks.map(id => [world.entities.get(id)!.transform.x, world.entities.get(id)!.transform.z]),
-        `seed ${seed} ${quality}: the evacuation trucks use the clear north-side staging shoulder`).toEqual([[450, 10], [459, 10], [468, 10]]);
+      const truckPositions = s.trucks.map(id => world.entities.get(id)!.transform);
+      expect(truckPositions.map(({ x, z }) => [x, z]),
+        `seed ${seed} ${quality}: the evacuation trucks use the north-side staging shoulder`).toEqual([[450, 26], [459, 26], [468, 26]]);
+      // Military truck bounds rotate with yaw=PI/2: 1.429 m across x and
+      // 3.4633 m along z. Keep every spot clear of the bridgehead furniture,
+      // including the low sandbag row that the old z=10 cab visibly crossed.
+      const halfX = 1.429, halfZ = 3.4633;
+      const separated = (truck: { x: number; z: number }, obstacle: { x: number; z: number; halfX: number; halfZ: number }) =>
+        Math.abs(truck.x - obstacle.x) >= halfX + obstacle.halfX || Math.abs(truck.z - obstacle.z) >= halfZ + obstacle.halfZ;
+      const bridgehead = [
+        ...Array.from({ length: 13 }, (_, i) => ({ x: 445 + i * 2, z: 8, halfX: .85, halfZ: .45 })),
+        ...Array.from({ length: 13 }, (_, i) => ({ x: 445 + i * 2, z: -8, halfX: .85, halfZ: .45 })),
+        { x: 453, z: 9, halfX: 3, halfZ: 2 }, // EVACUATION / STOP board and post
+        { x: 446, z: 12, halfX: .3, halfZ: .3 }, { x: 466, z: 12, halfX: .3, halfZ: .3 },
+        { x: 440, z: 11, halfX: .35, halfZ: 1.2 }, { x: 440, z: -11, halfX: .35, halfZ: 1.2 }, // gate-side fences
+      ];
+      for (const [i, truck] of truckPositions.entries()) {
+        for (const obstacle of bridgehead) expect(separated(truck, obstacle), `truck ${i + 1} at ${truck.x},${truck.z} clears bridgehead obstacle ${obstacle.x},${obstacle.z}`).toBe(true);
+        for (const obstacle of world.vehicles!.obstacles.items.filter(item => !item.broken)) {
+          expect(separated(truck, { ...obstacle.entity.transform, halfX: obstacle.halfX, halfZ: obstacle.halfZ }),
+            `truck ${i + 1} at ${truck.x},${truck.z} clears collision obstacle ${obstacle.entity.id}`).toBe(true);
+        }
+        expect(Math.abs(truck.z) - halfZ, `truck ${i + 1} does not occupy the APC stop road`).toBeGreaterThan(8);
+      }
       const evacuees = s.roster.filter(id => id !== s.samId);
       expect(evacuees).toHaveLength(4);
       const last = evacuees[3]!, slot = 3, target = { x: l9Course.evacuation.truckX + slot % 3 * 9 + 2.5, z: l9Course.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };

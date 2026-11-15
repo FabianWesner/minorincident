@@ -1,0 +1,28 @@
+# s129 L9 HIGH evacuation and staging placement — in progress
+
+This report records a partial P2 placement correction. The P1 HIGH evacuation delay is still open, so this lane is not accepted and the requested three-run browser gate has not been met.
+
+## Staging truck overlap
+
+The archived pre-fix image in [placement-before.jpg](./placement-before.jpg) shows the old north row at z=10 crossing the low sandbag row and the `EVACUATION / STOP` sign. This was a fresh-L9 custom camera view, not the requested follow-camera zoom-1.5 review. The same fixed scene has sandbags at z=±8, light posts at z=±12, the evacuation sign at (453, 9), gate-side fences at x=440, and the APC stop centered at z=0.
+
+The trucks now stage at (450, 26), (459, 26), and (468, 26). Their model collision bounds are 6.9266 m by 2.858 m; at the authored π/2 yaw their world footprint is 2.858 m across x and 6.9266 m along z. The extended existing vehicle test checks all three footprints against the sandbag/sign/post/fence positions and active L9 obstacle colliders, and verifies the truck row stays outside the APC road lane. The post-change browser capture and visual inspection at HIGH zoom 1.5 are still missing because this sandbox denies localhost binds.
+
+## HIGH evacuation investigation
+
+The supplied s128 HIGH-road log shows 3/4 at the trucks continuously from tick 12,656 through tick 17,447 while the courier remains at (468.76, -2.17), at 100 HP. The supplied tick-16,237 capture shows the APC surrounded by the HIGH horde and no final evacuee visible near the trucks. The logs do not contain the hidden evacuee's identity or civilian navigation/knockdown/slot state. I cannot conclude from this evidence whether the straggler is Mia, Rosa, or another survivor, or whether it is blocked, re-pathing, downed, or waiting on a story beat.
+
+The documented playtest path was attempted with HIGH, `--l9-route road`, WebGPU, and ports 4995/4996. Its QA build succeeded, but the local preview server could not start: `listen EPERM: operation not permitted 127.0.0.1:4995`. The documented `tools/e2e-lock.sh` path cannot provide the required real-input run in this environment. No gameplay behavior has been changed to guess at the P1 cause. Required follow-up: reproduce HIGH road ×2 and HIGH shortcut ×1 through `tools/playtest`, record the straggler's full state, fix the verified cause (or implement and test a visible physical pickup fallback), then inspect the post-fix truck spots and APC stop in-browser at HIGH zoom 1.5.
+
+## Checks so far
+
+- Focused `tests/engine/vehicles.test.ts`: 2 tests passed in 35.11 s after the final obstacle-collider assertion.
+- `npm run typecheck`: pass.
+- `npm run lint`: pass.
+- E31 per-change verify gate via `TMPDIR=/private/tmp node --import tsx tools/verify.ts E31`: typecheck, lint, and full budgeted suite passed; 27 files, 106 tests, 90.3 s under the 240 s limit. The `npm run verify -- E31` wrapper could not start because tsx IPC binding is denied in this sandbox.
+- Full direct Vitest suite (`npx vitest run --project default --configLoader runner --maxWorkers=4`): 27 files, 106 tests passed in 55.09 s before the final obstacle-collider assertion; the later verify run covers the final tree.
+- Focused native L9 threat audit: `L9.json` has zero skilled and passive flags; the audit command exits nonzero only because its full-report summary marks the intentionally selected one-level run `PARTIAL_LEVEL_SELECTION`.
+- Required `sh tools/remote/run.sh "$PWD" -- npm test`: not dispatched; no healthy Hetzner runner is provisioned, and the Mac fallback does not accept the nested `npm test` wrapper. The full suite passed locally through E31 verify as listed above.
+- Vehicle campaign motion gate and real-input browser gate: not run; both require a browser preview server, which cannot bind in this sandbox.
+
+The placement code/test and this evidence note are committed as a partial lane checkpoint. The final report must be updated after the HIGH root-cause fix and browser acceptance runs.
