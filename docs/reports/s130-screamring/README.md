@@ -32,3 +32,5 @@ The first dense WebGPU implementation exposed async character-pipeline errors wh
 The attached JSON contains the final matrix results and completion status. No deployment, push, or main-branch move occurred.
 
 Final matrix: all eight backend × tier × zoom runs passed with zero browser errors, covering L9 and L10 before/after in each run. I reviewed the 100/200 ms after views for HIGH/LOW × zoom 1/1.5 on both backends: the violet local cue stays readable in every combination, with no broad ground fill. Each comparison records normal attacks and nonzero courier movement from 50 to 500 ms (avoiding initial teleport displacement). Scene-fixture visual acceptance is complete within the method limits above.
+
+Final HIGH zoom 1 reruns explicitly recorded runtime renderer identity: `WebGLBackend` and `WebGPUBackend`, with zero errors. Typecheck and full lint passed again after adding this metadata.

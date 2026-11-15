@@ -56,7 +56,7 @@ try {
           const slot = fx.waves.spawn(fx.snapshot().time, 1, x, .03, z, 0, 0, 0, 40, 8, 0xef92ff, 1); fx.waves.opacity(slot, .25);
         } else fx.effect('screamer', x, z, 20);
         api.input.set({ move: { x: 1, z: 0 }, aim: { x: 1, z: 0 }, ...(combat ? { left: { down: true, held: true, up: false } } : {}) });
-        return { sourceId: source.id, source: { x, z }, player: { ...player.transform }, tick: api.tick() };
+        return { renderingBackend: game.view.renderer.backend.constructor.name, sourceId: source.id, source: { x, z }, player: { ...player.transform }, tick: api.tick() };
       }, { version, combat, tier, zoom });
       for (const frame of [3, 6, 12, 24, 30]) {
         const state = await session.page.evaluate(async ticks => {
