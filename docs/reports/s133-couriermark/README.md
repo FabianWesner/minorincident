@@ -59,3 +59,7 @@ On source revision 492bab69, `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 np
 Extended the existing matched review tool with `--perf`: native uncapped Chrome, 180 warm frames and 600 measured render updates per marker-off/on view. Requires `tools/perf/quiet-run.sh`; normal pooled invocation correctly rejects uncapped timing. Initial admitted attempt exposed tsx `__name` injection in a nested page helper; removed that helper. The corrected attempt remained in quiet-admission wait because host load stayed above the <3 threshold; cancelled before measurement (exit 75, exclusive admission cancelled). No native timing result is claimed. Typecheck/lint passed for the tool before the nested-helper removal.
 
 Reproduce when the host is quiet: `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 sh tools/perf/quiet-run.sh npx tsx tools/scenelab/courier-mark-review.ts --perf`.
+
+## Refreshed current sheet
+
+Replaced the single `contact.jpg` with four current-source matched marker-off/on pairs: living L4/L6 and corpse-heavy L4/L6, HIGH zoom 1, identical camera and pose within each pair. Opened and inspected the sheet. Corpse-heavy L6 shows a clear teal arc around the feet; L4 shows a smaller arc among bodies. Living-only dense views still cover most of the ground cue, leaving the existing contour as the locator. This bounded review supports utility but does not establish every-frame 0.3-second recognition. Both fresh WebGL2 capture runs completed exit 0; no behavior changed.
