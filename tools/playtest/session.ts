@@ -1098,9 +1098,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const b = points[i + 1]; if (!b) return [a];
     const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
     const along = (p: readonly number[]) => ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / length;
+    // The shortcut joins west of the closed bridgehead gate. Follow its visible
+    // north-side opening instead of repeatedly driving into the barrier.
+    const gateDetour: [number, number][] = o.l9Route === 'dry-shortcut' && a[0] < 440 && b[0] >= 450 && a[1] < 11
+      ? [[425, 18], [450, 18]] : [];
     return [a, ...l9Groups.filter(g => g.route === o.l9Route).map(g => g.at)
       .filter(p => along(p) > 0 && along(p) < length && Math.abs((p[0] - a[0]) * dz - (p[1] - a[1]) * dx) / length < 1)
-      .sort((p, q) => along(p) - along(q))];
+      .sort((p, q) => along(p) - along(q)), ...gateDetour];
   });
   let l9Waypoint = 1, l9RouteLogged = false;
 
