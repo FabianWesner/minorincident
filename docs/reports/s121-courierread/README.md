@@ -51,3 +51,7 @@ PaletteMaterial already contains a separate foreground contour calculation. Rais
 ## Revised contour backend matrix
 
 The revised palette contour passed both isolated 48-infected stationary zoom-1 scenes on HIGH and LOW in WebGL2 and WebGPU, with requested backend/tier confirmed, zero console errors and >=90% body-share gates. HIGH WebGPU moving zoom-1.5 scenes also passed visibility gates at frame 60. Actor intersections remain in moving fixtures; these gates do not prove artifact clearance. report.json lists exact raw metrics paths. Production hold/retreat, open-street/L1/menu controls, revised-contour low HP, complete motion matrix, remote suite rerun and performance remain open.
+
+## Control captures
+
+Revised-contour HIGH WebGL2 controls: production L1 start and the same D-FAIR pose with only the courier both pass zero-foreground-frame gates and report zero console errors. This verifies contour gating at those poses, not a full appearance pixel comparison or transition/popping test. Native title-menu fixture with ui=1 also passes its console/draw/triangle gates. Raw captures are under test-results/s121-courierread/controls and menu-control. Other tiers/backends and temporal controls remain outside this check.

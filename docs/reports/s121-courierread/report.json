@@ -402,5 +402,48 @@
       ],
       "consoleErrors": 0
     }
+  ],
+  "controls": [
+    {
+      "path": "test-results/s121-courierread/controls/collision-placement-l1-start/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "foreground": [
+        {
+          "frame": 0,
+          "active": false,
+          "occluder": ""
+        },
+        {
+          "frame": 1,
+          "active": false,
+          "occluder": ""
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/controls/s121-open-street/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "foreground": [
+        {
+          "frame": 1,
+          "active": false,
+          "occluder": ""
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/menu-control/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "foreground": [],
+      "consoleErrors": 0
+    }
   ]
 }
