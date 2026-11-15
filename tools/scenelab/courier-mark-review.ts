@@ -1,9 +1,10 @@
 /** One pooled browser; matched marker-disabled/enabled captures and structural draw counts. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer } from './session';
-const out = 'test-results/s133-couriermark/review';
+const corpses = process.argv.includes('--corpses');
+const out = `test-results/s133-couriermark/review${corpses ? '-corpses' : ''}`;
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend: 'webgl2', tier: 'high' });
+const session = new SceneSession({ backend: process.argv.includes('--webgpu') ? 'webgpu' : 'webgl2', tier: 'high' });
 const rows: unknown[] = [];
 try {
   await session.open();
@@ -12,6 +13,7 @@ try {
     spec.camera = { mode: 'game', target: 'courier', zoom: 1 };
     for (const actor of spec.actors ?? []) if (actor.kind === 'infected') actor.state = { chase: 'courier' };
     await session.load(spec); await session.step(60);
+    if (corpses) { await session.page.evaluate(() => { for (let i = 0; i < 16; i++) window.__SCENE__!.command(`infected-${i}`, { corpse: true, ageTicks: 180 }); }); await session.step(1); }
     for (const enabled of [false, true]) {
       await session.page.evaluate(on => {
         // Debug fixture owns the game; change only the marker's geometry submission.

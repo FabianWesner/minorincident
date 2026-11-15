@@ -81,6 +81,7 @@ import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 import { Environment } from './lighting/Environment';
 import { courierForegroundWanted, crowdSurroundsCourier, megaOccludesCourier } from './courierForeground';
 import { courierXray } from './characters/courierDepth';
+import { livingStencil } from './characters/figureStencil';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -316,7 +317,7 @@ export class GameView implements Lifecycle {
     if (this.character) { this.contactShadows = new ContactShadows(this.world); this.scene.add(this.contactShadows); }
     if (this.world.missions?.state.l4) { this.militaryPerimeter = new MilitaryPerimeter(this.world); this.scene.add(this.militaryPerimeter); }
     if (player) {
-      const markMaterial = new MeshBasicNodeMaterial({ color: '#429e91', depthWrite: false, depthTest: true, transparent: true, opacity: .72 }); markMaterial.name = 'courier-ground-mark';
+      const markMaterial = new MeshBasicNodeMaterial({ color: '#429e91', depthWrite: true, depthTest: true }); markMaterial.name = 'courier-ground-mark'; livingStencil(markMaterial);
       this.courierMark = new Mesh(new RingGeometry(.57, .69, 48), markMaterial);
       this.courierMark.renderOrder = 1.5; this.courierMark.rotation.x = -Math.PI / 2; this.courierMark.visible = false;
       this.meshes.push(this.courierMark); this.scene.add(this.courierMark);
