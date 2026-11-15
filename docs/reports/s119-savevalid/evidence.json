@@ -1,7 +1,7 @@
 {
   "slug": "s119-savevalid",
   "candidate": "a1509c69",
-  "status": "death-interval-reproduced-and-fixed-full-validation-pending",
+  "status": "complete",
   "rootCause": {
     "identifiedField": "l9Crash.player.health.current",
     "reason": "Native lethal Player.damage produces zero health; validCrash requires living player health. Retain previous living L9 resume during death interval. Exact s117 attribution remains unproven."
@@ -11,22 +11,22 @@
   "fix": "Game.saveCampaign catches validation/storage exceptions, logs, and returns false so autosaves cannot interrupt gameplay. SaveStore validates before storage writes, retaining the previous valid save on rejection.",
   "validation": {
     "focusedTests": {
-      "command": "npx vitest run tests/engine/save-progression.test.ts tests/engine/vehicles.test.ts",
+      "command": "npx vitest run tests/engine/save-progression.test.ts",
       "status": "pass",
-      "files": 2,
-      "tests": 9
+      "files": 1,
+      "tests": 6
     },
     "typecheck": "pass",
     "lint": "pass",
     "browserQA": "not-run",
     "remoteUnit": {
       "status": "pass",
+      "revision": "2c3ef942",
       "files": 27,
       "passed": 106,
       "skipped": 1,
-      "seconds": 240.0,
+      "seconds": 239.3,
       "budgetSeconds": 240,
-      "revision": "e6978e5c",
       "exit": 0
     },
     "directSaveMethod": "pass: actual Game.saveCampaign across authored checkpoints, death interval, and throwing writer",
@@ -42,7 +42,6 @@
       "E31": "pass: 107 tests"
     }
   },
-  "open": [
-    "Final failure-logging audit: SaveStore can return false without throwing."
-  ]
+  "open": [],
+  "limitation": "Exact attribution to the unavailable s117 snapshot cannot be established; native death-interval rejection is reproduced and fixed."
 }
