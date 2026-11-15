@@ -254,5 +254,11 @@
     },
     "path": "test-results/s121-courierread/low-hp",
     "scope": "stationary 48-infected fixture; not production timing or full matrix"
+  },
+  "contourCandidate": {
+    "change": "Palette foreground gold edge gain .25 to .55; distant vehicle x-ray retains .14",
+    "evidence": "contact.jpg: cropped isolated L4 HIGH WebGL2 z1 before/after",
+    "validation": "scene body-share and console gates passed; typecheck and lint passed",
+    "status": "requires full visual matrix and remote suite rerun"
   }
 }
