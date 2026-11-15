@@ -393,22 +393,33 @@ export class Game {
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.appliedCampaign=this.campaign;this.view.update(1);}}
   saveCampaign(atCheckpoint = false):boolean {
     if(!this.campaign)return false;
-    const liveCampaign = this.appliedCampaign === this.campaign && !!this.world.progression?.campaign;
-    const held = this.world.entities.get(1)?.weapons, phase = this.world.missions?.state.phase;
-    // New-game and Continue settings may save before their campaign owns the live world.
-    if (liveCampaign && !this.loading && held && this.world.scenario === `L${this.campaign.unlockedLevel}` && (phase === 'playing' || phase === 'retry')) {
-      this.campaign.selectedAction = heldAction(held);
-      this.campaign.racks = { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) };
-      for (const id of [...this.campaign.racks.LEFT, ...this.campaign.racks.RIGHT]) if (!this.campaign.ownedActions.includes(id)) this.campaign.ownedActions.push(id);
+    try {
+      const liveCampaign = this.appliedCampaign === this.campaign && !!this.world.progression?.campaign;
+      const held = this.world.entities.get(1)?.weapons, phase = this.world.missions?.state.phase;
+      // New-game and Continue settings may save before their campaign owns the live world.
+      if (liveCampaign && !this.loading && held && this.world.scenario === `L${this.campaign.unlockedLevel}` && (phase === 'playing' || phase === 'retry')) {
+        this.campaign.selectedAction = heldAction(held);
+        this.campaign.racks = { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) };
+        for (const id of [...this.campaign.racks.LEFT, ...this.campaign.racks.RIGHT]) if (!this.campaign.ownedActions.includes(id)) this.campaign.ownedActions.push(id);
+      }
+      if (liveCampaign && (this.world.entities.get(1)?.health.current ?? 0) > 0 && this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
+      if (liveCampaign && this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
+        const live = this.world.progression?.campaign;
+        if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
+        this.campaign.cureResume = { ...this.world.missions.saveResume(atCheckpoint), cameraZoom: this.view.view.getState().targetZoom };
+      }
+      if(liveCampaign){this.world.progression!.campaign=cloneData(this.campaign);}
+      const saved = this.saves.write(this.campaign);
+      if (!saved) console.error('Campaign save failed; continuing with the current game.');
+      return saved;
     }
-    if (liveCampaign && this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
-    if (liveCampaign && this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
-      const live = this.world.progression?.campaign;
-      if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
-      this.campaign.cureResume = { ...this.world.missions.saveResume(atCheckpoint), cameraZoom: this.view.view.getState().targetZoom };
+    catch (error) {
+      // Validation and storage failures must not escape a gameplay event (notably
+      // settings changes and mission autosaves). SaveStore leaves the previous
+      // stored campaign untouched when a candidate is rejected.
+      console.error('Campaign save failed; continuing with the current game.', error);
+      return false;
     }
-    if(liveCampaign){this.world.progression!.campaign=cloneData(this.campaign);}
-    return this.saves.write(this.campaign);
   }
   campaignSettings(patch:CampaignSettings):void {if(this.campaign){Object.assign(this.campaign.settings,patch);this.saveCampaign();}}
   private watchCampaign():void {

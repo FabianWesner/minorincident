@@ -8,9 +8,10 @@ export default defineConfig({
   test: {
     environment: 'node',
     pool: 'threads',
-    // Each loaded campaign world is large; two workers avoid concurrent heap
-    // pressure on shared runners and the busy development Mac.
-    maxWorkers: 2,
+    // Each loaded campaign world is large; two workers avoid heap pressure on the
+    // busy development Mac. The Linux test runners (4 vCPU, `tools/remote/run.sh`)
+    // use three so the default run stays inside its 4-min budget.
+    maxWorkers: process.platform === 'linux' ? 3 : 2,
     testTimeout: 30_000,
     restoreMocks: true,
     setupFiles: ['tests/setup/node-gltf-images.ts'],

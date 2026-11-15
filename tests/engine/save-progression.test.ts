@@ -29,7 +29,7 @@ const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgu
 }) as never;
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
-test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', () => {
+test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', async () => {
   // The public pause overlay accepts both query spellings used in production reports.
   expect(['1', 'true'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([true, true]);
   expect(['', '0', 'false'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([false, false, false]);
@@ -77,6 +77,57 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   // L5 difficulty is frozen: preserve the exact rack used by its bot fixture, including kick.
   const l5 = preset('L5-default'), l5Start = campaignLoadout(l5, 5);
   expect({ LEFT:l5Start.LEFT, RIGHT:l5Start.RIGHT }).toEqual(l5.racks);
+  const { Game } = await import('../../src/Game');
+  // Native checkpoint sweep shares this campaign progression regression's case budget.
+  for (let level = 1; level <= 10; level++) {
+    const save = level === 1 ? newCampaign() : preset(`L${level}-default` as `L${2|3|4|5|6|7|8|9|10}-default`);
+    const world = await loadLevel(`L${level}` as `L${1|2|3|4|5|6|7|8|9|10}`, 1, save, 0, { quality: 'low' });
+    try {
+      const checkpoints = world.missions!.def.checkpoints;
+      for (const checkpoint of checkpoints) {
+        world.missions!.checkpoint(checkpoint);
+        const candidate = structuredClone(save);
+        if (level === 9) candidate.l9Crash = world.missions!.l9!.save();
+        if (level === 10) candidate.cureResume = { ...world.missions!.saveResume(true), cameraZoom: 1 };
+        expect(validateSave(candidate), `L${level} checkpoint ${checkpoint}`).toBe(true);
+        const context = { campaign: structuredClone(save), appliedCampaign: null, world, loading: false,
+          view: { view: { getState: () => ({ targetZoom: 1 }) } }, saves: { write: (value: CampaignSave) => validateSave(value) } };
+        context.appliedCampaign = context.campaign as never;
+        expect(Game.prototype.saveCampaign.call(context as never), `L${level} actual saveCampaign at ${checkpoint}`).toBe(true);
+
+      }
+      if (level === 9) {
+        const l9 = world.missions!.l9!;
+        const living = l9.save();
+        world.player!.damage(100000, world.tick, true);
+        const dead = structuredClone(save); dead.l9Crash = l9.save();
+        expect(dead.l9Crash.player.health.current).toBe(0);
+        expect(validateSave(dead), 'death interval must not be persisted as a living crash resume').toBe(false);
+        dead.l9Crash = living; dead.settings.quality = 'low';
+        expect(validateSave(dead), 'settings can retain the previous living resume during death').toBe(true);
+        const context = { campaign: dead, appliedCampaign: dead, world, loading: false,
+          saves: { write: (value: CampaignSave) => validateSave(value) } };
+        expect(Game.prototype.saveCampaign.call(context as never), 'actual settings save during death retains living resume').toBe(true);
+        const log = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+        context.saves.write = () => { throw new Error('storage unavailable'); };
+        expect(Game.prototype.saveCampaign.call(context as never), 'save failure returns without interrupting gameplay').toBe(false);
+        expect(log).toHaveBeenCalled(); log.mockClear();
+        context.saves.write = () => false;
+        expect(Game.prototype.saveCampaign.call(context as never), 'storage rejection also remains nonfatal').toBe(false);
+        expect(log).toHaveBeenCalled(); log.mockRestore();
+
+        world.entities.get(1)!.health.current = living.player.health.current;
+        for (const phase of ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'] as const) {
+          l9.state.phase = phase; l9.state.finished = phase === 'done';
+          const car = world.entities.get(l9.state.carId)!;
+          if (['impact', 'crawl', 'done'].includes(phase)) { car.vehicle!.damage = 'exploded'; car.vehicle!.driver = null; }
+          else { car.vehicle!.damage = 'normal'; car.vehicle!.driver = 1; }
+          const candidate = structuredClone(save); candidate.l9Crash = l9.save();
+          expect(validateSave(candidate), `L9 phase ${phase}`).toBe(true);
+        }
+      }
+    } finally { world.dispose(); }
+  }
 });
 
 test('selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun', () => {
