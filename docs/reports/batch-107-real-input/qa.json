@@ -34,7 +34,7 @@
     "apcTiltAndSeatedHatchShooting": "unverified",
     "l1CarAlarmPromptHighLowZoom1And1_5": "Static layout fixture reviewed all four; vitals clear; P3 objective-arrow overlap z1; uninterrupted post-outbreak approach remains unverified",
     "otherPromptsL1ToL3": "unverified",
-    "screamerReadabilityL9AndL10WhileMoving": "unverified",
+    "screamerReadabilityL9AndL10WhileMoving": "Actual ordinary events captured both levels; purple thin ring visible in stills, L9 partially occluded; continuous motion noticeability not proven",
     "l9BoringHarmlessBabysittingAndVisualVerdict": "unverified",
     "webgpuCoveragePerLevel": "Confirmed renderer webgpu in L9 x3, L1 HIGH and L10 HIGH logs; L2 partial HIGH also checked"
   },
@@ -408,5 +408,12 @@
       }
     ],
     "verdict": "Vitals clear in all four captures. Yellow objective arrow overlaps panel upper-right at zoom 1 HIGH/LOW. Temporal jumping not established."
+  },
+  "l10OrdinaryScreamer": {
+    "method": "HIGH WebGPU zoom 1, documented --immortal / ROUTE ONLY real-key route; stopped after warning collection; not combat acceptance",
+    "telegraphTick": 7529,
+    "noiseTick": 7577,
+    "capture": "test-results/b107/l10-warning-route/captures/scream-L10-7577-8.jpg",
+    "verdict": "Thin purple circumference visible on dark open ground when centered. Competing red melee rings and crowd dominate focus. Moving-player noticeability remains weakly evidenced by sparse captures, not continuous video."
   }
 }

@@ -35,3 +35,7 @@ A subsequent standard HIGH WebGPU L1 run reached the outbreak and bat pickup. A 
 ## Alarm layout fixture
 
 All four HIGH/LOW × zoom 1/1.5 alarm panel captures were reviewed on WebGPU. Vitals are clear in these views. **P3:** the yellow objective arrow overlaps the panel upper-right at zoom 1 on HIGH and LOW (`test-results/b107/prompt-fixture/alarm-high-z1.jpg`; tick 69). Zoom 1.5 separates them. Setup explicitly loaded L1, began its mission, armed/reset alarm cycles and positioned the courier outside interaction range; final approach used real WASD. This is static HUD layout evidence, not an uninterrupted post-outbreak playthrough. Alarm auto-completion required short capture intervals. Temporal prompt jumping remains unverified. Raw matrix and metadata: `test-results/b107/prompt-fixture/`.
+
+## Ordinary L10 screamer
+
+A HIGH WebGPU zoom 1 real-key route used documented `--immortal` and is **IMMORTAL / ROUTE ONLY**, not combat acceptance. It reached actual ordinary screamer events: telegraph tick 7529 and noise/purple ring tick 7577 (`test-results/b107/l10-warning-route/captures/scream-L10-7577-8.jpg`). Reviewed both: the thin purple circumference is visible centered on dark open ground, but red melee rings and the dense crowd draw more attention. L9’s purple arc is more occluded by APC/HUD. Sparse captures do not prove continuous moving-player noticeability; no claim of a conspicuous warning while moving is made. The diagnostic was stopped after event collection; no L10 completion claim.
