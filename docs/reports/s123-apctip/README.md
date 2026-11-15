@@ -1,6 +1,6 @@
 # s123 — L9 APC driving lean
 
-Status: **APC driving lean correction implemented; native driving bound and full L9 threat audit pass. Vehicle browser gate and remote unit suite remain blocked by shared infrastructure.** No deployment, push, or main movement.
+Status: **Correction committed; six complete native drives meet the 20° bound, continuous bus asphalt hold passes, and current vehicle campaign and remote unit gates pass. Fresh threat audit passes; original physical-input reproduction remains open.** No deployment, push, or main movement.
 
 ## Finding and correction
 
@@ -55,3 +55,7 @@ All six corrected-axis native drives completed: HIGH/LOW primary road, road deto
 ## Corrected runtime gate reruns
 
 On b58ec0b5, unchanged remote npm test passes (94.130.181.173, 146.8 s, 27 files, 105 passed/1 skipped). Full vehicle campaign motion gate passes all eight HIGH/LOW cases, exit 0, using the single headless reservation on SCENE_PORT=4984. Current receipts supersede the pre-axis-correction gate receipts. Original real-keyboard s122 tipping trigger and fresh threat audit on corrected runtime remain outstanding.
+
+## Fresh threat qualification
+
+Full unchanged npm run qa:threat passes on corrected runtime: 330.2 seconds including wrapper, 0 fail flags. L9 skilled and passive both complete with 0 passive flags. Source/observer hashes and revision retained in results.json. Remaining completion gap: reproduce and inspect the original real-keyboard road-driver tipping sequence, including visual suspension feel; controlled native fixtures and bot driving do not prove that exact observation fixed.
