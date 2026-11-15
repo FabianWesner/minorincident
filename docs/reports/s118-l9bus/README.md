@@ -68,3 +68,11 @@ Both the guarded handoff alone and its combination with a 1.75 bus speed share c
 ## Paired distance trace
 
 Added APC pose, bus HP/stop tick and passenger target/heard/scripted fields to the existing observer. The HIGH normal-speed guarded-handoff drive completes but remains a participation failure. At tick 5280 bus (281,-330) trails APC (378,-239) by about 132 m; at tick 6180 the bus remains about 25 m away with no released passengers. Wreck tick is 6572, after the 20-second rail hold. Later passengers have target/heard IDs zero and attracted state while travelling toward the evacuation. See `target-distance-trace.json`. The next implementation must close the delivery distance before rail hold, then release and target ordinary infected without changing stats.
+
+## Combined delivery working trial
+
+The combined guarded target handoff + mission bus speed share1.75 + hull-distance stall braking + near-held-APC faster release improves HIGH primary-road peak passenger proximity to one within5m. L9 completes, but no passenger attack starts occur, so requirements still fail. Typecheck/lint pass. Runtime changes remain uncommitted pending correction and broader validation; see `combined-delivery-trial.json`.
+
+## Ordinary target refresh trial
+
+Repeated `press` while exposed did not improve the combined delivery trial: HIGH completes, peak proximity remains1, no passenger attacks. That extra target refresh was removed. Detailed earlier trace shows passengers losing HP and disappearing from the living sample during hatch fire; enough living bodies must arrive close together before combat thins them. No health/count/stat changes made. Combined delivery changes remain uncommitted and unqualified.
