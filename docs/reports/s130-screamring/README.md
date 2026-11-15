@@ -18,3 +18,7 @@
 ## Follow-up required
 
 Run the existing crowded L9 visual gate and capture moving HIGH zoom 1 sequences in L9 and L10 on WebGL2 and WebGPU. Review a compact before/after sheet, retain `tools/qa/s124-screamer-ground.ts` as the broad-ground guard, and update this report with the actual visual result before treating the objective as complete.
+
+## Unrestricted environment recheck
+
+The required remote unit suite passed: 105 passed, 1 skipped across 27 files, 150-case collection, 124.1 s within the 240 s budget. The unchanged s124 broad-ground gate passed on both WebGL2 and WebGPU with no browser errors. Maximum bright-purple pixel counts were 294 and 347 respectively (limit 5,000), across six alternating HIGH/LOW frames at zoom 1.5 per backend. Raw captures and rows remain in `test-results/s124-pulse-{webgl2,webgpu}-none/`. These sparse frames do not establish early noticeability while moving at zoom 1; the before/after sequence and sheet remain open. The earlier infrastructure failures above are historical and are resolved.

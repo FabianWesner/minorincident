@@ -6,8 +6,8 @@
     "typecheck": "passed",
     "lint": "passed",
     "localNpmTest": "passed: 106 tests, 27 files, 83.3 seconds",
-    "remoteNpmTest": "not run: remote launcher exited 69; no healthy Hetzner runner",
-    "s124ScreamerGroundVisualGate": "not run: browser pool bind EPERM on 127.0.0.1:4329; legacy path GPU guard denied ps (EPERM)",
+    "remoteNpmTest": "passed: 105 passed, 1 skipped; 150-case collection; 124.1 s / 240 s budget",
+    "s124ScreamerGroundVisualGate": "passed WebGL2 and WebGPU; six HIGH/LOW alternating zoom 1.5 frames each; maximum pink pixels 294 / 347, threshold 5000; no browser errors",
     "beforeAfterFrameReview": "incomplete: baseline findings reviewed from batch 107; no after frames available",
     "l9L10HighZoom1Webgl2WebgpuMoving": "unverified"
   },
