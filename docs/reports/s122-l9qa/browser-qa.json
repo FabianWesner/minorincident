@@ -1,0 +1,3082 @@
+{
+  "status": "bounded-qa-reported",
+  "target": {
+    "batch": 103,
+    "commit": "2815e0d5"
+  },
+  "scope": "real-input browser QA of L9 bus pursuit, hatch fight, save fix, and ending at trucks",
+  "sourceChanges": {
+    "gameplay": false,
+    "playtestDriver": false,
+    "deployment": false,
+    "push": false,
+    "mainMoved": false
+  },
+  "build": {
+    "command": "MI_BUILD_CACHE=off npm run build:qa",
+    "result": "pass"
+  },
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "result": "pass"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "result": "pass"
+    },
+    "remoteUnit": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "result": "not-run",
+      "exitCode": 69,
+      "reason": "No healthy provisioned Hetzner runner; npm test is ineligible for the Mac fallback."
+    }
+  },
+  "browser": {
+    "requiredPoolWrapperAttempted": true,
+    "poolPort": 4329,
+    "e2ePort": 4981,
+    "scenePort": 4982,
+    "poolStart": "failed",
+    "poolError": "listen EPERM: operation not permitted 127.0.0.1:4329",
+    "previewError": "listen EPERM: operation not permitted 127.0.0.1:4981",
+    "headlessBrowserLaunched": false,
+    "passes": [],
+    "visualFramesCaptured": 0,
+    "contactSheet": null
+  },
+  "observations": {
+    "busPacing": "unmeasured",
+    "roadAndOffRoadDriving": "unmeasured",
+    "passengerDisembarkation": "unmeasured",
+    "hatchThreat": "unmeasured",
+    "smokeReadability": "unmeasured",
+    "endingAtTrucks": "unmeasured",
+    "deathRetryQualityChange": "unmeasured",
+    "continueSave": "unmeasured",
+    "glitches": [],
+    "funVerdict": "withheld; gameplay was not observed"
+  },
+  "blockerEvidence": {
+    "wrapper": "E2E_PORT=4981 E2E_UNITS=1 sh tools/e2e-lock.sh node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4981 --strictPort --configLoader runner",
+    "wrapperExitCode": 75,
+    "directPreviewAttempt": "E2E_PORT=4981 node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4981 --strictPort --configLoader runner",
+    "directPreviewError": "listen EPERM: operation not permitted 127.0.0.1:4981",
+    "poolLog": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+  },
+  "continuation": {
+    "browserBlockerResolved": true,
+    "highRoad": {
+      "mode": "continue",
+      "quality": "high",
+      "heroine": "female",
+      "zoom": 1,
+      "levels": [
+        "L9"
+      ],
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 477,
+          "maxNoProgressSeconds": 4.548,
+          "deaths": 22,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 5,
+      "bySeverity": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 4,
+        "P3": 0
+      }
+    },
+    "rawEvidence": "test-results/s122-high-road",
+    "visualReview": "pending",
+    "remaining": "LOW, zoom 1.5, WebGPU, off-road, save quality change, truck ending, contact sheet, remote suite"
+  },
+  "lowRoadCorrectedDriver": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 213,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 7.664,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 26
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 4,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0347378253936768,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "",
+            "tick": 11269,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "temporaryDriverChange": "During visible Engine stalled HUD, release driving keys and aim/fire real mouse input at visible living infected; original driver suppressed fire for every vehicle state. Restored after pass.",
+    "rawEvidence": "test-results/s122-low-road"
+  },
+  "highWebGPU": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 205,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 5.133333333333334,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 38
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 3,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0400424003601074,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "",
+            "tick": 10654,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "route": "dry-shortcut",
+    "zoom": 1.5,
+    "rawEvidence": "test-results/s122-high-gpu"
+  },
+  "remoteFinal": {
+    "exit": 0,
+    "runner": "46.225.66.90",
+    "seconds": 127.5,
+    "receipt": "[runner] queued FIFO 01794722170969857000-6803.json; remote preferred, eligible Mac CPU fallback\n[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/s122-l9qa -> 46.225.66.90:/srv/mi/ws/s122-l9qa-f09ddd\n[remote] cache-gc deleted:none\n[remote] sync 34s, 14562 files; job /srv/mi/jobs/s122-l9qa-f09ddd-6803-1794722170; queueing for a slot\n[runner] slot 0 acquired; load 0.21 0.05 0.02\n\n> test\n> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 45/45 files\n\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.3 \u001b[39m\u001b[90m/srv/mi/jobs/s122-l9qa-f09ddd-6803-1794722170\u001b[39m\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/shared/render-contracts.test.ts \u001b[2m(\u001b[22m\u001b[2m14 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2221\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m static placement batches reuse their graph and narrow barriers keep the foreground cut\u001b[33m 618\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding\u001b[33m 1208\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/infected-ai.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 10009\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed\u001b[33m 4511\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius\u001b[33m 3938\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m all levels recover nonlethal downs after seeded 10-20 s at full HP; explosives and burns kill for good\u001b[33m 1419\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/l4-contact.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 11022\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected\u001b[33m 11019\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/engine/vehicles.test.ts\u001b[2m > \u001b[22m\u001b[2menter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach\n\u001b[22m\u001b[39m[campaign] selected action weapon.rocket-launcher unavailable (not in destination rack); falling back to weapon.shotgun\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/combat.test.ts \u001b[2m(\u001b[22m\u001b[2m7 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 974\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection\u001b[33m 404\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/npcs.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 8086\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m civilians: seeded grab \u2192 bite \u2192 down \u2192 glowing eyes \u2192 rising \u2192 infected cycle in place; panic flees; a kill during the grab saves\u001b[33m 1455\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission\u001b[33m 840\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m corgi: warns of an offscreen threat within 18 m with a unit direction\u001b[33m 5788\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/engine/save-progression.test.ts\u001b[2m > \u001b[22m\u001b[2mL1\u2013L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection\n\u001b[22m\u001b[39m[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fists\n[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.bat\n[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe\n[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/world-systems.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 21424\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out\u001b[33m 10744\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded\u001b[33m 10434\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/engine/save-progression.test.ts\u001b[2m > \u001b[22m\u001b[2mselection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun\n\u001b[22m\u001b[39m[campaign] selected action weapon.shotgun unavailable (not in destination rack); falling back to weapon.army-mg\n\n\u001b[90mstdout\u001b[2m | tests/engine/save-progression.test.ts\u001b[2m > \u001b[22m\u001b[2mbare hands are innate: key 1 selects fists without them entering the carried racks; the L8 sanctuary gate takes the launcher\n\u001b[22m\u001b[39m[campaign] selected action weapon.fists unavailable (not in destination rack); falling back to weapon.rocket-launcher\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/save-progression.test.ts \u001b[2m(\u001b[22m\u001b[2m6 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 14312\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m L1\u2013L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection\u001b[33m 12115\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m bare hands are innate: key 1 selects fists without them entering the carried racks; the L8 sanctuary gate takes the launcher\u001b[33m 1747\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely\u001b[33m 439\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/shared/asset-contract.test.ts\u001b[2m > \u001b[22m\u001b[2mthe asset validator rejects every contract violation, and every production asset passes it\n\u001b[22m\u001b[39mprune: Removed types... Accessor (2)\n\n\u001b[90mstdout\u001b[2m | tests/shared/asset-contract.test.ts\u001b[2m > \u001b[22m\u001b[2mthe asset validator rejects every contract violation, and every production asset passes it\n\u001b[22m\u001b[39mprune: Removed types... Accessor (2)\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/shared/asset-contract.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 21335\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m crowd atlas cleanup preserves enclosed eye paint and its authored alpha class\u001b[33m 387\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m the asset validator rejects every contract violation, and every production asset passes it\u001b[33m 20652\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/missions.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 18093\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m graph timing: parallel tasks join in any order; a timeout fires exactly at 120 s, retry restores the timer, completion cancels it\u001b[33m 1180\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m interactions: only the open L6 gate the group is heading for offers its prompt\u001b[33m 12343\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead\u001b[33m 4370\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/gate-tools.test.ts \u001b[2m(\u001b[22m\u001b[2m8 tests\u001b[22m\u001b[2m | \u001b[22m\u001b[33m1 skipped\u001b[39m\u001b[2m)\u001b[22m\u001b[33m 16747\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m scene gate resume requires identical rows, revision and backend identities\u001b[33m 4291\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m scene gate rejects stale, failed, malformed and incomplete child results\u001b[33m 6622\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m scene gate rejects invalid arguments and empty selections before running children\u001b[33m 4627\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m build-cache publication never leaves an interrupted copy looking complete\u001b[33m 949\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/collision.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1487\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m admission: parked vehicle hulls exclude bodies, coincident spawns separate, a thin wall never admits a body through it\u001b[33m 1261\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/navigation.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 22885\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard\u001b[33m 4639\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m dynamic blockers: a prepared rebake equals a full rebake after doors and carts open and close; a checkpoint restore re-announcing unchanged blockers leaves every AI grid identical (L10, L8)\u001b[33m 6666\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m chasers path through a maze and an offset district without ever overlapping a static collider\u001b[33m 11520\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/input.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 61\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/qa-drivers.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 48\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/l10-camera-framing.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2374\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[32m\u2713\u001b[39m L10 road camera (PO 10-30 \"Wider L10 camera\") \u001b[2m(3)\u001b[22m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m snaps framing on level load, checkpoint/respawn poses and teleports before the first presented frame; the release/closing staging keeps a cured crowd and clears the Mega\u001b[33m 2238\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/aim-assist.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 306\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/vehicles.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 88181\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m handling: deterministic scripted drives, speed-dependent steering for every vehicle, braking before reverse, flip recovery\u001b[33m 425\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach\u001b[33m 87754\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/director-pressure.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1438\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m native routing clears thin doorways and yields failed shared searches\u001b[33m 1148\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/spawn-director.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 7308\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m a 150-infected migration follows its spline on time and fans out at the goal\u001b[33m 1154\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii\u001b[33m 5929\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/core.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 117\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/input-log-codec.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1093\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[32m\u2713\u001b[39m input log codec \u001b[2m(2)\u001b[22m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index\u001b[33m 371\u001b[2mms\u001b[22m\u001b[39m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage\u001b[33m 719\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/player.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 22646\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m movement: fast acceleration and stop, capped diagonal speed, 720\u00b0/s turning, one-tick aim snap, campaign ramps and stairs\u001b[33m 20775\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip\u001b[33m 1791\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/shared/architecture.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2585\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier)\u001b[33m 2028\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m lint rejects unseeded randomness, DOM and renderer imports in the sim\u001b[33m 555\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/browser-pool-client.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 8\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/playtest-finale-retreat.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/determinism.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 10991\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything\u001b[33m 397\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10\u001b[33m 10449\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/test-budget-tools.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 23980\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m test budget collection is passive, rejects missing counts and bounds collection with child cleanup\u001b[33m 23979\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m27 passed\u001b[39m\u001b[22m\u001b[90m (27)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m105 passed\u001b[39m\u001b[22m\u001b[2m | \u001b[22m\u001b[33m1 skipped\u001b[39m\u001b[90m (106)\u001b[39m\n\u001b[2m   Start at \u001b[22m 05:56:47\n\u001b[2m   Duration \u001b[22m 124.88s\u001b[2m (tests 93%, transform 4%, import 3%)\u001b[22m\n\n[test-budget] test: 127.5 s (budget 240 s)\n[remote] done exit=0 (runner 46.225.66.90, sync 34s, remote total 130s)\n"
+  },
+  "visualReview": {
+    "sheet": "contact-sheet.jpg",
+    "inspected": true,
+    "panels": [
+      "HIGH GL z1 bus entry6717",
+      "HIGH GL z1 passenger group6757",
+      "HIGH GPU z1.5 rail",
+      "HIGH GPU trucks",
+      "LOW GL z1 trucks smoke",
+      "LOW GPU z1.5 yield"
+    ],
+    "observations": [
+      "Rail APC and courier readable in sampled frames.",
+      "LOW trucks smoke plume and overlapping attackers reduce hull readability.",
+      "Loading panel is handover evidence, not the truck ending cinematic."
+    ],
+    "limitations": "Sampled stills do not establish continuous absence of popping, clipping, jitter or passenger spawn artifacts."
+  },
+  "saveProbeAttempt": {
+    "status": "incomplete",
+    "source": "import { launchProfile } from '../browser-pool/client';\nimport { writeFileSync } from 'node:fs';\nconst c=await launchProfile('test-results/s122-high-road/profile',{headless:true,args:['--use-angle=metal'],viewport:{width:1280,height:720}});\nconst p=c.pages()[0]??await c.newPage();const errors:string[]=[];p.on('pageerror',e=>errors.push(e.message));await p.addInitScript('window.__name=f=>f');\nconst url='http://127.0.0.1:4981/?testApi=1&scenelab=1&renderer=webgl&quality=high&audio=muted';\nconst start=async()=>{await p.goto(url);await p.waitForFunction(()=>!!window.__SS__);await p.evaluate(()=>window.__SS__!.ready);await p.getByTestId('start-game').click();await p.getByTestId('level-L9').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.id==='L9');if(await p.getByTestId('mission-button').isVisible())await p.getByTestId('mission-button').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.phase==='playing');};\nconst state=()=>p.evaluate(()=>({tick:window.__SS__!.tick(),hp:window.__SS__!.getEntity(1)!.health.current,level:window.__SS__!.missions.state()?.id,quality:window.__SS__!.getState().render.quality}));\ntry{await start();const before=await state();await p.evaluate(()=>{const g=(window as any).__SCENE__.game;g.world.player.damage(1000,g.world.tick,true);window.__SS__!.pause();});const dead=await state();if(!await p.getByTestId('pause-settings').isVisible())await p.keyboard.press('Escape');await p.getByTestId('pause-settings').click();await p.getByTestId('setting-quality').selectOption('low');const changedDead=await state();await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForFunction(()=>window.__SS__!.getEntity(1)!.health.current>0,{},{timeout:30000});const alive=await state();if(!await p.getByTestId('pause-settings').isVisible())await p.keyboard.press('Escape');await p.getByTestId('pause-settings').click();await p.getByTestId('setting-quality').selectOption('high');await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForTimeout(800);const after=await state();await start();await p.waitForTimeout(800);const continued=await state();writeFileSync('test-results/s122-save.json',JSON.stringify({method:'Continue existing L9-default profile; controlled lethal diagnostic hit and pause at zero HP; physical settings changes and menu reload/Continue',before,dead,changedDead,alive,after,continued,errors},null,2));}finally{await c.close();}\n",
+    "error": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nlocator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('pause-settings')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" data-testid=\"pause-settings\">Settings</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    54 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/s122-l9qa/tools/playtest/s122-save-temp.ts:8:329) {\n  log: [\n    \"  - waiting for getByTestId('pause-settings')\",\n    '    - locator resolved to <button type=\"button\" data-testid=\"pause-settings\">Settings</button>',\n    '  - attempting click action',\n    '    2 \u00d7 waiting for element to be visible, enabled and stable',\n    '      - element is not visible',\n    '    - retrying click action',\n    '    - waiting 20ms',\n    '    2 \u00d7 waiting for element to be visible, enabled and stable',\n    '      - element is not visible',\n    '    - retrying click action',\n    '      - waiting 100ms',\n    '    54 \u00d7 waiting for element to be visible, enabled and stable',\n    '       - element is not visible',\n    '     - retrying click action',\n    '       - waiting 500ms',\n    '    - waiting for element to be visible, enabled and stable'\n  ],\n  name: 'TimeoutError'\n}\n\nNode.js v26.0.0\n",
+    "verdict": "UI navigation timeout; no save regression verdict"
+  },
+  "saveFix": {
+    "method": "Continue existing L9-default profile; controlled lethal diagnostic hit and pause at zero HP; physical settings changes and menu reload/Continue",
+    "before": {
+      "tick": 0,
+      "hp": 100,
+      "level": "L9",
+      "quality": "high"
+    },
+    "dead": {
+      "tick": 8,
+      "hp": 0,
+      "level": "L9",
+      "quality": "high"
+    },
+    "changedDead": {
+      "tick": 8,
+      "hp": 0,
+      "level": "L9",
+      "quality": "low"
+    },
+    "alive": {
+      "tick": 133,
+      "hp": 100,
+      "level": "L9",
+      "quality": "low"
+    },
+    "after": {
+      "tick": 187,
+      "hp": 100,
+      "level": "L9",
+      "quality": "high"
+    },
+    "continued": {
+      "tick": 45,
+      "hp": 100,
+      "level": "L9",
+      "quality": "high"
+    },
+    "errors": [],
+    "setup": "Opened pause/settings physically while alive, applied controlled lethal hit while paused, then physically changed quality at zero HP; resumed, changed again after respawn, reloaded and entered Continue.",
+    "probeSource": "import { launchProfile } from '../browser-pool/client';\nimport { writeFileSync } from 'node:fs';\nconst c=await launchProfile('test-results/s122-high-road/profile',{headless:true,args:['--use-angle=metal'],viewport:{width:1280,height:720}});\nconst p=c.pages()[0]??await c.newPage();const errors:string[]=[];p.on('pageerror',e=>errors.push(e.message));await p.addInitScript('window.__name=f=>f');\nconst url='http://127.0.0.1:4981/?testApi=1&scenelab=1&renderer=webgl&quality=high&audio=muted';\nconst start=async()=>{await p.goto(url);await p.waitForFunction(()=>!!window.__SS__);await p.evaluate(()=>window.__SS__!.ready);await p.getByTestId('start-game').click();await p.getByTestId('level-L9').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.id==='L9');if(await p.getByTestId('mission-button').isVisible())await p.getByTestId('mission-button').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.phase==='playing');};\nconst state=()=>p.evaluate(()=>({tick:window.__SS__!.tick(),hp:window.__SS__!.getEntity(1)!.health.current,level:window.__SS__!.missions.state()?.id,quality:window.__SS__!.getState().render.quality}));\ntry{await start();const before=await state();await p.getByTestId('pause-button').click();await p.getByTestId('pause-settings').click();await p.evaluate(()=>{const g=(window as any).__SCENE__.game;g.world.player.damage(1000,g.world.tick,true);});const dead=await state();await p.getByTestId('setting-quality').selectOption('low');const changedDead=await state();await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForFunction(()=>window.__SS__!.getEntity(1)!.health.current>0,{},{timeout:30000});const alive=await state();await p.getByTestId('pause-button').click();await p.getByTestId('pause-settings').click();await p.getByTestId('setting-quality').selectOption('high');await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForTimeout(800);const after=await state();await start();await p.waitForTimeout(800);const continued=await state();writeFileSync('test-results/s122-save.json',JSON.stringify({method:'Continue existing L9-default profile; controlled lethal diagnostic hit and pause at zero HP; physical settings changes and menu reload/Continue',before,dead,changedDead,alive,after,continued,errors},null,2));}finally{await c.close();}\n"
+  },
+  "currentSummary": {
+    "lowRoadComplete": true,
+    "highShortcutComplete": true,
+    "controlledSaveBoundary": "pass",
+    "runtimeWebGPUAssertion": "confirmed in HIGH and LOW log renderer receipts",
+    "lowZoom1_5": "240s WebGPU pass, rail clear, trucks defense complete but1/4 survivors",
+    "continuousBusVisualReview": "frame sequence reviewed for rail entry/release; full pursuit pacing not established",
+    "fun": "provisionally tense/manageable; smoke obscures truck hull",
+    "confirmedFindings": [
+      {
+        "severity": "P2",
+        "kind": "known smoke/readability",
+        "where": "LOW trucks"
+      }
+    ]
+  },
+  "backendReceipts": {
+    "high": {
+      "t": "2026-11-15T05:55:07.500Z",
+      "renderer": "webgpu"
+    },
+    "low": {
+      "t": "2026-11-15T06:06:27.480Z",
+      "renderer": "webgpu"
+    }
+  },
+  "lowWebGPUZoom15": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 240,
+        "simSeconds": 232,
+        "maxNoProgressSeconds": 4.483333333333333,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 40
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 8,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0141711235046387,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "captures": "test-results/s122-low-gpu/captures",
+    "intervalSeconds": 1,
+    "review": {
+      "frames": "20 chronological samples t3513\u20136016 plus original-size final yield",
+      "observations": [
+        "Rail approach and hold remain readable; no floating actor established in reviewed frames.",
+        "Bus itself is not sufficiently visible on the off-road sample to judge speed or disembarkation.",
+        "Final trucks: defense complete, 1/4 survivors, courier100HP; crowded smoke and broad pink/purple ground patches."
+      ],
+      "findings": [
+        {
+          "severity": "P2",
+          "kind": "truck readability",
+          "detail": "Smoke/crowd obscures hull; known smoke issue."
+        },
+        {
+          "severity": "P2",
+          "kind": "ground color discontinuity",
+          "detail": "Broad pink/purple patches in LOW WebGPU final yield; cause unverified."
+        }
+      ],
+      "hitches": [
+        {
+          "level": "L9",
+          "tick": 1862,
+          "x": -259,
+          "z": -28.4,
+          "severity": "P2",
+          "kind": "hitch",
+          "text": "Frame of 650 ms at tick 1862",
+          "captures": [],
+          "step": null,
+          "objective": ""
+        },
+        {
+          "level": "L9",
+          "tick": 7869,
+          "x": 468.8,
+          "z": -1.1,
+          "severity": "P1",
+          "kind": "hitch",
+          "text": "Frame of 2533 ms at tick 7869",
+          "captures": [],
+          "step": null,
+          "objective": ""
+        }
+      ]
+    }
+  },
+  "stationaryFlagsReview": "HIGH flags actors in attack state at hull; no motion expected during planted attack, not confirmed frozen AI.",
+  "focusedRoadCapture": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 116,
+        "maxNoProgressSeconds": 6.616666666666666,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 7,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.018107295036316,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "review": "20 chronological samples inspected, t7\u20136109. APC tips visibly at t3255 and leaves road later; rail not reached by120s. Bus disembarkation still not observed clearly.",
+    "finding": {
+      "severity": "P2",
+      "kind": "APC tipping",
+      "capture": "test-results/s122-bus-road/captures/bus-road-L9-t3255.jpg",
+      "limits": "Capture-heavy real-input driver; steering/capture overhead contribution unisolated."
+    }
+  },
+  "railFocusedReview": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 150,
+        "simSeconds": 146,
+        "maxNoProgressSeconds": 15.209,
+        "deaths": 3,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 4,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0347378253936768,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "frames": "20 chronological samples t5417\u20138445 inspected",
+    "observations": [
+      "Bus parked behind APC throughout visible rail sequence.",
+      "No bus/APC overlap or floating actors established in reviewed samples.",
+      "Attackers gather at hull and courier takes lethal damage with original no-fire driver."
+    ],
+    "limits": "Arrival/first release not clearly captured; cannot judge spawn popping or3x speed. Capture cadence modified only near rail and restored."
+  },
+  "arrivalReview": {
+    "frames": [
+      6584,
+      6604,
+      6620,
+      6641,
+      6681,
+      6717,
+      6738,
+      6757,
+      6776,
+      6798
+    ],
+    "observations": [
+      "Bus first partly visible at top edge6681, advances into frame6717, stopped behind APC6738 onward. No centre-screen pop or APC intersection in this sequence.",
+      "Passengers visible beside front-left bus6738; tightly grouped, move away6757\u20136798. Legs appear on road; no floating established.",
+      "Smoke and group overlap obscure individual exits."
+    ],
+    "finding": {
+      "severity": "P3",
+      "kind": "clustered passenger release readability"
+    },
+    "feel": "Short approach reads as fast catch-up then stop; full3x pursuit speed not visible."
+  },
+  "currentFindings": [
+    {
+      "severity": "P2",
+      "kind": "known smoke/crowd truck hull occlusion"
+    },
+    {
+      "severity": "P2",
+      "kind": "LOW WebGPU pink/purple ground patches",
+      "cause": "unverified"
+    },
+    {
+      "severity": "P2",
+      "kind": "APC tipping in capture-heavy road attempt",
+      "cause": "driver/capture contribution unisolated"
+    },
+    {
+      "severity": "P3",
+      "kind": "clustered passenger release obscures individual exits"
+    }
+  ],
+  "validationCurrent": {
+    "build": "pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "remote": "150/150 manifest;27 files pass;105 passed1 skipped;127.5s;exit0"
+  },
+  "pursuitSamples": [
+    {
+      "tick": 29,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 1729.1019225152113,
+        "y": -532.9908201755193
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 96,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 1644.5526936456718,
+        "y": -534.5304628846131
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 151,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 1487.197854050974,
+        "y": -549.4143446725993
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 216,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 1275.3389972149546,
+        "y": -569.4827437003877
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 277,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 1085.633513312831,
+        "y": -587.4527813329689
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 341,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 906.9504528310204,
+        "y": -604.3787300351861
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 426,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 710.2360390955544,
+        "y": -622.7157203802724
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 489,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 589.0181402804523,
+        "y": -631.7926276172497
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 558,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 465.71068693676716,
+        "y": -629.0273644540491
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 627,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 346.3684431725275,
+        "y": -622.1771364653725
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 688,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 231.39661341797927,
+        "y": -615.8922305243048
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 755,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": 37.99344301384927,
+        "y": -604.7838863884257
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 824,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -198.79688800408175,
+        "y": -592.0719412351884
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 885,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -438.2074557659888,
+        "y": -579.4009594862488
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 974,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -843.5519147451555,
+        "y": -557.9491335625834
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1036,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -1173.9944477604297,
+        "y": -537.3068271806329
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1104,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -1577.4430541006075,
+        "y": -516.6848061317901
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1173,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -2049.9962521609455,
+        "y": -492.6947887681488
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1240,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -2586.394067930858,
+        "y": -465.40819222063755
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1306,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3212.165684292772,
+        "y": -433.34306790945567
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1369,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3914.062462262952,
+        "y": -398.8138994214145
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1434,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -4786.112605665887,
+        "y": -356.3131540155198
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1498,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -5912.27246448521,
+        "y": -297.88145186392205
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1561,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -7298.190468107594,
+        "y": -227.28196946929987
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1626,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -9086.978210637068,
+        "y": -139.12932506744147
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1692,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -11622.77752290365,
+        "y": -12.464833356965315
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1760,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -14522.93557676474,
+        "y": 120.25676261636762
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1827,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -12858.82271780475,
+        "y": -18.78707425306463
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1892,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -10480.809126292179,
+        "y": -174.82518437721342
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 1954,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -8727.967625984471,
+        "y": -290.18294035675495
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2020,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -7904.012443577871,
+        "y": -355.7932925751666
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2087,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -6953.334718001415,
+        "y": -422.8645807105649
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2149,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -6275.750506758678,
+        "y": -470.88026220676664
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2209,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -5760.229828556862,
+        "y": -507.429283059633
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2277,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -5293.503631509586,
+        "y": -540.5185434366208
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2339,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -4951.154108673765,
+        "y": -564.7888445827739
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2405,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -4649.017221367784,
+        "y": -586.2077068182922
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2484,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -4361.7085385918535,
+        "y": -606.1344897275369
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2551,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -4173.258397030132,
+        "y": -620.0468933345871
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2615,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -4006.600964132378,
+        "y": -631.9736515294311
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2681,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3850.3556887378336,
+        "y": -643.1523447342605
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2741,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3722.305441784584,
+        "y": -652.3132289793875
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2807,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3547.2444075928297,
+        "y": -636.4811469488828
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2872,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3516.385761344336,
+        "y": -655.640821162802
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 2940,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3446.181236297334,
+        "y": -672.5727748688337
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3002,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3419.9848963941663,
+        "y": -673.3743849076213
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3063,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3419.8957806125695,
+        "y": -673.3111772964588
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3104,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3419.2293408472888,
+        "y": -703.4692736146546
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3167,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3446.853597675713,
+        "y": -671.6764990351664
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3235,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3470.5560638429283,
+        "y": -671.2242996815032
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3304,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3412.8191419554855,
+        "y": -674.5556644054694
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3372,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3343.093830314162,
+        "y": -679.3811833044666
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3439,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3256.8142812386905,
+        "y": -684.8540094623942
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3505,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3172.1414416233297,
+        "y": -690.2237908755119
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3571,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3093.3331660592066,
+        "y": -695.2218603120915
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3635,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -3022.806014972638,
+        "y": -699.695888879973
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3699,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -2957.270691668228,
+        "y": -703.8529969787919
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3766,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -2893.2596034153103,
+        "y": -707.8694317910193
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3833,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -2847.2757021934694,
+        "y": -711.4142927444811
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3894,
+      "at": {
+        "x": -570,
+        "z": -120,
+        "y": 0.79,
+        "yaw": 0
+      },
+      "hidden": true,
+      "speed": 0,
+      "screen": {
+        "x": -2816.1102120019086,
+        "y": -714.253065112456
+      },
+      "released": 0,
+      "stopped": null,
+      "line": null
+    },
+    {
+      "tick": 3962,
+      "at": {
+        "x": -11.105352401733398,
+        "z": -330,
+        "y": 0.7354300618171692,
+        "yaw": -1.3126370721394098e-16
+      },
+      "hidden": false,
+      "speed": 7.513505458831787,
+      "screen": {
+        "x": -848.2147067976223,
+        "y": -518.7597497618635
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4025,
+      "at": {
+        "x": 0.8720653057098389,
+        "z": -330,
+        "y": 0.7354316115379333,
+        "yaw": -1.291783536213573e-16
+      },
+      "hidden": false,
+      "speed": 15.058623313903809,
+      "screen": {
+        "x": -820.7652961325238,
+        "y": -469.3914280382501
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4089,
+      "at": {
+        "x": 20.295522689819336,
+        "z": -330,
+        "y": 0.7354329824447632,
+        "yaw": -7.996508921900017e-17
+      },
+      "hidden": false,
+      "speed": 20.920867919921875,
+      "screen": {
+        "x": -823.2328872276028,
+        "y": -461.8677946507158
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4151,
+      "at": {
+        "x": 44.146671295166016,
+        "z": -330,
+        "y": 0.7354336977005005,
+        "yaw": -5.060909634444036e-17
+      },
+      "hidden": false,
+      "speed": 24.94272232055664,
+      "screen": {
+        "x": -840.0295344775066,
+        "y": -479.9070328133904
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4214,
+      "at": {
+        "x": 70.18011474609375,
+        "z": -330,
+        "y": 0.7354211807250977,
+        "yaw": 3.1085027235648264e-05
+      },
+      "hidden": false,
+      "speed": 25.82637596976818,
+      "screen": {
+        "x": -806.9859126089502,
+        "y": -458.5409848999071
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4276,
+      "at": {
+        "x": 98.3150634765625,
+        "z": -330,
+        "y": 0.7354252338409424,
+        "yaw": 1.610838646029819e-05
+      },
+      "hidden": false,
+      "speed": 28.43017387549779,
+      "screen": {
+        "x": -755.2352754725305,
+        "y": -420.71202973539414
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4346,
+      "at": {
+        "x": 131.92340087890625,
+        "z": -330.0057067871094,
+        "y": 1.3710798025131226,
+        "yaw": 0.0013408250197387867
+      },
+      "hidden": false,
+      "speed": 28.34197006530099,
+      "screen": {
+        "x": -669.4822514991625,
+        "y": -359.62721367386155
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4410,
+      "at": {
+        "x": 159.4157257080078,
+        "z": -330.015625,
+        "y": 4.04640531539917,
+        "yaw": -0.004177962692010495
+      },
+      "hidden": false,
+      "speed": 21.876474941247185,
+      "screen": {
+        "x": -536.0674440680526,
+        "y": -308.91672066981204
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4478,
+      "at": {
+        "x": 183.52316284179688,
+        "z": -330.0571594238281,
+        "y": 0.9669456481933594,
+        "yaw": 0.09041673201571278
+      },
+      "hidden": false,
+      "speed": 21.040677882437194,
+      "screen": {
+        "x": -452.43878878450687,
+        "y": -265.2351328552065
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4541,
+      "at": {
+        "x": 207.2774658203125,
+        "z": -330.0263671875,
+        "y": 0.7354029417037964,
+        "yaw": -0.05438520630218628
+      },
+      "hidden": false,
+      "speed": 24.531711914677516,
+      "screen": {
+        "x": -358.0511306834579,
+        "y": -206.14293877141048
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4605,
+      "at": {
+        "x": 235.17083740234375,
+        "z": -330.1630554199219,
+        "y": 0.7354340553283691,
+        "yaw": 0.01556225666909407
+      },
+      "hidden": false,
+      "speed": 27.56333866576872,
+      "screen": {
+        "x": -176.31686510943268,
+        "y": -98.79668034274972
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4673,
+      "at": {
+        "x": 267.7899475097656,
+        "z": -329.9469909667969,
+        "y": 0.7354342937469482,
+        "yaw": 0.0201089413551654
+      },
+      "hidden": false,
+      "speed": 29.82645498404467,
+      "screen": {
+        "x": 165.75498186006604,
+        "y": 119.13574559252838
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4739,
+      "at": {
+        "x": 286.1733093261719,
+        "z": -330.08197021484375,
+        "y": 0.7353726625442505,
+        "yaw": -0.01531472605498433
+      },
+      "hidden": false,
+      "speed": 0.03938843830104604,
+      "screen": {
+        "x": 293.14222704280814,
+        "y": 193.24133416204492
+      },
+      "released": 0,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4802,
+      "at": {
+        "x": 286.16571044921875,
+        "z": -330.082275390625,
+        "y": 0.7354350090026855,
+        "yaw": -0.015351473431890233
+      },
+      "hidden": false,
+      "speed": 1.4380928814228393e-07,
+      "screen": {
+        "x": -27.43736299822814,
+        "y": 4.628726541879802
+      },
+      "released": 1,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4864,
+      "at": {
+        "x": 286.16571044921875,
+        "z": -330.082275390625,
+        "y": 0.7354345321655273,
+        "yaw": -0.015351473431890205
+      },
+      "hidden": false,
+      "speed": 3.6254201709434233e-09,
+      "screen": {
+        "x": -254.05939192013435,
+        "y": -123.1114010534373
+      },
+      "released": 2,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4929,
+      "at": {
+        "x": 286.16571044921875,
+        "z": -330.082275390625,
+        "y": 0.7354345321655273,
+        "yaw": -0.015351473431890207
+      },
+      "hidden": false,
+      "speed": 1.0165848713422527e-08,
+      "screen": {
+        "x": -397.0449746199598,
+        "y": -225.5261860328245
+      },
+      "released": 2,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 4996,
+      "at": {
+        "x": 290.84771728515625,
+        "z": -330.0244140625,
+        "y": 0.7354310750961304,
+        "yaw": -0.011920227283400975
+      },
+      "hidden": false,
+      "speed": 8.248347294470003,
+      "screen": {
+        "x": -409.2558127228152,
+        "y": -282.69046404053097
+      },
+      "released": 3,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 5062,
+      "at": {
+        "x": 304.06170654296875,
+        "z": -329.97857666015625,
+        "y": 0.7354612946510315,
+        "yaw": 0.0006701310479453016
+      },
+      "hidden": false,
+      "speed": 14.636675145201497,
+      "screen": {
+        "x": -73.0761522407586,
+        "y": -299.38067779894135
+      },
+      "released": 3,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 5126,
+      "at": {
+        "x": 323.1005859375,
+        "z": -330.0090026855469,
+        "y": 0.7354139685630798,
+        "yaw": 1.7372914500623766e-05
+      },
+      "hidden": false,
+      "speed": 20.614198933805948,
+      "screen": {
+        "x": 473.83663470882357,
+        "y": -275.661635186671
+      },
+      "released": 3,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 5196,
+      "at": {
+        "x": 340.7262878417969,
+        "z": -329.9931335449219,
+        "y": 0.745421826839447,
+        "yaw": 0.006837755113863086
+      },
+      "hidden": false,
+      "speed": 4.822600440406602,
+      "screen": {
+        "x": 987.601944327977,
+        "y": -280.14678784196525
+      },
+      "released": 3,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 5264,
+      "at": {
+        "x": 341.1865539550781,
+        "z": -329.9478759765625,
+        "y": 0.7947801351547241,
+        "yaw": 0.02355644135959752
+      },
+      "hidden": false,
+      "speed": 0.03066008704645922,
+      "screen": {
+        "x": 1077.5220981693253,
+        "y": -361.393097446525
+      },
+      "released": 4,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 5325,
+      "at": {
+        "x": 341.19354248046875,
+        "z": -329.9215393066406,
+        "y": 0.7981481552124023,
+        "yaw": 0.030617129037631738
+      },
+      "hidden": false,
+      "speed": 0.023063116109183015,
+      "screen": {
+        "x": 1151.0400300619679,
+        "y": -415.41579396984946
+      },
+      "released": 5,
+      "stopped": null,
+      "line": 3900
+    },
+    {
+      "tick": 5390,
+      "at": {
+        "x": 341.20025634765625,
+        "z": -329.9039611816406,
+        "y": 0.7947765588760376,
+        "yaw": 0.03666938343155812
+      },
+      "hidden": false,
+      "speed": 0.02464281155273343,
+      "screen": {
+        "x": 1226.0962309378888,
+        "y": -459.59915670319714
+      },
+      "released": 5,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5454,
+      "at": {
+        "x": 341.19744873046875,
+        "z": -329.9138488769531,
+        "y": 0.7940098643302917,
+        "yaw": 0.03385116704215977
+      },
+      "hidden": false,
+      "speed": 0.01756333182697178,
+      "screen": {
+        "x": 1285.7399226447922,
+        "y": -494.72615740671677
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5516,
+      "at": {
+        "x": 341.19488525390625,
+        "z": -329.9214782714844,
+        "y": 0.793965756893158,
+        "yaw": 0.0314579973920204
+      },
+      "hidden": false,
+      "speed": 0.011981043749408608,
+      "screen": {
+        "x": 1320.559187285645,
+        "y": -499.0939711920537
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5577,
+      "at": {
+        "x": 341.19287109375,
+        "z": -329.92889404296875,
+        "y": 0.793859601020813,
+        "yaw": 0.029407946211541275
+      },
+      "hidden": false,
+      "speed": 0.01182660649683997,
+      "screen": {
+        "x": 1321.514665317785,
+        "y": -498.88707787471833
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5641,
+      "at": {
+        "x": 341.1907653808594,
+        "z": -329.93682861328125,
+        "y": 0.7940080761909485,
+        "yaw": 0.027548077555126598
+      },
+      "hidden": false,
+      "speed": 0.011340421330482112,
+      "screen": {
+        "x": 1321.5413882170246,
+        "y": -498.9041871361387
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5706,
+      "at": {
+        "x": 341.18878173828125,
+        "z": -329.94476318359375,
+        "y": 0.7939897775650024,
+        "yaw": 0.025919985155628412
+      },
+      "hidden": false,
+      "speed": 0.010773634394052288,
+      "screen": {
+        "x": 1321.57000534344,
+        "y": -498.92175223575003
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5770,
+      "at": {
+        "x": 341.18682861328125,
+        "z": -329.9525451660156,
+        "y": 0.7940024137496948,
+        "yaw": 0.024562071860486492
+      },
+      "hidden": false,
+      "speed": 0.010375657321171225,
+      "screen": {
+        "x": 1321.5979561194858,
+        "y": -498.93899227148586
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5835,
+      "at": {
+        "x": 341.184814453125,
+        "z": -329.9574279785156,
+        "y": 0.7939994931221008,
+        "yaw": 0.02339223615296651
+      },
+      "hidden": false,
+      "speed": 0.010079006925367751,
+      "screen": {
+        "x": 1321.6037893470377,
+        "y": -498.95120509537804
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5896,
+      "at": {
+        "x": 341.18292236328125,
+        "z": -329.9596862792969,
+        "y": 0.7941247224807739,
+        "yaw": 0.022449562208192973
+      },
+      "hidden": false,
+      "speed": 0.009855654445422607,
+      "screen": {
+        "x": 1321.592234086906,
+        "y": -498.9585539572732
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 5964,
+      "at": {
+        "x": 341.18084716796875,
+        "z": -329.95965576171875,
+        "y": 0.7940852046012878,
+        "yaw": 0.02156800598706404
+      },
+      "hidden": false,
+      "speed": 0.009693031482503953,
+      "screen": {
+        "x": 1321.5612185770053,
+        "y": -498.9621742286968
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 6032,
+      "at": {
+        "x": 341.17877197265625,
+        "z": -329.95965576171875,
+        "y": 0.7940553426742554,
+        "yaw": 0.020842178944031217
+      },
+      "hidden": false,
+      "speed": 0.009552741346491748,
+      "screen": {
+        "x": 1414.8480820696523,
+        "y": -585.0339092236777
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 6096,
+      "at": {
+        "x": 341.17681884765625,
+        "z": -329.9596252441406,
+        "y": 0.7940361499786377,
+        "yaw": 0.020281458360143417
+      },
+      "hidden": false,
+      "speed": 0.009497606657421017,
+      "screen": {
+        "x": 1415.7873313022503,
+        "y": -586.3452339620968
+      },
+      "released": 6,
+      "stopped": 5382,
+      "line": 3900
+    },
+    {
+      "tick": 6154,
+      "at": {
+        "x": 341.1609191894531,
+        "z": -329.9169921875,
+        "y": 0.9774409532546997,
+        "yaw": 0.03263360973656882
+      },
+      "hidden": false,
+      "speed": 0.004118076619315906,
+      "screen": {
+        "x": 1322.0719181044603,
+        "y": -499.9748689915537
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6221,
+      "at": {
+        "x": 341.1629638671875,
+        "z": -329.9169921875,
+        "y": 0.9775345921516418,
+        "yaw": 0.03263390188078446
+      },
+      "hidden": false,
+      "speed": 0.00410952484086827,
+      "screen": {
+        "x": 1321.507243731429,
+        "y": -499.24624021701123
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6287,
+      "at": {
+        "x": 341.1649475097656,
+        "z": -329.9169921875,
+        "y": 0.9776253700256348,
+        "yaw": 0.03263425804765097
+      },
+      "hidden": false,
+      "speed": 0.0041089674919529235,
+      "screen": {
+        "x": 1321.536670274995,
+        "y": -499.2428200994603
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6354,
+      "at": {
+        "x": 341.1669921875,
+        "z": -329.9169921875,
+        "y": 0.9777182340621948,
+        "yaw": 0.032634558065254365
+      },
+      "hidden": false,
+      "speed": 0.004109227974526731,
+      "screen": {
+        "x": 1321.5669829106773,
+        "y": -499.2392062753778
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6419,
+      "at": {
+        "x": 341.1689758300781,
+        "z": -329.9169921875,
+        "y": 0.97780841588974,
+        "yaw": 0.032634578233903
+      },
+      "hidden": false,
+      "speed": 0.004109215873917172,
+      "screen": {
+        "x": 1321.596391319872,
+        "y": -499.23570013582724
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6483,
+      "at": {
+        "x": 341.1708984375,
+        "z": -329.9169921875,
+        "y": 0.9778962135314941,
+        "yaw": 0.03263470268013842
+      },
+      "hidden": false,
+      "speed": 0.00411189859647412,
+      "screen": {
+        "x": 1321.624895468833,
+        "y": -499.2323018041592
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6547,
+      "at": {
+        "x": 341.1728515625,
+        "z": -329.9169921875,
+        "y": 0.9779846668243408,
+        "yaw": 0.03263474442382416
+      },
+      "hidden": false,
+      "speed": 0.0041112697392338225,
+      "screen": {
+        "x": 1321.6538526834283,
+        "y": -499.2288494569413
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6612,
+      "at": {
+        "x": 341.1748046875,
+        "z": -329.9169921875,
+        "y": 0.9780738353729248,
+        "yaw": 0.032634970135591135
+      },
+      "hidden": false,
+      "speed": 0.004112209863271265,
+      "screen": {
+        "x": 1321.6828105217394,
+        "y": -499.2253970353626
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6676,
+      "at": {
+        "x": 341.1767578125,
+        "z": -329.9169921875,
+        "y": 0.9781595468521118,
+        "yaw": 0.03263505227246704
+      },
+      "hidden": false,
+      "speed": 0.004112186338905527,
+      "screen": {
+        "x": 1321.711768983787,
+        "y": -499.22194453942035
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6738,
+      "at": {
+        "x": 341.17864990234375,
+        "z": -329.9169921875,
+        "y": 0.9782430529594421,
+        "yaw": 0.032634858144637846
+      },
+      "hidden": false,
+      "speed": 0.004112962037794958,
+      "screen": {
+        "x": 1321.7398230887143,
+        "y": -499.2185998630613
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6804,
+      "at": {
+        "x": 341.1806335449219,
+        "z": -329.9169921875,
+        "y": 0.9783344268798828,
+        "yaw": 0.03263445975090397
+      },
+      "hidden": false,
+      "speed": 0.004112875166722576,
+      "screen": {
+        "x": 1321.7692352789068,
+        "y": -499.21509327258264
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6872,
+      "at": {
+        "x": 341.1827087402344,
+        "z": -329.9169921875,
+        "y": 0.9784298539161682,
+        "yaw": 0.03263396911539622
+      },
+      "hidden": false,
+      "speed": 0.004112803947191133,
+      "screen": {
+        "x": 1321.8000056434726,
+        "y": -499.21142475736195
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 6937,
+      "at": {
+        "x": 341.1846923828125,
+        "z": -329.9169921875,
+        "y": 0.9785197973251343,
+        "yaw": 0.03263368602290744
+      },
+      "hidden": false,
+      "speed": 0.004112451653359834,
+      "screen": {
+        "x": 1321.8294191502696,
+        "y": -499.2079180099148
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7003,
+      "at": {
+        "x": 341.1866760253906,
+        "z": -329.9169921875,
+        "y": 0.9786120653152466,
+        "yaw": 0.032633193149268436
+      },
+      "hidden": false,
+      "speed": 0.004113003626231806,
+      "screen": {
+        "x": 1321.8588333005487,
+        "y": -499.20441118574996
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7068,
+      "at": {
+        "x": 341.18865966796875,
+        "z": -329.9169921875,
+        "y": 0.9788108468055725,
+        "yaw": 0.03263238432252597
+      },
+      "hidden": false,
+      "speed": 0.003983856060718759,
+      "screen": {
+        "x": 1321.8882480943344,
+        "y": -499.20090428486526
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7133,
+      "at": {
+        "x": 341.1906433105469,
+        "z": -329.9169921875,
+        "y": 0.9789038896560669,
+        "yaw": 0.03263262569424331
+      },
+      "hidden": false,
+      "speed": 0.003983676338442016,
+      "screen": {
+        "x": 1321.9176635316455,
+        "y": -499.19739730725775
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7202,
+      "at": {
+        "x": 341.1927490234375,
+        "z": -329.9169921875,
+        "y": 0.9790018796920776,
+        "yaw": 0.03263295185152678
+      },
+      "hidden": false,
+      "speed": 0.0039834227608652245,
+      "screen": {
+        "x": 1321.948889853888,
+        "y": -499.1936744316904
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7263,
+      "at": {
+        "x": 341.194580078125,
+        "z": -329.9169921875,
+        "y": 0.979088306427002,
+        "yaw": 0.03263319073319819
+      },
+      "hidden": false,
+      "speed": 0.003983046866348429,
+      "screen": {
+        "x": 1321.9760437670739,
+        "y": -499.1904370783076
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7326,
+      "at": {
+        "x": 341.1965026855469,
+        "z": -329.9169921875,
+        "y": 0.9791783094406128,
+        "yaw": 0.032633362150306405
+      },
+      "hidden": false,
+      "speed": 0.003982739595812672,
+      "screen": {
+        "x": 1329.0880859963086,
+        "y": -518.5756300491788
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7389,
+      "at": {
+        "x": 341.19842529296875,
+        "z": -329.9169921875,
+        "y": 0.9792686104774475,
+        "yaw": 0.03263343451594514
+      },
+      "hidden": false,
+      "speed": 0.0039822601761936565,
+      "screen": {
+        "x": 1363.4387489584487,
+        "y": -540.4433991912543
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7453,
+      "at": {
+        "x": 341.2003479003906,
+        "z": -329.9169921875,
+        "y": 0.9793606996536255,
+        "yaw": 0.03263349333903238
+      },
+      "hidden": false,
+      "speed": 0.0039820701713392265,
+      "screen": {
+        "x": 1392.4992557159248,
+        "y": -559.9561647948746
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7514,
+      "at": {
+        "x": 341.20220947265625,
+        "z": -329.9169921875,
+        "y": 0.9794480800628662,
+        "yaw": 0.032633456711586455
+      },
+      "hidden": false,
+      "speed": 0.003980844652839032,
+      "screen": {
+        "x": 1399.5661713652885,
+        "y": -577.0100997548229
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7580,
+      "at": {
+        "x": 341.2042236328125,
+        "z": -329.9169921875,
+        "y": 0.9795442223548889,
+        "yaw": 0.032633470998813696
+      },
+      "hidden": false,
+      "speed": 0.0039801832420245705,
+      "screen": {
+        "x": 1405.7345599171035,
+        "y": -593.1328158057552
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7646,
+      "at": {
+        "x": 341.2062072753906,
+        "z": -329.9169921875,
+        "y": 0.9796366691589355,
+        "yaw": 0.03263354182684441
+      },
+      "hidden": false,
+      "speed": 0.00398039328166156,
+      "screen": {
+        "x": 1421.531402695265,
+        "y": -606.7835657687376
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7712,
+      "at": {
+        "x": 341.2082214355469,
+        "z": -329.9169921875,
+        "y": 0.979732096195221,
+        "yaw": 0.032633603080827175
+      },
+      "hidden": false,
+      "speed": 0.0039799024612734305,
+      "screen": {
+        "x": 1442.5213086218685,
+        "y": -618.5392405611491
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7777,
+      "at": {
+        "x": 341.210205078125,
+        "z": -329.9169921875,
+        "y": 0.9798283576965332,
+        "yaw": 0.03263383396567074
+      },
+      "hidden": false,
+      "speed": 0.003980474640634347,
+      "screen": {
+        "x": 1458.583364333264,
+        "y": -628.9682995418898
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7845,
+      "at": {
+        "x": 341.2122497558594,
+        "z": -329.9169921875,
+        "y": 0.9799259305000305,
+        "yaw": 0.03263396501160473
+      },
+      "hidden": false,
+      "speed": 0.003980873617559935,
+      "screen": {
+        "x": 1462.4050829793052,
+        "y": -639.1822104777352
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7910,
+      "at": {
+        "x": 341.2142333984375,
+        "z": -329.9169921875,
+        "y": 0.9800223112106323,
+        "yaw": 0.03263393640343321
+      },
+      "hidden": false,
+      "speed": 0.00397862257749265,
+      "screen": {
+        "x": 1473.6253827750284,
+        "y": -647.677302716283
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 7973,
+      "at": {
+        "x": 341.2161560058594,
+        "z": -329.9169921875,
+        "y": 0.9801179766654968,
+        "yaw": 0.03263423485300892
+      },
+      "hidden": false,
+      "speed": 0.003977621288446211,
+      "screen": {
+        "x": 1487.7024782299823,
+        "y": -655.0567246538003
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8037,
+      "at": {
+        "x": 341.21807861328125,
+        "z": -329.9169921875,
+        "y": 0.9802082777023315,
+        "yaw": 0.03263450266457234
+      },
+      "hidden": false,
+      "speed": 0.003977694755336866,
+      "screen": {
+        "x": 1500.822628569335,
+        "y": -661.9442881343233
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8101,
+      "at": {
+        "x": 341.22003173828125,
+        "z": -329.9169921875,
+        "y": 0.9803036451339722,
+        "yaw": 0.03263453913486273
+      },
+      "hidden": false,
+      "speed": 0.00397617908954304,
+      "screen": {
+        "x": 1512.9003110676308,
+        "y": -668.2820036591811
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8163,
+      "at": {
+        "x": 341.221923828125,
+        "z": -329.9169921875,
+        "y": 0.980400025844574,
+        "yaw": 0.03263503069822343
+      },
+      "hidden": false,
+      "speed": 0.003977190327328746,
+      "screen": {
+        "x": 1523.7107962491962,
+        "y": -673.9539334318199
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8230,
+      "at": {
+        "x": 341.22393798828125,
+        "z": -329.9169921875,
+        "y": 0.9804985523223877,
+        "yaw": 0.03263533038137821
+      },
+      "hidden": false,
+      "speed": 0.003976311002315257,
+      "screen": {
+        "x": 1534.5190624729787,
+        "y": -679.6248305954148
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8290,
+      "at": {
+        "x": 341.22576904296875,
+        "z": -329.9169921875,
+        "y": 0.9805901050567627,
+        "yaw": 0.032635419679979835
+      },
+      "hidden": false,
+      "speed": 0.003972345890856958,
+      "screen": {
+        "x": 1543.6324276659643,
+        "y": -684.4062419134469
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8359,
+      "at": {
+        "x": 341.2278747558594,
+        "z": -329.9169921875,
+        "y": 0.9806978702545166,
+        "yaw": 0.032635642665867874
+      },
+      "hidden": false,
+      "speed": 0.003970774299297857,
+      "screen": {
+        "x": 1551.02345289919,
+        "y": -689.4342904234342
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8426,
+      "at": {
+        "x": 341.2298889160156,
+        "z": -329.9169921875,
+        "y": 0.9807957410812378,
+        "yaw": 0.03263565919037384
+      },
+      "hidden": false,
+      "speed": 0.003971787189746235,
+      "screen": {
+        "x": 1547.9149039212648,
+        "y": -694.2601734123298
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8487,
+      "at": {
+        "x": 341.23175048828125,
+        "z": -329.9169921875,
+        "y": 0.9808899760246277,
+        "yaw": 0.032635787492426384
+      },
+      "hidden": false,
+      "speed": 0.00396636288197945,
+      "screen": {
+        "x": 1547.4931423800022,
+        "y": -698.3037220967925
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8554,
+      "at": {
+        "x": 341.2337951660156,
+        "z": -329.9169921875,
+        "y": 0.9809961318969727,
+        "yaw": 0.032636054638091605
+      },
+      "hidden": false,
+      "speed": 0.003966492904987653,
+      "screen": {
+        "x": 1555.471853456816,
+        "y": -702.2521074554523
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8616,
+      "at": {
+        "x": 341.2356872558594,
+        "z": -329.9169921875,
+        "y": 0.9811559915542603,
+        "yaw": 0.03263597779645708
+      },
+      "hidden": false,
+      "speed": 0.003969355050222869,
+      "screen": {
+        "x": 1544.8780627010922,
+        "y": -705.9353014298654
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    },
+    {
+      "tick": 8687,
+      "at": {
+        "x": 341.2378234863281,
+        "z": -329.9169921875,
+        "y": 0.9812577962875366,
+        "yaw": 0.03263602181637404
+      },
+      "hidden": false,
+      "speed": 0.003968595770434208,
+      "screen": {
+        "x": 1483.4341927258902,
+        "y": -709.2903416777643
+      },
+      "released": 6,
+      "stopped": 5998,
+      "line": 4516
+    }
+  ],
+  "completionAudit": {
+    "requestedVariants": "HIGH/LOW, zoom1/1.5, WebGL2 and confirmed WebGPU exercised",
+    "routes": "real-input road and dry-shortcut from progressed save/Continue",
+    "hatchAndTrucks": "successful HIGH GPU/LOW GL handovers plus incomplete LOW GPU truck sample reported",
+    "save": "controlled lethal zeroHP UI quality change, respawn, later quality change and Continue pass;organic hatch menu not claimed",
+    "visual": "current sheet personally inspected;rail entry/release original-size sequence reviewed",
+    "gates": "build/typecheck/lint/unchanged remote npm test passed",
+    "artifacts": "README,JSON<200KB,one small sheet",
+    "source": "report-only final diff;temporary driver changes restored",
+    "limitations": [
+      "Mostly offscreen pursuit prevents exhaustive prop/fence/jitter or full3x visual qualification.",
+      "LOW GPU truck sample incomplete.",
+      "Capture-heavy hitches and APC tipping causes unisolated."
+    ]
+  }
+}
