@@ -198,3 +198,7 @@ Current runtime L9 subset completes both skilled/passive native routes with0L9 f
 ## Full final-runtime vehicle campaign browser gate
 
 Full command runs all8fixed-source headless pooled rows and exits1. BothL9tiers fail required hatch/contact coverage; allL7/L4rows pass. Measured contacts are within motion limits, but missing hatch windows cannot be treated as pass. See `final-campaign-motion.json`. This confirms goal remains incomplete despite native asphalt/participation and remote-suite passes. No gate edits or threshold changes.
+
+## Browser hatch contact coverage inspection
+
+Sampler steps the entire rail interval and requires visible living infected figures with soles near native hulls; its unchanged contact criterion cannot be satisfied by transient proximity/attack events alone. Current receipts have only one rendered infected actor in HIGH hatch samples and none LOW, so motion contact coverage remains missing. Native participation under no-fire input does not establish this browser gate. `browser-hatch-coverage-detail.json` records exact actor IDs/tick windows and coverage. No sampler threshold or runtime change made.
