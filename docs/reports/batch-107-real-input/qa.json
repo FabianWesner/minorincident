@@ -61,6 +61,14 @@
       "text": "Staging truck cab appears over low road barrier in camera-only placement diagnostic; natural placement concern. Late evacuation positions not inferred.",
       "capture": "test-results/b107/prompt-fixture/l9-staging.jpg",
       "tick": 6
+    },
+    {
+      "severity": "P2",
+      "level": "L10",
+      "tick": 6453,
+      "capture": "test-results/b107/video-l10/captures/scream-L10-6453-2.jpg",
+      "video": "test-results/b107/video-l10/video/page@18681991b6cdfdd36e5e9ec439629a75.webm",
+      "text": "Ordinary purple pulse easy to miss moving: brief screen-edge arc amid persistent red attack rings in reviewed 111\u2013117 s sequence; immortal route-only sample."
     }
   ],
   "carryOverNotRechecked": [
@@ -95,8 +103,7 @@
   "driverGaps": [
     "Optional L1 alarm not exercised by standard route; no dedicated alarm capture option.",
     "Temporal warning review and L10 remain open.",
-    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high.",
-    "Playwright recordVideo diagnostic wrapper completed but delivered no local video; continuous warning review remains unsupported."
+    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high."
   ],
   "runtimeRecovery": "Host access restored; preview and GPU pool work. Earlier EPERM failures are historical.",
   "l9Runs": [
@@ -616,6 +623,19 @@
     "result": "Session exited normally; no local video artifact delivered; cannot support continuous-motion verdict",
     "ordinaryNoiseTick": 7644,
     "capture": "test-results/b107/video-l10/captures/scream-L10-7644-8.jpg",
-    "raw": "test-results/b107/video-l10/"
+    "raw": "test-results/b107/video-l10/",
+    "resolved": "Persistent-context recording hook produced raw video; see l10MotionReview."
+  },
+  "l10MotionReview": {
+    "video": "test-results/b107/video-l10/video/page@18681991b6cdfdd36e5e9ec439629a75.webm",
+    "sequence": "test-results/b107/video-l10/review/scream-sequence.jpg",
+    "seconds": [
+      111,
+      117
+    ],
+    "sampleFps": 4,
+    "ordinaryNoiseTick": 6453,
+    "method": "HIGH WebGPU zoom 1 IMMORTAL / ROUTE ONLY; real-key movement; fresh profile; original driver unchanged; persistent-context recordVideo wrapper",
+    "verdict": "Purple pulse briefly crosses screen edge during movement; persistent red rings dominate. Easy to miss, insufficient warning emphasis. Bounded sequence review, not timing/performance qualification."
   }
 }
