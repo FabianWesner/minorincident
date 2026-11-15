@@ -74,3 +74,7 @@ Production frame 3600 records bloodCoverage=0, foreground=1, xray=0. Hiding crow
 ## Location shadow control
 
 A short isolated courier-only capture at (-34.9,8) shows the same location inside a building shadow; her clothing is shaded even without the production encounter. A five-infected control at that pose with supported look.set shadowIntensity=0 restores lit clothing. This establishes a lighting contribution, not an additional geometry defect or full production clearance. Raw images/specs under breach-light-control and shadow-control. No runtime adjustment retained.
+
+## Moving-courier retreat probe
+
+The runner --escape option sends the courier 12 m east and samples frames 1/30/60/180. HIGH WebGL2 L4/L6 at both zooms passed 16 low-HP/visibility samples, but foreground remained active in all of them. Reviewed L4 frame 180 shows pursuing attackers close behind: the ordinary AI detects and follows her even though fixture actors start idle. Thus this is retreat footage, not a successful crowd-exit or popping check. The runner needs an explicit clear-space criterion before an exit verdict can be asserted. Typecheck/lint pass.

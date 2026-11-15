@@ -4,9 +4,10 @@ import { measureCourierShare } from './run';
 
 // One browser at a time; invoke through e2e-lock.sh with a ten-minute pool lease.
 const backend = (process.argv[2] ?? 'webgl2') as Backend;
-const moving = process.argv.includes('--motion');
+const escaping = process.argv.includes('--escape');
+const moving = process.argv.includes('--motion') || escaping;
 if (!['webgl2', 'webgpu'].includes(backend)) throw new Error('Expected webgl2 or webgpu');
-const out = `test-results/s121-courierread/repro-${backend}${moving ? '-motion' : ''}`;
+const out = `test-results/s121-courierread/repro-${backend}${escaping ? '-escape' : moving ? '-motion' : ''}`;
 mkdirSync(out, { recursive: true });
 const results: unknown[] = [];
 try {
@@ -19,7 +20,10 @@ try {
         const spec = readSpec(`tests/scenes/catalog/courier-read-${level}-dense.json`);
         spec.camera = { mode: 'game', target: 'courier', zoom };
         if (moving) {
-          for (const actor of spec.actors ?? []) if (actor.kind === 'infected') actor.state = { chase: 'courier' };
+          for (const actor of spec.actors ?? []) {
+            if (actor.kind === 'infected' && !escaping) actor.state = { chase: 'courier' };
+            if (actor.kind === 'courier' && escaping && actor.at) actor.state = { moveTo: [actor.at[0] + 12, actor.at[1]], pace: 'run' };
+          }
         }
         await session.load(spec);
         await session.page.evaluate(() => window.__SS__!.survivor.damage(70));
@@ -36,13 +40,15 @@ try {
         await session.screenshot(`${out}/${id}.png`);
         results.push({ id, backend: actual, health: 30, share: share.share, foreground: state.render.courierForeground });
         if (moving) {
-          for (const frame of [30, 60]) {
-            await session.step(frame === 30 ? 29 : 30);
+          let previous = 1;
+          for (const frame of escaping ? [30, 60, 180] : [30, 60]) {
+            await session.step(frame - previous); previous = frame;
             const sample = await measureCourierShare(session);
             const hp = await session.page.evaluate(() => window.__SS__!.getState().player?.health.current);
             if (hp !== 30 || sample.share < .9 || session.errors.length) throw new Error(`Motion gate failed: ${id} f${frame}`);
             await session.screenshot(`${out}/${id}-f${frame}.png`);
-            results.push({ id, frame, health: hp, share: sample.share });
+            const foreground = await session.page.evaluate(() => window.__SS__!.getState().render.courierForeground);
+            results.push({ id, frame, health: hp, share: sample.share, foreground });
           }
           const clipping = await session.clipping();
           writeFileSync(`${out}/${id}-clipping.json`, JSON.stringify(clipping, null, 2));

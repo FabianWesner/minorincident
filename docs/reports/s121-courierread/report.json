@@ -828,5 +828,13 @@
     ],
     "observation": "open control is in building shadow; persistent shadowIntensity=0 override restores lit clothing in small-crowd control",
     "conclusion": "lighting contributes to dark appearance; not sufficient to clear production artifacts"
+  },
+  "escapeProbe": {
+    "path": "test-results/s121-courierread/repro-webgl2-escape",
+    "samples": 16,
+    "health": 30,
+    "foregroundOffObserved": false,
+    "reason": "ordinary infected perceive and pursue moving courier; final images still show close attackers",
+    "verdict": "not exit/popping clearance"
   }
 }
