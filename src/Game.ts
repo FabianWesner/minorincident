@@ -393,6 +393,7 @@ export class Game {
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.appliedCampaign=this.campaign;this.view.update(1);}}
   saveCampaign(atCheckpoint = false):boolean {
     if(!this.campaign)return false;
+    try {
     const liveCampaign = this.appliedCampaign === this.campaign && !!this.world.progression?.campaign;
     const held = this.world.entities.get(1)?.weapons, phase = this.world.missions?.state.phase;
     // New-game and Continue settings may save before their campaign owns the live world.
@@ -408,7 +409,8 @@ export class Game {
       this.campaign.cureResume = { ...this.world.missions.saveResume(atCheckpoint), cameraZoom: this.view.view.getState().targetZoom };
     }
     if(liveCampaign){this.world.progression!.campaign=cloneData(this.campaign);}
-    try { return this.saves.write(this.campaign); }
+    return this.saves.write(this.campaign);
+    }
     catch (error) {
       // Validation and storage failures must not escape a gameplay event (notably
       // settings changes and mission autosaves). SaveStore leaves the previous

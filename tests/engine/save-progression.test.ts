@@ -29,7 +29,7 @@ const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgu
 }) as never;
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
-test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', () => {
+test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', async () => {
   // The public pause overlay accepts both query spellings used in production reports.
   expect(['1', 'true'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([true, true]);
   expect(['', '0', 'false'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([false, false, false]);
@@ -77,9 +77,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   // L5 difficulty is frozen: preserve the exact rack used by its bot fixture, including kick.
   const l5 = preset('L5-default'), l5Start = campaignLoadout(l5, 5);
   expect({ LEFT:l5Start.LEFT, RIGHT:l5Start.RIGHT }).toEqual(l5.racks);
-});
-
-test('native L1–L10 checkpoint save sweep stays valid, including L9 crash phases and retry restores', async () => {
+  // Native checkpoint sweep shares this campaign progression regression's case budget.
   for (let level = 1; level <= 10; level++) {
     const save = level === 1 ? newCampaign() : preset(`L${level}-default` as `L${2|3|4|5|6|7|8|9|10}-default`);
     const world = await loadLevel(`L${level}` as `L${1|2|3|4|5|6|7|8|9|10}`, 1, save, 0, { quality: 'low' });
