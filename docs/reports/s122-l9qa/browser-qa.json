@@ -288,12 +288,12 @@
     "sheet": "contact-sheet.jpg",
     "inspected": true,
     "panels": [
-      "HIGH WebGL2 zoom1 rail hatch, uncorrected driver",
-      "LOW WebGL2 zoom1 immediately after rail restart",
-      "HIGH WebGPU zoom1.5 rail hatch",
-      "HIGH WebGPU trucks defence",
-      "LOW WebGL2 trucks defence",
-      "HIGH WebGPU L10 loading after L9 handover"
+      "HIGH GL z1 bus entry6717",
+      "HIGH GL z1 passenger group6757",
+      "HIGH GPU z1.5 rail",
+      "HIGH GPU trucks",
+      "LOW GL z1 trucks smoke",
+      "LOW GPU z1.5 yield"
     ],
     "observations": [
       "Rail APC and courier readable in sampled frames.",
@@ -354,9 +354,9 @@
     "lowRoadComplete": true,
     "highShortcutComplete": true,
     "controlledSaveBoundary": "pass",
-    "runtimeWebGPUAssertion": "missing",
-    "lowZoom1_5": "missing",
-    "continuousBusVisualReview": "missing",
+    "runtimeWebGPUAssertion": "confirmed in HIGH and LOW log renderer receipts",
+    "lowZoom1_5": "240s WebGPU pass, rail clear, trucks defense complete but1/4 survivors",
+    "continuousBusVisualReview": "frame sequence reviewed for rail entry/release; full pursuit pacing not established",
     "fun": "provisionally tense/manageable; smoke obscures truck hull",
     "confirmedFindings": [
       {
@@ -623,5 +623,31 @@
       "kind": "clustered passenger release readability"
     },
     "feel": "Short approach reads as fast catch-up then stop; full3x pursuit speed not visible."
+  },
+  "currentFindings": [
+    {
+      "severity": "P2",
+      "kind": "known smoke/crowd truck hull occlusion"
+    },
+    {
+      "severity": "P2",
+      "kind": "LOW WebGPU pink/purple ground patches",
+      "cause": "unverified"
+    },
+    {
+      "severity": "P2",
+      "kind": "APC tipping in capture-heavy road attempt",
+      "cause": "driver/capture contribution unisolated"
+    },
+    {
+      "severity": "P3",
+      "kind": "clustered passenger release obscures individual exits"
+    }
+  ],
+  "validationCurrent": {
+    "build": "pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "remote": "150/150 manifest;27 files pass;105 passed1 skipped;127.5s;exit0"
   }
 }

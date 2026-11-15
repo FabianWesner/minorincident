@@ -21,15 +21,15 @@ The temporary driver correction released movement and aimed/fired the physical m
 
 ## Visual review and provisional verdict
 
-Personally inspected [contact-sheet.jpg](contact-sheet.jpg), six panels at 960×870: HIGH GL rail hatch, LOW GL post-rail restart, HIGH requested GPU rail, HIGH requested GPU trucks, LOW GL trucks, L10 loading after actual handover. The last panel is a loading screen, not the ending cinematic.
+Personally inspected the current [contact-sheet.jpg](contact-sheet.jpg), six panels at960×870: HIGH GL z1 bus entry and passenger release, HIGH GPU z1.5 rail, HIGH GPU trucks, LOW GL z1 trucks smoke, LOW GPU z1.5 final yield. Earlier loading-screen panel was replaced with the observed incomplete LOW truck state.
 
-The pursuit gives the hatch a visible source of pressure; rail combat is readable in sampled frames. The truck defence is busier and smoky, with a crowd pressing around the APC. With working fire input both routes finish without deaths, while HIGH still costs health. **Provisional feel: tense and manageable, not harmless; smoke makes the truck beat harder to read.** This is an automated real-input observation, not a human playtester rating. No confirmed P1. Known smoke is P2. No new confirmed P3.
+The pursuit gives the hatch a visible source of pressure; rail combat is readable in sampled frames. The truck defence is busier and smoky, with a crowd pressing around the APC. With working fire input both routes finish without deaths, while HIGH still costs health. **Provisional feel: tense and manageable, not harmless; smoke makes the truck beat harder to read.** This is an automated real-input observation, not a human playtester rating. No confirmed P1. Known smoke is P2. P3: clustered passenger release obscures individual exits.
 
 Stills do not establish continuous absence of popping, bus clipping, sliding/jitter, unrealistic catch-up speed, or passenger spawn/grounding artifacts. Those checks remain open rather than being inferred from successful completion.
 
 ## Validation
 
-Production QA build, typecheck and lint passed. Unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: runner 46.225.66.90, 127.5/240 s. Earlier EPERM listener and unavailable-runner attempts were resolved and are retained only as history in JSON. JSON is below 200 KB; one small inspected sheet is committed. Raw captures/logs: `test-results/s122-*` (local).
+Production QA build, typecheck and lint passed. Unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: runner 46.225.66.90,127.5/240s;150/150 manifest,27 files passed,105 tests passed/1 skipped. Earlier EPERM listener and unavailable-runner attempts were resolved and are retained only as history in JSON. JSON is below 200 KB; one small inspected sheet is committed. Raw captures/logs: `test-results/s122-*` (local).
 
 ## Completion audit — still open
 
