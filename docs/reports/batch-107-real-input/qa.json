@@ -31,7 +31,7 @@
     "evacueesBoardWithin20Seconds": "FAIL HIGH road >=85.7 s incomplete; HIGH shortcut >=44.2 s incomplete. PASS LOW road 4/4 with 15 s defense remaining.",
     "northTruckStagingAndGateFence": "unverified",
     "redPickupGroundedAtZoom1_5": "unverified",
-    "apcTiltAndSeatedHatchShooting": "25/36/35 aggregate shotgun attacks, seated route exercised; precise hatch damage attribution and tilt feel unverified",
+    "apcTiltAndSeatedHatchShooting": "Sampled recorded lean appears modest without abrupt flip; hatch route/aggregate shots exercised; exact boarder damage attribution remains unverified",
     "l1CarAlarmPromptHighLowZoom1And1_5": "Static layout fixture reviewed all four; vitals clear; P3 objective-arrow overlap z1; uninterrupted post-outbreak approach remains unverified",
     "otherPromptsL1ToL3": "Three L1 panels reviewed statically and in brief real-key movement sequence; no erratic relocation observed within sample",
     "screamerReadabilityL9AndL10WhileMoving": "Actual ordinary events captured both levels; purple thin ring visible in stills, L9 partially occluded; continuous motion noticeability not proven",
@@ -637,5 +637,37 @@
     "ordinaryNoiseTick": 6453,
     "method": "HIGH WebGPU zoom 1 IMMORTAL / ROUTE ONLY; real-key movement; fresh profile; original driver unchanged; persistent-context recordVideo wrapper",
     "verdict": "Purple pulse briefly crosses screen edge during movement; persistent red rings dominate. Easy to miss, insufficient warning emphasis. Bounded sequence review, not timing/performance qualification."
+  },
+  "l9VideoReview": {
+    "video": "test-results/b107/video-l9/video/page@a38926bd456affad4e87b49fea43bb9f.webm",
+    "method": "Extra fresh HIGH road WebGPU normal-combat real-input repeat; persistent-context video wrapper; no original driver changes",
+    "segments": {
+      "tilt": {
+        "seconds": [
+          30,
+          42
+        ],
+        "fps": 1,
+        "verdict": "Gentle chassis lean through sampled turns; no abrupt flip/severe wobble observed"
+      },
+      "warning": {
+        "seconds": [
+          114,
+          120
+        ],
+        "fps": 4,
+        "eventTick": 6946,
+        "verdict": "Hatch stall; warning source off-camera; no conspicuous purple ring visible in sampled frames. Does not establish moving-carrier visibility of an onscreen ring."
+      },
+      "evacuation": {
+        "seconds": [
+          170,
+          190
+        ],
+        "fps": 1,
+        "verdict": "Survivors move through bay; crowd/camera do not expose every gate contact"
+      }
+    },
+    "boarding": "Defense complete tick10414 0/4; 3/4 tick11217 (~13.4 s); then crash/crawl; eventual handover. Exact 4/4 frame not logged."
   }
 }

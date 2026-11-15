@@ -54,3 +54,9 @@ A bounded 180-second HIGH WebGPU immortal route-only repeat requested Playwright
 ## L10 moving-warning follow-up
 
 Recording was recovered by applying Playwright `recordVideo` to the admitted persistent-context path in an ignored wrapper; original driver/source files remain unchanged. Fresh-profile HIGH WebGPU zoom 1 **IMMORTAL / ROUTE ONLY** video: `test-results/b107/video-l10/video/page@18681991b6cdfdd36e5e9ec439629a75.webm`. The 111–117 s interval was reviewed as 24 sequential frames at 4 fps (`review/scream-sequence.jpg`). Actual ordinary scream tick 6453 aligns with this interval. **P2 readability:** the purple pulse appears briefly as a large screen-edge arc while the courier runs; persistent red attack rings dominate. It is easy to miss during this movement sample. This is a bounded visual verdict, not performance qualification or combat acceptance. L9 continuous warning review remains open.
+
+## Recorded L9 follow-up
+
+An extra fresh HIGH road WebGPU normal-combat repeat was recorded at `test-results/b107/video-l9/video/page@a38926bd456affad4e87b49fea43bb9f.webm`. Reviewed sequential frames: 30–42 s at 1 fps show modest chassis lean through turns, without abrupt flip/severe wobble; 114–120 s at 4 fps show a hatch stall during an ordinary scream (tick 6946), whose source is off-camera, with no conspicuous purple ring visible; 170–190 s at 1 fps show survivors moving through the bay but not every fence contact. These are bounded samples, not a universal animation/performance pass.
+
+This extra repeat progressed from defense-complete 0/4 at tick 10414 to 3/4 at 11217 (~13.4 s), then crash/crawl and eventual handover. Exact 4/4 was not logged. It did not reproduce the first HIGH-road 85.7-second delay and does not cancel that observed intermittent failure. Continuous video exists, but this interval does not establish moving-camera noticeability of an onscreen L9 purple ring.
