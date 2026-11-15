@@ -226,3 +226,7 @@ Controller now brakes at12m along-road following gap so fast bus cannot run far 
 ## Following-gap six sweeps and main merge
 
 All6bcd03efc skilled paths complete with continuous every-tick bus records,0ticks outside6m; worst3.479m. `final-six-driven-paths.json` refreshed. Then merged main92a039e1 plus7c3652d3 cleanly, retaining the unchanged interaction sweep in its separate existing main test file and runner worker policy. No new test file or slow test added by this lane. Final remote suite must run after this merge.
+
+## Batch102 merged final unit/participation/threat checks
+
+After merging main92a039e1/7c3652d3, unchanged remote `npm test` passes exit0:28files,106passed/1skipped,233.2s within240s. Interaction sweep retained intact; no tests added or trimmed. Local typecheck/lint pass. Refreshed participation: HIGH4near/7.2s,LOW3near/7.92s; L9threat skilled/passive complete0flags (subset marker only). Receipts updated plus `merged-suite.json`. Final full browser8-row gate remains to run on merged source.
