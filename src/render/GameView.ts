@@ -980,17 +980,11 @@ export class GameView implements Lifecycle {
   /** Keep the courier's silhouette in front when an Alpha, Mega or zoo corpse overlaps her feet.
    *  Small corpses don't trigger it: foreground mode also lifts her lower legs over low world geometry such as curbs (Q-208). */
   private nearLargeCorpse(at: { x: number; y: number; z: number }): boolean {
+    // A lying Alpha/Mega/zoo body is ~2 m long and covers her legs from any side
+    // at this camera pitch; s133's camera-segment test missed beside-her bodies (smoke Q-208).
     for (const e of this.world.entities.iterate()) {
       if (e.hidden || e.infected?.hidden) continue;
-      if (!solidLargeCorpse(e)) continue;
-      const camera = this.camera.position, dx = at.x - camera.x, dy = at.y - .5 - camera.y, dz = at.z - camera.z;
-      const distanceSq = dx * dx + dy * dy + dz * dz;
-      if (distanceSq < 1e-6) continue;
-      // A retained body behind or beside her must not turn on the foreground cue.
-      const t = ((e.transform.x - camera.x) * dx + (e.transform.y - .4 - camera.y) * dy + (e.transform.z - camera.z) * dz) / distanceSq;
-      if (t <= 0 || t >= 1) continue;
-      const x = camera.x + t * dx, y = camera.y + t * dy, z = camera.z + t * dz;
-      if ((e.transform.x - x) ** 2 + (e.transform.y - .4 - y) ** 2 + (e.transform.z - z) ** 2 < 2.25 && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
+      if (solidLargeCorpse(e) && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
     }
     return false;
   }
