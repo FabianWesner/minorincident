@@ -60,3 +60,9 @@ An experiment routing to saved old south-side truck transforms worsened the arch
 ## Staging distance refinement (pending requalification)
 
 The remaining s126 LOW passive shortcut and HIGH/LOW seed-2 road cases pass at z26 (0, 18.72, 18.20 s). The late LOW seed-1 road actors walk steadily toward the unnecessarily distant z26 row after late disembarkation. Moving the row six metres closer to z20 retains all tested furniture clearances and improves that LOW fixture to **17.95 s**. The archived stalled save first reports 4/4/full health at **20.15 s** on a one-second census; its exact boarding tick remains to be captured. Typecheck, lint and both existing vehicle tests pass (29.33 s). The final three-run browser matrix and gates must be rerun on z20 before acceptance.
+
+## z20 qualification receipts
+
+All six retained native fixtures pass: HIGH road 15.75 s, HIGH passive road 0 s, LOW road 17.95 s, LOW passive shortcut 0 s, HIGH seed-2 road 14.60 s, LOW seed-2 road 0 s after defense. Archived stalled save exact boarding is **19.30 s** (start tick 444 +45 animation ticks versus defense tick -669), all four at full health. Required remote suite passes at z20: 105 passed/one platform skip, inventory150, 128.1 s.
+
+Fresh HIGH WebGPU shortcut at z20 completes in 209 s, no skips/deaths, all four boarded at **20.50 s** after defense. This is 0.50 s beyond the strict 20-second probe threshold and is explicitly borderline against the requested approximately20-second target. One enemy-frozen P2 diagnostic was recorded. Two fresh HIGH road runs and the final placement/motion/threat refresh remain.

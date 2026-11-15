@@ -110,7 +110,7 @@
     "threeHighRealInputRuns": "NOT RUN: browser preview binding unavailable"
   },
   "reportBytesUnder200KB": true,
-  "completion": "NOT MET: z20 staging refinement needs final-code requalification.",
+  "completion": "NOT MET: z20 two HIGH road browser runs and final visual/motion/threat refresh remain.",
   "browserRuns": [
     {
       "id": "repro-high-road-1",
@@ -1345,5 +1345,211 @@
       "vehiclesTest": "2 passed, 29.33s"
     },
     "remaining": "Exact archived boarding tick; repeat final-code three browser runs, fixture matrix, placement, motion, threat and remote suite"
+  },
+  "z20Qualification": {
+    "revision": "19b0a91e",
+    "nativeFixtures": [
+      {
+        "id": "low-road",
+        "completed": true,
+        "secondsAfterDefense": 17.95,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      {
+        "id": "high-road",
+        "completed": true,
+        "secondsAfterDefense": 15.75,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      {
+        "id": "low-shortcut-passive",
+        "completed": true,
+        "secondsAfterDefense": 0,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      {
+        "id": "high-road-passive",
+        "completed": true,
+        "secondsAfterDefense": 0,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      {
+        "id": "high-road-seed2",
+        "completed": true,
+        "secondsAfterDefense": 14.6,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      {
+        "id": "low-road-seed2",
+        "completed": true,
+        "secondsAfterDefense": 0,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      }
+    ],
+    "archivedStalled": {
+      "defenseCompleteTick": -669,
+      "lastBoardingStartTick": 444,
+      "lastBoardedTick": 489,
+      "secondsAfterDefense": 19.3,
+      "aboard": 4,
+      "hp": [
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    "remoteSuite": {
+      "result": "PASS",
+      "passed": 105,
+      "skipped": 1,
+      "inventory": 150,
+      "seconds": 128.1,
+      "runner": "46.225.66.90"
+    },
+    "browserRuns": [
+      {
+        "id": "final-shortcut",
+        "route": "dry-shortcut",
+        "backend": "webgpu",
+        "tier": "high",
+        "zoom": 1.5,
+        "finished": true,
+        "skipped": [],
+        "deaths": 0,
+        "secondsAfterDefense": 20.5,
+        "wallSeconds": 209,
+        "issues": {
+          "P2": 1
+        },
+        "note": "0.50 s beyond strict 20 s, explicit borderline for requested approximately20 s target"
+      }
+    ]
   }
 }
