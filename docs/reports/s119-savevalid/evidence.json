@@ -24,9 +24,10 @@
       "files": 27,
       "passed": 106,
       "skipped": 1,
-      "seconds": 233.3,
+      "seconds": 240.0,
       "budgetSeconds": 240,
-      "revision": "f49315c7"
+      "revision": "e6978e5c",
+      "exit": 0
     },
     "directSaveMethod": "pass: actual Game.saveCampaign across authored checkpoints, death interval, and throwing writer",
     "latestRemoteAttempt": {
@@ -35,9 +36,13 @@
       "seconds": 240.6,
       "exit": 124,
       "saveProgression": "pass"
+    },
+    "verify": {
+      "E13": "pass: 107 tests",
+      "E31": "pass: 107 tests"
     }
   },
   "open": [
-    "Rerun unchanged full remote suite after runner timeout."
+    "Final failure-logging audit: SaveStore can return false without throwing."
   ]
 }

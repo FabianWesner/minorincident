@@ -26,3 +26,5 @@ The existing campaign progression test sweeps every authored checkpoint in nativ
 ## Browser QA needed
 
 No browser run was required for the native reproduction or synchronous save exception boundary. Optional physical confirmation: change quality with the L9 hatch open, immediately after lethal damage, after retry, and after L10 handover; confirm play resumes normally and Continue retains a valid save. The missing s117 snapshot remains an attribution limitation.
+
+Final unchanged remote rerun passed (exit 0): 27 files, 106 passed, 1 skipped, 240.0 s reported within budget. `npm run verify -- E13` and `npm run verify -- E31` both passed typecheck, lint and 107 local tests. Final audit is checking ordinary false-return storage failures as well as exceptions.
