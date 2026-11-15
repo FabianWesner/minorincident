@@ -1,0 +1,68 @@
+{
+  "change": "Moved unchanged all-level mission interaction sweep from engine to nightly, per test strategy guidance for tests slower than ~15 seconds.",
+  "baseline": {
+    "source": "User-provided runner timings for candidate main 7c3652d3",
+    "suite_seconds": 234,
+    "per_file_seconds": {
+      "tests/engine/mission-interactions.test.ts": 142,
+      "tests/engine/vehicles.test.ts": 83,
+      "tests/engine/navigation.test.ts": 23,
+      "tests/engine/player.test.ts": 23,
+      "tests/engine/world-systems.test.ts": 20,
+      "tests/shared/asset-contract.test.ts": 19.6,
+      "tests/tools/gate-tools.test.ts": 15,
+      "tests/engine/save-progression.test.ts": 14.5,
+      "tests/tools/test-budget-tools.test.ts": "18-24"
+    }
+  },
+  "after_mac": {
+    "source": "Vitest JSON reporter on this Mac after moving the test",
+    "suite_seconds": 97.5,
+    "per_file_seconds": {
+      "tests/nightly/mission-interactions.test.ts": 74.32,
+      "tests/engine/vehicles.test.ts": 41.7,
+      "tests/engine/navigation.test.ts": 12,
+      "tests/engine/player.test.ts": 11.2,
+      "tests/engine/world-systems.test.ts": 9.3,
+      "tests/shared/asset-contract.test.ts": 10.9,
+      "tests/tools/gate-tools.test.ts": 29.8,
+      "tests/engine/save-progression.test.ts": 7.1,
+      "tests/tools/test-budget-tools.test.ts": 18.5
+    }
+  },
+  "after_runner": {
+    "suite_seconds": [
+      148.7,
+      126.7
+    ],
+    "per_file_seconds_run_2": {
+      "vehicles": 87.779,
+      "navigation": 23.322,
+      "world-systems": 20.724,
+      "asset-contract": 21.041,
+      "gate-tools": 16.716,
+      "save-progression": 14.771,
+      "test-budget-tools": 23.842
+    },
+    "receipts": [
+      {
+        "host": "94.130.181.173",
+        "seconds": 148.7,
+        "exit": 0
+      },
+      {
+        "host": "46.225.66.90",
+        "seconds": 126.7,
+        "exit": 0
+      }
+    ]
+  },
+  "runner_receipts": 2,
+  "runner_blocker": null,
+  "coverage_proof": {
+    "injection": "isMissionInteraction always false",
+    "result": "Failed as expected at L1 pickup view assertion",
+    "reverted": true,
+    "unchanged_moved_test_passed": true
+  }
+}

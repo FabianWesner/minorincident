@@ -1,0 +1,100 @@
+{
+  "command": "VEHICLE_CAMPAIGN_CASE=L9 E2E_PORT=4973 SCENE_PORT=4974 npm run qa:vehicle-campaign-motion",
+  "exitCode": 1,
+  "rows": [
+    {
+      "level": "L9",
+      "tier": "high",
+      "pass": false,
+      "sourceStable": true,
+      "samples": 1578,
+      "groundedRows": 34,
+      "maxCm": 1.8,
+      "p95Cm": 1.8,
+      "failed": [],
+      "correctionFailures": [],
+      "contextCoverage": [
+        {
+          "context": "driving",
+          "frames": 1578,
+          "actors": 39,
+          "contacts": 106,
+          "maxCm": 1.8,
+          "p95Cm": 1.8
+        },
+        {
+          "context": "detour",
+          "frames": 1578,
+          "actors": 39,
+          "contacts": 106,
+          "maxCm": 1.8,
+          "p95Cm": 1.8
+        },
+        {
+          "context": "hatch",
+          "frames": 59,
+          "actors": 1,
+          "contacts": 0,
+          "maxCm": null,
+          "p95Cm": null
+        },
+        {
+          "context": "rail-stall",
+          "frames": 59,
+          "actors": 1,
+          "contacts": 0,
+          "maxCm": null,
+          "p95Cm": null
+        }
+      ],
+      "stagedCoverage": []
+    },
+    {
+      "level": "L9",
+      "tier": "low",
+      "pass": true,
+      "sourceStable": true,
+      "samples": 909,
+      "groundedRows": 31,
+      "maxCm": 1.4,
+      "p95Cm": 1,
+      "failed": [],
+      "correctionFailures": [],
+      "contextCoverage": [
+        {
+          "context": "driving",
+          "frames": 909,
+          "actors": 35,
+          "contacts": 80,
+          "maxCm": 1.4,
+          "p95Cm": 1
+        },
+        {
+          "context": "detour",
+          "frames": 909,
+          "actors": 35,
+          "contacts": 80,
+          "maxCm": 1.4,
+          "p95Cm": 1
+        },
+        {
+          "context": "hatch",
+          "frames": 67,
+          "actors": 1,
+          "contacts": 6,
+          "maxCm": 1.4,
+          "p95Cm": 1
+        },
+        {
+          "context": "rail-stall",
+          "frames": 67,
+          "actors": 1,
+          "contacts": 6,
+          "maxCm": 1.4,
+          "p95Cm": 1
+        }
+      ],
+      "stagedCoverage": []
+    }
+  ]
+}

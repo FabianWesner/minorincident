@@ -61,6 +61,15 @@ export class ChunkResidency {
     const position = car?.entity.transform ?? player.transform;
     const v = car?.physics.body.linvel();
     const selected = selectTerrainChunks(this.chunks, this.size, focus ?? [position.x, position.z], velocity ?? [v?.x ?? 0, v?.z ?? 0], this.tier);
+    const bus = w.missions?.l9?.driving.busSupport();
+    if (bus) {
+      const support = this.chunk(bus.x, bus.z);
+      if (support && !selected.some(chunk => chunk.id === support.id)) {
+        // Reserve collision support within the existing tier budget. Keep the
+        // APC's nearest chunks and replace only its furthest prefetch chunk.
+        selected.pop(); selected.push(support);
+      }
+    }
     // Out-of-bounds story anchors cannot discard the final resident support set.
     if (!selected.length) return;
     const signature = selected.map(c => c.id).sort().join(',');

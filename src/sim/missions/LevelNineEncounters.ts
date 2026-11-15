@@ -8,7 +8,11 @@ export const emptyEncounters = (): L9EncounterState => ({ spawned: [], ids: {} }
  * inside the cab. Ordinary human targeting deliberately excludes seated people. */
 export function pursueCrossingVehicle(w: SimWorld, id: number): void {
   const e = w.entities.get(id), car = w.vehicles?.active == null ? undefined : w.entities.get(w.vehicles.active);
-  if (!e?.infected || !car || e.hidden || e.attachedTo !== undefined || e.health.current <= 0 || !w.entities.get(1)?.hidden) return;
+  if (!e?.infected || !car || e.hidden || e.attachedTo !== undefined || e.health.current <= 0) return;
+  if (!w.entities.get(1)?.hidden) {
+    if (e.infected.scripted) w.infected!.pursueTarget(id, 1);
+    return;
+  }
   e.infected.scripted = { x: car.transform.x, z: car.transform.z }; e.infected.state = 'chase'; e.infected.heardTargetId = 0;
 }
 
