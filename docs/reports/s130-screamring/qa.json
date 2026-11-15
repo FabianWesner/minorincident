@@ -1,0 +1,643 @@
+{
+  "status": "complete: controlled scene-fixture visual acceptance",
+  "method": "Scripted production VFX at standard screamer source; normal movement and attack input; fixture placement; L9 APC floor unlocked for exit; L10 catalog screamer spawned. Baseline uses previous VFX for all screams.",
+  "review": "Contact sheet HIGH zoom 1 both backends and levels at 50/100/200/400/500 ms reviewed; matrix 100/200 ms reviewed. Violet source cue visible by 100 ms and clear by 200 ms; no broad ground painting.",
+  "checks": {
+    "typecheck": "passed both projects",
+    "lint": "passed full repo",
+    "remoteNpmTest": "passed: 150-case collection, 105 passed, 1 skipped, 124.1s/240s",
+    "groundGate": {
+      "webgl2MaxPink": 294,
+      "webgpuMaxPink": 347,
+      "limit": 5000,
+      "errors": 0
+    },
+    "performance": "existing fixed 16-instance single draw; two additional spawn writes; no new per-frame allocation/pass/shader/pool; bounded local ring fragments; structural assessment, no isolated GPU timing claim"
+  },
+  "runs": [
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-high-1-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-high-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-low-1-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgl2-none-low-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-high-1-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-high-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-low-1-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "zoom": 1.5,
+      "errors": [],
+      "raw": "test-results/s130-sequence-webgpu-none-low-1.5-combat/rows.json",
+      "samples": [
+        {
+          "level": "L9",
+          "version": "before",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-before-3.jpg",
+            "L9-before-6.jpg",
+            "L9-before-12.jpg",
+            "L9-before-24.jpg",
+            "L9-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L9",
+          "version": "after",
+          "displacement50To500msM": 1.945,
+          "attacksAt500ms": 2,
+          "source": {
+            "x": 470.55492772988356,
+            "z": 1.3421974910114456
+          },
+          "frames": [
+            "L9-after-3.jpg",
+            "L9-after-6.jpg",
+            "L9-after-12.jpg",
+            "L9-after-24.jpg",
+            "L9-after-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "before",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-before-3.jpg",
+            "L10-before-6.jpg",
+            "L10-before-12.jpg",
+            "L10-before-24.jpg",
+            "L10-before-30.jpg"
+          ]
+        },
+        {
+          "level": "L10",
+          "version": "after",
+          "displacement50To500msM": 1.944,
+          "attacksAt500ms": 1,
+          "source": {
+            "x": 4009.0501000000004,
+            "z": -41.91062927246094
+          },
+          "frames": [
+            "L10-after-3.jpg",
+            "L10-after-6.jpg",
+            "L10-after-12.jpg",
+            "L10-after-24.jpg",
+            "L10-after-30.jpg"
+          ]
+        }
+      ]
+    }
+  ],
+  "runtimeBackends": {
+    "webgl2": [
+      "WebGLBackend"
+    ],
+    "webgpu": [
+      "WebGPUBackend"
+    ]
+  }
+}

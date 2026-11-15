@@ -597,8 +597,14 @@ export class Vfx extends Group {
       if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, ground + 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
     } else if (kind === 'screamer') {
-      // Noise can reach far beyond the fight. A proportional 18%-wide band
-      // painted whole roads pink; keep its radius with a 20 cm, subdued stroke.
+      // Put a brief, local warning above the crowd where it reads as a source cue.
+      // Both rings use the existing fixed wave pool; the distant ring remains a
+      // faint ground mark for the scream's actual hearing radius.
+      const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+      const first = this.waves.spawn(this.time, .34, x, ground + 2, z, 0, 0, 0, 2.8, 8, 0xd66bff, 1);
+      this.waves.opacity(first, .92);
+      const second = this.waves.spawn(this.time, .42, x, ground + 2.25, z, 0, 0, 0, 4.8, 8, 0xb94cff, 1);
+      this.waves.opacity(second, .82);
       const slot = this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 8, 0xef92ff, 1);
       this.waves.opacity(slot, .25);
     } else if (kind === 'electric') {

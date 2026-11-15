@@ -10,11 +10,69 @@ import { loadFixtureInPage } from './load-fixture';
 // Run under tools/e2e-lock.sh with SCENE_PORT=4985 and optional L9_BACKEND=webgl2.
 const backend = process.env.L9_BACKEND === 'webgl2' ? 'webgl2' : 'webgpu';
 const mode = process.env.L9_ABLATE ?? 'none';
-const out = `test-results/s124-pulse-${backend}-${mode}`;
+const sequence = process.env.SCREAM_SEQUENCE === '1';
+const combat = process.env.SCREAM_COMBAT === '1';
+const tier: 'low' | 'high' = process.env.SCREAM_TIER === 'low' ? 'low' : 'high';
+const zoom = process.env.SCREAM_ZOOM === '1.5' ? 1.5 : 1;
+const out = `test-results/${sequence ? 's130-sequence' : 's124-pulse'}-${backend}-${mode}${sequence && combat ? `-${tier}-${zoom}-combat` : ''}`;
 const session = new SceneSession({ backend, tier: 'high' });
 mkdirSync(out, { recursive: true });
 try {
   await session.open();
+  if (sequence) {
+    const rows = [];
+    const sequenceErrors: string[] = [];
+    for (const level of ['L9', 'L10']) for (const version of ['before', 'after']) {
+      // Isolate fixture lifetimes: pending WebGPU compilation must finish before world disposal.
+      await session.close(); await session.open();
+      const fixture = readFixture(level === 'L9' ? 'tests/fixtures/saves/qa/s124-l9-crowded-trucks.json.br' : 'tests/fixtures/saves/qa/l10-dispersal-console.json.gz');
+      fixture.campaign.settings.quality = tier;
+      await loadFixtureInPage(session.page, fixture);
+      const setup = await session.page.evaluate(({ version, combat, tier, zoom }) => {
+        const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
+        api.settings.set({ quality: tier }); api.camera.follow(); api.camera.zoom(zoom);
+        if (combat && game.world.vehicles?.active != null) {
+          const car = game.world.entities.get(game.world.vehicles.active)!;
+          // Fixture-only unlock: the late L9 APC checkpoint prevents normal on-foot combat.
+          if (car.vehicle) car.vehicle.floor = false;
+          game.world.vehicles.exit();
+        }
+        const player = game.world.entities.get(1)!;
+        let source = [...game.world.entities.iterate()].filter(e => e.health.current > 0 && e.archetype === 'infected.screamer').sort((a, b) => Math.hypot(a.transform.x-player.transform.x,a.transform.z-player.transform.z)-Math.hypot(b.transform.x-player.transform.x,b.transform.z-player.transform.z))[0];
+        if (!source) {
+          const id = game.world.infected!.spawn('infected.screamer', { x: player.transform.x + 5, z: player.transform.z - 3 });
+          source = game.world.entities.get(id)!;
+        }
+        // Scene fixture: bring the courier within sight of the existing actor, then run with normal input.
+        api.teleport('player', { x: source.transform.x - 5, z: source.transform.z + 3 });
+        const fx = game.view.vfx!;
+        const x = source.transform.x, z = source.transform.z;
+        if (version === 'before') {
+          const original = fx.effect.bind(fx);
+          fx.effect = (kind, x, z, radius = 2, height = .7) => {
+            if (kind !== 'screamer') return original(kind, x, z, radius, height);
+            const slot = fx.waves.spawn(fx.snapshot().time, 1, x, .03, z, 0, 0, 0, radius * 2, 8, 0xef92ff, 1); fx.waves.opacity(slot, .25);
+          };
+          const slot = fx.waves.spawn(fx.snapshot().time, 1, x, .03, z, 0, 0, 0, 40, 8, 0xef92ff, 1); fx.waves.opacity(slot, .25);
+        } else fx.effect('screamer', x, z, 20);
+        api.input.set({ move: { x: 1, z: 0 }, aim: { x: 1, z: 0 }, ...(combat ? { left: { down: true, held: true, up: false } } : {}) });
+        return { renderingBackend: game.view.renderer.backend.constructor.name, sourceId: source.id, source: { x, z }, player: { ...player.transform }, tick: api.tick() };
+      }, { version, combat, tier, zoom });
+      for (const frame of [3, 6, 12, 24, 30]) {
+        const state = await session.page.evaluate(async ticks => {
+          const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
+          for (let i = 0; i < ticks; i++) { await api.step(1); game.view.frame(1/60); }
+          return { ...game.world.entities.get(1)!.transform, attacks: api.events().filter(e => e.type === 'combat.attack').length, waves: game.view.vfx!.waves.count };
+        }, frame === 3 ? 3 : frame === 6 ? 3 : frame === 12 ? 6 : frame === 24 ? 12 : 6);
+        const file = `${level}-${version}-${frame}.jpg`;
+        await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 });
+        rows.push({ level, version, frame, seconds: frame/60, setup, player: state, file });
+      }
+      sequenceErrors.push(...session.errors);
+    }
+    writeFileSync(`${out}/rows.json`, JSON.stringify({ backend, tier, zoom, combat, fixture: 'scripted visual scream at existing living source; normal movement, no stat edits', rows, errors: sequenceErrors }, null, 2));
+    if (sequenceErrors.length) throw new Error('browser errors');
+  } else {
   const fixture = readFixture('tests/fixtures/saves/qa/s124-l9-crowded-trucks.json.br');
   fixture.campaign.settings.quality = 'high';
   await loadFixtureInPage(session.page, fixture);
@@ -50,6 +108,7 @@ try {
   writeFileSync(`${out}/rows.json`, JSON.stringify({ backend, mode, rows, errors: session.errors }, null, 2));
   // Before the fix the matched HIGH frame has 190,108 bright-pink pixels.
   if (rows.some(row => row.pink > 5000) || session.errors.length) throw new Error('broad pink ground or browser errors');
+  }
 } finally {
   await session.close(); stopServer();
 }
