@@ -34,3 +34,11 @@ Local preview startup is now permitted. Two sequential HIGH WebGPU road runs at 
 The exact required remote command now passes on runner `46.225.66.90`: 105 passed, one platform skip, 150-case inventory retained, 126.9 s within the 240 s budget. These results supersede the earlier environment-blocked attempts above.
 
 The resumed HIGH WebGPU shortcut run (`high-shortcut-1`, zoom 1.5) completed in 221 s without skips or deaths, but fails boarding timing: still 3/4 at tick 11213, approximately 31 s after defense completion. Two enemy-frozen diagnostics were recorded. This contradicts any claim that the z=26 staging change alone fixes P1; actor-level reproduction and a verified cause fix remain required.
+
+## Actor trace and candidate rescue correction
+
+A further unchanged real-input HIGH WebGPU shortcut diagnostic used a read-only page observer installed by a Node preload. At tick 10029 (9.03 s after defense), Dale was aboard, Rosa walked north, and Okafor/Mia were `grabbed` near (460.61,-0.86)/(462.26,-0.09). At tick 11410 (32.05 s after defense), Rosa was also aboard, while Okafor and Mia remained grabbed by infected 893 and 903. The corgi goodbye had already completed. This directly identifies a grab/crowd delay rather than a pending Rosa beat or claimed truck slot. The diagnostic was stopped after sustained evidence.
+
+The existing soldier rescue priority covered L7 evacuation grabs but omitted L9. A candidate change extends that same target priority to infected biting active L9 evacuees; validation and fresh browser acceptance are pending. Zombie statistics, bite damage, and corpse persistence remain unchanged.
+
+The rescue-priority candidate passes its first HIGH WebGPU shortcut run: 4/4 at 100 HP, last boarding tick 9539 versus defense completion 8833, **11.77 s** after defense. The run completes L9 in 190 s, no skips/deaths/issues. The existing NPC test now checks a soldier prioritizes an L9 evacuee biter over a closer Alpha; all three NPC tests pass. Two HIGH road runs on the rescue code and final fixture/motion/visual/full-suite checks remain required.
