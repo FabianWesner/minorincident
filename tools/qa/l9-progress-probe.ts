@@ -66,7 +66,8 @@ try {
     const steer = clamp(angleDelta(want, p.yaw) * 2, -1, 1);
     if (l9.state.phase === 'driving' && !l9.driving.holding(car.entity.id)) world.applyInput({ ...emptyInput(), drive: { throttle: 1, steer }, brake: false, handbrake: false }, 'keyboard');
     else {
-      const frame = support.sample();
+      const railPassive = process.env.L9_RAIL_PASSIVE === '1' && l9.driving.state.stallAt !== null && !l9.driving.state.restarted;
+      const frame = railPassive ? emptyInput() : support.sample();
       if (l9.state.phase === 'driving' && l9.driving.holding(car.entity.id) && !l9.driving.state.hatchOpen) frame.interact = true;
       world.applyInput(frame, 'keyboard');
     }

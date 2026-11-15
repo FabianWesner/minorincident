@@ -112,3 +112,7 @@ With sandbox restrictions lifted, the vehicle campaign gate starts successfully 
 ## Fresh L9 browser motion gate
 
 Fixed-source headless pooled L9 subset runs HIGH/LOW successfully through setup on4974; command exit1. LOW passes. HIGH fails because hatch/rail-stall windows contain zero contacts (59frames/1actor), despite no correction failures and measured other contacts max1.8cm. Both sourceStable true. See `browser-l9-motion.json`. This is no full vehicle campaign gate pass; other campaign fixtures and hatch participation remain outstanding.
+
+## No-fire rail diagnostic
+
+Added optional `L9_RAIL_PASSIVE=1` input policy to the existing native probe: empty input during rail hold, ordinary skilled behavior elsewhere. HIGH courier dies tick5848,9.67s after hatch5268; no bus passenger within5m or windup before death. No health/actor/threshold changes. This rules out player fire as the sole explanation for missing bus arrivals; current delivery is late even before shooting. Diagnostic is not a completion run. Typecheck/lint pass.
