@@ -10,7 +10,7 @@ No assertions were removed and no source files were changed. This retains total 
 
 The supplied runner baseline was 234 seconds overall, with the interaction test at about 142 seconds. After the move, the Mac default run took 97.5 seconds; a separate JSON reporter run measured individual files. These Mac timings are directional and are not a substitute for runner measurements.
 
-The runner pool had no healthy/provisioned Hetzner runner. `sh tools/remote/run.sh "$PWD" -- npm test` exited 69, and `sh tools/remote/scale.sh add` could not resolve its cloud API hostname. Therefore no post-change runner timing or consecutive remote receipts are available yet. The requested ≤150-second runner result remains unverified.
+Two consecutive remote runs passed on the unchanged implementation: **148.7 seconds** on 94.130.181.173 and **126.7 seconds** on 46.225.66.90. Each collected 150 cases / 45 files and ran 105 passing default cases with the existing Darwin-only case skipped. Both satisfy the 150-second target; the slower receipt has only 1.3 seconds of margin.
 
 Per-file before/after timing inputs and provenance are in [timings.json](./timings.json).
 
@@ -22,6 +22,6 @@ Per-file before/after timing inputs and provenance are in [timings.json](./timin
 - Default `npm test`: 150/150 collection, 45/45 files, 106/106 default tests passed, 97.5 seconds on the Mac.
 - `npm run typecheck` and `npm run lint` passed.
 
-## Next gate
+## Completion
 
-Restore runner availability, then run `sh tools/remote/run.sh "$PWD" -- npm test` twice consecutively. Capture runner per-file timings and confirm each run is at most 150 seconds. If not, continue reducing runtime while retaining the same assertions and use regression injection for every changed test.
+The two consecutive runner receipts meet the requested target. The test move is byte-identical to the original and its regression injection failed as expected. Typecheck and lint passed. No game behavior or budgets changed.

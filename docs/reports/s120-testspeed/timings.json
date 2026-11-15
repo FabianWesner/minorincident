@@ -30,9 +30,35 @@
       "tests/tools/test-budget-tools.test.ts": 18.5
     }
   },
-  "after_runner": null,
-  "runner_receipts": 0,
-  "runner_blocker": "No healthy Hetzner runner was provisioned; runner provisioning failed because the cloud API hostname did not resolve.",
+  "after_runner": {
+    "suite_seconds": [
+      148.7,
+      126.7
+    ],
+    "per_file_seconds_run_2": {
+      "vehicles": 87.779,
+      "navigation": 23.322,
+      "world-systems": 20.724,
+      "asset-contract": 21.041,
+      "gate-tools": 16.716,
+      "save-progression": 14.771,
+      "test-budget-tools": 23.842
+    },
+    "receipts": [
+      {
+        "host": "94.130.181.173",
+        "seconds": 148.7,
+        "exit": 0
+      },
+      {
+        "host": "46.225.66.90",
+        "seconds": 126.7,
+        "exit": 0
+      }
+    ]
+  },
+  "runner_receipts": 2,
+  "runner_blocker": null,
   "coverage_proof": {
     "injection": "isMissionInteraction always false",
     "result": "Failed as expected at L1 pickup view assertion",
