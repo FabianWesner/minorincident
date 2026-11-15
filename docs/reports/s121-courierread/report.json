@@ -5,7 +5,7 @@
   "visualEvidence": {
     "status": "incomplete",
     "contactSheet": null,
-    "reason": "Pool access restored. L6 HIGH WebGL2 capture completed; fixture has no dense horde and failed healthBarsMin (0 vs 1), so it does not prove requested readability.",
+    "reason": "Isolated 30-HP body-visibility matrix passed both backends, HIGH/LOW, z1/z1.5. Production dense-contact readability, full before/after sheet and temporal artifact clearance remain incomplete.",
     "unverified": [
       "L4 hold HIGH z1",
       "L4 hold LOW z1",
@@ -514,6 +514,64 @@
     {
       "id": "l6-low-z1.5",
       "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    }
+  ],
+  "reproducibleLowHpWebgpu": [
+    {
+      "id": "l4-high-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9995852343425964,
+      "foreground": true
+    },
+    {
+      "id": "l4-high-z1.5",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9990291262135922,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9992242048099301,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1.5",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l4-low-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9995852343425964,
+      "foreground": true
+    },
+    {
+      "id": "l4-low-z1.5",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9990291262135922,
+      "foreground": true
+    },
+    {
+      "id": "l6-low-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9992242048099301,
+      "foreground": true
+    },
+    {
+      "id": "l6-low-z1.5",
+      "backend": "webgpu",
       "health": 30,
       "share": 1,
       "foreground": true

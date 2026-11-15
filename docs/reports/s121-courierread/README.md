@@ -1,73 +1,45 @@
 # s121 · Courier readability in dense hordes
 
-## Change
+## Current verdict: incomplete
 
-Ordinary infected bars already appear for player-damaged infected and for infected engaging the courier within six metres. In a large horde, that can still produce a screen full of healthy attacker bars. `HealthBars` now keeps only the six closest healthy ordinary attackers in that local group. Player-damaged infected and mandatory bars (shielded infected, Alphas, pursuing Mega, and engaged arena bosses) keep their existing eligibility and are not counted against the cap. The change is render-only; it does not alter infected behavior, corpses, or the render pass count.
+The implementation reduces ordinary infected bar clutter and strengthens the courier's existing warm gold foreground contour. Isolated crowd probes demonstrate courier body visibility, but production dense-contact readability and temporal artifact clearance are not yet established. **Performance pending:** the orchestrator must measure L4 LOW against the 11 ms p95 budget.
 
-The focused L4 render-contract test now checks the six-actor cap and verifies damaged actors retain their bars. It passes. `npm run typecheck` and `npm run lint` pass.
+## Implementation
 
-## Visual evidence and open checks
+- `HealthBars`: retain the six closest healthy ordinary attackers inside six metres. Player-damaged infected and mandatory shield/Alpha/Mega/engaged-boss bars retain their existing eligibility. Followers retain their existing bar/pip policy.
+- `PaletteMaterial`: raise the existing non-vehicle foreground gold edge gain from .25 to .55. The distant vehicle x-ray gain remains .14. The foreground uniform gates the contour; no new render pass is added.
+- Simulation behavior, stats, crowd density, and corpse persistence are unchanged.
 
-No before/after contact sheet is included. The prescribed Scene Lab capture command exited before launching a browser: the sandbox denied the browser pool's loopback listener (`127.0.0.1:4329`, `listen EPERM`). Therefore there is no visual review of L4 hold at HIGH/LOW and zoom 1/1.5, L6 retreat, open-street courier appearance, menus/L1, or WebGPU/WebGL2 parity. The existing L4 hold and L6 retreat fixtures were identified but not captured.
+The courier already uses a foreground depth slice in close crowds. Its palette output has a separate contour calculation; changing the standard emissiveNode gain had no visible courier effect and that trial was reverted. `contact.jpg` is one small cropped L4 HIGH WebGL2 zoom-1 before/after pair for the palette contour. It is an isolated fixture, **not the required complete production contact sheet**.
 
-The requested full remote unit suite did not start: `tools/remote/run.sh` reported no healthy/provisioned Hetzner runner and refused the Mac fallback for this wrapped command. No timeout occurred, so the suite was not rerun or trimmed.
+## Checks and evidence
 
-**Performance: pending.** No L4 LOW p95 timing was collected. The new selection examines the entity list and retains at most six IDs; it adds no full-scene render pass. This is not a measured performance result.
+Typecheck, lint and the focused existing L4 render contract pass. The unchanged full remote unit command passed on 46.225.66.90 before the contour edit: 106 passed, 1 skipped, 28 files, 228.9 seconds within the 240-second budget. The contour edit still needs that full-suite rerun.
 
-## Verdict
+Committed reproduction:
 
-Partial implementation only. The bar cap is a plausible, low-cost reduction to crowd clutter, but the requested one-glance courier and HP readability and artifact-free behavior remain unverified. Continue with browser-pool access, capture the four required L4 views and L6 retreat, compare open-street/L1/menu controls, exercise WebGL2 and WebGPU on HIGH and LOW, and measure L4 LOW p95 before claiming completion.
+```sh
+SCENE_PORT=4980 E2E_PORT=4979 MI_BROWSER_POOL=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/courier-readability.ts webgl2
+# repeat with webgpu
+```
 
-## Follow-up validation
+The two committed `courier-read-{l4,l6}-dense.json` fixtures place 48 ordinary infected around the courier on D-FAIR/D-SUBWAY. The runner prepares 30 HP with the existing QA damage API, checks actual health/backend/quality and zero console errors, then measures body visibility against the courier's unobstructed ID mask. This measures occlusion, not visual recognition speed. WebGL2 HIGH/LOW zoom-1/1.5 passed all eight cases, minimum share 0.99961. WebGPU passed the same eight 30-HP cases, minimum share 0.999029, with explicit courier-follow camera targeting. Reviewed WebGPU L4 HIGH zoom-1 frame shows 30/100 HP and a warm courier edge. Earlier full-health stationary probes passed both backends/tiers; moving zoom-1.5 probes passed LOW WebGL2 and HIGH WebGPU at frame 60. Their actor-intersection metrics remain unresolved, so no artifact-free claim is made.
 
-Pool and Git access are restored. The source change was committed as de94c65f. The full remote unit suite passed unchanged on 46.225.66.90: 106 passed / 1 skipped, 28 files, 228.9 seconds within 240 seconds, exit 0.
+HIGH WebGL2 production L1-start and open-street controls kept foreground mode off and reported no console errors. The native title-menu capture passed its console/draw/triangle gates and looked intact. These are single-pose controls, not transition or pixel-equivalence tests.
 
-The L6 HIGH WebGL2 capture completed under the pool. Reviewed shot-0029: courier and HUD HP are visible, but there is no dense horde near the courier; this fixture cannot prove the requested crowd behavior. Its healthBarsMin check failed (0 versus 1). Raw frames and metrics are in test-results/s121-courierread/l6-high/. No dense-crowd or backend-parity claim is made. The earlier capture delay was pool admission behind another active exclusive job, not a renderer hang.
+Production fixture runs use the real L4 convoy/quartermaster/alarm and L6 shelter/stop/retreat controllers. L4 fixture setup overrides actor placement; post-setup moveTo commands successfully reach the plaza and west breach. Reviewed 30/60/90-second HIGH WebGL2 west-hold captures show a readable courier and HUD but do not surround her with 40+ infected. Large overlapping Alpha bodies near the barrier require baseline comparison. These captures cannot close dense-horde acceptance. The early L6 retreat fixture similarly leaves the courier far ahead of the group and does not provide dense contact.
 
-## Dense fixture probe
+## Evidence locations
 
-Two explicit 48-infected stationary fixtures were captured on HIGH WebGL2 (1280×720, zoom 1), using D-FAIR at (-22,8) and D-SUBWAY at (40,15). Both completed with zero console errors. Raw specifications, images and metrics are under test-results/s121-courierread/{specs,dense}. These are isolated occlusion probes, not production alarm/retreat timing evidence. L4 shows the courier amid overlapping bodies, with much of her outline obscured; the bar cap alone does not establish one-glance readability. L6 shows a bright foreground courier through the crowd. Inspection found an existing courier foreground policy and gold contour in courierForeground.ts/courierDepth.ts; investigate its L4 activation before adding another rendering effect. Neither probe proves low-HP clarity, LOW, zoom 1.5, WebGPU parity, motion artifacts, or performance.
+Raw images, fixtures, clipping pairs and metrics remain under `test-results/s121-courierread/`; `report.json` records selected measurements and exact paths. Important subdirectories: `repro-webgl2`, `repro-webgpu`, `final-*`, `motion-low`, `controls`, `menu-control`, `production`, `production-contact`, `west-contact`, `west-hold`. The first browser/commit attempts failed under a sandbox; access was later restored. A later apparent capture stall was pool admission behind another job's active exclusive lease, not a renderer hang.
 
-## Measured foreground follow-up
+## Remaining acceptance
 
-Correction to the visual impression above: same-pose ID-mask probes show 100% courier body visibility in both HIGH WebGL2 dense captures (2483/2483 L4 pixels; 2639/2639 L6). Foreground is active in both. The L4 concern is visual distinction among surrounding colors, not measured body occlusion. LOW WebGPU captures also passed the >=90% body-share check with the requested backend confirmed and zero console errors. These remain one-frame stationary zoom-1 fixtures at full health, not production hold/retreat signoff or temporal artifact clearance. Raw metrics are summarized in report.json.
+- Production L4 alarm hold and L6 retreat with dense contact, HIGH/LOW and zoom 1/1.5; low-HP recognition review.
+- Complete revised-contour motion/backend matrix and baseline attribution of visible intersections/Alpha appearance; no courier artifacts.
+- Open-street transition/popping check and remaining backend/tier controls.
+- One complete small before/after contact sheet covering required production views.
+- Full remote unit suite after the contour edit.
+- L4 LOW performance measurement: **perf pending**; no measured frame-time claim.
 
-## LOW zoom-1.5 motion probes
-
-The same 48 actors chased the courier for 60 frames in LOW WebGL2 at zoom 1.5. Both final measured frames retained 100% courier body visibility, with zero console errors. Screenshots were captured at frames 1, 30, and 60; reviewed L6 frame 60 retains a visible bright courier and HUD HP amid attack telegraphs. HP remains 100, so low-HP validation is still missing. Clipping metrics report actor intersections (L4: 4 actor hits / 2 piercing; L6: 69 / 37); this synthetic close-spawn fixture does not establish whether these reproduce under production admission, and no artifact-clear verdict is claimed.
-
-## 30-HP preparation
-
-The existing QA survivor.damage(70) API prepared both isolated 48-infected scenes at 30/100 HP. Captures and exported state under test-results/s121-courierread/low-hp confirm 30 HP in both levels; reviewed L4 HUD reads 30/100 clearly. HIGH WebGL2 zoom 1 only. The courier remains less visually distinct in the warm L4 crowd than in L6, so this does not close the one-glance requirement. Motion clipping summaries in report.json now omit raw pair arrays; full pair details remain in the original test-results metrics.
-
-## Contour output investigation
-
-A trial raising courierDepth's emissive contour gain from 0.8 to 1.4 produced no changed pixels around the courier in the matched HIGH WebGL2 L4 frame; the difference bounding box was confined to (372,152)-(927,214), above her body. The trial was reverted. PaletteMaterial installs a custom outputNode (setWeatherMode/outputFor), which may bypass the emissiveNode added by useCourierDepth. This is the next concrete investigation; the foreground depth treatment is active and measured, but the intended gold contour must be traced through the actual output before tuning its gain. No runtime source change from this trial remains.
-
-## Palette contour candidate
-
-PaletteMaterial already contains a separate foreground contour calculation. Raising its non-vehicle gold edge gain from .25 to .55 produces a visible warm contour around the L4 courier in the matched HIGH WebGL2 probe. Vehicle x-ray retains its .14 distant gain; the companion does not use heroFigure. This adjusts existing fragment arithmetic with no extra pass. The foreground uniform still gates the effect. `contact.jpg` contains a small cropped before/after pair for this isolated L4 HIGH zoom-1 probe only; it is not the requested complete production contact sheet. The capture passes the body-share check with zero console errors. Typecheck and lint pass. Remaining: candidate cross-backend/tier/motion/open-street validation, production L4/L6 captures, full unit rerun for this shader edit, performance pending. The earlier full remote pass predates this edit.
-
-## Revised contour backend matrix
-
-The revised palette contour passed both isolated 48-infected stationary zoom-1 scenes on HIGH and LOW in WebGL2 and WebGPU, with requested backend/tier confirmed, zero console errors and >=90% body-share gates. HIGH WebGPU moving zoom-1.5 scenes also passed visibility gates at frame 60. Actor intersections remain in moving fixtures; these gates do not prove artifact clearance. report.json lists exact raw metrics paths. Production hold/retreat, open-street/L1/menu controls, revised-contour low HP, complete motion matrix, remote suite rerun and performance remain open.
-
-## Control captures
-
-Revised-contour HIGH WebGL2 controls: production L1 start and the same D-FAIR pose with only the courier both pass zero-foreground-frame gates and report zero console errors. This verifies contour gating at those poses, not a full appearance pixel comparison or transition/popping test. Native title-menu fixture with ui=1 also passes its console/draw/triangle gates. Raw captures are under test-results/s121-courierread/controls and menu-control. Other tiers/backends and temporal controls remain outside this check.
-
-## Production controller probe
-
-Both production fixtures advanced 600 frames on HIGH WebGL2 with zero console errors: L4 real convoy/quartermaster/alarm and L6 real shelter/stop/retreat. Images and metrics are under test-results/s121-courierread/production. Reviewed L4 frame 600 shows the actual hold HUD (Alpha at west wall, 3:00 remaining) and courier beside the convoy, not the intended (-22,8) plaza pose: fixture setup overrides the actor's initial placement. This is not dense-contact signoff. Next production capture needs an explicit movement command after setup to reach the fight. The L4 and L6 scene clipping summaries each contain one gun/body hit; full artifact verdict remains open.
-
-## Post-setup production movement
-
-A frame-1 moveTo command successfully moved the production L4 courier 8.696 m to (-21.73,7.905). She was drawn and in view for all 1800 frames; zero console errors. Reviewed frame 1800 shows 100 HP, nearby friendly soldiers and the hold HUD at 2:40, with the west breach still 10 m away. This is not dense contact. The next local fixture adds a frame-900 move toward (-32,8), near the authored west soldier post, to approach production attackers. Raw first-route captures are in test-results/s121-courierread/production-contact.
-
-## West-breach production hold
-
-The post-setup route reaches (-31.711,7.997), two metres from the west objective. HIGH WebGL2 runs completed at 1800 and 5400 frames, zero console errors, with captures at 30/60/75/90 simulated seconds. Reviewed 30/60/90-second frames retain readable courier and full HUD HP; the immediate area still does not surround her with 40+ infected. Consequently these are production hold context, not dense-horde acceptance. Large overlapping Alpha bodies beside/outside the barrier are visible; baseline comparison is required before attributing their appearance to this patch. Raw captures/metrics: test-results/s121-courierread/west-contact and west-hold. The 5400-frame run took 136.243 wall seconds; this is capture duration, not a frame-time/performance measurement.
-
-## Reproducible low-HP matrix
-
-Committed isolated 48-infected fixture definitions in tests/scenes/catalog/courier-read-{l4,l6}-dense.json and runner tools/scenelab/courier-readability.ts. Invoke with SCENE_PORT=4980 E2E_PORT=4979 MI_BROWSER_POOL=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/courier-readability.ts webgl2 (or webgpu). Runner asserts actual 30 HP, backend, quality, zero console errors and >=90% body visibility. All eight WebGL2 HIGH/LOW zoom-1/1.5 cases passed, minimum body share 0.99961. Typecheck and lint passed. The camera typing was corrected during this batch; the next run uses explicit courier-follow targeting. These remain stationary isolated probes, not production dense-contact or artifact signoff.
+No deployment, push, or main movement was performed.
