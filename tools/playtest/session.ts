@@ -3,7 +3,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, unlinkSync, writeF
 import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
-import { canShootVehicleObjective, captureZooms, EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
+import { canShootVehicleObjective, EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, campaignEndingComplete, campaignEndingWaiting, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
 import { rangedWeaponPattern as ranged, campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
@@ -41,7 +41,7 @@ export interface SessionOptions {
   /** Authored road selected by a logged map assist; all driving stays WASD. */
   l9Route?: 'road' | 'countryside' | 'dry-shortcut';
   l9Waypoints?: [number, number][];
-  routeOnly?: boolean; immortal?: boolean; screamCaptures?: boolean;
+  routeOnly?: boolean; immortal?: boolean; screamCaptures?: boolean; captureZooms?: number[];
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
 export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
@@ -409,7 +409,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           const tiers = process.env.PLAYTEST_ACCEPTANCE_CAPTURE_TIERS === 'single' ? [o.quality] : ['low', 'high'] as const;
           for (const quality of tiers) {
             await page.evaluate(q => window.__SS__!.settings.set({ quality: q }), quality);
-            for (const zoom of noFrameTiming ? [1.5, 1, .5] : [1.5, .5]) {
+            for (const zoom of o.captureZooms ?? (noFrameTiming ? [1.5, 1, .5] : [1.5, .5])) {
               await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
               const file = await capture(`${key}-t${eyes.tick}-${quality}-z${zoom}`);
               const presentation = await photoPresentation();
@@ -430,7 +430,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await press([]); await releaseAim();
       await page.evaluate(() => { (window as unknown as { __threatAudit: { capturePaused: boolean } }).__threatAudit.capturePaused = true; window.__SS__!.pause(); });
       try {
-        for (const zoom of captureZooms) {
+        for (const zoom of o.captureZooms ?? [.5, 1.5]) {
           await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
           await capture(`${eyes.level}-${eyes.step}-${o.quality}-z${zoom}`);
         }
@@ -453,7 +453,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         window.__SS__!.pause();
       });
       try {
-        for (const zoom of captureZooms) {
+        for (const zoom of o.captureZooms ?? [.5, 1.5]) {
           await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
           await capture(`L6-${openingCapture ? 'hold' : 'retreat'}-${o.quality}-z${zoom}`);
         }

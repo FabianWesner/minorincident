@@ -5,7 +5,8 @@
 | Option | Default | Effect |
 | --- | --- | --- |
 | `--quality low\|high` | `low` | Requested render tier; reapplied and checked after each level or save load. |
-| `--zoom 1\|1.5` | `1.5` | Requested play zoom. QA captures include zoom 1 and 1.5. |
+| `--zoom 1\|1.5` | `1.5` | Requested play zoom. |
+| `--capture-zooms 1,1.5` | existing capture defaults | Override acceptance/threat capture zooms. |
 | `--scream-captures` | off | Captures scream noise and Alpha roar telegraphs per active mission world; writes event/level/tick metadata to the session log. |
 | `--route-only` | off | Disables combat for route diagnostics. Output labels this acceptance mode. |
 | `--immortal` | off | Enables god mode and labels output `IMMORTAL / ROUTE ONLY`; use only for route diagnostics. |

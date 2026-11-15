@@ -37,3 +37,7 @@ A second bounded headless LOW L9 run at zoom 1.5 completed 180 seconds, tick 106
 ## Rail-stall fixture proof
 
 A 60-second headless WebGL2 LOW L9 run loaded `tests/fixtures/saves/qa/l9-before-rail-stall.json.gz`, reached Hold the hatch at tick 1314 and restarted the engine. The run recorded 30 shotgun attacks, damage progress during the seated hatch objective, zero deaths/assists/issues, and real L9 scream telegraph captures (including ticks 2480 and 2507). Actual render quality LOW was asserted after the save load at tick 66. Raw evidence: ignored `test-results/s127-stall/`. Per-mission Alpha roar rebinding, dual zoom captures, and immortal runtime proof remain open.
+
+## Explicit zoom and immortal proof
+
+`--capture-zooms 1,1.5` now overrides capture zooms while existing callers retain their previous defaults. A 60-second LOW L9 rail fixture run with this option and `--immortal` logged `IMMORTAL / ROUTE ONLY`, and acceptance photos at tick 668 reported actual/target zoom exactly 1 and 1.5, both actual LOW. The route-only run recorded one P2 enemy-frozen diagnostic near the hatch; this is disclosed rather than treated as a clean gameplay pass. Evidence: ignored `test-results/s127-immortal/`. Typecheck and lint passed.
