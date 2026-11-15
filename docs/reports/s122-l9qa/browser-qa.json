@@ -365,5 +365,119 @@
         "where": "LOW trucks"
       }
     ]
-  }
+  },
+  "backendReceipts": {
+    "high": {
+      "t": "2026-11-15T05:55:07.500Z",
+      "renderer": "webgpu"
+    },
+    "low": {
+      "t": "2026-11-15T06:06:27.480Z",
+      "renderer": "webgpu"
+    }
+  },
+  "lowWebGPUZoom15": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 240,
+        "simSeconds": 232,
+        "maxNoProgressSeconds": 4.483333333333333,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 40
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 8,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0141711235046387,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "captures": "test-results/s122-low-gpu/captures",
+    "intervalSeconds": 1,
+    "review": {
+      "frames": "20 chronological samples t3513\u20136016 plus original-size final yield",
+      "observations": [
+        "Rail approach and hold remain readable; no floating actor established in reviewed frames.",
+        "Bus itself is not sufficiently visible on the off-road sample to judge speed or disembarkation.",
+        "Final trucks: defense complete, 1/4 survivors, courier100HP; crowded smoke and broad pink/purple ground patches."
+      ],
+      "findings": [
+        {
+          "severity": "P2",
+          "kind": "truck readability",
+          "detail": "Smoke/crowd obscures hull; known smoke issue."
+        },
+        {
+          "severity": "P2",
+          "kind": "ground color discontinuity",
+          "detail": "Broad pink/purple patches in LOW WebGPU final yield; cause unverified."
+        }
+      ],
+      "hitches": [
+        {
+          "level": "L9",
+          "tick": 1862,
+          "x": -259,
+          "z": -28.4,
+          "severity": "P2",
+          "kind": "hitch",
+          "text": "Frame of 650 ms at tick 1862",
+          "captures": [],
+          "step": null,
+          "objective": ""
+        },
+        {
+          "level": "L9",
+          "tick": 7869,
+          "x": 468.8,
+          "z": -1.1,
+          "severity": "P1",
+          "kind": "hitch",
+          "text": "Frame of 2533 ms at tick 7869",
+          "captures": [],
+          "step": null,
+          "objective": ""
+        }
+      ]
+    }
+  },
+  "stationaryFlagsReview": "HIGH flags actors in attack state at hull; no motion expected during planted attack, not confirmed frozen AI."
 }

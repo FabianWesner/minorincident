@@ -11,7 +11,7 @@ All passes used an L9-default progressed save and the visible Continue flow, rea
 | HIGH WebGL2 z1, road | 480 s; hatch reached, 22 deaths; unfinished | Invalid difficulty estimate: original driver suppressed all vehicle gunfire. Stationary-enemy flags near hull are unconfirmed collision/contact behavior; driver timeout P0 is not a game P0. |
 | HIGH WebGL2 z1.5, shortcut | 120 s; hatch reached, one death; unfinished | No driver flags. Same gunfire limitation; no reliable fight verdict. |
 | LOW WebGL2 z1, road, corrected driver | **Complete**, 213 s, 0 deaths, 26 shotgun attacks; truck defence and L10 handover | P2 known smoke/readability at trucks: broad plume and overlapping actors obscure hull. Rail view remains readable. Fight is manageable with aimed fire; not a passive safe spot. |
-| HIGH requested WebGPU z1.5, shortcut, corrected driver | **Complete**, 205 s, 0 deaths, 38 shotgun attacks; truck defence and L10 handover | Stationary-near-hull driver flags need review. Rail fight reduced courier to 50 HP before trucks: tense, not harmless. Backend was requested via driver; a recorded runtime-backend assertion is still missing. |
+| HIGH requested WebGPU z1.5, shortcut, corrected driver | **Complete**, 205 s, 0 deaths, 38 shotgun attacks; truck defence and L10 handover | Stationary-near-hull driver flags need review. Rail fight reduced courier to 50 HP before trucks: tense, not harmless. Runtime log confirms WebGPU. |
 
 The temporary driver correction released movement and aimed/fired the physical mouse at drawn living infected while the HUD said “Engine stalled”. Original code returned before combat for every vehicle state. It was restored before commits; no final driver diff. Zero source/stat/corpse changes.
 
@@ -33,9 +33,13 @@ Production QA build, typecheck and lint passed. Unchanged remote `sh tools/remot
 
 ## Completion audit — still open
 
-- LOW zoom 1.5 real-input pass and runtime confirmation of WebGPU backend.
+- LOW WebGPU z1.5 sampled for 240 s: rail cleared at 100 HP; trucks read Defense complete but only 1/4 survivors at yield. Runtime backend confirmed for both HIGH/LOW GPU passes. Outcome is incomplete, not a successful ending.
 - Continuous visual sampling of pursuit/spawn/disembarkation to judge the requested bus defects and 3× pacing.
-- Review stationary-near-hull flags before assigning a gameplay severity.
+- HIGH stationary flags were attack-state actors at the hull: not confirmed frozen AI. LOW capture-heavy run recorded 650 ms/P2 and 2533 ms/P1 hitches; capture overhead versus runtime cause is unverified.
 - Organic death/retry settings navigation at the hatch, supplementing the passing controlled zero-HP check.
 
 The goal is not complete. No broad “all clear” claim is supported by the current evidence.
+
+## Additional LOW WebGPU review
+
+Reviewed 20 chronological approach/rail samples (ticks 3513–6016) and the final yield at original size. Rail remains readable; the bus is insufficiently visible in this off-road sample to judge pacing or disembarkation. Final trucks show known P2 smoke/crowd hull occlusion, plus **P2 broad pink/purple ground color patches** (cause unverified). The late beat feels congested and stalled rather than tense: defense is complete but the driver remains at 1/4 survivors, alive at 100 HP, when the 240-second sample ends. A longer wait or organic intervention was not measured. These observations do not establish an impossible ending.
