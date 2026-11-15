@@ -108,3 +108,7 @@ Ordinary primary countryside drives (APC travels far north of the bus asphalt) c
 ## Browser lifecycle correction
 
 With sandbox restrictions lifted, the vehicle campaign gate starts successfully on4974. Its L9 setup exposed a crash: quality setup requests chunk residency before the APC exists. `busSupport` now returns null until that car exists. Typecheck/lint pass. The gate attempt was stopped (exit130) after already failing L9 rows and a hot-reload context loss; it supplies no green gate claim. A clean fixed-source rerun remains required.
+
+## Fresh L9 browser motion gate
+
+Fixed-source headless pooled L9 subset runs HIGH/LOW successfully through setup on4974; command exit1. LOW passes. HIGH fails because hatch/rail-stall windows contain zero contacts (59frames/1actor), despite no correction failures and measured other contacts max1.8cm. Both sourceStable true. See `browser-l9-motion.json`. This is no full vehicle campaign gate pass; other campaign fixtures and hatch participation remain outstanding.
