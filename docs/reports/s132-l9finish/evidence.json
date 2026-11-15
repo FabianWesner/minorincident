@@ -1,0 +1,31 @@
+{
+  "commit": "6b638cf0",
+  "status": "incomplete",
+  "runs": [
+    {
+      "run": "high-shortcut",
+      "evacuationAt": null,
+      "firstObservedEvacuationDone": null,
+      "handoverAt": null
+    },
+    {
+      "run": "high-road-1",
+      "evacuationAt": 8068,
+      "firstObservedEvacuationDone": 9900,
+      "handoverAt": "2026-11-15T21:55:02.293Z"
+    },
+    {
+      "run": "high-road-2",
+      "evacuationAt": 8397,
+      "firstObservedEvacuationDone": 10260,
+      "handoverAt": "2026-11-15T22:00:06.098Z"
+    }
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "nativeVehicles": "pass",
+    "threatAudit": "0 flags, 470.7s",
+    "remoteUnit": "pass, 105 passed / 1 skipped, 136s"
+  }
+}

@@ -179,7 +179,7 @@ async function l9InterruptedBoarding(): Promise<void> {
       expect(Math.hypot(actor.transform.x - beforeFallback.x, actor.transform.z - beforeFallback.z), 'fallback visibly moves the survivor toward the truck').toBeGreaterThan(0);
       for (let i = 0; i < 1200 && !s.evacuationDone; i++) world.update();
       expect(s.evacuated, `seed ${seed} ${quality}: fallback survivor reaches a truck`).toContain(last);
-      expect(s.evacuationDone, `seed ${seed} ${quality}: handover completes within 20 s after defense`).toBe(true);
+      expect(s.evacuationDone, `seed ${seed} ${quality}: evacuation completes within 20 s after defense`).toBe(true);
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
@@ -198,8 +198,8 @@ async function l9CrowdedEvacuationFixtures(): Promise<void> {
       const deadline = s.evacuationAt! + l9Course.evacuation.defendTicks + 1200;
       const ticksToDeadline = Math.max(0, deadline - world.tick);
       for (let i = 0; i < ticksToDeadline && !s.evacuationDone; i++) world.update();
-      expect(s.evacuationDone, `${name}: handover completes by 20 s after defense`).toBe(true);
-      expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks), `${name}: handover is within 20 s after defense`).toBeLessThanOrEqual(1200);
+      expect(s.evacuationDone, `${name}: evacuation completes by 20 s after defense`).toBe(true);
+      expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks), `${name}: evacuation is within 20 s after defense`).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
 }
