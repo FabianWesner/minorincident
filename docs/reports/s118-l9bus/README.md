@@ -202,3 +202,11 @@ Full command runs all8fixed-source headless pooled rows and exits1. BothL9tiers 
 ## Browser hatch contact coverage inspection
 
 Sampler steps the entire rail interval and requires visible living infected figures with soles near native hulls; its unchanged contact criterion cannot be satisfied by transient proximity/attack events alone. Current receipts have only one rendered infected actor in HIGH hatch samples and none LOW, so motion contact coverage remains missing. Native participation under no-fire input does not establish this browser gate. `browser-hatch-coverage-detail.json` records exact actor IDs/tick windows and coverage. No sampler threshold or runtime change made.
+
+## Working offscreen admission guard
+
+Added sampled bus hull points (length1m steps, sides/center, heights0/2/4m) against existing widest-camera `inFrame` with1.2margin before bus visibility activation. This strengthens distance-only admission but is uncommitted pending browser validation at both zooms/tiers and delivery revalidation. Typecheck/lint pass. No claim that visibility proof is complete.
+
+## Offscreen browser spawn proof
+
+Headless pooled browser probe runs ordinary bot driving with no actor/HP writes on HIGH+LOW at zoom1/1.5. At first visible bus tick, independently projected render-camera bus hull bounds are entirely outside viewport in all4cases; all buses spawn,command exit0. See `spawn-screen.json`, tool `tools/qa/s118-spawn-screen.ts`. Sampled hull admission guard and probe typecheck/lint pass. Evidence proves these4primary-route camera configurations; new guard can delay other path spawns and therefore final runtime route/participation gates still need revalidation.

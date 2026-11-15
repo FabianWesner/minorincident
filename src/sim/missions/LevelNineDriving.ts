@@ -560,6 +560,14 @@ export class LevelNineDriving {
       const bus = w.vehicles!.cars.get(s.busId)!;
       const tangent = this.busRoadTarget(at.x + 2);
       const yaw = -Math.atan2(tangent.z - at.z, tangent.x - at.x);
+      // Admit the complete bus hull beyond the widest camera envelope, rather
+      // than relying on the APC setback alone to hide a tall transport.
+      for (let along = -bus.physics.def.length / 2; along <= bus.physics.def.length / 2; along += 1) {
+        for (const side of [-bus.physics.def.width / 2, 0, bus.physics.def.width / 2]) for (const y of [0, 2, 4]) {
+          const point = { x: at.x + Math.cos(yaw) * along + Math.sin(yaw) * side, z: at.z - Math.sin(yaw) * along + Math.cos(yaw) * side, y };
+          if (w.infected!.director.inFrame(point, 1.2, true)) return;
+        }
+      }
       const pose = { ...at, y: bus.physics.def.suspension + bus.physics.def.wheelRadius + .15, yaw };
       Object.assign(bus.entity.transform, pose); Object.assign(bus.physics.previous, pose); bus.physics.body.setTranslation(pose, true);
       bus.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
