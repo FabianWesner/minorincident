@@ -100,3 +100,7 @@ Moving bus entry threshold from APC x110 to x-100, retaining125m asphalt setback
 ## Wide off-road APC driven coverage
 
 Ordinary primary countryside drives (APC travels far north of the bus asphalt) complete in HIGH and LOW. LOW242 samples/max2.546m, HIGH238 samples/max2.546m; zero bus samples outside6m. Both exact windup sets empty, peak hatch proximity0. See `wide-driven-checks.json`. This expands real native path coverage but preserves the failed passenger requirement.
+
+## Six native driven paths consolidated
+
+`six-driven-paths.json` contains measured bus positions every30ticks through completion for road, corner-cut road detour, and wide countryside APC drives on HIGH+LOW. All6 complete;100% sampled centers within6m, no authored exceptions. Worst4.885m LOW road. Exact passenger windups empty for every row; peak within5m is1 on corner-cut rows and0 elsewhere. This proves sampled asphalt adherence for the requested three native driving paths on both tiers, while passenger participation remains failed. Spawn offscreen screen geometry and browser QA still unverified; current full suite/threat/vehicle campaign gates still need rerun.
