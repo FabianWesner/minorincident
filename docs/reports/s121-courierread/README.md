@@ -55,3 +55,7 @@ The revised palette contour passed both isolated 48-infected stationary zoom-1 s
 ## Control captures
 
 Revised-contour HIGH WebGL2 controls: production L1 start and the same D-FAIR pose with only the courier both pass zero-foreground-frame gates and report zero console errors. This verifies contour gating at those poses, not a full appearance pixel comparison or transition/popping test. Native title-menu fixture with ui=1 also passes its console/draw/triangle gates. Raw captures are under test-results/s121-courierread/controls and menu-control. Other tiers/backends and temporal controls remain outside this check.
+
+## Production controller probe
+
+Both production fixtures advanced 600 frames on HIGH WebGL2 with zero console errors: L4 real convoy/quartermaster/alarm and L6 real shelter/stop/retreat. Images and metrics are under test-results/s121-courierread/production. Reviewed L4 frame 600 shows the actual hold HUD (Alpha at west wall, 3:00 remaining) and courier beside the convoy, not the intended (-22,8) plaza pose: fixture setup overrides the actor's initial placement. This is not dense-contact signoff. Next production capture needs an explicit movement command after setup to reach the fight. The L4 and L6 scene clipping summaries each contain one gun/body hit; full artifact verdict remains open.
