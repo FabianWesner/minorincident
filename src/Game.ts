@@ -402,7 +402,7 @@ export class Game {
       this.campaign.racks = { LEFT: held.LEFT.rack.map(s => s.id), RIGHT: held.RIGHT.rack.map(s => s.id) };
       for (const id of [...this.campaign.racks.LEFT, ...this.campaign.racks.RIGHT]) if (!this.campaign.ownedActions.includes(id)) this.campaign.ownedActions.push(id);
     }
-    if (liveCampaign && this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
+    if (liveCampaign && (this.world.entities.get(1)?.health.current ?? 0) > 0 && this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
     if (liveCampaign && this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
       const live = this.world.progression?.campaign;
       if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }

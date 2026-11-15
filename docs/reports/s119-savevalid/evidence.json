@@ -1,19 +1,27 @@
 {
   "slug": "s119-savevalid",
   "candidate": "a1509c69",
-  "status": "guard-fixed-transient-root-cause-unidentified",
+  "status": "death-interval-reproduced-and-fixed-full-validation-pending",
   "rootCause": {
-    "identifiedField": null,
-    "reason": "The s117 rejected live snapshot was not retained. Available native L9 fixtures and phase snapshots validate; no specific validator field can be named from current evidence."
+    "identifiedField": "l9Crash.player.health.current",
+    "reason": "Native lethal Player.damage produces zero health; validCrash requires living player health. Retain previous living L9 resume during death interval. Exact s117 attribution remains unproven."
   },
   "productionReachable": true,
   "productionPath": "Persisted settings call Game.campaignSettings -> Game.saveCampaign -> SaveStore.write; L9 mission signals also autosave.",
   "fix": "Game.saveCampaign catches validation/storage exceptions, logs, and returns false so autosaves cannot interrupt gameplay. SaveStore validates before storage writes, retaining the previous valid save on rejection.",
   "validation": {
-    "focusedTests": { "command": "npx vitest run tests/engine/save-progression.test.ts tests/engine/vehicles.test.ts", "status": "pass", "files": 2, "tests": 9 },
+    "focusedTests": {
+      "command": "npx vitest run tests/engine/save-progression.test.ts tests/engine/vehicles.test.ts",
+      "status": "pass",
+      "files": 2,
+      "tests": 9
+    },
     "typecheck": "pass",
     "lint": "pass",
     "browserQA": "not-run"
   },
-  "open": ["Recover or reproduce the exact transient s117 live snapshot and name the rejected field."]
+  "open": [
+    "Run full remote suite after merging sweep into existing test case.",
+    "Complete production saveCampaign integration coverage."
+  ]
 }

@@ -92,6 +92,14 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
       }
       if (level === 9) {
         const l9 = world.missions!.l9!;
+        const living = l9.save();
+        world.player!.damage(100000, world.tick, true);
+        const dead = structuredClone(save); dead.l9Crash = l9.save();
+        expect(dead.l9Crash.player.health.current).toBe(0);
+        expect(validateSave(dead), 'death interval must not be persisted as a living crash resume').toBe(false);
+        dead.l9Crash = living; dead.settings.quality = 'low';
+        expect(validateSave(dead), 'settings can retain the previous living resume during death').toBe(true);
+        world.entities.get(1)!.health.current = living.player.health.current;
         for (const phase of ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'] as const) {
           l9.state.phase = phase; l9.state.finished = phase === 'done';
           const car = world.entities.get(l9.state.carId)!;

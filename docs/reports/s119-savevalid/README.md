@@ -20,3 +20,7 @@ Yes. In production, changing any persisted in-game setting during L9 reaches thi
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
 - The exact s117 snapshot was not retained, so reproducing its invalid field and proving the candidate becomes valid remain open. Browser QA is not needed to verify the nonfatal exception boundary; no browser run was performed.
+
+## Native death-interval reproduction
+
+A native L9 world now reproduces rejection immediately after `Player.damage` kills the courier: `l9Crash.player.health.current` is zero and `validCrash` requires a living player. A settings change previously captured this dead live player. The Game save path now retains its previous living L9 resume while health is zero, preserving settings without writing a dead-player resume. The validator remains strict. This is a proven production-reachable cause; the unavailable s117 snapshot prevents attribution of that exact occurrence. The focused progression test passes (6 cases after merging the sweep into the existing case). Full remote validation remains pending.
