@@ -32,7 +32,7 @@
     "northTruckStagingAndGateFence": "unverified",
     "redPickupGroundedAtZoom1_5": "unverified",
     "apcTiltAndSeatedHatchShooting": "Sampled recorded tilt modest; seated fire effective: 23 shotgun hits correlate with APC driving observations; Alpha HP107 ->0 at tick5840 during hold hatch. Attached-boarder identity not independently logged.",
-    "l1CarAlarmPromptHighLowZoom1And1_5": "Static layout fixture reviewed all four; vitals clear; P3 objective-arrow overlap z1; uninterrupted post-outbreak approach remains unverified",
+    "l1CarAlarmPromptHighLowZoom1And1_5": "PASS sampled actual bat-checkpoint HIGH/LOW x zoom1/1.5 layout; real WASD final approach; no vitals/other-HUD overlap. Earlier pre-outbreak arrow overlap is diagnostic-only.",
     "otherPromptsL1ToL3": "Three L1 panels reviewed statically and in brief real-key movement sequence; no erratic relocation observed within sample",
     "screamerReadabilityL9AndL10WhileMoving": "Actual ordinary events captured both levels; purple thin ring visible in stills, L9 partially occluded; continuous motion noticeability not proven",
     "l9BoringHarmlessBabysittingAndVisualVerdict": "Reviewed late stationary defense: healthy courier amid dense crowd and >=85.7 s wait reads as babysitting; no general stunning/smooth-motion verdict",
@@ -53,7 +53,9 @@
       "level": "L1",
       "text": "Yellow objective arrow overlaps car alarm panel upper-right at zoom 1 in HIGH/LOW static layout fixture. Vitals do not overlap.",
       "tick": 69,
-      "capture": "test-results/b107/prompt-fixture/alarm-high-z1.jpg"
+      "capture": "test-results/b107/prompt-fixture/alarm-high-z1.jpg",
+      "scope": "Pre-outbreak armed-alarm fixture only; not reproduced in actual bat-checkpoint matrix",
+      "classification": "diagnostic-only, not confirmed post-outbreak defect"
     },
     {
       "severity": "P2",
@@ -726,5 +728,35 @@
       }
     ],
     "method": "Additional HIGH shortcut WebGPU standard real-input run with existing PLAYTEST_COMBAT_AUDIT=1; 339 s, finished without skips; nearest driving receipt within 70 ticks"
+  },
+  "postOutbreakAlarmMatrix": {
+    "method": "Begin L1 then load actual bat checkpoint; fixture positioning outside range and real WASD approach; no god mode; reset alarm cycle only to capture transient panel",
+    "matrix": [
+      {
+        "q": "high",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-high-z1.jpg",
+        "tick": 70
+      },
+      {
+        "q": "high",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-high-z1.5.jpg",
+        "tick": 78
+      },
+      {
+        "q": "low",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-low-z1.jpg",
+        "tick": 70
+      },
+      {
+        "q": "low",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/postblast-alarm-low-z1.5.jpg",
+        "tick": 79
+      }
+    ],
+    "verdict": "All four reviewed panels clear vitals and other HUD; no arrow overlap in sampled actual post-outbreak state. Not uninterrupted campaign navigation."
   }
 }
