@@ -1,0 +1,3643 @@
+{
+  "candidate": "4f50ecb9",
+  "status": "final report; candidate rejected; acceptance coverage partial",
+  "method": "normal combat, real keyboard/mouse, debug level-menu entry; headless WebGPU, one browser; original driver unchanged; ignored wrapper requests video and optional level-load seed",
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "remoteUnitSuite": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "result": "pass",
+      "inventory": 150,
+      "passed": 105,
+      "skipped": 1,
+      "seconds": 129.6,
+      "runner": "46.225.66.90"
+    }
+  },
+  "runs": [
+    {
+      "name": "l9-high-road-webgpu",
+      "path": "test-results/b108/l9-high-road-webgpu",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 207,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 8.633333333333333,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 27
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 10902,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [
+        {
+          "tick": 8859,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 1/4 at the trucks \u00b7 12\u00a0m",
+          "distance": 12,
+          "player": {
+            "x": 468.7913818359375,
+            "z": -1.076715350151062
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "lastIncompleteDefense": [
+        {
+          "tick": 10569,
+          "step": "approach",
+          "checkpoint": "evac-point",
+          "menu": null,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 3/4 at the trucks \u00b7 12\u00a0m",
+          "player": {
+            "x": 468.7913818359375,
+            "z": -1.076715350151062,
+            "hp": 100,
+            "weapon": "weapon.shotgun"
+          },
+          "driving": {
+            "id": 667,
+            "x": 468.7913818359375,
+            "z": -1.076715350151062,
+            "yaw": -0.008891778916519329,
+            "speed": 1.2813588847506034e-08,
+            "forwardSpeed": -1.6949857654754547e-09
+          },
+          "enemies": [
+            {
+              "id": 925,
+              "d": 3.673669657088361,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.14245296761044,
+              "z": -0.6510783413030214
+            },
+            {
+              "id": 851,
+              "d": 3.6741096054365707,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 465.92585187485514,
+              "z": -3.376241265399813
+            },
+            {
+              "id": 854,
+              "d": 3.860646349143873,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 465.1578381536977,
+              "z": -2.381303615625316
+            },
+            {
+              "id": 935,
+              "d": 4.241694728929753,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 464.5794573346604,
+              "z": -1.5783787522166475
+            },
+            {
+              "id": 926,
+              "d": 4.498304182040517,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 464.9329896860342,
+              "z": -3.389192492033298
+            },
+            {
+              "id": 869,
+              "d": 4.761776745613128,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 465.32673950433497,
+              "z": -4.343330002835046
+            },
+            {
+              "id": 927,
+              "d": 4.807343573272233,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 464.2368050297868,
+              "z": -2.6150203746361265
+            },
+            {
+              "id": 906,
+              "d": 5.293600358642375,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.62933573564635,
+              "z": -5.322144564806774
+            },
+            {
+              "id": 849,
+              "d": 5.457718632148196,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 464.34015098076895,
+              "z": -4.234758500852626
+            },
+            {
+              "id": 879,
+              "d": 6.113627622801917,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 465.6293128167989,
+              "z": -6.309091696371827
+            },
+            {
+              "id": 910,
+              "d": 6.149748466314432,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 464.64608258580375,
+              "z": -5.61939080914847
+            },
+            {
+              "id": 928,
+              "d": 6.173706793920708,
+              "hp": 186,
+              "max": 240,
+              "drawn": true,
+              "x": 462.91339982121553,
+              "z": -2.9645667775435376
+            },
+            {
+              "id": 919,
+              "d": 6.282803052479618,
+              "hp": 90,
+              "max": 90,
+              "drawn": true,
+              "x": 463.3841532547747,
+              "z": -4.27601109567117
+            },
+            {
+              "id": 864,
+              "d": 6.360575979342627,
+              "hp": 90,
+              "max": 90,
+              "drawn": true,
+              "x": 463.9515553925147,
+              "z": -5.203821695586795
+            },
+            {
+              "id": 914,
+              "d": 6.775829747691769,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 464.7551632364259,
+              "z": -6.519215528071264
+            },
+            {
+              "id": 681,
+              "d": 7.004963983612242,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 463.9428895532886,
+              "z": -6.132567701317834
+            },
+            {
+              "id": 917,
+              "d": 7.015727019837721,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.36250010803514,
+              "z": -7.1974339119653825
+            },
+            {
+              "id": 929,
+              "d": 7.034938894660196,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 463.0432942082113,
+              "z": -5.132557294258831
+            },
+            {
+              "id": 937,
+              "d": 7.099602171424974,
+              "hp": 5,
+              "max": 45,
+              "drawn": true,
+              "x": 462.4758255776916,
+              "z": -4.319877409227513
+            },
+            {
+              "id": 853,
+              "d": 7.452274467317813,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 465.8880212210653,
+              "z": -7.9401614143556785
+            },
+            {
+              "id": 933,
+              "d": 8.532468020661902,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.50507735937344,
+              "z": 6.7974965730151595
+            },
+            {
+              "id": 936,
+              "d": 9.331807292525108,
+              "hp": 240,
+              "max": 240,
+              "drawn": true,
+              "x": 459.47943375769455,
+              "z": -0.4682333595118678
+            },
+            {
+              "id": 934,
+              "d": 12.315312579340118,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 464.4993322809181,
+              "z": 10.466474613810842
+            }
+          ],
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "noProgressSeconds": 2.6166666666666667
+        }
+      ],
+      "firstAllBoarded": [],
+      "firstBridge": [
+        {
+          "tick": 10603,
+          "text": "Drive onto the bridge \u00b7 26\u00a0m",
+          "distance": 26,
+          "player": {
+            "x": 468.7913818359375,
+            "z": -1.076715350151062
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "warningCaptures": [
+        {
+          "file": "scream-L9-5153-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 5153,
+            "sourceId": 793,
+            "attackId": 21,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1590634765,
+              "x": 214.48037719726562,
+              "z": -319.41046142578125
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-5477-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 5477,
+            "sourceId": 833,
+            "attackId": 36,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-5501-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 5501,
+            "sourceId": 793,
+            "attackId": 38,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1590634765,
+              "x": 214.48037719726562,
+              "z": -319.41046142578125
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-5849-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 5849,
+            "sourceId": 793,
+            "attackId": 53,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1590634765,
+              "x": 214.48037719726562,
+              "z": -319.41046142578125
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-7079-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7079,
+            "sourceId": 919,
+            "attackId": 54,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 669,
+              "x": 465.3119517206736,
+              "z": -0.9535688006059713
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-7081-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7081,
+            "sourceId": 919,
+            "attackId": 55,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 669,
+              "x": 464.82424737242616,
+              "z": -0.4247266460162329
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-7091-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7091,
+            "sourceId": 919,
+            "attackId": 56,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 669,
+              "x": 463.22300641662054,
+              "z": 1.308208375100401
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-7101-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7101,
+            "sourceId": 919,
+            "attackId": 57,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 669,
+              "x": 463.2813312373713,
+              "z": 1.242123134333182
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        }
+      ],
+      "videos": [],
+      "handover": [
+        {
+          "t": "2026-11-15T19:44:36.157Z",
+          "handoverWithoutResult": "L9"
+        }
+      ]
+    },
+    {
+      "name": "l9-high-shortcut",
+      "path": "test-results/b108/l9-high-shortcut",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 473,
+          "maxNoProgressSeconds": 10.916666666666666,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [],
+      "videos": [],
+      "handover": []
+    },
+    {
+      "name": "l9-seed2-valid",
+      "path": "test-results/b108/l9-seed2-valid",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 202,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 5.048,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 26,
+            "weapon.fire-axe": 9
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 10601,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [
+        {
+          "tick": 9193,
+          "text": "Cover the survivors \u00b7 Hatch defense 16 s \u00b7 4/4 at the trucks \u00b7 12\u00a0m",
+          "distance": 12,
+          "player": {
+            "x": 468.7957458496094,
+            "z": -1.2828248739242554
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "firstBridge": [
+        {
+          "tick": 10150,
+          "text": "Drive onto the bridge \u00b7 26\u00a0m",
+          "distance": 26,
+          "player": {
+            "x": 468.742431640625,
+            "z": -1.278527021408081
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "warningCaptures": [
+        {
+          "file": "scream-L9-6046-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6046,
+            "sourceId": 843,
+            "attackId": 7,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1553964713,
+              "x": 234.96914672851562,
+              "z": -318.5618896484375
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-6394-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6394,
+            "sourceId": 843,
+            "attackId": 14,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1553964713,
+              "x": 234.96914672851562,
+              "z": -318.5618896484375
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-6485-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6485,
+            "sourceId": 866,
+            "attackId": 17,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-6724-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6724,
+            "sourceId": 863,
+            "attackId": 23,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1104106481,
+              "x": 366.9847717285156,
+              "z": -313.6466064453125
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-6742-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6742,
+            "sourceId": 843,
+            "attackId": 26,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1553964713,
+              "x": 234.96914672851562,
+              "z": -318.5618896484375
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [],
+      "handover": [
+        {
+          "t": "2026-11-15T20:03:20.127Z",
+          "handoverWithoutResult": "L9"
+        },
+        {
+          "t": "2026-11-15T20:03:22.796Z",
+          "handover": "L9",
+          "to": "L10",
+          "firstPlayableTick": 1,
+          "objective": "Get away from the river \u00b7 101\u00a0m"
+        }
+      ]
+    },
+    {
+      "name": "l9-low-road",
+      "path": "test-results/b108/l9-low-road",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 225,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 8.911,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 23
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 9,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0100750923156738,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 11983,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [
+        {
+          "tick": 11058,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 3/4 at the trucks \u00b7 9\u00a0m",
+          "distance": 9,
+          "player": {
+            "x": 465.47552490234375,
+            "z": -3.6332035064697266
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "lastIncompleteDefense": [
+        {
+          "tick": 11566,
+          "step": "approach",
+          "checkpoint": "evac-point",
+          "menu": null,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 3/4 at the trucks \u00b7 9\u00a0m",
+          "player": {
+            "x": 465.47552490234375,
+            "z": -3.6332035064697266,
+            "hp": 90,
+            "weapon": "weapon.shotgun"
+          },
+          "driving": {
+            "id": 667,
+            "x": 465.47552490234375,
+            "z": -3.6332035064697266,
+            "yaw": 0.014515493657283945,
+            "speed": 2.29224896649923e-09,
+            "forwardSpeed": -8.891087957466645e-10
+          },
+          "enemies": [
+            {
+              "id": 844,
+              "d": 3.7371950432972194,
+              "hp": 240,
+              "max": 240,
+              "drawn": true,
+              "x": 462.5970360363863,
+              "z": -6.016673380456906
+            },
+            {
+              "id": 889,
+              "d": 3.7426904277591677,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 461.81857793496783,
+              "z": -4.429740081800826
+            },
+            {
+              "id": 897,
+              "d": 4.3193961503954785,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 461.1588624629895,
+              "z": -3.786854047371089
+            },
+            {
+              "id": 865,
+              "d": 4.324938381758063,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 461.4718296789275,
+              "z": -5.268904140448365
+            },
+            {
+              "id": 886,
+              "d": 4.747810072646228,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 462.0235860980025,
+              "z": -6.89293033198811
+            },
+            {
+              "id": 855,
+              "d": 4.782386137649222,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 461.4273306249524,
+              "z": -6.179443923648608
+            },
+            {
+              "id": 890,
+              "d": 4.992149379339582,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 460.6068615377993,
+              "z": -4.736685481122447
+            },
+            {
+              "id": 681,
+              "d": 5.452021923282243,
+              "hp": 26.708743117868003,
+              "max": 45,
+              "drawn": true,
+              "x": 460.48906594496015,
+              "z": -5.837692136124918
+            },
+            {
+              "id": 899,
+              "d": 5.677301027409289,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 462.2842653838814,
+              "z": -8.328691728331863
+            },
+            {
+              "id": 902,
+              "d": 5.768352769343023,
+              "hp": 25,
+              "max": 45,
+              "drawn": true,
+              "x": 461.44067916968646,
+              "z": -7.7555709798088746
+            },
+            {
+              "id": 904,
+              "d": 5.794022610778757,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 460.7157017606837,
+              "z": -6.93695617189931
+            },
+            {
+              "id": 891,
+              "d": 6.512977902840247,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 461.8537425191804,
+              "z": -9.046296294506243
+            },
+            {
+              "id": 846,
+              "d": 6.668801755339371,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 462.5514170063073,
+              "z": -9.62674251646664
+            }
+          ],
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "noProgressSeconds": 8.46
+        }
+      ],
+      "firstAllBoarded": [],
+      "firstBridge": [
+        {
+          "tick": 11601,
+          "text": "Drive onto the bridge \u00b7 30\u00a0m",
+          "distance": 30,
+          "player": {
+            "x": 465.4516296386719,
+            "z": -3.63810396194458
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "warningCaptures": [
+        {
+          "file": "scream-L9-11083-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11083,
+            "sourceId": 851,
+            "attackId": 28,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 460.98512415112606,
+              "z": -4.087517717240977
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-11083-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11083,
+            "sourceId": 887,
+            "attackId": 29,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 460.98512415112606,
+              "z": -4.087517717240977
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-11091-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11091,
+            "sourceId": 851,
+            "attackId": 32,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 460.5722235063423,
+              "z": -1.784770770286705
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-11091-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11091,
+            "sourceId": 887,
+            "attackId": 33,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 460.5722235063423,
+              "z": -1.784770770286705
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-11101-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11101,
+            "sourceId": 851,
+            "attackId": 36,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 459.7807084421532,
+              "z": -0.867852013026444
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-11101-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11101,
+            "sourceId": 887,
+            "attackId": 37,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 459.7807084421532,
+              "z": -0.867852013026444
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-11111-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11111,
+            "sourceId": 851,
+            "attackId": 40,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 460.77272511317847,
+              "z": -2.0170388501818075
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-11111-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11111,
+            "sourceId": 887,
+            "attackId": 41,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 460.77272511317847,
+              "z": -2.0170388501818075
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "low",
+          "zoom": 1.5
+        }
+      ],
+      "videos": [],
+      "handover": [
+        {
+          "t": "2026-11-15T20:07:27.481Z",
+          "handoverWithoutResult": "L9"
+        }
+      ]
+    },
+    {
+      "name": "l9-native-video",
+      "path": "test-results/b108/l9-native-video",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 213,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 5.583,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 18
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 11542,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [
+        {
+          "tick": 10336,
+          "text": "Cover the survivors \u00b7 Hatch defense 14 s \u00b7 4/4 at the trucks \u00b7 12\u00a0m",
+          "distance": 12,
+          "player": {
+            "x": 468.788330078125,
+            "z": -4.007727146148682
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "firstBridge": [
+        {
+          "tick": 11170,
+          "text": "Drive onto the bridge \u00b7 27\u00a0m",
+          "distance": 27,
+          "player": {
+            "x": 468.788330078125,
+            "z": -4.007727146148682
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "warningCaptures": [
+        {
+          "file": "scream-L9-6264-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6264,
+            "sourceId": 869,
+            "attackId": 13,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1672246689,
+              "x": 344.7738952636719,
+              "z": -310.9542236328125
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-6612-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6612,
+            "sourceId": 869,
+            "attackId": 20,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 1672246689,
+              "x": 344.7738952636719,
+              "z": -310.9542236328125
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-11813-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11813,
+            "sourceId": 873,
+            "attackId": 27,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [
+        "test-results/b108/l9-native-video/video/page@c9cda3cead9ca51bb571704a7f0d0e37.webm"
+      ],
+      "handover": [
+        {
+          "t": "2026-11-15T20:17:14.232Z",
+          "handoverWithoutResult": "L9"
+        },
+        {
+          "t": "2026-11-15T20:17:16.849Z",
+          "handover": "L9",
+          "to": "L10",
+          "firstPlayableTick": 0,
+          "objective": "Get away from the river \u00b7 101\u00a0m"
+        }
+      ]
+    },
+    {
+      "name": "l9-shortcut-observed",
+      "path": "test-results/b108/l9-shortcut-observed",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 197,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 4.816666666666666,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 38
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 10217,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [
+        {
+          "tick": 9142,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 1/4 at the trucks \u00b7 12\u00a0m",
+          "distance": 12,
+          "player": {
+            "x": 468.7815246582031,
+            "z": 0.8577407002449036
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "lastIncompleteDefense": [
+        {
+          "tick": 9906,
+          "step": "approach",
+          "checkpoint": "evac-point",
+          "menu": null,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 3/4 at the trucks \u00b7 12\u00a0m",
+          "player": {
+            "x": 468.7815246582031,
+            "z": 0.8577407002449036,
+            "hp": 90,
+            "weapon": "weapon.shotgun"
+          },
+          "driving": {
+            "id": 667,
+            "x": 468.7815246582031,
+            "z": 0.8577407002449036,
+            "yaw": 0.01617578710248446,
+            "speed": 1.4640333626722102e-08,
+            "forwardSpeed": 9.775739400483824e-10
+          },
+          "enemies": [
+            {
+              "id": 796,
+              "d": 1.5996972369795466,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 468.6332414289837,
+              "z": -0.7350691860667848
+            },
+            {
+              "id": 833,
+              "d": 1.7722249433974295,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 467.9833264653582,
+              "z": -0.7245553829642657
+            },
+            {
+              "id": 844,
+              "d": 1.7722249433974295,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 467.9833264653582,
+              "z": -0.7245553829642657
+            },
+            {
+              "id": 815,
+              "d": 2.13717833837047,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 467.3334115017327,
+              "z": -0.7140415798617465
+            },
+            {
+              "id": 839,
+              "d": 2.13717833837047,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 467.3334115017327,
+              "z": -0.7140415798617465
+            },
+            {
+              "id": 842,
+              "d": 3.7980629469129705,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.6816887829681,
+              "z": -1.336866256665383
+            },
+            {
+              "id": 898,
+              "d": 3.8562609059219777,
+              "hp": 90,
+              "max": 90,
+              "drawn": true,
+              "x": 465.1166393868931,
+              "z": -0.34199432161493293
+            },
+            {
+              "id": 914,
+              "d": 3.9080495153530292,
+              "hp": 450,
+              "max": 450,
+              "drawn": true,
+              "x": 464.89219572142,
+              "z": 1.239802784143156
+            },
+            {
+              "id": 912,
+              "d": 4.602615517222146,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 464.70121972566034,
+              "z": -1.27185580070101
+            },
+            {
+              "id": 891,
+              "d": 4.707793966844633,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.8724876670949,
+              "z": -2.843722229276712
+            },
+            {
+              "id": 811,
+              "d": 4.713108400419087,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.1435727995498,
+              "z": -2.1387067076402895
+            },
+            {
+              "id": 877,
+              "d": 4.881152467409654,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 464.11845253062944,
+              "z": -0.5849677745152568
+            },
+            {
+              "id": 861,
+              "d": 5.111956651327686,
+              "hp": 90,
+              "max": 90,
+              "drawn": true,
+              "x": 463.7059409113915,
+              "z": 0.24901216127607806
+            },
+            {
+              "id": 883,
+              "d": 5.5087791523336245,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 463.28612184969234,
+              "z": 1.2414016461297979
+            },
+            {
+              "id": 885,
+              "d": 5.58076804726076,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 465.8793168816251,
+              "z": -3.9090362002295196
+            },
+            {
+              "id": 814,
+              "d": 5.746876112924501,
+              "hp": 180,
+              "max": 180,
+              "drawn": true,
+              "x": 463.9329484083613,
+              "z": -2.227367629582776
+            },
+            {
+              "id": 889,
+              "d": 5.870296620271036,
+              "hp": 240,
+              "max": 240,
+              "drawn": true,
+              "x": 464.79096268861844,
+              "z": -3.44758130593186
+            },
+            {
+              "id": 876,
+              "d": 5.898122453746463,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 463.1851296727654,
+              "z": -1.0045728196426158
+            },
+            {
+              "id": 859,
+              "d": 6.1601941115146435,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 462.6829467249521,
+              "z": -0.011361528266432126
+            },
+            {
+              "id": 913,
+              "d": 6.375250281894425,
+              "hp": 90,
+              "max": 90,
+              "drawn": true,
+              "x": 465.3507707171679,
+              "z": -4.515688703112533
+            },
+            {
+              "id": 907,
+              "d": 6.592527770586401,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 462.81501944018135,
+              "z": -1.9462275394596384
+            },
+            {
+              "id": 903,
+              "d": 6.787438537345246,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 463.4857789089571,
+              "z": -3.3877744460691694
+            },
+            {
+              "id": 911,
+              "d": 6.839869279400125,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 462.12103493825464,
+              "z": -0.6984368120402784
+            },
+            {
+              "id": 828,
+              "d": 6.913307174423122,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 465.7181594451055,
+              "z": -5.339807981218899
+            },
+            {
+              "id": 831,
+              "d": 6.964477807844852,
+              "hp": 59,
+              "max": 60,
+              "drawn": true,
+              "x": 464.4296102049762,
+              "z": -4.579610835912937
+            },
+            {
+              "id": 840,
+              "d": 7.02542292251535,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 462.7877261469517,
+              "z": -2.8070848954313954
+            },
+            {
+              "id": 827,
+              "d": 7.0960644005983236,
+              "hp": 59,
+              "max": 60,
+              "drawn": true,
+              "x": 463.7358263175568,
+              "z": -4.13175408706953
+            },
+            {
+              "id": 843,
+              "d": 7.126658540341558,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 464.9795979158104,
+              "z": -5.170079386328886
+            },
+            {
+              "id": 910,
+              "d": 7.161310502781205,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 462.0461084718294,
+              "z": -1.5750636308881192
+            },
+            {
+              "id": 837,
+              "d": 7.700552696183069,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 462.883122018936,
+              "z": -4.092749995815305
+            },
+            {
+              "id": 858,
+              "d": 7.826721687143901,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 464.2437202635499,
+              "z": -5.5192416302837435
+            },
+            {
+              "id": 808,
+              "d": 7.861056227418918,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 462.23700432970116,
+              "z": -3.497194279805469
+            },
+            {
+              "id": 886,
+              "d": 8.050929768455152,
+              "hp": 240,
+              "max": 240,
+              "drawn": true,
+              "x": 465.14058794551084,
+              "z": -6.3228616415344305
+            },
+            {
+              "id": 893,
+              "d": 8.2515342643561,
+              "hp": 240,
+              "max": 240,
+              "drawn": true,
+              "x": 463.1871597108052,
+              "z": -5.20780944390262
+            },
+            {
+              "id": 817,
+              "d": 8.54856311879662,
+              "hp": 45,
+              "max": 45,
+              "drawn": true,
+              "x": 464.13830361318935,
+              "z": -6.3198932917604695
+            },
+            {
+              "id": 820,
+              "d": 8.777005963242363,
+              "hp": 60,
+              "max": 60,
+              "drawn": true,
+              "x": 465.74145299540527,
+              "z": -7.375958223315847
+            }
+          ],
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "noProgressSeconds": 1.2166666666666666
+        }
+      ],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [
+        {
+          "file": "scream-L9-7796-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7796,
+            "sourceId": 865,
+            "attackId": 2,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-7982-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7982,
+            "sourceId": 865,
+            "attackId": 4,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-8054-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 8054,
+            "sourceId": 865,
+            "attackId": 6,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-8221-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 8221,
+            "sourceId": 861,
+            "attackId": 25,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 670,
+              "x": 463.9314741649247,
+              "z": 2.2439641982902616
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-8221-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 8221,
+            "sourceId": 865,
+            "attackId": 26,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-8222-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 8222,
+            "sourceId": 865,
+            "attackId": 27,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-8223-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 8223,
+            "sourceId": 865,
+            "attackId": 28,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "scream-L9-8225-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 8225,
+            "sourceId": 865,
+            "attackId": 29,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1.5
+        }
+      ],
+      "videos": [
+        "test-results/b108/l9-shortcut-observed/video/page@96f30f9852850979621af9b73f0006f5.webm"
+      ],
+      "handover": [
+        {
+          "t": "2026-11-15T20:40:20.415Z",
+          "handoverWithoutResult": "L9"
+        },
+        {
+          "t": "2026-11-15T20:40:23.008Z",
+          "handover": "L9",
+          "to": "L10",
+          "firstPlayableTick": 1,
+          "objective": "Get away from the river \u00b7 101\u00a0m"
+        }
+      ]
+    },
+    {
+      "name": "l9-moving-zoom1",
+      "path": "test-results/b108/l9-moving-zoom1",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 203,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 15.265,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 28
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 10500,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [
+        {
+          "tick": 9270,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 3/4 at the trucks \u00b7 12\u00a0m",
+          "distance": 12,
+          "player": {
+            "x": 468.78753662109375,
+            "z": 0.9485940337181091
+          },
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "reason": "hud-change"
+        }
+      ],
+      "lastIncompleteDefense": [
+        {
+          "tick": 10144,
+          "step": "approach",
+          "checkpoint": "evac-point",
+          "menu": null,
+          "text": "Cover the survivors \u00b7 Defense complete \u00b7 3/4 at the trucks \u00b7 12\u00a0m",
+          "player": {
+            "x": 468.78753662109375,
+            "z": 0.9485940337181091,
+            "hp": 100,
+            "weapon": "weapon.shotgun"
+          },
+          "driving": {
+            "id": 667,
+            "x": 468.78753662109375,
+            "z": 0.9485940337181091,
+            "yaw": 0.011963408178739416,
+            "speed": 1.6456873858824156e-17,
+            "forwardSpeed": -5.301845784731984e-25
+          },
+          "enemies": [
+            {
+              "id": 832,
+              "d": 2.137178338370513,
+              "hp": 59,
+              "max": 60,
+              "drawn": true,
+              "x": 467.3460572353318,
+              "z": -0.62927428474939
+            }
+          ],
+          "marker": {
+            "x": 470,
+            "y": 0,
+            "z": 0
+          },
+          "noProgressSeconds": 14.566
+        }
+      ],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [
+        {
+          "file": "scream-L9-7601-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7601,
+            "sourceId": 895,
+            "attackId": 2,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 671,
+              "x": 459.9536627870538,
+              "z": 2.6022849264089984
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-7611-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7611,
+            "sourceId": 895,
+            "attackId": 3,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 671,
+              "x": 462.2487891711315,
+              "z": 1.9270062253038007
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-7621-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7621,
+            "sourceId": 895,
+            "attackId": 5,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 670,
+              "x": 463.0487340334886,
+              "z": 1.9174590266985048
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-7631-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7631,
+            "sourceId": 895,
+            "attackId": 8,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 670,
+              "x": 463.0487340334886,
+              "z": 1.9174590266985048
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-7641-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7641,
+            "sourceId": 895,
+            "attackId": 10,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 670,
+              "x": 463.0487340334886,
+              "z": 1.9174590266985048
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-7651-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7651,
+            "sourceId": 895,
+            "attackId": 12,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 670,
+              "x": 463.0487340334886,
+              "z": 1.9174590266985048
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-9283-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 9283,
+            "sourceId": 854,
+            "attackId": 17,
+            "special": "scream",
+            "duration": 0.8,
+            "target": {
+              "id": 672,
+              "x": 464.2983099406149,
+              "z": 0.4828214283420822
+            },
+            "level": "L9",
+            "warning": "scream"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L9-9283-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 9283,
+            "sourceId": 867,
+            "attackId": 18,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L9",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [
+        "test-results/b108/l9-moving-zoom1/video/page@61400d12a1303c279cd1b9f8809fd667.webm"
+      ],
+      "handover": [
+        {
+          "t": "2026-11-15T20:54:10.995Z",
+          "handoverWithoutResult": "L9"
+        },
+        {
+          "t": "2026-11-15T20:54:13.772Z",
+          "handover": "L9",
+          "to": "L10",
+          "firstPlayableTick": 4,
+          "objective": "Get away from the river \u00b7 101\u00a0m"
+        }
+      ]
+    },
+    {
+      "name": "l6-video",
+      "path": "test-results/b108/l6-video",
+      "runs": [
+        {
+          "level": "L6",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 240,
+          "simSeconds": 237,
+          "maxNoProgressSeconds": 32.633,
+          "deaths": 4,
+          "assists": 1,
+          "attacks": {
+            "weapon.army-mg": 1251,
+            "weapon.fire-axe": 20
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "steps": [
+            {
+              "id": "shelter",
+              "text": "Look around the shelter \u00b7 rest while you can",
+              "tick": 11,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "stop",
+              "text": "Stop the infected \u00b7 Retreat in 0:36",
+              "tick": 2003,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "retreat",
+              "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+              "tick": 3258,
+              "marker": {
+                "anchor": "l6-next",
+                "ring": {
+                  "x": 242,
+                  "y": 0.6,
+                  "z": 15
+                },
+                "drawn": [
+                  242,
+                  0.6,
+                  15
+                ],
+                "playerY": 1.2699999809265137,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "exit",
+              "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 31\u00a0m",
+              "tick": 13289,
+              "marker": {
+                "anchor": "night-exit",
+                "ring": {
+                  "x": 273,
+                  "y": 3.9,
+                  "z": 15
+                },
+                "drawn": [
+                  273,
+                  3.9,
+                  15
+                ],
+                "playerY": 1.2699999809265137,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [
+        {
+          "file": "scream-L6-6695-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6695,
+            "sourceId": 151,
+            "attackId": 53,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 6695,
+            "activeTick": 6755,
+            "cooldownExpiry": 7655,
+            "target": {
+              "id": 16,
+              "x": 107.71783798675294,
+              "z": 14.201866798486822
+            },
+            "area": {
+              "x": 109.55275883362104,
+              "z": 14.335540347699283,
+              "radius": 8,
+              "dx": -0.999454833673544,
+              "dz": -0.03301568485717526
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-6777-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6777,
+            "sourceId": 151,
+            "attackId": 56,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 6777,
+            "activeTick": 6837,
+            "cooldownExpiry": 7737,
+            "target": {
+              "id": 16,
+              "x": 110.72456996944096,
+              "z": 14.180581502139628
+            },
+            "area": {
+              "x": 109.38766904104325,
+              "z": 13.546063434148964,
+              "radius": 8,
+              "dx": -0.7991566854720701,
+              "dz": 0.6011227761990845
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-6829-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6829,
+            "sourceId": 151,
+            "attackId": 57,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 6829,
+            "activeTick": 6889,
+            "cooldownExpiry": 7789,
+            "target": {
+              "id": 16,
+              "x": 112.63109898597213,
+              "z": 14.156181883335945
+            },
+            "area": {
+              "x": 111.46245858378654,
+              "z": 14.37668768294192,
+              "radius": 8,
+              "dx": -0.9821320564821622,
+              "dz": -0.18819304883581436
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-6877-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6877,
+            "sourceId": 151,
+            "attackId": 58,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 6877,
+            "activeTick": 6937,
+            "cooldownExpiry": 7837,
+            "target": {
+              "id": 16,
+              "x": 114.39108004226817,
+              "z": 14.166780675163034
+            },
+            "area": {
+              "x": 112.76644898468207,
+              "z": 15.043579363842381,
+              "radius": 8,
+              "dx": -0.5479095847941872,
+              "dz": -0.8365375585654607
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-6933-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6933,
+            "sourceId": 151,
+            "attackId": 59,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 6933,
+            "activeTick": 6993,
+            "cooldownExpiry": 7893,
+            "target": {
+              "id": 16,
+              "x": 116.44202697185344,
+              "z": 14.293717139146151
+            },
+            "area": {
+              "x": 112.81069787305908,
+              "z": 15.218364276732624,
+              "radius": 8,
+              "dx": 0.8172710806341358,
+              "dz": -0.5762533997809571
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-7118-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7118,
+            "sourceId": 151,
+            "attackId": 66,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 7118,
+            "activeTick": 7178,
+            "cooldownExpiry": 8078,
+            "target": {
+              "id": 1,
+              "x": 128.5607909397105,
+              "z": 12.066408233263132
+            },
+            "area": {
+              "x": 119.18615135163598,
+              "z": 14.823829165184629,
+              "radius": 8,
+              "dx": 0.9872418690106989,
+              "dz": -0.15922779930735065
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-7226-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7226,
+            "sourceId": 151,
+            "attackId": 69,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-7848-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7848,
+            "sourceId": 150,
+            "attackId": 89,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 7848,
+            "activeTick": 7908,
+            "cooldownExpiry": 8808,
+            "target": {
+              "id": 16,
+              "x": 111.96793677201548,
+              "z": 14.231882117060229
+            },
+            "area": {
+              "x": 107.13300840851873,
+              "z": 13.520601465387456,
+              "radius": 8,
+              "dx": 0.9721059300281473,
+              "dz": 0.23454223671678173
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [
+        "test-results/b108/l6-video/video/page@7b7b26e7b34a2d20d7e6c368ba2e6ef5.webm"
+      ],
+      "handover": []
+    },
+    {
+      "name": "l6-long-video",
+      "path": "test-results/b108/l6-long-video",
+      "runs": [
+        {
+          "level": "L6",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 478,
+          "maxNoProgressSeconds": 32.231,
+          "deaths": 18,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 77,
+            "weapon.army-mg": 1832,
+            "weapon.fire-axe": 19
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "steps": [
+            {
+              "id": "shelter",
+              "text": "Look around the shelter \u00b7 rest while you can",
+              "tick": 11,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "stop",
+              "text": "Stop the infected \u00b7 Retreat in 0:36",
+              "tick": 1998,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "retreat",
+              "text": "Cover the retreat through the tunnel \u00b7 239\u00a0m",
+              "tick": 3256,
+              "marker": {
+                "anchor": "l6-next",
+                "ring": {
+                  "x": 242,
+                  "y": 0.6,
+                  "z": 15
+                },
+                "drawn": [
+                  242,
+                  0.6,
+                  15
+                ],
+                "playerY": 1.3200000524520874,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "exit",
+              "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 33\u00a0m",
+              "tick": 18986,
+              "marker": {
+                "anchor": "night-exit",
+                "ring": {
+                  "x": 273,
+                  "y": 3.9,
+                  "z": 15
+                },
+                "drawn": [
+                  273,
+                  3.9,
+                  15
+                ],
+                "playerY": 1.2699999809265137,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [
+        {
+          "file": "scream-L6-11212-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11212,
+            "sourceId": 143,
+            "attackId": 525,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-11213-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11213,
+            "sourceId": 143,
+            "attackId": 526,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-11214-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11214,
+            "sourceId": 143,
+            "attackId": 527,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-14793-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 14793,
+            "sourceId": 143,
+            "attackId": 933,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 14793,
+            "activeTick": 14853,
+            "cooldownExpiry": 15753,
+            "target": {
+              "id": 1,
+              "x": 111.19669342041016,
+              "z": 13.072318077087402
+            },
+            "area": {
+              "x": 108.16854195585704,
+              "z": 14.877205359155688,
+              "radius": 8,
+              "dx": -0.6319824710340103,
+              "dz": -0.7749826812940701
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-14841-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 14841,
+            "sourceId": 143,
+            "attackId": 937,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 14841,
+            "activeTick": 14901,
+            "cooldownExpiry": 15801,
+            "target": {
+              "id": 1,
+              "x": 114.79654693603516,
+              "z": 13.072318077087402
+            },
+            "area": {
+              "x": 107.42106173307212,
+              "z": 14.404004298755225,
+              "radius": 8,
+              "dx": 0.9074135937732959,
+              "dz": -0.420238705779741
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-14889-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 14889,
+            "sourceId": 143,
+            "attackId": 943,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 14889,
+            "activeTick": 14949,
+            "cooldownExpiry": 15849,
+            "target": {
+              "id": 1,
+              "x": 117.27102164412896,
+              "z": 10.890458650956667
+            },
+            "area": {
+              "x": 107.42106173307212,
+              "z": 14.404004298755225,
+              "radius": 8,
+              "dx": 0.9141932267422868,
+              "dz": -0.40527860069158067
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-15201-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 15201,
+            "sourceId": 143,
+            "attackId": 954,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 15201,
+            "activeTick": 15261,
+            "cooldownExpiry": 16161,
+            "target": {
+              "id": 1,
+              "x": 132.75749626240977,
+              "z": 10.106426810405164
+            },
+            "area": {
+              "x": 121.61141879540212,
+              "z": 13.985708908564263,
+              "radius": 8,
+              "dx": 0.9961889031299123,
+              "dz": -0.08722195412178393
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L6-15501-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 15501,
+            "sourceId": 143,
+            "attackId": 960,
+            "special": "alpha.roar",
+            "move": "alpha.roar",
+            "duration": 1,
+            "startTick": 15501,
+            "activeTick": 15561,
+            "cooldownExpiry": 16461,
+            "target": {
+              "id": 1,
+              "x": 143.74627685546875,
+              "z": 14.699498176574707
+            },
+            "area": {
+              "x": 135.7852171361612,
+              "z": 14.44156027901823,
+              "radius": 8,
+              "dx": 0.9994755346644707,
+              "dz": 0.03238295241590191
+            },
+            "level": "L6",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [
+        "test-results/b108/l6-long-video/video/page@826d83df458aa5e52d4cc200791bde17.webm"
+      ],
+      "handover": []
+    },
+    {
+      "name": "l10-video",
+      "path": "test-results/b108/l10-video",
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 360,
+          "simSeconds": 357,
+          "maxNoProgressSeconds": 13.474,
+          "deaths": 13,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 394
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 10,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 64\u00a0m",
+              "tick": 1948,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [
+        {
+          "file": "scream-L10-4757-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 4757,
+            "sourceId": 124,
+            "attackId": 47,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-6241-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6241,
+            "sourceId": 124,
+            "attackId": 85,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-7592-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7592,
+            "sourceId": 124,
+            "attackId": 117,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-8858-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 8858,
+            "sourceId": 124,
+            "attackId": 146,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-10053-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 10053,
+            "sourceId": 124,
+            "attackId": 173,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-11395-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11395,
+            "sourceId": 124,
+            "attackId": 203,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-12760-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 12760,
+            "sourceId": 124,
+            "attackId": 234,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-14002-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 14002,
+            "sourceId": 124,
+            "attackId": 261,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [
+        "test-results/b108/l10-video/video/page@c518c4d7b0cb6ed9bfd93d95fd3c7e31.webm"
+      ],
+      "handover": []
+    },
+    {
+      "name": "l10-seed2-video",
+      "path": "test-results/b108/l10-seed2-video",
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 477,
+          "maxNoProgressSeconds": 13.85,
+          "deaths": 18,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 539
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 10,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 64\u00a0m",
+              "tick": 1992,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [
+        {
+          "file": "scream-L10-4702-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 4702,
+            "sourceId": 124,
+            "attackId": 46,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-6352-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 6352,
+            "sourceId": 124,
+            "attackId": 81,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-7729-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 7729,
+            "sourceId": 124,
+            "attackId": 110,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-9247-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 9247,
+            "sourceId": 124,
+            "attackId": 148,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-10719-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 10719,
+            "sourceId": 124,
+            "attackId": 177,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-11907-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 11907,
+            "sourceId": 124,
+            "attackId": 200,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-13290-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 13290,
+            "sourceId": 124,
+            "attackId": 227,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L10-14795-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 14795,
+            "sourceId": 124,
+            "attackId": 257,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L10",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [
+        "test-results/b108/l10-seed2-video/video/page@c8750a186d0f5473ad3dbb9c8edb6f91.webm"
+      ],
+      "handover": []
+    },
+    {
+      "name": "l4-video",
+      "path": "test-results/b108/l4-video",
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 180,
+          "simSeconds": 176,
+          "maxNoProgressSeconds": 29.735,
+          "deaths": 7,
+          "assists": 1,
+          "attacks": {
+            "weapon.army-mg": 998
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 12,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1829,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2174,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "renderer": "webgpu",
+      "firstDefenseComplete": [],
+      "lastIncompleteDefense": [],
+      "firstAllBoarded": [],
+      "firstBridge": [],
+      "warningCaptures": [
+        {
+          "file": "scream-L4-2533-1.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 2533,
+            "sourceId": 295,
+            "attackId": 0,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L4-3099-2.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 3099,
+            "sourceId": 295,
+            "attackId": 18,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L4-3519-3.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 3519,
+            "sourceId": 295,
+            "attackId": 39,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L4-3520-4.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 3520,
+            "sourceId": 295,
+            "attackId": 40,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L4-3521-5.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 3521,
+            "sourceId": 295,
+            "attackId": 41,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L4-3522-6.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 3522,
+            "sourceId": 295,
+            "attackId": 43,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L4-3523-7.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 3523,
+            "sourceId": 295,
+            "attackId": 44,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        },
+        {
+          "file": "scream-L4-3524-8.jpg",
+          "event": {
+            "type": "telegraph",
+            "tick": 3524,
+            "sourceId": 295,
+            "attackId": 45,
+            "special": "alpha.roar",
+            "duration": 0.6,
+            "level": "L4",
+            "warning": "alpha-roar"
+          },
+          "quality": "high",
+          "zoom": 1
+        }
+      ],
+      "videos": [
+        "test-results/b108/l4-video/video/page@1cf0917e2357a1f93efdd65287db7927.webm"
+      ],
+      "handover": []
+    }
+  ],
+  "findings": [
+    {
+      "severity": "P1",
+      "kind": "evacuation timing",
+      "run": "l9-high-road-webgpu",
+      "tick": 10569,
+      "defenseCompleteTick": 8859,
+      "incompleteSecondsLowerBound": 28.5,
+      "evidence": "test-results/b108/l9-high-road-webgpu/log-campaign.jsonl",
+      "contextCapture": "test-results/b108/l9-high-road-webgpu/captures/campaign-L9-t8116.jpg"
+    },
+    {
+      "severity": "P2",
+      "kind": "courier crowd readability",
+      "tick": 8139,
+      "capture": "test-results/b108/l4-video/captures/campaign-L4-t8139.jpg",
+      "sequence": "test-results/b108/review/l4-sequence.jpg"
+    }
+  ],
+  "openAcceptance": [
+    "ordinary screamer moving HIGH zoom-1 noticeability in L6/L9/L10",
+    "all-three-truck follow-camera furniture clearance",
+    "guard-versus-courier attribution of evacuee release"
+  ],
+  "shortcutObserver": {
+    "path": "test-results/b108/l9-shortcut-observed/observer.jsonl",
+    "runtimeSeed": 1,
+    "defenseHudTick": 9142,
+    "firstFourEvacuatedTick": 9922,
+    "seconds": 13,
+    "humanIds": [
+      669,
+      670,
+      671,
+      672
+    ],
+    "allHumanHP": 100,
+    "released": {
+      "rosa": 8737,
+      "okafor": 9397,
+      "mia": 9292
+    },
+    "rescueAttribution": "unproven"
+  },
+  "reviewedSequences": [
+    "review/l6-sequence.jpg",
+    "review/l10-sequence.jpg",
+    "review/l4-sequence.jpg",
+    "review/l9-scream-sequence.jpg",
+    "review/l9-shortcut-scream.jpg",
+    "review/l9-zoom1-source.jpg",
+    "review/l9-zoom1-source-later.jpg"
+  ],
+  "contactSheet": "contact-sheet.jpg",
+  "rawArtifactsCommitted": false
+}
