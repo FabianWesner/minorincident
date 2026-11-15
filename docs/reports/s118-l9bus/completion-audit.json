@@ -1,0 +1,29 @@
+{
+  "requirements": {
+    "sixPathsBothTiersEveryTickAsphalt": true,
+    "passengersBothTiersThreeWithin5mAndAttackWithin15s": true,
+    "offscreenSpawnBothTiersBothZooms": true,
+    "skilledCompletion": true,
+    "fullVehicleCampaignGate": true,
+    "L9ZeroThreatFlags": true,
+    "mergedMainBeforeFinalFullUnitSuite": true,
+    "typecheckAndLint": true,
+    "namedE31VerifierAndFinalConstituentChecks": true,
+    "noZombieStatChanges": true,
+    "noGateThresholdChanges": true
+  },
+  "sourceCommit": "bdbd4e7fd2e3a4a7b521f068094702ef1e5ae9d5",
+  "receipts": {
+    "final-six-driven-paths.json": "492362314fd1a31a27e8a311d76d5eda76770f725d91e94632777568c63ee690",
+    "participation.json": "3740da0cf70d03afd4d3cc9f0b94ad5aa383cb6e40e89a5f9ac400be106602ab",
+    "spawn-screen.json": "999dc37f4a7f5f826fd8313a84e31a77db289c0d768064bebe7ced040c1cfd51",
+    "final-campaign-motion.json": "b37d287cf7f1df09677a829c7dd840bd018fbabb92f821b761e30c04b74029b7",
+    "merged-suite.json": "a3321619f4a7bcfd77c2257ae57693b091c26a2ea4ed6e2c096fbf66724a6415",
+    "final-l9-threat.json": "d3ae0d34b3287250d3a5dec454bff8d81f0c1cdcdf040b3a1f47d6dc8c0a748a",
+    "e31-verification.json": "319d2ef70d546ffd315da5c692cfb2a49c5b5733938147419922e76c9125e063"
+  },
+  "limitations": [
+    "Native passenger participation uses disclosed no-fire rail input; skilled completion is separately proven.",
+    "Browser primary-route offscreen spawn checked at HIGH/LOW zoom1/1.5; further manual visual QA remains recommended."
+  ]
+}

@@ -44,7 +44,7 @@ The native HIGH/LOW probe is [bus-route.json](bus-route.json). On-road and corne
 
 ## Browser QA needed
 
-The bus routing, visibility, hatch attack timing and passenger proximity still need headless browser confirmation at HIGH and LOW. Browser QA was not attempted because the configured browser pool failed before launch.
+Automated headless browser QA is complete for offscreen spawn (HIGH/LOW, zoom1/1.5) and the unchanged full8-row vehicle motion gate. Manual WebGPU and visual review of pursuit pacing/disembarkation remain recommended; they are not claimed by the numeric receipts. Native passenger threat diagnostics use ordinary no-fire rail input; skilled completion is measured separately. No deployment performed.
 
 ## Continuation validation
 
@@ -235,3 +235,7 @@ All6bcd03efc skilled paths complete with continuous every-tick bus records,0tick
 ## Batch102 merged final unit/participation/threat checks
 
 After merging main92a039e1/7c3652d3, unchanged remote `npm test` passes exit0:28files,106passed/1skipped,233.2s within240s. Interaction sweep retained intact; no tests added or trimmed. Local typecheck/lint pass. Refreshed participation: HIGH4near/7.2s,LOW3near/7.92s; L9threat skilled/passive complete0flags (subset marker only). Receipts updated plus `merged-suite.json`. Final full browser8-row gate remains to run on merged source.
+
+## Completion audit
+
+`completion-audit.json` maps each required behavior/gate to inspected committed receipts with SHA256 hashes. All requested numeric requirements pass; original thresholds, zombie definitions and protected reference/spec files remain unchanged. Main batch102 test-file movement and save fixes are inherited from the authorized main merge.
