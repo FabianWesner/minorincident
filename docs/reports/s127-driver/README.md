@@ -33,3 +33,7 @@ The QA build completed. Playtest did not reach browser launch: tsx first failed 
 Permissions restored: remote `sh tools/remote/run.sh "$PWD" -- npm test` passed (105 passed, 1 platform skip, 128.3 s). Typecheck and lint passed. A headless pooled WebGL2 LOW L9 sample ran 60 seconds with zero issues, reaching tick 3411 at crossing-start. It did not reach hatch combat; event capture, boarder targeting and immortal runtime proof remain open. Raw evidence is in ignored `test-results/s127-proof/`.
 
 A second bounded headless LOW L9 run at zoom 1.5 completed 180 seconds, tick 10617, checkpoint `evac-point`, with zero reported issues. It observed the hull leaper encounter and rendered nearby infected, but did not emit scream captures or reach Hold the hatch. Evidence: ignored `test-results/s127-hatch/`. Visibility bypass is now limited to rendered APC-attached actors rather than all rendered L9 actors. Typecheck and lint passed after this correction.
+
+## Rail-stall fixture proof
+
+A 60-second headless WebGL2 LOW L9 run loaded `tests/fixtures/saves/qa/l9-before-rail-stall.json.gz`, reached Hold the hatch at tick 1314 and restarted the engine. The run recorded 30 shotgun attacks, damage progress during the seated hatch objective, zero deaths/assists/issues, and real L9 scream telegraph captures (including ticks 2480 and 2507). Actual render quality LOW was asserted after the save load at tick 66. Raw evidence: ignored `test-results/s127-stall/`. Per-mission Alpha roar rebinding, dual zoom captures, and immortal runtime proof remain open.

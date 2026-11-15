@@ -11,4 +11,4 @@
 | `--immortal` | off | Enables god mode and labels output `IMMORTAL / ROUTE ONLY`; use only for route diagnostics. |
 | `--levels L6-L10` | `L1-L10` | Select levels; scream capture covers screamer missions L6/L9/L10 and Alpha roars in L6/L7 when events occur. |
 
-The L9 `Hold the hatch` objective allows attacks on rendered infected while the player is seated in the APC. Rendered APC passengers remain eligible as visible boarders for escort observation. Standard combat and acceptance behavior are unchanged unless the route-only or immortal option is selected.
+The L9 `Hold the hatch` objective allows attacks on rendered infected while the player is seated in the APC. Rendered infected attached to the APC remain eligible as targets despite the hull blocking ground visibility. Standard combat and acceptance behavior are unchanged unless the route-only or immortal option is selected.
