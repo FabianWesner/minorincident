@@ -645,7 +645,7 @@ export class LevelNineDriving {
     for (const id of s.evacuated) if (!this.evacSaved.includes(id)) this.evacSaved.push(id);
     this.keepSaved();
     const passengers = this.car.entity.vehicle!.passengers ?? [];
-    // After the wait the door may hold a straggler or two (released at <= releaseThreats); the hard cap keeps fail-forward.
+    // Defence completion ends the clear-door wait; release the remaining passengers at the existing stagger.
     // A courier at the open hatch at or below half health ends the wait at once: with the crew inside, the pack bit her instead and
     // the W-only probe looped 12 deaths (each reloads evac-point and restarts the hold).
     const waited = w.tick - s.evacuationAt, courier = w.entities.get(1)!, hurt = courier.health.current <= courier.health.max * cfg.evacuation.releaseCourierHp;
@@ -761,7 +761,23 @@ export class LevelNineDriving {
       && w.solids.clear({ ...spot, y: .7 }, .35, rosa.id, false) && w.solids.clear({ x: spot.dogX, z: spot.dogZ, y: .3 }, .9, corgi.id, false);
     if (s.hugAt === null && s.hugSpot && !clear(s.hugSpot)) delete s.hugSpot;
     if (!s.hugSpot) {
-      search: for (const sign of [1, -1]) for (const along of [-1, -2, 0, 1]) for (const across of [3.5, 4.5, 5.5]) {
+      // Prefer space beside Rosa: an APC against a barrier can separate two
+      // individually clear points into different walking pockets.
+      for (const radius of [0, .8, 1.6, 2.4]) {
+        for (let i = 0; i < 8; i++) {
+          const angle = i * Math.PI / 4;
+          const x = rosa.transform.x + Math.cos(angle) * radius, z = rosa.transform.z + Math.sin(angle) * radius;
+          const candidate = { x, z, dogX: x + .7, dogZ: z };
+          if (clear(candidate)) { s.hugSpot = candidate; break; }
+        }
+        if (s.hugSpot) break;
+      }
+    }
+    if (!s.hugSpot) {
+      // A clear point across the hull can be unreachable from Rosa's exit.
+      // Keep the paired goodbye on her side before trying the opposite side.
+      const nearSide = (rosa.transform.x - p.x) * side + (rosa.transform.z - p.z) * c >= 0 ? 1 : -1;
+      search: for (const sign of [nearSide, -nearSide]) for (const along of [-1, -2, 0, 1]) for (const across of [3.5, 4.5, 5.5]) {
         const x = p.x + c * along + side * across * sign, z = p.z - side * along + c * across * sign;
         const candidate = { x, z, dogX: x + side * .7 * sign, dogZ: z + c * .7 * sign };
         if (clear(candidate)) { s.hugSpot = candidate; break search; }
