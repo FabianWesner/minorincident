@@ -62,3 +62,7 @@ A later move toward (-40,8) reaches (-34.9,8) at frame 3600, with real productio
 ## Close-contact mode diagnosis
 
 Replayed the production breach pose at (-34.900,8.000), frame 3600, and read the actual Vite courierDepth module uniforms: foreground=1, courierXray=0. Normal and forced-xray-off screenshots are pixel identical. Thus the vehicle-hull dark-silhouette policy does not cause the dark courier in this frame. Next investigate the palette lighting/shadow contribution. Raw state and paired images: test-results/s121-courierread/mode-probe. No runtime code change was made for this diagnostic.
+
+## Rejected foreground light-floor trial
+
+A temporary .28 surface-color floor inside the existing foreground contour branch changed courier pixels but did not visibly resolve the dark close-contact appearance in the matched frame-3600 production replay. Typecheck/lint passed during the trial. The trial was reverted; no runtime change remains. Next compare the same pose with crowd geometry/shadows hidden to isolate the cause before adding another material adjustment. The latest mode-probe images contain this rejected trial; the earlier production-surround capture remains the accepted-source reference.
