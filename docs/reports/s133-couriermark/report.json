@@ -15,8 +15,9 @@
     "remote_unit": {
       "passed": 105,
       "skipped": 1,
-      "seconds": 127,
-      "runner": "46.225.66.90"
+      "seconds": 127.7,
+      "runner": "46.225.66.90",
+      "revision": "58cd1a5c"
     }
   },
   "matrix": {
@@ -26,6 +27,14 @@
         "backend": "webgl",
         "health": 30,
         "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
         "foreground": true
       },
       {
@@ -47,6 +56,14 @@
         "backend": "webgl",
         "health": 30,
         "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
         "foreground": true
       },
       {
@@ -68,6 +85,14 @@
         "backend": "webgl",
         "health": 30,
         "share": 0.999611046285492,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
         "foreground": true
       },
       {
@@ -89,6 +114,14 @@
         "backend": "webgl",
         "health": 30,
         "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
         "foreground": true
       },
       {
@@ -100,6 +133,122 @@
       },
       {
         "id": "l6-high-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "backend": "webgl",
+        "health": 30,
+        "share": 0.999611046285492,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
         "frame": 60,
         "health": 30,
         "share": 1,
@@ -2763,5 +2912,13 @@
     ],
     "errors": []
   },
-  "sheet": "contact.jpg"
+  "sheet": "contact.jpg",
+  "validatedRevision": "58cd1a5c",
+  "cpuMicrobenchmark": {
+    "bodies": 160,
+    "calls": 30000,
+    "medianMs": 0.003620375,
+    "p95Ms": 0.004910625,
+    "method": "warmed Node no-hit scan; excludes GPU/render frame cost"
+  }
 }

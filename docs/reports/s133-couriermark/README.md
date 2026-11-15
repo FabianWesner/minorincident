@@ -43,3 +43,9 @@ Extended the matched capture tool with `--corpses` (existing Scene Lab command, 
 Replaced the five-nearby-body crowd trigger with camera rays toward courier head/torso, tested against conservative body-height samples (ordinary radius 0.8 m, Alpha 1.4 m, Mega 2.4 m). Off-axis and rear figures no longer activate that crowd branch solely by proximity. Existing hull, Mega and large-corpse handling remains. This is a conservative approximation, not pixel-exact occlusion.
 
 The WebGL2 HIGH moving L4/L6 matrix at zoom 1/1.5 passed with this candidate. Typecheck/lint passed; existing 14-case render-contract suite passed after extending its foreground helper with front/rear/off-axis/hidden/dead controls. LOW/WebGPU, runtime cost and large-corpse trigger refinement remain to qualify.
+
+## Current-revision validation (58cd1a5c)
+
+Both full moving-fixture backend runs passed L4/L6 × HIGH/LOW × zoom 1/1.5, sampled at frames 1/30/60. Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests, one skipped, 27 files in 127.7 s (240 s budget), runner 46.225.66.90. JSON matrix receipts refreshed from these runs.
+
+A warmed Node benchmark of the body-overlap helper scanned 160 no-hit figures for 30,000 calls: median 0.00362 ms, p95 0.00491 ms. This bounds helper CPU cost only; it does not measure native renderer/GPU frame-time delta. Recognition acceptance, final sheet refresh, current-revision gate rerun, large-corpse trigger refinement and full-frame timing remain open.
