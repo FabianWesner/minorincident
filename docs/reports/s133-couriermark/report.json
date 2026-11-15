@@ -260,7 +260,7 @@
         "id": "l4-high-z1",
         "backend": "webgpu",
         "health": 30,
-        "share": 0.9995852343425964,
+        "share": 0.9995513683266039,
         "marker": {
           "visible": true,
           "position": [
@@ -289,7 +289,7 @@
         "id": "l4-high-z1.5",
         "backend": "webgpu",
         "health": 30,
-        "share": 0.9990291262135922,
+        "share": 0.9989395546129375,
         "marker": {
           "visible": true,
           "position": [
@@ -318,7 +318,7 @@
         "id": "l6-high-z1",
         "backend": "webgpu",
         "health": 30,
-        "share": 0.9992242048099301,
+        "share": 0.9991846718304117,
         "marker": {
           "visible": true,
           "position": [
@@ -376,7 +376,7 @@
         "id": "l4-low-z1",
         "backend": "webgpu",
         "health": 30,
-        "share": 0.9995852343425964,
+        "share": 0.9995513683266039,
         "marker": {
           "visible": true,
           "position": [
@@ -405,7 +405,7 @@
         "id": "l4-low-z1.5",
         "backend": "webgpu",
         "health": 30,
-        "share": 0.9990291262135922,
+        "share": 0.9989395546129375,
         "marker": {
           "visible": true,
           "position": [
@@ -434,7 +434,7 @@
         "id": "l6-low-z1",
         "backend": "webgpu",
         "health": 30,
-        "share": 0.9992242048099301,
+        "share": 0.9991846718304117,
         "marker": {
           "visible": true,
           "position": [
@@ -2946,5 +2946,1096 @@
     "status": "unmeasured",
     "reason": "quiet host load admission unavailable; waiting attempt cancelled",
     "timeoutVariable": "E2E_ADMISSION_TIMEOUT_SECONDS"
+  },
+  "sourceComparison": {
+    "rows": [
+      {
+        "level": "l4",
+        "side": "before",
+        "revision": "49f3252a",
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 48,
+            "liveCount": 48,
+            "firstLiveId": 3,
+            "available": 302
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "high",
+            "flashReduction": false,
+            "time": 1.0000000000000013,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 0,
+            "particleCap": 2048,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 80,
+            "telegraphs": [
+              {
+                "attackId": 3,
+                "slot": 2,
+                "kind": "lunge",
+                "spawned": 0.3,
+                "x": -21.371734515201815,
+                "z": 9.704035891849195,
+                "angle": -1.9240258193930044,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6499999999999999,
+                "sourceId": 27
+              },
+              {
+                "attackId": 4,
+                "slot": 3,
+                "kind": "lunge",
+                "spawned": 0.31666666666666665,
+                "x": -20.360378427167785,
+                "z": 8.9208185652131,
+                "angle": -2.6298838484140625,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6666666666666666,
+                "sourceId": 11
+              },
+              {
+                "attackId": 5,
+                "slot": 4,
+                "kind": "lunge",
+                "spawned": 0.39999999999999997,
+                "x": -20.449770072824364,
+                "z": 6.737506524842958,
+                "angle": 2.458138035293388,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.75,
+                "sourceId": 21
+              },
+              {
+                "attackId": 6,
+                "slot": 5,
+                "kind": "lunge",
+                "spawned": 0.41666666666666663,
+                "x": -23.652618219677418,
+                "z": 7.747056081113134,
+                "angle": 0.15187781640985126,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.7666666666666666,
+                "sourceId": 20
+              },
+              {
+                "attackId": 10,
+                "slot": 9,
+                "kind": "lunge",
+                "spawned": 0.44999999999999996,
+                "x": -20.557609502064572,
+                "z": 8.013877061364727,
+                "angle": -3.131972073553468,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.7999999999999999,
+                "sourceId": 3
+              },
+              {
+                "attackId": 11,
+                "slot": 10,
+                "kind": "lunge",
+                "spawned": 0.4666666666666666,
+                "x": -23.87346906428464,
+                "z": 8.637853500850154,
+                "angle": -0.3281566297912244,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8166666666666667,
+                "sourceId": 12
+              },
+              {
+                "attackId": 13,
+                "slot": 12,
+                "kind": "lunge",
+                "spawned": 0.5166666666666666,
+                "x": -23.991891426628207,
+                "z": 6.889168965476934,
+                "angle": 0.508717764904533,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8666666666666666,
+                "sourceId": 28
+              },
+              {
+                "attackId": 14,
+                "slot": 13,
+                "kind": "lunge",
+                "spawned": 0.8000000000000008,
+                "x": -23.44475279874504,
+                "z": 9.915097232250918,
+                "angle": -0.9244840132628581,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.1500000000000008,
+                "sourceId": 30
+              }
+            ],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 400,
+              "fireballs": 0,
+              "fireballCap": 192,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "flameJet": null,
+              "vehicleSmokeColumns": 0,
+              "columns": 0,
+              "transientColumns": 0,
+              "fireColumns": 0,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 8,
+            "submitted": 98,
+            "completed": 98,
+            "prebuilt": 98,
+            "failed": 0
+          },
+          "nodeBuilds": 298,
+          "profile": null,
+          "profileAssets": null,
+          "updateCpuMs": 0,
+          "renderCpuMs": 0,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 59.88023952095874,
+          "frameMs": 16.699999999999818,
+          "simMs": 0,
+          "simTicks": 0,
+          "simWorldMs": 0,
+          "simTickMs": 0,
+          "uiMs": 0,
+          "drawCalls": 126,
+          "triangles": 340876,
+          "geometries": 420,
+          "textures": 232,
+          "entities": 66,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 0,
+            "simMs": 29.600000023841858,
+            "viewMs": 4369.099999904633
+          },
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 75,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 1070000000,
+          "lighting": {
+            "lightFieldMs": 0.20000004768371582,
+            "lightPools": 6,
+            "lightCandidates": 6,
+            "shadowMaps": 1,
+            "heroLights": 0,
+            "heroShadow": 0,
+            "preset": "L4"
+          }
+        }
+      },
+      {
+        "level": "l6",
+        "side": "before",
+        "revision": "49f3252a",
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 48,
+            "liveCount": 48,
+            "firstLiveId": 3,
+            "available": 302
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "high",
+            "flashReduction": false,
+            "time": 1.0000000000000013,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 0,
+            "particleCap": 2048,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 80,
+            "telegraphs": [
+              {
+                "attackId": 1,
+                "slot": 0,
+                "kind": "lunge",
+                "spawned": 0.26666666666666666,
+                "x": 41.889284382550684,
+                "z": 14.500326023468178,
+                "angle": 2.883034822268833,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6166666666666667,
+                "sourceId": 29
+              },
+              {
+                "attackId": 4,
+                "slot": 3,
+                "kind": "lunge",
+                "spawned": 0.31666666666666665,
+                "x": 41.66797626799563,
+                "z": 16.04785577146236,
+                "angle": -2.5806813030855804,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6666666666666666,
+                "sourceId": 11
+              },
+              {
+                "attackId": 6,
+                "slot": 5,
+                "kind": "lunge",
+                "spawned": 0.41666666666666663,
+                "x": 38.11612929232994,
+                "z": 14.565116285533234,
+                "angle": 0.2268715818089359,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.7666666666666666,
+                "sourceId": 20
+              },
+              {
+                "attackId": 10,
+                "slot": 9,
+                "kind": "lunge",
+                "spawned": 0.4666666666666666,
+                "x": 37.834712500483086,
+                "z": 15.441737553301284,
+                "angle": -0.20124711985724714,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8166666666666667,
+                "sourceId": 12
+              },
+              {
+                "attackId": 11,
+                "slot": 10,
+                "kind": "lunge",
+                "spawned": 0.4833333333333333,
+                "x": 38.79278617484864,
+                "z": 13.900283873509938,
+                "angle": 0.7388341163154508,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8333333333333333,
+                "sourceId": 36
+              },
+              {
+                "attackId": 13,
+                "slot": 12,
+                "kind": "lunge",
+                "spawned": 0.6666666666666671,
+                "x": 38.30598899477339,
+                "z": 16.235349444540724,
+                "angle": -0.6300851995289605,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.016666666666667,
+                "sourceId": 4
+              },
+              {
+                "attackId": 14,
+                "slot": 13,
+                "kind": "lunge",
+                "spawned": 0.6666666666666671,
+                "x": 38.37661815779847,
+                "z": 13.114311464466605,
+                "angle": 0.8600104484814097,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.016666666666667,
+                "sourceId": 23
+              },
+              {
+                "attackId": 15,
+                "slot": 14,
+                "kind": "lunge",
+                "spawned": 0.9000000000000011,
+                "x": 40.95518105697656,
+                "z": 13.00256641725149,
+                "angle": 2.01685572527361,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.250000000000001,
+                "sourceId": 13
+              },
+              {
+                "attackId": 16,
+                "slot": 15,
+                "kind": "lunge",
+                "spawned": 0.9166666666666679,
+                "x": 37.88500439082763,
+                "z": 13.68400085993557,
+                "angle": 0.5565999561279334,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.266666666666668,
+                "sourceId": 28
+              }
+            ],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 400,
+              "fireballs": 0,
+              "fireballCap": 192,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "flameJet": null,
+              "vehicleSmokeColumns": 0,
+              "columns": 2,
+              "transientColumns": 0,
+              "fireColumns": 2,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 16,
+            "submitted": 121,
+            "completed": 121,
+            "prebuilt": 121,
+            "failed": 0
+          },
+          "nodeBuilds": 600,
+          "profile": null,
+          "profileAssets": null,
+          "updateCpuMs": 0,
+          "renderCpuMs": 0,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 60.24096385542697,
+          "frameMs": 16.599999999998545,
+          "simMs": 0,
+          "simTicks": 0,
+          "simWorldMs": 0,
+          "simTickMs": 0,
+          "uiMs": 0,
+          "drawCalls": 76,
+          "triangles": 277080,
+          "geometries": 423,
+          "textures": 239,
+          "entities": 66,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 0,
+            "simMs": 19.700000047683716,
+            "viewMs": 4370.799999952316
+          },
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 145,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 1070000000,
+          "lighting": {
+            "lightFieldMs": 0.20000004768371582,
+            "lightPools": 24,
+            "lightCandidates": 24,
+            "shadowMaps": 1,
+            "heroLights": 1,
+            "heroShadow": 1,
+            "preset": "L6-subway"
+          }
+        }
+      },
+      {
+        "level": "l4",
+        "side": "after",
+        "revision": "current",
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 48,
+            "liveCount": 48,
+            "firstLiveId": 3,
+            "available": 302
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "high",
+            "flashReduction": false,
+            "time": 1.0000000000000013,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 0,
+            "particleCap": 2048,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 80,
+            "telegraphs": [
+              {
+                "attackId": 3,
+                "slot": 2,
+                "kind": "lunge",
+                "spawned": 0.3,
+                "x": -21.371734515201815,
+                "z": 9.704035891849195,
+                "angle": -1.9240258193930044,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6499999999999999,
+                "sourceId": 27
+              },
+              {
+                "attackId": 4,
+                "slot": 3,
+                "kind": "lunge",
+                "spawned": 0.31666666666666665,
+                "x": -20.360378427167785,
+                "z": 8.9208185652131,
+                "angle": -2.6298838484140625,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6666666666666666,
+                "sourceId": 11
+              },
+              {
+                "attackId": 5,
+                "slot": 4,
+                "kind": "lunge",
+                "spawned": 0.39999999999999997,
+                "x": -20.449770072824364,
+                "z": 6.737506524842958,
+                "angle": 2.458138035293388,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.75,
+                "sourceId": 21
+              },
+              {
+                "attackId": 6,
+                "slot": 5,
+                "kind": "lunge",
+                "spawned": 0.41666666666666663,
+                "x": -23.652618219677418,
+                "z": 7.747056081113134,
+                "angle": 0.15187781640985126,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.7666666666666666,
+                "sourceId": 20
+              },
+              {
+                "attackId": 10,
+                "slot": 9,
+                "kind": "lunge",
+                "spawned": 0.44999999999999996,
+                "x": -20.557609502064572,
+                "z": 8.013877061364727,
+                "angle": -3.131972073553468,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.7999999999999999,
+                "sourceId": 3
+              },
+              {
+                "attackId": 11,
+                "slot": 10,
+                "kind": "lunge",
+                "spawned": 0.4666666666666666,
+                "x": -23.87346906428464,
+                "z": 8.637853500850154,
+                "angle": -0.3281566297912244,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8166666666666667,
+                "sourceId": 12
+              },
+              {
+                "attackId": 13,
+                "slot": 12,
+                "kind": "lunge",
+                "spawned": 0.5166666666666666,
+                "x": -23.991891426628207,
+                "z": 6.889168965476934,
+                "angle": 0.508717764904533,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8666666666666666,
+                "sourceId": 28
+              },
+              {
+                "attackId": 14,
+                "slot": 13,
+                "kind": "lunge",
+                "spawned": 0.8000000000000008,
+                "x": -23.44475279874504,
+                "z": 9.915097232250918,
+                "angle": -0.9244840132628581,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.1500000000000008,
+                "sourceId": 30
+              }
+            ],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 400,
+              "fireballs": 0,
+              "fireballCap": 192,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "flameJet": null,
+              "vehicleSmokeColumns": 0,
+              "columns": 0,
+              "transientColumns": 0,
+              "fireColumns": 0,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 8,
+            "submitted": 98,
+            "completed": 98,
+            "prebuilt": 98,
+            "failed": 0
+          },
+          "nodeBuilds": 301,
+          "profile": null,
+          "profileAssets": null,
+          "updateCpuMs": 0,
+          "renderCpuMs": 0,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 60.240963855423665,
+          "frameMs": 16.599999999999454,
+          "simMs": 0,
+          "simTicks": 0,
+          "simWorldMs": 0,
+          "simTickMs": 0,
+          "uiMs": 0,
+          "drawCalls": 127,
+          "triangles": 340972,
+          "geometries": 421,
+          "textures": 232,
+          "entities": 66,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 0,
+            "simMs": 21.399999976158142,
+            "viewMs": 4358
+          },
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 75,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 1070000000,
+          "lighting": {
+            "lightFieldMs": 0.10000002384185791,
+            "lightPools": 6,
+            "lightCandidates": 6,
+            "shadowMaps": 1,
+            "heroLights": 0,
+            "heroShadow": 0,
+            "preset": "L4"
+          }
+        }
+      },
+      {
+        "level": "l6",
+        "side": "after",
+        "revision": "current",
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 48,
+            "liveCount": 48,
+            "firstLiveId": 3,
+            "available": 302
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "high",
+            "flashReduction": false,
+            "time": 1.0000000000000013,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 0,
+            "particleCap": 2048,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 80,
+            "telegraphs": [
+              {
+                "attackId": 1,
+                "slot": 0,
+                "kind": "lunge",
+                "spawned": 0.26666666666666666,
+                "x": 41.889284382550684,
+                "z": 14.500326023468178,
+                "angle": 2.883034822268833,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6166666666666667,
+                "sourceId": 29
+              },
+              {
+                "attackId": 4,
+                "slot": 3,
+                "kind": "lunge",
+                "spawned": 0.31666666666666665,
+                "x": 41.66797626799563,
+                "z": 16.04785577146236,
+                "angle": -2.5806813030855804,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.6666666666666666,
+                "sourceId": 11
+              },
+              {
+                "attackId": 6,
+                "slot": 5,
+                "kind": "lunge",
+                "spawned": 0.41666666666666663,
+                "x": 38.11612929232994,
+                "z": 14.565116285533234,
+                "angle": 0.2268715818089359,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.7666666666666666,
+                "sourceId": 20
+              },
+              {
+                "attackId": 10,
+                "slot": 9,
+                "kind": "lunge",
+                "spawned": 0.4666666666666666,
+                "x": 37.834712500483086,
+                "z": 15.441737553301284,
+                "angle": -0.20124711985724714,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8166666666666667,
+                "sourceId": 12
+              },
+              {
+                "attackId": 11,
+                "slot": 10,
+                "kind": "lunge",
+                "spawned": 0.4833333333333333,
+                "x": 38.79278617484864,
+                "z": 13.900283873509938,
+                "angle": 0.7388341163154508,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 0.8333333333333333,
+                "sourceId": 36
+              },
+              {
+                "attackId": 13,
+                "slot": 12,
+                "kind": "lunge",
+                "spawned": 0.6666666666666671,
+                "x": 38.30598899477339,
+                "z": 16.235349444540724,
+                "angle": -0.6300851995289605,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.016666666666667,
+                "sourceId": 4
+              },
+              {
+                "attackId": 14,
+                "slot": 13,
+                "kind": "lunge",
+                "spawned": 0.6666666666666671,
+                "x": 38.37661815779847,
+                "z": 13.114311464466605,
+                "angle": 0.8600104484814097,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.016666666666667,
+                "sourceId": 23
+              },
+              {
+                "attackId": 15,
+                "slot": 14,
+                "kind": "lunge",
+                "spawned": 0.9000000000000011,
+                "x": 40.95518105697656,
+                "z": 13.00256641725149,
+                "angle": 2.01685572527361,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.250000000000001,
+                "sourceId": 13
+              },
+              {
+                "attackId": 16,
+                "slot": 15,
+                "kind": "lunge",
+                "spawned": 0.9166666666666679,
+                "x": 37.88500439082763,
+                "z": 13.68400085993557,
+                "angle": 0.5565999561279334,
+                "shape": 1,
+                "radius": 2,
+                "resolves": 1.266666666666668,
+                "sourceId": 28
+              }
+            ],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 400,
+              "fireballs": 0,
+              "fireballCap": 192,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "flameJet": null,
+              "vehicleSmokeColumns": 0,
+              "columns": 2,
+              "transientColumns": 0,
+              "fireColumns": 2,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 16,
+            "submitted": 121,
+            "completed": 121,
+            "prebuilt": 121,
+            "failed": 0
+          },
+          "nodeBuilds": 604,
+          "profile": null,
+          "profileAssets": null,
+          "updateCpuMs": 0,
+          "renderCpuMs": 0,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 60.24096385542037,
+          "frameMs": 16.600000000000364,
+          "simMs": 0,
+          "simTicks": 0,
+          "simWorldMs": 0,
+          "simTickMs": 0,
+          "uiMs": 0,
+          "drawCalls": 77,
+          "triangles": 277176,
+          "geometries": 424,
+          "textures": 239,
+          "entities": 66,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 0,
+            "simMs": 19.600000023841858,
+            "viewMs": 4437.399999976158
+          },
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 145,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 1070000000,
+          "lighting": {
+            "lightFieldMs": 0.09999990463256836,
+            "lightPools": 24,
+            "lightCandidates": 24,
+            "shadowMaps": 1,
+            "heroLights": 1,
+            "heroShadow": 1,
+            "preset": "L6-subway"
+          }
+        }
+      }
+    ],
+    "errors": [],
+    "baseline": "49f3252a",
+    "current": "c7ec3256",
+    "drawDelta": 1,
+    "triangleDelta": 96
   }
 }

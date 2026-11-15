@@ -71,3 +71,9 @@ Changed only the courier contour from warm gold to restrained teal (`#80ddce`), 
 ## Teal-contour remote suite
 
 Required unchanged remote unit command passed on c7ec3256: 105 passed, one skipped, 27 files, 132.2 seconds within 240-second budget, runner 46.225.66.90. Corrected native timing attempt remained in quiet admission (host load >3), then was cancelled without a measurement. Pool wrapper reads `E2E_ADMISSION_TIMEOUT_SECONDS`, whereas the attempted `MI_PERF_ADMISSION_TIMEOUT_SECONDS=120` only controls the legacy path; future retries must set the pool variable. No running check remains from this attempt.
+
+## Original/current source comparison
+
+Extended the existing tool with `--baseline` to serve original 49f3252a GameView/PaletteMaterial/courierDepth/courierForeground via a Vite source override on 5003, current code on 5004, one pooled browser. Identical seeded moving scenes at frame 60, HIGH zoom 1. Zero browser errors. The single `contact.jpg` now contains these actual source-before/source-after L4/L6 pairs and supersedes the earlier marker-only sheet. Opened it: L4 teal edge separates the courier from warm clothes; L6 already has a strongly lit courier and gains a smaller colour-identity change. It remains a qualitative review, not measured human reaction time.
+
+Measured draw counts: L4 126→127; L6 76→77. Triangle counts: L4 340876→340972; L6 277080→277176. **Delta +1 draw, +96 triangles, no added pass.** This supersedes the earlier zero-range draw comparison caveat. Current teal WebGPU full moving matrix passed all tiers/zooms. Typecheck/lint passed with the baseline tool. Native frame-time admission and remaining acceptance gaps are still open.

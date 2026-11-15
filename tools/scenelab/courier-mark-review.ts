@@ -1,15 +1,35 @@
 /** One pooled browser; matched marker-disabled/enabled captures and structural draw counts. */
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { SceneSession, readSpec, stopServer } from './session';
+import { SceneSession, readSpec, stopServer, origin } from './session';
+import { execFileSync } from 'node:child_process';
+import { resolve } from 'node:path';
+import { createServer } from 'vite';
 const corpses = process.argv.includes('--corpses');
 const timing = process.argv.includes('--perf');
 const out = `test-results/s133-couriermark/review${corpses ? '-corpses' : ''}${process.argv.includes('--webgpu') ? '-webgpu' : ''}${timing ? '-perf' : ''}`;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend: process.argv.includes('--webgpu') ? 'webgpu' : 'webgl2', tier: 'high', nativeFrameTiming: timing });
 const rows: unknown[] = [];
+let baselineServer: Awaited<ReturnType<typeof createServer>> | undefined;
 try {
   await session.open();
-  for (const level of ['l4', 'l6']) {
+  if (process.argv.includes('--baseline')) {
+    const paths = ['src/render/GameView.ts', 'src/render/PaletteMaterial.ts', 'src/render/characters/courierDepth.ts', 'src/render/courierForeground.ts'];
+    const sources = new Map(paths.map(path => [resolve(path), execFileSync('git', ['show', `49f3252a:${path}`], { encoding: 'utf8' })]));
+    baselineServer = await createServer({ configFile: resolve('vite.config.ts'), cacheDir: '/private/tmp/s133-before-vite', plugins: [{ name: 's133-baseline', enforce: 'pre', load(id) { return sources.get(id.split('?')[0]); } }], server: { host: '127.0.0.1', port: 5003, strictPort: true } });
+    await baselineServer.listen();
+    for (const side of ['before', 'after']) {
+      await session.page.goto(`${side === 'before' ? 'http://127.0.0.1:5003' : origin}/?test=1&scenelab=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1`);
+      await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__, null, { timeout: 120000 });
+      await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
+      for (const level of ['l4', 'l6']) {
+        const spec = readSpec(`tests/scenes/catalog/courier-read-${level}-dense.json`); spec.camera = { mode: 'game', target: 'courier', zoom: 1 };
+        for (const actor of spec.actors ?? []) if (actor.kind === 'infected') actor.state = { chase: 'courier' };
+        await session.load(spec); await session.step(60); await session.screenshot(`${out}/${level}-baseline-${side}.png`);
+        rows.push({ level, side, revision: side === 'before' ? '49f3252a' : 'current', perf: await session.page.evaluate(() => window.__SS__!.perf()) });
+      }
+    }
+  } else for (const level of ['l4', 'l6']) {
     const spec = readSpec(`tests/scenes/catalog/courier-read-${level}-dense.json`);
     spec.camera = { mode: 'game', target: 'courier', zoom: 1 };
     for (const actor of spec.actors ?? []) if (actor.kind === 'infected') actor.state = { chase: 'courier' };
@@ -41,4 +61,4 @@ try {
     }
   }
   writeFileSync(`${out}/metrics.json`, JSON.stringify({ rows, errors: session.errors }, null, 2));
-} finally { await session.close(); stopServer(); }
+} finally { await session.close(); await baselineServer?.close(); stopServer(); }
