@@ -92,3 +92,7 @@ Bus steering now projects the actual bus position onto the nearest authored asph
 ## Current projection runtime native drives
 
 Fresh HIGH primary-road and LOW road-detour (corner-cut) ordinary drives both complete. Exact telegraph windup observer records zero bus passenger windups in each; peak hatch proximity is0 HIGH and1 LOW. Current asphalt distances and sample counts are in `current-driven-checks.json`. Participation remains failed, and full six driven path/tier coverage is not yet complete.
+
+## Earlier entry trial
+
+Moving bus entry threshold from APC x110 to x-100, retaining125m asphalt setback and ordinary bus speed, still completes HIGH with zero exact passenger windups and zero within5m. First visible-bus sample2490, hatch5309. Trial reverted. Earlier entry alone does not overcome relative speed/delivery geometry. See `rejected-earlier-entry.json`.
