@@ -23,3 +23,7 @@ L1 HIGH completed normally in 155 s on WebGPU. Reviewed its frequent-capture ove
 North truck staging, gate fence clearance, red pickup grounding at zoom 1.5, APC tilt feel, hatch-shot effectiveness, L9 moving warning noticeability and L10 warning/WebGPU coverage need further review. Requested capture zooms and scream capture options were used; ordinary captures do not automatically create a full scene/zoom matrix. No new P2/P3 gameplay finding is established. Batch 106's P2 truck and P3 alarm issues are not cleared by this checkpoint.
 
 Typecheck and lint passed. Required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: full 150-case collection, 105 passed/1 skipped, 130.0 s within 240 s. Initial sandbox socket/cache failures were resolved when host access became available. No source fixes or deployments are included.
+
+## L10 follow-up
+
+A roughly four-minute standard-combat HIGH/zoom 1 WebGPU sample reached the farms. Actual Alpha roar at tick 4711 (`test-results/b107/l10-high/captures/scream-L10-4711-1.jpg`) was reviewed: broad red ring conspicuous against dark ground. Metadata identifies `alpha.roar`; it is not the requested ordinary purple scream. Subsequent captures also showed Alpha roars. Sample was manually stopped in the farm fight; ordinary L10 warning and temporal readability remain open. Renderer WebGPU is explicitly recorded in the L9, L1 HIGH, and L10 HIGH logs. Earlier JSON environment failures are now recorded as resolved historical setup issues.

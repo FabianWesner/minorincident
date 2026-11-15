@@ -1,20 +1,13 @@
 {
   "candidate": "d1101b68c71adfb36f20c31bcf0a897880a49f45",
   "status": "incomplete progress checkpoint; L9 x3 completed; HIGH evacuation timing failed",
-  "method": "Attempted headless real-input playtest through the documented driver and browser pool; no browser session started; no source or driver changes",
+  "method": "Headless GPU browser pool; real keyboard/mouse driver; debug level-menu entry; logged navigation assists; standard combat, no immortal or route-only mode; no source or driver changes",
   "environment": {
-    "buildQa": "passed with MI_WORKTREE_CACHE=/private/tmp/minorincident-mi-cache; default shared cache path was not writable",
-    "tsxIpc": "failed with EPERM under default TMPDIR and under TMPDIR=/private/tmp",
-    "preview": "failed to bind/listen on 127.0.0.1:4993; playtest launcher timed out waiting for preview",
-    "browserPool": "unavailable; browser-status reported fetch failed; no listener on 4329",
-    "otherPorts": {
-      "4993": "no listener",
-      "3300": "no listener (not started)",
-      "4329": "no listener"
-    },
+    "buildQa": "passed",
     "typecheck": "passed",
     "lint": "passed",
-    "remoteNpmTest": "passed: 105 passed, 1 skipped; 150-case collection; 130.0 seconds"
+    "remoteNpmTest": "passed: 105 passed, 1 skipped; 150-case collection; 130.0 seconds",
+    "runtime": "Initial sandbox failures resolved; preview 4993 and headless GPU pool used successfully."
   },
   "attemptedRuns": [
     {
@@ -32,10 +25,10 @@
     }
   ],
   "checks": {
-    "l9HighRoadEvacuationAndHandover": "unverified",
-    "l9HighShortcutEvacuationAndHandover": "unverified",
-    "l9LowRoadEvacuationAndHandover": "unverified",
-    "evacueesBoardWithin20Seconds": "unverified",
+    "l9HighRoadEvacuationAndHandover": "finished without skips; L10 loading observed",
+    "l9HighShortcutEvacuationAndHandover": "finished without skips; L10 loading observed",
+    "l9LowRoadEvacuationAndHandover": "finished without skips; L10 loading observed",
+    "evacueesBoardWithin20Seconds": "FAIL HIGH road >=85.7 s incomplete; HIGH shortcut >=44.2 s incomplete; LOW precise interval unverified",
     "northTruckStagingAndGateFence": "unverified",
     "redPickupGroundedAtZoom1_5": "unverified",
     "apcTiltAndSeatedHatchShooting": "unverified",
@@ -43,7 +36,7 @@
     "otherPromptsL1ToL3": "unverified",
     "screamerReadabilityL9AndL10WhileMoving": "unverified",
     "l9BoringHarmlessBabysittingAndVisualVerdict": "unverified",
-    "webgpuCoveragePerLevel": "unverified"
+    "webgpuCoveragePerLevel": "Confirmed renderer webgpu in L9 x3, L1 HIGH and L10 HIGH logs; L2 partial HIGH also checked"
   },
   "findings": [
     {
@@ -83,7 +76,7 @@
     "rawCopiedToGit": false,
     "newCapturePaths": [],
     "contactSheet": "contact-sheet.jpg",
-    "contactSheetReason": "Reviewed derived sheet of L9 delay, scream and two L10 loading handovers"
+    "contactSheetReason": "Reviewed derived sheet"
   },
   "driverGaps": [
     "Optional L1 alarm not exercised by standard route; no dedicated alarm capture option.",
@@ -355,5 +348,14 @@
         }
       }
     }
-  ]
+  ],
+  "l10Warning": {
+    "capture": "test-results/b107/l10-high/captures/scream-L10-4711-1.jpg",
+    "tick": 4711,
+    "event": "alpha.roar",
+    "quality": "high",
+    "zoom": 1,
+    "verdict": "Conspicuous red ring; ordinary purple screamer not captured in this bounded standard-combat sample",
+    "sample": "Stopped after roughly four minutes in farm fight; no full L10 completion claim"
+  }
 }
