@@ -788,5 +788,18 @@
         }
       ]
     }
+  },
+  "productionBreachContact": {
+    "path": "test-results/s121-courierread/production-surround/metrics.json",
+    "frames": 3600,
+    "position": [
+      -34.9,
+      8
+    ],
+    "backend": "webgl",
+    "tier": "high",
+    "consoleErrors": 0,
+    "visualConcern": "courier is gold outlined but darker in close breach overlap; investigate active x-ray/hull policy before artifact clearance",
+    "dense40Proven": false
   }
 }

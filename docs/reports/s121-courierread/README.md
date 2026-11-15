@@ -54,3 +54,7 @@ The moving L4 probe exposed a row of overlapping ordinary bars above the courier
 ## Bar-protection motion matrix
 
 After ordinary-bar suppression, the committed runner completed all 48 samples: both backends, HIGH/LOW, L4/L6, zoom 1/1.5, frames 1/30/60. Every sample retained 30 HP and passed the >=90% body-share/zero-console gates. Detailed clipping reports show zero courier-versus-prop records, zero gun/body hits, and zero held-prop hits in all 16 cases. The previously reported actor warnings concern infected-versus-scenery intersections; they do not establish a courier defect. These short isolated probes still do not prove artifact-free production play or transition stability. Raw files: repro-{webgl2,webgpu}-motion. Full remote suite after bar suppression and production acceptance remain open; perf pending.
+
+## Close west-breach contact
+
+A later move toward (-40,8) reaches (-34.9,8) at frame 3600, with real production attackers beside the courier. HIGH WebGL2 run reports zero console errors. Reviewed production-surround/shot-3600.png shows a gold-outlined but substantially darker courier among overlapping bodies at the barrier. This is a visual concern requiring active x-ray/hull-mode inspection, not artifact clearance. The frame still does not establish 40+ infected surrounding her. Native L4 LOW p95 measurement was requested from the orchestrator via scheduler note; perf remains pending.
