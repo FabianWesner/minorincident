@@ -39,3 +39,7 @@ The same 48 actors chased the courier for 60 frames in LOW WebGL2 at zoom 1.5. B
 ## 30-HP preparation
 
 The existing QA survivor.damage(70) API prepared both isolated 48-infected scenes at 30/100 HP. Captures and exported state under test-results/s121-courierread/low-hp confirm 30 HP in both levels; reviewed L4 HUD reads 30/100 clearly. HIGH WebGL2 zoom 1 only. The courier remains less visually distinct in the warm L4 crowd than in L6, so this does not close the one-glance requirement. Motion clipping summaries in report.json now omit raw pair arrays; full pair details remain in the original test-results metrics.
+
+## Contour output investigation
+
+A trial raising courierDepth's emissive contour gain from 0.8 to 1.4 produced no changed pixels around the courier in the matched HIGH WebGL2 L4 frame; the difference bounding box was confined to (372,152)-(927,214), above her body. The trial was reverted. PaletteMaterial installs a custom outputNode (setWeatherMode/outputFor), which may bypass the emissiveNode added by useCourierDepth. This is the next concrete investigation; the foreground depth treatment is active and measured, but the intended gold contour must be traced through the actual output before tuning its gain. No runtime source change from this trial remains.
