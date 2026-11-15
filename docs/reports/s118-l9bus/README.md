@@ -104,3 +104,7 @@ Ordinary primary countryside drives (APC travels far north of the bus asphalt) c
 ## Six native driven paths consolidated
 
 `six-driven-paths.json` contains measured bus positions every30ticks through completion for road, corner-cut road detour, and wide countryside APC drives on HIGH+LOW. All6 complete;100% sampled centers within6m, no authored exceptions. Worst4.885m LOW road. Exact passenger windups empty for every row; peak within5m is1 on corner-cut rows and0 elsewhere. This proves sampled asphalt adherence for the requested three native driving paths on both tiers, while passenger participation remains failed. Spawn offscreen screen geometry and browser QA still unverified; current full suite/threat/vehicle campaign gates still need rerun.
+
+## Browser lifecycle correction
+
+With sandbox restrictions lifted, the vehicle campaign gate starts successfully on4974. Its L9 setup exposed a crash: quality setup requests chunk residency before the APC exists. `busSupport` now returns null until that car exists. Typecheck/lint pass. The gate attempt was stopped (exit130) after already failing L9 rows and a hot-reload context loss; it supplies no green gate claim. A clean fixed-source rerun remains required.
