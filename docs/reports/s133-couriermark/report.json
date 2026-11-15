@@ -1,0 +1,950 @@
+{
+  "status": "blocked-on-human-recognition-review",
+  "base": "49f3252a",
+  "acceptance": {
+    "recognition_0_3s": "unproven",
+    "marker_above_corpses": "existing stencil ordering implemented; HIGH corpse variants reviewed",
+    "occlusion_only_outline": "conservative camera/body and corpse segment overlap plus existing hull/Mega handling; not pixel-exact",
+    "real_L4": "180-second HIGH zoom-1 standard combat spot completed; frames 5424/8136 opened; universal recognition still unproven",
+    "scene_gate": "final-source 91/91 plus vehicle-contact HIGH/LOW and native L9/L7/L4 motion all exit 0",
+    "performance": "small measured marker cost: median interval delta -0.1/+0.1 ms, p95 -0.2/+0.3 ms in L4/L6 HIGH WebGL2; helper p95 0.00491 ms; +1 draw +96 triangles no pass"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "remote_unit": {
+      "revision": "e4a7bba5",
+      "passed": 105,
+      "skipped": 1,
+      "seconds": 132.7,
+      "runner": "46.225.66.90"
+    }
+  },
+  "matrix": {
+    "webgl2": [
+      {
+        "id": "l4-high-z1",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1.5",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1.5",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "backend": "webgl",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      }
+    ],
+    "webgpu": [
+      {
+        "id": "l4-high-z1",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 0.9995513683266039,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1.5",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 0.9989395546129375,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-high-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 0.9991846718304117,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1.5",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-high-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 0.9995513683266039,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 0.9989395546129375,
+        "marker": {
+          "visible": true,
+          "position": [
+            -22,
+            0.08499999888241291,
+            8
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l4-low-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 0.9991846718304117,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "backend": "webgpu",
+        "health": 30,
+        "share": 1,
+        "marker": {
+          "visible": true,
+          "position": [
+            40,
+            0.635,
+            15
+          ]
+        },
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "frame": 30,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      },
+      {
+        "id": "l6-low-z1.5",
+        "frame": 60,
+        "health": 30,
+        "share": 1,
+        "foreground": true
+      }
+    ]
+  },
+  "realPlay": {
+    "out": "test-results/s133-couriermark/l4-real",
+    "seconds": 180,
+    "finishedLevel": false,
+    "skips": [],
+    "reviewedTicks": [
+      5424,
+      8136
+    ],
+    "issue": "early empty-HUD navigation warning"
+  },
+  "matchedReview": {
+    "rows": [
+      {
+        "level": "l4",
+        "enabled": false,
+        "perf": {
+          "drawCalls": 127,
+          "triangles": 340876,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      },
+      {
+        "level": "l4",
+        "enabled": true,
+        "perf": {
+          "drawCalls": 127,
+          "triangles": 340972,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      },
+      {
+        "level": "l6",
+        "enabled": false,
+        "perf": {
+          "drawCalls": 77,
+          "triangles": 277080,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      },
+      {
+        "level": "l6",
+        "enabled": true,
+        "perf": {
+          "drawCalls": 77,
+          "triangles": 277176,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      }
+    ],
+    "errors": []
+  },
+  "sheet": "contact.jpg",
+  "validatedRevision": "e4a7bba5",
+  "cpuMicrobenchmark": {
+    "bodies": 160,
+    "calls": 30000,
+    "medianMs": 0.003620375,
+    "p95Ms": 0.004910625,
+    "method": "warmed Node no-hit scan; excludes GPU/render frame cost"
+  },
+  "fullGate": {
+    "revision": "9440d7cc",
+    "implementation": "e4a7bba5",
+    "rows": 91,
+    "passed": 91,
+    "notRun": 0,
+    "known": 0,
+    "vehicleContactExit": 0,
+    "vehicleCampaignExit": 0,
+    "minutes": 20.6,
+    "output": "test-results/s133-couriermark/gate-final"
+  },
+  "sheetReview": {
+    "revision": "ec9319e6",
+    "pairs": [
+      "living-l4",
+      "living-l6",
+      "corpses-l4",
+      "corpses-l6"
+    ],
+    "backend": "webgl2",
+    "tier": "high",
+    "zoom": 1,
+    "verdict": "clear corpse-heavy L6 arc; mostly hidden in living-only crowds; recognition acceptance unproven"
+  },
+  "nativeTiming": {
+    "status": "measured",
+    "revision": "e4a7bba5",
+    "method": "exclusive quiet preflight; native uncapped Chrome WebGL2 HIGH; stationary moving-fixture frame60; 180 warm +600 measured updates per side; marker geometry off/on, not full original-source timing",
+    "evidence": {
+      "rows": [
+        {
+          "level": "l4",
+          "enabled": false,
+          "timings": {
+            "samples": 600,
+            "cpuMs": {
+              "median": 5.800000071525574,
+              "p95": 6.200000047683716
+            },
+            "frameMs": {
+              "median": 6.100000000000364,
+              "p95": 6.700000000000728
+            }
+          },
+          "perf": {
+            "drawCalls": 127,
+            "triangles": 340876,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            }
+          }
+        },
+        {
+          "level": "l4",
+          "enabled": true,
+          "timings": {
+            "samples": 600,
+            "cpuMs": {
+              "median": 5.700000047683716,
+              "p95": 6.099999904632568
+            },
+            "frameMs": {
+              "median": 6,
+              "p95": 6.5
+            }
+          },
+          "perf": {
+            "drawCalls": 127,
+            "triangles": 340972,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            }
+          }
+        },
+        {
+          "level": "l6",
+          "enabled": false,
+          "timings": {
+            "samples": 600,
+            "cpuMs": {
+              "median": 5.700000047683716,
+              "p95": 6.100000023841858
+            },
+            "frameMs": {
+              "median": 6,
+              "p95": 6.5
+            }
+          },
+          "perf": {
+            "drawCalls": 77,
+            "triangles": 277080,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            }
+          }
+        },
+        {
+          "level": "l6",
+          "enabled": true,
+          "timings": {
+            "samples": 600,
+            "cpuMs": {
+              "median": 5.800000071525574,
+              "p95": 6.399999976158142
+            },
+            "frameMs": {
+              "median": 6.099999999998545,
+              "p95": 6.799999999995634
+            }
+          },
+          "perf": {
+            "drawCalls": 77,
+            "triangles": 277176,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            }
+          }
+        }
+      ],
+      "errors": []
+    }
+  },
+  "sourceComparison": {
+    "rows": [
+      {
+        "level": "l4",
+        "side": "before",
+        "revision": "49f3252a",
+        "perf": {
+          "drawCalls": 126,
+          "triangles": 340876,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      },
+      {
+        "level": "l6",
+        "side": "before",
+        "revision": "49f3252a",
+        "perf": {
+          "drawCalls": 76,
+          "triangles": 277080,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      },
+      {
+        "level": "l4",
+        "side": "after",
+        "revision": "current",
+        "perf": {
+          "drawCalls": 127,
+          "triangles": 340972,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      },
+      {
+        "level": "l6",
+        "side": "after",
+        "revision": "current",
+        "perf": {
+          "drawCalls": 77,
+          "triangles": 277176,
+          "backend": "webgl",
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          }
+        }
+      }
+    ],
+    "errors": [],
+    "baseline": "49f3252a",
+    "current": "c7ec3256",
+    "drawDelta": 1,
+    "triangleDelta": 96
+  },
+  "realPlayFinal": {
+    "revision": "e4a7bba5",
+    "quality": "high",
+    "zoom": 1,
+    "seconds": 180,
+    "skips": [],
+    "finishedLevel": false,
+    "out": "test-results/s133-couriermark/l4-final",
+    "reviewedTick": 8141,
+    "courierHp": 10,
+    "review": "teal silhouette distinct among multiple overlapping large white-bodied Alphas; ring occluded",
+    "issue": "early empty-HUD navigation warning"
+  },
+  "remaining": [
+    "Human assessment of ~0.3-second courier recognition in both matched after views; request pending"
+  ]
+}

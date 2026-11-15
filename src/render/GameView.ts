@@ -79,8 +79,9 @@ import { layoutLights } from './WorldLights';
 import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 import { Environment } from './lighting/Environment';
-import { courierForegroundWanted, crowdSurroundsCourier, megaOccludesCourier } from './courierForeground';
+import { courierForegroundWanted, bodiesOccludeCourier, megaOccludesCourier } from './courierForeground';
 import { courierXray } from './characters/courierDepth';
+import { livingStencil } from './characters/figureStencil';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -196,6 +197,8 @@ export class GameView implements Lifecycle {
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
   private destination: Mesh | null = null;
+  /** Subtle courier locator, depth-tested against bodies and props and drawn above ground decals. */
+  private courierMark: Mesh | null = null;
   private militaryPerimeter: MilitaryPerimeter | null = null;
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
@@ -314,6 +317,10 @@ export class GameView implements Lifecycle {
     if (this.character) { this.contactShadows = new ContactShadows(this.world); this.scene.add(this.contactShadows); }
     if (this.world.missions?.state.l4) { this.militaryPerimeter = new MilitaryPerimeter(this.world); this.scene.add(this.militaryPerimeter); }
     if (player) {
+      const markMaterial = new MeshBasicNodeMaterial({ color: '#429e91', depthWrite: true, depthTest: true }); markMaterial.name = 'courier-ground-mark'; livingStencil(markMaterial);
+      this.courierMark = new Mesh(new RingGeometry(.57, .69, 48), markMaterial);
+      this.courierMark.renderOrder = 1.5; this.courierMark.rotation.x = -Math.PI / 2; this.courierMark.visible = false;
+      this.meshes.push(this.courierMark); this.scene.add(this.courierMark);
       const material = new MeshBasicNodeMaterial({ color: '#64ffce', depthWrite: false, depthTest: false }); material.name = 'keep_moveMarker';
       this.destination = new Mesh(new RingGeometry(.22, .32, 32), material);
       this.destination.renderOrder = 10; this.destination.rotation.x = -Math.PI / 2; this.destination.visible = false;
@@ -961,10 +968,18 @@ export class GameView implements Lifecycle {
   }
   /** Keep the courier's silhouette in front when an Alpha, Mega or zoo corpse overlaps her feet.
    *  Small corpses don't trigger it: foreground mode also lifts her lower legs over low world geometry such as curbs (Q-208). */
-  private nearLargeCorpse(at: { x: number; z: number }): boolean {
+  private nearLargeCorpse(at: { x: number; y: number; z: number }): boolean {
     for (const e of this.world.entities.iterate()) {
       if (e.hidden || e.infected?.hidden) continue;
-      if (solidLargeCorpse(e) && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
+      if (!solidLargeCorpse(e)) continue;
+      const camera = this.camera.position, dx = at.x - camera.x, dy = at.y - .5 - camera.y, dz = at.z - camera.z;
+      const distanceSq = dx * dx + dy * dy + dz * dz;
+      if (distanceSq < 1e-6) continue;
+      // A retained body behind or beside her must not turn on the foreground cue.
+      const t = ((e.transform.x - camera.x) * dx + (e.transform.y - .4 - camera.y) * dy + (e.transform.z - camera.z) * dz) / distanceSq;
+      if (t <= 0 || t >= 1) continue;
+      const x = camera.x + t * dx, y = camera.y + t * dy, z = camera.z + t * dz;
+      if ((e.transform.x - x) ** 2 + (e.transform.y - .4 - y) ** 2 + (e.transform.z - z) ** 2 < 2.25 && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 4) return true;
     }
     return false;
   }
@@ -1031,7 +1046,7 @@ export class GameView implements Lifecycle {
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
-    return { placeholderDraws: this.districts?.placeholderDraws() ?? [], machineGuns: this.districts?.machineGunState() ?? [], weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+    return { placeholderDraws: this.districts?.placeholderDraws() ?? [], machineGuns: this.districts?.machineGunState() ?? [], weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, courierMark: this.courierMark ? { visible: this.courierMark.visible, position: this.courierMark.position.toArray() } : null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       npcs: this.npcs?.snapshot() ?? null, accessories: this.accessories?.snapshot() ?? [],
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, healthBars: this.healthBars?.snapshot() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
@@ -1121,6 +1136,12 @@ export class GameView implements Lifecycle {
       this.occlusion.update(this.camera, this.playerPosition, 0, this.labView.playerMeshes);
     }
     if (this.character) this.character.visible = !this.probes?.hide.courier && (carPose ? carPose.visible : !this.world.entities.get(1)?.hidden);
+    if (this.courierMark && current) {
+      const walking = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding === undefined && !carPose;
+      this.courierMark.visible = walking && !this.world.entities.get(1)?.hidden;
+      const x = lerp(previous?.x ?? current.x, current.x, alpha), z = lerp(previous?.z ?? current.z, current.z, alpha);
+      this.courierMark.position.set(x, (this.drawnGround(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0) + .035, z);
+    }
     if (this.crowd) this.crowd.visible = !this.probes?.hide.crowd;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update(); this.l9Props?.update(alpha); this.l8Gates?.update(); this.l10Perimeter?.update();
@@ -1241,7 +1262,7 @@ export class GameView implements Lifecycle {
     const courier = this.world.entities.get(1);
     const behindHull = !!current && !!(this.vehicles?.courierOccluded || this.entityAssets?.courierOccluded || courier && !courier.hidden && this.l8Gates?.courierOccluded(this.camera.position, courier.transform));
     courierXray.value = behindHull ? 1 : 0;
-    this.courierForeground = !!current && courierForegroundWanted(crowdSurroundsCourier(current, this.world.entities.iterate(), this.world.scenario === 'L4' ? 4.5 : 3) || this.nearLargeCorpse(current), megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
+    this.courierForeground = !!current && courierForegroundWanted(bodiesOccludeCourier(this.camera.position, current, this.world.entities.iterate()) || this.nearLargeCorpse(current), megaOccludesCourier(this.camera.position, current, this.world.entities.iterate()), behindHull);
     // The seated copy shares the courier's prewarmed depth slice: retain her
     // silhouette among the crew as the scripted truck turns under the camera.
     this.character?.setForeground(this.courierForeground || !!this.world.missions?.state.l2?.seated);
@@ -1449,7 +1470,7 @@ export class GameView implements Lifecycle {
       this.scene.remove(mesh); mesh.geometry.dispose();
       for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) if (!(material instanceof PaletteMaterial)) material.dispose();
     }
-    this.meshes.length = 0; this.cube = null; this.destination = null;
+    this.meshes.length = 0; this.cube = null; this.destination = null; this.courierMark = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }
     this.renderer.releaseLevelCaches();
   }

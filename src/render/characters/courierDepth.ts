@@ -28,9 +28,9 @@ export function useCourierDepth(material: Material, companion = false): boolean 
   const node = material as NodeMaterial, target = companion ? companionDepth : courierDepth;
   if (node.depthNode === target) return false;
   // A depth lift alone leaves her dark silhouette lost among similarly colored
-  // infected. Install a gold contour once and switch it with the same uniform.
+  // infected. Install the identity contour once and switch it with the same uniform.
   const edge = float(1).sub(normalView.dot(positionView.negate().normalize()).abs()).pow(3).mul(courierForegroundOn).mul(companion ? courierXray.oneMinus() : 1).mul(.8);
-  const contour = color('#ffd17d').mul(edge);
+  const contour = color(companion ? '#ffd17d' : '#80ddce').mul(edge);
   const lit = node as unknown as { emissiveNode?: typeof contour };
   lit.emissiveNode = lit.emissiveNode ? lit.emissiveNode.add(contour) : contour;
   node.depthTest = true; node.depthNode = target; node.needsUpdate = true;
