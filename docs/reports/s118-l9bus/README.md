@@ -64,3 +64,7 @@ Found that `pursueCrossingVehicle` returned while the courier was exposed, leavi
 ## Guarded handoff runtime follow-up
 
 Both the guarded handoff alone and its combination with a 1.75 bus speed share completed HIGH but still gave zero passenger attacks and zero passengers within 5 m. The combined trace shows repeated attracted states and passengers tens of metres behind during the rail hold. Speed override reverted again. See `rejected-handoff-pacing.json`; guarded handoff remains a working change, not a proven participation fix.
+
+## Paired distance trace
+
+Added APC pose, bus HP/stop tick and passenger target/heard/scripted fields to the existing observer. The HIGH normal-speed guarded-handoff drive completes but remains a participation failure. At tick 5280 bus (281,-330) trails APC (378,-239) by about 132 m; at tick 6180 the bus remains about 25 m away with no released passengers. Wreck tick is 6572, after the 20-second rail hold. Later passengers have target/heard IDs zero and attracted state while travelling toward the evacuation. See `target-distance-trace.json`. The next implementation must close the delivery distance before rail hold, then release and target ordinary infected without changing stats.
