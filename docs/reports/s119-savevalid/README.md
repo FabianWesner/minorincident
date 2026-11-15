@@ -24,3 +24,5 @@ Yes. In production, changing any persisted in-game setting during L9 reaches thi
 ## Native death-interval reproduction
 
 A native L9 world now reproduces rejection immediately after `Player.damage` kills the courier: `l9Crash.player.health.current` is zero and `validCrash` requires a living player. A settings change previously captured this dead live player. The Game save path now retains its previous living L9 resume while health is zero, preserving settings without writing a dead-player resume. The validator remains strict. This is a proven production-reachable cause; the unavailable s117 snapshot prevents attribution of that exact occurrence. The focused progression test passes (6 cases after merging the sweep into the existing case). Full remote validation remains pending.
+
+Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on runtime revision f49315c7: 27 files, 106 passed, 1 skipped; 233.3 s within 240 s. Subsequent direct Game.saveCampaign assertions pass locally with typecheck and lint; they add no test cases.

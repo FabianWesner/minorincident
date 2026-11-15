@@ -18,10 +18,19 @@
     },
     "typecheck": "pass",
     "lint": "pass",
-    "browserQA": "not-run"
+    "browserQA": "not-run",
+    "remoteUnit": {
+      "status": "pass",
+      "files": 27,
+      "passed": 106,
+      "skipped": 1,
+      "seconds": 233.3,
+      "budgetSeconds": 240,
+      "revision": "f49315c7"
+    },
+    "directSaveMethod": "pass: actual Game.saveCampaign across authored checkpoints, death interval, and throwing writer"
   },
   "open": [
-    "Run full remote suite after merging sweep into existing test case.",
-    "Complete production saveCampaign integration coverage."
+    "Final report reconciliation and full-suite confirmation of added direct save-method assertions."
   ]
 }
