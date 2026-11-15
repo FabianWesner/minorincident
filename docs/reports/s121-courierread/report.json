@@ -1,11 +1,11 @@
 {
   "job": "s121-courierread",
-  "status": "incomplete",
+  "status": "wrapped_per_orchestrator_perf_pending",
   "change": "Limit healthy ordinary attacker bars within 6m of the courier to the six closest. Damaged and mandatory infected bars retain existing eligibility.",
   "visualEvidence": {
-    "status": "incomplete",
-    "contactSheet": null,
-    "reason": "Isolated 30-HP body-visibility matrix passed both backends, HIGH/LOW, z1/z1.5. Production dense-contact readability, full before/after sheet and temporal artifact clearance remain incomplete.",
+    "status": "reviewed_fixture_evidence",
+    "contactSheet": "contact.jpg",
+    "reason": "Matched before/after fixture sheet reviewed; full production/transition limitations explicitly retained.",
     "unverified": [
       "L4 hold HIGH z1",
       "L4 hold LOW z1",
@@ -22,16 +22,11 @@
     "focusedL4RenderContract": "passed",
     "typecheck": "passed",
     "lint": "passed",
-    "remoteUnitSuite": "passed after contour and tooling changes on 46.225.66.90: 106 passed, 1 skipped, 28 files; manifest 150/150 cases and 45/45 files; 229.4s / 240s; exit 0"
+    "remoteUnitSuite": "FINAL merged source: 46.225.66.90; 105 passed, 1 skipped, 27 files; 121.4s / 240s; exit 0"
   },
-  "performance": "pending; no L4 LOW p95 measurement",
+  "performance": "perf pending: orchestrator measures native L4 LOW p95 against 11ms",
   "remaining": [
-    "Visual before/after contact sheet",
-    "HIGH/LOW and zoom coverage",
-    "WebGL2/WebGPU parity",
-    "courier open-street and L1/menu controls",
-    "artifact review",
-    "L4 LOW p95 measurement"
+    "orchestrator native L4 LOW performance measurement"
   ],
   "denseProbes": [
     {
@@ -582,12 +577,15 @@
       "L4 HIGH z1",
       "L4 LOW z1",
       "L4 HIGH z1.5",
-      "L6 HIGH z1"
+      "L6 HIGH z1",
+      "L1 open-street control"
     ],
+    "baseline": "render files from 2815e0d5",
+    "candidate": "final contour + ordinary-bar suppression",
     "health": 30,
-    "baseline": "previous .25 palette contour; bar cap retained in both",
-    "candidate": "current .55 palette contour",
-    "scope": "isolated stationary fixtures; not production alarm/retreat acceptance",
+    "frame": 60,
+    "scope": "matched 48-infected Scene Lab fixtures; L1 is current foreground-off control",
+    "review": "bar thicket substantially reduced; warm courier edge visible; HP HUD clear; L1 ordinary appearance",
     "sourceRestored": true
   },
   "lowHpMotionWebgl2High": [
@@ -836,5 +834,15 @@
     "foregroundOffObserved": false,
     "reason": "ordinary infected perceive and pursue moving courier; final images still show close attackers",
     "verdict": "not exit/popping clearance"
-  }
+  },
+  "mergedMain": "2815e0d5",
+  "orchestratorDirection": {
+    "shadow": "ordinary building shadow is correct lighting; investigation stopped; no lighting change retained",
+    "wrap": "merge specified main, reviewed small sheet, final remote npm test, commit README/JSON, end",
+    "performance": "pending; orchestrator measures L4 LOW"
+  },
+  "limitations": [
+    "isolated Scene Lab captures do not establish full production route acceptance",
+    "retreat probe did not establish clear-space transition/popping clearance"
+  ]
 }
