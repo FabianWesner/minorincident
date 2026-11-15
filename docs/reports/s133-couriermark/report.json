@@ -13,11 +13,11 @@
     "typecheck": "passed",
     "lint": "passed",
     "remote_unit": {
+      "revision": "c7ec3256",
       "passed": 105,
       "skipped": 1,
-      "seconds": 127.7,
-      "runner": "46.225.66.90",
-      "revision": "58cd1a5c"
+      "seconds": 132.2,
+      "runner": "46.225.66.90"
     }
   },
   "matrix": {
@@ -2941,5 +2941,10 @@
     "tier": "high",
     "zoom": 1,
     "verdict": "clear corpse-heavy L6 arc; mostly hidden in living-only crowds; recognition acceptance unproven"
+  },
+  "nativeTiming": {
+    "status": "unmeasured",
+    "reason": "quiet host load admission unavailable; waiting attempt cancelled",
+    "timeoutVariable": "E2E_ADMISSION_TIMEOUT_SECONDS"
   }
 }

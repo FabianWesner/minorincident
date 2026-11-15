@@ -67,3 +67,7 @@ Replaced the single `contact.jpg` with four current-source matched marker-off/on
 ## Courier identity contour
 
 Changed only the courier contour from warm gold to restrained teal (`#80ddce`), matching the ground cue. Close-view grazing falloff widens slightly (power 3→2), strength .55→.65; hull x-ray edge .14→.2. Companion fallback explicitly retains gold; no zombie/corgi material change. Existing uniforms and draws are reused. Opened current L4 HIGH zoom-1 frame 60: teal head/torso/arm edges separate the courier from warm crowd clothing even when the ground ring is hidden. WebGL2 HIGH moving L4/L6 at both zooms passed; typecheck/lint passed. The earlier full matrix, gate and remote-suite results predate this contour-only change and must not be represented as its final validation.
+
+## Teal-contour remote suite
+
+Required unchanged remote unit command passed on c7ec3256: 105 passed, one skipped, 27 files, 132.2 seconds within 240-second budget, runner 46.225.66.90. Corrected native timing attempt remained in quiet admission (host load >3), then was cancelled without a measurement. Pool wrapper reads `E2E_ADMISSION_TIMEOUT_SECONDS`, whereas the attempted `MI_PERF_ADMISSION_TIMEOUT_SECONDS=120` only controls the legacy path; future retries must set the pool variable. No running check remains from this attempt.
