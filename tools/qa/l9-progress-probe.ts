@@ -39,6 +39,7 @@ try {
   const l9 = world.missions!.l9!, car = world.vehicles!.cars.get(l9.state.carId)!;
   const positionJumps: { tick: number; metres: number; from: number[]; to: number[] }[] = [];
   const attitude = { maxRoll: 0, maxPitch: 0, maxAt: 0, drivingMaxRoll: 0, drivingMaxPitch: 0, drivingMaxAt: 0, firstOver20: null as null | { tick: number; phase: string; roll: number; pitch: number; position: number[]; velocity: unknown; wheels: unknown; contacts: unknown[] } };
+  const busRoad = { samples: 0, outside6: 0, maxDistance: 0 };
   const busSamples: unknown[] = [], passengerAttacks: {tick:number;id:number}[] = [];
   const passengerWindups: { tick: number; id: number; attackId: number; targetId?: number }[] = [];
   world.events.on('telegraph', event => {
@@ -109,6 +110,15 @@ try {
     }
     const bus = world.entities.get(l9.driving.state.busId);
     if (bus && !bus.hidden && world.tick % Number(process.env.L9_BUS_SAMPLE_TICKS ?? 30) === 0) busSamples.push({tick:world.tick,at:{...bus.transform},apc:{...p},busHealth:bus.health.current,busStoppedAt:l9.driving.state.busStoppedAt,passengers:passengers.map(e=>({id:e!.id,at:{...e!.transform},state:e!.infected?.state,target:e!.infected?.targetId,heard:e!.infected?.heardTargetId,scripted:e!.infected?.scripted,hp:e!.health.current})),hatch:l9.driving.hatch});
+    if (bus && !bus.hidden) {
+      const points = crossing.routes.find(r => r.id === 'road')!.points;
+      const distance = Math.min(...points.slice(1).map((b, j) => {
+        const a = points[j], dx = b[0]-a[0], dz = b[1]-a[1];
+        const t = clamp(((bus.transform.x-a[0])*dx+(bus.transform.z-a[1])*dz)/(dx*dx+dz*dz),0,1);
+        return Math.hypot(bus.transform.x-a[0]-t*dx,bus.transform.z-a[1]-t*dz);
+      }));
+      busRoad.samples++; busRoad.maxDistance = Math.max(busRoad.maxDistance, distance); if (distance > 6) busRoad.outside6++;
+    }
     const displacement = Math.hypot(p.x-before.x,p.z-before.z);
     if (before.driving && l9.state.phase === 'driving' && displacement > 2)
       positionJumps.push({ tick:world.tick, metres:displacement, from:[before.x,before.z], to:[p.x,p.z] });
@@ -147,9 +157,10 @@ try {
     const probes = targets.map(([x,z]) => { const path = { path: [] as number[], goal:-1, pathIndex:0 }, waypoint={x:0,z:0}; return { target:[x,z], clear:nav.clear(x,z,.5), physicalSweep: world.solids.sweep(e,{x:(x-e.transform.x)/Math.hypot(x-e.transform.x,z-e.transform.z),z:(z-e.transform.z)/Math.hypot(x-e.transform.x,z-e.transform.z)},1), reachable:nav.steer(e.transform,{x,z},path,.35,waypoint,100000), waypoint, length:path.path.length }; });
     console.log(JSON.stringify({ navDiagnostic:true, source:{...e.transform}, sourceClear:nav.clear(e.transform.x,e.transform.z,.35), bodyContacts, probes }));
   }
-  const result = { attitude, passengerWindups, busSamples, passengerAttacks, hatchOpenedAt, peakPassengersWithin5, seed, routeId, pathId, positionJumps, evacuation: l9.driving.state.roster.map(id => { const e = world.entities.get(id); return { id, hp:e?.health.current, at:e?.transform, passengerOf:e?.passengerOf, phase:e?.civilian?.survivor?.mode, story:e?.civilian?.story, hidden:e?.hidden, pending:e?.pendingAdmission, route: e?.civilian ? { goal:e.civilian.goal, index:e.civilian.pathIndex, cells:e.civilian.path.slice(-6).map(cell => [world.infected!.nav.x(cell),world.infected!.nav.z(cell)]) } : null }; }), driving: { evacuationAt:l9.driving.state.evacuationAt, evacuated:l9.driving.state.evacuated, evacuating:l9.driving.state.evacuating, done:l9.driving.state.evacuationDone, spotFailures: Object.fromEntries((l9.driving as unknown as { spotFail: Map<number,number> }).spotFail), spotSkips: Object.fromEntries((l9.driving as unknown as { spotSkip: Map<number,number> }).spotSkip), truckEntering:l9.driving.state.truckEntering, hugDone:l9.driving.state.hugDone, hugSpot:l9.driving.state.hugSpot }, tick: world.tick, phase: l9.state.phase, playerHp: world.entities.get(1)!.health.current, maxNoProgressSeconds: +(maxStalled / 60).toFixed(2), maxAt, maxWindow, routeProgress: +projection(car.entity.transform.x, car.entity.transform.z).along.toFixed(4), finished: l9.state.finished };
+  const result = { busRoad, attitude, passengerWindups, busSamples, passengerAttacks, hatchOpenedAt, peakPassengersWithin5, seed, routeId, pathId, positionJumps, evacuation: l9.driving.state.roster.map(id => { const e = world.entities.get(id); return { id, hp:e?.health.current, at:e?.transform, passengerOf:e?.passengerOf, phase:e?.civilian?.survivor?.mode, story:e?.civilian?.story, hidden:e?.hidden, pending:e?.pendingAdmission, route: e?.civilian ? { goal:e.civilian.goal, index:e.civilian.pathIndex, cells:e.civilian.path.slice(-6).map(cell => [world.infected!.nav.x(cell),world.infected!.nav.z(cell)]) } : null }; }), driving: { evacuationAt:l9.driving.state.evacuationAt, evacuated:l9.driving.state.evacuated, evacuating:l9.driving.state.evacuating, done:l9.driving.state.evacuationDone, spotFailures: Object.fromEntries((l9.driving as unknown as { spotFail: Map<number,number> }).spotFail), spotSkips: Object.fromEntries((l9.driving as unknown as { spotSkip: Map<number,number> }).spotSkip), truckEntering:l9.driving.state.truckEntering, hugDone:l9.driving.state.hugDone, hugSpot:l9.driving.state.hugSpot }, tick: world.tick, phase: l9.state.phase, playerHp: world.entities.get(1)!.health.current, maxNoProgressSeconds: +(maxStalled / 60).toFixed(2), maxAt, maxWindow, routeProgress: +projection(car.entity.transform.x, car.entity.transform.z).along.toFixed(4), finished: l9.state.finished };
   mkdirSync('test-results/s67-l9stuck', { recursive: true });
   writeFileSync(`test-results/s67-l9stuck/${pathId === 'primary' ? 'primary-' : ''}${routeId}-seed-${seed}.json`, JSON.stringify(result, null, 2) + '\n');
+  if (process.env.L9_SUMMARY_OUT) writeFileSync(process.env.L9_SUMMARY_OUT, JSON.stringify({ quality: process.env.L9_QUALITY, routeId, pathId, finished: result.finished, tick: world.tick, attitude, busRoad }));
   console.log(JSON.stringify(result, null, 2));
   if (process.argv.includes('--attitude-check') && Math.max(attitude.drivingMaxRoll, attitude.drivingMaxPitch) >= 20 * Math.PI / 180) process.exitCode = 1;
   if (process.argv.includes('--check') && (!result.finished || maxStalled > 300 || positionJumps.length > 0 || Math.max(attitude.drivingMaxRoll, attitude.drivingMaxPitch) >= 20 * Math.PI / 180)) process.exitCode = 1;

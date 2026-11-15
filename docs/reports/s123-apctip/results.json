@@ -347,5 +347,139 @@
         "maxPitchDegrees": 5.8111640084454015
       }
     ]
+  },
+  "correctedFullDriveMatrix": [
+    {
+      "quality": "high",
+      "routeId": "countryside",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 11386,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.18475899374925672,
+        "maxAt": 10725,
+        "drivingMaxRoll": 0.14556547279128682,
+        "drivingMaxPitch": 0.18475899374925672,
+        "drivingMaxAt": 2853,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7189,
+        "outside6": 0,
+        "maxDistance": 3.476933002471924
+      }
+    },
+    {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "detour",
+      "finished": true,
+      "tick": 12374,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.2125141605296607,
+        "maxAt": 11713,
+        "drivingMaxRoll": 0.14490254257101828,
+        "drivingMaxPitch": 0.2125141605296607,
+        "drivingMaxAt": 4967,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7878,
+        "outside6": 0,
+        "maxDistance": 3.4783480167388916
+      }
+    },
+    {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 10989,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.19900390726266862,
+        "maxAt": 10328,
+        "drivingMaxRoll": 0.100410123303174,
+        "drivingMaxPitch": 0.19900390726266862,
+        "drivingMaxAt": 2584,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7295,
+        "outside6": 0,
+        "maxDistance": 2.378319637734984
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "countryside",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 11846,
+      "attitude": {
+        "maxRoll": 1.5707963267948963,
+        "maxPitch": 0.2107265680010802,
+        "maxAt": 11185,
+        "drivingMaxRoll": 0.18838768559256977,
+        "drivingMaxPitch": 0.2107265680010802,
+        "drivingMaxAt": 5447,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7448,
+        "outside6": 0,
+        "maxDistance": 3.470313549041748
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "road",
+      "pathId": "detour",
+      "finished": true,
+      "tick": 12351,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.10184373411706941,
+        "maxAt": 11690,
+        "drivingMaxRoll": 0.07407894842377596,
+        "drivingMaxPitch": 0.10184373411706941,
+        "drivingMaxAt": 4126,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7844,
+        "outside6": 0,
+        "maxDistance": 3.292135000228882
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 10790,
+      "attitude": {
+        "maxRoll": 1.5707963267948963,
+        "maxPitch": 0.1993064859088667,
+        "maxAt": 10129,
+        "drivingMaxRoll": 0.13504823666936075,
+        "drivingMaxPitch": 0.1993064859088667,
+        "drivingMaxAt": 2585,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7130,
+        "outside6": 0,
+        "maxDistance": 3.478804588317871
+      }
+    }
+  ],
+  "olderBaselineComparison": {
+    "older": "683da8f8",
+    "candidate": "266ec466",
+    "vehicleBodyDiff": "empty",
+    "scope": "Identical chassis implementation; isolated rollover susceptibility predates batch 103. Original browser incident trigger remains unisolated."
   }
 }
