@@ -5,7 +5,7 @@
     "recognition_0_3s": "unproven",
     "marker_above_corpses": "unproven",
     "occlusion_only_outline": "existing proximity-triggered foreground; not yet revised",
-    "real_L4": "pending",
+    "real_L4": "180-second HIGH zoom-1 standard combat spot completed; frames 5424/8136 opened; universal recognition still unproven",
     "scene_gate": "pending",
     "performance": "unmeasured; structural +1 mesh draw, 96 triangles, no pass"
   },
@@ -340,5 +340,16 @@
         "foreground": true
       }
     ]
+  },
+  "realPlay": {
+    "out": "test-results/s133-couriermark/l4-real",
+    "seconds": 180,
+    "finishedLevel": false,
+    "skips": [],
+    "reviewedTicks": [
+      5424,
+      8136
+    ],
+    "issue": "early empty-HUD navigation warning"
   }
 }

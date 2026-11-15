@@ -19,3 +19,9 @@ Still required: finish marker/occlusion treatment, final complete backend/tier/z
 ## Rejected occlusion experiment
 
 A camera-to-torso sphere test replaced the five-nearby-body trigger. Its focused front/rear/off-axis tests passed, but the WebGL2 HIGH L4 fixture failed the existing 90% body-visibility gate. The experiment was reverted; no regression is retained. Conservative pose-aware occlusion remains open.
+
+## Real-play L4 HIGH zoom 1
+
+QA build passed. `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 npx tsx tools/playtest/play.ts --levels L4 --quality high --zoom 1 --capture-zooms 1 --weapon weapon.army-mg --level-minutes 3 --session-seconds 180 --no-skip --out test-results/s133-couriermark/l4-real` ran its bounded 180-second sample through the pool. Exit 1 represents unfinished level at the sample limit; no objective was skipped. One early empty-HUD navigation warning was recorded. The driver reached west, north and south breach objectives.
+
+Opened tick 5424 and tick 8136 captures. The small teal ring clearly locates the courier in active north-breach combat, including among corpses, armed figures, Alphas and red warnings at tick 8136. These are different combat configurations from the original batch-108 complaint frame; they establish real-play utility, not a matched before/after or universal 0.3-second test. Raw receipts remain in the ignored output directory.
