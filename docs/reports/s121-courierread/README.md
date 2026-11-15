@@ -14,7 +14,7 @@ The courier already uses a foreground depth slice in close crowds. Its palette o
 
 ## Checks and evidence
 
-Typecheck, lint and the focused existing L4 render contract pass. The unchanged full remote unit command passed on 46.225.66.90 before the contour edit: 106 passed, 1 skipped, 28 files, 228.9 seconds within the 240-second budget. The contour edit still needs that full-suite rerun.
+Typecheck, lint and the focused existing L4 render contract pass. The unchanged full remote unit command passed after the contour and tooling changes on 46.225.66.90: 106 passed, 1 skipped, 28 executed files; passive manifest 150/150 cases and 45/45 files; 229.4 seconds within the 240-second budget, exit 0.
 
 Committed reproduction:
 
@@ -39,7 +39,6 @@ Raw images, fixtures, clipping pairs and metrics remain under `test-results/s121
 - Complete revised-contour motion/backend matrix and baseline attribution of visible intersections/Alpha appearance; no courier artifacts.
 - Open-street transition/popping check and remaining backend/tier controls.
 - One complete small before/after contact sheet covering required production views.
-- Full remote unit suite after the contour edit.
 - L4 LOW performance measurement: **perf pending**; no measured frame-time claim.
 
 No deployment, push, or main movement was performed.
