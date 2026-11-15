@@ -116,3 +116,7 @@ Fixed-source headless pooled L9 subset runs HIGH/LOW successfully through setup 
 ## No-fire rail diagnostic
 
 Added optional `L9_RAIL_PASSIVE=1` input policy to the existing native probe: empty input during rail hold, ordinary skilled behavior elsewhere. HIGH courier dies tick5848,9.67s after hatch5268; no bus passenger within5m or windup before death. No health/actor/threshold changes. This rules out player fire as the sole explanation for missing bus arrivals; current delivery is late even before shooting. Diagnostic is not a completion run. Typecheck/lint pass.
+
+## Closer ram delivery trial
+
+A trial combining18m ram-warning range (from42m),1.75 pursuit speed share, hull-gap rail braking and near-held-APC release still completed HIGH with zero windups and zero within5m. Reverted all trial changes. No gate/threshold relaxation retained. See `rejected-close-ram.json`. Passenger delivery remains unresolved.
