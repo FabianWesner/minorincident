@@ -808,5 +808,16 @@
     "vehicleXray": 0,
     "xrayOffImageDifference": null,
     "conclusion": "vehicle x-ray is not the dark-courier cause; inspect palette lighting/shadow contribution"
+  },
+  "crowdLightProbe": {
+    "path": "test-results/s121-courierread/crowd-light-probe",
+    "bloodCoverage": 0,
+    "foreground": 1,
+    "xray": 0,
+    "observation": "courier remains dark with crowd geometry hidden",
+    "limitations": [
+      "cached shadow contribution not isolated",
+      "manual foreground override may be reset by redraw; off image is not causal evidence"
+    ]
   }
 }
