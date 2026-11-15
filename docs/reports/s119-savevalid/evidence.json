@@ -28,9 +28,16 @@
       "budgetSeconds": 240,
       "revision": "f49315c7"
     },
-    "directSaveMethod": "pass: actual Game.saveCampaign across authored checkpoints, death interval, and throwing writer"
+    "directSaveMethod": "pass: actual Game.saveCampaign across authored checkpoints, death interval, and throwing writer",
+    "latestRemoteAttempt": {
+      "revision": "18a9ba12",
+      "status": "runner-timeout",
+      "seconds": 240.6,
+      "exit": 124,
+      "saveProgression": "pass"
+    }
   },
   "open": [
-    "Final report reconciliation and full-suite confirmation of added direct save-method assertions."
+    "Rerun unchanged full remote suite after runner timeout."
   ]
 }

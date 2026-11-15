@@ -1,28 +1,28 @@
-# s119-savevalid — campaign save validation during L9
+# s119-savevalid — L9 campaign save validation
 
-## Finding
+## Root cause and fix
 
-The s117 browser report retained no rejected live campaign snapshot. The current worktree reproduces the call chain: changing a persisted setting calls `Game.campaignSettings()` and then `saveCampaign()`; L9's live mission state is copied into `l9Crash` before `SaveStore.write()` validates it. Mission signals and other autosave hooks use the same write path. Native snapshots from the available L9 bridge and rail-stall save fixtures validate after restore, after a settings change, and after the bridge death/retry. A native L1–L10 sweep also validates campaign saves at each authored mission checkpoint; the L9 crash payload validates in driving, approach, fall, impact, crawl, and done phases.
+Native simulation reproduces a rejected save immediately after lethal `Player.damage`: `l9Crash.player.health.current` is zero, while `validCrash` requires a living player. In-game settings previously captured this transient dead player before checkpoint restore. `Game.saveCampaign` now retains the previous living L9 resume during the death interval, allowing settings persistence without storing an unusable dead-player resume. Validation remains strict.
 
-This does not identify the exact field in the s117 transient snapshot. That evidence is unavailable, and the current authored native states do not trigger the rejection. No validator rule was relaxed.
+The exact s117 rejected snapshot was not retained. This reproduction proves a reachable cause of the reported exception, but cannot establish that the missing snapshot failed for the same field.
 
-## Fix
-
-`Game.saveCampaign()` now catches validation and storage exceptions at the game boundary, logs the failed write, returns `false`, and lets gameplay continue. `SaveStore.write()` validates before writing, so an invalid candidate does not replace the previous stored campaign. This protects settings changes and all autosave callers from an exception escaping into gameplay. The in-memory run continues; a failed candidate is not persisted.
+Snapshot capture, validation and write exceptions are caught at the Game boundary, logged, and return false. They cannot escape settings or mission autosave callbacks. SaveStore validates before writing, so rejected candidates preserve the previous browser save. No pause or clock operation is performed by the failure handler.
 
 ## Production impact
 
-Yes. In production, changing any persisted in-game setting during L9 reaches this autosave path; L9 mission autosaves also reach it without a settings change. Therefore the reported validation rejection was reachable in production and could block the interaction that initiated the settings update on the affected build. With this fix, a failed save is logged and play continues, while the previous valid browser save remains stored.
+Yes: persisted in-game settings and L9 mission signals use this same autosave path in production. A settings change during death/retry could previously throw. The fix keeps playing and preserves the previous living resume. Autosave failures remain nonfatal even for unexpected invalid candidates or storage errors.
+
+## Coverage
+
+The existing campaign progression test sweeps every authored checkpoint in native L1–L10 worlds through the actual Game.saveCampaign method and validateSave. L9 coverage includes driving/approach/fall/impact/crawl/done snapshots, native lethal damage and retained living resume, and a throwing writer. Existing bridge/rail-stall fixtures additionally validate live resume snapshots and bridge death/checkpoint restore. Phase snapshots set the phase and matching vehicle flags directly; this is schema coverage, not a physical playthrough of each phase. The sweep explicitly captures authored checkpoints; it is not a full campaign bot run.
 
 ## Verification
 
-- Focused native tests: `npx vitest run tests/engine/save-progression.test.ts tests/engine/vehicles.test.ts` — 2 files, 9 tests passed.
-- `npm run typecheck` — passed.
-- `npm run lint` — passed.
-- The exact s117 snapshot was not retained, so reproducing its invalid field and proving the candidate becomes valid remain open. Browser QA is not needed to verify the nonfatal exception boundary; no browser run was performed.
+- Typecheck and lint pass, including direct Game method assertions.
+- Focused progression test: 6 cases pass. Vehicle checks passed in the full remote suite.
+- Remote suite on f49315c7: 27 files, 106 passed, 1 skipped; 233.3 seconds within the 240-second budget, 150/150 cases.
+- Final remote suite with direct Game method assertions: all completed files passed, including direct Game save tests, but the runner timed out at 240.6 seconds (exit 124) before the last tool test completed. An unchanged rerun is required.
 
-## Native death-interval reproduction
+## Browser QA needed
 
-A native L9 world now reproduces rejection immediately after `Player.damage` kills the courier: `l9Crash.player.health.current` is zero and `validCrash` requires a living player. A settings change previously captured this dead live player. The Game save path now retains its previous living L9 resume while health is zero, preserving settings without writing a dead-player resume. The validator remains strict. This is a proven production-reachable cause; the unavailable s117 snapshot prevents attribution of that exact occurrence. The focused progression test passes (6 cases after merging the sweep into the existing case). Full remote validation remains pending.
-
-Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on runtime revision f49315c7: 27 files, 106 passed, 1 skipped; 233.3 s within 240 s. Subsequent direct Game.saveCampaign assertions pass locally with typecheck and lint; they add no test cases.
+No browser run was required for the native reproduction or synchronous save exception boundary. Optional physical confirmation: change quality with the L9 hatch open, immediately after lethal damage, after retry, and after L10 handover; confirm play resumes normally and Continue retains a valid save. The missing s117 snapshot remains an attribution limitation.
