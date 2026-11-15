@@ -130,3 +130,39 @@ Added optional `L9_RAIL_PASSIVE=1` input policy to the existing native probe: em
 ## Closer ram delivery trial
 
 A trial combining18m ram-warning range (from42m),1.75 pursuit speed share, hull-gap rail braking and near-held-APC release still completed HIGH with zero windups and zero within5m. Reverted all trial changes. No gate/threshold relaxation retained. See `rejected-close-ram.json`. Passenger delivery remains unresolved.
+
+## Six-passenger arrival working trial
+
+Bus speed share3 +18m ram-warning range (instead of42m) permits all6 passengers within5m of APC during HIGH no-fire rail hatch. Guarded engine-target handoff still yields no exact windups. Courier dies tick6300/hatch5173. Runtime trial remains uncommitted: requires realistic pacing review, attack fix, LOW/full-drive/asphalt/regression checks. Typecheck/lint pass. See `six-passenger-arrival-trial.json`. Earlier asphalt receipts describe committed runtime, not this trial.
+
+## Hull windup measurement correction
+
+The attack observer now includes `vehicle.attack-windup`, whose targetId is the attacking infected and sourceId the APC. Earlier empty telegraph results did not prove absence of hull attacks. Current uncommitted speed-share3/18m-ram/guarded-handoff trial with ordinary no-fire rail input: HIGH6 within5m, first hull windup1.97s after hatch; LOW2 within5m, first4.05s. Thus HIGH diagnostic meets participation thresholds; LOW proximity still fails. See `hull-attack-trial.json`. Runtime trial still requires pacing/asphalt/full regression qualification.
+
+## Current delivery trial gate results
+
+Near-held-APC exit spacing30ticks improves LOW to4 within5m and first hull attack3.15s; HIGH6/1.97s. Both no-fire diagnostics meet numeric passenger criteria. However updated `bus-route.json` is now trial evidence and fails asphalt (max8.832m), and focused vehicle test fails the unchanged90tick ram telegraph expectation because trial18m warning range is too short. Typecheck/lint pass. Uncommitted trial is not releasable: pre-bend braking and compatible ram telegraph/commit distance must be fixed; all final gates remain required.
+
+## Pre-bend braking correction in working delivery trial
+
+Working fast pursuit brakes55m before authored interior road vertices to7m/s, then uses existing turn braking. Ram warning returns42m/90ticks with lateral alignment<8m, preserving the unchanged telegraph regression. All6 extended fixtures now pass asphalt (max2.315m), and focused vehicle tests2/2 pass (30.83s). Earlier HIGH/LOW delivery pass receipts predate this braking correction and must be rerun. Runtime remains uncommitted until final participation/static checks.
+
+## Braking participation revalidation failure
+
+Revalidated speed-share3/55m-braking runtime fails both no-fire tier participation diagnostics (0near/0windups before courier death). Earlier delivery passes predate braking and cannot qualify this runtime. Lower share2/25m-braking HIGH trial also fails0/0. Latest working runtime is uncommitted and not qualified; current asphalt JSON still describes preceding share3/55m trial. See `braking-participation-trials.json`. Typecheck/lint passed before the latest two numeric adjustments, whose full checks remain open.
+
+## Latest pacing investigation
+
+Share2/25m-brake ordinary skilled HIGH completes but has1near/0hullwindups. Share3/10m-brake HIGH no-fire diagnostic has0near/0hullwindups before death. Both use restored42m lateral-aligned ram warning; prior delivery passes used18m warning and therefore cannot be claimed for this runtime. Runtime remains an uncommitted failing trial. Next inspect speed-dependent ram approach eligibility while preserving unchanged90tick warning and regression.
+
+## Speed-aware ram eligibility trial
+
+Working warning range max(18,42-2*busSpeed), lateral alignment<8m, share3 and10m pre-bend braking: HIGH6near/first1.68s, LOW4near/first3.63s. Focused vehicles2/2 pass36.36s, unchanged warning assertions. Asphalt fixture worst6.906m fails6m; runtime uncommitted. See `eligible-ram-participation.json`. Need modestly earlier braking, then repeat combined criteria and all final gates.
+
+##18m braking and LOW exit spacing
+
+18m pre-bend braking passes all6 asphalt fixtures(max3.426m), HIGH6near/first4.2s, LOW2near/3.95s. Typecheck/lint pass. Further changing near-stop disembark spacing30→15ticks gives LOW3near/first4.4s. Latest runtime remains uncommitted: HIGH, asphalt, focused/full gates and skilled completion must be revalidated after exit-spacing change. See `low-exit15-trial.json`.
+
+## Delivery implementation focused qualification
+
+Current runtime: mission bus speed cap share3 (36m/s allowed straight-line cap),18m pre-bend braking to7m/s, existing5m/s turn braking, speed-aware ram eligibility preserving90tick warning,15tick exits near a held APC and guarded engine-waypoint→courier targeting. Infected stats unchanged. HIGH4near/first4.4s, LOW3near/first4.4s under disclosed ordinary no-fire rail input; full samples/windups in `participation.json`. All6 extended asphalt fixtures pass(max3.426m); focused vehicles2/2, typecheck/lint pass. This is focused qualification only: final six driven path sweeps, skilled completion, offscreen spawn, full remote suite, threat audit, E31 and browser vehicle gates remain required. Earlier current verdict predates this implementation.

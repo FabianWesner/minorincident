@@ -44,6 +44,10 @@ try {
     if (event.type === 'telegraph' && event.sourceId !== undefined && l9.driving.state.busPassengers.includes(event.sourceId))
       passengerWindups.push({ tick: event.tick, id: event.sourceId, attackId: event.attackId, targetId: event.target?.id });
   });
+  world.events.on('vehicle.attack-windup', event => {
+    if (event.type === 'vehicle.attack-windup' && l9.driving.state.busPassengers.includes(event.targetId))
+      passengerWindups.push({ tick: event.tick, id: event.targetId, attackId: event.attackId, targetId: event.sourceId });
+  });
   const attacking = new Set<number>();
   let hatchOpenedAt: number | null = null, peakPassengersWithin5 = 0;
   let index = 1, peak = projection(car.entity.transform.x, car.entity.transform.z).along;

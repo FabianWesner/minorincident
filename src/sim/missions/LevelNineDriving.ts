@@ -495,6 +495,8 @@ export class LevelNineDriving {
     const dx = target.x - bus.transform.x, dz = target.z - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
+    const approachingBend = this.busRoad.slice(1, -1).some(point => point[0] >= nearestX && point[0] - nearestX < 18);
+    if (approachingBend && (bus.vehicle?.speed ?? 0) > 7) { intent.throttle = 0; intent.brake = true; }
     const turning = Math.abs(delta) > .15;
     if (turning && (bus.vehicle?.speed ?? 0) > 5) { intent.throttle = 0; intent.brake = true; }
     // The road chase delivers its infected beside the authored rail crossing.
@@ -569,7 +571,7 @@ export class LevelNineDriving {
     const bus = w.vehicles!.cars.get(s.busId); if (!bus) return;
     if (s.busStoppedAt === null && w.tick % 6 === 0) emitEngine(w, s.busId, bus.physics.speed);
     const ramAt = s.busRamAt ?? 0;
-    if (s.busStoppedAt === null && !ramAt && s.busRams < busRamCap && w.tick - s.busHitAt >= 300 && Math.max(bus.physics.speed, car.physics.speed) > 2 && distance(bus.entity.transform, p) < 42) {
+    if (s.busStoppedAt === null && !ramAt && s.busRams < busRamCap && w.tick - s.busHitAt >= 300 && Math.max(bus.physics.speed, car.physics.speed) > 2 && distance(bus.entity.transform, p) < Math.max(18, 42 - bus.physics.speed * 2) && Math.abs(bus.entity.transform.z - p.z) < 8) {
       s.busRamAt = w.tick + busTelegraphTicks; s.busRamZ = p.z; this.signal('bus-ram-windup', bus.entity.id);
       w.events.emit({ type: 'vehicle.sound', tick: w.tick, sourceId: bus.entity.id, position: { x: bus.entity.transform.x, y: bus.entity.transform.y, z: bus.entity.transform.z }, velocity: { x: bus.physics.forwardSpeed, z: 0 }, rpm: 0, speed: bus.physics.speed, health: bus.entity.health.current / bus.entity.health.max, phase: 'horn' });
       // Reuse the pooled directional telegraph renderer for a broad red lane
@@ -603,7 +605,8 @@ export class LevelNineDriving {
     for (let i = s.busReleased; i < s.busPassengers.length; i++) {
       const e = w.entities.get(s.busPassengers[i]); if (!e) continue;
       Object.assign(e.transform, bus.entity.transform);
-      if ((bus.physics.speed < 3 || s.busStoppedAt !== null) && w.tick % 90 === 0 && i === s.busReleased) {
+      const delivering = this.holding(car.entity.id) && distance(bus.entity.transform, p) < 30 && bus.physics.speed < 6;
+      if ((delivering || bus.physics.speed < 3 || s.busStoppedAt !== null) && w.tick % (delivering ? 15 : 90) === 0 && i === s.busReleased) {
         e.transform.z += 2.1; e.transform.x -= 2; e.hidden = false; e.infected!.hidden = false; delete e.attachedTo;
         w.spatial.set(e.id, e.transform.x, e.transform.z); w.infected!.pursueTarget(e.id, 1); pursueCrossingVehicle(w, e.id); s.busReleased++; this.signal('bus-spill', e.id); break;
       }
