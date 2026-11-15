@@ -40,3 +40,7 @@ Rail braking now applies only during the unrestarted rail stall; evacuation appr
 ## Road collision residency correction
 
 The bus now requests collision residency for its pending asphalt spawn or current position. Chunk selection reserves that support within the existing tier budget by replacing the furthest APC prefetch chunk. The six native 30-second fixtures now all spawn and all measured centers stay within 6 m (worst 5.256 m at the return bend). HIGH/LOW wide-detour fixtures release no passengers within that window; this remains incomplete. These are stationary APC setup fixtures, not the required full pursuit driving paths or hatch participation proof. Typecheck and lint pass. Earlier missing-spawn results above are superseded by the current JSON, while full route, hatch and gate requirements remain open.
+
+## Extended bend measurement
+
+Extended the stationary native fixtures to 120 seconds. This exposed a 8.979 m return-bend excursion in both wide-detour cases. Reducing pursuit lookahead to 6 m and braking above 5 m/s when steering error exceeds 0.15 radians brings the worst sampled offset to 2.657 m; every sampled position in all six fixtures is within 6 m, and all six passengers release in every fixture. Typecheck and lint pass. This remains fixture evidence, not full driven pursuits or hatch attack timing/proximity qualification.

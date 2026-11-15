@@ -22,14 +22,14 @@ for (const quality of ['high', 'low'] as const) for (const path of ['on-road', '
     Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
     world.spatial.set(car.entity.id, pose.x, pose.z);
     const samples: { tick: number; x: number; z: number; distanceToAsphalt: number }[] = [];
-    for (let i = 0; i < 1800; i++) {
+    for (let i = 0; i < 7200; i++) {
       world.applyInput(emptyInput(), 'keyboard'); world.update();
       if (!bus.entity.hidden && i % 30 === 0) samples.push({ tick: world.tick, x: bus.entity.transform.x, z: bus.entity.transform.z, distanceToAsphalt: roadDistance(bus.entity.transform) });
     }
     rows.push({ quality, path, apcFixture: { x: pose.x, z }, samples, maxDistance: Math.max(0, ...samples.map(s => s.distanceToAsphalt)), busSpawned: samples.length > 0, finalBus: { x: bus.entity.transform.x, z: bus.entity.transform.z, hidden: bus.entity.hidden }, passengersReleased: state.busReleased });
   } finally { world.dispose(); }
 }
-const result = { ...provenance(), method: 'Native L9 sim, HIGH/LOW; APC is placed at the same cross-section on asphalt, a corner cut and a wide off-road detour as controlled fixture setup. Bus physics/autopilot then runs unassisted for 30 s. Centreline distance is measured against every authored asphalt segment every 0.5 s. Hatch participation remains a separate browser/native observation.', asphaltHalfWidthM: road.width / 2, rows };
+const result = { ...provenance(), method: 'Native L9 sim, HIGH/LOW; APC is placed at the same cross-section on asphalt, a corner cut and a wide off-road detour as controlled fixture setup. Bus physics/autopilot then runs unassisted for 120 s. Centreline distance is measured against every authored asphalt segment every 0.5 s. Hatch participation remains a separate browser/native observation.', asphaltHalfWidthM: road.width / 2, rows };
 mkdirSync('docs/reports/s118-l9bus', { recursive: true });
 writeFileSync('docs/reports/s118-l9bus/bus-route.json', `${JSON.stringify(result, null, 2)}\n`);
 for (const row of rows) console.log(JSON.stringify({ quality: row.quality, path: row.path, spawned: row.busSpawned, maxDistance: row.maxDistance, end: row.finalBus, released: row.passengersReleased }));

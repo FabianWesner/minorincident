@@ -482,10 +482,12 @@ export class LevelNineDriving {
   }
   private readonly busIntent = (intent: DriveIntent, bus: EntitySnapshot): void => {
     if ((this.state.busStunUntil ?? 0) > this.w.tick) { intent.throttle = 0; intent.brake = true; intent.steer = 0; return; }
-    const target = this.busRoadTarget(bus.transform.x + 18);
+    const target = this.busRoadTarget(bus.transform.x + 6);
     const dx = target.x - bus.transform.x, dz = target.z - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
+    const turning = Math.abs(delta) > .15;
+    if (turning && (bus.vehicle?.speed ?? 0) > 5) { intent.throttle = 0; intent.brake = true; }
     // The road chase delivers its infected beside the authored rail crossing.
     // Let them disembark there so the hatch defense does not depend on a ram or
     // on the APC having stayed on the asphalt.
