@@ -93,3 +93,14 @@ Native quiet retry used the correct `E2E_ADMISSION_TIMEOUT_SECONDS=120` and ende
 Built current QA source successfully and repeated the identical 180-second standard-combat playtest at HIGH zoom 1, no skips, output `test-results/s133-couriermark/l4-final/`. It reached breach combat and stopped at the requested sample limit (exit 1 for unfinished level). One early empty-HUD navigation warning was recorded.
 
 Opened `campaign-L4-t8141.jpg`: courier HUD 10/100, several large white-bodied Alphas around/overlapping her, red warnings and health bars competing. The teal head/torso/limb contour clearly identifies her amid those bodies; the ground ring is occluded. This supplies actual current-source dense-combat visual evidence, not a fixture substitution. Independent ~0.3-second recognition review remains pending.
+
+## Native timing completed
+
+The host became quiet and the corrected `--perf` run completed exit 0 with exclusive admission, preflight load <3, no foreign headless Chrome/build/test process, native uncapped Chrome WebGL2 HIGH. Each stationary frame-60 scene warmed 180 frames and measured 600 render updates per marker-off/on side; zero browser errors. Raw output: `test-results/s133-couriermark/review-perf/metrics.json`.
+
+| Scene | CPU median off/on | CPU p95 off/on | Frame median off/on | Frame p95 off/on |
+| --- | --- | --- | --- | --- |
+| L4 | 5.8 / 5.7 ms | 6.2 / 6.1 ms | 6.1 / 6.0 ms | 6.7 / 6.5 ms |
+| L6 | 5.7 / 5.8 ms | 6.1 / 6.4 ms | 6.0 / 6.1 ms | 6.5 / 6.8 ms |
+
+Median frame delta is within ±0.1 ms, p95 within −0.2/+0.3 ms. This supports small marker render cost in these dense stationary samples. The geometry-off control still submits the marker's empty draw, so it excludes the incremental draw-dispatch cost; full original/current source comparison separately measured +1 draw and +96 triangles. The helper microbenchmark separately measured 0.00491 ms p95 for a 160-body no-hit scan. These bounded results supersede the earlier unmeasured-timing status, without claiming universal GPU/frame-time guarantees. Human recognition review remains pending.
