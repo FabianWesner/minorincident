@@ -1,0 +1,47 @@
+{
+  "slug": "s119-savevalid",
+  "candidate": "a1509c69",
+  "status": "complete",
+  "rootCause": {
+    "identifiedField": "l9Crash.player.health.current",
+    "reason": "Native lethal Player.damage produces zero health; validCrash requires living player health. Retain previous living L9 resume during death interval. Exact s117 attribution remains unproven."
+  },
+  "productionReachable": true,
+  "productionPath": "Persisted settings call Game.campaignSettings -> Game.saveCampaign -> SaveStore.write; L9 mission signals also autosave.",
+  "fix": "Game.saveCampaign catches validation/storage exceptions, logs, and returns false so autosaves cannot interrupt gameplay. SaveStore validates before storage writes, retaining the previous valid save on rejection.",
+  "validation": {
+    "focusedTests": {
+      "command": "npx vitest run tests/engine/save-progression.test.ts",
+      "status": "pass",
+      "files": 1,
+      "tests": 6
+    },
+    "typecheck": "pass",
+    "lint": "pass",
+    "browserQA": "not-run",
+    "remoteUnit": {
+      "status": "pass",
+      "revision": "2c3ef942",
+      "files": 27,
+      "passed": 106,
+      "skipped": 1,
+      "seconds": 239.3,
+      "budgetSeconds": 240,
+      "exit": 0
+    },
+    "directSaveMethod": "pass: actual Game.saveCampaign across authored checkpoints, death interval, and throwing writer",
+    "latestRemoteAttempt": {
+      "revision": "18a9ba12",
+      "status": "runner-timeout",
+      "seconds": 240.6,
+      "exit": 124,
+      "saveProgression": "pass"
+    },
+    "verify": {
+      "E13": "pass: 107 tests",
+      "E31": "pass: 107 tests"
+    }
+  },
+  "open": [],
+  "limitation": "Exact attribution to the unavailable s117 snapshot cannot be established; native death-interval rejection is reproduced and fixed."
+}
