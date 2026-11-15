@@ -53,3 +53,9 @@ A warmed Node benchmark of the body-overlap helper scanned 160 no-hit figures fo
 ## Full current scene gate
 
 On source revision 492bab69, `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 npx tsx tools/scenelab/gate-run.ts gate --out test-results/s133-couriermark/gate-current --jobs 1 --batch 10` completed exit 0. All 91 curated rows passed with no known/not-run rows. Required vehicle-contact HIGH/LOW and native L9/L7/L4 campaign motion follow-ups also passed exit 0. The source stayed unchanged for the entire sequential pooled run. This supersedes the earlier focused-only gate status.
+
+## Native timing harness
+
+Extended the existing matched review tool with `--perf`: native uncapped Chrome, 180 warm frames and 600 measured render updates per marker-off/on view. Requires `tools/perf/quiet-run.sh`; normal pooled invocation correctly rejects uncapped timing. Initial admitted attempt exposed tsx `__name` injection in a nested page helper; removed that helper. The corrected attempt remained in quiet-admission wait because host load stayed above the <3 threshold; cancelled before measurement (exit 75, exclusive admission cancelled). No native timing result is claimed. Typecheck/lint passed for the tool before the nested-helper removal.
+
+Reproduce when the host is quiet: `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 sh tools/perf/quiet-run.sh npx tsx tools/scenelab/courier-mark-review.ts --perf`.
