@@ -70,3 +70,7 @@ A temporary .28 surface-color floor inside the existing foreground contour branc
 ## Same-pose crowd visibility probe
 
 Production frame 3600 records bloodCoverage=0, foreground=1, xray=0. Hiding crowd geometry leaves the courier dark. This does not isolate cached shadow contribution, so it neither proves nor rules out crowd shadows. The manual foreground-off capture is not causal evidence because a redraw can restore policy uniforms. Raw state/images and diagnostic script: test-results/s121-courierread/crowd-light-probe. No runtime changes remain. Next isolate received-shadow/shadow-intensity contribution using a supported persistent presentation override.
+
+## Location shadow control
+
+A short isolated courier-only capture at (-34.9,8) shows the same location inside a building shadow; her clothing is shaded even without the production encounter. A five-infected control at that pose with supported look.set shadowIntensity=0 restores lit clothing. This establishes a lighting contribution, not an additional geometry defect or full production clearance. Raw images/specs under breach-light-control and shadow-control. No runtime adjustment retained.

@@ -819,5 +819,14 @@
       "cached shadow contribution not isolated",
       "manual foreground override may be reset by redraw; off image is not causal evidence"
     ]
+  },
+  "breachShadowControl": {
+    "path": "test-results/s121-courierread/shadow-control",
+    "position": [
+      -34.9,
+      8
+    ],
+    "observation": "open control is in building shadow; persistent shadowIntensity=0 override restores lit clothing in small-crowd control",
+    "conclusion": "lighting contributes to dark appearance; not sufficient to clear production artifacts"
   }
 }
