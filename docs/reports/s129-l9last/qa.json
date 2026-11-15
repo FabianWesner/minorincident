@@ -4,8 +4,30 @@
   "status": "in-progress",
   "candidateBase": "3e4f3ab0",
   "placement": {
-    "before": { "truckZ": 10, "observed": "Truck cabs overlap the sandbag row and EVACUATION / STOP sign in the archived custom-camera frame." },
-    "after": { "positions": [[450, 26], [459, 26], [468, 26]], "boundsAfterYaw": { "halfX": 1.429, "halfZ": 3.4633 } },
+    "before": {
+      "truckZ": 10,
+      "observed": "Truck cabs overlap the sandbag row and EVACUATION / STOP sign in the archived custom-camera frame."
+    },
+    "after": {
+      "positions": [
+        [
+          450,
+          26
+        ],
+        [
+          459,
+          26
+        ],
+        [
+          468,
+          26
+        ]
+      ],
+      "boundsAfterYaw": {
+        "halfX": 1.429,
+        "halfZ": 3.4633
+      }
+    },
     "test": "Existing vehicle-interrupted-boarding test extended with bridgehead footprint, collider, and APC-road clearance assertions.",
     "visualAfter": "NOT RUN: sandbox denies localhost preview bind on 127.0.0.1:4995; post-change HIGH zoom-1.5 capture remains required."
   },
@@ -13,20 +35,111 @@
     "status": "unresolved",
     "evidence": "s128 HIGH road log remains 3/4 from tick 12656 through 17447; courier stays at (468.761, -2.172), 100 HP. Supplied tick-16237 capture shows no final evacuee near trucks.",
     "actorIdentityAndState": "Not recorded in source run logs; do not infer survivor identity, pathing, knockdown, crowd blockage, or story-beat state.",
-    "requiredBrowserRuns": ["HIGH road x2", "HIGH shortcut x1"],
+    "requiredBrowserRuns": [
+      "HIGH road x2",
+      "HIGH shortcut x1"
+    ],
     "browserAttempt": "QA build succeeded; Vite preview bind failed with EPERM at 127.0.0.1:4995."
   },
   "checks": {
-    "focusedVehicleTest": { "result": "PASS", "files": 1, "tests": 2, "seconds": 35.11, "afterLastAssertion": true },
+    "focusedVehicleTest": {
+      "result": "PASS",
+      "files": 1,
+      "tests": 2,
+      "seconds": 35.11,
+      "afterLastAssertion": true
+    },
     "typecheck": "PASS",
     "lint": "PASS",
-    "E31VerifyDirect": { "result": "PASS", "entrypoint": "node --import tsx tools/verify.ts E31", "files": 27, "tests": 106, "seconds": 90.3, "budgetSeconds": 240 },
-    "fullVitestLocal": { "result": "PASS", "files": 27, "tests": 106, "seconds": 55.09, "beforeLastTestAssertion": true },
-    "focusedL9ThreatAudit": { "skilledFlags": [], "passiveFlags": [], "overallExit": "nonzero solely for PARTIAL_LEVEL_SELECTION" },
-    "requiredRemoteCommand": { "command": "sh tools/remote/run.sh $PWD -- npm test", "result": "not dispatched", "reason": "no healthy Hetzner runner; local fallback rejects nested npm test wrapper" },
+    "E31VerifyDirect": {
+      "result": "PASS",
+      "entrypoint": "node --import tsx tools/verify.ts E31",
+      "files": 27,
+      "tests": 106,
+      "seconds": 90.3,
+      "budgetSeconds": 240
+    },
+    "fullVitestLocal": {
+      "result": "PASS",
+      "files": 27,
+      "tests": 106,
+      "seconds": 55.09,
+      "beforeLastTestAssertion": true
+    },
+    "focusedL9ThreatAudit": {
+      "skilledFlags": [],
+      "passiveFlags": [],
+      "overallExit": "nonzero solely for PARTIAL_LEVEL_SELECTION"
+    },
+    "requiredRemoteCommand": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "result": "PASS",
+      "runner": "46.225.66.90",
+      "passed": 105,
+      "skipped": 1,
+      "inventoryCases": 150,
+      "seconds": 126.9,
+      "budgetSeconds": 240
+    },
     "vehicleMotionGate": "NOT RUN: browser preview binding unavailable",
     "threeHighRealInputRuns": "NOT RUN: browser preview binding unavailable"
   },
   "reportBytesUnder200KB": true,
-  "completion": "NOT MET: P1 fix, three HIGH real-input runs, post-fix visual clearance review, motion gate, and remote suite receipt remain open."
+  "completion": "NOT MET: HIGH shortcut still exceeds 20 s; root cause and remaining gates open.",
+  "browserRuns": [
+    {
+      "id": "repro-high-road-1",
+      "backend": "webgpu",
+      "quality": "high",
+      "route": "road",
+      "zoom": 1.5,
+      "finished": true,
+      "skipped": [],
+      "deaths": 0,
+      "wallSeconds": 222,
+      "allFourAboardDefenseSecondsRemaining": 8,
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    },
+    {
+      "id": "high-road-2",
+      "backend": "webgpu",
+      "quality": "high",
+      "route": "road",
+      "zoom": 1.5,
+      "finished": true,
+      "skipped": [],
+      "deaths": 0,
+      "wallSeconds": 238,
+      "allFourAboardDefenseSecondsRemaining": 9,
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "id": "high-shortcut-1",
+      "backend": "webgpu",
+      "route": "dry-shortcut",
+      "quality": "high",
+      "zoom": 1.5,
+      "finished": true,
+      "deaths": 0,
+      "skipped": [],
+      "wallSeconds": 221,
+      "boardingTiming": "FAIL: 3/4 at tick 11213, approximately 31 s after defense complete",
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    }
+  ]
 }

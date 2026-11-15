@@ -26,3 +26,11 @@ The documented playtest path was attempted with HIGH, `--l9-route road`, WebGPU,
 - Vehicle campaign motion gate and real-input browser gate: not run; both require a browser preview server, which cannot bind in this sandbox.
 
 The placement code/test and this evidence note are committed as a partial lane checkpoint. The final report must be updated after the HIGH root-cause fix and browser acceptance runs.
+
+## Resumed browser evidence
+
+Local preview startup is now permitted. Two sequential HIGH WebGPU road runs at zoom 1.5 completed L9 without skips or deaths: `repro-high-road-1` (222 s, 4/4 aboard with 8 s defense remaining; two frame-hitch diagnostics) and `high-road-2` (238 s, 4/4 with 9 s remaining; zero issues). The HIGH shortcut run is pending. Raw receipts are under `test-results/s129/`.
+
+The exact required remote command now passes on runner `46.225.66.90`: 105 passed, one platform skip, 150-case inventory retained, 126.9 s within the 240 s budget. These results supersede the earlier environment-blocked attempts above.
+
+The resumed HIGH WebGPU shortcut run (`high-shortcut-1`, zoom 1.5) completed in 221 s without skips or deaths, but fails boarding timing: still 3/4 at tick 11213, approximately 31 s after defense completion. Two enemy-frozen diagnostics were recorded. This contradicts any claim that the z=26 staging change alone fixes P1; actor-level reproduction and a verified cause fix remain required.
