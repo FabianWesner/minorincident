@@ -87,3 +87,9 @@ Replaced the remaining distance-only large-corpse trigger with a conservative 3D
 Complete moving L4/L6 × HIGH/LOW × zoom 1/1.5 × WebGL2/WebGPU matrices passed, sampled at frames 1/30/60. Required remote suite passed 105 tests, one skipped, 27 files in 132.7 seconds, runner 46.225.66.90. JSON matrix and unit receipts refreshed. No source mutation occurred during these checks.
 
 Native quiet retry used the correct `E2E_ADMISSION_TIMEOUT_SECONDS=120` and ended exit 75 at its deadline: host load stayed above the <3 preflight threshold. No frame-time data was collected. Independent reaction-time review of the committed before/after sheet was requested from the scheduling session; no response is yet recorded. Recognition speed and native frame-time acceptance remain open. All processes from this validation are terminal.
+
+## Latest-source real L4 HIGH spot
+
+Built current QA source successfully and repeated the identical 180-second standard-combat playtest at HIGH zoom 1, no skips, output `test-results/s133-couriermark/l4-final/`. It reached breach combat and stopped at the requested sample limit (exit 1 for unfinished level). One early empty-HUD navigation warning was recorded.
+
+Opened `campaign-L4-t8141.jpg`: courier HUD 10/100, several large white-bodied Alphas around/overlapping her, red warnings and health bars competing. The teal head/torso/limb contour clearly identifies her amid those bodies; the ground ring is occluded. This supplies actual current-source dense-combat visual evidence, not a fixture substitution. Independent ~0.3-second recognition review remains pending.
