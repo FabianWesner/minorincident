@@ -31,10 +31,14 @@ I inspected the final HIGH WebGPU APC-stop capture at follow zoom1.5 and the thr
 The six s126 native fixtures all complete with living evacuees aboard: HIGH road15.75 s, HIGH passive road0 s, LOW road17.95 s, LOW passive shortcut0 s, HIGH seed2 road14.60 s, LOW seed2 road0 s. Negative times clamp to0 in the native probe. The actual archived stalled save reaches all four aboard/full health at **19.30 s** after defense (last start444 +45 ticks, defense tick−669); its one-second census first observes completion at20.15 s. These are native fixtures, not real-input qualification.
 
 - Typecheck and lint pass. Existing vehicle tests pass (2 tests,29.33 s); existing NPC tests pass (3 tests), including guard selection of an L9 evacuee biter before a nearer Alpha. No registered cases added.
-- Exact required remote `sh tools/remote/run.sh "$PWD" -- npm test` passes on final gameplay code:105 passed/one platform skip,150-case inventory retained,128.1 s within240 s, runner46.225.66.90.
+- Exact required remote `sh tools/remote/run.sh "$PWD" -- npm test` passes on final gameplay code:105 passed/one platform skip,150-case inventory retained,129.6 s within240 s, runner46.225.66.90.
 - Final focused L9 threat audit: skilled/passive complete, zero level flags. Its overall nonzero exit is solely `PARTIAL_LEVEL_SELECTION`, since this is intentionally an L9 diagnostic.
-- Final vehicle campaign motion refresh: LOW passes; HIGH is unproven because one hatch actor has only two captured frames. Both source-stable; the unchanged gate must be rerun for sufficient evidence.
+- Final vehicle campaign motion gate passes HIGH and LOW, both source-stable and with no failed tracks or correction failures. HIGH has1,302 samples; LOW also passes the full gate.
 
 Final artifacts are this README, compact JSON below200 KB, and one small reviewed sheet. No deployment, push or main-branch move occurred.
 
-The unchanged motion-gate repeat reproduces one unproven HIGH track (`hatch/hull-ground/888`, two complete frames, zero measured planted contacts); LOW passes again. Existing verdict thresholds remain unchanged. The next correction is observer coverage around the hull/visibility boundary, not accepting missing contacts as zero slide.
+The original observer cut actor888 to two airborne frames at its3m hull boundary, producing an unproven result. The sampler now retains approach data up to6m only for actors that enter the original3m window. Actor888 now has29 frames and five planted contacts and passes as grounded. Existing verdict thresholds and fail-unproven behavior are unchanged. The real-input driver is unchanged.
+
+## Completion audit
+
+The requested approximately20-second HIGH matrix, retained s126 fixtures, all-three-truck clearance, existing-test extensions, zero L9 threat flags, HIGH/LOW motion gate, typecheck/lint and final remote suite are verified. Final remote rerun includes the observer correction (105 passed/one platform skip,150-case inventory,129.6 s). The worst real-input result remains explicitly20.50 s, not an exact≤20.00 s claim. The final report is committed with compact receipts and one reviewed sheet.

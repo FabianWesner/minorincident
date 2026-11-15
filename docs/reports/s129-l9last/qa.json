@@ -1,7 +1,7 @@
 {
   "job": "s129-l9last",
   "revision": "19b0a91e",
-  "status": "in-progress: motion HIGH insufficient frame coverage",
+  "status": "complete",
   "cause": "HIGH crowd grabs pinned Okafor and Mia near the APC; soldier evacuation rescue priority covered L7 but omitted L9. Rosa goodbye already complete.",
   "changes": {
     "rescue": "L9 guards prioritize infected biting active evacuees using existing soldier rescue priority",
@@ -331,8 +331,10 @@
     "passed": 105,
     "skipped": 1,
     "inventory": 150,
-    "seconds": 128.1,
-    "runner": "46.225.66.90"
+    "seconds": 129.6,
+    "runner": "46.225.66.90",
+    "note": "Final rerun includes motion observer coverage correction",
+    "receipt": "test-results/s129/final-remote.log"
   },
   "threat": {
     "skilledFlags": [],
@@ -1405,54 +1407,53 @@
     }
   ],
   "motion": {
-    "pass": false,
+    "pass": true,
     "rows": [
       {
         "mode": "L9",
         "tier": "high",
-        "code": 1,
-        "seconds": 114.86,
+        "code": 0,
+        "seconds": 105.448,
         "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
         "sourceHash": "bb0791e10116900ed5c63b74da91d19ac1d66b6ed9784f1a5f8b3ed8bcfe4f5d",
-        "pass": false
+        "pass": true
       },
       {
         "mode": "L9",
         "tier": "low",
         "code": 0,
-        "seconds": 76.818,
+        "seconds": 78.089,
         "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
         "sourceHash": "bb0791e10116900ed5c63b74da91d19ac1d66b6ed9784f1a5f8b3ed8bcfe4f5d",
         "pass": true
       }
     ]
   },
-  "motionRepeat": {
-    "sameSource": true,
-    "highPass": false,
-    "lowPass": true,
-    "failedTracks": [
-      {
-        "key": "hatch/hull-ground/888",
-        "classification": "unproven",
-        "complete": true,
-        "actionsMatched": true,
-        "pass": false,
-        "motion": {
-          "frames": 2,
-          "torsoPitchMinDeg": null,
-          "torsoPitchMaxDeg": null,
-          "contacts": 0,
-          "slideMaxCm": 0,
-          "slideP95Cm": null,
-          "yawDriftMaxDeg": 0,
-          "liftMaxCm": 7.4,
-          "sinkMaxCm": 0,
-          "jitterRunMax": 0,
-          "worstSlideFrame": null
-        }
-      }
-    ],
-    "nextAction": "Retain approach samples around the hull visibility boundary; preserve verdict thresholds and fail-unproven behavior."
+  "motionObserver": {
+    "change": "Retain up-to6m approach samples only for actors entering original3m contact window",
+    "thresholds": "unchanged; missing contacts remain unproven",
+    "actor888": {
+      "frames": 29,
+      "contacts": 5,
+      "classification": "grounded",
+      "pass": true
+    },
+    "high": {
+      "samples": 1302,
+      "failed": [],
+      "correctionFailures": []
+    }
+  },
+  "completionAudit": {
+    "threeHighRealInputRuns": "road x2, shortcut x1; all living evacuees aboard; worst20.50s against requested approximately20s",
+    "s126Fixtures": "six native cases plus archived stalled save pass",
+    "truckPlacement": "HIGH WebGPU reviewed, all three spots and APC road clear; collision assertions pass",
+    "existingTestsExtended": true,
+    "threatFlags": 0,
+    "motionHighLowPass": true,
+    "typecheckLint": "PASS",
+    "remoteSuite": "PASS final tree",
+    "artifacts": "README, JSON<200KB, one small sheet",
+    "constraints": "no zombie stats/corpse removal/teleports/invulnerability changes; no push/deploy/main move"
   }
 }

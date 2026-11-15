@@ -169,6 +169,7 @@ try {
 
     const stagedMotion = new Map(stagedActors.map(id => { const p = game.world.entities.get(id)!.transform; return [id, { x: p.x, z: p.z, travelM: 0, movingFrames: 0, aliveFrames: 0 }]; }));
     const result = [];
+    const hullActors = new Set<number>();
     const progress = [];
     const captureCamera = [];
     for (let frame = 1; frame <= frameCount; frame++) {
@@ -204,8 +205,12 @@ try {
         const e = w.entities.get(figure.id);
         if (!e?.infected || e.health.current <= 0 || !figure.drawn || !figure.soles?.length) continue;
         const floor = w.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0;
-        const hull = hulls.find(h => gap(h.boxes, e.transform.x, floor + .7, e.transform.z) <= 3);
+        // Retain the approach to the contact window: its boundary can cut a
+        // running stride down to two airborne frames with no planted contact.
+        // Only actors that actually enter the original 3 m window qualify.
+        const hull = hulls.find(h => gap(h.boxes, e.transform.x, floor + .7, e.transform.z) <= 6);
         if (!hull) continue;
+        if (hulls.some(h => gap(h.boxes, e.transform.x, floor + .7, e.transform.z) <= 3)) hullActors.add(e.id);
         const driving = w.missions?.l9?.driving;
         const context = driving ? driving.hatch ? 'hatch' : driving.state.stallAt !== null && !driving.state.restarted ? 'rail-stall' : driving.state.repairActive ? 'repair' : 'driving' : level;
         const contexts = driving ? ['driving', 'detour', ...(driving.hatch ? ['hatch'] : []), ...(driving.state.stallAt !== null && !driving.state.restarted ? ['rail-stall'] : []), ...(driving.state.repairActive ? ['repair'] : [])] : [level];
@@ -225,7 +230,7 @@ try {
     }
     api.input.clear();
     const stagedOutcomes = stagedActors.map(id => { const e = game.world.entities.get(id); return { id, exists: !!e, health: e?.health.current ?? null, deathFrame: e?.infected?.deadAt ? e.infected.deadAt - startTick : null, motion: stagedMotion.get(id)! }; });
-    return { samples: result, progress, stagedActors, stagedOutcomes, captureCamera, collisionFixture };
+    return { samples: result.filter(sample => hullActors.has(sample.id)), progress, stagedActors, stagedOutcomes, captureCamera, collisionFixture };
   }, { level, fixture, frameCount, captureFrom, contactIds });
   const name = fixture ?? level;
   if (cells.length) await session.makeSheet(cells, `test-results/s83-vehicleslide/campaign/${name}-${tier}-consecutive.jpg`, 480);
