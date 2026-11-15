@@ -107,7 +107,9 @@ export class LevelNineDriving {
       // later. Hidden truck occupants are deployed before that camp is visible.
       const id = outbreak.spawnPedestrian(warm, { role: 'soldier', model: 'npc.national-guard', waypoints: [warm] }, false), e = w.entities.get(id)!;
       e.hidden = true; e.passengerOf = s.trucks[i % 3]; w.spatial.delete(id);
-      e.civilian!.ally = { ...allyState('soldier', null), post: { x: 447 + i * 4, z: -7 }, hold: true, range: 35, gun: { damage: 20, shotS: .7, rangeM: 35, nearM: 12, hitNear: .75, hitFar: .3 } };
+      // Post beyond the north-side boarding row: the guard line can engage the
+      // horde without standing in the evacuees' narrow egress path.
+      e.civilian!.ally = { ...allyState('soldier', null), post: { x: 447 + i * 4, z: 16 }, hold: true, range: 35, gun: { damage: 20, shotS: .7, rangeM: 35, nearM: 12, hitNear: .75, hitFar: .3 } };
       s.soldiers.push(id);
     }
     if (!s.samId) {

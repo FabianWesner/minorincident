@@ -1,0 +1,226 @@
+{
+  "job": "s126-l9evac",
+  "date": "2026-11-15",
+  "candidateMain": "70b7871f",
+  "title": "L9 evacuation timing and D-CROSSING red wreck placement",
+  "changes": {
+    "evacuationTruckPositions": [
+      [
+        450,
+        10
+      ],
+      [
+        459,
+        10
+      ],
+      [
+        468,
+        10
+      ]
+    ],
+    "guardsPosts": "North of the boarding lane at z=16; active guard combat unchanged.",
+    "redPickupBefore": [
+      465,
+      -8.9
+    ],
+    "redPickupAfter": [
+      465,
+      -19
+    ],
+    "designChoice": "Moved the truck row north to keep evacuees from crossing the dense horde left behind the APC; moved the red pickup clear of barricade footprints onto level ground. No infected statistics changed, no zombies or corpses were removed, and survivors remain damageable."
+  },
+  "reproduction": {
+    "s125Finding": "Browser run ended 240 s sample at 2/4, 58.4 s after Defense complete; courier alive, no deaths. Native QA frame showed a dense horde between APC and trucks.",
+    "cause": "The authored south-side truck row at z=-16 and the guards' south-side posts put the survivor egress across the horde corridor. The truck slot/board trigger was available; survivors took damage and died or stalled en route. North-side staging reduced that crossing; the north guard line attacks from beyond the boarding lane.",
+    "evidencePaths": [
+      "scratchpad/archive/s125-b106qa/s125/l9-video-fresh/runs-video.json",
+      "scratchpad/briefs/s126-evidence/video-L9-checkpoint-yield.jpg",
+      "scratchpad/briefs/s126-evidence/continue-L9-L9-t8117.jpg"
+    ]
+  },
+  "nativeRuns": [
+    {
+      "id": "s126-proof-high-road-final",
+      "tier": "HIGH",
+      "route": "road",
+      "player": "skilled",
+      "seed": 1,
+      "completed": true,
+      "seconds": 185.52,
+      "defenseCompleteTick": 10101,
+      "lastBoardedTick": 9507,
+      "secondsAfterDefense": 0,
+      "livingEvacuees": 4,
+      "evacuated": 4,
+      "evacueeHp": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "peakAlive": 168,
+      "collisionFailures": 0,
+      "note": "s126 fresh native road run"
+    },
+    {
+      "id": "s126-proof-high-road-passive-final",
+      "tier": "HIGH",
+      "route": "road",
+      "player": "passive",
+      "seed": 1,
+      "completed": true,
+      "seconds": 186.58,
+      "defenseCompleteTick": 10152,
+      "lastBoardedTick": 9344,
+      "secondsAfterDefense": 0,
+      "livingEvacuees": 4,
+      "evacuated": 4,
+      "evacueeHp": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "peakAlive": 167,
+      "collisionFailures": 0,
+      "note": "s126 native passive road run"
+    },
+    {
+      "id": "s126-proof-low-road-final",
+      "tier": "LOW",
+      "route": "road",
+      "player": "skilled",
+      "seed": 1,
+      "completed": true,
+      "seconds": 203.38,
+      "defenseCompleteTick": 10104,
+      "lastBoardedTick": 11125,
+      "secondsAfterDefense": 17.02,
+      "livingEvacuees": 4,
+      "evacuated": 4,
+      "evacueeHp": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "peakAlive": 90,
+      "collisionFailures": 0,
+      "note": "s126 native road run"
+    },
+    {
+      "id": "s126-shortcut-low-passive",
+      "tier": "LOW",
+      "route": "dry-shortcut",
+      "player": "passive",
+      "seed": 1,
+      "completed": true,
+      "seconds": 178.32,
+      "defenseCompleteTick": 8658,
+      "lastBoardedTick": 9566,
+      "secondsAfterDefense": 15.13,
+      "livingEvacuees": 4,
+      "evacuated": 4,
+      "evacueeHp": [
+        100,
+        70,
+        100,
+        100
+      ],
+      "peakAlive": 92,
+      "collisionFailures": 0,
+      "note": "s126 native passive shortcut run"
+    },
+    {
+      "id": "s126-proof-high-road-seed2",
+      "tier": "HIGH",
+      "route": "road",
+      "player": "skilled",
+      "seed": 2,
+      "completed": true,
+      "seconds": 185.67,
+      "defenseCompleteTick": 10085,
+      "lastBoardedTick": 9309,
+      "secondsAfterDefense": 0,
+      "livingEvacuees": 4,
+      "evacuated": 4,
+      "evacueeHp": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "peakAlive": 168,
+      "collisionFailures": 0,
+      "note": "repeat with seed 2"
+    },
+    {
+      "id": "s126-proof-low-road-seed2",
+      "tier": "LOW",
+      "route": "road",
+      "player": "skilled",
+      "seed": 2,
+      "completed": true,
+      "seconds": 186.63,
+      "defenseCompleteTick": 10157,
+      "lastBoardedTick": 9225,
+      "secondsAfterDefense": 0,
+      "livingEvacuees": 4,
+      "evacuated": 4,
+      "evacueeHp": [
+        100,
+        100,
+        100,
+        100
+      ],
+      "peakAlive": 90,
+      "collisionFailures": 0,
+      "note": "repeat with seed 2"
+    }
+  ],
+  "threatAudit": {
+    "focusedL9Flags": [],
+    "focusedL9PassiveFlags": [],
+    "focusedOutcome": "complete",
+    "focusedWallSeconds": 23.902,
+    "fullCrossLevelAudit": "Exceeded 600-second budget/reservation during unrelated L4 stages; no full-gate receipt."
+  },
+  "checks": {
+    "focusedVehicleTest": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "remoteUnitSuite": "PASS: exact required command, runner 46.225.66.90, 105 passed / 1 skipped, 129.2 s within 240 s budget",
+    "vehicleMotionGate": "PASS: L9 HIGH and LOW, sourceStable true, no correction failures",
+    "layoutBuild": "BLOCKED: checked-in generation cannot run because assets/kit.river-terrain/model.glb is absent; generated layout JSON was updated alongside authored layout source."
+  },
+  "visualQA": {
+    "before": "Viewed s125 QA screenshot; red pickup perched on barricade with front wheels visibly lifted.",
+    "after": "Authored placement and collision bounds put the pickup at y=0, z=-19 with no barricade overlap. Browser after-render unavailable because the pool could not bind its control port. Sheet labels the after side as an authored placement plan, not a render.",
+    "browserQAneeded": [
+      "Render the after placement and inspect wheel contact and grounded rest in browser/scene QA.",
+      "Run the vehicle campaign motion gate once the shared browser pool is available.",
+      "Run the required remote unit suite once a healthy runner is available."
+    ]
+  },
+  "limits": [
+    "One explored HIGH dry-shortcut skilled run still left one living evacuee unboarded at 20 s; the failing route was outside the s125 HIGH road reproduction matrix and remains open.",
+    "A LOW road passive seed-2 run died before reaching the evacuation; no immortality was added."
+  ],
+  "commitStatus": "Committed with report; see git history",
+  "vehicleMotion": {
+    "high": {
+      "level": "L9",
+      "tier": "high",
+      "sourceHash": "66783d80ebbbf9ae6f8704099497eb96d93e31c16c564d9d8422b4f9dfe3a3f8",
+      "sourceStable": true,
+      "pass": true
+    },
+    "low": {
+      "level": "L9",
+      "tier": "low",
+      "sourceHash": "66783d80ebbbf9ae6f8704099497eb96d93e31c16c564d9d8422b4f9dfe3a3f8",
+      "sourceStable": true,
+      "pass": true
+    }
+  }
+}

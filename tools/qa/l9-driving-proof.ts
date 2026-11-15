@@ -6,15 +6,19 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { provenance } from './accept/probe';
 import { stateHash } from '../../src/sim/world/stateHash';
+import { l9Course } from '../../src/data/l9';
 
 const arg = (name: string, fallback: string) => { const i = process.argv.indexOf(name); return i < 0 ? fallback : process.argv[i + 1]; };
 const route = arg('--route', 'road'), tier = arg('--tier', 'low'), zero = process.argv.includes('--zero'), risky = process.argv.includes('--risky');
+const passive = process.argv.includes('--passive');
+const seed = Number(arg('--seed', '1'));
 if (!['road', 'countryside', 'dry-shortcut'].includes(route) || !['low', 'high'].includes(tier)) throw new Error('Expected --route road|countryside|dry-shortcut --tier low|high');
+if (!Number.isInteger(seed) || seed < 1) throw new Error('Invalid seed');
 const maxSeconds = Number(arg('--max-seconds', '600'));
 if (!Number.isFinite(maxSeconds) || maxSeconds <= 0 || maxSeconds > 1200) throw new Error('Invalid tick budget');
 const output = arg('--out', `test-results/eg-l9/${route}-${tier}${zero ? '-zero' : ''}${risky ? '-risky' : ''}.json`);
 const save = preset('L9-default'); save.settings.quality = tier as 'low' | 'high';
-const world = await loadLevel('L9', 1, save, 0, { quality: tier as 'low' | 'high' });
+const world = await loadLevel('L9', seed, save, 0, { quality: tier as 'low' | 'high' });
 try {
   const l9 = world.missions!.l9!, bot = new LevelNineBot(world, route, !risky), car = world.vehicles!.cars.get(l9.state.carId)!;
   if (zero) world.vehicles!.damage(car.entity.id, car.entity.health.max);
@@ -36,7 +40,10 @@ try {
   };
   const seen = new Set<number>(), firstNear: { id: number; archetype: string; state: string; distance: number }[] = [], durations: number[] = [];
   for (let i = 0; i < maxSeconds * 60 && world.missions!.state.phase !== 'progression' && world.missions!.state.phase !== 'result' && world.entities.get(1)!.health.current > 0; i++) {
-    world.applyInput(bot.sample(), 'keyboard'); const start = performance.now(); world.update(); durations.push(performance.now() - start);
+    const frame = bot.sample();
+    if (passive) Object.assign(frame, { activeAttack: false, mouseAttack: false,
+      left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } });
+    world.applyInput(frame, 'keyboard'); const start = performance.now(); world.update(); durations.push(performance.now() - start);
     const p = world.entities.get(1)!;
     peakAlive = Math.max(peakAlive, world.infected!.director.count); peakChunks = Math.max(peakChunks, world.chunks!.stats().resident);
     for (const e of world.infected!.active) {
@@ -53,10 +60,17 @@ try {
   }
   durations.sort((a, b) => a - b);
   const collision = world.solids.snapshot(), state = l9.state, final = world.getState();
+  const boarding = signals.filter(s => s.name === 'l9.survivor-evacuated');
+  const defenseCompleteTick = l9.driving.state.evacuationAt === null ? null : l9.driving.state.evacuationAt + l9Course.evacuation.defendTicks;
+  const lastBoardedTick = boarding.at(-1)?.tick ?? null;
+  const evacuation = { startedTick: l9.driving.state.evacuationAt, defenseCompleteTick, lastBoardedTick,
+    secondsAfterDefense: defenseCompleteTick === null || lastBoardedTick === null ? null : Math.max(0, (lastBoardedTick - defenseCompleteTick) / 60),
+    roster: l9.driving.state.roster.filter(id => id !== l9.driving.state.samId).map(id => ({ id,
+      hp: world.entities.get(id)!.health.current, evacuated: l9.driving.state.evacuated.includes(id) })) };
   const result = {
-    ...provenance(), route, tier, zero, risky, seed: 1, method: 'Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; no immortality, teleports, actor writes or objective skips.',
+    ...provenance(), route, tier, zero, risky, passive, seed, method: 'Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; --passive removes attack inputs only. No immortality, teleports, actor writes or objective skips.',
     completed: state.finished && !!world.progression?.campaign?.crossingHandover, seconds: world.tick / 60, hp: world.entities.get(1)!.health.current, durability: car.entity.health.current,
-    peakAlive, peakChunks, grabs, shakes, playerHits, playerDamage, signals, hits, samples, collision, finalStateHash: stateHash(final), driving: state.driving,
+    peakAlive, peakChunks, grabs, shakes, playerHits, playerDamage, signals, evacuation, hits, samples, collision, finalStateHash: stateHash(final), driving: state.driving,
     admissions: { actors: admissions, violations: admissions.filter(e => !e.hidden && (e.distance < 100 || e.state === 'idle')) },
     firstNear: { method: 'First shown native actor within a conservative 45 m radius; this is a headless proxy, not a rendered max-zoom frustum.', actors: firstNear, idle: firstNear.filter(e => e.state === 'idle') },
     cpu: { p95: durations[Math.floor(durations.length * .95)], max: durations[durations.length - 1], note: 'Shared runner diagnostic; rendering and device performance are not measured.' },
@@ -65,5 +79,6 @@ try {
   };
   mkdirSync(dirname(output), { recursive: true }); writeFileSync(output, `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify({ output, completed: result.completed, seconds: result.seconds, hp: result.hp, peakAlive, peakChunks, grabs, shakes, collisionFailures: collision.failures, admissionViolations: result.admissions.violations, signals, last: samples[samples.length - 1], passengers: result.passengers, dog: result.companion && { p: result.companion.transform, owner: result.companion.passengerOf }, roster: l9.driving.state.roster.map(id => { const e = world.entities.get(id)!; return { id, key: e.civilian?.survivor?.key, position: e.transform, hp: e.health.current, passengerOf: e.passengerOf }; }) }));
-  if (!result.completed || collision.failures) process.exitCode = 1;
+  if (!result.completed || collision.failures || evacuation.roster.some(e => e.hp > 0 && !e.evacuated)
+    || evacuation.secondsAfterDefense === null || evacuation.secondsAfterDefense > 20) process.exitCode = 1;
 } finally { world.dispose(); }
