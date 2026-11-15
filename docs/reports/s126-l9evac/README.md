@@ -44,3 +44,7 @@ A second headless WebGL capture (120 frames, 7.98 seconds, no reported clipping)
 ## Shortcut route fix
 
 The remaining HIGH shortcut stall is resolved by an explicit approach around the north end of the closed gate side fence. Evacuees discharged west of the fence first walk to `(437,16)` before approaching their truck. This preserves ordinary body collision, movement speed, damage and boarding. The previously failing HIGH shortcut now boards all four at full health 16.75 seconds after defense and completes L10 handover. HIGH road, LOW road, HIGH passive road and LOW passive shortcut regression runs also complete within the 20-second window. Typecheck and lint pass. The exact required remote suite passes again: 105 passed / 1 skipped, 124.9 seconds. Earlier shortcut failures above describe rejected experiments and are superseded by this final waypoint result.
+
+## Final-code coverage audit
+
+Six native runs now use the final waypoint code: HIGH shortcut skilled, HIGH road skilled, LOW road skilled, HIGH road passive, LOW shortcut passive, and HIGH road seed 2 skilled. Every living evacuee boards within 17.02 seconds of Defense complete and every run completes handover. The refreshed L9 threat receipt has zero skilled/passive flags; its diagnostic command exits nonzero solely for partial level selection. Exact replay of the s125 browser input/checkpoint state remains unproven; the HIGH native road run covers its route and dense horde class but does not establish input-identical replay.

@@ -449,6 +449,48 @@
         ]
       },
       "peakAlive": 92
+    },
+    {
+      "route": "road",
+      "tier": "high",
+      "seed": 2,
+      "passive": false,
+      "completed": true,
+      "evacuation": {
+        "startedTick": 8285,
+        "defenseCompleteTick": 10085,
+        "lastBoardedTick": 9309,
+        "secondsAfterDefense": 0,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      "peakAlive": 168
     }
-  ]
+  ],
+  "finalThreat": {
+    "flags": [],
+    "passiveFlags": [],
+    "diagnosticExitReason": "PARTIAL_LEVEL_SELECTION"
+  },
+  "remainingEvidenceGap": "Exact s125 browser input/checkpoint replay not yet proven; native HIGH road reproduction matches route and dense horde class."
 }
