@@ -230,5 +230,37 @@
       "sourceStable": true,
       "pass": true
     }
+  },
+  "shortcutCornerRoutingExperiment": {
+    "completed": false,
+    "evacuation": {
+      "startedTick": 6893,
+      "defenseCompleteTick": 8693,
+      "lastBoardedTick": 12562,
+      "secondsAfterDefense": 64.48333333333333,
+      "roster": [
+        {
+          "id": 669,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 672,
+          "hp": 80,
+          "evacuated": false
+        }
+      ]
+    },
+    "decision": "Reverted: body-clear routeFollower handling boards Okafor but strands Mia; it does not meet the objective."
   }
 }
