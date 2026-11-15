@@ -186,3 +186,7 @@ Detailed trace identifies stopped bus atx467.65/z0.386 against closed bridge gat
 ## Physical passing space on final asphalt
 
 Bus target uses z3 after x450 on the final12m-wide asphalt, leaving APC passage beside its gate stop. LOW corner ordinary skilled drive now completes with continuous per-tick bus max3.885m/0outside6m; see `passing-lane-low.json`. No teleport, physics lock, zombie stats or gate thresholds changed. Focused vehicle2/2, typecheck/lint pass. Other5final sweeps, current broad gates and visibility still require revalidation after lane change.
+
+## Final passing-space runtime sweeps and full remote suite
+
+All6 final a7a064ac skilled native drives complete with continuous every-tick bus positions,0ticks outside6m; worst3.885m. Refreshed `final-six-driven-paths.json` supersedes prior92tick failure. Required unchanged remote `npm test` passes:27files,106tests passed/1skipped,223.9s of240s budget,exit0. No suite trimming or timeout retry needed. Current browser campaign gate, L9 threat audit, E31 verification and offscreen-spawn proof remain open.
