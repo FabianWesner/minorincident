@@ -58,3 +58,7 @@ After ordinary-bar suppression, the committed runner completed all 48 samples: b
 ## Close west-breach contact
 
 A later move toward (-40,8) reaches (-34.9,8) at frame 3600, with real production attackers beside the courier. HIGH WebGL2 run reports zero console errors. Reviewed production-surround/shot-3600.png shows a gold-outlined but substantially darker courier among overlapping bodies at the barrier. This is a visual concern requiring active x-ray/hull-mode inspection, not artifact clearance. The frame still does not establish 40+ infected surrounding her. Native L4 LOW p95 measurement was requested from the orchestrator via scheduler note; perf remains pending.
+
+## Close-contact mode diagnosis
+
+Replayed the production breach pose at (-34.900,8.000), frame 3600, and read the actual Vite courierDepth module uniforms: foreground=1, courierXray=0. Normal and forced-xray-off screenshots are pixel identical. Thus the vehicle-hull dark-silhouette policy does not cause the dark courier in this frame. Next investigate the palette lighting/shadow contribution. Raw state and paired images: test-results/s121-courierread/mode-probe. No runtime code change was made for this diagnostic.
