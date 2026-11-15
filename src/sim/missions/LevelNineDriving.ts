@@ -22,6 +22,8 @@ export interface L9DrivingState {
   hugAt: number | null; hugDone: boolean;
   hugSpot?: { x: number; z: number; dogX: number; dogZ: number };
   truckEntering: Record<number, number>;
+  /** Visible, timed walk to the trucks when ordinary civilian routing has taken too long after defense. */
+  fallbackBoarding?: Record<number, { x: number; z: number }>;
   busId: number; busPassengers: number[]; busReleased: number; busHitAt: number; busRams: number; busStoppedAt: number | null; busLineAt: number | null; busRamAt?: number; busRamZ?: number; busStunUntil?: number;
   tankerId: number; tankerWreckId: number; tankerFuseAt: number | null; tankerExploded: boolean; stampede: number[];
   fireAt: number | null; fireIds: number[]; jumped: string[]; jump: { id: string; airborne: boolean } | null;
@@ -37,6 +39,7 @@ export const emptyDriving = (): L9DrivingState => ({
   evacuationAt: null, evacuated: [], evacuating: [], evacuationDone: false,
   hugAt: null, hugDone: false,
   truckEntering: {},
+  fallbackBoarding: {},
   busId: 0, busPassengers: [], busReleased: 0, busHitAt: -1000, busRams: 0, busStoppedAt: null, busLineAt: null,
   tankerId: 0, tankerWreckId: 0, tankerFuseAt: null, tankerExploded: false, stampede: [], fireAt: null, fireIds: [], jumped: [], jump: null,
   obstacleIds: [], waves: [], nextWave: 0, lines: [],
@@ -46,6 +49,7 @@ const tuneStall = l9SetPieceTuning.stall;
 const busRamCap = 3;
 const stallTicks = 20 * 60;
 const busTelegraphTicks = 90;
+const evacuationFallbackTicks = 8 * 60;
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection;
 
@@ -652,6 +656,31 @@ export class LevelNineDriving {
     // A courier at the open hatch at or below half health ends the wait at once: with the crew inside, the pack bit her instead and
     // the W-only probe looped 12 deaths (each reloads evac-point and restarts the hold).
     const waited = w.tick - s.evacuationAt, courier = w.entities.get(1)!, hurt = courier.health.current <= courier.health.max * cfg.evacuation.releaseCourierHp;
+    // A dense crowd can make every ordinary disembark slot fail its clearance
+    // test. After the same ten-second grace window, stage a real stand-up/exit
+    // animation to the nearest clear point beside the passenger door.
+    if (waited >= cfg.evacuation.defendTicks + evacuationFallbackTicks) for (const id of s.roster) {
+      const actor = w.entities.get(id);
+      if (id === s.samId || !alive(actor) || s.evacuated.includes(id)) continue;
+      if (actor.passengerOf !== this.car.entity.id) {
+        if (actor.passengerOf !== undefined && s.trucks.includes(actor.passengerOf)) s.evacuated.push(id);
+        else if (!s.evacuating.includes(id)) s.evacuating.push(id);
+        continue;
+      }
+      const passenger = passengers.find(row => row.id === id);
+      if (!passenger || passenger.phase !== 'seated') continue;
+      const door = w.vehicles!.passengerDoor(this.car.entity.id), truck = s.trucks.map(tid => w.entities.get(tid)!).reduce((best, candidate) => distance(candidate.transform, actor.transform) < distance(best.transform, actor.transform) ? candidate : best);
+      const angle = Math.atan2(truck.transform.z - door.z, truck.transform.x - door.x), offsets = [0, .45, -.45, .9, -.9, 1.35, -1.35, Math.PI];
+      let exit: { x: number; z: number } | undefined;
+      for (const radius of [1.6, 2.4, 3.2, 4.2]) for (const offset of offsets) {
+        const spot = { x: door.x + Math.cos(angle + offset) * radius, z: door.z + Math.sin(angle + offset) * radius };
+        if (!exit && w.infected!.nav.clear(spot.x, spot.z, .5) && w.solids.clear({ ...spot, y: actor.transform.y }, .35, id, false) && ![...w.entities.iterate()].some(other => other.id !== id && !other.hidden && other.health.current > 0 && (other.civilian || other.survivor) && distance(other.transform, spot) < 1.1)) exit = spot;
+      }
+      if (!exit) continue;
+      passenger.phase = 'exit'; passenger.side = 1; passenger.started = w.tick; passenger.from = { ...actor.transform };
+      passenger.to = { ...exit, y: actor.transform.y, yaw: this.car.entity.transform.yaw };
+      if (!s.evacuating.includes(id)) s.evacuating.push(id);
+    }
     if (w.tick % 45 === 0 && (this.doorThreats() === 0 || hurt || waited >= cfg.evacuation.defendTicks)) {
       const next = passengers.find(p => p.id !== s.samId && alive(w.entities.get(p.id)) && !w.entities.get(p.id)?.companion && p.phase === 'seated');
       if (next && w.vehicles!.disembarkPassenger(this.car.entity.id, next.id)) s.evacuating.push(next.id);
@@ -673,13 +702,42 @@ export class LevelNineDriving {
       const nearest = waited >= cfg.evacuation.defendTicks && usable.length > 0 && (cached !== undefined || s.truckEntering[id] === undefined);
       // Lock the closest clear lane after defence. Indexing a filtered list
       // changes the destination when the bus moves a wreck into another slot.
-      const target = nearest ? cached && open(cached) ? cached : usable.reduce((best, spot) => distance(e.transform, spot) < distance(e.transform, best) ? spot : best)
+      let target = nearest ? cached && open(cached) ? cached : usable.reduce((best, spot) => distance(e.transform, spot) < distance(e.transform, best) ? spot : best)
         : usable.length ? usable[skip % usable.length] : base;
       if (nearest && target !== cached) {
         this.truckApproach.set(id, target);
         e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.pathIndex = 0;
       }
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
+      // After ten seconds of post-defense routing, visibly walk the remaining
+      // survivor to the nearest clear boarding point. This is a movement beat,
+      // not a relocation: the actor remains alive, targetable, and in the world.
+      const fallback = (s.fallbackBoarding ??= {})[id];
+      let usingFallback = false;
+      if (waited >= cfg.evacuation.defendTicks + evacuationFallbackTicks) {
+        usingFallback = true;
+        let rescueTarget = fallback;
+        if (!rescueTarget) {
+          const nav = w.infected!.nav, from = nav.nearestCell(e.transform.x, e.transform.z, .5);
+          const routeLength = (spot: { x: number; z: number }) => {
+            const path: number[] = [];
+            return from >= 0 && nav.reachPath(from, spot, path, Infinity) ? path.length : Infinity;
+          };
+          const reachable = usable.map(spot => ({ spot, length: routeLength(spot) })).filter(item => Number.isFinite(item.length));
+          rescueTarget = reachable.length
+            ? reachable.reduce((best, item) => item.length < best.length ? item : best).spot
+            : usable.filter(spot => w.infected!.nav.visible(e.transform, spot, .45)).reduce((best, spot) => distance(e.transform, spot) < distance(e.transform, best) ? spot : best, target);
+          s.fallbackBoarding![id] = rescueTarget;
+        }
+        target = rescueTarget;
+        const dx = rescueTarget.x - e.transform.x, dz = rescueTarget.z - e.transform.z, remaining = Math.hypot(dx, dz);
+        e.hidden = false; delete e.passengerOf;
+        if (remaining >= 1.2) {
+          e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER;
+          w.npcs!.move(e, rescueTarget, 7, e.civilian!, .6, 8000);
+        }
+        this.spotFail.set(id, 0);
+      }
       // The far truck sits beyond the bridge-gate wall end: from an APC parked north of the bay the walk
       // around it exceeds the default 1600-node search (r27-l9apc, --zero run: Okafor stood forever).
       const before = { x: e.transform.x, z: e.transform.z };
@@ -687,7 +745,8 @@ export class LevelNineDriving {
       // Combat knockdowns and body pushes can interrupt the 45-tick sit-down
       // animation; retaining the timestamp in that case strands the survivor
       // because the movement code below treats them as already arrived.
-      if (s.truckEntering[id] !== undefined && distance(e.transform, target) >= 1.2) {
+      const boardingRange = usingFallback ? 4 : 1.2;
+      if (s.truckEntering[id] !== undefined && distance(e.transform, target) >= boardingRange) {
         delete s.truckEntering[id];
         if (e.civilian!.story?.clip === 'npc-sit-down') e.civilian!.story = null;
       }
@@ -696,9 +755,9 @@ export class LevelNineDriving {
       // fence. Approach the open end before turning east toward the trucks.
       const approach = e.transform.x < cfg.gate.x + 1 && target.x > cfg.gate.x && e.transform.z < 15
         ? { x: cfg.gate.x - 3, z: 16 } : target;
-      const moved = approaching && w.npcs!.move(e, approach, 3, e.civilian!, .6, 8000);
+      const moved = approaching && !usingFallback && w.npcs!.move(e, approach, 3, e.civilian!, .6, 8000);
       // A reachable nearby cell can still leave an evacuee stationary short of the truck.
-      if (approaching && (!moved || distance(e.transform, target) >= 1.2 && distance(e.transform, before) < .001)) {
+      if (approaching && !usingFallback && (!moved || distance(e.transform, target) >= 1.2 && distance(e.transform, before) < .001)) {
         // No route to this spot for 1.5 s: take the next open one.
         const failed = (this.spotFail.get(id) ?? 0) + 1; this.spotFail.set(id, failed);
         if (failed >= 90) {
@@ -710,8 +769,12 @@ export class LevelNineDriving {
         }
       } else this.spotFail.set(id, 0);
       w.spatial.set(id, e.transform.x, e.transform.z);
-      if (distance(e.transform, target) < 1.2) {
+      if (distance(e.transform, target) < boardingRange) {
         s.truckEntering[id] ??= w.tick; e.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[id] };
+        if (usingFallback && distance(e.transform, target) >= 1.2) {
+          const dx = target.x - e.transform.x, dz = target.z - e.transform.z, length = Math.hypot(dx, dz), step = Math.min(length, 4 / 45);
+          if (length) { w.solids.wrote(e, 'npc.move'); e.transform.x += dx / length * step; e.transform.z += dz / length * step; e.transform.yaw = Math.atan2(dz, dx); w.spatial.set(id, e.transform.x, e.transform.z); }
+        }
         if (w.tick - s.truckEntering[id] < 45) continue;
         s.evacuated.push(id); e.hidden = true;
         e.passengerOf = s.trucks.reduce((best, truck) => distance(w.entities.get(truck)!.transform, e.transform) < distance(w.entities.get(best)!.transform, e.transform) ? truck : best); w.spatial.delete(id);
@@ -846,6 +909,10 @@ export class LevelNineDriving {
   }
   text(): string {
     const s = this.state, p = this.car.entity.transform, tick = this.w.tick;
+    if (s.evacuationAt !== null && !s.evacuationDone && tick - s.evacuationAt >= cfg.evacuation.defendTicks + evacuationFallbackTicks && s.roster.some(id => id !== s.samId && alive(this.w.entities.get(id)) && !s.evacuated.includes(id))) {
+      const living = s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length;
+      return `Survivors sprint to the trucks · ${s.evacuated.length}/${living} at the trucks`;
+    }
     if (s.stallAt !== null && !s.restarted) {
       const remaining = Math.max(0, stallTicks - tick + s.stallAt), seconds = Math.ceil(remaining / 60), filled = Math.ceil(remaining / stallTicks * 10);
       const bar = `[${'■'.repeat(filled)}${'·'.repeat(10 - filled)}]`;

@@ -1,0 +1,76 @@
+{
+  "commit": "6b638cf0",
+  "status": "incomplete",
+  "runs": [
+    {
+      "run": "high-road-1",
+      "evacuationAt": 8068,
+      "defenseEndTick": 9868,
+      "firstObservedEvacuationDone": 9900,
+      "evacuationDelaySeconds": 0.5333333333333333,
+      "handoverAt": "2026-11-15T21:55:02.293Z",
+      "estimatedDefenseEndWall": "2026-11-15T21:54:23.241667+00:00",
+      "actualL10WallDelaySeconds": 39.051
+    },
+    {
+      "run": "high-road-2",
+      "evacuationAt": 8397,
+      "defenseEndTick": 10197,
+      "firstObservedEvacuationDone": 10260,
+      "evacuationDelaySeconds": 1.05,
+      "handoverAt": "2026-11-15T22:00:06.098Z",
+      "estimatedDefenseEndWall": "2026-11-15T21:59:35.454333+00:00",
+      "actualL10WallDelaySeconds": 30.644
+    },
+    {
+      "run": "high-shortcut-2",
+      "evacuationAt": 7660,
+      "defenseEndTick": 9460,
+      "firstObservedEvacuationDone": 10077,
+      "evacuationDelaySeconds": 10.283333333333333,
+      "handoverAt": "2026-11-15T22:18:47.832Z",
+      "estimatedDefenseEndWall": "2026-11-15T22:18:15.426667+00:00",
+      "actualL10WallDelaySeconds": 32.405
+    },
+    {
+      "run": "low-road",
+      "evacuationAt": 9532,
+      "defenseEndTick": 11332,
+      "firstObservedEvacuationDone": 12164,
+      "evacuationDelaySeconds": 13.866666666666667,
+      "handoverAt": "2026-11-15T22:23:02.816Z",
+      "estimatedDefenseEndWall": "2026-11-15T22:22:17.776333+00:00",
+      "actualL10WallDelaySeconds": 45.04
+    }
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "nativeVehicles": "pass",
+    "threatAudit": "0 flags, 470.7s",
+    "remoteUnit": "pass, 105 passed / 1 skipped, 136s"
+  },
+  "vehicleMotion": {
+    "pass": true,
+    "rows": [
+      {
+        "mode": "L9",
+        "tier": "high",
+        "code": 0,
+        "seconds": 103.941,
+        "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+        "sourceHash": "5600e7369c6c05e419ea74c1321209c9d9de7a507f8d0d62a8caaeee8d749e1f",
+        "pass": true
+      },
+      {
+        "mode": "L9",
+        "tier": "low",
+        "code": 0,
+        "seconds": 76.203,
+        "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+        "sourceHash": "5600e7369c6c05e419ea74c1321209c9d9de7a507f8d0d62a8caaeee8d749e1f",
+        "pass": true
+      }
+    ]
+  }
+}

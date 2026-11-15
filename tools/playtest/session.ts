@@ -1098,9 +1098,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const b = points[i + 1]; if (!b) return [a];
     const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
     const along = (p: readonly number[]) => ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / length;
+    // The shortcut joins west of the closed bridgehead gate. Follow its visible
+    // north-side opening instead of repeatedly driving into the barrier.
+    const gateDetour: [number, number][] = o.l9Route === 'dry-shortcut' && a[0] < 440 && b[0] >= 450 && a[1] < 11
+      ? [[425, 18], [450, 18]] : [];
     return [a, ...l9Groups.filter(g => g.route === o.l9Route).map(g => g.at)
       .filter(p => along(p) > 0 && along(p) < length && Math.abs((p[0] - a[0]) * dz - (p[1] - a[1]) * dx) / length < 1)
-      .sort((p, q) => along(p) - along(q))];
+      .sort((p, q) => along(p) - along(q)), ...gateDetour];
   });
   let l9Waypoint = 1, l9RouteLogged = false;
 
@@ -1483,6 +1487,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           survivor: { variant: w.entities.get(1)!.survivor!.variant, gearTier: w.entities.get(1)!.survivor!.gearTier },
           followers: live.map(r => { const f = w.entities.get(r.id)!; return { id: r.id, x: f.transform.x, z: f.transform.z, hp: f.health.current, state: f.civilian?.state, knockedUntil: f.civilian?.knockedUntil, blockedBy: w.solids.blockingBody(f.id)?.id }; }),
           alarm: s?.alarm && w.tick < s.alarm.until ? s.alarm.text : null };
+      }).catch(() => null) });
+      // Read-only L9 evacuation census for delayed handovers. It samples the
+      // survivor's ordinary combat/route state without steering or mutating it.
+      if (e.level === 'L9' && process.env.PLAYTEST_L9_EVAC_AUDIT === '1') log({ l9EvacuationObserver: await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, l9 = w.missions?.l9, s = l9?.driving.state;
+        if (!l9 || !s) return null;
+        return { tick: w.tick, phase: l9.state.phase, evacuationAt: s.evacuationAt, evacuationDone: s.evacuationDone,
+          evacuated: [...s.evacuated], evacuating: [...s.evacuating], truckEntering: { ...s.truckEntering },
+          survivors: s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return {
+            id, key: a.civilian?.survivor?.key, hp: a.health.current, infected: !!a.infected || !!a.infection, hidden: a.hidden,
+            at: { x: a.transform.x, z: a.transform.z }, passengerOf: a.passengerOf, state: a.civilian?.state,
+            attacker: a.civilian?.attacker, knockedUntil: a.civilian?.knockedUntil, routeGoal: a.civilian?.goal,
+            routeIndex: a.civilian?.pathIndex, routeLength: a.civilian?.path.length,
+            nearestTruck: s.trucks.map(truck => { const t = w.entities.get(truck)!; return { id: truck, d: Math.hypot(t.transform.x - a.transform.x, t.transform.z - a.transform.z) }; }).sort((x, y) => x.d - y.d)[0],
+          }; }), guards: s.soldiers.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return { id, hp: a.health.current, at: { x: a.transform.x, z: a.transform.z }, attacker: a.civilian?.attacker }; }) };
       }).catch(() => null) });
       if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
         const metro = await page.evaluate(() => {
