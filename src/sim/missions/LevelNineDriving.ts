@@ -224,6 +224,7 @@ export class LevelNineDriving {
   /** r42-l9pin: per evacuee, failed route ticks and how many truck spots were skipped (transient; a restore starts over). */
   private readonly spotFail = new Map<number, number>();
   private readonly spotSkip = new Map<number, number>();
+  private readonly truckApproach = new Map<number, { x: number; z: number }>();
   /**
    * r43-l9loop: progress at the evacuation checkpoint that survives a death reload (the mission snapshot rewinds it). The passive courier at
    * the open hatch died every ~23 s and each reload restarted the 30 s hold: a loop. From the 2nd death on, the reload keeps the hold
@@ -255,7 +256,7 @@ export class LevelNineDriving {
     const s = this.state;
     const courier = this.w.entities.get(1)!, waited = s.evacuationAt === null ? 0 : this.w.tick - s.evacuationAt;
     if (courier.health.current <= courier.health.max * cfg.evacuation.releaseCourierHp) return false;
-    return s.evacuationAt !== null && !s.evacuationDone && waited < cfg.evacuation.capTicks
+    return s.evacuationAt !== null && !s.evacuationDone && waited < cfg.evacuation.defendTicks
       && (this.car.entity.vehicle!.passengers ?? []).some(p => p.id !== s.samId && !this.w.entities.get(p.id)?.companion && p.phase === 'seated');
   }
   /** r42-l9pin: live infected at the passenger door or on the hull; survivors wait inside while any are there. */
@@ -645,11 +646,11 @@ export class LevelNineDriving {
     for (const id of s.evacuated) if (!this.evacSaved.includes(id)) this.evacSaved.push(id);
     this.keepSaved();
     const passengers = this.car.entity.vehicle!.passengers ?? [];
-    // After the wait the door may hold a straggler or two (released at <= releaseThreats); the hard cap keeps fail-forward.
+    // Defence completion ends the clear-door wait; release the remaining passengers at the existing stagger.
     // A courier at the open hatch at or below half health ends the wait at once: with the crew inside, the pack bit her instead and
     // the W-only probe looped 12 deaths (each reloads evac-point and restarts the hold).
     const waited = w.tick - s.evacuationAt, courier = w.entities.get(1)!, hurt = courier.health.current <= courier.health.max * cfg.evacuation.releaseCourierHp;
-    if (w.tick % 45 === 0 && (this.doorThreats() === 0 || hurt || waited >= cfg.evacuation.waitMaxTicks && this.doorThreats() <= cfg.evacuation.releaseThreats || waited >= cfg.evacuation.capTicks)) {
+    if (w.tick % 45 === 0 && (this.doorThreats() === 0 || hurt || waited >= cfg.evacuation.defendTicks)) {
       const next = passengers.find(p => p.id !== s.samId && alive(w.entities.get(p.id)) && !w.entities.get(p.id)?.companion && p.phase === 'seated');
       if (next && w.vehicles!.disembarkPassenger(this.car.entity.id, next.id)) s.evacuating.push(next.id);
     }
@@ -666,7 +667,16 @@ export class LevelNineDriving {
       const spots = [base, { x: base.x - 5, z: base.z }, ...[0, 1, 2].flatMap(i => [{ x: cfg.evacuation.truckX + i * 9 + 2.5, z: cfg.evacuation.truckZ - 1.5 }, { x: cfg.evacuation.truckX + i * 9 - 2.5, z: cfg.evacuation.truckZ - 1.5 }])];
       const open = (p: { x: number; z: number }) => w.infected!.nav.clear(p.x, p.z, .5) && w.solids.clear({ ...p, y: e.transform.y }, .35, e.id, false);
       const usable = spots.filter(open), skip = this.spotSkip.get(id) ?? 0;
-      const target = usable.length ? usable[skip % usable.length] : base;
+      const cached = this.truckApproach.get(id);
+      const nearest = waited >= cfg.evacuation.defendTicks && usable.length > 0 && (cached !== undefined || s.truckEntering[id] === undefined);
+      // Lock the closest clear lane after defence. Indexing a filtered list
+      // changes the destination when the bus moves a wreck into another slot.
+      const target = nearest ? cached && open(cached) ? cached : usable.reduce((best, spot) => distance(e.transform, spot) < distance(e.transform, best) ? spot : best)
+        : usable.length ? usable[skip % usable.length] : base;
+      if (nearest && target !== cached) {
+        this.truckApproach.set(id, target);
+        e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.pathIndex = 0;
+      }
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
       // The far truck sits beyond the bridge-gate wall end: from an APC parked north of the bay the walk
       // around it exceeds the default 1600-node search (r27-l9apc, --zero run: Okafor stood forever).
@@ -685,13 +695,20 @@ export class LevelNineDriving {
       if (approaching && (!moved || distance(e.transform, target) >= 1.2 && distance(e.transform, before) < .001)) {
         // No route to this spot for 1.5 s: take the next open one.
         const failed = (this.spotFail.get(id) ?? 0) + 1; this.spotFail.set(id, failed);
-        if (failed >= 90) { this.spotFail.set(id, 0); this.spotSkip.set(id, skip + 1); }
+        if (failed >= 90) {
+          this.spotFail.set(id, 0); this.spotSkip.set(id, skip + 1);
+          if (usable.length) this.truckApproach.set(id, usable[(skip + 1) % usable.length]);
+          // Crowd pushes can strand the actor away from its cached corridor.
+          // A new boarding approach needs a route from the current position.
+          e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.pathIndex = 0;
+        }
       } else this.spotFail.set(id, 0);
       w.spatial.set(id, e.transform.x, e.transform.z);
       if (distance(e.transform, target) < 1.2) {
         s.truckEntering[id] ??= w.tick; e.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[id] };
         if (w.tick - s.truckEntering[id] < 45) continue;
-        s.evacuated.push(id); e.hidden = true; e.passengerOf = s.trucks[slot % 3]; w.spatial.delete(id);
+        s.evacuated.push(id); e.hidden = true;
+        e.passengerOf = s.trucks.reduce((best, truck) => distance(w.entities.get(truck)!.transform, e.transform) < distance(w.entities.get(best)!.transform, e.transform) ? truck : best); w.spatial.delete(id);
         this.signal('survivor-evacuated', id);
         if (e.civilian?.survivor?.key === 'okafor') this.line('L9.okafor');
       }
@@ -752,6 +769,13 @@ export class LevelNineDriving {
   private hugCorgi(rosa: EntitySnapshot): boolean {
     const w = this.w, s = this.state, corgi = [...w.entities.iterate()].find(e => e.companion);
     if (!corgi) { s.hugDone = true; return true; }
+    // An unstarted goodbye cannot hold the evacuation after defence. Crowds
+    // can keep the pair apart even when both positions are clear.
+    if (s.hugAt === null && s.evacuationAt !== null && w.tick - s.evacuationAt >= cfg.evacuation.defendTicks) {
+      s.hugDone = true; rosa.civilian!.story = null;
+      delete corgi.contactExempt; delete corgi.companion!.transitionUntil;
+      return true;
+    }
     // Rosa can already be beside the rear entry when the dog's exit ends.
     // Their shared embrace space must be exempt during disembarking too.
     corgi.contactExempt = rosa.id;
@@ -761,7 +785,23 @@ export class LevelNineDriving {
       && w.solids.clear({ ...spot, y: .7 }, .35, rosa.id, false) && w.solids.clear({ x: spot.dogX, z: spot.dogZ, y: .3 }, .9, corgi.id, false);
     if (s.hugAt === null && s.hugSpot && !clear(s.hugSpot)) delete s.hugSpot;
     if (!s.hugSpot) {
-      search: for (const sign of [1, -1]) for (const along of [-1, -2, 0, 1]) for (const across of [3.5, 4.5, 5.5]) {
+      // Prefer space beside Rosa: an APC against a barrier can separate two
+      // individually clear points into different walking pockets.
+      for (const radius of [0, .8, 1.6, 2.4]) {
+        for (let i = 0; i < 8; i++) {
+          const angle = i * Math.PI / 4;
+          const x = rosa.transform.x + Math.cos(angle) * radius, z = rosa.transform.z + Math.sin(angle) * radius;
+          const candidate = { x, z, dogX: x + .7, dogZ: z };
+          if (clear(candidate)) { s.hugSpot = candidate; break; }
+        }
+        if (s.hugSpot) break;
+      }
+    }
+    if (!s.hugSpot) {
+      // A clear point across the hull can be unreachable from Rosa's exit.
+      // Keep the paired goodbye on her side before trying the opposite side.
+      const nearSide = (rosa.transform.x - p.x) * side + (rosa.transform.z - p.z) * c >= 0 ? 1 : -1;
+      search: for (const sign of [nearSide, -nearSide]) for (const along of [-1, -2, 0, 1]) for (const across of [3.5, 4.5, 5.5]) {
         const x = p.x + c * along + side * across * sign, z = p.z - side * along + c * across * sign;
         const candidate = { x, z, dogX: x + side * .7 * sign, dogZ: z + c * .7 * sign };
         if (clear(candidate)) { s.hugSpot = candidate; break search; }

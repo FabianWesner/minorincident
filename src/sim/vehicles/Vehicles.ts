@@ -714,7 +714,9 @@ export class Vehicles {
   disembarkPassenger(carId: number, actorId: number): boolean {
     const car = this.cars.get(carId), passenger = car?.entity.vehicle!.passengers?.find(p => p.id === actorId), actor = this.world.entities.get(actorId);
     if (!car || !passenger || !actor || passenger.phase !== 'seated') return false;
-    for (const side of [1, -1]) for (let offset = 0; offset <= 4; offset++) {
+    const evacuation = this.world.missions?.l9?.driving.state;
+    const exitOffsets = evacuation?.evacuationAt !== null && evacuation?.evacuationAt !== undefined && !evacuation.evacuationDone ? 8 : 4;
+    for (const side of [1, -1]) for (let offset = 0; offset <= exitOffsets; offset++) {
       const entry = car.physics.def.transport?.entry;
       if (entry) this.localPoint(car, entry.x - .8 - offset * .8, entry.z + side * .9);
       else this.localPoint(car, car.physics.def.doorX - offset * .8, side * (car.physics.def.width / 2 + .65));

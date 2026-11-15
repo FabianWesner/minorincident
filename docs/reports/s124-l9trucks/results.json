@@ -1,0 +1,630 @@
+{
+  "status": "complete",
+  "sourceRevision": "b8b5ca9da7637571456fd63dfa072bed386a5131",
+  "commits": [
+    "5d409e61",
+    "ddfb9236",
+    "b537577c",
+    "ee5ba9fb",
+    "b8b5ca9d"
+  ],
+  "constraints": {
+    "zombieStatsChanged": false,
+    "acousticRadiusChanged": false,
+    "corpsesRemoved": false,
+    "pushed": false,
+    "deployed": false,
+    "mainMoved": false
+  },
+  "nativeMethod": "Full L9-default, native dry-shortcut completion driver, per-tick VFX clock, one-second upper-bound samples. Passive strips player attacks and protects courier damage.",
+  "nativeEvacuation": [
+    {
+      "tier": "low",
+      "policy": "skilled",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "seed": 1,
+      "trace": "test-results/s124-final-webgpu-low-skilled/rows.json",
+      "evacuationAt": 6754,
+      "defenceComplete": 8554,
+      "doneTick": 8640,
+      "secondsAfterDefence": 1.433,
+      "arrivals": [
+        {
+          "count": 1,
+          "firstObservedTick": 7560,
+          "secondsAfterDefence": -16.567
+        },
+        {
+          "count": 2,
+          "firstObservedTick": 7680,
+          "secondsAfterDefence": -14.567
+        },
+        {
+          "count": 3,
+          "firstObservedTick": 8280,
+          "secondsAfterDefence": -4.567
+        },
+        {
+          "count": 4,
+          "firstObservedTick": 8640,
+          "secondsAfterDefence": 1.433
+        }
+      ],
+      "survivors": [
+        {
+          "id": 669,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 683
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 684
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        }
+      ],
+      "sam": 667,
+      "dog": 667,
+      "errors": []
+    },
+    {
+      "tier": "low",
+      "policy": "passive",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "seed": 1,
+      "trace": "test-results/s124-final-webgpu-low-passive/rows.json",
+      "evacuationAt": 6752,
+      "defenceComplete": 8552,
+      "doneTick": 9660,
+      "secondsAfterDefence": 18.467,
+      "arrivals": [
+        {
+          "count": 1,
+          "firstObservedTick": 7560,
+          "secondsAfterDefence": -16.533
+        },
+        {
+          "count": 2,
+          "firstObservedTick": 7980,
+          "secondsAfterDefence": -9.533
+        },
+        {
+          "count": 3,
+          "firstObservedTick": 7980,
+          "secondsAfterDefence": -9.533
+        },
+        {
+          "count": 4,
+          "firstObservedTick": 9660,
+          "secondsAfterDefence": 18.467
+        }
+      ],
+      "survivors": [
+        {
+          "id": 669,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 683
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        }
+      ],
+      "sam": 667,
+      "dog": 667,
+      "errors": []
+    },
+    {
+      "tier": "high",
+      "policy": "skilled",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "seed": 1,
+      "trace": "test-results/s124-final-webgpu-high-skilled/rows.json",
+      "evacuationAt": 6848,
+      "defenceComplete": 8648,
+      "doneTick": 8700,
+      "secondsAfterDefence": 0.867,
+      "arrivals": [
+        {
+          "count": 1,
+          "firstObservedTick": 7620,
+          "secondsAfterDefence": -17.133
+        },
+        {
+          "count": 2,
+          "firstObservedTick": 7800,
+          "secondsAfterDefence": -14.133
+        },
+        {
+          "count": 3,
+          "firstObservedTick": 8220,
+          "secondsAfterDefence": -7.133
+        },
+        {
+          "count": 4,
+          "firstObservedTick": 8700,
+          "secondsAfterDefence": 0.867
+        }
+      ],
+      "survivors": [
+        {
+          "id": 669,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 683
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 684
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        }
+      ],
+      "sam": 667,
+      "dog": 667,
+      "errors": []
+    },
+    {
+      "tier": "high",
+      "policy": "passive",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "seed": 1,
+      "trace": "test-results/s124-stable-lane-fixed-high-passive/rows.json",
+      "evacuationAt": 6869,
+      "defenceComplete": 8669,
+      "doneTick": 9780,
+      "secondsAfterDefence": 18.517,
+      "arrivals": [
+        {
+          "count": 1,
+          "firstObservedTick": 7620,
+          "secondsAfterDefence": -17.483
+        },
+        {
+          "count": 2,
+          "firstObservedTick": 7980,
+          "secondsAfterDefence": -11.483
+        },
+        {
+          "count": 3,
+          "firstObservedTick": 9720,
+          "secondsAfterDefence": 17.517
+        },
+        {
+          "count": 4,
+          "firstObservedTick": 9780,
+          "secondsAfterDefence": 18.517
+        }
+      ],
+      "survivors": [
+        {
+          "id": 669,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        },
+        {
+          "id": 670,
+          "hp": 55,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        },
+        {
+          "id": 671,
+          "hp": 75,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "infected": false,
+          "incubating": false,
+          "passenger": 682
+        }
+      ],
+      "sam": 667,
+      "dog": 667,
+      "errors": []
+    }
+  ],
+  "ground": {
+    "cause": "Screamer VFX used shape1: ring thickness18% of radius,3.6m at native20m radius. Multiple opaque pink bands resembled ground patches.",
+    "fix": "Same20m radius and1s lifetime; existing thin-ring shape8 gives20cm maximum stroke, visibility0.25. Renderer-only, shared on all tiers/backends.",
+    "detector": "1280x720 DPR1 RGB: r>160,b>180,r-g>30,b-g>45; regression ceiling5000pixels.",
+    "before": {
+      "high1": 190108,
+      "low4": 48995
+    },
+    "after": {
+      "high1": 0,
+      "low4": 0
+    },
+    "pulseMatrix": [
+      {
+        "backend": "webgpu",
+        "trace": "test-results/s124-pulse-webgpu-none/rows.json",
+        "samples": [
+          {
+            "i": 0,
+            "tier": "low",
+            "pink": 0
+          },
+          {
+            "i": 1,
+            "tier": "high",
+            "pink": 0
+          },
+          {
+            "i": 2,
+            "tier": "low",
+            "pink": 0
+          },
+          {
+            "i": 3,
+            "tier": "high",
+            "pink": 0
+          },
+          {
+            "i": 4,
+            "tier": "low",
+            "pink": 0
+          },
+          {
+            "i": 5,
+            "tier": "high",
+            "pink": 0
+          }
+        ],
+        "errors": []
+      },
+      {
+        "backend": "webgl2",
+        "trace": "test-results/s124-pulse-webgl2-none/rows.json",
+        "samples": [
+          {
+            "i": 0,
+            "tier": "low",
+            "pink": 0
+          },
+          {
+            "i": 1,
+            "tier": "high",
+            "pink": 0
+          },
+          {
+            "i": 2,
+            "tier": "low",
+            "pink": 0
+          },
+          {
+            "i": 3,
+            "tier": "high",
+            "pink": 0
+          },
+          {
+            "i": 4,
+            "tier": "low",
+            "pink": 0
+          },
+          {
+            "i": 5,
+            "tier": "high",
+            "pink": 0
+          }
+        ],
+        "errors": []
+      }
+    ],
+    "ablation": {
+      "mode": "no-vfx",
+      "rows": [
+        {
+          "i": 0,
+          "tier": "low",
+          "pink": 0
+        },
+        {
+          "i": 1,
+          "tier": "high",
+          "pink": 0
+        },
+        {
+          "i": 2,
+          "tier": "low",
+          "pink": 0
+        },
+        {
+          "i": 3,
+          "tier": "high",
+          "pink": 0
+        },
+        {
+          "i": 4,
+          "tier": "low",
+          "pink": 0
+        },
+        {
+          "i": 5,
+          "tier": "high",
+          "pink": 0
+        }
+      ],
+      "errors": []
+    },
+    "qualitySwitchIsCause": false,
+    "sheet": "before-after.jpg",
+    "sheetBytes": 155505
+  },
+  "legacyFixture": {
+    "path": "tests/fixtures/saves/qa/s124-l9-crowded-trucks.json.br",
+    "bytes": 140955,
+    "source": "266ec466 physical dry-shortcut, protected courier, native NPCs; two aboard at tick12046,48.183s after defence.",
+    "recovery": [
+      {
+        "backend": "webgpu",
+        "tier": "low",
+        "done": true,
+        "count": 4,
+        "secondsAfterRestore": 26.0,
+        "allHuman": true,
+        "trace": "test-results/s124-fixture-webgpu-low/rows.json",
+        "errors": []
+      },
+      {
+        "backend": "webgpu",
+        "tier": "high",
+        "done": true,
+        "count": 4,
+        "secondsAfterRestore": 26.0,
+        "allHuman": true,
+        "trace": "test-results/s124-fixture-webgpu-high/rows.json",
+        "errors": []
+      },
+      {
+        "backend": "webgl",
+        "tier": "low",
+        "done": true,
+        "count": 4,
+        "secondsAfterRestore": 26.0,
+        "allHuman": true,
+        "trace": "test-results/s124-fixture-webgl2-low/rows.json",
+        "errors": []
+      },
+      {
+        "backend": "webgl",
+        "tier": "high",
+        "done": true,
+        "count": 4,
+        "secondsAfterRestore": 26.0,
+        "allHuman": true,
+        "trace": "test-results/s124-fixture-webgl2-high/rows.json",
+        "errors": []
+      }
+    ],
+    "note": "Recovery elapsed from restoration is not fresh-run defence timing."
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "remoteNpmTest": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "runner": "46.225.66.90",
+      "manifestCases": 150,
+      "files": 27,
+      "passed": 105,
+      "skipped": 1,
+      "seconds": 127.7,
+      "budgetSeconds": 240
+    },
+    "verifyE31": {
+      "target": "E31",
+      "epics": [
+        "E31"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 49.963
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 28.586
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 127.698
+        }
+      ]
+    },
+    "threat": {
+      "sourceHash": "6797b37feb0fcb8dd574aee6035c36cfc3587f28a761eede853c7e8d235cc60f",
+      "skilledFlags": [],
+      "passiveFlags": [],
+      "globalFlags": [
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ],
+      "scope": "L9 only; global PARTIAL_LEVEL_SELECTION is retained"
+    },
+    "vehicleMotion": {
+      "batch": {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "L9",
+            "tier": "high",
+            "code": 0,
+            "seconds": 104.674,
+            "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+            "sourceHash": "5b35dc95ed513f3ffcc5cf24b83732086e7a11c45f6d3e20df9a0aa87ed62db6",
+            "pass": true
+          },
+          {
+            "mode": "L9",
+            "tier": "low",
+            "code": 0,
+            "seconds": 79.447,
+            "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+            "sourceHash": "5b35dc95ed513f3ffcc5cf24b83732086e7a11c45f6d3e20df9a0aa87ed62db6",
+            "pass": true
+          }
+        ]
+      },
+      "details": [
+        {
+          "tier": "high",
+          "sourceHash": "5b35dc95ed513f3ffcc5cf24b83732086e7a11c45f6d3e20df9a0aa87ed62db6",
+          "sourceStable": true,
+          "samples": 935,
+          "errors": [],
+          "contexts": [
+            {
+              "context": "driving",
+              "frames": 935,
+              "actors": 35,
+              "contacts": 69,
+              "maxCm": 1.8,
+              "p95Cm": 1.8
+            },
+            {
+              "context": "detour",
+              "frames": 935,
+              "actors": 35,
+              "contacts": 69,
+              "maxCm": 1.8,
+              "p95Cm": 1.8
+            },
+            {
+              "context": "hatch",
+              "frames": 102,
+              "actors": 3,
+              "contacts": 4,
+              "maxCm": 0.5,
+              "p95Cm": 0.2
+            },
+            {
+              "context": "rail-stall",
+              "frames": 102,
+              "actors": 3,
+              "contacts": 4,
+              "maxCm": 0.5,
+              "p95Cm": 0.2
+            }
+          ],
+          "pass": true
+        },
+        {
+          "tier": "low",
+          "sourceHash": "5b35dc95ed513f3ffcc5cf24b83732086e7a11c45f6d3e20df9a0aa87ed62db6",
+          "sourceStable": true,
+          "samples": 1285,
+          "errors": [],
+          "contexts": [
+            {
+              "context": "driving",
+              "frames": 1285,
+              "actors": 39,
+              "contacts": 116,
+              "maxCm": 6.2,
+              "p95Cm": 1.4
+            },
+            {
+              "context": "detour",
+              "frames": 1285,
+              "actors": 39,
+              "contacts": 116,
+              "maxCm": 6.2,
+              "p95Cm": 1.4
+            },
+            {
+              "context": "hatch",
+              "frames": 387,
+              "actors": 3,
+              "contacts": 38,
+              "maxCm": 2,
+              "p95Cm": 1.4
+            },
+            {
+              "context": "rail-stall",
+              "frames": 387,
+              "actors": 3,
+              "contacts": 38,
+              "maxCm": 2,
+              "p95Cm": 1.4
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "matchesFinalSource": true
+    },
+    "runtimeSourceHash": "5b35dc95ed513f3ffcc5cf24b83732086e7a11c45f6d3e20df9a0aa87ed62db6"
+  },
+  "limits": [
+    "One seed; native passive courier protected as in project harness.",
+    "Known smoke/crowd hull occlusion remains visible.",
+    "Vehicle motion windows cover driving/detour/rail/hatch, not final evacuation."
+  ]
+}
