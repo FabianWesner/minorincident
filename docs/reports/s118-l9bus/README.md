@@ -214,3 +214,11 @@ Headless pooled browser probe runs ordinary bot driving with no actor/HP writes 
 ## Named E31 verification passed
 
 Remote `npm run verify -- E31` on1bcc3736 passes exit0: typecheck,lint,full unchanged unit suite27files/106passed/1skipped;230.7s within240s unit budget. Remote total315s includes static checks. Summary and log hash in `e31-verification.json`. Full vehicle browser gate remains red; completion is not claimed.
+
+## Browser timing root cause and following-gap working fix
+
+Full browser receipt shows bus already115–190m ahead at rail hatch (HIGH tick6300 APC378/-215,bus439/-35; LOW tick6000 APC378/-229,bus413/-121). Fast bus outruns slower browser bot then brakes at fixed railX, delivering too far ahead. Working controller brakes at12m along-road following gap (X share from road tangent), preserving asphalt steering. HIGH ordinary no-fire diagnostic now4near/first hull windup7.2s. Typecheck/lint pass. Uncommitted pending LOW/browser/asphalt/focused regressions.
+
+## Following-gap fix qualified in browser L9 subset
+
+Controller now brakes at12m along-road following gap so fast bus cannot run far ahead of slow APC. HIGH no-fire participation4near/7.2s; LOW3near/7.92s. Focused vehicles2/2pass30.43s; typecheck/lint pass. Unchanged fixed-source headless browser L9 subset passes both tiers, including hatch/rail-stall contact coverage (HIGH3actors/4contacts). `following-gap-browser.json` contains both verdicts. Commit this fix; then full8-row gate, six per-tick sweeps and final checks need revalidation.

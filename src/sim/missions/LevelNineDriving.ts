@@ -500,6 +500,10 @@ export class LevelNineDriving {
     if (approachingBend && (bus.vehicle?.speed ?? 0) > 7) { intent.throttle = 0; intent.brake = true; }
     const turning = Math.abs(delta) > .15;
     if (turning && (bus.vehicle?.speed ?? 0) > 5) { intent.throttle = 0; intent.brake = true; }
+    const roadHere = this.busRoadTarget(nearestX), roadAhead = this.busRoadTarget(nearestX + 1);
+    const roadLength = Math.hypot(roadAhead.x - roadHere.x, roadAhead.z - roadHere.z) || 1;
+    const followingX = 12 * Math.abs(roadAhead.x - roadHere.x) / roadLength;
+    if (bus.transform.x >= this.car.entity.transform.x - followingX) { intent.throttle = 0; intent.brake = true; }
     // The road chase delivers its infected beside the authored rail crossing.
     // Let them disembark there so the hatch defense does not depend on a ram or
     // on the APC having stayed on the asphalt.
