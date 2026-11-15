@@ -34,3 +34,5 @@ Implementation and report committed after focused tests, typecheck, lint, the re
 ## Follow-up rendered inspection
 
 The browser pool is now available. A headless WebGL D-CROSSING scene completed 120 frames in 8.94 seconds, with no reported clipping. I inspected its final capture: it shows the courier and stray mesh fragments but no pickup, so this does not prove wheel contact. Rendered wreck inspection remains open; the missing asset problem must be resolved before that capture can establish grounding.
+
+The missing pickup was a capture setup error: actor `at` expects `[x,z]`. Correcting it rendered the burning pickup clear of all barricades; visible front wheels sit at ground level. The sheet now includes that actual WebGL after capture. Rear wheel contact remains occluded from this angle.

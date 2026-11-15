@@ -195,7 +195,7 @@
   },
   "visualQA": {
     "before": "Viewed s125 QA screenshot; red pickup perched on barricade with front wheels visibly lifted.",
-    "after": "Headless WebGL scene ran successfully for 120 frames, but inspection of shot-0120.png showed the courier and stray mesh fragments without the pickup. Render is inconclusive for wheel contact; missing source GLBs were also observed during layout generation.",
+    "after": "Corrected camera capture shows the burning pickup at (465,-19), clear of barricades, with visible front wheels at ground level. Rear wheels are occluded; four-wheel contact is not proven from this angle.",
     "browserQAneeded": [
       "Render the after placement and inspect wheel contact and grounded rest in browser/scene QA.",
       "Run the vehicle campaign motion gate once the shared browser pool is available.",
@@ -205,8 +205,9 @@
       "pass": true,
       "frames": 120,
       "seconds": 8.942,
-      "pickupVisible": false,
-      "groundingVerified": false
+      "pickupVisible": true,
+      "groundingVerified": false,
+      "cameraCorrection": "Actor at uses [x,z], not [x,y,z]."
     }
   },
   "limits": [
