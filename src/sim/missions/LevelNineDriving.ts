@@ -224,6 +224,7 @@ export class LevelNineDriving {
   /** r42-l9pin: per evacuee, failed route ticks and how many truck spots were skipped (transient; a restore starts over). */
   private readonly spotFail = new Map<number, number>();
   private readonly spotSkip = new Map<number, number>();
+  private readonly truckApproach = new Map<number, { x: number; z: number }>();
   /**
    * r43-l9loop: progress at the evacuation checkpoint that survives a death reload (the mission snapshot rewinds it). The passive courier at
    * the open hatch died every ~23 s and each reload restarted the 30 s hold: a loop. From the 2nd death on, the reload keeps the hold
@@ -666,7 +667,16 @@ export class LevelNineDriving {
       const spots = [base, { x: base.x - 5, z: base.z }, ...[0, 1, 2].flatMap(i => [{ x: cfg.evacuation.truckX + i * 9 + 2.5, z: cfg.evacuation.truckZ - 1.5 }, { x: cfg.evacuation.truckX + i * 9 - 2.5, z: cfg.evacuation.truckZ - 1.5 }])];
       const open = (p: { x: number; z: number }) => w.infected!.nav.clear(p.x, p.z, .5) && w.solids.clear({ ...p, y: e.transform.y }, .35, e.id, false);
       const usable = spots.filter(open), skip = this.spotSkip.get(id) ?? 0;
-      const target = usable.length ? usable[skip % usable.length] : base;
+      const cached = this.truckApproach.get(id);
+      const nearest = waited >= cfg.evacuation.defendTicks && usable.length > 0 && (cached !== undefined || s.truckEntering[id] === undefined);
+      // Lock the closest clear lane after defence. Indexing a filtered list
+      // changes the destination when the bus moves a wreck into another slot.
+      const target = nearest ? cached && open(cached) ? cached : usable.reduce((best, spot) => distance(e.transform, spot) < distance(e.transform, best) ? spot : best)
+        : usable.length ? usable[skip % usable.length] : base;
+      if (nearest && target !== cached) {
+        this.truckApproach.set(id, target);
+        e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.pathIndex = 0;
+      }
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
       // The far truck sits beyond the bridge-gate wall end: from an APC parked north of the bay the walk
       // around it exceeds the default 1600-node search (r27-l9apc, --zero run: Okafor stood forever).
@@ -687,6 +697,7 @@ export class LevelNineDriving {
         const failed = (this.spotFail.get(id) ?? 0) + 1; this.spotFail.set(id, failed);
         if (failed >= 90) {
           this.spotFail.set(id, 0); this.spotSkip.set(id, skip + 1);
+          if (usable.length) this.truckApproach.set(id, usable[(skip + 1) % usable.length]);
           // Crowd pushes can strand the actor away from its cached corridor.
           // A new boarding approach needs a route from the current position.
           e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.pathIndex = 0;
@@ -696,7 +707,8 @@ export class LevelNineDriving {
       if (distance(e.transform, target) < 1.2) {
         s.truckEntering[id] ??= w.tick; e.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[id] };
         if (w.tick - s.truckEntering[id] < 45) continue;
-        s.evacuated.push(id); e.hidden = true; e.passengerOf = s.trucks[slot % 3]; w.spatial.delete(id);
+        s.evacuated.push(id); e.hidden = true;
+        e.passengerOf = s.trucks.reduce((best, truck) => distance(w.entities.get(truck)!.transform, e.transform) < distance(w.entities.get(best)!.transform, e.transform) ? truck : best); w.spatial.delete(id);
         this.signal('survivor-evacuated', id);
         if (e.civilian?.survivor?.key === 'okafor') this.line('L9.okafor');
       }
