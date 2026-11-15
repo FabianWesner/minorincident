@@ -1,0 +1,30 @@
+/** One pooled browser; matched marker-disabled/enabled captures and structural draw counts. */
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { SceneSession, readSpec, stopServer } from './session';
+const out = 'test-results/s133-couriermark/review';
+mkdirSync(out, { recursive: true });
+const session = new SceneSession({ backend: 'webgl2', tier: 'high' });
+const rows: unknown[] = [];
+try {
+  await session.open();
+  for (const level of ['l4', 'l6']) {
+    const spec = readSpec(`tests/scenes/catalog/courier-read-${level}-dense.json`);
+    spec.camera = { mode: 'game', target: 'courier', zoom: 1 };
+    for (const actor of spec.actors ?? []) if (actor.kind === 'infected') actor.state = { chase: 'courier' };
+    await session.load(spec); await session.step(60);
+    for (const enabled of [false, true]) {
+      await session.page.evaluate(on => {
+        // Debug fixture owns the game; change only the marker's geometry submission.
+        const lab = window.__SCENE__ as unknown as { game: { view: { scene: import('three').Scene } } };
+        lab.game.view.scene.traverse(node => {
+          const mesh = node as import('three').Mesh;
+          if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.name === 'courier-ground-mark') mesh.geometry.setDrawRange(0, on ? Infinity : 0);
+        });
+      }, enabled);
+      await session.ready();
+      await session.screenshot(`${out}/${level}-${enabled ? 'after' : 'before'}.png`);
+      rows.push({ level, enabled, perf: await session.page.evaluate(() => window.__SS__!.perf()) });
+    }
+  }
+  writeFileSync(`${out}/metrics.json`, JSON.stringify({ rows, errors: session.errors }, null, 2));
+} finally { await session.close(); stopServer(); }
