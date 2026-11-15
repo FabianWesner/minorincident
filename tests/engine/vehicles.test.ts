@@ -124,6 +124,8 @@ async function l9InterruptedBoarding(): Promise<void> {
       world.update();
       s = l9.driving.state;
       expect(s.evacuationAt, 'stopped APC starts the native evacuation and checkpoint').not.toBeNull();
+      expect(s.trucks.map(id => [world.entities.get(id)!.transform.x, world.entities.get(id)!.transform.z]),
+        `seed ${seed} ${quality}: the evacuation trucks use the clear north-side staging shoulder`).toEqual([[450, 10], [459, 10], [468, 10]]);
       const evacuees = s.roster.filter(id => id !== s.samId);
       expect(evacuees).toHaveLength(4);
       const last = evacuees[3]!, slot = 3, target = { x: l9Course.evacuation.truckX + slot % 3 * 9 + 2.5, z: l9Course.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
