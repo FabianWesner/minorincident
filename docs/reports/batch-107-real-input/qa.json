@@ -95,7 +95,8 @@
   "driverGaps": [
     "Optional L1 alarm not exercised by standard route; no dedicated alarm capture option.",
     "Temporal warning review and L10 remain open.",
-    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high."
+    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high.",
+    "Playwright recordVideo diagnostic wrapper completed but delivered no local video; continuous warning review remains unsupported."
   ],
   "runtimeRecovery": "Host access restored; preview and GPU pool work. Earlier EPERM failures are historical.",
   "l9Runs": [
@@ -609,5 +610,12 @@
     "text": "Cover the survivors \u00b7 Hatch defense 15 s \u00b7 4/4 at the trucks \u00b7 7 m",
     "source": "test-results/b107/l9-low-road/log-campaign.jsonl",
     "verdict": "PASS; all four boarded before Defense complete; eventual L10 loading observed"
+  },
+  "videoAttempt": {
+    "method": "Ignored diagnostic wrapper requested Playwright recordVideo around unchanged runSession; 180-second HIGH WebGPU IMMORTAL / ROUTE ONLY sample",
+    "result": "Session exited normally; no local video artifact delivered; cannot support continuous-motion verdict",
+    "ordinaryNoiseTick": 7644,
+    "capture": "test-results/b107/video-l10/captures/scream-L10-7644-8.jpg",
+    "raw": "test-results/b107/video-l10/"
   }
 }
