@@ -52,3 +52,7 @@ Extended `l9-progress-probe.ts` with read-only bus samples and passenger attack-
 ## Matched LOW driven measurement
 
 The LOW primary-road native drive also completes (tick 10930), with hatch-open tick 5417, zero passenger attack starts and zero passengers within 5 m during an open hatch. Read-only geometry over the full recorded pursuit gives HIGH 237 samples, maximum asphalt distance 2.558 m; LOW 244 samples, maximum 4.983 m; zero samples outside 6 m in either drive. See `driven-summary.json` and both tier raw passenger JSON files. These complete-road drives strengthen the asphalt evidence but do not cover the required corner-cut/wide-detour driven paths. Both passenger participation gates remain failed. The bus catalog top speed is 12 m/s versus the APC road cap 18 m/s; pursuit timing must account for that gap without zombie stat changes.
+
+## Rejected pursuit pacing trial
+
+A mission-only bus speed share of 1.75 (21 m/s cap) released passengers before the HIGH rail hatch (first observation tick 4950, hatch 5268), but still produced zero attacks and zero within 5 m during hatch defense. L9 completed. The speed change was reverted; see `rejected-pacing-trial.json`. Earlier release alone is insufficient, so the next investigation must trace passenger pathing/targets and delivery location.
