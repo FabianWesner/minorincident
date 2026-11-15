@@ -170,3 +170,19 @@ Current runtime: mission bus speed cap share3 (36m/s allowed straight-line cap),
 ## Final-runtime per-tick six driven sweeps
 
 Current31e6a83b skilled drives all6 complete. Bus positions recorded every native tick continuously from spawn to completion, independent nearest-segment geometry: HIGH road1.996m/corner4.841m/wide3.885m; LOW road2.245m/wide3.873m pass. LOW corner fails92ticks outside6m, peak6.237m. See `final-six-driven-paths.json` with every tick position. This supersedes stationary-fixture and earlier-runtime asphalt passes for completion audit. Requires slightly earlier bend braking and revalidation; goal not complete.
+
+## LOW corner excursion source
+
+Per-tick failure peaks at tick11697,x490/z6.236 in bridge finale, not return bend. Trial braking after evacuationDone did not change result and was reverted: bus already busStoppedAt8379 with HP1178.65, so autopilot was removed before attempted brake branch. Stopped bus later moves toward bridge near APC; inspect stopped vehicle controls/contact and bridge checkpoint placement. LOW corner still92ticks outside6m. Typecheck/lint passed trial; `finale-stop-low.json` retains rejected attempt.
+
+## Stopped bus handbrake trial
+
+Stopped bus already receives zero throttle and regular brake. Adding existing handbrake after busStoppedAt reduces LOW corner finale peak straight-road z from6.236 to6.185m, still fails6m. Trial reverted. Ordinary drive still completes. Need inspect native contacts/bridge placement causing parked bus to travel into bridge; no pose teleport or infinite-mass lock retained.
+
+## Gate-lane parking investigation
+
+Detailed trace identifies stopped bus atx467.65/z0.386 against closed bridge gate before APC arrives. After evacuation APC pushes it onto bridge/off asphalt. Trial braking bus fromx425 interferes with the APC approach: LOW corner reaches36000ticks without completion, bus ends offroad. Trial reverted. Current runtime retains known92tick LOW corner excursion; no completion claim. Need park physically clear of APC while on authored asphalt, or resolve lane passing without a teleport.
+
+## Physical passing space on final asphalt
+
+Bus target uses z3 after x450 on the final12m-wide asphalt, leaving APC passage beside its gate stop. LOW corner ordinary skilled drive now completes with continuous per-tick bus max3.885m/0outside6m; see `passing-lane-low.json`. No teleport, physics lock, zombie stats or gate thresholds changed. Focused vehicle2/2, typecheck/lint pass. Other5final sweeps, current broad gates and visibility still require revalidation after lane change.

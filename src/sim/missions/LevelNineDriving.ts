@@ -492,6 +492,7 @@ export class LevelNineDriving {
       if (gap < nearestDistance) { nearestDistance = gap; nearestX = x; }
     }
     const target = this.busRoadTarget(nearestX + 6);
+    if (bus.transform.x >= 450) target.z = 3;
     const dx = target.x - bus.transform.x, dz = target.z - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
