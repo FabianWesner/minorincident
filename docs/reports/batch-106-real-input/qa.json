@@ -1,0 +1,721 @@
+{
+  "candidate": "65e45013",
+  "status": "incomplete; candidate evacuation timing rejected by contradictory run",
+  "method": "Headless browser pool; real keyboard/mouse; progressed saves through menu; no source changes",
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "remote npm test": "passed; 105 passed, 1 skipped; 129.3 s; full 150-case collection budget"
+  },
+  "l9": {
+    "road": {
+      "quality": "high",
+      "zoom": 1,
+      "finished": true,
+      "deaths": 0,
+      "maxRollDegrees": 15.0,
+      "maxPitchDegrees": 11.4,
+      "evacuation": "4/4 with 6 seconds defense remaining",
+      "handover": "L10",
+      "evacuationEvidence": "2026-11-15T10:19:14.495Z: 4/4, defense 6 s"
+    },
+    "shortcut": {
+      "quality": "low",
+      "zoom": 1.5,
+      "finished": true,
+      "maxRollDegrees": 11.4,
+      "maxPitchDegrees": 10.5,
+      "handover": "L10",
+      "evacuation": "4/4 with 6 seconds defense remaining; first HUD record 2026-11-15T10:23:54.788Z"
+    },
+    "contradictoryRun": {
+      "level": "L9",
+      "severity": "P1",
+      "text": "Evacuation timing/progression delay: only 2/4 trucks 58.4 seconds after Defense complete; 240-second fresh HIGH road run ended without handover. Permanent softlock not proven.",
+      "capture": "test-results/s125/l9-video-fresh/captures/video-L9-checkpoint-yield.jpg",
+      "video": "test-results/s125/l9-video-fresh/video/recording-0.webm",
+      "firstDefenseCompleteTick": 10653,
+      "lastObservedTick": 14157,
+      "elapsedSeconds": 58.4,
+      "hp": 90,
+      "deaths": 0
+    }
+  },
+  "findings": [
+    {
+      "level": "L9",
+      "severity": "P1",
+      "text": "Evacuation timing/progression delay: only 2/4 trucks 58.4 seconds after Defense complete; 240-second fresh HIGH road run ended without handover. Permanent softlock not proven.",
+      "capture": "test-results/s125/l9-video-fresh/captures/video-L9-checkpoint-yield.jpg",
+      "video": "test-results/s125/l9-video-fresh/video/recording-0.webm",
+      "firstDefenseCompleteTick": 10653,
+      "lastObservedTick": 14157,
+      "elapsedSeconds": 58.4,
+      "hp": 90,
+      "deaths": 0
+    },
+    {
+      "level": "L9",
+      "severity": "P2",
+      "text": "Red evacuation truck appears perched above barricade; wheels off road",
+      "capture": "test-results/s125/high-road/captures/continue-L9-L9-t8117.jpg"
+    },
+    {
+      "level": "L1",
+      "severity": "P3",
+      "text": "Car alarm panel overlaps health HUD; some title/instructions obscured",
+      "capture": "test-results/s125/l1-spot-high/captures/spot-L1-checkpoint-yield.jpg"
+    }
+  ],
+  "readability": {
+    "L4": "HIGH and LOW, zoom 1/1.5 living courier frames reviewed; identifiable, HUD HP clear; no obvious player outline artefact",
+    "L6": "HIGH and LOW retreat frames reviewed; clear edge and HUD HP; sparse crowd limits conclusion",
+    "denseAcceptance": "L10 HIGH centered pulse frame: courier edge and fixed HP identifiable in dense crowd; immortal route-only functional evidence, not L4/L6 motion proof",
+    "L4Motion": {
+      "video": "test-results/s125/l4-motion/video/recording-0.webm",
+      "review": "test-results/s125/l4-motion/review/courier-close.jpg",
+      "quality": "high",
+      "zoom": 1,
+      "sampleSeconds": [
+        55,
+        55.8
+      ],
+      "intervalSeconds": 0.1,
+      "verdict": "Living courier remains identifiable during close crowd attack; no detached/flashing player outline observed. Alpha bar disappears during fall; no random flicker established. This short segment does not clear all bar behavior."
+    },
+    "L6Motion": {
+      "video": "test-results/s125/l6-motion/video/recording-0.webm",
+      "review": "test-results/s125/l6-motion/review/courier-close.jpg",
+      "quality": "high",
+      "zoom": 1,
+      "segmentSeconds": [
+        70,
+        70.8
+      ],
+      "intervalSeconds": 0.1,
+      "verdict": "Courier identifiable during close overlap; no obvious player outline corruption. Nearby enemy bar disappears briefly and returns.",
+      "classification": "Visible bar popping observed, consistent with intentional courier-silhouette suppression/head occlusion; renderer defect not established",
+      "source": "src/render/HealthBars.ts: nearest six healthy attackers, courier overlap suppression, head occlusion"
+    }
+  },
+  "spots": {
+    "L1": {
+      "high": [
+        {
+          "level": "L1",
+          "entry": "new",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 103,
+          "maxNoProgressSeconds": 14.2,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [],
+          "weaponsEnd": [
+            "weapon.fists",
+            "weapon.fists"
+          ],
+          "steps": [
+            {
+              "id": "pickup",
+              "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+              "tick": 10,
+              "marker": {
+                "anchor": "parcel-counter",
+                "ring": {
+                  "x": -37.8,
+                  "y": 0,
+                  "z": -37.5
+                },
+                "drawn": [
+                  -37.8,
+                  0.05,
+                  -37.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "deliver",
+              "text": "",
+              "tick": 1248,
+              "marker": {
+                "anchor": "lab-door",
+                "ring": {
+                  "x": 66,
+                  "y": 0,
+                  "z": -12.3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "weapon",
+              "text": "Find something to defend yourself \u00b7 63\u00a0m",
+              "tick": 5554,
+              "marker": {
+                "anchor": "garage-door",
+                "ring": {
+                  "x": 22.8,
+                  "y": 0,
+                  "z": 36.699999999999996
+                },
+                "drawn": [
+                  22.8,
+                  0.24,
+                  36.7
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "low": [
+        {
+          "level": "L1",
+          "entry": "new",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 115,
+          "maxNoProgressSeconds": 13.8,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fists"
+          ],
+          "steps": [
+            {
+              "id": "pickup",
+              "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+              "tick": 12,
+              "marker": {
+                "anchor": "parcel-counter",
+                "ring": {
+                  "x": -37.8,
+                  "y": 0,
+                  "z": -37.5
+                },
+                "drawn": [
+                  -37.8,
+                  0.05,
+                  -37.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "deliver",
+              "text": "",
+              "tick": 976,
+              "marker": {
+                "anchor": "lab-door",
+                "ring": {
+                  "x": 66,
+                  "y": 0,
+                  "z": -12.3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "weapon",
+              "text": "Find something to defend yourself \u00b7 63\u00a0m",
+              "tick": 5126,
+              "marker": {
+                "anchor": "garage-door",
+                "ring": {
+                  "x": 22.8,
+                  "y": 0,
+                  "z": 36.699999999999996
+                },
+                "drawn": [
+                  22.8,
+                  0.24,
+                  36.7
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "firestation",
+              "text": "",
+              "tick": 6311,
+              "marker": {
+                "anchor": "fire-bay-trigger",
+                "ring": {
+                  "x": -76.6,
+                  "y": 0.53,
+                  "z": 41.27
+                },
+                "drawn": null,
+                "playerY": 0.9649999737739563,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "L3": {
+      "high": [
+        {
+          "level": "L3",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 109,
+          "maxNoProgressSeconds": 4.8,
+          "deaths": 1,
+          "assists": 0,
+          "attacks": {
+            "weapon.handgun": 148
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "armory",
+              "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+              "tick": 12,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": {
+                  "x": -139.2,
+                  "y": 0,
+                  "z": -8.4
+                },
+                "drawn": [
+                  -139.2,
+                  0.05,
+                  -8.4
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "defend",
+              "text": "Help defend the station \u00b7 10\u00a0m",
+              "tick": 922,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "checkpoint",
+              "text": "Get inside the army checkpoint \u00b7 365\u00a0m",
+              "tick": 1627,
+              "marker": {
+                "anchor": "l3-zone",
+                "ring": {
+                  "x": 225,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  225,
+                  0.05,
+                  0
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "low": [
+        {
+          "level": "L3",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 116,
+          "maxNoProgressSeconds": 5,
+          "deaths": 1,
+          "assists": 0,
+          "attacks": {
+            "weapon.handgun": 185
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "armory",
+              "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+              "tick": 11,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": {
+                  "x": -139.2,
+                  "y": 0,
+                  "z": -8.4
+                },
+                "drawn": [
+                  -139.2,
+                  0.05,
+                  -8.4
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "defend",
+              "text": "Help defend the station \u00b7 10\u00a0m",
+              "tick": 803,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "checkpoint",
+              "text": "Get inside the army checkpoint \u00b7 364\u00a0m",
+              "tick": 1456,
+              "marker": {
+                "anchor": "l3-zone",
+                "ring": {
+                  "x": 225,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  225,
+                  0.05,
+                  0
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "L10": {
+      "high": [
+        {
+          "level": "L10",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 111,
+          "maxNoProgressSeconds": 11.739,
+          "deaths": 2,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 80
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 62\u00a0m",
+              "tick": 1991,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "low": [
+        {
+          "level": "L10",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 116,
+          "maxNoProgressSeconds": 8.032,
+          "deaths": 5,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 142
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 56\u00a0m",
+              "tick": 8,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "open": [
+    "L9 warning capture/verdict remains unverified",
+    "Full HIGH/LOW zoom1/1.5 temporal courier and screamer matrix incomplete",
+    "Absolute never-glued/jerky APC motion claim not proven beyond sampled reviews",
+    "P1 L9 evacuation delay requires separate source fix; report-only lane did not fix game"
+  ],
+  "contactSheet": "contact-sheet.jpg",
+  "sampleFunVerdicts": {
+    "L1": "tense after accident; early delivery harmless",
+    "L3": "tense opening route",
+    "L4": "tense alarm hold; mortal driver overwhelmed",
+    "L6": "babysitting; escort losses during retreat",
+    "L7": "babysitting corridor; group attrition",
+    "L9": "tense hatch defense, driving power payoff; motion verdict pending",
+    "L10": "HIGH opening harmless; LOW farm combat tense with deaths"
+  },
+  "screamEvidence": {
+    "L6": {
+      "capture": "test-results/s125/l6-corrected-capture/captures/scream-1.jpg",
+      "event": "alpha.roar telegraph, source149, tick7113, radius8",
+      "quality": "high",
+      "zoom": 1,
+      "verdict": "Conspicuous red telegraph ring and translucent red area, readable as warning; distinct from ordinary screamer thin purple pulse",
+      "method": "Immortal real-input route acceptance with 30-second hatch watch; corrected per-mission capture hook",
+      "correction": "Earlier empty event logs were weakened by a temporary hook binding flaw; direct probe confirmed Alpha and interrupted roar."
+    },
+    "L7": {
+      "capture": "test-results/s125/l7-corrected/captures/scream-1.jpg",
+      "event": "alpha.roar telegraph tick2083 source109; full windup tick2098 radius8",
+      "quality": "high",
+      "zoom": 1,
+      "verdict": "Bright red rings and translucent areas conspicuous against dark road; multiple overlapping warnings busy but readable",
+      "method": "Fresh progressed save; immortal real-input route-only acceptance; corrected per-mission hook",
+      "correction": "Prior empty logs were capture-hook limited and cannot imply absence of roar"
+    },
+    "L9": "Corrected per-mission hook, fresh progressed save, LOW zoom1.5 immortal real-input shortcut through rail stall and evacuation bay, 135s: no scream event captured. Warning readability remains unverified; no claim that warning is absent in all gameplay.",
+    "L10": {
+      "ordinary": "HIGH zoom 1: source 706 infected.screamer; noise tick 4012 radius 20",
+      "capture": "test-results/s125/l10-pulse-route/captures/scream-4.jpg",
+      "verdict": "Thin purple ring noticeable when centered on dark ground, no broad pink ground painting; easier to miss moving away",
+      "method": "Real input; immortal acceptance mode and route-only driver; no zombie changes",
+      "metadataNote": "warning label alpha-roar in temporary hook was generic; event special scream and noise actionId infected.screamer establish ordinary screamer identity",
+      "lowComparison": {
+        "quality": "low",
+        "zoom": 1.5,
+        "sourceId": 124,
+        "tick": 6863,
+        "capture": "test-results/s125/l10-pulse-low-fresh/captures/scream-4.jpg",
+        "verdict": "Centered thin purple ring visible on dark ground without broad fill; muted against brighter attack rings",
+        "method": "Fresh L10-default profile, immortal route-only acceptance, real movement"
+      }
+    }
+  },
+  "screamerSourceInventory": {
+    "L6": [
+      "src/data/l6.ts:45",
+      "src/data/alphaTypes.ts:21"
+    ],
+    "L7": [
+      "src/data/alphaTypes.ts:22"
+    ],
+    "L9": [
+      "src/data/l9.ts:131",
+      "src/data/l9.ts:133"
+    ],
+    "L10": [
+      "src/data/alphaTypes.ts:23",
+      "src/levels/L10/encounters.ts:25"
+    ]
+  },
+  "temporaryDriverStatus": "All tracked tools restored; final diagnostic patch /private/tmp/s125-playtest-driver-final.patch",
+  "motionEvidence": {
+    "path": "test-results/s125/l9-motion-frames/sequence.jpg",
+    "frames": 50,
+    "scope": "first turn and curb/grass transition",
+    "verdict": "upright in reviewed frames; continuous smoothness still unverified",
+    "continuousArtifact": "test-results/s125/l9-video-fresh/video/recording-0.webm",
+    "review": "Reviewed timestamped 1fps sequences 0-79 s: initial corner, roadblock/debris contacts, fire/explosion effects, onward driving. APC upright and headings progress without an obvious large snap in sampled frames; subsecond jerk/glued appearance not resolved.",
+    "subsecondReview": {
+      "intervalSeconds": 0.2,
+      "segmentsSeconds": [
+        [
+          12,
+          16
+        ],
+        [
+          59,
+          63
+        ]
+      ],
+      "paths": [
+        "test-results/s125/l9-video-fresh/review/close/turn.jpg",
+        "test-results/s125/l9-video-fresh/review/close/contact.jpg"
+      ],
+      "verdict": "Progressive translation and heading, upright, no obvious teleport or sudden righting snap in sampled road turn/contact sequences",
+      "limits": "Not full off-road temporal review or courier flicker proof"
+    },
+    "lowShortcut": {
+      "video": "test-results/s125/l9-shortcut-video/video/recording-0.webm",
+      "review": [
+        "test-results/s125/l9-shortcut-video/review/early.jpg",
+        "test-results/s125/l9-shortcut-video/review/middle.jpg",
+        "test-results/s125/l9-shortcut-video/review/transition.jpg"
+      ],
+      "quality": "low",
+      "zoom": 1.5,
+      "durationSeconds": 90,
+      "maxRollDegrees": 7.0,
+      "maxPitchDegrees": 10.6,
+      "verdict": "Upright in sampled shortcut and surface-transition frames; no obvious large position discontinuity; 0.2s transition sampled. Full continuous smoothness not proven."
+    }
+  },
+  "nextEvidenceActions": [
+    "L6: observe actual hatch-3 Alpha near x126, not generic retreat pressure",
+    "L7: extend corridor sample to authored screamer Alpha",
+    "L9: observe ordinary scream telegraph/noise while hatch open",
+    "L10: repeat ordinary pulse at LOW and zoom1.5",
+    "Continuous visual review for APC motion and courier bar flicker"
+  ],
+  "l6HatchWatch": {
+    "path": "test-results/s125/l6-hatch-watch/watch-completion.json",
+    "durationSeconds": 180,
+    "method": "immortal acceptance, real route movement, no player firing, 30-second release near x120",
+    "hatch3Births": [
+      {
+        "id": 149,
+        "tick": 6402,
+        "at": [
+          123,
+          12.6
+        ],
+        "wave": 4
+      },
+      {
+        "id": 150,
+        "tick": 6402,
+        "at": [
+          129,
+          14
+        ],
+        "wave": 4
+      }
+    ],
+    "verdict": "Authored wave admitted; no captured roar; visual warning still unverified",
+    "refusals": {
+      "cap": 11,
+      "reserved": 4
+    },
+    "actorTypeCaution": "Birth receipts do not include archetype/alphaType. Later read-only screamer-alpha observer produced no rows; admitted screamer type is not proven. Served LevelSixSubway-BB2RuK8y.js contains the expected Alpha spawn branch.",
+    "secondPass": "test-results/s125/l6-hatch-observed/watch-completion.json; births 146/147 at tick6423, no roar/type observation"
+  },
+  "completionAudit": {
+    "L9 two full routes": "Two original runs finished to L10; later HIGH repeat failed evacuation timing",
+    "APC tilt": "Telemetry and sampled temporal visual review support upright behavior; full never-glued/jerky claim not proven",
+    "bus and passengers": "Bus visible on road in captures; hatch fights and evacuation sampled; P1 evacuation delay and P2 elevated truck reported",
+    "L4/L6 readability": "HIGH/LOW zoom1/1.5 static captures reviewed; HIGH temporal closeups reviewed; no player-outline P1 observed; bar pop observed consistent with suppression; complete temporal matrix not done",
+    "screamers": "Source inventory L6/L7/L9/L10; L6/L7 Alpha warnings captured HIGH; L10 ordinary pulse HIGH/LOW captured; L9 warning not captured; full quality/zoom warning matrix incomplete",
+    "L1/L3/L10 spots": "HIGH/LOW 120s samples completed and final frames reviewed",
+    "checks": "Remote npm test passed (105 passed, 1 skipped, 129.3s; full150-case collection budget); final restored-tree typecheck and lint passed",
+    "artifacts": "README + JSON + one reviewed small contact sheet only; raw videos local",
+    "outcome": "Candidate not approved; QA goal incomplete at browser time-box close"
+  }
+}
