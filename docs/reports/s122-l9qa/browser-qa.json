@@ -1,5 +1,5 @@
 {
-  "status": "partial-qa-audit-open",
+  "status": "bounded-qa-reported",
   "target": {
     "batch": 103,
     "commit": "2815e0d5"
@@ -3063,5 +3063,20 @@
       "stopped": 5998,
       "line": 4516
     }
-  ]
+  ],
+  "completionAudit": {
+    "requestedVariants": "HIGH/LOW, zoom1/1.5, WebGL2 and confirmed WebGPU exercised",
+    "routes": "real-input road and dry-shortcut from progressed save/Continue",
+    "hatchAndTrucks": "successful HIGH GPU/LOW GL handovers plus incomplete LOW GPU truck sample reported",
+    "save": "controlled lethal zeroHP UI quality change, respawn, later quality change and Continue pass;organic hatch menu not claimed",
+    "visual": "current sheet personally inspected;rail entry/release original-size sequence reviewed",
+    "gates": "build/typecheck/lint/unchanged remote npm test passed",
+    "artifacts": "README,JSON<200KB,one small sheet",
+    "source": "report-only final diff;temporary driver changes restored",
+    "limitations": [
+      "Mostly offscreen pursuit prevents exhaustive prop/fence/jitter or full3x visual qualification.",
+      "LOW GPU truck sample incomplete.",
+      "Capture-heavy hitches and APC tipping causes unisolated."
+    ]
+  }
 }

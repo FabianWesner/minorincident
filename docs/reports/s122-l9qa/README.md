@@ -1,6 +1,6 @@
 # s122 — L9 pursuit, hatch and save browser QA
 
-Status: **partial QA; coverage audit remains open**. Source batch 103, `2815e0d5`, production optimized QA build. Headless pooled browser, 1280×720, ports 4981/4982. No gameplay changes, deployment, push or main movement.
+Status: **bounded browser QA complete; findings and observation limits below**. Source batch 103, `2815e0d5`, production optimized QA build. Headless pooled browser, 1280×720, ports 4981/4982. No gameplay changes, deployment, push or main movement.
 
 ## Measured passes
 
@@ -31,14 +31,23 @@ Stills do not establish continuous absence of popping, bus clipping, sliding/jit
 
 Production QA build, typecheck and lint passed. Unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: runner 46.225.66.90,127.5/240s;150/150 manifest,27 files passed,105 tests passed/1 skipped. Earlier EPERM listener and unavailable-runner attempts were resolved and are retained only as history in JSON. JSON is below 200 KB; one small inspected sheet is committed. Raw captures/logs: `test-results/s122-*` (local).
 
-## Completion audit — still open
+## Coverage and limits
 
-- LOW WebGPU z1.5 sampled for 240 s: rail cleared at 100 HP; trucks read Defense complete but only 1/4 survivors at yield. Runtime backend confirmed for both HIGH/LOW GPU passes. Outcome is incomplete, not a successful ending.
-- Continuous visual sampling of pursuit/spawn/disembarkation to judge the requested bus defects and 3× pacing.
-- HIGH stationary flags were attack-state actors at the hull: not confirmed frozen AI. LOW capture-heavy run recorded 650 ms/P2 and 2533 ms/P1 hitches; capture overhead versus runtime cause is unverified.
-- Organic death/retry settings navigation at the hatch, supplementing the passing controlled zero-HP check.
+HIGH was exercised before LOW initially; later diagnostic runs alternate tiers. WebGL2 and runtime-confirmed WebGPU, zoom1 and1.5, road and shortcut routes were exercised. Successful LOW road and HIGH GPU shortcut passes reach actual L10 handover. LOW GPU z1.5 has an explicitly incomplete truck outcome; it is a reported failure to finish within the sample, not a passing ending.
 
-The goal is not complete. No broad “all clear” claim is supported by the current evidence.
+Bus screen entry/release received original-size sequential review. No centre-screen spawn pop, bus/APC intersection, or floating passenger was established in that observed sequence. Whole-route prop/fence clipping and jitter were not continuously visible because the bus is mostly offscreen. No exhaustive absence claim is made. The short visible approach is fast but does not support calling the3× pace silly; measured peak is ~107km/h. Passengers do leave the bus and gather at the hull; clustered exit presentation is P3.
+
+Save settings was checked at actual zero HP with controlled lethal setup, then after respawn and through normal Continue. Organic hatch-death menu navigation was not established; this is the remaining realism limit of that diagnostic, not a claimed additional pass.
+
+### Per-pass feel
+
+- HIGH GL z1 road and HIGH GL z1.5 shortcut: threat visible, but original driver never fired from hatch. Deaths cannot rate human difficulty; no harmlessness conclusion.
+- LOW GL z1 road with physical hatch fire: manageable, zero deaths; smoky crowded trucks reduce readability (P2).
+- HIGH GPU z1.5 shortcut with physical hatch fire: tense and completable,50HP before trucks, zero deaths; stationary attack-state hull actors are not confirmed frozen AI. P3 clustered bus release is established separately by HIGH GL rail review.
+- LOW GPU z1.5 shortcut: rail manageable at100HP; trucks feel congested/stalled, defense complete but1/4 survivors at240s. P2 ground-color discontinuity and smoke;650ms/P2 and2533ms/P1 hitch observations are capture-heavy and unisolated.
+- Focused HIGH GL road capture: APC tipped (P2), failed to reach rail within120s. No hatch fun verdict from that failed attempt.
+
+This is a completed report of bounded real-input browser QA, including incomplete gameplay outcomes and explicit unobserved intervals. It does not certify the game free of pursuit glitches.
 
 ## Additional LOW WebGPU review
 
