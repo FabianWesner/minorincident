@@ -1,0 +1,555 @@
+{
+  "candidate": "65e45013",
+  "status": "incomplete",
+  "method": "Headless browser pool; real keyboard/mouse; progressed saves through menu; no source changes",
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "remote npm test": "passed; 105 passed, 1 skipped; 129.3 s; full 150-case collection budget"
+  },
+  "l9": {
+    "road": {
+      "quality": "high",
+      "zoom": 1,
+      "finished": true,
+      "deaths": 0,
+      "maxRollDegrees": 15.0,
+      "maxPitchDegrees": 11.4,
+      "evacuation": "4/4 with 6 seconds defense remaining",
+      "handover": "L10",
+      "evacuationEvidence": "2026-11-15T10:19:14.495Z: 4/4, defense 6 s"
+    },
+    "shortcut": {
+      "quality": "low",
+      "zoom": 1.5,
+      "finished": true,
+      "maxRollDegrees": 11.4,
+      "maxPitchDegrees": 10.5,
+      "handover": "L10",
+      "evacuation": "4/4 with 6 seconds defense remaining; first HUD record 2026-11-15T10:23:54.788Z"
+    }
+  },
+  "findings": [
+    {
+      "level": "L9",
+      "severity": "P2",
+      "text": "Red evacuation truck appears perched above barricade; wheels off road",
+      "capture": "test-results/s125/high-road/captures/continue-L9-L9-t8117.jpg"
+    },
+    {
+      "level": "L1",
+      "severity": "P3",
+      "text": "Car alarm panel overlaps health HUD; some title/instructions obscured",
+      "capture": "test-results/s125/l1-spot-high/captures/spot-L1-checkpoint-yield.jpg"
+    }
+  ],
+  "readability": {
+    "L4": "HIGH and LOW, zoom 1/1.5 living courier frames reviewed; identifiable, HUD HP clear; no obvious player outline artefact",
+    "L6": "HIGH and LOW retreat frames reviewed; clear edge and HUD HP; sparse crowd limits conclusion"
+  },
+  "spots": {
+    "L1": {
+      "high": [
+        {
+          "level": "L1",
+          "entry": "new",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 103,
+          "maxNoProgressSeconds": 14.2,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [],
+          "weaponsEnd": [
+            "weapon.fists",
+            "weapon.fists"
+          ],
+          "steps": [
+            {
+              "id": "pickup",
+              "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+              "tick": 10,
+              "marker": {
+                "anchor": "parcel-counter",
+                "ring": {
+                  "x": -37.8,
+                  "y": 0,
+                  "z": -37.5
+                },
+                "drawn": [
+                  -37.8,
+                  0.05,
+                  -37.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "deliver",
+              "text": "",
+              "tick": 1248,
+              "marker": {
+                "anchor": "lab-door",
+                "ring": {
+                  "x": 66,
+                  "y": 0,
+                  "z": -12.3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "weapon",
+              "text": "Find something to defend yourself \u00b7 63\u00a0m",
+              "tick": 5554,
+              "marker": {
+                "anchor": "garage-door",
+                "ring": {
+                  "x": 22.8,
+                  "y": 0,
+                  "z": 36.699999999999996
+                },
+                "drawn": [
+                  22.8,
+                  0.24,
+                  36.7
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "low": [
+        {
+          "level": "L1",
+          "entry": "new",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 115,
+          "maxNoProgressSeconds": 13.8,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fists"
+          ],
+          "steps": [
+            {
+              "id": "pickup",
+              "text": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+              "tick": 12,
+              "marker": {
+                "anchor": "parcel-counter",
+                "ring": {
+                  "x": -37.8,
+                  "y": 0,
+                  "z": -37.5
+                },
+                "drawn": [
+                  -37.8,
+                  0.05,
+                  -37.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "deliver",
+              "text": "",
+              "tick": 976,
+              "marker": {
+                "anchor": "lab-door",
+                "ring": {
+                  "x": 66,
+                  "y": 0,
+                  "z": -12.3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "weapon",
+              "text": "Find something to defend yourself \u00b7 63\u00a0m",
+              "tick": 5126,
+              "marker": {
+                "anchor": "garage-door",
+                "ring": {
+                  "x": 22.8,
+                  "y": 0,
+                  "z": 36.699999999999996
+                },
+                "drawn": [
+                  22.8,
+                  0.24,
+                  36.7
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "firestation",
+              "text": "",
+              "tick": 6311,
+              "marker": {
+                "anchor": "fire-bay-trigger",
+                "ring": {
+                  "x": -76.6,
+                  "y": 0.53,
+                  "z": 41.27
+                },
+                "drawn": null,
+                "playerY": 0.9649999737739563,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "L3": {
+      "high": [
+        {
+          "level": "L3",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 109,
+          "maxNoProgressSeconds": 4.8,
+          "deaths": 1,
+          "assists": 0,
+          "attacks": {
+            "weapon.handgun": 148
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "armory",
+              "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+              "tick": 12,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": {
+                  "x": -139.2,
+                  "y": 0,
+                  "z": -8.4
+                },
+                "drawn": [
+                  -139.2,
+                  0.05,
+                  -8.4
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "defend",
+              "text": "Help defend the station \u00b7 10\u00a0m",
+              "tick": 922,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "checkpoint",
+              "text": "Get inside the army checkpoint \u00b7 365\u00a0m",
+              "tick": 1627,
+              "marker": {
+                "anchor": "l3-zone",
+                "ring": {
+                  "x": 225,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  225,
+                  0.05,
+                  0
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "low": [
+        {
+          "level": "L3",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 116,
+          "maxNoProgressSeconds": 5,
+          "deaths": 1,
+          "assists": 0,
+          "attacks": {
+            "weapon.handgun": 185
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "armory",
+              "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+              "tick": 11,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": {
+                  "x": -139.2,
+                  "y": 0,
+                  "z": -8.4
+                },
+                "drawn": [
+                  -139.2,
+                  0.05,
+                  -8.4
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "defend",
+              "text": "Help defend the station \u00b7 10\u00a0m",
+              "tick": 803,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "checkpoint",
+              "text": "Get inside the army checkpoint \u00b7 364\u00a0m",
+              "tick": 1456,
+              "marker": {
+                "anchor": "l3-zone",
+                "ring": {
+                  "x": 225,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  225,
+                  0.05,
+                  0
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "L10": {
+      "high": [
+        {
+          "level": "L10",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 111,
+          "maxNoProgressSeconds": 11.739,
+          "deaths": 2,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 80
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 62\u00a0m",
+              "tick": 1991,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "low": [
+        {
+          "level": "L10",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 120,
+          "simSeconds": 116,
+          "maxNoProgressSeconds": 8.032,
+          "deaths": 5,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 142
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 56\u00a0m",
+              "tick": 8,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "open": [
+    "Ordinary scream pulse captures and verdict in every authored screamer level",
+    "Dense-horde living courier and motion flicker audit",
+    "L9 corner/bump visual motion audit; evacuation timing verified on both runs",
+    "Per-level final fun verdicts",
+    "Restore temporary driver changes and final checks/commit"
+  ],
+  "contactSheet": "contact-sheet.jpg",
+  "sampleFunVerdicts": {
+    "L1": "tense after accident; early delivery harmless",
+    "L3": "tense opening route",
+    "L4": "tense alarm hold; mortal driver overwhelmed",
+    "L6": "babysitting; escort losses during retreat",
+    "L7": "babysitting corridor; group attrition",
+    "L9": "tense hatch defense, driving power payoff; motion verdict pending",
+    "L10": "HIGH opening harmless; LOW farm combat tense with deaths"
+  },
+  "screamEvidence": {
+    "L6": "No qualifying event in sampled opening; Alpha roar path distinct from ordinary pulse",
+    "L7": "No qualifying event in 120-second corridor sample",
+    "L9": "No ordinary scream noise in 150-second hatch sample; telegraph capture retry pending",
+    "L10": "Alpha roar captured and reviewed at LOW zoom 1.5; ordinary pulse unverified"
+  },
+  "screamerSourceInventory": {
+    "L6": [
+      "src/data/l6.ts:45",
+      "src/data/alphaTypes.ts:21"
+    ],
+    "L7": [
+      "src/data/alphaTypes.ts:22"
+    ],
+    "L9": [
+      "src/data/l9.ts:131",
+      "src/data/l9.ts:133"
+    ],
+    "L10": [
+      "src/data/alphaTypes.ts:23",
+      "src/levels/L10/encounters.ts:25"
+    ]
+  },
+  "temporaryDriverStatus": "Restored before report checkpoint commit; local patch /private/tmp/s125-playtest-driver.patch retains diagnostic controls",
+  "motionEvidence": {
+    "path": "test-results/s125/l9-motion-frames/sequence.jpg",
+    "frames": 50,
+    "scope": "first turn and curb/grass transition",
+    "verdict": "upright in reviewed frames; continuous smoothness still unverified"
+  }
+}
