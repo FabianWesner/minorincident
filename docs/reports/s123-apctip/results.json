@@ -274,5 +274,18 @@
     "Rerun the vehicle campaign motion gate and unchanged remote unit suite.",
     "Check WebGPU manually."
   ],
-  "measurementAudit": "Probe maxima accumulation corrected on continuation. Earlier per-axis maxima need refreshed measurements; no completion claim."
+  "measurementAudit": "Probe maxima accumulation corrected on continuation. Earlier per-axis maxima need refreshed measurements; no completion claim.",
+  "axisCorrection": {
+    "method": "Chassis roll = atan2(-localZ.y, localY.y); chassis pitch = asin(localX.y). Both independent of yaw.",
+    "highPrimaryRoad": {
+      "finished": true,
+      "tick": 10989,
+      "drivingMaxRollRadians": 0.100410123303174,
+      "drivingMaxPitchRadians": 0.19900390726266862,
+      "firstOver20": null
+    },
+    "typecheck": "passed",
+    "lint": "passed",
+    "remaining": "Refresh contact/route matrix and broad gates after axis correction; earlier gate receipts predate this runtime."
+  }
 }

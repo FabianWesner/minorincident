@@ -39,3 +39,7 @@ Repeat the original headless HIGH WebGL2 real-input road capture through the bro
 Network and filesystem access restored. The unchanged remote unit suite passed on 46.225.66.90: 27 files, 105 passed/1 skipped, 127.6 seconds. Typecheck and lint pass. Vehicle campaign gate is running through the prescribed pool. Corrected probe maxima accumulation: each axis must update every tick independently. Previous per-axis numerical summaries remain provisional pending refreshed measurements. Original tipping root cause, baseline comparison, explicit kerb/ramp and bus-contact coverage remain incomplete; the goal is not complete.
 
 The complete vehicle campaign motion gate subsequently passed all eight cases (L9, L7 bus, L4 parked, L4 tank; HIGH and LOW), exit 0, through one headless browser pool reservation on port 4984. Receipts are summarized in results.json. Prior infrastructure failure descriptions above are historical and superseded by these successful gate and remote suite reruns.
+
+## Chassis axis correction
+
+Further audit found yaw mixing in the spring and probe angle formulas. Corrected chassis roll to atan2(-localZ.y, localY.y) and pitch to asin(localX.y). Full HIGH primary-road drive passes --check, completes tick 10989, peaks at 5.75 degrees roll and 11.40 degrees pitch during driving. Typecheck/lint pass. Earlier campaign/remote/threat receipts predate this runtime correction and require revalidation. Root-cause isolation and kerb/bus-contact coverage remain open.

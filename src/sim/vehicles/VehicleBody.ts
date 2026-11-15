@@ -139,8 +139,8 @@ export class VehicleBody {
   stabilizeTilt(maxAngle: number): void {
     const q = this.body.rotation(), omega = this.body.angvel(), inertia = this.body.principalInertia();
     const axes = [
-      { axis: { x: 1 - 2 * (q.y * q.y + q.z * q.z), y: 2 * (q.x * q.y + q.w * q.z), z: 2 * (q.x * q.z - q.w * q.y) }, angle: this.roll, inertia: inertia.x },
-      { axis: { x: 2 * (q.x * q.z + q.w * q.y), y: 2 * (q.y * q.z - q.w * q.x), z: 1 - 2 * (q.x * q.x + q.y * q.y) }, angle: Math.asin(Math.max(-1, Math.min(1, 2 * (q.w * q.z - q.x * q.y)))), inertia: inertia.z },
+      { axis: { x: 1 - 2 * (q.y * q.y + q.z * q.z), y: 2 * (q.x * q.y + q.w * q.z), z: 2 * (q.x * q.z - q.w * q.y) }, angle: Math.atan2(2 * (q.w * q.x - q.y * q.z), 1 - 2 * (q.x * q.x + q.z * q.z)), inertia: inertia.x },
+      { axis: { x: 2 * (q.x * q.z + q.w * q.y), y: 2 * (q.y * q.z - q.w * q.x), z: 1 - 2 * (q.x * q.x + q.y * q.y) }, angle: Math.asin(Math.max(-1, Math.min(1, 2 * (q.w * q.z + q.x * q.y)))), inertia: inertia.z },
     ];
     const start = maxAngle * .6, frequency = 24, damping = 1.7;
     const impulse = { x: 0, y: 0, z: 0 };

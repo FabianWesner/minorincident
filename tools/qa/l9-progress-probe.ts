@@ -81,8 +81,8 @@ try {
     const before = { x:p.x, z:p.z, driving:l9.state.phase === 'driving', held:l9.driving.holding(car.entity.id) };
     world.update();
     const q = car.physics.rotation;
-    const roll = Math.atan2(2 * (q.w * q.x + q.y * q.z), 1 - 2 * (q.x * q.x + q.z * q.z));
-    const pitch = Math.asin(Math.max(-1, Math.min(1, 2 * (q.w * q.z - q.x * q.y))));
+    const roll = Math.atan2(2 * (q.w * q.x - q.y * q.z), 1 - 2 * (q.x * q.x + q.z * q.z));
+    const pitch = Math.asin(Math.max(-1, Math.min(1, 2 * (q.w * q.z + q.x * q.y))));
     if (process.env.L9_ATTITUDE_TICKS && process.env.L9_ATTITUDE_TICKS.split(',').some(range => { const [a,b=a] = range.split('-').map(Number); return world.tick >= a && world.tick <= b; }))
       console.log(JSON.stringify({ attitudeTick: world.tick, roll, pitch, at: [p.x,p.y,p.z], velocity: car.physics.body.linvel(), wheels: car.physics.wheels.map(w => ({...w})) }));
     if (Math.max(Math.abs(roll), Math.abs(pitch)) > Math.max(attitude.maxRoll, attitude.maxPitch)) {
