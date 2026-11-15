@@ -194,3 +194,7 @@ All6 final a7a064ac skilled native drives complete with continuous every-tick bu
 ## Final L9 threat subset
 
 Current runtime L9 subset completes both skilled/passive native routes with0L9 flags and0passive flags. Command exit1 comes only from audit-level `PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate`, expected for subset; no threshold or audit code changed. User explicitly permits L9 subset. Full receipt in `final-l9-threat.json`. This establishes L9 zero flags, not a whole-campaign threat gate.
+
+## Full final-runtime vehicle campaign browser gate
+
+Full command runs all8fixed-source headless pooled rows and exits1. BothL9tiers fail required hatch/contact coverage; allL7/L4rows pass. Measured contacts are within motion limits, but missing hatch windows cannot be treated as pass. See `final-campaign-motion.json`. This confirms goal remains incomplete despite native asphalt/participation and remote-suite passes. No gate edits or threshold changes.
