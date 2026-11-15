@@ -667,5 +667,10 @@
       "health": 30,
       "share": 1
     }
-  ]
+  ],
+  "courierBarProtection": {
+    "change": "Ordinary infected bars crossing courier silhouette are suppressed instead of relocated to a shared row. Mandatory enemy and follower bars retain relocation.",
+    "checks": "existing L4 contract, typecheck, lint passed; HIGH WebGL2 moving z1.5 scene passes console/body visibility gates",
+    "remaining": "full remote and visual matrix rerun after this edit"
+  }
 }

@@ -44,6 +44,12 @@ function checkCompactFollowerOverlap(): void {
     expect(bar).toMatchObject({ id: 16, width: 18, height: 3 });
     const heroTop = Math.min(...[hero.min.x, hero.max.x].flatMap(x => [hero.min.y, hero.max.y].flatMap(y => [hero.min.z, hero.max.z].map(z => (1 - new Vector3(x, y, z).project(camera).y) * 360))));
     expect(bar.y + bar.height / 2).toBeLessThan(heroTop);
+    Object.assign(followers[0], { faction: 'infected', archetype: 'infected.runner', civilian: undefined, infected: { targetId: 1 } });
+    bars.update(camera, 1280, 720);
+    expect(bars.count, 'ordinary attacker bars crossing the courier do not pile above her head').toBe(0);
+    Object.assign(followers[0], { archetype: 'infected.alpha' });
+    bars.update(camera, 1280, 720);
+    expect(bars.count, 'mandatory Alpha bars retain their information above the courier').toBe(1);
   } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); vi.unstubAllGlobals(); }
 }
 

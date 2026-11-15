@@ -154,9 +154,11 @@ export class HealthBars extends Group {
         x = Math.max(displaySize.width / 2 + 2, Math.min(width - displaySize.width / 2 - 2, x));
         y = Math.max(displaySize.height / 2 + 2, Math.min(height - displaySize.height / 2 - 2, y));
       }
-      // Preserve every enemy bar, but move bars crossing the courier's body
-      // above her silhouette. Dense hordes previously painted red bars over it.
+      // Ordinary enemy bars crossing the courier disappear instead of piling
+      // into a shared row above her head. Special threats and followers retain
+      // their information above the silhouette.
       if ((follower || e.faction === 'infected') && x + displaySize.width / 2 >= this.heroScreen.left - 2 && x - displaySize.width / 2 <= this.heroScreen.right + 2 && y + displaySize.height / 2 >= this.heroScreen.top - 2 && y - displaySize.height / 2 <= this.heroScreen.bottom + 2) {
+        if (!follower && !mandatoryBar(e)) continue;
         y = this.heroScreen.top - 4 - displaySize.height / 2;
       }
       if (x - displaySize.width / 2 - (pip ? 0 : 2) < 0 || x + displaySize.width / 2 + (pip ? 0 : 2) > width || y - displaySize.height / 2 < 0 || y + displaySize.height / 2 > height) continue;
