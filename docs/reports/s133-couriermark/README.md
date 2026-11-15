@@ -37,3 +37,9 @@ Focused existing scene gate selection passed 10/10 across its authored WebGL2/We
 The marker now draws as an opaque depth-writing ring at order 1.5 and uses the existing living stencil bit. Living bodies/world props draw first and depth-test normally; later corpse draws respect the ring stencil. This retains a single mesh and no new pass. The ring is now solid muted teal rather than transparent.
 
 Extended the matched capture tool with `--corpses` (existing Scene Lab command, first 16 infected become retained corpses) and `--webgpu`. Both WebGL2 and WebGPU HIGH corpse variants completed. Opened WebGL2 L4 after and WebGPU L6 after: a teal arc survives among bodies, clearly around the L6 courier's feet, while nearer living figures cover portions. These are bounded visual checks, not universal layering proof. Latest raw corpse captures are WebGPU under `review-corpses`; the second run overwrote the first backend's images. Typecheck and lint passed. Final matrix, gate rerun, unit suite and sheet refresh must follow this rendering change.
+
+## Pose-volume occlusion candidate
+
+Replaced the five-nearby-body crowd trigger with camera rays toward courier head/torso, tested against conservative body-height samples (ordinary radius 0.8 m, Alpha 1.4 m, Mega 2.4 m). Off-axis and rear figures no longer activate that crowd branch solely by proximity. Existing hull, Mega and large-corpse handling remains. This is a conservative approximation, not pixel-exact occlusion.
+
+The WebGL2 HIGH moving L4/L6 matrix at zoom 1/1.5 passed with this candidate. Typecheck/lint passed; existing 14-case render-contract suite passed after extending its foreground helper with front/rear/off-axis/hidden/dead controls. LOW/WebGPU, runtime cost and large-corpse trigger refinement remain to qualify.

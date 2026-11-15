@@ -53,7 +53,7 @@ import { LimbIK } from '../../src/render/characters/LimbIK';
 import { retargetClip, skinClips } from '../../src/render/characters/clips';
 import { alphaTypes } from '../../src/data/alphaTypes';
 import { alphaLooks } from '../../src/data/alphaLooks';
-import { courierForegroundWanted, crowdSurroundsCourier, megaOccludesCourier } from '../../src/render/courierForeground';
+import { courierForegroundWanted, crowdSurroundsCourier, megaOccludesCourier, bodiesOccludeCourier } from '../../src/render/courierForeground';
 import { DistrictOcclusion } from '../../src/render/district/DistrictOcclusion';
 import { isStructuralOccluder } from '../../src/assets/worldDefinitions';
 import { isUncutProp } from '../../src/assets/DistrictAssets';
@@ -1089,6 +1089,14 @@ test('crowd long guns use asset grip/muzzle sockets and the courier support-hand
 });
 
 function checkVehicleForegroundVeto(): void {
+  const camera = { x: 0, y: 5, z: 10 }, courier = { x: 0, y: .7, z: 0 };
+  const blocker = { id: 2, archetype: 'infected.alpha', infected: {}, health: { current: 100 }, transform: { x: 0, y: .7, z: 2 } } as unknown as EntitySnapshot;
+  expect(bodiesOccludeCourier(camera, courier, [blocker])).toBe(true);
+  expect(bodiesOccludeCourier(camera, courier, [{ ...blocker, transform: { ...blocker.transform, x: 6 } }])).toBe(false);
+  expect(bodiesOccludeCourier(camera, courier, [{ ...blocker, transform: { ...blocker.transform, z: -6 } }])).toBe(false);
+  expect(bodiesOccludeCourier(camera, courier, [{ ...blocker, hidden: true }])).toBe(false);
+  expect(bodiesOccludeCourier(camera, courier, [{ ...blocker, health: { current: 0, max: 100 } }])).toBe(false);
+
   expect(courierForegroundWanted(true, false)).toBe(true);
   expect(courierForegroundWanted(false, false)).toBe(false);
   expect(courierForegroundWanted(false, true)).toBe(true);

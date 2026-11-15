@@ -32,6 +32,26 @@ export function megaOccludesCourier(camera: { x: number; y: number; z: number },
   return false;
 }
 
+/** Conservative camera-to-body capsule samples, covering head and torso overlaps without a crowd-count trigger. */
+export function bodiesOccludeCourier(camera: { x: number; y: number; z: number }, courier: { x: number; y: number; z: number }, figures: Iterable<EntitySnapshot>): boolean {
+  for (const e of figures) {
+    if (e.id === 1 || e.hidden || e.infected?.hidden || e.health.current <= 0 || !(e.infected || e.civilian || e.escort)) continue;
+    const radius = e.infected?.pursuit ? 2.4 : e.archetype === 'infected.alpha' ? 1.4 : .8;
+    for (const targetHeight of [0, .8]) {
+      const dx = courier.x - camera.x, dy = courier.y + targetHeight - camera.y, dz = courier.z - camera.z;
+      const lengthSq = dx * dx + dy * dy + dz * dz;
+      if (lengthSq < 1e-6) continue;
+      for (const bodyHeight of [-.2, .5, 1.2]) {
+        const y = e.transform.y + bodyHeight;
+        const t = ((e.transform.x - camera.x) * dx + (y - camera.y) * dy + (e.transform.z - camera.z) * dz) / lengthSq;
+        if (t <= 0 || t >= 1) continue;
+        if ((camera.x + dx * t - e.transform.x) ** 2 + (camera.y + dy * t - y) ** 2 + (camera.z + dz * t - e.transform.z) ** 2 < radius * radius) return true;
+      }
+    }
+  }
+  return false;
+}
+
 export function courierForegroundWanted(nearBodies: boolean, megaOccludes: boolean, onFootBehindVehicle = false): boolean {
   // vqa-3 P1 (L2 doors): on foot, vehicle hulls stay whole (no disc); a hull hiding her chest/head shows her through the
   // slice + gold contour instead, as in the hordes. Riding/driving keeps the separate hull cut and seated cutaway.
