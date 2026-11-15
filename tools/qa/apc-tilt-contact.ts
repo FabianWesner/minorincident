@@ -7,7 +7,7 @@ await RAPIER.init();
 const rows = [];
 for (const stabilized of [false, true]) for (const fixture of ['kerb', 'ramp', 'bus-side', 'bus-rear']) {
   const world = new RAPIER.World({ x: 0, y: -9.81, z: 0 });
-  world.createCollider(RAPIER.ColliderDesc.cuboid(150, .1, 150).setTranslation(0, -.1, 0));
+  world.createCollider(RAPIER.ColliderDesc.cuboid(1500, .1, 1500).setTranslation(0, -.1, 0));
   const car = new VehicleBody(vehicleDef('vehicle.military-apc'), world, { x: 0, z: 0 });
   let obstacle: RAPIER.Collider;
   let bus: VehicleBody | undefined;
@@ -22,6 +22,7 @@ for (const stabilized of [false, true]) for (const fixture of ['kerb', 'ramp', '
     car.body.setLinvel({ x: 18, y: 0, z: 0 }, true);
   }
   let contacts = 0, maxRoll = 0, maxPitch = 0;
+  const trace: { tick: number; roll: number; pitch: number; angularSpeed: number; suspension: number[] }[] = [];
   for (let tick = 0; tick < 600; tick++) {
     car.intent.throttle = fixture.startsWith('bus') ? 0 : 1; car.intent.brake = false;
     car.prePhysics(); if (bus) bus.prePhysics(); world.step(); car.postPhysics();
@@ -31,9 +32,13 @@ for (const stabilized of [false, true]) for (const fixture of ['kerb', 'ramp', '
     for (let wheel = 0; wheel < 4; wheel++) if (car.controller.wheelGroundObject(wheel)?.handle === obstacle.handle) contacts++;
     maxRoll = Math.max(maxRoll, Math.abs(roll)); maxPitch = Math.max(maxPitch, Math.abs(pitch));
     world.contactPair(car.collider, obstacle, manifold => { if (manifold.numContacts()) contacts++; });
+    if (tick % 10 === 0) {
+      const omega = car.body.angvel(), round = (n: number) => +n.toFixed(5);
+      trace.push({ tick, roll:round(roll), pitch:round(pitch), angularSpeed:round(Math.hypot(omega.x,omega.y,omega.z)), suspension:car.wheels.map(w=>round(w.suspension)) });
+    }
     if (stabilized) car.stabilizeTilt(Math.PI/9);
   }
-  rows.push({ stabilized, fixture, contacts, maxRollDegrees:maxRoll*180/Math.PI, maxPitchDegrees:maxPitch*180/Math.PI });
+  rows.push({ stabilized, fixture, contacts, trace, maxRollDegrees:maxRoll*180/Math.PI, maxPitchDegrees:maxPitch*180/Math.PI });
   world.free();
 }
 mkdirSync('test-results/s123-apctip', { recursive:true });
