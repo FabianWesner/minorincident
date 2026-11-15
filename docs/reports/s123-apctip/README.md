@@ -51,3 +51,7 @@ Added tools/qa/apc-tilt-contact.ts: actual Rapier APC, shared chassis controller
 ## Corrected full-drive matrix
 
 All six corrected-axis native drives completed: HIGH/LOW primary road, road detour (corner cut), and countryside primary (wide off-road). Every driving tick remained below 20 degrees on both axes; worst pitch 12.18 degrees, worst roll 10.79 degrees. Bus asphalt distance was measured on every visible native tick: 44,784 samples, zero outside 6 m, worst 3.479 m. Independent tier receipts in results.json supersede earlier duplicated/provisional tier summaries. Typecheck/lint pass. git diff 683da8f8 266ec466 -- src/sim/vehicles/VehicleBody.ts is empty: chassis susceptibility predates batch 103, although the original browser incident trigger is still unisolated.
+
+## Corrected runtime gate reruns
+
+On b58ec0b5, unchanged remote npm test passes (94.130.181.173, 146.8 s, 27 files, 105 passed/1 skipped). Full vehicle campaign motion gate passes all eight HIGH/LOW cases, exit 0, using the single headless reservation on SCENE_PORT=4984. Current receipts supersede the pre-axis-correction gate receipts. Original real-keyboard s122 tipping trigger and fresh threat audit on corrected runtime remain outstanding.
