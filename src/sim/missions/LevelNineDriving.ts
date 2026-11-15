@@ -692,7 +692,11 @@ export class LevelNineDriving {
         if (e.civilian!.story?.clip === 'npc-sit-down') e.civilian!.story = null;
       }
       const approaching = s.truckEntering[id] === undefined;
-      const moved = approaching && w.npcs!.move(e, target, 3, e.civilian!, .6, 8000);
+      // A shortcut stop can disembark west of the closed gate and its side
+      // fence. Approach the open end before turning east toward the trucks.
+      const approach = e.transform.x < cfg.gate.x + 1 && target.x > cfg.gate.x && e.transform.z < 15
+        ? { x: cfg.gate.x - 3, z: 16 } : target;
+      const moved = approaching && w.npcs!.move(e, approach, 3, e.civilian!, .6, 8000);
       // A reachable nearby cell can still leave an evacuee stationary short of the truck.
       if (approaching && (!moved || distance(e.transform, target) >= 1.2 && distance(e.transform, before) < .001)) {
         // No route to this spot for 1.5 s: take the next open one.

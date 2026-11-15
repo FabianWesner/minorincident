@@ -40,3 +40,7 @@ The existing body-clear follower corner routing was also tested for evacuating s
 ## Rear view inspection
 
 A second headless WebGL capture (120 frames, 7.98 seconds, no reported clipping) shows the relocated pickup from the rear. I inspected both after views: the pickup is clear of barricades on the road and the visible front and rear tires meet the road. The single sheet now includes both angles. Far-side tire contact remains occluded, but the requested alternative of moving the wreck off the barricade is visually verified.
+
+## Shortcut route fix
+
+The remaining HIGH shortcut stall is resolved by an explicit approach around the north end of the closed gate side fence. Evacuees discharged west of the fence first walk to `(437,16)` before approaching their truck. This preserves ordinary body collision, movement speed, damage and boarding. The previously failing HIGH shortcut now boards all four at full health 16.75 seconds after defense and completes L10 handover. HIGH road, LOW road, HIGH passive road and LOW passive shortcut regression runs also complete within the 20-second window. Typecheck and lint pass. The exact required remote suite passes again: 105 passed / 1 skipped, 124.9 seconds. Earlier shortcut failures above describe rejected experiments and are superseded by this final waypoint result.

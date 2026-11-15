@@ -189,7 +189,7 @@
     "focusedVehicleTest": "PASS",
     "typecheck": "PASS",
     "lint": "PASS",
-    "remoteUnitSuite": "PASS: exact required command, runner 46.225.66.90, 105 passed / 1 skipped, 129.2 s within 240 s budget",
+    "remoteUnitSuite": "PASS after waypoint: 105 passed / 1 skipped, 124.9 s, runner 46.225.66.90",
     "vehicleMotionGate": "PASS: L9 HIGH and LOW, sourceStable true, no correction failures",
     "layoutBuild": "BLOCKED: checked-in generation cannot run because assets/kit.river-terrain/model.glb is absent; generated layout JSON was updated alongside authored layout source."
   },
@@ -268,5 +268,187 @@
       ]
     },
     "decision": "Reverted: body-clear routeFollower handling boards Okafor but strands Mia; it does not meet the objective."
-  }
+  },
+  "finalWaypointRuns": [
+    {
+      "route": "dry-shortcut",
+      "tier": "high",
+      "seed": 1,
+      "passive": false,
+      "completed": true,
+      "evacuation": {
+        "startedTick": 6893,
+        "defenseCompleteTick": 8693,
+        "lastBoardedTick": 9698,
+        "secondsAfterDefense": 16.75,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      "peakAlive": 157
+    },
+    {
+      "route": "road",
+      "tier": "high",
+      "seed": 1,
+      "passive": false,
+      "completed": true,
+      "evacuation": {
+        "startedTick": 8301,
+        "defenseCompleteTick": 10101,
+        "lastBoardedTick": 9507,
+        "secondsAfterDefense": 0,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      "peakAlive": 168
+    },
+    {
+      "route": "road",
+      "tier": "low",
+      "seed": 1,
+      "passive": false,
+      "completed": true,
+      "evacuation": {
+        "startedTick": 8304,
+        "defenseCompleteTick": 10104,
+        "lastBoardedTick": 11125,
+        "secondsAfterDefense": 17.016666666666666,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      "peakAlive": 90
+    },
+    {
+      "route": "road",
+      "tier": "high",
+      "seed": 1,
+      "passive": true,
+      "completed": true,
+      "evacuation": {
+        "startedTick": 8352,
+        "defenseCompleteTick": 10152,
+        "lastBoardedTick": 9344,
+        "secondsAfterDefense": 0,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      "peakAlive": 167
+    },
+    {
+      "route": "dry-shortcut",
+      "tier": "low",
+      "seed": 1,
+      "passive": true,
+      "completed": true,
+      "evacuation": {
+        "startedTick": 6858,
+        "defenseCompleteTick": 8658,
+        "lastBoardedTick": 8158,
+        "secondsAfterDefense": 0,
+        "roster": [
+          {
+            "id": 669,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 670,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 671,
+            "hp": 100,
+            "evacuated": true
+          },
+          {
+            "id": 672,
+            "hp": 100,
+            "evacuated": true
+          }
+        ]
+      },
+      "peakAlive": 92
+    }
+  ]
 }
