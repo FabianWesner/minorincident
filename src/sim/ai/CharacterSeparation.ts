@@ -149,6 +149,9 @@ export function installCharacterSeparation(world: SimWorld): void {
     // Keep the authored three passes for ordinary groups, friendly queues and
     // L1 pursuit trains. Large classic crowds use one (two at a driven hull).
     for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
+      // Match the crowded pack's single correction pass during the truck walk;
+      // three civilian passes could undo the next tick's entire forward step.
+      if (pass && bodies.length > 20 && !body.infected && world.scenario === 'L9' && world.missions?.l9?.driving.state.evacuationAt != null && body.entity.civilian?.survivor) continue;
       if (pass && bodies.length > 20 && body.infected && !body.l1 && (!body.hullContact || pass > 1)) continue;
       const { entity: e, radius: r, point: p } = body; active = body; activeReach = reaches[body.category];
       query.x = p.x; query.z = p.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35) + (narrowQueue ? .4 : 0); // covers the largest gap below

@@ -685,7 +685,12 @@ export class LevelNineDriving {
       if (approaching && (!moved || distance(e.transform, target) >= 1.2 && distance(e.transform, before) < .001)) {
         // No route to this spot for 1.5 s: take the next open one.
         const failed = (this.spotFail.get(id) ?? 0) + 1; this.spotFail.set(id, failed);
-        if (failed >= 90) { this.spotFail.set(id, 0); this.spotSkip.set(id, skip + 1); }
+        if (failed >= 90) {
+          this.spotFail.set(id, 0); this.spotSkip.set(id, skip + 1);
+          // Crowd pushes can strand the actor away from its cached corridor.
+          // A new boarding approach needs a route from the current position.
+          e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.pathIndex = 0;
+        }
       } else this.spotFail.set(id, 0);
       w.spatial.set(id, e.transform.x, e.transform.z);
       if (distance(e.transform, target) < 1.2) {
@@ -752,6 +757,13 @@ export class LevelNineDriving {
   private hugCorgi(rosa: EntitySnapshot): boolean {
     const w = this.w, s = this.state, corgi = [...w.entities.iterate()].find(e => e.companion);
     if (!corgi) { s.hugDone = true; return true; }
+    // An unstarted goodbye cannot hold the evacuation after defence. Crowds
+    // can keep the pair apart even when both positions are clear.
+    if (s.hugAt === null && s.evacuationAt !== null && w.tick - s.evacuationAt >= cfg.evacuation.defendTicks) {
+      s.hugDone = true; rosa.civilian!.story = null;
+      delete corgi.contactExempt; delete corgi.companion!.transitionUntil;
+      return true;
+    }
     // Rosa can already be beside the rear entry when the dog's exit ends.
     // Their shared embrace space must be exempt during disembarking too.
     corgi.contactExempt = rosa.id;
