@@ -506,6 +506,12 @@ export class LevelNineDriving {
     }
     const end = points.at(-1)!; return { x: end[0], z: end[1] };
   }
+  /** Collision residency follows the bus independently of the APC's chosen terrain. */
+  busSupport(): { x: number; z: number } | null {
+    const s = this.state, p = this.car.entity.transform;
+    if (s.busLineAt === null) return p.x > 110 && p.x < 330 ? this.busRoadTarget(p.x - 125) : null;
+    return this.w.vehicles!.cars.get(s.busId)?.entity.transform ?? null;
+  }
   private bus(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform;
     // The first glimpse crosses the road behind the APC; the next two pace
