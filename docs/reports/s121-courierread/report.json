@@ -33,5 +33,151 @@
     "artifact review",
     "L4 LOW p95 measurement",
     "full remote unit suite"
+  ],
+  "denseProbes": [
+    {
+      "scene": "s121-l4-crowd",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.49487133194506616,
+              0.45874002119234036
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2483,
+          "reference": 2483,
+          "share": 1,
+          "megaPixels": 0,
+          "megaShare": 0
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "prop.light-tower@-22.1,6.1"
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "scene": "s121-l6-crowd",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.520987521968683,
+              0.384112711368187
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2639,
+          "reference": 2639,
+          "share": 1,
+          "megaPixels": 4590,
+          "megaShare": 0.00498046875
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "kit.metro-tunnel@48.0,15.0"
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "scene": "s121-l6-crowd",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.520987521968683,
+              0.384112711368187
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2641,
+          "reference": 2642,
+          "share": 0.9996214988644966,
+          "megaPixels": 3666,
+          "megaShare": 0.003977864583333333
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "kit.metro-tunnel@48.0,15.0"
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "scene": "s121-l4-crowd",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.49487133194506616,
+              0.45874002119234036
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2498,
+          "reference": 2498,
+          "share": 1,
+          "megaPixels": 2,
+          "megaShare": 2.170138888888889e-06
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "prop.light-tower@-22.1,6.1"
+        }
+      ],
+      "consoleErrors": []
+    }
   ]
 }
