@@ -596,8 +596,12 @@ export class Vfx extends Group {
       this.burst(x, ground + 0.3, z, 0xb09b85, 16, 0.13, 1.6);
       if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, ground + 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
-    } else if (kind === 'screamer') this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 1, 0xef92ff, 1);
-    else if (kind === 'electric') {
+    } else if (kind === 'screamer') {
+      // Noise can reach far beyond the fight. A proportional 18%-wide band
+      // painted whole roads pink; keep its radius with a 20 cm, subdued stroke.
+      const slot = this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 8, 0xef92ff, 1);
+      this.waves.opacity(slot, .25);
+    } else if (kind === 'electric') {
       this.burst(x, height, z, 0x94ecff, 12, 0.07, 0.25, 0, particleShape.spark);
       for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, height + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);
     }
