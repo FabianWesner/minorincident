@@ -80,3 +80,7 @@ Repeated `press` while exposed did not improve the combined delivery trial: HIGH
 ## Group release rejection and runtime cleanup
 
 Grouped near-held-APC release with the combined delivery trial completes HIGH but produces zero within5m and zero attacks, worse than the staggered combined trial. Removed the grouped release, and reverted all uncommitted combined delivery/targeting/speed changes because none met participation. Runtime now matches committed asphalt fixes; diagnostic improvements/evidence remain. Passenger participation is still failed in both qualified native road runs. Full driven off-road path coverage, current full regression gates, and browser QA remain open.
+
+## Current focused regression recheck
+
+On current committed asphalt runtime, focused `vehicles.test.ts` fails the parked-APC bus approach: closest X gap43.970642m versus required<13.845m (1passed/1failed). Earlier focused success preceded later bend steering changes and is superseded. Gate remains red. Added read-only passenger `telegraph` event observation for exact attack windup starts with attack/target IDs; typecheck/lint pass. No fresh windup-event runtime receipt yet.
