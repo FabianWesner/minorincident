@@ -15,7 +15,7 @@ Implementation: `6b638cf0`. After eight seconds beyond hatch defense, living str
 
 The first road run boarded everyone before defense expired. Actual L10 load occurred about 39 seconds after defense expiry: player-driven bridge travel, mandatory crash, crawl and caption remain after evacuation. The requested literal defense-to-L10 limit is therefore not met by the boarding fallback alone.
 
-HIGH dry-shortcut attempt reached (436.9, -1.7), then remained at the bay approach for 297 seconds. It hit the eight-minute cap without reaching defense, with boarder prompts and multi-second hitches. This is a failed acceptance attempt, not a passing shortcut run. The LOW real-input run remains outstanding.
+HIGH dry-shortcut attempt reached (436.9, -1.7), then remained at the bay approach for 297 seconds. It hit the eight-minute cap without reaching defense, with boarder prompts and multi-second hitches. This is a failed acceptance attempt, not a passing shortcut run. The subsequent completed matrix below supersedes this initial failed attempt.
 
 The archived batch-108 road log confirms 3/4 aboard at tick 10569 (defense complete 8859), but contains no survivor identity/position census. Its specific straggler behavior cannot be reconstructed from that log. The separate shortcut observer records Rosa grabbed by #840, then fleeing/recovering; it cannot establish the identity in the road run. New runs include a read-only per-survivor census.
 
@@ -25,11 +25,13 @@ Raw current logs and captures: `test-results/s132-l9finish/`. Compact receipt: `
 
 All four successful runs used headless tools/playtest through the browser pool, standard mortal input, WebGPU, ports 5001/5002, and one browser per reservation. Observer samples are approximately one second apart; delays below are the first observed evacuation-complete sample after the exact defense-end tick.
 
-| Run | Evacuation complete after defense | Result |
-| --- | ---: | --- |
-| HIGH road 1 | 0.53 s | L10 reached; one P2 observation |
-| HIGH road 2 | 1.05 s | L10 reached; zero issues |
-| HIGH shortcut retry | 10.28 s | L10 reached; one P2 observation |
-| LOW road | 13.87 s | L10 reached; one P1 frame hitch, three P2 observations |
+| Run | Evacuation complete after defense | Actual L10 arrival after defense | Result |
+| --- | ---: | ---: | --- |
+| HIGH road 1 | 0.53 s | ~39.05 s | L10 reached; one P2 observation |
+| HIGH road 2 | 1.05 s | ~30.64 s | L10 reached; zero issues |
+| HIGH shortcut retry | 10.28 s | ~32.41 s | L10 reached; one P2 observation |
+| LOW road | 13.87 s | ~45.04 s | L10 reached; one P1 frame hitch, three P2 observations |
 
 The shortcut retry follows the authored gate side opening using physical keys. The earlier failed shortcut remains preserved separately. These results prove the evacuation timing in this matrix, but do not prove actual L10 arrival within 20 seconds. The ending-scope clarification remains pending. The report's earlier outstanding LOW/shortcut notes describe the initial attempts and are superseded by this matrix.
+
+Actual L10 delays use wall-clock handover timestamps minus defense expiry interpolated from the nearest read-only simulation census. They include rendering/loading time and are approximate; each exceeds 20 seconds by enough that sampling uncertainty cannot change the failure. No run proves the literal deadline.
