@@ -7,7 +7,7 @@ import type { AssetDef } from '../../src/assets/types';
 import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
 import { frameInterval, type FrameState } from '../../tools/playtest/frames';
 import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
-import { visibleGroupTarget } from '../../tools/playtest/eyes';
+import { canShootVehicleObjective, captureZooms, visibleBoarder, visibleGroupTarget } from '../../tools/playtest/eyes';
 import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
 import { PNG } from 'pngjs';
 import { courierBodyPixels } from '../../tools/scenelab/run';
@@ -17,6 +17,13 @@ import { edgeNoise } from '../../tools/scenelab/edge-noise';
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
 test('playtest stuck detection: following a moving ring is progress; a parked courier, a 30 s loop or a static zero-distance objective is not', () => {
+  expect(canShootVehicleObjective('L9', 'Hold the hatch')).toBe(true);
+  expect(captureZooms).toEqual([1, 1.5]);
+  expect(canShootVehicleObjective('L9', 'Drive through the horde')).toBe(false);
+  expect(canShootVehicleObjective('L8', 'Hold the hatch')).toBe(false);
+  expect(visibleBoarder(true, true, { x: 640, y: 360 }, { w: 1280, h: 720 })).toBe(true);
+  expect(visibleBoarder(true, false, { x: 640, y: 360 }, { w: 1280, h: 720 })).toBe(false);
+  expect(visibleBoarder(true, true, { x: 1400, y: 360 }, { w: 1280, h: 720 })).toBe(false);
   const group = [{ x: 12, z: 0, hp: 100, drawn: true, corpse: false }];
   expect(visibleGroupTarget('L7', { x: 0, z: 0 }, group)).toBeNull();
   expect(visibleGroupTarget('L7', { x: -7, z: 0 }, group)).toEqual({ x: 12, z: 0 });

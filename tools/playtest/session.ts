@@ -3,7 +3,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, unlinkSync, writeF
 import assert from 'node:assert/strict';
 import { join, resolve } from 'node:path';
 import { launchProfile } from '../browser-pool/client';
-import { EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
+import { canShootVehicleObjective, captureZooms, EscortClearance, look, visibleGroupTarget, type Body, type Eyes } from './eyes';
 import { assertRenderedBodies, campaignEndingComplete, campaignEndingWaiting, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
 import { rangedWeaponPattern as ranged, campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
@@ -41,6 +41,7 @@ export interface SessionOptions {
   /** Authored road selected by a logged map assist; all driving stays WASD. */
   l9Route?: 'road' | 'countryside' | 'dry-shortcut';
   l9Waypoints?: [number, number][];
+  routeOnly?: boolean; immortal?: boolean; screamCaptures?: boolean;
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
 export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
@@ -429,7 +430,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await press([]); await releaseAim();
       await page.evaluate(() => { (window as unknown as { __threatAudit: { capturePaused: boolean } }).__threatAudit.capturePaused = true; window.__SS__!.pause(); });
       try {
-        for (const zoom of [.5, 1.5]) {
+        for (const zoom of captureZooms) {
           await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
           await capture(`${eyes.level}-${eyes.step}-${o.quality}-z${zoom}`);
         }
@@ -452,7 +453,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         window.__SS__!.pause();
       });
       try {
-        for (const zoom of [.5, 1.5]) {
+        for (const zoom of captureZooms) {
           await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
           await capture(`L6-${openingCapture ? 'hold' : 'retreat'}-${o.quality}-z${zoom}`);
         }
@@ -660,6 +661,44 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
   } else await page.getByTestId(`level-${first}`).click({ timeout: 60_000, force: o.entry === 'debug' });
   log({ session: o.tag, entry: o.entry, levels: o.levels, quality: o.quality, heroine: o.heroine });
+  if (o.routeOnly || o.immortal) log({ acceptanceMode: o.immortal ? 'IMMORTAL / ROUTE ONLY' : 'ROUTE ONLY', immortal: !!o.immortal, routeOnly: !!o.routeOnly });
+
+  if (o.screamCaptures) {
+    const screamShots = new Map<string, number>();
+    await page.exposeFunction('qaAlphaReceipt', (event: unknown) => log({ alphaObservation: event }));
+    await page.exposeFunction('qaScreamCapture', async (event: unknown) => {
+      const eventRecord = event as { level?: string; tick?: number; special?: string; kind?: string };
+      const level = eventRecord.level ?? 'mission', count = screamShots.get(level) ?? 0;
+      if (count >= 8) return;
+      screamShots.set(level, count + 1);
+      await hold(120);
+      const file = `scream-${level}-${eventRecord.tick ?? count + 1}-${count + 1}.jpg`;
+      await page.screenshot({ path: join(o.out, 'captures', file), type: 'jpeg', quality: 75 });
+      log({ screamCapture: { file, event, quality: o.quality, zoom: o.zoom } });
+    });
+    await page.evaluate(() => {
+      let bound: unknown;
+      const bind = () => {
+        requestAnimationFrame(bind);
+        const w = (window.__SCENE__ as unknown as { game?: Game })?.game?.world;
+        if (!w?.missions || bound === w.missions) return;
+        bound = w.missions;
+        w.events.on('sim.tick', () => {
+          if (w.tick % 120) return;
+          const actors = [...w.entities.iterate()].filter(e => e.infected?.alphaType === 'screamer').map(e => ({ id: e.id, hp: e.health.current, at: { ...e.transform }, brain: { state: e.infected!.state, targetId: e.infected!.targetId, cooldown: e.infected!.cooldown, specialAttack: e.infected!.specialAttack }, courier: { ...w.entities.get(1)!.transform } }));
+          if (actors.length) void (window as unknown as { qaAlphaReceipt(e: unknown): Promise<void> }).qaAlphaReceipt({ tick: w.tick, level: w.scenario, actors });
+        });
+        w.events.on('telegraph', event => {
+          if (event.type === 'telegraph' && 'special' in event && (event.special === 'alpha.roar' || event.special === 'scream'))
+            void (window as unknown as { qaScreamCapture(e: unknown): Promise<void> }).qaScreamCapture({ ...event, level: w.scenario, warning: 'alpha-roar' });
+        });
+        w.events.on('noise', event => {
+          if (event.type === 'noise' && event.kind === 'scream')
+            void (window as unknown as { qaScreamCapture(e: unknown): Promise<void> }).qaScreamCapture({ ...event, level: w.scenario });
+        });
+      }; bind();
+    });
+  }
 
   // --- per-level state ---
   let run = null as LevelRun | null, wallStart = 0, tickStart = 0;
@@ -795,8 +834,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   };
 
   const fight = async (e: Eyes): Promise<boolean> => {
+    if (o.routeOnly) return false;
     // Carried guns cannot fire from a vehicle; keep following the driving objective.
-    if (e.driving || e.player?.riding) return false;
+    if ((e.driving || e.player?.riding) && !canShootVehicleObjective(e.level, e.objective ?? '')) return false;
     // The collapse objective is escape. Keep movement aimed down the street
     // route instead of repeatedly stopping to duel the pursuing horde.
     if (e.level === 'L4' && e.step === 'hide') { await releaseAim(); return false; }
@@ -1286,6 +1326,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (e.loading) { await press([]); await releaseAim(); await hold(200); continue; }
 
     // Playing.
+    if (o.immortal) await page.evaluate(() => window.__SS__!.cheats.god(true));
     // Opt-in 1 Hz route trace (r9-l10pace): position plus on-screen living infected, for empty-stretch timing.
     if (process.env.PLAYTEST_ROUTE_TRACE === '1' && e.player && e.tick - lastTrace >= 60) {
       lastTrace = e.tick;
@@ -1293,6 +1334,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (e.tick - lastShot > Number(process.env.PLAYTEST_SHOT_SECONDS ?? 45) * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
     if (!zoomed) {
+      await page.evaluate(q => window.__SS__!.settings.set({ quality: q }), o.quality);
       const quality = await page.evaluate(() => window.__SS__!.getState().render.quality);
       if (e.level === 'L6' && process.env.PLAYTEST_L6_HOLD_AUDIT === '1') await page.evaluate(() => {
         const audit = (window as unknown as { __l6HoldAudit: Record<string, unknown> }).__l6HoldAudit;
