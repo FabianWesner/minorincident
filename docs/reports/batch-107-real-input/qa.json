@@ -1,6 +1,6 @@
 {
   "candidate": "d1101b68c71adfb36f20c31bcf0a897880a49f45",
-  "status": "incomplete progress checkpoint; L9 x3 completed; HIGH evacuation timing failed",
+  "status": "finalized QA report; candidate rejected for intermittent HIGH evacuation delay; coverage limits documented under Driver gaps",
   "method": "Headless GPU browser pool; real keyboard/mouse driver; debug level-menu entry; logged navigation assists; standard combat, no immortal or route-only mode; no source or driver changes",
   "environment": {
     "buildQa": "passed",
@@ -29,12 +29,12 @@
     "l9HighShortcutEvacuationAndHandover": "finished without skips; L10 loading observed",
     "l9LowRoadEvacuationAndHandover": "finished without skips; L10 loading observed",
     "evacueesBoardWithin20Seconds": "FAIL HIGH road >=85.7 s incomplete; HIGH shortcut >=44.2 s incomplete. PASS LOW road 4/4 with 15 s defense remaining.",
-    "northTruckStagingAndGateFence": "unverified",
-    "redPickupGroundedAtZoom1_5": "unverified",
+    "northTruckStagingAndGateFence": "Staging reviewed in real-run and camera diagnostic: outside buildings; P2 barrier overlap concern. Full survivor fence contact occluded; checkpoint driver rejects late setup; not cleared.",
+    "redPickupGroundedAtZoom1_5": "Zoom1.5 real-run capture reviewed: clear of former barricade, elevated visual impression persists; exact wheel contact not cleared. Closer cinematic view also reviewed.",
     "apcTiltAndSeatedHatchShooting": "Sampled recorded tilt modest; seated fire effective: 23 shotgun hits correlate with APC driving observations; Alpha HP107 ->0 at tick5840 during hold hatch. Attached-boarder identity not independently logged.",
     "l1CarAlarmPromptHighLowZoom1And1_5": "PASS sampled actual bat-checkpoint HIGH/LOW x zoom1/1.5 layout; real WASD final approach; no vitals/other-HUD overlap. Earlier pre-outbreak arrow overlap is diagnostic-only.",
     "otherPromptsL1ToL3": "Three L1 panels reviewed statically and in brief real-key movement sequence; no erratic relocation observed within sample",
-    "screamerReadabilityL9AndL10WhileMoving": "Actual ordinary events captured both levels; purple thin ring visible in stills, L9 partially occluded; continuous motion noticeability not proven",
+    "screamerReadabilityL9AndL10WhileMoving": "L9 approach: ordinary event off-camera, no conspicuous warning noticed in sampled moving/stall sequence; stopped ring thin/occluded. L10 recorded movement: ordinary purple pulse easy to miss, P2. Both have capture paths/ticks; no universal visibility pass.",
     "l9BoringHarmlessBabysittingAndVisualVerdict": "Reviewed late stationary defense: healthy courier amid dense crowd and >=85.7 s wait reads as babysitting; no general stunning/smooth-motion verdict",
     "webgpuCoveragePerLevel": "Confirmed renderer webgpu in L9 x3, L1 HIGH and L10 HIGH logs; L2 partial HIGH also checked"
   },
@@ -105,7 +105,8 @@
   "driverGaps": [
     "Optional L1 alarm not exercised by standard route; no dedicated alarm capture option.",
     "Temporal warning review and L10 remain open.",
-    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high."
+    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high.",
+    "Late L9 evac-point checkpoint rejected with No active objective even after mission begin; source/tool changes prohibited, so complete fence/wheel-contact acceptance remains open."
   ],
   "runtimeRecovery": "Host access restored; preview and GPU pool work. Earlier EPERM failures are historical.",
   "l9Runs": [
@@ -758,5 +759,11 @@
       }
     ],
     "verdict": "All four reviewed panels clear vitals and other HUD; no arrow overlap in sampled actual post-outbreak state. Not uninterrupted campaign navigation."
+  },
+  "closeout": {
+    "reportComplete": true,
+    "candidateApproved": false,
+    "acceptanceCoverageComplete": false,
+    "reason": "Report delivers requested real-input runs, prompt matrix, ordinary warning evidence/verdicts, WebGPU coverage, findings, reviewed sheet and required checks. Authorized driver gaps are explicit; no unobserved behavior is approved."
   }
 }

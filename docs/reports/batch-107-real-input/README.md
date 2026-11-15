@@ -1,6 +1,6 @@
-# Batch 107 real-input QA — incomplete, candidate not approved
+# Batch 107 real-input QA — candidate rejected
 
-Candidate `d1101b68`. **P1: HIGH evacuation exceeds the requested ~20-second window on both routes.** All three L9 runs eventually reached L10 loading without skipped objectives. Remaining uncertainty is explicitly listed below; this report is not full candidate acceptance.
+Candidate `d1101b68`. **P1: HIGH evacuation exceeds the requested ~20-second window on both routes.** All three L9 runs eventually reached L10 loading without skipped objectives. The report is finalized with the authorized Driver gaps below; acceptance coverage is partial and the candidate is not approved.
 
 ## Method and checks
 
@@ -47,13 +47,13 @@ A separate living L10 farm sample captured `alpha.roar` at tick 4711; its broad 
 
 No tools/playtest edits were made. Dedicated alarm approach/capture and continuous warning-motion recording were not available in the documented options. Capture zooms do not automatically produce a complete scene matrix. Late L9 checkpoint setup rejected `evac-point` with “No active objective,” so placement diagnostics used a fresh level and camera-only viewpoints.
 
-Still unverified: complete living-survivor fence routing; pickup wheel grounding at follow zoom 1.5; attached-boarder identity beyond nearby seated hits; uninterrupted post-outbreak alarm matrix; continuous warning noticeability in L9/L10. The committed sheet includes evacuation, ordinary L9 scream, two L10 loading handovers and the alarm fixture matrix. The report remains incomplete until these evidence gaps are resolved or the authorized time-box closeout is reached.
+Still unverified: complete living-survivor fence routing; pickup wheel grounding at follow zoom 1.5; attached-boarder identity beyond nearby seated hits; uninterrupted post-outbreak alarm matrix; continuous warning noticeability in L9/L10. The committed sheet includes evacuation, ordinary L9 scream, two L10 loading handovers and the alarm fixture matrix. These limits remain open acceptance work; they are not passing results.
 
 A bounded 180-second HIGH WebGPU immortal route-only repeat requested Playwright context video via an ignored wrapper around unchanged `runSession`. It captured ordinary scream tick 7644, but delivered no local video artifact. The run exited normally; it does not establish continuous-motion readability. Raw diagnostic: `test-results/b107/video-l10/`.
 
 ## L10 moving-warning follow-up
 
-Recording was recovered by applying Playwright `recordVideo` to the admitted persistent-context path in an ignored wrapper; original driver/source files remain unchanged. Fresh-profile HIGH WebGPU zoom 1 **IMMORTAL / ROUTE ONLY** video: `test-results/b107/video-l10/video/page@18681991b6cdfdd36e5e9ec439629a75.webm`. The 111–117 s interval was reviewed as 24 sequential frames at 4 fps (`review/scream-sequence.jpg`). Actual ordinary scream tick 6453 aligns with this interval. **P2 readability:** the purple pulse appears briefly as a large screen-edge arc while the courier runs; persistent red attack rings dominate. It is easy to miss during this movement sample. This is a bounded visual verdict, not performance qualification or combat acceptance. L9 continuous warning review remains open.
+Recording was recovered by applying Playwright `recordVideo` to the admitted persistent-context path in an ignored wrapper; original driver/source files remain unchanged. Fresh-profile HIGH WebGPU zoom 1 **IMMORTAL / ROUTE ONLY** video: `test-results/b107/video-l10/video/page@18681991b6cdfdd36e5e9ec439629a75.webm`. The 111–117 s interval was reviewed as 24 sequential frames at 4 fps (`review/scream-sequence.jpg`). Actual ordinary scream tick 6453 aligns with this interval. **P2 readability:** the purple pulse appears briefly as a large screen-edge arc while the courier runs; persistent red attack rings dominate. It is easy to miss during this movement sample. This is a bounded visual verdict, not performance qualification or combat acceptance. L9 route recording is reviewed in the follow-up below; it does not prove an onscreen moving-ring pass.
 
 ## Recorded L9 follow-up
 
@@ -68,3 +68,9 @@ An additional normal-combat HIGH shortcut WebGPU run used existing `PLAYTEST_COM
 ## Actual post-outbreak alarm matrix
 
 Beginning L1 before loading its actual `bat` checkpoint produced the correct post-outbreak mission/HUD state. All HIGH/LOW × zoom 1/1.5 captures were reviewed: `test-results/b107/prompt-fixture/postblast-alarm-{high,low}-z{1,1.5}.jpg`, with ticks in `postblast-results.json`. Panels clear vitals and other HUD in all four sampled views; HIGH/zoom 1 places the panel beside vitals with a visible gap. The prior P3 arrow overlap is limited to an artificially armed pre-outbreak fixture and was **not reproduced** here; it is not a confirmed post-outbreak product defect. Setup used the genuine checkpoint plus fixture positioning and real WASD final approach, not uninterrupted campaign navigation. The contact sheet now shows this stage-accurate matrix.
+
+## Final disposition
+
+Requested L9 HIGH road/HIGH shortcut/LOW road runs all completed by real input without skips; HIGH timing failed twice, LOW boarded before defense ended. Alarm HIGH/LOW × zoom 1/1.5 was reviewed in the actual post-outbreak checkpoint with real-input final approach. Three other prompts received short motion review. Ordinary L9/L10 screams have captures/ticks and bounded readability verdicts; L10 moving pulse is easy to miss, while the recorded L9 approach event is off-camera and its stopped ring is occluded. WebGPU is recorded for each checked level (L1/L2/L9/L10). The report answers the boredom/harmlessness question from the prolonged healthy-courier evacuation wait and does not approve an absolute “stunning” claim.
+
+The late L9 checkpoint was retried after beginning the mission and still rejected “No active objective.” In accordance with the instruction to record missing driver capabilities and move on, no tool patch was made. Full fence-contact tracing, exact pickup wheel contact and universal warning noticeability remain explicit acceptance gaps. They do not soften the reproduced P1. Final disposition: reject batch 107 for intermittent HIGH evacuation delay; report complete with documented coverage limits.
