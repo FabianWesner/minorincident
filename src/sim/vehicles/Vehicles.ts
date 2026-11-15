@@ -93,6 +93,7 @@ export class Vehicles {
   }
   /** L9 terrain cap and damage floor compose once, including damage/checkpoint rebuilds. */
   private speedShare(car: Car): number {
+    if (this.world.missions?.l9?.driving.state.busId === car.entity.id) return 3;
     let share = car.entity.vehicle!.floor ? apcFloor.speedShare + (1 - apcFloor.speedShare) * car.entity.health.current / car.entity.health.max : 1;
     if (car.entity.vehicle!.floor && this.world.scenario === 'L9') {
       const district = this.world.districts?.districts.find(d => d.id === 'D-CROSSING');

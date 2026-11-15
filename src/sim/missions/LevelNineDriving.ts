@@ -11,6 +11,7 @@ import { pursueCrossingVehicle } from './LevelNineEncounters';
 import { Outbreak } from '../outbreak/Outbreak';
 import { clearThreat } from './Respawn';
 import { LevelNineSetPieces, emptySetPieces, type L9SetPieceState } from './LevelNineSetPieces';
+import { crossing } from '../../levels/L9/district';
 
 export interface L9DrivingState {
   prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[]; megaSightings?: number[]; megaSighting?: { index: number; startedAt: number; roadZ: number };
@@ -50,7 +51,8 @@ const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.h
 
 /** L9's physical road challenges, exposed hatch defense and visible bridgehead handoff. */
 export class LevelNineDriving {
-  private readonly busTrail: { x: number; z: number; yaw: number }[] = [];
+  /** The pursuing bus has its own authored asphalt route; APC shortcuts never steer it off the road. */
+  private readonly busRoad = crossing.routes.find(route => route.id === 'road')!.points;
   private readonly rampHandles: number[] = [];
   readonly setPieces: LevelNineSetPieces;
   constructor(private readonly mission: Mission) {
@@ -480,25 +482,56 @@ export class LevelNineDriving {
   }
   private readonly busIntent = (intent: DriveIntent, bus: EntitySnapshot): void => {
     if ((this.state.busStunUntil ?? 0) > this.w.tick) { intent.throttle = 0; intent.brake = true; intent.steer = 0; return; }
-    const car = this.car.entity.transform, targetZ = (this.state.busRamAt ?? 0) > this.w.tick ? (this.state.busRamZ ?? car.z) : car.z;
-    const dx = car.x - bus.transform.x, dz = targetZ - bus.transform.z;
+    let nearestX = bus.transform.x, nearestDistance = Infinity;
+    for (let i = 1; i < this.busRoad.length; i++) {
+      const a = this.busRoad[i - 1]!, b = this.busRoad[i]!;
+      const dx = b[0] - a[0], dz = b[1] - a[1];
+      const t = Math.max(0, Math.min(1, ((bus.transform.x - a[0]) * dx + (bus.transform.z - a[1]) * dz) / (dx * dx + dz * dz)));
+      const x = a[0] + dx * t, z = a[1] + dz * t;
+      const gap = Math.hypot(bus.transform.x - x, bus.transform.z - z);
+      if (gap < nearestDistance) { nearestDistance = gap; nearestX = x; }
+    }
+    const target = this.busRoadTarget(nearestX + 6);
+    if (bus.transform.x >= 450) target.z = 3;
+    const dx = target.x - bus.transform.x, dz = target.z - bus.transform.z;
     const delta = Math.atan2(Math.sin(-Math.atan2(dz, dx) - bus.transform.yaw), Math.cos(-Math.atan2(dz, dx) - bus.transform.yaw));
     intent.throttle = 1; intent.brake = false; intent.steer = Math.max(-1, Math.min(1, delta * 2));
-    // r27-l9board: a bus glued to a crawling or stalled APC rammed it every 2 s (30 rams, durability 0 by the rail on the
-    // countryside route). It now damages the APC at most busRamCap times (r33-l9polish: 3 x 40 = 120 of 1000, was 12 x 40); it still drives and pushes.
-    // Evacuation hold: the APC is parked with the brake on. A full-throttle bus
-    // pressed against it shoved it ~2.4 m at once and then crept it ~10 m over
-    // the hold. The bus now slows on approach and halts a few metres short, so
-    // it never pushes the parked APC and never blocks the passenger door
-    // (its passengers still spill and attack, see bus()).
+    const approachingBend = this.busRoad.slice(1, -1).some(point => point[0] >= nearestX && point[0] - nearestX < 18);
+    if (approachingBend && (bus.vehicle?.speed ?? 0) > 7) { intent.throttle = 0; intent.brake = true; }
+    const turning = Math.abs(delta) > .15;
+    if (turning && (bus.vehicle?.speed ?? 0) > 5) { intent.throttle = 0; intent.brake = true; }
+    const roadHere = this.busRoadTarget(nearestX), roadAhead = this.busRoadTarget(nearestX + 1);
+    const roadLength = Math.hypot(roadAhead.x - roadHere.x, roadAhead.z - roadHere.z) || 1;
+    const followingX = 12 * Math.abs(roadAhead.x - roadHere.x) / roadLength;
+    if (bus.transform.x >= this.car.entity.transform.x - followingX) { intent.throttle = 0; intent.brake = true; }
+    // The road chase delivers its infected beside the authored rail crossing.
+    // Let them disembark there so the hatch defense does not depend on a ram or
+    // on the APC having stayed on the asphalt.
+    if (this.state.stallAt !== null && !this.state.restarted && bus.transform.x >= cfg.railX - 10) {
+      intent.throttle = 0; intent.brake = true;
+    }
     if (this.state.evacuationAt !== null && !this.state.evacuationDone) {
       const gap = this.car.physics.hullDistance(bus.transform.x, bus.transform.z) - this.w.vehicles!.cars.get(this.state.busId)!.physics.def.length / 2;
-      const speed = bus.vehicle?.speed ?? 0, allowed = 2.5 + Math.max(0, gap - 4.5) * .6;
-      // A bus already alongside when the hold starts (countryside route) backs off the door instead of walling it in.
-      if (gap < 3.5) { intent.throttle = -.6; intent.brake = false; intent.steer = 0; }
-      else if (gap <= 4.5 || speed > allowed) { intent.throttle = 0; intent.brake = true; }
+      const allowed = 2.5 + Math.max(0, gap - 4.5) * .6;
+      if (gap <= 4.5 || (bus.vehicle?.speed ?? 0) > allowed) { intent.throttle = 0; intent.brake = true; }
     }
   };
+  private busRoadTarget(x: number): { x: number; z: number } {
+    const points = this.busRoad;
+    for (let i = 1; i < points.length; i++) {
+      const a = points[i - 1]!, b = points[i]!;
+      if (x <= b[0]) { const t = Math.max(0, Math.min(1, (x - a[0]) / (b[0] - a[0]))); return { x, z: a[1] + (b[1] - a[1]) * t }; }
+    }
+    const end = points.at(-1)!; return { x: end[0], z: end[1] };
+  }
+  /** Collision residency follows the bus independently of the APC's chosen terrain. */
+  busSupport(): { x: number; z: number } | null {
+    const car = this.w.vehicles?.cars.get(this.mission.l9!.state.carId);
+    if (!car) return null;
+    const s = this.state, p = car.entity.transform;
+    if (s.busLineAt === null) return p.x > 110 && p.x < 330 ? this.busRoadTarget(p.x - 125) : null;
+    return this.w.vehicles!.cars.get(s.busId)?.entity.transform ?? null;
+  }
   private bus(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform;
     // The first glimpse crosses the road behind the APC; the next two pace
@@ -523,34 +556,25 @@ export class LevelNineDriving {
         } else { mega.hidden = true; mega.infected!.hidden = true; w.spatial.delete(mega.id); delete s.megaSighting; }
       }
     }
-    if (s.busLineAt === null && w.tick % 6 === 0) {
-      const last = this.busTrail.at(-1);
-      if (last && distance(last, p) > 25) this.busTrail.length = 0;
-      if (!last || distance(last, p) >= 1) {
-        this.busTrail.push({ x: p.x, z: p.z, yaw: p.yaw });
-        if (this.busTrail.length > 180) this.busTrail.shift();
-      }
-    }
     if (s.busLineAt === null && p.x > 110 && p.x < 330) {
-      // Follow the driven lane: projecting a transient dodge heading behind
-      // the APC can place the pursuing bus off-road against the verge.
-      let behind = 0, trail = this.busTrail.at(-1);
-      for (let i = this.busTrail.length - 2; i >= 0 && behind < 110; i--) {
-        const older = this.busTrail[i], newer = this.busTrail[i + 1], length = distance(newer, older);
-        if (behind + length >= 110) {
-          const t = (110 - behind) / length;
-          trail = { x: newer.x + (older.x - newer.x) * t, z: newer.z + (older.z - newer.z) * t, yaw: -Math.atan2(newer.z - older.z, newer.x - older.x) };
-          behind = 110; break;
-        }
-        behind += length; trail = older;
-      }
-      if (!trail || behind < 110) return;
-      const at = { x: trail.x, z: trail.z };
+      // Spawn at a point well behind the courier on the authored asphalt, even
+      // when the APC has taken a gravel shortcut or a wide off-road detour.
+      const at = this.busRoadTarget(p.x - 125);
       if (!w.chunks?.resident(at.x, at.z) || !w.infected!.nav.clear(at.x, at.z, 2)) return;
       const bus = w.vehicles!.cars.get(s.busId)!;
-      const pose = { ...at, y: bus.physics.def.suspension + bus.physics.def.wheelRadius + .15, yaw: trail.yaw };
+      const tangent = this.busRoadTarget(at.x + 2);
+      const yaw = -Math.atan2(tangent.z - at.z, tangent.x - at.x);
+      // Admit the complete bus hull beyond the widest camera envelope, rather
+      // than relying on the APC setback alone to hide a tall transport.
+      for (let along = -bus.physics.def.length / 2; along <= bus.physics.def.length / 2; along += 1) {
+        for (const side of [-bus.physics.def.width / 2, 0, bus.physics.def.width / 2]) for (const y of [0, 2, 4]) {
+          const point = { x: at.x + Math.cos(yaw) * along + Math.sin(yaw) * side, z: at.z - Math.sin(yaw) * along + Math.cos(yaw) * side, y };
+          if (w.infected!.director.inFrame(point, 1.2, true)) return;
+        }
+      }
+      const pose = { ...at, y: bus.physics.def.suspension + bus.physics.def.wheelRadius + .15, yaw };
       Object.assign(bus.entity.transform, pose); Object.assign(bus.physics.previous, pose); bus.physics.body.setTranslation(pose, true);
-      bus.physics.body.setRotation({ x: 0, y: Math.sin(trail.yaw / 2), z: 0, w: Math.cos(trail.yaw / 2) }, true);
+      bus.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
       bus.physics.body.setEnabled(true); bus.entity.hidden = false; bus.entity.vehicle!.braced = false;
       w.vehicles!.autopilot.set(s.busId, this.busIntent); s.busLineAt = w.tick;
       if (s.roster.some(id => alive(w.entities.get(id)) && w.entities.get(id)!.civilian?.survivor?.key === 'dale')) { this.line('L9.bus.dale'); this.line('L9.bus.dale-beat', 180); }
@@ -560,7 +584,7 @@ export class LevelNineDriving {
     const bus = w.vehicles!.cars.get(s.busId); if (!bus) return;
     if (s.busStoppedAt === null && w.tick % 6 === 0) emitEngine(w, s.busId, bus.physics.speed);
     const ramAt = s.busRamAt ?? 0;
-    if (s.busStoppedAt === null && !ramAt && s.busRams < busRamCap && w.tick - s.busHitAt >= 300 && Math.max(bus.physics.speed, car.physics.speed) > 2 && distance(bus.entity.transform, p) < 42) {
+    if (s.busStoppedAt === null && !ramAt && s.busRams < busRamCap && w.tick - s.busHitAt >= 300 && Math.max(bus.physics.speed, car.physics.speed) > 2 && distance(bus.entity.transform, p) < Math.max(18, 42 - bus.physics.speed * 2) && Math.abs(bus.entity.transform.z - p.z) < 8) {
       s.busRamAt = w.tick + busTelegraphTicks; s.busRamZ = p.z; this.signal('bus-ram-windup', bus.entity.id);
       w.events.emit({ type: 'vehicle.sound', tick: w.tick, sourceId: bus.entity.id, position: { x: bus.entity.transform.x, y: bus.entity.transform.y, z: bus.entity.transform.z }, velocity: { x: bus.physics.forwardSpeed, z: 0 }, rpm: 0, speed: bus.physics.speed, health: bus.entity.health.current / bus.entity.health.max, phase: 'horn' });
       // Reuse the pooled directional telegraph renderer for a broad red lane
@@ -576,11 +600,9 @@ export class LevelNineDriving {
         });
       }
       if (lateral > 4.5 || !physicalContact) {
-        const side = Math.sign(p.z - (s.busRamZ ?? p.z)) || 1;
         w.vehicles!.damage(s.busId, 600);
-        // A successful dodge sends the bus toward the opposite verge, away
-        // from the lane the player just chose.
-        bus.physics.body.setLinvel({ x: Math.max(5, bus.physics.forwardSpeed), y: 0, z: -side * 4 }, true);
+        // Brake after a missed ram. A sideways impulse here used to launch
+        // the bus off the asphalt even when its steering followed the road.
         s.busStunUntil = w.tick + 180; this.signal('bus-ram-missed', bus.entity.id);
         if (bus.entity.health.current <= 0) { s.busStoppedAt = w.tick; w.vehicles!.autopilot.delete(s.busId); stopEngine(w, s.busId); this.signal('bus-wrecked', s.busId); }
       } else if (s.busRams <= busRamCap) { w.vehicles!.damage(car.entity.id, 40); this.signal('bus-ram', bus.entity.id); }
@@ -596,7 +618,8 @@ export class LevelNineDriving {
     for (let i = s.busReleased; i < s.busPassengers.length; i++) {
       const e = w.entities.get(s.busPassengers[i]); if (!e) continue;
       Object.assign(e.transform, bus.entity.transform);
-      if ((bus.physics.speed < 3 || s.busStoppedAt !== null) && w.tick % 90 === 0 && i === s.busReleased) {
+      const delivering = this.holding(car.entity.id) && distance(bus.entity.transform, p) < 30 && bus.physics.speed < 6;
+      if ((delivering || bus.physics.speed < 3 || s.busStoppedAt !== null) && w.tick % (delivering ? 15 : 90) === 0 && i === s.busReleased) {
         e.transform.z += 2.1; e.transform.x -= 2; e.hidden = false; e.infected!.hidden = false; delete e.attachedTo;
         w.spatial.set(e.id, e.transform.x, e.transform.z); w.infected!.pursueTarget(e.id, 1); pursueCrossingVehicle(w, e.id); s.busReleased++; this.signal('bus-spill', e.id); break;
       }
