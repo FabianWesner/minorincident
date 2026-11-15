@@ -108,6 +108,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9BayAndHatch();
   await l9HatchCheckpointAndEvacuation();
   await l9InterruptedBoarding();
+  await l9CrowdedEvacuationFixtures();
 }, 400_000);
 
 // A pushed evacuee can leave the truck during the boarding animation.
@@ -150,7 +151,7 @@ async function l9InterruptedBoarding(): Promise<void> {
       }
       const evacuees = s.roster.filter(id => id !== s.samId);
       expect(evacuees).toHaveLength(4);
-      const last = evacuees[3]!, slot = 3, target = { x: l9Course.evacuation.truckX + slot % 3 * 9 + 2.5, z: l9Course.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
+      const last = evacuees[3]!;
       if (seed === 42) {
         world.player!.damage(1000, world.tick, true);
         for (let i = 0; i < 360 && world.entities.get(1)!.health.current <= 0; i++) world.update();
@@ -166,14 +167,39 @@ async function l9InterruptedBoarding(): Promise<void> {
       }
       const actor = world.entities.get(last)!;
       car.entity.vehicle!.passengers = car.entity.vehicle!.passengers!.filter(p => p.id !== last);
-      actor.hidden = false; delete actor.passengerOf; actor.transform.x = target.x + 1.5; actor.transform.z = target.z;
+      // Native fixture for the post-defense fallback: the normal route window
+      // has elapsed and this survivor is well away from the truck row.
+      actor.hidden = false; delete actor.passengerOf; actor.transform.x = 446; actor.transform.z = 13;
       world.spatial.set(last, actor.transform.x, actor.transform.z); s.evacuating.push(last);
-      s.evacuationAt = world.tick - l9Course.evacuation.defendTicks;
-      s.truckEntering[last] = world.tick - 46;
-      actor.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[last] };
-      for (let i = 0; i < 1200 && !s.evacuated.includes(last); i++) world.update();
-      expect(s.evacuated, `seed ${seed} ${quality}: fourth survivor reaches a truck within 20 s`).toContain(last);
+      s.evacuationAt = world.tick - l9Course.evacuation.defendTicks - 480;
+      const beforeFallback = { x: actor.transform.x, z: actor.transform.z };
+      expect(l9.driving.text()).toContain('Survivors sprint to the trucks');
+      world.update();
+      expect(actor.hidden, 'fallback survivor stays visible while walking').toBe(false);
+      expect(Math.hypot(actor.transform.x - beforeFallback.x, actor.transform.z - beforeFallback.z), 'fallback visibly moves the survivor toward the truck').toBeGreaterThan(0);
+      for (let i = 0; i < 1200 && !s.evacuationDone; i++) world.update();
+      expect(s.evacuated, `seed ${seed} ${quality}: fallback survivor reaches a truck`).toContain(last);
+      expect(s.evacuationDone, `seed ${seed} ${quality}: handover completes within 20 s after defense`).toBe(true);
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
+    } finally { world.dispose(); }
+  }
+}
+
+// The preserved s124/s126 crowded saves exercise the timed fallback against
+// the dense native state that originally delayed the last healthy survivor.
+async function l9CrowdedEvacuationFixtures(): Promise<void> {
+  for (const name of ['s124-l9-crowded-trucks.json.br', 's126-s125-l9-stalled-trucks.json.br']) {
+    const decoded = decodeSave(JSON.stringify(readFixture(`tests/fixtures/saves/qa/${name}`).campaign));
+    if (decoded.status !== 'ok') throw new Error(`${name} does not decode`);
+    const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'high' });
+    try {
+      const l9 = world.missions!.l9!, s = l9.driving.state;
+      expect(s.evacuationAt, `${name}: fixture is inside its evacuation`).not.toBeNull();
+      const deadline = s.evacuationAt! + l9Course.evacuation.defendTicks + 1200;
+      const ticksToDeadline = Math.max(0, deadline - world.tick);
+      for (let i = 0; i < ticksToDeadline && !s.evacuationDone; i++) world.update();
+      expect(s.evacuationDone, `${name}: handover completes by 20 s after defense`).toBe(true);
+      expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks), `${name}: handover is within 20 s after defense`).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
 }
