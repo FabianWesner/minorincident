@@ -45,3 +45,7 @@ A HIGH WebGPU zoom 1 real-key route used documented `--immortal` and is **IMMORT
 Three additional HIGH WebGPU L1 fixture prompts were reviewed: Gate, Push dumpster and Start car wash (`test-results/b107/prompt-fixture/other-{gate,dumpster,carwash}.jpg`, ticks in `other.json`). They clear vitals, minimap and objective text in these static views. Fixture positions plus short physical KeyW movement were used; no temporal jumping verdict follows.
 
 L9 HIGH shortcut zoom 1.5 frame at tick 10821 (`test-results/b107/l9-high-shortcut/captures/campaign-L9-t10821.jpg`) shows staging trucks on roadway outside buildings. Crowd/framing occlude complete gate-fence routing. The red pickup appears elevated in the upper frame; this angle does not clear grounding and requires a closer side view. This remains an unresolved placement concern rather than a confirmed new P2.
+
+## Close placement diagnostic
+
+Camera-only views on fresh L9 confirm the red pickup is clear of its former barricade (`test-results/b107/prompt-fixture/l9-pickup-side.jpg`). Grounding remains visually uncertain; authored y=0 is not sufficient render proof. **P2 placement concern:** a staging truck cab appears over a low road barrier (`test-results/b107/prompt-fixture/l9-staging.jpg`; tick 6). No building intersection is visible. These use a custom cinematic camera, not follow zoom 1.5, and cannot establish late evacuation actors or fence routing. The requested late checkpoint setup failed with “No active objective”; no tools/playtest patch was made.

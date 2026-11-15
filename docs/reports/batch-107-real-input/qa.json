@@ -54,6 +54,13 @@
       "text": "Yellow objective arrow overlaps car alarm panel upper-right at zoom 1 in HIGH/LOW static layout fixture. Vitals do not overlap.",
       "tick": 69,
       "capture": "test-results/b107/prompt-fixture/alarm-high-z1.jpg"
+    },
+    {
+      "severity": "P2",
+      "level": "L9",
+      "text": "Staging truck cab appears over low road barrier in camera-only placement diagnostic; natural placement concern. Late evacuation positions not inferred.",
+      "capture": "test-results/b107/prompt-fixture/l9-staging.jpg",
+      "tick": 6
     }
   ],
   "carryOverNotRechecked": [
@@ -445,5 +452,23 @@
     "tick": 10821,
     "zoom": 1.5,
     "verdict": "Trucks visible on roadway outside buildings; full gate-fence route occluded by crowd. Red pickup appears elevated in upper frame; grounding cannot be cleared from this angle."
+  },
+  "l9PlacementFixture": {
+    "method": "Camera-only cinematic viewpoint on fresh L9; checkpoint loader failed, so no late-state inference; not requested follow-camera zoom evidence",
+    "samples": [
+      {
+        "name": "pickup-side",
+        "file": "test-results/b107/prompt-fixture/l9-pickup-side.jpg",
+        "tick": 8,
+        "text": "Bridge is forty klicks. Dawn's in two hours. Floor it.\n\u2161\nAPC armor 1000 / 1000\n1\n2\n3\n4\n5\n6\n100 / 100\nCorgi \u00b7 hiding\nN\n\u25b2\n\u2302\n\u2248 Wind\nDrive to the evacuation point \u00b7 1007\u00a0m"
+      },
+      {
+        "name": "staging",
+        "file": "test-results/b107/prompt-fixture/l9-staging.jpg",
+        "tick": 6,
+        "text": "Bridge is forty klicks. Dawn's in two hours. Floor it.\n\u2161\nAPC armor 1000 / 1000\n1\n2\n3\n4\n5\n6\n100 / 100\nCorgi \u00b7 hiding\nN\n\u25b2\n\u2302\n\u2248 Wind\nDrive to the evacuation point \u00b7 1007\u00a0m"
+      }
+    ],
+    "verdict": "Pickup clear of barricade; visual grounding remains uncertain. Staging truck cab visually overlaps low road barrier in camera view; no building intersection shown."
   }
 }
