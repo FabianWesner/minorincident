@@ -48,3 +48,5 @@ The remaining HIGH shortcut stall is resolved by an explicit approach around the
 ## Final-code coverage audit
 
 Six native runs now use the final waypoint code: HIGH shortcut skilled, HIGH road skilled, LOW road skilled, HIGH road passive, LOW shortcut passive, and HIGH road seed 2 skilled. Every living evacuee boards within 17.02 seconds of Defense complete and every run completes handover. The refreshed L9 threat receipt has zero skilled/passive flags; its diagnostic command exits nonzero solely for partial level selection. Exact replay of the s125 browser input/checkpoint state remains unproven; the HIGH native road run covers its route and dense horde class but does not establish input-identical replay.
+
+The archived s125 browser profile was copied and probed headlessly. It resumes at the exact reported APC position `(468.706,-2.066)`, courier HP 90, but its first observed objective is already “Drive onto the bridge.” It therefore cannot establish replay of the pre-boarding stall. The full-route driver steered west from this late resume, so that diagnostic was stopped and is not counted as a passing run.
