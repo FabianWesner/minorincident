@@ -6440,5 +6440,49 @@
     "exit": 1,
     "interpretation": "Bounded sample, unfinished level; no tilt breach in 6738 sampled driving ticks. Reviewed t2707 and t5411 original-size captures: upright APC during leaper load and barricade contact. Sparse stills do not establish continuous suspension feel."
   },
-  "contactFixtureCorrection": "Ground enlarged to 1500m half extent: APC cannot drive off the floor during the 600-tick window. Traces every 10 ticks retain suspension and angular response."
+  "contactFixtureCorrection": "Ground enlarged to 1500m half extent: APC cannot drive off the floor during the 600-tick window. Traces every 10 ticks retain suspension and angular response.",
+  "aggressiveCompletedDrives": [
+    {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 12079,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.21042477137886195,
+        "maxAt": 11418,
+        "drivingMaxRoll": 0.21494475691967893,
+        "drivingMaxPitch": 0.21042477137886195,
+        "drivingMaxAt": 4227,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 6953,
+        "outside6": 0,
+        "maxDistance": 2.3693087639957233
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 11264,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.19759379640124636,
+        "maxAt": 10603,
+        "drivingMaxRoll": 0.16707941506705432,
+        "drivingMaxPitch": 0.19759379640124636,
+        "drivingMaxAt": 3300,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 6948,
+        "outside6": 0,
+        "maxDistance": 0.330352783203125
+      }
+    }
+  ]
 }

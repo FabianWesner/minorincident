@@ -67,3 +67,7 @@ QA build passed. Headless pooled HIGH WebGL2 zoom1, real keyboard road driver, d
 ## Contact settling trace correction
 
 Extended the isolated fixture floor from 150m to 1500m half extent after traces showed the driven APC left the smaller floor near the end of the 600-tick sample. Updated contact results supersede earlier fixture maxima. Corrected fixtures all have verified contacts and pass the 20-degree bound: kerb 0.43/0.19 degrees roll/pitch, ramp 14.85/8.68, bus-side 8.94/0.09, bus-rear 0.05/5.81. At tick590 all stabilized fixtures settle to essentially zero roll/pitch and angular speed, with compressed suspension around 0.245m. Sampled suspension and angular response traces are retained in results.json. This supplies numeric settling evidence, not a human feel verdict.
+
+## Completed aggressive steering drives
+
+On current runtime, a 600-tick alternating full-steer burst (ticks2400–2999, sin(tick/55)) followed by ordinary route tracking completes HIGH at tick12079 and LOW at tick11264. HIGH maximum driving roll/pitch 12.32/12.06 degrees; LOW 9.58/11.32 degrees. Zero 20-degree breaches. Bus road census: 6953 HIGH +6948 LOW native ticks, zero outside6m; worst2.369m HIGH,0.331m LOW. These completed corrected-axis trials supersede the earlier incomplete steering sample.
