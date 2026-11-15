@@ -42,3 +42,7 @@ Raw images, fixtures, clipping pairs and metrics remain under `test-results/s121
 - L4 LOW performance measurement: **perf pending**; no measured frame-time claim.
 
 No deployment, push, or main movement was performed.
+
+## Reproducible 30-HP motion sampling
+
+Runner now accepts --motion (infected chase the stationary courier) and --high-only for bounded batches. HIGH WebGL2 L4/L6 zoom-1/1.5 passed all 12 samples at frames 1/30/60, confirmed 30 HP, minimum body share 0.99961. Clipping reports are saved separately and are not treated as passing artifact gates. Reviewed L4 frame 60 shows attacking poses and a visible gold courier edge, but retained enemy bars overlap above her; the body-share pass does not settle the clutter/readability criterion. Existing Scene Lab courier fixtures default to god mode, retaining health during this presentation-only probe. Typecheck/lint pass.

@@ -4,18 +4,23 @@ import { measureCourierShare } from './run';
 
 // One browser at a time; invoke through e2e-lock.sh with a ten-minute pool lease.
 const backend = (process.argv[2] ?? 'webgl2') as Backend;
+const moving = process.argv.includes('--motion');
 if (!['webgl2', 'webgpu'].includes(backend)) throw new Error('Expected webgl2 or webgpu');
-const out = `test-results/s121-courierread/repro-${backend}`;
+const out = `test-results/s121-courierread/repro-${backend}${moving ? '-motion' : ''}`;
 mkdirSync(out, { recursive: true });
 const results: unknown[] = [];
 try {
   for (const tier of ['high', 'low'] as const) {
+    if (process.argv.includes('--high-only') && tier !== 'high') continue;
     const session = new SceneSession({ backend, tier });
     try {
       await session.open();
       for (const level of ['l4', 'l6']) for (const zoom of [1, 1.5]) {
         const spec = readSpec(`tests/scenes/catalog/courier-read-${level}-dense.json`);
         spec.camera = { mode: 'game', target: 'courier', zoom };
+        if (moving) {
+          for (const actor of spec.actors ?? []) if (actor.kind === 'infected') actor.state = { chase: 'courier' };
+        }
         await session.load(spec);
         await session.page.evaluate(() => window.__SS__!.survivor.damage(70));
         await session.step(1);
@@ -30,6 +35,18 @@ try {
         const id = `${level}-${tier}-z${zoom}`;
         await session.screenshot(`${out}/${id}.png`);
         results.push({ id, backend: actual, health: 30, share: share.share, foreground: state.render.courierForeground });
+        if (moving) {
+          for (const frame of [30, 60]) {
+            await session.step(frame === 30 ? 29 : 30);
+            const sample = await measureCourierShare(session);
+            const hp = await session.page.evaluate(() => window.__SS__!.getState().player?.health.current);
+            if (hp !== 30 || sample.share < .9 || session.errors.length) throw new Error(`Motion gate failed: ${id} f${frame}`);
+            await session.screenshot(`${out}/${id}-f${frame}.png`);
+            results.push({ id, frame, health: hp, share: sample.share });
+          }
+          const clipping = await session.clipping();
+          writeFileSync(`${out}/${id}-clipping.json`, JSON.stringify(clipping, null, 2));
+        }
         writeFileSync(`${out}/summary.json`, JSON.stringify(results, null, 2));
       }
     } finally { await session.close(); }
