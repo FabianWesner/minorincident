@@ -43,3 +43,7 @@ The complete vehicle campaign motion gate subsequently passed all eight cases (L
 ## Chassis axis correction
 
 Further audit found yaw mixing in the spring and probe angle formulas. Corrected chassis roll to atan2(-localZ.y, localY.y) and pitch to asin(localX.y). Full HIGH primary-road drive passes --check, completes tick 10989, peaks at 5.75 degrees roll and 11.40 degrees pitch during driving. Typecheck/lint pass. Earlier campaign/remote/threat receipts predate this runtime correction and require revalidation. Root-cause isolation and kerb/bus-contact coverage remain open.
+
+## Controlled native contact evidence
+
+Added tools/qa/apc-tilt-contact.ts: actual Rapier APC, shared chassis controller and suspension, native ground, kerb/ramp and bus fixtures. Initial setup only; no pose writes during the 600-tick samples. Both wheel ray contacts and hull manifold contacts are counted. Without stabilization, ramp roll reaches 45.82 degrees and a 30 m/s side bus impact inverts the APC. With stabilization, all four fixtures have verified contact and stay below 15 degrees on both axes (ramp roll 14.85, bus-side roll 8.94; rear ram pitch 5.81). The unchanged native suspension/contact system can generate rollover momentum; the bounded spring arrests that momentum before tipping. These are isolated native physics fixtures, not full L9/browser contact coverage. Probe exits nonzero if any stabilized fixture misses contact or reaches 20 degrees. Typecheck/lint pass. Original s122 trigger and older-baseline comparison remain unproven.

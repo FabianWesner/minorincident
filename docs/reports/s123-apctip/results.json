@@ -287,5 +287,65 @@
     "typecheck": "passed",
     "lint": "passed",
     "remaining": "Refresh contact/route matrix and broad gates after axis correction; earlier gate receipts predate this runtime."
+  },
+  "controlledContacts": {
+    "rows": [
+      {
+        "stabilized": false,
+        "fixture": "kerb",
+        "contacts": 2,
+        "maxRollDegrees": 0.4288606994852173,
+        "maxPitchDegrees": 22.29297287869616
+      },
+      {
+        "stabilized": false,
+        "fixture": "ramp",
+        "contacts": 17,
+        "maxRollDegrees": 45.8216435220951,
+        "maxPitchDegrees": 22.795943840351445
+      },
+      {
+        "stabilized": false,
+        "fixture": "bus-side",
+        "contacts": 15,
+        "maxRollDegrees": 179.99999997660018,
+        "maxPitchDegrees": 0.21804778419724766
+      },
+      {
+        "stabilized": false,
+        "fixture": "bus-rear",
+        "contacts": 2228,
+        "maxRollDegrees": 0.05667517286406818,
+        "maxPitchDegrees": 7.097161502369282
+      },
+      {
+        "stabilized": true,
+        "fixture": "kerb",
+        "contacts": 2,
+        "maxRollDegrees": 0.4288606994852173,
+        "maxPitchDegrees": 12.07511894722722
+      },
+      {
+        "stabilized": true,
+        "fixture": "ramp",
+        "contacts": 27,
+        "maxRollDegrees": 14.848905002124198,
+        "maxPitchDegrees": 12.07377163441895
+      },
+      {
+        "stabilized": true,
+        "fixture": "bus-side",
+        "contacts": 28,
+        "maxRollDegrees": 8.944963042385119,
+        "maxPitchDegrees": 0.09133453663533103
+      },
+      {
+        "stabilized": true,
+        "fixture": "bus-rear",
+        "contacts": 2224,
+        "maxRollDegrees": 0.052954794876232364,
+        "maxPitchDegrees": 5.8111640084454015
+      }
+    ]
   }
 }
