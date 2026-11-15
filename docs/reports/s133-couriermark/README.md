@@ -63,3 +63,7 @@ Reproduce when the host is quiet: `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL
 ## Refreshed current sheet
 
 Replaced the single `contact.jpg` with four current-source matched marker-off/on pairs: living L4/L6 and corpse-heavy L4/L6, HIGH zoom 1, identical camera and pose within each pair. Opened and inspected the sheet. Corpse-heavy L6 shows a clear teal arc around the feet; L4 shows a smaller arc among bodies. Living-only dense views still cover most of the ground cue, leaving the existing contour as the locator. This bounded review supports utility but does not establish every-frame 0.3-second recognition. Both fresh WebGL2 capture runs completed exit 0; no behavior changed.
+
+## Courier identity contour
+
+Changed only the courier contour from warm gold to restrained teal (`#80ddce`), matching the ground cue. Close-view grazing falloff widens slightly (power 3→2), strength .55→.65; hull x-ray edge .14→.2. Companion fallback explicitly retains gold; no zombie/corgi material change. Existing uniforms and draws are reused. Opened current L4 HIGH zoom-1 frame 60: teal head/torso/arm edges separate the courier from warm crowd clothing even when the ground ring is hidden. WebGL2 HIGH moving L4/L6 at both zooms passed; typecheck/lint passed. The earlier full matrix, gate and remote-suite results predate this contour-only change and must not be represented as its final validation.
