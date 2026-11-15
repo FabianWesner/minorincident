@@ -59,3 +59,7 @@ Revised-contour HIGH WebGL2 controls: production L1 start and the same D-FAIR po
 ## Production controller probe
 
 Both production fixtures advanced 600 frames on HIGH WebGL2 with zero console errors: L4 real convoy/quartermaster/alarm and L6 real shelter/stop/retreat. Images and metrics are under test-results/s121-courierread/production. Reviewed L4 frame 600 shows the actual hold HUD (Alpha at west wall, 3:00 remaining) and courier beside the convoy, not the intended (-22,8) plaza pose: fixture setup overrides the actor's initial placement. This is not dense-contact signoff. Next production capture needs an explicit movement command after setup to reach the fight. The L4 and L6 scene clipping summaries each contain one gun/body hit; full artifact verdict remains open.
+
+## Post-setup production movement
+
+A frame-1 moveTo command successfully moved the production L4 courier 8.696 m to (-21.73,7.905). She was drawn and in view for all 1800 frames; zero console errors. Reviewed frame 1800 shows 100 HP, nearby friendly soldiers and the hold HUD at 2:40, with the west breach still 10 m away. This is not dense contact. The next local fixture adds a frame-900 move toward (-32,8), near the authored west soldier post, to approach production attackers. Raw first-route captures are in test-results/s121-courierread/production-contact.

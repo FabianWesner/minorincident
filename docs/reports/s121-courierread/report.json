@@ -445,5 +445,20 @@
       "foreground": [],
       "consoleErrors": 0
     }
-  ]
+  ],
+  "productionMovementProbe": {
+    "path": "test-results/s121-courierread/production-contact/metrics.json",
+    "frames": 1800,
+    "tier": "high",
+    "backend": "webgl",
+    "courierFinalPosition": [
+      -21.73,
+      7.905
+    ],
+    "travelM": 8.696,
+    "drawnFrames": 1800,
+    "inViewFrames": 1800,
+    "consoleErrors": 0,
+    "verdict": "movement succeeds; plaza position is not dense contact; next staged route approaches west breach at (-32,8)"
+  }
 }
