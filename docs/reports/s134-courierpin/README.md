@@ -39,3 +39,9 @@ Lowered the chevron to the courier hair rather than a rear zombie. Scene Lab use
 Opened the latest full-size L4/L6/calm L1 after captures and [contact.jpg](contact.jpg). L4 eye lands on the teal chevron at the courier hair and follows her outlined body; L6 eye lands on her already lit body. Calm L1 has no pin and no ground ring. The small sheet compresses the pin, so full-size captures were also reviewed.
 
 Both moving matrices passed: 24 samples per backend across L4/L6, HIGH/LOW, zoom 1/1.5, frames 1/30/60. Minimum body-mask share 1.0 WebGL2 / 0.9989396 WebGPU. These masks establish visibility, not recognition speed. Final scene gate, real-play spot, counters, and broad visual review remain open.
+
+## Draw cost and expanded review
+
+Matched s133/current HIGH z1 f60 counters: L4 127→128 draws, 340972→340884 triangles; L6 77→78 draws, 277176→277088 triangles. Calm L1 68→67 draws, 47877→47781 triangles. Dense delta **+1 draw, −88 triangles**, calm delta **−1 draw, −96 triangles**, no new pass. This replaces one 96-triangle ring with two four-triangle chevrons only when active.
+
+Opened LOW z1.5 L4 full-size captures on both backends and an eight-frame backend comparison of L4 HIGH z1/z1.5 and L6 LOW z1/z1.5 f60. Backend output appears consistent. L4 chevron is readable at the courier hair at both zooms; L6 eye lands on her lit body first. Final gate is in progress; 32 LOW rows passed before waiting on another job’s live exclusive pool reservation.
