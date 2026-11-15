@@ -32,7 +32,7 @@
     "northTruckStagingAndGateFence": "unverified",
     "redPickupGroundedAtZoom1_5": "unverified",
     "apcTiltAndSeatedHatchShooting": "unverified",
-    "l1CarAlarmPromptHighLowZoom1And1_5": "unverified",
+    "l1CarAlarmPromptHighLowZoom1And1_5": "Static layout fixture reviewed all four; vitals clear; P3 objective-arrow overlap z1; uninterrupted post-outbreak approach remains unverified",
     "otherPromptsL1ToL3": "unverified",
     "screamerReadabilityL9AndL10WhileMoving": "unverified",
     "l9BoringHarmlessBabysittingAndVisualVerdict": "unverified",
@@ -47,6 +47,13 @@
       "capture": "test-results/b107/l9-high-road/captures/campaign-L9-t16237.jpg",
       "roadIncompleteSeconds": 85.7,
       "shortcutIncompleteSeconds": 44.2
+    },
+    {
+      "severity": "P3",
+      "level": "L1",
+      "text": "Yellow objective arrow overlaps car alarm panel upper-right at zoom 1 in HIGH/LOW static layout fixture. Vitals do not overlap.",
+      "tick": 69,
+      "capture": "test-results/b107/prompt-fixture/alarm-high-z1.jpg"
     }
   ],
   "carryOverNotRechecked": [
@@ -371,5 +378,35 @@
     "result": "Standard HIGH WebGPU route reached outbreak and acquired bat; manual real-key detour failed to approach alarm reliably; stopped without alarm verdict",
     "raw": "test-results/b107/alarm-standard-high",
     "note": "Authored map anchor assist used; no teleport, objective skip, god mode or tool edit"
+  },
+  "alarmLayoutFixture": {
+    "method": "L1 load, begin mission, arm alarms and reset alarm cycle; teleport outside interaction range, real WASD final approach; static layout fixture, not post-outbreak campaign acceptance",
+    "matrix": [
+      {
+        "q": "high",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/alarm-high-z1.jpg",
+        "tick": 69
+      },
+      {
+        "q": "high",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/alarm-high-z1.5.jpg",
+        "tick": 78
+      },
+      {
+        "q": "low",
+        "z": 1,
+        "file": "test-results/b107/prompt-fixture/alarm-low-z1.jpg",
+        "tick": 68
+      },
+      {
+        "q": "low",
+        "z": 1.5,
+        "file": "test-results/b107/prompt-fixture/alarm-low-z1.5.jpg",
+        "tick": 75
+      }
+    ],
+    "verdict": "Vitals clear in all four captures. Yellow objective arrow overlaps panel upper-right at zoom 1 HIGH/LOW. Temporal jumping not established."
   }
 }
