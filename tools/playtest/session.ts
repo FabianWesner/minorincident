@@ -248,6 +248,28 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const escortAlarms = new Set<string>();
   const l6GroupMemory: { rear: { x: number; z: number; tick: number } | null } = { rear: null };
   const see = async () => {
+    if (process.env.PLAYTEST_APC_TILT === '1') await page.evaluate(disableTilt => {
+      const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+      const scope = window as unknown as { __apcTiltWorld?: unknown; __apcTilt?: { samples: number; maxRoll: number; maxPitch: number; firstOver20: unknown; wheelTravel: number } };
+      if (scope.__apcTiltWorld === w || w.scenario !== 'L9') return;
+      scope.__apcTiltWorld = w;
+      if (disableTilt) {
+        const car = w.missions?.l9 && w.vehicles?.cars.get(w.missions.l9.state.carId);
+        if (car) car.physics.stabilizeTilt = () => {};
+      }
+      const audit = scope.__apcTilt ??= { samples: 0, maxRoll: 0, maxPitch: 0, firstOver20: null, wheelTravel: 0 };
+      w.events.on('sim.tick', () => {
+        const l9 = w.missions?.l9, car = l9 && w.vehicles?.cars.get(l9.state.carId);
+        if (!car || l9!.state.phase !== 'driving') return;
+        const q = car.physics.body.rotation();
+        const roll = Math.atan2(2*(q.w*q.x-q.y*q.z),1-2*(q.x*q.x+q.z*q.z));
+        const pitch = Math.asin(Math.max(-1,Math.min(1,2*(q.w*q.z+q.x*q.y))));
+        audit.samples++; audit.maxRoll = Math.max(audit.maxRoll,Math.abs(roll)); audit.maxPitch = Math.max(audit.maxPitch,Math.abs(pitch));
+        audit.wheelTravel = Math.max(audit.wheelTravel,...car.physics.wheels.map(wheel=>Math.abs(wheel.suspension-car.physics.def.suspension)));
+        if (!audit.firstOver20 && Math.max(Math.abs(roll),Math.abs(pitch)) >= Math.PI/9)
+          audit.firstOver20 = { tick:w.tick, roll, pitch, position:{...car.entity.transform}, velocity:car.physics.body.linvel(), contacts:car.physics.wheels.map(wheel=>wheel.contact) };
+      });
+    }, process.env.PLAYTEST_APC_DISABLE_TILT === '1');
     eyes = await observeWithin(page.evaluate(look));
     if (eyes.level === 'L7' && eyes.player && process.env.PLAYTEST_L7_DEPARTURE_CAPTURES === '1') {
       const p = eyes.player, stage = Math.hypot(p.x - 262.4, p.z - 15) < 6 ? 'opening'
@@ -1992,6 +2014,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   assert.ok(handoverReady,'L8 must have no objective, destination pin or minimap marker during the calm after handover (L8-02)');
   return { runs, issues, yielded };
   } finally {
+    if (process.env.PLAYTEST_APC_TILT === '1' && !page.isClosed()) {
+      await page.evaluate('window.__apcTilt').then(data => writeFileSync(join(o.out, `${o.tag}-apc-tilt.json`), JSON.stringify(data))).catch(error => log({ apcTiltAuditError: String(error) }));
+    }
     if (process.env.QA_BROWSER_ROUTE_AUDIT === '1' && !page.isClosed()) {
       await page.evaluate(() => (window as unknown as { __qaBrowserRoutes: unknown[] }).__qaBrowserRoutes).then(data => writeFileSync(join(o.out, `${o.tag}-route-audit.json`), JSON.stringify(data))).catch(error => log({ qaRouteAuditError: String(error) }));
     }

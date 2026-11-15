@@ -1,0 +1,6696 @@
+{
+  "candidate": "266ec466",
+  "finding": {
+    "source": "docs/reports/s122-l9qa/README.md",
+    "nativeDefaultPath": "detour",
+    "asphaltCenterZ": -330,
+    "detourZ": -305,
+    "baseline": {
+      "quality": "high",
+      "tick": 4096,
+      "position": [
+        58.3925,
+        1.4318,
+        -304.6467
+      ],
+      "rollRadians": 0.36839,
+      "rollDegrees": 21.09,
+      "pitchRadians": -0.04299,
+      "descendingVelocityMps": -0.8345,
+      "wheelContacts": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "maxRollRadians": 0.39999,
+      "maxRollDegrees": 22.92,
+      "interpretation": "Uncontrolled chassis lean after wheel support was lost on the off-road detour; missing collision chunk was not established."
+    }
+  },
+  "correction": {
+    "file": "src/sim/vehicles/VehicleBody.ts",
+    "method": "stabilizeTilt",
+    "enabledWhen": "L9 mission APC is player-driven",
+    "boundDegrees": 20,
+    "springStartsAtFractionOfBound": 0.6,
+    "angularVelocityDeltaCapRadiansPerSecond": 3,
+    "technique": "Finite capped restorative angular impulse; no view-side rotation or blanket angular damping."
+  },
+  "primaryRoutes": {
+    "simulationTicksPerTier": 9000,
+    "qualityTiers": [
+      "low",
+      "high"
+    ],
+    "assertion": "No driving-phase roll or pitch reached 20 degrees.",
+    "rows": [
+      {
+        "route": "road",
+        "low": {
+          "maxRollDegrees": 1.99,
+          "maxPitchDegrees": 11.42,
+          "firstOver20": null
+        },
+        "high": {
+          "maxRollDegrees": 1.99,
+          "maxPitchDegrees": 11.42,
+          "firstOver20": null
+        }
+      },
+      {
+        "route": "countryside",
+        "low": {
+          "maxRollDegrees": 2.89,
+          "maxPitchDegrees": 10.6,
+          "firstOver20": null
+        },
+        "high": {
+          "maxRollDegrees": 2.89,
+          "maxPitchDegrees": 10.6,
+          "firstOver20": null
+        }
+      },
+      {
+        "route": "dry-shortcut",
+        "low": {
+          "maxRollDegrees": 14.13,
+          "maxPitchDegrees": 11.94,
+          "firstOver20": null
+        },
+        "high": {
+          "maxRollDegrees": 14.13,
+          "maxPitchDegrees": 11.94,
+          "firstOver20": null
+        }
+      }
+    ],
+    "fullHighRoadCompletion": {
+      "command": "L9_QUALITY=high L9_PROGRESS_PATH=primary L9_PROGRESS_TICKS=36000 node --import tsx/esm tools/qa/l9-progress-probe.ts 1 road --attitude-check --check",
+      "finished": true,
+      "tick": 10989,
+      "phase": "done",
+      "drivingMaxRollDegrees": 1.99,
+      "drivingMaxPitchDegrees": 11.4,
+      "firstDrivingOver20": null,
+      "positionJumps": 0,
+      "postDrivingCrashMaxRollDegrees": 90
+    },
+    "aggressiveSteering": {
+      "scenario": "10-second alternating full-steer burst during primary road drive",
+      "maxRollDegrees": 8.48,
+      "maxPitchDegrees": 12.06,
+      "firstDrivingOver20": null,
+      "routeCompleted": false
+    }
+  },
+  "busOnRoadHold": {
+    "durationSeconds": 120,
+    "samplesPerRow": 240,
+    "asphaltDistanceBoundMeters": 6,
+    "rows": [
+      {
+        "quality": "high",
+        "apcPlacement": "on-road",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.02
+      },
+      {
+        "quality": "high",
+        "apcPlacement": "corner-cut",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      },
+      {
+        "quality": "high",
+        "apcPlacement": "wide-detour",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      },
+      {
+        "quality": "low",
+        "apcPlacement": "on-road",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.003
+      },
+      {
+        "quality": "low",
+        "apcPlacement": "corner-cut",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      },
+      {
+        "quality": "low",
+        "apcPlacement": "wide-detour",
+        "busSpawned": true,
+        "maxDistanceMeters": 0.001
+      }
+    ],
+    "method": "Native L9 sim; bus ran unassisted for 120 seconds, bus centre sampled every 30 ticks against authored asphalt route segments."
+  },
+  "gates": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "threatAudit": {
+      "command": "npm run qa:threat",
+      "exit": 0,
+      "durationSeconds": 304.3,
+      "failFlags": 0,
+      "l9Skilled": "complete, 0 flags",
+      "l9Passive": "complete, 0 flags"
+    },
+    "vehicleCampaignMotion": {
+      "command": "E2E_PORT=4983 SCENE_PORT=4984 npm run qa:vehicle-campaign-motion",
+      "status": "passed",
+      "cases": 8,
+      "batches": [
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-tank",
+              "tier": "high",
+              "code": 0,
+              "seconds": 51.841,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "l4-tank",
+              "tier": "low",
+              "code": 0,
+              "seconds": 29.724,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-parked",
+              "tier": "high",
+              "code": 0,
+              "seconds": 32.153,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "l4-parked",
+              "tier": "low",
+              "code": 0,
+              "seconds": 16.646,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l7-bus",
+              "tier": "high",
+              "code": 0,
+              "seconds": 14.443,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "l7-bus",
+              "tier": "low",
+              "code": 0,
+              "seconds": 12.896,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "L9",
+              "tier": "high",
+              "code": 0,
+              "seconds": 117.434,
+              "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            },
+            {
+              "mode": "L9",
+              "tier": "low",
+              "code": 0,
+              "seconds": 77.945,
+              "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+              "sourceHash": "f268b701e72bce057aead06726372312f5bd3c7abeed6b128f599edb24c07a0a",
+              "pass": true
+            }
+          ]
+        }
+      ]
+    },
+    "remoteUnitSuite": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "status": "passed",
+      "runner": "46.225.66.90",
+      "seconds": 127.6,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1
+    }
+  },
+  "browserQaNeeded": [
+    "Repeat real-input HIGH WebGL2 road capture and review frames.",
+    "Exercise aggressive steering, kerb/ramp contact, and bus/APC contact with per-tick roll and pitch logging.",
+    "Rerun the vehicle campaign motion gate and unchanged remote unit suite.",
+    "Check WebGPU manually."
+  ],
+  "measurementAudit": "Probe maxima accumulation corrected on continuation. Earlier per-axis maxima need refreshed measurements; no completion claim.",
+  "axisCorrection": {
+    "method": "Chassis roll = atan2(-localZ.y, localY.y); chassis pitch = asin(localX.y). Both independent of yaw.",
+    "highPrimaryRoad": {
+      "finished": true,
+      "tick": 10989,
+      "drivingMaxRollRadians": 0.100410123303174,
+      "drivingMaxPitchRadians": 0.19900390726266862,
+      "firstOver20": null
+    },
+    "typecheck": "passed",
+    "lint": "passed",
+    "remaining": "Refresh contact/route matrix and broad gates after axis correction; earlier gate receipts predate this runtime."
+  },
+  "controlledContacts": {
+    "rows": [
+      {
+        "stabilized": false,
+        "fixture": "kerb",
+        "contacts": 2,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0,
+            "pitch": 1e-05,
+            "angularSpeed": 0.00013,
+            "suspension": [
+              0.26463,
+              0.26463,
+              0.2646,
+              0.2646
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0,
+            "pitch": 4e-05,
+            "angularSpeed": 0.00014,
+            "suspension": [
+              0.24507,
+              0.24507,
+              0.24495,
+              0.24495
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": 0,
+            "pitch": 6e-05,
+            "angularSpeed": 0.00013,
+            "suspension": [
+              0.24494,
+              0.24494,
+              0.24474,
+              0.24474
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": -0.00325,
+            "pitch": 0.00285,
+            "angularSpeed": 0.03925,
+            "suspension": [
+              0.25605,
+              0.25106,
+              0.25104,
+              0.24059
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": -0.00504,
+            "pitch": -0.00285,
+            "angularSpeed": 0.0578,
+            "suspension": [
+              0.25589,
+              0.24241,
+              0.24842,
+              0.2476
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": -0.00096,
+            "pitch": -0.00053,
+            "angularSpeed": 0.01407,
+            "suspension": [
+              0.24833,
+              0.24434,
+              0.25222,
+              0.24843
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": -0.00017,
+            "pitch": 0.0001,
+            "angularSpeed": 0.00216,
+            "suspension": [
+              0.2458,
+              0.24504,
+              0.24579,
+              0.24504
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": -3e-05,
+            "pitch": 0.00014,
+            "angularSpeed": 0.00035,
+            "suspension": [
+              0.24566,
+              0.24553,
+              0.24516,
+              0.24503
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": 0,
+            "pitch": 0.00015,
+            "angularSpeed": 8e-05,
+            "suspension": [
+              0.24572,
+              0.2457,
+              0.24517,
+              0.24514
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": 0,
+            "pitch": 0.00016,
+            "angularSpeed": 5e-05,
+            "suspension": [
+              0.24573,
+              0.24573,
+              0.24514,
+              0.24514
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": 0,
+            "pitch": 0.00017,
+            "angularSpeed": 5e-05,
+            "suspension": [
+              0.24575,
+              0.24575,
+              0.24512,
+              0.24512
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": 0,
+            "pitch": 0.00018,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24576,
+              0.24576,
+              0.24511,
+              0.24511
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": 0,
+            "pitch": 0.00018,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24577,
+              0.24577,
+              0.2451,
+              0.2451
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": 0,
+            "pitch": 0.00019,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24578,
+              0.24578,
+              0.24509,
+              0.24509
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": 0,
+            "pitch": 0.00019,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24579,
+              0.24579,
+              0.24508,
+              0.24508
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": 0,
+            "pitch": 0.0002,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.2458,
+              0.2458,
+              0.24507,
+              0.24507
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": 0,
+            "pitch": 0.0002,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24581,
+              0.24581,
+              0.24506,
+              0.24506
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24581,
+              0.24581,
+              0.24506,
+              0.24506
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24582,
+              0.24582,
+              0.24505,
+              0.24505
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24582,
+              0.24582,
+              0.24505,
+              0.24505
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24583,
+              0.24583,
+              0.24504,
+              0.24504
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24583,
+              0.24583,
+              0.24504,
+              0.24504
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24583,
+              0.24583,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24501,
+              0.24502
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          }
+        ],
+        "maxRollDegrees": 0.4288606994852173,
+        "maxPitchDegrees": 0.19042336564641835
+      },
+      {
+        "stabilized": false,
+        "fixture": "ramp",
+        "contacts": 17,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0,
+            "pitch": 1e-05,
+            "angularSpeed": 0.00013,
+            "suspension": [
+              0.26463,
+              0.26463,
+              0.2646,
+              0.2646
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0,
+            "pitch": 4e-05,
+            "angularSpeed": 0.00014,
+            "suspension": [
+              0.24507,
+              0.24507,
+              0.24495,
+              0.24495
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": -0.06961,
+            "pitch": 0.02358,
+            "angularSpeed": 1.34039,
+            "suspension": [
+              0.14186,
+              0.24501,
+              0.27264,
+              0.21642
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": -0.30752,
+            "pitch": 0.09558,
+            "angularSpeed": 1.4855,
+            "suspension": [
+              0.10906,
+              0.29822,
+              0.29958,
+              0.12295
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": -0.51354,
+            "pitch": 0.13176,
+            "angularSpeed": 1.02507,
+            "suspension": [
+              0.29167,
+              0.29997,
+              0.29999,
+              0.22441
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": -0.67466,
+            "pitch": 0.14513,
+            "angularSpeed": 0.88299,
+            "suspension": [
+              0.29987,
+              0.3,
+              0.3,
+              0.27714
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": -0.78478,
+            "pitch": 0.10038,
+            "angularSpeed": 0.64365,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.22613
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": -0.77549,
+            "pitch": -0.00862,
+            "angularSpeed": 0.85135,
+            "suspension": [
+              0.3,
+              0.27845,
+              0.3,
+              0.22827
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": -0.51942,
+            "pitch": -0.00956,
+            "angularSpeed": 1.78055,
+            "suspension": [
+              0.3,
+              0.17471,
+              0.3,
+              0.24449
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": -0.20647,
+            "pitch": 0.00801,
+            "angularSpeed": 1.92927,
+            "suspension": [
+              0.3,
+              0.27269,
+              0.3,
+              0.25308
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": 0.01712,
+            "pitch": 0.00396,
+            "angularSpeed": 0.12246,
+            "suspension": [
+              0.21888,
+              0.25095,
+              0.2035,
+              0.23049
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": 0.0009,
+            "pitch": 0.00026,
+            "angularSpeed": 0.0377,
+            "suspension": [
+              0.21342,
+              0.22299,
+              0.20976,
+              0.21925
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": 5e-05,
+            "pitch": 0.00049,
+            "angularSpeed": 0.0026,
+            "suspension": [
+              0.25754,
+              0.2578,
+              0.25622,
+              0.25648
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": 3e-05,
+            "pitch": 0.00062,
+            "angularSpeed": 0.00018,
+            "suspension": [
+              0.24939,
+              0.24948,
+              0.24714,
+              0.24723
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": 1e-05,
+            "pitch": 0.00058,
+            "angularSpeed": 0.00029,
+            "suspension": [
+              0.24626,
+              0.24629,
+              0.24406,
+              0.24409
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": 0,
+            "pitch": 0.00054,
+            "angularSpeed": 0.00024,
+            "suspension": [
+              0.24635,
+              0.24636,
+              0.24432,
+              0.24433
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": 0,
+            "pitch": 0.0005,
+            "angularSpeed": 0.00021,
+            "suspension": [
+              0.24638,
+              0.24638,
+              0.2445,
+              0.2445
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": 0,
+            "pitch": 0.00047,
+            "angularSpeed": 0.00018,
+            "suspension": [
+              0.24631,
+              0.24631,
+              0.24456,
+              0.24456
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": 0,
+            "pitch": 0.00044,
+            "angularSpeed": 0.00016,
+            "suspension": [
+              0.24626,
+              0.24626,
+              0.24461,
+              0.24461
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": 0,
+            "pitch": 0.00041,
+            "angularSpeed": 0.00014,
+            "suspension": [
+              0.24621,
+              0.24621,
+              0.24466,
+              0.24466
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": 0,
+            "pitch": 0.00039,
+            "angularSpeed": 0.00012,
+            "suspension": [
+              0.24616,
+              0.24616,
+              0.2447,
+              0.2447
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": 0,
+            "pitch": 0.00037,
+            "angularSpeed": 0.00011,
+            "suspension": [
+              0.24613,
+              0.24613,
+              0.24474,
+              0.24474
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": 0,
+            "pitch": 0.00035,
+            "angularSpeed": 9e-05,
+            "suspension": [
+              0.24609,
+              0.24609,
+              0.24477,
+              0.24477
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": 0,
+            "pitch": 0.00034,
+            "angularSpeed": 8e-05,
+            "suspension": [
+              0.24606,
+              0.24606,
+              0.2448,
+              0.2448
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": 0,
+            "pitch": 0.00032,
+            "angularSpeed": 7e-05,
+            "suspension": [
+              0.24604,
+              0.24604,
+              0.24483,
+              0.24483
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": 0,
+            "pitch": 0.00031,
+            "angularSpeed": 6e-05,
+            "suspension": [
+              0.24602,
+              0.24602,
+              0.24485,
+              0.24485
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": 0,
+            "pitch": 0.0003,
+            "angularSpeed": 6e-05,
+            "suspension": [
+              0.246,
+              0.246,
+              0.24487,
+              0.24487
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": 0,
+            "pitch": 0.00029,
+            "angularSpeed": 5e-05,
+            "suspension": [
+              0.24598,
+              0.24598,
+              0.24489,
+              0.24489
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": 0,
+            "pitch": 0.00029,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24597,
+              0.24597,
+              0.2449,
+              0.2449
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": 0,
+            "pitch": 0.00028,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24595,
+              0.24595,
+              0.24492,
+              0.24492
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": 0,
+            "pitch": 0.00027,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24594,
+              0.24594,
+              0.24493,
+              0.24493
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": 0,
+            "pitch": 0.00027,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24593,
+              0.24593,
+              0.24494,
+              0.24494
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": 0,
+            "pitch": 0.00026,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24592,
+              0.24592,
+              0.24495,
+              0.24495
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": 0,
+            "pitch": 0.00026,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24591,
+              0.24591,
+              0.24495,
+              0.24495
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": 0,
+            "pitch": 0.00026,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24591,
+              0.24591,
+              0.24496,
+              0.24496
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": 0,
+            "pitch": 0.00025,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.2459,
+              0.2459,
+              0.24497,
+              0.24497
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": 0,
+            "pitch": 0.00025,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.2459,
+              0.2459,
+              0.24497,
+              0.24497
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": 0,
+            "pitch": 0.00025,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24589,
+              0.24589,
+              0.24498,
+              0.24498
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24589,
+              0.24589,
+              0.24498,
+              0.24498
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24588,
+              0.24588,
+              0.24498,
+              0.24498
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24588,
+              0.24588,
+              0.24499,
+              0.24499
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24588,
+              0.24588,
+              0.24499,
+              0.24499
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24588,
+              0.24588,
+              0.24499,
+              0.24499
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          }
+        ],
+        "maxRollDegrees": 45.8216435220951,
+        "maxPitchDegrees": 8.32839901665716
+      },
+      {
+        "stabilized": false,
+        "fixture": "bus-side",
+        "contacts": 15,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0.19041,
+            "pitch": 0.00126,
+            "angularSpeed": 2.35258,
+            "suspension": [
+              0.18209,
+              0.2884,
+              0.18045,
+              0.2884
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0.4355,
+            "pitch": 0.00374,
+            "angularSpeed": 1.25837,
+            "suspension": [
+              0.05205,
+              0.29982,
+              0.05202,
+              0.29982
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": 0.74548,
+            "pitch": 0.00158,
+            "angularSpeed": 2.24866,
+            "suspension": [
+              0.20224,
+              0.3,
+              0.19098,
+              0.3
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": 1.08166,
+            "pitch": -0.00173,
+            "angularSpeed": 1.75665,
+            "suspension": [
+              0.29789,
+              0.3,
+              0.29748,
+              0.3
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": 1.34788,
+            "pitch": 0,
+            "angularSpeed": 1.83656,
+            "suspension": [
+              0.29997,
+              0.3,
+              0.29996,
+              0.3
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": 1.65783,
+            "pitch": 0.00077,
+            "angularSpeed": 1.677,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": 1.92357,
+            "pitch": -1e-05,
+            "angularSpeed": 1.49347,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": 2.17452,
+            "pitch": 1e-05,
+            "angularSpeed": 1.49422,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": 2.44472,
+            "pitch": 1e-05,
+            "angularSpeed": 1.69636,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": 2.76722,
+            "pitch": 0,
+            "angularSpeed": 2.08987,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": 3.14147,
+            "pitch": -0.00068,
+            "angularSpeed": 0.55232,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": -3.14157,
+            "pitch": 0,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": -3.14158,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": -3.14159,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        ],
+        "maxRollDegrees": 179.99999819755382,
+        "maxPitchDegrees": 0.21804778419724766
+      },
+      {
+        "stabilized": false,
+        "fixture": "bus-rear",
+        "contacts": 2228,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.26461,
+              0.26461,
+              0.26461,
+              0.26461
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0.00091,
+            "pitch": -0.0761,
+            "angularSpeed": 0.61164,
+            "suspension": [
+              0.23526,
+              0.23594,
+              0.06143,
+              0.06141
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": 0.00084,
+            "pitch": -0.1227,
+            "angularSpeed": 0.0487,
+            "suspension": [
+              0.06812,
+              0.06828,
+              0.05018,
+              0.05018
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": 0.00074,
+            "pitch": -0.09451,
+            "angularSpeed": 0.40316,
+            "suspension": [
+              0.05028,
+              0.05028,
+              0.26466,
+              0.26517
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": 0.00033,
+            "pitch": -0.02787,
+            "angularSpeed": 0.34818,
+            "suspension": [
+              0.28598,
+              0.28614,
+              0.29945,
+              0.29946
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": -1e-05,
+            "pitch": 0.02418,
+            "angularSpeed": 0.272,
+            "suspension": [
+              0.29978,
+              0.29979,
+              0.29999,
+              0.29999
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": -0.00018,
+            "pitch": 0.04431,
+            "angularSpeed": 0.3501,
+            "suspension": [
+              0.3,
+              0.3,
+              0.27393,
+              0.27359
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": -4e-05,
+            "pitch": -0.00516,
+            "angularSpeed": 0.00293,
+            "suspension": [
+              0.21787,
+              0.21774,
+              0.22599,
+              0.22584
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": 0,
+            "pitch": -0.00082,
+            "angularSpeed": 0.01624,
+            "suspension": [
+              0.2363,
+              0.2363,
+              0.24352,
+              0.24352
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": 0,
+            "pitch": -0.00092,
+            "angularSpeed": 0.00399,
+            "suspension": [
+              0.24716,
+              0.24717,
+              0.24993,
+              0.24993
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": 0,
+            "pitch": -0.00122,
+            "angularSpeed": 0.00052,
+            "suspension": [
+              0.24364,
+              0.24365,
+              0.24796,
+              0.24797
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": 0,
+            "pitch": -0.00124,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24306,
+              0.24306,
+              0.24764,
+              0.24764
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": 0,
+            "pitch": -0.00124,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24313,
+              0.24313,
+              0.24771,
+              0.24771
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": 0,
+            "pitch": -0.00075,
+            "angularSpeed": 0.00623,
+            "suspension": [
+              0.24357,
+              0.24357,
+              0.2473,
+              0.2473
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": 0,
+            "pitch": -8e-05,
+            "angularSpeed": 0.00176,
+            "suspension": [
+              0.24505,
+              0.24505,
+              0.24583,
+              0.24583
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": 0,
+            "pitch": 1e-05,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24542,
+              0.24542
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          }
+        ],
+        "maxRollDegrees": 0.05667517286406818,
+        "maxPitchDegrees": 7.097161502369282
+      },
+      {
+        "stabilized": true,
+        "fixture": "kerb",
+        "contacts": 2,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0,
+            "pitch": 1e-05,
+            "angularSpeed": 0.00013,
+            "suspension": [
+              0.26463,
+              0.26463,
+              0.2646,
+              0.2646
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0,
+            "pitch": 4e-05,
+            "angularSpeed": 0.00014,
+            "suspension": [
+              0.24507,
+              0.24507,
+              0.24495,
+              0.24495
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": 0,
+            "pitch": 6e-05,
+            "angularSpeed": 0.00013,
+            "suspension": [
+              0.24494,
+              0.24494,
+              0.24474,
+              0.24474
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": -0.00325,
+            "pitch": 0.00285,
+            "angularSpeed": 0.03925,
+            "suspension": [
+              0.25605,
+              0.25106,
+              0.25104,
+              0.24059
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": -0.00504,
+            "pitch": -0.00285,
+            "angularSpeed": 0.0578,
+            "suspension": [
+              0.25589,
+              0.24241,
+              0.24842,
+              0.2476
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": -0.00096,
+            "pitch": -0.00053,
+            "angularSpeed": 0.01407,
+            "suspension": [
+              0.24833,
+              0.24434,
+              0.25222,
+              0.24843
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": -0.00017,
+            "pitch": 0.0001,
+            "angularSpeed": 0.00216,
+            "suspension": [
+              0.2458,
+              0.24504,
+              0.24579,
+              0.24504
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": -3e-05,
+            "pitch": 0.00014,
+            "angularSpeed": 0.00035,
+            "suspension": [
+              0.24566,
+              0.24553,
+              0.24516,
+              0.24503
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": 0,
+            "pitch": 0.00015,
+            "angularSpeed": 8e-05,
+            "suspension": [
+              0.24572,
+              0.2457,
+              0.24517,
+              0.24514
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": 0,
+            "pitch": 0.00016,
+            "angularSpeed": 5e-05,
+            "suspension": [
+              0.24573,
+              0.24573,
+              0.24514,
+              0.24514
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": 0,
+            "pitch": 0.00017,
+            "angularSpeed": 5e-05,
+            "suspension": [
+              0.24575,
+              0.24575,
+              0.24512,
+              0.24512
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": 0,
+            "pitch": 0.00018,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24576,
+              0.24576,
+              0.24511,
+              0.24511
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": 0,
+            "pitch": 0.00018,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24577,
+              0.24577,
+              0.2451,
+              0.2451
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": 0,
+            "pitch": 0.00019,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24578,
+              0.24578,
+              0.24509,
+              0.24509
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": 0,
+            "pitch": 0.00019,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24579,
+              0.24579,
+              0.24508,
+              0.24508
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": 0,
+            "pitch": 0.0002,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.2458,
+              0.2458,
+              0.24507,
+              0.24507
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": 0,
+            "pitch": 0.0002,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24581,
+              0.24581,
+              0.24506,
+              0.24506
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24581,
+              0.24581,
+              0.24506,
+              0.24506
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24582,
+              0.24582,
+              0.24505,
+              0.24505
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24582,
+              0.24582,
+              0.24505,
+              0.24505
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": 0,
+            "pitch": 0.00021,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24583,
+              0.24583,
+              0.24504,
+              0.24504
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24583,
+              0.24583,
+              0.24504,
+              0.24504
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24583,
+              0.24583,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24503,
+              0.24503
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24584,
+              0.24584,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": 0,
+            "pitch": 0.00022,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24502,
+              0.24502
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24501,
+              0.24502
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24585,
+              0.24585,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.24501,
+              0.24501
+            ]
+          }
+        ],
+        "maxRollDegrees": 0.4288606994852173,
+        "maxPitchDegrees": 0.19042336564641835
+      },
+      {
+        "stabilized": true,
+        "fixture": "ramp",
+        "contacts": 27,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0,
+            "pitch": 1e-05,
+            "angularSpeed": 0.00013,
+            "suspension": [
+              0.26463,
+              0.26463,
+              0.2646,
+              0.2646
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0,
+            "pitch": 4e-05,
+            "angularSpeed": 0.00014,
+            "suspension": [
+              0.24507,
+              0.24507,
+              0.24495,
+              0.24495
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": -0.05304,
+            "pitch": 0.02161,
+            "angularSpeed": 0.93696,
+            "suspension": [
+              0.13623,
+              0.24945,
+              0.26748,
+              0.22021
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": -0.19475,
+            "pitch": 0.09825,
+            "angularSpeed": 0.95156,
+            "suspension": [
+              0.05135,
+              0.29882,
+              0.2995,
+              0.20189
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": -0.23268,
+            "pitch": 0.15062,
+            "angularSpeed": 0.51988,
+            "suspension": [
+              0.2795,
+              0.29998,
+              0.27619,
+              0.29638
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": -0.2351,
+            "pitch": 0.0911,
+            "angularSpeed": 0.54458,
+            "suspension": [
+              0.29968,
+              0.3,
+              0.26511,
+              0.29994
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": -0.21101,
+            "pitch": 0.05995,
+            "angularSpeed": 0.20022,
+            "suspension": [
+              0.3,
+              0.3,
+              0.29946,
+              0.3
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": -0.20978,
+            "pitch": 0.03563,
+            "angularSpeed": 0.1546,
+            "suspension": [
+              0.3,
+              0.3,
+              0.29999,
+              0.3
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": -0.20957,
+            "pitch": 0.01662,
+            "angularSpeed": 0.12071,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": -0.18844,
+            "pitch": 0.00185,
+            "angularSpeed": 1.23428,
+            "suspension": [
+              0.3,
+              0.28881,
+              0.3,
+              0.28483
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": -0.02258,
+            "pitch": -0.00011,
+            "angularSpeed": 0.27996,
+            "suspension": [
+              0.21701,
+              0.132,
+              0.21918,
+              0.13417
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": 0.00134,
+            "pitch": 0.00187,
+            "angularSpeed": 0.00335,
+            "suspension": [
+              0.23833,
+              0.23565,
+              0.23263,
+              0.22994
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": 0.0003,
+            "pitch": 0.00155,
+            "angularSpeed": 0.00321,
+            "suspension": [
+              0.26219,
+              0.26321,
+              0.25607,
+              0.25709
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": 7e-05,
+            "pitch": 0.00131,
+            "angularSpeed": 0.00125,
+            "suspension": [
+              0.24941,
+              0.24969,
+              0.24436,
+              0.24464
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": 2e-05,
+            "pitch": 0.00116,
+            "angularSpeed": 0.00076,
+            "suspension": [
+              0.24723,
+              0.2473,
+              0.24279,
+              0.24286
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": 0,
+            "pitch": 0.00105,
+            "angularSpeed": 0.00063,
+            "suspension": [
+              0.24737,
+              0.24738,
+              0.24337,
+              0.24339
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": 0,
+            "pitch": 0.00095,
+            "angularSpeed": 0.00055,
+            "suspension": [
+              0.24725,
+              0.24725,
+              0.24364,
+              0.24364
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": 0,
+            "pitch": 0.00086,
+            "angularSpeed": 0.00049,
+            "suspension": [
+              0.24707,
+              0.24707,
+              0.2438,
+              0.2438
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": 0,
+            "pitch": 0.00078,
+            "angularSpeed": 0.00043,
+            "suspension": [
+              0.24692,
+              0.24692,
+              0.24395,
+              0.24395
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": 0,
+            "pitch": 0.00072,
+            "angularSpeed": 0.00037,
+            "suspension": [
+              0.24679,
+              0.24679,
+              0.24408,
+              0.24408
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": 0,
+            "pitch": 0.00066,
+            "angularSpeed": 0.00033,
+            "suspension": [
+              0.24668,
+              0.24668,
+              0.24419,
+              0.24419
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": 0,
+            "pitch": 0.0006,
+            "angularSpeed": 0.00029,
+            "suspension": [
+              0.24658,
+              0.24658,
+              0.24429,
+              0.24429
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": 0,
+            "pitch": 0.00056,
+            "angularSpeed": 0.00025,
+            "suspension": [
+              0.24649,
+              0.24649,
+              0.24438,
+              0.24438
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": 0,
+            "pitch": 0.00052,
+            "angularSpeed": 0.00022,
+            "suspension": [
+              0.24641,
+              0.24641,
+              0.24446,
+              0.24446
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": 0,
+            "pitch": 0.00048,
+            "angularSpeed": 0.00019,
+            "suspension": [
+              0.24634,
+              0.24634,
+              0.24453,
+              0.24453
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": 0,
+            "pitch": 0.00045,
+            "angularSpeed": 0.00017,
+            "suspension": [
+              0.24628,
+              0.24628,
+              0.24459,
+              0.24459
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": 0,
+            "pitch": 0.00042,
+            "angularSpeed": 0.00015,
+            "suspension": [
+              0.24623,
+              0.24623,
+              0.24464,
+              0.24464
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": 0,
+            "pitch": 0.0004,
+            "angularSpeed": 0.00013,
+            "suspension": [
+              0.24619,
+              0.24619,
+              0.24468,
+              0.24468
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": 0,
+            "pitch": 0.00038,
+            "angularSpeed": 0.00012,
+            "suspension": [
+              0.24615,
+              0.24615,
+              0.24472,
+              0.24472
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": 0,
+            "pitch": 0.00036,
+            "angularSpeed": 0.0001,
+            "suspension": [
+              0.24611,
+              0.24611,
+              0.24476,
+              0.24476
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": 0,
+            "pitch": 0.00035,
+            "angularSpeed": 9e-05,
+            "suspension": [
+              0.24608,
+              0.24608,
+              0.24479,
+              0.24479
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": 0,
+            "pitch": 0.00033,
+            "angularSpeed": 8e-05,
+            "suspension": [
+              0.24605,
+              0.24605,
+              0.24482,
+              0.24482
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": 0,
+            "pitch": 0.00032,
+            "angularSpeed": 7e-05,
+            "suspension": [
+              0.24603,
+              0.24603,
+              0.24484,
+              0.24484
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": 0,
+            "pitch": 0.00031,
+            "angularSpeed": 6e-05,
+            "suspension": [
+              0.24601,
+              0.24601,
+              0.24486,
+              0.24486
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": 0,
+            "pitch": 0.0003,
+            "angularSpeed": 5e-05,
+            "suspension": [
+              0.24599,
+              0.24599,
+              0.24488,
+              0.24488
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": 0,
+            "pitch": 0.00029,
+            "angularSpeed": 5e-05,
+            "suspension": [
+              0.24597,
+              0.24597,
+              0.2449,
+              0.2449
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": 0,
+            "pitch": 0.00028,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24596,
+              0.24596,
+              0.24491,
+              0.24491
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": 0,
+            "pitch": 0.00028,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24595,
+              0.24595,
+              0.24492,
+              0.24492
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": 0,
+            "pitch": 0.00027,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24594,
+              0.24594,
+              0.24493,
+              0.24493
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": 0,
+            "pitch": 0.00027,
+            "angularSpeed": 3e-05,
+            "suspension": [
+              0.24593,
+              0.24593,
+              0.24494,
+              0.24494
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": 0,
+            "pitch": 0.00026,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24592,
+              0.24592,
+              0.24495,
+              0.24495
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": 0,
+            "pitch": 0.00026,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24591,
+              0.24591,
+              0.24496,
+              0.24496
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": 0,
+            "pitch": 0.00025,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.2459,
+              0.2459,
+              0.24496,
+              0.24496
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": 0,
+            "pitch": 0.00025,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.2459,
+              0.2459,
+              0.24497,
+              0.24497
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": 0,
+            "pitch": 0.00025,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24589,
+              0.24589,
+              0.24497,
+              0.24497
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": 0,
+            "pitch": 0.00025,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24589,
+              0.24589,
+              0.24498,
+              0.24498
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24589,
+              0.24589,
+              0.24498,
+              0.24498
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24588,
+              0.24588,
+              0.24499,
+              0.24499
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24588,
+              0.24588,
+              0.24499,
+              0.24499
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24588,
+              0.24588,
+              0.24499,
+              0.24499
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.24499,
+              0.24499
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": 0,
+            "pitch": 0.00024,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24587,
+              0.24587,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.245,
+              0.245
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": 0,
+            "pitch": 0.00023,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24586,
+              0.24586,
+              0.245,
+              0.245
+            ]
+          }
+        ],
+        "maxRollDegrees": 14.848905002124198,
+        "maxPitchDegrees": 8.677292581731413
+      },
+      {
+        "stabilized": true,
+        "fixture": "bus-side",
+        "contacts": 28,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0.11355,
+            "pitch": 0.00104,
+            "angularSpeed": 0.27893,
+            "suspension": [
+              0.19712,
+              0.2884,
+              0.19568,
+              0.2884
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0.13973,
+            "pitch": 0.00132,
+            "angularSpeed": 0.36047,
+            "suspension": [
+              0.15445,
+              0.29982,
+              0.14894,
+              0.29982
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": 0.07978,
+            "pitch": 0.00023,
+            "angularSpeed": 0.42165,
+            "suspension": [
+              0.24096,
+              0.3,
+              0.23932,
+              0.3
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": 0.01858,
+            "pitch": 0.0001,
+            "angularSpeed": 0.09922,
+            "suspension": [
+              0.23184,
+              0.28543,
+              0.23107,
+              0.28494
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": 0.00499,
+            "pitch": -3e-05,
+            "angularSpeed": 0.05845,
+            "suspension": [
+              0.22851,
+              0.24838,
+              0.22857,
+              0.24844
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": 0.00102,
+            "pitch": 0,
+            "angularSpeed": 0.00867,
+            "suspension": [
+              0.24361,
+              0.2476,
+              0.24365,
+              0.24763
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": 0.00025,
+            "pitch": 0,
+            "angularSpeed": 0.00229,
+            "suspension": [
+              0.24532,
+              0.24628,
+              0.24532,
+              0.24628
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": 5e-05,
+            "pitch": 0,
+            "angularSpeed": 0.00053,
+            "suspension": [
+              0.24533,
+              0.24555,
+              0.24533,
+              0.24555
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": 1e-05,
+            "pitch": 0,
+            "angularSpeed": 0.00011,
+            "suspension": [
+              0.2454,
+              0.24545,
+              0.2454,
+              0.24545
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 2e-05,
+            "suspension": [
+              0.24543,
+              0.24544,
+              0.24543,
+              0.24544
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24544,
+              0.24543,
+              0.24544
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24543,
+              0.24543,
+              0.24543,
+              0.24543
+            ]
+          }
+        ],
+        "maxRollDegrees": 8.944963042385119,
+        "maxPitchDegrees": 0.09133453663533103
+      },
+      {
+        "stabilized": true,
+        "fixture": "bus-rear",
+        "contacts": 2224,
+        "trace": [
+          {
+            "tick": 0,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.3,
+              0.3,
+              0.3,
+              0.3
+            ]
+          },
+          {
+            "tick": 10,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.26461,
+              0.26461,
+              0.26461,
+              0.26461
+            ]
+          },
+          {
+            "tick": 20,
+            "roll": 0.00085,
+            "pitch": -0.06648,
+            "angularSpeed": 0.47781,
+            "suspension": [
+              0.24149,
+              0.24212,
+              0.06143,
+              0.06141
+            ]
+          },
+          {
+            "tick": 30,
+            "roll": 0.00035,
+            "pitch": -0.09862,
+            "angularSpeed": 0.07185,
+            "suspension": [
+              0.06917,
+              0.06922,
+              0.05018,
+              0.05018
+            ]
+          },
+          {
+            "tick": 40,
+            "roll": 0.00032,
+            "pitch": -0.08383,
+            "angularSpeed": 0.31399,
+            "suspension": [
+              0.0503,
+              0.0503,
+              0.23153,
+              0.23203
+            ]
+          },
+          {
+            "tick": 50,
+            "roll": 0.00011,
+            "pitch": -0.03038,
+            "angularSpeed": 0.27932,
+            "suspension": [
+              0.28606,
+              0.28613,
+              0.29894,
+              0.29895
+            ]
+          },
+          {
+            "tick": 60,
+            "roll": -6e-05,
+            "pitch": 0.01138,
+            "angularSpeed": 0.2182,
+            "suspension": [
+              0.29978,
+              0.29978,
+              0.29998,
+              0.29998
+            ]
+          },
+          {
+            "tick": 70,
+            "roll": -0.00017,
+            "pitch": 0.04005,
+            "angularSpeed": 0.06151,
+            "suspension": [
+              0.3,
+              0.3,
+              0.29877,
+              0.29863
+            ]
+          },
+          {
+            "tick": 80,
+            "roll": -4e-05,
+            "pitch": -0.0005,
+            "angularSpeed": 0.04649,
+            "suspension": [
+              0.22282,
+              0.22267,
+              0.21094,
+              0.21076
+            ]
+          },
+          {
+            "tick": 90,
+            "roll": 0,
+            "pitch": -0.00186,
+            "angularSpeed": 0.00827,
+            "suspension": [
+              0.23425,
+              0.23424,
+              0.24183,
+              0.24181
+            ]
+          },
+          {
+            "tick": 100,
+            "roll": 0,
+            "pitch": -0.0012,
+            "angularSpeed": 7e-05,
+            "suspension": [
+              0.24795,
+              0.24795,
+              0.25261,
+              0.25261
+            ]
+          },
+          {
+            "tick": 110,
+            "roll": 0,
+            "pitch": -0.00124,
+            "angularSpeed": 0.00011,
+            "suspension": [
+              0.24377,
+              0.24377,
+              0.24831,
+              0.24831
+            ]
+          },
+          {
+            "tick": 120,
+            "roll": 0,
+            "pitch": -0.00124,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24301,
+              0.24301,
+              0.24759,
+              0.24759
+            ]
+          },
+          {
+            "tick": 130,
+            "roll": 0,
+            "pitch": -0.00062,
+            "angularSpeed": 0.00602,
+            "suspension": [
+              0.24375,
+              0.24375,
+              0.24707,
+              0.24707
+            ]
+          },
+          {
+            "tick": 140,
+            "roll": 0,
+            "pitch": -5e-05,
+            "angularSpeed": 0.00134,
+            "suspension": [
+              0.24515,
+              0.24515,
+              0.24573,
+              0.24573
+            ]
+          },
+          {
+            "tick": 150,
+            "roll": 0,
+            "pitch": 1e-05,
+            "angularSpeed": 1e-05,
+            "suspension": [
+              0.24545,
+              0.24545,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 160,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 4e-05,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 170,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24543,
+              0.24543
+            ]
+          },
+          {
+            "tick": 180,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 190,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 200,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 210,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 220,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 230,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 240,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 250,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 260,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 270,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 280,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 290,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 300,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 310,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 320,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 330,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 340,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 350,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 360,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 370,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 380,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 390,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 400,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 410,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 420,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 430,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 440,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 450,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 460,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 470,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 480,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 490,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 500,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 510,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 520,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 530,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 540,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 550,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 560,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 570,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 580,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          },
+          {
+            "tick": 590,
+            "roll": 0,
+            "pitch": 0,
+            "angularSpeed": 0,
+            "suspension": [
+              0.24544,
+              0.24544,
+              0.24544,
+              0.24544
+            ]
+          }
+        ],
+        "maxRollDegrees": 0.052954794876232364,
+        "maxPitchDegrees": 5.8111640084454015
+      }
+    ]
+  },
+  "correctedFullDriveMatrix": [
+    {
+      "quality": "high",
+      "routeId": "countryside",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 11386,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.18475899374925672,
+        "maxAt": 10725,
+        "drivingMaxRoll": 0.14556547279128682,
+        "drivingMaxPitch": 0.18475899374925672,
+        "drivingMaxAt": 2853,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7189,
+        "outside6": 0,
+        "maxDistance": 3.476933002471924
+      }
+    },
+    {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "detour",
+      "finished": true,
+      "tick": 12374,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.2125141605296607,
+        "maxAt": 11713,
+        "drivingMaxRoll": 0.14490254257101828,
+        "drivingMaxPitch": 0.2125141605296607,
+        "drivingMaxAt": 4967,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7878,
+        "outside6": 0,
+        "maxDistance": 3.4783480167388916
+      }
+    },
+    {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 10989,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.19900390726266862,
+        "maxAt": 10328,
+        "drivingMaxRoll": 0.100410123303174,
+        "drivingMaxPitch": 0.19900390726266862,
+        "drivingMaxAt": 2584,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7295,
+        "outside6": 0,
+        "maxDistance": 2.378319637734984
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "countryside",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 11846,
+      "attitude": {
+        "maxRoll": 1.5707963267948963,
+        "maxPitch": 0.2107265680010802,
+        "maxAt": 11185,
+        "drivingMaxRoll": 0.18838768559256977,
+        "drivingMaxPitch": 0.2107265680010802,
+        "drivingMaxAt": 5447,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7448,
+        "outside6": 0,
+        "maxDistance": 3.470313549041748
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "road",
+      "pathId": "detour",
+      "finished": true,
+      "tick": 12351,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.10184373411706941,
+        "maxAt": 11690,
+        "drivingMaxRoll": 0.07407894842377596,
+        "drivingMaxPitch": 0.10184373411706941,
+        "drivingMaxAt": 4126,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7844,
+        "outside6": 0,
+        "maxDistance": 3.292135000228882
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 10790,
+      "attitude": {
+        "maxRoll": 1.5707963267948963,
+        "maxPitch": 0.1993064859088667,
+        "maxAt": 10129,
+        "drivingMaxRoll": 0.13504823666936075,
+        "drivingMaxPitch": 0.1993064859088667,
+        "drivingMaxAt": 2585,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 7130,
+        "outside6": 0,
+        "maxDistance": 3.478804588317871
+      }
+    }
+  ],
+  "olderBaselineComparison": {
+    "older": "683da8f8",
+    "candidate": "266ec466",
+    "vehicleBodyDiff": "empty",
+    "scope": "Identical chassis implementation; isolated rollover susceptibility predates batch 103. Original browser incident trigger remains unisolated."
+  },
+  "correctedRuntimeGates": {
+    "runtimeCommit": "b58ec0b5",
+    "remoteUnit": {
+      "exit": 0,
+      "runner": "94.130.181.173",
+      "seconds": 146.8,
+      "files": 27,
+      "passed": 105,
+      "skipped": 1
+    },
+    "vehicleCampaign": {
+      "exit": 0,
+      "cases": 8,
+      "batches": [
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-tank",
+              "tier": "high",
+              "code": 0,
+              "seconds": 51.616,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            },
+            {
+              "mode": "l4-tank",
+              "tier": "low",
+              "code": 0,
+              "seconds": 29.82,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-parked",
+              "tier": "high",
+              "code": 0,
+              "seconds": 32.42,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            },
+            {
+              "mode": "l4-parked",
+              "tier": "low",
+              "code": 0,
+              "seconds": 17.392,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l7-bus",
+              "tier": "high",
+              "code": 0,
+              "seconds": 14.5,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            },
+            {
+              "mode": "l7-bus",
+              "tier": "low",
+              "code": 0,
+              "seconds": 12.952,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "L9",
+              "tier": "high",
+              "code": 0,
+              "seconds": 114.395,
+              "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            },
+            {
+              "mode": "L9",
+              "tier": "low",
+              "code": 0,
+              "seconds": 77.757,
+              "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+              "sourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+              "pass": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "currentThreatAudit": {
+    "sourceHash": "297bf1264f4b0e30aad69fa90a21e3ff1c5f79c9049d12d296c39e75086c41af",
+    "observerHash": "b8dcd5fd4180aa0610f1cedbff7b7564aff6d78d027d58cf624a09801c158cb8",
+    "revision": "e14bf965e48d271d60d7a85af40456b19aebbf11",
+    "seconds": 328.77928975000003,
+    "flags": [],
+    "command": "npm run qa:threat",
+    "exit": 0,
+    "L9": "skilled complete, passive complete, 0 passive flags"
+  },
+  "physicalKeyboardRoad": {
+    "command": "PLAYTEST_APC_TILT=1 E2E_PORT=4983 SCENE_PORT=4984 node --import tsx tools/playtest/play.ts --levels L9 --quality high --zoom 1 --entry debug --l9-route road --no-skip --session-seconds 120 --level-minutes 2 --out test-results/s123-apctip/physical-high",
+    "attitude": {
+      "samples": 6738,
+      "maxRoll": 0.26517920218431695,
+      "maxPitch": 0.1909810002558933,
+      "firstOver20": null,
+      "wheelTravel": 0.2499957502189309
+    },
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 112,
+        "maxNoProgressSeconds": 5.152,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 0.705,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "exit": 1,
+    "interpretation": "Bounded sample, unfinished level; no tilt breach in 6738 sampled driving ticks. Reviewed t2707 and t5411 original-size captures: upright APC during leaper load and barricade contact. Sparse stills do not establish continuous suspension feel."
+  },
+  "contactFixtureCorrection": "Ground enlarged to 1500m half extent: APC cannot drive off the floor during the 600-tick window. Traces every 10 ticks retain suspension and angular response.",
+  "aggressiveCompletedDrives": [
+    {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 12079,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.21042477137886195,
+        "maxAt": 11418,
+        "drivingMaxRoll": 0.21494475691967893,
+        "drivingMaxPitch": 0.21042477137886195,
+        "drivingMaxAt": 4227,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 6953,
+        "outside6": 0,
+        "maxDistance": 2.3693087639957233
+      }
+    },
+    {
+      "quality": "low",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": true,
+      "tick": 11264,
+      "attitude": {
+        "maxRoll": 1.5707963267948966,
+        "maxPitch": 0.19759379640124636,
+        "maxAt": 10603,
+        "drivingMaxRoll": 0.16707941506705432,
+        "drivingMaxPitch": 0.19759379640124636,
+        "drivingMaxAt": 3300,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 6948,
+        "outside6": 0,
+        "maxDistance": 0.330352783203125
+      }
+    }
+  ],
+  "nativeTorqueAblation": {
+    "road": {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": false,
+      "tick": 7200,
+      "attitude": {
+        "maxRoll": 0.18376828547744464,
+        "maxPitch": 0.2942217819578819,
+        "maxAt": 3699,
+        "drivingMaxRoll": 0.18376828547744464,
+        "drivingMaxPitch": 0.2942217819578819,
+        "drivingMaxAt": 3699,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 3597,
+        "outside6": 0,
+        "maxDistance": 1.954887740897992
+      }
+    },
+    "detour": {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "detour",
+      "finished": false,
+      "tick": 7200,
+      "attitude": {
+        "maxRoll": 0.4035066177702304,
+        "maxPitch": 0.12419785654496775,
+        "maxAt": 4098,
+        "drivingMaxRoll": 0.4035066177702304,
+        "drivingMaxPitch": 0.12419785654496775,
+        "drivingMaxAt": 4098,
+        "firstOver20": {
+          "tick": 4096,
+          "phase": "driving",
+          "roll": 0.3706616986221007,
+          "pitch": -0.009533671089967104,
+          "position": [
+            58.392547607421875,
+            1.431844711303711,
+            -304.6466979980469
+          ],
+          "velocity": {
+            "x": 4.0240020751953125,
+            "y": -0.8344616889953613,
+            "z": -0.21895162761211395
+          },
+          "wheels": [
+            {
+              "rotation": 1347.4701196740145,
+              "steer": -0.022399246493338316,
+              "suspension": 0.2996799080481583,
+              "contact": false
+            },
+            {
+              "rotation": 1347.4701196740145,
+              "steer": -0.022399246493338316,
+              "suspension": 0.30000001192065384,
+              "contact": false
+            },
+            {
+              "rotation": 1347.4701196740145,
+              "steer": 0,
+              "suspension": 0.2999999963727478,
+              "contact": false
+            },
+            {
+              "rotation": 1347.4701196740145,
+              "steer": 0,
+              "suspension": 0.27982513843608736,
+              "contact": false
+            }
+          ],
+          "contacts": [
+            {
+              "position": {
+                "x": 59.111202239990234,
+                "y": 0.349922239780426,
+                "z": -306.4580078125
+              },
+              "handle": 5.646630800335e-311
+            },
+            {
+              "position": {
+                "x": 59.241302490234375,
+                "y": 0.345599502325058,
+                "z": -303.1152648925781
+              },
+              "handle": 5.6445088046514e-311
+            },
+            {
+              "position": {
+                "x": 55.549434661865234,
+                "y": 0.5854833722114563,
+                "z": -305.1534729003906
+              },
+              "handle": 5.64238680886e-311
+            }
+          ]
+        }
+      },
+      "busRoad": {
+        "samples": 2713,
+        "outside6": 0,
+        "maxDistance": 1.7384583937542712
+      }
+    },
+    "method": "Same current L9 scenario, native physics and route input. Only car.physics.stabilizeTilt replaced with a no-op by diagnostic flag. Native detour crosses bound; native primary road does not within 7200 ticks. Does not reproduce original physical-keyboard incident."
+  },
+  "physicalKeyboardTorqueAblation": {
+    "attitude": {
+      "samples": 6987,
+      "maxRoll": 0.8577851299914937,
+      "maxPitch": 0.29733939794169734,
+      "firstOver20": {
+        "tick": 2757,
+        "roll": -0.3509923319522887,
+        "pitch": 0.13211015159732753,
+        "position": {
+          "x": -67.55856323242188,
+          "y": 1.5012526512145996,
+          "z": -333.2355651855469,
+          "yaw": -0.1205779673309092
+        },
+        "velocity": {
+          "x": 16.262800216674805,
+          "y": 2.311427593231201,
+          "z": 0.20878908038139343
+        },
+        "contacts": [
+          true,
+          false,
+          false,
+          true
+        ]
+      },
+      "wheelTravel": 0.24998604008441852
+    },
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 116,
+        "maxNoProgressSeconds": 7.333333333333333,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 5,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.029242992401123,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "method": "Same physical keyboard road harness and current runtime, only corrective torque disabled before sampling. Headless HIGH WebGL2 zoom1 120wall seconds. Diagnostic run unfinished, exit1.",
+    "maxRollDegrees": 49.14746767759328
+  },
+  "completionAudit": {
+    "runtimeSourceHash": "1309406c170b8a1691683886cccb677a71a2025d1abdc22e513c44fdfb4c5f75",
+    "drivingBoundDegrees": 20,
+    "vehicleGateSourceMatchesCurrent": true,
+    "sixDrivesComplete": true,
+    "aggressiveBothTiersComplete": true,
+    "contactFixturesVerified": true,
+    "busRoadHoldPass": true,
+    "threatFlags": 0,
+    "remoteUnitPass": true,
+    "rootMechanism": "Asymmetric wheel support/contact imparts roll momentum; delayed inversion recovery cannot prevent tip. Finite restorative torque prevents reproduced native and physical-keyboard failures.",
+    "scopeLimit": "Not an exact replay of s122 tick3255; mandatory final crash excluded from driving bound. Manual WebGPU/human feel review recommended."
+  }
+}
