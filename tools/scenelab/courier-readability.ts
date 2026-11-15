@@ -38,7 +38,7 @@ try {
         if (share.share < .9 || session.errors.length) throw new Error(`Visibility/console gate failed: ${level}`);
         const id = `${level}-${tier}-z${zoom}`;
         await session.screenshot(`${out}/${id}.png`);
-        results.push({ id, backend: actual, health: 30, share: share.share, foreground: state.render.courierForeground });
+        results.push({ id, backend: actual, health: 30, share: share.share, marker: state.render.courierMark, foreground: state.render.courierForeground });
         if (moving) {
           let previous = 1;
           for (const frame of escaping ? [30, 60, 180] : [30, 60]) {
