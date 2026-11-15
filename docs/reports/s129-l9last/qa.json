@@ -67,9 +67,11 @@
       "beforeLastTestAssertion": true
     },
     "focusedL9ThreatAudit": {
+      "revision": "692b7f47",
       "skilledFlags": [],
       "passiveFlags": [],
-      "overallExit": "nonzero solely for PARTIAL_LEVEL_SELECTION"
+      "overallExit": "nonzero solely for PARTIAL_LEVEL_SELECTION",
+      "seconds": 22.5
     },
     "requiredRemoteCommand": {
       "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
@@ -108,7 +110,7 @@
     "threeHighRealInputRuns": "NOT RUN: browser preview binding unavailable"
   },
   "reportBytesUnder200KB": true,
-  "completion": "Three HIGH real-input runs, placement review and motion gate pass. Remaining: s126 fixtures, final L9 threat refresh and report finalization.",
+  "completion": "NOT MET: s126 low-road and archived stalled fixtures exceed strict 20 s; remaining fixture cases and report finalization open.",
   "browserRuns": [
     {
       "id": "repro-high-road-1",
@@ -1314,5 +1316,22 @@
         100
       ]
     }
-  ]
+  ],
+  "s126ClosureAttempt": {
+    "highRoad": "PASS",
+    "highRoadPassive": "PASS",
+    "lowRoad": {
+      "completed": true,
+      "allLivingAboard": true,
+      "secondsAfterDefense": 21.283333333333335,
+      "strict20Gate": "FAIL"
+    },
+    "archivedStalled": {
+      "result": "4/4 full health",
+      "firstObservedAllAboardSecondsAfterDefense": 22.15,
+      "strict20Gate": "FAIL"
+    },
+    "actualTruckTargetExperiment": "Discarded: restored old south truck row left Rosa unboarded after 60 s; production code restored unchanged.",
+    "remainingCases": "not run after matrix stopped on low-road failure"
+  }
 }

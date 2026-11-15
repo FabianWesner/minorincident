@@ -50,3 +50,9 @@ On rescue commit `3515e9f8`, HIGH WebGPU road runs `rescue-road-1` (222 s) and `
 I inspected fresh HIGH WebGPU placement captures: the stop road at follow zoom 1.5 is clear between the barrier rows; the overview shows all three trucks north of the barriers and sign, with visible gaps from light posts, side fence and bridge wall. See `placement-sheet.jpg`. The fixture uses an APC pose at the stop and is labeled placement evidence, not real-input timing evidence. The retained s126 fixture matrix and final motion/threat gates are still pending.
 
 Final-code L9 vehicle campaign motion gate passes HIGH and LOW: both source-stable, zero correction failures. Raw receipts: `test-results/s83-vehicleslide/campaign/L9-{high,low}.json`. Remaining closure work is the retained s126 fixtures, final threat refresh and report rewrite.
+
+## Closure fixture findings
+
+Final L9 threat refresh has zero skilled/passive flags (single-level summary only has `PARTIAL_LEVEL_SELECTION`). The retained s126 native HIGH road and HIGH passive road fixtures pass. LOW road completes with all four alive/aboard at **21.28 s** after defense, failing the strict 20 s probe. The archived s125 stalled save reaches 4/4 at full health at the first observed **22.15 s** point, also outside that strict gate. Thus full acceptance remains open despite the three HIGH real-input passes.
+
+An experiment routing to saved old south-side truck transforms worsened the archived fixture: Rosa remained unboarded through its 60 s sample. That experiment was discarded and production code restored unchanged. Remaining s126 cases were not run after the LOW-road failure.
