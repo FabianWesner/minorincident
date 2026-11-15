@@ -76,3 +76,7 @@ The combined guarded target handoff + mission bus speed share1.75 + hull-distanc
 ## Ordinary target refresh trial
 
 Repeated `press` while exposed did not improve the combined delivery trial: HIGH completes, peak proximity remains1, no passenger attacks. That extra target refresh was removed. Detailed earlier trace shows passengers losing HP and disappearing from the living sample during hatch fire; enough living bodies must arrive close together before combat thins them. No health/count/stat changes made. Combined delivery changes remain uncommitted and unqualified.
+
+## Group release rejection and runtime cleanup
+
+Grouped near-held-APC release with the combined delivery trial completes HIGH but produces zero within5m and zero attacks, worse than the staggered combined trial. Removed the grouped release, and reverted all uncommitted combined delivery/targeting/speed changes because none met participation. Runtime now matches committed asphalt fixes; diagnostic improvements/evidence remain. Passenger participation is still failed in both qualified native road runs. Full driven off-road path coverage, current full regression gates, and browser QA remain open.
