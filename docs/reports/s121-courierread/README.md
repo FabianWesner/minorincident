@@ -31,3 +31,7 @@ Two explicit 48-infected stationary fixtures were captured on HIGH WebGL2 (1280Ã
 ## Measured foreground follow-up
 
 Correction to the visual impression above: same-pose ID-mask probes show 100% courier body visibility in both HIGH WebGL2 dense captures (2483/2483 L4 pixels; 2639/2639 L6). Foreground is active in both. The L4 concern is visual distinction among surrounding colors, not measured body occlusion. LOW WebGPU captures also passed the >=90% body-share check with the requested backend confirmed and zero console errors. These remain one-frame stationary zoom-1 fixtures at full health, not production hold/retreat signoff or temporal artifact clearance. Raw metrics are summarized in report.json.
+
+## LOW zoom-1.5 motion probes
+
+The same 48 actors chased the courier for 60 frames in LOW WebGL2 at zoom 1.5. Both final measured frames retained 100% courier body visibility, with zero console errors. Screenshots were captured at frames 1, 30, and 60; reviewed L6 frame 60 retains a visible bright courier and HUD HP amid attack telegraphs. HP remains 100, so low-HP validation is still missing. Clipping metrics report actor intersections (L4: 4 actor hits / 2 piercing; L6: 69 / 37); this synthetic close-spawn fixture does not establish whether these reproduce under production admission, and no artifact-clear verdict is claimed.
