@@ -1,3 +1,4 @@
+import { installScreamObserver } from '../../tools/playtest/scream-observer';
 // QA drivers used by every pre-deploy check: the real-input playtest driver (tools/playtest) and Scene Lab specs.
 // A broken stuck detector or spec validator silently turns the PO-style QA green.
 import { readdirSync, readFileSync } from 'node:fs';
@@ -17,6 +18,26 @@ import { edgeNoise } from '../../tools/scenelab/edge-noise';
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
 test('playtest stuck detection: following a moving ring is progress; a parked courier, a 30 s loop or a static zero-distance objective is not', () => {
+  let frame: FrameRequestCallback = () => {};
+  const receipts: unknown[] = [];
+  const listeners = new Map<string, ((event: unknown) => void)[]>();
+  const world = { missions: {}, scenario: 'L6', events: { on: (name: string, fn: (event: unknown) => void) => { listeners.set(name, [...(listeners.get(name) ?? []), fn]); } } };
+  vi.stubGlobal('window', { __SCENE__: { game: { world } }, qaScreamCapture: (e: unknown) => { receipts.push(e); } });
+  vi.stubGlobal('requestAnimationFrame', (fn: FrameRequestCallback) => { frame = fn; });
+  try {
+    installScreamObserver();
+    frame(0);
+    expect(listeners.get('telegraph')).toHaveLength(1);
+    for (const level of ['L6', 'L7', 'L9', 'L10']) {
+      if (level !== 'L6') { world.scenario = level; world.missions = {}; listeners.clear(); frame(0); }
+      listeners.get('telegraph')![0]({ type: 'telegraph', special: 'alpha.roar', tick: 123 });
+      listeners.get('noise')![0]({ type: 'noise', kind: 'scream', tick: 124 });
+    }
+    expect(receipts).toHaveLength(8);
+    expect(receipts).toContainEqual(expect.objectContaining({ level: 'L7', special: 'alpha.roar', warning: 'alpha-roar' }));
+    expect(receipts).toContainEqual(expect.objectContaining({ level: 'L10', kind: 'scream' }));
+  } finally { vi.unstubAllGlobals(); }
+
   expect(canShootVehicleObjective('L9', 'Hold the hatch')).toBe(true);
   expect(captureZooms).toEqual([1, 1.5]);
   expect(canShootVehicleObjective('L9', 'Drive through the horde')).toBe(false);
