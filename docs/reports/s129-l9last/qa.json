@@ -110,7 +110,7 @@
     "threeHighRealInputRuns": "NOT RUN: browser preview binding unavailable"
   },
   "reportBytesUnder200KB": true,
-  "completion": "NOT MET: s126 low-road and archived stalled fixtures exceed strict 20 s; remaining fixture cases and report finalization open.",
+  "completion": "NOT MET: z20 staging refinement needs final-code requalification.",
   "browserRuns": [
     {
       "id": "repro-high-road-1",
@@ -1333,5 +1333,17 @@
     },
     "actualTruckTargetExperiment": "Discarded: restored old south truck row left Rosa unboarded after 60 s; production code restored unchanged.",
     "remainingCases": "not run after matrix stopped on low-road failure"
+  },
+  "stagingRefinement": {
+    "truckZ": 20,
+    "reason": "z26 added unnecessary 6m walking after late disembarkation; z20 retains furniture clearance and reduces travel",
+    "lowRoadSecondsAfterDefense": 17.95,
+    "archivedFirstObservedAllAboardSecondsAfterDefense": 20.15,
+    "checks": {
+      "typecheck": "PASS",
+      "lint": "PASS",
+      "vehiclesTest": "2 passed, 29.33s"
+    },
+    "remaining": "Exact archived boarding tick; repeat final-code three browser runs, fixture matrix, placement, motion, threat and remote suite"
   }
 }

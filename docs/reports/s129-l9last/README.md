@@ -56,3 +56,7 @@ Final-code L9 vehicle campaign motion gate passes HIGH and LOW: both source-stab
 Final L9 threat refresh has zero skilled/passive flags (single-level summary only has `PARTIAL_LEVEL_SELECTION`). The retained s126 native HIGH road and HIGH passive road fixtures pass. LOW road completes with all four alive/aboard at **21.28 s** after defense, failing the strict 20 s probe. The archived s125 stalled save reaches 4/4 at full health at the first observed **22.15 s** point, also outside that strict gate. Thus full acceptance remains open despite the three HIGH real-input passes.
 
 An experiment routing to saved old south-side truck transforms worsened the archived fixture: Rosa remained unboarded through its 60 s sample. That experiment was discarded and production code restored unchanged. Remaining s126 cases were not run after the LOW-road failure.
+
+## Staging distance refinement (pending requalification)
+
+The remaining s126 LOW passive shortcut and HIGH/LOW seed-2 road cases pass at z26 (0, 18.72, 18.20 s). The late LOW seed-1 road actors walk steadily toward the unnecessarily distant z26 row after late disembarkation. Moving the row six metres closer to z20 retains all tested furniture clearances and improves that LOW fixture to **17.95 s**. The archived stalled save first reports 4/4/full health at **20.15 s** on a one-second census; its exact boarding tick remains to be captured. Typecheck, lint and both existing vehicle tests pass (29.33 s). The final three-run browser matrix and gates must be rerun on z20 before acceptance.

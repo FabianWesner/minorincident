@@ -126,7 +126,7 @@ async function l9InterruptedBoarding(): Promise<void> {
       expect(s.evacuationAt, 'stopped APC starts the native evacuation and checkpoint').not.toBeNull();
       const truckPositions = s.trucks.map(id => world.entities.get(id)!.transform);
       expect(truckPositions.map(({ x, z }) => [x, z]),
-        `seed ${seed} ${quality}: the evacuation trucks use the north-side staging shoulder`).toEqual([[450, 26], [459, 26], [468, 26]]);
+        `seed ${seed} ${quality}: the evacuation trucks use the north-side staging shoulder`).toEqual([[450, 20], [459, 20], [468, 20]]);
       // Military truck bounds rotate with yaw=PI/2: 1.429 m across x and
       // 3.4633 m along z. Keep every spot clear of the bridgehead furniture,
       // including the low sandbag row that the old z=10 cab visibly crossed.
