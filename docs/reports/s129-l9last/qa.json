@@ -1,1554 +1,1429 @@
 {
   "job": "s129-l9last",
-  "date": "2026-11-15",
-  "status": "in-progress",
-  "candidateBase": "3e4f3ab0",
-  "placement": {
-    "before": {
-      "truckZ": 10,
-      "observed": "Truck cabs overlap the sandbag row and EVACUATION / STOP sign in the archived custom-camera frame."
-    },
-    "after": {
-      "positions": [
-        [
-          450,
-          26
-        ],
-        [
-          459,
-          26
-        ],
-        [
-          468,
-          26
-        ]
+  "revision": "19b0a91e",
+  "status": "in-progress: motion HIGH insufficient frame coverage",
+  "cause": "HIGH crowd grabs pinned Okafor and Mia near the APC; soldier evacuation rescue priority covered L7 but omitted L9. Rosa goodbye already complete.",
+  "changes": {
+    "rescue": "L9 guards prioritize infected biting active evacuees using existing soldier rescue priority",
+    "trucks": [
+      [
+        450,
+        20
       ],
-      "boundsAfterYaw": {
-        "halfX": 1.429,
-        "halfZ": 3.4633
-      }
-    },
-    "test": "Existing vehicle-interrupted-boarding test extended with bridgehead footprint, collider, and APC-road clearance assertions.",
-    "visualAfter": "PASS: inspected HIGH WebGPU zoom-1.5 stop road and three-truck overview; visible gaps to sandbag rows/sign/posts/gate-side fence and bridge wall."
-  },
-  "evacuation": {
-    "status": "unresolved",
-    "evidence": "s128 HIGH road log remains 3/4 from tick 12656 through 17447; courier stays at (468.761, -2.172), 100 HP. Supplied tick-16237 capture shows no final evacuee near trucks.",
-    "actorIdentityAndState": "Not recorded in source run logs; do not infer survivor identity, pathing, knockdown, crowd blockage, or story-beat state.",
-    "requiredBrowserRuns": [
-      "HIGH road x2",
-      "HIGH shortcut x1"
-    ],
-    "browserAttempt": "QA build succeeded; Vite preview bind failed with EPERM at 127.0.0.1:4995."
-  },
-  "checks": {
-    "focusedVehicleTest": {
-      "result": "PASS",
-      "files": 1,
-      "tests": 2,
-      "seconds": 35.11,
-      "afterLastAssertion": true
-    },
-    "typecheck": "PASS",
-    "lint": "PASS",
-    "E31VerifyDirect": {
-      "result": "PASS",
-      "entrypoint": "node --import tsx tools/verify.ts E31",
-      "files": 27,
-      "tests": 106,
-      "seconds": 90.3,
-      "budgetSeconds": 240
-    },
-    "fullVitestLocal": {
-      "result": "PASS",
-      "files": 27,
-      "tests": 106,
-      "seconds": 55.09,
-      "beforeLastTestAssertion": true
-    },
-    "focusedL9ThreatAudit": {
-      "revision": "692b7f47",
-      "skilledFlags": [],
-      "passiveFlags": [],
-      "overallExit": "nonzero solely for PARTIAL_LEVEL_SELECTION",
-      "seconds": 22.5
-    },
-    "requiredRemoteCommand": {
-      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
-      "result": "PASS",
-      "runner": "46.225.66.90",
-      "passed": 105,
-      "skipped": 1,
-      "inventoryCases": 150,
-      "seconds": 127.3,
-      "budgetSeconds": 240,
-      "revision": "3515e9f8"
-    },
-    "vehicleMotionGate": {
-      "pass": true,
-      "rows": [
-        {
-          "mode": "L9",
-          "tier": "high",
-          "code": 0,
-          "seconds": 114.193,
-          "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
-          "sourceHash": "9607ee5a7d28432e1435adfde216938874f67c563b57e394e9965671863ce8d8",
-          "pass": true
-        },
-        {
-          "mode": "L9",
-          "tier": "low",
-          "code": 0,
-          "seconds": 76.419,
-          "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
-          "sourceHash": "9607ee5a7d28432e1435adfde216938874f67c563b57e394e9965671863ce8d8",
-          "pass": true
-        }
+      [
+        459,
+        20
+      ],
+      [
+        468,
+        20
       ]
-    },
-    "threeHighRealInputRuns": "NOT RUN: browser preview binding unavailable"
+    ],
+    "constraints": "No zombie stat changes, removal, corpse deletion, teleport or invulnerability added."
   },
-  "reportBytesUnder200KB": true,
-  "completion": "NOT MET: z20 two HIGH road browser runs and final visual/motion/threat refresh remain.",
   "browserRuns": [
     {
-      "id": "repro-high-road-1",
-      "backend": "webgpu",
-      "quality": "high",
+      "id": "final-road-1",
       "route": "road",
+      "backend": "webgpu",
+      "tier": "high",
       "zoom": 1.5,
       "finished": true,
-      "skipped": [],
       "deaths": 0,
-      "wallSeconds": 222,
-      "allFourAboardDefenseSecondsRemaining": 8,
-      "issues": {
-        "P0": 0,
-        "P1": 0,
-        "P2": 2,
-        "P3": 0
-      }
-    },
-    {
-      "id": "high-road-2",
-      "backend": "webgpu",
-      "quality": "high",
-      "route": "road",
-      "zoom": 1.5,
-      "finished": true,
       "skipped": [],
-      "deaths": 0,
-      "wallSeconds": 238,
-      "allFourAboardDefenseSecondsRemaining": 9,
+      "wallSeconds": 235,
       "issues": {
         "P0": 0,
         "P1": 0,
         "P2": 0,
         "P3": 0
-      }
+      },
+      "defenseCompleteTick": 10950,
+      "lastBoardedTick": 11875,
+      "secondsAfterDefense": 15.416666666666666,
+      "evacuees": [
+        {
+          "key": "dale",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "rosa",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "okafor",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "mia",
+          "hp": 100,
+          "aboard": true
+        }
+      ]
     },
     {
-      "id": "high-shortcut-1",
+      "id": "final-road-2",
+      "route": "road",
       "backend": "webgpu",
-      "route": "dry-shortcut",
-      "quality": "high",
+      "tier": "high",
       "zoom": 1.5,
       "finished": true,
       "deaths": 0,
       "skipped": [],
-      "wallSeconds": 221,
-      "boardingTiming": "FAIL: 3/4 at tick 11213, approximately 31 s after defense complete",
+      "wallSeconds": 232,
       "issues": {
         "P0": 0,
         "P1": 0,
-        "P2": 2,
+        "P2": 0,
         "P3": 0
-      }
+      },
+      "defenseCompleteTick": 11813,
+      "lastBoardedTick": 11014,
+      "secondsAfterDefense": -13.316666666666666,
+      "evacuees": [
+        {
+          "key": "dale",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "rosa",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "okafor",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "mia",
+          "hp": 100,
+          "aboard": true
+        }
+      ]
+    },
+    {
+      "id": "final-shortcut",
+      "route": "dry-shortcut",
+      "backend": "webgpu",
+      "tier": "high",
+      "zoom": 1.5,
+      "finished": true,
+      "deaths": 0,
+      "skipped": [],
+      "wallSeconds": 209,
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1,
+        "P3": 0
+      },
+      "defenseCompleteTick": 9406,
+      "lastBoardedTick": 10636,
+      "secondsAfterDefense": 20.5,
+      "evacuees": [
+        {
+          "key": "dale",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "rosa",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "okafor",
+          "hp": 100,
+          "aboard": true
+        },
+        {
+          "key": "mia",
+          "hp": 100,
+          "aboard": true
+        }
+      ]
     }
   ],
-  "stragglerTrace": {
-    "method": "Read-only addInitScript observer via Node launcher preload; unchanged tools/playtest physical input driver. Diagnostic run stopped after repeated grab evidence.",
-    "samples": [
-      {
-        "tick": 7687,
-        "secondsAfterDefense": -30.0,
-        "evacuated": [],
-        "hugDone": false,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 468.23255309831933,
-              "z": -2.092746193061723,
-              "y": 1.1746846246719362,
-              "yaw": -0.021613160551794162
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 467.4089673168359,
-              "z": -1.0102922861730979,
-              "y": 1.1746846246719362,
-              "yaw": -0.021613160551794162
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 467.4327399425294,
-              "z": -2.1100353753842276,
-              "y": 1.1746846246719362,
-              "yaw": -0.021613160551794162
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.609154161046,
-              "z": -1.0275814684956024,
-              "y": 1.1746846246719362,
-              "yaw": -0.021613160551794162
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.63292678673946,
-              "z": -2.1273245577067326,
-              "y": 1.1746846246719362,
-              "yaw": -0.021613160551794162
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 8287,
-        "secondsAfterDefense": -20.0,
-        "evacuated": [],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 454.2544351154569,
-              "z": 22.529163151846124,
-              "y": 0.7,
-              "yaw": -1.9447491202063834
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "grabbed",
-            "attacker": 849,
-            "position": {
-              "x": 463.8155381859143,
-              "z": -0.7523099254653652,
-              "y": 0.7,
-              "yaw": 2.931041341639387
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 467.42851868177746,
-              "z": -2.1657736926471554,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775877
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.59582776855837,
-              "z": -1.0903082850015169,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775877
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775877
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 8888,
-        "secondsAfterDefense": -9.983333333333333,
-        "evacuated": [
-          669
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "grabbed",
-            "attacker": 849,
-            "position": {
-              "x": 463.81085000718065,
-              "z": -0.6217389274422647,
-              "y": 0.7,
-              "yaw": 2.931041341639387
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 467.42851868177746,
-              "z": -2.1657736926471554,
-              "y": 1.225434880256653,
-              "yaw": -0.03005191694177587
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.59582776855837,
-              "z": -1.0903082850015169,
-              "y": 1.225434880256653,
-              "yaw": -0.03005191694177587
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.03005191694177587
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 9488,
-        "secondsAfterDefense": 0.016666666666666666,
-        "evacuated": [
-          669
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "grabbed",
-            "attacker": 849,
-            "position": {
-              "x": 463.81206936633265,
-              "z": -0.4894108683663231,
-              "y": 0.7,
-              "yaw": 2.931041341639387
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 467.42851868177746,
-              "z": -2.1657736926471554,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775857
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.59582776855837,
-              "z": -1.0903082850015169,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775857
-            },
-            "hp": 100,
-            "passengerOf": 667
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775857
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 10089,
-        "secondsAfterDefense": 10.033333333333333,
-        "evacuated": [
-          669
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.89314277156586,
-              "z": 23.13444809477015,
-              "y": 0.7,
-              "yaw": -1.8491801371806167
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.6181013228399,
-              "z": -0.8505157620942366,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.2607879752967,
-              "z": -0.08141855192001714,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775877
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 10689,
-        "secondsAfterDefense": 20.033333333333335,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.65376058545314,
-              "z": -0.7699051759311516,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.2860684371903,
-              "z": 0.049175281582470615,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.03005191694177588
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 11290,
-        "secondsAfterDefense": 30.05,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.68943914501125,
-              "z": -0.6894355230206343,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.31135588255,
-              "z": 0.17999718400894543,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.03005191694177588
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 11892,
-        "secondsAfterDefense": 40.083333333333336,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.7328618474069,
-              "z": -0.5874909917806932,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.33665042586966,
-              "z": 0.3110466095591297,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775874
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 12492,
-        "secondsAfterDefense": 50.083333333333336,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.76847812566285,
-              "z": -0.5077843837415316,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.3619387643476,
-              "z": 0.4416334093260242,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775874
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 13094,
-        "secondsAfterDefense": 60.11666666666667,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.81901086030814,
-              "z": -0.38400776944717285,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.3852461020054,
-              "z": 0.5731898963567046,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.1898116076415173,
-              "y": 1.225434880256653,
-              "yaw": -0.03005191694177589
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 13697,
-        "secondsAfterDefense": 70.16666666666667,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.8695490099802,
-              "z": -0.26002045308430893,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.40906259362544,
-              "z": 0.7048813685865821,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.1898116076415173,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775902
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 14300,
-        "secondsAfterDefense": 80.21666666666667,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.92027446003095,
-              "z": -0.13608139063882171,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.4342469341229,
-              "z": 0.8361589101814575,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.030051916941775857
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      },
-      {
-        "tick": 14905,
-        "secondsAfterDefense": 90.3,
-        "evacuated": [
-          669,
-          670
-        ],
-        "hugDone": true,
-        "actors": [
-          {
-            "id": 669,
-            "key": "dale",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 452.5650378657688,
-              "z": 26.834263641759485,
-              "y": 0.7,
-              "yaw": -1.944749120200604
-            },
-            "hp": 100,
-            "passengerOf": 682
-          },
-          {
-            "id": 670,
-            "key": "rosa",
-            "state": "flee",
-            "attacker": 849,
-            "position": {
-              "x": 456.50177435589615,
-              "z": 26.79223810824541,
-              "y": 0.7,
-              "yaw": -1.6368764596346594
-            },
-            "hp": 100,
-            "passengerOf": 683
-          },
-          {
-            "id": 671,
-            "key": "okafor",
-            "state": "grabbed",
-            "attacker": 893,
-            "position": {
-              "x": 460.97099127359104,
-              "z": -0.011661520473032684,
-              "y": 0.7,
-              "yaw": -0.030051916941775853
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 672,
-            "key": "mia",
-            "state": "grabbed",
-            "attacker": 903,
-            "position": {
-              "x": 462.45943197452067,
-              "z": 0.9678805625328093,
-              "y": 0.7,
-              "yaw": -1.1136311394789815
-            },
-            "hp": 100,
-            "passengerOf": null
-          },
-          {
-            "id": 673,
-            "key": "sam",
-            "state": "calm",
-            "attacker": 0,
-            "position": {
-              "x": 466.62887990167565,
-              "z": -2.189811607641517,
-              "y": 1.225434880256653,
-              "yaw": -0.03005191694177588
-            },
-            "hp": 100,
-            "passengerOf": 667
-          }
-        ]
-      }
+  "nativeFixtures": [
+    {
+      "id": "low-road",
+      "completed": true,
+      "secondsAfterDefense": 17.95,
+      "roster": [
+        {
+          "id": 669,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "evacuated": true
+        }
+      ]
+    },
+    {
+      "id": "high-road",
+      "completed": true,
+      "secondsAfterDefense": 15.75,
+      "roster": [
+        {
+          "id": 669,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "evacuated": true
+        }
+      ]
+    },
+    {
+      "id": "low-shortcut-passive",
+      "completed": true,
+      "secondsAfterDefense": 0,
+      "roster": [
+        {
+          "id": 669,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "evacuated": true
+        }
+      ]
+    },
+    {
+      "id": "high-road-passive",
+      "completed": true,
+      "secondsAfterDefense": 0,
+      "roster": [
+        {
+          "id": 669,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "evacuated": true
+        }
+      ]
+    },
+    {
+      "id": "high-road-seed2",
+      "completed": true,
+      "secondsAfterDefense": 14.6,
+      "roster": [
+        {
+          "id": 669,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "evacuated": true
+        }
+      ]
+    },
+    {
+      "id": "low-road-seed2",
+      "completed": true,
+      "secondsAfterDefense": 0,
+      "roster": [
+        {
+          "id": 669,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 670,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 671,
+          "hp": 100,
+          "evacuated": true
+        },
+        {
+          "id": 672,
+          "hp": 100,
+          "evacuated": true
+        }
+      ]
+    }
+  ],
+  "archivedStalled": {
+    "defenseCompleteTick": -669,
+    "lastBoardingStartTick": 444,
+    "lastBoardedTick": 489,
+    "secondsAfterDefense": 19.3,
+    "aboard": 4,
+    "hp": [
+      100,
+      100,
+      100,
+      100
     ]
   },
-  "rescueCandidate": {
-    "change": "Extend existing soldier rescue priority to infected biting active L9 evacuees",
-    "regression": "Existing NPC civilian test extended: guard selects evacuee biter before closer Alpha; 3 NPC tests pass",
-    "run": {
-      "id": "rescue-shortcut",
-      "backend": "webgpu",
-      "tier": "high",
-      "route": "dry-shortcut",
-      "zoom": 1.5,
-      "finished": true,
-      "skipped": [],
-      "deaths": 0,
-      "issues": 0,
-      "wallSeconds": 190,
-      "evacuationAt": 7033,
-      "defenseCompleteTick": 8833,
-      "lastBoardingStartTick": 9494,
-      "boardingAnimationTicks": 45,
-      "lastBoardedTick": 9539,
-      "secondsAfterDefense": 11.766666666666667,
-      "livingEvacuees": 4,
-      "aboard": 4,
-      "hp": [
-        100,
-        100,
-        100,
-        100
-      ]
-    },
-    "remaining": "Two HIGH road runs on rescue code, s126 fixture matrix, final remote suite, motion and visual gates"
+  "remoteSuite": {
+    "result": "PASS",
+    "passed": 105,
+    "skipped": 1,
+    "inventory": 150,
+    "seconds": 128.1,
+    "runner": "46.225.66.90"
   },
-  "finalCodeBrowserRuns": [
+  "threat": {
+    "skilledFlags": [],
+    "passiveFlags": [],
+    "summaryFlag": "PARTIAL_LEVEL_SELECTION only",
+    "receipt": "test-results/s129/z20-threat/audit.json"
+  },
+  "tests": {
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "vehicles": "2 passed,29.33s",
+    "npcs": "3 passed; L9 guard rescue priority regression in existing test"
+  },
+  "visual": {
+    "backend": "webgpu",
+    "tier": "high",
+    "zoom": 1.5,
+    "review": "All three truck spots clear barriers/sign/posts/fences/bridge wall; APC stop road clear",
+    "fixture": "APC pose fixture; not real-input timing evidence",
+    "sheet": "placement-sheet.jpg"
+  },
+  "limits": [
+    "Shortcut measured20.50s: half-second over exact20, within requested approximate20 target; one enemy-frozen P2 diagnostic.",
+    "Native fixtures and archived save are not real-input browser runs."
+  ],
+  "sourceTraceSamples": [
     {
-      "id": "rescue-shortcut",
-      "backend": "webgpu",
-      "tier": "high",
-      "route": "dry-shortcut",
-      "zoom": 1.5,
-      "finished": true,
-      "skipped": [],
-      "deaths": 0,
-      "issues": 0,
-      "wallSeconds": 190,
-      "evacuationAt": 7033,
-      "defenseCompleteTick": 8833,
-      "lastBoardingStartTick": 9494,
-      "boardingAnimationTicks": 45,
-      "lastBoardedTick": 9539,
-      "secondsAfterDefense": 11.766666666666667,
-      "livingEvacuees": 4,
-      "aboard": 4,
-      "hp": [
-        100,
-        100,
-        100,
-        100
+      "tick": 7687,
+      "secondsAfterDefense": -30.0,
+      "evacuated": [],
+      "hugDone": false,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 468.23255309831933,
+            "z": -2.092746193061723,
+            "y": 1.1746846246719362,
+            "yaw": -0.021613160551794162
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 467.4089673168359,
+            "z": -1.0102922861730979,
+            "y": 1.1746846246719362,
+            "yaw": -0.021613160551794162
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 467.4327399425294,
+            "z": -2.1100353753842276,
+            "y": 1.1746846246719362,
+            "yaw": -0.021613160551794162
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.609154161046,
+            "z": -1.0275814684956024,
+            "y": 1.1746846246719362,
+            "yaw": -0.021613160551794162
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.63292678673946,
+            "z": -2.1273245577067326,
+            "y": 1.1746846246719362,
+            "yaw": -0.021613160551794162
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
       ]
     },
     {
-      "id": "rescue-road-1",
-      "route": "road",
-      "backend": "webgpu",
-      "tier": "high",
-      "zoom": 1.5,
-      "finished": true,
-      "skipped": [],
-      "deaths": 0,
-      "issues": 0,
-      "wallSeconds": 222,
-      "defenseCompleteTick": 11725,
-      "lastBoardedTick": 10961,
-      "secondsAfterDefense": -12.733333333333333,
-      "hp": [
-        100,
-        100,
-        100,
-        100
+      "tick": 8287,
+      "secondsAfterDefense": -20.0,
+      "evacuated": [],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 454.2544351154569,
+            "z": 22.529163151846124,
+            "y": 0.7,
+            "yaw": -1.9447491202063834
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "grabbed",
+          "attacker": 849,
+          "position": {
+            "x": 463.8155381859143,
+            "z": -0.7523099254653652,
+            "y": 0.7,
+            "yaw": 2.931041341639387
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 467.42851868177746,
+            "z": -2.1657736926471554,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775877
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.59582776855837,
+            "z": -1.0903082850015169,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775877
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775877
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
       ]
     },
     {
-      "id": "rescue-road-2",
-      "route": "road",
-      "backend": "webgpu",
-      "tier": "high",
-      "zoom": 1.5,
-      "finished": true,
-      "skipped": [],
-      "deaths": 0,
-      "issues": 0,
-      "wallSeconds": 342,
-      "defenseCompleteTick": 18801,
-      "lastBoardedTick": 18003,
-      "secondsAfterDefense": -13.3,
-      "hp": [
-        100,
-        100,
-        100,
-        100
+      "tick": 8888,
+      "secondsAfterDefense": -9.983333333333333,
+      "evacuated": [
+        669
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "grabbed",
+          "attacker": 849,
+          "position": {
+            "x": 463.81085000718065,
+            "z": -0.6217389274422647,
+            "y": 0.7,
+            "yaw": 2.931041341639387
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 467.42851868177746,
+            "z": -2.1657736926471554,
+            "y": 1.225434880256653,
+            "yaw": -0.03005191694177587
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.59582776855837,
+            "z": -1.0903082850015169,
+            "y": 1.225434880256653,
+            "yaw": -0.03005191694177587
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.03005191694177587
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 9488,
+      "secondsAfterDefense": 0.016666666666666666,
+      "evacuated": [
+        669
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "grabbed",
+          "attacker": 849,
+          "position": {
+            "x": 463.81206936633265,
+            "z": -0.4894108683663231,
+            "y": 0.7,
+            "yaw": 2.931041341639387
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 467.42851868177746,
+            "z": -2.1657736926471554,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775857
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.59582776855837,
+            "z": -1.0903082850015169,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775857
+          },
+          "hp": 100,
+          "passengerOf": 667
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775857
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 10089,
+      "secondsAfterDefense": 10.033333333333333,
+      "evacuated": [
+        669
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.89314277156586,
+            "z": 23.13444809477015,
+            "y": 0.7,
+            "yaw": -1.8491801371806167
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.6181013228399,
+            "z": -0.8505157620942366,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.2607879752967,
+            "z": -0.08141855192001714,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775877
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 10689,
+      "secondsAfterDefense": 20.033333333333335,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.65376058545314,
+            "z": -0.7699051759311516,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.2860684371903,
+            "z": 0.049175281582470615,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.03005191694177588
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 11290,
+      "secondsAfterDefense": 30.05,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.68943914501125,
+            "z": -0.6894355230206343,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.31135588255,
+            "z": 0.17999718400894543,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.03005191694177588
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 11892,
+      "secondsAfterDefense": 40.083333333333336,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.7328618474069,
+            "z": -0.5874909917806932,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.33665042586966,
+            "z": 0.3110466095591297,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775874
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 12492,
+      "secondsAfterDefense": 50.083333333333336,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.76847812566285,
+            "z": -0.5077843837415316,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.3619387643476,
+            "z": 0.4416334093260242,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775874
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 13094,
+      "secondsAfterDefense": 60.11666666666667,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.81901086030814,
+            "z": -0.38400776944717285,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.3852461020054,
+            "z": 0.5731898963567046,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.1898116076415173,
+            "y": 1.225434880256653,
+            "yaw": -0.03005191694177589
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 13697,
+      "secondsAfterDefense": 70.16666666666667,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.8695490099802,
+            "z": -0.26002045308430893,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.40906259362544,
+            "z": 0.7048813685865821,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.1898116076415173,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775902
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 14300,
+      "secondsAfterDefense": 80.21666666666667,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.92027446003095,
+            "z": -0.13608139063882171,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.4342469341229,
+            "z": 0.8361589101814575,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.030051916941775857
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
+      ]
+    },
+    {
+      "tick": 14905,
+      "secondsAfterDefense": 90.3,
+      "evacuated": [
+        669,
+        670
+      ],
+      "hugDone": true,
+      "actors": [
+        {
+          "id": 669,
+          "key": "dale",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 452.5650378657688,
+            "z": 26.834263641759485,
+            "y": 0.7,
+            "yaw": -1.944749120200604
+          },
+          "hp": 100,
+          "passengerOf": 682
+        },
+        {
+          "id": 670,
+          "key": "rosa",
+          "state": "flee",
+          "attacker": 849,
+          "position": {
+            "x": 456.50177435589615,
+            "z": 26.79223810824541,
+            "y": 0.7,
+            "yaw": -1.6368764596346594
+          },
+          "hp": 100,
+          "passengerOf": 683
+        },
+        {
+          "id": 671,
+          "key": "okafor",
+          "state": "grabbed",
+          "attacker": 893,
+          "position": {
+            "x": 460.97099127359104,
+            "z": -0.011661520473032684,
+            "y": 0.7,
+            "yaw": -0.030051916941775853
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 672,
+          "key": "mia",
+          "state": "grabbed",
+          "attacker": 903,
+          "position": {
+            "x": 462.45943197452067,
+            "z": 0.9678805625328093,
+            "y": 0.7,
+            "yaw": -1.1136311394789815
+          },
+          "hp": 100,
+          "passengerOf": null
+        },
+        {
+          "id": 673,
+          "key": "sam",
+          "state": "calm",
+          "attacker": 0,
+          "position": {
+            "x": 466.62887990167565,
+            "z": -2.189811607641517,
+            "y": 1.225434880256653,
+            "yaw": -0.03005191694177588
+          },
+          "hp": 100,
+          "passengerOf": 667
+        }
       ]
     }
   ],
-  "s126ClosureAttempt": {
-    "highRoad": "PASS",
-    "highRoadPassive": "PASS",
-    "lowRoad": {
-      "completed": true,
-      "allLivingAboard": true,
-      "secondsAfterDefense": 21.283333333333335,
-      "strict20Gate": "FAIL"
-    },
-    "archivedStalled": {
-      "result": "4/4 full health",
-      "firstObservedAllAboardSecondsAfterDefense": 22.15,
-      "strict20Gate": "FAIL"
-    },
-    "actualTruckTargetExperiment": "Discarded: restored old south truck row left Rosa unboarded after 60 s; production code restored unchanged.",
-    "remainingCases": "not run after matrix stopped on low-road failure"
-  },
-  "stagingRefinement": {
-    "truckZ": 20,
-    "reason": "z26 added unnecessary 6m walking after late disembarkation; z20 retains furniture clearance and reduces travel",
-    "lowRoadSecondsAfterDefense": 17.95,
-    "archivedFirstObservedAllAboardSecondsAfterDefense": 20.15,
-    "checks": {
-      "typecheck": "PASS",
-      "lint": "PASS",
-      "vehiclesTest": "2 passed, 29.33s"
-    },
-    "remaining": "Exact archived boarding tick; repeat final-code three browser runs, fixture matrix, placement, motion, threat and remote suite"
-  },
-  "z20Qualification": {
-    "revision": "19b0a91e",
-    "nativeFixtures": [
+  "motion": {
+    "pass": false,
+    "rows": [
       {
-        "id": "low-road",
-        "completed": true,
-        "secondsAfterDefense": 17.95,
-        "roster": [
-          {
-            "id": 669,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 670,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 671,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 672,
-            "hp": 100,
-            "evacuated": true
-          }
-        ]
-      },
-      {
-        "id": "high-road",
-        "completed": true,
-        "secondsAfterDefense": 15.75,
-        "roster": [
-          {
-            "id": 669,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 670,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 671,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 672,
-            "hp": 100,
-            "evacuated": true
-          }
-        ]
-      },
-      {
-        "id": "low-shortcut-passive",
-        "completed": true,
-        "secondsAfterDefense": 0,
-        "roster": [
-          {
-            "id": 669,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 670,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 671,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 672,
-            "hp": 100,
-            "evacuated": true
-          }
-        ]
-      },
-      {
-        "id": "high-road-passive",
-        "completed": true,
-        "secondsAfterDefense": 0,
-        "roster": [
-          {
-            "id": 669,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 670,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 671,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 672,
-            "hp": 100,
-            "evacuated": true
-          }
-        ]
-      },
-      {
-        "id": "high-road-seed2",
-        "completed": true,
-        "secondsAfterDefense": 14.6,
-        "roster": [
-          {
-            "id": 669,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 670,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 671,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 672,
-            "hp": 100,
-            "evacuated": true
-          }
-        ]
-      },
-      {
-        "id": "low-road-seed2",
-        "completed": true,
-        "secondsAfterDefense": 0,
-        "roster": [
-          {
-            "id": 669,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 670,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 671,
-            "hp": 100,
-            "evacuated": true
-          },
-          {
-            "id": 672,
-            "hp": 100,
-            "evacuated": true
-          }
-        ]
-      }
-    ],
-    "archivedStalled": {
-      "defenseCompleteTick": -669,
-      "lastBoardingStartTick": 444,
-      "lastBoardedTick": 489,
-      "secondsAfterDefense": 19.3,
-      "aboard": 4,
-      "hp": [
-        100,
-        100,
-        100,
-        100
-      ]
-    },
-    "remoteSuite": {
-      "result": "PASS",
-      "passed": 105,
-      "skipped": 1,
-      "inventory": 150,
-      "seconds": 128.1,
-      "runner": "46.225.66.90"
-    },
-    "browserRuns": [
-      {
-        "id": "final-shortcut",
-        "route": "dry-shortcut",
-        "backend": "webgpu",
+        "mode": "L9",
         "tier": "high",
-        "zoom": 1.5,
-        "finished": true,
-        "skipped": [],
-        "deaths": 0,
-        "secondsAfterDefense": 20.5,
-        "wallSeconds": 209,
-        "issues": {
-          "P2": 1
-        },
-        "note": "0.50 s beyond strict 20 s, explicit borderline for requested approximately20 s target"
+        "code": 1,
+        "seconds": 114.86,
+        "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+        "sourceHash": "bb0791e10116900ed5c63b74da91d19ac1d66b6ed9784f1a5f8b3ed8bcfe4f5d",
+        "pass": false
+      },
+      {
+        "mode": "L9",
+        "tier": "low",
+        "code": 0,
+        "seconds": 76.818,
+        "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+        "sourceHash": "bb0791e10116900ed5c63b74da91d19ac1d66b6ed9784f1a5f8b3ed8bcfe4f5d",
+        "pass": true
       }
     ]
   }
