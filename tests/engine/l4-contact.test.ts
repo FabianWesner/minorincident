@@ -6,7 +6,7 @@ import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations, l4Rea
 import physicsAssets from '../../src/data/physicsAssets';
 import { l4BreachSite, l4PerimeterWalls } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
-import { barEligible, bossChip, bossChipFadeTicks, bossChipHoldTicks, bossChipMinPx, followerBarsAlwaysMax, followerPipSize, HealthBars } from '../../src/render/HealthBars';
+import { barEligible, bossChip, bossChipFadeTicks, bossChipHoldTicks, bossChipMinPx, followerBarsAlwaysMax, followerPipSize, HealthBars, nearbyAttackerBarLimit, nearestHealthyAttackers } from '../../src/render/HealthBars';
 import { bossHitFlashChip, bossHitFlashExposed } from '../../src/render/vfx/Vfx';
 import { bossHitFlashTicks, hitFlashTicks } from '../../src/render/CrowdView';
 import { pickBodies } from '../../src/render/characters/PickBodies';
@@ -44,6 +44,12 @@ function checkCompactFollowerOverlap(): void {
     expect(bar).toMatchObject({ id: 16, width: 18, height: 3 });
     const heroTop = Math.min(...[hero.min.x, hero.max.x].flatMap(x => [hero.min.y, hero.max.y].flatMap(y => [hero.min.z, hero.max.z].map(z => (1 - new Vector3(x, y, z).project(camera).y) * 360))));
     expect(bar.y + bar.height / 2).toBeLessThan(heroTop);
+    Object.assign(followers[0], { faction: 'infected', archetype: 'infected.runner', civilian: undefined, infected: { targetId: 1 } });
+    bars.update(camera, 1280, 720);
+    expect(bars.count, 'ordinary attacker bars crossing the courier do not pile above her head').toBe(0);
+    Object.assign(followers[0], { archetype: 'infected.alpha' });
+    bars.update(camera, 1280, 720);
+    expect(bars.count, 'mandatory Alpha bars retain their information above the courier').toBe(1);
   } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); vi.unstubAllGlobals(); }
 }
 
@@ -243,6 +249,15 @@ async function scriptedPartyEngagement() {
 }
 
 test('L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected', async () => {
+  const player = { x: 0, z: 0 };
+  const crowd = Array.from({ length: 12 }, (_, i) => ({ id: i + 10, faction: 'infected', archetype: 'infected.runner', health: { current: 60, max: 60 }, transform: { x: i + 1, z: 0 }, infected: { targetId: 1 } } as unknown as EntitySnapshot));
+  const shown = nearestHealthyAttackers(crowd, player);
+  expect(shown.size, 'a healthy horde keeps only a small local threat cue').toBe(nearbyAttackerBarLimit);
+  expect([...shown]).toEqual([10, 11, 12, 13, 14, 15]);
+  crowd[11].health.current--;
+  crowd[11].infected!.hitByPlayer = true;
+  expect(nearestHealthyAttackers(crowd, player).has(crowd[11].id), 'damaged infected do not consume the healthy-attacker cap').toBe(false);
+  expect(barEligible(crowd[11], player, true), 'damaged infected retain their bar independently of the cap').toBe(true);
   const cameraCheck = await loadLevel('L4', 1);
   try {
     expect(Object.keys(cameraCheck.missions!.def.cinematics).filter(id => id.startsWith('l4-'))).toEqual([]);

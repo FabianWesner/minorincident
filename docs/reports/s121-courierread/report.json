@@ -1,0 +1,848 @@
+{
+  "job": "s121-courierread",
+  "status": "wrapped_per_orchestrator_perf_pending",
+  "change": "Limit healthy ordinary attacker bars within 6m of the courier to the six closest. Damaged and mandatory infected bars retain existing eligibility.",
+  "visualEvidence": {
+    "status": "reviewed_fixture_evidence",
+    "contactSheet": "contact.jpg",
+    "reason": "Matched before/after fixture sheet reviewed; full production/transition limitations explicitly retained.",
+    "unverified": [
+      "L4 hold HIGH z1",
+      "L4 hold LOW z1",
+      "L4 hold z1.5",
+      "L6 retreat",
+      "WebGL2",
+      "WebGPU",
+      "open streets",
+      "L1 and menus",
+      "artefacts"
+    ]
+  },
+  "checks": {
+    "focusedL4RenderContract": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "remoteUnitSuite": "FINAL merged source: 46.225.66.90; 105 passed, 1 skipped, 27 files; 121.4s / 240s; exit 0"
+  },
+  "performance": "perf pending: orchestrator measures native L4 LOW p95 against 11ms",
+  "remaining": [
+    "orchestrator native L4 LOW performance measurement"
+  ],
+  "denseProbes": [
+    {
+      "scene": "s121-l4-crowd",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.49487133194506616,
+              0.45874002119234036
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2483,
+          "reference": 2483,
+          "share": 1,
+          "megaPixels": 0,
+          "megaShare": 0
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "prop.light-tower@-22.1,6.1"
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "scene": "s121-l6-crowd",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.520987521968683,
+              0.384112711368187
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2639,
+          "reference": 2639,
+          "share": 1,
+          "megaPixels": 4590,
+          "megaShare": 0.00498046875
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "kit.metro-tunnel@48.0,15.0"
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "scene": "s121-l6-crowd",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.520987521968683,
+              0.384112711368187
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2641,
+          "reference": 2642,
+          "share": 0.9996214988644966,
+          "megaPixels": 3666,
+          "megaShare": 0.003977864583333333
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "kit.metro-tunnel@48.0,15.0"
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "scene": "s121-l4-crowd",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "shares": [
+        {
+          "frame": 1,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.49487133194506616,
+              0.45874002119234036
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 2498,
+          "reference": 2498,
+          "share": 1,
+          "megaPixels": 2,
+          "megaShare": 2.170138888888889e-06
+        }
+      ],
+      "foreground": [
+        {
+          "frame": 1,
+          "active": true,
+          "occluder": "prop.light-tower@-22.1,6.1"
+        }
+      ],
+      "consoleErrors": []
+    }
+  ],
+  "motionProbes": [
+    {
+      "scene": "s121-l4-crowd-motion-low",
+      "backend": "webgl",
+      "tier": "low",
+      "zoom": 1.5,
+      "frames": 60,
+      "shares": [
+        {
+          "frame": 60,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.5012258205360232,
+              0.4775513335166579
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 1043,
+          "reference": 1043,
+          "share": 1,
+          "megaPixels": 3,
+          "megaShare": 3.2552083333333335e-06
+        }
+      ],
+      "clipping": {},
+      "consoleErrors": []
+    },
+    {
+      "scene": "s121-l6-crowd-motion-low",
+      "backend": "webgl",
+      "tier": "low",
+      "zoom": 1.5,
+      "frames": 60,
+      "shares": [
+        {
+          "frame": 60,
+          "alphaPixels": 0,
+          "alphaBodyPixels": 0,
+          "bossReveal": {
+            "center": [
+              0.504684828489667,
+              0.42699250470048944
+            ],
+            "radius": 0.12,
+            "strength": 0
+          },
+          "megaAlphaRatio": 0,
+          "megaM": null,
+          "visible": 1090,
+          "reference": 1090,
+          "share": 1,
+          "megaPixels": 1740,
+          "megaShare": 0.0018880208333333333
+        }
+      ],
+      "clipping": {},
+      "consoleErrors": []
+    }
+  ],
+  "lowHpProbes": {
+    "backend": "webgl",
+    "tier": "high",
+    "zoom": 1,
+    "health": {
+      "l4": 30,
+      "l6": 30
+    },
+    "path": "test-results/s121-courierread/low-hp",
+    "scope": "stationary 48-infected fixture; not production timing or full matrix"
+  },
+  "contourCandidate": {
+    "change": "Palette foreground gold edge gain .25 to .55; distant vehicle x-ray retains .14",
+    "evidence": "contact.jpg: cropped isolated L4 HIGH WebGL2 z1 before/after",
+    "validation": "scene body-share and console gates passed; typecheck and lint passed",
+    "status": "requires full visual matrix and remote suite rerun"
+  },
+  "revisedContourMatrix": [
+    {
+      "path": "test-results/s121-courierread/final-webgl2-high/s121-l4-crowd/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgl2-high/s121-l6-crowd/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-low/s121-l6-crowd-webgpu-low/metrics.json",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 0.9996214988644966
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-low/s121-l4-crowd-webgpu-low/metrics.json",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-gpu-high/s121-l4-crowd-motion-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 60,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 60,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-gpu-high/s121-l6-crowd-motion-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 60,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 60,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgl2-low/s121-l4-crowd-low/metrics.json",
+      "backend": "webgl",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgl2-low/s121-l6-crowd-low/metrics.json",
+      "backend": "webgl",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-high/s121-l6-crowd-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 0.9996214988644966
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-high/s121-l4-crowd-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    }
+  ],
+  "controls": [
+    {
+      "path": "test-results/s121-courierread/controls/collision-placement-l1-start/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "foreground": [
+        {
+          "frame": 0,
+          "active": false,
+          "occluder": ""
+        },
+        {
+          "frame": 1,
+          "active": false,
+          "occluder": ""
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/controls/s121-open-street/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "foreground": [
+        {
+          "frame": 1,
+          "active": false,
+          "occluder": ""
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/menu-control/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "foreground": [],
+      "consoleErrors": 0
+    }
+  ],
+  "productionMovementProbe": {
+    "path": "test-results/s121-courierread/production-contact/metrics.json",
+    "frames": 1800,
+    "tier": "high",
+    "backend": "webgl",
+    "courierFinalPosition": [
+      -21.73,
+      7.905
+    ],
+    "travelM": 8.696,
+    "drawnFrames": 1800,
+    "inViewFrames": 1800,
+    "consoleErrors": 0,
+    "verdict": "movement succeeds; plaza position is not dense contact; next staged route approaches west breach at (-32,8)"
+  },
+  "reproducibleLowHpWebgl2": [
+    {
+      "id": "l4-high-z1",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l4-high-z1.5",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1",
+      "backend": "webgl",
+      "health": 30,
+      "share": 0.999611046285492,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1.5",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l4-low-z1",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l4-low-z1.5",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l6-low-z1",
+      "backend": "webgl",
+      "health": 30,
+      "share": 0.999611046285492,
+      "foreground": true
+    },
+    {
+      "id": "l6-low-z1.5",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    }
+  ],
+  "reproducibleLowHpWebgpu": [
+    {
+      "id": "l4-high-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9995852343425964,
+      "foreground": true
+    },
+    {
+      "id": "l4-high-z1.5",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9990291262135922,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9992242048099301,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1.5",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l4-low-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9995852343425964,
+      "foreground": true
+    },
+    {
+      "id": "l4-low-z1.5",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9990291262135922,
+      "foreground": true
+    },
+    {
+      "id": "l6-low-z1",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 0.9992242048099301,
+      "foreground": true
+    },
+    {
+      "id": "l6-low-z1.5",
+      "backend": "webgpu",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    }
+  ],
+  "contactSheet": {
+    "path": "contact.jpg",
+    "rows": [
+      "L4 HIGH z1",
+      "L4 LOW z1",
+      "L4 HIGH z1.5",
+      "L6 HIGH z1",
+      "L1 open-street control"
+    ],
+    "baseline": "render files from 2815e0d5",
+    "candidate": "final contour + ordinary-bar suppression",
+    "health": 30,
+    "frame": 60,
+    "scope": "matched 48-infected Scene Lab fixtures; L1 is current foreground-off control",
+    "review": "bar thicket substantially reduced; warm courier edge visible; HP HUD clear; L1 ordinary appearance",
+    "sourceRestored": true
+  },
+  "lowHpMotionWebgl2High": [
+    {
+      "id": "l4-high-z1",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l4-high-z1",
+      "frame": 30,
+      "health": 30,
+      "share": 1
+    },
+    {
+      "id": "l4-high-z1",
+      "frame": 60,
+      "health": 30,
+      "share": 1
+    },
+    {
+      "id": "l4-high-z1.5",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l4-high-z1.5",
+      "frame": 30,
+      "health": 30,
+      "share": 1
+    },
+    {
+      "id": "l4-high-z1.5",
+      "frame": 60,
+      "health": 30,
+      "share": 1
+    },
+    {
+      "id": "l6-high-z1",
+      "backend": "webgl",
+      "health": 30,
+      "share": 0.999611046285492,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1",
+      "frame": 30,
+      "health": 30,
+      "share": 1
+    },
+    {
+      "id": "l6-high-z1",
+      "frame": 60,
+      "health": 30,
+      "share": 1
+    },
+    {
+      "id": "l6-high-z1.5",
+      "backend": "webgl",
+      "health": 30,
+      "share": 1,
+      "foreground": true
+    },
+    {
+      "id": "l6-high-z1.5",
+      "frame": 30,
+      "health": 30,
+      "share": 1
+    },
+    {
+      "id": "l6-high-z1.5",
+      "frame": 60,
+      "health": 30,
+      "share": 1
+    }
+  ],
+  "courierBarProtection": {
+    "change": "Ordinary infected bars crossing courier silhouette are suppressed instead of relocated to a shared row. Mandatory enemy and follower bars retain relocation.",
+    "checks": "existing L4 contract, typecheck, lint passed; HIGH WebGL2 moving z1.5 scene passes console/body visibility gates",
+    "remaining": "full remote and visual matrix rerun after this edit"
+  },
+  "barProtectionMotionMatrix": {
+    "webgl2": {
+      "samples": 24,
+      "minShare": 0.999611046285492,
+      "healthValues": [
+        30
+      ],
+      "clipping": [
+        {
+          "case": "l6-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        }
+      ]
+    },
+    "webgpu": {
+      "samples": 24,
+      "minShare": 0.9990291262135922,
+      "healthValues": [
+        30
+      ],
+      "clipping": [
+        {
+          "case": "l6-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-high-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l4-low-z1-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        },
+        {
+          "case": "l6-low-z1.5-clipping",
+          "courierPropHits": 0,
+          "gunBodyHits": 0,
+          "heldPropHits": 0
+        }
+      ]
+    }
+  },
+  "productionBreachContact": {
+    "path": "test-results/s121-courierread/production-surround/metrics.json",
+    "frames": 3600,
+    "position": [
+      -34.9,
+      8
+    ],
+    "backend": "webgl",
+    "tier": "high",
+    "consoleErrors": 0,
+    "visualConcern": "courier is gold outlined but darker in close breach overlap; investigate active x-ray/hull policy before artifact clearance",
+    "dense40Proven": false
+  },
+  "breachModeProbe": {
+    "path": "test-results/s121-courierread/mode-probe/state.json",
+    "foreground": 1,
+    "vehicleXray": 0,
+    "xrayOffImageDifference": null,
+    "conclusion": "vehicle x-ray is not the dark-courier cause; inspect palette lighting/shadow contribution"
+  },
+  "crowdLightProbe": {
+    "path": "test-results/s121-courierread/crowd-light-probe",
+    "bloodCoverage": 0,
+    "foreground": 1,
+    "xray": 0,
+    "observation": "courier remains dark with crowd geometry hidden",
+    "limitations": [
+      "cached shadow contribution not isolated",
+      "manual foreground override may be reset by redraw; off image is not causal evidence"
+    ]
+  },
+  "breachShadowControl": {
+    "path": "test-results/s121-courierread/shadow-control",
+    "position": [
+      -34.9,
+      8
+    ],
+    "observation": "open control is in building shadow; persistent shadowIntensity=0 override restores lit clothing in small-crowd control",
+    "conclusion": "lighting contributes to dark appearance; not sufficient to clear production artifacts"
+  },
+  "escapeProbe": {
+    "path": "test-results/s121-courierread/repro-webgl2-escape",
+    "samples": 16,
+    "health": 30,
+    "foregroundOffObserved": false,
+    "reason": "ordinary infected perceive and pursue moving courier; final images still show close attackers",
+    "verdict": "not exit/popping clearance"
+  },
+  "mergedMain": "2815e0d5",
+  "orchestratorDirection": {
+    "shadow": "ordinary building shadow is correct lighting; investigation stopped; no lighting change retained",
+    "wrap": "merge specified main, reviewed small sheet, final remote npm test, commit README/JSON, end",
+    "performance": "pending; orchestrator measures L4 LOW"
+  },
+  "limitations": [
+    "isolated Scene Lab captures do not establish full production route acceptance",
+    "retreat probe did not establish clear-space transition/popping clearance"
+  ]
+}

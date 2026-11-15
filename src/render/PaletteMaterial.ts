@@ -293,7 +293,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         // A fully lit body over a whole hull reads as standing on its roof.
         result.assign(mix(result, vec3(.035, .075, .095), courierXray.mul(.92)));
         const courierEdge = normalView.dot(positionViewDirection).abs().oneMinus().pow(mix(3, 1.5, distant));
-        result.addAssign(color('#ffd17d').mul(courierEdge).mul(mix(.25, mix(.25, .14, courierXray), distant)));
+        result.addAssign(color('#ffd17d').mul(courierEdge).mul(mix(.55, mix(.55, .14, courierXray), distant)));
       });
       // Opaque courier meshes use scene alpha as a grade-protection mask. The
       // composite consumes it and writes opaque canvas alpha; no extra render pass.
