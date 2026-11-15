@@ -1,106 +1,53 @@
-# s133 · Courier crowd marker — work in progress
+# s133 · Courier crowd readability
 
-Acceptance remains open. The current ring is a depth-tested teal annulus (0.57–0.69 m), interpolated with the courier and placed 35 mm above rendered paving. It adds one mesh draw and 96 triangles while on foot, no render pass; these are structural counts, not measured frame-time results. Existing corpse persistence, zombie stats and companion appearance are unchanged.
+**Implementation and automated checks are delivered; ~0.3-second human recognition acceptance remains pending.** No completion claim is made until that review arrives.
 
-The existing foreground treatment still uses proximity/crowd/hull triggers. This lane has not yet delivered a new occlusion-only outline. A depth-tested ground ring can still disappear behind corpses; above-corpse ordering is unproven.
+## Change
+
+A small muted teal ground ring follows the interpolated on-foot courier at rendered paving height. It hides while riding/driving. It draws before retained corpses using the existing living stencil bit, so corpses yield to its footprint while living bodies and props depth-test normally. Corpses persist; simulation stats and behavior are unchanged.
+
+The courier’s existing foreground contour is teal rather than gold, with slightly wider grazing falloff. The crowd-count trigger is replaced by conservative camera-to-head/torso body-volume overlap. Large corpses use a camera-to-lower-body segment check; existing hull/Mega handling remains. These are conservative overlap approximations, not pixel-exact occlusion queries. Corgi fallback contour retains gold; zombie materials are unchanged. No pass is added.
 
 ## Reviewed evidence
 
-Opened the original batch-108 L4 tick-8139 capture: the teal pack is difficult to locate among large bodies. Opened current WebGL2 L4 HIGH zoom-1 frame 60 and WebGPU L6 HIGH zoom-1 frame 60. L4 retains a visible warm courier edge but the ring is not independently conspicuous. L6 lights the courier strongly; the ring is difficult to distinguish amid feet and red warnings. These observations do not prove a 0.3-second recognition time. No matched before/after sheet is claimed yet.
+[contact.jpg](contact.jpg) is the sole small sheet: original 49f3252a render sources versus current source, identical L4/L6 HIGH zoom-1 moving fixture frame 60. Original GameView, PaletteMaterial, courierDepth and courierForeground are served by a private Vite source override; current source uses the other private server. One pooled headless browser, ports 5003/5004. Zero browser errors.
 
-Raw fixture screenshots and clipping receipts remain in ignored `test-results/s121-courierread/repro-{webgl2,webgpu}-motion/`. The JSON records available fixture results; earlier rows may precede the rendered-paving-height correction. Re-run the complete final matrix after design acceptance.
+Opened the original batch-108 L4 tick-8139 complaint capture and matched sheet. L4’s original warm edge competes with clothes; the teal edge separates courier head, torso and limbs. L6 already lights her strongly and gains a smaller identity-colour improvement. The ring is largely hidden by living bodies in the tightest fixtures; the contour carries identification there. Additional corpse-heavy L4/L6 captures show surviving teal arcs, clearest around L6 feet. Raw captures are under ignored `test-results/s133-couriermark/`.
 
-## Checks and remaining work
+Current-source real-play: QA build passed; a 180-second standard-combat HIGH zoom-1 spot ran via `tools/playtest`, no skips. It reached breach combat and stopped at its requested sample limit (exit 1: unfinished level). One early empty-HUD navigation warning. Opened `l4-final/captures/campaign-L4-t8141.jpg`: 10/100 HP, multiple large white-bodied Alphas overlapping the courier, health bars and red warnings. Her teal silhouette is clear; the ring is covered. This supports practical utility but does not measure human reaction time. Independent recognition review was requested and remains unanswered.
 
-Typecheck passed after snapshot instrumentation. Lint passed after that instrumentation. The unchanged required remote unit command passed 105 tests, one skipped, 27 files in 127 seconds on 46.225.66.90. Browser checks use the pool, headless, one browser, ports 5003/5004.
+## Validation
 
-Still required: finish marker/occlusion treatment, final complete backend/tier/zoom matrix, above-corpse/below-body review, measured draw/performance comparison, scene gate rows, real-play L4 HIGH spot via tools/playtest, matched before/after review and one small sheet. This report is a progress receipt, not acceptance signoff.
+- Typecheck and lint passed. Existing render-contract suite was extended with front/rear/off-axis/hidden/dead body-overlap controls; all 14 cases passed.
+- Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test`: 105 passed, one skipped, 27 files, 132.7 s within 240 s, runner 46.225.66.90, implementation e4a7bba5.
+- Current moving fixtures: L4/L6 × WebGL2/WebGPU × HIGH/LOW × zoom 1/1.5, frames 1/30/60: 48 samples pass. Minimum courier body-mask share 1.0 WebGL2 / 0.99894 WebGPU. Masks prove visibility, not recognition speed.
+- Earlier full scene gate: 91/91 plus HIGH/LOW vehicle-contact and native L9/L7/L4 motion passed. Current corpse-specific rows passed 3/3. Final full-source rerun passed 91/91 with zero known/not-run rows, plus vehicle-contact HIGH/LOW and native L9/L7/L4 motion follow-ups (exit 0), output `test-results/s133-couriermark/gate-final/`. Source remained unchanged throughout its 20.6-minute run.
 
-## Rejected occlusion experiment
+## Cost
 
-A camera-to-torso sphere test replaced the five-nearby-body trigger. Its focused front/rear/off-axis tests passed, but the WebGL2 HIGH L4 fixture failed the existing 90% body-visibility gate. The experiment was reverted; no regression is retained. Conservative pose-aware occlusion remains open.
+Actual source-before/current comparison: L4 126→127 draws, 340876→340972 triangles; L6 76→77 draws, 277080→277176 triangles. **+1 draw, +96 triangles, no added pass.**
 
-## Real-play L4 HIGH zoom 1
-
-QA build passed. `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 npx tsx tools/playtest/play.ts --levels L4 --quality high --zoom 1 --capture-zooms 1 --weapon weapon.army-mg --level-minutes 3 --session-seconds 180 --no-skip --out test-results/s133-couriermark/l4-real` ran its bounded 180-second sample through the pool. Exit 1 represents unfinished level at the sample limit; no objective was skipped. One early empty-HUD navigation warning was recorded. The driver reached west, north and south breach objectives.
-
-Opened tick 5424 and tick 8136 captures. The small teal ring clearly locates the courier in active north-breach combat, including among corpses, armed figures, Alphas and red warnings at tick 8136. These are different combat configurations from the original batch-108 complaint frame; they establish real-play utility, not a matched before/after or universal 0.3-second test. Raw receipts remain in the ignored output directory.
-
-## Matched sheet and focused gates
-
-`contact.jpg` is the single small sheet: matched L4/L6 HIGH zoom-1 moving-crowd frame-60 views, marker geometry disabled/enabled without changing poses or camera. Opened and reviewed it: most of the ring is hidden by bodies and the fixture improvement is weak, despite its clearer utility in real play. This does not close recognition acceptance. `tools/scenelab/courier-mark-review.ts` reproduces it through the pool on 5003/5004. Captured triangle delta is +96 in each scene. Zero-range meshes still count in the renderer draw counter (127/127 L4, 77/77 L6), so this comparison does not independently measure the structural +1 draw. No native frame-time claim is made.
-
-Focused existing scene gate selection passed 10/10 across its authored WebGL2/WebGPU HIGH/LOW/zoom rows: courier gear, locomotion, turns, armed male/female, vehicle admission and bar-cap horde. Full gate coverage is still pending. Output: `test-results/s133-couriermark/gate/`. Typecheck and lint passed with the matched capture tool.
-
-## Corpse-layer correction
-
-The marker now draws as an opaque depth-writing ring at order 1.5 and uses the existing living stencil bit. Living bodies/world props draw first and depth-test normally; later corpse draws respect the ring stencil. This retains a single mesh and no new pass. The ring is now solid muted teal rather than transparent.
-
-Extended the matched capture tool with `--corpses` (existing Scene Lab command, first 16 infected become retained corpses) and `--webgpu`. Both WebGL2 and WebGPU HIGH corpse variants completed. Opened WebGL2 L4 after and WebGPU L6 after: a teal arc survives among bodies, clearly around the L6 courier's feet, while nearer living figures cover portions. These are bounded visual checks, not universal layering proof. Latest raw corpse captures are WebGPU under `review-corpses`; the second run overwrote the first backend's images. Typecheck and lint passed. Final matrix, gate rerun, unit suite and sheet refresh must follow this rendering change.
-
-## Pose-volume occlusion candidate
-
-Replaced the five-nearby-body crowd trigger with camera rays toward courier head/torso, tested against conservative body-height samples (ordinary radius 0.8 m, Alpha 1.4 m, Mega 2.4 m). Off-axis and rear figures no longer activate that crowd branch solely by proximity. Existing hull, Mega and large-corpse handling remains. This is a conservative approximation, not pixel-exact occlusion.
-
-The WebGL2 HIGH moving L4/L6 matrix at zoom 1/1.5 passed with this candidate. Typecheck/lint passed; existing 14-case render-contract suite passed after extending its foreground helper with front/rear/off-axis/hidden/dead controls. LOW/WebGPU, runtime cost and large-corpse trigger refinement remain to qualify.
-
-## Current-revision validation (58cd1a5c)
-
-Both full moving-fixture backend runs passed L4/L6 × HIGH/LOW × zoom 1/1.5, sampled at frames 1/30/60. Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests, one skipped, 27 files in 127.7 s (240 s budget), runner 46.225.66.90. JSON matrix receipts refreshed from these runs.
-
-A warmed Node benchmark of the body-overlap helper scanned 160 no-hit figures for 30,000 calls: median 0.00362 ms, p95 0.00491 ms. This bounds helper CPU cost only; it does not measure native renderer/GPU frame-time delta. Recognition acceptance, final sheet refresh, current-revision gate rerun, large-corpse trigger refinement and full-frame timing remain open.
-
-## Full current scene gate
-
-On source revision 492bab69, `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 npx tsx tools/scenelab/gate-run.ts gate --out test-results/s133-couriermark/gate-current --jobs 1 --batch 10` completed exit 0. All 91 curated rows passed with no known/not-run rows. Required vehicle-contact HIGH/LOW and native L9/L7/L4 campaign motion follow-ups also passed exit 0. The source stayed unchanged for the entire sequential pooled run. This supersedes the earlier focused-only gate status.
-
-## Native timing harness
-
-Extended the existing matched review tool with `--perf`: native uncapped Chrome, 180 warm frames and 600 measured render updates per marker-off/on view. Requires `tools/perf/quiet-run.sh`; normal pooled invocation correctly rejects uncapped timing. Initial admitted attempt exposed tsx `__name` injection in a nested page helper; removed that helper. The corrected attempt remained in quiet-admission wait because host load stayed above the <3 threshold; cancelled before measurement (exit 75, exclusive admission cancelled). No native timing result is claimed. Typecheck/lint passed for the tool before the nested-helper removal.
-
-Reproduce when the host is quiet: `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 sh tools/perf/quiet-run.sh npx tsx tools/scenelab/courier-mark-review.ts --perf`.
-
-## Refreshed current sheet
-
-Replaced the single `contact.jpg` with four current-source matched marker-off/on pairs: living L4/L6 and corpse-heavy L4/L6, HIGH zoom 1, identical camera and pose within each pair. Opened and inspected the sheet. Corpse-heavy L6 shows a clear teal arc around the feet; L4 shows a smaller arc among bodies. Living-only dense views still cover most of the ground cue, leaving the existing contour as the locator. This bounded review supports utility but does not establish every-frame 0.3-second recognition. Both fresh WebGL2 capture runs completed exit 0; no behavior changed.
-
-## Courier identity contour
-
-Changed only the courier contour from warm gold to restrained teal (`#80ddce`), matching the ground cue. Close-view grazing falloff widens slightly (power 3→2), strength .55→.65; hull x-ray edge .14→.2. Companion fallback explicitly retains gold; no zombie/corgi material change. Existing uniforms and draws are reused. Opened current L4 HIGH zoom-1 frame 60: teal head/torso/arm edges separate the courier from warm crowd clothing even when the ground ring is hidden. WebGL2 HIGH moving L4/L6 at both zooms passed; typecheck/lint passed. The earlier full matrix, gate and remote-suite results predate this contour-only change and must not be represented as its final validation.
-
-## Teal-contour remote suite
-
-Required unchanged remote unit command passed on c7ec3256: 105 passed, one skipped, 27 files, 132.2 seconds within 240-second budget, runner 46.225.66.90. Corrected native timing attempt remained in quiet admission (host load >3), then was cancelled without a measurement. Pool wrapper reads `E2E_ADMISSION_TIMEOUT_SECONDS`, whereas the attempted `MI_PERF_ADMISSION_TIMEOUT_SECONDS=120` only controls the legacy path; future retries must set the pool variable. No running check remains from this attempt.
-
-## Original/current source comparison
-
-Extended the existing tool with `--baseline` to serve original 49f3252a GameView/PaletteMaterial/courierDepth/courierForeground via a Vite source override on 5003, current code on 5004, one pooled browser. Identical seeded moving scenes at frame 60, HIGH zoom 1. Zero browser errors. The single `contact.jpg` now contains these actual source-before/source-after L4/L6 pairs and supersedes the earlier marker-only sheet. Opened it: L4 teal edge separates the courier from warm clothes; L6 already has a strongly lit courier and gains a smaller colour-identity change. It remains a qualitative review, not measured human reaction time.
-
-Measured draw counts: L4 126→127; L6 76→77. Triangle counts: L4 340876→340972; L6 277080→277176. **Delta +1 draw, +96 triangles, no added pass.** This supersedes the earlier zero-range draw comparison caveat. Current teal WebGPU full moving matrix passed all tiers/zooms. Typecheck/lint passed with the baseline tool. Native frame-time admission and remaining acceptance gaps are still open.
-
-## Large-corpse eligibility refinement
-
-Replaced the remaining distance-only large-corpse trigger with a conservative 3D camera-to-lower-body segment test (1.5 m body-volume radius plus the existing four-metre neighborhood). Rear/off-axis corpses no longer trigger solely by proximity. This is approximate view overlap, not a GPU occlusion query. Typecheck/lint passed; corpse-heavy matched capture completed; existing corpse gate selection passed 3/3 (close corpse LOW WebGL2, Alpha corpse HIGH WebGPU, corpse pile LOW WebGPU). The first gate request queued behind another lane's exclusive reservation, then completed normally. Raw receipts: `test-results/s133-couriermark/corpse-gate-current/`. Current source needs final dense-matrix validation after this predicate change.
-
-## Latest stable-source receipts (e4a7bba5)
-
-Complete moving L4/L6 × HIGH/LOW × zoom 1/1.5 × WebGL2/WebGPU matrices passed, sampled at frames 1/30/60. Required remote suite passed 105 tests, one skipped, 27 files in 132.7 seconds, runner 46.225.66.90. JSON matrix and unit receipts refreshed. No source mutation occurred during these checks.
-
-Native quiet retry used the correct `E2E_ADMISSION_TIMEOUT_SECONDS=120` and ended exit 75 at its deadline: host load stayed above the <3 preflight threshold. No frame-time data was collected. Independent reaction-time review of the committed before/after sheet was requested from the scheduling session; no response is yet recorded. Recognition speed and native frame-time acceptance remain open. All processes from this validation are terminal.
-
-## Latest-source real L4 HIGH spot
-
-Built current QA source successfully and repeated the identical 180-second standard-combat playtest at HIGH zoom 1, no skips, output `test-results/s133-couriermark/l4-final/`. It reached breach combat and stopped at the requested sample limit (exit 1 for unfinished level). One early empty-HUD navigation warning was recorded.
-
-Opened `campaign-L4-t8141.jpg`: courier HUD 10/100, several large white-bodied Alphas around/overlapping her, red warnings and health bars competing. The teal head/torso/limb contour clearly identifies her amid those bodies; the ground ring is occluded. This supplies actual current-source dense-combat visual evidence, not a fixture substitution. Independent ~0.3-second recognition review remains pending.
-
-## Native timing completed
-
-The host became quiet and the corrected `--perf` run completed exit 0 with exclusive admission, preflight load <3, no foreign headless Chrome/build/test process, native uncapped Chrome WebGL2 HIGH. Each stationary frame-60 scene warmed 180 frames and measured 600 render updates per marker-off/on side; zero browser errors. Raw output: `test-results/s133-couriermark/review-perf/metrics.json`.
+Quiet native uncapped Chrome WebGL2 HIGH timing completed with exclusive admission, preflight load <3 and no foreign headless browser/build/test process. Stationary fixture frame 60, 180 warm +600 measured render updates per marker-off/on side, zero errors:
 
 | Scene | CPU median off/on | CPU p95 off/on | Frame median off/on | Frame p95 off/on |
 | --- | --- | --- | --- | --- |
 | L4 | 5.8 / 5.7 ms | 6.2 / 6.1 ms | 6.1 / 6.0 ms | 6.7 / 6.5 ms |
 | L6 | 5.7 / 5.8 ms | 6.1 / 6.4 ms | 6.0 / 6.1 ms | 6.5 / 6.8 ms |
 
-Median frame delta is within ±0.1 ms, p95 within −0.2/+0.3 ms. This supports small marker render cost in these dense stationary samples. The geometry-off control still submits the marker's empty draw, so it excludes the incremental draw-dispatch cost; full original/current source comparison separately measured +1 draw and +96 triangles. The helper microbenchmark separately measured 0.00491 ms p95 for a 160-body no-hit scan. These bounded results supersede the earlier unmeasured-timing status, without claiming universal GPU/frame-time guarantees. Human recognition review remains pending.
+Median delta ±0.1 ms, p95 −0.2/+0.3 ms supports small marker cost in these samples. Geometry-off still submits an empty draw, excluding incremental dispatch cost. A separate warmed Node 160-body no-hit overlap scan measured 0.00362 ms median / 0.00491 ms p95. These are bounded measurements, not universal frame-time guarantees.
+
+## Reproduction
+
+```sh
+E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/courier-readability.ts webgl2 --motion
+# repeat with webgpu
+E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/courier-mark-review.ts --baseline
+# --corpses for retained-body variants; --webgpu selects that backend
+E2E_ADMISSION_TIMEOUT_SECONDS=120 E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 sh tools/perf/quiet-run.sh npx tsx tools/scenelab/courier-mark-review.ts --perf
+```
+
+The JSON contains the current matrices, comparison counters, timing receipts and bounded real-play review. One small sheet; JSON <200 KB. No deploy, push or main movement.
+
+## Acceptance handoff
+
+All requested implementation, matrix, real-play spot, matched visual review, draw counters, bounded native timing, typecheck/lint/unit checks and final scene gates are recorded and committed. Worktree source is stable. The one remaining unproven requirement is ~0.3-second human recognition in L4/L6: the direct review question and scheduling-session note have no answer. Goal is blocked on that assessment; no more unchanged test reruns can supply a human reaction-time judgment. If either after view remains hard to find, identify L4/L6 and the frame so the cue can be tuned against that evidence.
