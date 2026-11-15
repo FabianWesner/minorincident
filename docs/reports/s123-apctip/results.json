@@ -6484,5 +6484,117 @@
         "maxDistance": 0.330352783203125
       }
     }
-  ]
+  ],
+  "nativeTorqueAblation": {
+    "road": {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "primary",
+      "finished": false,
+      "tick": 7200,
+      "attitude": {
+        "maxRoll": 0.18376828547744464,
+        "maxPitch": 0.2942217819578819,
+        "maxAt": 3699,
+        "drivingMaxRoll": 0.18376828547744464,
+        "drivingMaxPitch": 0.2942217819578819,
+        "drivingMaxAt": 3699,
+        "firstOver20": null
+      },
+      "busRoad": {
+        "samples": 3597,
+        "outside6": 0,
+        "maxDistance": 1.954887740897992
+      }
+    },
+    "detour": {
+      "quality": "high",
+      "routeId": "road",
+      "pathId": "detour",
+      "finished": false,
+      "tick": 7200,
+      "attitude": {
+        "maxRoll": 0.4035066177702304,
+        "maxPitch": 0.12419785654496775,
+        "maxAt": 4098,
+        "drivingMaxRoll": 0.4035066177702304,
+        "drivingMaxPitch": 0.12419785654496775,
+        "drivingMaxAt": 4098,
+        "firstOver20": {
+          "tick": 4096,
+          "phase": "driving",
+          "roll": 0.3706616986221007,
+          "pitch": -0.009533671089967104,
+          "position": [
+            58.392547607421875,
+            1.431844711303711,
+            -304.6466979980469
+          ],
+          "velocity": {
+            "x": 4.0240020751953125,
+            "y": -0.8344616889953613,
+            "z": -0.21895162761211395
+          },
+          "wheels": [
+            {
+              "rotation": 1347.4701196740145,
+              "steer": -0.022399246493338316,
+              "suspension": 0.2996799080481583,
+              "contact": false
+            },
+            {
+              "rotation": 1347.4701196740145,
+              "steer": -0.022399246493338316,
+              "suspension": 0.30000001192065384,
+              "contact": false
+            },
+            {
+              "rotation": 1347.4701196740145,
+              "steer": 0,
+              "suspension": 0.2999999963727478,
+              "contact": false
+            },
+            {
+              "rotation": 1347.4701196740145,
+              "steer": 0,
+              "suspension": 0.27982513843608736,
+              "contact": false
+            }
+          ],
+          "contacts": [
+            {
+              "position": {
+                "x": 59.111202239990234,
+                "y": 0.349922239780426,
+                "z": -306.4580078125
+              },
+              "handle": 5.646630800335e-311
+            },
+            {
+              "position": {
+                "x": 59.241302490234375,
+                "y": 0.345599502325058,
+                "z": -303.1152648925781
+              },
+              "handle": 5.6445088046514e-311
+            },
+            {
+              "position": {
+                "x": 55.549434661865234,
+                "y": 0.5854833722114563,
+                "z": -305.1534729003906
+              },
+              "handle": 5.64238680886e-311
+            }
+          ]
+        }
+      },
+      "busRoad": {
+        "samples": 2713,
+        "outside6": 0,
+        "maxDistance": 1.7384583937542712
+      }
+    },
+    "method": "Same current L9 scenario, native physics and route input. Only car.physics.stabilizeTilt replaced with a no-op by diagnostic flag. Native detour crosses bound; native primary road does not within 7200 ticks. Does not reproduce original physical-keyboard incident."
+  }
 }

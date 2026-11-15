@@ -71,3 +71,7 @@ Extended the isolated fixture floor from 150m to 1500m half extent after traces 
 ## Completed aggressive steering drives
 
 On current runtime, a 600-tick alternating full-steer burst (ticks2400–2999, sin(tick/55)) followed by ordinary route tracking completes HIGH at tick12079 and LOW at tick11264. HIGH maximum driving roll/pitch 12.32/12.06 degrees; LOW 9.58/11.32 degrees. Zero 20-degree breaches. Bus road census: 6953 HIGH +6948 LOW native ticks, zero outside6m; worst2.369m HIGH,0.331m LOW. These completed corrected-axis trials supersede the earlier incomplete steering sample.
+
+## Native corrective-torque ablation
+
+Added explicit L9_DISABLE_TILT diagnostic option to the native probe. It replaces only the corrective-torque method with a no-op; route input, contacts, residents, bus and chassis physics remain native. HIGH road detour now reproduces roll23.12 degrees (first crossing tick4096, all4 wheels unsupported, descending0.83m/s). Corrected runtime same route completes below12.2 degrees. Primary asphalt route without correction stays below20 degrees for7200ticks (roll10.53/pitch16.86), so the ablation does not reproduce the original physical-keyboard road incident. It isolates a supported native failure mechanism—uncontrolled roll momentum after asymmetric support/contact—and confirms the spring fixes that mechanism. No evidence attributes the original incident to dropped terrain residency. Typecheck/lint pass.

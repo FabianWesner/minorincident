@@ -37,6 +37,8 @@ const projection = (x: number, z: number) => {
 try {
   const support = new LevelNineBot(world, routeId, true);
   const l9 = world.missions!.l9!, car = world.vehicles!.cars.get(l9.state.carId)!;
+  // Diagnostic ablation: retain native L9 physics and input, omit only the corrective torque.
+  if (process.env.L9_DISABLE_TILT === '1') car.physics.stabilizeTilt = () => {};
   const positionJumps: { tick: number; metres: number; from: number[]; to: number[] }[] = [];
   const attitude = { maxRoll: 0, maxPitch: 0, maxAt: 0, drivingMaxRoll: 0, drivingMaxPitch: 0, drivingMaxAt: 0, firstOver20: null as null | { tick: number; phase: string; roll: number; pitch: number; position: number[]; velocity: unknown; wheels: unknown; contacts: unknown[] } };
   const busRoad = { samples: 0, outside6: 0, maxDistance: 0 };
@@ -98,7 +100,7 @@ try {
     }
     if (l9.state.phase === 'driving' && !attitude.firstOver20 && Math.max(Math.abs(roll), Math.abs(pitch)) >= Math.PI / 9) {
       const contacts: unknown[] = [];
-      world.physics.world!.contactPairsWith(car.physics.collider, other => contacts.push({ position: other.translation(), handle: other.handle }));
+      world.physics.world!.contactPairsWith(car.physics.collider, other => contacts.push({ position: other.translation(), handle: other.handle, prop: world.props?.items.find(item => item.collider.handle === other.handle)?.assetId }));
       attitude.firstOver20 = { tick: world.tick, phase: l9.state.phase, roll, pitch, position: [p.x,p.y,p.z], velocity: car.physics.body.linvel(), wheels: car.physics.wheels.map(w => ({...w})), contacts };
     }
     if (l9.driving.hatch && hatchOpenedAt === null) hatchOpenedAt = world.tick;
