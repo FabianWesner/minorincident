@@ -260,5 +260,147 @@
     "evidence": "contact.jpg: cropped isolated L4 HIGH WebGL2 z1 before/after",
     "validation": "scene body-share and console gates passed; typecheck and lint passed",
     "status": "requires full visual matrix and remote suite rerun"
-  }
+  },
+  "revisedContourMatrix": [
+    {
+      "path": "test-results/s121-courierread/final-webgl2-high/s121-l4-crowd/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgl2-high/s121-l6-crowd/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-low/s121-l6-crowd-webgpu-low/metrics.json",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 0.9996214988644966
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-low/s121-l4-crowd-webgpu-low/metrics.json",
+      "backend": "webgpu",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-gpu-high/s121-l4-crowd-motion-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 60,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 60,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-gpu-high/s121-l6-crowd-motion-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 60,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 60,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgl2-low/s121-l4-crowd-low/metrics.json",
+      "backend": "webgl",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgl2-low/s121-l6-crowd-low/metrics.json",
+      "backend": "webgl",
+      "tier": "low",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-high/s121-l6-crowd-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 0.9996214988644966
+        }
+      ],
+      "consoleErrors": 0
+    },
+    {
+      "path": "test-results/s121-courierread/final-webgpu-high/s121-l4-crowd-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "frames": 1,
+      "pass": true,
+      "shares": [
+        {
+          "frame": 1,
+          "share": 1
+        }
+      ],
+      "consoleErrors": 0
+    }
+  ]
 }
