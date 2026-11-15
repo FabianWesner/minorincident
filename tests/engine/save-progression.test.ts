@@ -111,6 +111,9 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
         const log = vi.spyOn(console, 'error').mockImplementation(() => undefined);
         context.saves.write = () => { throw new Error('storage unavailable'); };
         expect(Game.prototype.saveCampaign.call(context as never), 'save failure returns without interrupting gameplay').toBe(false);
+        expect(log).toHaveBeenCalled(); log.mockClear();
+        context.saves.write = () => false;
+        expect(Game.prototype.saveCampaign.call(context as never), 'storage rejection also remains nonfatal').toBe(false);
         expect(log).toHaveBeenCalled(); log.mockRestore();
 
         world.entities.get(1)!.health.current = living.player.health.current;
