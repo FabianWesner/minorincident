@@ -1,6 +1,16 @@
 # s118 L9 bus and hatch defence
 
-Status: **in progress; not green**. This report records the first routing change and its native probe. The required spawn/residency behavior is still incomplete, so no completion claim or commit is made.
+Status: **in progress; not green**. Runtime fixes and diagnostic evidence are committed on this lane; no push, deploy or main movement.
+
+## Current verdict
+
+- **Asphalt native samples pass:** all three driven APC paths (road, corner cuts, wide countryside detour) on HIGH+LOW complete L9, with100% half-second bus samples within6m. Worst4.885m. See [six-driven-paths.json](six-driven-paths.json). No authored asphalt exceptions claimed. Spawn screen visibility is not yet proven, and half-second sampling does not establish every simulation tick.
+- **Passenger participation fails:** exact bus passenger windup events are absent in all six drives; peak living passengers within5m during hatch-open is0 or1, below3. First attack within15s is therefore unproven/failed. Passenger stats were not tuned; unsuccessful delivery trials were reverted.
+- **Vehicle motion gate fails HIGH:** fresh headless browser L9 subset has stable source, LOW pass, HIGH fail due zero hatch contacts. See [browser-l9-motion.json](browser-l9-motion.json). Full campaign gate remains unqualified.
+- **Focused vehicle tests pass:**2/2 after nearest-road projection correction. Typecheck/lint pass after lifecycle guard. Full remote suite previously failed the parked-APC assertion before its correction; a current full remote run remains required. Earlier threat audit had0 flags, but predates later runtime fixes and needs rerun.
+- **Remaining work:** fix physical passenger delivery/arrival and targeting; prove HIGH+LOW hatch thresholds; verify offscreen spawn and continuous tick asphalt invariant; rerun full remote suite, E31 verification, vehicle campaign motion and L9 threat audit on final runtime.
+
+The sections below retain historical trials and intermediate failures. Later current verdicts supersede earlier observations.
 
 ## Findings and change
 
