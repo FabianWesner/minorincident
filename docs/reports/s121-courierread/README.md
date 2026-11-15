@@ -63,3 +63,7 @@ Both production fixtures advanced 600 frames on HIGH WebGL2 with zero console er
 ## Post-setup production movement
 
 A frame-1 moveTo command successfully moved the production L4 courier 8.696 m to (-21.73,7.905). She was drawn and in view for all 1800 frames; zero console errors. Reviewed frame 1800 shows 100 HP, nearby friendly soldiers and the hold HUD at 2:40, with the west breach still 10 m away. This is not dense contact. The next local fixture adds a frame-900 move toward (-32,8), near the authored west soldier post, to approach production attackers. Raw first-route captures are in test-results/s121-courierread/production-contact.
+
+## West-breach production hold
+
+The post-setup route reaches (-31.711,7.997), two metres from the west objective. HIGH WebGL2 runs completed at 1800 and 5400 frames, zero console errors, with captures at 30/60/75/90 simulated seconds. Reviewed 30/60/90-second frames retain readable courier and full HUD HP; the immediate area still does not surround her with 40+ infected. Consequently these are production hold context, not dense-horde acceptance. Large overlapping Alpha bodies beside/outside the barrier are visible; baseline comparison is required before attributing their appearance to this patch. Raw captures/metrics: test-results/s121-courierread/west-contact and west-hold. The 5400-frame run took 136.243 wall seconds; this is capture duration, not a frame-time/performance measurement.
