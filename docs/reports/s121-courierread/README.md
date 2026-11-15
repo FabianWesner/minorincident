@@ -10,7 +10,7 @@ The implementation reduces ordinary infected bar clutter and strengthens the cou
 - `PaletteMaterial`: raise the existing non-vehicle foreground gold edge gain from .25 to .55. The distant vehicle x-ray gain remains .14. The foreground uniform gates the contour; no new render pass is added.
 - Simulation behavior, stats, crowd density, and corpse persistence are unchanged.
 
-The courier already uses a foreground depth slice in close crowds. Its palette output has a separate contour calculation; changing the standard emissiveNode gain had no visible courier effect and that trial was reverted. `contact.jpg` is one small cropped L4 HIGH WebGL2 zoom-1 before/after pair for the palette contour. It is an isolated fixture, **not the required complete production contact sheet**.
+The courier already uses a foreground depth slice in close crowds. Its palette output has a separate contour calculation; changing the standard emissiveNode gain had no visible courier effect and that trial was reverted. `contact.jpg` contains four labeled before/after rows: L4 HIGH z1, LOW z1, HIGH z1.5, and L6 HIGH z1, all at 30 HP. Baseline uses the prior .25 palette contour, candidate uses .55; the bar cap is present in both. These are isolated stationary fixtures, **not production alarm/retreat acceptance**. At sheet scale the contour improvement is subtle. Baseline/candidate raw files are under contour-before-webgl2 and contour-after-webgl2; the candidate source was restored after baseline capture.
 
 ## Checks and evidence
 

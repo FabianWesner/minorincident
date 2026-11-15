@@ -575,5 +575,19 @@
       "share": 1,
       "foreground": true
     }
-  ]
+  ],
+  "contactSheet": {
+    "path": "contact.jpg",
+    "rows": [
+      "L4 HIGH z1",
+      "L4 LOW z1",
+      "L4 HIGH z1.5",
+      "L6 HIGH z1"
+    ],
+    "health": 30,
+    "baseline": "previous .25 palette contour; bar cap retained in both",
+    "candidate": "current .55 palette contour",
+    "scope": "isolated stationary fixtures; not production alarm/retreat acceptance",
+    "sourceRestored": true
+  }
 }
