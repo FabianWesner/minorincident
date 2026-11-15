@@ -14,9 +14,9 @@ Typecheck and lint passed. Required remote `sh tools/remote/run.sh "$PWD" -- npm
 | --- | --- | --- | --- |
 | HIGH road | 1 | 322 s; no skips | 2/4 at tick 12306; still 3/4 at 17447: ≥85.7 s incomplete |
 | HIGH shortcut | 1.5 | 236 s; no skips | 2/4 at tick 9835; still 3/4 at 12487: ≥44.2 s incomplete |
-| LOW road | 1.5 | 215 s; no skips | No intervening “Defense complete” stall observation; exact boarding interval not established |
+| LOW road | 1.5 | 215 s; no skips | 4/4 at tick 9754, with 15 s defense remaining: PASS |
 
-**P1:** evacuation timing/progression delay. Capture: `test-results/b107/l9-high-road/captures/campaign-L9-t16237.jpg`, tick 16237. Eventual handover disproves a permanent softlock in these samples. The driver labeled its pause P2; this report prioritizes the reproduced progression-target failure P1. LOW's eventual completion alone does not establish ≤20-second boarding.
+**P1:** evacuation timing/progression delay. Capture: `test-results/b107/l9-high-road/captures/campaign-L9-t16237.jpg`, tick 16237. Eventual handover disproves a permanent softlock in these samples. The driver labeled its pause P2; this report prioritizes the reproduced progression-target failure P1. LOW's log establishes 4/4 before defense ended; it passes boarding timing.
 
 The runs recorded 25/36/35 shotgun attacks respectively, including the seated hatch route, but aggregate counts do not prove every hatch/boarder shot was effective. Courier HP was 100 in the reviewed late HIGH-road defense frame despite dense nearby infected. The prolonged stationary wait after defense reads as babysitting: the crowd supplies visual pressure while the player waits on the final survivor. This sampled phase does not feel consistently dangerous. No general “stunning” or smooth-motion verdict is justified from sparse captures; APC tilt feel remains unverified.
 
@@ -47,4 +47,4 @@ A separate living L10 farm sample captured `alpha.roar` at tick 4711; its broad 
 
 No tools/playtest edits were made. Dedicated alarm approach/capture and continuous warning-motion recording were not available in the documented options. Capture zooms do not automatically produce a complete scene matrix. Late L9 checkpoint setup rejected `evac-point` with “No active objective,” so placement diagnostics used a fresh level and camera-only viewpoints.
 
-Still unverified: LOW evacuation's exact post-defense interval; complete living-survivor fence routing; pickup wheel grounding at follow zoom 1.5; APC tilt feel and hatch/boarder damage attribution; uninterrupted post-outbreak alarm matrix; continuous warning noticeability in L9/L10. The committed sheet includes evacuation, ordinary L9 scream, two L10 loading handovers and the alarm fixture matrix. The report remains incomplete until these evidence gaps are resolved or the authorized time-box closeout is reached.
+Still unverified: complete living-survivor fence routing; pickup wheel grounding at follow zoom 1.5; APC tilt feel and hatch/boarder damage attribution; uninterrupted post-outbreak alarm matrix; continuous warning noticeability in L9/L10. The committed sheet includes evacuation, ordinary L9 scream, two L10 loading handovers and the alarm fixture matrix. The report remains incomplete until these evidence gaps are resolved or the authorized time-box closeout is reached.

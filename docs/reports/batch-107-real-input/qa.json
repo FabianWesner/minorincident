@@ -28,7 +28,7 @@
     "l9HighRoadEvacuationAndHandover": "finished without skips; L10 loading observed",
     "l9HighShortcutEvacuationAndHandover": "finished without skips; L10 loading observed",
     "l9LowRoadEvacuationAndHandover": "finished without skips; L10 loading observed",
-    "evacueesBoardWithin20Seconds": "FAIL HIGH road >=85.7 s incomplete; HIGH shortcut >=44.2 s incomplete; LOW precise interval unverified",
+    "evacueesBoardWithin20Seconds": "FAIL HIGH road >=85.7 s incomplete; HIGH shortcut >=44.2 s incomplete. PASS LOW road 4/4 with 15 s defense remaining.",
     "northTruckStagingAndGateFence": "unverified",
     "redPickupGroundedAtZoom1_5": "unverified",
     "apcTiltAndSeatedHatchShooting": "25/36/35 aggregate shotgun attacks, seated route exercised; precise hatch damage attribution and tilt feel unverified",
@@ -603,5 +603,11 @@
     ],
     "reviewSheet": "/private/tmp/b107-motion.jpg",
     "verdict": "No erratic relocation while visible in this brief sample. Gate/dumpster panels disappear and return at range boundary; carwash panel disappears on activation. No broad temporal pass."
+  },
+  "lowBoarding": {
+    "tick": 9754,
+    "text": "Cover the survivors \u00b7 Hatch defense 15 s \u00b7 4/4 at the trucks \u00b7 7 m",
+    "source": "test-results/b107/l9-low-road/log-campaign.jsonl",
+    "verdict": "PASS; all four boarded before Defense complete; eventual L10 loading observed"
   }
 }
