@@ -600,5 +600,68 @@
     "command": "npm run qa:threat",
     "exit": 0,
     "L9": "skilled complete, passive complete, 0 passive flags"
+  },
+  "physicalKeyboardRoad": {
+    "command": "PLAYTEST_APC_TILT=1 E2E_PORT=4983 SCENE_PORT=4984 node --import tsx tools/playtest/play.ts --levels L9 --quality high --zoom 1 --entry debug --l9-route road --no-skip --session-seconds 120 --level-minutes 2 --out test-results/s123-apctip/physical-high",
+    "attitude": {
+      "samples": 6738,
+      "maxRoll": 0.26517920218431695,
+      "maxPitch": 0.1909810002558933,
+      "firstOver20": null,
+      "wheelTravel": 0.2499957502189309
+    },
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 112,
+        "maxNoProgressSeconds": 5.152,
+        "deaths": 1,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 0.705,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "exit": 1,
+    "interpretation": "Bounded sample, unfinished level; no tilt breach in 6738 sampled driving ticks. Reviewed t2707 and t5411 original-size captures: upright APC during leaper load and barricade contact. Sparse stills do not establish continuous suspension feel."
   }
 }

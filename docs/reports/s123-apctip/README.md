@@ -59,3 +59,7 @@ On b58ec0b5, unchanged remote npm test passes (94.130.181.173, 146.8 s, 27 files
 ## Fresh threat qualification
 
 Full unchanged npm run qa:threat passes on corrected runtime: 330.2 seconds including wrapper, 0 fail flags. L9 skilled and passive both complete with 0 passive flags. Source/observer hashes and revision retained in results.json. Remaining completion gap: reproduce and inspect the original real-keyboard road-driver tipping sequence, including visual suspension feel; controlled native fixtures and bot driving do not prove that exact observation fixed.
+
+## Physical keyboard road sample
+
+QA build passed. Headless pooled HIGH WebGL2 zoom1, real keyboard road driver, debug menu entry, 120 wall seconds: 6738 sampled driving ticks, max chassis roll 15.19 degrees / pitch 10.94 degrees, no 20-degree breach; suspension deviation reached 0.25 m. The sample ends unfinished with one death, zero objective skips and one disclosed route assist; command exit1 reflects incomplete gameplay and is not a completion pass. Personally inspected original-size t2707 (leapers on hull, bridge approach) and t5411 (barricade contact) captures: APC upright in both. These sparse stills cannot prove continuous natural suspension feel or isolate the exact original tick3255 incident. Raw photos and physical input log remain under test-results/s123-apctip/physical-high; summarized result is in results.json. No exhaustive visual absence claim.
