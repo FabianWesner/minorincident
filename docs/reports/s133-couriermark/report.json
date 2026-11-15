@@ -6,7 +6,7 @@
     "marker_above_corpses": "unproven",
     "occlusion_only_outline": "existing proximity-triggered foreground; not yet revised",
     "real_L4": "180-second HIGH zoom-1 standard combat spot completed; frames 5424/8136 opened; universal recognition still unproven",
-    "scene_gate": "focused existing courier/vehicle/bar rows 10/10 pass; full gate pending",
+    "scene_gate": "91/91 pass on 492bab69, plus vehicle-contact HIGH/LOW and native L9/L7/L4 vehicle motion exit 0",
     "performance": "unmeasured; structural +1 mesh draw, 96 triangles, no pass"
   },
   "checks": {
@@ -2920,5 +2920,13 @@
     "medianMs": 0.003620375,
     "p95Ms": 0.004910625,
     "method": "warmed Node no-hit scan; excludes GPU/render frame cost"
+  },
+  "fullGate": {
+    "revision": "492bab69",
+    "rows": 91,
+    "passed": 91,
+    "vehicleContactExit": 0,
+    "vehicleCampaignExit": 0,
+    "output": "test-results/s133-couriermark/gate-current"
   }
 }

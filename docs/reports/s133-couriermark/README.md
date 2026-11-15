@@ -49,3 +49,7 @@ The WebGL2 HIGH moving L4/L6 matrix at zoom 1/1.5 passed with this candidate. Ty
 Both full moving-fixture backend runs passed L4/L6 × HIGH/LOW × zoom 1/1.5, sampled at frames 1/30/60. Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests, one skipped, 27 files in 127.7 s (240 s budget), runner 46.225.66.90. JSON matrix receipts refreshed from these runs.
 
 A warmed Node benchmark of the body-overlap helper scanned 160 no-hit figures for 30,000 calls: median 0.00362 ms, p95 0.00491 ms. This bounds helper CPU cost only; it does not measure native renderer/GPU frame-time delta. Recognition acceptance, final sheet refresh, current-revision gate rerun, large-corpse trigger refinement and full-frame timing remain open.
+
+## Full current scene gate
+
+On source revision 492bab69, `E2E_PORT=5003 SCENE_PORT=5004 MI_BROWSER_POOL=1 npx tsx tools/scenelab/gate-run.ts gate --out test-results/s133-couriermark/gate-current --jobs 1 --batch 10` completed exit 0. All 91 curated rows passed with no known/not-run rows. Required vehicle-contact HIGH/LOW and native L9/L7/L4 campaign motion follow-ups also passed exit 0. The source stayed unchanged for the entire sequential pooled run. This supersedes the earlier focused-only gate status.
