@@ -1,6 +1,6 @@
 {
   "candidate": "65e45013",
-  "status": "incomplete",
+  "status": "incomplete; candidate evacuation timing rejected by contradictory run",
   "method": "Headless browser pool; real keyboard/mouse; progressed saves through menu; no source changes",
   "checks": {
     "typecheck": "passed",
@@ -27,9 +27,33 @@
       "maxPitchDegrees": 10.5,
       "handover": "L10",
       "evacuation": "4/4 with 6 seconds defense remaining; first HUD record 2026-11-15T10:23:54.788Z"
+    },
+    "contradictoryRun": {
+      "level": "L9",
+      "severity": "P1",
+      "text": "Evacuation timing/progression delay: only 2/4 trucks 58.4 seconds after Defense complete; 240-second fresh HIGH road run ended without handover. Permanent softlock not proven.",
+      "capture": "test-results/s125/l9-video-fresh/captures/video-L9-checkpoint-yield.jpg",
+      "video": "test-results/s125/l9-video-fresh/video/recording-0.webm",
+      "firstDefenseCompleteTick": 10653,
+      "lastObservedTick": 14157,
+      "elapsedSeconds": 58.4,
+      "hp": 90,
+      "deaths": 0
     }
   },
   "findings": [
+    {
+      "level": "L9",
+      "severity": "P1",
+      "text": "Evacuation timing/progression delay: only 2/4 trucks 58.4 seconds after Defense complete; 240-second fresh HIGH road run ended without handover. Permanent softlock not proven.",
+      "capture": "test-results/s125/l9-video-fresh/captures/video-L9-checkpoint-yield.jpg",
+      "video": "test-results/s125/l9-video-fresh/video/recording-0.webm",
+      "firstDefenseCompleteTick": 10653,
+      "lastObservedTick": 14157,
+      "elapsedSeconds": 58.4,
+      "hp": 90,
+      "deaths": 0
+    },
     {
       "level": "L9",
       "severity": "P2",
@@ -45,7 +69,8 @@
   ],
   "readability": {
     "L4": "HIGH and LOW, zoom 1/1.5 living courier frames reviewed; identifiable, HUD HP clear; no obvious player outline artefact",
-    "L6": "HIGH and LOW retreat frames reviewed; clear edge and HUD HP; sparse crowd limits conclusion"
+    "L6": "HIGH and LOW retreat frames reviewed; clear edge and HUD HP; sparse crowd limits conclusion",
+    "denseAcceptance": "L10 HIGH centered pulse frame: courier edge and fixed HP identifiable in dense crowd; immortal route-only functional evidence, not L4/L6 motion proof"
   },
   "spots": {
     "L1": {
@@ -506,11 +531,11 @@
     }
   },
   "open": [
-    "Ordinary scream pulse captures and verdict in every authored screamer level",
-    "Dense-horde living courier and motion flicker audit",
-    "L9 corner/bump visual motion audit; evacuation timing verified on both runs",
-    "Per-level final fun verdicts",
-    "Restore temporary driver changes and final checks/commit"
+    "Capture/observe L6, L7 and L9 authored screamer warnings; current samples produced no events",
+    "Continuous visual review for APC corner/bump motion and courier bar flicker",
+    "Dense-horde L4/L6 living courier motion review",
+    "L9 P1 evacuation delay remains a candidate failure; report-only task makes no source fix",
+    "Final requirement-by-requirement QA audit"
   ],
   "contactSheet": "contact-sheet.jpg",
   "sampleFunVerdicts": {
@@ -523,10 +548,25 @@
     "L10": "HIGH opening harmless; LOW farm combat tense with deaths"
   },
   "screamEvidence": {
-    "L6": "No qualifying event in sampled opening; Alpha roar path distinct from ordinary pulse",
-    "L7": "No qualifying event in 120-second corridor sample",
+    "L6": "No roar event in 150-second active or passive acceptance samples. Source: LevelSixSubway.ts hatch front wave 4, requested hatch 3 at x126; profile contains campaign progression but no resume snapshot, so gate-150 observation was not a resumed save.",
+    "L7": "Fresh passive immortal real-input route completed L7 to L8 in132s with no skipped objectives and no captured roar; gunfire interruption excluded for this attempt; warning not verified.",
     "L9": "No ordinary scream noise in 150-second hatch sample; telegraph capture retry pending",
-    "L10": "Alpha roar captured and reviewed at LOW zoom 1.5; ordinary pulse unverified"
+    "L10": {
+      "ordinary": "HIGH zoom 1: source 706 infected.screamer; noise tick 4012 radius 20",
+      "capture": "test-results/s125/l10-pulse-route/captures/scream-4.jpg",
+      "verdict": "Thin purple ring noticeable when centered on dark ground, no broad pink ground painting; easier to miss moving away",
+      "method": "Real input; immortal acceptance mode and route-only driver; no zombie changes",
+      "metadataNote": "warning label alpha-roar in temporary hook was generic; event special scream and noise actionId infected.screamer establish ordinary screamer identity",
+      "lowComparison": {
+        "quality": "low",
+        "zoom": 1.5,
+        "sourceId": 124,
+        "tick": 6863,
+        "capture": "test-results/s125/l10-pulse-low-fresh/captures/scream-4.jpg",
+        "verdict": "Centered thin purple ring visible on dark ground without broad fill; muted against brighter attack rings",
+        "method": "Fresh L10-default profile, immortal route-only acceptance, real movement"
+      }
+    }
   },
   "screamerSourceInventory": {
     "L6": [
@@ -545,11 +585,50 @@
       "src/levels/L10/encounters.ts:25"
     ]
   },
-  "temporaryDriverStatus": "Restored before report checkpoint commit; local patch /private/tmp/s125-playtest-driver.patch retains diagnostic controls",
+  "temporaryDriverStatus": "Restored before report update commit; latest local diagnostic patch /private/tmp/s125-playtest-driver-v2.patch",
   "motionEvidence": {
     "path": "test-results/s125/l9-motion-frames/sequence.jpg",
     "frames": 50,
     "scope": "first turn and curb/grass transition",
     "verdict": "upright in reviewed frames; continuous smoothness still unverified"
+  },
+  "nextEvidenceActions": [
+    "L6: observe actual hatch-3 Alpha near x126, not generic retreat pressure",
+    "L7: extend corridor sample to authored screamer Alpha",
+    "L9: observe ordinary scream telegraph/noise while hatch open",
+    "L10: repeat ordinary pulse at LOW and zoom1.5",
+    "Continuous visual review for APC motion and courier bar flicker"
+  ],
+  "l6HatchWatch": {
+    "path": "test-results/s125/l6-hatch-watch/watch-completion.json",
+    "durationSeconds": 180,
+    "method": "immortal acceptance, real route movement, no player firing, 30-second release near x120",
+    "hatch3Births": [
+      {
+        "id": 149,
+        "tick": 6402,
+        "at": [
+          123,
+          12.6
+        ],
+        "wave": 4
+      },
+      {
+        "id": 150,
+        "tick": 6402,
+        "at": [
+          129,
+          14
+        ],
+        "wave": 4
+      }
+    ],
+    "verdict": "Authored wave admitted; no captured roar; visual warning still unverified",
+    "refusals": {
+      "cap": 11,
+      "reserved": 4
+    },
+    "actorTypeCaution": "Birth receipts do not include archetype/alphaType. Later read-only screamer-alpha observer produced no rows; admitted screamer type is not proven. Served LevelSixSubway-BB2RuK8y.js contains the expected Alpha spawn branch.",
+    "secondPass": "test-results/s125/l6-hatch-observed/watch-completion.json; births 146/147 at tick6423, no roar/type observation"
   }
 }
