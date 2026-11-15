@@ -210,3 +210,7 @@ Added sampled bus hull points (length1m steps, sides/center, heights0/2/4m) agai
 ## Offscreen browser spawn proof
 
 Headless pooled browser probe runs ordinary bot driving with no actor/HP writes on HIGH+LOW at zoom1/1.5. At first visible bus tick, independently projected render-camera bus hull bounds are entirely outside viewport in all4cases; all buses spawn,command exit0. See `spawn-screen.json`, tool `tools/qa/s118-spawn-screen.ts`. Sampled hull admission guard and probe typecheck/lint pass. Evidence proves these4primary-route camera configurations; new guard can delay other path spawns and therefore final runtime route/participation gates still need revalidation.
+
+## Named E31 verification passed
+
+Remote `npm run verify -- E31` on1bcc3736 passes exit0: typecheck,lint,full unchanged unit suite27files/106passed/1skipped;230.7s within240s unit budget. Remote total315s includes static checks. Summary and log hash in `e31-verification.json`. Full vehicle browser gate remains red; completion is not claimed.
