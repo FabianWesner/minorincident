@@ -44,3 +44,7 @@ The bus now requests collision residency for its pending asphalt spawn or curren
 ## Extended bend measurement
 
 Extended the stationary native fixtures to 120 seconds. This exposed a 8.979 m return-bend excursion in both wide-detour cases. Reducing pursuit lookahead to 6 m and braking above 5 m/s when steering error exceeds 0.15 radians brings the worst sampled offset to 2.657 m; every sampled position in all six fixtures is within 6 m, and all six passengers release in every fixture. Typecheck and lint pass. This remains fixture evidence, not full driven pursuits or hatch attack timing/proximity qualification.
+
+## Actual HIGH primary-road drive
+
+Extended `l9-progress-probe.ts` with read-only bus samples and passenger attack-state transitions. The ordinary HIGH primary-road drive completes at tick 10711, first hatch opens at 5268, zero passengers reach 5 m during an open hatch, and zero passenger attack starts are observed. At hatch-open the bus is still near x281/z-330; it brakes around x374/z-252 and releases after the rail defense. The current fixed rail stop therefore delivers too late. Raw measured positions are committed in `high-driven-passengers.json`. Passenger arrival remains failed; this supersedes any implication that six disembarkations prove participation.
