@@ -1,14 +1,15 @@
 {
   "command": "E2E_PORT=4973 SCENE_PORT=4974 npm run qa:vehicle-campaign-motion",
-  "exitCode": 1,
+  "exitCode": 0,
+  "mergedRuntime": "ee0c05b0",
   "rows": [
     {
       "level": "L9",
       "tier": "high",
-      "pass": false,
+      "pass": true,
       "sourceStable": true,
-      "samples": 890,
-      "groundedRows": 29,
+      "samples": 935,
+      "groundedRows": 31,
       "maxCm": 1.8,
       "p95Cm": 1.8,
       "failed": [],
@@ -16,35 +17,35 @@
       "contextCoverage": [
         {
           "context": "driving",
-          "frames": 890,
-          "actors": 34,
-          "contacts": 64,
+          "frames": 935,
+          "actors": 35,
+          "contacts": 69,
           "maxCm": 1.8,
           "p95Cm": 1.8
         },
         {
           "context": "detour",
-          "frames": 890,
-          "actors": 34,
-          "contacts": 64,
+          "frames": 935,
+          "actors": 35,
+          "contacts": 69,
           "maxCm": 1.8,
           "p95Cm": 1.8
         },
         {
           "context": "hatch",
-          "frames": 59,
-          "actors": 1,
-          "contacts": 0,
-          "maxCm": null,
-          "p95Cm": null
+          "frames": 102,
+          "actors": 3,
+          "contacts": 4,
+          "maxCm": 0.5,
+          "p95Cm": 0.2
         },
         {
           "context": "rail-stall",
-          "frames": 59,
-          "actors": 1,
-          "contacts": 0,
-          "maxCm": null,
-          "p95Cm": null
+          "frames": 102,
+          "actors": 3,
+          "contacts": 4,
+          "maxCm": 0.5,
+          "p95Cm": 0.2
         }
       ],
       "stagedCoverage": []
@@ -52,30 +53,46 @@
     {
       "level": "L9",
       "tier": "low",
-      "pass": false,
+      "pass": true,
       "sourceStable": true,
-      "samples": 913,
-      "groundedRows": 33,
-      "maxCm": 1.2,
-      "p95Cm": 0.4,
+      "samples": 1285,
+      "groundedRows": 35,
+      "maxCm": 6.2,
+      "p95Cm": 1.4,
       "failed": [],
       "correctionFailures": [],
       "contextCoverage": [
         {
           "context": "driving",
-          "frames": 913,
-          "actors": 37,
-          "contacts": 80,
-          "maxCm": 1.2,
-          "p95Cm": 0.4
+          "frames": 1285,
+          "actors": 39,
+          "contacts": 116,
+          "maxCm": 6.2,
+          "p95Cm": 1.4
         },
         {
           "context": "detour",
-          "frames": 913,
-          "actors": 37,
-          "contacts": 80,
-          "maxCm": 1.2,
-          "p95Cm": 0.4
+          "frames": 1285,
+          "actors": 39,
+          "contacts": 116,
+          "maxCm": 6.2,
+          "p95Cm": 1.4
+        },
+        {
+          "context": "hatch",
+          "frames": 387,
+          "actors": 3,
+          "contacts": 38,
+          "maxCm": 2,
+          "p95Cm": 1.4
+        },
+        {
+          "context": "rail-stall",
+          "frames": 387,
+          "actors": 3,
+          "contacts": 38,
+          "maxCm": 2,
+          "p95Cm": 1.4
         }
       ],
       "stagedCoverage": []

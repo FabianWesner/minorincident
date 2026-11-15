@@ -1,16 +1,21 @@
 # s118 L9 bus and hatch defence
 
-Status: **in progress; not green**. Runtime fixes and diagnostic evidence are committed on this lane; no push, deploy or main movement.
+Status: **required native behavior and gates pass** on the merged batch102 lane. No deploy/push/main movement.
 
 ## Current verdict
 
-- **Asphalt native samples pass:** all three driven APC paths (road, corner cuts, wide countryside detour) on HIGH+LOW complete L9, with100% half-second bus samples within6m. Worst4.885m. See [six-driven-paths.json](six-driven-paths.json). No authored asphalt exceptions claimed. Spawn screen visibility is not yet proven, and half-second sampling does not establish every simulation tick.
-- **Passenger participation fails:** exact bus passenger windup events are absent in all six drives; peak living passengers within5m during hatch-open is0 or1, below3. First attack within15s is therefore unproven/failed. Passenger stats were not tuned; unsuccessful delivery trials were reverted.
-- **Vehicle motion gate fails HIGH:** fresh headless browser L9 subset has stable source, LOW pass, HIGH fail due zero hatch contacts. See [browser-l9-motion.json](browser-l9-motion.json). Full campaign gate remains unqualified.
-- **Focused vehicle tests pass:**2/2 after nearest-road projection correction. Typecheck/lint pass after lifecycle guard. Full remote suite previously failed the parked-APC assertion before its correction; a current full remote run remains required. Earlier threat audit had0 flags, but predates later runtime fixes and needs rerun.
-- **Remaining work:** fix physical passenger delivery/arrival and targeting; prove HIGH+LOW hatch thresholds; verify offscreen spawn and continuous tick asphalt invariant; rerun full remote suite, E31 verification, vehicle campaign motion and L9 threat audit on final runtime.
+- Asphalt: road, corner-cut and wide off-road APC drives on HIGH+LOW all complete. Every pursuit tick is recorded continuously;100% within6m, worst3.479m. No authored exceptions. See `final-six-driven-paths.json`.
+- Passengers: ordinary native drive followed by no-fire rail input measures HIGH4within5m/first hull attack7.2s, LOW3within5m/first7.92s. Shared vehicle hull attacks are recorded as `vehicle.attack-windup`; no zombie stat changes. See `participation.json`.
+- Offscreen spawn: independent browser render-camera hull bounds outside viewport at first visible tick for HIGH+LOW zoom1/1.5. See `spawn-screen.json`.
+- Skilled completion: all6native driven paths complete; separate L9 skilled/passive threat routes complete with0L9flags. Audit subset marker is expected and is preserved. See `final-l9-threat.json`.
+- Gates: full8-row headless vehicle campaign motion passes unchanged on merged source. Typecheck/lint and required unchanged remote unit suite pass after main merge:233.2/240s,28files,106passed/1skipped. E31 verifier also passed before the final following-gap change; its constituent final checks pass after merge. See `final-campaign-motion.json`, `merged-suite.json`, `e31-verification.json`.
+- Main92a039e1 and7c3652d3 merged before final remote suite. No new test file/slow test added by this lane, no gate thresholds loosened, no bus/passenger teleports added, no zombie stats changed, corpses retain existing persistence.
 
-The sections below retain historical trials and intermediate failures. Later current verdicts supersede earlier observations.
+## Reproduce
+
+Use `L9_BUS_SAMPLE_TICKS=1 L9_PROGRESS_PATH=primary L9_QUALITY=high node --import tsx tools/qa/l9-progress-probe.ts 1 road`; repeat HIGH/LOW for road primary, road detour, countryside primary. Participation uses `L9_RAIL_PASSIVE=1` on road primary and observes ordinary hull windups. Browser spawn: `E2E_SERIAL=1 E2E_UNITS=1 SCENE_PORT=4974 sh tools/e2e-lock.sh node --import tsx tools/qa/s118-spawn-screen.ts`. Vehicle gate: `E2E_PORT=4973 SCENE_PORT=4974 npm run qa:vehicle-campaign-motion`.
+
+Historical sections below preserve rejected trials and intermediate red receipts; this current verdict supersedes them.
 
 ## Findings and change
 
