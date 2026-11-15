@@ -80,7 +80,8 @@
   },
   "driverGaps": [
     "Optional L1 alarm not exercised by standard route; no dedicated alarm capture option.",
-    "Temporal warning review and L10 remain open."
+    "Temporal warning review and L10 remain open.",
+    "Fresh HIGH L1 with PLAYTEST_VISIBLE_ONLY=1 stalled before pickup against house/fence; physical manual recovery attempted; no skips or teleport; no alarm evidence. Raw test-results/b107/alarm-high."
   ],
   "runtimeRecovery": "Host access restored; preview and GPU pool work. Earlier EPERM failures are historical.",
   "l9Runs": [
@@ -357,5 +358,13 @@
     "zoom": 1,
     "verdict": "Conspicuous red ring; ordinary purple screamer not captured in this bounded standard-combat sample",
     "sample": "Stopped after roughly four minutes in farm fight; no full L10 completion claim"
+  },
+  "alarmAttempt": {
+    "quality": "high",
+    "backend": "webgpu",
+    "result": "incomplete before pickup",
+    "manualInputs": "WASD via existing control-file interface; no driver edits",
+    "captures": "test-results/b107/alarm-high/captures/",
+    "coverage": "Does not satisfy alarm prompt check"
   }
 }
