@@ -56,3 +56,11 @@ The LOW primary-road native drive also completes (tick 10930), with hatch-open t
 ## Rejected pursuit pacing trial
 
 A mission-only bus speed share of 1.75 (21 m/s cap) released passengers before the HIGH rail hatch (first observation tick 4950, hatch 5268), but still produced zero attacks and zero within 5 m during hatch defense. L9 completed. The speed change was reverted; see `rejected-pacing-trial.json`. Earlier release alone is insufficient, so the next investigation must trace passenger pathing/targets and delivery location.
+
+## Target handoff investigation
+
+Found that `pursueCrossingVehicle` returned while the courier was exposed, leaving an engine scripted waypoint installed; `scriptedMovement` suppresses attacks. Working change hands that existing waypoint to ordinary courier targeting once, without resetting an already active attack each ten-tick update. Typecheck and lint pass. The initial handoff trial still completed HIGH with zero passenger participation; the final guarded handoff needs a fresh native run and regression validation before commit. Delivery timing remains unresolved.
+
+## Guarded handoff runtime follow-up
+
+Both the guarded handoff alone and its combination with a 1.75 bus speed share completed HIGH but still gave zero passenger attacks and zero passengers within 5 m. The combined trace shows repeated attracted states and passengers tens of metres behind during the rail hold. Speed override reverted again. See `rejected-handoff-pacing.json`; guarded handoff remains a working change, not a proven participation fix.
