@@ -79,6 +79,34 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   expect({ LEFT:l5Start.LEFT, RIGHT:l5Start.RIGHT }).toEqual(l5.racks);
 });
 
+test('native L1–L10 checkpoint save sweep stays valid, including L9 crash phases and retry restores', async () => {
+  for (let level = 1; level <= 10; level++) {
+    const save = level === 1 ? newCampaign() : preset(`L${level}-default` as `L${2|3|4|5|6|7|8|9|10}-default`);
+    const world = await loadLevel(`L${level}` as `L${1|2|3|4|5|6|7|8|9|10}`, 1, save, 0, { quality: 'low' });
+    try {
+      const checkpoints = world.missions!.def.checkpoints;
+      for (const checkpoint of checkpoints) {
+        world.missions!.checkpoint(checkpoint);
+        const candidate = structuredClone(save);
+        if (level === 9) candidate.l9Crash = world.missions!.l9!.save();
+        if (level === 10) candidate.cureResume = { ...world.missions!.saveResume(true), cameraZoom: 1 };
+        expect(validateSave(candidate), `L${level} checkpoint ${checkpoint}`).toBe(true);
+      }
+      if (level === 9) {
+        const l9 = world.missions!.l9!;
+        for (const phase of ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'] as const) {
+          l9.state.phase = phase; l9.state.finished = phase === 'done';
+          const car = world.entities.get(l9.state.carId)!;
+          if (['impact', 'crawl', 'done'].includes(phase)) { car.vehicle!.damage = 'exploded'; car.vehicle!.driver = null; }
+          else { car.vehicle!.damage = 'normal'; car.vehicle!.driver = 1; }
+          const candidate = structuredClone(save); candidate.l9Crash = l9.save();
+          expect(validateSave(candidate), `L9 phase ${phase}`).toBe(true);
+        }
+      }
+    } finally { world.dispose(); }
+  }
+});
+
 test('selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun', () => {
   const lost = preset('L8-default'); lost.selectedAction = 'weapon.shotgun';
   lost.ownedActions = lost.ownedActions.filter(id => id !== 'weapon.shotgun'); lost.racks.RIGHT = lost.racks.RIGHT.filter(id => id !== 'weapon.shotgun');

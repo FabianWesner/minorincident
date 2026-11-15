@@ -408,7 +408,14 @@ export class Game {
       this.campaign.cureResume = { ...this.world.missions.saveResume(atCheckpoint), cameraZoom: this.view.view.getState().targetZoom };
     }
     if(liveCampaign){this.world.progression!.campaign=cloneData(this.campaign);}
-    return this.saves.write(this.campaign);
+    try { return this.saves.write(this.campaign); }
+    catch (error) {
+      // Validation and storage failures must not escape a gameplay event (notably
+      // settings changes and mission autosaves). SaveStore leaves the previous
+      // stored campaign untouched when a candidate is rejected.
+      console.error('Campaign save failed; continuing with the current game.', error);
+      return false;
+    }
   }
   campaignSettings(patch:CampaignSettings):void {if(this.campaign){Object.assign(this.campaign.settings,patch);this.saveCampaign();}}
   private watchCampaign():void {

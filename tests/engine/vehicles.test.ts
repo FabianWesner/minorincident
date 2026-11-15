@@ -12,7 +12,7 @@ import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
-import { decodeSave } from '../../src/sim/progression/Save';
+import { decodeSave, validateSave } from '../../src/sim/progression/Save';
 import { readFixture } from '../../tools/qa/fixture-io';
 import { l9Course } from '../../src/data/l9';
 
@@ -260,6 +260,11 @@ async function l9CheckpointLanes(): Promise<void> {
     const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
     try {
       const l9 = world.missions!.l9!, s = l9.driving.state;
+      const live = structuredClone(decoded.save);
+      live.l9Crash = l9.save();
+      expect(validateSave(live), `${name}: live L9 snapshot validates immediately after restore`).toBe(true);
+      live.settings.quality = 'low';
+      expect(validateSave(live), `${name}: settings-change candidate validates`).toBe(true);
       const bridge = name.startsWith('l9-at-bridge');
       expect(l9.driving.laneClear(8, bridge ? 0 : undefined, bridge), `${name}: 8 m of clear route ahead of the restored APC`).toBe(true);
       if (!bridge) continue;
@@ -274,6 +279,8 @@ async function l9CheckpointLanes(): Promise<void> {
       for (let i = 0; i < 900 && !respawned; i++) world.update();
       expect(respawned, 'the courier respawns at the bridge checkpoint').toBe(true);
       for (let i = 0; i < 5; i++) world.update();
+      live.l9Crash = l9.save();
+      expect(validateSave(live), `${name}: live retry snapshot validates after death`).toBe(true);
       expect(l9.driving.laneClear(8), 'bridge retry: clear lane ahead').toBe(true);
       expect(gap(), 'bridge retry: the bus starts well behind the APC').toBeGreaterThanOrEqual(30);
       expect(world.vehicles!.active, 'bridge retry: the courier is still driving the APC').toBe(l9.state.carId);
