@@ -70,7 +70,33 @@
   "readability": {
     "L4": "HIGH and LOW, zoom 1/1.5 living courier frames reviewed; identifiable, HUD HP clear; no obvious player outline artefact",
     "L6": "HIGH and LOW retreat frames reviewed; clear edge and HUD HP; sparse crowd limits conclusion",
-    "denseAcceptance": "L10 HIGH centered pulse frame: courier edge and fixed HP identifiable in dense crowd; immortal route-only functional evidence, not L4/L6 motion proof"
+    "denseAcceptance": "L10 HIGH centered pulse frame: courier edge and fixed HP identifiable in dense crowd; immortal route-only functional evidence, not L4/L6 motion proof",
+    "L4Motion": {
+      "video": "test-results/s125/l4-motion/video/recording-0.webm",
+      "review": "test-results/s125/l4-motion/review/courier-close.jpg",
+      "quality": "high",
+      "zoom": 1,
+      "sampleSeconds": [
+        55,
+        55.8
+      ],
+      "intervalSeconds": 0.1,
+      "verdict": "Living courier remains identifiable during close crowd attack; no detached/flashing player outline observed. Alpha bar disappears during fall; no random flicker established. This short segment does not clear all bar behavior."
+    },
+    "L6Motion": {
+      "video": "test-results/s125/l6-motion/video/recording-0.webm",
+      "review": "test-results/s125/l6-motion/review/courier-close.jpg",
+      "quality": "high",
+      "zoom": 1,
+      "segmentSeconds": [
+        70,
+        70.8
+      ],
+      "intervalSeconds": 0.1,
+      "verdict": "Courier identifiable during close overlap; no obvious player outline corruption. Nearby enemy bar disappears briefly and returns.",
+      "classification": "Visible bar popping observed, consistent with intentional courier-silhouette suppression/head occlusion; renderer defect not established",
+      "source": "src/render/HealthBars.ts: nearest six healthy attackers, courier overlap suppression, head occlusion"
+    }
   },
   "spots": {
     "L1": {
@@ -531,11 +557,10 @@
     }
   },
   "open": [
-    "Capture/observe L6, L7 and L9 authored screamer warnings; current samples produced no events",
-    "Continuous visual review for APC corner/bump motion and courier bar flicker",
-    "Dense-horde L4/L6 living courier motion review",
-    "L9 P1 evacuation delay remains a candidate failure; report-only task makes no source fix",
-    "Final requirement-by-requirement QA audit"
+    "L9 warning capture/verdict remains unverified",
+    "Full HIGH/LOW zoom1/1.5 temporal courier and screamer matrix incomplete",
+    "Absolute never-glued/jerky APC motion claim not proven beyond sampled reviews",
+    "P1 L9 evacuation delay requires separate source fix; report-only lane did not fix game"
   ],
   "contactSheet": "contact-sheet.jpg",
   "sampleFunVerdicts": {
@@ -548,9 +573,25 @@
     "L10": "HIGH opening harmless; LOW farm combat tense with deaths"
   },
   "screamEvidence": {
-    "L6": "No roar event in 150-second active or passive acceptance samples. Source: LevelSixSubway.ts hatch front wave 4, requested hatch 3 at x126; profile contains campaign progression but no resume snapshot, so gate-150 observation was not a resumed save.",
-    "L7": "Fresh passive immortal real-input route completed L7 to L8 in132s with no skipped objectives and no captured roar; gunfire interruption excluded for this attempt; warning not verified.",
-    "L9": "No ordinary scream noise in 150-second hatch sample; telegraph capture retry pending",
+    "L6": {
+      "capture": "test-results/s125/l6-corrected-capture/captures/scream-1.jpg",
+      "event": "alpha.roar telegraph, source149, tick7113, radius8",
+      "quality": "high",
+      "zoom": 1,
+      "verdict": "Conspicuous red telegraph ring and translucent red area, readable as warning; distinct from ordinary screamer thin purple pulse",
+      "method": "Immortal real-input route acceptance with 30-second hatch watch; corrected per-mission capture hook",
+      "correction": "Earlier empty event logs were weakened by a temporary hook binding flaw; direct probe confirmed Alpha and interrupted roar."
+    },
+    "L7": {
+      "capture": "test-results/s125/l7-corrected/captures/scream-1.jpg",
+      "event": "alpha.roar telegraph tick2083 source109; full windup tick2098 radius8",
+      "quality": "high",
+      "zoom": 1,
+      "verdict": "Bright red rings and translucent areas conspicuous against dark road; multiple overlapping warnings busy but readable",
+      "method": "Fresh progressed save; immortal real-input route-only acceptance; corrected per-mission hook",
+      "correction": "Prior empty logs were capture-hook limited and cannot imply absence of roar"
+    },
+    "L9": "Corrected per-mission hook, fresh progressed save, LOW zoom1.5 immortal real-input shortcut through rail stall and evacuation bay, 135s: no scream event captured. Warning readability remains unverified; no claim that warning is absent in all gameplay.",
     "L10": {
       "ordinary": "HIGH zoom 1: source 706 infected.screamer; noise tick 4012 radius 20",
       "capture": "test-results/s125/l10-pulse-route/captures/scream-4.jpg",
@@ -585,12 +626,47 @@
       "src/levels/L10/encounters.ts:25"
     ]
   },
-  "temporaryDriverStatus": "Restored before report update commit; latest local diagnostic patch /private/tmp/s125-playtest-driver-v2.patch",
+  "temporaryDriverStatus": "All tracked tools restored; final diagnostic patch /private/tmp/s125-playtest-driver-final.patch",
   "motionEvidence": {
     "path": "test-results/s125/l9-motion-frames/sequence.jpg",
     "frames": 50,
     "scope": "first turn and curb/grass transition",
-    "verdict": "upright in reviewed frames; continuous smoothness still unverified"
+    "verdict": "upright in reviewed frames; continuous smoothness still unverified",
+    "continuousArtifact": "test-results/s125/l9-video-fresh/video/recording-0.webm",
+    "review": "Reviewed timestamped 1fps sequences 0-79 s: initial corner, roadblock/debris contacts, fire/explosion effects, onward driving. APC upright and headings progress without an obvious large snap in sampled frames; subsecond jerk/glued appearance not resolved.",
+    "subsecondReview": {
+      "intervalSeconds": 0.2,
+      "segmentsSeconds": [
+        [
+          12,
+          16
+        ],
+        [
+          59,
+          63
+        ]
+      ],
+      "paths": [
+        "test-results/s125/l9-video-fresh/review/close/turn.jpg",
+        "test-results/s125/l9-video-fresh/review/close/contact.jpg"
+      ],
+      "verdict": "Progressive translation and heading, upright, no obvious teleport or sudden righting snap in sampled road turn/contact sequences",
+      "limits": "Not full off-road temporal review or courier flicker proof"
+    },
+    "lowShortcut": {
+      "video": "test-results/s125/l9-shortcut-video/video/recording-0.webm",
+      "review": [
+        "test-results/s125/l9-shortcut-video/review/early.jpg",
+        "test-results/s125/l9-shortcut-video/review/middle.jpg",
+        "test-results/s125/l9-shortcut-video/review/transition.jpg"
+      ],
+      "quality": "low",
+      "zoom": 1.5,
+      "durationSeconds": 90,
+      "maxRollDegrees": 7.0,
+      "maxPitchDegrees": 10.6,
+      "verdict": "Upright in sampled shortcut and surface-transition frames; no obvious large position discontinuity; 0.2s transition sampled. Full continuous smoothness not proven."
+    }
   },
   "nextEvidenceActions": [
     "L6: observe actual hatch-3 Alpha near x126, not generic retreat pressure",
@@ -630,5 +706,16 @@
     },
     "actorTypeCaution": "Birth receipts do not include archetype/alphaType. Later read-only screamer-alpha observer produced no rows; admitted screamer type is not proven. Served LevelSixSubway-BB2RuK8y.js contains the expected Alpha spawn branch.",
     "secondPass": "test-results/s125/l6-hatch-observed/watch-completion.json; births 146/147 at tick6423, no roar/type observation"
+  },
+  "completionAudit": {
+    "L9 two full routes": "Two original runs finished to L10; later HIGH repeat failed evacuation timing",
+    "APC tilt": "Telemetry and sampled temporal visual review support upright behavior; full never-glued/jerky claim not proven",
+    "bus and passengers": "Bus visible on road in captures; hatch fights and evacuation sampled; P1 evacuation delay and P2 elevated truck reported",
+    "L4/L6 readability": "HIGH/LOW zoom1/1.5 static captures reviewed; HIGH temporal closeups reviewed; no player-outline P1 observed; bar pop observed consistent with suppression; complete temporal matrix not done",
+    "screamers": "Source inventory L6/L7/L9/L10; L6/L7 Alpha warnings captured HIGH; L10 ordinary pulse HIGH/LOW captured; L9 warning not captured; full quality/zoom warning matrix incomplete",
+    "L1/L3/L10 spots": "HIGH/LOW 120s samples completed and final frames reviewed",
+    "checks": "Remote npm test passed (105 passed, 1 skipped, 129.3s; full150-case collection budget); final restored-tree typecheck and lint passed",
+    "artifacts": "README + JSON + one reviewed small contact sheet only; raw videos local",
+    "outcome": "Candidate not approved; QA goal incomplete at browser time-box close"
   }
 }

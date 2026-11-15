@@ -11,3 +11,9 @@ Temporary driver changes enable hatch shooting, admit rendered APC boarders, cap
 [Reviewed contact sheet](contact-sheet.jpg), 102 KB: evacuation truck placement, L10 handover, L4 HIGH and L6 LOW courier frames, L1 alarm-panel overlap, and L10 HIGH ordinary scream pulse (immortal route-only acceptance). These static frames do not establish motion quality across all requested scenes. L10 ordinary pulse is visible when centered on dark ground without broad ground painting; it is easier to miss moving away. L6/L7/L9 warning evidence remains incomplete.
 
 Further temporary diagnostics used disclosed immortal/route-only acceptance, a 30-second control release near the L6 hatch, read-only Alpha state logging, and downloaded pool video. All tracked tool edits are restored. No zombie stats, corpse persistence, source behavior, deployment, main branch, or remote branch was changed. The report remains incomplete for warning coverage in L6/L7/L9, continuous motion, and living L4/L6 dense-horde motion checks.
+
+## Time-box closeout
+
+QA remains incomplete and the candidate is not approved. L6 and L7 Alpha-roar warnings were subsequently captured with the corrected per-mission hook and were conspicuous red rings/areas. L10 ordinary pulse was captured at HIGH/zoom 1 and LOW/zoom 1.5: thin purple ring, visible when centered without broad ground painting. A corrected-hook L9 route reached evacuation defense without a scream event, leaving its warning verdict unverified. Full temporal quality/zoom coverage and an absolute smooth-motion claim remain open.
+
+The final diagnostic patch is retained at `/private/tmp/s125-playtest-driver-final.patch`; all tracked tools are restored. The later P1 evacuation repeat supersedes any general pass impression from the first two runs. No source fix is included.
