@@ -1,0 +1,353 @@
+{
+  "status": "in-progress",
+  "target": {
+    "batch": 103,
+    "commit": "2815e0d5"
+  },
+  "scope": "real-input browser QA of L9 bus pursuit, hatch fight, save fix, and ending at trucks",
+  "sourceChanges": {
+    "gameplay": false,
+    "playtestDriver": false,
+    "deployment": false,
+    "push": false,
+    "mainMoved": false
+  },
+  "build": {
+    "command": "MI_BUILD_CACHE=off npm run build:qa",
+    "result": "pass"
+  },
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "result": "pass"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "result": "pass"
+    },
+    "remoteUnit": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "result": "not-run",
+      "exitCode": 69,
+      "reason": "No healthy provisioned Hetzner runner; npm test is ineligible for the Mac fallback."
+    }
+  },
+  "browser": {
+    "requiredPoolWrapperAttempted": true,
+    "poolPort": 4329,
+    "e2ePort": 4981,
+    "scenePort": 4982,
+    "poolStart": "failed",
+    "poolError": "listen EPERM: operation not permitted 127.0.0.1:4329",
+    "previewError": "listen EPERM: operation not permitted 127.0.0.1:4981",
+    "headlessBrowserLaunched": false,
+    "passes": [],
+    "visualFramesCaptured": 0,
+    "contactSheet": null
+  },
+  "observations": {
+    "busPacing": "unmeasured",
+    "roadAndOffRoadDriving": "unmeasured",
+    "passengerDisembarkation": "unmeasured",
+    "hatchThreat": "unmeasured",
+    "smokeReadability": "unmeasured",
+    "endingAtTrucks": "unmeasured",
+    "deathRetryQualityChange": "unmeasured",
+    "continueSave": "unmeasured",
+    "glitches": [],
+    "funVerdict": "withheld; gameplay was not observed"
+  },
+  "blockerEvidence": {
+    "wrapper": "E2E_PORT=4981 E2E_UNITS=1 sh tools/e2e-lock.sh node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4981 --strictPort --configLoader runner",
+    "wrapperExitCode": 75,
+    "directPreviewAttempt": "E2E_PORT=4981 node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 4981 --strictPort --configLoader runner",
+    "directPreviewError": "listen EPERM: operation not permitted 127.0.0.1:4981",
+    "poolLog": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+  },
+  "continuation": {
+    "browserBlockerResolved": true,
+    "highRoad": {
+      "mode": "continue",
+      "quality": "high",
+      "heroine": "female",
+      "zoom": 1,
+      "levels": [
+        "L9"
+      ],
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 477,
+          "maxNoProgressSeconds": 4.548,
+          "deaths": 22,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 5,
+      "bySeverity": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 4,
+        "P3": 0
+      }
+    },
+    "rawEvidence": "test-results/s122-high-road",
+    "visualReview": "pending",
+    "remaining": "LOW, zoom 1.5, WebGPU, off-road, save quality change, truck ending, contact sheet, remote suite"
+  },
+  "lowRoadCorrectedDriver": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 213,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 7.664,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 26
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 4,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0347378253936768,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "",
+            "tick": 11269,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "temporaryDriverChange": "During visible Engine stalled HUD, release driving keys and aim/fire real mouse input at visible living infected; original driver suppressed fire for every vehicle state. Restored after pass.",
+    "rawEvidence": "test-results/s122-low-road"
+  },
+  "highWebGPU": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 205,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 5.133333333333334,
+        "deaths": 0,
+        "assists": 1,
+        "attacks": {
+          "weapon.shotgun": 38
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 3,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0400424003601074,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "reach-outskirts",
+            "text": "",
+            "tick": 10654,
+            "marker": {
+              "anchor": "crawl-end",
+              "ring": {
+                "x": 547,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "route": "dry-shortcut",
+    "zoom": 1.5,
+    "rawEvidence": "test-results/s122-high-gpu"
+  },
+  "remoteFinal": {
+    "exit": 0,
+    "runner": "46.225.66.90",
+    "seconds": 127.5,
+    "receipt": "[runner] queued FIFO 01794722170969857000-6803.json; remote preferred, eligible Mac CPU fallback\n[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/s122-l9qa -> 46.225.66.90:/srv/mi/ws/s122-l9qa-f09ddd\n[remote] cache-gc deleted:none\n[remote] sync 34s, 14562 files; job /srv/mi/jobs/s122-l9qa-f09ddd-6803-1794722170; queueing for a slot\n[runner] slot 0 acquired; load 0.21 0.05 0.02\n\n> test\n> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 45/45 files\n\n\u001b[1m\u001b[30m\u001b[46m RUN \u001b[49m\u001b[39m\u001b[22m \u001b[36mv5.0.3 \u001b[39m\u001b[90m/srv/mi/jobs/s122-l9qa-f09ddd-6803-1794722170\u001b[39m\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/shared/render-contracts.test.ts \u001b[2m(\u001b[22m\u001b[2m14 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2221\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m static placement batches reuse their graph and narrow barriers keep the foreground cut\u001b[33m 618\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding\u001b[33m 1208\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/infected-ai.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 10009\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed\u001b[33m 4511\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius\u001b[33m 3938\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m all levels recover nonlethal downs after seeded 10-20 s at full HP; explosives and burns kill for good\u001b[33m 1419\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/l4-contact.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 11022\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected\u001b[33m 11019\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/engine/vehicles.test.ts\u001b[2m > \u001b[22m\u001b[2menter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach\n\u001b[22m\u001b[39m[campaign] selected action weapon.rocket-launcher unavailable (not in destination rack); falling back to weapon.shotgun\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/combat.test.ts \u001b[2m(\u001b[22m\u001b[2m7 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 974\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection\u001b[33m 404\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/npcs.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 8086\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m civilians: seeded grab \u2192 bite \u2192 down \u2192 glowing eyes \u2192 rising \u2192 infected cycle in place; panic flees; a kill during the grab saves\u001b[33m 1455\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission\u001b[33m 840\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m corgi: warns of an offscreen threat within 18 m with a unit direction\u001b[33m 5788\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/engine/save-progression.test.ts\u001b[2m > \u001b[22m\u001b[2mL1\u2013L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection\n\u001b[22m\u001b[39m[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fists\n[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.bat\n[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe\n[campaign] selected action weapon.handgun unavailable (not in destination rack); falling back to weapon.fire-axe\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/world-systems.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 21424\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out\u001b[33m 10744\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded\u001b[33m 10434\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/engine/save-progression.test.ts\u001b[2m > \u001b[22m\u001b[2mselection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun\n\u001b[22m\u001b[39m[campaign] selected action weapon.shotgun unavailable (not in destination rack); falling back to weapon.army-mg\n\n\u001b[90mstdout\u001b[2m | tests/engine/save-progression.test.ts\u001b[2m > \u001b[22m\u001b[2mbare hands are innate: key 1 selects fists without them entering the carried racks; the L8 sanctuary gate takes the launcher\n\u001b[22m\u001b[39m[campaign] selected action weapon.fists unavailable (not in destination rack); falling back to weapon.rocket-launcher\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/save-progression.test.ts \u001b[2m(\u001b[22m\u001b[2m6 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 14312\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m L1\u2013L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection\u001b[33m 12115\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m bare hands are innate: key 1 selects fists without them entering the carried racks; the L8 sanctuary gate takes the launcher\u001b[33m 1747\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely\u001b[33m 439\u001b[2mms\u001b[22m\u001b[39m\n\u001b[90mstdout\u001b[2m | tests/shared/asset-contract.test.ts\u001b[2m > \u001b[22m\u001b[2mthe asset validator rejects every contract violation, and every production asset passes it\n\u001b[22m\u001b[39mprune: Removed types... Accessor (2)\n\n\u001b[90mstdout\u001b[2m | tests/shared/asset-contract.test.ts\u001b[2m > \u001b[22m\u001b[2mthe asset validator rejects every contract violation, and every production asset passes it\n\u001b[22m\u001b[39mprune: Removed types... Accessor (2)\n\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/shared/asset-contract.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 21335\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m crowd atlas cleanup preserves enclosed eye paint and its authored alpha class\u001b[33m 387\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m the asset validator rejects every contract violation, and every production asset passes it\u001b[33m 20652\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/missions.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 18093\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m graph timing: parallel tasks join in any order; a timeout fires exactly at 120 s, retry restores the timer, completion cancels it\u001b[33m 1180\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m interactions: only the open L6 gate the group is heading for offers its prompt\u001b[33m 12343\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead\u001b[33m 4370\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/gate-tools.test.ts \u001b[2m(\u001b[22m\u001b[2m8 tests\u001b[22m\u001b[2m | \u001b[22m\u001b[33m1 skipped\u001b[39m\u001b[2m)\u001b[22m\u001b[33m 16747\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m scene gate resume requires identical rows, revision and backend identities\u001b[33m 4291\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m scene gate rejects stale, failed, malformed and incomplete child results\u001b[33m 6622\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m scene gate rejects invalid arguments and empty selections before running children\u001b[33m 4627\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m build-cache publication never leaves an interrupted copy looking complete\u001b[33m 949\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/collision.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1487\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m admission: parked vehicle hulls exclude bodies, coincident spawns separate, a thin wall never admits a body through it\u001b[33m 1261\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/navigation.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 22885\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m A*: budgeted search resumes across ticks within its expansion budget; connectivity tells a long route from an enclosed yard\u001b[33m 4639\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m dynamic blockers: a prepared rebake equals a full rebake after doors and carts open and close; a checkpoint restore re-announcing unchanged blockers leaves every AI grid identical (L10, L8)\u001b[33m 6666\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m chasers path through a maze and an offset district without ever overlapping a static collider\u001b[33m 11520\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/input.test.ts \u001b[2m(\u001b[22m\u001b[2m5 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 61\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/qa-drivers.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 48\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/l10-camera-framing.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2374\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[32m\u2713\u001b[39m L10 road camera (PO 10-30 \"Wider L10 camera\") \u001b[2m(3)\u001b[22m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m snaps framing on level load, checkpoint/respawn poses and teleports before the first presented frame; the release/closing staging keeps a cured crowd and clears the Mega\u001b[33m 2238\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/aim-assist.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 306\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/vehicles.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 88181\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m handling: deterministic scripted drives, speed-dependent steering for every vehicle, braking before reverse, flip recovery\u001b[33m 425\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach\u001b[33m 87754\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/director-pressure.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1438\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m native routing clears thin doorways and yields failed shared searches\u001b[33m 1148\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/spawn-director.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 7308\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m a 150-infected migration follows its spline on time and fans out at the goal\u001b[33m 1154\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and refresh borrowed collision radii\u001b[33m 5929\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/core.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 117\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/input-log-codec.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 1093\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[32m\u2713\u001b[39m input log codec \u001b[2m(2)\u001b[22m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m round-trips every InputFrame field and scheme exactly, with float64 precision and commands at their sample index\u001b[33m 371\u001b[2mms\u001b[22m\u001b[39m\n     \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage\u001b[33m 719\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/player.test.ts \u001b[2m(\u001b[22m\u001b[2m3 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 22646\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m movement: fast acceleration and stop, capped diagonal speed, 720\u00b0/s turning, one-tick aim snap, campaign ramps and stairs\u001b[33m 20775\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip\u001b[33m 1791\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/shared/architecture.test.ts \u001b[2m(\u001b[22m\u001b[2m2 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 2585\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m the sim import graph never reaches renderer, UI, debug or DOM code (Three math, synchronous save codecs and Rapier)\u001b[33m 2028\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m lint rejects unseeded randomness, DOM and renderer imports in the sim\u001b[33m 555\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/browser-pool-client.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 8\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/playtest-finale-retreat.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[32m 4\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/engine/determinism.test.ts \u001b[2m(\u001b[22m\u001b[2m4 tests\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 10991\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m a serialized recording replays the identical state hash at every tick; snapshots are copies; reset frees everything\u001b[33m 397\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m real levels replay deterministically: same seed and script give the same hash on L1, L4 and L10\u001b[33m 10449\u001b[2mms\u001b[22m\u001b[39m\n \u001b[32m\u2713\u001b[39m \u001b[30m\u001b[42m default \u001b[49m\u001b[39m tests/tools/test-budget-tools.test.ts \u001b[2m(\u001b[22m\u001b[2m1 test\u001b[22m\u001b[2m)\u001b[22m\u001b[33m 23980\u001b[2mms\u001b[22m\u001b[39m\n   \u001b[33m\u001b[2m\u2713\u001b[22m\u001b[39m test budget collection is passive, rejects missing counts and bounds collection with child cleanup\u001b[33m 23979\u001b[2mms\u001b[22m\u001b[39m\n\n\u001b[2m Test Files \u001b[22m \u001b[1m\u001b[32m27 passed\u001b[39m\u001b[22m\u001b[90m (27)\u001b[39m\n\u001b[2m      Tests \u001b[22m \u001b[1m\u001b[32m105 passed\u001b[39m\u001b[22m\u001b[2m | \u001b[22m\u001b[33m1 skipped\u001b[39m\u001b[90m (106)\u001b[39m\n\u001b[2m   Start at \u001b[22m 05:56:47\n\u001b[2m   Duration \u001b[22m 124.88s\u001b[2m (tests 93%, transform 4%, import 3%)\u001b[22m\n\n[test-budget] test: 127.5 s (budget 240 s)\n[remote] done exit=0 (runner 46.225.66.90, sync 34s, remote total 130s)\n"
+  },
+  "visualReview": {
+    "sheet": "contact-sheet.jpg",
+    "inspected": true,
+    "panels": [
+      "HIGH WebGL2 zoom1 rail hatch, uncorrected driver",
+      "LOW WebGL2 zoom1 immediately after rail restart",
+      "HIGH WebGPU zoom1.5 rail hatch",
+      "HIGH WebGPU trucks defence",
+      "LOW WebGL2 trucks defence",
+      "HIGH WebGPU L10 loading after L9 handover"
+    ],
+    "observations": [
+      "Rail APC and courier readable in sampled frames.",
+      "LOW trucks smoke plume and overlapping attackers reduce hull readability.",
+      "Loading panel is handover evidence, not the truck ending cinematic."
+    ],
+    "limitations": "Sampled stills do not establish continuous absence of popping, clipping, jitter or passenger spawn artifacts."
+  },
+  "saveProbeAttempt": {
+    "status": "incomplete",
+    "source": "import { launchProfile } from '../browser-pool/client';\nimport { writeFileSync } from 'node:fs';\nconst c=await launchProfile('test-results/s122-high-road/profile',{headless:true,args:['--use-angle=metal'],viewport:{width:1280,height:720}});\nconst p=c.pages()[0]??await c.newPage();const errors:string[]=[];p.on('pageerror',e=>errors.push(e.message));await p.addInitScript('window.__name=f=>f');\nconst url='http://127.0.0.1:4981/?testApi=1&scenelab=1&renderer=webgl&quality=high&audio=muted';\nconst start=async()=>{await p.goto(url);await p.waitForFunction(()=>!!window.__SS__);await p.evaluate(()=>window.__SS__!.ready);await p.getByTestId('start-game').click();await p.getByTestId('level-L9').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.id==='L9');if(await p.getByTestId('mission-button').isVisible())await p.getByTestId('mission-button').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.phase==='playing');};\nconst state=()=>p.evaluate(()=>({tick:window.__SS__!.tick(),hp:window.__SS__!.getEntity(1)!.health.current,level:window.__SS__!.missions.state()?.id,quality:window.__SS__!.getState().render.quality}));\ntry{await start();const before=await state();await p.evaluate(()=>{const g=(window as any).__SCENE__.game;g.world.player.damage(1000,g.world.tick,true);window.__SS__!.pause();});const dead=await state();if(!await p.getByTestId('pause-settings').isVisible())await p.keyboard.press('Escape');await p.getByTestId('pause-settings').click();await p.getByTestId('setting-quality').selectOption('low');const changedDead=await state();await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForFunction(()=>window.__SS__!.getEntity(1)!.health.current>0,{},{timeout:30000});const alive=await state();if(!await p.getByTestId('pause-settings').isVisible())await p.keyboard.press('Escape');await p.getByTestId('pause-settings').click();await p.getByTestId('setting-quality').selectOption('high');await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForTimeout(800);const after=await state();await start();await p.waitForTimeout(800);const continued=await state();writeFileSync('test-results/s122-save.json',JSON.stringify({method:'Continue existing L9-default profile; controlled lethal diagnostic hit and pause at zero HP; physical settings changes and menu reload/Continue',before,dead,changedDead,alive,after,continued,errors},null,2));}finally{await c.close();}\n",
+    "error": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nlocator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('pause-settings')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" data-testid=\"pause-settings\">Settings</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    54 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/s122-l9qa/tools/playtest/s122-save-temp.ts:8:329) {\n  log: [\n    \"  - waiting for getByTestId('pause-settings')\",\n    '    - locator resolved to <button type=\"button\" data-testid=\"pause-settings\">Settings</button>',\n    '  - attempting click action',\n    '    2 \u00d7 waiting for element to be visible, enabled and stable',\n    '      - element is not visible',\n    '    - retrying click action',\n    '    - waiting 20ms',\n    '    2 \u00d7 waiting for element to be visible, enabled and stable',\n    '      - element is not visible',\n    '    - retrying click action',\n    '      - waiting 100ms',\n    '    54 \u00d7 waiting for element to be visible, enabled and stable',\n    '       - element is not visible',\n    '     - retrying click action',\n    '       - waiting 500ms',\n    '    - waiting for element to be visible, enabled and stable'\n  ],\n  name: 'TimeoutError'\n}\n\nNode.js v26.0.0\n",
+    "verdict": "UI navigation timeout; no save regression verdict"
+  },
+  "saveFix": {
+    "method": "Continue existing L9-default profile; controlled lethal diagnostic hit and pause at zero HP; physical settings changes and menu reload/Continue",
+    "before": {
+      "tick": 0,
+      "hp": 100,
+      "level": "L9",
+      "quality": "high"
+    },
+    "dead": {
+      "tick": 8,
+      "hp": 0,
+      "level": "L9",
+      "quality": "high"
+    },
+    "changedDead": {
+      "tick": 8,
+      "hp": 0,
+      "level": "L9",
+      "quality": "low"
+    },
+    "alive": {
+      "tick": 133,
+      "hp": 100,
+      "level": "L9",
+      "quality": "low"
+    },
+    "after": {
+      "tick": 187,
+      "hp": 100,
+      "level": "L9",
+      "quality": "high"
+    },
+    "continued": {
+      "tick": 45,
+      "hp": 100,
+      "level": "L9",
+      "quality": "high"
+    },
+    "errors": [],
+    "setup": "Opened pause/settings physically while alive, applied controlled lethal hit while paused, then physically changed quality at zero HP; resumed, changed again after respawn, reloaded and entered Continue.",
+    "probeSource": "import { launchProfile } from '../browser-pool/client';\nimport { writeFileSync } from 'node:fs';\nconst c=await launchProfile('test-results/s122-high-road/profile',{headless:true,args:['--use-angle=metal'],viewport:{width:1280,height:720}});\nconst p=c.pages()[0]??await c.newPage();const errors:string[]=[];p.on('pageerror',e=>errors.push(e.message));await p.addInitScript('window.__name=f=>f');\nconst url='http://127.0.0.1:4981/?testApi=1&scenelab=1&renderer=webgl&quality=high&audio=muted';\nconst start=async()=>{await p.goto(url);await p.waitForFunction(()=>!!window.__SS__);await p.evaluate(()=>window.__SS__!.ready);await p.getByTestId('start-game').click();await p.getByTestId('level-L9').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.id==='L9');if(await p.getByTestId('mission-button').isVisible())await p.getByTestId('mission-button').click();await p.waitForFunction(()=>window.__SS__!.missions.state()?.phase==='playing');};\nconst state=()=>p.evaluate(()=>({tick:window.__SS__!.tick(),hp:window.__SS__!.getEntity(1)!.health.current,level:window.__SS__!.missions.state()?.id,quality:window.__SS__!.getState().render.quality}));\ntry{await start();const before=await state();await p.getByTestId('pause-button').click();await p.getByTestId('pause-settings').click();await p.evaluate(()=>{const g=(window as any).__SCENE__.game;g.world.player.damage(1000,g.world.tick,true);});const dead=await state();await p.getByTestId('setting-quality').selectOption('low');const changedDead=await state();await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForFunction(()=>window.__SS__!.getEntity(1)!.health.current>0,{},{timeout:30000});const alive=await state();await p.getByTestId('pause-button').click();await p.getByTestId('pause-settings').click();await p.getByTestId('setting-quality').selectOption('high');await p.getByTestId('settings-back').click();await p.getByTestId('resume-game').click();await p.waitForTimeout(800);const after=await state();await start();await p.waitForTimeout(800);const continued=await state();writeFileSync('test-results/s122-save.json',JSON.stringify({method:'Continue existing L9-default profile; controlled lethal diagnostic hit and pause at zero HP; physical settings changes and menu reload/Continue',before,dead,changedDead,alive,after,continued,errors},null,2));}finally{await c.close();}\n"
+  }
+}
