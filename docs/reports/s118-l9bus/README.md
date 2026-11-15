@@ -96,3 +96,7 @@ Fresh HIGH primary-road and LOW road-detour (corner-cut) ordinary drives both co
 ## Earlier entry trial
 
 Moving bus entry threshold from APC x110 to x-100, retaining125m asphalt setback and ordinary bus speed, still completes HIGH with zero exact passenger windups and zero within5m. First visible-bus sample2490, hatch5309. Trial reverted. Earlier entry alone does not overcome relative speed/delivery geometry. See `rejected-earlier-entry.json`.
+
+## Wide off-road APC driven coverage
+
+Ordinary primary countryside drives (APC travels far north of the bus asphalt) complete in HIGH and LOW. LOW242 samples/max2.546m, HIGH238 samples/max2.546m; zero bus samples outside6m. Both exact windup sets empty, peak hatch proximity0. See `wide-driven-checks.json`. This expands real native path coverage but preserves the failed passenger requirement.
