@@ -110,7 +110,7 @@ export function look(): Eyes {
       if (enemy && m?.id === 'L4') {
         const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
         if (world.infected?.director.occluded(e.transform)) continue;
-      } else if (!(enemy && m?.id === 'L9' && /hold the hatch/i.test(document.body.innerText)) && !(m?.id === 'L9' && figures.has(e.id)) && !a.input.visible(e.transform)) continue;
+      } else if (!(enemy && m?.id === 'L9' && /hold the hatch/i.test(document.body.innerText)) && !(m?.id === 'L9' && e.attachedTo !== undefined && figures.has(e.id)) && !a.input.visible(e.transform)) continue;
       const s = a.input.project(e.transform, 'player');
       const joints = figures.get(e.id)?.joints;
       if (enemy && !figures.has(e.id)) continue;
@@ -126,7 +126,7 @@ export function look(): Eyes {
       // The drawn chest may sit behind Home, Pause or a rack button. A mouse
       // attack there activates the UI and can leave the driver holding WASD on the title menu.
       if (document.elementFromPoint(aim.x, aim.y)?.closest('button, input, select, textarea, [role="button"], [role="dialog"]')) continue;
-      const drawn = enemy ? figures.has(e.id) : (a.input.visible(e.transform) || (m?.id === 'L9' && figures.has(e.id))) && s.x >= 0 && s.x < view.w && s.y >= 0 && s.y < view.h;
+      const drawn = enemy ? figures.has(e.id) : (a.input.visible(e.transform) || (m?.id === 'L9' && e.attachedTo !== undefined && figures.has(e.id))) && s.x >= 0 && s.x < view.w && s.y >= 0 && s.y < view.h;
       const b: Body = { id: e.id, x: e.transform.x, z: e.transform.z, hp: e.health.current, max: e.health.max, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), kind: e.kind, archetype: e.archetype, drawn, screen: s, aim,
         moving: !!e.motion?.moving, speed: e.motion?.speed ?? 0, yaw: e.transform.yaw, vx: e.motion?.velocity.x ?? 0, vz: e.motion?.velocity.z ?? 0, corpse: !!e.corpse,
         state: e.infected?.state ?? e.escort?.state ?? e.companion?.state ?? e.civilian?.state, following: e.civilian?.survivor?.mode === 'follow', attacking: /^(windup|swing|dog-lunge-bite|zebra-rear-kick)$/.test(figures.get(e.id)?.clip ?? '') };
