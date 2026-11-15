@@ -47,3 +47,7 @@ Reviewed 20 chronological approach/rail samples (ticks 3513–6016) and the fina
 ## Focused pursuit attempt
 
 A further HIGH WebGL2 z1 road-driver sample captured every half-second for120s. Reviewed20 chronological frames: APC tips visibly at tick3255, later leaves asphalt and does not reach rail in this bound. **P2 APC tipping** is observed; driver steering and capture overhead are not isolated. This run does not resolve bus pacing/disembarkation coverage. Its result is retained as a failed observation attempt, not substituted for the successful earlier route.
+
+## Focused rail sequence
+
+A150-second HIGH GL z1 road pass reached rail; near-rail capture cadence was temporarily increased, then driver restored. Reviewed20 chronological frames (t5417–8445). Bus stays parked behind APC; no bus/APC overlap or floating actor established in sampled frames. Attackers gather around hull and the no-fire driver dies. Arrival and first passenger-release remain outside useful frames; spawn popping and3× pacing remain unverified.

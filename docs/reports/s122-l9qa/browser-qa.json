@@ -539,5 +539,65 @@
       "capture": "test-results/s122-bus-road/captures/bus-road-L9-t3255.jpg",
       "limits": "Capture-heavy real-input driver; steering/capture overhead contribution unisolated."
     }
+  },
+  "railFocusedReview": {
+    "runs": [
+      {
+        "level": "L9",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 150,
+        "simSeconds": 146,
+        "maxNoProgressSeconds": 15.209,
+        "deaths": 3,
+        "assists": 1,
+        "attacks": {},
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.handgun"
+        ],
+        "steps": [
+          {
+            "id": "approach",
+            "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+            "tick": 4,
+            "marker": {
+              "anchor": "crash-approach",
+              "ring": {
+                "x": 470,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                457,
+                0,
+                0
+              ],
+              "playerY": 1.0347378253936768,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "frames": "20 chronological samples t5417\u20138445 inspected",
+    "observations": [
+      "Bus parked behind APC throughout visible rail sequence.",
+      "No bus/APC overlap or floating actors established in reviewed samples.",
+      "Attackers gather at hull and courier takes lethal damage with original no-fire driver."
+    ],
+    "limits": "Arrival/first release not clearly captured; cannot judge spawn popping or3x speed. Capture cadence modified only near rail and restored."
   }
 }
