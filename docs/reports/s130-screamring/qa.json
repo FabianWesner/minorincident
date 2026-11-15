@@ -1,0 +1,15 @@
+{
+  "status": "implementation committed; visual acceptance open",
+  "change": "Two short, high-opacity source rings above ground using the existing pooled wave renderer; faint full-radius ground ring retained.",
+  "baseline": "Batch 107 report records the thin L9 HIGH arc and easy-to-miss L10 moving pulse.",
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "localNpmTest": "passed: 106 tests, 27 files, 83.3 seconds",
+    "remoteNpmTest": "not run: remote launcher exited 69; no healthy Hetzner runner",
+    "s124ScreamerGroundVisualGate": "not run: browser pool bind EPERM on 127.0.0.1:4329; legacy path GPU guard denied ps (EPERM)",
+    "beforeAfterFrameReview": "incomplete: baseline findings reviewed from batch 107; no after frames available",
+    "l9L10HighZoom1Webgl2WebgpuMoving": "unverified"
+  },
+  "visualAcceptance": "open; do not claim noticeability or broad-ground gate passed"
+}
