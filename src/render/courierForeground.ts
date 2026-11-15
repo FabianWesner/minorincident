@@ -57,3 +57,8 @@ export function courierForegroundWanted(nearBodies: boolean, megaOccludes: boole
   // slice + gold contour instead, as in the hordes. Riding/driving keeps the separate hull cut and seated cutaway.
   return onFootBehindVehicle || nearBodies || megaOccludes;
 }
+
+/** The overhead identity pin is reserved for visible, on-foot play when bodies obscure the camera line. */
+export function courierPinWanted(onFoot: boolean, visible: boolean, gameplayShot: boolean, bodyOccluded: boolean): boolean {
+  return onFoot && visible && gameplayShot && bodyOccluded;
+}

@@ -1,0 +1,42 @@
+{
+  "slug": "s134-courierpin",
+  "status": "incomplete-visual-and-scene-gates",
+  "change": "Replace the always-visible occludable courier ground ring with a depth-disabled camera-facing teal chevron pin, activated only during visible on-foot gameplay when body occlusion is detected.",
+  "validation": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "renderContracts": "14 passed",
+    "fullSuiteLocal": {
+      "status": "passed",
+      "passed": 106,
+      "skipped": 44,
+      "files": 27,
+      "seconds": 90.5
+    },
+    "requiredRemoteSuite": {
+      "status": "passed",
+      "passed": 105,
+      "skipped": 1,
+      "files": 27,
+      "seconds": 130.5,
+      "runner": "46.225.66.90"
+    },
+    "diffCheck": "passed"
+  },
+  "visualEvidence": {
+    "status": "unverified",
+    "frames": [
+      "L4 dense",
+      "L6 dense",
+      "L1 calm"
+    ],
+    "sheet": null,
+    "reason": "Capture now succeeds. Opened L4 after frame: overhead pin absent; recognition acceptance fails. Diagnose visibility/rendering before final matrix."
+  },
+  "open": [
+    "Capture and inspect matched s133/current frames for L4 dense, L6 dense, and calm L1; record first eye landing and own recognition verdict.",
+    "Run WebGL2 and WebGPU at HIGH and LOW, zoom 1 and 1.5, with moving L4/L6 fixtures.",
+    "Run a real-play L4 HIGH spot and the scene gate.",
+    "Measure draw/triangle delta and finish the report with one small comparison sheet."
+  ]
+}
