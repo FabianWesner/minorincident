@@ -38,3 +38,7 @@ The working correction is now validated: include `alpha-strike`, `alpha-roar`, a
 ## Archived S136 identity tracks
 
 Parsed the actual `observation.enemies` rows from both archived `log-campaign.jsonl` files, matching all seven flagged IDs. Each later changes position substantially while alive: run 1b #946 30.80 m, #947 30.47 m, #943 21.13 m; run 2 #960 13.68 m, #959 8.50 m, #956 25.12 m, #958 21.23 m. Exact ticks/positions/HP are retained in `qa.json.stationaryArchiveTracks`. This rules out permanently frozen identities in these runs. It does not attribute the five-second intervals to hull attack: observation records lack attack ledger, target and path state. The 450-HP #947/#960 may be scripted Alphas but HP alone is not role proof. Their precise follow-up remains a read-only identity/role/vehicle-contact observer at the evacuation hold, retaining `apcContacts`, special timers, blocked path and target IDs rather than suppressing the flags.
+
+## Fresh HIGH evacuation audit
+
+Ordinary mortal real-input road run completed L9 with no skips in 216 seconds, zero issues. Raw: `test-results/playtest/s139-l9-audit-high/`. Expanded observer ran successfully: 28 evacuation-hold samples, 81 nearby-infected records, 34 with native APC contact-ledger entries. Thus hull contacts are directly observed during the hold; the fresh run emits no stationary flags. This validates the added read-only audit but cannot retroactively assign the seven original identities to an attack ledger. LOW replay and archived-interval attribution remain outstanding.
