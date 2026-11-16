@@ -761,8 +761,10 @@ export class LevelEightZoo {
         const column = (queueIndex - 1) % columns, row = Math.floor((queueIndex - 1) / columns), half = columns / 2;
         // A 2.5 m centre passage lets the current head (including the corgi's
         // long capsule) reach the entry before the waiting rows advance.
-        const side = (column < half ? -1 : 1) * (1.6 + column % half * .9);
-        const queue = { x: door.x + dx / length * (2 + row * 1.2) - dz / length * side, z: door.z + dz / length * (2 + row * 1.2) + dx / length * side };
+        const side = (column < half ? -1 : 1) * (1.45 + column % half * .85);
+        // Keep the double-file tail within the courier's nearby escort ring
+        // while preserving clearance for ordinary 0.35 m capsules.
+        const queue = { x: door.x + dx / length * (1.7 + row * .82) - dz / length * side, z: door.z + dz / length * (1.7 + row * .82) + dx / length * side };
         target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id, false) ? queue : e.transform;
       }
     }

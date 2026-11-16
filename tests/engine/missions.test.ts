@@ -22,6 +22,40 @@ async function load(def = missionSandbox()) {
   world = new SimWorld(); await world.init(); world.loadScenario('combat-arena', 1); world.scenario = 'mission-sandbox'; world.loadMission(def);
   const api = missionControls(world); api.begin(); return api;
 }
+
+async function l6FollowersCatchUpOnRoute(): Promise<void> {
+  const w = await loadMissionLevel('L6', 1);
+  try {
+    const mission = w.missions!, state = mission.state.l6!;
+    mission.completeObjective('shelter'); mission.completeObjective('stop');
+    for (const infected of [...w.infected!.active]) w.infected!.release(infected);
+    const row = state.survivors.find(r => r.status === 'following')!;
+    const follower = w.entities.get(row.id)!;
+    for (const other of state.survivors) if (other.id !== row.id) other.status = 'dead';
+    state.leaderX = 120; state.leaderZ = 15;
+    w.solids.relocate(follower, { x: 100, y: follower.transform.y, z: 15 }, 'test.l6-catchup', 1.5);
+    w.solids.relocate(w.entities.get(1)!, { x: 120, y: 1.3, z: 15 }, 'test.l6-courier', 1.5);
+    const startGap = state.leaderX - follower.transform.x;
+    for (let i = 0; i < 300; i++) w.update();
+    expect(follower.transform.x - 100, 'a separated follower uses catch-up pace above the 2.2 m/s column speed').toBeGreaterThan(11);
+    expect(state.leaderX - follower.transform.x, 'the follower closes the gap while the leader continues').toBeLessThan(startGap);
+    expect(state.leaderX).toBeGreaterThan(120);
+    row.straggler = true;
+    expect(new LevelSixBot(w).sample().move?.x, 'distance without an infected threat does not send the courier back across the route').toBeGreaterThan(0);
+  } finally { w.dispose(); }
+}
+
+async function l7DistanceAloneDoesNotPrompt(): Promise<void> {
+  const w = await loadMissionLevel('L7', 1);
+  try {
+    const encounters = w.l7Encounters!, row = encounters.state.roster[0], follower = w.entities.get(row.id)!;
+    w.solids.relocate(w.entities.get(1)!, { x: 20, y: 1.3, z: 15 }, 'test.l7-courier', 1.5);
+    w.solids.relocate(follower, { x: -5, y: follower.transform.y, z: 15 }, 'test.l7-distant-follower', 1.5);
+    expect(Math.hypot(follower.transform.x - w.entities.get(1)!.transform.x, follower.transform.z - w.entities.get(1)!.transform.z)).toBeGreaterThan(18);
+    encounters.follower(follower);
+    expect(encounters.state.alarm, 'separation alone is not a danger prompt').toBeUndefined();
+  } finally { w.dispose(); }
+}
 const step = (ticks = 1) => { for (let i = 0; i < ticks; i++) world!.update(); };
 const teleport = (id: number, x = 5, z = 0) => missionControls(world!).teleport(id, { x, z });
 const kill = (id: number) => missionControls(world!).damageActor(Object.entries(world!.missions!.state.actors).find(([, entity]) => entity === id)![0], 10000);
@@ -255,6 +289,8 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   } finally { w.dispose(); }
   await shelterRecoveryIsShared();
   await northgateSurvivorsStayVisible();
+  await l6FollowersCatchUpOnRoute();
+  await l7DistanceAloneDoesNotPrompt();
 });
 
 async function northgateSurvivorsStayVisible(): Promise<void> {

@@ -7,7 +7,7 @@ import { l7Encounters, l7Rocket } from '../../data/l7';
 import { l3 } from '../../data/l3';
 import { alphaMixFor } from '../../data/alphaTypes';
 import { infectedHumanBite } from '../../data/infected';
-import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
+import { corpseDetour, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
 
@@ -342,10 +342,6 @@ export class LevelSevenEncounters {
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
     const target = nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35);
-    if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
-      this.state.waitAt = w.tick + 300;
-      this.warn(e, 'wait');
-    }
     if (distance(e.transform, target) > .6) {
       // Reuse the crowd's connected route across the city. Until that field
       // reaches a follower, short searches fit the shared A* scratch budget.
@@ -389,7 +385,8 @@ export class LevelSevenEncounters {
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
       const budget = d > l7FollowerRangeM ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
-      w.npcs!.move(e, destination, 5.2, c, 0, budget, nav);
+      const catchupSpeed = d > 12 ? Math.min(6.4, 5.2 + (d - 12) * .16) : 5.2;
+      w.npcs!.move(e, destination, catchupSpeed, c, 0, budget, nav);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;

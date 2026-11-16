@@ -77,12 +77,38 @@ export interface FollowerWaitReceipt {
   escortTicks: number; stationaryFarTicks: number; upperBoundPercent: number | null;
   followers: { id: number; escortTicks: number; stationaryFarTicks: number }[];
   windows?: { key: string; escortTicks: number; stationaryFarTicks: number; first?: { tick: number; playerX: number; playerZ: number; followerId: number; followerX: number; followerZ: number } }[];
+  /** Seeded route metrics: 2 Hz Euclidean player/follower gaps and resolved courier reversals toward a follower over 10 m away. */
+  paceWindows?: { key: string; samples: number; p50GapM: number | null; p90GapM: number | null; maxGapM: number | null; waitingTicks: number; backtrackTicks: number; stuckFollowers: { id: number; maxSeconds: number }[] }[];
+  prompts?: { wait: number; attack: number; lost: number };
 }
 /** Standing during combat is included, so this bounds actual babysitting from
  * above. Passing the bound proves the <=10% waiting-share requirement. */
 export function followerWaitFlags(wait: Pick<FollowerWaitReceipt, 'escortTicks' | 'stationaryFarTicks'> | undefined): string[] {
   if (!wait || !wait.escortTicks) return ['FOLLOWER_WAIT_UNOBSERVED'];
   return wait.stationaryFarTicks > .1 * wait.escortTicks ? ['FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT'] : [];
+}
+
+const escortPaths: Partial<Record<RunnerLevel, readonly { x: number; z: number }[]>> = {
+  L6: [{ x: 0, z: 4 }, { x: 6, z: 15 }, { x: 25, z: 15 }, { x: 246, z: 15 }, { x: 273, z: 15 }],
+  L7: [{ x: 259, z: 15 }, { x: 88, z: 15 }, { x: 88, z: 46 }, { x: -30, z: 47 }, { x: -36, z: 47 }, { x: -36, z: 41.7 }, { x: -50, z: 41.7 }, { x: -50, z: 47 }, { x: -74, z: 47 }],
+};
+function escortProgress(level: RunnerLevel, p: { x: number; z: number }, preferredSegment?: number): { progress: number; distance: number; segment: number } | null {
+  const zooPath = level === 'L8' ? l8Route.flatMap(stage => {
+    const x = (stage.zone.x0 + stage.zone.x1) / 2, z = (stage.zone.z0 + stage.zone.z1) / 2;
+    return [...stage.nodes, { x, z }, ...(stage.exit ? [{ x: stage.exit.x, z: stage.exit.z }] : [])];
+  }) : undefined;
+  const points = escortPaths[level] ?? zooPath;
+  if (!points || points.length < 2) return null;
+  let progress = 0, bestDistance = Infinity, offset = 0, segment = 0;
+  for (let i = 1; i < points.length; i++) {
+    if (preferredSegment !== undefined && Math.abs((i - 1) - preferredSegment) > 1) { offset += Math.hypot(points[i].x - points[i - 1].x, points[i].z - points[i - 1].z); continue; }
+    const a = points[i - 1], b = points[i], dx = b.x - a.x, dz = b.z - a.z, length2 = dx * dx + dz * dz, length = Math.sqrt(length2);
+    const t = length2 ? Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / length2)) : 0;
+    const d = Math.hypot(p.x - a.x - dx * t, p.z - a.z - dz * t);
+    if (d < bestDistance) { bestDistance = d; progress = offset + length * t; segment = i - 1; }
+    offset += length;
+  }
+  return { progress, distance: bestDistance, segment };
 }
 // Five seconds of walking at the observer's 2 Hz cadence. Retain shorter raw
 // samples, but do not compare a one-step arrival correction with a whole route.
@@ -212,6 +238,9 @@ export function physicalPathEntry(world: SimWorld, entity: EntitySnapshot, grid:
 export class ThreatObserver {
   private readonly followerWait = { escortTicks: 0, stationaryFarTicks: 0, followers: new Map<number, { escortTicks: number; stationaryFarTicks: number }>() };
   private readonly waitWindows = new Map<string, NonNullable<FollowerWaitReceipt['windows']>[number]>();
+  private readonly paceWindows = new Map<string, { gaps: number[]; waitingTicks: number; backtrackTicks: number; stuck: Map<number, { since: number; maxTicks: number }>; stuckMax: Map<number, number> }>();
+  private readonly routeProgress = new Map<string, { progress: number; distance: number; segment: number }>();
+  private readonly prompts = { wait: 0, attack: 0, lost: 0 };
   private readonly rows = new Map<string, Row>();
   private active: Row[] = [];
   private readonly births = new SpawnIdentities(() => { for (const row of this.active) row.spawned++; });
@@ -310,6 +339,10 @@ export class ThreatObserver {
     this.waves = new WaveObserver(world, level, e => this.identity(e), !options.followersOnly);
     const update = world.update.bind(world);
     if (!options.followersOnly) {
+      world.events.on('l7.follower-alarm', event => {
+        if (event.type === 'l7.follower-alarm') this.prompts[event.kind]++;
+      });
+      world.events.on('l6.straggler', () => { this.prompts.wait++; });
       world.events.on('l3.fallback', e => { if (e.type === 'l3.fallback') this.initialSquad = e.squad.length; });
       const ai = world.infected!, spawn = ai.spawn.bind(ai);
       // Per-instance observation; no game data, health, inputs, movement or AI budgets are changed.
@@ -409,9 +442,13 @@ export class ThreatObserver {
     // Extra seed receipts retain only 2 Hz follower samples. The per-tick
     // infected and waiting censuses are used by the main audit, not those votes.
     if (followersOnly && w.tick % 30) return;
-    let escorting = false, stationaryFar = false;
+    let escorting = false, stationaryFar = false, unnecessaryWait = false;
     const windowKey = this.level === 'L8' ? w.missions!.l8!.protecting() ? 'protect' : w.vehicles!.active !== null ? 'aboard' : w.missions!.l8!.boarding() ? 'boarding' : 'escort' : this.active.map(r => r.key).join('|');
     const window: NonNullable<FollowerWaitReceipt['windows']>[number] = this.waitWindows.get(windowKey) ?? { key: windowKey, escortTicks: 0, stationaryFarTicks: 0 };
+    const pace = this.paceWindows.get(windowKey) ?? { gaps: [], waitingTicks: 0, backtrackTicks: 0, stuck: new Map<number, { since: number; maxTicks: number }>(), stuckMax: new Map<number, number>() };
+    const priorRoute = this.routeProgress.get(windowKey), route = escortProgress(this.level, player.transform, priorRoute?.segment);
+    if (priorRoute && route && priorRoute.distance <= 8 && route.distance <= 8 && route.progress < priorRoute.progress - .01) pace.backtrackTicks++;
+    if (route && route.distance <= 8) this.routeProgress.set(windowKey, route); else this.routeProgress.delete(windowKey);
     // Use resolved displacement: requested velocity can remain nonzero while
     // the courier is blocked or a cinematic owns movement.
     for (const e of this.entities()) {
@@ -436,6 +473,14 @@ export class ThreatObserver {
         }
         this.followerWait.followers.set(e.id, wait);
       }
+      const gap = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
+      if (w.tick % 30 === 0) pace.gaps.push(gap);
+      const threatened = w.infected!.active.some(enemy => enemy.health.current > 0 && !enemy.hidden && Math.hypot(enemy.transform.x - player.transform.x, enemy.transform.z - player.transform.z) <= 20);
+      if (leaderSpeed <= .2 && gap > 10 && !threatened) unnecessaryWait = true;
+      if (leaderSpeed > .2 && gap > 10 && (e.motion.speed ?? 0) < .1) {
+        const stuck = pace.stuck.get(e.id) ?? { since: w.tick, maxTicks: 0 };
+        stuck.maxTicks = Math.max(stuck.maxTicks, w.tick - stuck.since); pace.stuck.set(e.id, stuck); pace.stuckMax.set(e.id, Math.max(pace.stuckMax.get(e.id) ?? 0, stuck.maxTicks));
+      } else pace.stuck.delete(e.id);
       if (w.tick % 30) continue;
       const speed = e.motion.speed;
       if (leaderSpeed <= .2) continue; // Compare escort travel, not corrections around a resting leader.
@@ -456,7 +501,9 @@ export class ThreatObserver {
     if (stationaryFar) this.followerWait.stationaryFarTicks++;
     if (escorting) window.escortTicks++;
     if (stationaryFar) window.stationaryFarTicks++;
+    if (unnecessaryWait) pace.waitingTicks++;
     this.waitWindows.set(windowKey, window);
+    this.paceWindows.set(windowKey, pace);
   }
   private readonly chaseWatch = new Map<number, { x: number; z: number; at: number; flagged: boolean }>();
   /** r42-arenas (r41-vqa P2-5: a brute and a riot stood in 'chase' 5 m from her behind a shop shelf for 180 s): a chasing infected within 6 m of the courier that has not moved 0.5 m for 30 s is a safe pocket. */
@@ -598,6 +645,13 @@ export class ThreatObserver {
         escortTicks: this.followerWait.escortTicks, stationaryFarTicks: this.followerWait.stationaryFarTicks,
         upperBoundPercent: this.followerWait.escortTicks ? 100 * this.followerWait.stationaryFarTicks / this.followerWait.escortTicks : null,
         followers: [...this.followerWait.followers].map(([id, value]) => ({ id, ...value })),
+        paceWindows: [...this.paceWindows].map(([key, value]) => {
+          const sorted = [...value.gaps].sort((a, b) => a - b), percentile = (p: number) => sorted.length ? sorted[Math.min(sorted.length - 1, Math.ceil(p * sorted.length) - 1)] : null;
+          return { key, samples: sorted.length, p50GapM: percentile(.5), p90GapM: percentile(.9), maxGapM: sorted.length ? sorted.at(-1)! : null,
+            waitingTicks: value.waitingTicks, backtrackTicks: value.backtrackTicks,
+            stuckFollowers: [...value.stuckMax].map(([id, ticks]) => ({ id, maxSeconds: ticks / 60 })) };
+        }),
+        prompts: { ...this.prompts },
       },
       phases: [...this.rows.values()].map(row => {
         const followerSpeeds = [...row.followers].map(([id, values]) => ({ id, samples: values.length, median: median(values)! }));

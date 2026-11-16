@@ -76,8 +76,6 @@ export class LevelEightBot {
         const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg');
         if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, enemy, gun.side, p, false); }
       }
-      const live = zoo.roster().map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined);
-      if (this.profile !== 'runner' && !returning && Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
     }
     // A boss corpse beside the APC (seed 3: elephant at 88,70) blocks the straight walk to the door; step around it like the group does.
     if (!calm && boarded) target = corpseDetour(w, player, target)?.[0] ?? target;

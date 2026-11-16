@@ -372,10 +372,15 @@ export class LevelSixSubway {
     // onto a walkable side walkway uses the courier's route back across that edge.
     const side=Math.abs(e.transform.z-l6.tunnel.z),baseNav=this.w.infected!.nav;
     const nav=this.navigationFor(e),returning=side>1.8&&nav!==baseNav;
-    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,l6.follow.speed,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&(returning||side>l6.tunnel.width/2))
+    // Keep the authored column pace close to the leader, but let separated
+    // walkers make up contact instead of forcing the courier to fetch them.
+    // A small distance ramp is enough for the long tunnel without changing
+    // the pressure, damage, or survivor health rules.
+    const gapToSlot=distance(e.transform,goal), catchupSpeed=gapToSlot>10?Math.min(5.2,l6.follow.speed+(gapToSlot-10)*.4):l6.follow.speed;
+    if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,catchupSpeed,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&(returning||side>l6.tunnel.width/2))
       // A side room's long route can exceed the steering budget. Collected walkers
       // return to the nearby track; the unfetched group keeps its authored mouth approach.
-      this.w.npcs!.move(e,{x:returning?Math.max(l6.tunnel.start,Math.min(e.transform.x,l6.tunnel.end)):l6.tunnel.start,z:l6.tunnel.z},l6.follow.speed,e.civilian!,reach,1600,nav);
+      this.w.npcs!.move(e,{x:returning?Math.max(l6.tunnel.start,Math.min(e.transform.x,l6.tunnel.end)):l6.tunnel.start,z:l6.tunnel.z},catchupSpeed,e.civilian!,reach,1600,nav);
     this.w.spatial.set(e.id,e.transform.x,e.transform.z);return true;
   }
   update():void {
