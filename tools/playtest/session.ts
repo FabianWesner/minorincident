@@ -909,13 +909,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       ? e.enemies.filter(b => b.drawn && b.hp > 0 && !b.corpse && b.d < 6) : [];
     if (e.level === 'L10' && e.player && e.step !== 'mega' && e.step !== 'hold' &&
         e.player.hp / e.player.max < .65 && l10FarmThreats.length >= 2) {
-      const kit = await page.evaluate(() => {
-        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, p = w.entities.get(1)!.transform;
-        return [...w.entities.iterate()].filter(a => !a.hidden && a.pickup && 'kind' in a.pickup && a.pickup.kind === 'medkit' &&
-          Math.hypot(a.transform.x - p.x, a.transform.z - p.z) < 22)
-          .sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))
-          .map(a => ({ x: a.transform.x, z: a.transform.z }))[0] ?? null;
-      });
+      const kit = e.healthKits?.slice().sort((a, b) => a.d - b.d)[0] ?? null;
       await releaseAim();
       if (kit) {
         const points = await page.evaluate(({ p, goal }) => {
@@ -1871,6 +1865,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await press(keys);
       await hold(150);
       continue;
+    }
+    // During L10 travel, collect a visible carried weapon before the next crowd.
+    // Pickups require physical approach; no rack entitlement or world state is written.
+    const l10Gun = e.level === 'L10' && e.player && !['hold', 'mega', 'release', 'epilogue'].includes(e.step ?? '')
+      ? e.weaponPickups?.find(pickup => ranged.test(pickup.action) && !e.player!.weapons.includes(pickup.action)) : undefined;
+    if (l10Gun && !e.enemies.some(body => body.drawn && body.hp > 0 && !body.corpse && body.d < 2)) {
+      await releaseAim();
+      await press(wasdToward(e, l10Gun.screen.x, l10Gun.screen.y));
+      await hold(150); continue;
+    }
+    const l10Kit = e.level === 'L10' && e.player && e.player.hp < e.player.max * .65
+      ? e.healthKits?.slice().sort((a, b) => a.d - b.d)[0] : undefined;
+    if (l10Kit && !e.enemies.some(body => body.drawn && body.hp > 0 && !body.corpse && body.d < 3)) {
+      await releaseAim(); await press(wasdToward(e, l10Kit.screen.x, l10Kit.screen.y));
+      await hold(150); continue;
     }
     // Keep the escape route in charge even between dense crowds. Chasing each
     // recovering straggler could pull the driver to the map edge indefinitely.
