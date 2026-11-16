@@ -17,3 +17,5 @@ The latest shortcut census has a same-attacker sampled grab span around 3.24 sec
 I inspected [boarding.jpg](boarding.jpg), showing -1.6, +4.7 and +10.8 seconds around Defense complete, with progress from 0/4 to 3/4. The crowd and frame spacing prevent continuous individual boarding inspection; no claim of complete teleport/clipping verification is made. Raw captures remain under `test-results/playtest/s138-roster-high-shortcut/captures`.
 
 [qa.json](qa.json) contains compact census evidence. No deployment, push or main move occurred.
+
+A further HIGH shortcut with state-entry timing completed in 7.73 seconds, zero issues. Its sole post-defense grabbed sample was Okafor at age 10 ticks. The observer now logs `stateEnteredAt` and `grabAgeTicks`; no simulation state is changed. One-second sampling still cannot prove exact duration of every completed hold.

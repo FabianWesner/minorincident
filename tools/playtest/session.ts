@@ -1510,6 +1510,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           census, survivors: s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return {
             id, key: a.civilian?.survivor?.key, hp: a.health.current, infected: !!a.infected || !!a.infection, hidden: a.hidden,
             at: { x: a.transform.x, z: a.transform.z }, passengerOf: a.passengerOf, state: a.civilian?.state,
+            stateEnteredAt: a.civilian?.entered, grabAgeTicks: a.civilian?.state === 'grabbed' ? w.tick - a.civilian.entered : null,
             attacker: a.civilian?.attacker, knockedUntil: a.civilian?.knockedUntil, routeGoal: a.civilian?.goal,
             routeIndex: a.civilian?.pathIndex, routeLength: a.civilian?.path.length,
             nearestTruck: s.trucks.map(truck => { const t = w.entities.get(truck)!; return { id: truck, d: Math.hypot(t.transform.x - a.transform.x, t.transform.z - a.transform.z) }; }).sort((x, y) => x.d - y.d)[0],
