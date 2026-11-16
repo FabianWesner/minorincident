@@ -193,3 +193,7 @@ Captured ten worst baseline measured wrecks plus five seeded random OK wrecks (s
 ## LOW recovery trace
 
 Both original LOW flags have no static overlap at observation. West #228 has empty path and recovery mark distance 14.84 m despite the outer scripted goal being nearby; north #263 has empty path and 0.885 m mark. Tried removing the distant-goal reset for scripted Alphas: mission still completes but west stall persists, so reverted the experiment. An attack-state north flag also appears in that run. Need exact per-tick steering/ownership attribution before another production change. Focused checks completed; no source change retained from this experiment.
+
+## Opposite-angle recaptures
+
+Recaptured L6 l6-35 and L3 roadblock-1-2 from a closer opposite angle on explicitly selected webgl/webgpu; both pairs measure 0 cm. Opened all four full images. L3 now exposes wheel/curb contact, with neighboring truck overlap still visible. L6 shows a closer vehicle silhouette but remains too dark for confident visual contact review under production lighting. Thus one selected pair still has a visual-quality limitation; no lighting/material override was used. Receipts in qa.json.visualRecaptures.
