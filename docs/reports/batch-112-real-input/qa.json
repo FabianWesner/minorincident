@@ -1,6 +1,6 @@
 {
   "candidate": "cc2f7476c7e7834d5060b07a2b654a5d1cb1c873",
-  "disposition": "in-progress-visual-qualification-open",
+  "disposition": "incomplete-tank-visual-qualification-blocked",
   "backend": "webgpu",
   "method": "planned unchanged real keyboard/mouse playtest driver; normal mortal combat; headless; HIGH before LOW; guarded single-browser workflow; ports 5019/5020",
   "runs": [
@@ -1921,7 +1921,7 @@
       "highShortcutRuns": 1,
       "lowRoadRuns": 1,
       "evacAudit": "PLAYTEST_L9_EVAC_AUDIT=1",
-      "timingAndVisualReview": "pending"
+      "timingAndVisualReview": "Timing passes all four runs; visible LOW route natural, final entry/crowd segments partly obscured"
     },
     "l4": {
       "tier": "HIGH",
@@ -1931,7 +1931,7 @@
         "roar",
         "slam"
       ],
-      "footPlantingReview": "pending"
+      "footPlantingReview": "Repeated real-input captures reviewed; individual strike/roar/slam soles unqualified"
     },
     "broadSweep": {
       "levels": [
@@ -1945,7 +1945,7 @@
       "tier": "HIGH",
       "zoom": 1,
       "minutesPerLevel": 4,
-      "visualReview": "pending"
+      "visualReview": "All six levels sampled and reviewed; L1/L7 finished before four minutes"
     },
     "contactSheet": {
       "path": "contact-sheet.jpg",
@@ -1971,9 +1971,8 @@
     "Ordinary off-screen scream arrow judgment pending"
   ],
   "open": [
-    "L4 strike/roar/slam planted soles at tank",
-    "L9 complete route naturalness through crowd",
-    "Final report audit"
+    "L4 identifiable planted soles for strike/roar/slam at tank; requires different permitted observation setup or manual review",
+    "L9 final entry/crowd route portions obscured, no universal no-clipping claim"
   ],
   "sourceChanges": [],
   "rawCaptures": [],
@@ -2049,7 +2048,7 @@
       "L4 identifiable continuous strike/roar/slam soles at tank",
       "Full L9 route visibility beyond sampled clear segment"
     ],
-    "status": "acceptance-incomplete"
+    "status": "report committed; acceptance incomplete"
   },
   "shortcutReview": {
     "path": "test-results/b112-review/shortcut.jpg",

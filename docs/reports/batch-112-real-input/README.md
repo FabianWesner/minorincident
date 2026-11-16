@@ -1,4 +1,4 @@
-# Batch 112 real-input browser QA — review in progress
+# Batch 112 real-input browser QA — incomplete acceptance
 
 Candidate `cc2f7476c7e7834d5060b07a2b654a5d1cb1c873`. All requested level/tier capture runs are collected. **Not yet a complete acceptance pass:** L4 tank strike/roar/slam foot planting and full L9 route naturalness remain visually unqualified; off-screen arrow is helpful in the reviewed LOW hatch event (moving courier remains untested).
 
@@ -111,3 +111,9 @@ Ignored observer bundle forwards Alpha identity, transform, health and brain sta
 ### Exact observed attack coverage
 
 Parsed the 781 Alpha-state samples: 39 charge, eight grab-throw and five grab-human special samples; zero recorded roar or ground-slam states. Ordinary attack actor #296 is recorded at ticks 2831/2846. Opened `test-results/b112-review/strike296.jpg` (captures 2811/2840/2869): actor cluster near the generator is visible, but soles are not continuously readable. This narrows the gap: the observer run supplies ordinary attack identities but does not provide usable roar/slam foot windows. Sampling is 250 ms, so zero recorded states does not prove no brief event occurred between samples.
+
+## Final handoff
+
+The report-only artifacts are committed; batch 112 is **not approved as a complete acceptance pass**. Four L9 timing runs meet the requested numerical limits with all four evacuees alive; sampled LOW travel looks natural. Six broad sweeps are collected/reviewed, ordinary off-screen scream bearing is helpful in the seated LOW event, and the prescribed code gates pass. Provisional issues retain capture paths/ticks and do not become confirmed product defects solely from driver labels.
+
+Remaining qualification: readable individual strike/roar/slam planted soles at the L4 tank. Repeated unchanged real-input samples do not expose all required feet continuously; recording wrappers failed to save video. The read-only observer works but its captured special windows are charge/grab, not roar/slam. Source inspection confirms L4 normal Alpha spawning assigns alphaType, so expanding the observer filter is not evidence for another identical retry. Further closure needs a different permitted camera/observation setup or manual visual review. L9 final-entry occlusion also limits a universal no-clipping claim. No source/playtest fixes, deployment, push, main movement, stat tuning or corpse removal occurred.
