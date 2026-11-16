@@ -211,6 +211,9 @@ export class Outbreak {
       // ambient schedule here can finish an activity and clear `hidden`,
       // leaving the passenger visible at the vehicle's last world position.
       // Other hidden civilians keep their routine clock running inside shops/houses.
+      // Vehicle exit animation may temporarily hide a grabbed passenger;
+      // its evacuation struggle clock must keep running during that handoff.
+      if (e.hidden && c.state === 'grabbed' && world.missions?.l9?.driving.state.roster.includes(e.id)) { this.held(e); continue; }
       if (e.hidden) { if (e.passengerOf === undefined && c.state === 'calm' && !e.infection) this.routine(e); continue; }
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
