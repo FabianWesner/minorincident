@@ -144,3 +144,7 @@ Opened manual-attempt warning captures `campaign-L4-10809-enemy-frozen.jpg` (#25
 ## Wider-view HIGH completion attempt
 
 Ordinary HIGH zoom1 ran540 seconds without skips (`test-results/playtest/b113-l4-wide-high`) and again ended at cellar escape, tick32211,80m from objective. The wider view did not resolve the repeated route/death loop. No full L4 completion is claimed. Further unchanged completion replays are not justified by this result.
+
+## Second manual bearing attempt
+
+HIGH zoom1 attempt `test-results/playtest/b113-l4-bearing-high` stopped after336s without completion. Existing control-file physical legs:10s KeyA (fence79HP),10s KeyD+KeyW (back plaza30HP),10s KeyS (café death), then driver resumed. Opened all three `campaign-bearing-first/second/south.jpg` captures. Manual mode influences no-progress timing; the automatic90s stop at tick19955 is not a confirmed product P0. This manual approach also fails and does not justify more identical replay.
