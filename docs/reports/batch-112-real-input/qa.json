@@ -1,0 +1,82 @@
+{
+  "candidate": "cc2f7476c7e7834d5060b07a2b654a5d1cb1c873",
+  "disposition": "incomplete-browser-runtime-blocker",
+  "backend": "webgpu",
+  "method": "planned unchanged real keyboard/mouse playtest driver; normal mortal combat; headless; HIGH before LOW; guarded single-browser workflow; ports 5019/5020",
+  "runs": [],
+  "validation": {
+    "qaBuild": "pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "remote": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "exit": 69,
+      "status": "not-run-no-healthy-runner",
+      "reason": "No healthy Hetzner runner; prescribed runner policy disallowed local Mac fallback. Not a runner timeout."
+    }
+  },
+  "browserAttempts": [
+    {
+      "command": "npm run playtest -- --levels L9 --quality high --zoom 1 --l9-route road --level-minutes 8 --out test-results/playtest/b112-l9-high-road-1",
+      "result": "QA build passed; tsx IPC socket creation failed with EPERM before browser execution"
+    },
+    {
+      "command": "TMPDIR=/private/tmp node --import tsx/esm tools/playtest/play.ts --levels L9 --quality high --zoom 1 --l9-route road --level-minutes 8 --out test-results/playtest/b112-l9-high-road-1",
+      "result": "Preview unavailable on port 5019; no browser execution"
+    },
+    {
+      "command": "vite preview --host 127.0.0.1 --port 5019 --strictPort",
+      "result": "listen EPERM: operation not permitted 127.0.0.1:5019"
+    },
+    {
+      "command": "sh tools/browser-status.sh",
+      "result": "Browser pool unavailable (fetch failed)"
+    },
+    {
+      "command": "TMPDIR=/private/tmp MI_WORKTREE_CACHE=/private/tmp/mi-b112-cache E2E_PORT=5019 SCENE_PORT=5020 E2E_RESERVATION_SECONDS=60 E2E_ADMISSION_TIMEOUT_SECONDS=30 sh tools/e2e-lock.sh true",
+      "result": "Guarded wrapper could not start pool; listen EPERM on 127.0.0.1:4329 (also 4321 probe); no browser launched"
+    }
+  ],
+  "requestedCoverage": {
+    "l9": {
+      "highRoadRuns": 2,
+      "highShortcutRuns": 1,
+      "lowRoadRuns": 1,
+      "evacAudit": "PLAYTEST_L9_EVAC_AUDIT=1",
+      "timingAndVisualReview": "pending"
+    },
+    "l4": {
+      "tier": "HIGH",
+      "zoom": 1.5,
+      "attacks": ["strike", "roar", "slam"],
+      "footPlantingReview": "pending"
+    },
+    "broadSweep": {
+      "levels": ["L1", "L2", "L3", "L5", "L7", "L8"],
+      "tier": "HIGH",
+      "zoom": 1,
+      "minutesPerLevel": 4,
+      "visualReview": "pending"
+    },
+    "contactSheet": {
+      "path": null,
+      "reviewed": false,
+      "status": "pending-no-gameplay-captures"
+    }
+  },
+  "findings": [],
+  "driverGaps": [
+    "Sandbox denies binding the required local preview server on 127.0.0.1:5019; shared browser pool status is unavailable. No game frame, capture, or gameplay tick was produced."
+  ],
+  "open": [
+    "L9 last-living-evacuee boarding deadline (about 20 seconds after Defense complete)",
+    "L9 grabbed-state maximum age, struggle-free recovery, natural run to trucks, and no teleport/sliding/pack traversal",
+    "L9 bridge stall presence and driver attribution",
+    "L4 Alpha strike/roar/slam foot planting and sliding at HIGH zoom 1.5",
+    "L1/L2/L3/L5/L7/L8 glitches with capture and tick, visual appeal, and babysitting burden",
+    "Screamer edge arrow helpfulness or clutter if an off-screen scream occurs",
+    "Required small reviewed contact sheet"
+  ],
+  "sourceChanges": [],
+  "rawCaptures": []
+}
