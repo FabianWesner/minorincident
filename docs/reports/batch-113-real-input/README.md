@@ -51,3 +51,7 @@ Read-only source inspection confirms CrowdFigureProbe joint telemetry records co
 ## L7 HIGH route collected
 
 Ordinary HIGH WebGPU zoom 1.5 completed in 154 seconds with zero skips/issues. Opened `test-results/playtest/b113-l7-high/captures/campaign-wreck-route.jpg`: strong fire glow, large escort and waiting-for-survivor cue; military wreck contacts are not exposed. Full mission completion does not close the requested D-FAIR framing. Camera-only placement closeups remain pending.
+
+## L7 targeted wreck review
+
+Opened all three registered L7 HIGH WebGPU zoom1.5 camera-only closeups: `test-results/b113-wrecks/military-1.jpg`, `military-3.jpg`, and `military-4.jpg`. These supplement the real-input route; simulation was paused, only camera framing changed. Both trucks and the APC appear supported on paving, with no obvious deep sink or float. Night lighting limits fine wheel-contact judgment. Backend/tier/tick receipts are retained in qa.json; ignored capture wrapper and raw images remain outside git.
