@@ -129,3 +129,7 @@ Fresh L6/L7 HIGH WebGL2 sweep measures all 39 identities with the elevated trian
 ## L7 support attribution caution
 
 Source inspection confirms center-only terrace formula for military wreck placement, while northgateGround changes height by 15 cm across footprint boundaries. This is a plausible cause of smaller sinks. The 194 cm candidate needs further attribution: pavingHeight includes walkable building supports, so the audit ceiling may admit nearby building geometry. Added worst contact world XYZ and sampled groundHeight to probe receipts to resolve this before data correction. Typecheck and lint pass; runtime attribution pending. Treat the earlier 194 cm offender label as provisional.
+
+## Native support geometry path established
+
+Loaded all D-FAIR layout GLB layers natively with production GLTFLoader/Meshopt and GroundField (15,258 footprint triangles). Road center heights at x214/138/100,z25 are 3.75/1.50/0.45 m. A 10 cm grid around x134–142,z22–28 peaks at 1.65 m, strengthening concern that the runtime 194 cm candidate is support-selection contamination. Raw-layer probe does not apply all runtime filtering, so no placement correction follows solely from it. Reproduction source retained in qa.json; browser contact rerun failed admission after 60 s.
