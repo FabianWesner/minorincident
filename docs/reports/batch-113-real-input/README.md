@@ -80,3 +80,7 @@ Prepared wrapper now ran240 seconds HIGH zoom1.5;472 frames saved at `test-resul
 ## Opposite tank camera run
 
 Collected240 seconds HIGH zoom1.5 from camera(−34,11,16), target(−20,0,27.5);473 frames under `test-results/b113-l4-opposite-high/sequence`. Opened ticks7258 and14140: south-wall large infected are partly frame-edge/fence occluded, later fallen. This exposes the opposite side but still supplies no continuous planted-sole track. Tank-foot acceptance stays open; another identical view is not useful.
+
+## South-shifted camera candidate
+
+Collected240 seconds HIGH zoom1.5,478 frames (`test-results/b113-l4-south-high/sequence`) from camera(−34,11,6), target(−20,0,17.5). Opened ticks7228 and14360. Early view has corpses and clear paving; final frame exposes a large standing infected feet near sandbags. This is a candidate for consecutive review, not a planted-foot verdict. Preceding saved frames remain to be inspected; no additional replay is needed to review that window.
