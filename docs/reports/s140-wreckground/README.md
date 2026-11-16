@@ -149,3 +149,7 @@ Military wreck placement now rests on the highest exported Northgate terrace ove
 ## L7 correction runtime pair
 
 HIGH WebGL2 and requested WebGPU sequential sweeps both measure 38/38 wrecks at 0 cm, with matching placement matrices. Opened and reviewed military-3 full images and [small before/after sheet](wreck-fix-sheet.jpg): lower body and wheels now clear the road rather than being buried. Session zoom was set to 1.5 with camera-only cinematic positioning. Receipt currently retains requested backend rather than selected backend; explicit backend identity remains required before claiming the WebGPU gate. The sheet replaces the old isolated reference so this report retains only one small image.
+
+## Current remote validation
+
+Prescribed remote npm test on f30878a4 passes: 27 files, 105 passed / 1 skipped, complete 150-case budget collection, 134.1 s under 240 s. No source changes occurred during the suite. Native Alpha diagnostic additionally classifies the admission-route obstruction: convoy exclusion passes, static clearance fails. Exact static solid and a body-clear detour remain to be identified.
