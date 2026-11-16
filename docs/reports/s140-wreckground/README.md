@@ -165,3 +165,7 @@ After alignment change, native seed-1 HIGH run completes at tick 18,326 with 30,
 ## Aligned entry plus bounded recovery
 
 Existing four-second wide-grid recovery now also observes scripted L4 Alpha goals. Full seed-1 HIGH mission completes at tick 18,265 with 19,394 eligible windows; original west #296 no longer flags and west arrivals rise from one to three. Two other Alpha windows remain (#345 and #371). South #371 receives z=24.1 outside the z1=22.5 perimeter despite an open breach, consistent with generic snap searching back outside when the intended inner post is blocked. Focused L4 test, typecheck and lint pass. Overall outside-wire requirement remains incomplete; remote suite pending this change.
+
+## Rejected constrained landing experiment
+
+Tried requiring inside navigation/static-clear landing candidates. Full mission completes at tick 18,571 but residual south Alphas remain at outside goals displaced about 1 m laterally by snap. The .6 m center-alignment criterion then keeps selecting their already completed outer point. Removed this unvalidated experiment; retained full trace in qa.json.insideLandingExperiment. Next correction must account for the usable width of the two-segment opening instead of a center-only alignment threshold.
