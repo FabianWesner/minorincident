@@ -169,3 +169,7 @@ Existing four-second wide-grid recovery now also observes scripted L4 Alpha goal
 ## Rejected constrained landing experiment
 
 Tried requiring inside navigation/static-clear landing candidates. Full mission completes at tick 18,571 but residual south Alphas remain at outside goals displaced about 1 m laterally by snap. The .6 m center-alignment criterion then keeps selecting their already completed outer point. Removed this unvalidated experiment; retained full trace in qa.json.insideLandingExperiment. Next correction must account for the usable width of the two-segment opening instead of a center-only alignment threshold.
+
+## Breach-width correction validated for Alpha windows
+
+Alignment now uses the actual two-segment opening width minus actor radius and 5 cm clearance; inside candidates must remain inside and pass nav/static checks. Full seed-1 HIGH mission completes at tick 18,101 with 8,252 eligible rolling windows and zero Alpha stationary flags. One crawler #223 retains an expired-pressure outside waypoint during collapse; overall requirement remains open. Focused L4 regression, typecheck and lint pass. Exact full-run receipt retained in qa.json.l4BreachWidthFullRun.

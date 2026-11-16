@@ -1,5 +1,5 @@
 import { l4, l4Edges, l4OffscreenMouths } from '../../data/l4';
-import { l4BreachSides, l4BreachSite, l4Breaches, l4Wall, type L4BreachSide } from '../../data/l4Perimeter';
+import { l4BreachSides, l4BreachSite, l4Breaches, l4PerimeterSegments, l4Wall, type L4BreachSide } from '../../data/l4Perimeter';
 import { l4AlphaEmergence, l4BreakableLine } from '../../levels/L4/layout';
 import type { Mission } from './Mission';
 import type { L4Director, L4Line, L4State } from './types';
@@ -276,9 +276,22 @@ export class L4Collapse {
         // Align outside the opening before crossing: a direct inside goal can
         // clip the intact neighbouring segment with the Alpha's wider body.
         const lateral = Math.abs((e.transform.x - centre.x) * out.z - (e.transform.z - centre.z) * out.x);
-        b.scripted = this.h.snap(lateral > .6
-          ? { x: centre.x + out.x * 1.6, z: centre.z + out.z * 1.6 }
-          : { x: centre.x - out.x * 3, z: centre.z - out.z * 3 }, .55);
+        const halfOpening = l4Breaches[job.breach].segments.reduce((sum, i) => sum + l4PerimeterSegments[i].length, 0) / 2;
+        const clearance = Math.max(0, halfOpening - e.combat!.radius - .05);
+        if (lateral > clearance) b.scripted = this.h.snap({ x: centre.x + out.x * 1.6, z: centre.z + out.z * 1.6 }, e.combat!.radius);
+        else {
+          // Radial snapping must not move an inside crossing goal back outside.
+          let landing: Point | undefined;
+          for (const depth of [.9, 1.2, 1.6, 2, 3, 4]) {
+            for (const offset of [0, .5, -.5, 1, -1]) {
+              const p = { x: centre.x - out.x * depth + out.z * offset, z: centre.z - out.z * depth - out.x * offset };
+              if (!this.inside(p) || !ai.infectedNav.clear(p.x, p.z, e.combat!.radius)) continue;
+              if (world.solids.clear({ ...p, y: world.districts!.groundHeight(p.x, p.z) + .7 }, e.combat!.radius, e.id, false)) { landing = p; break; }
+            }
+            if (landing) break;
+          }
+          if (landing) b.scripted = landing;
+        }
         continue;
       }
       // The authored entrance/beat still owns staging. Inside, each other type uses its own move set against the crew.
