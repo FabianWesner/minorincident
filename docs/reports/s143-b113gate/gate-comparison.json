@@ -1,0 +1,63 @@
+{
+  "candidate": "7fb95a9159be6c3b38856a0071464d35f0de4396",
+  "baseline": "cc2f7476c7e7834d5060b07a2b654a5d1cb1c873",
+  "l2_12": {
+    "criterion": "at least 2 and at most 20 attacks/min",
+    "sample_seconds": 3.08,
+    "candidate_attacks_per_minute": 21.93,
+    "baseline_attacks_per_minute": 21.93,
+    "baseline_threat_fail_flags": 0,
+    "classification": "baseline short-sample reporting drift; criterion unchanged"
+  },
+  "l4_north_breach": {
+    "candidate_observed_cohort_attackers": 2,
+    "required_cohort_attackers": 3,
+    "candidate_flag": "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+    "baseline_threat_fail_flags": 0,
+    "status": "root cause and fix pending"
+  },
+  "l4_tank_low": {
+    "candidate_fixture": "l4-tank",
+    "candidate_key": "L4/hull-ground/225",
+    "frames": 272,
+    "contacts": 13,
+    "slide_max_cm": 11,
+    "slide_p95_cm": 9.8,
+    "yaw_drift_max_deg": 59.3,
+    "lift_max_cm": 6.2,
+    "worst_slide_frame": 987,
+    "baseline_vehicle_comparison": "not run; local browser pool could not bind on 127.0.0.1:4329",
+    "rerun": "exact reproduction on port 5024",
+    "actor": {
+      "id": 225,
+      "archetype": "infected.runner",
+      "lod": "lod2",
+      "clip_before": "get-up",
+      "clip_at_worst_contact_start": "infected-search",
+      "tick": 5307,
+      "reaction_until": 5307,
+      "root_step_cm": 0.0222,
+      "hull": "veh.evac-bus"
+    }
+  },
+  "checks": {
+    "l4_contact_regression": "pass; 1 test",
+    "typecheck": "pass",
+    "lint": "pass",
+    "candidate_vehicle_gate": "not completed; browser pool EPERM / Chromium bootstrap failure",
+    "remote_npm_test": "pending"
+  },
+  "currentThreat": {
+    "seconds": 298.476004209,
+    "flags": [
+      "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS"
+    ]
+  },
+  "isolation": {
+    "restoredFile": "L4Collapse.ts",
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "seconds": 67.562250833
+  }
+}
