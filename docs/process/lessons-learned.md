@@ -396,3 +396,5 @@ A living record, updated after every lane or experiment. Short entries with evid
 - 2026-11-15: `npm test` reached 245 s (budget 240) after one save-sweep extension; the single all-level interaction sweep (~140 s) blocked a worker. Split it into its own file and run three workers on the Linux runners (234 s). Headroom is now ~6 s with 45/45 files: briefs must say "extend an existing test, keep additions to a few seconds", and a test-time reduction lane is due before the next big test addition.
 
 - 2026-11-15 (s126 → s128): an L9 evacuation fix passed 6 native runs and a preserved stalled save, yet real-input browser QA on HIGH still had the last survivor lag 44–86 s on 2 of 3 runs (LOW passed). Native sims at the same tier did not reproduce the HIGH browser crowd. Progression fixes for crowded beats must be accepted on real-input browser runs at HIGH, not native runs alone.
+
+- 2026-11-16 (batch 113 gate): `gate89.sh` printed "gate exit 0" although `scene rc=1` (native vehicle motion FAIL) and qa:threat reported 1 fail flag. The final exit line is not a verdict: read every `rc=` line and the threat flag count before deploying.
