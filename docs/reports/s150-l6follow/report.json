@@ -21,8 +21,28 @@
     "tick": 3720,
     "leaderSpeedMps": 4.500008865749257,
     "followers": [
-      { "id": 26, "status": "following", "hp": 60, "x": 19.4936, "z": 8.2043, "motionSpeedMps": 0, "civilianState": "calm", "engaged": false, "incapacitated": false },
-      { "id": 36, "status": "following", "hp": 60, "x": 22, "z": 8, "motionSpeedMps": 0, "civilianState": "calm", "engaged": false, "incapacitated": false }
+      {
+        "id": 26,
+        "status": "following",
+        "hp": 60,
+        "x": 19.4936,
+        "z": 8.2043,
+        "motionSpeedMps": 0,
+        "civilianState": "calm",
+        "engaged": false,
+        "incapacitated": false
+      },
+      {
+        "id": 36,
+        "status": "following",
+        "hp": 60,
+        "x": 22,
+        "z": 8,
+        "motionSpeedMps": 0,
+        "civilianState": "calm",
+        "engaged": false,
+        "incapacitated": false
+      }
     ]
   },
   "l6RetreatPace": {
@@ -41,8 +61,20 @@
           "validPaceSamples": 0,
           "outcome": "turned after bite, then dead",
           "evidence": [
-            { "tick": 3900, "seconds": 65, "status": "turned", "hp": 60, "civilianState": "bitten" },
-            { "tick": 4200, "seconds": 70, "status": "turned", "hp": 0, "civilianState": "finished" }
+            {
+              "tick": 3900,
+              "seconds": 65,
+              "status": "turned",
+              "hp": 60,
+              "civilianState": "bitten"
+            },
+            {
+              "tick": 4200,
+              "seconds": 70,
+              "status": "turned",
+              "hp": 0,
+              "civilianState": "finished"
+            }
           ],
           "paceEligibility": "No longer a living, ambulatory follower after the bite; excluded from later pace samples."
         }
@@ -51,8 +83,20 @@
     "passiveNative": {
       "groupMedianMps": 2.2348091220849406,
       "followers": [
-        { "id": 26, "samples": 6, "medianMps": 4.250960959281924, "percentOfGroupMedian": 190.2, "coverage": "below ten-sample minimum" },
-        { "id": 36, "samples": 6, "medianMps": 5.110012260597961, "percentOfGroupMedian": 228.7, "coverage": "below ten-sample minimum" }
+        {
+          "id": 26,
+          "samples": 6,
+          "medianMps": 4.250960959281924,
+          "percentOfGroupMedian": 190.2,
+          "coverage": "below ten-sample minimum"
+        },
+        {
+          "id": 36,
+          "samples": 6,
+          "medianMps": 5.110012260597961,
+          "percentOfGroupMedian": 228.7,
+          "coverage": "below ten-sample minimum"
+        }
       ]
     },
     "thresholdPercent": 95
@@ -71,8 +115,26 @@
     "retreatBacktrackingTicks": 0
   },
   "validation": {
-    "npmTest": { "passed": true, "runner": "local", "vitestTests": 106, "files": 27, "budgetTestInventory": "150/150", "budgetSeconds": 240, "wallSeconds": 134.9 },
-    "remoteRunner": { "passed": false, "reason": "No healthy Hetzner runner; local fallback is unavailable in this Linux execution environment. scale.sh add failed because Hetzner API DNS was unavailable." },
+    "npmTest": {
+      "passed": true,
+      "runner": "local",
+      "vitestTests": 106,
+      "files": 27,
+      "budgetTestInventory": "150/150",
+      "budgetSeconds": 240,
+      "wallSeconds": 134.9
+    },
+    "remoteRunner": {
+      "passed": true,
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "runner": "46.225.66.90",
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "filesPassed": 27,
+      "inventory": "150/150",
+      "wallSeconds": 201.2,
+      "budgetSeconds": 240
+    },
     "typecheck": "passed",
     "lint": "passed",
     "missionRegression": "Passed inside the existing missions test; no test case was added."

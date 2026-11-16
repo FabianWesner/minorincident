@@ -23,3 +23,5 @@ The full audit also exposed a late hatch reopen behind the completed column: the
 - `npm test` — passed locally, 106 tests / 27 files; test-budget inventory 150/150 and wall time 134.9 s of 240 s. The prescribed remote wrapper could not dispatch because no Hetzner runner was healthy. `scale.sh add` also could not reach the Hetzner API (DNS unavailable), so no runner was created.
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
+
+Remote validation completed on 2026-11-16: `sh tools/remote/run.sh "$PWD" -- npm test` passed on runner 46.225.66.90: 27 files, 105 tests passed and one platform skip, 150/150 inventory, 201.2 s within the 240 s budget. This supersedes the earlier runner availability limitation.
