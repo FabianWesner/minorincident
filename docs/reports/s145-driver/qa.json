@@ -1,7 +1,7 @@
 {
   "objective": "s145-driver \u2014 playtest driver: no false stalls (L9 bridge loops, L10 farm deaths, cap labels)",
   "candidate": "69562fd1",
-  "status": "L9 accepted; first full mortal L10 passed; second run and baseline comparison open",
+  "status": "time-box result: L9 accepted; one full mortal L10 pass; second completion open",
   "changes": [
     "L9 live bridge steering gains loop detection and physical reverse/re-approach recovery",
     "L10 low-health crowd retreat and nearby medkit steering during travel",
@@ -27,7 +27,7 @@
       "files": 27,
       "passed": 105,
       "skipped": 1,
-      "seconds": 179.4,
+      "seconds": 188.2,
       "runner": "46.225.66.90"
     }
   },
@@ -220,6 +220,12 @@
       },
       "creditsVerified": true,
       "immortal": false
+    },
+    "L10_HIGH_rifle_attempt_8": {
+      "status": "failed save boundary at finale; completion unproven",
+      "run": "test-results/s145-driver/l10-high-rifle-8-full",
+      "error": "pause-settings not visible at sample yield",
+      "fullRun": false
     }
   },
   "archived_baseline_only": {
@@ -286,5 +292,34 @@
       14685
     ],
     "scope": "farm diagnostic before early melee retreat; not acceptance"
+  },
+  "farmEntranceComparison": {
+    "baselineSource": "docs/reports/batch-108-real-input/qa.json runs l10-video and l10-seed2-video; README farm-entrance attribution",
+    "baselineDeaths": [
+      13,
+      18
+    ],
+    "firstObservedRifleTicks": [
+      3025,
+      3093
+    ],
+    "deathsBeforeFirstObservedRifle": [
+      0,
+      0
+    ],
+    "limit": 6.5,
+    "scope": "rifle pickup boundary; archived counts attributed to farm entrance by report; full second completion missing"
+  },
+  "s146Followup": {
+    "status": "implemented and unit verified; runtime observer not yet qualified",
+    "policy": "only recent unique resolved melee queries including named target qualify; positive target damage rejects warning; at least eight qualifying attacks",
+    "records": [
+      "attackId",
+      "tick",
+      "queryIds",
+      "hitIds",
+      "damage amounts"
+    ],
+    "tests": "zero attacks over nine seconds; misses; qualified attacks; positive damage"
   }
 }

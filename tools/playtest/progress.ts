@@ -85,3 +85,11 @@ export class PlaytestProgress {
     return {seconds:Math.max(0,Math.min((s.tick-this.tick)/60,(s.nowMs-this.wall)/1000)),reason};
   }
 }
+
+export interface ResolvedAttackEvidence { attackId: number; tick: number; queryIds: number[]; hitIds: number[]; damage: { targetId: number; amount: number }[] }
+/** Observation time and misses never count as evidence against a named target. */
+export function qualifyingUnhittableAttacks(rows: readonly ResolvedAttackEvidence[], targetId: number, tick: number): ResolvedAttackEvidence[] {
+  const recent = rows.filter(row => row.tick >= tick - 480 && row.tick <= tick);
+  if (recent.some(row => row.damage.some(hit => hit.targetId === targetId && hit.amount > 0))) return [];
+  return [...new Map(recent.filter(row => row.queryIds.includes(targetId)).map(row => [row.attackId, row])).values()];
+}

@@ -8,7 +8,7 @@ import { canShootVehicleObjective, EscortClearance, look, visibleGroupTarget, ty
 import { assertRenderedBodies, campaignEndingComplete, campaignEndingWaiting, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
 import { rangedWeaponPattern as ranged, campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
-import { PlaytestProgress } from './progress';
+import { PlaytestProgress, qualifyingUnhittableAttacks, type ResolvedAttackEvidence } from './progress';
 import { dodgeWalkKeys, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
 import { VehicleRecovery, VehicleRouteRecovery } from './driving';
@@ -765,6 +765,26 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (event.type !== 'level.completed') return;
         observation.__playtestCompleted!.push({ level: event.id, tick: world.tick, result: structuredClone(event.result), steps: mission.def.steps.map(s => ({ id: s.id, optional: !!s.optional, status: mission.state.steps[s.id].status })) });
       });
+      const resolvedAudit = window as unknown as { __playtestResolved: { attackId: number; tick: number; queryIds: number[]; hitIds: number[]; damage: unknown[] }[] };
+      resolvedAudit.__playtestResolved = [];
+      const resolvedSeen = new Set<number>(), attackDamage = new Map<number, unknown[]>();
+      world.events.on('combat.hit', event => {
+        if (event.type === 'combat.hit' && event.sourceId === 1) {
+          const rows = attackDamage.get(event.attackId) ?? []; rows.push(structuredClone(event)); attackDamage.set(event.attackId, rows);
+        }
+      });
+      world.events.on('sim.tick', () => {
+        const combat = world.combat, source = world.entities.get(1);
+        if (!combat || !source) return;
+        for (const attack of Object.values(combat.runner.running)) {
+          if (!attack || !attack.resolved || attack.def.category !== 'melee' || resolvedSeen.has(attack.id)) continue;
+          resolvedSeen.add(attack.id);
+          const queryIds = combat.query.melee(source.id, source.transform, attack.aim, attack.def.range, attack.def.arc, attack.def.maxTargets, attack.inPlace, attack.target).map(target => target.id);
+          resolvedAudit.__playtestResolved.push({ attackId: attack.id, tick: world.tick, queryIds, hitIds: [...attack.hit], damage: attackDamage.get(attack.id) ?? [] });
+          if (resolvedAudit.__playtestResolved.length > 200) resolvedAudit.__playtestResolved.shift();
+          attackDamage.delete(attack.id);
+        }
+      });
       world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
       observation.__playtestDamage = [];
       if (world.scenario === 'L4' || audit || companionTrace) {
@@ -903,7 +923,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         return true;
       }
       ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp, diagnostic }); await releaseAim();
-      if (!reportedUnhittable.has(threat.id)) { reportedUnhittable.add(threat.id); if (threat.d < 2.2) await issue('P2', 'enemy-unhittable', `Infected #${threat.id} (${threat.state}) ${threat.d.toFixed(1)} m away took no damage from 8 s of attacks (hp ${threat.hp}/${threat.max})`); }
+      const resolvedRows = await page.evaluate(() => (window as unknown as { __playtestResolved?: ResolvedAttackEvidence[] }).__playtestResolved ?? []);
+      const resolvedEvidence = qualifyingUnhittableAttacks(resolvedRows, threat.id, e.tick);
+      log({ unchangedHpDiagnostic: threat.id, resolvedEvidence, reason: 'Observation time alone is not evidence of a qualifying attack' });
+      if (!reportedUnhittable.has(threat.id) && resolvedEvidence.length >= 8) {
+        reportedUnhittable.add(threat.id);
+        await issue('P2', 'enemy-unhittable', `Infected #${threat.id} unchanged after 8 resolved melee queries qualified it; attack IDs ${resolvedEvidence.map(row => row.attackId).join(',')}; query/hit/damage evidence in unchangedHpDiagnostic`);
+      }
       return false;
     }
     const l10FarmThreats = e.level === 'L10' && e.player && e.step !== 'mega' && e.step !== 'hold'

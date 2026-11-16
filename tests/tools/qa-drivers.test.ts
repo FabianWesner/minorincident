@@ -8,7 +8,7 @@ import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
 import { frameInterval, type FrameState } from '../../tools/playtest/frames';
-import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
+import { PlaytestProgress, qualifyingUnhittableAttacks, type ProgressSample } from '../../tools/playtest/progress';
 import { canShootVehicleObjective, captureZooms, visibleBoarder, visibleGroupTarget } from '../../tools/playtest/eyes';
 import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
 import { PNG } from 'pngjs';
@@ -55,6 +55,12 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
   expect(visibleGroupTarget('L7', { x: 0, z: 0 }, group)).toBeNull();
   expect(visibleGroupTarget('L7', { x: -7, z: 0 }, group)).toEqual({ x: 12, z: 0 });
   expect(visibleGroupTarget('L6', { x: 0, z: 0 }, group, 8, 'exit')).toEqual({ x: 12, z: 0 });
+  expect(qualifyingUnhittableAttacks([], 7, 540)).toEqual([]); // nine seconds, zero resolved attacks
+  const misses = Array.from({ length: 8 }, (_, i) => ({ attackId: i, tick: 60 + i * 60, queryIds: [], hitIds: [], damage: [] }));
+  expect(qualifyingUnhittableAttacks(misses, 7, 540)).toEqual([]);
+  const accepted = misses.map(row => ({ ...row, queryIds: [7] }));
+  expect(qualifyingUnhittableAttacks(accepted, 7, 540)).toHaveLength(8);
+  expect(qualifyingUnhittableAttacks([...accepted, { attackId: 9, tick: 540, queryIds: [7], hitIds: [7], damage: [{ targetId: 7, amount: 1 }] }], 7, 540)).toEqual([]);
   const follow = new PlaytestProgress(); follow.update(sample(0));
   for (let t = 1; t <= 45; t++) expect(follow.update(sample(t, { player: { x: t * 2.2, z: 15 }, marker: { x: t * 2.2 + 12, z: 15 } })).seconds).toBeLessThan(2);
   const parked = new PlaytestProgress(); parked.update(sample(0));

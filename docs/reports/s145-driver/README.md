@@ -66,3 +66,11 @@ Rifle trial 6 confirmed collection and continued play beyond the prior Digit19 c
 ## First full mortal L10 PASS
 
 Projection-fixed attempt 7 completed real credits with no skips and immortal=false. Three segments lasted 481 / 480 / 430 seconds; observed deaths were 2 / 2 / 1 (five total). Five P2 observations (navigation/hangar warnings and a 1300 ms hitch), zero P0/P1/P3. Rifle pickup and the extended selection path remained functional; the restricted-zone and hangar warnings recovered. Raw evidence: `test-results/s145-driver/l10-high-rifle-7-full`. This establishes one full completion, not the required two or the archived before-farm-interior death ratio. Those requirements remain open.
+
+## Time-box status and s146 follow-up
+
+The second final mortal run reached the dispersal hold but failed at a bounded-session save: `pause-settings` remained hidden and the click timed out. Full completion is unproven. One full mortal completion is verified; the required two are **not met**. Fixing save/yield during the ending and repeating the second run remain open.
+
+Located the archived 13/18 entrance-death baseline in `docs/reports/batch-108-real-input/qa.json` (`l10-video`, `l10-seed2-video`) and its README attribution to farm-entrance fighting. Both final current runs have zero observed deaths before first observed hunting-rifle pickup (ticks 3025 / 3093); the first completed run has five deaths across the whole level, below half even the lower archived count. The pickup boundary is reported explicitly; this does not replace the missing second full completion.
+
+Per orchestrator s146: unchanged-HP observation time no longer suffices for `enemy-unhittable`. A read-only resolved-melee observer records unique attack IDs, committed query target IDs, hit IDs, and damage events. A warning needs at least eight recent resolved queries qualifying the named target and no positive target damage. Ranged/unqualified observations remain diagnostic. Existing unit tests cover nine seconds with zero attacks, resolved misses, qualified attacks, and positive damage rejection. Typecheck, lint and prescribed remote suite pass (27 files, 105 passed / one skipped, 188.2 seconds; inventory 150). Runtime qualification of this observer remains open. No main movement, deployment or push.

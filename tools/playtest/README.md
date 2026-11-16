@@ -23,3 +23,5 @@ For long mortal L10 runs, `--session-seconds 480` saves the live production Resu
 L10 travel cover keeps movement on the player navigation route toward the live objective while aiming ordinary attacks at close pursuers, to avoid unbounded retreat into the corn rows.
 
 A logged farmhouse map detour seeks the authored hunting rifle while travelling through the farms without a firearm. Recovered hunting/assault rifles and nail guns are eligible for carried-weapon selection; empty weapons still fall back normally.
+
+`enemy-unhittable` warnings require eight recent unique resolved melee queries that include the named target and no positive target damage. Logs retain attack IDs, query IDs, hit IDs and damage under `unchangedHpDiagnostic`; elapsed observation time or ranged misses alone remain diagnostic.
