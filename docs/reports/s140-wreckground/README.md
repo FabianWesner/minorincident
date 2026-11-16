@@ -97,3 +97,7 @@ L9/L10 retry with no overlapping lane CPU check also exited 75 before browser ex
 ## Admission route collision evidence
 
 Diagnostic forced admission-grid routing (no production source change) obtains 22 route nodes but advances only to pathIndex 1 over 600 ticks, travels 0.408 m, and ends with SolidRegistry.clear false at the actual body radius. First route nodes: (-36.25,3.75), (-36.25,4.25), (-36.25,4.75). This shows why coarse-grid path existence alone cannot prove a traversable Alpha route. Future fix must preserve body clearance while routing around the blocker; shrinking body stats or bypassing collision is not justified.
+
+## L9/L10 registered-level sweep
+
+HIGH WebGL2 sequential camera-only batch completed. L9: 84/84 measured; range -2.921 to 0.600 cm; 0 threshold offenders; L10: 238/238 measured; range -2.891 to 1.903 cm; 0 threshold offenders. Matrix/identity receipts are preserved in qa.json, compacted to remain below 200 KB. This is numerical support-gap coverage; WebGPU comparison and requested zoom-1.5 close-up review remain pending.
