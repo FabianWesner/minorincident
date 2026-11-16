@@ -120,3 +120,7 @@ Opened local crop sheets `test-results/b113-tracked-high-review.jpg` (ticks9921�
 ## Identified LOW tracking collected
 
 Four-minute matching LOW run saved479 receipts,210 tracking living Alpha (`test-results/b113-l4-tracked-low`). Tracked state samples:151 attracted,46 chase,11 alerted,2 stagger; charge specials start at8191. Zero ordinary attack samples on tracked actor, so no comparable LOW ordinary-strike window is supplied. Half-second sampling can miss brief states; this is not proof no strike occurred. Charge visual review remains pending.
+
+## LOW identified charge review
+
+Opened `test-results/b113-low-charge-review.jpg`, consecutive ticks8161–8342, Alpha #246. Telegraph8191, active8222/8252, recovery8282/8312/8342. Charge travel is followed by fixed recovery position(−17.6114,.75,23.2720), with no obvious continuing recovery glide in viewed frames. Fence partly obscures contact. This is bounded charge-recovery evidence, not ordinary strike/roar/slam or complete LOW sole qualification.
