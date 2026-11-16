@@ -938,6 +938,312 @@
             "lost": 5
           }
         }
+      },
+      "normalWalk": {
+        "policy": "shared-route-normal-walk",
+        "run": {
+          "level": "L6",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 209.78333333333333,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 80,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "shelter",
+              "t": 33.2
+            },
+            {
+              "id": "stop",
+              "t": 60.6
+            },
+            {
+              "id": "retreat",
+              "t": 194.31666666666666
+            },
+            {
+              "id": "exit",
+              "t": 204.78333333333333
+            }
+          ],
+          "furthestObjective": "exit",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 169,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "followerWait": {
+          "windows": [
+            {
+              "key": "step/shelter|phase/shelter",
+              "escortTicks": 1992,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/stop|phase/first",
+              "escortTicks": 1261,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/stop|phase/fails",
+              "escortTicks": 383,
+              "stationaryFarTicks": 1,
+              "first": {
+                "tick": 3636,
+                "playerX": 0.33100223541259766,
+                "playerZ": 3.558663845062256,
+                "followerId": 16,
+                "followerX": -8,
+                "followerZ": -11
+              }
+            },
+            {
+              "key": "step/retreat|phase/retreat",
+              "escortTicks": 8023,
+              "stationaryFarTicks": 597,
+              "first": {
+                "tick": 3637,
+                "playerX": 0.33100223541259766,
+                "playerZ": 3.558663845062256,
+                "followerId": 16,
+                "followerX": -7.999824588396138,
+                "followerZ": -10.999863568752552
+              }
+            },
+            {
+              "key": "step/exit|phase/exit",
+              "escortTicks": 628,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "phase/run-out",
+              "escortTicks": 16,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "escortTicks": 12303,
+          "stationaryFarTicks": 598,
+          "upperBoundPercent": 4.860603104933756,
+          "followers": [
+            {
+              "id": 15,
+              "escortTicks": 12303,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 16,
+              "escortTicks": 8317,
+              "stationaryFarTicks": 280
+            },
+            {
+              "id": 19,
+              "escortTicks": 151,
+              "stationaryFarTicks": 90
+            },
+            {
+              "id": 20,
+              "escortTicks": 3951,
+              "stationaryFarTicks": 221
+            },
+            {
+              "id": 22,
+              "escortTicks": 8384,
+              "stationaryFarTicks": 110
+            },
+            {
+              "id": 24,
+              "escortTicks": 2032,
+              "stationaryFarTicks": 196
+            },
+            {
+              "id": 25,
+              "escortTicks": 8419,
+              "stationaryFarTicks": 76
+            },
+            {
+              "id": 26,
+              "escortTicks": 402,
+              "stationaryFarTicks": 339
+            },
+            {
+              "id": 27,
+              "escortTicks": 4997,
+              "stationaryFarTicks": 151
+            },
+            {
+              "id": 28,
+              "escortTicks": 8433,
+              "stationaryFarTicks": 56
+            },
+            {
+              "id": 29,
+              "escortTicks": 28,
+              "stationaryFarTicks": 28
+            },
+            {
+              "id": 31,
+              "escortTicks": 142,
+              "stationaryFarTicks": 124
+            },
+            {
+              "id": 32,
+              "escortTicks": 8412,
+              "stationaryFarTicks": 65
+            },
+            {
+              "id": 33,
+              "escortTicks": 8383,
+              "stationaryFarTicks": 68
+            },
+            {
+              "id": 34,
+              "escortTicks": 80,
+              "stationaryFarTicks": 80
+            },
+            {
+              "id": 35,
+              "escortTicks": 8435,
+              "stationaryFarTicks": 9
+            },
+            {
+              "id": 36,
+              "escortTicks": 464,
+              "stationaryFarTicks": 401
+            },
+            {
+              "id": 37,
+              "escortTicks": 8475,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 38,
+              "escortTicks": 8456,
+              "stationaryFarTicks": 53
+            },
+            {
+              "id": 39,
+              "escortTicks": 78,
+              "stationaryFarTicks": 78
+            },
+            {
+              "id": 42,
+              "escortTicks": 8408,
+              "stationaryFarTicks": 44
+            },
+            {
+              "id": 43,
+              "escortTicks": 8519,
+              "stationaryFarTicks": 29
+            },
+            {
+              "id": 44,
+              "escortTicks": 5175,
+              "stationaryFarTicks": 38
+            }
+          ],
+          "paceWindows": [
+            {
+              "key": "step/shelter|phase/shelter",
+              "samples": 66,
+              "p50GapM": 1.340388252771011,
+              "p90GapM": 1.340388252771011,
+              "maxGapM": 2.2181952379570027,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "step/stop|phase/first",
+              "samples": 42,
+              "p50GapM": 1.340388252771011,
+              "p90GapM": 1.340388252771011,
+              "maxGapM": 1.340388252771011,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "step/stop|phase/fails",
+              "samples": 13,
+              "p50GapM": 1.340388252771011,
+              "p90GapM": 1.340388252771011,
+              "maxGapM": 1.340388252771011,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "step/retreat|phase/retreat",
+              "samples": 3782,
+              "p50GapM": 5.611808173460313,
+              "p90GapM": 9.837464201962659,
+              "maxGapM": 22.119469500032118,
+              "waitingTicks": 30,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 26,
+                  "maxSeconds": 0.5333333333333333
+                },
+                {
+                  "id": 31,
+                  "maxSeconds": 0.2833333333333333
+                },
+                {
+                  "id": 36,
+                  "maxSeconds": 0.5333333333333333
+                },
+                {
+                  "id": 20,
+                  "maxSeconds": 0.25
+                },
+                {
+                  "id": 27,
+                  "maxSeconds": 0.21666666666666667
+                },
+                {
+                  "id": 16,
+                  "maxSeconds": 0.31666666666666665
+                }
+              ]
+            },
+            {
+              "key": "step/exit|phase/exit",
+              "samples": 169,
+              "p50GapM": 5.653764530289857,
+              "p90GapM": 8.312955484162124,
+              "maxGapM": 11.181148520275183,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "phase/run-out",
+              "samples": 1,
+              "p50GapM": 1.2650000000000223,
+              "p90GapM": 1.2650000000000223,
+              "maxGapM": 1.2650000000000223,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            }
+          ],
+          "prompts": {
+            "wait": 0,
+            "attack": 15,
+            "lost": 6
+          }
+        }
       }
     },
     "L7": {
@@ -1833,6 +2139,418 @@
             "groupAttacksPerMinute": 5.767910276951247
           }
         ]
+      },
+      "normalWalk": {
+        "policy": "shared-route-normal-walk",
+        "run": {
+          "level": "L7",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 207.43333333333334,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 90,
+          "failures": {},
+          "objectiveTimeline": [],
+          "furthestObjective": "bus-departure",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "survivorsSaved": 24,
+          "survivorsTotal": 24,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 271,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "followerWait": {
+          "windows": [
+            {
+              "key": "step/rocket|phase/pickup",
+              "escortTicks": 26,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/corridor|phase/encounters",
+              "escortTicks": 9932,
+              "stationaryFarTicks": 2,
+              "first": {
+                "tick": 29,
+                "playerX": 273.8664855957031,
+                "playerZ": 15,
+                "followerId": 66,
+                "followerX": 284.787044621599,
+                "followerZ": 16.198385781834908
+              }
+            },
+            {
+              "key": "step/departure|phase/encounters",
+              "escortTicks": 1382,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/departure|phase/boarding",
+              "escortTicks": 565,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/departure|phase/departing",
+              "escortTicks": 0,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "escortTicks": 11905,
+          "stationaryFarTicks": 2,
+          "upperBoundPercent": 0.016799664006719867,
+          "followers": [
+            {
+              "id": 20,
+              "escortTicks": 11752,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 51,
+              "escortTicks": 11479,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 52,
+              "escortTicks": 11625,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 53,
+              "escortTicks": 11494,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 54,
+              "escortTicks": 11464,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 55,
+              "escortTicks": 11509,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 56,
+              "escortTicks": 11524,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 57,
+              "escortTicks": 11539,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 58,
+              "escortTicks": 11554,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 59,
+              "escortTicks": 11569,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 60,
+              "escortTicks": 11584,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 61,
+              "escortTicks": 11599,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 62,
+              "escortTicks": 11614,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 63,
+              "escortTicks": 11644,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 64,
+              "escortTicks": 11659,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 65,
+              "escortTicks": 11674,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 66,
+              "escortTicks": 11689,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 67,
+              "escortTicks": 11704,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 68,
+              "escortTicks": 11719,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 69,
+              "escortTicks": 11734,
+              "stationaryFarTicks": 2
+            },
+            {
+              "id": 70,
+              "escortTicks": 11749,
+              "stationaryFarTicks": 2
+            },
+            {
+              "id": 71,
+              "escortTicks": 11764,
+              "stationaryFarTicks": 2
+            },
+            {
+              "id": 72,
+              "escortTicks": 11779,
+              "stationaryFarTicks": 2
+            },
+            {
+              "id": 73,
+              "escortTicks": 11794,
+              "stationaryFarTicks": 2
+            },
+            {
+              "id": 74,
+              "escortTicks": 11806,
+              "stationaryFarTicks": 2
+            },
+            {
+              "id": 96,
+              "escortTicks": 11333,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 97,
+              "escortTicks": 11339,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 98,
+              "escortTicks": 11326,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 99,
+              "escortTicks": 11339,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "paceWindows": [
+            {
+              "key": "step/rocket|phase/pickup",
+              "samples": 0,
+              "p50GapM": null,
+              "p90GapM": null,
+              "maxGapM": null,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 63,
+                  "maxSeconds": 0.3333333333333333
+                },
+                {
+                  "id": 64,
+                  "maxSeconds": 0.3
+                },
+                {
+                  "id": 65,
+                  "maxSeconds": 0.3333333333333333
+                },
+                {
+                  "id": 66,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 67,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 68,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 69,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 70,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 71,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 72,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 73,
+                  "maxSeconds": 0.4166666666666667
+                },
+                {
+                  "id": 74,
+                  "maxSeconds": 0.4166666666666667
+                }
+              ]
+            },
+            {
+              "key": "step/corridor|phase/encounters",
+              "samples": 9598,
+              "p50GapM": 6.960966809767032,
+              "p90GapM": 12.914648989334856,
+              "maxGapM": 14.462478848894023,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 66,
+                  "maxSeconds": 0
+                },
+                {
+                  "id": 67,
+                  "maxSeconds": 0.016666666666666666
+                },
+                {
+                  "id": 68,
+                  "maxSeconds": 0
+                },
+                {
+                  "id": 69,
+                  "maxSeconds": 0.11666666666666667
+                },
+                {
+                  "id": 70,
+                  "maxSeconds": 0
+                },
+                {
+                  "id": 71,
+                  "maxSeconds": 0.016666666666666666
+                },
+                {
+                  "id": 72,
+                  "maxSeconds": 0.11666666666666667
+                },
+                {
+                  "id": 73,
+                  "maxSeconds": 0.25
+                },
+                {
+                  "id": 74,
+                  "maxSeconds": 0.08333333333333333
+                },
+                {
+                  "id": 20,
+                  "maxSeconds": 0.05
+                }
+              ]
+            },
+            {
+              "key": "step/departure|phase/encounters",
+              "samples": 1354,
+              "p50GapM": 7.0215823753323425,
+              "p90GapM": 12.043273975669585,
+              "maxGapM": 14.690186620866132,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 74,
+                  "maxSeconds": 0.23333333333333334
+                },
+                {
+                  "id": 68,
+                  "maxSeconds": 0.16666666666666666
+                },
+                {
+                  "id": 70,
+                  "maxSeconds": 0.11666666666666667
+                },
+                {
+                  "id": 64,
+                  "maxSeconds": 0.15
+                },
+                {
+                  "id": 66,
+                  "maxSeconds": 0.11666666666666667
+                },
+                {
+                  "id": 72,
+                  "maxSeconds": 0.05
+                },
+                {
+                  "id": 58,
+                  "maxSeconds": 0.23333333333333334
+                },
+                {
+                  "id": 52,
+                  "maxSeconds": 0.31666666666666665
+                },
+                {
+                  "id": 20,
+                  "maxSeconds": 0.65
+                },
+                {
+                  "id": 62,
+                  "maxSeconds": 0.016666666666666666
+                },
+                {
+                  "id": 71,
+                  "maxSeconds": 0.05
+                },
+                {
+                  "id": 69,
+                  "maxSeconds": 0.06666666666666667
+                }
+              ]
+            },
+            {
+              "key": "step/departure|phase/boarding",
+              "samples": 246,
+              "p50GapM": 4.629525604324651,
+              "p90GapM": 8.99858296899115,
+              "maxGapM": 13.022689147839857,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "step/departure|phase/departing",
+              "samples": 0,
+              "p50GapM": null,
+              "p90GapM": null,
+              "maxGapM": null,
+              "waitingTicks": 0,
+              "backtrackTicks": 440,
+              "stuckFollowers": []
+            }
+          ],
+          "prompts": {
+            "wait": 0,
+            "attack": 0,
+            "lost": 0
+          }
+        }
       }
     },
     "L8": {
@@ -2335,6 +3053,270 @@
             "groupAttacksPerMinute": 0.22484541877459246
           }
         ]
+      },
+      "normalWalk": {
+        "policy": "shared-route-normal-walk",
+        "run": {
+          "level": "L8",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 799.0333333333333,
+          "deaths": 0,
+          "kills": 38,
+          "damageTaken": 75,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "sanctuary",
+              "t": 180
+            },
+            {
+              "id": "escape",
+              "t": 791.0333333333333
+            },
+            {
+              "id": "depart",
+              "t": 799.0333333333333
+            }
+          ],
+          "furthestObjective": "depart",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 263,
+            "deferred": 17,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "followerWait": {
+          "windows": [
+            {
+              "key": "escort",
+              "escortTicks": 28131,
+              "stationaryFarTicks": 3916,
+              "first": {
+                "tick": 16062,
+                "playerX": 7.553049564361572,
+                "playerZ": -27.1328182220459,
+                "followerId": 423,
+                "followerX": 0.5064729297071828,
+                "followerZ": -19.85965147655115
+              }
+            },
+            {
+              "key": "protect",
+              "escortTicks": 1800,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "boarding",
+              "escortTicks": 6637,
+              "stationaryFarTicks": 5847,
+              "first": {
+                "tick": 41026,
+                "playerX": 92.0504379272461,
+                "playerZ": 72.317138671875,
+                "followerId": 355,
+                "followerX": 94.3958122249878,
+                "followerZ": 61.45551125920215
+              }
+            },
+            {
+              "key": "aboard",
+              "escortTicks": 0,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "escortTicks": 36568,
+          "stationaryFarTicks": 9763,
+          "upperBoundPercent": 26.69820608182017,
+          "followers": [
+            {
+              "id": 354,
+              "escortTicks": 30032,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 355,
+              "escortTicks": 30299,
+              "stationaryFarTicks": 101
+            },
+            {
+              "id": 356,
+              "escortTicks": 30375,
+              "stationaryFarTicks": 88
+            },
+            {
+              "id": 357,
+              "escortTicks": 30522,
+              "stationaryFarTicks": 88
+            },
+            {
+              "id": 358,
+              "escortTicks": 30631,
+              "stationaryFarTicks": 127
+            },
+            {
+              "id": 359,
+              "escortTicks": 30743,
+              "stationaryFarTicks": 260
+            },
+            {
+              "id": 360,
+              "escortTicks": 30850,
+              "stationaryFarTicks": 88
+            },
+            {
+              "id": 361,
+              "escortTicks": 30892,
+              "stationaryFarTicks": 116
+            },
+            {
+              "id": 362,
+              "escortTicks": 31032,
+              "stationaryFarTicks": 88
+            },
+            {
+              "id": 363,
+              "escortTicks": 36182,
+              "stationaryFarTicks": 6069
+            },
+            {
+              "id": 364,
+              "escortTicks": 36156,
+              "stationaryFarTicks": 119
+            },
+            {
+              "id": 365,
+              "escortTicks": 36336,
+              "stationaryFarTicks": 158
+            },
+            {
+              "id": 366,
+              "escortTicks": 36459,
+              "stationaryFarTicks": 117
+            },
+            {
+              "id": 423,
+              "escortTicks": 36568,
+              "stationaryFarTicks": 9538
+            }
+          ],
+          "paceWindows": [
+            {
+              "key": "escort",
+              "samples": 13124,
+              "p50GapM": 6.6627617757457385,
+              "p90GapM": 9.521273504638287,
+              "maxGapM": 113.86308739010039,
+              "waitingTicks": 41,
+              "backtrackTicks": 4951,
+              "stuckFollowers": [
+                {
+                  "id": 423,
+                  "maxSeconds": 65.78333333333333
+                },
+                {
+                  "id": 364,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 363,
+                  "maxSeconds": 65.78333333333333
+                },
+                {
+                  "id": 366,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 360,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 365,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 361,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 362,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 355,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 356,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 357,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 358,
+                  "maxSeconds": 1.7666666666666666
+                },
+                {
+                  "id": 359,
+                  "maxSeconds": 1.7666666666666666
+                }
+              ]
+            },
+            {
+              "key": "protect",
+              "samples": 838,
+              "p50GapM": 3.270240093547164,
+              "p90GapM": 6.065169034832928,
+              "maxGapM": 8.113354734313418,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "boarding",
+              "samples": 1281,
+              "p50GapM": 6.44889592302294,
+              "p90GapM": 82.03955903655051,
+              "maxGapM": 112.00615631305345,
+              "waitingTicks": 5847,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 363,
+                  "maxSeconds": 1.5
+                },
+                {
+                  "id": 423,
+                  "maxSeconds": 1.5
+                }
+              ]
+            },
+            {
+              "key": "aboard",
+              "samples": 0,
+              "p50GapM": null,
+              "p90GapM": null,
+              "maxGapM": null,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            }
+          ],
+          "prompts": {
+            "wait": 0,
+            "attack": 0,
+            "lost": 0
+          }
+        }
       }
     }
   }
