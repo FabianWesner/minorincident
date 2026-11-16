@@ -29,3 +29,5 @@ Final simulation HIGH road reruns with per-tick grab audit completed at 0.3, 0.0
 Latest simulation remote unit refresh passed: 105 passed, one platform skip, 128.4 seconds (exit 0). Typecheck and lint pass. LOW refresh could not launch: browser pool returned external-exclusive; this attempt is infrastructure-incomplete.
 
 Latest simulation L9 threat refresh (`test-results/s138-exit-threat`) completed skilled and passive with zero level flags; aggregate PARTIAL_LEVEL_SELECTION only. A second LOW refresh launch was refused external-exclusive; `tools/browser-status.sh` confirmed a live s139-openchecks exclusive lease and corresponding browser job.
+
+Latest exit-corrected LOW run passed: 0.7166666666666667 seconds after Defense complete, maximum grabbed age 0 ticks, zero issues. Latest E31 verification passed all 106 tests / 27 files in 91.6 seconds.
