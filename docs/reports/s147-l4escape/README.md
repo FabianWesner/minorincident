@@ -1,62 +1,46 @@
-# s147 L4 cellar escape
+# s147 — L4 cellar escape
 
-## Finding
+HIGH now completes the escape within three attempts with the horde intact. The native skilled L4 bot completes with zero escape deaths; a headless real keyboard/mouse HIGH run completes with two escape deaths. LOW also completes, with six escape deaths. The three-attempt target was specified for HIGH.
 
-The batch-113 real-input evidence showed repeated deaths after the cellar objective appeared, at the line-break checkpoint. HIGH had 24 death/input-release events and LOW had 25. The objective text and marker already pointed at the cellar, but the checkpoint was at `(-4, 16)`, beside the collapsed army perimeter, rather than on the authored Lakeshore escape road. Restoring that checkpoint therefore repeatedly put a mortal player at the camp edge. The escape gap lasted 40 seconds while the authored route loops through Lakeshore, Metro Road and Harbor Street to Kessler's cellar.
+## Diagnosis
 
-The existing gap logic diverts infected away from the route while keeping the horde, Alphas and combat rules intact. The problem was its route-start placement and duration, not a lack of enemies or zombie tuning.
+Batch-113 reported 24 HIGH and 25 LOW escape death/input-release events. The new native baseline reproduced five HIGH escape deaths. Subsequent visible-input logs exposed four contributing design faults:
 
-## Change
+- The direct cellar bearing led northwest into the flooded camp and fences, while the usable route begins south toward Lakeshore. A 5 m observation heatmap clustered 73 of 191 hide observations near (-15,10). These are observation counts, not independent deaths.
+- Street-corner markers required an exact junction arrival. The player stopped at the ring edge until killed. A 3 m arrival tolerance fixes the handoff.
+- The horde diversion corridor ended on southern Lakeshore, omitting Metro Road and Harbor Street. The full route required about 71 seconds in native play, against the former 40-second window.
+- The fixed line-break checkpoint replayed the entire route against an increasingly flooded live battlefield. Reached street turns now preserve progress.
 
-- Moved the line-break checkpoint from `(-4, 16)` to `(-4, 28)`, the first open Lakeshore route leg beyond the perimeter.
-- Extended the existing army diversion window from 40 to 75 seconds. Retry restoration continues to reopen the window; ordinary respawn grace remains in place.
-- Added a fixed-seed HIGH native regression requiring the skilled mortal L4 bot to finish with at most three deaths during the escape phase, while confirming infected remain alive at line break.
-- No wave sizes, Alpha counts, infected stats, corpses, or playtest tools changed.
+The JSON includes death positions/ticks and nearby infected IDs/positions from failed browser runs, plus native death records with recent infected attack sources, archetypes, positions, damage and special moves. Nearby browser actors cannot establish a definitive killing blow. Native final-run deaths were all during defense; the escape had none.
 
-## Evidence
+## Changes
 
-The L4 native skilled bot completed a baseline HIGH run with 13 total deaths, including five in the escape phase; LOW completed with 8 total deaths, including one escape-phase death. Candidate probing showed that a 75-second gap alone still timed out at the original checkpoint. The combined outer checkpoint and 75-second gap completed the fixed-seed HIGH run with 11 total deaths, including exactly three after line break.
+- Line-break checkpoint moved from (-4,16) to the open Lakeshore leg at (-4,28).
+- Existing diversion extended to 75 seconds and its polyline aligned with the entire authored Lakeshore–Metro–Harbor route.
+- Visible marker follows street corners and their reachable A* approaches around existing obstacles, advancing within 3 m of a corner; final guidance remains the cellar door.
+- Reaching Metro Road (48.5,20), the Harbor turn (48.5,-37.4), or western Harbor (-44,-37.4) refreshes the existing line-break checkpoint at the actual player position. Death reopens the diversion through existing respawn logic. Live enemies and corpses remain.
+- Existing L4 contact test extended with corridor equality, reached checkpoint and onward guidance assertions. The full mortal completion is recorded run evidence; duplicating it inside the existing long contact test exceeded its timeout. No pre-existing test or replay was trimmed; inventory stays at150 cases.
 
-The new focused regression passed under Vitest and proves completion, exactly three collapse-phase deaths for this seed, and a non-empty infected horde at line break. It uses the existing native `loadL4` / `runL4` skilled bot, with no immortality or route teleport.
-
-Reviewed sheet: [corpse-persistence-sheet.jpg](corpse-persistence-sheet.jpg), a HIGH WebGL2 civilian/corpse sequence. The corpses remain present through the later frames, consistent with the persistent-corpse rule.
+Wave sizes, Alpha counts, zombie stats, persistent corpses and `tools/playtest` are unchanged. No specs, prohibited reference files, main branch, deployment or remote publishing changed.
 
 ## Validation
 
-- Focused native regression: passed (1 passed, 1 unrelated test skipped by name filter; 61.87 s).
-- `npm run typecheck`: passed.
-- `npm run lint`: passed.
-- Required `sh tools/remote/run.sh "$PWD" -- npm test`: not admitted. The remote runner reported no healthy Hetzner runner and refused the local Mac slot for this queued job (exit 69); this was not a runner timeout.
-- HIGH/LOW real-input browser confirmation remains open. Batch-113's browser admission had failed before browser start with `EPERM` binding the browser-pool port. No browser was started in this change.
+| Evidence | Result |
+| --- | --- |
+| Native skilled HIGH, seed1, ordinary InputFrames | Complete, zero escape deaths; eight preceding defense deaths; 61 infected alive at line break |
+| HIGH visible-input real keyboard/mouse | Complete in384 s, two escape deaths, 11 total deaths, 1256 MG attacks; no skips, assists or immortality |
+| LOW visible-input real keyboard/mouse | Complete in458 s, six escape deaths, 13 total deaths, 1543 MG attacks; no skips, assists or immortality |
+| Typecheck / lint | Passed |
+| Required remote `sh tools/remote/run.sh "$PWD" -- npm test` | Passed, exit0, 187.1 s; 27 files, 105 tests passed, one skipped, 150-case inventory |
 
-## Remaining uncertainty
+Earlier full-suite attempts timed out at240.4 s and were rerun unchanged. A focused contact-file run exposed the duplicated campaign replay cost; replacing only the newly added duplicate with focused assertions restored the full suite to its budget.
 
-The fixed-seed native skilled bot reaches the cellar within three escape-phase deaths, but it still records eight deaths in the preceding HIGH defense. The raw real-input captures do not identify a specific killing infected reliably, so attribution by infected identity and origin remains unresolved. The real-input HIGH and LOW confirmations are still needed to establish the competent-player target beyond this native regression.
+Browsers were headless, one at a time, admitted through `tools/e2e-lock.sh`/browser pool, with10-minute reservations and ports5031/5032. HIGH preceded LOW. The default driver reads authored anchors directly, bypassing displayed route guidance; final confirmation used its existing `PLAYTEST_VISIBLE_ONLY=1` mode to follow the actual minimap pin. The only warning in successful LOW was the known convoy empty-HUD navigation warning; successful HIGH additionally logged a provisional frozen actor during defense. Neither prevented completion.
 
-## Follow-up validation
+Reviewed [escape contact sheet](corpse-persistence-sheet.jpg): successful HIGH line-break crowd and bodies, two street guidance views, and barred-cellar ending. One small sheet is committed. The filename is retained from the earlier corpse review.
 
-Committed initial change as `35cd62ba`. Folded the escape regression into the existing L4 contact test to retain the 150-case suite budget. The first remote run then timed out at 240 seconds; rerun unchanged as requested. HIGH real-input confirmation ran on ports 5031/5032 through the browser pool, mortal with ordinary combat: it failed to finish after 480 seconds and 28 deaths. Its logs are in `test-results/playtest/campaign-high-2026-11-161422`. The automatically started second segment was stopped. This contradicts completion of the target; further route/checkpoint design work is required. Three native escape deaths also mean success on the fourth attempt, so the initial native regression is insufficient to establish the approximately three-attempt goal.
+Raw final runs: `test-results/s147-l4escape/high-street-checkpoints` and `test-results/s147-l4escape/low-nine-minute`. The committed JSON is below200 KB and retains failed-run observations, heatmap, native attribution and final results.
 
-The unchanged remote rerun also timed out at 240.4 seconds (exit 124). No tests were trimmed. The full suite remains unverified.
+## Limits
 
-## Route marker diagnosis
-
-The current HIGH log contains 191 hide observations. A 5 m observation heatmap (JSON) clusters 73 samples at (-15,10), back inside the camp. The first hide observation is at (-4,28), with a direct marker at (-79.3,-45.28); the next observation moves northwest to (-7.43,24.57). The intended route instead starts south to Lakeshore. Updated the L4 hide marker to follow the existing authored route corners, including its final door point. This directly addresses the misleading bearing; native and browser verification of this follow-up remains pending. The heatmap counts observations, not independently attributed deaths.
-
-Native marker probe confirms checkpoint (-4,28) points south to (-4,43). Bounded HIGH browser follow-up did not finish in 480 seconds, but inspection found the default driver reads `def.anchors[state.marker]` directly (session.ts markerRing) and bypasses displayed route guidance. Its strict `PLAYTEST_VISIBLE_ONLY=1` mode instead reads the actual minimap pin. Strict visible-pin HIGH/LOW confirmation is pending; no playtest code was edited.
-
-Strict visible-input HIGH did not finish in 480 seconds. It escaped the camp with full HP (tick14147, -4,41.49), confirming improved bearing, but stopped near the first corner marker until killed (tick21010, -4.01,42.38). Added a 3 m corner arrival tolerance so entering the marker area reveals the next street leg. This follow-up still requires gameplay revalidation.
-
-Corner-handoff HIGH confirmation reached eastern Lakeshore at full health, but did not finish after 481 seconds. Tick18012: player (28.92,39.92), HP100, marker (48.5,43). The first two corner transitions now work. Native probe at that position returns the existing reachable `cellarDistance` hint (18.625,39.875), routing west around an obstruction; the marker currently exposes the distant authored corner instead. Next work: expose the reachable street approach and revalidate. Logs: `test-results/s147-l4escape/high-corner-handoff`.
-
-Updated route marker to reuse the existing L4 A* street approach query, retaining the 3 m corner handoff. Native probes now expose reachable approaches at the checkpoint (-4.125,31.875), first turn (-0.125,42.875), and recorded Lakeshore obstruction (18.625,39.875); final approach retains the door (-79.3,-45.2801). Typecheck and lint pass. Gameplay confirmation of this latest change remains pending.
-
-Reachable-approach HIGH passed the obstruction and reached Metro Road at full HP, but did not finish after 481 seconds. Six escape death observations are recorded with nearby actor IDs/positions in JSON (proximity does not establish killing blow). Five later deaths clustered around Metro Road and its southern junction. Found the gap corridor still ended on southern Lakeshore, omitting the Metro/Harbor route legs. Extended its polyline to match the entire authored finale route. This keeps the existing 75-second window, counts, close pursuers and Alpha rules; gameplay revalidation remains pending.
-
-Full-corridor native HIGH completes with zero escape deaths (8 preceding defense deaths), cellar at293.35s vs line break222.82s, with61 infected alive at line break. Tightened existing regression to at most2 escape deaths (three attempts). Visible-input HIGH still failed: first death on Harbor at(-23.38,-36.69), then9 later death observations progressively earlier on the route. Added reached checkpoint refreshes at Metro Road (48.5,20), its Harbor turn (48.5,-37.4), and western Harbor (-44,-37.4). These record actual reached positions using the existing line-break checkpoint, keep the live horde/corpses, and reopen the existing diversion on death. Latest checkpoint change requires validation.
-
-## Current acceptance evidence
-
-HIGH real-input with reached checkpoints completes in384 seconds, no skips/assists/immortality, 1256 machine-gun attacks. Two escape death observations (tick14985 at-3.26,38.68; tick17329 at50.64,15.53) establish success within three escape attempts; 11 total deaths include earlier defense. Native HIGH completes with zero escape deaths and61 infected at line break. LOW eight-minute observation ended on Harbor without completion; longer bounded confirmation is pending. Replaced the generic corpse sheet with four reviewed frames from successful HIGH: line-break crowd/bodies, street guidance and barred-cellar ending. Latest remote full-suite run timed out at240.4s and its unchanged rerun is pending.
-
-The latest unchanged remote rerun on94.130.181.173 also timed out at240.4s (exit124). No tests were trimmed. Full-suite validation remains open.
+HIGH satisfies the requested approximately three-attempt escape target. LOW completion is confirmed but took more retries. Defense remains punishing (eight native HIGH defense deaths); this task changes the escape. Historical killing blows cannot be reconstructed conclusively from browser proximity snapshots. Native attack-source records provide stronger attribution for the reproduced run.

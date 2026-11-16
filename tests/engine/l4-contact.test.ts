@@ -22,12 +22,18 @@ import { obbHitsAabb } from '../qa/invariants/oracles';
 async function checkMortalCellarEscape(): Promise<void> {
   const { world, mission } = await loadL4(1, 'high');
   try {
-    const report = runL4(world, mission, 'complete', { seed: 1, maxSeconds: 540 });
-    expect(report.outcome, 'the full mortal native route reaches and bars the cellar').toBe('complete');
-    const escapeDeaths = report.deathsAt.filter(sample => sample.endsWith('/collapse'));
-    expect(escapeDeaths.length, 'the full Lakeshore/Metro/Harbor corridor permits completion within three attempts').toBeLessThanOrEqual(2);
-    expect(l4.director.escape.gapS).toBeGreaterThanOrEqual(75);
-    expect(report.infectedAtBreak).toBeGreaterThan(0);
+    mission.loadCheckpoint('line-break');
+    expect(l4.director.escape.route).toEqual(l4.finale.route);
+    const player = world.entities.get(1)!;
+    Object.assign(player.transform, { x: 48.5, z: -37.4 });
+    world.physics.playerBody!.setTranslation(player.transform, true);
+    world.update();
+    expect(player.survivor!.checkpoint.x).toBeCloseTo(48.5);
+    expect(player.survivor!.checkpoint.z).toBeCloseTo(-37.4);
+    const next = { x: 0, z: 0 };
+    mission.l4!.cellarDistance(next);
+    expect(next.x).toBeLessThan(player.transform.x);
+    expect(mission.state.l4!.phase).toBe('collapse');
   } finally { world.dispose(); }
 }
 

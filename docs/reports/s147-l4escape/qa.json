@@ -64,10 +64,7 @@
   },
   "reviewedSheet": "corpse-persistence-sheet.jpg (updated: successful HIGH escape and cellar contact sheet)",
   "open": [
-    "Real-input HIGH then LOW confirmation",
-    "Reliable identification of the infected responsible for individual real-input deaths",
-    "Remote full unit suite",
-    "HIGH real-input failure must be resolved; native three deaths imply fourth-attempt completion"
+    "Historical browser logs identify nearby attackers, not definitive killing blows; LOW completed with six escape deaths, above HIGH target."
   ],
   "escapeObservationHeatmap5m": [
     {
@@ -489,11 +486,244 @@
       "path": "test-results/s147-l4escape/high-street-checkpoints"
     },
     "realInputLow": {
-      "complete": false,
-      "wallSeconds": 481,
-      "path": "test-results/s147-l4escape/low-street-checkpoints",
-      "status": "observation cutoff; longer bounded run pending"
+      "complete": true,
+      "wallSeconds": 458,
+      "escapeDeathObservations": 6,
+      "totalDeaths": 13,
+      "machineGunAttacks": 1543,
+      "path": "test-results/s147-l4escape/low-nine-minute"
     },
-    "remoteSuite": "two latest unchanged runs on different runners timed out at240.4s; full suite unverified"
+    "remoteSuite": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "exitCode": 0,
+      "seconds": 187.1,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "inventoryCases": 150
+    }
+  },
+  "nativeAttribution": {
+    "outcome": "complete",
+    "escapeDeaths": [],
+    "infectedAtBreak": 61,
+    "deaths": [
+      {
+        "tick": 4740,
+        "phase": "war",
+        "position": {
+          "x": -21.130163192749023,
+          "y": 0.7099999785423279,
+          "z": 2.824714183807373,
+          "yaw": -1.286529974666906
+        },
+        "recentAttacks": [
+          {
+            "tick": 4649,
+            "id": 216,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -19.789547274556924,
+              "z": 1.656873616556842
+            },
+            "amount": 10,
+            "special": "armor"
+          },
+          {
+            "tick": 4690,
+            "id": 214,
+            "archetype": "infected.hazmat",
+            "from": {
+              "x": -22.554997091341004,
+              "z": 1.1119646084145292
+            },
+            "amount": 10,
+            "special": "aura"
+          }
+        ]
+      },
+      {
+        "tick": 5892,
+        "phase": "war",
+        "position": {
+          "x": -20.731708526611328,
+          "y": 0.7099999785423279,
+          "z": 4.47166633605957,
+          "yaw": -0.4877775283410382
+        },
+        "recentAttacks": []
+      },
+      {
+        "tick": 6823,
+        "phase": "war",
+        "position": {
+          "x": -17.62543296813965,
+          "y": 0.7099999785423279,
+          "z": -5.948136329650879,
+          "yaw": 2.998237719739527
+        },
+        "recentAttacks": [
+          {
+            "tick": 6722,
+            "id": 266,
+            "archetype": "infected.butcher",
+            "from": {
+              "x": -18.317479729719317,
+              "z": -2.9224165753529245
+            },
+            "amount": 10,
+            "special": "combo-grab"
+          },
+          {
+            "tick": 6769,
+            "id": 260,
+            "archetype": "infected.brute",
+            "from": {
+              "x": -16.60471453804164,
+              "z": -1.362257783185442
+            },
+            "amount": 10,
+            "special": "charge"
+          }
+        ]
+      },
+      {
+        "tick": 7822,
+        "phase": "war",
+        "position": {
+          "x": -16.744430541992188,
+          "y": 0.7099999785423279,
+          "z": -2.2158925533294678,
+          "yaw": 2.7315387858494
+        },
+        "recentAttacks": [
+          {
+            "tick": 7715,
+            "id": 326,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -22.12215430870404,
+              "z": 1.6852240290686002
+            },
+            "amount": 10,
+            "special": "armor"
+          },
+          {
+            "tick": 7775,
+            "id": 216,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -21.4874988925871,
+              "z": 0.543933210979881
+            },
+            "amount": 10,
+            "special": "armor"
+          }
+        ]
+      },
+      {
+        "tick": 9174,
+        "phase": "war",
+        "position": {
+          "x": -18.027048110961914,
+          "y": 0.7099999785423279,
+          "z": -1.7993706464767456,
+          "yaw": 1.6274009057349341
+        },
+        "recentAttacks": [
+          {
+            "tick": 9115,
+            "id": 353,
+            "archetype": "infected.hazmat",
+            "from": {
+              "x": -18.60824234231349,
+              "z": -1.6243914240420887
+            },
+            "amount": 10,
+            "special": "aura"
+          }
+        ]
+      },
+      {
+        "tick": 10896,
+        "phase": "war",
+        "position": {
+          "x": -10.710987091064453,
+          "y": 0.7099999785423279,
+          "z": 17.456453323364258,
+          "yaw": -1.3952967337835607
+        },
+        "recentAttacks": [
+          {
+            "tick": 10854,
+            "id": 211,
+            "archetype": "infected.hazmat",
+            "from": {
+              "x": -12.73128871095113,
+              "z": 15.548027116065983
+            },
+            "amount": 10,
+            "special": "aura"
+          }
+        ]
+      },
+      {
+        "tick": 11948,
+        "phase": "war",
+        "position": {
+          "x": -12.700878143310547,
+          "y": 0.7099999785423279,
+          "z": 15.676887512207031,
+          "yaw": -0.06952954868084464
+        },
+        "recentAttacks": [
+          {
+            "tick": 11907,
+            "id": 260,
+            "archetype": "infected.brute",
+            "from": {
+              "x": -10.092959382268486,
+              "z": 15.932590334649715
+            },
+            "amount": 10,
+            "special": "charge"
+          }
+        ]
+      },
+      {
+        "tick": 12947,
+        "phase": "war",
+        "position": {
+          "x": -11.145371437072754,
+          "y": 0.7099999785423279,
+          "z": 16.84185218811035,
+          "yaw": 0.7006305116855609
+        },
+        "recentAttacks": [
+          {
+            "tick": 12839,
+            "id": 260,
+            "archetype": "infected.brute",
+            "from": {
+              "x": -11.360802432252573,
+              "z": 13.06529091510471
+            },
+            "amount": 10,
+            "special": "charge"
+          },
+          {
+            "tick": 12904,
+            "id": 216,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -10.265924620409038,
+              "z": 19.25384399656769
+            },
+            "amount": 10,
+            "special": "armor"
+          }
+        ]
+      }
+    ]
   }
 }
