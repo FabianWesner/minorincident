@@ -65,12 +65,17 @@ export class LevelFourWar {
   /** The street turn can lie behind reception furniture. Show its reachable approach. */
   cellarDistance(next: Point): number {
     const p = this.world.entities.get(1)!.transform, distance = l4CellarDistance(p, next);
+    this.cellarApproach(next);
+    return distance;
+  }
+  /** Reachable approach to an escape corner when street furniture blocks its direct bearing. */
+  cellarApproach(next: Point): void {
+    const p = this.world.entities.get(1)!.transform;
     const nav = this.infected.nav.forPlayer(survivor.radius + .02, .25);
     // Hints must use A*: routed movement owns the resumable nearest-reachable
     // flood. A second flood to the hint cancels the player's pending route
     // every frame at obstructed corners, including after a collapse respawn.
     if (!nav.visible(p, next, survivor.radius)) nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000);
-    return distance;
   }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
@@ -1577,6 +1582,13 @@ export class LevelFourWar {
       }
       this.spectacle.updateTank(); this.spectacle.updateHeli();
       if (s.phase === 'collapse') {
+        const player = world.entities.get(1)!, checkpoint = player.survivor!.checkpoint;
+        // Reached street turns preserve escape progress without moving the
+        // courier or discarding the live horde and persistent corpses.
+        if (player.health.current > 0 && l4CellarDistance(checkpoint) - l4CellarDistance(player.transform) > 30 &&
+          [[48.5, 20], [48.5, -37.4], [-44, -37.4]].some(([x, z]) => Math.hypot(player.transform.x - x, player.transform.z - z) < 5)) {
+          this.mission.requestCheckpoint('line-break');
+        }
         this.emergeCollapse();
         if (this.breakRadioAt && tick >= this.breakRadioAt) { this.breakRadioAt = 0; this.mission.radio('L4.break'); }
         if (this.gateOpenAt && tick >= this.gateOpenAt) { this.gateOpenAt = 0; this.openGate(); }

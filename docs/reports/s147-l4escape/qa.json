@@ -1,0 +1,729 @@
+{
+  "task": "s147-l4escape",
+  "candidate": "b764d446",
+  "finding": {
+    "source": "docs/reports/batch-113-real-input/README.md",
+    "highEscapeDeathInputReleaseEvents": 24,
+    "lowEscapeDeathInputReleaseEvents": 25,
+    "objectiveMarker": "Present and points at cellar",
+    "oldCheckpoint": [
+      -4,
+      16
+    ],
+    "oldGapSeconds": 40,
+    "oldCheckpointAssessment": "At the camp perimeter instead of on the first open Lakeshore route leg; repeated collapse retries resumed at the exposed camp edge."
+  },
+  "change": {
+    "checkpoint": [
+      -4,
+      28
+    ],
+    "gapSeconds": 75,
+    "wavesChanged": false,
+    "alphaCountsChanged": false,
+    "infectedStatsChanged": false,
+    "corpsesRemoved": false
+  },
+  "nativeEvidence": {
+    "baselineHigh": {
+      "finished": true,
+      "deaths": 13,
+      "collapseDeaths": 5
+    },
+    "baselineLow": {
+      "finished": true,
+      "deaths": 8,
+      "collapseDeaths": 1
+    },
+    "candidateProbeHigh": {
+      "finished": true,
+      "deaths": 11,
+      "collapseDeaths": 3
+    },
+    "focusedTest": "tests/engine/l4-contact.test.ts: L4 HIGH collapse escape gives a skilled mortal route at most three deaths before the cellar",
+    "focusedTestResult": "passed",
+    "hordeIntactAtLineBreak": true
+  },
+  "validation": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "focusedNativeTest": "passed",
+    "remoteUnitSuite": {
+      "status": "two unchanged runs timed out at 240.4 seconds",
+      "inventoryCases": 150,
+      "exitCode": 124
+    },
+    "realInputHigh": {
+      "finished": false,
+      "wallSeconds": 480,
+      "deaths": 28,
+      "path": "test-results/playtest/campaign-high-2026-11-161422",
+      "assessment": "Current design does not meet target; second automatic segment stopped."
+    },
+    "realInputLow": "open"
+  },
+  "reviewedSheet": "corpse-persistence-sheet.jpg (updated: successful HIGH escape and cellar contact sheet)",
+  "open": [
+    "Historical browser logs identify nearby attackers, not definitive killing blows; LOW completed with six escape deaths, above HIGH target."
+  ],
+  "escapeObservationHeatmap5m": [
+    {
+      "x": -15,
+      "z": 10,
+      "samples": 73
+    },
+    {
+      "x": -5,
+      "z": 25,
+      "samples": 25
+    },
+    {
+      "x": -15,
+      "z": 5,
+      "samples": 25
+    },
+    {
+      "x": -10,
+      "z": 20,
+      "samples": 20
+    },
+    {
+      "x": -15,
+      "z": 15,
+      "samples": 13
+    },
+    {
+      "x": -10,
+      "z": 15,
+      "samples": 12
+    },
+    {
+      "x": -15,
+      "z": 0,
+      "samples": 8
+    },
+    {
+      "x": -5,
+      "z": 30,
+      "samples": 4
+    },
+    {
+      "x": -20,
+      "z": 5,
+      "samples": 4
+    },
+    {
+      "x": -10,
+      "z": 25,
+      "samples": 4
+    },
+    {
+      "x": -15,
+      "z": -5,
+      "samples": 1
+    },
+    {
+      "x": -20,
+      "z": -5,
+      "samples": 1
+    },
+    {
+      "x": -10,
+      "z": 10,
+      "samples": 1
+    }
+  ],
+  "routeGuidanceFinding": "First hide observation at (-4,28) points directly to cellar (-79.3,-45.28); next observation moves northwest toward camp. 73 hide observations cluster near (-15,10). Added route-corner marker guidance; verification pending.",
+  "markerNativeProbe": {
+    "checkpoint": "line-break",
+    "player": [
+      -4,
+      28
+    ],
+    "marker": [
+      -4,
+      43
+    ],
+    "result": "correct next street corner"
+  },
+  "markerBrowserFollowup": {
+    "path": "test-results/s147-l4escape/high-route-marker",
+    "finished": false,
+    "wallSeconds": 480,
+    "limitation": "Default driver session.ts markerRing reads def.anchors, bypassing markerAnchor. Use PLAYTEST_VISIBLE_ONLY=1 to read displayed minimap pin.",
+    "strictVisibleConfirmation": "pending"
+  },
+  "strictVisibleHigh": {
+    "path": "test-results/s147-l4escape/high-visible-pin",
+    "finished": false,
+    "wallSeconds": 480,
+    "finding": "Escaped camp at full HP, then waited at first corner marker; at tick 14147 (-4,41.49) HP100, tick21010 (-4.01,42.38) HP0. Added 3m corner marker handoff tolerance; revalidation pending."
+  },
+  "cornerHandoffConfirmation": {
+    "path": "test-results/s147-l4escape/high-corner-handoff",
+    "finished": false,
+    "wallSeconds": 481,
+    "positionAtTick18012": [
+      28.9199,
+      39.9239
+    ],
+    "hp": 100,
+    "marker": [
+      48.5,
+      43
+    ],
+    "nativeReachableHint": [
+      18.625,
+      39.875
+    ],
+    "finding": "Corner handoff works; eastern Lakeshore pin points beyond an obstruction. Existing cellarDistance navigation hint routes back west around it; marker should expose reachable approach."
+  },
+  "reachableMarkerProbe": {
+    "change": "Marker uses existing L4 A* approach for blocked street corners",
+    "positions": [
+      {
+        "player": [
+          -4,
+          28
+        ],
+        "marker": [
+          -4.125,
+          31.875
+        ]
+      },
+      {
+        "player": [
+          -4,
+          41.5
+        ],
+        "marker": [
+          -0.125,
+          42.875
+        ]
+      },
+      {
+        "player": [
+          28.92,
+          39.92
+        ],
+        "marker": [
+          18.625,
+          39.875
+        ]
+      },
+      {
+        "player": [
+          -79,
+          -44
+        ],
+        "marker": [
+          -79.3,
+          -45.2801
+        ]
+      }
+    ],
+    "typecheck": "passed",
+    "lint": "passed",
+    "gameplayConfirmation": "pending"
+  },
+  "reachableApproachHigh": {
+    "finished": false,
+    "wallSeconds": 481,
+    "deathObservations": [
+      {
+        "tick": 14585,
+        "player": {
+          "x": -34.50318908691406,
+          "z": 15.40279483795166,
+          "hp": 0,
+          "weapon": "weapon.army-mg"
+        },
+        "nearbyEnemies": [
+          {
+            "id": 208,
+            "d": 0.9074189383749067,
+            "hp": 143.76,
+            "max": 225,
+            "drawn": true,
+            "x": -33.600862751892656,
+            "z": 15.30679319813088
+          },
+          {
+            "id": 320,
+            "d": 1.7442094322408233,
+            "hp": 108,
+            "max": 180,
+            "drawn": true,
+            "x": -32.76142501938486,
+            "z": 15.49512293000375
+          },
+          {
+            "id": 211,
+            "d": 2.481200149423227,
+            "hp": 144,
+            "max": 180,
+            "drawn": true,
+            "x": -32.02199293998248,
+            "z": 15.398338163213529
+          }
+        ]
+      },
+      {
+        "tick": 18694,
+        "player": {
+          "x": 46.563663482666016,
+          "z": -38.84048080444336,
+          "hp": 0,
+          "weapon": "weapon.army-mg"
+        },
+        "nearbyEnemies": [
+          {
+            "id": 94,
+            "d": 0.3785392746935837,
+            "hp": 60,
+            "max": 60,
+            "drawn": true,
+            "x": 46.3232501165928,
+            "z": -38.548088267091785
+          },
+          {
+            "id": 457,
+            "d": 0.8373654152698499,
+            "hp": 240,
+            "max": 240,
+            "drawn": true,
+            "x": 47.21761810652202,
+            "z": -39.363476204640534
+          },
+          {
+            "id": 58,
+            "d": 1.2342705500585314,
+            "hp": 10,
+            "max": 60,
+            "drawn": true,
+            "x": 45.3385482054213,
+            "z": -38.690426320327134
+          }
+        ]
+      },
+      {
+        "tick": 21545,
+        "player": {
+          "x": 46.19611358642578,
+          "z": 24.11267852783203,
+          "hp": 0,
+          "weapon": "weapon.army-mg"
+        },
+        "nearbyEnemies": [
+          {
+            "id": 441,
+            "d": 0.505362435187559,
+            "hp": 60,
+            "max": 180,
+            "drawn": true,
+            "x": 45.81527613175789,
+            "z": 24.444874289425677
+          },
+          {
+            "id": 329,
+            "d": 1.0401834868283875,
+            "hp": 117,
+            "max": 225,
+            "drawn": true,
+            "x": 45.217493669034084,
+            "z": 23.760138113759076
+          },
+          {
+            "id": 306,
+            "d": 1.646555427930523,
+            "hp": 180,
+            "max": 240,
+            "drawn": true,
+            "x": 45.536926256130016,
+            "z": 25.62152472305042
+          }
+        ]
+      },
+      {
+        "tick": 23443,
+        "player": {
+          "x": 38.38580322265625,
+          "z": 40.88010025024414,
+          "hp": 0,
+          "weapon": "weapon.army-mg"
+        },
+        "nearbyEnemies": [
+          {
+            "id": 459,
+            "d": 2.4502948203869024,
+            "hp": 270,
+            "max": 450,
+            "drawn": true,
+            "x": 36.749009802354834,
+            "z": 42.703517922110045
+          },
+          {
+            "id": 457,
+            "d": 2.79377649269955,
+            "hp": 90,
+            "max": 240,
+            "drawn": true,
+            "x": 35.59716074420906,
+            "z": 41.04939354178438
+          }
+        ]
+      },
+      {
+        "tick": 25979,
+        "player": {
+          "x": 47.49930953979492,
+          "z": 39.276824951171875,
+          "hp": 0,
+          "weapon": "weapon.army-mg"
+        },
+        "nearbyEnemies": [
+          {
+            "id": 441,
+            "d": 0.6893598783965061,
+            "hp": 60,
+            "max": 180,
+            "drawn": true,
+            "x": 47.209731043520776,
+            "z": 38.65123615936175
+          },
+          {
+            "id": 306,
+            "d": 0.8410540087447508,
+            "hp": 180,
+            "max": 240,
+            "drawn": true,
+            "x": 47.89694884875652,
+            "z": 40.01794223311459
+          },
+          {
+            "id": 442,
+            "d": 1.2035197520615761,
+            "hp": 37.5,
+            "max": 37.5,
+            "drawn": true,
+            "x": 46.36474680191968,
+            "z": 39.678356005297694
+          }
+        ]
+      },
+      {
+        "tick": 28303,
+        "player": {
+          "x": 46.0820426940918,
+          "z": 41.31919860839844,
+          "hp": 0,
+          "weapon": "weapon.army-mg"
+        },
+        "nearbyEnemies": [
+          {
+            "id": 306,
+            "d": 0.9585888708810671,
+            "hp": 180,
+            "max": 240,
+            "drawn": true,
+            "x": 46.70358492806347,
+            "z": 42.048977941324864
+          },
+          {
+            "id": 441,
+            "d": 1.3806778431457087,
+            "hp": 60,
+            "max": 180,
+            "drawn": true,
+            "x": 45.44565605029591,
+            "z": 40.09392992514905
+          },
+          {
+            "id": 442,
+            "d": 1.6151301993221496,
+            "hp": 37.5,
+            "max": 37.5,
+            "drawn": true,
+            "x": 46.2811826920466,
+            "z": 39.71639206299847
+          }
+        ]
+      }
+    ],
+    "finding": "Guidance passes Lakeshore obstruction; repeated deaths on Metro Road. Gap route omitted Metro/Harbor legs. Extended diversion corridor to complete authored route; revalidation pending."
+  },
+  "fullCorridorNativeHigh": {
+    "outcome": "complete",
+    "collapseDeaths": 0,
+    "totalDeaths": 8,
+    "lineBreakSeconds": 222.8167,
+    "cellarSeconds": 293.35,
+    "infectedAtBreak": 61
+  },
+  "fullCorridorVisibleHigh": {
+    "finished": false,
+    "wallSeconds": 480,
+    "firstEscapeDeath": {
+      "tick": 20667,
+      "x": -23.3795,
+      "z": -36.6949
+    },
+    "escapeDeathObservations": 10,
+    "path": "test-results/s147-l4escape/high-full-corridor",
+    "finding": "First escape reached Harbor; subsequent fixed-checkpoint retries failed earlier. Added reached checkpoints at Metro/Harbor turns; pending validation."
+  },
+  "currentAcceptance": {
+    "nativeHigh": {
+      "complete": true,
+      "escapeDeaths": 0,
+      "infectedAtBreak": 61
+    },
+    "realInputHigh": {
+      "complete": true,
+      "escapeDeathObservations": 2,
+      "attempts": 3,
+      "wallSeconds": 384,
+      "path": "test-results/s147-l4escape/high-street-checkpoints"
+    },
+    "realInputLow": {
+      "complete": true,
+      "wallSeconds": 458,
+      "escapeDeathObservations": 6,
+      "totalDeaths": 13,
+      "machineGunAttacks": 1543,
+      "path": "test-results/s147-l4escape/low-nine-minute"
+    },
+    "remoteSuite": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "exitCode": 0,
+      "seconds": 187.1,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "inventoryCases": 150
+    }
+  },
+  "nativeAttribution": {
+    "outcome": "complete",
+    "escapeDeaths": [],
+    "infectedAtBreak": 61,
+    "deaths": [
+      {
+        "tick": 4740,
+        "phase": "war",
+        "position": {
+          "x": -21.130163192749023,
+          "y": 0.7099999785423279,
+          "z": 2.824714183807373,
+          "yaw": -1.286529974666906
+        },
+        "recentAttacks": [
+          {
+            "tick": 4649,
+            "id": 216,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -19.789547274556924,
+              "z": 1.656873616556842
+            },
+            "amount": 10,
+            "special": "armor"
+          },
+          {
+            "tick": 4690,
+            "id": 214,
+            "archetype": "infected.hazmat",
+            "from": {
+              "x": -22.554997091341004,
+              "z": 1.1119646084145292
+            },
+            "amount": 10,
+            "special": "aura"
+          }
+        ]
+      },
+      {
+        "tick": 5892,
+        "phase": "war",
+        "position": {
+          "x": -20.731708526611328,
+          "y": 0.7099999785423279,
+          "z": 4.47166633605957,
+          "yaw": -0.4877775283410382
+        },
+        "recentAttacks": []
+      },
+      {
+        "tick": 6823,
+        "phase": "war",
+        "position": {
+          "x": -17.62543296813965,
+          "y": 0.7099999785423279,
+          "z": -5.948136329650879,
+          "yaw": 2.998237719739527
+        },
+        "recentAttacks": [
+          {
+            "tick": 6722,
+            "id": 266,
+            "archetype": "infected.butcher",
+            "from": {
+              "x": -18.317479729719317,
+              "z": -2.9224165753529245
+            },
+            "amount": 10,
+            "special": "combo-grab"
+          },
+          {
+            "tick": 6769,
+            "id": 260,
+            "archetype": "infected.brute",
+            "from": {
+              "x": -16.60471453804164,
+              "z": -1.362257783185442
+            },
+            "amount": 10,
+            "special": "charge"
+          }
+        ]
+      },
+      {
+        "tick": 7822,
+        "phase": "war",
+        "position": {
+          "x": -16.744430541992188,
+          "y": 0.7099999785423279,
+          "z": -2.2158925533294678,
+          "yaw": 2.7315387858494
+        },
+        "recentAttacks": [
+          {
+            "tick": 7715,
+            "id": 326,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -22.12215430870404,
+              "z": 1.6852240290686002
+            },
+            "amount": 10,
+            "special": "armor"
+          },
+          {
+            "tick": 7775,
+            "id": 216,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -21.4874988925871,
+              "z": 0.543933210979881
+            },
+            "amount": 10,
+            "special": "armor"
+          }
+        ]
+      },
+      {
+        "tick": 9174,
+        "phase": "war",
+        "position": {
+          "x": -18.027048110961914,
+          "y": 0.7099999785423279,
+          "z": -1.7993706464767456,
+          "yaw": 1.6274009057349341
+        },
+        "recentAttacks": [
+          {
+            "tick": 9115,
+            "id": 353,
+            "archetype": "infected.hazmat",
+            "from": {
+              "x": -18.60824234231349,
+              "z": -1.6243914240420887
+            },
+            "amount": 10,
+            "special": "aura"
+          }
+        ]
+      },
+      {
+        "tick": 10896,
+        "phase": "war",
+        "position": {
+          "x": -10.710987091064453,
+          "y": 0.7099999785423279,
+          "z": 17.456453323364258,
+          "yaw": -1.3952967337835607
+        },
+        "recentAttacks": [
+          {
+            "tick": 10854,
+            "id": 211,
+            "archetype": "infected.hazmat",
+            "from": {
+              "x": -12.73128871095113,
+              "z": 15.548027116065983
+            },
+            "amount": 10,
+            "special": "aura"
+          }
+        ]
+      },
+      {
+        "tick": 11948,
+        "phase": "war",
+        "position": {
+          "x": -12.700878143310547,
+          "y": 0.7099999785423279,
+          "z": 15.676887512207031,
+          "yaw": -0.06952954868084464
+        },
+        "recentAttacks": [
+          {
+            "tick": 11907,
+            "id": 260,
+            "archetype": "infected.brute",
+            "from": {
+              "x": -10.092959382268486,
+              "z": 15.932590334649715
+            },
+            "amount": 10,
+            "special": "charge"
+          }
+        ]
+      },
+      {
+        "tick": 12947,
+        "phase": "war",
+        "position": {
+          "x": -11.145371437072754,
+          "y": 0.7099999785423279,
+          "z": 16.84185218811035,
+          "yaw": 0.7006305116855609
+        },
+        "recentAttacks": [
+          {
+            "tick": 12839,
+            "id": 260,
+            "archetype": "infected.brute",
+            "from": {
+              "x": -11.360802432252573,
+              "z": 13.06529091510471
+            },
+            "amount": 10,
+            "special": "charge"
+          },
+          {
+            "tick": 12904,
+            "id": 216,
+            "archetype": "infected.armored",
+            "from": {
+              "x": -10.265924620409038,
+              "z": 19.25384399656769
+            },
+            "amount": 10,
+            "special": "armor"
+          }
+        ]
+      }
+    ]
+  }
+}

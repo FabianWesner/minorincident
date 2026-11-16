@@ -19,6 +19,24 @@ import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { Refuge } from '../../src/sim/outbreak/Outbreak';
 import { obbHitsAabb } from '../qa/invariants/oracles';
 
+async function checkMortalCellarEscape(): Promise<void> {
+  const { world, mission } = await loadL4(1, 'high');
+  try {
+    mission.loadCheckpoint('line-break');
+    expect(l4.director.escape.route).toEqual(l4.finale.route);
+    const player = world.entities.get(1)!;
+    Object.assign(player.transform, { x: 48.5, z: -37.4 });
+    world.physics.playerBody!.setTranslation(player.transform, true);
+    world.update();
+    expect(player.survivor!.checkpoint.x).toBeCloseTo(48.5);
+    expect(player.survivor!.checkpoint.z).toBeCloseTo(-37.4);
+    const next = { x: 0, z: 0 };
+    mission.l4!.cellarDistance(next);
+    expect(next.x).toBeLessThan(player.transform.x);
+    expect(mission.state.l4!.phase).toBe('collapse');
+  } finally { world.dispose(); }
+}
+
 type RefugeInternals = {
   refugeSpot: (person: EntitySnapshot, door: Refuge) => { x: number; z: number } | null;
   flee: (person: EntitySnapshot) => void;
@@ -274,6 +292,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     }
   }
   expect(violations, 'PO 2026-11-08: parked army cargo trucks do not cross the perimeter').toEqual([]);
+  await checkMortalCellarEscape();
   await checkOutsideWireRouting();
   checkCompactFollowerOverlap();
   expect(followerBarsAlwaysMax, 'five-person groups retain full bars').toBe(5);
