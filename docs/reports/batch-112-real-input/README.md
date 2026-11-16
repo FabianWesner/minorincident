@@ -39,3 +39,7 @@ The JSON ledger is [qa.json](qa.json). It records the candidate, commands, valid
 ## Browser access restored
 
 The sandbox restriction was removed on continuation. The first HIGH WebGPU road run completed L9 in 221 seconds with zero skips and zero driver issues (`test-results/playtest/b112-l9-high-road-1`). Its frequent captures and evacuation census are awaiting review; this is not yet an evacuation timing or visual pass. The prescribed remote suite now passes on 46.225.66.90: 27 files, 105 passed / one skipped, full 150-case inventory, 134.9 seconds. Earlier environment failures above are historical. Remaining matrix runs, visual review and contact sheet remain pending.
+
+### HIGH L9 matrix collected
+
+Both road runs and the shortcut completed with zero skips and zero driver issues (221 / 235 / 190 seconds). Road 1 last living native evacuation is observed +1.02 s after Defense complete; road 2 +13.47 s. The earlier road-2 +0.48 s figure used `aboard`, which also includes APC passengers, and is invalid as truck boarding proof. The JSON now uses `census.evacuated`. Maximum recorded grab ages are 0 / 180 ticks for the roads. Road 2 visual sequence reviewed under `test-results/b112-review/road2.jpg`: running survivor and advancing boarding are visible; dense crowd occlusion prevents ruling out subtle sliding or brief infected penetration. Shortcut frames await review.

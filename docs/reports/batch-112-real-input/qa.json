@@ -11,7 +11,78 @@
       "skipped": [],
       "wallSeconds": 221,
       "driverIssues": 0,
-      "review": "pending"
+      "review": "pending",
+      "run": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 221,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 6.516666666666667,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 33
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 12062,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "defenseCompleteAt": 11441,
+      "allLivingEvacuatedObservedAt": 11502,
+      "delaySeconds": 1.0166666666666666,
+      "maxGrabAgeTicks": 0,
+      "boardingMetric": "native census.evacuated; aboard alone also includes APC passengers"
     },
     {
       "name": "b112-l9-high-road-2",
@@ -83,10 +154,86 @@
         }
       ],
       "defenseCompleteAt": 11166,
-      "allLivingAboardObservedAt": 11195,
-      "delaySeconds": 0.48333333333333334,
+      "delaySeconds": 13.466666666666667,
       "maxGrabAgeTicks": 180,
-      "visualReview": "pending"
+      "visualReview": "pending",
+      "allLivingEvacuatedObservedAt": 11974,
+      "boardingMetric": "native census.evacuated; aboard alone also includes APC passengers"
+    },
+    {
+      "name": "b112-l9-high-shortcut",
+      "raw": "test-results/playtest/b112-l9-high-shortcut",
+      "run": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 190,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 3.35,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 37
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 10069,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "defenseCompleteAt": 9643,
+      "allLivingEvacuatedObservedAt": 9668,
+      "delaySeconds": 0.4166666666666667,
+      "maxGrabAgeTicks": 0,
+      "boardingMetric": "native census.evacuated; aboard alone also includes APC passengers"
     }
   ],
   "validation": {
