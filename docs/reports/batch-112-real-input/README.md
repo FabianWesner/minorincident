@@ -67,3 +67,7 @@ Collected 241 seconds with no skips. Opened the tick-5252 follow warning capture
 ### LOW L9 collected
 
 LOW road completed in 287 seconds with zero skips. Native last-living evacuation observed 10.15 seconds after Defense complete; maximum recorded grab age 0 ticks. Two bridge navigation warnings at ticks 15571/15765 recovered before completion; exact capture paths are retained in qa.json. Driver-versus-product root cause remains unproven. Reviewed L4 consecutive sequence `test-results/b112-review/l4-sequence.jpg` (ticks 8952–9242, roughly 2 fps): crowd/tank occlude feet; full strike/roar/slam sole planting remains unqualified.
+
+### Additional full-size review
+
+Opened L4 `captures/campaign-L4-t9007.jpg` at full size: several Alphas attack among overlapping rings, but tank/crowd occlusion prevents individual sole tracking. Opened LOW L9 `captures/scream-L9-8411-1-1.jpg`: ordinary native scream telegraph at tick 8411, seated hatch phase, no clear violet edge arrow in the wind-up frame. Eight ordinary telegraph windows are logged at 8411/8759/9107/9260/13738/13741/13751/13761; the callback captures do not establish released-noise arrow visibility or moving-courier usefulness. Keep the arrow judgment open rather than treating Alpha roar footage as ordinary scream proof.
