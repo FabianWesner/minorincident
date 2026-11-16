@@ -1,3 +1,4 @@
+import { GroundField } from '../../src/render/GroundField';
 // Shared render contracts: every crowd figure, corpse and prop in all levels goes through these paths. The compiled-program
 // GPU-limit ground truth is tests/e2e/crowd-gpu-limits.spec.ts; these node tests pin the CPU-side layouts and math it relies on.
 import { BufferAttribute, Float32BufferAttribute, BufferGeometry, BoxGeometry, Group, Mesh, MeshBasicMaterial, Object3D, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
@@ -352,6 +353,16 @@ function checkStaticArtworkBatches(): void {
 }
 
 test('static placement batches reuse their graph and narrow barriers keep the foreground cut', async () => {
+  const supportField = new GroundField(), supportGeometry = new BoxGeometry(10, .2, 10), supportMaterial = new MeshBasicMaterial();
+  for (const height of [3.8, 7.8]) {
+    const mesh = new Mesh(supportGeometry, supportMaterial); mesh.position.y = height; mesh.updateMatrixWorld(true);
+    supportField.add(mesh, Infinity);
+  }
+  expect(supportField.height(0, 0)).toBeCloseTo(7.9);
+  expect(supportField.height(0, 0, 4)).toBeCloseTo(3.9);
+  expect(supportField.height(0, 0, 3)).toBeNull();
+  expect(supportField.height(0, 0)).toBeCloseTo(7.9);
+  supportGeometry.dispose(); supportMaterial.dispose();
   await checkHighwayModels();
   checkVehicleForegroundVeto();
   await checkSeatedBodyFrame(); checkChangingSupport();

@@ -533,10 +533,20 @@ export class LevelFourWar {
     const open = (['west', 'north', 'south'] as const).filter(side => this.breachOpen(side));
     const r = l4.perimeter, inside = (p: Point) => p.x > r.x0 && p.x < r.x1 && p.z > r.z0 && p.z < r.z1;
     const intactWalls = l4WallSlots.map((_, i) => this.wallSegment(i)).filter(w => w?.barricade?.intact);
+    const released = new Set<number>();
     // An attracted infected outside whose goal lies in the camp has no route while the wall stands: its goal becomes the wire in
     // front of it (the pile at the fence), where the E26 rule makes it claw at the segment in its way.
     for (const e of this.infected.active) {
       const b = e.infected!, l1 = b.l1, nativeArrival = !l1 && this.s.origin[e.id] !== undefined;
+      const assigned = this.world.entities.get(b.l4FlankTarget ?? b.pressureTarget?.id ?? l1?.focusId ?? 1);
+      if (this.s.phase === 'collapse' && assigned && !inside(assigned.transform)) {
+        released.add(e.id);
+        if (b.breachApproach) {
+          delete b.scripted; delete b.breachApproach;
+          if (e.health.current > 0) this.infected.press(e.id, assigned.id, this.world.tick + ticks(30));
+        }
+        continue;
+      }
       if (e.health.current > 0 && !b.vault && inside(e.transform)) {
         const targetId = b.pressureTarget?.id ?? l1?.focusId ?? b.l4FlankTarget ?? 1;
         const target = this.world.entities.get(targetId)?.transform ?? this.world.entities.get(1)!.transform;
@@ -595,7 +605,7 @@ export class LevelFourWar {
     const sites = open.map(side => { const { centre } = l4BreachSite(side), o = l4Breaches[side].out; return { outer: this.snap({ x: centre.x + o.x * 1.6, z: centre.z + o.z * 1.6 }, .45) }; });
     const player = this.world.entities.get(1)!.transform;
     for (const e of this.infected.active) {
-      const b = e.infected!; if (e.health.current <= 0 || e.hidden || e.archetype === 'infected.alpha' || b.specialAttack || b.vault) continue;
+      const b = e.infected!; if (released.has(e.id) || e.health.current <= 0 || e.hidden || e.archetype === 'infected.alpha' || b.specialAttack || b.vault) continue;
       if (b.breachApproach === 'wire') {
         b.scripted = sites.slice().sort((p, q) => dist(p.outer, e.transform) - dist(q.outer, e.transform))[0].outer;
         b.breachApproach = 'outside';
@@ -1548,7 +1558,8 @@ export class LevelFourWar {
     if (s.phase === 'convoy') this.ride();
     this.convoySound(tick);
     if (s.phase === 'war' && tick % 10 === 0) { if (!this.fence.length) this.perimeter(true); this.perimeterBark(); }
-    if (s.phase === 'war' && tick % 15 === 7 && this.fence.length) this.funnel();
+    // Exterior breach legs must finish after the defense falls as well.
+    if ((s.phase === 'war' && this.fence.length || s.phase === 'collapse') && tick % 15 === 7) this.funnel();
     if (s.phase === 'plaza') {
       if (tick === s.arrivedAt + ticks(l4.calm.welcomeAtS)) this.mission.radio('L4.welcome');
       if (s.gunAt && tick >= s.turnDueAt) this.turn();

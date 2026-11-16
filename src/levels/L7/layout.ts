@@ -78,8 +78,13 @@ export function levelSevenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     layout.placements.push(mouth);
     add('l7-rocket-wreck', l7Rocket.vehicle, l7Exit.position[0] + l7Rocket.vehicleExitOffset[0], l7Exit.position[2] + l7Rocket.vehicleExitOffset[1], 0, 1, l7Rocket.decay, 3.9);
     for (const [i, x] of [252, 214, 176, 138, 100].entries()) {
-      const y = Math.min(3.9, Math.floor((x - 85) / 5) * 5 / 130 * 3.9);
-      add(`l7-military-${i}`, i % 2 ? 'veh.military-truck' : 'veh.military-apc', x, i % 2 ? 25 : 6, .18 * (i % 3 - 1), 1, 'wrecked', y);
+      const asset = i % 2 ? 'veh.military-truck' : 'veh.military-apc', z = i % 2 ? 25 : 6, yaw = .18 * (i % 3 - 1);
+      const dim = manifest.find(a => a.id === asset)!.dimensions, c = Math.abs(Math.cos(yaw)), s = Math.abs(Math.sin(yaw));
+      const hx = (c * dim.x + s * dim.z) / 2, hz = (s * dim.x + c * dim.z) / 2;
+      // A rigid wreck can span adjacent 15 cm terraces: its footprint rests on the higher support.
+      const support = northgateGround.filter(surface => Math.max(...surface.polygon.map(p => p[0])) > x - hx && Math.min(...surface.polygon.map(p => p[0])) < x + hx && Math.max(...surface.polygon.map(p => p[1])) > z - hz && Math.min(...surface.polygon.map(p => p[1])) < z + hz);
+      const y = Math.max(0, ...support.map(surface => surface.height));
+      add(`l7-military-${i}`, asset, x, z, yaw, 1, 'wrecked', y);
       add(`l7-edge-shell-${i}`, i % 2 ? 'bld.storefront-row' : 'bld.apartment-block-a', x, i % 2 ? 36 : -5, Math.PI / 2, 1, 'w6');
     }
     for (const [i, [x, z]] of l7StreetDamage.entries()) {

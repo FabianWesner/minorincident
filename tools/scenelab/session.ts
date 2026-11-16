@@ -183,6 +183,11 @@ export function encodeWebm(frames: Buffer[], path: string, fps = 20): void {
 }
 export const writeJson = (path: string, data: unknown) => { mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, JSON.stringify(data, null, 2)); };
 
+/** Missing support and out-of-range wreck contacts fail the existing placement gate. */
+export function wreckGroundFailures(gaps: readonly { id: string; gapCm: number | null }[]): string[] {
+  return gaps.filter(g => g.gapCm === null || !Number.isFinite(g.gapCm) || g.gapCm > 8 || g.gapCm < -10).map(g => g.id);
+}
+
 /** Turn spec expectations into pass/fail checks. */
 export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSession['metrics']>>, clipping: Awaited<ReturnType<SceneSession['clipping']>>, errors: string[]) {
   const e = spec.expect ?? {}, checks: { name: string; pass: boolean; value: number; limit: number }[] = [];
@@ -312,6 +317,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('actorHitsMax', clipping.actors.length, e.actorHitsMax);
   add('doorClosedFramesMax', Math.max(0, ...Object.values(metrics.doors ?? {}).map(d => d.closedFrames)), e.doorClosedFramesMax);
   add('propSinkMaxCm', metrics.props.sinkMaxCm, e.propSinkMaxCm);
+  add('wreckGroundOffendersMax', wreckGroundFailures(metrics.props.wrecks ?? []).length, 0);
   const pursuit = Object.values(metrics.pursuit?.actors ?? {});
   add('stuckActorFramesMax', Math.max(0, ...pursuit.map(p => p.stuckRunMax)), e.stuckActorFramesMax);
   add('lostTargetNearFramesMax', Math.max(0, ...pursuit.map(p => p.lostNearFrames)), e.lostTargetNearFramesMax);

@@ -12,7 +12,7 @@ import { bossHitFlashTicks, hitFlashTicks } from '../../src/render/CrowdView';
 import { pickBodies } from '../../src/render/characters/PickBodies';
 import { updateAlly } from '../../src/sim/outbreak/Allies';
 import { respawnAtCheckpoint } from '../../src/sim/missions/Respawn';
-import { loadL4 } from '../../tools/sim-runner/l4Bots';
+import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../src/sim/world/types';
@@ -638,7 +638,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       } finally { bars.dispose(); boundsProbe.mockRestore(); topProbe.mockRestore(); }
     } finally { occlusion.world.dispose(); }
   } finally { world.dispose(); }
-});
+}, 150_000);
 
 async function checkOutsideWireRouting(): Promise<void> {
   const { world, mission } = await loadL4(1, 'high');
@@ -652,10 +652,24 @@ async function checkOutsideWireRouting(): Promise<void> {
     const side = 'north', opened = l4Breaches[side].segments[0];
     const wall = [...world.entities.iterate()].find(e => e.barricade?.slot.id === `l4-wall-${opened}`)!;
     expect(wall.barricade?.intact).toBe(true);
-    wall.barricade!.intact = false;
-    wall.kind = 'device';
+    wall.health.current = 0;
+    world.barricades!.update();
+    expect(wall.barricade!.intact).toBe(false);
     world.solids.setBarrier(`l4-wall-${opened}`, null);
     state.breaches = { north: { announcedAt: world.tick, openAt: world.tick } };
+    // A slow arrival may reach its exterior waypoint after the war has ended.
+    // Its script must advance through the open breach instead of owning an idle body forever.
+    const crawlerId = ai.spawn('infected.crawler', { x: -20, z: l4.perimeter.z1 + 1.4 });
+    const crawler = world.entities.get(crawlerId)!;
+    crawler.infected!.scripted = { x: crawler.transform.x, z: crawler.transform.z };
+    crawler.infected!.breachApproach = 'outside';
+    state.phase = 'collapse';
+    // The real phase transition can retire the visual/physics fence registry.
+    (mission.l4 as unknown as { fence: number[] }).fence.length = 0;
+    for (let tick = 0; tick < 30; tick++) world.update();
+    expect(crawler.infected!.breachApproach, 'collapse still advances an arrived exterior breach leg').not.toBe('outside');
+    ai.release(crawler);
+    state.phase = 'war';
     const perimeter = l4.perimeter;
     const id = ai.spawn('infected.runner', { x: -20, z: perimeter.z1 + 1.4 });
     const infected = world.entities.get(id)!;
@@ -668,4 +682,49 @@ async function checkOutsideWireRouting(): Promise<void> {
       Math.hypot(start.x - l4PerimeterSegments[opened].x, start.z - l4PerimeterSegments[opened].z),
     );
   } finally { world.dispose(); }
+
+  // Replay real perimeter arrivals: a clear route must not retain an idle
+  // exterior waypoint after a breach opens (including a hull-blocked approach).
+  const { world: replay, mission: campaign } = await loadL4(1, 'low');
+  try {
+    const nav = replay.infected!.nav;
+    const windows = new Map<number, { tick: number; x: number; z: number; travel: number }[]>();
+    const stopped = new Map<number, unknown>();
+    const hits = new Map<number, number[]>();
+    replay.events.on('barricade.damaged', event => {
+      if (event.type === 'barricade.damaged' && event.amount > 0) hits.set(event.sourceId, [...(hits.get(event.sourceId) ?? []), event.tick]);
+    });
+    const result = runL4(replay, campaign, 'complete', { seed: 1, god: true, maxSeconds: 520, stopWhen: () => {
+      const player = replay.entities.get(1)!, goal = nav.nearestCell(player.transform.x, player.transform.z, .35);
+      const seen = new Set<number>();
+      for (const e of replay.infected!.active) {
+        if (e.health.current <= 0 || e.hidden || e.emerging) continue;
+        const { x, z } = e.transform, p = l4.perimeter;
+        if (x >= p.x0 && x <= p.x1 && z >= p.z0 && z <= p.z1) continue;
+        if (Math.min(...l4PerimeterWalls.map(w => Math.hypot(Math.max(0, Math.abs(x - w.x) - w.halfX), Math.max(0, Math.abs(z - w.z) - w.halfZ)))) > 2) continue;
+        const from = nav.nearestCell(x, z, e.combat?.radius ?? .35);
+        if (from < 0 || goal < 0 || !nav.path(from, goal, [], 1000000)) continue;
+        seen.add(e.id);
+        const rows = windows.get(e.id) ?? [], last = rows.at(-1);
+        const travel = (last?.travel ?? 0) + (last ? Math.hypot(x - last.x, z - last.z) : 0);
+        rows.push({ tick: replay.tick, x, z, travel });
+        while (rows.length && rows[0].tick < replay.tick - 301) rows.shift();
+        windows.set(e.id, rows);
+        if (rows.length > 301 && travel - rows[0].travel < .1) {
+          const damageTicks = (hits.get(e.id) ?? []).filter(t => t >= rows[0].tick && t <= replay.tick);
+          // Repeated damage to the rail is active combat, not a lost route.
+          if (damageTicks.length < 2 && !stopped.has(e.id)) stopped.set(e.id, {
+            id: e.id, start: rows[0].tick, end: replay.tick, position: { ...e.transform },
+            scripted: e.infected?.scripted, damageTicks,
+            job: structuredClone(campaign.state.l4!.director.alphaJobs.find(j => j.alphaId === e.id)),
+            breaches: structuredClone(campaign.state.l4!.breaches),
+          });
+        }
+      }
+      for (const id of windows.keys()) if (!seen.has(id)) windows.delete(id);
+      return false;
+    } });
+    expect(result.outcome).toBe('complete');
+    expect([...stopped.values()], 'real LOW perimeter actors keep routing through an available entrance').toEqual([]);
+  } finally { replay.dispose(); }
 }

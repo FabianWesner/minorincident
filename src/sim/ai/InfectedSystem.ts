@@ -559,12 +559,21 @@ export class InfectedSystem {
   }
   /** Phase 4: an unnoticed scripted walker keeps its authored point. */
   private followScript(e: EntitySnapshot, b: InfectedState): boolean {
-    if (b.alphaType && this.provoker(b)) { delete b.scripted; return false; }
+    const provoker = b.alphaType ? this.provoker(b) : undefined;
+    // A hit still selects the target, but must not erase the route through
+    // L4's wire while that target remains behind a body-blocking segment.
+    if (provoker && !(this.world.scenario === 'L4' && b.scripted && !this.infectedNav.visible(e.transform, provoker.transform, e.combat!.radius))) {
+      delete b.scripted; return false;
+    }
     // A windup already in progress must resolve before scripted travel resumes.
     if (!b.scripted || b.specialAttack || b.state === 'attack') return false;
     const retreatRun = b.clearingStreet || b.l4ArmyApproach && this.world.missions?.state.l4?.phase === 'collapse';
     const scriptedSpeed = retreatRun ? b.l1?.runSpeed ?? Math.max(b.speed, b.clearingStreet ? 4.8 : 3.4) : b.breachApproach ? b.l1?.runSpeed : undefined;
-    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, scriptedSpeed);
+    const line = this.world.scenario === 'L4' && b.alphaType ? this.world.missions?.state.l4 : undefined;
+    const breach = line?.director.alphaJobs.find(job => job.alphaId === e.id)?.breach;
+    // The generic arrival band can stop just beyond the rail's attack reach.
+    const arrival = breach && !line?.breaches?.[breach]?.openAt ? .1 : .6;
+    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > arrival) this.seek(e, b.scripted, scriptedSpeed);
     e.combat!.attacking = false; this.place(e); return true;
   }
   /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */
@@ -2110,7 +2119,8 @@ export class InfectedSystem {
     let x = target.x, z = target.z;
     // r42-arenas (r41-vqa: 'a brute and a riot zombie stand in chase 5 m from her behind a shop shelf for 180 s'): the wide grid can leave a pocket no
     // wide body path enters. A wide body within 10 m of the courier that has not closed on her in 4 s walks the admission grid for the next 10 s.
-    if (this.wideNav && nav === this.wideNav && Math.hypot(target.x - this.world.entities.get(1)!.transform.x, target.z - this.world.entities.get(1)!.transform.z) < 2) {
+    const breachApproach = this.world.scenario === 'L4' && !!b.scripted && e.archetype === 'infected.alpha';
+    if (this.wideNav && nav === this.wideNav && (breachApproach || Math.hypot(target.x - this.world.entities.get(1)!.transform.x, target.z - this.world.entities.get(1)!.transform.z) < 2)) {
       const gap = Math.hypot(e.transform.x - target.x, e.transform.z - target.z), mark = b.wideStuck;
       if (gap > 10 || !mark || gap < mark.d - .5) b.wideStuck = { d: gap, at: this.world.tick };
       else if (this.world.tick - mark.at >= 240 && gap > e.combat!.radius + 1.5) { b.wideFallbackUntil = this.world.tick + 600; b.wideStuck = { d: gap, at: this.world.tick }; b.path.length = 0; b.goal = -1; }
