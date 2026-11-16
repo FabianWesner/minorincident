@@ -71,3 +71,7 @@ Completed in 183 seconds with zero skips/issues. Reviewed `test-results/b112-rev
 ### L8 HIGH zoom 1
 
 Collected 241 seconds with no skips. Opened the tick-5252 follow warning capture (`test-results/playtest/b112-l8-high/captures/campaign-L8-5252-stuck-at-ring.jpg`) and `test-results/b112-review/l8.jpg`, ticks 1658–13474. Quiet Nadia following feels like group babysitting; the later crowded plaza ring is more dramatic and dangerous. The warning frame shows Nadia ahead with a visible ring and the courier six metres behind; subsequent frames reach the plaza fight and habitat objective, so a permanent mission stall is not supported. No obvious geometry glitch in inspected frames. Tick-14264 cannot-finish is the four-minute cap; follow-navigation warnings remain driver gaps pending exact cause. No ordinary off-screen scream arrow assessment is established by these frames.
+
+### LOW L9 collected
+
+LOW road completed in 287 seconds with zero skips. Native last-living evacuation observed 10.15 seconds after Defense complete; maximum recorded grab age 0 ticks. Two bridge navigation warnings at ticks 15571/15765 recovered before completion; exact capture paths are retained in qa.json. Driver-versus-product root cause remains unproven. Reviewed L4 consecutive sequence `test-results/b112-review/l4-sequence.jpg` (ticks 8952–9242, roughly 2 fps): crowd/tank occlude feet; full strike/roar/slam sole planting remains unqualified.

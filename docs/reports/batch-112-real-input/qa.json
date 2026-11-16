@@ -1023,6 +1023,110 @@
         "test-results/playtest/b112-l8-high/captures/campaign-L8-5252-stuck-at-ring.jpg"
       ],
       "assessment": "Quiet Nadia-follow opening feels like group babysitting, then dramatic plaza ring combat. Follow warning recovers; no permanent stall established. No obvious geometry glitch in inspected frames."
+    },
+    {
+      "name": "b112-l9-low-road",
+      "raw": "test-results/playtest/b112-l9-low-road",
+      "run": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 287,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 24.683333333333334,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 16
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 0,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 0.705,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 16044,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "driverIssues": [
+        {
+          "level": "L9",
+          "tick": 15571,
+          "x": 480.9,
+          "z": -3,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance 14.0 m, no marker: false); HUD: \"Drive onto the bridge \u00b7 14\u00a0m\"",
+          "captures": [
+            "captures/campaign-L9-15571-stuck-navigating.jpg"
+          ],
+          "step": "approach",
+          "objective": "Drive onto the bridge \u00b7 14\u00a0m"
+        },
+        {
+          "level": "L9",
+          "tick": 15765,
+          "x": 468.5,
+          "z": -1.8,
+          "severity": "P2",
+          "kind": "stuck-at-ring",
+          "text": "23 s without objective progress standing at the ring (27.0 m); HUD: \"Drive onto the bridge \u00b7 27\u00a0m\"",
+          "captures": [
+            "captures/campaign-L9-15765-stuck-at-ring.jpg"
+          ],
+          "step": "approach",
+          "objective": "Drive onto the bridge \u00b7 27\u00a0m"
+        }
+      ],
+      "defenseCompleteAt": 13690,
+      "allLivingEvacuatedObservedAt": 14299,
+      "delaySeconds": 10.15,
+      "maxGrabAgeTicks": 0
     }
   ],
   "validation": {
