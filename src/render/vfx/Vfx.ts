@@ -613,9 +613,9 @@ export class Vfx extends Group {
       // faint ground mark for the scream's actual hearing radius.
       const ground = this.world.districts?.groundHeight(x, z) ?? 0;
       this.screamAt.x = x; this.screamAt.z = z; this.screamUntil = this.time + 1.1;
-      const first = this.waves.spawn(this.time, .8, x, ground + 2, z, 0, 0, 0, 3.8, 8, 0xe77bff, 1);
+      const first = this.waves.spawn(this.time, .8, x, ground + 2, z, 0, 0, 0, 2.8, 8, 0xd66bff, 1);
       this.waves.opacity(first, .92);
-      const second = this.waves.spawn(this.time, .9, x, ground + 2.25, z, 0, 0, 0, 6, 8, 0xc65bff, 1);
+      const second = this.waves.spawn(this.time, .9, x, ground + 2.25, z, 0, 0, 0, 4.8, 8, 0xb94cff, 1);
       this.waves.opacity(second, .82);
       const slot = this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 8, 0xef92ff, 1);
       this.waves.opacity(slot, .25);

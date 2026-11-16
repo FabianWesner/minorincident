@@ -21,3 +21,9 @@ Implementation committed as `ef387646` (`Improve screamer warning readability`).
 ## Open acceptance evidence
 
 No before/after sequence or contact sheet exists yet. On-screen noticeability while moving, any off-screen direction cue in rendered gameplay, HIGH then LOW, zoom 1 and 1.5, WebGL2 and WebGPU, and the s124 visual regression result are unverified. The CSS marker is an implementation hypothesis pending those captures. Resume the bounded real-input run in an environment where `tsx` IPC and browser-pool listeners can bind; inspect the resulting frames before closing this report.
+
+## Resumed validation
+
+Browser access is operational. s124 now passes on WebGPU (violet pixel counts 0, 1621, 3340, 2060, 2142, 1990). Enlarged rings initially exceeded its 5000-pixel limit, so ring sizes and colours were restored while retaining longer duration. Typecheck and lint pass. Moving real-input acceptance remains open.
+
+Required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 105 passed, one platform skip, 27 files, 126.9 seconds under the 240-second budget.
