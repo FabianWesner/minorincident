@@ -19,3 +19,5 @@ The L9 driver follows the live bridge objective after evacuation and uses physic
 During L10 travel the driver also approaches visible unowned guns and visible medkits when nearby enemies leave room to collect them. These pickups use ordinary movement input.
 
 For long mortal L10 runs, `--session-seconds 480` saves the live production Resume snapshot through pause/settings before releasing each browser reservation. The next segment resumes through the normal menu. Segment logs remain separate and must be considered together for full-run evidence.
+
+L10 travel cover keeps movement on the player navigation route toward the live objective while aiming ordinary attacks at close pursuers, to avoid unbounded retreat into the corn rows.

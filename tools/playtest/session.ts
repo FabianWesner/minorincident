@@ -920,7 +920,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         await press(wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y));
         if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ l10FarmMedkit: e.tick, hp: e.player.hp, threats: l10FarmThreats.length, goal: kit }); }
       } else {
-        await press(awayKeys(e, threat));
+        await press(await l10TravelEscapeKeys(e, threat));
         if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ l10FarmKite: e.tick, hp: e.player.hp, threats: l10FarmThreats.length, enemy: threat.id }); }
       }
       await page.mouse.move(threat.aim.x, threat.aim.y);
@@ -932,7 +932,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         !ranged.test(e.player.current ?? '') && threat.d < 2.6) {
       // Axe travel must create space before damage accumulates, including one
       // fast contact. Standing to swing lets the following crowd surround us.
-      await press(awayKeys(e, threat));
+      await press(await l10TravelEscapeKeys(e, threat));
       await page.mouse.move(threat.aim.x, threat.aim.y);
       if (aimHeld === null) await page.mouse.down();
       aimHeld = threat.id;
@@ -1065,6 +1065,20 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (aimHeld === null) { await page.mouse.down(); }
     aimHeld = threat.id;
     return true;
+  };
+  const l10TravelEscapeKeys = async (e: Eyes, threat: Body): Promise<string[]> => {
+    if (!e.player || !ring) return awayKeys(e, threat);
+    const p = e.player;
+    // Keep the map route in charge while making space. Purely fleeing the
+    // nearest contact drifts into corn rows and never reaches the next pickup.
+    const points = await page.evaluate(({ p, goal }) => {
+      const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+      const out = { ...goal }, radius = w.entities.get(1)!.combat?.radius ?? .3;
+      if (!w.infected!.nav.forPlayer(radius).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, radius, out, Infinity, true)) return null;
+      const length = Math.hypot(out.x - p.x, out.z - p.z) || 1;
+      return [a.input.project(p, 'player'), a.input.project({ x: p.x + (out.x - p.x) / length * 3, z: p.z + (out.z - p.z) / length * 3 }, 'player')];
+    }, { p, goal: ring });
+    return points ? markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12) : awayKeys(e, threat);
   };
   const awayKeys = (e: Eyes, b: Body): string[] => {
     const dx = e.view.w / 2 - b.screen.x, dy = e.view.h / 2 - b.screen.y, out: string[] = [];
