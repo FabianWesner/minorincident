@@ -2,6 +2,7 @@ import type { Mission } from './Mission';
 import { cureWeaponPickups } from '../../levels/L10/encounters';
 import { l5 as l5Rescue } from '../../data/l5';
 import { l9Course } from '../../data/l9';
+import { l4CellarDistance } from '../../data/l4';
 // (l5Rescue.firstRescue.route is the survivor order of the first rescue)
 
 type Anchored = { x: number; z: number; y?: number; radius?: number };
@@ -14,6 +15,16 @@ export const objectiveRingRadius = .65;
  * around street closures instead of bearing straight through them.
  */
 export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world']; l8?: Mission['l8']; l9?: Mission['l9'] }) | null | undefined): Anchored | null {
+  // The direct cellar bearing crosses the fallen camp and residential fences.
+  // Guide the escape along its open streets, then show the actual door ring.
+  if (mission?.def.id === 'L4' && mission.world && mission.state.steps.hide?.status === 'active') {
+    const player = mission.world.entities.get(1);
+    if (player) {
+      const next = { x: 0, z: 0 };
+      l4CellarDistance(player.transform, next);
+      return { ...next, radius: 1.4 };
+    }
+  }
   // L10 final fight (r29-l10mega, PO finding: 'Kill the Mega Alpha' ran for minutes with no direction): the 'mega' step
   // has no authored waypoint, so while it is active the guidance follows the live Mega (HUD distance, edge arrow, minimap pin).
   if (mission?.def.id === 'L10' && mission.state.steps.mega?.status === 'active' && mission.world?.megaPursuit?.alive()) {
