@@ -19,3 +19,5 @@ I inspected [boarding.jpg](boarding.jpg), showing -1.6, +4.7 and +10.8 seconds a
 [qa.json](qa.json) contains compact census evidence. No deployment, push or main move occurred.
 
 A further HIGH shortcut with state-entry timing completed in 7.73 seconds, zero issues. Its sole post-defense grabbed sample was Okafor at age 10 ticks. The observer now logs `stateEnteredAt` and `grabAgeTicks`; no simulation state is changed. One-second sampling still cannot prove exact duration of every completed hold.
+
+Final simulation HIGH road reruns with per-tick grab audit completed at 0.3, 0.05, 0.36666666666666664 seconds, each with zero issues and zero grabbed ticks after Defense complete. `npm run verify -- E31` passed (106 tests, 27 files, 113.9 seconds). Refreshed L9 skilled/passive threat routes have zero level flags; aggregate flag is PARTIAL_LEVEL_SELECTION.
