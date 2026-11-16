@@ -961,7 +961,8 @@
     "scope": "Resident selected LOD meshes only; returns identity, resolved reference matrix, district origin and minimum vertex-to-drawn-support gap. Full campaign coverage still requires residency sweep.",
     "typecheck": "passed",
     "lint": "passed",
-    "runtimeValidated": "One L3 resident placement on HIGH WebGL2; camera-only cinematic positioning"
+    "runtimeValidated": "One L3 resident placement on HIGH WebGL2; camera-only cinematic positioning",
+    "lodIdentity": "Reports slot lod and meshLod separately, excludes placeholder batches. Runtime validation of this additional metadata pending."
   },
   "wreckRuntimeL3Webgl2": {
     "backend": "webgl",
@@ -1012,6 +1013,17 @@
       3.564453125,
       3.6064453125,
       3.71484375
+    ],
+    "executed": false
+  },
+  "wreckSweepAdmissionRetry": {
+    "exit": 75,
+    "timeoutSeconds": 60,
+    "quiet": false,
+    "load": [
+      4.1103515625,
+      3.703125,
+      3.73388671875
     ],
     "executed": false
   }

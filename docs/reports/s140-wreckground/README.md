@@ -63,3 +63,7 @@ Browser pool admitted two sequential HIGH WebGL2 L3 probes on port 5018. Initial
 ## Camera sweep admission
 
 Prepared a sequential camera-only identity-checked sweep of every resolved wreck in one registered level; recipe preserved in qa.json. L3 HIGH WebGL2 sweep attempt exited 75 before browser execution: quiet-run admission exceeded 60 seconds, quiet=false, load 3.56/3.61/3.71. No sweep measurements were produced and no browser process remains running. The earlier single-wreck runtime result remains the only validated campaign gap measurement.
+
+## Probe LOD identity correction
+
+Hero slots can contain temporary lower LOD prototypes. Probe now reports `meshLod` separately from slot `lod` and excludes placeholders. Typecheck and lint pass. Second bounded L3 sweep attempt exited 75 before execution (quiet=false, load 4.11/3.70/3.73); no new measurement. Earlier receipt labelled lod0 establishes slot identity only, not independently verified LOD0 prototype identity.

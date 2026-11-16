@@ -522,17 +522,17 @@ export class DistrictView extends Group {
     return gaps;
   }
   /** Read-only campaign wreck audit: selected resident mesh and the renderer's resolved placement matrix. */
-  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; matrix: number[]; origin: number[]; gapCm: number }[] {
-    const rows: { id: string; asset: string; decay: string; lod: string; matrix: number[]; origin: number[]; gapCm: number }[] = [];
+  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number }[] {
+    const rows: { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number }[] = [];
     for (const entry of this.lodBatches) {
       if (!entry.id.startsWith('veh.') || !(entry.id === 'veh.wreck' || entry.decay === 'wrecked' || entry.decay === 'burned')) continue;
       for (const [index, ref] of entry.refs.entries()) {
         const band = entry.bands[index];
         if (!band || typeof ref.userData.placementId !== 'string') continue;
         const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
-        if (!batch.references.includes(ref)) continue;
+        if (!batch.references.includes(ref) || batch.userData.placeholder) continue;
         const gap = this.propGap(entry, ref, batch);
-        if (Number.isFinite(gap)) rows.push({ id: ref.userData.placementId, asset: entry.id, decay: entry.decay ?? '', lod: band, matrix: ref.matrix.toArray(), origin: [...entry.origin], gapCm: gap * 100 });
+        if (Number.isFinite(gap)) rows.push({ id: ref.userData.placementId, asset: entry.id, decay: entry.decay ?? '', lod: band, meshLod: band === 'lod0' ? entry.heroShown : band, matrix: ref.matrix.toArray(), origin: [...entry.origin], gapCm: gap * 100 });
       }
     }
     return rows;
