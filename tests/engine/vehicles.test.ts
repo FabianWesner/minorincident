@@ -188,13 +188,21 @@ async function l9InterruptedBoarding(): Promise<void> {
 // The preserved s124/s126 crowded saves exercise the timed fallback against
 // the dense native state that originally delayed the last healthy survivor.
 async function l9CrowdedEvacuationFixtures(): Promise<void> {
-  for (const name of ['s124-l9-crowded-trucks.json.br', 's126-s125-l9-stalled-trucks.json.br']) {
+  for (const name of ['s124-l9-crowded-trucks.json.br', 's126-s125-l9-stalled-trucks.json.br', 's136-b110-l9-road-loop.json.br']) {
     const decoded = decodeSave(JSON.stringify(readFixture(`tests/fixtures/saves/qa/${name}`).campaign));
     if (decoded.status !== 'ok') throw new Error(`${name} does not decode`);
     const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'high' });
     try {
       const l9 = world.missions!.l9!, s = l9.driving.state;
       expect(s.evacuationAt, `${name}: fixture is inside its evacuation`).not.toBeNull();
+      // The archived batch-110 save was written after its boarding wait. It
+      // proves completed state survives loading, not the earlier deadline.
+      if (name === 's136-b110-l9-road-loop.json.br') {
+        expect(s.evacuationDone).toBe(true);
+        for (let i = 0; i < 300; i++) world.update();
+        expect(s.evacuationDone).toBe(true);
+        continue;
+      }
       const deadline = s.evacuationAt! + l9Course.evacuation.defendTicks + 1200;
       const ticksToDeadline = Math.max(0, deadline - world.tick);
       for (let i = 0; i < ticksToDeadline && !s.evacuationDone; i++) world.update();
