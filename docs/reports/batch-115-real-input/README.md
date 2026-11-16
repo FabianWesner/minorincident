@@ -25,3 +25,5 @@ The compact JSON includes sampled waiting-HUD duration and sample counts per seg
 Driver gaps remain: exact transient prompt counting, intentional waiting measurement, continuous individual survivor/contact traces, and melee arc/hit sequence qualification. Recovering navigation warnings are not automatically product defects. LOW L6 full completion remains open. This report is evidence of completed HIGH escorts and full L10 credits, not full batch approval.
 
 LOW L7 sampled waiting-for-survivor HUD duration is approximately 21.73 seconds; HIGH L7 records none in sampled objective text. One inspected contact sheet is committed; raw captures stay ignored.
+
+Injured L6 snapshots strengthen follow-through evidence: ID26 is following at tick9067, x162.84 with leader x164.2; ID36 is following at tick6247, x94.89 with leader x98.8. Both moved from their opening shelter platform positions (x20/x22). Later stationary snapshots mark ID26 dead and ID36 turned, so these are not attributed to geometry stalls. Full retained trajectories are in JSON; sparse samples still cannot exclude every brief obstruction.
