@@ -211,6 +211,19 @@ test('melee: the swing hits inside its arc/range once per target and respects ma
   expect(hits).toHaveLength(3);
   for (const id of inside) expect(hits.filter(e => e.type === 'combat.hit' && e.targetId === id)).toHaveLength(1);
 
+  // The displayed swing must retain this committed direction when the live
+  // pointer reverses during windup (ActionView consumes runner.running aim).
+  const turning = await arena(); equip(turning, ['weapon.fire-axe']);
+  const east = dummy(turning, 1.1, 0, 1000), west = dummy(turning, -1.1, 0, 1000);
+  turning.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } }); step(turning, 1);
+  const committed = turning.combat!.runner.running.LEFT!;
+  turning.setInput({ aim: { x: -1, z: 0 }, left: { down: false, held: false, up: false } });
+  step(turning, committed.activeAt - turning.tick);
+  expect(turning.combat!.runner.loadout.state.LEFT.aim.x).toBe(-1);
+  expect(committed.aim.x).toBe(1);
+  expect(health(turning, east)).toBeLessThan(1000);
+  expect(health(turning, west)).toBe(1000);
+
   // Mouse taps wait through recovery; keyboard/touch keep the existing 200 ms window.
   for (const mouseAttack of [true, false]) {
     const w = await arena(); equip(w);

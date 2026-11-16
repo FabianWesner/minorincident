@@ -1,58 +1,34 @@
-# s146-l10hit · L10 farm melee damage
+# s146-l10hit · L10 farm melee
 
-## Finding
+## Result
 
-The B113 L10 warning is **not reproduced as a product hit failure**. A native L10 reproduction at the authored farm shed position (x=1170, z=-26) placed a real `infected.runner` 1.1 m from the courier on the same support level. With the fire axe selected, a held eight-second attack produced a target-selection query and a `combat.hit` event for that runner on the first swing; the runner went from 60 HP to 0. The same controlled contact probe registered a courier melee hit in L5, L6, and L8.
+Fixed a product presentation cause of misleading melee arcs: the attack runner commits aim and combo reach when a swing starts, but the yellow cone previously followed the live cursor and base weapon definition. Turning the cursor during windup could draw the arc over an infected outside the actual committed strike. `ActionView` now uses the running swing's aim, arc and range. Idle preview still follows the selected weapon.
 
-The original driver warning remains unqualified. B113 has a still frame showing the drawn arc over a nearby body, but no per-attack target query or hit event. The playtest detector in `tools/playtest/session.ts` classifies unchanged HP after its observation window; that alone cannot distinguish a true in-arc miss from aim, cover, or an attack input that did not resolve. I did not edit the playtest driver. The driver-side follow-up is to record each melee `combat.attack` by attack ID, the target selected when its active frame resolves, the hit IDs and damage, and a concrete miss reason before emitting `enemy-unhittable`.
+Also proved a driver false-positive mechanism: its unchanged-HP timer accumulates observation time without checking resolved attacks, arc, range or cover. Executing the exact source block with a target at 4 m for 8.5 seconds, then 1.1 m at nine seconds, satisfies its warning threshold with zero attack events. The owning driver lane should count only resolved attacks that qualify the named target and record attack IDs, query results and damage before issuing a product warning. No `tools/playtest` source was edited.
 
-No shared product root cause was demonstrated, so no product change was made. The B113 warning is not evidence that every visually overlapping body is inside the XZ melee query or unobstructed. The exact historical #134 input/position trace is unavailable; this report does not claim that the driver-only cause of that individual warning is proven.
+These findings do not identify which mechanism produced historical target #134's warning. Its original input/attack diagnostic log and live save were not found. The reviewed B113 still establishes visual overlap only. No universal guarantee is inferred from these bounded checks; original historical attribution remains open.
 
-## Native evidence
+## Reproduction and evidence
 
-- [evidence.json](evidence.json) records the native attack trace: tick, weapon, facing, selected target, attack ID, hit IDs, target damage events, and HP. The L10 record uses the authored farm shed coordinates and a constructed tick-13892 mission-resume fixture.
-- [s146-l10-farm-melee-contact.json.gz](../../../tests/fixtures/saves/qa/s146-l10-farm-melee-contact.json.gz) is the replayable fixture. It is constructed evidence, not a recovered B113 save.
-- [b113-l10-capture.jpg](b113-l10-capture.jpg) is the one reviewed frame from the B113 report. It shows the character, drawn axe arc, nearby runner, and roof edge; it does not expose world-space height, query result, or attack event.
-- The controlled L5/L6/L8/L10 probes use a QA-only 9 s stun after fixture capture to hold the live runner still through the axe windup. It changes no health or infected stats. L7's start probe is explicitly intercepted: three nearby soldiers deal 25 + 25 + 10 damage at tick 2, before the courier's first axe active tick (tick 7). L9 starts in the APC during its driving phase and has no on-foot melee window before the forced crash. Those rows do not count as courier melee misses.
+- [evidence.json](evidence.json), below 200 KB, contains the native eight-second per-attack traces, weapon/facing, query selections, active-frame positions/heights, hit IDs, damage events, campaign scan, detector reproduction and both browser receipts.
+- [b113-l10-capture.jpg](b113-l10-capture.jpg) is the reviewed archived frame showing the close target, melee cone and farm roof edge. It cannot expose the strike's committed aim or preceding eight seconds.
+- [s146-l10-farm-melee-contact.json.gz](../../../tests/fixtures/saves/qa/s146-l10-farm-melee-contact.json.gz) is a constructed native farm contact at tick 13892, courier x=1168.9/z=-26 and real runner x=1170/z=-26, initially 60 HP. This is not the recovered B113 #134 save. It uses `campaign-save` and `campaign.cureResume`; generic L10 `opts.resume` is deliberately ignored by `Game.loadLevel`.
 
-## Validation
+The native held axe probe logs 16 swings over eight seconds. The runner is selected at the first active frame and takes a 60-point courier melee hit. Later swings do not hit because it is dead. Controlled native probes apply a nine-second zero-damage stun after fixture capture to retain contact through windup; browser checks apply no stun, respawn or health modification. No infected stats or corpse lifecycle changed.
 
-- Focused combat test: `npx vitest run tests/engine/combat.test.ts -t 'guns: held fire cadence' --maxWorkers=4 --configLoader runner` — passed.
-- Native fixture loader: `node --import tsx/esm tools/qa/check-fixtures.ts` — passed, including the new L10 farm fixture.
-- `npm run typecheck` and `npm run lint` — passed.
-- Full local `npm test` — passed, 27 files / 106 tests in 139 s; the test budget reported 150/150 inventory cases.
-- Required remote `sh tools/remote/run.sh "$PWD" -- npm test` could not start because no Hetzner runner was healthy. `sh tools/remote/scale.sh add` also could not reach the provider because outbound DNS is blocked. The local full run is supplemental and is not reported as a remote pass.
+The native L5/L6/L8 controlled contact probes also register courier melee hits. At L7's start, soldiers kill the runner at tick 2 for 25+25+10 damage before the courier active tick 7; that is an intercepted probe, not courier damage. L9 starts in its APC.
 
-No zombie stat tuning, corpse removal, driver edits, browser run, deploy, push, or main movement.
+A separate seed-1 `complete` campaign scan covers bounded 120-second windows in L5–L10. Living targets accepted by the running melee query within 1.5 m qualify; continuity resets on HP change or loss of qualification. L6 has 12 qualifying target-ticks (maximum unchanged span 6), L7 301 (maximum 17), and L10 10 (maximum 6). No >2-second flags occur. L5/L8/L9 have no qualifying melee contact in these windows. These are not full-route scans.
 
-## Remote follow-up
+## Verification
 
-After filesystem/network access was restored, the report and regression were committed as `e656951d`. The prescribed full remote command then ran twice unchanged on 94.130.181.173. Both runs passed the combat battery but failed the existing L4 contact case at its 150-second timeout (104 passed, one skipped, one failed; total budget times 207.8 s and 216.6 s). The original infrastructure-unavailable result above is historical. No test was trimmed or timeout increased. Root-cause attribution and HIGH/LOW browser confirmation remain open; this commit does not close the requested goal.
+- Existing combat battery: seven tests passed after adding the cursor-reversal regression. The regression starts eastward, reverses live input west during windup, verifies committed aim stays east, and requires damage only to the eastward target. No new test case was added to the inventory.
+- Typecheck and lint passed after the render correction; the final small combat assertion extension passed the full combat file.
+- Headless WebGL2, lock/pool, ports 5029/5030, HIGH then LOW: corrected fixture restores the original runner; axe hit at tick 67 deals 60 damage, 60→0 HP, zero page errors.
+- Fresh HIGH then LOW moving-cursor browser assertions on the corrected renderer: committed aim east, live aim west, actual cone geometry remains east (relative X bounds about -0.027 to +2.135 m including line thickness). The east runner takes the committed hit in both tiers. Receipts are in `movingCursorBrowserRegression`. Earlier fixture failure was fixed by using the supported `campaign.cureResume` path.
+- Full local suite before the render correction passed: 27 files, 106 tests, 139 seconds, inventory 150/150. This is not a post-render full-suite claim.
+- Prescribed remote suite ran twice unchanged on 94.130.181.173 before the render correction. Both passed combat and failed the existing L4 contact test at its 150-second timeout: 104 passed, one skipped, one failed; total 207.8 and 216.6 seconds. Tests were not trimmed and timeouts were not increased. These remain failed full-suite gates.
 
-## Browser fixture follow-up
+## Open requirements
 
-A headless WebGL2 HIGH check through `E2E_PORT=5029 SCENE_PORT=5030 E2E_UNITS=1 sh tools/e2e-lock.sh` reached the page, but after `loadFixtureInPage` restored and advanced the fixture 60 ticks, no living infected was within 1.5 m of the courier. The browser probe stopped before attacking. This exposes a remaining fixture/resume qualification gap; it is not a passed HIGH confirmation, and LOW was not attempted. The native loader's successful return alone does not prove that the live contact survives the browser restore path. The temporary probe was removed and the browser session closed.
-
-## Corrected fixture and browser confirmation
-
-The browser gap above was caused by fixture format: `Game.loadLevel` explicitly ignores generic `opts.resume` for L10, which uses `campaign.cureResume`. The fixture now uses `campaign-save` with its unchanged native snapshot stored under `campaign.cureResume`. This corrects the QA artifact, not the product hit path.
-
-Headless WebGL2 confirmation then passed HIGH followed by LOW through the lock on ports 5029/5030. Both restored the existing real runner #100 at approximately 1.08 m, with courier Y=0.705 and target Y=0.7. Ordinary held axe input over 480 ticks produced a courier melee hit for 60 damage at tick 67, reducing the runner from 60 to 0 HP. No stun or target respawn was applied in the browser. Both sessions reported zero page errors. Receipts are included in evidence.json. The historical #134 warning still lacks causal attribution; successful replay of this constructed fixture does not prove that warning was driver-only.
-
-## Proven driver detector defect
-
-Executed the exact unchanged HP-observation accumulation block from `tools/playtest/session.ts` in a Node VM (source hash and all samples are persisted under `driverDetectorReproduction`). With constant 60 HP, the target stays 4 m away for 8.5 seconds, then approaches to 1.1 m at 9 seconds. The accumulated timer reaches 9,000 ms and the close-distance warning predicate passes despite **zero attack events**. The timer reads no combat events, arc, cover, or weapon range. Its position before the combat input branch means observation time can be labelled as time spent attacking. A frame showing a close target cannot validate the preceding eight seconds.
-
-This proves a driver false-positive mechanism, not the historical input sequence for #134. The lane owning `tools/playtest` should accumulate only ticks with a resolved courier melee attack whose active-frame query actually includes the named live target, and reset/suspend for out-of-range, out-of-arc, blocked, target-switch, or interrupted input periods. Record attack IDs and accepted damage before issuing a product warning. No driver source was edited here. The original historical attribution remains unproven until its missing trace is recovered or the actual driver reproduces the warning with attack-level instrumentation.
-
-## Native campaign scan
-
-Ran unchanged seed-1 `complete` native policies for bounded 120-second windows in L5–L10, observing living infected within 1.5 m accepted by the running melee action's arc/height/cover query. A continuous unchanged-HP period resets on loss of qualification or HP change; the flag threshold is 121 ticks. L6 had 12 qualifying target-ticks (maximum unchanged span 6 ticks), L7 had 301 (maximum 17), and L10 had 10 (maximum 6). None exceeded two seconds. L5/L8/L9 had no qualifying melee contact and therefore provide no close-contact proof. All six windows completed without observer errors. Results are persisted under `nativeCampaignScan` in evidence.json. This bounded scan supplements the constructed contact probes and does not claim full-route coverage or historical #134 attribution.
-
-## Melee cone presentation correction
-
-Code inspection found an additional product mismatch: `ActionRunner` copies aim and a combo-specific definition at swing startup, while `ActionView` drew the melee cone from the continuously updated loadout aim and base weapon definition. Moving the pointer during windup/recovery could therefore draw the yellow cone over a target outside the actual committed swing, and combo reach could disagree as well. `ActionView` now draws the running melee swing's aim, arc and range while that swing exists. Idle aiming retains the selected weapon preview. Typecheck and lint pass after this change. Historical #134 attribution remains unproven; the correction still needs a focused moving-cursor regression and fresh HIGH/LOW browser review before being accepted as the symptom's resolution. Earlier browser receipts predate this render change.
-
-## Moving-cursor correction verified
-
-Fresh headless HIGH then LOW checks on the corrected render source restore the farm runner, start an eastward axe attack, then change input aim west after the first tick while the swing is winding up. The committed swing stays east (+1,0), the live loadout aim becomes west (-1,0), and the actual cone geometry remains east (relative X bounds approximately -0.027 to +2.135 m, including line thickness). Both tiers then register the committed eastward melee hit at tick 67 for 60 damage, runner 60→0 HP, with zero page errors. Browser assertions fail if the cone follows the westward cursor. No stun or respawn was applied. These receipts are persisted under `movingCursorBrowserRegression` and supersede the earlier statement that the render correction had no moving-cursor browser check. The source-level presentation cause is reproduced and corrected; assigning that cause to the historical #134 sequence still requires its unavailable input trace.
+Historical #134 attribution remains unproven; product cone correction and driver detector defect are independently established. The complete post-change remote gate remains required, with the repeated L4 timeout investigated separately. A persistent render regression within the existing hit/render test infrastructure would strengthen the temporary browser assertions. No deployment, push or main movement occurred.
