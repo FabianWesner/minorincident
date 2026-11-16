@@ -53,3 +53,13 @@ Required remote suite retry passed: 27 files, 105 tests passed and one skipped; 
 ## Final browser confirmation
 
 HIGH then LOW passed using temporary audit fixtures generated directly from production `cureEncounterSlots`, with the existing actor `allowRigid: true` option to inspect the production sprinter. No runtime code or stats changed for this audit. Both WebGPU tiers were confirmed as requested, with zero console errors or undrawn frames; HIGH 54 draw calls / 128,297 triangles, LOW 54 / 65,089. Both sheets were opened. Actors and attack cues are visible, but foreground geometry obscures part of this short farmhouse view; this is not a full visual route walkthrough. The sole retained sheet now contains these HIGH and LOW captures, replacing the earlier native schematic. Native mapping remains in the table and JSON.
+
+## S153b: late-workshop recovery
+
+Identical seed-1 LOW normal-walk policy, 900 s on original c02a9b91 sources: 15 deaths, furthest x=990.7. Deaths by segment (entrance/farmhouse/corn/sheds/depot): 0/13/2/0/0. It never reached the later choke, so this run cannot establish whether that choke pre-existed. The initial S153 candidate reproduces 42 deaths, furthest x=1455.5, segment deaths 0/1/1/40/0.
+
+At the choke the diagnostic found two live Alphas alongside armored/firefighter attackers. The shed crossing itself is unchanged. Shifted the LOW depot cohort 63 m east using its existing tier-specific placement and moved the service medkit from [1517,-55] to [1437,100], before the approach. All slots, encounter types, stats and corpses remain. This separates the depot arrival from the workshop fight.
+
+Final LOW: x=1517 crossed at 612.68 s with 3 total deaths (one in the late-shed segment); furthest x=1554.85 by900 s. Whole-window segment deaths 0/1/1/1/5 (8 total). The later depot remains dangerous. Final HIGH farm window: 157 kills in309.47 s, **30.44 kills/min, 0 deaths**. This exceeds original30.17/min; the prior S153 result was30.48/min (about0.1% faster). Regression assertions preserve LOW placement beyond the workshop, one Alpha, and the approach medkit.
+
+S153b verification: typecheck and lint passed. Required remote suite passed on unchanged retry: 27 files,105 tests passed,one skipped,193.3 s. First attempt had an unrelated L4 contact-test150 s timeout (104 passed).

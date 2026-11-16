@@ -324,11 +324,15 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const { cureCrossingLines, cureCrossingStories, crossingScenesBlock } = await import('../../src/levels/L10/crossingStories');
   const { cureRoadsideBelt } = await import('../../src/levels/L10/roadsideBelt');
   const { cure } = await import('../../src/levels/L10/district');
-  const { cureEncounters, curePaceEncounters, cureEncounterSlots } = await import('../../src/levels/L10/encounters');
+  const { cureEncounters, curePaceEncounters, cureEncounterSlots, cureMedkits } = await import('../../src/levels/L10/encounters');
   const farmGroups = [...cureEncounters, ...curePaceEncounters].filter(g => g.region === 'crash-outskirts' || g.region === 'residential-fringe');
   const farmTypes = [...new Set(farmGroups.map(g => g.type).filter(Boolean))].sort();
   expect(farmTypes).toEqual(['barn-defense', 'field-horde', 'lone-pursuer'].sort());
   expect(cureEncounters.find(g => g.id === 'depot-alpha')?.type).toBe('alpha-ambush');
+  const depot = cureEncounters.find(g => g.id === 'depot-alpha')!;
+  expect(Math.min(...cureEncounterSlots(depot, 'low').map(s => s.x))).toBeGreaterThan(1560);
+  expect(cureEncounterSlots(depot, 'low').filter(s => s.archetype === 'infected.alpha')).toHaveLength(1);
+  expect(cureMedkits.find(k => k.id === 'industrial-service')?.at).toEqual([1437, 100]);
   for (const tier of ['high', 'low'] as const) {
     expect(farmGroups.reduce((sum, g) => sum + cureEncounterSlots(g, tier).filter(s => s.archetype !== 'infected.dog').length, 0))
       .toBe(tier === 'high' ? 51 : 37);

@@ -25,7 +25,7 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'crash-road-pair', region: 'crash-outskirts', at: [622, -12.5], regular: [2, 2], dogs: 0, alphas: 0, roles: ['infected.crawler'] },
   { id: 'crash-pair', region: 'crash-outskirts', at: [712, 33], regular: [2, 2], dogs: 0, alphas: 0 },
   { id: 'farmhouse-defense', type: 'barn-defense', region: 'residential-fringe', at: [982, 80], regular: [11, 9], dogs: 1, alphas: 0, roles: ['infected.screamer'] },
-  { id: 'depot-alpha', type: 'alpha-ambush', region: 'industrial-area', at: [1517, 100], regular: [9, 7], dogs: 0, alphas: 1, roles: ['infected.bloated', 'infected.firefighter'] },
+  { id: 'depot-alpha', type: 'alpha-ambush', region: 'industrial-area', at: [1517, 100], atLow: [1580, 100], regular: [9, 7], dogs: 0, alphas: 1, roles: ['infected.bloated', 'infected.firefighter'] },
   { id: 'military-breach', region: 'military-zone', at: [2012, -75], regular: [8, 6], dogs: 2, alphas: 1, roles: ['infected.riot', 'infected.armored', 'infected.sprinter'] },
   { id: 'military-exit', region: 'military-zone', at: [2327, -75], regular: [7, 5], dogs: 2, alphas: 1, roles: ['infected.riot', 'infected.armored'] },
   { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [6, 4], dogs: 1, alphas: 1, roles: ['infected.hazmat', 'infected.nurse'] },
@@ -59,7 +59,7 @@ export const cureMedkits = [
   { id: 'field-approach', at: [807, 80] as Point },
   ...['police-medkit', 'industrial-medkit', 'military-medkit', 'research-medkit', 'corridor-medkit'].map(id => ({ id, at: id === 'industrial-medkit' ? [1297, 80] as Point : cure.anchors[id] })),
   { id: 'fringe-detour', at: [937, 76] as Point },
-  { id: 'industrial-service', at: [1517, -55] as Point },
+  { id: 'industrial-service', at: [1437, 100] as Point },
   { id: 'military-motor-pool', at: [2137, 110] as Point },
 ];
 
