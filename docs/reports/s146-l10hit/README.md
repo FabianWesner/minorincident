@@ -32,3 +32,9 @@ After filesystem/network access was restored, the report and regression were com
 ## Browser fixture follow-up
 
 A headless WebGL2 HIGH check through `E2E_PORT=5029 SCENE_PORT=5030 E2E_UNITS=1 sh tools/e2e-lock.sh` reached the page, but after `loadFixtureInPage` restored and advanced the fixture 60 ticks, no living infected was within 1.5 m of the courier. The browser probe stopped before attacking. This exposes a remaining fixture/resume qualification gap; it is not a passed HIGH confirmation, and LOW was not attempted. The native loader's successful return alone does not prove that the live contact survives the browser restore path. The temporary probe was removed and the browser session closed.
+
+## Corrected fixture and browser confirmation
+
+The browser gap above was caused by fixture format: `Game.loadLevel` explicitly ignores generic `opts.resume` for L10, which uses `campaign.cureResume`. The fixture now uses `campaign-save` with its unchanged native snapshot stored under `campaign.cureResume`. This corrects the QA artifact, not the product hit path.
+
+Headless WebGL2 confirmation then passed HIGH followed by LOW through the lock on ports 5029/5030. Both restored the existing real runner #100 at approximately 1.08 m, with courier Y=0.705 and target Y=0.7. Ordinary held axe input over 480 ticks produced a courier melee hit for 60 damage at tick 67, reducing the runner from 60 to 0 HP. No stun or target respawn was applied in the browser. Both sessions reported zero page errors. Receipts are included in evidence.json. The historical #134 warning still lacks causal attribution; successful replay of this constructed fixture does not prove that warning was driver-only.
