@@ -101,3 +101,7 @@ Diagnostic forced admission-grid routing (no production source change) obtains 2
 ## L9/L10 registered-level sweep
 
 HIGH WebGL2 sequential camera-only batch completed. L9: 84/84 measured; range -2.921 to 0.600 cm; 0 threshold offenders; L10: 238/238 measured; range -2.891 to 1.903 cm; 0 threshold offenders. Matrix/identity receipts are preserved in qa.json, compacted to remain below 200 KB. This is numerical support-gap coverage; WebGPU comparison and requested zoom-1.5 close-up review remain pending.
+
+## Elevated support coverage limitation
+
+Four missing L7 wrecks are authored at Y 2.7–3.9 m. GroundField.add defaults to a 0.4 m ceiling; DistrictView.groundAt reads terrain or this field. Current null rows do not distinguish an absent reference from contacts with no support samples. Before closing grounding, add exact raised-road support coverage and explicit missing-support diagnostics. Existing measured rows remain numerical results against the current field, not proof of every raised-road surface. L6/L7 retry failed browser admission before execution (60 s, quiet=false, load 3.00/3.00/3.35).
