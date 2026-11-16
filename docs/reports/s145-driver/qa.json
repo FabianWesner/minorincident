@@ -27,7 +27,7 @@
       "files": 27,
       "passed": 105,
       "skipped": 1,
-      "seconds": 189.6,
+      "seconds": 179.4,
       "runner": "46.225.66.90"
     }
   },
@@ -181,6 +181,20 @@
       },
       "error": "Unknown key Digit19",
       "fix": "shortcuts above ten select through actual HUD mouse click; ten maps to Digit0",
+      "fullRun": false
+    },
+    "L10_HIGH_rifle_attempt_6": {
+      "status": "stopped after repeated off-road navigation loops",
+      "run": "test-results/s145-driver/l10-high-rifle-6-full",
+      "rifleCollected": true,
+      "extendedSelectionCrash": false,
+      "loopCoordinates": {
+        "x": 1865,
+        "zRange": [
+          -210,
+          -145
+        ]
+      },
       "fullRun": false
     }
   },

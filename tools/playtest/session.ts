@@ -1000,7 +1000,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           const out = { ...goal }, radius = w.entities.get(1)!.combat?.radius ?? .3;
           w.infected!.nav.forPlayer(radius).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, radius, out, Infinity, true);
-          return [a.input.project(p, 'player'), a.input.project(out, 'player')];
+          // Project a nearby point along the route: a far point behind the
+          // camera can reverse its apparent screen bearing.
+          const scale = Math.min(1, 3 / (Math.hypot(out.x - p.x, out.z - p.z) || 1));
+          return [a.input.project(p, 'player'), a.input.project({ x: p.x + (out.x - p.x) * scale, z: p.z + (out.z - p.z) * scale }, 'player')];
         }, { p: e.player, goal: coverGoal });
         retreatKeys = markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12);
         if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ movingCover: e.tick, level: e.level, keys: retreatKeys, input: 'physical WASD + mouse; read-only route steering' }); }
