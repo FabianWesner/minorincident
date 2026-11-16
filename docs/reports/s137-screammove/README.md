@@ -27,3 +27,9 @@ No before/after sequence or contact sheet exists yet. On-screen noticeability wh
 Browser access is operational. s124 now passes on WebGPU (violet pixel counts 0, 1621, 3340, 2060, 2142, 1990). Enlarged rings initially exceeded its 5000-pixel limit, so ring sizes and colours were restored while retaining longer duration. Typecheck and lint pass. Moving real-input acceptance remains open.
 
 Required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 105 passed, one platform skip, 27 files, 126.9 seconds under the 240-second budget.
+
+## Native moving capture matrix
+
+`tools/playtest/s137-screammove.ts` uses physical KeyD input, a restored L10 checkpoint and an ordinary screamer spawned in chase state (encounter setup, no stat edits). It records 4 fps for ten seconds and observes native noise events. All eight HIGH-then-LOW, WebGL2/WebGPU, zoom 1/1.5 after runs produced two screams and confirmed their actual backend. A HIGH/WebGL2/zoom 1 before run restores the batch-110 VFX constants and omits the bearing.
+
+Opened `sheet.jpg`: after rings remain conspicuous over consecutive moving frames; before is faint and shorter. This is partial evidence: zoom 1 sources sit near the upper edge. A clearly off-screen before/after sequence and full-size frame review remain required. JSON retains capture paths, tick, player movement, source projection and native events.
