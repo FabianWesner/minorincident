@@ -1233,6 +1233,157 @@
       ],
       "reviewed": "test-results/b112-review/l4-repeat.jpg",
       "assessment": "Second ordinary 240-second HIGH zoom1.5 sample, no skips. Dense overlapping Alphas still obscure planted soles; no acceptance pass claimed. Opening and time cap warnings are driver gaps."
+    },
+    {
+      "name": "b112-l4-native",
+      "raw": "test-results/playtest/b112-l4-native",
+      "run": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 240,
+          "simSeconds": 236,
+          "maxNoProgressSeconds": 29.773,
+          "deaths": 9,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 1539
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 11,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1832,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2098,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 91\u00a0m",
+              "tick": 13497,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "driverIssues": [
+        {
+          "level": "L4",
+          "tick": 1250,
+          "x": 12.8,
+          "z": -28.3,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+          "captures": [
+            "captures/native-L4-1250-stuck-navigating.jpg"
+          ],
+          "step": "ride",
+          "objective": ""
+        },
+        {
+          "level": "L4",
+          "tick": 10580,
+          "x": -10.6,
+          "z": -15.7,
+          "severity": "P2",
+          "kind": "enemy-frozen",
+          "text": "Infected #221 in state chase 8.3 m away has not moved for ~5 s",
+          "captures": [
+            "captures/native-L4-10580-enemy-frozen.jpg"
+          ],
+          "step": "hold",
+          "objective": "Hold the south breach \u00b7 0:49 remaining \u00b7 36\u00a0m"
+        },
+        {
+          "level": "L4",
+          "tick": 12688,
+          "x": -9.9,
+          "z": -15.7,
+          "severity": "P2",
+          "kind": "enemy-frozen",
+          "text": "Infected #270 in state chase 9.2 m away has not moved for ~5 s",
+          "captures": [
+            "captures/native-L4-12688-enemy-frozen.jpg"
+          ],
+          "step": "hold",
+          "objective": "Hold the south breach \u00b7 0:14 remaining \u00b7 37\u00a0m"
+        }
+      ],
+      "driverGap": "Wrapper failed to produce expected native video/observer artifacts; no native video evidence claimed."
     }
   ],
   "validation": {

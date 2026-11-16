@@ -87,3 +87,7 @@ The earlier callback-window limitation is superseded by continuous captures. Ope
 ### Second L4 real-input sample
 
 Collected another 240 seconds HIGH zoom 1.5, no skips (`test-results/playtest/b112-l4-high-repeat`). Reviewed `test-results/b112-review/l4-repeat.jpg`, ticks 7206–9398. Multiple large Alphas and attack warnings remain visible but overlapping bodies obscure soles. This repeat does not close strike/roar/slam planted-foot qualification. Opening empty-HUD warning tick 1257 and cap tick 14225 remain driver gaps. No new confirmed product defect is established.
+
+### L4 wrapper limitation
+
+Additional 240-second real-input run under `test-results/playtest/b112-l4-native/` completed, but ignored wrapper did not produce expected video/observer artifacts. No native video evidence is claimed. Driver stationary warnings at ticks 10580 (#221) and 12688 (#270) remain provisional; captures/logs retained, no frozen-AI conclusion.
