@@ -60,8 +60,9 @@
       ],
       "weapon": "weapon.handgun",
       "distanceM": 0.1,
-      "result": "all targets took damage",
-      "l9": "excluded from opening-segment scan: courier starts in APC without an on-foot carried-weapon attack"
+      "result": "all targets took damage during three-second native probes",
+      "l9": "excluded from opening-segment scan: courier starts in APC without an on-foot carried-weapon attack",
+      "target": "real infected.runner through production spawn, aim follows movement each tick"
     }
   },
   "driverChange": "provisional axe fallback removed",
@@ -75,7 +76,8 @@
     "remoteUnitSuite": "PASS: 27 files, 105 passed / 1 skipped; 174.5 s within 240 s; collection 150/150 cases"
   },
   "open": [
-    "Recover or recreate the exact B112 runtime state and persist its original attack-by-attack ray/target/hit trace to prove which body intercepted shots at #793."
+    "Extend scanning beyond controlled close-contact probes to campaign combat windows, including L9 on-foot crash segment.",
+    "Replace constructed fixture dummy with a captured live infected bridge encounter and persist full per-attack trace."
   ],
   "invariants": [
     "no infected stat changes",

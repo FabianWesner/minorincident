@@ -23,3 +23,7 @@ The original shot-by-shot log is unavailable; the native reproduction establishe
 - Direct headless WebGL2 bridge confirmation passed HIGH then LOW: real runner spawned at Y=6.4 and took three 20-point handgun hits (60→0 HP), with no browser errors. The closer fixture dummy intercepted the first three shots; the runner then took damage. See `browserConfirmation` in evidence.json.
 - Remote suite completed successfully on runner 46.225.66.90.
 - The archived B112 attack-level ray trace is missing; the real-spawn native regression proves the product height defect and its correction.
+
+## Final scope audit
+
+Real infected.runner production-spawn probes now pass in L1, L2, L4, L5, L6, L7, L8 and L10 with aim tracking the target each tick for three seconds. The existing L3 real-runner bridge test covers eight seconds. These are controlled contact probes, not full campaign scans. L9 on-foot crash combat, a live-encounter replacement fixture and a persisted complete attack trace remain open.

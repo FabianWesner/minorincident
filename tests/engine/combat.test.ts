@@ -310,16 +310,20 @@ async function checkPointBlankCombat() {
     missionControls(w).teleport('player', { x: p.transform.x, z: p.transform.z });
     const at = { x: p.transform.x + .1, z: p.transform.z };
     equip(w, ['weapon.handgun']);
-    const target = dummy(w, at.x, at.z, 1000);
-    Object.assign(w.entities.get(target)!.transform, at, { y: w.districts!.groundHeight(at.x, at.z) + .7 });
-    w.spatial.set(target, at.x, at.z);
+    const target = w.infected!.spawn('infected.runner', at);
+    const initialHp = health(w, target);
     w.storyLock = null; w.missions!.state.phase = 'playing'; w.missions!.state.cinematic = null;
     w.setInput({ aim: { x: 1, z: 0 }, aimPoint: at, left: { down: true, held: true, up: false } });
-    step(w, 180); w.clearInput();
+    for (let tick = 0; tick < 180; tick++) {
+      const e = w.entities.get(target)!, dx = e.transform.x - p.transform.x, dz = e.transform.z - p.transform.z, distance = Math.hypot(dx, dz) || 1;
+      w.setInput({ aim: { x: dx / distance, z: dz / distance }, aimPoint: { x: e.transform.x, z: e.transform.z }, left: { down: tick === 0, held: true, up: false } });
+      w.update();
+    }
+    w.clearInput();
     const shots = w.events.events().filter(event => event.type === 'combat.attack' && event.sourceId === 1 && event.actionId === 'weapon.handgun');
     const first = shots.find(event => event.type === 'combat.attack');
     const ray = first?.type === 'combat.attack' ? w.combat!.query.ray(1, { ...first.position, y: first.position.y + .45 }, first.direction, rosterAction('weapon.handgun').range) : null;
-    expect(health(w, target), `${level} native 3s point-blank handgun aim=${JSON.stringify(at)} player=${JSON.stringify(p.transform)} target=${JSON.stringify(w.entities.get(target)!.transform)} attacks=${shots.length} ray=${ray?.id ?? null}`).toBeLessThan(1000);
+    expect(health(w, target), `${level} native 3s point-blank handgun aim=${JSON.stringify(at)} player=${JSON.stringify(p.transform)} target=${JSON.stringify(w.entities.get(target)!.transform)} attacks=${shots.length} ray=${ray?.id ?? null}`).toBeLessThan(initialHp);
   }
 }
 
