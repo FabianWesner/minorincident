@@ -141,3 +141,7 @@ Native asset-vertex + recorded-matrix replay reproduces every military gap, incl
 ## Vehicle prop support correction
 
 Vehicle prop settling now uses the same elevated layout triangle support query as the audit, replacing low-only sampling for vehicles. This targets the sleeping-truck transform that fell from authored Y=1.5 to -0.29 m. Existing 14 render contracts, typecheck and lint pass. L7 after-sweep failed admission before execution (60 s, quiet=false), so runtime correction is pending and not yet claimed verified. Remote suite must run on this source revision.
+
+## L7 footprint placement correction
+
+Military wreck placement now rests on the highest exported Northgate terrace overlapping its rotated footprint, replacing center-only height. Native asset-vertex checks against raw road triangles give military 0–4 gaps of -1.468, -0.0007, -1.468, -0.000004, -1.468 cm; all within thresholds. World-systems tests (5), typecheck and lint pass. Runtime after-sweep and prescribed remote suite remain required; native checks do not alone validate final renderer prop settling.
