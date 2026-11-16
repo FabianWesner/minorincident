@@ -60,3 +60,7 @@ Read-only inspection of `tools/browser-pool/client.ts` shows pooled `launchProfi
 ## Recording wrapper smoke result
 
 Ignored esbuild wrapper explicitly forwards recordVideo into pooled browser.newContext; checked-in sources/driver remain unchanged. One-minute ordinary HIGH L4 smoke run completed its cap at tick3412 (`test-results/b113-video/smoke`). Expected `test-results/b113-video/smoke-video` directory was absent after context disposal. No native recording is claimed; forwarding alone did not resolve recording. Pool/protocol recording behavior remains a driver gap, and identical wrapper retries are not justified.
+
+## Consecutive capture fallback verified
+
+A permitted ignored wrapper added read-only page screenshots every500ms during an unchanged ordinary HIGH L4 zoom1.5 four-minute run. Saved473 frames under `test-results/b113-l4-sequence-high/sequence`. Opened local review sheet `test-results/b113-sequence-review.jpg`, consecutive ticks9021–9200: active breach fighting, but overlapping crowd still hides individual Alpha soles. This verifies the capture fallback without closing tank-foot acceptance. Raw sequence/review sheet remain outside git; the sole retained report contact sheet is unchanged.

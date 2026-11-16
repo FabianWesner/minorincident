@@ -1269,5 +1269,23 @@
     "expectedVideoDirectory": "test-results/b113-video/smoke-video",
     "videoExists": false,
     "qualification": "No native video evidence; context recordVideo forwarding verified in ignored bundle, recording gap persists."
+  },
+  "sequenceCapture": {
+    "path": "test-results/b113-l4-sequence-high/sequence",
+    "frames": 473,
+    "seconds": 240,
+    "quality": "high",
+    "zoom": 1.5,
+    "reviewedTicks": [
+      9021,
+      9049,
+      9079,
+      9109,
+      9141,
+      9169,
+      9200
+    ],
+    "reviewSheet": "test-results/b113-sequence-review.jpg",
+    "review": "Opened consecutive sequence; active breach crowd, individual Alpha feet remain occluded. Native video absent; screenshot fallback works."
   }
 }
