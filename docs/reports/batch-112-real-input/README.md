@@ -103,3 +103,7 @@ Rechecked all four L9 final census rows: IDs 669–672 are all alive at 100 HP w
 Ignored bundled native-video wrapper (`test-results/b112-bundle.mjs`, `b112-video-run.ts`) explicitly forwards recordVideo in the profile helper; verified pooled context completed, but no video appeared after disposal. Raw `b112-l4-recorded` remains capture-only. The recording gap is unresolved and no native video proof is claimed.
 
 Shortcut sheet `test-results/b112-review/shortcut.jpg` was opened at approximately 2–3 fps. No obvious teleport occurs during the visible departure; crowd/APC conceal individual boarding paths. Inspected pool message forwarding does not establish why native recordings were absent; recording cause remains unresolved.
+
+### Read-only Alpha observer now verified
+
+Ignored observer bundle forwards Alpha identity, transform, health and brain state every 250 ms to `test-results/playtest/b112-l4-observed/alpha-state.jsonl`. The real-input bounded run completed and produced 781 state samples. Runtime hook is verified; it does not mutate simulation. Exact attack-window review remains pending.
