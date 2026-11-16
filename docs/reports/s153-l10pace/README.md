@@ -42,10 +42,14 @@ Authored repeat count: the former four corn scare triggers plus workshop/shed po
 
 ## Artifact
 
-[Route evidence sheet](route-evidence.png) — small native evidence schematic, opened for review. It is not a browser capture.
+[Route evidence sheet](route-evidence.png) — inspected HIGH/LOW browser captures (see final confirmation below).
 
 ## Follow-up with unrestricted execution
 
 Implementation and report committed as `f4ab5a34`. HIGH then LOW browser attempts now reach the pool, but both fail before rendering because SceneLab rejects production `infected.sprinter` actors as retired rigid figures. Visual confirmation remains open.
 
 Required remote suite retry passed: 27 files, 105 tests passed and one skipped; 192.2 s within the 240 s budget, exit 0.
+
+## Final browser confirmation
+
+HIGH then LOW passed using temporary audit fixtures generated directly from production `cureEncounterSlots`, with the existing actor `allowRigid: true` option to inspect the production sprinter. No runtime code or stats changed for this audit. Both WebGPU tiers were confirmed as requested, with zero console errors or undrawn frames; HIGH 54 draw calls / 128,297 triangles, LOW 54 / 65,089. Both sheets were opened. Actors and attack cues are visible, but foreground geometry obscures part of this short farmhouse view; this is not a full visual route walkthrough. The sole retained sheet now contains these HIGH and LOW captures, replacing the earlier native schematic. Native mapping remains in the table and JSON.

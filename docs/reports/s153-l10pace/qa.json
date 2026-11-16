@@ -350,5 +350,48 @@
     "skipped": 1,
     "seconds": 192.2,
     "exit": 0
+  },
+  "finalBrowser": {
+    "high": {
+      "seconds": 11.533,
+      "rows": [
+        {
+          "name": "l10-farm-audit-high",
+          "file": "test-results/s153-l10pace/audit-scenes/l10-farm-audit-high.json",
+          "pass": true,
+          "seconds": 9.706,
+          "frames": 60,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high",
+          "gates": "ok consoleErrors 0/0; ok undrawnFramesMax 0/0; ok drawCallsMax 54/300; ok trianglesMax 128297/500000; ok wreckGroundOffendersMax 0/0; ok canvas.f0.varianceMin 1607.0/1; ok canvas.f0.variedTilesMin 60/8; ok canvas.f30.varianceMin 1601.1/1; ok canvas.f30.variedTilesMin 60/8; ok canvas.f60.varianceMin 1611.2/1; ok canvas.f60.variedTilesMin 62/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+          "failed": [],
+          "sheet": "l10-farm-audit-high/sheet.jpg",
+          "sheetKb": 18,
+          "note": "Production farmhouse defense and checkpoint approach. Review both tiers/zooms: readable crowd, low dog and Screamer silhouettes, and the open mown route through the crops."
+        }
+      ]
+    },
+    "low": {
+      "seconds": 9.459,
+      "rows": [
+        {
+          "name": "l10-farm-audit-low",
+          "file": "test-results/s153-l10pace/audit-scenes/l10-farm-audit-low.json",
+          "pass": true,
+          "seconds": 7.728,
+          "frames": 60,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low",
+          "gates": "ok consoleErrors 0/0; ok undrawnFramesMax 0/0; ok drawCallsMax 54/300; ok trianglesMax 65089/500000; ok wreckGroundOffendersMax 0/0; ok canvas.f0.varianceMin 1564.2/1; ok canvas.f0.variedTilesMin 60/8; ok canvas.f30.varianceMin 1556.5/1; ok canvas.f30.variedTilesMin 60/8; ok canvas.f60.varianceMin 1571.4/1; ok canvas.f60.variedTilesMin 62/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+          "failed": [],
+          "sheet": "l10-farm-audit-low/sheet.jpg",
+          "sheetKb": 18,
+          "note": "Production farmhouse defense and checkpoint approach. Review both tiers/zooms: readable crowd, low dog and Screamer silhouettes, and the open mown route through the crops."
+        }
+      ]
+    },
+    "method": "Production slots with existing allowRigid audit option; both sheets inspected, partial foreground occlusion"
   }
 }
