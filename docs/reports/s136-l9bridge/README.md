@@ -51,3 +51,9 @@ The prescribed unchanged remote rerun passed: 27 files, 105 passed / 1 skipped, 
 ## Census evidence review
 
 Reviewed all 180 defense-complete observer samples across the four road runs (66/50/16/48). Every sample contains all four survivor identities; none reports a dead or infected survivor. Pending-evacuation samples number 27/15/0/10 respectively. These records now distinguish living stragglers from deaths. The original batch-110 save is already evacuation-complete when loaded; its regression therefore checks preserved completion, rather than claiming the earlier boarding deadline passed.
+
+## Archived save driving replay and disposition
+
+The unchanged recovered batch-110 save completes L9 in 1072 native ticks (17.87 seconds) with the existing road input policy (`LevelNineBot`), no actor/objective/health writes. Evacuation remains complete and the native crash/crawl reaches `done`. This complements the four real-input runs: the preserved crowd does not prevent bridge completion when the input policy follows the bridge. The seven stationary-infected observations concern evacuation actors and are retained separately; they did not stall the APC crossing and the independent L9 threat audit has zero level-specific flags.
+
+The requested bridge driver correction, archived fixture/native regression, read-only boarding census, three HIGH plus one LOW WebGPU road completions, L9 threat diagnostic, vehicle motion gate, remote suite rerun, typecheck/lint and reviewed small sheet are delivered. No zombie statistics or corpse persistence rules changed. The archive save is tick 13042, near the requested 13140 start; no exact later physics snapshot is claimed.
