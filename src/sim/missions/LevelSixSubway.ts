@@ -376,7 +376,7 @@ export class LevelSixSubway {
     // walkers make up contact instead of forcing the courier to fetch them.
     // A small distance ramp is enough for the long tunnel without changing
     // the pressure, damage, or survivor health rules.
-    const gapToSlot=distance(e.transform,goal), catchupSpeed=gapToSlot>10?Math.min(5.2,l6.follow.speed+(gapToSlot-10)*.4):l6.follow.speed;
+    const gapToSlot=distance(e.transform,goal), catchupSpeed=gapToSlot>1?Math.min(5.2,l6.follow.speed+(gapToSlot-1)*.4):l6.follow.speed;
     if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,catchupSpeed,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&(returning||side>l6.tunnel.width/2))
       // A side room's long route can exceed the steering budget. Collected walkers
       // return to the nearby track; the unfetched group keeps its authored mouth approach.
