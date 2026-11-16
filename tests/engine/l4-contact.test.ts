@@ -4,7 +4,7 @@ import { Box3, PerspectiveCamera, Vector3 } from 'three/webgpu';
 import { ColliderDesc, Ray, ShapeType } from '@dimforge/rapier3d-compat';
 import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations, l4RearTruckParkOffset } from '../../src/data/l4';
 import physicsAssets from '../../src/data/physicsAssets';
-import { l4BreachSite, l4PerimeterWalls } from '../../src/data/l4Perimeter';
+import { l4Breaches, l4BreachSite, l4PerimeterSegments, l4PerimeterWalls } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
 import { barEligible, bossChip, bossChipFadeTicks, bossChipHoldTicks, bossChipMinPx, followerBarsAlwaysMax, followerPipSize, HealthBars, nearbyAttackerBarLimit, nearestHealthyAttackers } from '../../src/render/HealthBars';
 import { bossHitFlashChip, bossHitFlashExposed } from '../../src/render/vfx/Vfx';
@@ -274,6 +274,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     }
   }
   expect(violations, 'PO 2026-11-08: parked army cargo trucks do not cross the perimeter').toEqual([]);
+  await checkOutsideWireRouting();
   checkCompactFollowerOverlap();
   expect(followerBarsAlwaysMax, 'five-person groups retain full bars').toBe(5);
   expect(followerPipSize, 'larger groups use thin, short pips').toEqual({ width: 18, height: 3 });
@@ -638,3 +639,33 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     } finally { occlusion.world.dispose(); }
   } finally { world.dispose(); }
 });
+
+async function checkOutsideWireRouting(): Promise<void> {
+  const { world, mission } = await loadL4(1, 'high');
+  try {
+    mission.loadCheckpoint('turn');
+    const state = mission.state.l4!, ai = world.infected!;
+    expect(state.phase).toBe('war');
+    for (const e of [...ai.active]) ai.release(e);
+    // Keep the route test focused on perimeter navigation rather than the camp's soldiers killing the test actor.
+    for (const e of world.entities.iterate()) if (e.civilian && e.id !== 1) e.hidden = true;
+    const side = 'north', opened = l4Breaches[side].segments[0];
+    const wall = [...world.entities.iterate()].find(e => e.barricade?.slot.id === `l4-wall-${opened}`)!;
+    expect(wall.barricade?.intact).toBe(true);
+    wall.barricade!.intact = false;
+    wall.kind = 'device';
+    world.solids.setBarrier(`l4-wall-${opened}`, null);
+    state.breaches = { north: { announcedAt: world.tick, openAt: world.tick } };
+    const perimeter = l4.perimeter;
+    const id = ai.spawn('infected.runner', { x: -20, z: perimeter.z1 + 1.4 });
+    const infected = world.entities.get(id)!;
+    ai.press(id, 1, world.tick + 600, 1);
+    const start = { x: infected.transform.x, z: infected.transform.z };
+    for (let tick = 0; tick < 600; tick++) world.update();
+    const travelled = Math.hypot(infected.transform.x - start.x, infected.transform.z - start.z);
+    expect(travelled, `outside infected must move along the perimeter toward the open ${side} breach`).toBeGreaterThan(4);
+    expect(Math.hypot(infected.transform.x - l4PerimeterSegments[opened].x, infected.transform.z - l4PerimeterSegments[opened].z)).toBeLessThan(
+      Math.hypot(start.x - l4PerimeterSegments[opened].x, start.z - l4PerimeterSegments[opened].z),
+    );
+  } finally { world.dispose(); }
+}
