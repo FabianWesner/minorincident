@@ -6435,6 +6435,247 @@
             "lost": 0
           }
         }
+      },
+      "independentWalk": {
+        "policy": "independent-l8-between-arenas-normal-walk",
+        "run": {
+          "level": "L8",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 616.4666666666667,
+          "deaths": 1,
+          "kills": 39,
+          "damageTaken": 160.70000000000005,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "sanctuary",
+              "t": 180
+            },
+            {
+              "id": "escape",
+              "t": 608.4666666666667
+            },
+            {
+              "id": "depart",
+              "t": 616.4666666666667
+            }
+          ],
+          "furthestObjective": "depart",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 250,
+            "deferred": 17,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "followerWait": {
+          "windows": [
+            {
+              "key": "escort",
+              "escortTicks": 22301,
+              "stationaryFarTicks": 235,
+              "first": {
+                "tick": 15481,
+                "playerX": 8.021648406982422,
+                "playerZ": -28.196775436401367,
+                "followerId": 423,
+                "followerX": 0.672163938882615,
+                "followerZ": -21.17317924960165
+              }
+            },
+            {
+              "key": "protect",
+              "escortTicks": 1800,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "boarding",
+              "escortTicks": 1512,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "aboard",
+              "escortTicks": 0,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "escortTicks": 25613,
+          "stationaryFarTicks": 235,
+          "upperBoundPercent": 0.9175028305938391,
+          "followers": [
+            {
+              "id": 354,
+              "escortTicks": 24205,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 355,
+              "escortTicks": 24305,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 356,
+              "escortTicks": 24413,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 357,
+              "escortTicks": 24515,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 358,
+              "escortTicks": 24626,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 359,
+              "escortTicks": 24738,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 360,
+              "escortTicks": 24849,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 361,
+              "escortTicks": 24957,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 362,
+              "escortTicks": 25068,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 363,
+              "escortTicks": 25178,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 364,
+              "escortTicks": 25290,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 365,
+              "escortTicks": 25406,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 366,
+              "escortTicks": 25504,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 423,
+              "escortTicks": 25613,
+              "stationaryFarTicks": 235
+            }
+          ],
+          "paceWindows": [
+            {
+              "key": "escort",
+              "samples": 10416,
+              "p50GapM": 4.470702802267496,
+              "p90GapM": 7.559135716212313,
+              "maxGapM": 13.189129401450092,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 423,
+                  "maxSeconds": 3.05
+                },
+                {
+                  "id": 358,
+                  "maxSeconds": 2.6
+                },
+                {
+                  "id": 364,
+                  "maxSeconds": 2.3
+                },
+                {
+                  "id": 355,
+                  "maxSeconds": 1.3833333333333333
+                },
+                {
+                  "id": 365,
+                  "maxSeconds": 1.2
+                },
+                {
+                  "id": 361,
+                  "maxSeconds": 0.95
+                },
+                {
+                  "id": 360,
+                  "maxSeconds": 0.6333333333333333
+                },
+                {
+                  "id": 363,
+                  "maxSeconds": 0.43333333333333335
+                },
+                {
+                  "id": 366,
+                  "maxSeconds": 0.3333333333333333
+                },
+                {
+                  "id": 362,
+                  "maxSeconds": 0.25
+                },
+                {
+                  "id": 359,
+                  "maxSeconds": 0.08333333333333333
+                }
+              ]
+            },
+            {
+              "key": "protect",
+              "samples": 840,
+              "p50GapM": 2.291463824695312,
+              "p90GapM": 4.235588215361327,
+              "maxGapM": 8.113354734313418,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "boarding",
+              "samples": 373,
+              "p50GapM": 5.227641932032078,
+              "p90GapM": 7.399911012655931,
+              "maxGapM": 9.348338002882667,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "aboard",
+              "samples": 0,
+              "p50GapM": null,
+              "p90GapM": null,
+              "maxGapM": null,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            }
+          ],
+          "prompts": {
+            "wait": 0,
+            "attack": 0,
+            "lost": 0
+          }
+        }
       }
     }
   },
