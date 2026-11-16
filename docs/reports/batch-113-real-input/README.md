@@ -52,3 +52,7 @@ Read both full logs: HIGH has 24 death-input-release events; LOW summary records
 ## L3 close damage audit
 
 Existing ordinary-input logs establish close bridge targets losing HP in both tiers. HIGH tick 21837: #545 45→20 HP at 0.69 m and #444 47.5→15 at 0.87 m, courier x161.79. LOW tick 7087: #1472 60→20 at 1.18 m (x164.16); tick 7155: #1242 60→20 at 1.08 m (x166.42). These are sampled same-actor HP changes, not shot-by-shot attribution; companion damage can contribute. They support close-target damage on the bridge during real play, without proving universal hitability. Exact sampled receipts are in `l3CloseDamageAudit`.
+
+## Native recording driver gap
+
+Read-only inspection of `tools/browser-pool/client.ts` shows pooled `launchProfile` creates its context with viewport, DPR and storage state, omitting `recordVideo`. Merely supplying video options to the helper cannot record the pooled run. A permitted ignored wrapper must explicitly create a recording context before another camera/sole attempt; no source/helper fix was made.
