@@ -13,7 +13,7 @@ The original shot-by-shot log is unavailable; the native reproduction establishe
 - `tests/fixtures/saves/qa/s142-l3-bridge-pointblank.json.gz` is a native mission-resume fixture at tick 10900 on the L3 bridge, with the courier and a live target within 1 m. It is a constructed reproduction fixture, not a recovered save from B112.
 - `tests/engine/combat.test.ts` records each weapon, aim, ray-selected target, hit IDs, and a no-damage classification in the eight-second point-blank test trace. It tests handgun and axe at 0.1 m, the authored L3 bridge, and on-foot starts in L1–L8/L10.
 - [`l3-bridge-crowd.jpg`](l3-bridge-crowd.jpg) is the B112 screenshot reviewed for this report.
-- The fixture was restored natively and the target was killed by two handgun attacks (one hit event). Restore clearance moves the target from the overlapping capture position to about 0.5 m away.
+- The final fixture contains a real production runner 0.8 m ahead at tick 10900. Its native eight-second trace records 24 handgun discharges; the first three hit for 20 damage each and kill it. Later shots miss because the target is dead. The old dummy record is retained dead rather than deleted. Full per-attack weapon, aim, facing, selected target, hit IDs, damage and height are persisted under `nativeAttackTrace` in evidence.json.
 
 ## Validation
 
@@ -26,4 +26,4 @@ The original shot-by-shot log is unavailable; the native reproduction establishe
 
 ## Final scope audit
 
-Real infected.runner production-spawn probes now pass in L1, L2, L4, L5, L6, L7, L8 and L10 with aim tracking the target each tick for three seconds. The existing L3 real-runner bridge test covers eight seconds. These are controlled contact probes, not full campaign scans. L9 on-foot crash combat, a live-encounter replacement fixture and a persisted complete attack trace remain open.
+Real infected.runner production-spawn probes now pass in L1, L2, L4, L5, L6, L7, L8 and L10 with aim tracking the target each tick for three seconds. The existing L3 real-runner bridge test covers eight seconds. These are controlled contact probes, not full campaign scans. L9 on-foot crash combat and broader campaign-window scanning remain open. The real-infected fixture and persisted complete eight-second attack trace are now present.

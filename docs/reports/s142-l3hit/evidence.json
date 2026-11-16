@@ -43,7 +43,8 @@
       "targetAtRestoreM": 0.5,
       "handgunAttacks": 24,
       "durationSeconds": 8,
-      "result": "target killed; no minimum-range or invulnerability rejection"
+      "result": "target killed; no minimum-range or invulnerability rejection",
+      "fixtureTarget": "real infected.runner at .8 m, corpse retained"
     },
     "crossLevelProbe": {
       "durationSeconds": 3,
@@ -71,13 +72,12 @@
     "typecheck": "passed after final cross-level probe and trace edits",
     "lint": "passed after final cross-level probe and trace edits",
     "qaBuild": "passed",
-    "browserHigh": "PASS: real bridge runner 60\u21920 HP, three 20-point hits, no page errors",
+    "browserHigh": "PASS: real bridge runner 60→0 HP, three 20-point hits, no page errors",
     "browserLow": "PASS: after HIGH, same result",
     "remoteUnitSuite": "PASS: 27 files, 105 passed / 1 skipped; 174.5 s within 240 s; collection 150/150 cases"
   },
   "open": [
-    "Extend scanning beyond controlled close-contact probes to campaign combat windows, including L9 on-foot crash segment.",
-    "Replace constructed fixture dummy with a captured live infected bridge encounter and persist full per-attack trace."
+    "Extend scanning beyond controlled close-contact probes to campaign combat windows, including L9 on-foot crash segment."
   ],
   "invariants": [
     "no infected stat changes",
@@ -125,7 +125,7 @@
           },
           "direction": {
             "x": 0.9999999999999605,
-            "z": -2.8134559976609655e-07
+            "z": -2.8134559976609655e-7
           },
           "knockback": 0,
           "amount": 20,
@@ -146,7 +146,7 @@
           },
           "direction": {
             "x": 0.9999999999999878,
-            "z": -1.5673710676298179e-07
+            "z": -1.5673710676298179e-7
           },
           "knockback": 0,
           "amount": 20,
@@ -167,7 +167,7 @@
           },
           "direction": {
             "x": 0.9999999999999916,
-            "z": -1.3003084466513315e-07
+            "z": -1.3003084466513315e-7
           },
           "knockback": 0,
           "amount": 20,
@@ -274,7 +274,7 @@
           },
           "direction": {
             "x": 0.9999999999999605,
-            "z": -2.8134559976609655e-07
+            "z": -2.8134559976609655e-7
           },
           "knockback": 0,
           "amount": 20,
@@ -295,7 +295,7 @@
           },
           "direction": {
             "x": 0.9999999999999878,
-            "z": -1.5673710676298179e-07
+            "z": -1.5673710676298179e-7
           },
           "knockback": 0,
           "amount": 20,
@@ -316,7 +316,7 @@
           },
           "direction": {
             "x": 0.9999999999999916,
-            "z": -1.3003084466513315e-07
+            "z": -1.3003084466513315e-7
           },
           "knockback": 0,
           "amount": 20,
@@ -389,5 +389,407 @@
       ],
       "errors": []
     }
-  ]
+  ],
+  "nativeAttackTrace": {
+    "startTick": 10900,
+    "durationSeconds": 8,
+    "realTargetId": 106,
+    "initialHp": 60,
+    "finalHp": 0,
+    "rows": [
+      {
+        "tick": 10907,
+        "attackId": 1,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999993,
+          "z": -3.51669227986703e-8
+        },
+        "facing": 3.516692279867031e-8,
+        "targetChosen": 106,
+        "targetHp": 60,
+        "hitIds": [
+          106
+        ],
+        "reason": null,
+        "courierY": 6.420000076293945,
+        "targetY": 6.4,
+        "damage": 20
+      },
+      {
+        "tick": 10927,
+        "attackId": 2,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999993,
+          "z": -3.516692276544545e-8
+        },
+        "facing": 3.516692279517114e-8,
+        "targetChosen": 106,
+        "targetHp": 40,
+        "hitIds": [
+          106
+        ],
+        "reason": null,
+        "courierY": 6.420000076293945,
+        "targetY": 6.4,
+        "damage": 20
+      },
+      {
+        "tick": 10947,
+        "attackId": 3,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": 106,
+        "targetHp": 20,
+        "hitIds": [
+          106
+        ],
+        "reason": null,
+        "courierY": 6.420000076293945,
+        "targetY": 6.4,
+        "damage": 20
+      },
+      {
+        "tick": 10967,
+        "attackId": 4,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 10987,
+        "attackId": 5,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11007,
+        "attackId": 6,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11027,
+        "attackId": 7,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11047,
+        "attackId": 8,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11067,
+        "attackId": 9,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11087,
+        "attackId": 10,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11107,
+        "attackId": 11,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11127,
+        "attackId": 12,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11147,
+        "attackId": 13,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11167,
+        "attackId": 14,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11187,
+        "attackId": 15,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11207,
+        "attackId": 16,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11227,
+        "attackId": 17,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11247,
+        "attackId": 18,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11267,
+        "attackId": 19,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11287,
+        "attackId": 20,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11307,
+        "attackId": 21,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11327,
+        "attackId": 22,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11347,
+        "attackId": 23,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      },
+      {
+        "tick": 11367,
+        "attackId": 24,
+        "weapon": "weapon.handgun",
+        "aim": {
+          "x": 0.9999999999999996,
+          "z": -2.9320951605177214e-8
+        },
+        "facing": 2.9320951605177217e-8,
+        "targetChosen": null,
+        "targetHp": 0,
+        "hitIds": [],
+        "reason": "ray-missed-living-targets",
+        "courierY": 6.420000076293945,
+        "targetY": 6.4
+      }
+    ]
+  }
 }
