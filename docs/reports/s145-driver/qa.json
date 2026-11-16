@@ -124,6 +124,50 @@
         "stuck-navigating",
         "sample-cap"
       ]
+    },
+    "L10_HIGH_mortal_attempt_4": {
+      "status": "failed at overall budget after four segments; restricted-zone retry loop",
+      "run": "test-results/s145-driver/l10-high-mortal-4-full",
+      "exitCode": 1,
+      "segments": [
+        {
+          "log": "log-campaign-2.jsonl",
+          "observedDeaths": 13,
+          "lastCheckpoint": "cure-pace-8",
+          "lastStep": "restricted-zone",
+          "resumeSaves": [
+            28607
+          ]
+        },
+        {
+          "log": "log-campaign-3.jsonl",
+          "observedDeaths": 19,
+          "lastCheckpoint": "cure-pace-8",
+          "lastStep": "restricted-zone",
+          "resumeSaves": [
+            28633
+          ]
+        },
+        {
+          "log": "log-campaign-4.jsonl",
+          "observedDeaths": 19,
+          "lastCheckpoint": "cure-pace-8",
+          "lastStep": "restricted-zone",
+          "resumeSaves": [
+            28625
+          ]
+        },
+        {
+          "log": "log-campaign.jsonl",
+          "observedDeaths": 9,
+          "lastCheckpoint": "cure-pace-5",
+          "lastStep": "farmstead",
+          "resumeSaves": [
+            28602
+          ]
+        }
+      ],
+      "fullCompletion": false
     }
   },
   "archived_baseline_only": {
@@ -179,7 +223,7 @@
     "L9_high_road_x3_reaches_L10_no_stuck_navigating": "pass: 307, 303, 271 seconds; zero skips or stuck-navigating flags",
     "L9_low_road_x1_reaches_L10_no_stuck_navigating": "pass: 246 seconds; zero issues or skips",
     "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "pass: 208 seconds; zero issues or skips",
-    "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "unverified",
+    "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "not met: latest full-budget attempt never finished",
     "cap_label_sample_cap_not_p0": "runtime pass: eight minute mortal L10 sample ends P3 sample-cap, zero P0",
     "empty_opening_hud_no_warning": "unit/code-path verified; runtime acceptance pending"
   },
