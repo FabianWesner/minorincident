@@ -8,7 +8,7 @@ The existing `checkOutsideWireRouting` regression also passes. It covers one act
 
 ## Wreck grounding
 
-The source-layout inventory is 414 vehicle wrecks. The renderer-shared resolved `district.decay.placements` inventory contains 409 at-load placements: L1 0, L2 0, L3 23, L4 0, L5 25, L6 1, L7 38, L8 0, L9 84, L10 238. Five L8 candidates are filtered before rendering. This turn did not measure contact gaps against resolved terrain heights and did not perform the requested full-level backend close-ups. `isolated-wreck-reference.jpg` is only the previously reviewed isolated HIGH WebGPU comparison; it is not campaign grounding evidence.
+The source-layout inventory is 414 vehicle wrecks. The renderer-shared resolved `district.decay.placements` inventory contains 409 at-load placements: L1 0, L2 0, L3 23, L4 0, L5 25, L6 1, L7 38, L8 0, L9 84, L10 238. Five L8 candidates are filtered before rendering. This turn did not measure contact gaps against resolved terrain heights and did not perform the requested full-level backend close-ups. the archived s139 isolated reference is only the previously reviewed isolated HIGH WebGPU comparison; it is not campaign grounding evidence.
 
 ## Remaining work
 
@@ -145,3 +145,7 @@ Vehicle prop settling now uses the same elevated layout triangle support query a
 ## L7 footprint placement correction
 
 Military wreck placement now rests on the highest exported Northgate terrace overlapping its rotated footprint, replacing center-only height. Native asset-vertex checks against raw road triangles give military 0–4 gaps of -1.468, -0.0007, -1.468, -0.000004, -1.468 cm; all within thresholds. World-systems tests (5), typecheck and lint pass. Runtime after-sweep and prescribed remote suite remain required; native checks do not alone validate final renderer prop settling.
+
+## L7 correction runtime pair
+
+HIGH WebGL2 and requested WebGPU sequential sweeps both measure 38/38 wrecks at 0 cm, with matching placement matrices. Opened and reviewed military-3 full images and [small before/after sheet](wreck-fix-sheet.jpg): lower body and wheels now clear the road rather than being buried. Session zoom was set to 1.5 with camera-only cinematic positioning. Receipt currently retains requested backend rather than selected backend; explicit backend identity remains required before claiming the WebGPU gate. The sheet replaces the old isolated reference so this report retains only one small image.
