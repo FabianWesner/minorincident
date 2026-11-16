@@ -41,3 +41,9 @@ Created and opened [contact-sheet.jpg](contact-sheet.jpg), showing the reviewed 
 ## L9 HIGH sweep — P2 visible crowd corruption
 
 Collected 240 seconds HIGH WebGPU zoom 1 without skips. Opened `test-results/playtest/b113-l9-high/captures/campaign-L9-9495-enemy-frozen.jpg`: several crowd actors have tall black/white striped projected surfaces above their bodies, a conspicuous rendering glitch (**P2**, tick 9495; cause unproven). The nearly disabled, smoking APC and dense hatch crowd read dangerous and visually busy. This sample feels pressured rather than harmless; group evacuation remains ongoing. Stationary actor warnings around the hull are unqualified. The passive-ally label targets the player APC during the scripted engine interruption and is not established as an ally AI defect. The final automatic cannot-finish is the intentional four-minute cap.
+
+## L10 HIGH sweep
+
+Collected 240 seconds HIGH WebGPU zoom 1, no skips, joints telemetry disabled through existing option. **P2 provisional:** tick 13892, `test-results/playtest/b113-l10-high/captures/campaign-L10-13892-enemy-unhittable.jpg`: driver reports #134 at 1.1 m remained 60/60 HP through eight seconds of attacks. Opened frame shows nearby target and melee arc; aim/collision/hit logic remain unseparated. The dark farms read sparsely staged rather than stunning in this frame; close combat and damage make the run threatening. Repeated combat near the same residential route feels repetitive, but driver behavior limits product pacing attribution. No conspicuous geometry glitch in the reviewed frame. The four-minute stop is intentional.
+
+Read-only source inspection confirms CrowdFigureProbe joint telemetry records coordinates rather than drawing geometry, so it does not explain the L9 striped surfaces.

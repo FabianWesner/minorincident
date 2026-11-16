@@ -68,7 +68,7 @@
     },
     {
       "check": "L10 HIGH zoom 1 short sweep",
-      "status": "NOT RUN"
+      "status": "240 SECOND SWEEP COLLECTED; T13892 REVIEWED"
     }
   ],
   "findings": [
@@ -78,6 +78,14 @@
       "tick": 9495,
       "capture": "test-results/playtest/b113-l9-high/captures/campaign-L9-9495-enemy-frozen.jpg",
       "finding": "Several crowd actors show tall black/white striped projected surfaces above their bodies. Visible rendering corruption; root cause unproven."
+    },
+    {
+      "severity": "P2",
+      "provisional": true,
+      "level": "L10",
+      "tick": 13892,
+      "capture": "test-results/playtest/b113-l10-high/captures/campaign-L10-13892-enemy-unhittable.jpg",
+      "finding": "Driver reports #134 at 1.1m unchanged 60HP after 8s melee attacks; reviewed frame shows close target and attack arc. Aim/collision/hit logic attribution unproven."
     }
   ],
   "contactSheet": "contact-sheet.jpg",
@@ -408,6 +416,96 @@
       },
       "reviewedTicks": [
         9495
+      ]
+    },
+    {
+      "path": "test-results/playtest/b113-l10-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L10"
+        ],
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 240,
+            "simSeconds": 237,
+            "maxNoProgressSeconds": 14.716,
+            "deaths": 7,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "crash",
+                "text": "Get away from the river \u00b7 101\u00a0m",
+                "tick": 10,
+                "marker": {
+                  "anchor": "river-exit",
+                  "ring": {
+                    "x": 647,
+                    "y": 0,
+                    "z": -12.5
+                  },
+                  "drawn": [
+                    647,
+                    0,
+                    -12.5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "farmstead",
+                "text": "Find a way through the farms \u00b7 64\u00a0m",
+                "tick": 1967,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    698,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "reviewedTicks": [
+        13892
       ]
     }
   ]
