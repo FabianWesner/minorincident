@@ -1,0 +1,63 @@
+{
+  "slug": "s142-l3hit",
+  "finding": "driver-side crowd targeting failure is the leading explanation; native tests do not reproduce product invulnerability",
+  "originalObservation": {
+    "source": "batch-112-real-input / b112-l3-high",
+    "level": "L3",
+    "tick": 10983,
+    "targetId": 793,
+    "targetState": "chase",
+    "targetDistanceM": 0.11828443283986304,
+    "targetHp": "60/60 after 8 s of attacks",
+    "weapon": "weapon.handgun",
+    "input": {
+      "mouseAttack": true,
+      "rightHeld": true,
+      "aimPoint": { "x": 169.47784594138156, "z": -1.0371285693490804 },
+      "targetTransform": { "x": 169.47784594138156, "z": -1.0371285693490804, "y": 0.7 },
+      "pointerPickId": 793
+    },
+    "attackLevelRayEventsAvailable": false,
+    "crowd": "courier tightly surrounded on a narrow bridge, overlapping red telegraphs"
+  },
+  "native": {
+    "genericPointBlankTrace": {
+      "durationSeconds": 8,
+      "distanceM": 0.1,
+      "weapons": ["weapon.handgun", "weapon.fire-axe"],
+      "result": "both targets lost health and had combat.hit events"
+    },
+    "l3BridgeTrace": {
+      "fixture": "tests/fixtures/saves/qa/s142-l3-bridge-pointblank.json.gz",
+      "fixtureTick": 10900,
+      "targetAtRestoreM": 0.5,
+      "handgunAttacks": 24,
+      "durationSeconds": 8,
+      "result": "target killed; no minimum-range or invulnerability rejection"
+    },
+    "crossLevelProbe": {
+      "durationSeconds": 3,
+      "levels": ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L10"],
+      "weapon": "weapon.handgun",
+      "distanceM": 0.1,
+      "result": "all targets took damage",
+      "l9": "excluded from opening-segment scan: courier starts in APC without an on-foot carried-weapon attack"
+    }
+  },
+  "driverChange": "when L3 handgun is selected and the chosen threat is within 1.25 m, switch to the carried fire axe",
+  "validation": {
+    "combatTest": "8 tests passed after final trace expansion",
+    "typecheck": "passed after final cross-level probe and trace edits",
+    "lint": "passed after final cross-level probe and trace edits",
+    "qaBuild": "passed",
+    "browserHigh": "blocked: sandbox listen EPERM on 127.0.0.1:5021",
+    "browserLow": "not run",
+    "remoteUnitSuite": "not run: no healthy Hetzner runner; Mac fallback does not admit npm test"
+  },
+  "open": [
+    "Recover or recreate the exact B112 runtime state and persist its original attack-by-attack ray/target/hit trace to prove which body intercepted shots at #793.",
+    "Run HIGH then LOW headless browser confirmation when local server binding is available.",
+    "Run the remote npm test suite when a healthy Hetzner runner is available."
+  ],
+  "invariants": ["no infected stat changes", "corpses remain persistent"]
+}

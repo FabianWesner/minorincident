@@ -10,6 +10,8 @@ import { Status } from '../../src/sim/combat/Status';
 import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { missionControls } from '../../src/sim/missions/controls';
+import { loadLevel } from '../qa/invariants/world';
 import { checkRocketCadence, checkRocketEndpoints } from '../helpers/l7Uat';
 import { emptyInput } from '../../src/input/InputFrame';
 
@@ -247,6 +249,76 @@ test('guns: held fire cadence, reload timing, infinite reserve and seeded, bound
     }
     expect(directions[0]).toEqual(directions[1]);
   } finally { pistol.spread = previous; }
+});
+
+test('point-blank handgun and axe attacks damage a living infected', async () => {
+  // An infected can overlap the courier in a crowd. Neither a gun muzzle at
+  // the target nor a melee strike at body-contact distance has a minimum range.
+  for (const weapon of ['weapon.handgun', 'weapon.fire-axe']) {
+    const w = await arena(); equip(w, [weapon]);
+    const id = dummy(w, 0.1, 0, 1000);
+    w.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: 0.1, z: 0 }, left: { down: true, held: true, up: false } });
+    step(w, 480); w.clearInput();
+    const events = w.events.events(), shots = events.filter(event => event.type === 'combat.attack' && event.sourceId === 1 && event.actionId === weapon);
+    const hits = events.filter(event => event.type === 'combat.hit' && event.sourceId === 1 && 'targetId' in event);
+    const trace = shots.map(shot => shot.type === 'combat.attack' ? {
+      tick: shot.tick, weapon: shot.actionId, aim: shot.direction,
+      targetChosen: weapon === 'weapon.handgun'
+        ? w.combat!.query.ray(1, { ...shot.position, y: shot.position.y + .45 }, shot.direction, rosterAction(weapon).range)?.id ?? null
+        : w.combat!.query.melee(1, shot.position, shot.direction, rosterAction(weapon).range, rosterAction(weapon).arc, rosterAction(weapon).maxTargets).map(target => target.id),
+      hitIds: hits.filter(hit => hit.type === 'combat.hit' && hit.attackId === shot.attackId && 'targetId' in hit).map(hit => 'targetId' in hit ? hit.targetId : null),
+    } : null);
+    expect(shots.length, `${weapon} attack trace`).toBeGreaterThan(0);
+    expect(health(w, id), `${weapon} 8s trace: ${JSON.stringify(trace)}`).toBeLessThan(1000);
+    expect(hits.some(hit => hit.type === 'combat.hit' && 'targetId' in hit && hit.targetId === id), `${weapon} attack trace`).toBe(true);
+  }
+  // Repeat the handgun case with the authored L3 bridge, its rail cover and
+  // campaign mission composition loaded natively (no renderer or browser).
+  const bridge = await loadLevel('L3', 1, 'high'); worlds.push(bridge);
+  missionControls(bridge).teleport('player', { x: 169.548, z: -0.942 });
+  equip(bridge, ['weapon.handgun']);
+  const bridgeTarget = dummy(bridge, 169.648, -0.942, 1000);
+  bridge.entities.get(bridgeTarget)!.transform.y = bridge.districts!.groundHeight(169.648, -0.942) + .7;
+  const bridgeTrace: { attackId: number; tick: number; weapon: string; aim: { x: number; z: number }; targetChosen: number | null; hitIds: number[]; noDamageReason: string | null }[] = [];
+  bridge.events.on('combat.attack', event => {
+    if (event.type !== 'combat.attack' || event.sourceId !== 1 || event.actionId !== 'weapon.handgun') return;
+    const origin = { ...event.position, y: event.position.y + .45 }, def = rosterAction('weapon.handgun');
+    const chosen = bridge.combat!.query.ray(1, origin, event.direction, def.range);
+    const wall = bridge.combat!.query.clearDistance(origin, event.direction, def.range);
+    bridgeTrace.push({ attackId: event.attackId, tick: event.tick, weapon: event.actionId, aim: event.direction, targetChosen: chosen?.id ?? null, hitIds: [],
+      noDamageReason: chosen ? chosen.id === bridgeTarget ? 'damage-rejected-after-hit-test' : 'another-body-intercepted-ray' : wall < def.range ? 'bridge-cover-blocked-ray' : 'aim-ray-missed-all-targets' });
+  });
+  bridge.events.on('combat.hit', event => {
+    if (event.type !== 'combat.hit' || event.sourceId !== 1 || !('targetId' in event)) return;
+    const shot = bridgeTrace.find(row => row.attackId === event.attackId);
+    if (shot) { shot.hitIds.push(event.targetId); shot.noDamageReason = null; }
+  });
+  bridge.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: 169.648, z: -0.942 }, left: { down: true, held: true, up: false } });
+  step(bridge, 480); bridge.clearInput();
+  const bridgeEvents = bridge.events.events(), bridgeShots = bridgeEvents.filter(event => event.type === 'combat.attack' && event.sourceId === 1 && event.actionId === 'weapon.handgun');
+  expect(bridgeTrace.length, 'each native bridge handgun discharge was traced at its attack tick').toBe(bridgeShots.length);
+  expect(health(bridge, bridgeTarget), `native L3 bridge handgun trace; player=${JSON.stringify(bridge.entities.get(1)!.transform)} target=${JSON.stringify(bridge.entities.get(bridgeTarget)!.transform)} shots=${bridgeShots.length} trace=${JSON.stringify(bridgeTrace)}`).toBeLessThan(1000);
+
+  // The hit path is shared campaign-wide. Run the same three-second native
+  // point-blank probe at each other on-foot level's player start. L9 starts
+  // inside its APC and has no carried-weapon attack until the forced crash.
+  for (const level of ['L1', 'L2', 'L4', 'L5', 'L6', 'L7', 'L8', 'L10'] as const) {
+    const w = await loadLevel(level, 1, 'high'); worlds.push(w);
+    const p = w.entities.get(1)!;
+    missionControls(w).teleport('player', { x: p.transform.x, z: p.transform.z });
+    const at = { x: p.transform.x + .1, z: p.transform.z };
+    equip(w, ['weapon.handgun']);
+    const target = dummy(w, at.x, at.z, 1000);
+    Object.assign(w.entities.get(target)!.transform, at, { y: w.districts!.groundHeight(at.x, at.z) + .7 });
+    w.spatial.set(target, at.x, at.z);
+    w.storyLock = null; w.missions!.state.phase = 'playing'; w.missions!.state.cinematic = null;
+    w.setInput({ aim: { x: 1, z: 0 }, aimPoint: at, left: { down: true, held: true, up: false } });
+    step(w, 180); w.clearInput();
+    const shots = w.events.events().filter(event => event.type === 'combat.attack' && event.sourceId === 1 && event.actionId === 'weapon.handgun');
+    const first = shots.find(event => event.type === 'combat.attack');
+    const ray = first?.type === 'combat.attack' ? w.combat!.query.ray(1, { ...first.position, y: first.position.y + .45 }, first.direction, rosterAction('weapon.handgun').range) : null;
+    expect(health(w, target), `${level} native 3s point-blank handgun aim=${JSON.stringify(at)} player=${JSON.stringify(p.transform)} target=${JSON.stringify(w.entities.get(target)!.transform)} attacks=${shots.length} ray=${ray?.id ?? null}`).toBeLessThan(1000);
+  }
 });
 
 test('explosives: landing clamps to range, fuse, distance falloff, cover line of sight, self 30 % and escort 100 %', async () => {
