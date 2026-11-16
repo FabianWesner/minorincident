@@ -67,3 +67,7 @@ Prepared a sequential camera-only identity-checked sweep of every resolved wreck
 ## Probe LOD identity correction
 
 Hero slots can contain temporary lower LOD prototypes. Probe now reports `meshLod` separately from slot `lod` and excludes placeholders. Typecheck and lint pass. Second bounded L3 sweep attempt exited 75 before execution (quiet=false, load 4.11/3.70/3.73); no new measurement. Earlier receipt labelled lod0 establishes slot identity only, not independently verified LOD0 prototype identity.
+
+## Complete L3 runtime gap sweep
+
+Third bounded attempt admitted and completed. Full registered L3 HIGH WebGL2 camera-only sweep measures all 23/23 resolved wreck identities, zero missing rows, all reported gaps 0 cm. Receipts retain matrix, origin, slot and actual mesh LOD per identity in qa.json. This is numerical grounding evidence for L3 only; requested close-up visual review and WebGPU comparison are still pending.
