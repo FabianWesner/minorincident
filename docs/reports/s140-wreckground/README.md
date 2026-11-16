@@ -51,3 +51,7 @@ At the first stationary flag, #296 has radius 0.55 m and no cached path. Its sel
 ## Rejected Alpha recovery experiment
 
 Broadening the existing wide fallback to scripted L4 goals when any breach is open did not move an Alpha placed at the captured west position in a 600-tick extension of the existing fixture. That fixture opens north, not west, so it does not reproduce the real topology. Removed both the attempted source change and the mismatched fixture extension; the validated collapse fix remains intact. Next focused reproduction must open the west segments and retain actual controller ownership. No Alpha fix is claimed.
+
+## Renderer contact probe
+
+Added read-only `DistrictView.wreckGroundGaps()`, reusing the existing prop ground-contact measurement against the drawn support. It returns placement identity, asset/decay, selected resident LOD, resolved placement matrix, district origin and gap. It covers only currently resident references and has not yet been exercised in browser; a residency sweep must prove coverage. Typecheck and lint pass. A native static-bake census covers 254/409 resolved placements; 155 need source fallback, so bake-only sampling cannot establish the campaign result.

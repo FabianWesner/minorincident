@@ -847,5 +847,120 @@
     "fixtureLimitation": "Existing regression opens north breach; captured west Alpha requires west topology. The experiment cannot establish fallback effectiveness for the real case.",
     "sourceRetained": false,
     "next": "Open west segments and reproduce actual controller ownership before testing recovery."
+  },
+  "wreckBakeCoverage": {
+    "stage": "Native static bake coverage and prototype minimum Y only; no terrain/contact gap conclusion",
+    "resolvedCount": 409,
+    "covered": 254,
+    "missingCount": 155,
+    "missingVariants": [
+      [
+        "veh.pickup-red",
+        "wrecked"
+      ],
+      [
+        "veh.sedan-blue",
+        "burned"
+      ],
+      [
+        "veh.sedan-red",
+        "burned"
+      ],
+      [
+        "veh.school-bus",
+        "wrecked"
+      ],
+      [
+        "veh.suv-dark",
+        "wrecked"
+      ],
+      [
+        "veh.sedan-white",
+        "burned"
+      ],
+      [
+        "veh.pickup-red",
+        "burned"
+      ],
+      [
+        "veh.school-bus",
+        "burned"
+      ],
+      [
+        "veh.wreck",
+        "wrecked"
+      ],
+      [
+        "veh.ambulance",
+        "wrecked"
+      ],
+      [
+        "veh.sedan-white",
+        "wrecked"
+      ],
+      [
+        "veh.evac-bus",
+        "burned"
+      ]
+    ],
+    "prototypeMinY": [
+      [
+        "veh.wreck",
+        "",
+        -0.0
+      ],
+      [
+        "veh.sedan-red",
+        "wrecked",
+        0.0
+      ],
+      [
+        "veh.sedan-green",
+        "wrecked",
+        -0.0
+      ],
+      [
+        "veh.military-truck",
+        "wrecked",
+        -1e-05
+      ],
+      [
+        "veh.suv-dark",
+        "burned",
+        0.00194
+      ],
+      [
+        "veh.police-sedan",
+        "wrecked",
+        -0.0
+      ],
+      [
+        "veh.tank",
+        "wrecked",
+        -0.00747
+      ],
+      [
+        "veh.sedan-blue",
+        "wrecked",
+        0.0
+      ],
+      [
+        "veh.police-sedan",
+        "burned",
+        -0.0
+      ],
+      [
+        "veh.military-apc",
+        "wrecked",
+        -0.01468
+      ]
+    ]
+  },
+  "wreckProbe": {
+    "method": "DistrictView.wreckGroundGaps",
+    "scope": "Resident selected LOD meshes only; returns identity, resolved reference matrix, district origin and minimum vertex-to-drawn-support gap. Full campaign coverage still requires residency sweep.",
+    "typecheck": "passed",
+    "lint": "passed",
+    "runtimeValidated": false
   }
 }
