@@ -19,7 +19,7 @@ Current-worktree real-input acceptance is **not verified**. `npm run playtest` r
 
 ## Archived evidence reviewed
 
-The archived batch-112 report records HIGH road 1, HIGH road 2, HIGH shortcut and LOW road L9 runs reaching L10 with no skips; this is baseline evidence only. Its LOW bridge warnings at ticks 15571 and 15765 motivated this change. I opened the archived LOW capture at tick 15571 and reviewed it as a single-frame diagnostic; the APC is near the bridge marker amid boarders, and the HUD reads 14 m. See [review-sheet.csv](review-sheet.csv) for the compact source mapping. These archived results do not validate this patch.
+The archived batch-112 report records HIGH road 1, HIGH road 2, HIGH shortcut and LOW road L9 runs reaching L10 with no skips; this is baseline evidence only. Its LOW bridge warnings at ticks 15571 and 15765 motivated this change. I opened the archived LOW capture at tick 15571 and reviewed it as a single-frame diagnostic; the APC is near the bridge marker amid boarders, and the HUD reads 14 m. See [contact-sheet.jpg](contact-sheet.jpg) for current farm diagnostic frames. These archived results do not validate this patch.
 
 ## Still required
 
@@ -48,3 +48,5 @@ L10 follow-up: reuse the existing visible/uncollected health-kit observations, s
 Segmented L10 continuation fix: the campaign CLI now enables the existing `saveOnYield` UI flow for bounded single-level L10 sessions, so the live production Resume snapshot is saved before releasing the browser reservation. Typecheck, lint and the required remote suite pass (27 files, 105 passed / one skipped, 179.6 seconds). Runtime save-boundary verification and full L10 acceptance remain pending.
 
 Revised mortal HIGH L10 attempt (`l10-high-mortal-2`) was stopped for route diagnosis after a navigation warning at tick 14685 near x881. Final observation reached `cure-pace-3`, x934.6/z−42.575, 46.7 HP, still carrying the axe, with five deaths observed. Nearby gun seeking did not yet establish successful reacquisition. Neither full-run completion nor live save-boundary behavior was verified. The two required successful full runs and archived death comparison remain open.
+
+Reviewed the current two-frame contact sheet (ticks 13536 and 14685): axe-only courier beside farm buildings, low health and close contacts. L10 travel melee now backs away while mouse-attacking any contact within 2.6 m, before the low-health/crowd threshold. Typecheck, lint and remote suite pass (27 files, 105 passed / one skipped, 185.0 seconds). The effect on mortality remains unverified.

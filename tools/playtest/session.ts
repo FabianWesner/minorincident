@@ -928,6 +928,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       aimHeld = threat.id;
       return true;
     }
+    if (e.level === 'L10' && e.player && !['mega', 'hold', 'release', 'epilogue'].includes(e.step ?? '') &&
+        !ranged.test(e.player.current ?? '') && threat.d < 2.6) {
+      // Axe travel must create space before damage accumulates, including one
+      // fast contact. Standing to swing lets the following crowd surround us.
+      await press(awayKeys(e, threat));
+      await page.mouse.move(threat.aim.x, threat.aim.y);
+      if (aimHeld === null) await page.mouse.down();
+      aimHeld = threat.id;
+      return true;
+    }
     if (threat.d > reach) { // walk toward the ally's attacker
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await walkTowardScreenPoint(s.x, s.y); lastClick = Date.now(); }
       return true;
