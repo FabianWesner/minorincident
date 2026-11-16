@@ -3851,5 +3851,34 @@
       3.8193359375
     ],
     "busy": []
+  },
+  "westAlphaAdmissionRoute": {
+    "diagnosticOnly": true,
+    "forcedFallbackUntil": 10000,
+    "ticks": 600,
+    "travelM": 0.40750490961384667,
+    "pathNodes": 22,
+    "pathIndex": 1,
+    "solidClearAtFinal": false,
+    "firstNodes": [
+      [
+        -36.25,
+        3.75
+      ],
+      [
+        -36.25,
+        4.25
+      ],
+      [
+        -36.25,
+        4.75
+      ],
+      [
+        -35.75,
+        4.75
+      ]
+    ],
+    "productionChange": false,
+    "conclusion": "Admission connectivity does not prove a body-clear route; observed movement stalls at pathIndex 1 under solid collision."
   }
 }

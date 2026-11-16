@@ -93,3 +93,7 @@ Sequential HIGH WebGL2 batch completed within one reservation. L5: 25/25 measure
 Baked-layout marker references lacked placementId, unlike runtime placements. They now retain district/marker identity for contact audits. Typecheck and lint pass; runtime matching remains to be verified. L9/L10 batch failed admission before execution after 60 s; the quiet guard included this lane’s overlapping typecheck. Future browser admission must run without overlapping CPU checks. No late-level measurements were produced.
 
 L9/L10 retry with no overlapping lane CPU check also exited 75 before browser execution: quiet=false, load 3.99/3.99/3.82, busy=[] after 60 s. No new gap coverage. Native Alpha work remains available, so browser admission alone does not block the entire goal.
+
+## Admission route collision evidence
+
+Diagnostic forced admission-grid routing (no production source change) obtains 22 route nodes but advances only to pathIndex 1 over 600 ticks, travels 0.408 m, and ends with SolidRegistry.clear false at the actual body radius. First route nodes: (-36.25,3.75), (-36.25,4.25), (-36.25,4.75). This shows why coarse-grid path existence alone cannot prove a traversable Alpha route. Future fix must preserve body clearance while routing around the blocker; shrinking body stats or bypassing collision is not justified.
