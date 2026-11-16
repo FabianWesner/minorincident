@@ -559,7 +559,12 @@ export class InfectedSystem {
   }
   /** Phase 4: an unnoticed scripted walker keeps its authored point. */
   private followScript(e: EntitySnapshot, b: InfectedState): boolean {
-    if (b.alphaType && this.provoker(b)) { delete b.scripted; return false; }
+    const provoker = b.alphaType ? this.provoker(b) : undefined;
+    // A hit still selects the target, but must not erase the route through
+    // L4's wire while that target remains behind a body-blocking segment.
+    if (provoker && !(this.world.scenario === 'L4' && b.scripted && !this.infectedNav.visible(e.transform, provoker.transform, e.combat!.radius))) {
+      delete b.scripted; return false;
+    }
     // A windup already in progress must resolve before scripted travel resumes.
     if (!b.scripted || b.specialAttack || b.state === 'attack') return false;
     const retreatRun = b.clearingStreet || b.l4ArmyApproach && this.world.missions?.state.l4?.phase === 'collapse';

@@ -197,3 +197,7 @@ Both original LOW flags have no static overlap at observation. West #228 has emp
 ## Opposite-angle recaptures
 
 Recaptured L6 l6-35 and L3 roadblock-1-2 from a closer opposite angle on explicitly selected webgl/webgpu; both pairs measure 0 cm. Opened all four full images. L3 now exposes wheel/curb contact, with neighboring truck overlap still visible. L6 shows a closer vehicle silhouette but remains too dark for confident visual contact review under production lighting. Thus one selected pair still has a visual-quality limitation; no lighting/material override was used. Receipts in qa.json.visualRecaptures.
+
+## Provoked Alpha route ownership fix
+
+Steering trace proves LOW #228 discarded its script because courier provocation bypassed followScript, then sought the courtyard directly every tick. L4 Alphas now retain authored breach routing while the provoker remains behind a body-blocking segment; direct reachable provocation still interrupts. LOW full run completes at tick 17,920 with 5,186 eligible windows and no scripted-waypoint flags. One Alpha #255 flag is attack state targeting #123 beside the closed south breach; event-ledger attribution remains pending. Focused L4 test, typecheck and lint pass. HIGH rerun and latest remote suite required.
