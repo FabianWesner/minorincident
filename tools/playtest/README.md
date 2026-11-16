@@ -17,3 +17,5 @@ The L9 `Hold the hatch` objective allows attacks on rendered infected while the 
 The L9 driver follows the live bridge objective after evacuation and uses physical reverse/steer input when the APC revisits the same approach without closing on its target. L10 travel backs away from nearby crowds at low health and heads for a nearby visible medkit when one is available. An empty opening objective HUD does not accrue stall time. Reaching the configured per-level time cap is recorded as a P3 `sample-cap` and ends the sample without a `cannot-finish` P0.
 
 During L10 travel the driver also approaches visible unowned guns and visible medkits when nearby enemies leave room to collect them. These pickups use ordinary movement input.
+
+For long mortal L10 runs, `--session-seconds 480` saves the live production Resume snapshot through pause/settings before releasing each browser reservation. The next segment resumes through the normal menu. Segment logs remain separate and must be considered together for full-run evidence.

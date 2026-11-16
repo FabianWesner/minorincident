@@ -6,7 +6,8 @@
     "L9 live bridge steering gains loop detection and physical reverse/re-approach recovery",
     "L10 low-health crowd retreat and nearby medkit steering during travel",
     "empty HUD objective resets visible stall timing",
-    "configured level cap emits P3 sample-cap and stops without cannot-finish P0"
+    "configured level cap emits P3 sample-cap and stops without cannot-finish P0",
+    "Bounded single-level L10 sessions save live Resume through pause/settings before yielding"
   ],
   "checks": {
     "build_qa": "pass",
@@ -26,7 +27,7 @@
       "files": 27,
       "passed": 105,
       "skipped": 1,
-      "seconds": 175.4,
+      "seconds": 179.6,
       "runner": "46.225.66.90"
     }
   },
