@@ -1310,7 +1310,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (frame.playMs > 500) await issue(frame.playMs > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(frame.playMs)} ms at tick ${frame.tick}`, false, frame);
       }
     }
-    if (run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) {
+    if (run && !e.ending && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) {
       await press([]); await releaseAim();
       run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
       run.weaponsEnd = e.player?.weapons ?? [];
