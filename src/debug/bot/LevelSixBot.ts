@@ -64,8 +64,14 @@ export class LevelSixBot {
     if(closingHatch)return f;
     if(s.phase==='shelter'||s.phase==='first'||s.phase==='fails'){go({x:0,z:4},.6,'shelter');return f;}
     if(fights){
-      const lag=friends.filter(r=>r.straggler&&!r.rejoined).sort((a,b)=>w.entities.get(a.id)!.transform.x-w.entities.get(b.id)!.transform.x)[0];
-      if(lag){const at=w.entities.get(lag.id)!.transform;if(!lag.collected){go(at,2,`collect-${lag.id}`);return f;}if(p.x-at.x>5)return f;}
+      // Only turn back for an actual attack on a straggler. Distance alone
+      // used to send the courier repeatedly across the tunnel to fetch a
+      // follower whose catch-up route was already closing the gap.
+      const lag=friends.filter(r=>r.straggler&&!r.rejoined).find(r=>w.infected!.active.some(e=>{
+        const brain=e.infected!;
+        return e.health.current>0&&!e.hidden&&brain.state==='attack'&&(brain.targetId||brain.l1?.targetId||brain.heardTargetId)===r.id;
+      }));
+      if(lag){const at=w.entities.get(lag.id)!.transform;if(!lag.collected){go(at,2,`rescue-${lag.id}`);return f;}if(p.x-at.x>5)return f;}
       const gate=s.gates.find(g=>!g.closedAt&&p.x<g.x+8&&friends.every(r=>w.entities.get(r.id)!.transform.x>g.x+2));
       if(gate){if(go(LevelSixSubway.gateWait(gate.x),.4,`gate-${gate.id}`))f.interact=true;return f;}
       const tail=friends.length?Math.min(...friends.map(r=>w.entities.get(r.id)!.transform.x)):s.leaderX;

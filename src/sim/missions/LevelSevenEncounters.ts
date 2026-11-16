@@ -7,7 +7,7 @@ import { l7Encounters, l7Rocket } from '../../data/l7';
 import { l3 } from '../../data/l3';
 import { alphaMixFor } from '../../data/alphaTypes';
 import { infectedHumanBite } from '../../data/infected';
-import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
+import { corpseDetour, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
 
@@ -342,10 +342,6 @@ export class LevelSevenEncounters {
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
     const target = nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35);
-    if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
-      this.state.waitAt = w.tick + 300;
-      this.warn(e, 'wait');
-    }
     if (distance(e.transform, target) > .6) {
       // Reuse the crowd's connected route across the city. Until that field
       // reaches a follower, short searches fit the shared A* scratch budget.
@@ -451,12 +447,12 @@ export class LevelSevenEncounters {
       if (this.trail.length > 128) this.trail.shift();
     }
     if (this.state.started || this.world.missions?.state.steps.departure?.status === 'active') {
-      let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
+      let remaining = 1.4 + Math.floor(slot / 3) * .8, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          const side = slot % 2 - .5;
+          const side = (slot % 3 - 1) * .8;
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();
