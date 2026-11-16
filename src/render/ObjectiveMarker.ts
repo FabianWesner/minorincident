@@ -22,6 +22,10 @@ export class ObjectiveMarker extends Group {
   // L5 search spots are unmarked (Q-302, found by sound); this marker draws the single current objective.
   update(_storyShot?: boolean, zoomScale = 1):void{
     const mission=this.world.missions,reached=!!mission?.state.l3?.crossedAt,anchor=reached||mission?.state.marker==='l3-route'?mission!.def.anchors['l3-zone']:markerAnchor(mission);
+    const cellarDoorTarget = mission?.def.id === 'L4' && mission.state.steps.hide?.status === 'active'
+      && !!anchor && Math.hypot(anchor.x - mission.def.anchors['l4-cellar-door'].x, anchor.z - mission.def.anchors['l4-cellar-door'].z) < .01;
+    // The final L4 waypoint sits in the storefront entrance; keep its ring visible through the shell at the door.
+    this.ringMaterial.depthTest = !cellarDoorTarget;
     const metroDone=!!mission?.state.l5?.shutterAt;
     this.material.color.set(reached?'#71e8a3':'#ffcf77');this.ringMaterial.color.copy(this.material.color);this.arrow.visible=!reached;
     // Camera pull-backs retain the active waypoint, so guidance survives the reveal.

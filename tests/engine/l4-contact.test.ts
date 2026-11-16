@@ -2,7 +2,7 @@ import { expect, test, vi } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Box3, PerspectiveCamera, Vector3 } from 'three/webgpu';
 import { ColliderDesc, Ray, ShapeType } from '@dimforge/rapier3d-compat';
-import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations, l4RearTruckParkOffset } from '../../src/data/l4';
+import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations, l4RearTruckParkOffset, l4CollapseGroups } from '../../src/data/l4';
 import physicsAssets from '../../src/data/physicsAssets';
 import { l4Breaches, l4BreachSite, l4PerimeterSegments, l4PerimeterWalls } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
@@ -12,6 +12,7 @@ import { bossHitFlashTicks, hitFlashTicks } from '../../src/render/CrowdView';
 import { pickBodies } from '../../src/render/characters/PickBodies';
 import { updateAlly } from '../../src/sim/outbreak/Allies';
 import { respawnAtCheckpoint } from '../../src/sim/missions/Respawn';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
@@ -24,7 +25,16 @@ async function checkMortalCellarEscape(): Promise<void> {
   try {
     mission.loadCheckpoint('line-break');
     expect(l4.director.escape.route).toEqual(l4.finale.route);
+    const nav = world.infected!.nav, door = mission.def.anchors['l4-cellar-door'];
+    const westHarbor = nav.nearestCell(-44, -37.4, .45), cellar = nav.nearestCell(door.x, door.z, .45);
+    expect(nav.clear(door.x, door.z, .45), 'the cellar interaction anchor stays clear at the final approach').toBe(true);
+    expect(nav.path(westHarbor, cellar, [], 100000), 'the final Harbor approach remains connected to the cellar door').toBeTruthy();
     const player = world.entities.get(1)!;
+    Object.assign(player.transform, { x: -80, z: -40 });
+    const finalMarker = markerAnchor(mission);
+    expect(finalMarker, 'the last street turn exposes the cellar entrance').not.toBeNull();
+    expect(finalMarker!.x).toBeCloseTo(door.x);
+    expect(finalMarker!.z).toBeCloseTo(door.z);
     Object.assign(player.transform, { x: 48.5, z: -37.4 });
     world.physics.playerBody!.setTranslation(player.transform, true);
     world.update();
@@ -707,22 +717,37 @@ async function checkOutsideWireRouting(): Promise<void> {
   const { world: replay, mission: campaign } = await loadL4(1, 'low');
   try {
     const nav = replay.infected!.nav;
+    const streetEntry = nav.nearestCell(-64, -39.5, .45);
+    for (const index of [20, 22]) {
+      const [x, z] = l4CollapseGroups[index];
+      const cell = nav.nearestCell(x, z, .45);
+      expect(cell, `L4 collapse encounter ${index} has a walkable spawn`).toBeGreaterThanOrEqual(0);
+      expect(nav.path(cell, streetEntry, [], 1000000), `L4 collapse encounter ${index} can reach western Harbor`).toBeTruthy();
+      const routeDistance = Math.min(...l4.finale.route.slice(1).map(([bx, bz], i) => {
+        const [ax, az] = l4.finale.route[i], dx = bx - ax, dz = bz - az;
+        const t = Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz)));
+        return Math.hypot(x - ax - t * dx, z - az - t * dz);
+      }));
+      expect(routeDistance, `L4 collapse encounter ${index} leaves the cellar route clear`).toBeGreaterThan(8);
+    }
     const windows = new Map<number, { tick: number; x: number; z: number; travel: number }[]>();
     const stopped = new Map<number, unknown>();
+    let breachState = "";
     const hits = new Map<number, number[]>();
     replay.events.on('barricade.damaged', event => {
       if (event.type === 'barricade.damaged' && event.amount > 0) hits.set(event.sourceId, [...(hits.get(event.sourceId) ?? []), event.tick]);
     });
+    // Only query expensive connectivity when an actor has actually stopped for the full observation window.
     const result = runL4(replay, campaign, 'complete', { seed: 1, god: true, maxSeconds: 520, stopWhen: () => {
       const player = replay.entities.get(1)!, goal = nav.nearestCell(player.transform.x, player.transform.z, .35);
+      const breaches = JSON.stringify(campaign.state.l4!.breaches);
+      if (breaches !== breachState) { windows.clear(); breachState = breaches; }
       const seen = new Set<number>();
       for (const e of replay.infected!.active) {
         if (e.health.current <= 0 || e.hidden || e.emerging) continue;
         const { x, z } = e.transform, p = l4.perimeter;
         if (x >= p.x0 && x <= p.x1 && z >= p.z0 && z <= p.z1) continue;
         if (Math.min(...l4PerimeterWalls.map(w => Math.hypot(Math.max(0, Math.abs(x - w.x) - w.halfX), Math.max(0, Math.abs(z - w.z) - w.halfZ)))) > 2) continue;
-        const from = nav.nearestCell(x, z, e.combat?.radius ?? .35);
-        if (from < 0 || goal < 0 || !nav.path(from, goal, [], 1000000)) continue;
         seen.add(e.id);
         const rows = windows.get(e.id) ?? [], last = rows.at(-1);
         const travel = (last?.travel ?? 0) + (last ? Math.hypot(x - last.x, z - last.z) : 0);
@@ -730,6 +755,8 @@ async function checkOutsideWireRouting(): Promise<void> {
         while (rows.length && rows[0].tick < replay.tick - 301) rows.shift();
         windows.set(e.id, rows);
         if (rows.length > 301 && travel - rows[0].travel < .1) {
+          const from = nav.nearestCell(x, z, e.combat?.radius ?? .35);
+          if (from < 0 || goal < 0 || !nav.path(from, goal, [], 1000000)) continue;
           const damageTicks = (hits.get(e.id) ?? []).filter(t => t >= rows[0].tick && t <= replay.tick);
           // Repeated damage to the rail is active combat, not a lost route.
           if (damageTicks.length < 2 && !stopped.has(e.id)) stopped.set(e.id, {

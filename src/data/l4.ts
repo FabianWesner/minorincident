@@ -238,6 +238,8 @@ export const l4 = {
     [-30.5, -2], [-22, 15], [-16, -11], [-26, 24], [-40.5, 8],                         // plaza ring and west
     [-56, 18], [-44, -37.5], [-4, -37.2], [30, -37.2], [52.5, -2], [60, 22], [58, 43],   // both routes to Kessler Lane
     [38, 43.2], [18, 43.2], [-6, 43.4],
+    // Recovery on the two contact-heavy turns: stay on the escape sidewalk to collect.
+    [-4, 38], [-1, 42], [-73, -39.5], [-79, -42],
   ] as readonly P[] },
   checkpoints: ['arrival', 'turn', 'line-1', 'nests', 'armor', 'line-break'] as const,
   /** Bots (section 8). Bands are provisional until the first green run (staging decision section 6). */
@@ -374,12 +376,12 @@ export const l4CollapseGroups: readonly (readonly [number, number, number, numbe
   [20, 54, 2], [42, 54, 2, 2],
   [-84, -39.5, 3, 2], [-46, -37.4, 3], [-24, -37.4, 4, 2], [-4, -37.4, 4, 2], [18, -37.4, 4], [38, -37.4, 3], [50, -22, 4, 2], [50, -6, 4], [50, 12, 3, 2],
   [-46, 44, 3], [-20, 44, 4], [4, 44, 4], [26, 44, 3], [45, 44, 4], [58, 44, 3], [62, 28.6, 3],
-  // PO 2026-11-11 ("tons of tough zombies, add encounters on the street north"): three authored fights on the north street (plaza exit to Harbor Street west, the way the courier runs) and on Metro Road north (the marker's east loop). Same zombies as everywhere (no stat change): only count, mix and placement. Indices 18..20 are stable. No reserved slots (they would shrink the war's room during the hold); in the collapse they draw on the live cap directly.
+  // PO 2026-11-11 ("tons of tough zombies, add encounters on the street north"): authored street fights use reachable homes beside the route, leaving the sidewalk open for the courier. Same zombies as everywhere (no stat change): only count, mix and placement. Indices 18..20 are stable. No reserved slots (they would shrink the war's room during the hold); in the collapse they draw on the live cap directly.
   // 'heavy': heavies + riot/firefighter, the street holds them in the open crossing between the block fronts;
   // 'alpha': the first body is an Alpha, escorted by the same heavy-rich mix.
-  [-48, -39, 5, 0, 'heavy'], [-66, -40.2, 4, 0, 'alpha'], [48.5, -14, 5, 0, 'heavy'],
-  // r41-l4chase (r38-vqa P2: "L4 north street can be outrun ... sprinting gets her from the plaza exit to the cellar in 18 s"): a fourth fight stands in the street in front of the cellar approach (the door is at (-79.3, -45.3)), so a sprinting courier meets a held choke at the end of the run and must fight or take hits. Index 21 is stable.
-  [-74, -40.4, 4, 0, 'heavy'],
+  [-48, -39, 5, 0, 'heavy'], [-60, -20, 4, 0, 'alpha'], [48.5, -14, 5, 0, 'heavy'],
+  // r41-l4chase (r38-vqa P2: "L4 north street can be outrun ... sprinting gets her from the plaza exit to the cellar in 18 s"): a fourth fight waits beside the cellar approach rather than on its sidewalk; a sprinting courier still has to react to the group. Index 21 is stable.
+  [-60, -54, 4, 0, 'heavy'],
 ];
 /** Soldier pockets of the collapse (hold, engaged) with the infected that rush them, along the two routes. */
 export const l4Pockets: readonly { at: P[]; foes: P }[] = [
