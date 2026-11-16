@@ -132,3 +132,7 @@ Replaced the sole retained contact sheet with four reviewed frames: L3 bridge, p
 ## Manual HIGH escape attempt
 
 Another540-second HIGH normal-camera run (`test-results/playtest/b113-l4-manual-high`) reached cellar escape but did not finish. Used existing control-file physical input:10s KeyA, then10s KeyW, then returned to driver. Opened `captures/campaign-manual-west.jpg` (96HP near residential fence) and `campaign-manual-north.jpg` (47HP back toward plaza). This manual route did not improve completion; steering/combat attribution remains open. No skips, teleport, immortality or simulation mutation. Additional stationary warnings remain unqualified; intentional cap is not product P0.
+
+## Same-actor south-breach arrivals
+
+Authored L4 south perimeter is z22.5 (`src/data/l4.ts`). Existing identified histories show live HIGH Alpha #372 and LOW #246 crossing from z>22.5 to z≤22.5 within perimeter X bounds. Exact before/after tick/transforms are in `observedSouthCrossings`. These establish exterior-to-interior arrival for the identified actors alongside opened-breach imagery. They do not prove every ordinary infected route or zero crowd stalls across the full level.

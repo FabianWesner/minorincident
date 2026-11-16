@@ -1712,5 +1712,171 @@
       }
     ],
     "review": "Both captures opened; first escaped crowd at96HP near fence; second returned plaza at47HP. Returned driver did not finish. No skips or game-state mutation."
+  },
+  "observedSouthCrossings": {
+    "authoredBoundaryZ": 22.5,
+    "source": "src/data/l4.ts l4.perimeter",
+    "crossings": [
+      {
+        "tier": "high",
+        "before": {
+          "tick": 9771,
+          "id": 372,
+          "transform": {
+            "x": -17.568779652737714,
+            "y": 0.75,
+            "z": 24.016940029555002,
+            "yaw": 1.7021769112967933
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 661,
+              "stage": "active",
+              "startTick": 9694,
+              "activeTick": 9742,
+              "cooldownExpiry": 10222,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 372,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.97926636142176,
+                "z": 28.478158930187604,
+                "radius": 1,
+                "dx": -0.13100295362576297,
+                "dz": -0.9913819779183632
+              },
+              "hitIds": [
+                165,
+                166
+              ]
+            },
+            "targetId": 0
+          }
+        },
+        "after": {
+          "tick": 9801,
+          "id": 372,
+          "transform": {
+            "x": -18.158292944053667,
+            "y": 0.75,
+            "z": 19.5557211289224,
+            "yaw": 1.7021769112967933
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 661,
+              "stage": "active",
+              "startTick": 9694,
+              "activeTick": 9742,
+              "cooldownExpiry": 10222,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 372,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.97926636142176,
+                "z": 28.478158930187604,
+                "radius": 1,
+                "dx": -0.13100295362576297,
+                "dz": -0.9913819779183632
+              },
+              "hitIds": [
+                165,
+                166
+              ]
+            },
+            "targetId": 0
+          }
+        }
+      },
+      {
+        "tier": "low",
+        "before": {
+          "tick": 12074,
+          "id": 246,
+          "transform": {
+            "x": -17.504567135046848,
+            "y": 0.75,
+            "z": 25.114275762369914,
+            "yaw": 1.6716904137181225
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 424,
+              "stage": "active",
+              "startTick": 11990,
+              "activeTick": 12038,
+              "cooldownExpiry": 12518,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 246,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.945554502595623,
+                "z": 30.63605128087486,
+                "radius": 1,
+                "dx": -0.10072299683804677,
+                "dz": -0.99491450783872
+              },
+              "hitIds": []
+            },
+            "targetId": 0
+          }
+        },
+        "after": {
+          "tick": 12104,
+          "id": 246,
+          "transform": {
+            "x": -17.95782062081811,
+            "y": 0.75,
+            "z": 20.637160477095634,
+            "yaw": 1.6716904137181225
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 424,
+              "stage": "active",
+              "startTick": 11990,
+              "activeTick": 12038,
+              "cooldownExpiry": 12518,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 246,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.945554502595623,
+                "z": 30.63605128087486,
+                "radius": 1,
+                "dx": -0.10072299683804677,
+                "dz": -0.99491450783872
+              },
+              "hitIds": [
+                122,
+                123
+              ]
+            },
+            "targetId": 0
+          }
+        }
+      }
+    ],
+    "qualification": "Same living identified Alpha outside-to-inside crossing in each tier; bounded evidence, not every ordinary actor route."
   }
 }
