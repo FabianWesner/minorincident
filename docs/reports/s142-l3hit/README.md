@@ -27,3 +27,5 @@ The original shot-by-shot log is unavailable; the native reproduction establishe
 ## Final scope audit
 
 Real infected.runner production-spawn probes now pass in L1, L2, L4, L5, L6, L7, L8 and L10 with aim tracking the target each tick for three seconds. The existing L3 real-runner bridge test covers eight seconds. These are controlled contact probes, not full campaign scans. L9 on-foot crash combat and broader campaign-window scanning remain open. The real-infected fixture and persisted complete eight-second attack trace are now present.
+
+Native 120-second campaign windows scanned L1, L2 and L4–L10 (seed 1, complete policy). No >2-second zero-damage flags occurred. L4 had 38 qualifying contact ticks and L7 had 59; other windows had none, so those windows do not prove close-contact behavior. L8 produced no courier attacks. The scan is bounded and does not claim full campaign completion. Remaining audit: ensure infected height follows the raised bridge approach after spawning on lower street terrain.
