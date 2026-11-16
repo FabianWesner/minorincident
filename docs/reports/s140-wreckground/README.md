@@ -35,3 +35,7 @@ Repeated full-run scan reproduces the same three stationary identities. Crawler 
 ## Collapse breach navigation correction
 
 Confirmed lifecycle defect: `funnel()` ran only during war, leaving slow exterior approach arrivals in collapse at completed scripted waypoints. Continue the existing funnel updates in collapse. Extended `checkOutsideWireRouting` with a crawler arriving at its exterior waypoint during collapse; it must advance the approach within 30 ticks. Focused L4 contact test, typecheck and lint pass. Full native after-scan, Alpha diagnosis and prescribed remote suite remain pending.
+
+## Full-run validation of collapse correction
+
+After d7b89cf8, seed-1 HIGH complete mission again reaches progression. The scan evaluates 16,827 rolling windows and no longer flags crawler #233. Alpha #296 and #372 still flag. Controller state is now cloned at observation: #296 is west/charge at an open west breach; #372 is south/walk as its breach opens. Their navigation remains open. Prescribed remote npm test passes: 27 files, 105 passed / 1 skipped, complete 150-case budget collection, 134.0 s under 240 s. Typecheck and lint passed on the same source revision. No check remains running.

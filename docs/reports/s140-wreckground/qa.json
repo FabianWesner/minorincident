@@ -549,5 +549,114 @@
     ],
     "qualifyingCount": 29,
     "snapshotCaveat": "Actor scalar fields and scripted coordinate objects are retained at first flag; job and breaches were stored by reference and may reflect later controller state. Re-run with structuredClone before using job stage/openAt for causal attribution."
+  },
+  "outsideWireAfterCollapseFix": {
+    "seed": 1,
+    "tier": "high",
+    "profile": "complete",
+    "outcome": "complete",
+    "ticks": 18584,
+    "phase": "progression",
+    "turnAt": 1969,
+    "eligibleTicks": 50986,
+    "nearTicks": 64926,
+    "maxConcurrentCandidates": 22,
+    "rollingWindows": 16827,
+    "stationaryThresholdM": 0.1,
+    "stopped": [
+      {
+        "id": 296,
+        "archetype": "infected.alpha",
+        "start": 3005,
+        "end": 3306,
+        "travel": 0,
+        "position": {
+          "x": -36.74867099529254,
+          "y": 0.7,
+          "z": 3.7673575875408876,
+          "yaw": -0.7873789806539067
+        },
+        "state": "attracted",
+        "scripted": {
+          "x": -32.1,
+          "z": 6.105882352941178
+        },
+        "targetId": 0,
+        "phase": "war",
+        "job": {
+          "alphaId": 296,
+          "job": "west",
+          "stage": "charge",
+          "startedAt": 2329,
+          "breach": "west"
+        },
+        "breaches": {
+          "west": {
+            "announcedAt": 2329,
+            "openAt": 3005,
+            "arrivals": 1
+          }
+        }
+      },
+      {
+        "id": 372,
+        "archetype": "infected.alpha",
+        "start": 7584,
+        "end": 7885,
+        "travel": 0.098670225439637,
+        "position": {
+          "x": -15.80683821698411,
+          "y": 0.75,
+          "z": 23.462330424348742,
+          "yaw": 2.395262681268739
+        },
+        "state": "chase",
+        "scripted": {
+          "x": -16.769230769230774,
+          "z": 29.5
+        },
+        "targetId": 0,
+        "phase": "war",
+        "job": {
+          "alphaId": 372,
+          "job": "south",
+          "stage": "walk",
+          "startedAt": 7009,
+          "breach": "south"
+        },
+        "breaches": {
+          "west": {
+            "announcedAt": 2329,
+            "openAt": 3005,
+            "arrivals": 1
+          },
+          "north": {
+            "announcedAt": 3889,
+            "openAt": 5600,
+            "arrivals": 0
+          },
+          "south": {
+            "announcedAt": 7129,
+            "openAt": 7877,
+            "arrivals": 0
+          }
+        }
+      }
+    ],
+    "qualifyingCount": 33
+  },
+  "validation": {
+    "revision": "d7b89cf8",
+    "typecheck": "passed",
+    "lint": "passed",
+    "remoteUnitSuite": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "exit": 0,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "collectionBudgetCases": 150,
+      "seconds": 134.0
+    }
   }
 }
