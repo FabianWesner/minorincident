@@ -2184,5 +2184,119 @@
         "flags": []
       }
     ]
-  }
+  },
+  "movingCursorBrowserRegression": [
+    {
+      "tier": "high",
+      "turn": {
+        "committedAim": {
+          "x": 1,
+          "z": 0
+        },
+        "liveAim": {
+          "x": -1,
+          "z": 0
+        },
+        "minX": -0.02685546875,
+        "maxX": 2.135009765625
+      },
+      "setup": {
+        "id": 100,
+        "hp": 60,
+        "player": {
+          "x": 1168.9000244140625,
+          "y": 0.7049999833106995,
+          "z": -26,
+          "yaw": 0.3205919885488634
+        },
+        "target": {
+          "x": 1169.9800244140624,
+          "y": 0.7,
+          "z": -26,
+          "yaw": -3.141592653589793
+        }
+      },
+      "hp": 0,
+      "hits": [
+        {
+          "tick": 67,
+          "attackId": 1,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 100,
+          "position": {
+            "x": 1169.9800244140624,
+            "y": 0.7,
+            "z": -26,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0.4,
+          "amount": 60,
+          "damageType": "melee",
+          "type": "combat.hit"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "tier": "low",
+      "turn": {
+        "committedAim": {
+          "x": 1,
+          "z": 0
+        },
+        "liveAim": {
+          "x": -1,
+          "z": 0
+        },
+        "minX": -0.02685546875,
+        "maxX": 2.135009765625
+      },
+      "setup": {
+        "id": 100,
+        "hp": 60,
+        "player": {
+          "x": 1168.9000244140625,
+          "y": 0.7049999833106995,
+          "z": -26,
+          "yaw": 0.3205919885488634
+        },
+        "target": {
+          "x": 1169.9800244140624,
+          "y": 0.7,
+          "z": -26,
+          "yaw": -3.141592653589793
+        }
+      },
+      "hp": 0,
+      "hits": [
+        {
+          "tick": 67,
+          "attackId": 1,
+          "actionId": "weapon.fire-axe",
+          "sourceId": 1,
+          "targetId": 100,
+          "position": {
+            "x": 1169.9800244140624,
+            "y": 0.7,
+            "z": -26,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0.4,
+          "amount": 60,
+          "damageType": "melee",
+          "type": "combat.hit"
+        }
+      ],
+      "errors": []
+    }
+  ]
 }
