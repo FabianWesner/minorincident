@@ -549,17 +549,19 @@ export class Outbreak {
     // Otherwise a point-blank self-shot resets every native hold indefinitely.
     const needsRescue = c.ally?.role === 'officer' && this.world.missions?.def.l3 || c.ally?.role === 'soldier' && this.world.missions?.state.l4?.phase === 'collapse';
     if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier') && !needsRescue && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
-    if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
-      // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
-      if (this.world.infected!.holding(e.id) === 0) this.rescued(e);
-      return;
-    }
     const evacuation = this.world.missions?.l9?.driving.state;
     // At the trucks, a survivor struggles free after three seconds of holding.
     // Ordinary rescue releases the hold and keeps both actors vulnerable.
     if (evacuation && evacuation.evacuationAt !== null && evacuation.evacuating.includes(e.id) &&
         tick >= evacuation.evacuationAt + l9Course.evacuation.defendTicks && tick - c.entered >= 180) {
+      // A shove interrupts the infected's native hold as well as the civilian pose.
+      if (attacker?.infected) attacker.infected.grabHits++;
       this.rescued(e); return;
+    }
+    if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
+      // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
+      if (this.world.infected!.holding(e.id) === 0) this.rescued(e);
+      return;
     }
     const broken = !attacker?.infected || attacker.health.current <= 0 || !combatHeightReachable(attacker, e) || this.rescue.has(c.attacker) || (attacker.combat?.staggerUntil ?? 0) > tick
       || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > Math.max(l1Pedestrians.grabBreakM, (attacker.combat?.radius ?? .35) + (e.combat?.radius ?? .35) + 1.1);

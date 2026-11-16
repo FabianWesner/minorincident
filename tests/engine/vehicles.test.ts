@@ -175,7 +175,8 @@ async function l9InterruptedBoarding(): Promise<void> {
       s.evacuating.push(last);
       const grabber = world.infected!.spawn('infected.runner', { x: actor.transform.x, z: actor.transform.z }, { state: 'chase' });
       actor.civilian!.state = 'grabbed'; actor.civilian!.attacker = grabber; actor.civilian!.entered = world.tick; actor.civilian!.until = world.tick + 90;
-      world.npcs!.civilians.hold(grabber);
+      world.npcs!.civilians.release(grabber);
+      Object.assign(world.entities.get(grabber)!.infected!.l1!, { mode: 'bite', biteTargetId: last });
       const outbreak = world.npcs!.civilians.outbreak!;
       // Exercise the production hold handler at both sides of the deadline;
       // ordinary AI movement or guard fire must not make this pass early.
