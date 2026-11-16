@@ -1,37 +1,32 @@
-# s138-l9grab — L9 evacuation grab escape
+# s138-l9grab — L9 grabbed evacuation
 
-Implementation committed through `99dd10e7`. Acceptance remains incomplete.
+Implemented and verified on simulation revision `7daf5712`. Living evacuees struggle free within 180 ticks after Defense complete, including AI-owned holds and hidden APC exit handoffs. The ordinary saved/flee lifecycle resumes their truck route. An occupied exit target can complete at the nearby clear position already reached by separation, preventing repeated reseating. No zombie stats, corpse persistence, Defense-complete timing, or invulnerability rules changed.
 
-The active `Outbreak.held()` path now gives unboarded L9 roster members a three-second struggle after Defense complete, including interrupted APC disembarks. It interrupts the native infected hold via `grabHits`, then uses the ordinary saved/flee lifecycle. Zombies retain their stats and remain alive; corpses persist. No relocation or Defense-complete delay was added.
+## Acceptance evidence
 
-The existing L9 vehicle regression checks the AI-owned hold at ticks 179/180 and an actor outside the walking evacuation list, then requires native boarding within the deadline. Focused native fixtures pass. The latest required remote `npm test` passed: 105 passed, one platform skip, 133.9 seconds.
+| Final simulation run | Last boarding observed after Defense complete | Maximum grabbed age |
+| --- | ---: | ---: |
+| HIGH road 1 | 0.35 s | 0 ticks |
+| HIGH road 2 | 0.23 s | 0 ticks |
+| HIGH road 3 | 1.07 s | 0 ticks |
+| HIGH shortcut | 12.15 s | 180 ticks |
+| LOW road | 0.72 s | 0 ticks |
+| HIGH shortcut visual review | 10.75 s | 180 ticks |
 
-## Real input results
+All runs use mortal real input through tools/playtest, headless WebGPU and the browser pool, ports 5013/5014. Per-tick read-only grab tracking covers the post-defense window, including holds between census observations. HIGH road 1 passed evacuation but later stalled at the bridge; HIGH road 3 completed with four stationary-infected P2 observations. Other listed final runs completed with zero issues. These observations are retained in raw logs and are separate from the L9 threat audit.
 
-Three HIGH road runs observed completion at 0.78, 0.35 and 0.35 seconds after Defense complete on earlier revisions. Latest LOW road (`99dd10e7`) observed 0.57 seconds. Latest HIGH shortcut observed 12.88 seconds, with one stationary-infected P2. All use mortal real input and headless WebGPU via the browser pool, ports 5013/5014. Earlier shortcut evidence exposed two gaps subsequently fixed: AI-owned holds bypassed the deadline; interrupted disembarks were absent from the walking list.
+The existing L9 vehicle test covers crowded native s124/s126 fixtures and the s136 completed-save load. Its added regression exercises an AI-owned grab outside the walking roster at ticks 179/180 and requires native boarding within the deadline. Hidden-passenger and exit-reset gaps found during runtime verification were corrected. Earlier failing runs remain in test-results; they are not counted as acceptance passes.
 
-## Remaining verification
+## Gates
 
-The latest shortcut census has a same-attacker sampled grab span around 3.24 seconds. State-entry/event timing is needed to distinguish a continuous hold from repeated grabs; do not claim the three-second runtime requirement proven. The HIGH road matrix predates the last two corrections and needs final-revision confirmation. Vehicle-motion gate passed (HIGH/LOW native contact scenarios, exit 0). Final typecheck/lint/E31 and threat receipts need refreshing for the final revision.
+- Required remote `sh tools/remote/run.sh "$PWD" -- npm test`: pass, 105 passed / one platform skip, 128.4 s, all 150 registered cases retained.
+- `npm run verify -- E31`: pass, 106 tests / 27 files, 91.6 s (includes typecheck and lint).
+- Latest standalone typecheck and lint: pass.
+- L9 threat audit: skilled and passive complete, zero level flags. Aggregate PARTIAL_LEVEL_SELECTION reflects selecting only L9.
+- Refreshed HIGH/LOW vehicle-motion gate: pass, exit 0.
 
-I inspected [boarding.jpg](boarding.jpg), showing -1.6, +4.7 and +10.8 seconds around Defense complete, with progress from 0/4 to 3/4. The crowd and frame spacing prevent continuous individual boarding inspection; no claim of complete teleport/clipping verification is made. Raw captures remain under `test-results/playtest/s138-roster-high-shortcut/captures`.
+## Visual review and artifacts
 
-[qa.json](qa.json) contains compact census evidence. No deployment, push or main move occurred.
+I inspected [boarding.jpg](boarding.jpg), a final-revision sequence from -0.52 through +11.43 seconds around Defense complete. Visible survivors travel along the ground toward the trucks, boarding advances from 1/4 to 3/4, then the APC departs after all four board. No visible teleport or solid-object clipping was seen in those frames; the dense crowd obscures parts of the doorway. The full frames are under `test-results/playtest/s138-visual-final/captures`.
 
-A further HIGH shortcut with state-entry timing completed in 7.73 seconds, zero issues. Its sole post-defense grabbed sample was Okafor at age 10 ticks. The observer now logs `stateEnteredAt` and `grabAgeTicks`; no simulation state is changed. One-second sampling still cannot prove exact duration of every completed hold.
-
-Final simulation HIGH road reruns with per-tick grab audit completed at 0.3, 0.05, 0.36666666666666664 seconds, each with zero issues and zero grabbed ticks after Defense complete. `npm run verify -- E31` passed (106 tests, 27 files, 113.9 seconds). Refreshed L9 skilled/passive threat routes have zero level flags; aggregate flag is PARTIAL_LEVEL_SELECTION.
-
-## Latest crowded tick acceptance (`7daf5712`)
-
-`s138-exit-tick-shortcut` passed: last boarding observed at 12.15 seconds after Defense complete, maximum grab age exactly 180 ticks across 501 grabbed-tick samples, zero driver issues. This supersedes earlier grab-duration uncertainty. The previous hidden-passenger run exposed the exit reset loop; `53665cfe` keeps hidden hold clocks running and `7daf5712` allows completion at the already reached nearby clear point. Final simulation gates/matrix refresh and continuous visual review remain open.
-
-Latest simulation remote unit refresh passed: 105 passed, one platform skip, 128.4 seconds (exit 0). Typecheck and lint pass. LOW refresh could not launch: browser pool returned external-exclusive; this attempt is infrastructure-incomplete.
-
-Latest simulation L9 threat refresh (`test-results/s138-exit-threat`) completed skilled and passive with zero level flags; aggregate PARTIAL_LEVEL_SELECTION only. A second LOW refresh launch was refused external-exclusive; `tools/browser-status.sh` confirmed a live s139-openchecks exclusive lease and corresponding browser job.
-
-Latest exit-corrected LOW run passed: 0.7166666666666667 seconds after Defense complete, maximum grabbed age 0 ticks, zero issues. Latest E31 verification passed all 106 tests / 27 files in 91.6 seconds.
-
-Exit-corrected HIGH road matrix: 0.35, 0.23333333333333334, 1.0666666666666667 seconds after Defense complete, all with zero grabbed ticks. Run 1 later stalled at the bridge (L9 incomplete); run 2 completed with zero issues; run 3 completed with four stationary-infected P2s. These driver observations are retained and do not replace the separate zero-level-flag threat audit.
-
-Refreshed vehicle-motion gate on the exit-corrected simulation passed (exit 0; `/private/tmp/s138-exit-motion.log`). The remaining visual gap is final-revision boarding capture/review; older dense captures predate the exit correction. Final report reconciliation is still pending.
+[qa.json](qa.json) retains compact census evidence and final gate results under 200 KB. Native checks and per-tick timing support the numerical deadlines; the sheet records the inspected visual sequence. No deployment, push, main movement, zombie stat tuning, corpse deletion, or protected reference edits occurred.
