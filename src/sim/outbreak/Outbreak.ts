@@ -4,6 +4,7 @@ import { leastCrowdedModel, crowdAppearance, shirtTones, regularInfectedModels }
 import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
+import { l9Course } from '../../data/l9';
 import { l1v2 } from '../../data/l1v2';
 import { civilianRoles, l1Pedestrians } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
@@ -552,6 +553,13 @@ export class Outbreak {
       // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
       if (this.world.infected!.holding(e.id) === 0) this.rescued(e);
       return;
+    }
+    const evacuation = this.world.missions?.l9?.driving.state;
+    // At the trucks, a survivor struggles free after three seconds of holding.
+    // Ordinary rescue releases the hold and keeps both actors vulnerable.
+    if (evacuation && evacuation.evacuationAt !== null && evacuation.evacuating.includes(e.id) &&
+        tick >= evacuation.evacuationAt + l9Course.evacuation.defendTicks && tick - c.entered >= 180) {
+      this.rescued(e); return;
     }
     const broken = !attacker?.infected || attacker.health.current <= 0 || !combatHeightReachable(attacker, e) || this.rescue.has(c.attacker) || (attacker.combat?.staggerUntil ?? 0) > tick
       || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > Math.max(l1Pedestrians.grabBreakM, (attacker.combat?.radius ?? .35) + (e.combat?.radius ?? .35) + 1.1);

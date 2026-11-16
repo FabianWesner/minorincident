@@ -170,8 +170,24 @@ async function l9InterruptedBoarding(): Promise<void> {
       // Native fixture for the post-defense fallback: the normal route window
       // has elapsed and this survivor is well away from the truck row.
       actor.hidden = false; delete actor.passengerOf; actor.transform.x = 446; actor.transform.z = 13;
-      world.spatial.set(last, actor.transform.x, actor.transform.z); s.evacuating.push(last);
+      world.spatial.set(last, actor.transform.x, actor.transform.z);
       s.evacuationAt = world.tick - l9Course.evacuation.defendTicks - 480;
+      s.evacuating.push(last);
+      const grabber = world.infected!.spawn('infected.runner', { x: actor.transform.x, z: actor.transform.z }, { state: 'chase' });
+      actor.civilian!.state = 'grabbed'; actor.civilian!.attacker = grabber; actor.civilian!.entered = world.tick; actor.civilian!.until = world.tick + 90;
+      world.npcs!.civilians.hold(grabber);
+      const outbreak = world.npcs!.civilians.outbreak!;
+      // Exercise the production hold handler at both sides of the deadline;
+      // ordinary AI movement or guard fire must not make this pass early.
+      const held = outbreak as unknown as { held(entity: typeof actor): void };
+      actor.civilian!.until = world.tick + 1000;
+      actor.civilian!.entered = world.tick - 179;
+      held.held(actor);
+      expect(actor.civilian!.state).toBe('grabbed');
+      actor.civilian!.entered--;
+      held.held(actor);
+      expect(actor.civilian!.state, 'post-defense struggle releases at three seconds').toBe('flee');
+      expect(world.entities.get(grabber)!.health.current, 'escape leaves the attacker alive').toBeGreaterThan(0);
       const beforeFallback = { x: actor.transform.x, z: actor.transform.z };
       expect(l9.driving.text()).toContain('Survivors sprint to the trucks');
       world.update();
