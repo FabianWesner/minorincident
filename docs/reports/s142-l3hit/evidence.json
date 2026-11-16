@@ -70,14 +70,13 @@
     "typecheck": "passed after final cross-level probe and trace edits",
     "lint": "passed after final cross-level probe and trace edits",
     "qaBuild": "passed",
-    "browserHigh": "blocked: sandbox listen EPERM on 127.0.0.1:5021",
+    "browserHigh": "short real-input run launched successfully but capped before bridge; bridge confirmation pending",
     "browserLow": "not run",
-    "remoteUnitSuite": "not run: no healthy Hetzner runner; Mac fallback does not admit npm test"
+    "remoteUnitSuite": "PASS: 27 files, 105 passed / 1 skipped; 174.5 s within 240 s; collection 150/150 cases"
   },
   "open": [
     "Recover or recreate the exact B112 runtime state and persist its original attack-by-attack ray/target/hit trace to prove which body intercepted shots at #793.",
-    "Run HIGH then LOW headless browser confirmation when local server binding is available.",
-    "Run the remote npm test suite when a healthy Hetzner runner is available."
+    "Run HIGH then LOW headless browser confirmation when local server binding is available."
   ],
   "invariants": [
     "no infected stat changes",

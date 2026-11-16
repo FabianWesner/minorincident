@@ -230,6 +230,7 @@ test('melee: the swing hits inside its arc/range once per target and respects ma
 });
 
 test('guns: held fire cadence, reload timing, infinite reserve and seeded, bounded, serialized spread', async () => {
+  await checkPointBlankCombat();
   await checkRocketCadence();
   const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5, 0, 10000);
   w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 82);
@@ -251,7 +252,7 @@ test('guns: held fire cadence, reload timing, infinite reserve and seeded, bound
   } finally { pistol.spread = previous; }
 });
 
-test('point-blank handgun and axe attacks damage a living infected', async () => {
+async function checkPointBlankCombat() {
   // An infected can overlap the courier in a crowd. Neither a gun muzzle at
   // the target nor a melee strike at body-contact distance has a minimum range.
   for (const weapon of ['weapon.handgun', 'weapon.fire-axe']) {
@@ -320,7 +321,7 @@ test('point-blank handgun and axe attacks damage a living infected', async () =>
     const ray = first?.type === 'combat.attack' ? w.combat!.query.ray(1, { ...first.position, y: first.position.y + .45 }, first.direction, rosterAction('weapon.handgun').range) : null;
     expect(health(w, target), `${level} native 3s point-blank handgun aim=${JSON.stringify(at)} player=${JSON.stringify(p.transform)} target=${JSON.stringify(w.entities.get(target)!.transform)} attacks=${shots.length} ray=${ray?.id ?? null}`).toBeLessThan(1000);
   }
-});
+}
 
 test('explosives: landing clamps to range, fuse, distance falloff, cover line of sight, self 30 % and escort 100 %', async () => {
   const w = await arena(); equip(w); w.combat!.damage.god = true;

@@ -17,9 +17,9 @@ The original shot-by-shot log is unavailable; the native reproduction establishe
 
 ## Validation
 
-- Focused combat suite: 8 tests passed.
+- Regression merged into the existing gun test to keep collection at 150/150 cases. Full remote suite passed: 27 files, 105 passed and 1 skipped, 174.5 s within the 240 s budget.
 - TypeScript and lint passed after the final all-level probe and trace edits.
 - QA build passed.
-- HIGH browser confirmation could not start: the managed sandbox returned `listen EPERM` for `127.0.0.1:5021`. LOW was not attempted. The browser confirmation remains open.
-- The mandated remote unit suite was unavailable because `tools/remote/run.sh` found no healthy Hetzner runner; its local Mac slot does not admit `npm test`.
+- HIGH browser launched successfully after sandbox restrictions were lifted; its one-minute real-input run capped before reaching the bridge. Direct bridge HIGH then LOW confirmation remains open.
+- Remote suite completed successfully on runner 46.225.66.90.
 - The archived B112 attack-level ray trace is missing; the real-spawn native regression proves the product height defect and its correction.
