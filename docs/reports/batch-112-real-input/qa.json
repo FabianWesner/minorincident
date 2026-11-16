@@ -899,6 +899,130 @@
       ],
       "reviewed": "test-results/b112-review/l7.jpg",
       "assessment": "Completed 183 seconds, zero skips/issues. Atmospheric dark crowd escort, explicit wait/survivor-left-behind messages create babysitting feel; fire-lit departure appealing. No obvious geometry glitch in sampled frames."
+    },
+    {
+      "name": "b112-l8-high",
+      "raw": "test-results/playtest/b112-l8-high",
+      "run": [
+        {
+          "level": "L8",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 241,
+          "simSeconds": 238,
+          "maxNoProgressSeconds": 51.21666666666667,
+          "deaths": 0,
+          "assists": 2,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "sanctuary",
+              "text": "Follow Nadia \u00b7 5\u00a0m",
+              "tick": 14,
+              "marker": {
+                "anchor": "l8-route",
+                "ring": {
+                  "x": 3,
+                  "y": 0,
+                  "z": 66
+                },
+                "drawn": [
+                  3,
+                  0.82,
+                  66
+                ],
+                "playerY": 0.8399999737739563,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "escape",
+              "text": "Protect the group! \u00b7 3\u00a0m",
+              "tick": 10125,
+              "marker": {
+                "anchor": "central-plaza",
+                "ring": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  0,
+                  0.12,
+                  0
+                ],
+                "playerY": 0.8399999737739563,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "driverIssues": [
+        {
+          "level": "L8",
+          "tick": 5252,
+          "x": 17.8,
+          "z": 0.8,
+          "severity": "P2",
+          "kind": "stuck-at-ring",
+          "text": "21 s without objective progress standing at the ring (6.0 m); HUD: \"Follow Nadia \u00b7 6\u00a0m\"",
+          "captures": [
+            "captures/campaign-L8-5252-stuck-at-ring.jpg"
+          ],
+          "step": "sanctuary",
+          "objective": "Follow Nadia \u00b7 6\u00a0m"
+        },
+        {
+          "level": "L8",
+          "tick": 5269,
+          "x": 17.3,
+          "z": 0.3,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "21 s without objective progress (distance 6.0 m, no marker: false); HUD: \"Follow Nadia \u00b7 6\u00a0m\"",
+          "captures": [
+            "captures/campaign-L8-5269-stuck-navigating.jpg"
+          ],
+          "step": "sanctuary",
+          "objective": "Follow Nadia \u00b7 6\u00a0m"
+        },
+        {
+          "level": "L8",
+          "tick": 14264,
+          "x": 0.2,
+          "z": -37.3,
+          "severity": "P0",
+          "kind": "cannot-finish",
+          "text": "Driver could not finish step escape (\"Enter the lion habitat \u00b7 15\u00a0m\") after 2 s on it (4 min level cap: true); stopping without advancing the objective",
+          "captures": [
+            "captures/campaign-L8-14264-cannot-finish.jpg"
+          ],
+          "step": "escape",
+          "objective": "Enter the lion habitat \u00b7 15\u00a0m"
+        }
+      ],
+      "reviewed": [
+        "test-results/b112-review/l8.jpg",
+        "test-results/playtest/b112-l8-high/captures/campaign-L8-5252-stuck-at-ring.jpg"
+      ],
+      "assessment": "Quiet Nadia-follow opening feels like group babysitting, then dramatic plaza ring combat. Follow warning recovers; no permanent stall established. No obvious geometry glitch in inspected frames."
     }
   ],
   "validation": {
