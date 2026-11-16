@@ -15,6 +15,7 @@ Format: gzip (`.json.gz`) or brotli (`.json.br`) of `{ kind, label, level, descr
 | `l9-at-bridge` | L9 | campaign-save | `bridge` checkpoint (evacuation done), APC at the bridge |
 | `l9-bridge-approach-census` | L9 | campaign-save | Native seed-1 `bridge` checkpoint snapshot (tick 10810), before the APC drives onto the bridge |
 | `l10-dispersal-console` | L10 | campaign-save | checkpoint `cure-disperse-ready`, cure installed (`cure-installed` = true), at the dispersal console |
+| `s146-l10-farm-melee-contact` | L10 | mission-resume | constructed at tick 13892 in the farm district, courier and live runner 1.1 m apart beside the shed |
 
 All fixtures: native bot route, seed 1, `L8-default` / `L9-default` / `L10-default` gear (all five weapons, corgi following). Arena order is the bot's (lion and gorilla fixtures sit at checkpoint `sanctuary`, elephant after the gorilla arena); other arenas are uncleared unless the checkpoint says so.
 

@@ -1,0 +1,1908 @@
+{
+  "schema": "s146-l10hit-native-v1",
+  "generatedAt": "2026-11-16T14:18:39.578Z",
+  "method": "Native SimWorld, seed 1, HIGH population; real production infected.runner; held fire-axe attack for 480 ticks with aim updated toward live target each tick. Records attack weapon, facing vector, chosen target, hit IDs, HP before/after. No browser or playtest driver.",
+  "levels": [
+    {
+      "level": "L5",
+      "playerStart": {
+        "x": 75.30000305175781,
+        "y": 0.7049999833106995,
+        "z": -5.400000095367432
+      },
+      "targetId": 347,
+      "targetStart": {
+        "x": 76.39999999999999,
+        "z": -5.4,
+        "y": 0.7,
+        "hp": 60
+      },
+      "targetDamageEvents": [
+        {
+          "tick": 7,
+          "sourceId": 1,
+          "actionId": "weapon.fire-axe",
+          "amount": 60,
+          "type": "melee"
+        }
+      ],
+      "weapon": "weapon.fire-axe",
+      "durationTicks": 480,
+      "attacks": [
+        {
+          "attackId": 1,
+          "tick": 1,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.48569594207624694,
+            "z": 0.8741278235193449
+          },
+          "facing": 1.063637179092599,
+          "targetChosen": [
+            347
+          ],
+          "hitIds": [
+            347
+          ],
+          "reason": null,
+          "activeFrame": {
+            "tick": 7,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 60,
+            "distance": 1.080000000000002,
+            "selected": [
+              347
+            ]
+          }
+        },
+        {
+          "attackId": 2,
+          "tick": 31,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 37,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 3,
+          "tick": 61,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 67,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 4,
+          "tick": 91,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 97,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 5,
+          "tick": 121,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 127,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 6,
+          "tick": 151,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 157,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 7,
+          "tick": 181,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 187,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 8,
+          "tick": 211,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 217,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 9,
+          "tick": 241,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 247,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 10,
+          "tick": 271,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 277,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 11,
+          "tick": 301,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 307,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 12,
+          "tick": 331,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 337,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 13,
+          "tick": 361,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 367,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 14,
+          "tick": 391,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 397,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 15,
+          "tick": 421,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 427,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 16,
+          "tick": 451,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 0.43313050102575845,
+            "z": 0.9013312205183927
+          },
+          "facing": 1.122833239358128,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 457,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.75,
+            "targetHp": 0,
+            "distance": 1.4353342711555133,
+            "selected": []
+          }
+        }
+      ],
+      "finalHp": 0,
+      "damage": 60,
+      "traceNote": "Aim follows the living target each tick; each attack records combat query selection and combat.hit events. AI remains enabled."
+    },
+    {
+      "level": "L6",
+      "playerStart": {
+        "x": 3,
+        "y": 1.3200000524520874,
+        "z": 0
+      },
+      "targetId": 57,
+      "targetStart": {
+        "x": 4.1,
+        "z": 0,
+        "y": 1.300000011920929,
+        "hp": 60
+      },
+      "targetDamageEvents": [
+        {
+          "tick": 7,
+          "sourceId": 1,
+          "actionId": "weapon.fire-axe",
+          "amount": 60,
+          "type": "melee"
+        }
+      ],
+      "weapon": "weapon.fire-axe",
+      "durationTicks": 480,
+      "attacks": [
+        {
+          "attackId": 1,
+          "tick": 1,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [
+            57
+          ],
+          "hitIds": [
+            57
+          ],
+          "reason": null,
+          "activeFrame": {
+            "tick": 7,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 60,
+            "distance": 1.0999999999999996,
+            "selected": [
+              57
+            ]
+          }
+        },
+        {
+          "attackId": 2,
+          "tick": 31,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 37,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 3,
+          "tick": 61,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 67,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 4,
+          "tick": 91,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 97,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 5,
+          "tick": 121,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 127,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 6,
+          "tick": 151,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 157,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 7,
+          "tick": 181,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 187,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 8,
+          "tick": 211,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 217,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 9,
+          "tick": 241,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 247,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 10,
+          "tick": 271,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 277,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 11,
+          "tick": 301,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 307,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 12,
+          "tick": 331,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 337,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 13,
+          "tick": 361,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 367,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 14,
+          "tick": 391,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 397,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 15,
+          "tick": 421,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 427,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 16,
+          "tick": 451,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 457,
+            "playerY": 1.3200000524520874,
+            "targetY": 1.300000011920929,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        }
+      ],
+      "finalHp": 0,
+      "damage": 60,
+      "traceNote": "Aim follows the living target each tick; each attack records combat query selection and combat.hit events. AI remains enabled."
+    },
+    {
+      "level": "L7",
+      "playerStart": {
+        "x": 273,
+        "y": 4.619999885559082,
+        "z": 15
+      },
+      "targetId": 108,
+      "targetStart": {
+        "x": 274.1,
+        "z": 15,
+        "y": 4.6,
+        "hp": 60
+      },
+      "targetDamageEvents": [
+        {
+          "tick": 2,
+          "sourceId": 97,
+          "actionId": "weapon.pistol",
+          "amount": 25,
+          "type": "bullet"
+        },
+        {
+          "tick": 2,
+          "sourceId": 98,
+          "actionId": "weapon.pistol",
+          "amount": 25,
+          "type": "bullet"
+        },
+        {
+          "tick": 2,
+          "sourceId": 99,
+          "actionId": "weapon.pistol",
+          "amount": 10,
+          "type": "bullet"
+        }
+      ],
+      "weapon": "weapon.fire-axe",
+      "durationTicks": 480,
+      "attacks": [
+        {
+          "attackId": 1,
+          "tick": 1,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [
+            108
+          ],
+          "hitIds": [],
+          "reason": "other-attacker-killed-target-before-active-frame",
+          "activeFrame": {
+            "tick": 7,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 2,
+          "tick": 31,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 37,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 3,
+          "tick": 61,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 67,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 4,
+          "tick": 91,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 97,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 5,
+          "tick": 121,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 127,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 6,
+          "tick": 151,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 157,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 7,
+          "tick": 181,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 187,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 8,
+          "tick": 211,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 217,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 9,
+          "tick": 241,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 247,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 10,
+          "tick": 271,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 277,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 11,
+          "tick": 301,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 307,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 12,
+          "tick": 331,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 337,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 13,
+          "tick": 361,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 367,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 14,
+          "tick": 391,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 397,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 15,
+          "tick": 421,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 427,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 16,
+          "tick": 451,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 457,
+            "playerY": 4.619999885559082,
+            "targetY": 4.6,
+            "targetHp": 0,
+            "distance": 1.1000000000000227,
+            "selected": []
+          }
+        }
+      ],
+      "finalHp": 0,
+      "damage": 60,
+      "traceNote": "Aim follows the living target each tick; each attack records combat query selection and combat.hit events. AI remains enabled."
+    },
+    {
+      "level": "L8",
+      "playerStart": {
+        "x": 0,
+        "y": 0.8399999737739563,
+        "z": 70
+      },
+      "targetId": 426,
+      "targetStart": {
+        "x": 1.1,
+        "z": 70,
+        "y": 0.82,
+        "hp": 60
+      },
+      "targetDamageEvents": [
+        {
+          "tick": 7,
+          "sourceId": 1,
+          "actionId": "weapon.fire-axe",
+          "amount": 60,
+          "type": "melee"
+        }
+      ],
+      "weapon": "weapon.fire-axe",
+      "durationTicks": 480,
+      "attacks": [
+        {
+          "attackId": 1,
+          "tick": 1,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [
+            426
+          ],
+          "hitIds": [
+            426
+          ],
+          "reason": null,
+          "activeFrame": {
+            "tick": 7,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 60,
+            "distance": 1.1,
+            "selected": [
+              426
+            ]
+          }
+        },
+        {
+          "attackId": 2,
+          "tick": 31,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 37,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 3,
+          "tick": 61,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 67,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 4,
+          "tick": 91,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 97,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 5,
+          "tick": 121,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 127,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 6,
+          "tick": 151,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 157,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 7,
+          "tick": 181,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 187,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 8,
+          "tick": 211,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 217,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 9,
+          "tick": 241,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 247,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 10,
+          "tick": 271,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 277,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 11,
+          "tick": 301,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 307,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 12,
+          "tick": 331,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 337,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 13,
+          "tick": 361,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 367,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 14,
+          "tick": 391,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 397,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 15,
+          "tick": 421,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 427,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 16,
+          "tick": 451,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 457,
+            "playerY": 0.8399999737739563,
+            "targetY": 0.82,
+            "targetHp": 0,
+            "distance": 1.5,
+            "selected": []
+          }
+        }
+      ],
+      "finalHp": 0,
+      "damage": 60,
+      "traceNote": "Aim follows the living target each tick; each attack records combat query selection and combat.hit events. AI remains enabled."
+    },
+    {
+      "level": "L9",
+      "phase": "driving",
+      "activeVehicle": 667,
+      "attacks": 0,
+      "disposition": "Not applicable before the scripted crash: courier is in the APC and has no on-foot melee attack window."
+    },
+    {
+      "fixture": {
+        "path": "tests/fixtures/saves/qa/s146-l10-farm-melee-contact.json.gz",
+        "bytes": 72235,
+        "tick": 13892,
+        "player": {
+          "x": 1168.9,
+          "y": 0.72,
+          "z": -26
+        },
+        "target": {
+          "id": 100,
+          "x": 1170,
+          "y": 0.7,
+          "z": -26,
+          "hp": 60
+        }
+      }
+    },
+    {
+      "level": "L10",
+      "playerStart": {
+        "x": 1168.9000244140625,
+        "y": 0.7049999833106995,
+        "z": -26
+      },
+      "targetId": 100,
+      "targetStart": {
+        "x": 1170,
+        "z": -26,
+        "y": 0.7,
+        "hp": 60
+      },
+      "targetDamageEvents": [
+        {
+          "tick": 13899,
+          "sourceId": 1,
+          "actionId": "weapon.fire-axe",
+          "amount": 60,
+          "type": "melee"
+        }
+      ],
+      "weapon": "weapon.fire-axe",
+      "durationTicks": 480,
+      "attacks": [
+        {
+          "attackId": 1,
+          "tick": 13893,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [
+            100
+          ],
+          "hitIds": [
+            100
+          ],
+          "reason": null,
+          "activeFrame": {
+            "tick": 13899,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 60,
+            "distance": 1.0999755859375,
+            "selected": [
+              100
+            ]
+          }
+        },
+        {
+          "attackId": 2,
+          "tick": 13923,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 13929,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 3,
+          "tick": 13953,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 13959,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 4,
+          "tick": 13983,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 13989,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 5,
+          "tick": 14013,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14019,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 6,
+          "tick": 14043,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14049,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 7,
+          "tick": 14073,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14079,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 8,
+          "tick": 14103,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14109,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 9,
+          "tick": 14133,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14139,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 10,
+          "tick": 14163,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14169,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 11,
+          "tick": 14193,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14199,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 12,
+          "tick": 14223,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14229,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 13,
+          "tick": 14253,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14259,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 14,
+          "tick": 14283,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14289,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 15,
+          "tick": 14313,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14319,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        },
+        {
+          "attackId": 16,
+          "tick": 14343,
+          "weapon": "weapon.fire-axe",
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "facing": 0,
+          "targetChosen": [],
+          "hitIds": [],
+          "reason": "target-dead-at-attack-start",
+          "activeFrame": {
+            "tick": 14349,
+            "playerY": 0.7049999833106995,
+            "targetY": 0.7,
+            "targetHp": 0,
+            "distance": 1.499975585937591,
+            "selected": []
+          }
+        }
+      ],
+      "finalHp": 0,
+      "damage": 60,
+      "traceNote": "Aim follows the living target each tick; each attack records combat query selection and combat.hit events. AI remains enabled."
+    }
+  ]
+}
