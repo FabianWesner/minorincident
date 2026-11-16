@@ -1,65 +1,46 @@
-# Batch 113 real-input browser QA — pending admission
+# Batch 113 real-input browser QA — incomplete acceptance
 
-Candidate `69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11` (PROD batch 113). This report is report-only. No source or playtest files were edited; no raw captures exist yet.
+Candidate `69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11`. Report only. **L4 full completion, outside-wire route attribution and readable Alpha tank foot planting remain open.** Both L3 tiers completed, the three L7 wreck closeups were reviewed, and HIGH L6/L9/L10 four-minute sweeps were collected.
 
-## Current state
+## Method and validation
 
-The QA build passed with `MI_BUILD_CACHE=off npm run build:qa` because the normal cache lock is under the repository parent, outside this worktree's writable area. `npm run typecheck` and `npm run lint` pass.
+Headless WebGPU, ordinary mortal keyboard/mouse combat, debug level entry, no objective skips. HIGH runs precede LOW. One guarded browser at a time through the pool / `tools/e2e-lock.sh`, ports 5025/5026, reservations below ten minutes. L7 closeups supplement the real-input route with camera-only framing in the registered level, paused at tick 0. No source or playtest edits.
 
-No real-input run has started. The first HIGH L3 WebGPU request used `tools/e2e-lock.sh`, `E2E_PORT=5025`, and `SCENE_PORT=5026`, but browser-pool startup failed before admission: Node received `listen EPERM` binding `127.0.0.1:4329`. A retry after 30 seconds failed the same way. A further retry on the pool's documented alternate port 4328 also failed with `listen EPERM`. The pool was not listening at either health endpoint. These are environment admission failures, not gameplay evidence.
+QA build (`MI_BUILD_CACHE=off npm run build:qa`), typecheck and lint pass. The unchanged prescribed `sh tools/remote/run.sh "$PWD" -- npm test` passes on 46.225.66.90: 27 files, 105 passed, one existing skip, 150-case inventory, 183.2 seconds within 240 seconds. Initial sandbox cache/socket denials and runner unavailability were resolved before successful runs. No checks remain running.
 
-The exact requested remote suite, `sh tools/remote/run.sh "$PWD" -- npm test`, returned exit 69: no healthy Hetzner runner is running/provisioned, and the command rejected local Mac fallback. It was not rerun or reduced.
+[qa.json](qa.json) is below 200 KB. One small [contact sheet](contact-sheet.jpg) was created and opened, containing L3 tick 21652 and L4 tick 11864. All raw captures remain ignored under `test-results/`.
 
-## Coverage and findings
+## Coverage
 
-All gameplay checks remain **NOT RUN**: L3 HIGH then LOW full level on WebGPU; L4 HIGH then LOW full level on WebGPU; L7 D-FAIR wreck framing at HIGH zoom 1.5; and approximately four-minute HIGH zoom 1 sweeps of L6, L9 and L10. No P1/P2/P3 gameplay finding can be supported until captures are collected and reviewed. See [qa.json](qa.json) for the attempt and validation receipts.
+| Check | Collected evidence | Qualification |
+| --- | --- | --- |
+| L3 HIGH zoom 1 | Full level, 414 s, no skips/issues, seven deaths | Opened bridge tick 21652: infected on deck, one damaged target; no obvious sink/float in frame. Universal hitability unproven. |
+| L3 LOW zoom 1 | Full level, 157 s, no skips/issues | Extra bridge frame is post-fight; geometry readable but no infected to qualify close damage. |
+| L4 HIGH zoom 1.5 | 480 s through cellar escape; no skips | Not complete. Stationary warnings require attribution. Feet occluded. Continuation restarted at quartermaster and was interrupted. |
+| L4 LOW zoom 1.5 | 540 s through cellar escape; no skips, 25 deaths | Not complete. No stationary-enemy warnings. Opened north-breach tick 10839: dense interior crowd and Alphas; feet occluded. |
+| L7 HIGH zoom 1.5 | Full real-input route, 154 s, no skips/issues; three camera closeups | Opened military-1/3/4 closeups: supported on paving, no obvious deep sink/float. Dark wheel contact limits fine judgment. |
+| L6 HIGH zoom 1 | 240 s, no skips | Opened tick 13543: dark readable shield/courier, survivor separation makes babysitting conspicuous. Combat pressure visible, courier full HP. No obvious geometry glitch in frame. |
+| L9 HIGH zoom 1 | 240 s, no skips | Opened tick 9495: strong hatch pressure and nearly disabled smoking APC; conspicuous crowd rendering corruption. |
+| L10 HIGH zoom 1 | 240 s, no skips | Opened tick 13892: sparse dark farm staging, repetitive close fighting, threatening damage; provisional close-target warning. |
 
-Driver gaps: browser-pool local service cannot bind under the current sandbox (`EPERM` on `127.0.0.1:4329` or alternate 4328); remote test runner is unavailable. No capture path, tick, or contact sheet is claimed. This report is incomplete and must be updated if admission becomes available within the job time box.
+## Findings
 
-No deployment, push, main movement, source fix, playtest-tool edit, zombie stat tuning, or corpse removal occurred.
+- **P2 — L9 visible crowd rendering corruption.** Tick **9495**, `test-results/playtest/b113-l9-high/captures/campaign-L9-9495-enemy-frozen.jpg`. Several infected have large black/white striped surfaces projecting above their bodies. Opened at full size. Cause unproven. Read-only inspection confirms joint telemetry records coordinates and does not draw geometry; it does not explain these surfaces.
+- **P2 provisional — L10 close target takes no damage during driver attacks.** Tick **13892**, `test-results/playtest/b113-l10-high/captures/campaign-L10-13892-enemy-unhittable.jpg`. Driver reports #134 at 1.1 m stayed 60/60 HP for eight seconds of attacks. Opened frame shows target and melee arc. Aim, collision and product hit logic remain unseparated.
+- **P2 provisional — HIGH L4 stationary actor warnings.** #214/#328/#208 at ticks **11864/11908/11941**. Captures: `test-results/playtest/b113-l4-high/captures/campaign-L4-<tick>-enemy-frozen.jpg`. Opened tick 11864: dense truck/perimeter crowd and infected inside the wire, but flagged actor identity and obstacle combat are not resolved. No frozen-AI conclusion.
 
-## Admission restored
+No confirmed P1 or P3 product finding. Driver severities are not automatically accepted as product severities.
 
-After filesystem/network restrictions were removed, the guarded browser pool admitted HIGH L3 on WebGPU. This run is active; its raw captures and log are under `test-results/playtest/b113-l3-high/`. The unchanged prescribed remote suite now passes on 46.225.66.90: 27 files, 105 tests passed, one existing skip, 150-case inventory, 183.2 seconds within 240 seconds. Prior admission failures are historical and no longer block progress.
+## Driver gaps and outstanding qualification
 
-## HIGH L3 collected
+L4 opening empty-HUD navigation warnings, L6 shelter-wait warning, and intentional sample-cap cannot-finish labels are driver gaps. L9 passive-ally warning targets the player APC during the scripted engine interruption; it does not establish ally AI failure. L9 stationary warnings around the hull remain unqualified. L4 bounded continuation restarted the opening rather than preserving the cellar state; repeated identical continuation is not evidence of progress.
 
-The full ordinary-combat HIGH WebGPU run completed in 414 seconds with no skips, no assists and zero driver issues. It recorded seven deaths and 561 handgun attacks. Raw evidence is under `test-results/playtest/b113-l3-high/`. Bridge captures await visual review; completion alone does not establish bridge support or universal hitability. All other requested runs remain pending. No checks remain running.
+Still required: full HIGH and LOW L4 completion; observable outside-wire routing and breach-wave arrivals; continuously readable Alpha soles near the tank. Existing wide frames show substantial interior combat but cannot independently establish every outside actor's route or planted feet. L3 close-target visual coverage also remains bounded to the reviewed HIGH frame; the LOW extra capture landed after combat.
 
-## HIGH L4 first segment
+## Capture locations
 
-Collected 480 seconds of ordinary HIGH WebGPU combat at zoom 1.5 without skips. The courier reached the cellar escape objective but did not finish. Three stationary warnings (#214/#328/#208, ticks 11864/11908/11941) await visual attribution; the opening empty-HUD warning is a known driver gap. On normal save continuation, the second segment restarted at the quartermaster rather than the cellar checkpoint; this repeat was interrupted. No full L4 completion is claimed. Raw evidence: `test-results/playtest/b113-l4-high/`.
+Runs: `test-results/playtest/b113-l3-high`, `b113-l3-low`, `b113-l4-high`, `b113-l4-low`, `b113-l6-high`, `b113-l7-high`, `b113-l9-high`, `b113-l10-high`. Each contains logs, capture ticks and available summaries. The interrupted HIGH L4 parent lacks a final aggregate summary; its first segment receipt is retained.
 
-Opened HIGH L3 bridge capture `test-results/playtest/b113-l3-high/captures/campaign-L3-t21652.jpg`: visible infected are on the deck, and one has reduced health. No obvious bridge sinking/floating in this frame. Universal point-blank hitability is not established.
+L7 camera-only captures: `test-results/b113-wrecks/military-1.jpg`, `military-3.jpg`, `military-4.jpg`. Registered placements are D-FAIR/l7-military-1 (214,25), military-3 (138,25), military-4 (100,6). Backend HIGH WebGPU and camera/tick receipts are in qa.json. These are placement observations, not extra combat runs.
 
-## L6 HIGH sweep and reviewed sheet
-
-Collected 240 seconds HIGH WebGPU at zoom 1, no skips (`test-results/playtest/b113-l6-high`). Opened tick 13543: the courier and shield read clearly against a dark tunnel; Survivor lost and group separation make escort babysitting conspicuous. Combat pressure is visible, though the courier remains at full health in this frame. No obvious geometry glitch is visible. This single frame does not establish every transient. The opening shelter wait warning and automatic four-minute cannot-finish label are driver gaps, not confirmed product defects.
-
-Created and opened [contact-sheet.jpg](contact-sheet.jpg), showing the reviewed L3 tick 21652 and L4 tick 11864. Raw captures remain ignored. L4 stationary warnings remain provisional because truck/crowd occlusion prevents actor attribution.
-
-## L9 HIGH sweep — P2 visible crowd corruption
-
-Collected 240 seconds HIGH WebGPU zoom 1 without skips. Opened `test-results/playtest/b113-l9-high/captures/campaign-L9-9495-enemy-frozen.jpg`: several crowd actors have tall black/white striped projected surfaces above their bodies, a conspicuous rendering glitch (**P2**, tick 9495; cause unproven). The nearly disabled, smoking APC and dense hatch crowd read dangerous and visually busy. This sample feels pressured rather than harmless; group evacuation remains ongoing. Stationary actor warnings around the hull are unqualified. The passive-ally label targets the player APC during the scripted engine interruption and is not established as an ally AI defect. The final automatic cannot-finish is the intentional four-minute cap.
-
-## L10 HIGH sweep
-
-Collected 240 seconds HIGH WebGPU zoom 1, no skips, joints telemetry disabled through existing option. **P2 provisional:** tick 13892, `test-results/playtest/b113-l10-high/captures/campaign-L10-13892-enemy-unhittable.jpg`: driver reports #134 at 1.1 m remained 60/60 HP through eight seconds of attacks. Opened frame shows nearby target and melee arc; aim/collision/hit logic remain unseparated. The dark farms read sparsely staged rather than stunning in this frame; close combat and damage make the run threatening. Repeated combat near the same residential route feels repetitive, but driver behavior limits product pacing attribution. No conspicuous geometry glitch in the reviewed frame. The four-minute stop is intentional.
-
-Read-only source inspection confirms CrowdFigureProbe joint telemetry records coordinates rather than drawing geometry, so it does not explain the L9 striped surfaces.
-
-## L7 HIGH route collected
-
-Ordinary HIGH WebGPU zoom 1.5 completed in 154 seconds with zero skips/issues. Opened `test-results/playtest/b113-l7-high/captures/campaign-wreck-route.jpg`: strong fire glow, large escort and waiting-for-survivor cue; military wreck contacts are not exposed. Full mission completion does not close the requested D-FAIR framing. Camera-only placement closeups remain pending.
-
-## L7 targeted wreck review
-
-Opened all three registered L7 HIGH WebGPU zoom1.5 camera-only closeups: `test-results/b113-wrecks/military-1.jpg`, `military-3.jpg`, and `military-4.jpg`. These supplement the real-input route; simulation was paused, only camera framing changed. Both trucks and the APC appear supported on paving, with no obvious deep sink or float. Night lighting limits fine wheel-contact judgment. Backend/tier/tick receipts are retained in qa.json; ignored capture wrapper and raw images remain outside git.
-
-## LOW L3 full run
-
-Completed in 157 seconds, ordinary WebGPU LOW zoom1, no skips and zero driver issues (`test-results/playtest/b113-l3-low`). Opened `captures/campaign-bridge-close.jpg`: clear bridge after the nearby fight, no obvious surface glitch, but no infected in view to qualify close damage or actor height. Thus full HIGH/LOW completion and absence of driver hit warnings are established; universal hitability remains unproven by this frame.
-
-## LOW L4 nine-minute run
-
-Ordinary WebGPU LOW zoom1.5 ran 540 seconds without skips, reaching cellar escape but not completing before the cap (`test-results/playtest/b113-l4-low`). Only opening empty-HUD warning and cap were emitted; no stationary-enemy warning. Opened `captures/campaign-L4-t10839.jpg`: north-breach defense has dense interior infected and several Alphas, with heavy pressure and overlapping telegraphs. Feet are occluded, so planted-foot qualification remains open. Mission phase progress does not independently prove every outside actor routes through breaches. Full HIGH and LOW L4 completion remain unqualified.
+No deployment, push, main movement, zombie stat tuning, corpse removal, protected-reference edits, source fixes or playtest-tool edits occurred. This is an incomplete acceptance report, not batch approval.

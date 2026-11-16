@@ -40,7 +40,7 @@
   "gameplayCoverage": [
     {
       "check": "L3 HIGH full level: bridge close-target damage and infected bridge support",
-      "status": "FULL LEVEL COLLECTED; VISUAL REVIEW PENDING"
+      "status": "FULL LEVEL COLLECTED; T21652 REVIEWED, DAMAGED DECK TARGET VISIBLE"
     },
     {
       "check": "L3 LOW full level: bridge close-target damage and infected bridge support",
@@ -115,11 +115,15 @@
     }
   },
   "driverGaps": [
-    "Browser pool service bind denied with EPERM on 127.0.0.1:4329.",
-    "Remote test runner unavailable; command rejected local fallback."
+    "L4 opening empty-HUD navigation warning",
+    "Intentional sample-cap cannot-finish labels",
+    "L6 shelter wait classified as no progress",
+    "L4 bounded continuation does not preserve cellar state; explicit saveOnYield path is restricted to L10",
+    "L9 player APC passive-ally label during scripted stall",
+    "L4/L9 stationary actor attribution unresolved"
   ],
   "rawCaptures": [],
-  "notes": "HIGH L3 completed 414 seconds, no skips, zero issues; visual review and remaining runs pending.",
+  "notes": "Incomplete acceptance. All requested tiers sampled; both L3 runs complete; L4 HIGH/LOW cellar escape incomplete and tank feet occluded. L7 frames reviewed. Required validations passed.",
   "runs": [
     {
       "path": "test-results/playtest/b113-l3-high",
@@ -977,5 +981,15 @@
       "test-results/b113-wrecks/military-4.jpg"
     ],
     "review": "All three opened; appear supported on paving without obvious deep sink/float; dark wheel contact limits fine judgment."
+  },
+  "findingClassification": {
+    "confirmedProduct": [
+      "L9 P2 visible crowd rendering corruption"
+    ],
+    "provisional": [
+      "L10 P2 close target no damage",
+      "L4 HIGH P2 stationary actor warnings"
+    ],
+    "notProductP0": "Intentional run caps"
   }
 }
