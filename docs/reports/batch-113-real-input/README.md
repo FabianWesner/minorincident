@@ -47,3 +47,7 @@ Collected 240 seconds HIGH WebGPU zoom 1 without skips. Opened `test-results/pla
 Collected 240 seconds HIGH WebGPU zoom 1, no skips, joints telemetry disabled through existing option. **P2 provisional:** tick 13892, `test-results/playtest/b113-l10-high/captures/campaign-L10-13892-enemy-unhittable.jpg`: driver reports #134 at 1.1 m remained 60/60 HP through eight seconds of attacks. Opened frame shows nearby target and melee arc; aim/collision/hit logic remain unseparated. The dark farms read sparsely staged rather than stunning in this frame; close combat and damage make the run threatening. Repeated combat near the same residential route feels repetitive, but driver behavior limits product pacing attribution. No conspicuous geometry glitch in the reviewed frame. The four-minute stop is intentional.
 
 Read-only source inspection confirms CrowdFigureProbe joint telemetry records coordinates rather than drawing geometry, so it does not explain the L9 striped surfaces.
+
+## L7 HIGH route collected
+
+Ordinary HIGH WebGPU zoom 1.5 completed in 154 seconds with zero skips/issues. Opened `test-results/playtest/b113-l7-high/captures/campaign-wreck-route.jpg`: strong fire glow, large escort and waiting-for-survivor cue; military wreck contacts are not exposed. Full mission completion does not close the requested D-FAIR framing. Camera-only placement closeups remain pending.
