@@ -1999,5 +1999,140 @@
     "kind": "campaign-save",
     "resumePath": "campaign.cureResume",
     "reason": "Game.loadLevel ignores opts.resume for L10; campaign.cureResume is the supported restore path."
+  },
+  "driverDetectorReproduction": {
+    "method": "Executes the exact unchanged production detector accumulation block with constant target HP. Target is outside fire-axe range for 8.5 seconds, then approaches to 1.1m. No attack or damage events are supplied because this block reads neither.",
+    "source": "tools/playtest/session.ts",
+    "sourceSha256": "8ff873f0cab894104ce1791ccd011ae3f2edc292a4804f82976524a86df52e61",
+    "block": "if (threat.hp !== seen.hp) { seen.hp = threat.hp; seen.ms = 0; } else seen.ms += Math.min(500, now - seen.last);\n    seen.last = now; shotAt.set(threat.id, seen);\n    ",
+    "samples": [
+      {
+        "wallMs": 500,
+        "distance": 4,
+        "accumulatedMs": 500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 1000,
+        "distance": 4,
+        "accumulatedMs": 1000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 1500,
+        "distance": 4,
+        "accumulatedMs": 1500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 2000,
+        "distance": 4,
+        "accumulatedMs": 2000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 2500,
+        "distance": 4,
+        "accumulatedMs": 2500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 3000,
+        "distance": 4,
+        "accumulatedMs": 3000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 3500,
+        "distance": 4,
+        "accumulatedMs": 3500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 4000,
+        "distance": 4,
+        "accumulatedMs": 4000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 4500,
+        "distance": 4,
+        "accumulatedMs": 4500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 5000,
+        "distance": 4,
+        "accumulatedMs": 5000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 5500,
+        "distance": 4,
+        "accumulatedMs": 5500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 6000,
+        "distance": 4,
+        "accumulatedMs": 6000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 6500,
+        "distance": 4,
+        "accumulatedMs": 6500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 7000,
+        "distance": 4,
+        "accumulatedMs": 7000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 7500,
+        "distance": 4,
+        "accumulatedMs": 7500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 8000,
+        "distance": 4,
+        "accumulatedMs": 8000,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 8500,
+        "distance": 4,
+        "accumulatedMs": 8500,
+        "actualAttackEvents": 0,
+        "warningPredicate": false
+      },
+      {
+        "wallMs": 9000,
+        "distance": 1.1,
+        "accumulatedMs": 9000,
+        "actualAttackEvents": 0,
+        "warningPredicate": true
+      }
+    ],
+    "falsePositiveProven": true
   }
 }
