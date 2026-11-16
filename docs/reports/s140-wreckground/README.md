@@ -47,3 +47,7 @@ Restoring only the original war-only funnel condition makes the unchanged extend
 ## Alpha grid evidence
 
 At the first stationary flag, #296 has radius 0.55 m and no cached path. Its selected wide grid (clearance 0.7 m) cannot reach the scripted inside-breach goal; admission grids at 0.5 and 0.35 m both find a 22-node route. Start and goal are individually clear at the actual radius. This confirms a conservative-grid connectivity mismatch for #296. #372 has routes on all three grids and direct visibility at the flag, so it requires separate temporal/controller diagnosis. Full scan completes; read-only path probes run only after a stationary window is already recorded. Exact rows are in `qa.json.alphaGridScan`.
+
+## Rejected Alpha recovery experiment
+
+Broadening the existing wide fallback to scripted L4 goals when any breach is open did not move an Alpha placed at the captured west position in a 600-tick extension of the existing fixture. That fixture opens north, not west, so it does not reproduce the real topology. Removed both the attempted source change and the mismatched fixture extension; the validated collapse fix remains intact. Next focused reproduction must open the west segments and retain actual controller ownership. No Alpha fix is claimed.

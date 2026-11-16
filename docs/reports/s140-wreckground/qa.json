@@ -840,5 +840,12 @@
       }
     ],
     "qualifyingCount": 33
+  },
+  "alphaRecoveryExperiment": {
+    "change": "Allow existing wide-body fallback for scripted L4 goals when any breach is open",
+    "result": "Rejected: focused actor at captured west position moved 0 m in 600 ticks",
+    "fixtureLimitation": "Existing regression opens north breach; captured west Alpha requires west topology. The experiment cannot establish fallback effectiveness for the real case.",
+    "sourceRetained": false,
+    "next": "Open west segments and reproduce actual controller ownership before testing recovery."
   }
 }
