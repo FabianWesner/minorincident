@@ -92,3 +92,7 @@ Opened local crop sheet `test-results/b113-south-feet-review.jpg`, ten consecuti
 ## LOW matching south-camera run
 
 Collected240 seconds LOW zoom1.5 with identical south camera after the HIGH pass;474 frames (`test-results/b113-l4-south-low/sequence`). Opened local final-ten-frame crop sheet `test-results/b113-south-low-review.jpg`, ticks13974–14245. Ordinary infected moves around sandbags; the large actor is clipped at left edge. This does not supply a comparable Alpha sole track. LOW tank-foot qualification stays open. Cap is intentional; no native video claimed.
+
+## Wider LOW crop identity audit
+
+Opened `test-results/b113-low-left-review.jpg` from the same final ten frames, crop(0,160)–(700,650). Mixed ordinary/armored infected move through the left side; no confidently identified Alpha or stable sole track. Nearby sampled observations list IDs/HP but lack archetype; visual size alone cannot establish Alpha identity. A read-only identity observer is required before attributing this window to the requested Alpha. No new replay performed.
