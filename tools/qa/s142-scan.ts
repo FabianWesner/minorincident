@@ -5,7 +5,7 @@ for (const level of ['L1','L2','L4','L5','L6','L7','L8','L9','L10'] as const) {
  const row = { level, ticks: 0, attacks: 0, contacts: 0, flags: [] as unknown[], outcome: '' }; rows.push(row);
  const report = await runLevel(level, 'complete', 1, 120, 'auto', undefined, undefined, 0, { beforeBegin(w) {
  const watch = new Map<number, { hp: number; since: number; reported: boolean }>(); let fired = -999;
- w.events.on('combat.attack', e => { if (e.sourceId === 1) { row.attacks++; fired = w.tick; } });
+ w.events.on('combat.attack', e => { if ((e as { sourceId?: number }).sourceId === 1) { row.attacks++; fired = w.tick; } });
  w.events.on('sim.tick', () => {
  row.ticks++; const p = w.entities.get(1)!;
  const aim = w.inputFrame.aim; const attacking = w.tick - fired <= 60;
