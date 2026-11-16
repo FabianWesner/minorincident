@@ -157,3 +157,7 @@ Prescribed remote npm test on f30878a4 passes: 27 files, 105 passed / 1 skipped,
 ## Alpha breach alignment correction
 
 Exact blocker is intact l4-wall-34 beside the west breach (1.41 cm corner contact). Native outer-center waypoint moves the captured Alpha 2.525 m rather than 0 m and reaches the opening. L4Collapse now aligns an outside Alpha laterally with the open breach before assigning its inside waypoint. Existing focused L4 regression, typecheck and lint pass. Full real-actor rolling scan and dedicated regression coverage for this branch remain pending; not yet a complete outside-wire pass.
+
+## Full-run alignment audit
+
+After alignment change, native seed-1 HIGH run completes at tick 18,326 with 30,114 eligible rolling windows. Residual flags remain: #296 now reaches the west outer center but stalls on the inside goal; south Alphas #369/#377 retain scripts, while #345 is attacking target 151 and riot #357 requires separate pressure-target attribution. Thus alignment alone is insufficient and outside-wire completion is not claimed. Exact cloned states are retained in qa.json.l4AlignedFullRun. Next test should combine body-clear aligned entry with bounded route recovery, preserving normal attack states.
