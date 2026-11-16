@@ -24,3 +24,7 @@ No shared product root cause was demonstrated, so no product change was made. Th
 - Required remote `sh tools/remote/run.sh "$PWD" -- npm test` could not start because no Hetzner runner was healthy. `sh tools/remote/scale.sh add` also could not reach the provider because outbound DNS is blocked. The local full run is supplemental and is not reported as a remote pass.
 
 No zombie stat tuning, corpse removal, driver edits, browser run, deploy, push, or main movement.
+
+## Remote follow-up
+
+After filesystem/network access was restored, the report and regression were committed as `e656951d`. The prescribed full remote command then ran twice unchanged on 94.130.181.173. Both runs passed the combat battery but failed the existing L4 contact case at its 150-second timeout (104 passed, one skipped, one failed; total budget times 207.8 s and 216.6 s). The original infrastructure-unavailable result above is historical. No test was trimmed or timeout increased. Root-cause attribution and HIGH/LOW browser confirmation remain open; this commit does not close the requested goal.
