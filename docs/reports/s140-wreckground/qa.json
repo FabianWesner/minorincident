@@ -1,0 +1,320 @@
+{
+  "source": "s139 resolved campaignWreckInventory, current lane cc2f7476",
+  "wreckInventory": {
+    "sourceLayoutCount": 414,
+    "resolvedAtLoadCount": 409,
+    "removedByDecayFiltering": 5,
+    "levelCounts": {
+      "L1": 0,
+      "L2": 0,
+      "L3": 23,
+      "L4": 0,
+      "L5": 25,
+      "L6": 1,
+      "L7": 38,
+      "L8": 0,
+      "L9": 84,
+      "L10": 238
+    }
+  },
+  "outsideWireFullRun": {
+    "seed": 1,
+    "tier": "high",
+    "profile": "complete",
+    "outcome": "complete",
+    "ticks": 18468,
+    "phase": "progression",
+    "turnAt": 1969,
+    "eligibleTicks": 50533,
+    "nearTicks": 64628,
+    "maxConcurrentCandidates": 24,
+    "qualifyingCount": 29,
+    "thresholdSeconds": 5,
+    "distanceToWireMaxM": 2,
+    "route": "infected NavGrid path from actor nearest cell to courier nearest cell, checked each simulation tick",
+    "standstillDefinition": "cumulative movement below 1 m during the qualifying interval",
+    "standstillCount": 0,
+    "qualifyingActors": [
+      {
+        "id": 217,
+        "arch": "infected.crawler",
+        "seconds": 7.883333333333334,
+        "start": 5366,
+        "end": 5838,
+        "travel": 8.43,
+        "nearest": 0
+      },
+      {
+        "id": 233,
+        "arch": "infected.crawler",
+        "seconds": 43.36666666666667,
+        "start": 15375,
+        "end": 17976,
+        "travel": 6.49,
+        "nearest": 0.36
+      },
+      {
+        "id": 280,
+        "arch": "infected.crawler",
+        "seconds": 7.683333333333334,
+        "start": 3005,
+        "end": 3465,
+        "travel": 5.88,
+        "nearest": 0
+      },
+      {
+        "id": 296,
+        "arch": "infected.alpha",
+        "seconds": 44.61666666666667,
+        "start": 3005,
+        "end": 5681,
+        "travel": 3.48,
+        "nearest": 0.95
+      },
+      {
+        "id": 297,
+        "arch": "infected.crawler",
+        "seconds": 6.55,
+        "start": 16962,
+        "end": 17354,
+        "travel": 2.63,
+        "nearest": 0
+      },
+      {
+        "id": 298,
+        "arch": "infected.crawler",
+        "seconds": 5.35,
+        "start": 3005,
+        "end": 3325,
+        "travel": 1.65,
+        "nearest": 0.5
+      },
+      {
+        "id": 230,
+        "arch": "infected.crawler",
+        "seconds": 8.583333333333334,
+        "start": 12957,
+        "end": 13471,
+        "travel": 9.36,
+        "nearest": 0.71
+      },
+      {
+        "id": 353,
+        "arch": "infected.crawler",
+        "seconds": 15.166666666666666,
+        "start": 4009,
+        "end": 4918,
+        "travel": 18.67,
+        "nearest": 0.57
+      },
+      {
+        "id": 209,
+        "arch": "infected.crawler",
+        "seconds": 14.666666666666666,
+        "start": 4100,
+        "end": 4979,
+        "travel": 13.38,
+        "nearest": 0
+      },
+      {
+        "id": 352,
+        "arch": "infected.hazmat",
+        "seconds": 7.416666666666667,
+        "start": 4156,
+        "end": 4600,
+        "travel": 10.13,
+        "nearest": 0.37
+      },
+      {
+        "id": 346,
+        "arch": "infected.brute",
+        "seconds": 6.4,
+        "start": 4187,
+        "end": 4570,
+        "travel": 6.77,
+        "nearest": 0.6
+      },
+      {
+        "id": 355,
+        "arch": "infected.firefighter",
+        "seconds": 6.75,
+        "start": 4256,
+        "end": 4660,
+        "travel": 10.03,
+        "nearest": 0.37
+      },
+      {
+        "id": 291,
+        "arch": "infected.crawler",
+        "seconds": 11.85,
+        "start": 5021,
+        "end": 5731,
+        "travel": 20.36,
+        "nearest": 0
+      },
+      {
+        "id": 345,
+        "arch": "infected.alpha",
+        "seconds": 6.983333333333333,
+        "start": 5259,
+        "end": 5677,
+        "travel": 3.51,
+        "nearest": 0
+      },
+      {
+        "id": 223,
+        "arch": "infected.crawler",
+        "seconds": 11.266666666666667,
+        "start": 6610,
+        "end": 7285,
+        "travel": 16.71,
+        "nearest": 0
+      },
+      {
+        "id": 372,
+        "arch": "infected.alpha",
+        "seconds": 6.45,
+        "start": 7534,
+        "end": 7920,
+        "travel": 3.59,
+        "nearest": 0.67
+      },
+      {
+        "id": 432,
+        "arch": "infected.crawler",
+        "seconds": 7.933333333333334,
+        "start": 14110,
+        "end": 14585,
+        "travel": 5.38,
+        "nearest": 0
+      },
+      {
+        "id": 269,
+        "arch": "infected.butcher",
+        "seconds": 7.05,
+        "start": 14522,
+        "end": 14944,
+        "travel": 11.79,
+        "nearest": 0
+      },
+      {
+        "id": 310,
+        "arch": "infected.butcher",
+        "seconds": 12.75,
+        "start": 14729,
+        "end": 15493,
+        "travel": 15.26,
+        "nearest": 0.41
+      },
+      {
+        "id": 391,
+        "arch": "infected.runner",
+        "seconds": 5.45,
+        "start": 14739,
+        "end": 15065,
+        "travel": 13.31,
+        "nearest": 0
+      },
+      {
+        "id": 444,
+        "arch": "infected.armored",
+        "seconds": 6.783333333333333,
+        "start": 14803,
+        "end": 15209,
+        "travel": 8.14,
+        "nearest": 0
+      },
+      {
+        "id": 445,
+        "arch": "infected.crawler",
+        "seconds": 14.25,
+        "start": 17122,
+        "end": 17976,
+        "travel": 6.37,
+        "nearest": 0
+      },
+      {
+        "id": 224,
+        "arch": "infected.brute",
+        "seconds": 7.35,
+        "start": 16408,
+        "end": 16848,
+        "travel": 4.41,
+        "nearest": 0.52
+      },
+      {
+        "id": 95,
+        "arch": "infected.runner",
+        "seconds": 5.1,
+        "start": 15093,
+        "end": 15398,
+        "travel": 10.42,
+        "nearest": 0
+      },
+      {
+        "id": 335,
+        "arch": "infected.brute",
+        "seconds": 21.183333333333334,
+        "start": 15223,
+        "end": 16493,
+        "travel": 23.99,
+        "nearest": 0.42
+      },
+      {
+        "id": 350,
+        "arch": "infected.brute",
+        "seconds": 6.216666666666667,
+        "start": 15631,
+        "end": 16003,
+        "travel": 7.66,
+        "nearest": 1.27
+      },
+      {
+        "id": 267,
+        "arch": "infected.butcher",
+        "seconds": 6.833333333333333,
+        "start": 16009,
+        "end": 16418,
+        "travel": 5.39,
+        "nearest": 0.52
+      },
+      {
+        "id": 427,
+        "arch": "infected.sprinter",
+        "seconds": 12.816666666666666,
+        "start": 16847,
+        "end": 17615,
+        "travel": 17.04,
+        "nearest": 0
+      },
+      {
+        "id": 428,
+        "arch": "infected.sprinter",
+        "seconds": 5.35,
+        "start": 17281,
+        "end": 17601,
+        "travel": 11.55,
+        "nearest": 0
+      }
+    ],
+    "completionProven": false,
+    "limitation": "Aggregated interval travel does not exclude stationary five-second subwindows; rerun with rolling position windows and actor target/attack state."
+  },
+  "existingRegression": {
+    "file": "tests/engine/l4-contact.test.ts",
+    "check": "checkOutsideWireRouting",
+    "result": "passed",
+    "scope": "single open north breach; 600 simulation ticks; actor advances along perimeter toward breach"
+  },
+  "visualReference": {
+    "file": "isolated-wreck-reference.jpg",
+    "origin": "s139 isolated two-vehicle HIGH WebGPU comparison",
+    "reviewed": true,
+    "campaignGroundingEvidence": false
+  },
+  "wreckRendererAdjustment": {
+    "file": "src/render/district/DistrictBuild.ts",
+    "function": "restOnGround",
+    "behavior": "Vehicle references with authored y <= .01 sample four support locations and raise reference y to their median. Native source placement coordinates alone do not prove rendered contact gaps."
+  }
+}
