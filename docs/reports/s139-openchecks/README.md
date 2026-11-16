@@ -64,3 +64,7 @@ Loaded the actual L3 mission in HIGH WebGPU, began the mission without advancing
 ## Full-level HIGH first-placement coverage
 
 Reviewed actual registered-level HIGH WebGPU first-wreck captures for L5/L6/L7/L9/L10, and the matching HIGH WebGL2 L3 capture. L3 pair has matching visible placement. L5 image is black (opening presentation), L6 is too dark/foreground-obstructed, L7 shows the wreck APC, L9 shows a sedan wreck, L10 shows the crashed APC beside the bridge lip. Paths: `test-results/s139-openchecks/full-L<level>-high-webgpu/wreck.jpg`; L3 pair under `full-L3-high-webgl2/`. L8 resolves zero wreck candidates at load despite five in source data, confirming decay filtering changes drawn coverage. These are reviewed diagnostics; black/obstructed frames are rejected as grounding evidence. The remaining probe must clear opening presentation, choose useful angles and compare each resolved placement/support group across backends and tiers.
+
+## Resolved renderer inventory
+
+Re-ran all ten production worlds using exactly `district.decay.placements`, the set used by DistrictBuild. Counts: L1/L2/L4/L8 0; L3 23, L5 25, L6 1, L7 38, L9 84, L10 238: **409 at-load vehicle wreck placements**. `qa.json.campaignWreckInventory` now contains this resolved set and names its stage explicitly. The earlier source-only 414 count is superseded; five L8 placements are removed by decay filtering. Runtime destruction/checkpoint variants still require independent coverage.
