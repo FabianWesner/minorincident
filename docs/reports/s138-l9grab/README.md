@@ -25,3 +25,5 @@ Final simulation HIGH road reruns with per-tick grab audit completed at 0.3, 0.0
 ## Latest crowded tick acceptance (`7daf5712`)
 
 `s138-exit-tick-shortcut` passed: last boarding observed at 12.15 seconds after Defense complete, maximum grab age exactly 180 ticks across 501 grabbed-tick samples, zero driver issues. This supersedes earlier grab-duration uncertainty. The previous hidden-passenger run exposed the exit reset loop; `53665cfe` keeps hidden hold clocks running and `7daf5712` allows completion at the already reached nearby clear point. Final simulation gates/matrix refresh and continuous visual review remain open.
+
+Latest simulation remote unit refresh passed: 105 passed, one platform skip, 128.4 seconds (exit 0). Typecheck and lint pass. LOW refresh could not launch: browser pool returned external-exclusive; this attempt is infrastructure-incomplete.
