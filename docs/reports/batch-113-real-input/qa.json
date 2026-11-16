@@ -1434,7 +1434,7 @@
   },
   "identityObserverPreparation": {
     "wrapper": "test-results/b113-video/identified-feet-entry.ts",
-    "status": "PREPARED AND SYNTAX CHECKED; NOT RUN",
+    "status": "RUN, VALIDATED 473 SAMPLES",
     "filter": "archetype includes alpha OR infected.alphaType exists",
     "fields": [
       "id",
@@ -1449,5 +1449,23 @@
     ],
     "intervalMs": 500,
     "mutation": "camera only; actor/simulation observer read-only"
+  },
+  "identifiedHighObservation": {
+    "path": "test-results/b113-l4-identified-high",
+    "samples": 473,
+    "aliveActorStateSamples": {
+      "attracted": 466,
+      "alerted": 196,
+      "attack": 43,
+      "chase": 136,
+      "stagger": 5,
+      "idle": 2
+    },
+    "specialMoveSamples": {
+      "alpha.charge": 14
+    },
+    "nearTankAliveSamples": 89,
+    "exampleAlphaId": 372,
+    "visualWindowReview": "PENDING; state telemetry is not sole proof"
   }
 }

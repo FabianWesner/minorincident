@@ -100,3 +100,7 @@ Opened `test-results/b113-low-left-review.jpg` from the same final ten frames, c
 ## Identity observer prepared
 
 Ignored `test-results/b113-video/identified-feet-entry.ts` is prepared and syntax checked, not run. Each half-second sample records actors selected by archetype containing alpha or infected.alphaType, with ID/type, transform, HP, brain state/special/target and projected position. This will distinguish Alpha identity from visually large ordinary actors. No actor/simulation mutation; existing camera-only framing retained. No new identity evidence is claimed yet.
+
+## Alpha identity observer verified
+
+Four-minute HIGH observer run produced473 half-second receipts under `test-results/b113-l4-identified-high/alpha-observer.jsonl`, with screenshots alongside. Living Alpha states include43 ordinary attack samples and charge special samples;89 living Alpha observations fall within10m of tank anchor. Brute #372 is identified near the tank. No roar/slam sample is claimed. Identity hookup works; matching visual attack/sole review remains pending. Telemetry does not substitute for visible planting.
