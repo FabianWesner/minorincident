@@ -2110,7 +2110,8 @@ export class InfectedSystem {
     let x = target.x, z = target.z;
     // r42-arenas (r41-vqa: 'a brute and a riot zombie stand in chase 5 m from her behind a shop shelf for 180 s'): the wide grid can leave a pocket no
     // wide body path enters. A wide body within 10 m of the courier that has not closed on her in 4 s walks the admission grid for the next 10 s.
-    if (this.wideNav && nav === this.wideNav && Math.hypot(target.x - this.world.entities.get(1)!.transform.x, target.z - this.world.entities.get(1)!.transform.z) < 2) {
+    const breachApproach = this.world.scenario === 'L4' && !!b.scripted && e.archetype === 'infected.alpha';
+    if (this.wideNav && nav === this.wideNav && (breachApproach || Math.hypot(target.x - this.world.entities.get(1)!.transform.x, target.z - this.world.entities.get(1)!.transform.z) < 2)) {
       const gap = Math.hypot(e.transform.x - target.x, e.transform.z - target.z), mark = b.wideStuck;
       if (gap > 10 || !mark || gap < mark.d - .5) b.wideStuck = { d: gap, at: this.world.tick };
       else if (this.world.tick - mark.at >= 240 && gap > e.combat!.radius + 1.5) { b.wideFallbackUntil = this.world.tick + 600; b.wideStuck = { d: gap, at: this.world.tick }; b.path.length = 0; b.goal = -1; }

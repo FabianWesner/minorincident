@@ -161,3 +161,7 @@ Exact blocker is intact l4-wall-34 beside the west breach (1.41 cm corner contac
 ## Full-run alignment audit
 
 After alignment change, native seed-1 HIGH run completes at tick 18,326 with 30,114 eligible rolling windows. Residual flags remain: #296 now reaches the west outer center but stalls on the inside goal; south Alphas #369/#377 retain scripts, while #345 is attacking target 151 and riot #357 requires separate pressure-target attribution. Thus alignment alone is insufficient and outside-wire completion is not claimed. Exact cloned states are retained in qa.json.l4AlignedFullRun. Next test should combine body-clear aligned entry with bounded route recovery, preserving normal attack states.
+
+## Aligned entry plus bounded recovery
+
+Existing four-second wide-grid recovery now also observes scripted L4 Alpha goals. Full seed-1 HIGH mission completes at tick 18,265 with 19,394 eligible windows; original west #296 no longer flags and west arrivals rise from one to three. Two other Alpha windows remain (#345 and #371). South #371 receives z=24.1 outside the z1=22.5 perimeter despite an open breach, consistent with generic snap searching back outside when the intended inner post is blocked. Focused L4 test, typecheck and lint pass. Overall outside-wire requirement remains incomplete; remote suite pending this change.
