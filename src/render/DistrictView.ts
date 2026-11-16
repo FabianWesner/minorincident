@@ -524,12 +524,12 @@ export class DistrictView extends Group {
   }
   private wreckSupport?: GroundField;
   /** Read-only campaign wreck audit: selected resident mesh and the renderer's resolved placement matrix. */
-  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; supportSamples: number; contactSamples: number }[] {
+  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; contact: number[] | null; groundHeight: number | null; supportSamples: number; contactSamples: number }[] {
     if (!this.wreckSupport) {
       this.wreckSupport = new GroundField();
       for (const mesh of this.parts.mergedLayout) this.wreckSupport.add(mesh, Infinity);
     }
-    const rows: { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; supportSamples: number; contactSamples: number }[] = [];
+    const rows: { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; contact: number[] | null; groundHeight: number | null; supportSamples: number; contactSamples: number }[] = [];
     for (const entry of this.lodBatches) {
       if (!entry.id.startsWith('veh.') || !(entry.id === 'veh.wreck' || entry.decay === 'wrecked' || entry.decay === 'burned')) continue;
       for (const [index, ref] of entry.refs.entries()) {
@@ -539,15 +539,16 @@ export class DistrictView extends Group {
         if (!batch.references.includes(ref) || batch.userData.placeholder) continue;
         ref.updateMatrix();
         const points = batch.contactPoints();
-        let gap = Infinity, supportSamples = 0;
+        let gap = Infinity, supportSamples = 0, contact: number[] | null = null, groundHeight: number | null = null;
         for (const point of points) {
           const v = this.propPoint.copy(point).applyMatrix4(ref.matrix);
           v.x += entry.origin[0]; v.z += entry.origin[1];
           const ground = this.wreckSupport.height(v.x, v.z, this.world.pavingHeight(v.x, v.z) + .1) ?? this.groundAt(v.x, v.z);
           if (ground === null) continue;
-          supportSamples++; gap = Math.min(gap, v.y - ground);
+          supportSamples++;
+          if (v.y - ground < gap) { gap = v.y - ground; contact = v.toArray(); groundHeight = ground; }
         }
-        rows.push({ id: ref.userData.placementId, asset: entry.id, decay: entry.decay ?? '', lod: band, meshLod: band === 'lod0' ? entry.heroShown : band, matrix: ref.matrix.toArray(), origin: [...entry.origin], gapCm: Number.isFinite(gap) ? gap * 100 : null, supportSamples, contactSamples: points.length });
+        rows.push({ id: ref.userData.placementId, asset: entry.id, decay: entry.decay ?? '', lod: band, meshLod: band === 'lod0' ? entry.heroShown : band, matrix: ref.matrix.toArray(), origin: [...entry.origin], gapCm: Number.isFinite(gap) ? gap * 100 : null, contact, groundHeight, supportSamples, contactSamples: points.length });
       }
     }
     return rows;

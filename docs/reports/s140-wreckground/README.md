@@ -125,3 +125,7 @@ Extended existing static-placement render contract with stacked road/roof surfac
 ## Elevated support result and L7 offenders
 
 Fresh L6/L7 HIGH WebGL2 sweep measures all 39 identities with the elevated triangle field. L6 gap is -0.170 cm. L7 now reveals three sink offenders: l7-military-1 -15.001 cm, l7-military-3 -194.002 cm, l7-military-4 -16.468 cm. Opened and reviewed full-level l7-military-3.jpg: APC upper body/roof is visible while its lower body is buried in the road, consistent with the large sink result. Scene is dark; this diagnostic does not substitute for requested zoom-1.5 backend pairs. Placement correction remains to do. Earlier L7 34-row zero-gap result used an incomplete low-only field and is superseded.
+
+## L7 support attribution caution
+
+Source inspection confirms center-only terrace formula for military wreck placement, while northgateGround changes height by 15 cm across footprint boundaries. This is a plausible cause of smaller sinks. The 194 cm candidate needs further attribution: pavingHeight includes walkable building supports, so the audit ceiling may admit nearby building geometry. Added worst contact world XYZ and sampled groundHeight to probe receipts to resolve this before data correction. Typecheck and lint pass; runtime attribution pending. Treat the earlier 194 cm offender label as provisional.
