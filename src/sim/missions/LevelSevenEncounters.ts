@@ -385,8 +385,7 @@ export class LevelSevenEncounters {
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
       const budget = d > l7FollowerRangeM ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
-      const catchupSpeed = d > 12 ? Math.min(6.4, 5.2 + (d - 12) * .16) : 5.2;
-      w.npcs!.move(e, destination, catchupSpeed, c, 0, budget, nav);
+      w.npcs!.move(e, destination, 5.2, c, 0, budget, nav);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
