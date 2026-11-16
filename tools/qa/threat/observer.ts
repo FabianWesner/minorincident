@@ -443,7 +443,7 @@ export class ThreatObserver {
     // infected and waiting censuses are used by the main audit, not those votes.
     if (followersOnly && w.tick % 30) return;
     let escorting = false, stationaryFar = false, unnecessaryWait = false, returningToFollower = false;
-    const windowKey = this.level === 'L8' ? w.missions!.l8!.protecting() ? 'protect' : w.vehicles!.active !== null ? 'aboard' : w.missions!.l8!.boarding() ? 'boarding' : 'escort' : this.active.map(r => r.key).join('|');
+    const windowKey = this.level === 'L8' ? w.missions!.l8!.protecting() ? 'protect' : w.vehicles!.active !== null ? 'aboard' : w.missions!.l8!.boarding() ? 'boarding' : `escort/${w.missions!.l8!.state.arenas.find(a => a.phase !== 3)?.id ?? 'apc-approach'}` : this.active.map(r => r.key).join('|');
     const window: NonNullable<FollowerWaitReceipt['windows']>[number] = this.waitWindows.get(windowKey) ?? { key: windowKey, escortTicks: 0, stationaryFarTicks: 0 };
     const pace = this.paceWindows.get(windowKey) ?? { gaps: [], waitingTicks: 0, backtrackTicks: 0, stuck: new Map<number, { since: number; maxTicks: number }>(), stuckMax: new Map<number, number>() };
     const priorRoute = this.routeProgress.get(windowKey), route = escortProgress(this.level, player.transform, priorRoute?.segment);
