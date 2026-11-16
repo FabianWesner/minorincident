@@ -5473,7 +5473,269 @@
             "groupAttacksPerMinute": 0
           }
         ]
+      },
+      "correctedBaseline": {
+        "run": {
+          "level": "L8",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 425.96666666666664,
+          "deaths": 0,
+          "kills": 39,
+          "damageTaken": 80,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "sanctuary",
+              "t": 149.96666666666667
+            },
+            {
+              "id": "escape",
+              "t": 417.96666666666664
+            },
+            {
+              "id": "depart",
+              "t": 425.96666666666664
+            }
+          ],
+          "furthestObjective": "depart",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 249,
+            "deferred": 17,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "followerWait": {
+          "windows": [
+            {
+              "key": "escort",
+              "escortTicks": 12622,
+              "stationaryFarTicks": 38,
+              "first": {
+                "tick": 11804,
+                "playerX": 3.5628175735473633,
+                "playerZ": -25.447389602661133,
+                "followerId": 366,
+                "followerX": 11.920011351629363,
+                "followerZ": -19.52464569055596
+              }
+            },
+            {
+              "key": "protect",
+              "escortTicks": 1800,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "boarding",
+              "escortTicks": 1578,
+              "stationaryFarTicks": 218,
+              "first": {
+                "tick": 23556,
+                "playerX": 91.97073364257812,
+                "playerZ": 72.32862854003906,
+                "followerId": 359,
+                "followerX": 95.98294616875317,
+                "followerZ": 57.01663540678877
+              }
+            },
+            {
+              "key": "aboard",
+              "escortTicks": 0,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "escortTicks": 16000,
+          "stationaryFarTicks": 256,
+          "upperBoundPercent": 1.6,
+          "followers": [
+            {
+              "id": 354,
+              "escortTicks": 14535,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 355,
+              "escortTicks": 14653,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 356,
+              "escortTicks": 14758,
+              "stationaryFarTicks": 16
+            },
+            {
+              "id": 357,
+              "escortTicks": 14875,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 358,
+              "escortTicks": 14990,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 359,
+              "escortTicks": 15107,
+              "stationaryFarTicks": 82
+            },
+            {
+              "id": 360,
+              "escortTicks": 15219,
+              "stationaryFarTicks": 58
+            },
+            {
+              "id": 361,
+              "escortTicks": 15331,
+              "stationaryFarTicks": 37
+            },
+            {
+              "id": 362,
+              "escortTicks": 15453,
+              "stationaryFarTicks": 50
+            },
+            {
+              "id": 363,
+              "escortTicks": 15571,
+              "stationaryFarTicks": 162
+            },
+            {
+              "id": 364,
+              "escortTicks": 15686,
+              "stationaryFarTicks": 147
+            },
+            {
+              "id": 365,
+              "escortTicks": 15789,
+              "stationaryFarTicks": 103
+            },
+            {
+              "id": 366,
+              "escortTicks": 15912,
+              "stationaryFarTicks": 251
+            },
+            {
+              "id": 423,
+              "escortTicks": 16000,
+              "stationaryFarTicks": 161
+            }
+          ],
+          "paceWindows": [
+            {
+              "key": "escort",
+              "samples": 5894,
+              "p50GapM": 6.4048837633236655,
+              "p90GapM": 9.14829981320181,
+              "maxGapM": 13.446234087512728,
+              "waitingTicks": 1,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 363,
+                  "maxSeconds": 0
+                },
+                {
+                  "id": 364,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 423,
+                  "maxSeconds": 0.38333333333333336
+                },
+                {
+                  "id": 358,
+                  "maxSeconds": 0.11666666666666667
+                }
+              ]
+            },
+            {
+              "key": "protect",
+              "samples": 840,
+              "p50GapM": 2.711791354557788,
+              "p90GapM": 4.997525694672636,
+              "maxGapM": 7.074705142376281,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "boarding",
+              "samples": 402,
+              "p50GapM": 6.478770886855714,
+              "p90GapM": 13.106736885009703,
+              "maxGapM": 19.45907808399435,
+              "waitingTicks": 218,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 363,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 364,
+                  "maxSeconds": 0.016666666666666666
+                },
+                {
+                  "id": 365,
+                  "maxSeconds": 0.016666666666666666
+                },
+                {
+                  "id": 366,
+                  "maxSeconds": 0
+                },
+                {
+                  "id": 423,
+                  "maxSeconds": 0.15
+                }
+              ]
+            },
+            {
+              "key": "aboard",
+              "samples": 0,
+              "p50GapM": null,
+              "p90GapM": null,
+              "maxGapM": null,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            }
+          ],
+          "prompts": {
+            "wait": 0,
+            "attack": 0,
+            "lost": 0
+          }
+        }
       }
+    }
+  },
+  "groupThreatComparison": {
+    "L6": {
+      "window": "step/stop",
+      "beforeAttacksPerMinute": 56.590084643288996,
+      "afterAttacksPerMinute": 56.590084643288996,
+      "beforeCount": 26,
+      "afterCount": 26
+    },
+    "L7": {
+      "window": "step/corridor",
+      "beforeAttacksPerMinute": 4.490644490644491,
+      "afterAttacksPerMinute": 9.049360146252285,
+      "beforeCount": 6,
+      "afterCount": 11
+    },
+    "L8": {
+      "window": "step/escape",
+      "beforeAttacksPerMinute": 0.22388059701492538,
+      "afterAttacksPerMinute": 0.46780586056786433,
+      "beforeCount": 1,
+      "afterCount": 2
     }
   }
 }
