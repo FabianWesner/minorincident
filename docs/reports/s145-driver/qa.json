@@ -112,6 +112,18 @@
       },
       "fullRun": false,
       "saveBoundaryVerified": false
+    },
+    "L10_HIGH_mortal_attempt_3": {
+      "status": "sample-cap; farm navigation still fails",
+      "run": "test-results/s145-driver/l10-high-mortal-3-cap",
+      "wallSeconds": 480,
+      "deathsObserved": 10,
+      "fullRun": false,
+      "issueKinds": [
+        "stuck-navigating",
+        "stuck-navigating",
+        "sample-cap"
+      ]
     }
   },
   "archived_baseline_only": {
@@ -168,7 +180,7 @@
     "L9_low_road_x1_reaches_L10_no_stuck_navigating": "pass: 246 seconds; zero issues or skips",
     "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "pass: 208 seconds; zero issues or skips",
     "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "unverified",
-    "cap_label_sample_cap_not_p0": "unit/code-path verified; runtime acceptance pending",
+    "cap_label_sample_cap_not_p0": "runtime pass: eight minute mortal L10 sample ends P3 sample-cap, zero P0",
     "empty_opening_hud_no_warning": "unit/code-path verified; runtime acceptance pending"
   },
   "reviewedCurrentContactSheet": {
