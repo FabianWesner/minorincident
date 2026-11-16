@@ -31,3 +31,7 @@ The repeated native seed-1 HIGH complete run finished at tick 18,468 and evaluat
 ## Identity ownership capture
 
 Repeated full-run scan reproduces the same three stationary identities. Crawler #233 retains `breachApproach: outside` in collapse at ticks 15676–15977, with a scripted destination only about 10 cm away and an expired pressure target (until tick 3769). This matches the script follower arrival dead zone and needs a focused regression. Alpha job identities are west (#296) and line (#372), but job and breach objects in this capture were retained by reference, so their later stage/open times cannot establish state at the flag. A subsequent capture must clone these objects at observation time. Evidence remains preliminary.
+
+## Collapse breach navigation correction
+
+Confirmed lifecycle defect: `funnel()` ran only during war, leaving slow exterior approach arrivals in collapse at completed scripted waypoints. Continue the existing funnel updates in collapse. Extended `checkOutsideWireRouting` with a crawler arriving at its exterior waypoint during collapse; it must advance the approach within 30 ticks. Focused L4 contact test, typecheck and lint pass. Full native after-scan, Alpha diagnosis and prescribed remote suite remain pending.

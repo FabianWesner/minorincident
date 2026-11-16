@@ -1548,7 +1548,8 @@ export class LevelFourWar {
     if (s.phase === 'convoy') this.ride();
     this.convoySound(tick);
     if (s.phase === 'war' && tick % 10 === 0) { if (!this.fence.length) this.perimeter(true); this.perimeterBark(); }
-    if (s.phase === 'war' && tick % 15 === 7 && this.fence.length) this.funnel();
+    // Exterior breach legs must finish after the defense falls as well.
+    if ((s.phase === 'war' || s.phase === 'collapse') && tick % 15 === 7 && this.fence.length) this.funnel();
     if (s.phase === 'plaza') {
       if (tick === s.arrivedAt + ticks(l4.calm.welcomeAtS)) this.mission.radio('L4.welcome');
       if (s.gunAt && tick >= s.turnDueAt) this.turn();

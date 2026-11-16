@@ -656,6 +656,17 @@ async function checkOutsideWireRouting(): Promise<void> {
     wall.kind = 'device';
     world.solids.setBarrier(`l4-wall-${opened}`, null);
     state.breaches = { north: { announcedAt: world.tick, openAt: world.tick } };
+    // A slow arrival may reach its exterior waypoint after the war has ended.
+    // Its script must advance through the open breach instead of owning an idle body forever.
+    const crawlerId = ai.spawn('infected.crawler', { x: -20, z: l4.perimeter.z1 + 1.4 });
+    const crawler = world.entities.get(crawlerId)!;
+    crawler.infected!.scripted = { x: crawler.transform.x, z: crawler.transform.z };
+    crawler.infected!.breachApproach = 'outside';
+    state.phase = 'collapse';
+    for (let tick = 0; tick < 30; tick++) world.update();
+    expect(crawler.infected!.breachApproach, 'collapse still advances an arrived exterior breach leg').not.toBe('outside');
+    ai.release(crawler);
+    state.phase = 'war';
     const perimeter = l4.perimeter;
     const id = ai.spawn('infected.runner', { x: -20, z: perimeter.z1 + 1.4 });
     const infected = world.entities.get(id)!;
