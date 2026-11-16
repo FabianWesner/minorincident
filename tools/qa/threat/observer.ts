@@ -239,7 +239,7 @@ export class ThreatObserver {
   private readonly followerWait = { escortTicks: 0, stationaryFarTicks: 0, followers: new Map<number, { escortTicks: number; stationaryFarTicks: number }>() };
   private readonly waitWindows = new Map<string, NonNullable<FollowerWaitReceipt['windows']>[number]>();
   private readonly paceWindows = new Map<string, { gaps: number[]; waitingTicks: number; backtrackTicks: number; stuck: Map<number, { since: number; maxTicks: number }>; stuckMax: Map<number, number> }>();
-  private readonly routeProgress = new Map<string, { progress: number; distance: number; segment: number }>();
+  private readonly routeProgress = new Map<string, { progress: number; distance: number; segment: number; x: number; z: number }>();
   private readonly prompts = { wait: 0, attack: 0, lost: 0 };
   private readonly rows = new Map<string, Row>();
   private active: Row[] = [];
@@ -442,13 +442,13 @@ export class ThreatObserver {
     // Extra seed receipts retain only 2 Hz follower samples. The per-tick
     // infected and waiting censuses are used by the main audit, not those votes.
     if (followersOnly && w.tick % 30) return;
-    let escorting = false, stationaryFar = false, unnecessaryWait = false;
+    let escorting = false, stationaryFar = false, unnecessaryWait = false, returningToFollower = false;
     const windowKey = this.level === 'L8' ? w.missions!.l8!.protecting() ? 'protect' : w.vehicles!.active !== null ? 'aboard' : w.missions!.l8!.boarding() ? 'boarding' : 'escort' : this.active.map(r => r.key).join('|');
     const window: NonNullable<FollowerWaitReceipt['windows']>[number] = this.waitWindows.get(windowKey) ?? { key: windowKey, escortTicks: 0, stationaryFarTicks: 0 };
     const pace = this.paceWindows.get(windowKey) ?? { gaps: [], waitingTicks: 0, backtrackTicks: 0, stuck: new Map<number, { since: number; maxTicks: number }>(), stuckMax: new Map<number, number>() };
     const priorRoute = this.routeProgress.get(windowKey), route = escortProgress(this.level, player.transform, priorRoute?.segment);
-    if (priorRoute && route && priorRoute.distance <= 8 && route.distance <= 8 && route.progress < priorRoute.progress - .01) pace.backtrackTicks++;
-    if (route && route.distance <= 8) this.routeProgress.set(windowKey, route); else this.routeProgress.delete(windowKey);
+    const reversing = !!(priorRoute && route && priorRoute.distance <= 8 && route.distance <= 8 && route.progress < priorRoute.progress - .01);
+    if (route && route.distance <= 8) this.routeProgress.set(windowKey, { ...route, x: player.transform.x, z: player.transform.z }); else this.routeProgress.delete(windowKey);
     // Use resolved displacement: requested velocity can remain nonzero while
     // the courier is blocked or a cinematic owns movement.
     for (const e of this.entities()) {
@@ -477,6 +477,9 @@ export class ThreatObserver {
       if (w.tick % 30 === 0) pace.gaps.push(gap);
       const threatened = w.infected!.active.some(enemy => enemy.health.current > 0 && !enemy.hidden && Math.hypot(enemy.transform.x - player.transform.x, enemy.transform.z - player.transform.z) <= 20);
       if (leaderSpeed <= .2 && gap > 10 && !threatened) unnecessaryWait = true;
+      if (reversing && priorRoute && gap > 10 && !threatened &&
+        (player.transform.x - priorRoute.x) * (e.transform.x - player.transform.x) +
+        (player.transform.z - priorRoute.z) * (e.transform.z - player.transform.z) > 0) returningToFollower = true;
       if (leaderSpeed > .2 && gap > 10 && (e.motion.speed ?? 0) < .1) {
         const stuck = pace.stuck.get(e.id) ?? { since: w.tick, maxTicks: 0 };
         stuck.maxTicks = Math.max(stuck.maxTicks, w.tick - stuck.since); pace.stuck.set(e.id, stuck); pace.stuckMax.set(e.id, Math.max(pace.stuckMax.get(e.id) ?? 0, stuck.maxTicks));
@@ -501,7 +504,8 @@ export class ThreatObserver {
     if (stationaryFar) this.followerWait.stationaryFarTicks++;
     if (escorting) window.escortTicks++;
     if (stationaryFar) window.stationaryFarTicks++;
-    if (unnecessaryWait) pace.waitingTicks++;
+    if (escorting && unnecessaryWait) pace.waitingTicks++;
+    if (escorting && returningToFollower) pace.backtrackTicks++;
     this.waitWindows.set(windowKey, window);
     this.paceWindows.set(windowKey, pace);
   }
