@@ -53,7 +53,7 @@ import { LimbIK } from '../../src/render/characters/LimbIK';
 import { retargetClip, skinClips } from '../../src/render/characters/clips';
 import { alphaTypes } from '../../src/data/alphaTypes';
 import { alphaLooks } from '../../src/data/alphaLooks';
-import { courierForegroundWanted, crowdSurroundsCourier, megaOccludesCourier, bodiesOccludeCourier } from '../../src/render/courierForeground';
+import { courierForegroundWanted, courierPinWanted, crowdSurroundsCourier, megaOccludesCourier, bodiesOccludeCourier } from '../../src/render/courierForeground';
 import { DistrictOcclusion } from '../../src/render/district/DistrictOcclusion';
 import { isStructuralOccluder } from '../../src/assets/worldDefinitions';
 import { isUncutProp } from '../../src/assets/DistrictAssets';
@@ -1100,6 +1100,11 @@ function checkVehicleForegroundVeto(): void {
   expect(courierForegroundWanted(true, false)).toBe(true);
   expect(courierForegroundWanted(false, false)).toBe(false);
   expect(courierForegroundWanted(false, true)).toBe(true);
+  expect(courierPinWanted(true, true, true, true)).toBe(true);
+  expect(courierPinWanted(true, true, true, false)).toBe(false); // calm frame
+  expect(courierPinWanted(false, true, true, true)).toBe(false); // riding
+  expect(courierPinWanted(true, false, true, true)).toBe(false); // hidden
+  expect(courierPinWanted(true, true, false, true)).toBe(false); // story shot
   // vqa-3 P1: an on-foot vehicle hull stays whole; her own occluded chest/head turns the foreground contour on instead.
   for (const crowd of [false, true]) for (const mega of [false, true]) expect(courierForegroundWanted(crowd, mega, true)).toBe(true);
   const mega = { id: 4, infected: { pursuit: true }, hidden: false, health: { current: 100 }, transform: { x: 0, y: 4.65, z: 5 } } as unknown as EntitySnapshot;

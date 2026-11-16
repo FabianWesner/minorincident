@@ -41,7 +41,7 @@ import { ActionView } from './ActionView';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
 import { corpseLayout } from './characters/CorpseLayout';
-import { Box3, BoxGeometry, Color, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, Shape, ShapeGeometry } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -79,9 +79,8 @@ import { layoutLights } from './WorldLights';
 import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 import { Environment } from './lighting/Environment';
-import { courierForegroundWanted, bodiesOccludeCourier, megaOccludesCourier } from './courierForeground';
+import { courierForegroundWanted, courierPinWanted, bodiesOccludeCourier, megaOccludesCourier } from './courierForeground';
 import { courierXray } from './characters/courierDepth';
-import { livingStencil } from './characters/figureStencil';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -198,7 +197,7 @@ export class GameView implements Lifecycle {
   private readonly vfxSettings: VfxSettings = {};
   private destination: Mesh | null = null;
   /** Subtle courier locator, depth-tested against bodies and props and drawn above ground decals. */
-  private courierMark: Mesh | null = null;
+  private courierMark: Group | null = null;
   private militaryPerimeter: MilitaryPerimeter | null = null;
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
@@ -317,10 +316,22 @@ export class GameView implements Lifecycle {
     if (this.character) { this.contactShadows = new ContactShadows(this.world); this.scene.add(this.contactShadows); }
     if (this.world.missions?.state.l4) { this.militaryPerimeter = new MilitaryPerimeter(this.world); this.scene.add(this.militaryPerimeter); }
     if (player) {
-      const markMaterial = new MeshBasicNodeMaterial({ color: '#429e91', depthWrite: true, depthTest: true }); markMaterial.name = 'courier-ground-mark'; livingStencil(markMaterial);
-      this.courierMark = new Mesh(new RingGeometry(.57, .69, 48), markMaterial);
-      this.courierMark.renderOrder = 1.5; this.courierMark.rotation.x = -Math.PI / 2; this.courierMark.visible = false;
-      this.meshes.push(this.courierMark); this.scene.add(this.courierMark);
+      // Hollow, paired chevrons read as a small game-world pin. They sit just
+      // above the courier and render over bodies, but only while a body volume
+      // crosses the camera view to her. Scale with camera distance to hold a
+      // steady screen size across zooms.
+      const chevron = new Shape();
+      chevron.moveTo(-.5, .34); chevron.lineTo(-.35, .5); chevron.lineTo(0, .15);
+      chevron.lineTo(.35, .5); chevron.lineTo(.5, .34); chevron.lineTo(0, -.16); chevron.closePath();
+      // The silhouette stays light and narrow; the backing gives it separation
+      // from bright hair, lamps and pale clothing without a filled badge.
+      const geometry = new ShapeGeometry(chevron);
+      this.courierMark = new Group(); this.courierMark.name = 'courier-occlusion-pin';
+      const backing = new Mesh(geometry, new MeshBasicNodeMaterial({ color: '#173b38', depthWrite: false, depthTest: false }));
+      backing.scale.setScalar(1.28); backing.renderOrder = 1001; this.courierMark.add(backing);
+      const face = new Mesh(geometry, new MeshBasicNodeMaterial({ color: '#58d6bd', depthWrite: false, depthTest: false }));
+      face.scale.setScalar(.88); face.renderOrder = 1002; this.courierMark.add(face);
+      this.courierMark.visible = false; this.scene.add(this.courierMark);
       const material = new MeshBasicNodeMaterial({ color: '#64ffce', depthWrite: false, depthTest: false }); material.name = 'keep_moveMarker';
       this.destination = new Mesh(new RingGeometry(.22, .32, 32), material);
       this.destination.renderOrder = 10; this.destination.rotation.x = -Math.PI / 2; this.destination.visible = false;
@@ -1132,9 +1143,15 @@ export class GameView implements Lifecycle {
     if (this.character) this.character.visible = !this.probes?.hide.courier && (carPose ? carPose.visible : !this.world.entities.get(1)?.hidden);
     if (this.courierMark && current) {
       const walking = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding === undefined && !carPose;
-      this.courierMark.visible = walking && !this.world.entities.get(1)?.hidden;
+      const nearbyBodies = bodiesOccludeCourier(this.camera.position, current, this.world.entities.iterate()) || this.nearLargeCorpse(current);
+      const bodyBoss = megaOccludesCourier(this.camera.position, current, this.world.entities.iterate());
+      this.courierMark.visible = courierPinWanted(walking, !this.world.entities.get(1)?.hidden, (!this.view.storyShot || __QA_HOOKS__ && this.view.spot === 'scene-lab'), nearbyBodies || bodyBoss);
       const x = lerp(previous?.x ?? current.x, current.x, alpha), z = lerp(previous?.z ?? current.z, current.z, alpha);
-      this.courierMark.position.set(x, (this.drawnGround(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0) + .035, z);
+      const y = lerp(previous?.y ?? current.y, current.y, alpha);
+      this.courierMark.position.set(x, y + .62, z);
+      this.courierMark.quaternion.copy(this.camera.quaternion);
+      const distance = this.camera.position.distanceTo(this.courierMark.position);
+      this.courierMark.scale.setScalar(Math.max(.2, distance * .012));
     }
     if (this.crowd) this.crowd.visible = !this.probes?.hide.crowd;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
@@ -1460,6 +1477,14 @@ export class GameView implements Lifecycle {
       this.districtResources?.registry.dispose(); this.districtResources?.grassMaterial.dispose(); this.districtResources?.materials.dispose(); this.districtResources?.lighting.dispose(); this.districtResources = null; this.resourceDistricts = '';
     }
     this.occlusion.reset(); this.scene.fog = null; this.scene.backgroundNode = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
+    if (this.courierMark) {
+      this.scene.remove(this.courierMark);
+      this.courierMark.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        node.geometry.dispose();
+        for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose();
+      });
+    }
     for (const mesh of this.meshes) {
       this.scene.remove(mesh); mesh.geometry.dispose();
       for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) if (!(material instanceof PaletteMaterial)) material.dispose();

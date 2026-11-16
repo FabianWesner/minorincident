@@ -1,0 +1,574 @@
+{
+  "slug": "s134-courierpin",
+  "status": "complete",
+  "change": "Replace the always-visible occludable courier ground ring with a depth-disabled camera-facing teal chevron pin, activated only during visible on-foot gameplay when body occlusion is detected.",
+  "validation": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "renderContracts": "14 passed",
+    "fullSuiteLocal": {
+      "status": "passed",
+      "passed": 106,
+      "skipped": 44,
+      "files": 27,
+      "seconds": 90.5
+    },
+    "requiredRemoteSuite": {
+      "status": "passed",
+      "passed": 105,
+      "skipped": 1,
+      "files": 27,
+      "seconds": 130.5,
+      "runner": "46.225.66.90"
+    },
+    "diffCheck": "passed",
+    "finalMergedRemoteSuite": {
+      "status": "passed",
+      "passed": 105,
+      "skipped": 1,
+      "files": 27,
+      "seconds": 130.2,
+      "runner": "46.225.66.90",
+      "source": "839b4799"
+    }
+  },
+  "visualEvidence": {
+    "status": "reviewed-pass",
+    "frames": [
+      "L4 dense",
+      "L6 dense",
+      "L1 calm"
+    ],
+    "sheet": "contact.jpg",
+    "reason": "Latest placement reviewed in full-size L4/L6/L1 captures and sheet. L4 pin touches courier hair; L6 lit courier dominates; calm L1 pin hidden. Broader visual review remains open.",
+    "verdicts": {
+      "L4": "Teal chevron at hair draws the eye to courier, then her contour. Findable at a glance in my review.",
+      "L6": "Lit courier dominates; pin adds identity without competing.",
+      "L1": "Pin hidden; no always-on ground ring."
+    }
+  },
+  "open": [],
+  "movingMatrix": {
+    "webgl2": {
+      "samples": 24,
+      "minBodyMaskShare": 1,
+      "rows": [
+        {
+          "id": "l4-high-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "backend": "webgl",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        }
+      ]
+    },
+    "webgpu": {
+      "samples": 24,
+      "minBodyMaskShare": 0.9989395546129375,
+      "rows": [
+        {
+          "id": "l4-high-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9995513683266039,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9989395546129375,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9991846718304117,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-high-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9995513683266039,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9989395546129375,
+          "marker": {
+            "visible": true,
+            "position": [
+              -22,
+              1.3249999833106996,
+              8
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l4-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 0.9991846718304117,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "backend": "webgpu",
+          "health": 30,
+          "share": 1,
+          "marker": {
+            "visible": true,
+            "position": [
+              40,
+              1.8899999809265138,
+              15
+            ]
+          },
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 30,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        },
+        {
+          "id": "l6-low-z1.5",
+          "frame": 60,
+          "health": 30,
+          "share": 1,
+          "foreground": true
+        }
+      ]
+    }
+  },
+  "cost": {
+    "comparison": "s133 4dca98d8 versus current, matched HIGH zoom1 f60",
+    "l4": {
+      "beforeDraws": 127,
+      "afterDraws": 128,
+      "beforeTriangles": 340972,
+      "afterTriangles": 340884
+    },
+    "l6": {
+      "beforeDraws": 77,
+      "afterDraws": 78,
+      "beforeTriangles": 277176,
+      "afterTriangles": 277088
+    },
+    "l1Calm": {
+      "beforeDraws": 68,
+      "afterDraws": 67,
+      "beforeTriangles": 47877,
+      "afterTriangles": 47781
+    },
+    "newPasses": 0
+  },
+  "gate": {
+    "mainRows": 91,
+    "passed": 91,
+    "vehicleContact": "HIGH/LOW passed",
+    "nativeMotion": "L9/L7/L4 passed",
+    "source": "ebf2e0e5 plus report-only changes; before main merge"
+  },
+  "mainMerge": {
+    "commit": "839b4799",
+    "included": "49f06681",
+    "nearLargeCorpse": "distance <4 m retained",
+    "postMergeSmoke": "passed 128.2s, 6 QA plus 1 public tests"
+  },
+  "realPlay": {
+    "level": "L4",
+    "quality": "high",
+    "zoom": 1,
+    "seconds": 182,
+    "skips": [],
+    "capture": "campaign-L4-t8129.jpg",
+    "verdict": "90 HP courier pin clear above hair amid Alphas and red health bars; eye lands on chevron then body.",
+    "limitations": "Three-minute bounded spot, not level completion. Early empty-HUD navigation warning and expected cannot-finish at cap."
+  }
+}
