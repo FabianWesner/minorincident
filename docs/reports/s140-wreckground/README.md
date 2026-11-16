@@ -217,3 +217,7 @@ HIGH #345 interval 4253–4554 contains six matching native wall damage/attack e
 ## Rejected LOW arrival experiments
 
 Tested nearer wire goals (0.6/0.8 m) and then a smaller scripted Alpha arrival tolerance (0.1 m). Each full LOW run completes but residuals move rather than disappear; the tolerance experiment still flags #255 at an open south outer waypoint over 8,357 eligible windows. Restored original goal distances and arrival tolerance. No production change retained. Need actual landing crowd/solid/ownership trace before further correction; existing focused checks completed.
+
+## Current complete WebGL2 grounding sweep
+
+Full sequential HIGH sweep on current support code completes all 409/409 resolved wreck identities across L3/L5/L6/L7/L9/L10, selected backend webgl in every level, zero missing support and zero threshold offenders. L3/L5/L6/L7 gaps are all 0 cm; L9/L10 ranges are retained in qa.json.finalWebgl2CampaignGrounding.summary. Compact per-placement tuples retain mesh LOD, resolved matrix, worst contact, support height and sample counts. This replaces earlier per-level sweeps for current-state grounding. Source-layout count remains 414 with five L8 decay-filtered placements; these are not drawn. Complete native source-loader coverage, final WebGPU coverage, LOW routing and latest remote gate validation still require audit.
