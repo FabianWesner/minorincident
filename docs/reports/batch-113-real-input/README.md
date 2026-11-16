@@ -104,3 +104,7 @@ Ignored `test-results/b113-video/identified-feet-entry.ts` is prepared and synta
 ## Alpha identity observer verified
 
 Four-minute HIGH observer run produced473 half-second receipts under `test-results/b113-l4-identified-high/alpha-observer.jsonl`, with screenshots alongside. Living Alpha states include43 ordinary attack samples and charge special samples;89 living Alpha observations fall within10m of tank anchor. Brute #372 is identified near the tank. No roar/slam sample is claimed. Identity hookup works; matching visual attack/sole review remains pending. Telemetry does not substitute for visible planting.
+
+## Identified attack frames reviewed
+
+Matched brute Alpha #372 ordinary attack states at ticks10017/10077 to `test-results/b113-l4-identified-high/sequence/00332-t10017.jpg` and `00334-t10077.jpg`; opened both full-size. Actor is at the upper edge behind the perimeter; fence/tank obscure lower legs. Identity is established, but planted soles remain unqualified. Charge windows are recorded at9325–9445 and9807–9927; these are not roar/slam proof.
