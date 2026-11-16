@@ -93,3 +93,5 @@ Collected another 240 seconds HIGH zoom 1.5, no skips (`test-results/playtest/b1
 Additional 240-second real-input run under `test-results/playtest/b112-l4-native/` completed, but ignored wrapper did not produce expected video/observer artifacts. No native video evidence is claimed. Driver stationary warnings at ticks 10580 (#221) and 12688 (#270) remain provisional; captures/logs retained, no frozen-AI conclusion.
 
 Wrapper retry `b112-l4-native-pooled` also used opaque exclusive admission because the classifier recognizes TypeScript entry files. It completed its bounded sample but supplies no native video/observer proof. This is a driver gap; tick-9125 #237 stationary warning remains provisional.
+
+Corrected TypeScript wrapper entry (`b112-l4-video-final`) was verified queued then admitted as a pooled GPU context, but the recording/observer interception still produced no artifacts. It completed the 240-second bounded run. No native-video evidence or tank-foot acceptance is claimed; further identical wrapper retries are not justified.
