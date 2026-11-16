@@ -161,5 +161,24 @@
     "finished": false,
     "wallSeconds": 480,
     "finding": "Escaped camp at full HP, then waited at first corner marker; at tick 14147 (-4,41.49) HP100, tick21010 (-4.01,42.38) HP0. Added 3m corner marker handoff tolerance; revalidation pending."
+  },
+  "cornerHandoffConfirmation": {
+    "path": "test-results/s147-l4escape/high-corner-handoff",
+    "finished": false,
+    "wallSeconds": 481,
+    "positionAtTick18012": [
+      28.9199,
+      39.9239
+    ],
+    "hp": 100,
+    "marker": [
+      48.5,
+      43
+    ],
+    "nativeReachableHint": [
+      18.625,
+      39.875
+    ],
+    "finding": "Corner handoff works; eastern Lakeshore pin points beyond an obstruction. Existing cellarDistance navigation hint routes back west around it; marker should expose reachable approach."
   }
 }
