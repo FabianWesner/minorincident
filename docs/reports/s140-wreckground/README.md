@@ -133,3 +133,7 @@ Source inspection confirms center-only terrace formula for military wreck placem
 ## Native support geometry path established
 
 Loaded all D-FAIR layout GLB layers natively with production GLTFLoader/Meshopt and GroundField (15,258 footprint triangles). Road center heights at x214/138/100,z25 are 3.75/1.50/0.45 m. A 10 cm grid around x134–142,z22–28 peaks at 1.65 m, strengthening concern that the runtime 194 cm candidate is support-selection contamination. Raw-layer probe does not apply all runtime filtering, so no placement correction follows solely from it. Reproduction source retained in qa.json; browser contact rerun failed admission after 60 s.
+
+## Large sink transform cause found
+
+Native asset-vertex + recorded-matrix replay reproduces every military gap, including -194.002 cm. l7-military-3 is authored Y=1.5 m but its renderer reference is Y=-0.290022 m; worst vertex is at [140.3201,-0.2900,24.4840] over road Y=1.65. Vehicles are pushable props; DistrictView sleeping-prop contact correction uses the incomplete low ground field and can lower the elevated reference. Thus the large sink is not dismissed as support contamination. Correct the prop support sampling before modifying authored height; the smaller 15 cm terrace discrepancies remain separate.
