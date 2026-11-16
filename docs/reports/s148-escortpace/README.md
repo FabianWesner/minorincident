@@ -1,6 +1,6 @@
 # s148 escort pace
 
-Current native seed-1 LOW evidence meets the measured waiting target in the recorded skilled escort windows; full acceptance remains pending the gaps below. Original runtime: `5ee3d0a3`. Current source and evidence are committed on this lane.
+Final native seed-1 LOW evidence meets the measured waiting/return target in every recorded skilled and independent normal-walk window. Original runtime: `5ee3d0a3`. Current source and evidence are committed on this lane.
 
 | Skilled window | Before waiting ticks | After | Reduction |
 | --- | ---: | ---: | ---: |
@@ -18,7 +18,9 @@ Independent normal-walk comparisons use fixed route points without follower read
 
 Validation: typecheck/lint and 12 focused tests pass. Required remote `sh tools/remote/run.sh "$PWD" -- npm test` passes, 105 passed / 1 skipped, 185.7 s under 240 s. Repository test-case budget remains 150. HIGH then LOW headless Metal WebGL2 captures through the browser pool show moving/fighting escorts; inspected [sheet](escort-sheet.jpg), one browser, ports 5033/5034, 600 s reservations. [Measurements](measurements.json) are under 200 KB.
 
-Acceptance audit still open: L8 observer aggregates travel across arenas rather than proving every individual route leg; the independent L8 sample retries once; detailed route-policy threat comparisons are not yet summarized; the epic verifier wrapper has not completed (duplicate local runs were stopped after discovering identical gates). Required remote unit command itself has passed. These gaps prevent an unqualified full-goal completion claim.
+Final matched batch uses identical observer/probe code for all 12 original/candidate runs, including individual L8 route legs and contact classification. Assertions pass: every candidate window has at most half its baseline waiting/return ticks (zero baselines remain zero), and all named skilled threat rates are unchanged/higher. Candidate gameplay outcomes reproduce prior receipts. Baseline L6 normal walk times out; candidate completes. No forbidden source paths, zombie stats or corpse-retention code changed. JSON now contains final matched receipts rather than experimental snapshots.
+
+The exact epic verifier wrappers remain unfinished: their implementation is the same typecheck/lint/unit gate for E24/E29/E30. Those underlying checks have passed, including the required full remote unit command; duplicate local wrapper jobs were stopped to avoid redundant load. This command-level requirement remains open before declaring the entire job complete. Other limitations: waiting/returns measure behavior heuristically; static contact does not prove a navigation root cause; independent policies retain mandatory combat/interactions; L8 normal walk includes one death/retry; L6 emits genuine survivor-death alerts.
 
 ## Measurement definitions
 
