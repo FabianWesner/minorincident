@@ -1384,6 +1384,143 @@
         }
       ],
       "driverGap": "Wrapper failed to produce expected native video/observer artifacts; no native video evidence claimed."
+    },
+    {
+      "name": "b112-l4-native-pooled",
+      "raw": "test-results/playtest/b112-l4-native-pooled",
+      "run": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 240,
+          "simSeconds": 237,
+          "maxNoProgressSeconds": 29.855,
+          "deaths": 9,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 1482
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 11,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1837,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2103,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 97\u00a0m",
+              "tick": 13505,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.70509934425354,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "driverIssues": [
+        {
+          "level": "L4",
+          "tick": 1235,
+          "x": 12.8,
+          "z": -30,
+          "severity": "P2",
+          "kind": "stuck-navigating",
+          "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"\"",
+          "captures": [
+            "captures/native-L4-1235-stuck-navigating.jpg"
+          ],
+          "step": "ride",
+          "objective": ""
+        },
+        {
+          "level": "L4",
+          "tick": 9125,
+          "x": -25.1,
+          "z": -4.4,
+          "severity": "P2",
+          "kind": "enemy-frozen",
+          "text": "Infected #237 in state chase 8.8 m away has not moved for ~5 s",
+          "captures": [
+            "captures/native-L4-9125-enemy-frozen.jpg"
+          ],
+          "step": "hold",
+          "objective": "Hold the south breach \u00b7 1:13 remaining \u00b7 25\u00a0m"
+        }
+      ],
+      "driverGap": "JavaScript wrapper classified opaque exclusive; recording hook still not reached. No native video evidence."
     }
   ],
   "validation": {
