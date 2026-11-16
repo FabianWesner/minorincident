@@ -552,7 +552,7 @@ export class Outbreak {
     const evacuation = this.world.missions?.l9?.driving.state;
     // At the trucks, a survivor struggles free after three seconds of holding.
     // Ordinary rescue releases the hold and keeps both actors vulnerable.
-    if (evacuation && evacuation.evacuationAt !== null && evacuation.evacuating.includes(e.id) &&
+    if (evacuation && evacuation.evacuationAt !== null && evacuation.roster.includes(e.id) && !evacuation.evacuated.includes(e.id) &&
         tick >= evacuation.evacuationAt + l9Course.evacuation.defendTicks && tick - c.entered >= 180) {
       // A shove interrupts the infected's native hold as well as the civilian pose.
       if (attacker?.infected) attacker.infected.grabHits++;

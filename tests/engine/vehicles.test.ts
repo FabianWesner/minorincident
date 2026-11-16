@@ -172,7 +172,8 @@ async function l9InterruptedBoarding(): Promise<void> {
       actor.hidden = false; delete actor.passengerOf; actor.transform.x = 446; actor.transform.z = 13;
       world.spatial.set(last, actor.transform.x, actor.transform.z);
       s.evacuationAt = world.tick - l9Course.evacuation.defendTicks - 480;
-      s.evacuating.push(last);
+      // Interrupted disembark has not entered the walking roster yet.
+      s.evacuating = s.evacuating.filter(id => id !== last);
       const grabber = world.infected!.spawn('infected.runner', { x: actor.transform.x, z: actor.transform.z }, { state: 'chase' });
       actor.civilian!.state = 'grabbed'; actor.civilian!.attacker = grabber; actor.civilian!.entered = world.tick; actor.civilian!.until = world.tick + 90;
       world.npcs!.civilians.release(grabber);
@@ -189,6 +190,7 @@ async function l9InterruptedBoarding(): Promise<void> {
       held.held(actor);
       expect(actor.civilian!.state, 'post-defense struggle releases at three seconds').toBe('flee');
       expect(world.entities.get(grabber)!.health.current, 'escape leaves the attacker alive').toBeGreaterThan(0);
+      s.evacuating.push(last);
       const beforeFallback = { x: actor.transform.x, z: actor.transform.z };
       expect(l9.driving.text()).toContain('Survivors sprint to the trucks');
       world.update();
