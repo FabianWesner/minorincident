@@ -569,7 +569,11 @@ export class InfectedSystem {
     if (!b.scripted || b.specialAttack || b.state === 'attack') return false;
     const retreatRun = b.clearingStreet || b.l4ArmyApproach && this.world.missions?.state.l4?.phase === 'collapse';
     const scriptedSpeed = retreatRun ? b.l1?.runSpeed ?? Math.max(b.speed, b.clearingStreet ? 4.8 : 3.4) : b.breachApproach ? b.l1?.runSpeed : undefined;
-    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted, scriptedSpeed);
+    const line = this.world.scenario === 'L4' && b.alphaType ? this.world.missions?.state.l4 : undefined;
+    const breach = line?.director.alphaJobs.find(job => job.alphaId === e.id)?.breach;
+    // The generic arrival band can stop just beyond the rail's attack reach.
+    const arrival = breach && !line?.breaches?.[breach]?.openAt ? .1 : .6;
+    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > arrival) this.seek(e, b.scripted, scriptedSpeed);
     e.combat!.attacking = false; this.place(e); return true;
   }
   /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */

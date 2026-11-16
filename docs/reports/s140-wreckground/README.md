@@ -225,3 +225,7 @@ Full sequential HIGH sweep on current support code completes all 409/409 resolve
 ## Complete native contact replay
 
 Native production DistrictAssets/GLTFLoader/Meshopt source loading, InstancedGroup contact vertices and recorded renderer matrices cover all 409 resolved wrecks, including variants without static bakes. All native support samples exist; zero >8 cm float / >10 cm sink offenders. L3/L5/L6/L7 native gaps are 0 cm; L9 -2.921 to +0.600 cm; L10 -2.900 to +1.903 cm. Source terrain chunks use their production origins. Raw source layers omit some runtime filtering/offsets, so renderer sweep remains separate corroboration, not an identical-height claim. Native per-row gaps align with final renderer identity rows in qa.json.nativeCampaignContacts; source recipe retained. Five source-only L8 placements are decay-filtered, accounting for 414 source vs 409 drawn.
+
+## Closed-wire arrival band correction
+
+LOW north actor was inside generic script arrival tolerance but just beyond rail-face attack reach (1.5 m). Only assigned still-closed L4 Alpha breach approaches now use 0.1 m arrival precision; other scripts retain 0.6 m. LOW full run completes with the old north stall absent, but a later south outer-waypoint window remains after opening. This suggests a blocked inside landing needing another-breach routing. Focused L4 test, typecheck and lint pass; broad routing is still incomplete.
