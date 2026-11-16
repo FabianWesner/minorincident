@@ -33,3 +33,5 @@ Latest simulation L9 threat refresh (`test-results/s138-exit-threat`) completed 
 Latest exit-corrected LOW run passed: 0.7166666666666667 seconds after Defense complete, maximum grabbed age 0 ticks, zero issues. Latest E31 verification passed all 106 tests / 27 files in 91.6 seconds.
 
 Exit-corrected HIGH road matrix: 0.35, 0.23333333333333334, 1.0666666666666667 seconds after Defense complete, all with zero grabbed ticks. Run 1 later stalled at the bridge (L9 incomplete); run 2 completed with zero issues; run 3 completed with four stationary-infected P2s. These driver observations are retained and do not replace the separate zero-level-flag threat audit.
+
+Refreshed vehicle-motion gate on the exit-corrected simulation passed (exit 0; `/private/tmp/s138-exit-motion.log`). The remaining visual gap is final-revision boarding capture/review; older dense captures predate the exit correction. Final report reconciliation is still pending.
