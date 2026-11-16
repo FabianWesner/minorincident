@@ -1507,6 +1507,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         }; });
         return { tick: w.tick, phase: l9.state.phase, evacuationAt: s.evacuationAt, defenseCompleteAt, defenseComplete, evacuationDone: s.evacuationDone,
           evacuated: [...s.evacuated], evacuating: [...s.evacuating], truckEntering: { ...s.truckEntering },
+          infected: w.infected!.active.filter(a => a.health.current > 0 && Math.hypot(a.transform.x - w.entities.get(1)!.transform.x, a.transform.z - w.entities.get(1)!.transform.z) < 15).map(a => ({
+            id: a.id, archetype: a.archetype, hp: a.health.current, at: { ...a.transform }, state: a.infected!.state,
+            attachedTo: a.attachedTo, motion: a.motion, targetId: a.infected!.heardTargetId, scripted: a.infected!.scripted,
+            goal: a.infected!.goal, pathIndex: a.infected!.pathIndex, pathLength: a.infected!.path.length,
+            special: a.infected!.specialAttack, vehicleContact: w.entities.get(l9.state.carId)?.vehicle?.apcContacts?.infected[a.id],
+          })),
           census, survivors: s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return {
             id, key: a.civilian?.survivor?.key, hp: a.health.current, infected: !!a.infected || !!a.infection, hidden: a.hidden,
             at: { x: a.transform.x, z: a.transform.z }, passengerOf: a.passengerOf, state: a.civilian?.state,
