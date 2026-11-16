@@ -21,3 +21,7 @@ No deployment, push, main movement, source fix, playtest-tool edit, zombie stat 
 ## Admission restored
 
 After filesystem/network restrictions were removed, the guarded browser pool admitted HIGH L3 on WebGPU. This run is active; its raw captures and log are under `test-results/playtest/b113-l3-high/`. The unchanged prescribed remote suite now passes on 46.225.66.90: 27 files, 105 tests passed, one existing skip, 150-case inventory, 183.2 seconds within 240 seconds. Prior admission failures are historical and no longer block progress.
+
+## HIGH L3 collected
+
+The full ordinary-combat HIGH WebGPU run completed in 414 seconds with no skips, no assists and zero driver issues. It recorded seven deaths and 561 handgun attacks. Raw evidence is under `test-results/playtest/b113-l3-high/`. Bridge captures await visual review; completion alone does not establish bridge support or universal hitability. All other requested runs remain pending. No checks remain running.

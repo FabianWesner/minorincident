@@ -40,7 +40,7 @@
   "gameplayCoverage": [
     {
       "check": "L3 HIGH full level: bridge close-target damage and infected bridge support",
-      "status": "NOT RUN"
+      "status": "FULL LEVEL COLLECTED; VISUAL REVIEW PENDING"
     },
     {
       "check": "L3 LOW full level: bridge close-target damage and infected bridge support",
@@ -103,5 +103,113 @@
     "Remote test runner unavailable; command rejected local fallback."
   ],
   "rawCaptures": [],
-  "notes": "Browser admission restored after sandbox was disabled. HIGH L3 real-input WebGPU run is active; full coverage remains pending."
+  "notes": "HIGH L3 completed 414 seconds, no skips, zero issues; visual review and remaining runs pending.",
+  "runs": [
+    {
+      "path": "test-results/playtest/b113-l3-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L3"
+        ],
+        "runs": [
+          {
+            "level": "L3",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 414,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 4.837,
+            "deaths": 7,
+            "assists": 0,
+            "attacks": {
+              "weapon.handgun": 561
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "armory",
+                "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+                "tick": 12,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": {
+                    "x": -139.2,
+                    "y": 0,
+                    "z": -8.4
+                  },
+                  "drawn": [
+                    -139.2,
+                    0.05,
+                    -8.4
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "defend",
+                "text": "Help defend the station \u00b7 10\u00a0m",
+                "tick": 970,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "checkpoint",
+                "text": "Get inside the army checkpoint \u00b7 365\u00a0m",
+                "tick": 1652,
+                "marker": {
+                  "anchor": "l3-zone",
+                  "ring": {
+                    "x": 225,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    225,
+                    0.05,
+                    0
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      },
+      "visualReview": "PENDING"
+    }
+  ]
 }
