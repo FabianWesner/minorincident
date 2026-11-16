@@ -1,7 +1,7 @@
 {
   "objective": "s145-driver \u2014 playtest driver: no false stalls (L9 bridge loops, L10 farm deaths, cap labels)",
   "candidate": "69562fd1",
-  "status": "implementation complete; real-input acceptance pending",
+  "status": "L9 accepted; L10 policy requires further work",
   "changes": [
     "L9 live bridge steering gains loop detection and physical reverse/re-approach recovery",
     "L10 low-health crowd retreat and nearby medkit steering during travel",
@@ -83,6 +83,17 @@
           "tick": 13548
         }
       ]
+    },
+    "L10_HIGH_mortal_attempt_1": {
+      "status": "diagnostic failed; stopped after repeated farm navigation warnings",
+      "run": "test-results/s145-driver/l10-high-mortal-1",
+      "deathsObserved": 5,
+      "lastCheckpoint": "cure-pace-3",
+      "navigationWarningTicks": [
+        10335,
+        23244
+      ],
+      "fullRun": false
     }
   },
   "archived_baseline_only": {

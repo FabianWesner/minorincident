@@ -40,3 +40,5 @@ Third HIGH road run completed handover in 271 seconds with no skips or `stuck-na
 LOW road completed handover in 246 seconds with zero issues and no skips. This passes the required LOW navigation criterion. Raw evidence: `test-results/s145-driver/l9-road-low-live`. Shortcut and both full mortal L10 runs remain pending.
 
 HIGH dry-shortcut completed handover in 208 seconds with zero issues and no skips. The full required L9 matrix now passes: HIGH road ×3, LOW road ×1, HIGH shortcut ×1, all without `stuck-navigating`. Raw evidence: `test-results/s145-driver/l9-shortcut-high-live`. Both full mortal L10 runs and the farm death comparison remain pending.
+
+First mortal HIGH L10 attempt remains a failed diagnostic, deliberately stopped after repeated farm navigation warnings (ticks 10335 and 23244). It advanced to `cure-pace-3`, near x986, with five observed deaths. Retreat triggered, but did not reliably prevent farm navigation stalls. This is not a full-run acceptance result; both required full L10 runs and the baseline comparison remain open. Raw evidence: `test-results/s145-driver/l10-high-mortal-1`.
