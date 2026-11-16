@@ -12,7 +12,7 @@ import { bossHitFlashTicks, hitFlashTicks } from '../../src/render/CrowdView';
 import { pickBodies } from '../../src/render/characters/PickBodies';
 import { updateAlly } from '../../src/sim/outbreak/Allies';
 import { respawnAtCheckpoint } from '../../src/sim/missions/Respawn';
-import { loadL4 } from '../../tools/sim-runner/l4Bots';
+import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../src/sim/world/types';
@@ -638,7 +638,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       } finally { bars.dispose(); boundsProbe.mockRestore(); topProbe.mockRestore(); }
     } finally { occlusion.world.dispose(); }
   } finally { world.dispose(); }
-});
+}, 90_000);
 
 async function checkOutsideWireRouting(): Promise<void> {
   const { world, mission } = await loadL4(1, 'high');
@@ -682,4 +682,36 @@ async function checkOutsideWireRouting(): Promise<void> {
       Math.hypot(start.x - l4PerimeterSegments[opened].x, start.z - l4PerimeterSegments[opened].z),
     );
   } finally { world.dispose(); }
+
+  // Replay real perimeter arrivals: a clear route must not retain an idle
+  // exterior waypoint after a breach opens (including a hull-blocked approach).
+  const { world: replay, mission: campaign } = await loadL4(1, 'low');
+  try {
+    const nav = replay.infected!.nav;
+    const windows = new Map<number, { tick: number; x: number; z: number; travel: number }[]>();
+    const stopped = new Set<number>();
+    const result = runL4(replay, campaign, 'complete', { seed: 1, god: true, maxSeconds: 520, stopWhen: () => {
+      const player = replay.entities.get(1)!, goal = nav.nearestCell(player.transform.x, player.transform.z, .35);
+      const seen = new Set<number>();
+      for (const e of replay.infected!.active) {
+        if (e.health.current <= 0 || e.hidden || e.emerging) continue;
+        const { x, z } = e.transform, p = l4.perimeter;
+        if (x >= p.x0 && x <= p.x1 && z >= p.z0 && z <= p.z1) continue;
+        if (Math.min(...l4PerimeterWalls.map(w => Math.hypot(Math.max(0, Math.abs(x - w.x) - w.halfX), Math.max(0, Math.abs(z - w.z) - w.halfZ)))) > 2) continue;
+        const from = nav.nearestCell(x, z, e.combat?.radius ?? .35);
+        if (from < 0 || goal < 0 || !nav.path(from, goal, [], 1000000)) continue;
+        seen.add(e.id);
+        const rows = windows.get(e.id) ?? [], last = rows.at(-1);
+        const travel = (last?.travel ?? 0) + (last ? Math.hypot(x - last.x, z - last.z) : 0);
+        rows.push({ tick: replay.tick, x, z, travel });
+        while (rows.length && rows[0].tick < replay.tick - 301) rows.shift();
+        windows.set(e.id, rows);
+        if (rows.length > 301 && travel - rows[0].travel < .1) stopped.add(e.id);
+      }
+      for (const id of windows.keys()) if (!seen.has(id)) windows.delete(id);
+      return false;
+    } });
+    expect(result.outcome).toBe('complete');
+    expect([...stopped], 'real LOW perimeter actors keep routing through an available entrance').toEqual([]);
+  } finally { replay.dispose(); }
 }

@@ -279,7 +279,22 @@ export class L4Collapse {
         const lateral = Math.abs(along);
         const halfOpening = l4Breaches[job.breach].segments.reduce((sum, i) => sum + l4PerimeterSegments[i].length, 0) / 2;
         const clearance = Math.max(0, halfOpening - e.combat!.radius - .05);
-        if (lateral > clearance) b.scripted = this.h.snap({ x: centre.x + out.x * 1.6, z: centre.z + out.z * 1.6 }, e.combat!.radius);
+        if (lateral > clearance) {
+          // Keep alignment within the opening: radial snapping around a hull
+          // can otherwise place the waypoint beyond the neighbouring rail.
+          let aligned = false;
+          for (const offset of [0, .5, -.5, 1, -1]) {
+            if (Math.abs(offset) > clearance) continue;
+            const p = { x: centre.x + out.x * 1.6 + out.z * offset, z: centre.z + out.z * 1.6 - out.x * offset };
+            if (!ai.infectedNav.clear(p.x, p.z, e.combat!.radius)) continue;
+            if (world.solids.clear({ ...p, y: world.districts!.groundHeight(p.x, p.z) + .7 }, e.combat!.radius, e.id, false)) { b.scripted = p; aligned = true; break; }
+          }
+          if (!aligned) {
+            const alternative = l4BreachSides.filter(side => side !== job.breach && this.h.breachOpen(side))
+              .sort((a, c) => dist(l4BreachSite(a).centre, e.transform) - dist(l4BreachSite(c).centre, e.transform))[0];
+            if (alternative) { job.breach = alternative; b.scripted = this.h.snap(l4BreachSite(alternative).stage, e.combat!.radius); }
+          }
+        }
         else {
           // Radial snapping must not move an inside crossing goal back outside.
           let landing: Point | undefined;
