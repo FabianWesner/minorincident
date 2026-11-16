@@ -1,273 +1,245 @@
 {
-  "candidate": "7fb95a9159be6c3b38856a0071464d35f0de4396",
-  "baseline": "cc2f7476c7e7834d5060b07a2b654a5d1cb1c873",
-  "l2_12": {
-    "criterion": "at least 2 and at most 20 attacks/min",
-    "sample_seconds": 3.08,
-    "candidate_attacks_per_minute": 21.93,
-    "baseline_attacks_per_minute": 21.93,
-    "baseline_threat_fail_flags": 0,
-    "classification": "baseline short-sample reporting drift; criterion unchanged"
+  "base": "7fb95a91",
+  "mergedMain": "792dde65",
+  "fixes": [
+    "f3b337e2",
+    "4bab7d9c",
+    "25397f72"
+  ],
+  "baseline": {
+    "revision": "cc2f7476",
+    "fullThreatExit": 0,
+    "fullThreatFlags": 0,
+    "l2_12AttacksPerMinute": 21.93,
+    "l2BridgeSeconds": 3.08,
+    "checkoutRemoved": true
   },
-  "l4_north_breach": {
-    "candidate_observed_cohort_attackers": 2,
-    "required_cohort_attackers": 3,
-    "candidate_flag": "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
-    "baseline_threat_fail_flags": 0,
-    "status": "root cause and fix pending"
-  },
-  "l4_tank_low": {
-    "candidate_fixture": "l4-tank",
-    "candidate_key": "L4/hull-ground/225",
-    "frames": 272,
-    "contacts": 13,
-    "slide_max_cm": 11,
-    "slide_p95_cm": 9.8,
-    "yaw_drift_max_deg": 59.3,
-    "lift_max_cm": 6.2,
-    "worst_slide_frame": 987,
-    "baseline_vehicle_comparison": "not run; local browser pool could not bind on 127.0.0.1:4329",
-    "rerun": "exact reproduction on port 5024",
-    "actor": {
-      "id": 225,
-      "archetype": "infected.runner",
-      "lod": "lod2",
-      "clip_before": "get-up",
-      "clip_at_worst_contact_start": "infected-search",
-      "tick": 5307,
-      "reaction_until": 5307,
-      "root_step_cm": 0.0222,
-      "hull": "veh.evac-bus"
+  "final": {
+    "vehicle": {
+      "batches": [
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "L9",
+              "tier": "high",
+              "code": 0,
+              "seconds": 106.712,
+              "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "L9",
+              "tier": "low",
+              "code": 0,
+              "seconds": 77.259,
+              "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l7-bus",
+              "tier": "high",
+              "code": 0,
+              "seconds": 14.437,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "l7-bus",
+              "tier": "low",
+              "code": 0,
+              "seconds": 13.111,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-parked",
+              "tier": "high",
+              "code": 0,
+              "seconds": 32.848,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "l4-parked",
+              "tier": "low",
+              "code": 0,
+              "seconds": 17.014,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-tank",
+              "tier": "high",
+              "code": 0,
+              "seconds": 49.12,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "l4-tank",
+              "tier": "low",
+              "code": 0,
+              "seconds": 28.753,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        }
+      ]
+    },
+    "threat": {
+      "seconds": 436.513335083,
+      "flags": [],
+      "levels": [
+        {
+          "level": "L1",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L2",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L3",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L4",
+          "outcome": "complete",
+          "flags": [
+            "wave/breach-west:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+            "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+          ],
+          "passiveFlags": []
+        },
+        {
+          "level": "L5",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L6",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L7",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L8",
+          "outcome": "complete",
+          "flags": [
+            "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+          ],
+          "passiveFlags": []
+        },
+        {
+          "level": "L9",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L10",
+          "outcome": "complete",
+          "flags": [
+            "wave/dispersal-assault:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+          ],
+          "passiveFlags": []
+        }
+      ],
+      "simUnchangedSinceCommit": "4bab7d9c"
+    },
+    "remoteUnit": {
+      "exit": 0,
+      "seconds": 182.2,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "unchangedBudgetSeconds": 240
+    },
+    "l4Contact": {
+      "exit": 0,
+      "seconds": 88.53
+    },
+    "typecheck": {
+      "exit": 0
+    },
+    "lint": {
+      "exit": 0
+    },
+    "renderContracts": {
+      "exit": 0,
+      "tests": 14
     }
   },
-  "checks": {
-    "l4_contact_regression": "pass; 1 test",
-    "typecheck": "pass after s142 scan event narrowing",
-    "lint": "pass",
-    "candidate_vehicle_gate": "not completed; browser pool EPERM / Chromium bootstrap failure",
-    "remote_npm_test": "pending"
+  "rootCauseEvidence": {
+    "originalSlide": {
+      "actor": 225,
+      "p95Cm": 9.8,
+      "maxCm": 11
+    },
+    "idleHullPush": {
+      "actor": 241,
+      "maxCm": 19.2,
+      "reportedSpeed": 0,
+      "rootMoved": true
+    },
+    "finalTankLow": {
+      "maxCm": 3.1,
+      "p95Cm": 3
+    },
+    "northCapacity": {
+      "tick": 8580,
+      "recovering": 48,
+      "nearPlayerOrdinary": 30,
+      "alphas": 2,
+      "cap": 80,
+      "arrivals": 2,
+      "remainingPending": 5
+    },
+    "l4CollapseBaselineIsolation": "restoring only baseline L4Collapse removed the north-breach flag"
   },
-  "currentThreat": {
-    "seconds": 298.476004209,
-    "flags": [
-      "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS"
-    ]
-  },
-  "isolation": {
-    "restoredFile": "L4Collapse.ts",
-    "flags": [
-      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
-    ],
-    "seconds": 67.562250833
-  },
-  "afterMainMerge": {
-    "main": "792dde65",
-    "threatFlags": [
-      "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
-      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
-    ],
-    "vehicleLowFailures": [
-      {
-        "key": "L4/hull-ground/225",
-        "classification": "grounded",
-        "complete": true,
-        "actionsMatched": true,
-        "pass": false,
-        "motion": {
-          "frames": 272,
-          "torsoPitchMinDeg": null,
-          "torsoPitchMaxDeg": null,
-          "contacts": 13,
-          "slideMaxCm": 11,
-          "slideP95Cm": 9.8,
-          "yawDriftMaxDeg": 59.3,
-          "liftMaxCm": 6.2,
-          "sinkMaxCm": 0,
-          "jitterRunMax": 1,
-          "worstSlideFrame": 987
-        }
-      }
-    ]
-  },
-  "rejectedDepthExperiment": {
-    "depthOrder": [
-      3,
-      4,
-      2,
-      1.6,
-      1.2,
-      0.9
-    ],
-    "flags": [
-      "L4/wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
-      "L4/criterion/L4-06 sustained horde:FAIL"
-    ],
-    "reverted": true
-  },
-  "turnReleaseFix": {
-    "angleRadiansBefore": 0.5,
-    "angleRadiansAfter": 0.2,
-    "tankHighPass": true,
-    "tankLowPass": true,
-    "tankLowP95Cm": 3.4,
-    "tankLowMaxCm": 10.1
-  },
-  "remoteUnit": {
-    "firstAttempt": "runner timeout at 246.1 seconds",
-    "unchangedRetryExit": 0,
-    "unchangedRetrySeconds": 171.7
-  },
-  "rejectedDirectRouteExperiment": {
-    "flag": "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
-    "reverted": true
-  },
-  "northAdmissionProbe": {
-    "openTick": 8458,
-    "initialPending": 7,
-    "finalArrivals": 2,
-    "remainingPending": 5,
-    "count": 80,
-    "reserved": 0,
-    "collapseFirstObservedTick": 13380,
-    "conclusion": "owed third member starved at LOW cap before pressure processing stops in collapse"
-  },
-  "reservationExperiment": {
-    "reserveAtAnnouncement": true,
-    "spawned": 5,
-    "firstAttackSeconds": 40.96666666666667,
-    "spawnedWithin18Seconds": 1,
-    "reverted": true
-  },
-  "fullVehicleGate": {
-    "exit": 0,
-    "batches": [
-      {
-        "pass": true,
-        "rows": [
-          {
-            "mode": "L9",
-            "tier": "high",
-            "code": 0,
-            "seconds": 120.079,
-            "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          },
-          {
-            "mode": "L9",
-            "tier": "low",
-            "code": 0,
-            "seconds": 77.447,
-            "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          }
-        ]
-      },
-      {
-        "pass": true,
-        "rows": [
-          {
-            "mode": "l7-bus",
-            "tier": "high",
-            "code": 0,
-            "seconds": 14.172,
-            "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          },
-          {
-            "mode": "l7-bus",
-            "tier": "low",
-            "code": 0,
-            "seconds": 13.098,
-            "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          }
-        ]
-      },
-      {
-        "pass": true,
-        "rows": [
-          {
-            "mode": "l4-parked",
-            "tier": "high",
-            "code": 0,
-            "seconds": 32.702,
-            "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          },
-          {
-            "mode": "l4-parked",
-            "tier": "low",
-            "code": 0,
-            "seconds": 16.99,
-            "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          }
-        ]
-      },
-      {
-        "pass": true,
-        "rows": [
-          {
-            "mode": "l4-tank",
-            "tier": "high",
-            "code": 0,
-            "seconds": 51.188,
-            "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          },
-          {
-            "mode": "l4-tank",
-            "tier": "low",
-            "code": 0,
-            "seconds": 27.944,
-            "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
-            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
-            "pass": true
-          }
-        ]
-      }
-    ]
-  },
-  "northCapacityCensus": {
-    "tick": 8580,
-    "recovering": 48,
-    "nearPlayerOrdinary": 30,
-    "alphas": 2,
-    "total": 80,
-    "safeRetirementCandidates": 0
-  },
-  "afterReservationFix": {
-    "threatExit": 0,
-    "threatFlags": [],
-    "seconds": 436.5,
-    "vehicleFailures": [
-      {
-        "key": "L4/hull-ground/241",
-        "classification": "grounded",
-        "complete": true,
-        "actionsMatched": true,
-        "pass": false,
-        "motion": {
-          "frames": 1320,
-          "torsoPitchMinDeg": null,
-          "torsoPitchMaxDeg": null,
-          "contacts": 95,
-          "slideMaxCm": 19.2,
-          "slideP95Cm": 3.3,
-          "yawDriftMaxDeg": 0.2,
-          "liftMaxCm": 38.6,
-          "sinkMaxCm": 0,
-          "jitterRunMax": 3,
-          "worstSlideFrame": 878
-        }
-      }
-    ]
+  "invariants": {
+    "zombieStatsUnchanged": true,
+    "corpsesPersist": true,
+    "s140RoutingPreserved": true,
+    "l7WreckGroundingPreserved": true,
+    "wreckGatePreserved": true
   }
 }

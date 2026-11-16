@@ -1,38 +1,22 @@
-# s143-b113gate — gate comparison
+# Batch 113 gate corrections
 
-## Scope and source
+Base `7fb95a91`; merged requested main `792dde65` in `b0666c70`. No push, deployment or main movement was performed.
 
-Candidate: `7fb95a9159be6c3b38856a0071464d35f0de4396` (s140 changes on top of PROD 112, `cc2f7476c7e7834d5060b07a2b654a5d1cb1c873`). A disposable checkout at the baseline commit was used for the full native threat audit and removed after the run.
+## Root causes and fixes
 
-## Findings so far
+- **LOW tank slide:** the changed L4 routes exposed existing far-LOD foot contact defects. Actor 225 turned after recovery while its stance held too long (9.8 cm P95); releasing the turn step at 0.2 rather than 0.5 radians fixes this. The corrected population then exposed actor 241: a rotating hull pushed an idle actor while requested stride remained zero. Reach recovery must also lift these idle plants. Final focused tank HIGH/LOW pass; LOW maximum 3.1 cm, P95 3.0 cm. Existing render-contract coverage now includes a zero-stride shove beyond leg reach.
+- **L2-12:** the full baseline `cc2f7476` audit reproduces exactly 21.93 attacks/min in the same 3.08-second sample and exits 0 with zero fail flags. This is existing short-sample matrix reporting; no L2 behavior or criterion was changed. The single disposable baseline checkout was removed.
+- **Actual threat gate failure:** north breach owes three admissions, but LOW's cap was full before opening: 48 recovering infected, 30 nearby ordinary infected and two Alphas. Two arrivals eventually entered; the third remained pending. Restoring only baseline `L4Collapse.ts` removed the regression, identifying the changed routing trajectory that exposed this capacity fault. LOW now reserves each authored opening cohort before the camp fills, independently of the ordinary pending reinforcement queue. Quotas, cap, roster, damage and speed are unchanged; recovering bodies and corpses persist. All s140 wire-routing, L7 grounding and wreck-gate changes remain.
+- Merged `tools/qa/s142-scan.ts` needed an explicit event discriminator for TypeScript union narrowing.
 
-- **L2-12:** candidate and baseline both report **21.93 attacks/min** for the same 3.08-second L2 bridge sample. The baseline full audit reports **zero fail flags**. This is existing short-sample reporting drift, not an s140 L2 behavior change; the criterion was not changed.
-- **L4 threat:** candidate reports `breach-north` with 2 observed cohort attackers against the 3-member floor and adds `L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS`. The baseline full audit reports zero fail flags. This remains to be root-caused and fixed.
-- **L4 vehicle motion:** candidate LOW `l4-tank` fails at `L4/hull-ground/225`: 272 frames, 13 contacts, 11 cm maximum slide, 9.8 cm P95, 59.3° yaw drift, 6.2 cm lift; worst frame 987. The browser pool failed to start locally (`listen EPERM` on `127.0.0.1:4329`; headless Chromium also failed its Mach port bootstrap), so baseline vehicle comparison and candidate rerun remain outstanding.
-- `tests/engine/l4-contact.test.ts` passes (1 test); `npm run typecheck` and `npm run lint` pass.
+## Validation
 
-No runtime fix has been made yet. The next step is to isolate the L4 routing edits responsible for the north-breach cohort and tank-adjacent foot slide, while retaining active L4 wire routing and grounded L7 wrecks. Then rerun the required gates and remote unit suite and update this report.
+- Full `qa:threat`: exit 0, zero flags across L1–L10, 436.5 seconds. Simulation source is unchanged since this pass.
+- L4 contact regression: passes, including the LOW real-route outside-wire check.
+- Final focused HIGH/LOW tank gate: passes.
+- Final complete vehicle gate: all eight HIGH/LOW rows pass, each child exits 0.
+- Final remote `npm test`: exit 0, 182.2 s within 240 s; 27 files, 105 tests pass, one existing skip. The earlier runner timeout was retried unchanged.
+- Typecheck and lint: exit 0.
+- Existing render-contract suite: 14 tests pass.
 
-## Evidence
-
-The concise machine-readable comparison is in [`gate-comparison.json`](gate-comparison.json). Full source logs supplied for batch 113 were read from the scheduler archive. The full baseline threat audit was run at `cc2f7476` using the current harness; its measured L2-12 value and zero-flag result are recorded above.
-
-## Fresh candidate and isolation results
-
-The tank fixture reran successfully on port 5024: HIGH passed and LOW reproduced the exact actor-225 failure. Its contact begins at tick 5307 as an LOD2 runner changes from `get-up` to `infected-search`, then turns beside an evacuation bus. Root travel on the first frame is 0.0222 cm.
-
-The full candidate threat audit completed in about 300 seconds with only the north-breach cohort flag. A focused L4 comparison restoring only `L4Collapse.ts` to `cc2f7476` removed that flag (only the expected partial-level diagnostic notice remained). The candidate file was restored after the run. This isolates the threat regression to the breach-alignment change, but a routing-preserving correction remains open.
-
-Main `792dde65` is merged. Focused L2/L4 and HIGH/LOW tank reruns retain the same failures. A 3 m-first breach landing experiment changed the failure to late first attack and sustained-horde failure; it was rejected and reverted.
-
-## Vehicle foot-contact correction
-
-The cheap world-space foot solver released a turning stance only after 0.5 radians. Releasing at 0.2 radians begins the lifted turn step before the stance strains. Both tank tiers pass; LOW worst P95 falls from 9.8 cm to 3.4 cm, maximum 10.1 cm. Simulation sample count and staged actor travel remain unchanged. Full gate and unit validation remain pending.
-
-Remote `npm test` passes unchanged on retry: 171.7 seconds within the 240-second budget (first attempt timed out at 246.1 seconds). A radius-visible direct-crossing shortcut retained the north-breach cohort failure and was reverted.
-
-Admission probe: north opens at tick 8458 with pending=7, but arrivals stop at 2 and pending=5 while LOW count=80 and reserved=0. The same debt persists at collapse (first observed tick 13380), when LOW supplemental pressure processing stops. The remaining defect is admission starvation, not a census omission.
-
-Full `qa:vehicle-campaign-motion` now exits 0 across L9, L7 bus, L4 parked and L4 tank at HIGH and LOW. Typecheck and lint pass; the merged s142 diagnostic scan needed an explicit `combat.attack` event guard for TypeScript union narrowing. Threat north-breach admission remains open.
-
-With the LOW cohort reservation fix, full `qa:threat` exits 0 (436.5 seconds, zero flags). L4 contact regression passes. The final vehicle rerun exposes a different LOW tank actor: sprinter 241 switches shamble→idle at frame 878, then accumulates 19.2 cm maximum slide (P95 3.3 cm). This remains open; earlier full vehicle success predates the reservation fix.
+The JSON receipt records comparisons, rejected/reverted experiments and validation. No specs, zombie stats, corpse lifetime, L7 wreck grounding or wreck gate were changed.
