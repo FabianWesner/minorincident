@@ -217,7 +217,8 @@ try {
         const footwork = contactIds.includes(e.id) ? (game.view as unknown as { crowd: { footwork: CrowdFootwork } | null }).crowd?.footwork : undefined;
         const detailed = footwork?.states.get(e.id), far = footwork?.far.get(e.id);
         const dimensions = detailed ? detailed.contacts as unknown as { sole: number; feet: { a: number; b: number }[] } : undefined;
-        const contactDebug = footwork ? { dimensions: dimensions ? { sole: dimensions.sole, lengths: dimensions.feet.map(f => [f.a, f.b]) } : null, joints: figure.joints ? Object.fromEntries(['hip','legL','shinL','footL','legR','shinR','footR'].map(k => [k, figure.joints![k]])) : null, weight: detailed?.weight, detailed: detailed ? [0, 1].map(i => {
+        const l4State = w.missions?.state.l4;
+        const contactDebug = footwork ? { l4Group: l4State ? { emerged: l4State.emergedIds.includes(e.id), collapse: l4State.collapseIds.includes(e.id), alpha: l4State.alphaIds.includes(e.id), origin: l4State.origin[e.id] ?? null } : null, dimensions: dimensions ? { sole: dimensions.sole, lengths: dimensions.feet.map(f => [f.a, f.b]) } : null, joints: figure.joints ? Object.fromEntries(['hip','legL','shinL','footL','legR','shinR','footR'].map(k => [k, figure.joints![k]])) : null, weight: detailed?.weight, detailed: detailed ? [0, 1].map(i => {
           const c = detailed.contacts.contact(i); return { target: c.target.toArray(), anchor: c.anchor.toArray(), locked: c.locked, pitch: c.pitch };
         }) : null, far: far ? [0, 1].map(i => { const c = far.contacts.contact(i); return c ? { target: c.target.toArray(), yaw: c.yaw } : null; }) : null } : undefined;
         result.push({ contactDebug, reaction: e.combat?.reaction ? { heavy: e.combat.reaction.heavy, started: e.combat.reaction.started, until: e.combat.reaction.until } : null,
