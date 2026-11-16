@@ -64,14 +64,22 @@
     },
     {
       "check": "L9 HIGH zoom 1 short sweep",
-      "status": "NOT RUN"
+      "status": "240 SECOND SWEEP COLLECTED; T9495 REVIEWED"
     },
     {
       "check": "L10 HIGH zoom 1 short sweep",
       "status": "NOT RUN"
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "severity": "P2",
+      "level": "L9",
+      "tick": 9495,
+      "capture": "test-results/playtest/b113-l9-high/captures/campaign-L9-9495-enemy-frozen.jpg",
+      "finding": "Several crowd actors show tall black/white striped projected surfaces above their bodies. Visible rendering corruption; root cause unproven."
+    }
+  ],
   "contactSheet": "contact-sheet.jpg",
   "validation": {
     "qaBuild": {
@@ -325,6 +333,82 @@
         "capture": "test-results/playtest/b113-l6-high/captures/campaign-L6-t13543.jpg",
         "observation": "Dark readable courier/shield against tunnel; Survivor lost warning and separated group make escort babysitting conspicuous. No obvious geometry glitch in this frame. Intentional sample cap is not a product P0."
       }
+    },
+    {
+      "path": "test-results/playtest/b113-l9-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 240,
+            "simSeconds": 235,
+            "maxNoProgressSeconds": 4.816666666666666,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0400424003601074,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 6,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 1,
+          "P2": 4,
+          "P3": 0
+        }
+      },
+      "reviewedTicks": [
+        9495
+      ]
     }
   ]
 }
