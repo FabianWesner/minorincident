@@ -173,3 +173,7 @@ Tried requiring inside navigation/static-clear landing candidates. Full mission 
 ## Breach-width correction validated for Alpha windows
 
 Alignment now uses the actual two-segment opening width minus actor radius and 5 cm clearance; inside candidates must remain inside and pass nav/static checks. Full seed-1 HIGH mission completes at tick 18,101 with 8,252 eligible rolling windows and zero Alpha stationary flags. One crawler #223 retains an expired-pressure outside waypoint during collapse; overall requirement remains open. Focused L4 regression, typecheck and lint pass. Exact full-run receipt retained in qa.json.l4BreachWidthFullRun.
+
+## Full HIGH outside-wire scan clean
+
+Real collapse can empty the fence registry, which prevented earlier funnel cleanup. Collapse cleanup now runs without that guard and releases approaches whose assigned target has left the camp. Full seed-1 HIGH complete run reaches progression at tick 18,147 with 6,161 eligible rolling windows and zero stationary flags. Existing regression now explicitly retires the fence registry during collapse and passes; typecheck and lint pass. LOW/cross-level fence coverage and latest remote suite remain pending before broad closure.

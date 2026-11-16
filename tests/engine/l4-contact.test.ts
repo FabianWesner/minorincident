@@ -664,6 +664,8 @@ async function checkOutsideWireRouting(): Promise<void> {
     crawler.infected!.scripted = { x: crawler.transform.x, z: crawler.transform.z };
     crawler.infected!.breachApproach = 'outside';
     state.phase = 'collapse';
+    // The real phase transition can retire the visual/physics fence registry.
+    (mission.l4 as unknown as { fence: number[] }).fence.length = 0;
     for (let tick = 0; tick < 30; tick++) world.update();
     expect(crawler.infected!.breachApproach, 'collapse still advances an arrived exterior breach leg').not.toBe('outside');
     ai.release(crawler);
