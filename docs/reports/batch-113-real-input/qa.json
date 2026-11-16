@@ -52,7 +52,7 @@
     },
     {
       "check": "L4 LOW full level: breach approaches, waves, Alpha tank foot planting",
-      "status": "NOT RUN"
+      "status": "540 SECOND RUN COLLECTED; CELLAR ESCAPE NOT FINISHED; FEET OCCLUDED"
     },
     {
       "check": "L7 D-FAIR military wrecks, HIGH zoom 1.5",
@@ -731,6 +731,132 @@
         }
       },
       "review": "Opened campaign-bridge-close.jpg; clear bridge after combat, no actors to qualify close damage. Zero driver issues full run."
+    },
+    {
+      "path": "test-results/playtest/b113-l4-low",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 540,
+            "simSeconds": 537,
+            "maxNoProgressSeconds": 29.751,
+            "deaths": 25,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 13,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": {
+                    "x": -17,
+                    "y": 0,
+                    "z": 3
+                  },
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1832,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2176,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 97\u00a0m",
+                "tick": 13607,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -79.29999999999998,
+                    "y": 0,
+                    "z": -45.2801
+                  },
+                  "drawn": [
+                    -79.3,
+                    0.13,
+                    -45.28
+                  ],
+                  "playerY": 0.7050989270210266,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "reviewedTicks": [
+        10839
+      ],
+      "review": "North breach interior crowd and Alphas; feet occluded. No stationary-enemy warning. Nine-minute limit on cellar escape; full completion unqualified."
     }
   ],
   "wreckCloseups": {

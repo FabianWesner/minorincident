@@ -59,3 +59,7 @@ Opened all three registered L7 HIGH WebGPU zoom1.5 camera-only closeups: `test-r
 ## LOW L3 full run
 
 Completed in 157 seconds, ordinary WebGPU LOW zoom1, no skips and zero driver issues (`test-results/playtest/b113-l3-low`). Opened `captures/campaign-bridge-close.jpg`: clear bridge after the nearby fight, no obvious surface glitch, but no infected in view to qualify close damage or actor height. Thus full HIGH/LOW completion and absence of driver hit warnings are established; universal hitability remains unproven by this frame.
+
+## LOW L4 nine-minute run
+
+Ordinary WebGPU LOW zoom1.5 ran 540 seconds without skips, reaching cellar escape but not completing before the cap (`test-results/playtest/b113-l4-low`). Only opening empty-HUD warning and cap were emitted; no stationary-enemy warning. Opened `captures/campaign-L4-t10839.jpg`: north-breach defense has dense interior infected and several Alphas, with heavy pressure and overlapping telegraphs. Feet are occluded, so planted-foot qualification remains open. Mission phase progress does not independently prove every outside actor routes through breaches. Full HIGH and LOW L4 completion remain unqualified.
