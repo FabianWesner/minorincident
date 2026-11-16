@@ -18,6 +18,7 @@ import { installFinalAudit } from './final-audit';
 import { installSoftlockAudit } from './softlock-audit';
 import { installL6HoldObserver } from './l6-hold-observer';
 import { crossing } from '../../src/levels/L9/district';
+import { cure } from '../../src/levels/L10/district';
 import { l9Course, l9Groups } from '../../src/data/l9';
 import { l5Survivors } from '../../src/data/l5';
 import { installAcceptanceLedger } from './acceptance-ledger';
@@ -1066,8 +1067,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     aimHeld = threat.id;
     return true;
   };
-  const l10TravelEscapeKeys = async (e: Eyes, threat: Body): Promise<string[]> => {
-    if (!e.player || !ring) return awayKeys(e, threat);
+  const l10TravelEscapeKeys = async (e: Eyes, threat: Body, destination = ring): Promise<string[]> => {
+    if (!e.player || !destination) return awayKeys(e, threat);
     const p = e.player;
     // Keep the map route in charge while making space. Purely fleeing the
     // nearest contact drifts into corn rows and never reaches the next pickup.
@@ -1077,7 +1078,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (!w.infected!.nav.forPlayer(radius).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, radius, out, Infinity, true)) return null;
       const length = Math.hypot(out.x - p.x, out.z - p.z) || 1;
       return [a.input.project(p, 'player'), a.input.project({ x: p.x + (out.x - p.x) / length * 3, z: p.z + (out.z - p.z) / length * 3 }, 'player')];
-    }, { p, goal: ring });
+    }, { p, goal: destination });
     return points ? markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12) : awayKeys(e, threat);
   };
   const awayKeys = (e: Eyes, b: Body): string[] => {
@@ -1903,6 +1904,21 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       ? e.healthKits?.slice().sort((a, b) => a.d - b.d)[0] : undefined;
     if (l10Kit && !e.enemies.some(body => body.drawn && body.hp > 0 && !body.corpse && body.d < 3)) {
       await releaseAim(); await press(wasdToward(e, l10Kit.screen.x, l10Kit.screen.y));
+      await hold(150); continue;
+    }
+    const rifleAt = cure.anchors['farmhouse-rifle'];
+    if (e.level === 'L10' && e.player && e.step === 'farmstead' &&
+        !e.player.weapons.some(id => ranged.test(id)) && Math.abs(e.player.x - rifleAt[0]) < 180) {
+      const goal = { x: rifleAt[0], y: e.player.y, z: rifleAt[1] };
+      const threat = e.enemies.find(body => body.drawn && body.hp > 0 && !body.corpse);
+      const keys = await l10TravelEscapeKeys(e, threat ?? { screen: { x: e.view.w / 2, y: e.view.h / 2 } } as Body, goal);
+      await press(keys);
+      if (threat && threat.d < 3) {
+        await page.mouse.move(threat.aim.x, threat.aim.y);
+        if (aimHeld === null) await page.mouse.down();
+        aimHeld = threat.id;
+      } else await releaseAim();
+      if (Date.now() - navLog > 3000) { navLog = Date.now(); assist('L10 farmhouse map detour', { goal, input: 'physical WASD + mouse; read-only navigation' }); }
       await hold(150); continue;
     }
     // Keep the escape route in charge even between dense crowds. Chasing each

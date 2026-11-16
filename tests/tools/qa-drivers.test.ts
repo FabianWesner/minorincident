@@ -1,3 +1,4 @@
+import { campaignCombatWeapon } from '../../tools/playtest/combat';
 import { installScreamObserver } from '../../tools/playtest/scream-observer';
 // QA drivers used by every pre-deploy check: the real-input playtest driver (tools/playtest) and Scene Lab specs.
 // A broken stuck detector or spec validator silently turns the PO-style QA green.
@@ -39,6 +40,10 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
     expect(receipts).toContainEqual(expect.objectContaining({ level: 'L10', kind: 'scream' }));
   } finally { vi.unstubAllGlobals(); }
 
+  for (const gun of ['weapon.hunting-rifle', 'weapon.assault-rifle', 'weapon.nail-gun']) {
+    expect(campaignCombatWeapon('L10', ['weapon.fire-axe', gun])).toBe(gun);
+    expect(campaignCombatWeapon('L10', ['weapon.fire-axe', gun], [gun])).toBe('weapon.fire-axe');
+  }
   expect(canShootVehicleObjective('L9', 'Hold the hatch')).toBe(true);
   expect(captureZooms).toEqual([1, 1.5]);
   expect(canShootVehicleObjective('L9', 'Drive through the horde')).toBe(false);

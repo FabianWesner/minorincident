@@ -21,3 +21,5 @@ During L10 travel the driver also approaches visible unowned guns and visible me
 For long mortal L10 runs, `--session-seconds 480` saves the live production Resume snapshot through pause/settings before releasing each browser reservation. The next segment resumes through the normal menu. Segment logs remain separate and must be considered together for full-run evidence.
 
 L10 travel cover keeps movement on the player navigation route toward the live objective while aiming ordinary attacks at close pursuers, to avoid unbounded retreat into the corn rows.
+
+A logged farmhouse map detour seeks the authored hunting rifle while travelling through the farms without a firearm. Recovered hunting/assault rifles and nail guns are eligible for carried-weapon selection; empty weapons still fall back normally.

@@ -26,7 +26,7 @@ export const rocketMinRange = 5;
 /** Choose from the carried HUD arsenal, including L10's recovered checkpoint weapons. */
 export function campaignCombatWeapon(level: string | null, weapons: readonly string[], emptyWeapons: readonly string[] = [], nearestEnemy = Infinity): string | null {
   if (level !== 'L7' && level !== 'L8' && level !== 'L10') return null;
-  const order = ['weapon.rocket-launcher', 'weapon.army-mg', 'weapon.shotgun', 'weapon.handgun', 'weapon.pistol', 'weapon.fire-axe'];
+  const order = ['weapon.rocket-launcher', 'weapon.army-mg', 'weapon.assault-rifle', 'weapon.nail-gun', 'weapon.hunting-rifle', 'weapon.shotgun', 'weapon.handgun', 'weapon.pistol', 'weapon.fire-axe'];
   // The launcher refuses to fire with an infected inside 5 m ("Too close!"); a bot holding it there never shoots (r24 playtest: 6+ min).
   return order.find(id => weapons.includes(id) && !emptyWeapons.includes(id) && !(id === 'weapon.rocket-launcher' && nearestEnemy < rocketMinRange + 1)) ?? null;
 }
