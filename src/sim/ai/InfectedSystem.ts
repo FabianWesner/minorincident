@@ -298,7 +298,12 @@ export class InfectedSystem {
     entity.archetype = id;
     const hp = def.hp * INFECTED_TOUGHNESS * (this.world.scenario === 'L7' && id === 'infected.alpha' ? 1.5 : 1);
     entity.health.current = entity.health.max = hp;
-    Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.supportBelow(position.x, position.z, (position.y ?? .7) - .7) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
+    // XZ-only encounter spawns belong on the authored walking surface. An
+    // explicit height still selects support below that floor (stacked routes).
+    const floor = position.y === undefined
+      ? this.world.districts?.groundHeight(position.x, position.z)
+      : this.world.districts?.supportBelow(position.x, position.z, position.y - .7);
+    Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (floor ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
     delete entity.combat!.shieldStress; delete entity.combat!.shieldBrokenAt; delete entity.combat!.shieldBrokenUntil;
     Object.assign(entity.infected!, { hitByPlayer: false, state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downedAt: undefined, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, pathRetryAt: 0, l4ArmyApproach: false, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
