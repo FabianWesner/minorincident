@@ -596,6 +596,389 @@
       "typecheck": "pass",
       "lint": "pass",
       "remote": "105 passed, 1 skipped,27 files,193.3s; unchanged retry after L4 test timeout"
+    },
+    "finalOffsetOnly": {
+      "low": {
+        "run": {
+          "level": "L10",
+          "policy": "complete",
+          "seed": 1,
+          "completed": false,
+          "time": 900,
+          "deaths": 8,
+          "kills": 0,
+          "damageTaken": 1501.5999999999829,
+          "failures": {
+            "player-died": 8,
+            "tick-budget": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "crash",
+              "t": 53.81666666666667
+            }
+          ],
+          "furthestObjective": "farmstead",
+          "activeObjectives": [
+            "farmstead"
+          ],
+          "outcome": "tick-budget",
+          "blocker": {
+            "objective": "farmstead",
+            "detail": "tick-budget: Find a way through the farms",
+            "player": {
+              "x": 1516.7852783203125,
+              "z": -26.962173461914062
+            },
+            "distance": 344.1600271944336,
+            "actors": {}
+          },
+          "cureReleases": 0,
+          "regions": [
+            {
+              "id": "crash-outskirts",
+              "seconds": 151.76666666667958,
+              "travelSeconds": 86.31666666666305,
+              "combatSeconds": 63.466666666664345,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 1.9833333333333312,
+              "metres": 317.9508316218537
+            },
+            {
+              "id": "residential-fringe",
+              "seconds": 233.56666666674468,
+              "travelSeconds": 32.59999999999943,
+              "combatSeconds": 198.98333333338383,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 1.9833333333333312,
+              "metres": 457.7795312525254
+            },
+            {
+              "id": "industrial-area",
+              "seconds": 514.6666666665272,
+              "travelSeconds": 144.1166666666735,
+              "combatSeconds": 358.6500000000025,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 11.90000000000017,
+              "metres": 1641.5717696295758
+            },
+            {
+              "id": "military-zone",
+              "seconds": 0,
+              "travelSeconds": 0,
+              "combatSeconds": 0,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 0
+            },
+            {
+              "id": "research-campus",
+              "seconds": 0,
+              "travelSeconds": 0,
+              "combatSeconds": 0,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 0
+            },
+            {
+              "id": "destroyed-corridor",
+              "seconds": 0,
+              "travelSeconds": 0,
+              "combatSeconds": 0,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 0
+            },
+            {
+              "id": "dispersal-complex",
+              "seconds": 0,
+              "travelSeconds": 0,
+              "combatSeconds": 0,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 0
+            }
+          ],
+          "maxConcurrentInfected": 40,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 132,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "maxX": 1554.1534423828125,
+        "kills": 218,
+        "deaths": [
+          759.48486328125,
+          1050.8814697265625,
+          1553.0029296875,
+          1484.389892578125,
+          1554.1204833984375,
+          1548.9459228515625,
+          1551.3848876953125,
+          1547.7593994140625
+        ],
+        "crossings": [
+          {
+            "x": 698,
+            "seconds": 86.2,
+            "kills": 7,
+            "deaths": 0
+          },
+          {
+            "x": 936,
+            "seconds": 227.35,
+            "kills": 56,
+            "deaths": 1
+          },
+          {
+            "x": 1165,
+            "seconds": 347.55,
+            "kills": 115,
+            "deaths": 2
+          },
+          {
+            "x": 1517,
+            "seconds": 533.6833333333333,
+            "kills": 144,
+            "deaths": 2
+          }
+        ]
+      },
+      "high": {
+        "run": {
+          "level": "L10",
+          "policy": "complete",
+          "seed": 1,
+          "completed": false,
+          "time": 900,
+          "deaths": 1,
+          "kills": 0,
+          "damageTaken": 930,
+          "failures": {
+            "player-died": 1,
+            "tick-budget": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "crash",
+              "t": 23.966666666666665
+            },
+            {
+              "id": "farmstead",
+              "t": 309.05
+            },
+            {
+              "id": "restricted-zone",
+              "t": 515.7
+            },
+            {
+              "id": "research-hangar",
+              "t": 573.45
+            },
+            {
+              "id": "research",
+              "t": 629.4666666666667
+            },
+            {
+              "id": "cure",
+              "t": 630.3833333333333
+            },
+            {
+              "id": "research-exit",
+              "t": 655.65
+            },
+            {
+              "id": "delivery-corridor",
+              "t": 687.0666666666667
+            },
+            {
+              "id": "dispersal-complex",
+              "t": 865.3333333333334
+            }
+          ],
+          "furthestObjective": "install",
+          "activeObjectives": [
+            "install"
+          ],
+          "outcome": "tick-budget",
+          "blocker": {
+            "objective": "install",
+            "detail": "tick-budget: Install the cure",
+            "player": {
+              "x": 3851.006591796875,
+              "z": -31.713926315307617
+            },
+            "distance": 155.66401917065625,
+            "actors": {
+              "arena-fuel-0": {
+                "x": 4026,
+                "z": -31,
+                "hp": 20
+              },
+              "arena-fuel-1": {
+                "x": 3984,
+                "z": -17,
+                "hp": 20
+              },
+              "arena-gate-switch": {
+                "x": 4012,
+                "z": 1,
+                "hp": 100,
+                "state": ""
+              }
+            }
+          },
+          "cureReleases": 0,
+          "regions": [
+            {
+              "id": "crash-outskirts",
+              "seconds": 60.98333333333115,
+              "travelSeconds": 52.16666666666499,
+              "combatSeconds": 8.816666666666684,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 273.9647335620519
+            },
+            {
+              "id": "residential-fringe",
+              "seconds": 103.89999999999539,
+              "travelSeconds": 41.16666666666561,
+              "combatSeconds": 62.73333333333105,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 466.7645551839396
+            },
+            {
+              "id": "industrial-area",
+              "seconds": 139.7833333333367,
+              "travelSeconds": 29.0166666666663,
+              "combatSeconds": 110.76666666666166,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 621.6517308595619
+            },
+            {
+              "id": "military-zone",
+              "seconds": 215.81666666673055,
+              "travelSeconds": 91.63333333332942,
+              "combatSeconds": 122.19999999999435,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 1.9833333333333312,
+              "metres": 1107.6923293684167
+            },
+            {
+              "id": "research-campus",
+              "seconds": 173.78333333336377,
+              "travelSeconds": 80.41666666666339,
+              "combatSeconds": 39.833333333332355,
+              "interactionSeconds": 40.28333333333233,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 13.250000000000238,
+              "metres": 537.0334499153182
+            },
+            {
+              "id": "destroyed-corridor",
+              "seconds": 175.95000000003216,
+              "travelSeconds": 85.16666666666312,
+              "combatSeconds": 90.78333333332947,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 779.8300412290777
+            },
+            {
+              "id": "dispersal-complex",
+              "seconds": 29.783333333332923,
+              "travelSeconds": 13.56666666666692,
+              "combatSeconds": 16.216666666667027,
+              "interactionSeconds": 0,
+              "holdSeconds": 0,
+              "epilogueSeconds": 0,
+              "otherSeconds": 0,
+              "metres": 134.08449429877047
+            }
+          ],
+          "maxConcurrentInfected": 69,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 530,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "maxX": 3850.931640625,
+        "kills": 483,
+        "deaths": [
+          2317.63818359375
+        ],
+        "crossings": [
+          {
+            "x": 698,
+            "seconds": 38.31666666666667,
+            "kills": 6,
+            "deaths": 0
+          },
+          {
+            "x": 936,
+            "seconds": 97.26666666666667,
+            "kills": 44,
+            "deaths": 0
+          },
+          {
+            "x": 1165,
+            "seconds": 148.2,
+            "kills": 74,
+            "deaths": 0
+          },
+          {
+            "x": 1517,
+            "seconds": 232.66666666666666,
+            "kills": 116,
+            "deaths": 0
+          },
+          {
+            "x": 1857,
+            "seconds": 309.46666666666664,
+            "kills": 158,
+            "deaths": 0
+          }
+        ]
+      }
+    },
+    "finalVerification": {
+      "typecheck": "pass",
+      "lint": "pass",
+      "remote": "two unchanged runs:104 passed,1 skipped,L4 contact150s timeout;201.1s and224.9s total; L10 passes"
     }
   }
 }

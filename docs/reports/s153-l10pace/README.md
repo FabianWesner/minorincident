@@ -63,3 +63,9 @@ At the choke the diagnostic found two live Alphas alongside armored/firefighter 
 Final LOW: x=1517 crossed at 612.68 s with 3 total deaths (one in the late-shed segment); furthest x=1554.85 by900 s. Whole-window segment deaths 0/1/1/1/5 (8 total). The later depot remains dangerous. Final HIGH farm window: 157 kills in309.47 s, **30.44 kills/min, 0 deaths**. This exceeds original30.17/min; the prior S153 result was30.48/min (about0.1% faster). Regression assertions preserve LOW placement beyond the workshop, one Alpha, and the approach medkit.
 
 S153b verification: typecheck and lint passed. Required remote suite passed on unchanged retry: 27 files,105 tests passed,one skipped,193.3 s. First attempt had an unrelated L4 contact-test150 s timeout (104 passed).
+
+### Final S153b refinement
+
+Restored the service medkit to its original [1517,-55] position: the LOW depot offset alone is sufficient and preserves HIGH placement. Final identical900 s LOW probe crosses1517 at533.68 s with **2 total deaths and zero in1165–1517**; furthest1554.15,8 deaths over the whole window (6 after1517). HIGH crosses1857 at309.47 s with **158 kills,30.63/min,zero farm deaths**, meeting both the original30.17 and prior S15330.48 rates. The retained fix changes only the LOW depot placement, not the shed horde, medkit, stats or encounter census.
+
+Final refinement validation: typecheck and lint pass. Two unchanged required remote runs both pass104 tests with one skipped, but fail the unrelated L4 contact150 s timeout (201.1 s and224.9 s suite totals). L10 assertions pass in both. The preceding combined-placement revision had a green remote retry; the final revision does not claim a full-suite pass.

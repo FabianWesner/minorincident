@@ -59,7 +59,7 @@ export const cureMedkits = [
   { id: 'field-approach', at: [807, 80] as Point },
   ...['police-medkit', 'industrial-medkit', 'military-medkit', 'research-medkit', 'corridor-medkit'].map(id => ({ id, at: id === 'industrial-medkit' ? [1297, 80] as Point : cure.anchors[id] })),
   { id: 'fringe-detour', at: [937, 76] as Point },
-  { id: 'industrial-service', at: [1437, 100] as Point },
+  { id: 'industrial-service', at: [1517, -55] as Point },
   { id: 'military-motor-pool', at: [2137, 110] as Point },
 ];
 
