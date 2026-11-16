@@ -40,8 +40,21 @@ async function l6FollowersCatchUpOnRoute(): Promise<void> {
     expect(follower.transform.x - 100, 'a separated follower uses catch-up pace above the 2.2 m/s column speed').toBeGreaterThan(11);
     expect(state.leaderX - follower.transform.x, 'the follower closes the gap while the leader continues').toBeLessThan(startGap);
     expect(state.leaderX).toBeGreaterThan(120);
+    const entry = state.entries!.find(item => item.door === 4)!;
+    state.phase = 'exit'; state.leaderX = 254;
+    Object.assign(entry, { warnedAt: 1, remaining: 0, closedAt: 1, brokenAt: 0, hits: 1, nextAt: w.tick });
+    mission.l6!.update();
+    expect(entry.brokenAt).toBe(w.tick);
+    expect(entry.reopenRemaining, 'a passed hatch does not reserve a late cohort behind Northgate').toBe(0);
+    expect(entry.remaining).toBe(0);
     row.straggler = true;
     expect(new LevelSixBot(w).sample().move?.x, 'distance without an infected threat does not send the courier back across the route').toBeGreaterThan(0);
+    row.injured = true; row.straggler = false; state.leaderX = 6; state.leaderZ = 15;
+    mission.completeObjective('retreat');
+    w.solids.relocate(follower, { x: 22, y: follower.transform.y, z: 8 }, 'test.l6-injured-side-floor', 0, false);
+    const injuredStart = { x: follower.transform.x, z: follower.transform.z };
+    for (let i = 0; i < 300; i++) w.update();
+    expect(Math.hypot(follower.transform.x - injuredStart.x, follower.transform.z - injuredStart.z), 'an injured follower leaves the side floor and joins retreat movement').toBeGreaterThan(1);
   } finally { w.dispose(); }
 }
 

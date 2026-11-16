@@ -352,7 +352,9 @@ export class LevelSixSubway {
     const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?(e.transform.x<246?l6.exit.approachZ:l6.tunnel.z):15+(r.collected?0:(column-1)*.725)};
     // Three 0.7 m bodies share the 2.2 m mouth with 2.5 cm between bodies and each barrier.
     const reach=r.collected?1.8:.4;
-    if(r.injured&&!r.collected&&s.leaderX<e.transform.x&&s.leaderX<25)return true;
+    // Injured survivors still walk with the retreating column. Holding them at
+    // the tunnel mouth while the courier approaches left some actors stranded
+    // on the side platform for the entire L6 retreat.
     let around=this.aroundCourier.get(e.id);
     const p=this.w.entities.get(1)!,dx=goal.x-e.transform.x,dz=goal.z-e.transform.z,len2=dx*dx+dz*dz;
     const opening=!r.collected&&Math.hypot(p.survivor!.velocity.x,p.survivor!.velocity.z)<.15&&s.gates.some(g=>!g.closedAt&&Math.abs(p.transform.x-g.x)<.75&&Math.abs(p.transform.z-15)<.8);
@@ -460,7 +462,16 @@ export class LevelSixSubway {
         if(entry.closedAt&&!entry.brokenAt){
           entry.hits=(entry.hits??l6.hatch.hits)-1;entry.hitAt=t;entry.nextAt=t+ticks(l6.hatch.hitS);
           w.events.emit({type:'barricade.sound',tick:t,sourceId:sw?.id??0,position:{x:door.x,y:1.2,z:door.z},phase:entry.hits>0?'hit':'break',hp:Math.max(0,entry.hits),maxHp:l6.hatch.hits});
-          if(entry.hits<=0){entry.brokenAt=t;entry.reopenRemaining=entry.remaining===0?1:0;entry.remaining=Math.max(entry.remaining,1);entry.nextAt=t;w.events.emit({type:'l6.hatch-broken',tick:t,door:entry.door});}
+          if(entry.hits<=0){
+            entry.brokenAt=t;
+            // A hatch reopening far behind the retreating column cannot add
+            // pressure to the encounter; avoid admitting a cohort after its
+            // route is already safely past the Northgate approach.
+            const passed=(s.phase==='retreat'||s.phase==='exit')&&door.x<s.leaderX-40;
+            entry.reopenRemaining=entry.remaining===0&&!passed?1:0;
+            entry.remaining=Math.max(entry.remaining,entry.reopenRemaining);
+            entry.nextAt=t;w.events.emit({type:'l6.hatch-broken',tick:t,door:entry.door});
+          }
         }
         else { const wave=entry.reopenRemaining?5:4,spawned=this.spawn(entry.remaining,[entry.door],wave); if(spawned){entry.remaining-=spawned;if(wave===5)entry.reopenRemaining=Math.max(0,(entry.reopenRemaining??0)-spawned);entry.nextAt=t+360;}else entry.nextAt=t+15; }
       }
