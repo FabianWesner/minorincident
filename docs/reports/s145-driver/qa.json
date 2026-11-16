@@ -46,7 +46,13 @@
       "skips": 0,
       "issues": 0
     },
-    "L9_HIGH_shortcut": "not run",
+    "L9_HIGH_shortcut": {
+      "status": "pass",
+      "run": "test-results/s145-driver/l9-shortcut-high-live",
+      "wallSeconds": 208,
+      "skips": 0,
+      "issues": 0
+    },
     "L10_HIGH_mortal_full_x2": "not run",
     "L9_HIGH_road_2": {
       "status": "pass for navigation acceptance",
@@ -131,7 +137,7 @@
   "acceptance": {
     "L9_high_road_x3_reaches_L10_no_stuck_navigating": "pass: 307, 303, 271 seconds; zero skips or stuck-navigating flags",
     "L9_low_road_x1_reaches_L10_no_stuck_navigating": "pass: 246 seconds; zero issues or skips",
-    "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "unverified",
+    "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "pass: 208 seconds; zero issues or skips",
     "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "unverified",
     "cap_label_sample_cap_not_p0": "unit/code-path verified; runtime acceptance pending",
     "empty_opening_hud_no_warning": "unit/code-path verified; runtime acceptance pending"

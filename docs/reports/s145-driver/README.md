@@ -38,3 +38,5 @@ Second HIGH road run completed handover in 303 seconds with no skips or `stuck-n
 Third HIGH road run completed handover in 271 seconds with no skips or `stuck-navigating` flags. One `enemy-frozen` observation was retained at tick 13548. HIGH road ×3 now passes the requested navigation criterion (307 / 303 / 271 seconds). LOW road, shortcut and both full L10 runs remain pending. Raw evidence: `test-results/s145-driver/l9-road-high-3-live`.
 
 LOW road completed handover in 246 seconds with zero issues and no skips. This passes the required LOW navigation criterion. Raw evidence: `test-results/s145-driver/l9-road-low-live`. Shortcut and both full mortal L10 runs remain pending.
+
+HIGH dry-shortcut completed handover in 208 seconds with zero issues and no skips. The full required L9 matrix now passes: HIGH road ×3, LOW road ×1, HIGH shortcut ×1, all without `stuck-navigating`. Raw evidence: `test-results/s145-driver/l9-shortcut-high-live`. Both full mortal L10 runs and the farm death comparison remain pending.
