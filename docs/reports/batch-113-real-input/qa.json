@@ -1296,7 +1296,7 @@
   },
   "nextObservation": {
     "wrapper": "test-results/b113-video/fixed-tank-entry.ts",
-    "status": "PREPARED, NOT RUN",
+    "status": "RUN, 240 SECONDS; HULL OCCLUDES FEET",
     "camera": {
       "position": [
         -6,
@@ -1313,5 +1313,16 @@
     },
     "basis": "src/data/l4.ts l4-tank-stop anchor",
     "scope": "Camera-only change and screenshot observer; simulation/input driver unchanged."
+  },
+  "fixedTankObservation": {
+    "path": "test-results/b113-l4-fixed-high/sequence",
+    "frames": 472,
+    "reviewedTicks": [
+      7250,
+      14202
+    ],
+    "quality": "high",
+    "zoom": 1.5,
+    "result": "Camera fixed successfully, but tank hull occludes nearby large infected soles. No foot acceptance."
   }
 }

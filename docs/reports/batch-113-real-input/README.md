@@ -72,3 +72,7 @@ Opened original sequence frames `00299-t9021.jpg`, `00300-t9049.jpg`, `00301-t90
 ## Prepared next camera observation
 
 Ignored `test-results/b113-video/fixed-tank-entry.ts` is prepared and syntax checked, not yet run. It retains the screenshot observer and sets only camera framing after tick4500: position(−6,11,39), target(−20,0,27.5), zoom1.5, using the authored l4-tank-stop anchor. No gameplay or input-policy modification. This is not collected acceptance evidence.
+
+## Fixed tank camera run
+
+Prepared wrapper now ran240 seconds HIGH zoom1.5;472 frames saved at `test-results/b113-l4-fixed-high/sequence`. Opened original ticks7250 and14202. Camera holds the tank consistently, but the near hull blocks large infected lower bodies on the far side. Neither frame qualifies planted soles. This corrects the earlier prepared-only status; an opposite-side camera would be needed for that actor cluster. No additional simulation/input changes.
