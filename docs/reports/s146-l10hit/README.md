@@ -36,3 +36,7 @@ Historical #134 attribution remains unproven; product cone correction and driver
 ## Final remote gate
 
 The prescribed unchanged full remote command passed on final source `3a7995aa` using runner 46.225.66.90: 27 files, 105 passed and one existing skip, 150-case inventory, 176.1 seconds within 240 seconds. L4 contact passed in 131.062 seconds without timeout or test changes. The prior two worker timeouts did not reproduce on this worker. No checks remain running.
+
+## Actual native route fixture
+
+Captured an additional unmodified seed-1 complete-policy L10 route at actual tick 13800 using the production campaign snapshot path. [s146-l10-native-route-13800.json.br](../../../tests/fixtures/saves/qa/s146-l10-native-route-13800.json.br) is 105,494 bytes; courier x=1503.842/z=-17.512, checkpoint `cure-pace-5`, no living infected within 10 m. No teleport, artificial tick assignment or added target was used. This distinguishes the actual route snapshot from the earlier constructed combat fixture. It does not reproduce the historical close target and does not recover B113 driver state. Position and fixture receipt are under `nativeRoute13800` in evidence.json.
