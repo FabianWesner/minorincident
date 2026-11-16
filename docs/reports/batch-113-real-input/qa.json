@@ -44,7 +44,7 @@
     },
     {
       "check": "L3 LOW full level: bridge close-target damage and infected bridge support",
-      "status": "NOT RUN"
+      "status": "FULL LEVEL COLLECTED; POST-FIGHT BRIDGE FRAME REVIEWED"
     },
     {
       "check": "L4 HIGH full level: breach approaches, waves, Alpha tank foot planting",
@@ -625,6 +625,112 @@
         }
       },
       "review": "Opened campaign-wreck-route.jpg; escort visible, wreck contacts not exposed; targeted framing pending."
+    },
+    {
+      "path": "test-results/playtest/b113-l3-low",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L3"
+        ],
+        "runs": [
+          {
+            "level": "L3",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 157,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 4.851,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.handgun": 195
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "armory",
+                "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+                "tick": 10,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": {
+                    "x": -139.2,
+                    "y": 0,
+                    "z": -8.4
+                  },
+                  "drawn": [
+                    -139.2,
+                    0.05,
+                    -8.4
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "defend",
+                "text": "Help defend the station \u00b7 10\u00a0m",
+                "tick": 973,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "checkpoint",
+                "text": "Get inside the army checkpoint \u00b7 365\u00a0m",
+                "tick": 1526,
+                "marker": {
+                  "anchor": "l3-zone",
+                  "ring": {
+                    "x": 225,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    225,
+                    0.05,
+                    0
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      },
+      "review": "Opened campaign-bridge-close.jpg; clear bridge after combat, no actors to qualify close damage. Zero driver issues full run."
     }
   ],
   "wreckCloseups": {

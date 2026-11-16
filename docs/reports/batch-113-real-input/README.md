@@ -55,3 +55,7 @@ Ordinary HIGH WebGPU zoom 1.5 completed in 154 seconds with zero skips/issues. O
 ## L7 targeted wreck review
 
 Opened all three registered L7 HIGH WebGPU zoom1.5 camera-only closeups: `test-results/b113-wrecks/military-1.jpg`, `military-3.jpg`, and `military-4.jpg`. These supplement the real-input route; simulation was paused, only camera framing changed. Both trucks and the APC appear supported on paving, with no obvious deep sink or float. Night lighting limits fine wheel-contact judgment. Backend/tier/tick receipts are retained in qa.json; ignored capture wrapper and raw images remain outside git.
+
+## LOW L3 full run
+
+Completed in 157 seconds, ordinary WebGPU LOW zoom1, no skips and zero driver issues (`test-results/playtest/b113-l3-low`). Opened `captures/campaign-bridge-close.jpg`: clear bridge after the nearby fight, no obvious surface glitch, but no infected in view to qualify close damage or actor height. Thus full HIGH/LOW completion and absence of driver hit warnings are established; universal hitability remains unproven by this frame.
