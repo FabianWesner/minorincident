@@ -78,3 +78,9 @@ Outstanding decisions: (1) outside-wire: isolated open-breach regression passes,
 ## Archived hull-distance check
 
 Applied the production `VehicleBody.hullDistance` rectangular-chassis formula (APC 5.69 × 2.95 m) to matching archived observation enemy/APC coordinates and yaw. Near-flag distances: #946 0.820 m, #947 4.367 m, #943 4.483 m; #960 5.457 m, #959 1.042 m, #956 1.008 m, #958 5.498 m. Exact values added to `qa.json.stationaryArchiveTracks`. Four flagged actors are several metres outside the chassis, so a blanket direct-hull-contact attribution is unsupported. The three near-hull actors also need their radius/reach/contact ledger to prove an attack. This narrows the follow-up to remote path targets or script holds for the distant actors and contact-state evidence for the nearby trio.
+
+## B110 LOW #763 source attribution
+
+The archived observer at ticks 4135/4150 identifies #763 as `thrower-1`, role `thrower`, phase `cool`, uses 2, post [-37.9912, -321.0176]. `LevelNineSetPieces` intentionally restores throwers to their post during cooldown: `hold()` sets `scripted` to the post and state to `chase`; the thrower branch calls it after release recovery. Thus B110 LOW tick 4144 is an authored thrower wait rather than frozen AI. The flagged capture was reviewed earlier. This proof is identity-specific; it does not generalize to the seven S136 observations.
+
+Second bounded corrected L5 retry also failed browser admission before execution (60 s, quiet=false, host load ~3.50/3.79/3.94). No new rendered result or grounding pass is claimed.
