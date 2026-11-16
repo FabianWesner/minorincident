@@ -242,5 +242,32 @@
     "alphas": 2,
     "total": 80,
     "safeRetirementCandidates": 0
+  },
+  "afterReservationFix": {
+    "threatExit": 0,
+    "threatFlags": [],
+    "seconds": 436.5,
+    "vehicleFailures": [
+      {
+        "key": "L4/hull-ground/241",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": false,
+        "motion": {
+          "frames": 1320,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 95,
+          "slideMaxCm": 19.2,
+          "slideP95Cm": 3.3,
+          "yawDriftMaxDeg": 0.2,
+          "liftMaxCm": 38.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 3,
+          "worstSlideFrame": 878
+        }
+      }
+    ]
   }
 }
