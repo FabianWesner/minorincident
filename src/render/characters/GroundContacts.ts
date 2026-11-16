@@ -68,7 +68,7 @@ export class GroundContacts {
         foot.landed = false; foot.swinging = false; foot.release = -1; foot.rotation.copy(this.frame);
       }
       // A reversal releases the old support in a lifted step instead of rotating a planted shoe with the body.
-      if (p <= stance && foot.release < 0 && foot.rotation.angleTo(this.frame) > .5) foot.release = p;
+      if (p <= stance && foot.release < 0 && foot.rotation.angleTo(this.frame) > .2) foot.release = p;
       // A shove can consume the remaining stance reach before the gait phase
       // reaches toe-off. Release early while there is still room to lift.
       this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
@@ -116,7 +116,7 @@ export class GroundContacts {
       // above the floor rather than letting IK clamp a grounded, travelling shoe.
       this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
       const reach = (foot.ik.middle.position.length() + foot.ik.end.position.length()) * this.scale.y * .99;
-      if (stride > 0 && this.joint.distanceTo(foot.target) > reach) {
+      if (this.joint.distanceTo(foot.target) > reach) {
         foot.target.y = Math.max(foot.target.y, this.origin.y + this.sole * this.scale.y + .04 * this.scale.y);
         const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z;
         const horizontal = Math.hypot(dx, dz), allowed = Math.sqrt(Math.max(0, reach * reach - (foot.target.y - this.joint.y) ** 2));

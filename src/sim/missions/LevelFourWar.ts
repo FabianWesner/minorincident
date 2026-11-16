@@ -100,13 +100,14 @@ export class LevelFourWar {
     // be reserved. A recovering body never creates extra low-tier capacity.
     ai.director.reserved = this.low ? Math.min(wanted, Math.max(0, ai.director.cap - ai.director.count - turning)) : wanted;
   }
-  /** fix69-r: slots still owed to the first three bodies of a freshly opened breach while its perimeter group is queued.
+  /** Slots owed to the first three bodies of each breach. LOW holds these before
+   * opening: persistent recovering bodies can otherwise occupy every slot first.
    * Like L6's announced cohorts, this spearhead outranks other emergence for the next free slots (the cap is unchanged). */
   private spearheadNeed(): number {
     const s = this.s;
-    if (!s.perimeterPending || !(s.phase === 'war' || s.phase === 'collapse' && !this.low)) return 0;
+    if ((!this.low && !s.perimeterPending) || !(s.phase === 'war' || s.phase === 'collapse' && !this.low)) return 0;
     let need = 0;
-    for (const side of ['west', 'north', 'south'] as const) { const b = s.breaches?.[side]; if (b?.openAt) need += Math.max(0, 3 - (b.arrivals ?? 0)); }
+    for (const side of ['west', 'north', 'south'] as const) { const b = s.breaches?.[side]; if (this.low || b?.openAt) need += Math.max(0, 3 - (b?.arrivals ?? 0)); }
     return need;
   }
   /** fix69-r: a breach still without its spearhead two seconds after opening at a full cap retires distant,

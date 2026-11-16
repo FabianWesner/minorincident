@@ -1,0 +1,245 @@
+{
+  "base": "7fb95a91",
+  "mergedMain": "792dde65",
+  "fixes": [
+    "f3b337e2",
+    "4bab7d9c",
+    "25397f72"
+  ],
+  "baseline": {
+    "revision": "cc2f7476",
+    "fullThreatExit": 0,
+    "fullThreatFlags": 0,
+    "l2_12AttacksPerMinute": 21.93,
+    "l2BridgeSeconds": 3.08,
+    "checkoutRemoved": true
+  },
+  "final": {
+    "vehicle": {
+      "batches": [
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "L9",
+              "tier": "high",
+              "code": 0,
+              "seconds": 106.712,
+              "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "L9",
+              "tier": "low",
+              "code": 0,
+              "seconds": 77.259,
+              "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l7-bus",
+              "tier": "high",
+              "code": 0,
+              "seconds": 14.437,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "l7-bus",
+              "tier": "low",
+              "code": 0,
+              "seconds": 13.111,
+              "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-parked",
+              "tier": "high",
+              "code": 0,
+              "seconds": 32.848,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "l4-parked",
+              "tier": "low",
+              "code": 0,
+              "seconds": 17.014,
+              "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "pass": true,
+          "rows": [
+            {
+              "mode": "l4-tank",
+              "tier": "high",
+              "code": 0,
+              "seconds": 49.12,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            },
+            {
+              "mode": "l4-tank",
+              "tier": "low",
+              "code": 0,
+              "seconds": 28.753,
+              "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+              "sourceHash": "25d3afa20628c107ce13a47a0459a00cf5f2aef803288ba5d31cb24295c1c24c",
+              "pass": true
+            }
+          ]
+        }
+      ]
+    },
+    "threat": {
+      "seconds": 436.513335083,
+      "flags": [],
+      "levels": [
+        {
+          "level": "L1",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L2",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L3",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L4",
+          "outcome": "complete",
+          "flags": [
+            "wave/breach-west:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+            "wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+          ],
+          "passiveFlags": []
+        },
+        {
+          "level": "L5",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L6",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L7",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L8",
+          "outcome": "complete",
+          "flags": [
+            "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+          ],
+          "passiveFlags": []
+        },
+        {
+          "level": "L9",
+          "outcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L10",
+          "outcome": "complete",
+          "flags": [
+            "wave/dispersal-assault:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+          ],
+          "passiveFlags": []
+        }
+      ],
+      "simUnchangedSinceCommit": "4bab7d9c"
+    },
+    "remoteUnit": {
+      "exit": 0,
+      "seconds": 182.2,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "unchangedBudgetSeconds": 240
+    },
+    "l4Contact": {
+      "exit": 0,
+      "seconds": 88.53
+    },
+    "typecheck": {
+      "exit": 0
+    },
+    "lint": {
+      "exit": 0
+    },
+    "renderContracts": {
+      "exit": 0,
+      "tests": 14
+    }
+  },
+  "rootCauseEvidence": {
+    "originalSlide": {
+      "actor": 225,
+      "p95Cm": 9.8,
+      "maxCm": 11
+    },
+    "idleHullPush": {
+      "actor": 241,
+      "maxCm": 19.2,
+      "reportedSpeed": 0,
+      "rootMoved": true
+    },
+    "finalTankLow": {
+      "maxCm": 3.1,
+      "p95Cm": 3
+    },
+    "northCapacity": {
+      "tick": 8580,
+      "recovering": 48,
+      "nearPlayerOrdinary": 30,
+      "alphas": 2,
+      "cap": 80,
+      "arrivals": 2,
+      "remainingPending": 5
+    },
+    "l4CollapseBaselineIsolation": "restoring only baseline L4Collapse removed the north-breach flag"
+  },
+  "invariants": {
+    "zombieStatsUnchanged": true,
+    "corpsesPersist": true,
+    "s140RoutingPreserved": true,
+    "l7WreckGroundingPreserved": true,
+    "wreckGatePreserved": true
+  }
+}

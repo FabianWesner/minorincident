@@ -284,6 +284,11 @@ function checkChangingSupport(): void {
     const recovery = contacts.contact(0)!.target, upper = rig.legL.getWorldPosition(new Vector3());
     expect(recovery.y).toBeGreaterThan(plant.y + .012);
     expect(upper.distanceTo(recovery)).toBeLessThan(rig.shinL.position.length() + rig.footL.position.length());
+    // A moving hull can push an idle actor whose requested stride is zero.
+    contacts.restore();
+    model.position.x += 1;
+    contacts.update(0, 0, 0, 1, 1);
+    expect(contacts.contact(0)!.target.y).toBeGreaterThan(plant.y + .012);
   } finally { disposeCharacter(model); }
 }
 
