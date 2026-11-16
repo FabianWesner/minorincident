@@ -672,10 +672,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const level = eventRecord.level ?? 'mission', count = screamShots.get(level) ?? 0;
       if (count >= 8) return;
       screamShots.set(level, count + 1);
-      await hold(120);
-      const file = `scream-${level}-${eventRecord.tick ?? count + 1}-${count + 1}.jpg`;
-      await page.screenshot({ path: join(o.out, 'captures', file), type: 'jpeg', quality: 75 });
-      log({ screamCapture: { file, event, quality: o.quality, zoom: o.zoom } });
+      // A 4 fps burst makes the brief warning assessable in a moving real-input run.
+      // Start immediately at the event, then sample for 0.75 s.
+      for (let frame = 0; frame < 4; frame++) {
+        if (frame) await hold(250);
+        const file = `scream-${level}-${eventRecord.tick ?? count + 1}-${count + 1}-${frame}.jpg`;
+        await page.screenshot({ path: join(o.out, 'captures', file), type: 'jpeg', quality: 75 });
+        log({ screamCapture: { file, frame, hz: 4, event, quality: o.quality, zoom: o.zoom } });
+      }
     });
     await page.evaluate(installScreamObserver);
   }
