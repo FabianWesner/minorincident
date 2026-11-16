@@ -14,7 +14,7 @@ export const objectiveRingRadius = .65;
  * L3 uses its next open route waypoint so navigation markers guide the player
  * around street closures instead of bearing straight through them.
  */
-export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world']; l8?: Mission['l8']; l9?: Mission['l9'] }) | null | undefined): Anchored | null {
+export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world']; l4?: Mission['l4']; l8?: Mission['l8']; l9?: Mission['l9'] }) | null | undefined): Anchored | null {
   // The direct cellar bearing crosses the fallen camp and residential fences.
   // Guide the escape along its open streets, then show the actual door ring.
   if (mission?.def.id === 'L4' && mission.world && mission.state.steps.hide?.status === 'active') {
@@ -29,6 +29,7 @@ export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?
         const following = l4.finale.route[index + 1];
         if (index >= 0 && following) { next.x = following[0]; next.z = following[1]; }
       }
+      mission.l4?.cellarApproach(next);
       return { ...next, radius: 1.4 };
     }
   }
