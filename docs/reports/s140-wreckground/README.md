@@ -213,3 +213,7 @@ Inside landing now first preserves the actor’s safe lateral position within th
 ## North-wire event attribution
 
 HIGH #345 interval 4253–4554 contains six matching native wall damage/attack events at 100 HP each, reducing l4-wall-6 from 600 to 0 and opening the breach at 4554. This identity is actively breaking the wire. LOW #256 interval 8358–8659 contains one telegraph at 8374 and no damage/attack events; hits immediately before it do not prove continued activity in the flagged interval. Therefore HIGH residual is attributed, LOW remains unresolved. Compact damage/telegraph receipts retained in qa.json.northWireAttribution.
+
+## Rejected LOW arrival experiments
+
+Tested nearer wire goals (0.6/0.8 m) and then a smaller scripted Alpha arrival tolerance (0.1 m). Each full LOW run completes but residuals move rather than disappear; the tolerance experiment still flags #255 at an open south outer waypoint over 8,357 eligible windows. Restored original goal distances and arrival tolerance. No production change retained. Need actual landing crowd/solid/ownership trace before further correction; existing focused checks completed.
