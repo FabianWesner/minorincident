@@ -28,3 +28,5 @@ Main `792dde65` is merged. Focused L2/L4 and HIGH/LOW tank reruns retain the sam
 ## Vehicle foot-contact correction
 
 The cheap world-space foot solver released a turning stance only after 0.5 radians. Releasing at 0.2 radians begins the lifted turn step before the stance strains. Both tank tiers pass; LOW worst P95 falls from 9.8 cm to 3.4 cm, maximum 10.1 cm. Simulation sample count and staged actor travel remain unchanged. Full gate and unit validation remain pending.
+
+Remote `npm test` passes unchanged on retry: 171.7 seconds within the 240-second budget (first attempt timed out at 246.1 seconds). A radius-visible direct-crossing shortcut retained the north-breach cohort failure and was reverted.
