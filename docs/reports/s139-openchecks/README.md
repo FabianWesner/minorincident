@@ -28,3 +28,5 @@ Precise follow-up: extend the existing Alpha foot-contact fixture with zoom 1.5 
 ## Working strike correction (not committed as a fix yet)
 
 `CrowdLocomotion` standing clips omitted `alpha-strike` and `alpha-roar`. Adding them to the existing footwork solve reduced alpha-2 P95 from 127.1 cm to 0.2 cm (max 0.6 cm) on the unchanged HIGH WebGPU zoom-1.5 replay. Raw after receipt: `test-results/s139-openchecks/tank-z15-high-after/metrics.json`; reviewed its complete sheet. Overall gate still fails: alpha-0/1/3 P95 5.3/6.8/5 cm. The two-clip source edit remains a working change pending remaining contact diagnosis, LOW replay and validation. Do not report the tank item fixed.
+
+LOW replay of the two-clip correction matches HIGH exactly (remaining P95 5.3/6.8/5 cm); its sheet was reviewed at `test-results/s139-openchecks/tank-z15-low-after/sheet.jpg`. HIGH worst residual contacts start in `alpha-slam` for alpha-0/3/4 (348/354/408), and alpha-1 starts at strike frame 409 after a preceding special. Added `alpha-slam` to the same working standing-clip correction for the next replay; this third clip is not yet validated.
