@@ -177,3 +177,7 @@ Alignment now uses the actual two-segment opening width minus actor radius and 5
 ## Full HIGH outside-wire scan clean
 
 Real collapse can empty the fence registry, which prevented earlier funnel cleanup. Collapse cleanup now runs without that guard and releases approaches whose assigned target has left the camp. Full seed-1 HIGH complete run reaches progression at tick 18,147 with 6,161 eligible rolling windows and zero stationary flags. Existing regression now explicitly retires the fence registry during collapse and passes; typecheck and lint pass. LOW/cross-level fence coverage and latest remote suite remain pending before broad closure.
+
+## Latest LOW and remote audit
+
+LOW full native run completes at tick 15,335 with 6,401 eligible rolling windows, but flags two Alphas: #228 at west outer approach after opening and #263 by the still-closed north wire. HIGH clean result does not establish LOW closure. Latest prescribed remote suite on d1cb3a99 passes 27 files, 105 passed / 1 skipped, complete 150-case collection, 127.5 s under 240 s. No process remains running. LOW exact cloned states are in qa.json.l4LatestLowRoutingScan.
