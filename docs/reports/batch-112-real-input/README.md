@@ -75,3 +75,7 @@ Opened L4 `captures/campaign-L4-t9007.jpg` at full size: several Alphas attack a
 ### LOW evacuation route review
 
 Opened `test-results/b112-review/low-evac.jpg`, consecutive ticks 13911–14137 at about 3 fps. A survivor runs along the clear foreground lane toward the trucks. Visible travel reads natural: no obvious teleport, foot sliding, or running through the infected pack in this segment. Final entry is partly APC-occluded, so this does not qualify every survivor route or every transient. Violet source rings in this sequence are conspicuous and on screen; they do not qualify off-screen arrow clutter/usefulness.
+
+### Bridge attribution narrowed
+
+Opened LOW tick-15571 warning capture. Read actual driving telemetry at 15018/15215/15407/15593/15776/15968: vehicle repeatedly turns around x466–481 at roughly 7–11 m/s, then reaches x495 and completes. This supports a recovered driver steering/navigation delay, not a motionless APC freeze. Collision and route-design contribution remains unproven. Close tank crop `test-results/b112-review/l4-close.jpg` was also inspected; overlapping bodies still prevent reliable sole tracking.
