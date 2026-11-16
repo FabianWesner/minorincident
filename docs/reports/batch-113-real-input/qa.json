@@ -1,0 +1,107 @@
+{
+  "candidate": "69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11",
+  "batch": 113,
+  "reportOnly": true,
+  "complete": false,
+  "method": {
+    "requested": "Real keyboard/mouse playtest, headless WebGPU, HIGH before LOW, ordinary combat, full L3/L4, focused L7 wreck framing and short L6/L9/L10 sweeps.",
+    "browserAdmission": "tools/e2e-lock.sh; E2E_PORT=5025; SCENE_PORT=5026; one browser at a time.",
+    "browserAdmissionAttempts": [
+      {
+        "level": "L3",
+        "tier": "high",
+        "backend": "webgpu",
+        "status": "NOT STARTED",
+        "exitCode": 75,
+        "reason": "Browser pool failed to start; Node listen returned EPERM binding 127.0.0.1:4329 before a browser session was admitted.",
+        "rawOutput": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "backend": "webgpu",
+        "status": "NOT STARTED",
+        "exitCode": 75,
+        "reason": "Retry after 30 seconds; same listen EPERM on 127.0.0.1:4329 before browser admission.",
+        "rawOutput": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "backend": "webgpu",
+        "poolPort": 4328,
+        "status": "NOT STARTED",
+        "exitCode": 75,
+        "reason": "Alternate documented pool port also failed with listen EPERM before browser admission.",
+        "rawOutput": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+      }
+    ]
+  },
+  "gameplayCoverage": [
+    {
+      "check": "L3 HIGH full level: bridge close-target damage and infected bridge support",
+      "status": "NOT RUN"
+    },
+    {
+      "check": "L3 LOW full level: bridge close-target damage and infected bridge support",
+      "status": "NOT RUN"
+    },
+    {
+      "check": "L4 HIGH full level: breach approaches, waves, Alpha tank foot planting",
+      "status": "NOT RUN"
+    },
+    {
+      "check": "L4 LOW full level: breach approaches, waves, Alpha tank foot planting",
+      "status": "NOT RUN"
+    },
+    {
+      "check": "L7 D-FAIR military wrecks, HIGH zoom 1.5",
+      "status": "NOT RUN"
+    },
+    {
+      "check": "L6 HIGH zoom 1 short sweep",
+      "status": "NOT RUN"
+    },
+    {
+      "check": "L9 HIGH zoom 1 short sweep",
+      "status": "NOT RUN"
+    },
+    {
+      "check": "L10 HIGH zoom 1 short sweep",
+      "status": "NOT RUN"
+    }
+  ],
+  "findings": [],
+  "contactSheet": null,
+  "validation": {
+    "qaBuild": {
+      "command": "MI_BUILD_CACHE=off npm run build:qa",
+      "exitCode": 0
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "remoteTests": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "exitCode": 0,
+      "runner": "46.225.66.90",
+      "budgetSeconds": 240,
+      "elapsedSeconds": 183.2,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "inventoryCases": 150
+    }
+  },
+  "driverGaps": [
+    "Browser pool service bind denied with EPERM on 127.0.0.1:4329.",
+    "Remote test runner unavailable; command rejected local fallback."
+  ],
+  "rawCaptures": [],
+  "notes": "Browser admission restored after sandbox was disabled. HIGH L3 real-input WebGPU run is active; full coverage remains pending."
+}
