@@ -1,0 +1,767 @@
+{
+  "candidate": "fc0341d1e1787519454e7da5d934e9f96536e967",
+  "disposition": "not-approved-acceptance-gaps",
+  "backend": "webgpu",
+  "method": "unchanged real keyboard/mouse driver; normal mortal combat; headless; one browser; pool lock; native video wrappers",
+  "runs": [
+    {
+      "name": "l10-high-z1",
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 300,
+          "simSeconds": 297,
+          "maxNoProgressSeconds": 14.566666666666666,
+          "deaths": 10,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 314
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 64\u00a0m",
+              "tick": 1916,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l10-high-z1",
+      "videos": [
+        "test-results/b110/l10-high-z1/video/page@5b7defa3998b1865ad1771711d115bc8.webm"
+      ]
+    },
+    {
+      "name": "l4-high-z15",
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 180,
+          "simSeconds": 177,
+          "maxNoProgressSeconds": 29.831,
+          "deaths": 7,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 993
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 11,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1836,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2184,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l4-high-z15",
+      "videos": [
+        "test-results/b110/l4-high-z15/video/page@09177618f78d9db9852a232cc9c397f0.webm"
+      ]
+    },
+    {
+      "name": "l6-high-z1",
+      "runs": [
+        {
+          "level": "L6",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 300,
+          "simSeconds": 297,
+          "maxNoProgressSeconds": 32.527,
+          "deaths": 7,
+          "assists": 1,
+          "attacks": {
+            "weapon.army-mg": 1483
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "steps": [
+            {
+              "id": "shelter",
+              "text": "Look around the shelter \u00b7 rest while you can",
+              "tick": 10,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "stop",
+              "text": "Stop the infected \u00b7 Retreat in 0:36",
+              "tick": 1997,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "retreat",
+              "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+              "tick": 3259,
+              "marker": {
+                "anchor": "l6-next",
+                "ring": {
+                  "x": 242,
+                  "y": 0.6,
+                  "z": 15
+                },
+                "drawn": [
+                  242,
+                  0.6,
+                  15
+                ],
+                "playerY": 1.2699999809265137,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l6-high-z1",
+      "videos": [
+        "test-results/b110/l6-high-z1/video/page@56d040ca8f853825c07549e3fd2c9170.webm"
+      ]
+    },
+    {
+      "name": "l6-high-z15",
+      "runs": [
+        {
+          "level": "L6",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 300,
+          "simSeconds": 298,
+          "maxNoProgressSeconds": 32.489,
+          "deaths": 6,
+          "assists": 1,
+          "attacks": {
+            "weapon.army-mg": 1309,
+            "weapon.fire-axe": 30
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "steps": [
+            {
+              "id": "shelter",
+              "text": "Look around the shelter \u00b7 rest while you can",
+              "tick": 10,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "stop",
+              "text": "Stop the infected \u00b7 Retreat in 0:36",
+              "tick": 1995,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "retreat",
+              "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+              "tick": 3261,
+              "marker": {
+                "anchor": "l6-next",
+                "ring": {
+                  "x": 242,
+                  "y": 0.6,
+                  "z": 15
+                },
+                "drawn": [
+                  242,
+                  0.6,
+                  15
+                ],
+                "playerY": 1.2699999809265137,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "exit",
+              "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 32\u00a0m",
+              "tick": 12950,
+              "marker": {
+                "anchor": "night-exit",
+                "ring": {
+                  "x": 273,
+                  "y": 3.9,
+                  "z": 15
+                },
+                "drawn": [
+                  273,
+                  3.9,
+                  15
+                ],
+                "playerY": 1.2699999809265137,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l6-high-z15",
+      "videos": [
+        "test-results/b110/l6-high-z15/video/page@6ba191e7ec7c663ddd1b0a7952bd1b09.webm"
+      ]
+    },
+    {
+      "name": "l9-high-road",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 475,
+          "maxNoProgressSeconds": 173.463,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l9-high-road",
+      "videos": []
+    },
+    {
+      "name": "l9-high-road-observed",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 220,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 6.466,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 13
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 11296,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l9-high-road-observed",
+      "videos": [
+        "test-results/b110/l9-high-road-observed/video/page@a25ebb0575374fd423667e816ee5fe4f.webm"
+      ]
+    },
+    {
+      "name": "l9-high-seed2",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 206,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 7.593,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 16
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 11066,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l9-high-seed2",
+      "videos": [
+        "test-results/b110/l9-high-seed2/video/page@aad58f1ae8ebc25a40e906ba44ec359d.webm"
+      ]
+    },
+    {
+      "name": "l9-high-shortcut",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 200,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 4.816666666666666,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 35
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 10265,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l9-high-shortcut",
+      "videos": [
+        "test-results/b110/l9-high-shortcut/video/page@6c26c35e20b60d0da5c044c7d4f73ed8.webm"
+      ]
+    },
+    {
+      "name": "l9-low-road",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 242,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 8.933333333333334,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 34
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 9,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0100750923156738,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 13009,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "raw": "test-results/b110/l9-low-road",
+      "videos": [
+        "test-results/b110/l9-low-road/video/page@19b013482066b13f24868351a1812a1d.webm"
+      ]
+    }
+  ],
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "remote": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "exit": 0,
+      "runner": "46.225.66.90",
+      "passed": 105,
+      "skipped": 1,
+      "files": 27,
+      "inventory": 150,
+      "seconds": 126.5
+    }
+  },
+  "open": [
+    "ordinary screamer violet rings while moving HIGH zoom 1 unproven",
+    "first road 3/4 beyond 20 seconds lacks living identity census",
+    "fallback subtle clipping/sliding not fully visible",
+    "L6 sampled overlap less dense than L4"
+  ],
+  "findings": [
+    {
+      "severity": "P2",
+      "kind": "bridge-stall-root-cause-unproven",
+      "tick": 17230,
+      "capture": "test-results/b110/l9-high-road/captures/campaign-L9-17230-stuck-navigating.jpg"
+    },
+    {
+      "severity": "P2",
+      "kind": "provisional-boarding-count-delay",
+      "tick": 12998,
+      "evidence": "test-results/b110/l9-high-road/log-campaign.jsonl",
+      "delaySeconds": 29.98
+    },
+    {
+      "severity": "P3",
+      "kind": "motionless-enemy-unattributed",
+      "tick": 8409,
+      "evidence": "test-results/b110/l9-high-shortcut/issues-campaign.json"
+    }
+  ],
+  "reviewed": [
+    "l4-full.jpg",
+    "l4-high-z1.jpg",
+    "l4-z15.jpg",
+    "l6-high-z1-100.jpg",
+    "l6-high-z15-100.jpg",
+    "l6-z1.jpg",
+    "l6-dense.jpg",
+    "fallback.jpg",
+    "low.jpg",
+    "l10.jpg",
+    "scream-moving.jpg"
+  ],
+  "contactSheet": "contact-sheet.jpg"
+}
