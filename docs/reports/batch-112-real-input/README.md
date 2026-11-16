@@ -21,20 +21,20 @@ Raw logs/captures remain under `test-results/playtest/b112-*`. [qa.json](qa.json
 
 Timing uses simulation ticks / 60 and first-observed census bounds. `census.evacuated` confirms native truck evacuation; `aboard` alone also includes APC passengers and must not establish truck boarding. All four runs use `PLAYTEST_L9_EVAC_AUDIT=1`; maximum grab age comes from its per-tick audit.
 
-Opened and reviewed the contact sheet, road-2 ticks 11635–11983 at approximately 2 fps: survivor runs toward trucks, count advances, departure follows. No obvious teleport is visible. Dense infected/APC occlusion prevents ruling out subtle sliding or running through infected. Other reviewed sequence paths are recorded below. LOW bridge warnings recover, but driver/product cause remains unproven.
+Opened and reviewed the contact sheet, road-2 ticks 11635–11983 at approximately 2 fps: survivor runs toward trucks, count advances, departure follows. No obvious teleport is visible. Dense infected/APC occlusion prevents ruling out subtle sliding or running through infected. Other reviewed sequence paths are recorded below. LOW bridge warnings recover; telemetry supports moving driver steering loops, while collision/route-design contributions remain unproven.
 
 ## Findings and driver gaps
 
 - **P2 provisional — L3 close target takes no damage during driver attacks.** Tick 10983, `test-results/playtest/b112-l3-high/captures/campaign-L3-10983-enemy-unhittable.jpg`. Reviewed image shows tight bridge crowd; aim/occlusion versus product hit logic remains unresolved.
 - **P2 provisional — LOW L9 bridge navigation delay.** Ticks 15571 and 15765; `test-results/playtest/b112-l9-low-road/captures/campaign-L9-15571-stuck-navigating.jpg` and `campaign-L9-15765-stuck-at-ring.jpg` in the same directory. Run later completes; root cause unproven.
 
-Driver gaps: opening empty-HUD navigation warnings in L4/L2; four-minute caps emit automatic P0 cannot-finish labels despite being intentional sample ends. Those labels are not established product P0s. L8 follow warning recovers. L1/L7 complete naturally before four minutes. L5 sample does not reach survivor rescue. L4 crowd/tank obscure soles. Ordinary off-screen scream arrow helpfulness/clutter is not established yet. No confirmed P1 or P3 product finding.
+Driver gaps: opening empty-HUD navigation warnings in L4/L2; four-minute caps emit automatic P0 cannot-finish labels despite being intentional sample ends. Those labels are not established product P0s. L8 follow warning recovers. L1/L7 complete naturally before four minutes. L5 sample does not reach survivor rescue. L4 crowd/tank obscure soles. Ordinary off-screen arrow is helpful with little clutter in the reviewed LOW hatch event. No confirmed P1 or P3 product finding.
 
 ## Collected observations
 
 ### HIGH L9 matrix collected
 
-Both road runs and the shortcut completed with zero skips and zero driver issues (221 / 235 / 190 seconds). Road 1 last living native evacuation is observed +1.02 s after Defense complete; road 2 +13.47 s. The earlier road-2 +0.48 s figure used `aboard`, which also includes APC passengers, and is invalid as truck boarding proof. The JSON now uses `census.evacuated`. Maximum recorded grab ages are 0 / 180 ticks for the roads. Road 2 visual sequence reviewed under `test-results/b112-review/road2.jpg`: running survivor and advancing boarding are visible; dense crowd occlusion prevents ruling out subtle sliding or brief infected penetration. Shortcut frames await review.
+Both road runs and the shortcut completed with zero skips and zero driver issues (221 / 235 / 190 seconds). Road 1 last living native evacuation is observed +1.02 s after Defense complete; road 2 +13.47 s. The earlier road-2 +0.48 s figure used `aboard`, which also includes APC passengers, and is invalid as truck boarding proof. The JSON now uses `census.evacuated`. Maximum recorded grab ages are 0 / 180 ticks for the roads. Road 2 visual sequence reviewed under `test-results/b112-review/road2.jpg`: running survivor and advancing boarding are visible; dense crowd occlusion prevents ruling out subtle sliding or brief infected penetration. Shortcut frames reviewed at ticks 9584–9755: 4/4 already aboard before Defense complete, then departure; no fallback run is exercised.
 
 ### L4 HIGH zoom 1.5 sample
 
@@ -101,3 +101,5 @@ Corrected TypeScript wrapper entry (`b112-l4-video-final`) was verified queued t
 Rechecked all four L9 final census rows: IDs 669–672 are all alive at 100 HP with native `evacuated=true` at the reported ticks. Thus the timing result is not an all-dead/vacuous pass. Candidate diff contains only README, qa.json (about 54 KB), and one reviewed 168 KB contact sheet; raw captures stay ignored. Typecheck/lint/remote suite passed on unchanged production source. Outstanding acceptance remains identifiable continuous L4 tank attack soles and fully visible L9 route beyond the sampled clear segment.
 
 Ignored bundled native-video wrapper (`test-results/b112-bundle.mjs`, `b112-video-run.ts`) explicitly forwards recordVideo in the profile helper; verified pooled context completed, but no video appeared after disposal. Raw `b112-l4-recorded` remains capture-only. The recording gap is unresolved and no native video proof is claimed.
+
+Shortcut sheet `test-results/b112-review/shortcut.jpg` was opened at approximately 2–3 fps. No obvious teleport occurs during the visible departure; crowd/APC conceal individual boarding paths. Inspected pool message forwarding does not establish why native recordings were absent; recording cause remains unresolved.
