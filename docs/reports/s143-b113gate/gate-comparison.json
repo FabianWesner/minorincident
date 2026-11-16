@@ -120,5 +120,15 @@
   "rejectedDirectRouteExperiment": {
     "flag": "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
     "reverted": true
+  },
+  "northAdmissionProbe": {
+    "openTick": 8458,
+    "initialPending": 7,
+    "finalArrivals": 2,
+    "remainingPending": 5,
+    "count": 80,
+    "reserved": 0,
+    "collapseFirstObservedTick": 13380,
+    "conclusion": "owed third member starved at LOW cap before pressure processing stops in collapse"
   }
 }
