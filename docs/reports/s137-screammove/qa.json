@@ -1,0 +1,21 @@
+{
+  "status": "incomplete",
+  "commit": "ef387646",
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "unit": { "status": "pass", "tests": 106, "files": 27, "manifestCases": 150 },
+    "remoteUnit": "unavailable: no healthy remote runner; local fallback passed",
+    "playtestCapture": "blocked: Node 26 tsx IPC listener EPERM",
+    "s124ScreamerGround": "blocked: browser pool listeners 127.0.0.1:4321/4329 EPERM"
+  },
+  "visualAcceptance": {
+    "beforeAfterFourFps": "not captured",
+    "onScreenMovingNoticeability": "unverified",
+    "offScreenDirectionCue": "unverified",
+    "qualityOrder": ["HIGH", "LOW"],
+    "zooms": [1, 1.5],
+    "backends": ["WebGL2", "WebGPU"],
+    "contactSheet": "not created"
+  }
+}
