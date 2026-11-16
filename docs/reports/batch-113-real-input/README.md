@@ -37,118 +37,35 @@ L4 opening empty-HUD navigation warnings, L6 shelter-wait warning, and intention
 
 Still required: full HIGH and LOW L4 completion; broad ordinary-infected outside-wire routing and breach-wave arrival qualification; complete readable Alpha foot-contact windows near the tank. Identified same-actor Alpha crossings are established in both tiers, with bounded HIGH strike and LOW charge-recovery observations detailed below. Existing wide frames show substantial interior combat but cannot independently establish every outside actor's route or planted feet. L3 close-target visual coverage also remains bounded to the reviewed HIGH frame; the LOW extra capture landed after combat.
 
-## Capture locations
+## L4 evidence and remaining gaps
 
-Runs: `test-results/playtest/b113-l3-high`, `b113-l3-low`, `b113-l4-high`, `b113-l4-low`, `b113-l6-high`, `b113-l7-high`, `b113-l9-high`, `b113-l10-high`. Each contains logs, capture ticks and available summaries. The interrupted HIGH L4 parent lacks a final aggregate summary; its first segment receipt is retained.
+Both tiers reached cellar escape under ordinary mortal input. HIGH collected a 480-second segment, additional 540-second normal-camera runs at zoom1/1.5, and two manual physical-key escape attempts. LOW collected540 seconds at zoom1.5. None completed L4. Logs show repeated escape deaths/checkpoint resets, not a motionless run. LOW recorded25 deaths; the first HIGH segment has24 death-input-release events. Manual legs reached residential fencing then returned toward plaza/café combat and died. Steering, combat difficulty and route-design contributions remain unresolved. Full-level acceptance is **not achieved**.
 
-L7 camera-only captures: `test-results/b113-wrecks/military-1.jpg`, `military-3.jpg`, `military-4.jpg`. Registered placements are D-FAIR/l7-military-1 (214,25), military-3 (138,25), military-4 (100,6). Backend HIGH WebGPU and camera/tick receipts are in qa.json. These are placement observations, not extra combat runs.
+Bounded continuation restarted at quartermaster rather than preserving cellar progress. Read-only inspection confirms explicit live save-on-yield is restricted to L10. Repeating the same L4 continuation is not useful.
 
-No deployment, push, main movement, zombie stat tuning, corpse removal, protected-reference edits, source fixes or playtest-tool edits occurred. This is an incomplete acceptance report, not batch approval.
+Read-only Alpha observers and screenshot sequences were collected in ignored wrappers, with camera-only static and tracked views. Production infected.alpha identity, alphaType, health, transforms and brain states are recorded every500ms. HIGH tracking followed #372 for218 samples; LOW tracked living Alphas for210 samples. Same live actors cross the authored south boundary z22.5: HIGH #372 at9771→9801 and LOW #246 at12074→12104. This establishes arrivals for those actors, not every ordinary infected route or zero wire stalls throughout the level.
 
-## L4 escape telemetry attribution
+Opened identified HIGH #372 strike sequence ticks13322–13533, including attack states13352/13413/13473/13533. No obvious prolonged foot slide in those sampled ordinary strikes; objective arrow/nearby actors intermittently obscure parts of feet. Opened LOW #246 charge sequence8161–8342: active travel followed by fixed recovery position at8282/8312/8342, without obvious continuing recovery glide. Fence partly obscures contact. LOW ordinary strikes and complete readable attack/contact coverage remain unqualified. No roar/slam acceptance is claimed. Half-second samples can miss brief events.
 
-Read both full logs: HIGH has 24 death-input-release events; LOW summary records 25 deaths. During hide, the courier repeatedly advances from the line-break spawn around x−4/−5,z16 to x−15…−32, then resets. This is repeated failed escape under combat pressure, not a motionless simulation. Driver steering, route design and combat contribution remain unresolved. Representative tick/position/checkpoint samples are in `l4EscapeAudit` in qa.json. Repeating the identical route without a different observation or physical-input approach is unlikely to close acceptance.
+Local review sheets `test-results/b113-tracked-attack-review.jpg` and `test-results/b113-low-charge-review.jpg` were opened. They stay ignored. Static tank views were limited by hull/fence occlusion; the identity-tracked view finally exposed the actor fully. Exact receipts, earlier attempts and review ticks remain in qa.json.
 
-## L3 close damage audit
+## Driver gaps
 
-Existing ordinary-input logs establish close bridge targets losing HP in both tiers. HIGH tick 21837: #545 45→20 HP at 0.69 m and #444 47.5→15 at 0.87 m, courier x161.79. LOW tick 7087: #1472 60→20 at 1.18 m (x164.16); tick 7155: #1242 60→20 at 1.08 m (x166.42). These are sampled same-actor HP changes, not shot-by-shot attribution; companion damage can contribute. They support close-target damage on the bridge during real play, without proving universal hitability. Exact sampled receipts are in `l3CloseDamageAudit`.
+- L4 empty opening HUD and L6 shelter wait trigger navigation warnings.
+- Intentional sample caps emit automatic P0 cannot-finish labels; they do not establish product P0s. Manual-mode time can also influence no-progress labels.
+- L9 passive-ally warning targets the player APC during its scripted engine interruption; ally AI failure is not established. Stationary warnings around its hull remain unresolved.
+- L4 continuation does not preserve live cellar progress through the bounded driver path.
+- Pooled launchProfile drops recordVideo options. A permitted ignored wrapper explicitly forwarding recordVideo still produced no video directory. No native-video proof is claimed. A read-only screenshot fallback worked, producing approximately two frames per second.
+- Wide crowds hide feet and actor identity. Identity receipts resolve actor attribution, but some contact windows remain visually occluded.
 
-## Native recording driver gap
+## Evidence locations and scope audit
 
-Read-only inspection of `tools/browser-pool/client.ts` shows pooled `launchProfile` creates its context with viewport, DPR and storage state, omitting `recordVideo`. Merely supplying video options to the helper cannot record the pooled run. A permitted ignored wrapper must explicitly create a recording context before another camera/sole attempt; no source/helper fix was made.
+Primary raw runs: `test-results/playtest/b113-l3-high`, `b113-l3-low`, `b113-l4-high`, `b113-l4-low`, `b113-l4-manual-high`, `b113-l4-wide-high`, `b113-l4-bearing-high`, `b113-l6-high`, `b113-l7-high`, `b113-l9-high`, `b113-l10-high`. The interrupted initial HIGH L4 parent lacks a final aggregate summary; its first segment receipt is retained.
 
-## Recording wrapper smoke result
+Camera/observer runs: `test-results/b113-l4-sequence-high`, `b113-l4-fixed-high`, `b113-l4-opposite-high`, `b113-l4-south-high`, `b113-l4-south-low`, `b113-l4-identified-high`, `b113-l4-tracked-high`, `b113-l4-tracked-low`. They supplement physical-input coverage and do not become normal-camera completion runs.
 
-Ignored esbuild wrapper explicitly forwards recordVideo into pooled browser.newContext; checked-in sources/driver remain unchanged. One-minute ordinary HIGH L4 smoke run completed its cap at tick3412 (`test-results/b113-video/smoke`). Expected `test-results/b113-video/smoke-video` directory was absent after context disposal. No native recording is claimed; forwarding alone did not resolve recording. Pool/protocol recording behavior remains a driver gap, and identical wrapper retries are not justified.
+L7 registered-level camera closeups: `test-results/b113-wrecks/military-1.jpg`, `military-3.jpg`, `military-4.jpg`, all opened at HIGH WebGPU zoom1.5, tick0. Placements D-FAIR/l7-military-1(214,25), military-3(138,25), military-4(100,6) appear supported on paving; dark wheel contact limits fine judgment. No actor or lighting edits.
 
-## Consecutive capture fallback verified
+Broader HIGH sweep sheets were opened: `test-results/b113-l6-broad-review.jpg` (2720/5427/8129/10834/13543), `b113-l9-broad-review.jpg` (2710/5412/8117/10825/13528), and `b113-l10-broad-review.jpg` (2713/5418/8136/10854/13560). L9 striped corruption remains visible at10825/13528. Driver backtracking limits pacing attribution in L6/L10.
 
-A permitted ignored wrapper added read-only page screenshots every500ms during an unchanged ordinary HIGH L4 zoom1.5 four-minute run. Saved473 frames under `test-results/b113-l4-sequence-high/sequence`. Opened local review sheet `test-results/b113-sequence-review.jpg`, consecutive ticks9021–9200: active breach fighting, but overlapping crowd still hides individual Alpha soles. This verifies the capture fallback without closing tank-foot acceptance. Raw sequence/review sheet remain outside git; the sole retained report contact sheet is unchanged.
-
-## Full-size sequence review
-
-Opened original sequence frames `00299-t9021.jpg`, `00300-t9049.jpg`, `00301-t9079.jpg` at full size. Large infected and surrounding actors move between frames; no obvious frozen crowd in this short window. Courier-follow camera movement and body overlap still prevent continuous individual sole tracking. These are breach-area frames and do not qualify all tank attacks.
-
-## Prepared next camera observation
-
-Ignored `test-results/b113-video/fixed-tank-entry.ts` is prepared and syntax checked, not yet run. It retains the screenshot observer and sets only camera framing after tick4500: position(−6,11,39), target(−20,0,27.5), zoom1.5, using the authored l4-tank-stop anchor. No gameplay or input-policy modification. This is not collected acceptance evidence.
-
-## Fixed tank camera run
-
-Prepared wrapper now ran240 seconds HIGH zoom1.5;472 frames saved at `test-results/b113-l4-fixed-high/sequence`. Opened original ticks7250 and14202. Camera holds the tank consistently, but the near hull blocks large infected lower bodies on the far side. Neither frame qualifies planted soles. This corrects the earlier prepared-only status; an opposite-side camera would be needed for that actor cluster. No additional simulation/input changes.
-
-## Opposite tank camera run
-
-Collected240 seconds HIGH zoom1.5 from camera(−34,11,16), target(−20,0,27.5);473 frames under `test-results/b113-l4-opposite-high/sequence`. Opened ticks7258 and14140: south-wall large infected are partly frame-edge/fence occluded, later fallen. This exposes the opposite side but still supplies no continuous planted-sole track. Tank-foot acceptance stays open; another identical view is not useful.
-
-## South-shifted camera candidate
-
-Collected240 seconds HIGH zoom1.5,478 frames (`test-results/b113-l4-south-high/sequence`) from camera(−34,11,6), target(−20,0,17.5). Opened ticks7228 and14360. Early view has corpses and clear paving; final frame exposes a large standing infected feet near sandbags. This is a candidate for consecutive review, not a planted-foot verdict. Preceding saved frames remain to be inspected; no additional replay is needed to review that window.
-
-## HIGH south-window consecutive review
-
-Opened local crop sheet `test-results/b113-south-feet-review.jpg`, ten consecutive frames ticks14089–14360 (~4.5 s). The large infected visible foot remains near the same paving lines while upper-body pose shifts; no obvious sliding in this bounded HIGH window. Identity and complete strike/roar/slam cycles are not established. This narrows the visual gap but does not close all tank attacks or LOW. Raw review sheet remains ignored.
-
-## LOW matching south-camera run
-
-Collected240 seconds LOW zoom1.5 with identical south camera after the HIGH pass;474 frames (`test-results/b113-l4-south-low/sequence`). Opened local final-ten-frame crop sheet `test-results/b113-south-low-review.jpg`, ticks13974–14245. Ordinary infected moves around sandbags; the large actor is clipped at left edge. This does not supply a comparable Alpha sole track. LOW tank-foot qualification stays open. Cap is intentional; no native video claimed.
-
-## Wider LOW crop identity audit
-
-Opened `test-results/b113-low-left-review.jpg` from the same final ten frames, crop(0,160)–(700,650). Mixed ordinary/armored infected move through the left side; no confidently identified Alpha or stable sole track. Nearby sampled observations list IDs/HP but lack archetype; visual size alone cannot establish Alpha identity. A read-only identity observer is required before attributing this window to the requested Alpha. No new replay performed.
-
-## Identity observer prepared
-
-Ignored `test-results/b113-video/identified-feet-entry.ts` is prepared and syntax checked, not run. Each half-second sample records actors selected by archetype containing alpha or infected.alphaType, with ID/type, transform, HP, brain state/special/target and projected position. This will distinguish Alpha identity from visually large ordinary actors. No actor/simulation mutation; existing camera-only framing retained. No new identity evidence is claimed yet.
-
-## Alpha identity observer verified
-
-Four-minute HIGH observer run produced473 half-second receipts under `test-results/b113-l4-identified-high/alpha-observer.jsonl`, with screenshots alongside. Living Alpha states include43 ordinary attack samples and charge special samples;89 living Alpha observations fall within10m of tank anchor. Brute #372 is identified near the tank. No roar/slam sample is claimed. Identity hookup works; matching visual attack/sole review remains pending. Telemetry does not substitute for visible planting.
-
-## Identified attack frames reviewed
-
-Matched brute Alpha #372 ordinary attack states at ticks10017/10077 to `test-results/b113-l4-identified-high/sequence/00332-t10017.jpg` and `00334-t10077.jpg`; opened both full-size. Actor is at the upper edge behind the perimeter; fence/tank obscure lower legs. Identity is established, but planted soles remain unqualified. Charge windows are recorded at9325–9445 and9807–9927; these are not roar/slam proof.
-
-## Identified camera tracking succeeds
-
-Four-minute HIGH camera-only Alpha tracking run saved475 samples;218 track living #372 near tank (ticks7273–13804). Opened `test-results/b113-l4-tracked-high/sequence/00332-t10012.jpg`: identified Alpha full body and feet visible beside opened south breach. This provides a useful consecutive review candidate, not yet a no-slide verdict. Tracking supplements ordinary input; it is not a normal-camera completion run.
-
-## Identified HIGH strike sequence
-
-Opened local crop sheets `test-results/b113-tracked-high-review.jpg` (ticks9921–10132, movement/turning) and `test-results/b113-tracked-attack-review.jpg` (ticks13322–13533, including #372 attack states13352/13413/13473/13533). The identified Alpha steps/pivots, then strikes beside the opened breach. No obvious prolonged foot slide in sampled HIGH strikes; objective arrow and nearby actors intermittently obscure portions of feet. This is bounded ordinary-strike evidence, not all-special or LOW qualification.
-
-## Identified LOW tracking collected
-
-Four-minute matching LOW run saved479 receipts,210 tracking living Alpha (`test-results/b113-l4-tracked-low`). Tracked state samples:151 attracted,46 chase,11 alerted,2 stagger; charge specials start at8191. Zero ordinary attack samples on tracked actor, so no comparable LOW ordinary-strike window is supplied. Half-second sampling can miss brief states; this is not proof no strike occurred. Charge visual review remains pending.
-
-## LOW identified charge review
-
-Opened `test-results/b113-low-charge-review.jpg`, consecutive ticks8161–8342, Alpha #246. Telegraph8191, active8222/8252, recovery8282/8312/8342. Charge travel is followed by fixed recovery position(−17.6114,.75,23.2720), with no obvious continuing recovery glide in viewed frames. Fence partly obscures contact. This is bounded charge-recovery evidence, not ordinary strike/roar/slam or complete LOW sole qualification.
-
-## Finding-sheet refresh
-
-Replaced the sole retained contact sheet with four reviewed frames: L3 bridge, provisional L4 stationary warning, L9 visible rendering corruption, provisional L10 close-target warning. Opened the updated sheet at960×584;99,726 bytes. No second report image or raw capture was added.
-
-## Manual HIGH escape attempt
-
-Another540-second HIGH normal-camera run (`test-results/playtest/b113-l4-manual-high`) reached cellar escape but did not finish. Used existing control-file physical input:10s KeyA, then10s KeyW, then returned to driver. Opened `captures/campaign-manual-west.jpg` (96HP near residential fence) and `campaign-manual-north.jpg` (47HP back toward plaza). This manual route did not improve completion; steering/combat attribution remains open. No skips, teleport, immortality or simulation mutation. Additional stationary warnings remain unqualified; intentional cap is not product P0.
-
-## Same-actor south-breach arrivals
-
-Authored L4 south perimeter is z22.5 (`src/data/l4.ts`). Existing identified histories show live HIGH Alpha #372 and LOW #246 crossing from z>22.5 to z≤22.5 within perimeter X bounds. Exact before/after tick/transforms are in `observedSouthCrossings`. These establish exterior-to-interior arrival for the identified actors alongside opened-breach imagery. They do not prove every ordinary infected route or zero crowd stalls across the full level.
-
-## Additional HIGH stationary capture review
-
-Opened manual-attempt warning captures `campaign-L4-10809-enemy-frozen.jpg` (#257,9.1m) and `campaign-L4-11589-enemy-frozen.jpg` (#239,3.2m) under `test-results/playtest/b113-l4-manual-high/captures`. Both show dense truck/perimeter crowd. Actors are inside camp and near wire; flagged identity and obstacle attribution remain unresolved. These do not establish outside-wire frozen AI, and do not clear the warnings either. Provisional classification retained.
-
-## Wider-view HIGH completion attempt
-
-Ordinary HIGH zoom1 ran540 seconds without skips (`test-results/playtest/b113-l4-wide-high`) and again ended at cellar escape, tick32211,80m from objective. The wider view did not resolve the repeated route/death loop. No full L4 completion is claimed. Further unchanged completion replays are not justified by this result.
-
-## Second manual bearing attempt
-
-HIGH zoom1 attempt `test-results/playtest/b113-l4-bearing-high` stopped after336s without completion. Existing control-file physical legs:10s KeyA (fence79HP),10s KeyD+KeyW (back plaza30HP),10s KeyS (café death), then driver resumed. Opened all three `campaign-bearing-first/second/south.jpg` captures. Manual mode influences no-progress timing; the automatic90s stop at tick19955 is not a confirmed product P0. This manual approach also fails and does not justify more identical replay.
-
-## Broader short-sweep review
-
-Opened local five-frame sheets `test-results/b113-l6-broad-review.jpg` (ticks2720/5427/8129/10834/13543), `b113-l9-broad-review.jpg` (2710/5412/8117/10825/13528), and `b113-l10-broad-review.jpg` (2713/5418/8136/10854/13560). L6 repeatedly displays Survivor lost/Rejoin Marcus, reinforcing conspicuous babysitting; dark tunnel courier remains readable and crowded telegraphs create pressure. L9 moves from hull pressure to smoking evacuation crowd; striped corruption persists at10825/13528, not just one capture. L10 repeats close combat around the same dark crop patch; visually sparse and repetitive in this sample, with driver backtracking limiting product pacing attribution. No additional confirmed geometry defect is established by these sheets. All review sheets stay ignored.
+Only this README, qa.json (below200KB) and one99,726-byte reviewed contact sheet are tracked. Raw captures, wrappers and extra local review sheets stay ignored. Candidate simulation/render source is unchanged; validation was run on that source. No deployment, push, main movement, zombie stat tuning, corpse removal, protected-reference edits, source fixes or playtest-tool edits occurred. This report is **not batch approval**.
