@@ -274,6 +274,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     }
   }
   expect(violations, 'PO 2026-11-08: parked army cargo trucks do not cross the perimeter').toEqual([]);
+  await checkOutsideWireRouting();
   checkCompactFollowerOverlap();
   expect(followerBarsAlwaysMax, 'five-person groups retain full bars').toBe(5);
   expect(followerPipSize, 'larger groups use thin, short pips').toEqual({ width: 18, height: 3 });
@@ -639,7 +640,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
   } finally { world.dispose(); }
 });
 
-test('L4: an outside infected follows the perimeter to an open breach', async () => {
+async function checkOutsideWireRouting(): Promise<void> {
   const { world, mission } = await loadL4(1, 'high');
   try {
     mission.loadCheckpoint('turn');
@@ -667,4 +668,4 @@ test('L4: an outside infected follows the perimeter to an open breach', async ()
       Math.hypot(start.x - l4PerimeterSegments[opened].x, start.z - l4PerimeterSegments[opened].z),
     );
   } finally { world.dispose(); }
-});
+}
