@@ -375,7 +375,7 @@
     ],
     "candidateScreenshot": false
   },
-  "goalStatus": "HIGH target achieved; LOW run capped, regression open",
+  "goalStatus": "HIGH target achieved and report committed; LOW completion remains documented limitation",
   "finalRuns": {
     "high": {
       "path": "test-results/s151-l4high/gpu-high-recovery",
@@ -677,5 +677,10 @@
       "176s@-14,-15/war",
       "200s@-8,-10/war"
     ]
+  },
+  "externalDoorReview": {
+    "file": "test-results/s151-l4high/door-review.png",
+    "method": "pooled headless explicit WebGPU URL, HIGH, camera zoom1.5, staged inspection at mission/l4-cellar-door",
+    "finding": "Lit wooden door, raised steps, clear sidewalk beside low wall; inspection camera is supplemental, not gameplay-marker proof"
   }
 }
