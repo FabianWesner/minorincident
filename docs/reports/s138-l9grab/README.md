@@ -31,3 +31,5 @@ Latest simulation remote unit refresh passed: 105 passed, one platform skip, 128
 Latest simulation L9 threat refresh (`test-results/s138-exit-threat`) completed skilled and passive with zero level flags; aggregate PARTIAL_LEVEL_SELECTION only. A second LOW refresh launch was refused external-exclusive; `tools/browser-status.sh` confirmed a live s139-openchecks exclusive lease and corresponding browser job.
 
 Latest exit-corrected LOW run passed: 0.7166666666666667 seconds after Defense complete, maximum grabbed age 0 ticks, zero issues. Latest E31 verification passed all 106 tests / 27 files in 91.6 seconds.
+
+Exit-corrected HIGH road matrix: 0.35, 0.23333333333333334, 1.0666666666666667 seconds after Defense complete, all with zero grabbed ticks. Run 1 later stalled at the bridge (L9 incomplete); run 2 completed with zero issues; run 3 completed with four stationary-infected P2s. These driver observations are retained and do not replace the separate zero-level-flag threat audit.
