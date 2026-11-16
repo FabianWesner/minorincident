@@ -39,3 +39,7 @@ The implementation is committed as `ea5b652a`. The former sandbox restrictions a
 ## Additional gates
 
 `npm run qa:vehicle-motion` passed all sixteen HIGH/LOW scenarios. L9 threat audit completed skilled and passive routes with zero level-specific flags; its sole aggregate flag is `PARTIAL_LEVEL_SELECTION` because only L9 was selected. Raw receipts: `test-results/s136-threat/audit.json` and `test-results/s83-vehicleslide/native-contact/*.json`.
+
+## Archived reproduction input
+
+Recovered the original batch-110 `campaign-completion.json` campaign save, which is actually tick 13042 (before the bridge loop, near the requested 13140 boundary). Preserved unchanged as `tests/fixtures/saves/qa/s136-b110-l9-road-loop.json.br` (151384 bytes). The native fixture loader passes. This records the original boarding state; the archive does not contain an exact tick-17230 physical snapshot. Later steering evidence remains the recorded observation trace.
