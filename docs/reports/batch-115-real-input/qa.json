@@ -1,0 +1,2491 @@
+{
+  "candidate": "c02a9b91",
+  "status": "report-incomplete-acceptance",
+  "batchApproved": false,
+  "method": {
+    "input": "ordinary mortal keyboard/mouse playtest driver",
+    "requestedBackend": "webgpu",
+    "order": [
+      "HIGH L6",
+      "HIGH L7",
+      "HIGH L8",
+      "LOW L6",
+      "LOW L7",
+      "HIGH L10 full ending/credits"
+    ],
+    "zoom": 1.5,
+    "l10Profile": "retained profile with 480-second resume segments",
+    "playtestStarted": true,
+    "rendererReceipts": [
+      {
+        "t": "2026-11-16T20:04:38.338Z",
+        "renderer": "webgpu"
+      },
+      {
+        "t": "2026-11-16T20:02:22.016Z",
+        "renderer": "webgpu"
+      },
+      {
+        "t": "2026-11-16T19:57:25.819Z",
+        "renderer": "webgpu"
+      }
+    ]
+  },
+  "validation": {
+    "build": "pass: MI_BUILD_CACHE=off npm run build:qa",
+    "typecheck": "pass: npm run typecheck",
+    "lint": "pass: npm run lint",
+    "remoteUnit": "pass: sh tools/remote/run.sh \"$PWD\" -- npm test; 190.3 seconds; runner 46.225.66.90; /tmp/s152-remote.log"
+  },
+  "admissionFailures": [
+    {
+      "command": "E2E_PORT=5041 SCENE_PORT=5042 PLAYTEST_BACKEND=webgpu E2E_UNITS=1 node --import tsx tools/playtest/play.ts --levels L6-L8 --quality high --zoom 1.5 --mode continue --out test-results/playtest/b115-high-l6-l8",
+      "result": "preview server did not start on 5041",
+      "detail": "Direct preview bind reproduced listen EPERM: operation not permitted 127.0.0.1:5041"
+    },
+    {
+      "component": "browser pool",
+      "port": 4329,
+      "result": "listen EPERM: operation not permitted 127.0.0.1:4329",
+      "statusCheck": "sh tools/browser-status.sh: Browser pool unavailable (fetch failed)"
+    }
+  ],
+  "coverage": {
+    "L6_HIGH": "completed, no skips; detailed review pending",
+    "L7_HIGH": "completed, no skips; detailed review pending",
+    "L8_HIGH": "completed, no skips; detailed review pending",
+    "L6_LOW": "595-second reservation expired at exit; incomplete",
+    "L7_LOW": "complete 147 seconds; debug full cohort; detailed review pending",
+    "L10_HIGH_WEBGPU_full_ending": "complete, credits visually inspected at campaign-3 tick 19010"
+  },
+  "findings": [
+    {
+      "severity": "P2",
+      "provisional": true,
+      "title": "LOW L6 exit completion not reproduced",
+      "capture": "test-results/playtest/b115-low-l6-l7/captures/continue-L6-L6-t27060.jpg",
+      "tick": 27060,
+      "observed": "15 HP, dense infected crowd, 24 m from exit; 21 death releases before reservation expiry",
+      "limitation": "Driver stair steering versus product difficulty unresolved"
+    }
+  ],
+  "findingInterpretation": "No gameplay observed; empty findings do not imply absence of defects.",
+  "artifacts": {
+    "rawCaptures": [],
+    "contactSheet": "contact-sheet.jpg",
+    "contactSheetReason": "Created and opened HIGH L6 ticks 8131/13537, L7 5465, L8 16392"
+  },
+  "driverGaps": [
+    "Exact transient follower-alarm counts unavailable",
+    "Intentional waiting and continuous survivor geometry/contact traces unqualified",
+    "LOW L6 full completion pending after 595-second expiry",
+    "Melee arc/hit visual sequence qualification remains open"
+  ],
+  "highEscortSummary": {
+    "mode": "continue",
+    "acceptanceMode": "STANDARD",
+    "immortal": false,
+    "routeOnly": false,
+    "quality": "high",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L6",
+      "L7",
+      "L8"
+    ],
+    "runs": [
+      {
+        "level": "L6",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 288,
+        "simSeconds": 280,
+        "maxNoProgressSeconds": 32.519,
+        "deaths": 6,
+        "assists": 1,
+        "attacks": {
+          "weapon.army-mg": 1399,
+          "weapon.fire-axe": 12
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "shelter",
+            "text": "Look around the shelter \u00b7 rest while you can",
+            "tick": 11,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "stop",
+            "text": "Stop the infected \u00b7 Retreat in 0:36",
+            "tick": 1999,
+            "marker": {
+              "anchor": null,
+              "ring": null,
+              "drawn": null,
+              "playerY": 1.3200000524520874,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "retreat",
+            "text": "Cover the retreat through the tunnel \u00b7 233\u00a0m",
+            "tick": 3259,
+            "marker": {
+              "anchor": "l6-next",
+              "ring": {
+                "x": 242,
+                "y": 0.6,
+                "z": 15
+              },
+              "drawn": [
+                242,
+                0.6,
+                15
+              ],
+              "playerY": 1.3200000524520874,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "exit",
+            "text": "Bring the survivors into the night \u00b7 0/2 out \u00b7 30\u00a0m",
+            "tick": 11754,
+            "marker": {
+              "anchor": "night-exit",
+              "ring": {
+                "x": 273,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                273,
+                3.9,
+                15
+              ],
+              "playerY": 1.2699999809265137,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      {
+        "level": "L7",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 131,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 2.2333333333333334,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 18,
+          "weapon.rocket-launcher": 36
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+            "tick": 2,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor \u00b7 Group 2/2 nearby \u00b7 306\u00a0m",
+            "tick": 45,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus \u00b7 44\u00a0m",
+            "tick": 5737,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.8500000238418579,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      {
+        "level": "L8",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 550,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 52.115,
+        "deaths": 0,
+        "assists": 3,
+        "attacks": {
+          "weapon.army-mg": 966
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "steps": [
+          {
+            "id": "sanctuary",
+            "text": "Follow Nadia \u00b7 5\u00a0m",
+            "tick": 12,
+            "marker": {
+              "anchor": "l8-route",
+              "ring": {
+                "x": 3,
+                "y": 0,
+                "z": 66
+              },
+              "drawn": [
+                3,
+                0.82,
+                66
+              ],
+              "playerY": 0.8399999737739563,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "escape",
+            "text": "Protect the group! \u00b7 2\u00a0m",
+            "tick": 10290,
+            "marker": {
+              "anchor": "central-plaza",
+              "ring": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "drawn": [
+                0,
+                0.12,
+                0
+              ],
+              "playerY": 0.8399999737739563,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "depart",
+            "text": "",
+            "tick": 32210,
+            "marker": {
+              "anchor": "exit",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.9954342842102051,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 3,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 3,
+      "P3": 0
+    }
+  },
+  "lowEscortSummary": {
+    "mode": "continue",
+    "acceptanceMode": "STANDARD",
+    "immortal": false,
+    "routeOnly": false,
+    "quality": "low",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L6",
+      "L7"
+    ],
+    "runs": [
+      {
+        "level": "L7",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 147,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 4.316666666666666,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 46,
+          "weapon.rocket-launcher": 38
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+            "tick": 0,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.6049999999999995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+            "tick": 64,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus \u00b7 41\u00a0m",
+            "tick": 6345,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.8500000238418579,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 1,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    }
+  },
+  "l10Summary": {
+    "mode": "campaign",
+    "acceptanceMode": "STANDARD",
+    "immortal": false,
+    "routeOnly": false,
+    "quality": "high",
+    "heroine": "female",
+    "zoom": 1.5,
+    "levels": [
+      "L10"
+    ],
+    "runs": [
+      {
+        "level": "L10",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 477,
+        "maxNoProgressSeconds": 27.031,
+        "deaths": 3,
+        "assists": 0,
+        "attacks": {
+          "weapon.fire-axe": 31,
+          "weapon.hunting-rifle": 199,
+          "weapon.machete": 1,
+          "weapon.assault-rifle": 84
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.assault-rifle",
+          "weapon.flashbang"
+        ],
+        "steps": [
+          {
+            "id": "crash",
+            "text": "Get away from the river \u00b7 101\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "river-exit",
+              "ring": {
+                "x": 647,
+                "y": 0,
+                "z": -12.5
+              },
+              "drawn": [
+                647,
+                0,
+                -12.5
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "farmstead",
+            "text": "Find a way through the farms \u00b7 64\u00a0m",
+            "tick": 2300,
+            "marker": {
+              "anchor": "cure-military",
+              "ring": {
+                "x": 1857,
+                "y": 0,
+                "z": 25
+              },
+              "drawn": [
+                698,
+                0,
+                25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "restricted-zone",
+            "text": "Get through the restricted zone \u00b7 104\u00a0m",
+            "tick": 24639,
+            "marker": {
+              "anchor": "r4-r5-seam",
+              "ring": {
+                "x": 2467,
+                "y": 0,
+                "z": -5
+              },
+              "drawn": [
+                1960,
+                0,
+                16
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 480,
+        "simSeconds": 477,
+        "maxNoProgressSeconds": 51.247,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.assault-rifle": 475,
+          "weapon.rocket-launcher": 90,
+          "weapon.army-mg": 360
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.assault-rifle",
+          "weapon.flashbang"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fists",
+          "weapon.kick",
+          "weapon.bat",
+          "weapon.machete",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.assault-rifle",
+          "weapon.flashbang",
+          "weapon.molotov",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher",
+          "weapon.pipe-bomb",
+          "weapon.shotgun",
+          "ability.corgi-lure",
+          "weapon.nail-gun",
+          "weapon.flamethrower"
+        ],
+        "steps": [
+          {
+            "id": "restricted-zone",
+            "text": "Get through the restricted zone \u00b7 378\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "r4-r5-seam",
+              "ring": {
+                "x": 2467,
+                "y": 0,
+                "z": -5
+              },
+              "drawn": [
+                2467,
+                0,
+                -5
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "research-hangar",
+            "text": "Enter the hangar \u00b7 249\u00a0m",
+            "tick": 6910,
+            "marker": {
+              "anchor": "cure-research-entry",
+              "ring": {
+                "x": 2707,
+                "y": 0,
+                "z": 59
+              },
+              "drawn": [
+                2707,
+                0,
+                59
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "research",
+            "text": "Enter the hangar \u00b7 10\u00a0m",
+            "tick": 11428,
+            "marker": {
+              "anchor": "cure-terminal",
+              "ring": {
+                "x": 2699,
+                "y": 0,
+                "z": 66
+              },
+              "drawn": [
+                2699,
+                0,
+                66
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "cure",
+            "text": "Bring the cure to the dispersal complex \u00b7 6\u00a0m",
+            "tick": 14764,
+            "marker": {
+              "anchor": "cure-canister",
+              "ring": {
+                "x": 2705,
+                "y": 0,
+                "z": 66
+              },
+              "drawn": [
+                2705,
+                0,
+                66
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "research-exit",
+            "text": "Bring the cure to the dispersal complex \u00b7 106\u00a0m",
+            "tick": 14868,
+            "marker": {
+              "anchor": "cure-research",
+              "ring": {
+                "x": 2807,
+                "y": 0,
+                "z": 45
+              },
+              "drawn": [
+                2807,
+                0,
+                45
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "delivery-corridor",
+            "text": "Bring the cure to the dispersal complex \u00b7 141\u00a0m",
+            "tick": 17086,
+            "marker": {
+              "anchor": "cure-corridor",
+              "ring": {
+                "x": 2937,
+                "y": 0,
+                "z": -5
+              },
+              "drawn": [
+                2937,
+                0,
+                -5
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "dispersal-complex",
+            "text": "Bring the cure to the dispersal complex \u00b7 759\u00a0m",
+            "tick": 19517,
+            "marker": {
+              "anchor": "cure-complex",
+              "ring": {
+                "x": 3697,
+                "y": 0,
+                "z": -25
+              },
+              "drawn": [
+                3697,
+                0,
+                -25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      {
+        "level": "L10",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 388,
+        "simSeconds": 383,
+        "maxNoProgressSeconds": 2.165,
+        "deaths": 4,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 48,
+          "weapon.army-mg": 316
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.fists",
+          "weapon.kick",
+          "weapon.bat",
+          "weapon.machete",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.assault-rifle",
+          "weapon.flashbang",
+          "weapon.molotov",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher",
+          "weapon.pipe-bomb",
+          "weapon.shotgun",
+          "ability.corgi-lure",
+          "weapon.nail-gun",
+          "weapon.flamethrower"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.fists",
+          "weapon.kick",
+          "weapon.bat",
+          "weapon.machete",
+          "weapon.fire-axe",
+          "weapon.hunting-rifle",
+          "weapon.machete",
+          "weapon.assault-rifle",
+          "weapon.flashbang",
+          "weapon.molotov",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher",
+          "weapon.pipe-bomb",
+          "weapon.shotgun",
+          "ability.corgi-lure",
+          "weapon.nail-gun",
+          "weapon.flamethrower"
+        ],
+        "steps": [
+          {
+            "id": "dispersal-complex",
+            "text": "Bring the cure to the dispersal complex \u00b7 214\u00a0m",
+            "tick": 10,
+            "marker": {
+              "anchor": "cure-complex",
+              "ring": {
+                "x": 3697,
+                "y": 0,
+                "z": -25
+              },
+              "drawn": [
+                3697,
+                0,
+                -25
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "install",
+            "text": "Install the cure \u00b7 309\u00a0m",
+            "tick": 3730,
+            "marker": {
+              "anchor": "cure-install",
+              "ring": {
+                "x": 4006.5,
+                "y": 0,
+                "z": -39
+              },
+              "drawn": [
+                4006.5,
+                0,
+                -39
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Activate the dispersal console \u00b7 13\u00a0m",
+            "tick": 8438,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "release",
+            "text": "Release the cure \u00b7 1\u00a0m \u00b7 Press E or tap the console action",
+            "tick": 13010,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": {
+                "x": 4002,
+                "y": 0,
+                "z": -27
+              },
+              "drawn": [
+                4002,
+                0,
+                -27
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "epilogue",
+            "text": "",
+            "tick": 13117,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "credits",
+            "text": "",
+            "tick": 16938,
+            "marker": {
+              "anchor": "cure-console",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          }
+        ]
+      }
+    ],
+    "issues": 2,
+    "bySeverity": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 2,
+      "P3": 0
+    }
+  },
+  "l10CreditsCapture": "test-results/playtest/b115-high-l10/captures/campaign-3-L10-t19010.jpg",
+  "l10RendererReceipts": [
+    {
+      "segment": "log-campaign-2.jsonl",
+      "t": "2026-11-16T20:35:45.270Z",
+      "renderer": "webgpu"
+    },
+    {
+      "segment": "log-campaign.jsonl",
+      "t": "2026-11-16T20:27:39.032Z",
+      "renderer": "webgpu"
+    },
+    {
+      "segment": "log-campaign-3.jsonl",
+      "t": "2026-11-16T20:43:49.929Z",
+      "renderer": "webgpu"
+    }
+  ],
+  "sampledMeasurements": {
+    "test-results/playtest/b115-high-l10/log-campaign-2.jsonl": {
+      "deathReleasesByObjective": {},
+      "waitingForHudSamples": 0,
+      "waitingForHudApproxSeconds": 0,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    },
+    "test-results/playtest/b115-high-l10/log-campaign.jsonl": {
+      "deathReleasesByObjective": {
+        "farmstead": 2,
+        "restricted-zone": 1
+      },
+      "waitingForHudSamples": 0,
+      "waitingForHudApproxSeconds": 0,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    },
+    "test-results/playtest/b115-high-l10/log-campaign-3.jsonl": {
+      "deathReleasesByObjective": {
+        "hold": 1
+      },
+      "waitingForHudSamples": 0,
+      "waitingForHudApproxSeconds": 0,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    },
+    "test-results/playtest/b115-low-l6-l7/log-continue-L7.jsonl": {
+      "deathReleasesByObjective": {},
+      "waitingForHudSamples": 17,
+      "waitingForHudApproxSeconds": 21.73,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    },
+    "test-results/playtest/b115-low-l6-l7/log-continue-L6.jsonl": {
+      "deathReleasesByObjective": {
+        "retreat": 5,
+        "exit": 16
+      },
+      "waitingForHudSamples": 0,
+      "waitingForHudApproxSeconds": 0,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    },
+    "test-results/playtest/b115-high-l6-l8/log-continue-L8.jsonl": {
+      "deathReleasesByObjective": {},
+      "waitingForHudSamples": 0,
+      "waitingForHudApproxSeconds": 0,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    },
+    "test-results/playtest/b115-high-l6-l8/log-continue-L7.jsonl": {
+      "deathReleasesByObjective": {},
+      "waitingForHudSamples": 0,
+      "waitingForHudApproxSeconds": 0,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    },
+    "test-results/playtest/b115-high-l6-l8/log-continue-L6.jsonl": {
+      "deathReleasesByObjective": {
+        "retreat": 2,
+        "exit": 4
+      },
+      "waitingForHudSamples": 0,
+      "waitingForHudApproxSeconds": 0,
+      "waitForUsObservedSamples": 0,
+      "lostBehindObservedSamples": 0,
+      "limitations": "HUD sampled about once per second; samples are not distinct alarm counts. Waiting duration measures displayed text, not player intent."
+    }
+  },
+  "injuredL6Trajectory": {
+    "26": [
+      {
+        "tick": 17,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 1999,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2058,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2117,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2181,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2235,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2298,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2362,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2415,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2479,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2576,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2594,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2657,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2722,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2780,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2834,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2897,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 2953,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 3015,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 3077,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 3140,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 3202,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 20,
+        "z": 8
+      },
+      {
+        "tick": 3260,
+        "leaderX": 6,
+        "status": "following",
+        "injured": true,
+        "x": 19.999817602295117,
+        "z": 7.999873059883006
+      },
+      {
+        "tick": 5949,
+        "leaderX": 87.87666666666486,
+        "status": "following",
+        "injured": true,
+        "x": 86.89744963074396,
+        "z": 15.180483706202894
+      },
+      {
+        "tick": 6081,
+        "leaderX": 92.71666666666421,
+        "status": "following",
+        "injured": true,
+        "x": 91.75328724833211,
+        "z": 15.138973830100879
+      },
+      {
+        "tick": 6247,
+        "leaderX": 98.80333333333006,
+        "status": "following",
+        "injured": true,
+        "x": 97.79548506217162,
+        "z": 15.00024168213942
+      },
+      {
+        "tick": 7536,
+        "leaderX": 146.06666666665706,
+        "status": "following",
+        "injured": true,
+        "x": 145.0345733918588,
+        "z": 15.133264374385892
+      },
+      {
+        "tick": 7625,
+        "leaderX": 149.32999999998995,
+        "status": "following",
+        "injured": true,
+        "x": 148.26227781966605,
+        "z": 15.053397636554003
+      },
+      {
+        "tick": 7735,
+        "leaderX": 153.36333333332274,
+        "status": "following",
+        "injured": true,
+        "x": 151.4965601710052,
+        "z": 14.570952903467798
+      },
+      {
+        "tick": 7757,
+        "leaderX": 154.1699999999893,
+        "status": "following",
+        "injured": true,
+        "x": 152.22152438677867,
+        "z": 14.461012766854271
+      },
+      {
+        "tick": 7767,
+        "leaderX": 154.53666666665592,
+        "status": "following",
+        "injured": true,
+        "x": 152.52678172338963,
+        "z": 14.381187881718661
+      },
+      {
+        "tick": 7790,
+        "leaderX": 155.37999999998914,
+        "status": "following",
+        "injured": true,
+        "x": 153.30160307525887,
+        "z": 14.268930965552109
+      },
+      {
+        "tick": 7813,
+        "leaderX": 156.22333333332236,
+        "status": "following",
+        "injured": true,
+        "x": 154.23883268728238,
+        "z": 14.559463377685825
+      },
+      {
+        "tick": 7825,
+        "leaderX": 156.6633333333223,
+        "status": "following",
+        "injured": true,
+        "x": 154.7432392384732,
+        "z": 14.71378928982975
+      },
+      {
+        "tick": 7858,
+        "leaderX": 157.87333333332214,
+        "status": "following",
+        "injured": true,
+        "x": 156.12505428560112,
+        "z": 15.039400960490235
+      },
+      {
+        "tick": 7944,
+        "leaderX": 161.02666666665505,
+        "status": "following",
+        "injured": true,
+        "x": 159.25745437198518,
+        "z": 14.932826759104506
+      },
+      {
+        "tick": 8046,
+        "leaderX": 164.3266666666546,
+        "status": "following",
+        "injured": true,
+        "x": 163.14904394339874,
+        "z": 15.091138279443872
+      },
+      {
+        "tick": 8241,
+        "leaderX": 168.79999999998734,
+        "status": "following",
+        "injured": true,
+        "x": 166.59038792796878,
+        "z": 15.122512997024158
+      },
+      {
+        "tick": 8890,
+        "leaderX": 157.68999999998883,
+        "status": "following",
+        "injured": true,
+        "x": 155.91692630302006,
+        "z": 14.996295246622822
+      },
+      {
+        "tick": 8979,
+        "leaderX": 160.95333333332172,
+        "status": "following",
+        "injured": true,
+        "x": 159.5203251617114,
+        "z": 14.99025653852672
+      },
+      {
+        "tick": 9067,
+        "leaderX": 164.17999999998796,
+        "status": "following",
+        "injured": true,
+        "x": 162.83897228307117,
+        "z": 15.075545482209693
+      },
+      {
+        "tick": 9129,
+        "leaderX": 165.49999999998778,
+        "status": "following",
+        "injured": true,
+        "x": 165.16455302351972,
+        "z": 15.11487789800312
+      },
+      {
+        "tick": 9655,
+        "leaderX": 172.50333333332017,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 10568,
+        "leaderX": 205.97999999998234,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 10756,
+        "leaderX": 212.87333333331475,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 10800,
+        "leaderX": 214.48666666664786,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 10808,
+        "leaderX": 214.77999999998116,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 10816,
+        "leaderX": 215.07333333331445,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 10850,
+        "leaderX": 216.31999999998095,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 11159,
+        "leaderX": 224.67999999997983,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 11337,
+        "leaderX": 229.51999999997918,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 11681,
+        "leaderX": 242.13333333331082,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 11754,
+        "leaderX": 244.80999999997712,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 14079,
+        "leaderX": 258.8166666666441,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 14821,
+        "leaderX": 244.9199999999771,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 15189,
+        "leaderX": 258.4133333333105,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 15871,
+        "leaderX": 244.99333333331043,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 16403,
+        "leaderX": 264.49999999998107,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 16433,
+        "leaderX": 265.5999999999818,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      },
+      {
+        "tick": 16514,
+        "leaderX": 268.23999999998347,
+        "status": "dead",
+        "injured": true,
+        "x": 165.50340639587813,
+        "z": 15.114834376122266
+      }
+    ],
+    "36": [
+      {
+        "tick": 17,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 1999,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2058,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2117,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2181,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2235,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2298,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2362,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2415,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2479,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2576,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2594,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2657,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2722,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2780,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2834,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2897,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 2953,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 3015,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 3077,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 3140,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 3202,
+        "leaderX": 6,
+        "status": "shelter",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 3260,
+        "leaderX": 6,
+        "status": "following",
+        "injured": true,
+        "x": 22,
+        "z": 8
+      },
+      {
+        "tick": 5949,
+        "leaderX": 87.87666666666486,
+        "status": "following",
+        "injured": true,
+        "x": 84.04115322384526,
+        "z": 16.037827637853034
+      },
+      {
+        "tick": 6081,
+        "leaderX": 92.71666666666421,
+        "status": "following",
+        "injured": true,
+        "x": 89.10886778610009,
+        "z": 15.79196156775193
+      },
+      {
+        "tick": 6247,
+        "leaderX": 98.80333333333006,
+        "status": "following",
+        "injured": true,
+        "x": 94.89154455280018,
+        "z": 15.72897570460385
+      },
+      {
+        "tick": 7536,
+        "leaderX": 146.06666666665706,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7625,
+        "leaderX": 149.32999999998995,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7735,
+        "leaderX": 153.36333333332274,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7757,
+        "leaderX": 154.1699999999893,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7767,
+        "leaderX": 154.53666666665592,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7790,
+        "leaderX": 155.37999999998914,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7813,
+        "leaderX": 156.22333333332236,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7825,
+        "leaderX": 156.6633333333223,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7858,
+        "leaderX": 157.87333333332214,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 7944,
+        "leaderX": 161.02666666665505,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 8046,
+        "leaderX": 164.3266666666546,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 8241,
+        "leaderX": 168.79999999998734,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 8890,
+        "leaderX": 157.68999999998883,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 8979,
+        "leaderX": 160.95333333332172,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 9067,
+        "leaderX": 164.17999999998796,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 9129,
+        "leaderX": 165.49999999998778,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 9655,
+        "leaderX": 172.50333333332017,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 10568,
+        "leaderX": 205.97999999998234,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 10756,
+        "leaderX": 212.87333333331475,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 10800,
+        "leaderX": 214.48666666664786,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 10808,
+        "leaderX": 214.77999999998116,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 10816,
+        "leaderX": 215.07333333331445,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 10850,
+        "leaderX": 216.31999999998095,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 11159,
+        "leaderX": 224.67999999997983,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 11337,
+        "leaderX": 229.51999999997918,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 11681,
+        "leaderX": 242.13333333331082,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 11754,
+        "leaderX": 244.80999999997712,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 14079,
+        "leaderX": 258.8166666666441,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 14821,
+        "leaderX": 244.9199999999771,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 15189,
+        "leaderX": 258.4133333333105,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 15871,
+        "leaderX": 244.99333333331043,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 16403,
+        "leaderX": 264.49999999998107,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 16433,
+        "leaderX": 265.5999999999818,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      },
+      {
+        "tick": 16514,
+        "leaderX": 268.23999999998347,
+        "status": "turned",
+        "injured": true,
+        "x": 111.3673400836229,
+        "z": 16.406665651774766
+      }
+    ]
+  },
+  "highL7FullCohort": {
+    "raw": "test-results/playtest/b115-high-l7-roster",
+    "summary": {
+      "mode": "campaign",
+      "acceptanceMode": "STANDARD",
+      "immortal": false,
+      "routeOnly": false,
+      "quality": "high",
+      "heroine": "female",
+      "zoom": 1.5,
+      "levels": [
+        "L7"
+      ],
+      "runs": [
+        {
+          "level": "L7",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 155,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 1.95,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 50,
+            "weapon.rocket-launcher": 40
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.rocket-launcher"
+          ],
+          "steps": [
+            {
+              "id": "rocket",
+              "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+              "tick": 0,
+              "marker": {
+                "anchor": "l7-rocket",
+                "ring": {
+                  "x": 276,
+                  "y": 3.9,
+                  "z": 15
+                },
+                "drawn": [
+                  276,
+                  3.9,
+                  15
+                ],
+                "playerY": 4.6049999999999995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "corridor",
+              "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+              "tick": 68,
+              "marker": {
+                "anchor": "l7-corridor-east",
+                "ring": {
+                  "x": -30,
+                  "y": 0,
+                  "z": 50
+                },
+                "drawn": [
+                  -30,
+                  0.13,
+                  50
+                ],
+                "playerY": 4.619999885559082,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "departure",
+              "text": "Get everyone aboard the bus \u00b7 41\u00a0m",
+              "tick": 6636,
+              "marker": {
+                "anchor": "l7-bus-boarding",
+                "ring": {
+                  "x": -70.5,
+                  "y": 0,
+                  "z": 47.5
+                },
+                "drawn": [
+                  -70.5,
+                  0,
+                  47.5
+                ],
+                "playerY": 0.8500000238418579,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 0,
+      "bySeverity": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    "rosterSamples": 129,
+    "nonemptyAlarmSamples": 0,
+    "lastRoster": {
+      "level": "L7",
+      "tick": 9065,
+      "following": 24,
+      "dead": 0,
+      "turned": 0,
+      "near18": 0,
+      "boarded": 24,
+      "departure": "done",
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 4
+      },
+      "alarm": null
+    },
+    "waitingForHudApproxSeconds": 20.92,
+    "renderer": [
+      {
+        "t": "2026-11-16T20:53:08.627Z",
+        "renderer": "webgpu"
+      }
+    ]
+  },
+  "lowL6Retry": {
+    "raw": "test-results/playtest/b115-low-l6-retry",
+    "summary": {
+      "mode": "campaign",
+      "acceptanceMode": "STANDARD",
+      "immortal": false,
+      "routeOnly": false,
+      "quality": "low",
+      "heroine": "female",
+      "zoom": 1.5,
+      "levels": [
+        "L6"
+      ],
+      "runs": [
+        {
+          "level": "L6",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 479,
+          "maxNoProgressSeconds": 32.51,
+          "deaths": 13,
+          "assists": 1,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "weapon.kick",
+            "weapon.shotgun"
+          ],
+          "steps": [
+            {
+              "id": "shelter",
+              "text": "Look around the shelter \u00b7 rest while you can",
+              "tick": 11,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "stop",
+              "text": "Stop the infected \u00b7 Retreat in 0:36",
+              "tick": 1998,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 1.3200000524520874,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "retreat",
+              "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+              "tick": 3257,
+              "marker": {
+                "anchor": "l6-next",
+                "ring": {
+                  "x": 242,
+                  "y": 0.6,
+                  "z": 15
+                },
+                "drawn": [
+                  242,
+                  0.6,
+                  15
+                ],
+                "playerY": 1.2699999809265137,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "exit",
+              "text": "Bring the survivors into the night \u00b7 0/1 out \u00b7 33\u00a0m",
+              "tick": 11663,
+              "marker": {
+                "anchor": "night-exit",
+                "ring": {
+                  "x": 273,
+                  "y": 3.9,
+                  "z": 15
+                },
+                "drawn": [
+                  273,
+                  3.9,
+                  15
+                ],
+                "playerY": 1.590000033378601,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 2,
+      "bySeverity": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1,
+        "P3": 1
+      }
+    },
+    "escortEventCounts": {
+      "l7.follower-alarm": 19,
+      "civilian.grabbed": 73,
+      "infected.attack": 1
+    },
+    "followerAlarmKinds": {
+      "attack": 12,
+      "lost": 7
+    },
+    "followerAlarms": [
+      {
+        "type": "l7.follower-alarm",
+        "tick": 2037,
+        "id": 23,
+        "kind": "attack",
+        "position": {
+          "x": 8.577696547491266,
+          "z": -10.994311941407254
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 2097,
+        "id": 23,
+        "kind": "lost",
+        "position": {
+          "x": 8.577603715113284,
+          "z": -10.994349118679855
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 2413,
+        "id": 27,
+        "kind": "attack",
+        "position": {
+          "x": -1.9994398681935361,
+          "z": -8.498994747345984
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 2473,
+        "id": 27,
+        "kind": "lost",
+        "position": {
+          "x": -1.9993911938351077,
+          "z": -8.498907392856507
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 2777,
+        "id": 42,
+        "kind": "attack",
+        "position": {
+          "x": -2.5001506043846353,
+          "z": -3.498702110225931
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 2784,
+        "id": 32,
+        "kind": "lost",
+        "position": {
+          "x": -7.101090464815614,
+          "z": -5.9990806304105915
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 3271,
+        "id": 41,
+        "kind": "attack",
+        "position": {
+          "x": 16.749509870769856,
+          "z": 5.51817348785065
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 3331,
+        "id": 41,
+        "kind": "lost",
+        "position": {
+          "x": 16.749595142141754,
+          "z": 5.518225725702199
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 3638,
+        "id": 26,
+        "kind": "attack",
+        "position": {
+          "x": 4.988641800130937,
+          "z": 7.543020682017604
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 3655,
+        "id": 31,
+        "kind": "lost",
+        "position": {
+          "x": 4.389277129518921,
+          "z": 5.14357659869433
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 4799,
+        "id": 39,
+        "kind": "attack",
+        "position": {
+          "x": 40.662373230028535,
+          "z": 15.667009198062933
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 4859,
+        "id": 39,
+        "kind": "lost",
+        "position": {
+          "x": 40.662473229735,
+          "z": 15.667008955766853
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 6880,
+        "id": 24,
+        "kind": "attack",
+        "position": {
+          "x": 113.28436510606554,
+          "z": 16.26077413418089
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 6940,
+        "id": 24,
+        "kind": "lost",
+        "position": {
+          "x": 113.28436510606554,
+          "z": 16.26077413418089
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 7547,
+        "id": 16,
+        "kind": "attack",
+        "position": {
+          "x": 142.72508344538633,
+          "z": 14.205478838158076
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 8612,
+        "id": 16,
+        "kind": "attack",
+        "position": {
+          "x": 181.85713585833213,
+          "z": 14.30155448568273
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 8984,
+        "id": 16,
+        "kind": "attack",
+        "position": {
+          "x": 195.53016039395806,
+          "z": 14.284022567691398
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 10047,
+        "id": 16,
+        "kind": "attack",
+        "position": {
+          "x": 189.0713548448265,
+          "z": 14.430751750417443
+        }
+      },
+      {
+        "type": "l7.follower-alarm",
+        "tick": 10611,
+        "id": 16,
+        "kind": "attack",
+        "position": {
+          "x": 210.1584265561056,
+          "z": 14.429033953834649
+        }
+      }
+    ]
+  }
+}
