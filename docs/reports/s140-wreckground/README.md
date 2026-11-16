@@ -71,3 +71,7 @@ Hero slots can contain temporary lower LOD prototypes. Probe now reports `meshLo
 ## Complete L3 runtime gap sweep
 
 Third bounded attempt admitted and completed. Full registered L3 HIGH WebGL2 camera-only sweep measures all 23/23 resolved wreck identities, zero missing rows, all reported gaps 0 cm. Receipts retain matrix, origin, slot and actual mesh LOD per identity in qa.json. This is numerical grounding evidence for L3 only; requested close-up visual review and WebGPU comparison are still pending.
+
+## West-breach focused reproduction
+
+Native isolated reproduction now opens both actual west segments and places an Alpha at the captured position with the same inside goal. It moves 0 m over 600 ticks. Broadening wide-body recovery to scripted L4 goals still yields 0 m, so that attempted change was removed. This disproves simple fallback broadening as a sufficient fix; preserved source in qa.json. L5 browser sweep separately failed admission before execution after 60 s.

@@ -1792,5 +1792,23 @@
         }
       }
     ]
+  },
+  "westAlphaFocused": {
+    "bothWestSegmentsOpened": true,
+    "ticks": 600,
+    "beforeTravelM": 0,
+    "broadenedFallbackTravelM": 0,
+    "changeRetained": false,
+    "source": "import {loadL4} from './tools/sim-runner/l4Bots.ts';\nimport {l4Breaches} from './src/data/l4Perimeter.ts';\nconst {world:w,mission:m}=await loadL4(1,'high');try{m.loadCheckpoint('turn');for(const e of [...w.infected!.active])w.infected!.release(e);for(const e of w.entities.iterate())if(e.civilian)e.hidden=true;for(const i of l4Breaches.west.segments){const id=`l4-wall-${i}`,e=[...w.entities.iterate()].find(e=>e.barricade?.slot.id===id)!;e.barricade!.intact=false;e.kind='device';w.solids.setBarrier(id,null);}m.state.l4!.breaches={west:{announcedAt:w.tick,openAt:w.tick}};const id=w.infected!.spawn('infected.alpha',{x:-36.74867099529254,z:3.7673575875408876}),e=w.entities.get(id)!;e.infected!.scripted={x:-32.1,z:6.105882352941178};const start={...e.transform};for(let i=0;i<600;i++)w.update();console.log(JSON.stringify({id,start,end:e.transform,travel:Math.hypot(e.transform.x-start.x,e.transform.z-start.z),scripted:e.infected!.scripted}));}finally{w.dispose();}\n"
+  },
+  "l5SweepAdmission": {
+    "exit": 75,
+    "executed": false,
+    "timeoutSeconds": 60,
+    "load": [
+      2.9931640625,
+      3.63623046875,
+      3.712890625
+    ]
   }
 }
