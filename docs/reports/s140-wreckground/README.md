@@ -43,3 +43,7 @@ After d7b89cf8, seed-1 HIGH complete mission again reaches progression. The scan
 ## Regression sensitivity
 
 Restoring only the original war-only funnel condition makes the unchanged extended L4 contact test fail at the collapse crawler assertion: approach remains `outside`. Current source was restored automatically in a finally block. The earlier focused and prescribed remote passes therefore cover a regression that detects the actual lifecycle change. For the remaining Alphas, inspect wide-grid connectivity and body clearance at the flag: the existing wide-body recovery only activates for goals near the courier, whereas these jobs target scripted breach points. This is a hypothesis, not a validated fix.
+
+## Alpha grid evidence
+
+At the first stationary flag, #296 has radius 0.55 m and no cached path. Its selected wide grid (clearance 0.7 m) cannot reach the scripted inside-breach goal; admission grids at 0.5 and 0.35 m both find a 22-node route. Start and goal are individually clear at the actual radius. This confirms a conservative-grid connectivity mismatch for #296. #372 has routes on all three grids and direct visibility at the flag, so it requires separate temporal/controller diagnosis. Full scan completes; read-only path probes run only after a stationary window is already recorded. Exact rows are in `qa.json.alphaGridScan`.

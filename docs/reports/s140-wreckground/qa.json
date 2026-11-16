@@ -669,7 +669,176 @@
   },
   "alphaRoutingNextProbe": {
     "hypothesis": "Wide-body recovery applies only to goals near the courier, while stationary Alphas follow scripted breach goals.",
-    "status": "unproven",
+    "status": "Confirmed grid mismatch for #296 only: radius .55, selected clearance .7 route false; .5 and .35 route true (22 nodes). #372 has routes on all grids.",
     "needed": "At the stationary tick inspect wideNav versus admission connectivity, route expansion budget, pathIndex/goal, and full body clearance."
+  },
+  "alphaGridScan": {
+    "seed": 1,
+    "tier": "high",
+    "profile": "complete",
+    "outcome": "complete",
+    "ticks": 18584,
+    "phase": "progression",
+    "turnAt": 1969,
+    "eligibleTicks": 50986,
+    "nearTicks": 64926,
+    "maxConcurrentCandidates": 22,
+    "rollingWindows": 16827,
+    "stationaryThresholdM": 0.1,
+    "stopped": [
+      {
+        "id": 296,
+        "archetype": "infected.alpha",
+        "start": 3005,
+        "end": 3306,
+        "travel": 0,
+        "position": {
+          "x": -36.74867099529254,
+          "y": 0.7,
+          "z": 3.7673575875408876,
+          "yaw": -0.7873789806539067
+        },
+        "state": "attracted",
+        "scripted": {
+          "x": -32.1,
+          "z": 6.105882352941178
+        },
+        "targetId": 0,
+        "radius": 0.55,
+        "path": [],
+        "pathIndex": 0,
+        "goal": 48386,
+        "pathRetryAt": 0,
+        "gridProbes": [
+          {
+            "clearance": 0.5,
+            "from": 46676,
+            "to": 48385,
+            "route": true,
+            "nodes": 22,
+            "visible": false,
+            "startClear": true,
+            "goalClear": true
+          },
+          {
+            "clearance": 0.35,
+            "from": 46676,
+            "to": 48385,
+            "route": true,
+            "nodes": 22,
+            "visible": false,
+            "startClear": true,
+            "goalClear": true
+          },
+          {
+            "clearance": 0.7,
+            "from": 46676,
+            "to": 48386,
+            "route": false,
+            "nodes": 0,
+            "visible": false,
+            "startClear": true,
+            "goalClear": true
+          }
+        ],
+        "phase": "war",
+        "job": {
+          "alphaId": 296,
+          "job": "west",
+          "stage": "charge",
+          "startedAt": 2329,
+          "breach": "west"
+        },
+        "breaches": {
+          "west": {
+            "announcedAt": 2329,
+            "openAt": 3005,
+            "arrivals": 1
+          }
+        }
+      },
+      {
+        "id": 372,
+        "archetype": "infected.alpha",
+        "start": 7584,
+        "end": 7885,
+        "travel": 0.098670225439637,
+        "position": {
+          "x": -15.80683821698411,
+          "y": 0.75,
+          "z": 23.462330424348742,
+          "yaw": 2.395262681268739
+        },
+        "state": "chase",
+        "scripted": {
+          "x": -16.769230769230774,
+          "z": 29.5
+        },
+        "targetId": 0,
+        "radius": 0.55,
+        "path": [],
+        "pathIndex": 20,
+        "goal": -1,
+        "pathRetryAt": 0,
+        "gridProbes": [
+          {
+            "clearance": 0.5,
+            "from": 59978,
+            "to": 64396,
+            "route": true,
+            "nodes": 15,
+            "visible": true,
+            "startClear": true,
+            "goalClear": true
+          },
+          {
+            "clearance": 0.35,
+            "from": 59978,
+            "to": 64396,
+            "route": true,
+            "nodes": 15,
+            "visible": true,
+            "startClear": true,
+            "goalClear": true
+          },
+          {
+            "clearance": 0.7,
+            "from": 60318,
+            "to": 64396,
+            "route": true,
+            "nodes": 14,
+            "visible": true,
+            "startClear": true,
+            "goalClear": true
+          }
+        ],
+        "phase": "war",
+        "job": {
+          "alphaId": 372,
+          "job": "south",
+          "stage": "walk",
+          "startedAt": 7009,
+          "breach": "south"
+        },
+        "breaches": {
+          "west": {
+            "announcedAt": 2329,
+            "openAt": 3005,
+            "arrivals": 1
+          },
+          "north": {
+            "announcedAt": 3889,
+            "openAt": 5600,
+            "arrivals": 0
+          },
+          "south": {
+            "announcedAt": 7129,
+            "openAt": 7877,
+            "arrivals": 0
+          }
+        }
+      }
+    ],
+    "qualifyingCount": 33
   }
 }
