@@ -11,7 +11,7 @@ These findings do not identify which mechanism produced historical target #134's
 ## Reproduction and evidence
 
 - [evidence.json](evidence.json), below 200 KB, contains the native eight-second per-attack traces, weapon/facing, query selections, active-frame positions/heights, hit IDs, damage events, campaign scan, detector reproduction and both browser receipts.
-- [b113-l10-capture.jpg](b113-l10-capture.jpg) is the reviewed archived frame showing the close target, melee cone and farm roof edge. It cannot expose the strike's committed aim or preceding eight seconds.
+- [contact-sheet.jpg](contact-sheet.jpg) is the reviewed comparison sheet containing the archived B113 frame and fresh HIGH/LOW post-hit captures. The constructed shed contact differs visibly from the historical exterior warning and objective state. It cannot expose the historical committed aim or preceding eight seconds.
 - [s146-l10-farm-melee-contact.json.gz](../../../tests/fixtures/saves/qa/s146-l10-farm-melee-contact.json.gz) is a constructed native farm contact at tick 13892, courier x=1168.9/z=-26 and real runner x=1170/z=-26, initially 60 HP. This is not the recovered B113 #134 save. It uses `campaign-save` and `campaign.cureResume`; generic L10 `opts.resume` is deliberately ignored by `Game.loadLevel`.
 
 The native held axe probe logs 16 swings over eight seconds. The runner is selected at the first active frame and takes a 60-point courier melee hit. Later swings do not hit because it is dead. Controlled native probes apply a nine-second zero-damage stun after fixture capture to retain contact through windup; browser checks apply no stun, respawn or health modification. No infected stats or corpse lifecycle changed.
