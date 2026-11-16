@@ -60,7 +60,7 @@
     },
     {
       "check": "L6 HIGH zoom 1 short sweep",
-      "status": "NOT RUN"
+      "status": "240 SECOND SWEEP COLLECTED; T13543 REVIEWED"
     },
     {
       "check": "L9 HIGH zoom 1 short sweep",
@@ -72,7 +72,7 @@
     }
   ],
   "findings": [],
-  "contactSheet": null,
+  "contactSheet": "contact-sheet.jpg",
   "validation": {
     "qaBuild": {
       "command": "MI_BUILD_CACHE=off npm run build:qa",
@@ -221,6 +221,110 @@
       "skips": [],
       "continuation": "Restarted at quartermaster; interrupted repeat",
       "visualReview": "PENDING"
+    },
+    {
+      "path": "test-results/playtest/b113-l6-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L6"
+        ],
+        "runs": [
+          {
+            "level": "L6",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 240,
+            "simSeconds": 238,
+            "maxNoProgressSeconds": 32.45,
+            "deaths": 4,
+            "assists": 1,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "shelter",
+                "text": "Look around the shelter \u00b7 rest while you can",
+                "tick": 11,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "stop",
+                "text": "Stop the infected \u00b7 Retreat in 0:36",
+                "tick": 1994,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "retreat",
+                "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+                "tick": 3254,
+                "marker": {
+                  "anchor": "l6-next",
+                  "ring": {
+                    "x": 242,
+                    "y": 0.6,
+                    "z": 15
+                  },
+                  "drawn": [
+                    242,
+                    0.6,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "review": {
+        "tick": 13543,
+        "capture": "test-results/playtest/b113-l6-high/captures/campaign-L6-t13543.jpg",
+        "observation": "Dark readable courier/shield against tunnel; Survivor lost warning and separated group make escort babysitting conspicuous. No obvious geometry glitch in this frame. Intentional sample cap is not a product P0."
+      }
     }
   ]
 }

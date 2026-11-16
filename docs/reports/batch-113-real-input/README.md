@@ -31,3 +31,9 @@ The full ordinary-combat HIGH WebGPU run completed in 414 seconds with no skips,
 Collected 480 seconds of ordinary HIGH WebGPU combat at zoom 1.5 without skips. The courier reached the cellar escape objective but did not finish. Three stationary warnings (#214/#328/#208, ticks 11864/11908/11941) await visual attribution; the opening empty-HUD warning is a known driver gap. On normal save continuation, the second segment restarted at the quartermaster rather than the cellar checkpoint; this repeat was interrupted. No full L4 completion is claimed. Raw evidence: `test-results/playtest/b113-l4-high/`.
 
 Opened HIGH L3 bridge capture `test-results/playtest/b113-l3-high/captures/campaign-L3-t21652.jpg`: visible infected are on the deck, and one has reduced health. No obvious bridge sinking/floating in this frame. Universal point-blank hitability is not established.
+
+## L6 HIGH sweep and reviewed sheet
+
+Collected 240 seconds HIGH WebGPU at zoom 1, no skips (`test-results/playtest/b113-l6-high`). Opened tick 13543: the courier and shield read clearly against a dark tunnel; Survivor lost and group separation make escort babysitting conspicuous. Combat pressure is visible, though the courier remains at full health in this frame. No obvious geometry glitch is visible. This single frame does not establish every transient. The opening shelter wait warning and automatic four-minute cannot-finish label are driver gaps, not confirmed product defects.
+
+Created and opened [contact-sheet.jpg](contact-sheet.jpg), showing the reviewed L3 tick 21652 and L4 tick 11864. Raw captures remain ignored. L4 stationary warnings remain provisional because truck/crowd occlusion prevents actor attribution.
