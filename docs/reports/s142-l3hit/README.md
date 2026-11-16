@@ -20,6 +20,6 @@ The original shot-by-shot log is unavailable; the native reproduction establishe
 - Regression merged into the existing gun test to keep collection at 150/150 cases. Full remote suite passed: 27 files, 105 passed and 1 skipped, 174.5 s within the 240 s budget.
 - TypeScript and lint passed after the final all-level probe and trace edits.
 - QA build passed.
-- HIGH browser launched successfully after sandbox restrictions were lifted; its one-minute real-input run capped before reaching the bridge. Direct bridge HIGH then LOW confirmation remains open.
+- Direct headless WebGL2 bridge confirmation passed HIGH then LOW: real runner spawned at Y=6.4 and took three 20-point handgun hits (60→0 HP), with no browser errors. The closer fixture dummy intercepted the first three shots; the runner then took damage. See `browserConfirmation` in evidence.json.
 - Remote suite completed successfully on runner 46.225.66.90.
 - The archived B112 attack-level ray trace is missing; the real-spawn native regression proves the product height defect and its correction.

@@ -70,13 +70,12 @@
     "typecheck": "passed after final cross-level probe and trace edits",
     "lint": "passed after final cross-level probe and trace edits",
     "qaBuild": "passed",
-    "browserHigh": "short real-input run launched successfully but capped before bridge; bridge confirmation pending",
-    "browserLow": "not run",
+    "browserHigh": "PASS: real bridge runner 60\u21920 HP, three 20-point hits, no page errors",
+    "browserLow": "PASS: after HIGH, same result",
     "remoteUnitSuite": "PASS: 27 files, 105 passed / 1 skipped; 174.5 s within 240 s; collection 150/150 cases"
   },
   "open": [
-    "Recover or recreate the exact B112 runtime state and persist its original attack-by-attack ray/target/hit trace to prove which body intercepted shots at #793.",
-    "Run HIGH then LOW headless browser confirmation when local server binding is available."
+    "Recover or recreate the exact B112 runtime state and persist its original attack-by-attack ray/target/hit trace to prove which body intercepted shots at #793."
   ],
   "invariants": [
     "no infected stat changes",
@@ -88,5 +87,305 @@
     "courierY": 6.42,
     "afterInfectedY": 6.4,
     "regression": "real infected.runner spawn, no manual height adjustment; 8-second handgun test passes"
-  }
+  },
+  "browserConfirmation": [
+    {
+      "tier": "high",
+      "setup": {
+        "id": 106,
+        "hp": 60,
+        "player": {
+          "x": 169.54800415039062,
+          "y": 6.420000076293945,
+          "z": -0.9419999718666077,
+          "yaw": 0.3205919885488634
+        },
+        "target": {
+          "x": 170.34800415039064,
+          "y": 6.4,
+          "z": -0.9419999718666077,
+          "yaw": 0
+        }
+      },
+      "hp": 0,
+      "hits": [
+        {
+          "tick": 67,
+          "attackId": 1,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 105,
+          "position": {
+            "x": 169.648,
+            "z": -0.942,
+            "y": 6.4,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999605,
+            "z": -2.8134559976609655e-07
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 87,
+          "attackId": 2,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 105,
+          "position": {
+            "x": 169.648,
+            "z": -0.942,
+            "y": 6.4,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999878,
+            "z": -1.5673710676298179e-07
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 107,
+          "attackId": 3,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 105,
+          "position": {
+            "x": 169.648,
+            "z": -0.942,
+            "y": 6.4,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999916,
+            "z": -1.3003084466513315e-07
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 127,
+          "attackId": 4,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 106,
+          "position": {
+            "x": 170.13163552343727,
+            "y": 6.4,
+            "z": -0.9419999718666077,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 147,
+          "attackId": 5,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 106,
+          "position": {
+            "x": 170.13163552343727,
+            "y": 6.4,
+            "z": -0.9419999718666077,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 167,
+          "attackId": 6,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 106,
+          "position": {
+            "x": 170.13163552343727,
+            "y": 6.4,
+            "z": -0.9419999718666077,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "tier": "low",
+      "setup": {
+        "id": 106,
+        "hp": 60,
+        "player": {
+          "x": 169.54800415039062,
+          "y": 6.420000076293945,
+          "z": -0.9419999718666077,
+          "yaw": 0.3205919885488634
+        },
+        "target": {
+          "x": 170.34800415039064,
+          "y": 6.4,
+          "z": -0.9419999718666077,
+          "yaw": 0
+        }
+      },
+      "hp": 0,
+      "hits": [
+        {
+          "tick": 67,
+          "attackId": 1,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 105,
+          "position": {
+            "x": 169.648,
+            "z": -0.942,
+            "y": 6.4,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999605,
+            "z": -2.8134559976609655e-07
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 87,
+          "attackId": 2,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 105,
+          "position": {
+            "x": 169.648,
+            "z": -0.942,
+            "y": 6.4,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999878,
+            "z": -1.5673710676298179e-07
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 107,
+          "attackId": 3,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 105,
+          "position": {
+            "x": 169.648,
+            "z": -0.942,
+            "y": 6.4,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 0.9999999999999916,
+            "z": -1.3003084466513315e-07
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 127,
+          "attackId": 4,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 106,
+          "position": {
+            "x": 170.13163552343727,
+            "y": 6.4,
+            "z": -0.9419999718666077,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 147,
+          "attackId": 5,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 106,
+          "position": {
+            "x": 170.13163552343727,
+            "y": 6.4,
+            "z": -0.9419999718666077,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "tick": 167,
+          "attackId": 6,
+          "actionId": "weapon.handgun",
+          "sourceId": 1,
+          "targetId": 106,
+          "position": {
+            "x": 170.13163552343727,
+            "y": 6.4,
+            "z": -0.9419999718666077,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 20,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        }
+      ],
+      "errors": []
+    }
+  ]
 }
