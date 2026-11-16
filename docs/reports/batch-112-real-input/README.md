@@ -51,3 +51,7 @@ Collected 240 seconds of ordinary real-input combat with no objective skips (`te
 ### L1 HIGH zoom 1
 
 Completed the level in 143 seconds with no skips or driver issues (`test-results/playtest/b112-l1-high`). Reviewed sheet `test-results/b112-review/l1.jpg`, ticks 947–8092: bright readable streets and clear silhouettes; quiet package delivery escalates to pursuit and melee on returning to the clinic. Pleasant and legible rather than spectacular in the quiet opening, then purposeful pressure. No obvious geometry glitch in inspected frames. This covers the complete level but is shorter than the requested approximate four-minute sample because the mission finished.
+
+### L2 HIGH zoom 1
+
+Collected 241 seconds without skips, ending at the bridge-route sample cap. Reviewed `test-results/b112-review/l2.jpg` ticks 1558–13498: strong fire-engine staging and readable bright streets, then crowd pressure and repeated retreat/return around the market. The repetition feels less engaging than the staging, but driver navigation/deaths confound a product pacing judgment. No obvious geometry glitch in these frames. Driver warnings at ticks 1244/2713/2921 concern axe pickup and empty-HUD navigation; automatic tick-14287 cannot-finish is the four-minute cap, not a verified product P0. Exact issue captures and ticks are retained in qa.json.
