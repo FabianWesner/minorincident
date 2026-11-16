@@ -744,6 +744,7 @@ export class Vehicles {
       if (p.phase === 'seated') {
         Object.assign(actor.transform, seated); actor.hidden = true; this.world.spatial.delete(actor.id); continue;
       }
+      const reached = { ...actor.transform };
       const entering = p.phase === 'enter';
       const entry = car.physics.def.transport?.entry;
       if (entry) this.localPoint(car, entry.x, entry.z);
@@ -766,7 +767,16 @@ export class Vehicles {
         p.phase = 'seated'; actor.hidden = true;
         this.world.events.emit({ type: 'vehicle.entered', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });
       } else {
-        if (!this.world.solids.clear(p.to!, actor.combat?.radius ?? survivor.radius, actor.id)) { p.phase = 'seated'; actor.hidden = true; continue; }
+        if (!this.world.solids.clear(p.to!, actor.combat?.radius ?? survivor.radius, actor.id)) {
+          // Separation can move an exiting evacuee away from a newly occupied
+          // door spot. Finish at that clear, already reached position instead
+          // of pulling them back into the APC and replaying the exit forever.
+          const evac = this.world.missions?.l9?.driving.state;
+          if (evac?.roster.includes(actor.id) && evac.evacuationAt !== null && !actor.hidden &&
+              Math.hypot(reached.x - p.to!.x, reached.z - p.to!.z) <= 1.2 &&
+              this.world.solids.clear(reached, actor.combat?.radius ?? survivor.radius, actor.id)) p.to = reached;
+          else { p.phase = 'seated'; actor.hidden = true; continue; }
+        }
         Object.assign(actor.transform, p.to); actor.hidden = false; delete actor.passengerOf; if (c) { c.pauseUntil = p.pauseUntil; c.floorY = p.floorY; c.story = p.story ?? null; }
         passengers.splice(i, 1);
         this.world.events.emit({ type: 'vehicle.exited', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });

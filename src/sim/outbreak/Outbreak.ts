@@ -4,6 +4,7 @@ import { leastCrowdedModel, crowdAppearance, shirtTones, regularInfectedModels }
 import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
+import { l9Course } from '../../data/l9';
 import { l1v2 } from '../../data/l1v2';
 import { civilianRoles, l1Pedestrians } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
@@ -210,6 +211,9 @@ export class Outbreak {
       // ambient schedule here can finish an activity and clear `hidden`,
       // leaving the passenger visible at the vehicle's last world position.
       // Other hidden civilians keep their routine clock running inside shops/houses.
+      // Vehicle exit animation may temporarily hide a grabbed passenger;
+      // its evacuation struggle clock must keep running during that handoff.
+      if (e.hidden && c.state === 'grabbed' && world.missions?.l9?.driving.state.roster.includes(e.id)) { this.held(e); continue; }
       if (e.hidden) { if (e.passengerOf === undefined && c.state === 'calm' && !e.infection) this.routine(e); continue; }
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
@@ -548,6 +552,15 @@ export class Outbreak {
     // Otherwise a point-blank self-shot resets every native hold indefinitely.
     const needsRescue = c.ally?.role === 'officer' && this.world.missions?.def.l3 || c.ally?.role === 'soldier' && this.world.missions?.state.l4?.phase === 'collapse';
     if (c.ally && (c.ally.gun || c.ally.role === 'officer' || c.ally.role === 'soldier') && !needsRescue && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
+    const evacuation = this.world.missions?.l9?.driving.state;
+    // At the trucks, a survivor struggles free after three seconds of holding.
+    // Ordinary rescue releases the hold and keeps both actors vulnerable.
+    if (evacuation && evacuation.evacuationAt !== null && evacuation.roster.includes(e.id) && !evacuation.evacuated.includes(e.id) &&
+        tick >= evacuation.evacuationAt + l9Course.evacuation.defendTicks && tick - c.entered >= 180) {
+      // A shove interrupts the infected's native hold as well as the civilian pose.
+      if (attacker?.infected) attacker.infected.grabHits++;
+      this.rescued(e); return;
+    }
     if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
       // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
       if (this.world.infected!.holding(e.id) === 0) this.rescued(e);

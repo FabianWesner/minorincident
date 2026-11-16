@@ -1497,6 +1497,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (e.level === 'L9' && process.env.PLAYTEST_L9_EVAC_AUDIT === '1') log({ l9EvacuationObserver: await page.evaluate(defendTicks => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, l9 = w.missions?.l9, s = l9?.driving.state;
         if (!l9 || !s) return null;
+        const auditWindow = window as unknown as { __l9GrabAudit?: { world: unknown; samples: { tick: number; id: number; entered: number; attacker: number }[]; maxAgeTicks: number } };
+        if (auditWindow.__l9GrabAudit?.world !== w) {
+          const audit = auditWindow.__l9GrabAudit = { world: w, samples: [] as { tick: number; id: number; entered: number; attacker: number }[], maxAgeTicks: 0 };
+          w.events.on('sim.tick', () => {
+            if (s.evacuationAt === null || w.tick < s.evacuationAt + defendTicks || s.evacuationDone) return;
+            for (const id of s.roster) {
+              const c = w.entities.get(id)?.civilian;
+              if (id === s.samId || c?.state !== 'grabbed') continue;
+              audit.maxAgeTicks = Math.max(audit.maxAgeTicks, w.tick - c.entered);
+              if (audit.samples.length < 12000) audit.samples.push({ tick: w.tick, id, entered: c.entered, attacker: c.attacker });
+            }
+          });
+        }
         const defenseCompleteAt = s.evacuationAt === null ? null : s.evacuationAt + defendTicks;
         const defenseComplete = defenseCompleteAt !== null && w.tick >= defenseCompleteAt;
         const census = s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id); return {
@@ -1505,11 +1518,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           aboard: !!a?.passengerOf || s.trucks.some(truckId => w.entities.get(truckId)?.vehicle?.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated')),
           state: a?.civilian?.state ?? null,
         }; });
-        return { tick: w.tick, phase: l9.state.phase, evacuationAt: s.evacuationAt, defenseCompleteAt, defenseComplete, evacuationDone: s.evacuationDone,
+        return { grabAudit: { maxAgeTicks: auditWindow.__l9GrabAudit!.maxAgeTicks, samples: auditWindow.__l9GrabAudit!.samples }, tick: w.tick, phase: l9.state.phase, evacuationAt: s.evacuationAt, defenseCompleteAt, defenseComplete, evacuationDone: s.evacuationDone,
           evacuated: [...s.evacuated], evacuating: [...s.evacuating], truckEntering: { ...s.truckEntering },
           census, survivors: s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return {
             id, key: a.civilian?.survivor?.key, hp: a.health.current, infected: !!a.infected || !!a.infection, hidden: a.hidden,
             at: { x: a.transform.x, z: a.transform.z }, passengerOf: a.passengerOf, state: a.civilian?.state,
+            stateEnteredAt: a.civilian?.entered, grabAgeTicks: a.civilian?.state === 'grabbed' ? w.tick - a.civilian.entered : null,
             attacker: a.civilian?.attacker, knockedUntil: a.civilian?.knockedUntil, routeGoal: a.civilian?.goal,
             routeIndex: a.civilian?.pathIndex, routeLength: a.civilian?.path.length,
             nearestTruck: s.trucks.map(truck => { const t = w.entities.get(truck)!; return { id: truck, d: Math.hypot(t.transform.x - a.transform.x, t.transform.z - a.transform.z) }; }).sort((x, y) => x.d - y.d)[0],
