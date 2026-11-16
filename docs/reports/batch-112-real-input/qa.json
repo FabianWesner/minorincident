@@ -611,6 +611,120 @@
       ],
       "reviewed": "test-results/b112-review/l2.jpg",
       "assessment": "Clear bright streets and fire-engine staging; repeated return/retreat and crowd pressure. No obvious geometry glitch in inspected frames; navigation warnings need attribution; cap is not product P0."
+    },
+    {
+      "name": "b112-l3-high",
+      "raw": "test-results/playtest/b112-l3-high",
+      "run": [
+        {
+          "level": "L3",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 240,
+          "simSeconds": 238,
+          "maxNoProgressSeconds": 4.65,
+          "deaths": 4,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "armory",
+              "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+              "tick": 11,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": {
+                  "x": -139.2,
+                  "y": 0,
+                  "z": -8.4
+                },
+                "drawn": [
+                  -139.2,
+                  0.05,
+                  -8.4
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "defend",
+              "text": "Help defend the station \u00b7 10\u00a0m",
+              "tick": 968,
+              "marker": {
+                "anchor": "l3-armory",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "checkpoint",
+              "text": "Get inside the army checkpoint \u00b7 365\u00a0m",
+              "tick": 1522,
+              "marker": {
+                "anchor": "l3-zone",
+                "ring": {
+                  "x": 225,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  225,
+                  0.05,
+                  0
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "driverIssues": [
+        {
+          "level": "L3",
+          "tick": 10983,
+          "x": 169.5,
+          "z": -0.9,
+          "severity": "P2",
+          "kind": "enemy-unhittable",
+          "text": "Infected #793 (chase) 0.1 m away took no damage from 8 s of attacks (hp 60/60)",
+          "captures": [
+            "captures/campaign-L3-10983-enemy-unhittable.jpg"
+          ],
+          "step": "checkpoint",
+          "objective": "Get inside the army checkpoint \u00b7 55\u00a0m"
+        },
+        {
+          "level": "L3",
+          "tick": 14270,
+          "x": 129.1,
+          "z": -8.9,
+          "severity": "P0",
+          "kind": "cannot-finish",
+          "text": "Driver could not finish step checkpoint (\"Get inside the army checkpoint \u00b7 96\u00a0m\") after 0 s on it (4 min level cap: true); stopping without advancing the objective",
+          "captures": [
+            "captures/campaign-L3-14270-cannot-finish.jpg"
+          ],
+          "step": "checkpoint",
+          "objective": "Get inside the army checkpoint \u00b7 96\u00a0m"
+        }
+      ]
     }
   ],
   "validation": {
@@ -688,7 +802,16 @@
       "status": "pending-no-gameplay-captures"
     }
   },
-  "findings": [],
+  "findings": [
+    {
+      "severity": "P2",
+      "status": "provisional-driver-targeting-or-product",
+      "level": "L3",
+      "tick": 10983,
+      "capture": "test-results/playtest/b112-l3-high/captures/campaign-L3-10983-enemy-unhittable.jpg",
+      "text": "Driver reports #793 at 0.1m took no damage during 8 seconds of attacks. Reviewed capture shows courier tightly surrounded on narrow bridge with overlapping warning rings; exact target visibility/aim obstruction unproven."
+    }
+  ],
   "driverGaps": [
     "Sandbox denies binding the required local preview server on 127.0.0.1:5019; shared browser pool status is unavailable. No game frame, capture, or gameplay tick was produced."
   ],

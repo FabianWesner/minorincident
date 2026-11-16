@@ -55,3 +55,7 @@ Completed the level in 143 seconds with no skips or driver issues (`test-results
 ### L2 HIGH zoom 1
 
 Collected 241 seconds without skips, ending at the bridge-route sample cap. Reviewed `test-results/b112-review/l2.jpg` ticks 1558–13498: strong fire-engine staging and readable bright streets, then crowd pressure and repeated retreat/return around the market. The repetition feels less engaging than the staging, but driver navigation/deaths confound a product pacing judgment. No obvious geometry glitch in these frames. Driver warnings at ticks 1244/2713/2921 concern axe pickup and empty-HUD navigation; automatic tick-14287 cannot-finish is the four-minute cap, not a verified product P0. Exact issue captures and ticks are retained in qa.json.
+
+### L3 HIGH zoom 1
+
+Collected 240 seconds, no skips. **P2 provisional — close infected takes no damage during driver fire:** tick 10983, `test-results/playtest/b112-l3-high/captures/campaign-L3-10983-enemy-unhittable.jpg` (opened and reviewed). Driver reports #793 at 0.1 m, 60/60 HP after eight seconds of attacks. Capture shows the courier tightly surrounded on a narrow bridge and overlapping red telegraphs. Target selection, muzzle occlusion and product hit logic remain unseparated; this is not proven invulnerability. Bridge crowd pressure reads dangerous and visually dramatic, with clear courier outline, rather than harmless. Repeated confinement is frustrating in this driver sample. Four-minute stop at tick 14270 is a driver cap, not product P0. Broader frame review remains pending.
