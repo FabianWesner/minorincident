@@ -189,3 +189,7 @@ Scene Lab placement metrics now include resolved wreck contacts. Existing evalua
 ## Fifteen paired backend captures reviewed
 
 Captured ten worst baseline measured wrecks plus five seeded random OK wrecks (seed 140), full registered levels, camera-only positioning, zoom setting 1.5. All 30 receipts explicitly identify selected backend (webgl/webgpu), resolved placement ID and matrix; every numerical gap is within thresholds. Reviewed all 30 captures in three paired review sheets. Thirteen pairs show the target and contacts sufficiently to compare backend placement; L6 l6-35 is too dark and L3 roadblock-1-2 is foreground-obstructed, so those two require recapture. Raw closeups are under test-results/s140-wreckground/closeups-{webgl2,webgpu}; compact paired receipts are in qa.json.campaignCloseupPairs. This supersedes earlier requested-backend-only identity caveat for these 15 pairs.
+
+## LOW recovery trace
+
+Both original LOW flags have no static overlap at observation. West #228 has empty path and recovery mark distance 14.84 m despite the outer scripted goal being nearby; north #263 has empty path and 0.885 m mark. Tried removing the distant-goal reset for scripted Alphas: mission still completes but west stall persists, so reverted the experiment. An attack-state north flag also appears in that run. Need exact per-tick steering/ownership attribution before another production change. Focused checks completed; no source change retained from this experiment.
