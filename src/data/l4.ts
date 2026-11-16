@@ -179,7 +179,8 @@ export const l4 = {
        * cellar door. From "Fall back!" (and after a respawn in the collapse) for `gapS` the horde leaves a gap on it: infected farther than
        * `nearM` from the courier within `gapM` of the route run off toward the army, and nothing emerges on it. Pursuers still chase.
        */
-      route: [[-12, 16], [-4, 16], [-4, 28], [-4, 43], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 75,
+      route: [[-12, 16], [-4, 16], [-4, 28], [-4, 43], [8, 43], [48.5, 43], [48.5, 20], [48.5, -15], [48.5, -37.4],
+        [20, -37.4], [-12, -37.4], [-44, -37.4], [-64, -39.5], [-79, -40], [-79.3, -45.2801]] as readonly P[], gapM: 7, gapS: 75,
     },
     /** Camp checkpoints behind each remaining line; choose the nearest safe navigable post when the line falls. */
     checkpoints: [
