@@ -41,7 +41,24 @@
     "L9_HIGH_road_node_loader": "blocked before browser launch: preview server listen on port 5027 returned EPERM",
     "L9_LOW_road": "not run",
     "L9_HIGH_shortcut": "not run",
-    "L10_HIGH_mortal_full_x2": "not run"
+    "L10_HIGH_mortal_full_x2": "not run",
+    "L9_HIGH_road_2": {
+      "status": "pass for navigation acceptance",
+      "run": "test-results/s145-driver/l9-road-high-2-live",
+      "wallSeconds": 303,
+      "skips": 0,
+      "stuckNavigating": 0,
+      "otherIssues": [
+        {
+          "kind": "enemy-frozen",
+          "tick": 4359
+        },
+        {
+          "kind": "enemy-frozen",
+          "tick": 14385
+        }
+      ]
+    }
   },
   "archived_baseline_only": {
     "source_report": "docs/reports/batch-112-real-input/README.md",
