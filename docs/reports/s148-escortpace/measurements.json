@@ -5223,6 +5223,256 @@
             "lost": 0
           }
         }
+      },
+      "compactRoute": {
+        "run": {
+          "level": "L8",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 414.48333333333335,
+          "deaths": 0,
+          "kills": 39,
+          "damageTaken": 10,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "sanctuary",
+              "t": 149.96666666666667
+            },
+            {
+              "id": "escape",
+              "t": 406.48333333333335
+            },
+            {
+              "id": "depart",
+              "t": 414.48333333333335
+            }
+          ],
+          "furthestObjective": "depart",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 250,
+            "deferred": 17,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "followerWait": {
+          "windows": [
+            {
+              "key": "escort",
+              "escortTicks": 11989,
+              "stationaryFarTicks": 17,
+              "first": {
+                "tick": 11294,
+                "playerX": 1.411267876625061,
+                "playerZ": -27.307327270507812,
+                "followerId": 364,
+                "followerX": -6.457826208108384,
+                "followerZ": -20.697196164914764
+              }
+            },
+            {
+              "key": "protect",
+              "escortTicks": 1800,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "boarding",
+              "escortTicks": 1523,
+              "stationaryFarTicks": 86,
+              "first": {
+                "tick": 22922,
+                "playerX": 91.97171783447266,
+                "playerZ": 72.32926940917969,
+                "followerId": 366,
+                "followerX": 94.98399280221524,
+                "followerZ": 57.34203084144149
+              }
+            },
+            {
+              "key": "aboard",
+              "escortTicks": 0,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "escortTicks": 15312,
+          "stationaryFarTicks": 103,
+          "upperBoundPercent": 0.672675026123302,
+          "followers": [
+            {
+              "id": 354,
+              "escortTicks": 13903,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 355,
+              "escortTicks": 14016,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 356,
+              "escortTicks": 14123,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 357,
+              "escortTicks": 14230,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 358,
+              "escortTicks": 14334,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 359,
+              "escortTicks": 14437,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 360,
+              "escortTicks": 14542,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 361,
+              "escortTicks": 14654,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 362,
+              "escortTicks": 14765,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 363,
+              "escortTicks": 14876,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 364,
+              "escortTicks": 14988,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 365,
+              "escortTicks": 15092,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 366,
+              "escortTicks": 15200,
+              "stationaryFarTicks": 96
+            },
+            {
+              "id": 423,
+              "escortTicks": 15312,
+              "stationaryFarTicks": 89
+            }
+          ],
+          "paceWindows": [
+            {
+              "key": "escort",
+              "samples": 5600,
+              "p50GapM": 5.716484330540822,
+              "p90GapM": 8.403893483229004,
+              "maxGapM": 13.338235773432658,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 357,
+                  "maxSeconds": 0.016666666666666666
+                }
+              ]
+            },
+            {
+              "key": "protect",
+              "samples": 840,
+              "p50GapM": 2.110114957067586,
+              "p90GapM": 3.866645774049326,
+              "maxGapM": 4.859304005109306,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "boarding",
+              "samples": 383,
+              "p50GapM": 5.608715315827823,
+              "p90GapM": 7.466066630399667,
+              "maxGapM": 16.241028528071432,
+              "waitingTicks": 86,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "aboard",
+              "samples": 0,
+              "p50GapM": null,
+              "p90GapM": null,
+              "maxGapM": null,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            }
+          ],
+          "prompts": {
+            "wait": 0,
+            "attack": 0,
+            "lost": 0
+          }
+        },
+        "threat": [
+          {
+            "key": "step/sanctuary",
+            "seconds": 149.96666666666667,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          },
+          {
+            "key": "phase/sanctuary",
+            "seconds": 149.96666666666667,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          },
+          {
+            "key": "step/escape",
+            "seconds": 256.51666666666665,
+            "attacks": 37,
+            "groupAttacks": 2,
+            "groupAttacksPerMinute": 0.46780586056786433
+          },
+          {
+            "key": "phase/breached",
+            "seconds": 256.51666666666665,
+            "attacks": 37,
+            "groupAttacks": 2,
+            "groupAttacksPerMinute": 0.46780586056786433
+          },
+          {
+            "key": "step/depart",
+            "seconds": 8,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          },
+          {
+            "key": "phase/boarding",
+            "seconds": 8,
+            "attacks": 0,
+            "groupAttacks": 0,
+            "groupAttacksPerMinute": 0
+          }
+        ]
       }
     }
   }

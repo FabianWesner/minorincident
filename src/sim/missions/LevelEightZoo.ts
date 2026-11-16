@@ -712,7 +712,13 @@ export class LevelEightZoo {
     // Catch-up and the tightly spaced APC queue need the shared follower
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
-    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
+    const routeHeading = leaderHeading(p.transform.yaw, velocity);
+    const goal = formationSlot(p.transform, routeHeading, slot, !this.breached);
+    if (this.breached) {
+      // Close ranks on the public route; arena holding positions remain authored below.
+      const forward = .9 + Math.floor(slot / 3) * .4;
+      goal.x += routeHeading.x * forward; goal.z += routeHeading.z * forward;
+    }
     const plaza = this.mission.def.anchors['central-plaza'];
     // r31-nadia: once Nadia has led the courier to the plaza the group settles inside the ring around its centre.
     if (!this.breached && s.guideDone === 2 && distance(p.transform, plaza) <= (plaza.radius ?? 6) + 4) {
