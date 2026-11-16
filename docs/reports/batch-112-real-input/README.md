@@ -83,3 +83,7 @@ Opened LOW tick-15571 warning capture. Read actual driving telemetry at 15018/15
 ### Ordinary off-screen scream arrow found in continuous frames
 
 The earlier callback-window limitation is superseded by continuous captures. Opened `test-results/b112-review/scream-after.jpg` (ticks 8452–8662) and full-size `test-results/playtest/b112-l9-low-road/captures/campaign-L9-t8478.jpg`. Following ordinary scream telegraph 8411, a conspicuous violet upper-edge bearing is visible at 8478 and 8504 and gone by 8529. It gives a useful off-screen direction, is distinct from the yellow objective arrow, and adds little clutter in this encounter. Courier is seated at the hatch, so moving-courier camera tracking is outside this batch observation. This is ordinary scream evidence, not an Alpha roar substitute.
+
+### Second L4 real-input sample
+
+Collected another 240 seconds HIGH zoom 1.5, no skips (`test-results/playtest/b112-l4-high-repeat`). Reviewed `test-results/b112-review/l4-repeat.jpg`, ticks 7206–9398. Multiple large Alphas and attack warnings remain visible but overlapping bodies obscure soles. This repeat does not close strike/roar/slam planted-foot qualification. Opening empty-HUD warning tick 1257 and cap tick 14225 remain driver gaps. No new confirmed product defect is established.
