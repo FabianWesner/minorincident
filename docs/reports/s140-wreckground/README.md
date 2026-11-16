@@ -91,3 +91,5 @@ Sequential HIGH WebGL2 batch completed within one reservation. L5: 25/25 measure
 ## Baked marker identity
 
 Baked-layout marker references lacked placementId, unlike runtime placements. They now retain district/marker identity for contact audits. Typecheck and lint pass; runtime matching remains to be verified. L9/L10 batch failed admission before execution after 60 s; the quiet guard included this lane’s overlapping typecheck. Future browser admission must run without overlapping CPU checks. No late-level measurements were produced.
+
+L9/L10 retry with no overlapping lane CPU check also exited 75 before browser execution: quiet=false, load 3.99/3.99/3.82, busy=[] after 60 s. No new gap coverage. Native Alpha work remains available, so browser admission alone does not block the entire goal.

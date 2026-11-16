@@ -3839,5 +3839,17 @@
       3.80419921875
     ],
     "busy": "Own typecheck appeared in quiet guard; future browser admission must not overlap CPU checks."
+  },
+  "lateSweepAdmissionWithoutCpuChecks": {
+    "exit": 75,
+    "executed": false,
+    "timeoutSeconds": 60,
+    "quiet": false,
+    "load": [
+      3.98974609375,
+      3.98828125,
+      3.8193359375
+    ],
+    "busy": []
   }
 }
