@@ -148,3 +148,7 @@ Ordinary HIGH zoom1 ran540 seconds without skips (`test-results/playtest/b113-l4
 ## Second manual bearing attempt
 
 HIGH zoom1 attempt `test-results/playtest/b113-l4-bearing-high` stopped after336s without completion. Existing control-file physical legs:10s KeyA (fence79HP),10s KeyD+KeyW (back plaza30HP),10s KeyS (café death), then driver resumed. Opened all three `campaign-bearing-first/second/south.jpg` captures. Manual mode influences no-progress timing; the automatic90s stop at tick19955 is not a confirmed product P0. This manual approach also fails and does not justify more identical replay.
+
+## Broader short-sweep review
+
+Opened local five-frame sheets `test-results/b113-l6-broad-review.jpg` (ticks2720/5427/8129/10834/13543), `b113-l9-broad-review.jpg` (2710/5412/8117/10825/13528), and `b113-l10-broad-review.jpg` (2713/5418/8136/10854/13560). L6 repeatedly displays Survivor lost/Rejoin Marcus, reinforcing conspicuous babysitting; dark tunnel courier remains readable and crowded telegraphs create pressure. L9 moves from hull pressure to smoking evacuation crowd; striped corruption persists at10825/13528, not just one capture. L10 repeats close combat around the same dark crop patch; visually sparse and repetitive in this sample, with driver backtracking limiting product pacing attribution. No additional confirmed geometry defect is established by these sheets. All review sheets stay ignored.
