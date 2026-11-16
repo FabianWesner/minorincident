@@ -24,3 +24,7 @@ The tank fixture reran successfully on port 5024: HIGH passed and LOW reproduced
 The full candidate threat audit completed in about 300 seconds with only the north-breach cohort flag. A focused L4 comparison restoring only `L4Collapse.ts` to `cc2f7476` removed that flag (only the expected partial-level diagnostic notice remained). The candidate file was restored after the run. This isolates the threat regression to the breach-alignment change, but a routing-preserving correction remains open.
 
 Main `792dde65` is merged. Focused L2/L4 and HIGH/LOW tank reruns retain the same failures. A 3 m-first breach landing experiment changed the failure to late first attack and sustained-horde failure; it was rejected and reverted.
+
+## Vehicle foot-contact correction
+
+The cheap world-space foot solver released a turning stance only after 0.5 radians. Releasing at 0.2 radians begins the lifted turn step before the stance strains. Both tank tiers pass; LOW worst P95 falls from 9.8 cm to 3.4 cm, maximum 10.1 cm. Simulation sample count and staged actor travel remain unchanged. Full gate and unit validation remain pending.

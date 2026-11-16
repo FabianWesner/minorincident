@@ -103,5 +103,13 @@
       "L4/criterion/L4-06 sustained horde:FAIL"
     ],
     "reverted": true
+  },
+  "turnReleaseFix": {
+    "angleRadiansBefore": 0.5,
+    "angleRadiansAfter": 0.2,
+    "tankHighPass": true,
+    "tankLowPass": true,
+    "tankLowP95Cm": 3.4,
+    "tankLowMaxCm": 10.1
   }
 }

@@ -68,7 +68,7 @@ export class GroundContacts {
         foot.landed = false; foot.swinging = false; foot.release = -1; foot.rotation.copy(this.frame);
       }
       // A reversal releases the old support in a lifted step instead of rotating a planted shoe with the body.
-      if (p <= stance && foot.release < 0 && foot.rotation.angleTo(this.frame) > .5) foot.release = p;
+      if (p <= stance && foot.release < 0 && foot.rotation.angleTo(this.frame) > .2) foot.release = p;
       // A shove can consume the remaining stance reach before the gait phase
       // reaches toe-off. Release early while there is still room to lift.
       this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
