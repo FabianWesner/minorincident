@@ -2134,5 +2134,55 @@
       }
     ],
     "falsePositiveProven": true
+  },
+  "nativeCampaignScan": {
+    "secondsPerLevel": 120,
+    "seed": 1,
+    "policy": "complete",
+    "method": "Ordinary native campaign policy; living targets within 1.5m accepted by melee query during running melee action. Continuity resets on gap or HP change. Bounded windows, not full routes.",
+    "rows": [
+      {
+        "level": "L5",
+        "samples": 0,
+        "attacks": 130,
+        "maxConsecutiveZeroDamageTicks": 0,
+        "flags": []
+      },
+      {
+        "level": "L6",
+        "samples": 12,
+        "attacks": 666,
+        "maxConsecutiveZeroDamageTicks": 6,
+        "flags": []
+      },
+      {
+        "level": "L7",
+        "samples": 301,
+        "attacks": 83,
+        "maxConsecutiveZeroDamageTicks": 17,
+        "flags": []
+      },
+      {
+        "level": "L8",
+        "samples": 0,
+        "attacks": 0,
+        "maxConsecutiveZeroDamageTicks": 0,
+        "flags": []
+      },
+      {
+        "level": "L9",
+        "samples": 0,
+        "attacks": 176,
+        "maxConsecutiveZeroDamageTicks": 0,
+        "flags": []
+      },
+      {
+        "level": "L10",
+        "samples": 10,
+        "attacks": 49,
+        "maxConsecutiveZeroDamageTicks": 6,
+        "flags": []
+      }
+    ]
   }
 }
