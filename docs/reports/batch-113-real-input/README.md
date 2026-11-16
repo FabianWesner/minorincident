@@ -8,7 +8,7 @@ Headless WebGPU, ordinary mortal keyboard/mouse combat, debug level entry, no ob
 
 QA build (`MI_BUILD_CACHE=off npm run build:qa`), typecheck and lint pass. The unchanged prescribed `sh tools/remote/run.sh "$PWD" -- npm test` passes on 46.225.66.90: 27 files, 105 passed, one existing skip, 150-case inventory, 183.2 seconds within 240 seconds. Initial sandbox cache/socket denials and runner unavailability were resolved before successful runs. No checks remain running.
 
-[qa.json](qa.json) is below 200 KB. One small [contact sheet](contact-sheet.jpg) was created and opened, containing L3 tick 21652 and L4 tick 11864. All raw captures remain ignored under `test-results/`.
+[qa.json](qa.json) is below 200 KB. One small [contact sheet](contact-sheet.jpg) was created and opened, containing L3 tick 21652, L4 tick 11864, L9 tick 9495 and L10 tick 13892. All raw captures remain ignored under `test-results/`.
 
 ## Coverage
 
@@ -124,3 +124,7 @@ Four-minute matching LOW run saved479 receipts,210 tracking living Alpha (`test-
 ## LOW identified charge review
 
 Opened `test-results/b113-low-charge-review.jpg`, consecutive ticks8161–8342, Alpha #246. Telegraph8191, active8222/8252, recovery8282/8312/8342. Charge travel is followed by fixed recovery position(−17.6114,.75,23.2720), with no obvious continuing recovery glide in viewed frames. Fence partly obscures contact. This is bounded charge-recovery evidence, not ordinary strike/roar/slam or complete LOW sole qualification.
+
+## Finding-sheet refresh
+
+Replaced the sole retained contact sheet with four reviewed frames: L3 bridge, provisional L4 stationary warning, L9 visible rendering corruption, provisional L10 close-target warning. Opened the updated sheet at960×584;99,726 bytes. No second report image or raw capture was added.
