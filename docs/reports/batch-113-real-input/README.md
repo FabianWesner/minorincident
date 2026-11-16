@@ -84,3 +84,7 @@ Collected240 seconds HIGH zoom1.5 from camera(−34,11,16), target(−20,0,27.5)
 ## South-shifted camera candidate
 
 Collected240 seconds HIGH zoom1.5,478 frames (`test-results/b113-l4-south-high/sequence`) from camera(−34,11,6), target(−20,0,17.5). Opened ticks7228 and14360. Early view has corpses and clear paving; final frame exposes a large standing infected feet near sandbags. This is a candidate for consecutive review, not a planted-foot verdict. Preceding saved frames remain to be inspected; no additional replay is needed to review that window.
+
+## HIGH south-window consecutive review
+
+Opened local crop sheet `test-results/b113-south-feet-review.jpg`, ten consecutive frames ticks14089–14360 (~4.5 s). The large infected visible foot remains near the same paving lines while upper-body pose shifts; no obvious sliding in this bounded HIGH window. Identity and complete strike/roar/slam cycles are not established. This narrows the visual gap but does not close all tank attacks or LOW. Raw review sheet remains ignored.
