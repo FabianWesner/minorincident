@@ -171,17 +171,15 @@ export const l4 = {
     swarm: 6, swarmM: 6.5, cutOff: { high: 6, low: 3 },
     /** The escape window: at "Fall back!" (and on a respawn in the collapse) infected farther than `nearM` from the courier ignore her for `s` (busy with the army). */
     escape: {
-      /** First street point beyond the east camp perimeter: the escape checkpoint after Fall back. */
-      // South of the parked truck/bus row: the former z=4 checkpoint and
-      // cross-plaza lane cut through the truck's hull and front bumper.
-      checkpoint: [-4, 16] as P,
+      /** First open Lakeshore route leg beyond the perimeter: the escape checkpoint after Fall back. */
+      checkpoint: [-4, 28] as P,
       nearM: 7, s: 15,
       /**
        * The escape street (l4-collapse-2): out of the ring's east side, down the x = -4 street to Lakeshore Avenue and east to Kessler's
        * cellar door. From "Fall back!" (and after a respawn in the collapse) for `gapS` the horde leaves a gap on it: infected farther than
        * `nearM` from the courier within `gapM` of the route run off toward the army, and nothing emerges on it. Pursuers still chase.
        */
-      route: [[-12, 16], [-4, 16], [-4, 28], [-4, 43], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
+      route: [[-12, 16], [-4, 16], [-4, 28], [-4, 43], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 75,
     },
     /** Camp checkpoints behind each remaining line; choose the nearest safe navigable post when the line falls. */
     checkpoints: [
