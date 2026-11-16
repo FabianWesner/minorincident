@@ -42,3 +42,7 @@ Parsed the actual `observation.enemies` rows from both archived `log-campaign.js
 ## Fresh HIGH evacuation audit
 
 Ordinary mortal real-input road run completed L9 with no skips in 216 seconds, zero issues. Raw: `test-results/playtest/s139-l9-audit-high/`. Expanded observer ran successfully: 28 evacuation-hold samples, 81 nearby-infected records, 34 with native APC contact-ledger entries. Thus hull contacts are directly observed during the hold; the fresh run emits no stationary flags. This validates the added read-only audit but cannot retroactively assign the seven original identities to an attack ledger. LOW replay and archived-interval attribution remain outstanding.
+
+## Production wreck inventory
+
+Loaded all ten production campaign worlds with the existing `loadLevel(level, 1)` loader and inspected assembled district placements, including level-specific overrides. Wrecked/burned or `veh.wreck` counts: L1 0, L2 1, L3 23, L4 0, L5 25, L6 1, L7 38, L8 5, L9 84, L10 344 (521 total). Full placement identities, district, asset, variant, coordinates and yaw are in `qa.json.campaignWreckInventory`. This is a renderer-independent census, not a visual grounding result. It supersedes raw-layout-only counts. Scripted destruction remains outside the at-load placement census and needs its own renderer samples. Next comparison must include campaign variants and placement supports, especially L9 raised roads and L10 streamed regions.
