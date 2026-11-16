@@ -1,0 +1,44 @@
+{
+  "objective": "s145-driver — playtest driver: no false stalls (L9 bridge loops, L10 farm deaths, cap labels)",
+  "candidate": "69562fd1",
+  "status": "implementation complete; real-input acceptance pending",
+  "changes": [
+    "L9 live bridge steering gains loop detection and physical reverse/re-approach recovery",
+    "L10 low-health crowd retreat and nearby medkit steering during travel",
+    "empty HUD objective resets visible stall timing",
+    "configured level cap emits P3 sample-cap and stops without cannot-finish P0"
+  ],
+  "checks": {
+    "build_qa": "pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "unit": { "command": "npm test", "status": "pass", "files": "27/27", "vitestTests": "106/106", "budgetCases": "150/150", "seconds": 126.1 },
+    "remote_unit_wrapper": { "command": "sh tools/remote/run.sh $PWD -- npm test", "status": "not run", "reason": "no healthy remote runner provisioned" }
+  },
+  "attempted_current_acceptance": {
+    "L9_HIGH_road": "blocked before browser launch: tsx CLI IPC socket returned EPERM",
+    "L9_HIGH_road_node_loader": "blocked before browser launch: preview server listen on port 5027 returned EPERM",
+    "L9_LOW_road": "not run",
+    "L9_HIGH_shortcut": "not run",
+    "L10_HIGH_mortal_full_x2": "not run"
+  },
+  "archived_baseline_only": {
+    "source_report": "docs/reports/batch-112-real-input/README.md",
+    "L9_matrix": [
+      { "run": "b112-l9-high-road-1", "tier": "high", "route": "road", "outcome": "L10", "wallSeconds": 221, "deaths": 0, "skips": 0 },
+      { "run": "b112-l9-high-road-2", "tier": "high", "route": "road", "outcome": "L10", "wallSeconds": 235, "deaths": 0, "skips": 0 },
+      { "run": "b112-l9-high-shortcut", "tier": "high", "route": "shortcut", "outcome": "L10", "wallSeconds": 190, "deaths": 0, "skips": 0 },
+      { "run": "b112-l9-low-road", "tier": "low", "route": "road", "outcome": "L10", "wallSeconds": 287, "deaths": null, "skips": 0 }
+    ],
+    "reviewed_capture": { "run": "b112-l9-low-road", "tick": 15571, "file": "campaign-L9-15571-stuck-navigating.jpg", "observation": "APC near bridge marker amid boarders; HUD distance 14 m", "evidence_scope": "single archived frame; not current patch validation" },
+    "L10_death_comparison": "missing; archived L10 full-run death counts not present in the referenced s141 archive"
+  },
+  "acceptance": {
+    "L9_high_road_x3_reaches_L10_no_stuck_navigating": "unverified",
+    "L9_low_road_x1_reaches_L10_no_stuck_navigating": "unverified",
+    "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "unverified",
+    "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "unverified",
+    "cap_label_sample_cap_not_p0": "unit/code-path verified; runtime acceptance pending",
+    "empty_opening_hud_no_warning": "unit/code-path verified; runtime acceptance pending"
+  }
+}

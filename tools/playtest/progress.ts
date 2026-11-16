@@ -26,6 +26,15 @@ export class PlaytestProgress {
     const band = ['distant', 'approaching', 'near'].indexOf(s.megaBand ?? '');
     const text=s.text.replace(/ · [\d.]+\s?m\b/g,'');
     let reason: string | null=null;
+    // The first playable frames can legitimately have no objective in the HUD.
+    // Do not age a stall clock against an objective the game has not shown yet.
+    if (!text.trim()) {
+      this.context=s.context; this.text=''; this.tick=s.tick; this.wall=s.nowMs;
+      this.best=Infinity; this.nearestBand=band; this.playerOrigin=s.player?{...s.player}:null;
+      this.markerOrigin=null; this.playerFar=this.markerFar=0; this.detourOrigin=null; this.detourTarget=null;
+      this.enemyHealth.clear(); this.previousPlayer=s.player?{...s.player}:null; this.previousTick=s.tick;
+      return { seconds: 0, reason: 'empty-objective' };
+    }
     // Ring reads are cached between frames. A respawn can leave the old gate's
     // ring paired with the new HUD distance; wait for a matching visible sample.
     const marker=s.marker&&s.player&&s.distance!==null&&Math.abs(Math.hypot(s.marker.x-s.player.x,s.marker.z-s.player.z)-s.distance)>5?null:s.marker;

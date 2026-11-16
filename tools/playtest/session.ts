@@ -11,7 +11,7 @@ import { weaponKey } from '../../src/data/weaponKeys';
 import { PlaytestProgress } from './progress';
 import { dodgeWalkKeys, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
-import { VehicleRecovery } from './driving';
+import { VehicleRecovery, VehicleRouteRecovery } from './driving';
 import type { Game } from '../../src/Game';
 import { l2Routes } from '../../src/debug/bot/LevelTwoBot';
 import { installFinalAudit } from './final-audit';
@@ -727,6 +727,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     shotAt.clear(); ignored.clear(); reportedUnhittable.clear();
     trail.length = 0; lastErr = null; steering = false;
     vehicleRecovery = new VehicleRecovery();
+    vehicleRouteRecovery = new VehicleRouteRecovery();
     searchedL5Places.clear(); l5SearchStop = null; l5SearchArrived = 0; l5SearchFound = 0;
     cureConsole = null; lastE = lastClick = 0;
     escortClearance = new EscortClearance();
@@ -904,6 +905,35 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (!reportedUnhittable.has(threat.id)) { reportedUnhittable.add(threat.id); if (threat.d < 2.2) await issue('P2', 'enemy-unhittable', `Infected #${threat.id} (${threat.state}) ${threat.d.toFixed(1)} m away took no damage from 8 s of attacks (hp ${threat.hp}/${threat.max})`); }
       return false;
     }
+    const l10FarmThreats = e.level === 'L10' && e.player && e.step !== 'mega' && e.step !== 'hold'
+      ? e.enemies.filter(b => b.drawn && b.hp > 0 && !b.corpse && b.d < 6) : [];
+    if (e.level === 'L10' && e.player && e.step !== 'mega' && e.step !== 'hold' &&
+        e.player.hp / e.player.max < .65 && l10FarmThreats.length >= 2) {
+      const kit = await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, p = w.entities.get(1)!.transform;
+        return [...w.entities.iterate()].filter(a => !a.hidden && a.pickup && 'kind' in a.pickup && a.pickup.kind === 'medkit' &&
+          Math.hypot(a.transform.x - p.x, a.transform.z - p.z) < 22)
+          .sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))
+          .map(a => ({ x: a.transform.x, z: a.transform.z }))[0] ?? null;
+      });
+      await releaseAim();
+      if (kit) {
+        const points = await page.evaluate(({ p, goal }) => {
+          const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+          const out = { ...goal }; w.infected!.nav.forPlayer(.45).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, .45, out, Infinity, true);
+          return [a.input.project(p, 'player'), a.input.project(out, 'player')];
+        }, { p: e.player, goal: kit });
+        await press(wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y));
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ l10FarmMedkit: e.tick, hp: e.player.hp, threats: l10FarmThreats.length, goal: kit }); }
+      } else {
+        await press(awayKeys(e, threat));
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ l10FarmKite: e.tick, hp: e.player.hp, threats: l10FarmThreats.length, enemy: threat.id }); }
+      }
+      await page.mouse.move(threat.aim.x, threat.aim.y);
+      if (aimHeld === null) await page.mouse.down();
+      aimHeld = threat.id;
+      return true;
+    }
     if (threat.d > reach) { // walk toward the ally's attacker
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await walkTowardScreenPoint(s.x, s.y); lastClick = Date.now(); }
       return true;
@@ -1071,8 +1101,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       // velocity flips the sign after a ram/reverse and can circle forever.
       // Keyboard driving is vehicle-relative (src/sim/vehicles/Vehicles.ts): W gas, S brake/reverse, A steers the
       // vehicle's own left, D right. Steer toward the lookahead point by comparing it with the heading.
-      const car = e.driving, recovery = vehicleRecovery.keys(car, Date.now());
-      if (recovery) { await press(recovery); return; }
+      const car = e.driving, now = Date.now(), recovery = vehicleRecovery.keys(car, now) ?? vehicleRouteRecovery.keys(car, goal, now);
+      if (recovery) { log({ l9RouteRecovery: { tick: e.tick, keys: recovery, car: { x: car.x, z: car.z }, goal } }); await press(recovery); return; }
       const want = -Math.atan2(goal.z - car.z, goal.x - car.x);
       const delta = Math.atan2(Math.sin(want - car.yaw), Math.cos(want - car.yaw));
       await press(['KeyW', ...(Math.abs(delta) > .08 ? [delta > 0 ? 'KeyA' : 'KeyD'] : [])]);
@@ -1096,7 +1126,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await press(keys);
   };
   const trail: { x: number; z: number; t: number }[] = []; let steerSign = 1, steerFlip = 0, lastErr: number | null = null, steering = false;
-  let vehicleRecovery = new VehicleRecovery();
+  let vehicleRecovery = new VehicleRecovery(), vehicleRouteRecovery = new VehicleRouteRecovery();
   const l9Route = crossing.routes.find(r => r.id === o.l9Route);
   const l9Path = o.l9Waypoints ?? l9Route?.points.flatMap((a, i, points) => {
     const b = points[i + 1]; if (!b) return [a];
@@ -1670,7 +1700,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const tag = `${key}|${atRing ? 'ring' : 'nav'}`;
       if (!stuckLogged.has(tag)) { stuckLogged.add(tag); await issue('P2', atRing ? 'stuck-at-ring' : 'stuck-navigating', `${Math.round(stuckSim)} s without objective progress ${atRing ? `standing at the ring (${e.distance?.toFixed(1)} m)` : `(distance ${e.distance?.toFixed(1) ?? 'none'} m, no marker: ${!e.marker?.visible})`}; HUD: "${e.tracker}"`); }
     }
-    if (Date.now() > levelDeadline() || stuckSim > 420) {
+    if (Date.now() > levelDeadline()) {
+      await issue('P3', 'sample-cap', `Stopped at the configured ${o.levelMinutes} minute playtest cap on step ${e.step} (objective: "${e.objective}")`);
+      log({ sampleCap: true, level: e.level, tick: e.tick, step: e.step, minutes: o.levelMinutes });
+      break;
+    }
+    if (stuckSim > 420) {
       const mandatory = e.level === 'L9' || isMandatoryBossObjective(e.level, e.step ?? null);
       await issue('P0', 'cannot-finish', `Driver could not finish step ${e.step} ("${e.objective}") after ${Math.round(stuckSim)} s on it (${o.levelMinutes} min level cap: ${Date.now() > levelDeadline()}); ${o.noSkip || mandatory?'stopping without advancing the objective':'skipping it with the debug objective cheat'}`);
       if(o.noSkip) { log({ abortedNoSkip:true, level:e.level, tick:e.tick, step:e.step }); break; }
