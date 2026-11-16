@@ -153,3 +153,7 @@ HIGH WebGL2 and requested WebGPU sequential sweeps both measure 38/38 wrecks at 
 ## Current remote validation
 
 Prescribed remote npm test on f30878a4 passes: 27 files, 105 passed / 1 skipped, complete 150-case budget collection, 134.1 s under 240 s. No source changes occurred during the suite. Native Alpha diagnostic additionally classifies the admission-route obstruction: convoy exclusion passes, static clearance fails. Exact static solid and a body-clear detour remain to be identified.
+
+## Alpha breach alignment correction
+
+Exact blocker is intact l4-wall-34 beside the west breach (1.41 cm corner contact). Native outer-center waypoint moves the captured Alpha 2.525 m rather than 0 m and reaches the opening. L4Collapse now aligns an outside Alpha laterally with the open breach before assigning its inside waypoint. Existing focused L4 regression, typecheck and lint pass. Full real-actor rolling scan and dedicated regression coverage for this branch remain pending; not yet a complete outside-wire pass.

@@ -273,7 +273,12 @@ export class L4Collapse {
       // the combat target can keep it outside and force a long route around the wall.
       if (job.breach && this.h.breachOpen(job.breach) && !this.inside(e.transform)) {
         const { centre } = l4BreachSite(job.breach), out = l4Breaches[job.breach].out;
-        b.scripted = this.h.snap({ x: centre.x - out.x * 3, z: centre.z - out.z * 3 }, .55);
+        // Align outside the opening before crossing: a direct inside goal can
+        // clip the intact neighbouring segment with the Alpha's wider body.
+        const lateral = Math.abs((e.transform.x - centre.x) * out.z - (e.transform.z - centre.z) * out.x);
+        b.scripted = this.h.snap(lateral > .6
+          ? { x: centre.x + out.x * 1.6, z: centre.z + out.z * 1.6 }
+          : { x: centre.x - out.x * 3, z: centre.z - out.z * 3 }, .55);
         continue;
       }
       // The authored entrance/beat still owns staging. Inside, each other type uses its own move set against the crew.
