@@ -996,5 +996,23 @@
         "gapCm": 0
       }
     ]
+  },
+  "wreckSweepRecipe": {
+    "source": "import { SceneSession,stopServer } from './tools/scenelab/session.ts';\nimport {mkdirSync,writeFileSync} from 'node:fs';\nconst level=process.argv[2]??'L3',backend=process.argv[3]??'webgl2';const s=new SceneSession({backend:backend as any,tier:'high'});const out=`test-results/s140-wreckground/sweep-${level}-${backend}`;mkdirSync(out,{recursive:true});\ntry{await s.open();await s.page.evaluate('globalThis.__name = fn => fn');const targets=await s.page.evaluate(async level=>{const a=window.__SS__!;await a.loadLevel(level,{seed:1});a.pause();a.missions.begin();await a.screenshotReady();const g=(window as any).__SCENE__.game;return g.world.districts.districts.flatMap(d=>d.decay.placements.filter(p=>p.assetId.startsWith('veh.')&&(p.assetId==='veh.wreck'||['wrecked','burned'].includes(p.decay))).map(p=>({id:`${d.id}/${p.id}`,x:p.position[0]+d.origin[0],y:p.position[1],z:p.position[2]+d.origin[1]})));},level);const rows=[];for(const p of targets){const row=await s.page.evaluate(async p=>{const a=window.__SS__!;a.camera.cinematic({position:[p.x+10,p.y+10,p.z+10],target:[p.x,p.y+.6,p.z]},true);await a.screenshotReady();await new Promise(r=>setTimeout(r,250));await a.screenshotReady();const g=(window as any).__SCENE__.game;return g.view.labProbes().districts.wreckGroundGaps().find(q=>q.id===p.id)??null;},p);rows.push({requested:p.id,result:row});console.log(JSON.stringify({id:p.id,gapCm:row?.gapCm,lod:row?.lod}));writeFileSync(`${out}/gaps.json`,JSON.stringify({level,backend,targets:targets.length,rows},null,2));}}finally{await s.close();stopServer();}\n",
+    "run": "Save at repository root as s140-wreck-sweep.mts; E2E_PORT=5017 SCENE_PORT=5018 E2E_UNITS=1 E2E_SERIAL=1 E2E_ADMISSION_TIMEOUT_SECONDS=60 E2E_RESERVATION_SECONDS=600 sh tools/e2e-lock.sh node --import tsx s140-wreck-sweep.mts L3 webgl2",
+    "scope": "Camera-only identity-checked resident sweep; fails coverage when returned row is null. Gap gate and screenshots still pending."
+  },
+  "wreckSweepAdmission": {
+    "level": "L3",
+    "backend": "webgl2",
+    "exit": 75,
+    "timeoutSeconds": 60,
+    "quiet": false,
+    "load": [
+      3.564453125,
+      3.6064453125,
+      3.71484375
+    ],
+    "executed": false
   }
 }

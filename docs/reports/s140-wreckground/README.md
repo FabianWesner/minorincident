@@ -59,3 +59,7 @@ Added read-only `DistrictView.wreckGroundGaps()`, reusing the existing prop grou
 ## First runtime contact result
 
 Browser pool admitted two sequential HIGH WebGL2 L3 probes on port 5018. Initial camera yielded no resident wreck rows. Camera-only positioning over `D-CORRIDOR/l3-jam-3` yielded its selected LOD0 mesh, resolved matrix Y = 0.070005506 m and gap = 0 cm. This validates the probe on one full registered-level placement; it does not cover the remaining campaign inventory or WebGPU. Raw receipt: `test-results/s140-wreckground/probe-L3-webgl2/gaps.json`, also preserved in qa.json. No simulation actor or wreck was repositioned.
+
+## Camera sweep admission
+
+Prepared a sequential camera-only identity-checked sweep of every resolved wreck in one registered level; recipe preserved in qa.json. L3 HIGH WebGL2 sweep attempt exited 75 before browser execution: quiet-run admission exceeded 60 seconds, quiet=false, load 3.56/3.61/3.71. No sweep measurements were produced and no browser process remains running. The earlier single-wreck runtime result remains the only validated campaign gap measurement.
