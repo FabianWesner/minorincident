@@ -18,7 +18,7 @@ import { installFinalAudit } from './final-audit';
 import { installSoftlockAudit } from './softlock-audit';
 import { installL6HoldObserver } from './l6-hold-observer';
 import { crossing } from '../../src/levels/L9/district';
-import { l9Groups } from '../../src/data/l9';
+import { l9Course, l9Groups } from '../../src/data/l9';
 import { l5Survivors } from '../../src/data/l5';
 import { installAcceptanceLedger } from './acceptance-ledger';
 import { observeAttackStarts } from '../qa/threat/attackStarts';
@@ -1106,7 +1106,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       .filter(p => along(p) > 0 && along(p) < length && Math.abs((p[0] - a[0]) * dz - (p[1] - a[1]) * dx) / length < 1)
       .sort((p, q) => along(p) - along(q)), ...gateDetour];
   });
-  let l9Waypoint = 1, l9RouteLogged = false;
+  let l9Waypoint = 1, l9RouteLogged = false, l9BridgeRouteLogged = false;
 
   const watchAllies = async (e: Eyes) => {
     for (const a of e.allies) {
@@ -1490,19 +1490,27 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }).catch(() => null) });
       // Read-only L9 evacuation census for delayed handovers. It samples the
       // survivor's ordinary combat/route state without steering or mutating it.
-      if (e.level === 'L9' && process.env.PLAYTEST_L9_EVAC_AUDIT === '1') log({ l9EvacuationObserver: await page.evaluate(() => {
+      if (e.level === 'L9' && process.env.PLAYTEST_L9_EVAC_AUDIT === '1') log({ l9EvacuationObserver: await page.evaluate(defendTicks => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, l9 = w.missions?.l9, s = l9?.driving.state;
         if (!l9 || !s) return null;
-        return { tick: w.tick, phase: l9.state.phase, evacuationAt: s.evacuationAt, evacuationDone: s.evacuationDone,
+        const defenseCompleteAt = s.evacuationAt === null ? null : s.evacuationAt + defendTicks;
+        const defenseComplete = defenseCompleteAt !== null && w.tick >= defenseCompleteAt;
+        const census = s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id); return {
+          id, key: a?.civilian?.survivor?.key ?? null, alive: !!a && a.health.current > 0 && !a.infected && !a.infection,
+          hp: a?.health.current ?? null, infected: !!a?.infected || !!a?.infection, evacuated: s.evacuated.includes(id),
+          aboard: !!a?.passengerOf || s.trucks.some(truckId => w.entities.get(truckId)?.vehicle?.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated')),
+          state: a?.civilian?.state ?? null,
+        }; });
+        return { tick: w.tick, phase: l9.state.phase, evacuationAt: s.evacuationAt, defenseCompleteAt, defenseComplete, evacuationDone: s.evacuationDone,
           evacuated: [...s.evacuated], evacuating: [...s.evacuating], truckEntering: { ...s.truckEntering },
-          survivors: s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return {
+          census, survivors: s.roster.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return {
             id, key: a.civilian?.survivor?.key, hp: a.health.current, infected: !!a.infected || !!a.infection, hidden: a.hidden,
             at: { x: a.transform.x, z: a.transform.z }, passengerOf: a.passengerOf, state: a.civilian?.state,
             attacker: a.civilian?.attacker, knockedUntil: a.civilian?.knockedUntil, routeGoal: a.civilian?.goal,
             routeIndex: a.civilian?.pathIndex, routeLength: a.civilian?.path.length,
             nearestTruck: s.trucks.map(truck => { const t = w.entities.get(truck)!; return { id: truck, d: Math.hypot(t.transform.x - a.transform.x, t.transform.z - a.transform.z) }; }).sort((x, y) => x.d - y.d)[0],
           }; }), guards: s.soldiers.filter(id => id !== s.samId).map(id => { const a = w.entities.get(id)!; return { id, hp: a.health.current, at: { x: a.transform.x, z: a.transform.z }, attacker: a.civilian?.attacker }; }) };
-      }).catch(() => null) });
+      }, l9Course.evacuation.defendTicks).catch(() => null) });
       if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
         const metro = await page.evaluate(() => {
           const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, s = w.missions!.state.l5!;
@@ -1822,7 +1830,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           l9Waypoint++;
         }
         // Vehicle-relative keyboard driving (see drive()).
-        const goal = l9Path[l9Waypoint];
+        // The authored approach route ends beyond the bridgehead. Once the evacuation
+        // switches the HUD to the bridge objective, use that live objective instead
+        // of continuing to the road endpoint (which leaves the APC circling the horde).
+        const bridgeObjective = /drive onto the bridge/i.test(e.objective);
+        if (bridgeObjective && !l9BridgeRouteLogged) {
+          l9BridgeRouteLogged = true;
+          assist('L9 bridge objective route', { marker: ring ? [ring.x, ring.z] : null, fallback: [l9Course.bridgeGate.x - 2, 0], oldRouteEndpoint: l9Path.at(-1) });
+        }
+        const goal = bridgeObjective ? ring ? [ring.x, ring.z] as [number, number] : [l9Course.bridgeGate.x - 2, 0] as [number, number] : l9Path[l9Waypoint];
         await drive(e, { x: goal[0], z: goal[1] });
       } else if (ring) await drive(e, ring); else await press([]);
       await hold(120); continue;
