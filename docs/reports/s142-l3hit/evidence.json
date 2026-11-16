@@ -76,9 +76,7 @@
     "browserLow": "PASS: after HIGH, same result",
     "remoteUnitSuite": "PASS: 27 files, 105 passed / 1 skipped; 174.5 s within 240 s; collection 150/150 cases"
   },
-  "open": [
-    "Audit infected movement from street onto raised bridge: spawn correction alone may not update height along the approach."
-  ],
+  "open": [],
   "invariants": [
     "no infected stat changes",
     "corpses remain persistent"
@@ -870,5 +868,123 @@
         "outcome": "tick-budget"
       }
     ]
-  }
+  },
+  "bridgeApproach": {
+    "startX": 155,
+    "seconds": 30,
+    "samples": [
+      {
+        "tick": 1,
+        "x": 155,
+        "y": 5.231944444444444,
+        "z": -1,
+        "floor": 4.531944444444444
+      },
+      {
+        "tick": 121,
+        "x": 155.71321782728367,
+        "y": 5.349652777777778,
+        "z": -1.3962321262686828,
+        "floor": 4.649652777777778
+      },
+      {
+        "tick": 241,
+        "x": 156.839252578933,
+        "y": 5.496875,
+        "z": -2.021806988296127,
+        "floor": 4.796875
+      },
+      {
+        "tick": 361,
+        "x": 156.88782193848465,
+        "y": 5.496875,
+        "z": -2.03647790234517,
+        "floor": 4.796875
+      },
+      {
+        "tick": 481,
+        "x": 158.6870940946206,
+        "y": 5.696875,
+        "z": -2.5799680244549523,
+        "floor": 4.996875
+      },
+      {
+        "tick": 601,
+        "x": 158.8037263924447,
+        "y": 5.727777777777779,
+        "z": -2.6151981043348784,
+        "floor": 5.027777777777779
+      },
+      {
+        "tick": 721,
+        "x": 160.2772055791253,
+        "y": 5.924652777777778,
+        "z": -2.997562275717433,
+        "floor": 5.224652777777778
+      },
+      {
+        "tick": 841,
+        "x": 160.90497035224456,
+        "y": 6.021875,
+        "z": -3.1595784675622594,
+        "floor": 5.3218749999999995
+      },
+      {
+        "tick": 961,
+        "x": 162.72157873237703,
+        "y": 6.231944444444444,
+        "z": -3.6169563538775424,
+        "floor": 5.531944444444444
+      },
+      {
+        "tick": 1081,
+        "x": 162.94632966383855,
+        "y": 6.246875,
+        "z": -3.673326820222856,
+        "floor": 5.546875
+      },
+      {
+        "tick": 1201,
+        "x": 164.73267797260195,
+        "y": 6.311111111111112,
+        "z": -4.120499813351994,
+        "floor": 5.611111111111112
+      },
+      {
+        "tick": 1321,
+        "x": 163.64647190478453,
+        "y": 6.261111111111111,
+        "z": -4.186299296167462,
+        "floor": 5.561111111111111
+      },
+      {
+        "tick": 1441,
+        "x": 162.72030738025103,
+        "y": 6.216319444444445,
+        "z": -4.228546714017673,
+        "floor": 5.516319444444445
+      },
+      {
+        "tick": 1561,
+        "x": 163.4928858707729,
+        "y": 6.2875000000000005,
+        "z": -3.2292723408474138,
+        "floor": 5.5875
+      },
+      {
+        "tick": 1681,
+        "x": 164.11679769352628,
+        "y": 6.341319444444445,
+        "z": -2.4597352649509543,
+        "floor": 5.641319444444445
+      }
+    ],
+    "final": {
+      "x": 166.06812190183408,
+      "y": 6.391319444444445,
+      "z": -1.283910300937035,
+      "yaw": 5.774675367367233
+    }
+  },
+  "completionScope": "Root cause reproduced with real infected, spawn fixed, native attack trace and bounded other-level scan persisted, HIGH then LOW browser confirmation passed. Original archived run has no full save/per-shot log; exact historical shot sequence cannot be recovered."
 }
