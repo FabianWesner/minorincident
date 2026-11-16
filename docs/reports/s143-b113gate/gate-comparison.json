@@ -59,5 +59,49 @@
       "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
     ],
     "seconds": 67.562250833
+  },
+  "afterMainMerge": {
+    "main": "792dde65",
+    "threatFlags": [
+      "L4/wave/breach-north:WAVE_FEWER_THAN_THREE_COHORT_MEMBERS",
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "vehicleLowFailures": [
+      {
+        "key": "L4/hull-ground/225",
+        "classification": "grounded",
+        "complete": true,
+        "actionsMatched": true,
+        "pass": false,
+        "motion": {
+          "frames": 272,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 13,
+          "slideMaxCm": 11,
+          "slideP95Cm": 9.8,
+          "yawDriftMaxDeg": 59.3,
+          "liftMaxCm": 6.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 987
+        }
+      }
+    ]
+  },
+  "rejectedDepthExperiment": {
+    "depthOrder": [
+      3,
+      4,
+      2,
+      1.6,
+      1.2,
+      0.9
+    ],
+    "flags": [
+      "L4/wave/breach-north:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+      "L4/criterion/L4-06 sustained horde:FAIL"
+    ],
+    "reverted": true
   }
 }
