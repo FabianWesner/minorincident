@@ -20,7 +20,9 @@ Validation: typecheck/lint and 12 focused tests pass. Required remote `sh tools/
 
 Final matched batch uses identical observer/probe code for all 12 original/candidate runs, including individual L8 route legs and contact classification. Assertions pass: every candidate window has at most half its baseline waiting/return ticks (zero baselines remain zero), and all named skilled threat rates are unchanged/higher. Candidate gameplay outcomes reproduce prior receipts. Baseline L6 normal walk times out; candidate completes. No forbidden source paths, zombie stats or corpse-retention code changed. JSON now contains final matched receipts rather than experimental snapshots.
 
-The exact epic verifier wrappers remain unfinished: their implementation is the same typecheck/lint/unit gate for E24/E29/E30. Those underlying checks have passed, including the required full remote unit command; duplicate local wrapper jobs were stopped to avoid redundant load. This command-level requirement remains open before declaring the entire job complete. Other limitations: waiting/returns measure behavior heuristically; static contact does not prove a navigation root cause; independent policies retain mandatory combat/interactions; L8 normal walk includes one death/retry; L6 emits genuine survivor-death alerts.
+E24, E29 and E30 verifier commands now all pass sequentially on the remote runner (combined job exit 0, 788 s remote total). Each runs typecheck, lint and the full unit suite; E24 test budget 180.2 s, E30 180.7 s, each under 240 s. The separate required `npm test` command also passed earlier. No checks remain running.
+
+Measured acceptance is achieved for seed 1 at LOW, with HIGH/LOW browser confirmation. Limits: waiting/returns are behavioral estimates; direct contact probes do not prove a navigation root cause; independent walking retains mandatory combat/interactions; L8 normal walk includes one death/retry; L6 retains genuine survivor-death warnings. Zero-baseline segments remain zero, rather than having a claimed percentage reduction.
 
 ## Measurement definitions
 
