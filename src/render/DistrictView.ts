@@ -522,8 +522,8 @@ export class DistrictView extends Group {
     return gaps;
   }
   /** Read-only campaign wreck audit: selected resident mesh and the renderer's resolved placement matrix. */
-  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number }[] {
-    const rows: { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number }[] = [];
+  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; supportSamples: number; contactSamples: number }[] {
+    const rows: { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; supportSamples: number; contactSamples: number }[] = [];
     for (const entry of this.lodBatches) {
       if (!entry.id.startsWith('veh.') || !(entry.id === 'veh.wreck' || entry.decay === 'wrecked' || entry.decay === 'burned')) continue;
       for (const [index, ref] of entry.refs.entries()) {
@@ -531,8 +531,17 @@ export class DistrictView extends Group {
         if (!band || typeof ref.userData.placementId !== 'string') continue;
         const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
         if (!batch.references.includes(ref) || batch.userData.placeholder) continue;
-        const gap = this.propGap(entry, ref, batch);
-        if (Number.isFinite(gap)) rows.push({ id: ref.userData.placementId, asset: entry.id, decay: entry.decay ?? '', lod: band, meshLod: band === 'lod0' ? entry.heroShown : band, matrix: ref.matrix.toArray(), origin: [...entry.origin], gapCm: gap * 100 });
+        ref.updateMatrix();
+        const points = batch.contactPoints();
+        let gap = Infinity, supportSamples = 0;
+        for (const point of points) {
+          const v = this.propPoint.copy(point).applyMatrix4(ref.matrix);
+          v.x += entry.origin[0]; v.z += entry.origin[1];
+          const ground = this.groundAt(v.x, v.z);
+          if (ground === null) continue;
+          supportSamples++; gap = Math.min(gap, v.y - ground);
+        }
+        rows.push({ id: ref.userData.placementId, asset: entry.id, decay: entry.decay ?? '', lod: band, meshLod: band === 'lod0' ? entry.heroShown : band, matrix: ref.matrix.toArray(), origin: [...entry.origin], gapCm: Number.isFinite(gap) ? gap * 100 : null, supportSamples, contactSamples: points.length });
       }
     }
     return rows;

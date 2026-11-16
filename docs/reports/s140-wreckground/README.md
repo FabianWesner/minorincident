@@ -105,3 +105,7 @@ HIGH WebGL2 sequential camera-only batch completed. L9: 84/84 measured; range -2
 ## Elevated support coverage limitation
 
 Four missing L7 wrecks are authored at Y 2.7–3.9 m. GroundField.add defaults to a 0.4 m ceiling; DistrictView.groundAt reads terrain or this field. Current null rows do not distinguish an absent reference from contacts with no support samples. Before closing grounding, add exact raised-road support coverage and explicit missing-support diagnostics. Existing measured rows remain numerical results against the current field, not proof of every raised-road surface. L6/L7 retry failed browser admission before execution (60 s, quiet=false, load 3.00/3.00/3.35).
+
+## Explicit missing support diagnostics
+
+Wreck probe now retains resident mesh identities with no support samples, returning gapCm=null plus supportSamples/contactSamples. This distinguishes absent ground coverage from missing residency without converting either into a grounding pass. Typecheck and lint pass; runtime check of the new fields remains pending.
