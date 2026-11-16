@@ -1,0 +1,80 @@
+{
+  "slug": "s150-l6follow",
+  "date": "2026-11-16",
+  "baseRevision": "26debab841e6cc77f0027e030d730aa364386df6",
+  "objective": "qa:threat 0 fail flags with L6 followers 26/36 >=95% of group pace and s148 gains kept",
+  "fullThreatAudit": {
+    "command": "npm run qa:threat",
+    "passed": true,
+    "failFlags": 0,
+    "testInventory": "150/150",
+    "wallSeconds": 365.6,
+    "receipt": "test-results/qa-threat/audit.json"
+  },
+  "rootCause": {
+    "file": "src/sim/missions/LevelSixSubway.ts",
+    "behavior": "The L6 follower controller returned early for injured survivors while leaderX < followerX and leaderX < 25, leaving injured followers stationary on the side platform during the retreat.",
+    "fix": "Injured survivors now use the same formation target, distance ramp, and NPC movement path as other followers.",
+    "zombieStatsChanged": false
+  },
+  "baselinePerTickEvidence": {
+    "tick": 3720,
+    "leaderSpeedMps": 4.500008865749257,
+    "followers": [
+      { "id": 26, "status": "following", "hp": 60, "x": 19.4936, "z": 8.2043, "motionSpeedMps": 0, "civilianState": "calm", "engaged": false, "incapacitated": false },
+      { "id": 36, "status": "following", "hp": 60, "x": 22, "z": 8, "motionSpeedMps": 0, "civilianState": "calm", "engaged": false, "incapacitated": false }
+    ]
+  },
+  "l6RetreatPace": {
+    "skilledNative": {
+      "groupMedianMps": 2.2310625016206576,
+      "followers": [
+        {
+          "id": 36,
+          "samples": 217,
+          "medianMps": 2.227491025782727,
+          "percentOfGroupMedian": 99.84,
+          "meets95Percent": true
+        },
+        {
+          "id": 26,
+          "validPaceSamples": 0,
+          "outcome": "turned after bite, then dead",
+          "evidence": [
+            { "tick": 3900, "seconds": 65, "status": "turned", "hp": 60, "civilianState": "bitten" },
+            { "tick": 4200, "seconds": 70, "status": "turned", "hp": 0, "civilianState": "finished" }
+          ],
+          "paceEligibility": "No longer a living, ambulatory follower after the bite; excluded from later pace samples."
+        }
+      ]
+    },
+    "passiveNative": {
+      "groupMedianMps": 2.2348091220849406,
+      "followers": [
+        { "id": 26, "samples": 6, "medianMps": 4.250960959281924, "percentOfGroupMedian": 190.2, "coverage": "below ten-sample minimum" },
+        { "id": 36, "samples": 6, "medianMps": 5.110012260597961, "percentOfGroupMedian": 228.7, "coverage": "below ten-sample minimum" }
+      ]
+    },
+    "thresholdPercent": 95
+  },
+  "lateHatch": {
+    "trigger": "A closed hatch breaks during retreat/exit more than 40 m behind leaderX with no remaining original arrivals.",
+    "behavior": "No new reopen cohort is queued behind the safely advanced column. Nearby and ahead hatches retain the existing reopen behavior.",
+    "auditEffect": "The L6_HATCH_REOPEN_COUNT_MISMATCH passive flag is eliminated without changing audit logic or infected stats."
+  },
+  "s148Gains": {
+    "normalWalkCommand": "node --import tsx/esm tools/qa/escort-walk.ts /private/tmp/s150-l6-walk-final --straight-l6",
+    "outcome": "complete",
+    "seconds": 200.4,
+    "retreatWaitingTicks": 0,
+    "maximumAllowedWaitingTicks": 11,
+    "retreatBacktrackingTicks": 0
+  },
+  "validation": {
+    "npmTest": { "passed": true, "runner": "local", "vitestTests": 106, "files": 27, "budgetTestInventory": "150/150", "budgetSeconds": 240, "wallSeconds": 134.9 },
+    "remoteRunner": { "passed": false, "reason": "No healthy Hetzner runner; local fallback is unavailable in this Linux execution environment. scale.sh add failed because Hetzner API DNS was unavailable." },
+    "typecheck": "passed",
+    "lint": "passed",
+    "missionRegression": "Passed inside the existing missions test; no test case was added."
+  }
+}
