@@ -116,7 +116,7 @@ export class GroundContacts {
       // above the floor rather than letting IK clamp a grounded, travelling shoe.
       this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
       const reach = (foot.ik.middle.position.length() + foot.ik.end.position.length()) * this.scale.y * .99;
-      if (stride > 0 && this.joint.distanceTo(foot.target) > reach) {
+      if (this.joint.distanceTo(foot.target) > reach) {
         foot.target.y = Math.max(foot.target.y, this.origin.y + this.sole * this.scale.y + .04 * this.scale.y);
         const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z;
         const horizontal = Math.hypot(dx, dz), allowed = Math.sqrt(Math.max(0, reach * reach - (foot.target.y - this.joint.y) ** 2));
