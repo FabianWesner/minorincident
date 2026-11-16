@@ -447,12 +447,12 @@ export class LevelSevenEncounters {
       if (this.trail.length > 128) this.trail.shift();
     }
     if (this.state.started || this.world.missions?.state.steps.departure?.status === 'active') {
-      let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
+      let remaining = 1.4 + Math.floor(slot / 3) * .8, newer: Point = player;
       for (let i = this.trail.length - 1; i >= 0; i--) {
         const older = this.trail[i], length = distance(older, newer);
         if (length >= remaining && length > 0) {
           const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
-          const side = slot % 2 - .5;
+          const side = (slot % 3 - 1) * .8;
           const centre = { x: newer.x - hx * remaining, z: newer.z - hz * remaining };
           const goal = { x: centre.x - hz * side, z: centre.z + hx * side };
           const nav = this.followerNavigation();

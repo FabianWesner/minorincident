@@ -450,7 +450,8 @@ function checkLowBoardingCorner(w: SimWorld) {
     for (const [x, z] of [[-42, 50], [-38, 50], [-34, 50], [-30, 50], [-30, 49]]) {
       Object.assign(player.transform, { x, z }); w.l7Encounters!.follower(follower);
     }
-    expect(target.x).toBeCloseTo(-31.3); expect(target.z).toBeCloseTo(49.5);
+    // Compact lead slot still follows the walked corner instead of cutting it.
+    expect(target.x).toBeCloseTo(-30.4); expect(target.z).toBeCloseTo(49.2);
   } finally { w.npcs!.move = move; }
 }
 
