@@ -58,6 +58,19 @@
           "tick": 14385
         }
       ]
+    },
+    "L9_HIGH_road_3": {
+      "status": "pass for navigation acceptance",
+      "run": "test-results/s145-driver/l9-road-high-3-live",
+      "wallSeconds": 271,
+      "skips": 0,
+      "stuckNavigating": 0,
+      "otherIssues": [
+        {
+          "kind": "enemy-frozen",
+          "tick": 13548
+        }
+      ]
     }
   },
   "archived_baseline_only": {
@@ -110,7 +123,7 @@
     "L10_death_comparison": "missing; archived L10 full-run death counts not present in the referenced s141 archive"
   },
   "acceptance": {
-    "L9_high_road_x3_reaches_L10_no_stuck_navigating": "unverified",
+    "L9_high_road_x3_reaches_L10_no_stuck_navigating": "pass: 307, 303, 271 seconds; zero skips or stuck-navigating flags",
     "L9_low_road_x1_reaches_L10_no_stuck_navigating": "unverified",
     "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "unverified",
     "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "unverified",
