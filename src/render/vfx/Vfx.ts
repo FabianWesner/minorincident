@@ -1,7 +1,7 @@
 import type { EntitySnapshot } from '../../sim/world/types';
 import { readableTelegraphs, type TelegraphThreat } from './telegraphPriority';
 import { megaAlpha } from '../../data/megaAlpha';
-import { Group, type BufferGeometry, type Node } from 'three/webgpu';
+import { Group, Vector3, type BufferGeometry, type Node } from 'three/webgpu';
 import { Rng } from '../../core/Rng';
 import { infectedDef } from '../../data/infected';
 import type { ActionDef } from '../../data/actions/schema';
@@ -81,6 +81,10 @@ export class Vfx extends Group {
   private flashNear = 1;
   /** One reusable edge feather veil: no stacking, central player and HUD stay clear. */
   private readonly featherVeil = typeof document === 'undefined' ? null : document.createElement('div');
+  /** One transient, screen-space bearing for a scream whose source is outside the camera. */
+  private readonly screamBearing = typeof document === 'undefined' ? null : document.createElement('div');
+  private screamUntil = 0;
+  private screamAt = { x: 0, z: 0 };
   private obstruction = { remainingTicks: 0, opacity: 0 };
   private readonly pools = [this.particles, this.decals, this.surfaceSplats, this.telegraphs, this.waves];
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
@@ -206,6 +210,13 @@ export class Vfx extends Group {
       this.featherVeil.setAttribute('aria-hidden', 'true');
       this.featherVeil.style.cssText = 'position:fixed;inset:8% 0 18%;pointer-events:none;z-index:2;opacity:0;background:repeating-conic-gradient(from 15deg at 0% 50%,#ef9fc1 0deg 8deg,transparent 8deg 25deg);mask-image:radial-gradient(ellipse at center,transparent 0 38%,black 78%);';
       document.querySelector('#game')?.append(this.featherVeil);
+    }
+    if (this.screamBearing) {
+      this.screamBearing.dataset.testid = 'screamer-bearing';
+      this.screamBearing.setAttribute('aria-hidden', 'true');
+      this.screamBearing.textContent = '▲';
+      this.screamBearing.style.cssText = 'position:fixed;display:none;z-index:5;pointer-events:none;color:#ef92ff;font:700 30px/1 system-ui;text-shadow:0 0 5px #361040,0 0 12px #a526d4;transform:translate(-50%,-50%);';
+      document.querySelector('#game')?.append(this.screamBearing);
     }
     this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
@@ -601,9 +612,10 @@ export class Vfx extends Group {
       // Both rings use the existing fixed wave pool; the distant ring remains a
       // faint ground mark for the scream's actual hearing radius.
       const ground = this.world.districts?.groundHeight(x, z) ?? 0;
-      const first = this.waves.spawn(this.time, .34, x, ground + 2, z, 0, 0, 0, 2.8, 8, 0xd66bff, 1);
+      this.screamAt.x = x; this.screamAt.z = z; this.screamUntil = this.time + 1.1;
+      const first = this.waves.spawn(this.time, .8, x, ground + 2, z, 0, 0, 0, 2.8, 8, 0xd66bff, 1);
       this.waves.opacity(first, .92);
-      const second = this.waves.spawn(this.time, .42, x, ground + 2.25, z, 0, 0, 0, 4.8, 8, 0xb94cff, 1);
+      const second = this.waves.spawn(this.time, .9, x, ground + 2.25, z, 0, 0, 0, 4.8, 8, 0xb94cff, 1);
       this.waves.opacity(second, .82);
       const slot = this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 8, 0xef92ff, 1);
       this.waves.opacity(slot, .25);
@@ -620,6 +632,21 @@ export class Vfx extends Group {
   }
   /** Read fixed-tick warnings/veil on every rendered frame, including paused redraws. */
   updateSpecialState(): void {
+    if (this.screamBearing) {
+      const camera = this.targets.camera?.();
+      if (camera && this.time < this.screamUntil) {
+        const p = new Vector3(this.screamAt.x, 1.8, this.screamAt.z).project(camera);
+        const offscreen = p.z < -1 || p.z > 1 || Math.abs(p.x) > .94 || Math.abs(p.y) > .9;
+        if (offscreen) {
+          if (p.z < -1) { p.x *= -1; p.y *= -1; }
+          const nx = p.x, ny = p.y, scale = Math.min(1, .84 / Math.max(Math.abs(nx), Math.abs(ny), .001));
+          this.screamBearing.style.display = 'block';
+          this.screamBearing.style.left = `${(nx * scale + 1) * innerWidth / 2}px`;
+          this.screamBearing.style.top = `${(1 - ny * scale) * innerHeight / 2}px`;
+          this.screamBearing.style.transform = `translate(-50%,-50%) rotate(${Math.atan2(nx, -ny)}rad)`;
+        } else this.screamBearing.style.display = 'none';
+      } else this.screamBearing.style.display = 'none';
+    }
     let remaining = 0;
     for (const e of this.world.infected?.active ?? []) {
       if (e.health.current <= 0 || e.corpse) continue;
@@ -811,5 +838,5 @@ export class Vfx extends Group {
       telegraphs: [...this.tells].map(([attackId, tell]) => ({ attackId, ...tell })), hitStop: { active: this.hitStop.active(this.time), until: this.hitStop.until, started: this.hitStop.started, suppressed: this.hitStop.suppressed },
       flash: this.flash, blasts: this.blasts.snapshot(), coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };
   }
-  dispose(): void { this.featherVeil?.remove(); for (const stop of this.stops) stop(); this.stops.length = 0; for (const pool of this.pools) pool.dispose(); this.gibs.dispose(); this.blasts.dispose(); this.clear(); }
+  dispose(): void { this.screamBearing?.remove(); this.featherVeil?.remove(); for (const stop of this.stops) stop(); this.stops.length = 0; for (const pool of this.pools) pool.dispose(); this.gibs.dispose(); this.blasts.dispose(); this.clear(); }
 }
