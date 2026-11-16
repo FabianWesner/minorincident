@@ -1,0 +1,355 @@
+{
+  "job": "s151-l4high",
+  "sourceCommit": "c02a9b91",
+  "date": "2026-11-16",
+  "baseline": {
+    "source": "docs/reports/batch-114-real-input/README.md and archived s149/b114-gpu-l4-high/log-campaign.jsonl",
+    "backend": "webgpu",
+    "tier": "high",
+    "zoom": 1.5,
+    "sampleSeconds": 541,
+    "sampleCapTick": 32246,
+    "deaths": {
+      "total": 26,
+      "hold": 11,
+      "hide": 15
+    },
+    "escapeDeathObservations": [
+      {
+        "tick": 20920,
+        "position": [
+          -54.5,
+          -37.0
+        ],
+        "nearbyDrawnInfected": [
+          [
+            475,
+            1.2
+          ],
+          [
+            301,
+            1.2
+          ],
+          [
+            469,
+            1.7
+          ]
+        ]
+      },
+      {
+        "tick": 21880,
+        "position": [
+          -52.2,
+          -39.2
+        ],
+        "nearbyDrawnInfected": [
+          [
+            467,
+            1.3
+          ],
+          [
+            308,
+            2.0
+          ],
+          [
+            465,
+            2.8
+          ]
+        ]
+      },
+      {
+        "tick": 23574,
+        "position": [
+          -52.1,
+          -34.1
+        ],
+        "nearbyDrawnInfected": [
+          [
+            475,
+            1.2
+          ],
+          [
+            468,
+            1.3
+          ],
+          [
+            466,
+            1.3
+          ]
+        ]
+      },
+      {
+        "tick": 26072,
+        "position": [
+          -54.2,
+          -40.5
+        ],
+        "nearbyDrawnInfected": [
+          [
+            469,
+            2.6
+          ],
+          [
+            467,
+            3.1
+          ],
+          [
+            317,
+            3.5
+          ]
+        ]
+      },
+      {
+        "tick": 28490,
+        "position": [
+          -52.0,
+          -37.2
+        ],
+        "nearbyDrawnInfected": [
+          [
+            471,
+            1.0
+          ],
+          [
+            317,
+            1.1
+          ],
+          [
+            466,
+            1.1
+          ]
+        ]
+      },
+      {
+        "tick": 29300,
+        "position": [
+          -52.3,
+          -37.0
+        ],
+        "nearbyDrawnInfected": [
+          [
+            308,
+            2.1
+          ],
+          [
+            470,
+            2.9
+          ],
+          [
+            467,
+            3.6
+          ]
+        ]
+      },
+      {
+        "tick": 30848,
+        "position": [
+          -49.4,
+          -37.0
+        ],
+        "nearbyDrawnInfected": [
+          [
+            468,
+            1.1
+          ],
+          [
+            472,
+            1.1
+          ],
+          [
+            469,
+            2.0
+          ]
+        ]
+      },
+      {
+        "tick": 31651,
+        "position": [
+          -53.1,
+          -37.0
+        ],
+        "nearbyDrawnInfected": [
+          [
+            466,
+            1.0
+          ],
+          [
+            317,
+            1.1
+          ],
+          [
+            475,
+            1.2
+          ]
+        ]
+      }
+    ],
+    "actorsDrawnInSample": true,
+    "assessment": "Death-adjacent samples show a dense visible crowd; exact killing blows are not recoverable from proximity alone. HIGH authored encounter homes use full counts, LOW half counts. The escape gap is 75 s; the first hide deaths occur >120 s after line-break."
+  },
+  "changes": {
+    "encounterHomes": [
+      {
+        "kind": "alpha",
+        "from": [
+          -66,
+          -40.2
+        ],
+        "to": [
+          -60,
+          -20
+        ],
+        "bodiesHigh": 4,
+        "bodiesLow": 2
+      },
+      {
+        "kind": "heavy",
+        "from": [
+          -74,
+          -40.4
+        ],
+        "to": [
+          -60,
+          -54
+        ],
+        "bodiesHigh": 4,
+        "bodiesLow": 2
+      }
+    ],
+    "hordeAndStatsChanged": false,
+    "finalCellarRingDepthTest": false,
+    "contactReplayRoute": "original auto route; connectivity deferred until stationary; breach changes reset window"
+  },
+  "nativeHigh": {
+    "level": "L4",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 301.51666666666665,
+    "deaths": 8,
+    "kills": 0,
+    "damageTaken": 988.4333333333328,
+    "failures": {
+      "player-died": 8
+    },
+    "objectiveTimeline": [
+      {
+        "id": "ride",
+        "t": 30.483333333333334
+      },
+      {
+        "id": "quartermaster",
+        "t": 32.81666666666667
+      },
+      {
+        "id": "hold",
+        "t": 222.81666666666666
+      },
+      {
+        "id": "hide",
+        "t": 293.35
+      },
+      {
+        "id": "bar",
+        "t": 294.51666666666665
+      },
+      {
+        "id": "wait",
+        "t": 301.51666666666665
+      }
+    ],
+    "furthestObjective": "wait",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 303,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "checks": {
+    "focusedContactTest": {
+      "status": "passed",
+      "wallSeconds": 46.2,
+      "allAssertionsRetained": true
+    },
+    "fullSuiteLocal": {
+      "status": "passed",
+      "files": 27,
+      "tests": 106,
+      "inventoryCases": 150,
+      "wallSeconds": 109.2,
+      "budgetSeconds": 240
+    },
+    "typecheck": "passed",
+    "lint": "passed",
+    "remoteSuite": {
+      "status": "passed",
+      "runs": [
+        {
+          "host": "46.225.66.90",
+          "seconds": 174,
+          "contactSeconds": 103.2
+        },
+        {
+          "host": "94.130.181.173",
+          "seconds": 204.4,
+          "contactSeconds": 114.6
+        }
+      ]
+    },
+    "webgpuHighLow": {
+      "status": "target-unmet",
+      "high": [
+        {
+          "run": "gpu-high-enabled",
+          "finished": true,
+          "seconds": 483,
+          "escapeDeaths": 6
+        },
+        {
+          "run": "gpu-high-final",
+          "finished": false,
+          "escapeDeaths": 9
+        },
+        {
+          "run": "gpu-high-gap150",
+          "finished": false,
+          "escapeDeaths": 9
+        },
+        {
+          "run": "gpu-high-near3",
+          "finished": false,
+          "escapeDeaths": 18
+        }
+      ],
+      "low": null
+    },
+    "buildQA": "passed"
+  },
+  "visualReview": {
+    "sheet": "approach-review.jpg",
+    "frames": [
+      {
+        "source": "archived s149 batch-114 HIGH",
+        "tick": 29895,
+        "zoom": 1,
+        "distanceToNextMarkerM": 20,
+        "finding": "Off-screen direction arrow and objective text are visible."
+      },
+      {
+        "source": "archived s147 prior HIGH completion",
+        "zoom": 1.5,
+        "objective": "Bar the cellar door",
+        "distanceM": 5,
+        "finding": "Objective and minimap pin visible; storefront entry partly occluded."
+      }
+    ],
+    "candidateScreenshot": false
+  },
+  "goalStatus": "incomplete: candidate real-input HIGH and LOW WebGPU qualification is outstanding"
+}
