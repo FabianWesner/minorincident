@@ -1874,7 +1874,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();
-      await page.keyboard.press(`Digit${shortcut}`); await hold(300);
+      if (shortcut <= 10) await page.keyboard.press(`Digit${shortcut === 10 ? 0 : shortcut}`);
+      else await page.getByTestId(`weapon-rack-${weapon}`).click();
+      await hold(300);
       log({ selectedCarriedWeapon: weapon, level: e.level, tick: e.tick }); continue;
     }
     const marketEscape = e.level === 'L2' && e.step === 'bridge';

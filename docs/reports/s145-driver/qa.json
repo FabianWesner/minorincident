@@ -27,7 +27,7 @@
       "files": 27,
       "passed": 105,
       "skipped": 1,
-      "seconds": 181.8,
+      "seconds": 189.6,
       "runner": "46.225.66.90"
     }
   },
@@ -168,6 +168,20 @@
         }
       ],
       "fullCompletion": false
+    },
+    "L10_HIGH_rifle_attempt_5": {
+      "status": "driver error after confirmed rifle pickup",
+      "run": "test-results/s145-driver/l10-high-rifle-5",
+      "deathsBeforeObservedRifle": 1,
+      "observedRiflePlayer": {
+        "x": 891.13,
+        "z": -9.38,
+        "hp": 100,
+        "weapon": "weapon.hunting-rifle"
+      },
+      "error": "Unknown key Digit19",
+      "fix": "shortcuts above ten select through actual HUD mouse click; ten maps to Digit0",
+      "fullRun": false
     }
   },
   "archived_baseline_only": {
