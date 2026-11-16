@@ -56,3 +56,7 @@ Existing ordinary-input logs establish close bridge targets losing HP in both ti
 ## Native recording driver gap
 
 Read-only inspection of `tools/browser-pool/client.ts` shows pooled `launchProfile` creates its context with viewport, DPR and storage state, omitting `recordVideo`. Merely supplying video options to the helper cannot record the pooled run. A permitted ignored wrapper must explicitly create a recording context before another camera/sole attempt; no source/helper fix was made.
+
+## Recording wrapper smoke result
+
+Ignored esbuild wrapper explicitly forwards recordVideo into pooled browser.newContext; checked-in sources/driver remain unchanged. One-minute ordinary HIGH L4 smoke run completed its cap at tick3412 (`test-results/b113-video/smoke`). Expected `test-results/b113-video/smoke-video` directory was absent after context disposal. No native recording is claimed; forwarding alone did not resolve recording. Pool/protocol recording behavior remains a driver gap, and identical wrapper retries are not justified.

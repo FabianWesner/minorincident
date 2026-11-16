@@ -1258,5 +1258,16 @@
         ]
       }
     ]
+  },
+  "recordingSmoke": {
+    "wrapper": "test-results/b113-video/build.mjs",
+    "run": "test-results/b113-video/smoke",
+    "seconds": 60,
+    "tier": "high",
+    "backend": "webgpu",
+    "tick": 3412,
+    "expectedVideoDirectory": "test-results/b113-video/smoke-video",
+    "videoExists": false,
+    "qualification": "No native video evidence; context recordVideo forwarding verified in ignored bundle, recording gap persists."
   }
 }
