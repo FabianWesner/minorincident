@@ -2065,5 +2065,30 @@
       9755
     ],
     "assessment": "4/4 aboard before defense completion; timely departure, no visible teleport; no post-defense fallback run exercised."
+  },
+  "observedAttackCoverage": {
+    "run": "b112-l4-observed",
+    "specialSamples": {
+      "alpha.charge": 39,
+      "alpha.grab-throw": 8,
+      "alpha.grab-human": 5
+    },
+    "roarSamples": 0,
+    "groundSlamSamples": 0,
+    "reviewedStrike": {
+      "id": 296,
+      "attackTicks": [
+        2831,
+        2846
+      ],
+      "captureTicks": [
+        2811,
+        2840,
+        2869
+      ],
+      "sheet": "test-results/b112-review/strike296.jpg",
+      "judgment": "Actor cluster visible near generator, soles not continuously readable; no foot-contact pass."
+    },
+    "limitation": "Observer is sampled at250ms, not every tick; zero recorded specials does not prove no special occurred between samples."
   }
 }

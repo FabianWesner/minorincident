@@ -107,3 +107,7 @@ Shortcut sheet `test-results/b112-review/shortcut.jpg` was opened at approximate
 ### Read-only Alpha observer now verified
 
 Ignored observer bundle forwards Alpha identity, transform, health and brain state every 250 ms to `test-results/playtest/b112-l4-observed/alpha-state.jsonl`. The real-input bounded run completed and produced 781 state samples. Runtime hook is verified; it does not mutate simulation. Exact attack-window review remains pending.
+
+### Exact observed attack coverage
+
+Parsed the 781 Alpha-state samples: 39 charge, eight grab-throw and five grab-human special samples; zero recorded roar or ground-slam states. Ordinary attack actor #296 is recorded at ticks 2831/2846. Opened `test-results/b112-review/strike296.jpg` (captures 2811/2840/2869): actor cluster near the generator is visible, but soles are not continuously readable. This narrows the gap: the observer run supplies ordinary attack identities but does not provide usable roar/slam foot windows. Sampling is 250 ms, so zero recorded states does not prove no brief event occurred between samples.
