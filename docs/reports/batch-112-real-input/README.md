@@ -71,3 +71,7 @@ LOW road completed in 287 seconds with zero skips. Native last-living evacuation
 ### Additional full-size review
 
 Opened L4 `captures/campaign-L4-t9007.jpg` at full size: several Alphas attack among overlapping rings, but tank/crowd occlusion prevents individual sole tracking. Opened LOW L9 `captures/scream-L9-8411-1-1.jpg`: ordinary native scream telegraph at tick 8411, seated hatch phase, no clear violet edge arrow in the wind-up frame. Eight ordinary telegraph windows are logged at 8411/8759/9107/9260/13738/13741/13751/13761; the callback captures do not establish released-noise arrow visibility or moving-courier usefulness. Keep the arrow judgment open rather than treating Alpha roar footage as ordinary scream proof.
+
+### LOW evacuation route review
+
+Opened `test-results/b112-review/low-evac.jpg`, consecutive ticks 13911–14137 at about 3 fps. A survivor runs along the clear foreground lane toward the trucks. Visible travel reads natural: no obvious teleport, foot sliding, or running through the infected pack in this segment. Final entry is partly APC-occluded, so this does not qualify every survivor route or every transient. Violet source rings in this sequence are conspicuous and on screen; they do not qualify off-screen arrow clutter/usefulness.
