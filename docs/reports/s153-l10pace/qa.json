@@ -979,6 +979,12 @@
       "typecheck": "pass",
       "lint": "pass",
       "remote": "two unchanged runs:104 passed,1 skipped,L4 contact150s timeout;201.1s and224.9s total; L10 passes"
+    },
+    "additionalRemoteRetry": {
+      "result": "timeout",
+      "seconds": 245.4,
+      "exit": 124,
+      "detail": "unchanged suite hit238s reservation and240s total budget on94.130.181.173; no tests trimmed"
     }
   }
 }
