@@ -42,3 +42,5 @@ The unchanged remote rerun also timed out at 240.4 seconds (exit 124). No tests 
 ## Route marker diagnosis
 
 The current HIGH log contains 191 hide observations. A 5 m observation heatmap (JSON) clusters 73 samples at (-15,10), back inside the camp. The first hide observation is at (-4,28), with a direct marker at (-79.3,-45.28); the next observation moves northwest to (-7.43,24.57). The intended route instead starts south to Lakeshore. Updated the L4 hide marker to follow the existing authored route corners, including its final door point. This directly addresses the misleading bearing; native and browser verification of this follow-up remains pending. The heatmap counts observations, not independently attributed deaths.
+
+Native marker probe confirms checkpoint (-4,28) points south to (-4,43). Bounded HIGH browser follow-up did not finish in 480 seconds, but inspection found the default driver reads `def.anchors[state.marker]` directly (session.ts markerRing) and bypasses displayed route guidance. Its strict `PLAYTEST_VISIBLE_ONLY=1` mode instead reads the actual minimap pin. Strict visible-pin HIGH/LOW confirmation is pending; no playtest code was edited.

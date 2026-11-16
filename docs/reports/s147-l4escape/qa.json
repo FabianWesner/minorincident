@@ -136,5 +136,24 @@
       "samples": 1
     }
   ],
-  "routeGuidanceFinding": "First hide observation at (-4,28) points directly to cellar (-79.3,-45.28); next observation moves northwest toward camp. 73 hide observations cluster near (-15,10). Added route-corner marker guidance; verification pending."
+  "routeGuidanceFinding": "First hide observation at (-4,28) points directly to cellar (-79.3,-45.28); next observation moves northwest toward camp. 73 hide observations cluster near (-15,10). Added route-corner marker guidance; verification pending.",
+  "markerNativeProbe": {
+    "checkpoint": "line-break",
+    "player": [
+      -4,
+      28
+    ],
+    "marker": [
+      -4,
+      43
+    ],
+    "result": "correct next street corner"
+  },
+  "markerBrowserFollowup": {
+    "path": "test-results/s147-l4escape/high-route-marker",
+    "finished": false,
+    "wallSeconds": 480,
+    "limitation": "Default driver session.ts markerRing reads def.anchors, bypassing markerAnchor. Use PLAYTEST_VISIBLE_ONLY=1 to read displayed minimap pin.",
+    "strictVisibleConfirmation": "pending"
+  }
 }
