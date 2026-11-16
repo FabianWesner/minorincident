@@ -1,5 +1,5 @@
 {
-  "objective": "s145-driver — playtest driver: no false stalls (L9 bridge loops, L10 farm deaths, cap labels)",
+  "objective": "s145-driver \u2014 playtest driver: no false stalls (L9 bridge loops, L10 farm deaths, cap labels)",
   "candidate": "69562fd1",
   "status": "implementation complete; real-input acceptance pending",
   "changes": [
@@ -12,11 +12,32 @@
     "build_qa": "pass",
     "typecheck": "pass",
     "lint": "pass",
-    "unit": { "command": "npm test", "status": "pass", "files": "27/27", "vitestTests": "106/106", "budgetCases": "150/150", "seconds": 126.1 },
-    "remote_unit_wrapper": { "command": "sh tools/remote/run.sh $PWD -- npm test", "status": "not run", "reason": "no healthy remote runner provisioned" }
+    "unit": {
+      "command": "npm test",
+      "status": "pass",
+      "files": "27/27",
+      "vitestTests": "106/106",
+      "budgetCases": "150/150",
+      "seconds": 126.1
+    },
+    "remote_unit_wrapper": {
+      "command": "sh tools/remote/run.sh $PWD -- npm test",
+      "status": "pass",
+      "files": 27,
+      "passed": 105,
+      "skipped": 1,
+      "seconds": 175.4,
+      "runner": "46.225.66.90"
+    }
   },
   "attempted_current_acceptance": {
-    "L9_HIGH_road": "blocked before browser launch: tsx CLI IPC socket returned EPERM",
+    "L9_HIGH_road": {
+      "status": "pass",
+      "run": "test-results/s145-driver/l9-road-high-1-live",
+      "wallSeconds": 307,
+      "issues": 0,
+      "skips": 0
+    },
     "L9_HIGH_road_node_loader": "blocked before browser launch: preview server listen on port 5027 returned EPERM",
     "L9_LOW_road": "not run",
     "L9_HIGH_shortcut": "not run",
@@ -25,12 +46,50 @@
   "archived_baseline_only": {
     "source_report": "docs/reports/batch-112-real-input/README.md",
     "L9_matrix": [
-      { "run": "b112-l9-high-road-1", "tier": "high", "route": "road", "outcome": "L10", "wallSeconds": 221, "deaths": 0, "skips": 0 },
-      { "run": "b112-l9-high-road-2", "tier": "high", "route": "road", "outcome": "L10", "wallSeconds": 235, "deaths": 0, "skips": 0 },
-      { "run": "b112-l9-high-shortcut", "tier": "high", "route": "shortcut", "outcome": "L10", "wallSeconds": 190, "deaths": 0, "skips": 0 },
-      { "run": "b112-l9-low-road", "tier": "low", "route": "road", "outcome": "L10", "wallSeconds": 287, "deaths": null, "skips": 0 }
+      {
+        "run": "b112-l9-high-road-1",
+        "tier": "high",
+        "route": "road",
+        "outcome": "L10",
+        "wallSeconds": 221,
+        "deaths": 0,
+        "skips": 0
+      },
+      {
+        "run": "b112-l9-high-road-2",
+        "tier": "high",
+        "route": "road",
+        "outcome": "L10",
+        "wallSeconds": 235,
+        "deaths": 0,
+        "skips": 0
+      },
+      {
+        "run": "b112-l9-high-shortcut",
+        "tier": "high",
+        "route": "shortcut",
+        "outcome": "L10",
+        "wallSeconds": 190,
+        "deaths": 0,
+        "skips": 0
+      },
+      {
+        "run": "b112-l9-low-road",
+        "tier": "low",
+        "route": "road",
+        "outcome": "L10",
+        "wallSeconds": 287,
+        "deaths": null,
+        "skips": 0
+      }
     ],
-    "reviewed_capture": { "run": "b112-l9-low-road", "tick": 15571, "file": "campaign-L9-15571-stuck-navigating.jpg", "observation": "APC near bridge marker amid boarders; HUD distance 14 m", "evidence_scope": "single archived frame; not current patch validation" },
+    "reviewed_capture": {
+      "run": "b112-l9-low-road",
+      "tick": 15571,
+      "file": "campaign-L9-15571-stuck-navigating.jpg",
+      "observation": "APC near bridge marker amid boarders; HUD distance 14 m",
+      "evidence_scope": "single archived frame; not current patch validation"
+    },
     "L10_death_comparison": "missing; archived L10 full-run death counts not present in the referenced s141 archive"
   },
   "acceptance": {

@@ -28,3 +28,7 @@ The archived batch-112 report records HIGH road 1, HIGH road 2, HIGH shortcut an
 - Review a current-worktree contact sheet and update the run JSON with those results.
 
 The run inventory, verification states and infrastructure errors are in [qa.json](qa.json) (<200 KB).
+
+## Resumed validation
+
+With unrestricted execution, the required remote unit suite passed on 46.225.66.90 (27 files, 105 passed / one skipped, 175.4 seconds). The first current HIGH road run completed L9 and its handover in 307 seconds with zero issues and no skips (`test-results/s145-driver/l9-road-high-1-live`). The remaining four L9 runs and two full mortal L10 runs remain pending. Earlier infrastructure blockers are resolved.
