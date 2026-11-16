@@ -68,3 +68,9 @@ Reviewed actual registered-level HIGH WebGPU first-wreck captures for L5/L6/L7/L
 ## Resolved renderer inventory
 
 Re-ran all ten production worlds using exactly `district.decay.placements`, the set used by DistrictBuild. Counts: L1/L2/L4/L8 0; L3 23, L5 25, L6 1, L7 38, L9 84, L10 238: **409 at-load vehicle wreck placements**. `qa.json.campaignWreckInventory` now contains this resolved set and names its stage explicitly. The earlier source-only 414 count is superseded; five L8 placements are removed by decay filtering. Runtime destruction/checkpoint variants still require independent coverage.
+
+## Current handoff and reproducibility
+
+`qa.json.reproduction` now preserves the exact tank reproduction spec and full-level wreck probe source, so `/private/tmp` cleanup does not erase the recipes. The full-level probe is diagnostic and still needs L5 opening validation, all placement/support groups, backend pairs and LOW coverage. Latest bounded L5 attempt did not start: browser guard reported `Quiet-run: admission exceeded 60 seconds`, host load ~3.74/3.83/3.97, no quiet slot. This is unmeasured coverage, not a renderer failure.
+
+Outstanding decisions: (1) outside-wire: isolated open-breach regression passes, but broad standstill report lacks an exact original actor/position fixture; inspect closed-wire clawing versus unreachable open-gap path before closure; (2) wreck grounding: full renderer set inventoried, isolated and L3 pair reviewed, campaign-wide visual verification incomplete; (3) original stationary flags: all seven later move alive, HIGH/LOW fresh runs clean with native hull contact evidence, but exact old five-second states lack target/path/contact records. Keep these open. Validated production fix is Alpha standing footwork only; read-only evacuation diagnostics and existing-test extensions are committed. Protected lane-owned mission files were not modified.
