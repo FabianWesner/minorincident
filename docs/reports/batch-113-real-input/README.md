@@ -116,3 +116,7 @@ Four-minute HIGH camera-only Alpha tracking run saved475 samples;218 track livin
 ## Identified HIGH strike sequence
 
 Opened local crop sheets `test-results/b113-tracked-high-review.jpg` (ticks9921–10132, movement/turning) and `test-results/b113-tracked-attack-review.jpg` (ticks13322–13533, including #372 attack states13352/13413/13473/13533). The identified Alpha steps/pivots, then strikes beside the opened breach. No obvious prolonged foot slide in sampled HIGH strikes; objective arrow and nearby actors intermittently obscure portions of feet. This is bounded ordinary-strike evidence, not all-special or LOW qualification.
+
+## Identified LOW tracking collected
+
+Four-minute matching LOW run saved479 receipts,210 tracking living Alpha (`test-results/b113-l4-tracked-low`). Tracked state samples:151 attracted,46 chase,11 alerted,2 stagger; charge specials start at8191. Zero ordinary attack samples on tracked actor, so no comparable LOW ordinary-strike window is supplied. Half-second sampling can miss brief states; this is not proof no strike occurred. Charge visual review remains pending.
