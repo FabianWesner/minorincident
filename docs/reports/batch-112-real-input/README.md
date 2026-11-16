@@ -99,3 +99,5 @@ Corrected TypeScript wrapper entry (`b112-l4-video-final`) was verified queued t
 ### Evidence audit
 
 Rechecked all four L9 final census rows: IDs 669–672 are all alive at 100 HP with native `evacuated=true` at the reported ticks. Thus the timing result is not an all-dead/vacuous pass. Candidate diff contains only README, qa.json (about 54 KB), and one reviewed 168 KB contact sheet; raw captures stay ignored. Typecheck/lint/remote suite passed on unchanged production source. Outstanding acceptance remains identifiable continuous L4 tank attack soles and fully visible L9 route beyond the sampled clear segment.
+
+Ignored bundled native-video wrapper (`test-results/b112-bundle.mjs`, `b112-video-run.ts`) explicitly forwards recordVideo in the profile helper; verified pooled context completed, but no video appeared after disposal. Raw `b112-l4-recorded` remains capture-only. The recording gap is unresolved and no native video proof is claimed.
