@@ -112,3 +112,7 @@ Matched brute Alpha #372 ordinary attack states at ticks10017/10077 to `test-res
 ## Identified camera tracking succeeds
 
 Four-minute HIGH camera-only Alpha tracking run saved475 samples;218 track living #372 near tank (ticks7273–13804). Opened `test-results/b113-l4-tracked-high/sequence/00332-t10012.jpg`: identified Alpha full body and feet visible beside opened south breach. This provides a useful consecutive review candidate, not yet a no-slide verdict. Tracking supplements ordinary input; it is not a normal-camera completion run.
+
+## Identified HIGH strike sequence
+
+Opened local crop sheets `test-results/b113-tracked-high-review.jpg` (ticks9921–10132, movement/turning) and `test-results/b113-tracked-attack-review.jpg` (ticks13322–13533, including #372 attack states13352/13413/13473/13533). The identified Alpha steps/pivots, then strikes beside the opened breach. No obvious prolonged foot slide in sampled HIGH strikes; objective arrow and nearby actors intermittently obscure portions of feet. This is bounded ordinary-strike evidence, not all-special or LOW qualification.
