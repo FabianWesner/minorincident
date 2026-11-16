@@ -211,6 +211,19 @@ test('melee: the swing hits inside its arc/range once per target and respects ma
   expect(hits).toHaveLength(3);
   for (const id of inside) expect(hits.filter(e => e.type === 'combat.hit' && e.targetId === id)).toHaveLength(1);
 
+  // The displayed swing must retain this committed direction when the live
+  // pointer reverses during windup (ActionView consumes runner.running aim).
+  const turning = await arena(); equip(turning, ['weapon.fire-axe']);
+  const east = dummy(turning, 1.1, 0, 1000), west = dummy(turning, -1.1, 0, 1000);
+  turning.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } }); step(turning, 1);
+  const committed = turning.combat!.runner.running.LEFT!;
+  turning.setInput({ aim: { x: -1, z: 0 }, left: { down: false, held: false, up: false } });
+  step(turning, committed.activeAt - turning.tick);
+  expect(turning.combat!.runner.loadout.state.LEFT.aim.x).toBe(-1);
+  expect(committed.aim.x).toBe(1);
+  expect(health(turning, east)).toBeLessThan(1000);
+  expect(health(turning, west)).toBe(1000);
+
   // Mouse taps wait through recovery; keyboard/touch keep the existing 200 ms window.
   for (const mouseAttack of [true, false]) {
     const w = await arena(); equip(w);
@@ -325,6 +338,78 @@ async function checkPointBlankCombat() {
     const ray = first?.type === 'combat.attack' ? w.combat!.query.ray(1, { ...first.position, y: first.position.y + .45 }, first.direction, rosterAction('weapon.handgun').range) : null;
     expect(health(w, target), `${level} native 3s point-blank handgun aim=${JSON.stringify(at)} player=${JSON.stringify(p.transform)} target=${JSON.stringify(w.entities.get(target)!.transform)} attacks=${shots.length} ray=${ray?.id ?? null}`).toBeLessThan(initialHp);
   }
+  // Controlled contact probes cover L5, L6 and L8. At the L7 start, allied
+  // soldiers kill the spawned runner before the axe's first active tick; that
+  // window is recorded as intercepted, not misreported as courier damage.
+  // L9 is vehicle-only before its scripted crash/crawl; L10's farm is below.
+  for (const level of ['L5', 'L6', 'L8'] as const) {
+    const w = await loadLevel(level, 1, 'high'); worlds.push(w);
+    const p = w.entities.get(1)!, start = { x: p.transform.x, z: p.transform.z };
+    let at: { x: number; z: number } | undefined;
+    for (let radius = 1; radius <= 8 && !at; radius++) for (let side = -1; side <= 1 && !at; side += 2) {
+      const candidate = { x: start.x + radius * 1.1, z: start.z + side * radius * .1 };
+      if (w.infected!.nav.cell(candidate.x, candidate.z) >= 0) at = candidate;
+    }
+    expect(at, `${level} has a resident start contact cell`).toBeDefined();
+    if (!at) throw new Error(`${level} has no start contact cell`);
+    missionControls(w).teleport('player', { x: at.x - 1.1, z: at.z });
+    if (w.chunks) w.chunks.update([at.x, at.z]);
+    equip(w, ['weapon.fire-axe']);
+    const target = w.infected!.spawn('infected.runner', at), hp = health(w, target);
+    w.combat!.status.apply(w.entities.get(target)!, { kind: 'stunned', duration: 9, maxStacks: 1, dps: 0, slow: 0 }, 1, 'qa.melee-contact');
+    let courierHit = false;
+    w.events.on('combat.hit', event => { if (event.type === 'combat.hit' && event.sourceId === 1 && event.targetId === target) courierHit = true; });
+    for (let tick = 0; tick < 480; tick++) {
+      const source = w.entities.get(1)!, enemy = w.entities.get(target)!;
+      const dx = enemy.transform.x - source.transform.x, dz = enemy.transform.z - source.transform.z, distance = Math.hypot(dx, dz) || 1;
+      w.setInput({ aim: { x: dx / distance, z: dz / distance }, aimPoint: { x: enemy.transform.x, z: enemy.transform.z }, left: { down: tick === 0, held: true, up: false } });
+      w.update();
+    }
+    w.clearInput();
+    expect(courierHit, `${level} courier melee hit event`).toBe(true);
+    expect(health(w, target), `${level} native 8s fire-axe contact probe`).toBeLessThan(hp);
+  }
+
+  // The batch-113 symptom is melee at the farm shed, so exercise the authored
+  // L10 surface and real infected spawn with normal eight-second attack input.
+  const farm = await loadLevel('L10', 1, 'high'); worlds.push(farm);
+  missionControls(farm).teleport('player', { x: 1170, z: -26 }); farm.chunks!.update([1170, -26]);
+  let farmAt: { x: number; z: number } | undefined, bestFarmDistance = Infinity;
+  for (let x = 1120; x <= 1220; x++) for (let z = -60; z <= 10; z++) if (farm.infected!.nav.clear(x, z, .35)) {
+    const distance = (x - 1170) ** 2 + (z + 26) ** 2;
+    if (distance < bestFarmDistance) { bestFarmDistance = distance; farmAt = { x, z }; }
+  }
+  expect(farmAt, 'an open L10 farm walk surface').toBeDefined();
+  if (!farmAt) throw new Error('No clear farm test position');
+  missionControls(farm).teleport('player', { x: farmAt.x - 1.1, z: farmAt.z }); farm.chunks!.update([farmAt.x, farmAt.z]);
+  equip(farm, ['weapon.fire-axe']);
+  const farmTarget = farm.infected!.spawn('infected.runner', farmAt);
+  const farmHp = health(farm, farmTarget);
+  farm.combat!.status.apply(farm.entities.get(farmTarget)!, { kind: 'stunned', duration: 9, maxStacks: 1, dps: 0, slow: 0 }, 1, 'qa.melee-contact');
+  farm.setInput({ aim: { x: 1, z: 0 }, aimPoint: farmAt, left: { down: true, held: true, up: false } });
+  const farmTrace: { attackId: number; tick: number; weapon: string; facing: number; targetChosen: number[]; hitIds: number[]; noDamageReason: string | null; y: number[] }[] = [];
+  farm.events.on('combat.attack', event => {
+    if (event.type !== 'combat.attack' || event.sourceId !== 1 || event.actionId !== 'weapon.fire-axe') return;
+    const def = rosterAction('weapon.fire-axe'), chosen = farm.combat!.query.melee(1, event.position, event.direction, def.range, def.arc, def.maxTargets);
+    farmTrace.push({ attackId: event.attackId, tick: event.tick, weapon: event.actionId, facing: Math.atan2(event.direction.z, event.direction.x), targetChosen: chosen.map(e => e.id), hitIds: [],
+      noDamageReason: chosen.some(e => e.id === farmTarget) ? 'damage-rejected-after-hit-test' : !chosen.length && Math.abs(farm.entities.get(1)!.transform.y - farm.entities.get(farmTarget)!.transform.y) > .9 ? 'height-mismatch' : !chosen.length && farm.combat!.query.clearDistance(event.position, event.direction, def.range) < Math.hypot(farm.entities.get(farmTarget)!.transform.x - event.position.x, farm.entities.get(farmTarget)!.transform.z - event.position.z) ? 'blocked-by-solid' : !chosen.length ? 'out-of-arc-or-range' : 'another-target-intercepted',
+      y: [event.position.y, farm.entities.get(farmTarget)!.transform.y] });
+  });
+  farm.events.on('combat.hit', event => {
+    if (event.type !== 'combat.hit' || event.sourceId !== 1 || !('targetId' in event)) return;
+    const shot = farmTrace.find(row => row.attackId === event.attackId);
+    if (shot) { shot.hitIds.push(event.targetId); if (event.targetId === farmTarget) shot.noDamageReason = null; }
+  });
+  for (let tick = 0; tick < 480; tick++) {
+    const p = farm.entities.get(1)!, target = farm.entities.get(farmTarget)!;
+    const dx = target.transform.x - p.transform.x, dz = target.transform.z - p.transform.z, distance = Math.hypot(dx, dz) || 1;
+    farm.setInput({ aim: { x: dx / distance, z: dz / distance }, aimPoint: { x: target.transform.x, z: target.transform.z }, left: { down: tick === 0, held: true, up: false } });
+    farm.update();
+  }
+  farm.clearInput();
+  expect(farmTrace.length, `native L10 farm melee trace: ${JSON.stringify(farmTrace)}`).toBeGreaterThan(0);
+  expect(farmTrace.some(row => row.hitIds.includes(farmTarget)), `native L10 farm courier hit trace: ${JSON.stringify(farmTrace)}`).toBe(true);
+  expect(health(farm, farmTarget), `native L10 farm melee trace player=${JSON.stringify(farm.entities.get(1)!.transform)} target=${JSON.stringify(farm.entities.get(farmTarget)!.transform)} attacks=${JSON.stringify(farmTrace)}`).toBeLessThan(farmHp);
 }
 
 test('explosives: landing clamps to range, fuse, distance falloff, cover line of sight, self 30 % and escort 100 %', async () => {
