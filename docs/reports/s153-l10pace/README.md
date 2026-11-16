@@ -1,0 +1,73 @@
+# S153 · L10 farm pacing
+
+## Result
+
+The farm-to-restricted run now has four authored encounter identities: lone pursuers, field hordes, farmhouse defense and an Alpha ambush. The high-tier LevelTenBot cleared the farmstead in **309.1 s**, with **157 kills (30.48/min) and 0 deaths**. The native baseline was **156 kills in 310.2 s (30.17/min), 0 deaths**. The six authored solo-popout targets across the farm/shed route fell to two corn-lane targets, reducing their span from about **1.07 km** to **0.50 km**; the larger groups now give the corn and shed approaches different combat shapes.
+
+The route evidence sheet is a native-simulation schematic, not a rendered game screenshot. It records segment times, encounters, and the low-tier walking deaths. Browser confirmation at HIGH then LOW remains open: the shared browser pool could not start inside this sandbox, and its guarded legacy path could not inspect processes.
+
+## Native route map
+
+Seed 1, L10 default start, fixed-step simulation. The skilled policy is the production `LevelTenBot`; the normal-walk probe uses the `walk: true` input modifier from `tools/qa/escort-walk.ts`. The skilled run uses HIGH density; normal-walk uses LOW density. Kills count `combat.kill` events. Segment boundaries are first crossings of the listed X markers.
+
+| Segment | Skilled HIGH elapsed | Kills in segment | Skilled deaths | Normal-walk LOW elapsed | Normal deaths |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Crash entrance → farmhouse (x=698) | 38.3 s | 6 | 0 | 86.2 s | 0 |
+| Farmhouse → corn crossing (x=936) | 59.0 s | 38 | 0 | 141.1 s | 1 |
+| Corn crossing → sheds (x=1,165) | 50.9 s | 30 | 0 | 120.3 s | 1 |
+| Sheds → depot/Alpha (x=1,517) | 84.5 s | 42 | 0 | Did not reach | 40 at x≈1,455 |
+| Depot/Alpha → restricted-zone marker (x=1,857) | 76.4 s | 41 | 0 | Did not reach | 0 beyond x=1,517 |
+
+The low-tier normal-walk run was observed for 900 simulated seconds. It recorded **42 deaths**, **261 kills**, and **691 m of X-axis backtracking**; it crossed x=698, 936 and 1,165, then stalled at x=1,442.1 before the restricted-zone marker. Deaths were at x≈760 (1), x≈1,051 (1), and x≈1,447–1,455 (40). This exposes a local late-shed/workshop choke for the slower policy; it does not replay the entire level on each retry. The result is diagnostic and is not used for the skilled-bot comparison.
+
+Authored repeat count: the former four corn scare triggers plus workshop/shed pop-outs at x=1,405 and 1,685 are now two corn triggers (x targets 615 and 1,115); the seven later route ambushes from x=2,040 onward remain. The encounter sequence now interleaves two field-horde groups with a farmhouse defense, then the Alpha set piece. Field-horde slots spread over a 14–26 m ring, leaving the mown lane open and making the threats approach across the field rather than appear as another close roadside pair.
+
+## Design choices
+
+- Replaced the farm's repeated small close-fighting beats with a farmhouse defense (11/9 regulars, one dog, Screamer role), a corn-field horde (14/7 regulars, one dog) and a shed field crossing (17/12 regulars). Counts are HIGH/LOW. Existing encounter archetypes and stats are unchanged.
+- Kept the regular Alpha at the depot as a distinct Alpha ambush. The encounter data names the four types so L10 tests can protect the set-piece census.
+- Removed two corn pop-outs and the workshop/shed pop-outs at x=1,405 and 1,685. Replaced their pressure with authored group members; HIGH/LOW farm groups have 51/37 regular slots including the crash groups.
+- Put a medkit on the corn-route entry at [807, 80] and moved the industrial medkit to the actual route bend at [1297, 80]. L10 campaign ammo remains bottomless, so no ammo pickup was added.
+- Kept the existing L10 pace checkpoints: first after 120 m, then every 200 m, plus region checkpoints. The normal-walk retry samples remain local to the later choke.
+
+## Verification
+
+- `npm run typecheck` — pass.
+- `npm run lint` — pass.
+- Focused `tests/engine/world-systems.test.ts` — 5/5 pass, including encounter-type/count and farm layout checks.
+- Required remote `sh tools/remote/run.sh "$PWD" -- npm test` — unavailable; runner returned 69 because no healthy remote host was running and this command was not eligible for the Mac fallback.
+- E32 verify — pass via `node --import tsx tools/verify.ts E32`: typecheck and lint passed; the full default suite passed 106 tests across 27 files in 158 s. The `npm run verify -- E32` wrapper itself hit sandbox `EPERM` on the `tsx` IPC socket, so the same verify script was invoked directly through Node's loader.
+- HIGH and LOW browser scenes — not run. Pool startup returned `EPERM` binding localhost:4329; the guarded fallback repeatedly received `EPERM` inspecting `ps`. No visual pass is claimed.
+- An exploratory broader `tests/qa/invariants/waves.test.ts` run exposed existing non-L10 failures (L4 low arrival and L6 hatch filler census); that file remains unchanged. The focused L10 level test passes.
+
+## Artifact
+
+[Route evidence sheet](route-evidence.png) — inspected HIGH/LOW browser captures (see final confirmation below).
+
+## Follow-up with unrestricted execution
+
+Implementation and report committed as `f4ab5a34`. HIGH then LOW browser attempts now reach the pool, but both fail before rendering because SceneLab rejects production `infected.sprinter` actors as retired rigid figures. Visual confirmation remains open.
+
+Required remote suite retry passed: 27 files, 105 tests passed and one skipped; 192.2 s within the 240 s budget, exit 0.
+
+## Final browser confirmation
+
+HIGH then LOW passed using temporary audit fixtures generated directly from production `cureEncounterSlots`, with the existing actor `allowRigid: true` option to inspect the production sprinter. No runtime code or stats changed for this audit. Both WebGPU tiers were confirmed as requested, with zero console errors or undrawn frames; HIGH 54 draw calls / 128,297 triangles, LOW 54 / 65,089. Both sheets were opened. Actors and attack cues are visible, but foreground geometry obscures part of this short farmhouse view; this is not a full visual route walkthrough. The sole retained sheet now contains these HIGH and LOW captures, replacing the earlier native schematic. Native mapping remains in the table and JSON.
+
+## S153b: late-workshop recovery
+
+Identical seed-1 LOW normal-walk policy, 900 s on original c02a9b91 sources: 15 deaths, furthest x=990.7. Deaths by segment (entrance/farmhouse/corn/sheds/depot): 0/13/2/0/0. It never reached the later choke, so this run cannot establish whether that choke pre-existed. The initial S153 candidate reproduces 42 deaths, furthest x=1455.5, segment deaths 0/1/1/40/0.
+
+At the choke the diagnostic found two live Alphas alongside armored/firefighter attackers. The shed crossing itself is unchanged. Shifted the LOW depot cohort 63 m east using its existing tier-specific placement and moved the service medkit from [1517,-55] to [1437,100], before the approach. All slots, encounter types, stats and corpses remain. This separates the depot arrival from the workshop fight.
+
+Final LOW: x=1517 crossed at 612.68 s with 3 total deaths (one in the late-shed segment); furthest x=1554.85 by900 s. Whole-window segment deaths 0/1/1/1/5 (8 total). The later depot remains dangerous. Final HIGH farm window: 157 kills in309.47 s, **30.44 kills/min, 0 deaths**. This exceeds original30.17/min; the prior S153 result was30.48/min (about0.1% faster). Regression assertions preserve LOW placement beyond the workshop, one Alpha, and the approach medkit.
+
+S153b verification: typecheck and lint passed. Required remote suite passed on unchanged retry: 27 files,105 tests passed,one skipped,193.3 s. First attempt had an unrelated L4 contact-test150 s timeout (104 passed).
+
+### Final S153b refinement
+
+Restored the service medkit to its original [1517,-55] position: the LOW depot offset alone is sufficient and preserves HIGH placement. Final identical900 s LOW probe crosses1517 at533.68 s with **2 total deaths and zero in1165–1517**; furthest1554.15,8 deaths over the whole window (6 after1517). HIGH crosses1857 at309.47 s with **158 kills,30.63/min,zero farm deaths**, meeting both the original30.17 and prior S15330.48 rates. The retained fix changes only the LOW depot placement, not the shed horde, medkit, stats or encounter census.
+
+Final refinement validation: typecheck and lint pass. Two unchanged required remote runs both pass104 tests with one skipped, but fail the unrelated L4 contact150 s timeout (201.1 s and224.9 s suite totals). L10 assertions pass in both. The preceding combined-placement revision had a green remote retry; the final revision does not claim a full-suite pass.
+
+Additional unchanged final-source remote retry on94.130.181.173 hit the238 s reservation and240 s suite budget (245.4 s,exit124). Repeated remote timing failures are the remaining validation blocker; no tests or timeouts were trimmed or changed.

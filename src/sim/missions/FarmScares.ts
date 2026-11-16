@@ -10,7 +10,9 @@ export function farmScareSites(placements: readonly Placement[]) {
   if (list) return list;
   list = [];
   const walking = [...cure.regions[0].route.slice(0, 4), cure.anchors['farmhouse-rifle'], [774, 26], [918, 21], [936, -12], cure.anchors['shed-molotov']];
-  for (const [i, targetX] of [615, 710, 865, 1115].entries()) {
+  // Two separated corn-lane stalkers replace four evenly spaced pop-outs.
+  // The intervening action now belongs to authored groups.
+  for (const [i, targetX] of [615, 1115].entries()) {
     const segment = walking.slice(1).findIndex((p, n) => walking[n][0] <= targetX && p[0] >= targetX && p[0] > walking[n][0]);
     const a = walking[Math.max(0, segment)], b = walking[Math.max(0, segment) + 1];
     const targetZ = a[1] + (b[1] - a[1]) * Math.max(0, Math.min(1, (targetX - a[0]) / (b[0] - a[0] || 1)));
@@ -28,9 +30,9 @@ export function farmScareSites(placements: readonly Placement[]) {
     }
     list.push({ id: `corn-scare-${i}`, x, z });
   }
-  // The later route trades corn for workshop corners, quarantine wrecks and
-  // broken delivery yards. These ambushes use the same warning/admission ledger.
-  for (const [i, [x, z]] of [[1405,37],[1685,0],[2040,27],[2405,-20],[2640,32],[2840,65],[3155,72],[3440,73],[3730,0]].entries()) list.push({id:`route-ambush-${i}`,x,z});
+  // Beyond the sheds, ambushes resume at the restricted perimeter. The old
+  // workshop/shed pop-outs duplicated both authored groups and the Alpha beat.
+  for (const [i, [x, z]] of [[2040,27],[2405,-20],[2640,32],[2840,65],[3155,72],[3440,73],[3730,0]].entries()) list.push({id:`route-ambush-${i}`,x,z});
   sites.set(placements, list); return list;
 }
 /** The scare ledger is checkpointed with LevelTenEncounters; nothing is spawned waiting in view. */
