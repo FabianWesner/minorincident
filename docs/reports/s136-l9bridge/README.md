@@ -35,3 +35,7 @@ The prescribed remote command `sh tools/remote/run.sh "$PWD" -- npm test` could 
 Headless WebGPU through the browser pool, ports 5009/5010, ordinary mortal input and no skips: HIGH runs reached L10 in 256, 270 and 191 seconds; LOW reached L10 in 244 seconds. The first two HIGH runs logged 3 and 4 stationary-infected P2 flags; the third HIGH and LOW runs logged none. Raw receipts are under `test-results/playtest/s136-*`, with compact results in `qa.json`.
 
 The implementation is committed as `ea5b652a`. The former sandbox restrictions are lifted. Threat and vehicle motion gates, review of the stationary-infected flags, exact old-log fixture reproduction and final acceptance audit remain open.
+
+## Additional gates
+
+`npm run qa:vehicle-motion` passed all sixteen HIGH/LOW scenarios. L9 threat audit completed skilled and passive routes with zero level-specific flags; its sole aggregate flag is `PARTIAL_LEVEL_SELECTION` because only L9 was selected. Raw receipts: `test-results/s136-threat/audit.json` and `test-results/s83-vehicleslide/native-contact/*.json`.

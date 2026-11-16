@@ -416,5 +416,81 @@
         "P3": 0
       }
     }
-  ]
+  ],
+  "threatAudit": {
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "receipt": "test-results/s136-threat/audit.json",
+    "note": "L9 zero level flags; partial selection diagnostic flag remains"
+  },
+  "vehicleMotion": {
+    "rows": [
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-clinging.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-prop-momentum.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-prop-push.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-push.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-ram-survivor.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-ram.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-reach-recovery.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/high-surrounded.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-clinging.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-prop-momentum.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-prop-push.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-push.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-ram-survivor.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-ram.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-reach-recovery.json",
+        "pass": true
+      },
+      {
+        "file": "test-results/s83-vehicleslide/native-contact/low-surrounded.json",
+        "pass": true
+      }
+    ],
+    "pass": true
+  }
 }
