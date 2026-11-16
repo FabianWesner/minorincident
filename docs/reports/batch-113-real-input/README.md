@@ -1,6 +1,6 @@
 # Batch 113 real-input browser QA — incomplete acceptance
 
-Candidate `69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11`. Report only. **L4 full completion, outside-wire route attribution and readable Alpha tank foot planting remain open.** Both L3 tiers completed, the three L7 wreck closeups were reviewed, and HIGH L6/L9/L10 four-minute sweeps were collected.
+Candidate `69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11`. Report only. **L4 full completion, broad outside-wire routing and complete Alpha tank foot planting remain open.** Identified HIGH ordinary strikes and LOW charge recovery have bounded visual evidence without obvious prolonged sliding. Both L3 tiers completed, the three L7 wreck closeups were reviewed, and HIGH L6/L9/L10 four-minute sweeps were collected.
 
 ## Method and validation
 
@@ -16,8 +16,8 @@ QA build (`MI_BUILD_CACHE=off npm run build:qa`), typecheck and lint pass. The u
 | --- | --- | --- |
 | L3 HIGH zoom 1 | Full level, 414 s, no skips/issues, seven deaths | Opened bridge tick 21652: infected on deck, one damaged target; no obvious sink/float in frame. Universal hitability unproven. |
 | L3 LOW zoom 1 | Full level, 157 s, no skips/issues | Extra bridge frame is post-fight; geometry readable but no infected to qualify close damage. |
-| L4 HIGH zoom 1.5 | 480 s through cellar escape; no skips | Not complete. Stationary warnings require attribution. Feet occluded. Continuation restarted at quartermaster and was interrupted. |
-| L4 LOW zoom 1.5 | 540 s through cellar escape; no skips, 25 deaths | Not complete. No stationary-enemy warnings. Opened north-breach tick 10839: dense interior crowd and Alphas; feet occluded. |
+| L4 HIGH zoom 1.5 | 480 s through cellar escape; no skips | Not complete. Stationary warnings require attribution. Original feet occluded; later identified HIGH strikes reviewed without obvious prolonged slide. Additional zoom1/manual completion attempts also stop at cellar. |
+| L4 LOW zoom 1.5 | 540 s through cellar escape; no skips, 25 deaths | Not complete. No stationary-enemy warnings. Opened north-breach tick 10839: feet occluded. Later identified LOW charge recovery reviewed without obvious continuing glide. |
 | L7 HIGH zoom 1.5 | Full real-input route, 154 s, no skips/issues; three camera closeups | Opened military-1/3/4 closeups: supported on paving, no obvious deep sink/float. Dark wheel contact limits fine judgment. |
 | L6 HIGH zoom 1 | 240 s, no skips | Opened tick 13543: dark readable shield/courier, survivor separation makes babysitting conspicuous. Combat pressure visible, courier full HP. No obvious geometry glitch in frame. |
 | L9 HIGH zoom 1 | 240 s, no skips | Opened tick 9495: strong hatch pressure and nearly disabled smoking APC; conspicuous crowd rendering corruption. |
@@ -35,7 +35,7 @@ No confirmed P1 or P3 product finding. Driver severities are not automatically a
 
 L4 opening empty-HUD navigation warnings, L6 shelter-wait warning, and intentional sample-cap cannot-finish labels are driver gaps. L9 passive-ally warning targets the player APC during the scripted engine interruption; it does not establish ally AI failure. L9 stationary warnings around the hull remain unqualified. L4 bounded continuation restarted the opening rather than preserving the cellar state; repeated identical continuation is not evidence of progress.
 
-Still required: full HIGH and LOW L4 completion; observable outside-wire routing and breach-wave arrivals; continuously readable Alpha soles near the tank. Existing wide frames show substantial interior combat but cannot independently establish every outside actor's route or planted feet. L3 close-target visual coverage also remains bounded to the reviewed HIGH frame; the LOW extra capture landed after combat.
+Still required: full HIGH and LOW L4 completion; broad ordinary-infected outside-wire routing and breach-wave arrival qualification; complete readable Alpha foot-contact windows near the tank. Identified same-actor Alpha crossings are established in both tiers, with bounded HIGH strike and LOW charge-recovery observations detailed below. Existing wide frames show substantial interior combat but cannot independently establish every outside actor's route or planted feet. L3 close-target visual coverage also remains bounded to the reviewed HIGH frame; the LOW extra capture landed after combat.
 
 ## Capture locations
 

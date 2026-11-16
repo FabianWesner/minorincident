@@ -124,7 +124,7 @@
     "Pooled launchProfile browser.newContext omits recordVideo; passing recording options to helper alone does not create video. Read-only code evidence tools/browser-pool/client.ts launchProfile."
   ],
   "rawCaptures": [],
-  "notes": "Incomplete acceptance. All requested tiers sampled; both L3 runs complete; L4 HIGH/LOW cellar escape incomplete and tank feet occluded. L7 frames reviewed. Required validations passed.",
+  "notes": "Incomplete acceptance: both L3 runs complete, close HP reductions observed; L7 frames reviewed; HIGH short sweeps collected. L4 same-actor Alpha crossings in both tiers and bounded HIGH strike/LOW charge visual evidence. Full L4 completion and broad routing/complete contact qualification remain open.",
   "runs": [
     {
       "path": "test-results/playtest/b113-l3-high",
@@ -2012,5 +2012,18 @@
       }
     },
     "interpretation": "Zoom1 also fails cellar escape by540s; does not resolve repeated route/death loop. No full completion."
+  },
+  "artifactAudit": {
+    "candidate": "69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11",
+    "changedPaths": [
+      "docs/reports/batch-113-real-input/README.md",
+      "docs/reports/batch-113-real-input/qa.json",
+      "docs/reports/batch-113-real-input/contact-sheet.jpg"
+    ],
+    "jsonUnder200KB": true,
+    "singleSheetBytes": 99726,
+    "rawCapturesTracked": false,
+    "missingExpectedArtifact": "test-results/b113-video/smoke-video (recorded recording failure)",
+    "activeOwnChecks": false
   }
 }
