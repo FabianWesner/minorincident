@@ -121,3 +121,7 @@ Added an audit-only GroundField from retained merged layout triangle meshes, inc
 ## Height ceiling regression
 
 Extended existing static-placement render contract with stacked road/roof surfaces. It proves unrestricted highest surface, road beneath a height ceiling, null below all surfaces, and query-order independence. All 14 render-contract tests pass; typecheck and lint pass. L6/L7 runtime admission again exited 75 before execution (60 s, quiet=false, load 3.08/3.35/3.40), so five elevated runtime gaps remain unverified.
+
+## Elevated support result and L7 offenders
+
+Fresh L6/L7 HIGH WebGL2 sweep measures all 39 identities with the elevated triangle field. L6 gap is -0.170 cm. L7 now reveals three sink offenders: l7-military-1 -15.001 cm, l7-military-3 -194.002 cm, l7-military-4 -16.468 cm. Opened and reviewed full-level l7-military-3.jpg: APC upper body/roof is visible while its lower body is buried in the road, consistent with the large sink result. Scene is dark; this diagnostic does not substitute for requested zoom-1.5 backend pairs. Placement correction remains to do. Earlier L7 34-row zero-gap result used an incomplete low-only field and is superseded.
