@@ -12,18 +12,20 @@ import { finale } from '../../data/l10Finale';
  * Checkpoint forecourts and the service/motor-pool roads remain clear of authored groups. */
 export interface CureEncounter {
   id: string; region: CureRegion; at: Point;
+  /** Authored set-piece identity used by the L10 route review and content tests. */
+  type?: 'lone-pursuer' | 'field-horde' | 'barn-defense' | 'alpha-ambush';
   /** Separate formations can enter as one regional cohort without moving their stations. */
   releaseWith?: string;
   /** Low-budget patrol station, after the corridor horde receives its slots. */
   atLow?: Point; regular: readonly [number, number]; dogs: number; alphas: number; alphasLow?: number; tough?: number; roles?: readonly string[]; assault?: boolean;
 }
 export const cureEncounters: readonly CureEncounter[] = [
-  { id: 'crash-singletons', region: 'crash-outskirts', at: [592, -8], regular: [2, 2], dogs: 0, alphas: 0, roles: ['infected.crawler'] },
+  { id: 'crash-singletons', type: 'lone-pursuer', region: 'crash-outskirts', at: [592, -8], regular: [2, 2], dogs: 0, alphas: 0, roles: ['infected.crawler'] },
   { id: 'crash-bend', region: 'crash-outskirts', at: [652, 33], regular: [3, 3], dogs: 0, alphas: 0 },
   { id: 'crash-road-pair', region: 'crash-outskirts', at: [622, -12.5], regular: [2, 2], dogs: 0, alphas: 0, roles: ['infected.crawler'] },
   { id: 'crash-pair', region: 'crash-outskirts', at: [712, 33], regular: [2, 2], dogs: 0, alphas: 0 },
-  { id: 'fringe-patrol', region: 'residential-fringe', at: [982, 80], regular: [11, 9], dogs: 1, alphas: 0, roles: ['infected.screamer'] },
-  { id: 'depot-alpha', region: 'industrial-area', at: [1517, 100], regular: [9, 7], dogs: 0, alphas: 1, roles: ['infected.bloated', 'infected.firefighter'] },
+  { id: 'farmhouse-defense', type: 'barn-defense', region: 'residential-fringe', at: [982, 80], regular: [11, 9], dogs: 1, alphas: 0, roles: ['infected.screamer'] },
+  { id: 'depot-alpha', type: 'alpha-ambush', region: 'industrial-area', at: [1517, 100], regular: [9, 7], dogs: 0, alphas: 1, roles: ['infected.bloated', 'infected.firefighter'] },
   { id: 'military-breach', region: 'military-zone', at: [2012, -75], regular: [8, 6], dogs: 2, alphas: 1, roles: ['infected.riot', 'infected.armored', 'infected.sprinter'] },
   { id: 'military-exit', region: 'military-zone', at: [2327, -75], regular: [7, 5], dogs: 2, alphas: 1, roles: ['infected.riot', 'infected.armored'] },
   { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [6, 4], dogs: 1, alphas: 1, roles: ['infected.hazmat', 'infected.nurse'] },
@@ -34,8 +36,8 @@ export const cureEncounters: readonly CureEncounter[] = [
 ];
 /** Route cadence groups intentionally stay outside the vignette exclusion map: they move to the courier's lane on admission. */
 export const curePaceEncounters: readonly CureEncounter[] = [
-  { id: 'farm-road-pair-1', region: 'residential-fringe', at: [830, 80], regular: [8, 7], dogs: 1, alphas: 0 },
-  { id: 'farm-road-pair-2', region: 'residential-fringe', at: [1125, 25], regular: [7, 6], dogs: 0, alphas: 0 },
+  { id: 'corn-field-horde', type: 'field-horde', region: 'residential-fringe', at: [830, 80], regular: [14, 7], dogs: 1, alphas: 0 },
+  { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1125, 25], regular: [17, 12], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [7, 6], dogs: 0, alphas: 0 },
   // Keep the armored slot south of the warehouse footprint (ends at z=94).
   { id: 'farm-road-pair-4', region: 'industrial-area', at: [1400, 106], regular: [5, 4], dogs: 0, alphas: 0 },
@@ -54,7 +56,8 @@ export const curePaceEncounters: readonly CureEncounter[] = [
 ];
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },
-  ...['police-medkit', 'industrial-medkit', 'military-medkit', 'research-medkit', 'corridor-medkit'].map(id => ({ id, at: cure.anchors[id] })),
+  { id: 'field-approach', at: [807, 80] as Point },
+  ...['police-medkit', 'industrial-medkit', 'military-medkit', 'research-medkit', 'corridor-medkit'].map(id => ({ id, at: id === 'industrial-medkit' ? [1297, 80] as Point : cure.anchors[id] })),
   { id: 'fringe-detour', at: [937, 76] as Point },
   { id: 'industrial-service', at: [1517, -55] as Point },
   { id: 'military-motor-pool', at: [2137, 110] as Point },
@@ -84,7 +87,8 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // Road arrivals scatter around their fixed authored anchors.
     const assault = group.assault === true, roadFight = group.region === 'crash-outskirts' || group.region === 'destroyed-corridor';
     const angle = assault ? [Math.PI, -Math.PI / 2, Math.PI / 2][i % 3] : i * 2.399963229728653;
-    const radius = assault ? finale.holdRadius + 8 + Math.floor(i / 3) % 4 * 2 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
+    const fieldHorde = group.type === 'field-horde';
+    const radius = assault ? finale.holdRadius + 8 + Math.floor(i / 3) % 4 * 2 : fieldHorde ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
     // The checkpoint-bearing patrols approach from the military road side.
     // A circle on the bearing sent bodies around both flanks and funnelled
     // a retreat into the full road groups. Staggered rows retain every slot
