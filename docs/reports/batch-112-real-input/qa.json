@@ -1,18 +1,32 @@
 {
   "candidate": "cc2f7476c7e7834d5060b07a2b654a5d1cb1c873",
-  "disposition": "incomplete-browser-runtime-blocker",
+  "disposition": "in-progress-browser-restored",
   "backend": "webgpu",
   "method": "planned unchanged real keyboard/mouse playtest driver; normal mortal combat; headless; HIGH before LOW; guarded single-browser workflow; ports 5019/5020",
-  "runs": [],
+  "runs": [
+    {
+      "name": "b112-l9-high-road-1",
+      "raw": "test-results/playtest/b112-l9-high-road-1",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 221,
+      "driverIssues": 0,
+      "review": "pending"
+    }
+  ],
   "validation": {
     "qaBuild": "pass",
     "typecheck": "pass",
     "lint": "pass",
     "remote": {
       "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
-      "exit": 69,
-      "status": "not-run-no-healthy-runner",
-      "reason": "No healthy Hetzner runner; prescribed runner policy disallowed local Mac fallback. Not a runner timeout."
+      "exit": 0,
+      "runner": "46.225.66.90",
+      "passed": 105,
+      "skipped": 1,
+      "files": 27,
+      "inventory": 150,
+      "seconds": 134.9
     }
   },
   "browserAttempts": [
@@ -48,11 +62,22 @@
     "l4": {
       "tier": "HIGH",
       "zoom": 1.5,
-      "attacks": ["strike", "roar", "slam"],
+      "attacks": [
+        "strike",
+        "roar",
+        "slam"
+      ],
       "footPlantingReview": "pending"
     },
     "broadSweep": {
-      "levels": ["L1", "L2", "L3", "L5", "L7", "L8"],
+      "levels": [
+        "L1",
+        "L2",
+        "L3",
+        "L5",
+        "L7",
+        "L8"
+      ],
       "tier": "HIGH",
       "zoom": 1,
       "minutesPerLevel": 4,

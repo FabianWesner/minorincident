@@ -35,3 +35,7 @@ These attempts produced no gameplay evidence and do not count as coverage. Retry
 No P1/P2/P3 gameplay finding is established: there are no batch 112 gameplay captures or ticks to support one. Driver gap: local preview binding is denied by the current sandbox, preventing all requested real-input checks and the contact sheet. The L9 boarding deadline, route naturalness, bridge stall attribution, L4 foot sliding, broad level glitches/appeal, and screamer arrow judgment remain unmeasured.
 
 The JSON ledger is [qa.json](qa.json). It records the candidate, commands, validation status, and pending coverage. No raw captures were added.
+
+## Browser access restored
+
+The sandbox restriction was removed on continuation. The first HIGH WebGPU road run completed L9 in 221 seconds with zero skips and zero driver issues (`test-results/playtest/b112-l9-high-road-1`). Its frequent captures and evacuation census are awaiting review; this is not yet an evacuation timing or visual pass. The prescribed remote suite now passes on 46.225.66.90: 27 files, 105 passed / one skipped, full 150-case inventory, 134.9 seconds. Earlier environment failures above are historical. Remaining matrix runs, visual review and contact sheet remain pending.
