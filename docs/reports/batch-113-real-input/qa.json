@@ -1,0 +1,2214 @@
+{
+  "candidate": "69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11",
+  "batch": 113,
+  "reportOnly": true,
+  "complete": false,
+  "method": {
+    "requested": "Real keyboard/mouse playtest, headless WebGPU, HIGH before LOW, ordinary combat, full L3/L4, focused L7 wreck framing and short L6/L9/L10 sweeps.",
+    "browserAdmission": "tools/e2e-lock.sh; E2E_PORT=5025; SCENE_PORT=5026; one browser at a time.",
+    "browserAdmissionAttempts": [
+      {
+        "level": "L3",
+        "tier": "high",
+        "backend": "webgpu",
+        "status": "NOT STARTED",
+        "exitCode": 75,
+        "reason": "Browser pool failed to start; Node listen returned EPERM binding 127.0.0.1:4329 before a browser session was admitted.",
+        "rawOutput": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "backend": "webgpu",
+        "status": "NOT STARTED",
+        "exitCode": 75,
+        "reason": "Retry after 30 seconds; same listen EPERM on 127.0.0.1:4329 before browser admission.",
+        "rawOutput": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+      },
+      {
+        "level": "L3",
+        "tier": "high",
+        "backend": "webgpu",
+        "poolPort": 4328,
+        "status": "NOT STARTED",
+        "exitCode": 75,
+        "reason": "Alternate documented pool port also failed with listen EPERM before browser admission.",
+        "rawOutput": "/var/folders/0d/d1pz5009603g0jcd5r3j353c0000gn/T/mi-browser-pool.log"
+      }
+    ]
+  },
+  "gameplayCoverage": [
+    {
+      "check": "L3 HIGH full level: bridge close-target damage and infected bridge support",
+      "status": "FULL LEVEL COLLECTED; T21652 REVIEWED, DAMAGED DECK TARGET VISIBLE"
+    },
+    {
+      "check": "L3 LOW full level: bridge close-target damage and infected bridge support",
+      "status": "FULL LEVEL; CLOSE BRIDGE HP REDUCTIONS OBSERVED IN LOG AT7087/7155"
+    },
+    {
+      "check": "L4 HIGH full level: breach approaches, waves, Alpha tank foot planting",
+      "status": "480 SECOND SEGMENT COLLECTED; FULL COMPLETION PENDING"
+    },
+    {
+      "check": "L4 LOW full level: breach approaches, waves, Alpha tank foot planting",
+      "status": "540 SECOND RUN COLLECTED; CELLAR ESCAPE NOT FINISHED; FEET OCCLUDED"
+    },
+    {
+      "check": "L7 D-FAIR military wrecks, HIGH zoom 1.5",
+      "status": "HIGH Z1.5 THREE TARGETED CAMERA FRAMES COLLECTED AND OPENED"
+    },
+    {
+      "check": "L6 HIGH zoom 1 short sweep",
+      "status": "240 SECOND SWEEP COLLECTED; T13543 REVIEWED"
+    },
+    {
+      "check": "L9 HIGH zoom 1 short sweep",
+      "status": "240 SECOND SWEEP COLLECTED; T9495 REVIEWED"
+    },
+    {
+      "check": "L10 HIGH zoom 1 short sweep",
+      "status": "240 SECOND SWEEP COLLECTED; T13892 REVIEWED"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "P2",
+      "level": "L9",
+      "tick": 9495,
+      "capture": "test-results/playtest/b113-l9-high/captures/campaign-L9-9495-enemy-frozen.jpg",
+      "finding": "Several crowd actors show tall black/white striped projected surfaces above their bodies. Visible rendering corruption; root cause unproven."
+    },
+    {
+      "severity": "P2",
+      "provisional": true,
+      "level": "L10",
+      "tick": 13892,
+      "capture": "test-results/playtest/b113-l10-high/captures/campaign-L10-13892-enemy-unhittable.jpg",
+      "finding": "Driver reports #134 at 1.1m unchanged 60HP after 8s melee attacks; reviewed frame shows close target and attack arc. Aim/collision/hit logic attribution unproven."
+    }
+  ],
+  "contactSheet": "contact-sheet.jpg",
+  "validation": {
+    "qaBuild": {
+      "command": "MI_BUILD_CACHE=off npm run build:qa",
+      "exitCode": 0
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "remoteTests": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "exitCode": 0,
+      "runner": "46.225.66.90",
+      "budgetSeconds": 240,
+      "elapsedSeconds": 183.2,
+      "filesPassed": 27,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "inventoryCases": 150
+    }
+  },
+  "driverGaps": [
+    "L4 opening empty-HUD navigation warning",
+    "Intentional sample-cap cannot-finish labels",
+    "L6 shelter wait classified as no progress",
+    "L4 bounded continuation does not preserve cellar state; explicit saveOnYield path is restricted to L10",
+    "L9 player APC passive-ally label during scripted stall",
+    "L4/L9 stationary actor attribution unresolved",
+    "Pooled launchProfile browser.newContext omits recordVideo; passing recording options to helper alone does not create video. Read-only code evidence tools/browser-pool/client.ts launchProfile."
+  ],
+  "rawCaptures": [],
+  "notes": "Incomplete acceptance: both L3 runs complete, close HP reductions observed; L7 frames reviewed; HIGH short sweeps collected. L4 same-actor Alpha crossings in both tiers and bounded HIGH strike/LOW charge visual evidence. Full L4 completion and broad routing/complete contact qualification remain open.",
+  "runs": [
+    {
+      "path": "test-results/playtest/b113-l3-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L3"
+        ],
+        "runs": [
+          {
+            "level": "L3",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 414,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 4.837,
+            "deaths": 7,
+            "assists": 0,
+            "attacks": {
+              "weapon.handgun": 561
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "armory",
+                "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+                "tick": 12,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": {
+                    "x": -139.2,
+                    "y": 0,
+                    "z": -8.4
+                  },
+                  "drawn": [
+                    -139.2,
+                    0.05,
+                    -8.4
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "defend",
+                "text": "Help defend the station \u00b7 10\u00a0m",
+                "tick": 970,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "checkpoint",
+                "text": "Get inside the army checkpoint \u00b7 365\u00a0m",
+                "tick": 1652,
+                "marker": {
+                  "anchor": "l3-zone",
+                  "ring": {
+                    "x": 225,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    225,
+                    0.05,
+                    0
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      },
+      "visualReview": "PENDING"
+    },
+    {
+      "level": "L4",
+      "quality": "high",
+      "zoom": 1.5,
+      "path": "test-results/playtest/b113-l4-high",
+      "seconds": 480,
+      "finished": false,
+      "skips": [],
+      "continuation": "Restarted at quartermaster; interrupted repeat",
+      "visualReview": "PENDING"
+    },
+    {
+      "path": "test-results/playtest/b113-l6-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L6"
+        ],
+        "runs": [
+          {
+            "level": "L6",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 240,
+            "simSeconds": 238,
+            "maxNoProgressSeconds": 32.45,
+            "deaths": 4,
+            "assists": 1,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "shelter",
+                "text": "Look around the shelter \u00b7 rest while you can",
+                "tick": 11,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "stop",
+                "text": "Stop the infected \u00b7 Retreat in 0:36",
+                "tick": 1994,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "retreat",
+                "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+                "tick": 3254,
+                "marker": {
+                  "anchor": "l6-next",
+                  "ring": {
+                    "x": 242,
+                    "y": 0.6,
+                    "z": 15
+                  },
+                  "drawn": [
+                    242,
+                    0.6,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "review": {
+        "tick": 13543,
+        "capture": "test-results/playtest/b113-l6-high/captures/campaign-L6-t13543.jpg",
+        "observation": "Dark readable courier/shield against tunnel; Survivor lost warning and separated group make escort babysitting conspicuous. No obvious geometry glitch in this frame. Intentional sample cap is not a product P0."
+      }
+    },
+    {
+      "path": "test-results/playtest/b113-l9-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L9"
+        ],
+        "runs": [
+          {
+            "level": "L9",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 240,
+            "simSeconds": 235,
+            "maxNoProgressSeconds": 4.816666666666666,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.handgun"
+            ],
+            "steps": [
+              {
+                "id": "approach",
+                "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+                "tick": 3,
+                "marker": {
+                  "anchor": "crash-approach",
+                  "ring": {
+                    "x": 470,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    457,
+                    0,
+                    0
+                  ],
+                  "playerY": 1.0400424003601074,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 6,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 1,
+          "P2": 4,
+          "P3": 0
+        }
+      },
+      "reviewedTicks": [
+        9495
+      ]
+    },
+    {
+      "path": "test-results/playtest/b113-l10-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L10"
+        ],
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 240,
+            "simSeconds": 237,
+            "maxNoProgressSeconds": 14.716,
+            "deaths": 7,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "steps": [
+              {
+                "id": "crash",
+                "text": "Get away from the river \u00b7 101\u00a0m",
+                "tick": 10,
+                "marker": {
+                  "anchor": "river-exit",
+                  "ring": {
+                    "x": 647,
+                    "y": 0,
+                    "z": -12.5
+                  },
+                  "drawn": [
+                    647,
+                    0,
+                    -12.5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "farmstead",
+                "text": "Find a way through the farms \u00b7 64\u00a0m",
+                "tick": 1967,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    698,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "reviewedTicks": [
+        13892
+      ]
+    },
+    {
+      "path": "test-results/playtest/b113-l7-high",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L7"
+        ],
+        "runs": [
+          {
+            "level": "L7",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 154,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 4.933333333333334,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 32,
+              "weapon.rocket-launcher": 52
+            },
+            "weaponsStart": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.bat",
+              "weapon.fire-axe",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.shotgun",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "rocket",
+                "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+                "tick": 1,
+                "marker": {
+                  "anchor": "l7-rocket",
+                  "ring": {
+                    "x": 276,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    276,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "corridor",
+                "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+                "tick": 66,
+                "marker": {
+                  "anchor": "l7-corridor-east",
+                  "ring": {
+                    "x": -30,
+                    "y": 0,
+                    "z": 50
+                  },
+                  "drawn": [
+                    -30,
+                    0.13,
+                    50
+                  ],
+                  "playerY": 4.619999885559082,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "departure",
+                "text": "Get everyone aboard the bus \u00b7 45\u00a0m",
+                "tick": 6347,
+                "marker": {
+                  "anchor": "l7-bus-boarding",
+                  "ring": {
+                    "x": -70.5,
+                    "y": 0,
+                    "z": 47.5
+                  },
+                  "drawn": [
+                    -70.5,
+                    0,
+                    47.5
+                  ],
+                  "playerY": 0.8500000238418579,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      },
+      "review": "Opened campaign-wreck-route.jpg; escort visible, wreck contacts not exposed; targeted framing pending."
+    },
+    {
+      "path": "test-results/playtest/b113-l3-low",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1,
+        "levels": [
+          "L3"
+        ],
+        "runs": [
+          {
+            "level": "L3",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 157,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 4.851,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.handgun": 195
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "armory",
+                "text": "Take a handgun from the armory \u00b7 19\u00a0m",
+                "tick": 10,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": {
+                    "x": -139.2,
+                    "y": 0,
+                    "z": -8.4
+                  },
+                  "drawn": [
+                    -139.2,
+                    0.05,
+                    -8.4
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "defend",
+                "text": "Help defend the station \u00b7 10\u00a0m",
+                "tick": 973,
+                "marker": {
+                  "anchor": "l3-armory",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "checkpoint",
+                "text": "Get inside the army checkpoint \u00b7 365\u00a0m",
+                "tick": 1526,
+                "marker": {
+                  "anchor": "l3-zone",
+                  "ring": {
+                    "x": 225,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "drawn": [
+                    225,
+                    0.05,
+                    0
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      },
+      "review": "Opened campaign-bridge-close.jpg; clear bridge after combat, no actors to qualify close damage. Zero driver issues full run."
+    },
+    {
+      "path": "test-results/playtest/b113-l4-low",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 540,
+            "simSeconds": 537,
+            "maxNoProgressSeconds": 29.751,
+            "deaths": 25,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 13,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": {
+                    "x": -17,
+                    "y": 0,
+                    "z": 3
+                  },
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1832,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2176,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 97\u00a0m",
+                "tick": 13607,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -79.29999999999998,
+                    "y": 0,
+                    "z": -45.2801
+                  },
+                  "drawn": [
+                    -79.3,
+                    0.13,
+                    -45.28
+                  ],
+                  "playerY": 0.7050989270210266,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 1,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "reviewedTicks": [
+        10839
+      ],
+      "review": "North breach interior crowd and Alphas; feet occluded. No stationary-enemy warning. Nine-minute limit on cellar escape; full completion unqualified."
+    }
+  ],
+  "wreckCloseups": {
+    "method": "Registered L7, HIGH WebGPU zoom1.5; camera-only cinematic placement; paused simulation; no actor or lighting edits. Supplement to real-input route.",
+    "receipt": {
+      "rows": [
+        {
+          "id": "military-1",
+          "tick": 0,
+          "backend": "webgpu",
+          "quality": "high",
+          "camera": {
+            "zoom": 1.5,
+            "targetZoom": 1.5,
+            "zoomLimits": [
+              0.5,
+              1.5
+            ],
+            "fov": 25,
+            "azimuth": 0.7853981633974483,
+            "polar": 0.9424777960769379,
+            "radius": 28.5,
+            "regionScale": 1,
+            "focus": [
+              273,
+              3.885,
+              15
+            ],
+            "target": [
+              214,
+              3.9,
+              25
+            ],
+            "position": [
+              226,
+              14.9,
+              37
+            ],
+            "spot": null
+          }
+        },
+        {
+          "id": "military-3",
+          "tick": 0,
+          "backend": "webgpu",
+          "quality": "high",
+          "camera": {
+            "zoom": 1.5,
+            "targetZoom": 1.5,
+            "zoomLimits": [
+              0.5,
+              1.5
+            ],
+            "fov": 25,
+            "azimuth": 0.7853981633974483,
+            "polar": 0.9424777960769379,
+            "radius": 28.5,
+            "regionScale": 1,
+            "focus": [
+              273,
+              3.885,
+              15
+            ],
+            "target": [
+              138,
+              1.65,
+              25
+            ],
+            "position": [
+              150,
+              12.65,
+              37
+            ],
+            "spot": null
+          }
+        },
+        {
+          "id": "military-4",
+          "tick": 0,
+          "backend": "webgpu",
+          "quality": "high",
+          "camera": {
+            "zoom": 1.5,
+            "targetZoom": 1.5,
+            "zoomLimits": [
+              0.5,
+              1.5
+            ],
+            "fov": 25,
+            "azimuth": 0.7853981633974483,
+            "polar": 0.9424777960769379,
+            "radius": 28.5,
+            "regionScale": 1,
+            "focus": [
+              273,
+              3.885,
+              15
+            ],
+            "target": [
+              100,
+              0.46499999999999986,
+              6
+            ],
+            "position": [
+              112,
+              11.465,
+              18
+            ],
+            "spot": null
+          }
+        }
+      ],
+      "errors": []
+    },
+    "captures": [
+      "test-results/b113-wrecks/military-1.jpg",
+      "test-results/b113-wrecks/military-3.jpg",
+      "test-results/b113-wrecks/military-4.jpg"
+    ],
+    "review": "All three opened; appear supported on paving without obvious deep sink/float; dark wheel contact limits fine judgment."
+  },
+  "findingClassification": {
+    "confirmedProduct": [
+      "L9 P2 visible crowd rendering corruption"
+    ],
+    "provisional": [
+      "L10 P2 close target no damage",
+      "L4 HIGH P2 stationary actor warnings"
+    ],
+    "notProductP0": "Intentional run caps"
+  },
+  "l4EscapeAudit": {
+    "interpretation": "Repeated dying/resetting at line-break checkpoint, not a motionless run. Driver steering vs combat/route product attribution unresolved.",
+    "runs": [
+      {
+        "tier": "high",
+        "hideObservations": 205,
+        "deathInputReleaseEvents": 24,
+        "samples": [
+          {
+            "tick": 13628,
+            "player": {
+              "x": -15.731046676635742,
+              "z": 20.03118896484375,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 15629,
+            "player": {
+              "x": -15.643997751176357,
+              "z": 10.275961510837078,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 17518,
+            "player": {
+              "x": -15.697925567626953,
+              "z": -0.8058217763900757,
+              "hp": 90,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 19257,
+            "player": {
+              "x": -24.76463508605957,
+              "z": -8.051992416381836,
+              "hp": 22,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 21026,
+            "player": {
+              "x": -17.2303321454674,
+              "z": 0.6643182542175055,
+              "hp": 47,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 22803,
+            "player": {
+              "x": -17.368511199951172,
+              "z": 9.3209867477417,
+              "hp": 0,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 24599,
+            "player": {
+              "x": -15.338327407836914,
+              "z": 6.726490497589111,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 26391,
+            "player": {
+              "x": -15.351954460144043,
+              "z": 3.331521511077881,
+              "hp": 60,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 28249,
+            "player": {
+              "x": -15.575894355773926,
+              "z": -0.5118460059165955,
+              "hp": 37,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "hideObservations": 260,
+        "deathInputReleaseEvents": 25,
+        "samples": [
+          {
+            "tick": 13650,
+            "player": {
+              "x": -5.383366107940674,
+              "z": 16.027753829956055,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 16014,
+            "player": {
+              "x": -40.12404251098633,
+              "z": -17.820663452148438,
+              "hp": 20,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 18267,
+            "player": {
+              "x": -16.58597755432129,
+              "z": 2.2150745391845703,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 20617,
+            "player": {
+              "x": -19.156707763671875,
+              "z": -7.070772171020508,
+              "hp": 10,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 22955,
+            "player": {
+              "x": -15.938379287719727,
+              "z": -2.7382261753082275,
+              "hp": 80,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 25325,
+            "player": {
+              "x": -15.47554132482037,
+              "z": -1.0509296674281359,
+              "hp": 60,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 27574,
+            "player": {
+              "x": -16.469846725463867,
+              "z": 9.021162033081055,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 29782,
+            "player": {
+              "x": -18.013450919650495,
+              "z": -4.8359566535800695,
+              "hp": 40,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 31982,
+            "player": {
+              "x": -14.613007545471191,
+              "z": 10.34599781036377,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          }
+        ]
+      }
+    ]
+  },
+  "l3CloseDamageAudit": {
+    "method": "Consecutive sampled observations in bridge approach x155\u2013205; same actor HP reduction while current distance below2m. Ordinary real-input run. Sampling cannot identify damage source or prove every attack/actor.",
+    "runs": [
+      {
+        "tier": "high",
+        "events": [
+          {
+            "tick": 21837,
+            "id": 545,
+            "previousHP": 45,
+            "hp": 20,
+            "distance": 0.6922293452718484,
+            "player": {
+              "x": 161.78716962086037,
+              "z": -2.8459139354526997,
+              "hp": 90,
+              "weapon": "weapon.handgun"
+            }
+          },
+          {
+            "tick": 21837,
+            "id": 444,
+            "previousHP": 47.5,
+            "hp": 15,
+            "distance": 0.8725623376842498,
+            "player": {
+              "x": 161.78716962086037,
+              "z": -2.8459139354526997,
+              "hp": 90,
+              "weapon": "weapon.handgun"
+            }
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "events": [
+          {
+            "tick": 7087,
+            "id": 1472,
+            "previousHP": 60,
+            "hp": 20,
+            "distance": 1.182002249348467,
+            "player": {
+              "x": 164.1593475341797,
+              "z": -3.3801872730255127,
+              "hp": 90,
+              "weapon": "weapon.handgun"
+            }
+          },
+          {
+            "tick": 7155,
+            "id": 1242,
+            "previousHP": 60,
+            "hp": 20,
+            "distance": 1.0819103792612608,
+            "player": {
+              "x": 166.42221069335938,
+              "z": -0.9042387008666992,
+              "hp": 80,
+              "weapon": "weapon.handgun"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "recordingSmoke": {
+    "wrapper": "test-results/b113-video/build.mjs",
+    "run": "test-results/b113-video/smoke",
+    "seconds": 60,
+    "tier": "high",
+    "backend": "webgpu",
+    "tick": 3412,
+    "expectedVideoDirectory": "test-results/b113-video/smoke-video",
+    "videoExists": false,
+    "qualification": "No native video evidence; context recordVideo forwarding verified in ignored bundle, recording gap persists."
+  },
+  "sequenceCapture": {
+    "path": "test-results/b113-l4-sequence-high/sequence",
+    "frames": 473,
+    "seconds": 240,
+    "quality": "high",
+    "zoom": 1.5,
+    "reviewedTicks": [
+      9021,
+      9049,
+      9079,
+      9109,
+      9141,
+      9169,
+      9200
+    ],
+    "reviewSheet": "test-results/b113-sequence-review.jpg",
+    "review": "Opened consecutive sequence; active breach crowd, individual Alpha feet remain occluded. Native video absent; screenshot fallback works.",
+    "fullSizeReviewed": [
+      9021,
+      9049,
+      9079
+    ],
+    "fullSizeReview": "Actors move between frames; no obvious frozen crowd in bounded segment; camera movement/overlap prevents reliable sole tracks."
+  },
+  "nextObservation": {
+    "wrapper": "test-results/b113-video/fixed-tank-entry.ts",
+    "status": "RUN, 240 SECONDS; HULL OCCLUDES FEET",
+    "camera": {
+      "position": [
+        -6,
+        11,
+        39
+      ],
+      "target": [
+        -20,
+        0,
+        27.5
+      ],
+      "zoom": 1.5,
+      "afterTick": 4500
+    },
+    "basis": "src/data/l4.ts l4-tank-stop anchor",
+    "scope": "Camera-only change and screenshot observer; simulation/input driver unchanged."
+  },
+  "fixedTankObservation": {
+    "path": "test-results/b113-l4-fixed-high/sequence",
+    "frames": 472,
+    "reviewedTicks": [
+      7250,
+      14202
+    ],
+    "quality": "high",
+    "zoom": 1.5,
+    "result": "Camera fixed successfully, but tank hull occludes nearby large infected soles. No foot acceptance."
+  },
+  "oppositeTankObservation": {
+    "path": "test-results/b113-l4-opposite-high/sequence",
+    "frames": 473,
+    "seconds": 240,
+    "quality": "high",
+    "zoom": 1.5,
+    "reviewedTicks": [
+      7258,
+      14140
+    ],
+    "camera": {
+      "position": [
+        -34,
+        11,
+        16
+      ],
+      "target": [
+        -20,
+        0,
+        27.5
+      ]
+    },
+    "result": "South-wall actors partly frame-edge/fence occluded; final frame shows fallen large bodies. No continuous sole track; not accepted."
+  },
+  "southTankObservation": {
+    "path": "test-results/b113-l4-south-high/sequence",
+    "frames": 478,
+    "seconds": 240,
+    "tier": "high",
+    "reviewedTicks": [
+      7228,
+      14360
+    ],
+    "camera": {
+      "position": [
+        -34,
+        11,
+        6
+      ],
+      "target": [
+        -20,
+        0,
+        17.5
+      ]
+    },
+    "result": "Final frame has large standing infected with visible feet near sandbags; consecutive window review pending. No sliding verdict from one frame.",
+    "consecutiveReview": {
+      "ticks": [
+        14089,
+        14119,
+        14149,
+        14179,
+        14209,
+        14239,
+        14269,
+        14299,
+        14329,
+        14360
+      ],
+      "sheet": "test-results/b113-south-feet-review.jpg",
+      "seconds": 4.5167,
+      "observation": "Visible large infected foot stays near same paving lines while upper body shifts; no obvious sliding in bounded window. Actor ID and complete strike/roar/slam coverage unverified."
+    }
+  },
+  "southLowObservation": {
+    "path": "test-results/b113-l4-south-low/sequence",
+    "frames": 474,
+    "seconds": 240,
+    "tier": "low",
+    "zoom": 1.5,
+    "reviewedTicks": [
+      13974,
+      14004,
+      14034,
+      14064,
+      14095,
+      14125,
+      14155,
+      14185,
+      14215,
+      14245
+    ],
+    "sheet": "test-results/b113-south-low-review.jpg",
+    "result": "Ordinary infected moves around sandbags; large actor clipped at left edge. No comparable Alpha sole track. LOW tank acceptance unqualified.",
+    "additionalReview": {
+      "sheet": "test-results/b113-low-left-review.jpg",
+      "crop": [
+        0,
+        160,
+        700,
+        650
+      ],
+      "ticks": [
+        13974,
+        14004,
+        14034,
+        14064,
+        14095,
+        14125,
+        14155,
+        14185,
+        14215,
+        14245
+      ],
+      "result": "Mixed ordinary/armored actors moving at left; no confidently identified Alpha or stable sole track. Available observation rows lack archetype; cannot infer identity from size."
+    }
+  },
+  "identityObserverPreparation": {
+    "wrapper": "test-results/b113-video/identified-feet-entry.ts",
+    "status": "RUN, VALIDATED 473 SAMPLES",
+    "filter": "archetype includes alpha OR infected.alphaType exists",
+    "fields": [
+      "id",
+      "archetype",
+      "alphaType",
+      "transform",
+      "health",
+      "brain.state",
+      "brain.specialAttack",
+      "brain.targetId",
+      "projected"
+    ],
+    "intervalMs": 500,
+    "mutation": "camera only; actor/simulation observer read-only"
+  },
+  "identifiedHighObservation": {
+    "path": "test-results/b113-l4-identified-high",
+    "samples": 473,
+    "aliveActorStateSamples": {
+      "attracted": 466,
+      "alerted": 196,
+      "attack": 43,
+      "chase": 136,
+      "stagger": 5,
+      "idle": 2
+    },
+    "specialMoveSamples": {
+      "alpha.charge": 14
+    },
+    "nearTankAliveSamples": 89,
+    "exampleAlphaId": 372,
+    "visualWindowReview": {
+      "actorId": 372,
+      "alphaType": "brute",
+      "ticks": [
+        10017,
+        10077
+      ],
+      "captures": [
+        "test-results/b113-l4-identified-high/sequence/00332-t10017.jpg",
+        "test-results/b113-l4-identified-high/sequence/00334-t10077.jpg"
+      ],
+      "state": "attack",
+      "result": "Opened full-size; identified actor at upper edge behind perimeter, fence/tank obscure lower legs. Planting unqualified."
+    }
+  },
+  "trackedHighObservation": {
+    "path": "test-results/b113-l4-tracked-high",
+    "samples": 475,
+    "trackedSamples": 218,
+    "trackedId": 372,
+    "trackedTickRange": [
+      7273,
+      13804
+    ],
+    "reviewedFrame": 10012,
+    "capture": "test-results/b113-l4-tracked-high/sequence/00332-t10012.jpg",
+    "result": "Opened full-size; identified Alpha full body/feet visible beside opened south breach. Consecutive foot review pending. Camera-only tracking supplement; not normal camera completion.",
+    "consecutiveReview": {
+      "movementTicks": [
+        9921,
+        9951,
+        9981,
+        10012,
+        10042,
+        10072,
+        10102,
+        10132
+      ],
+      "attackTicks": [
+        13322,
+        13352,
+        13382,
+        13413,
+        13443,
+        13473,
+        13503,
+        13533
+      ],
+      "actorId": 372,
+      "sheets": [
+        "test-results/b113-tracked-high-review.jpg",
+        "test-results/b113-tracked-attack-review.jpg"
+      ],
+      "result": "Stepping/pivoting during attracted movement, ordinary strikes later. No obvious prolonged foot sliding in sampled HIGH strikes. Arrow/actors partly occlude feet; LOW and all-special coverage unqualified."
+    }
+  },
+  "trackedLowObservation": {
+    "path": "test-results/b113-l4-tracked-low",
+    "samples": 479,
+    "trackedSamples": 210,
+    "trackedStateSamples": {
+      "attracted": 151,
+      "chase": 46,
+      "alerted": 11,
+      "stagger": 2
+    },
+    "ordinaryAttackSamples": 0,
+    "specials": "alpha.charge samples beginning8191; no ordinary attack sampled on tracked actor",
+    "qualification": "No comparable LOW ordinary-strike window; 500ms cadence can miss brief states. Visual charge review pending.",
+    "visualChargeReview": {
+      "actorId": 246,
+      "ticks": [
+        8161,
+        8191,
+        8222,
+        8252,
+        8282,
+        8312,
+        8342
+      ],
+      "sheet": "test-results/b113-low-charge-review.jpg",
+      "recoveryPosition": [
+        -17.611411362658195,
+        0.75,
+        23.271979736240457
+      ],
+      "result": "Charge travel then fixed recovery position; no obvious continuing recovery glide in viewed frames. Fence partly occludes sole contact. Not strike/roar/slam qualification."
+    }
+  },
+  "contactSheetReview": {
+    "path": "contact-sheet.jpg",
+    "bytes": 99726,
+    "size": [
+      960,
+      584
+    ],
+    "opened": true,
+    "ticks": {
+      "L3": 21652,
+      "L4": 11864,
+      "L9": 9495,
+      "L10": 13892
+    }
+  },
+  "manualHighAttempt": {
+    "path": "test-results/playtest/b113-l4-manual-high",
+    "summary": {
+      "mode": "campaign",
+      "acceptanceMode": "STANDARD",
+      "immortal": false,
+      "routeOnly": false,
+      "quality": "high",
+      "heroine": "female",
+      "zoom": 1.5,
+      "levels": [
+        "L4"
+      ],
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 540,
+          "simSeconds": 537,
+          "maxNoProgressSeconds": 52.458,
+          "deaths": 24,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 13,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1829,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2176,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 75\u00a0m",
+              "tick": 13597,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 9,
+      "bySeverity": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 8,
+        "P3": 0
+      }
+    },
+    "manualCommands": [
+      {
+        "manual": true,
+        "keys": [
+          "KeyA"
+        ],
+        "ms": 10000,
+        "capture": "campaign-manual-west.jpg"
+      },
+      {
+        "keys": [
+          "KeyW"
+        ],
+        "ms": 10000,
+        "capture": "campaign-manual-north.jpg"
+      },
+      {
+        "manual": false
+      }
+    ],
+    "review": "Both captures opened; first escaped crowd at96HP near fence; second returned plaza at47HP. Returned driver did not finish. No skips or game-state mutation.",
+    "stationaryCaptureReview": {
+      "ticks": [
+        10809,
+        11589
+      ],
+      "captures": [
+        "test-results/playtest/b113-l4-manual-high/captures/campaign-L4-10809-enemy-frozen.jpg",
+        "test-results/playtest/b113-l4-manual-high/captures/campaign-L4-11589-enemy-frozen.jpg"
+      ],
+      "result": "Opened full-size; dense truck/perimeter crowd, flagged identity unresolved. Outside route vs hull/crowd obstruction not established. Warnings remain provisional."
+    }
+  },
+  "observedSouthCrossings": {
+    "authoredBoundaryZ": 22.5,
+    "source": "src/data/l4.ts l4.perimeter",
+    "crossings": [
+      {
+        "tier": "high",
+        "before": {
+          "tick": 9771,
+          "id": 372,
+          "transform": {
+            "x": -17.568779652737714,
+            "y": 0.75,
+            "z": 24.016940029555002,
+            "yaw": 1.7021769112967933
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 661,
+              "stage": "active",
+              "startTick": 9694,
+              "activeTick": 9742,
+              "cooldownExpiry": 10222,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 372,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.97926636142176,
+                "z": 28.478158930187604,
+                "radius": 1,
+                "dx": -0.13100295362576297,
+                "dz": -0.9913819779183632
+              },
+              "hitIds": [
+                165,
+                166
+              ]
+            },
+            "targetId": 0
+          }
+        },
+        "after": {
+          "tick": 9801,
+          "id": 372,
+          "transform": {
+            "x": -18.158292944053667,
+            "y": 0.75,
+            "z": 19.5557211289224,
+            "yaw": 1.7021769112967933
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 661,
+              "stage": "active",
+              "startTick": 9694,
+              "activeTick": 9742,
+              "cooldownExpiry": 10222,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 372,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.97926636142176,
+                "z": 28.478158930187604,
+                "radius": 1,
+                "dx": -0.13100295362576297,
+                "dz": -0.9913819779183632
+              },
+              "hitIds": [
+                165,
+                166
+              ]
+            },
+            "targetId": 0
+          }
+        }
+      },
+      {
+        "tier": "low",
+        "before": {
+          "tick": 12074,
+          "id": 246,
+          "transform": {
+            "x": -17.504567135046848,
+            "y": 0.75,
+            "z": 25.114275762369914,
+            "yaw": 1.6716904137181225
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 424,
+              "stage": "active",
+              "startTick": 11990,
+              "activeTick": 12038,
+              "cooldownExpiry": 12518,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 246,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.945554502595623,
+                "z": 30.63605128087486,
+                "radius": 1,
+                "dx": -0.10072299683804677,
+                "dz": -0.99491450783872
+              },
+              "hitIds": []
+            },
+            "targetId": 0
+          }
+        },
+        "after": {
+          "tick": 12104,
+          "id": 246,
+          "transform": {
+            "x": -17.95782062081811,
+            "y": 0.75,
+            "z": 20.637160477095634,
+            "yaw": 1.6716904137181225
+          },
+          "brain": {
+            "state": "attracted",
+            "specialAttack": {
+              "move": "alpha.charge",
+              "attackId": 424,
+              "stage": "active",
+              "startTick": 11990,
+              "activeTick": 12038,
+              "cooldownExpiry": 12518,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 246,
+                "x": -17.769230769230774,
+                "z": 22.5
+              },
+              "area": {
+                "x": -16.945554502595623,
+                "z": 30.63605128087486,
+                "radius": 1,
+                "dx": -0.10072299683804677,
+                "dz": -0.99491450783872
+              },
+              "hitIds": [
+                122,
+                123
+              ]
+            },
+            "targetId": 0
+          }
+        }
+      }
+    ],
+    "qualification": "Same living identified Alpha outside-to-inside crossing in each tier; bounded evidence, not every ordinary actor route."
+  },
+  "wideHighCompletionAttempt": {
+    "path": "test-results/playtest/b113-l4-wide-high",
+    "summary": {
+      "mode": "campaign",
+      "acceptanceMode": "STANDARD",
+      "immortal": false,
+      "routeOnly": false,
+      "quality": "high",
+      "heroine": "female",
+      "zoom": 1,
+      "levels": [
+        "L4"
+      ],
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 540,
+          "simSeconds": 537,
+          "maxNoProgressSeconds": 29.896,
+          "deaths": 33,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 13,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1831,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2093,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 81\u00a0m",
+              "tick": 13493,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 3,
+      "bySeverity": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    },
+    "interpretation": "Zoom1 also fails cellar escape by540s; does not resolve repeated route/death loop. No full completion."
+  },
+  "artifactAudit": {
+    "candidate": "69562fd1ee5ba56140a8ce1f0a2f5e6b407e1c11",
+    "changedPaths": [
+      "docs/reports/batch-113-real-input/README.md",
+      "docs/reports/batch-113-real-input/qa.json",
+      "docs/reports/batch-113-real-input/contact-sheet.jpg"
+    ],
+    "jsonUnder200KB": true,
+    "singleSheetBytes": 99726,
+    "rawCapturesTracked": false,
+    "missingExpectedArtifact": "test-results/b113-video/smoke-video (recorded recording failure)",
+    "activeOwnChecks": false
+  },
+  "bearingHighAttempt": {
+    "path": "test-results/playtest/b113-l4-bearing-high",
+    "summary": {
+      "mode": "campaign",
+      "acceptanceMode": "STANDARD",
+      "immortal": false,
+      "routeOnly": false,
+      "quality": "high",
+      "heroine": "female",
+      "zoom": 1,
+      "levels": [
+        "L4"
+      ],
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 336,
+          "simSeconds": 333,
+          "maxNoProgressSeconds": 90.88333333333334,
+          "deaths": 12,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 12,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1836,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2099,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 75\u00a0m",
+              "tick": 13491,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 5,
+      "bySeverity": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 4,
+        "P3": 0
+      }
+    },
+    "manualKeys": [
+      {
+        "keys": [
+          "KeyA"
+        ],
+        "ms": 10000
+      },
+      {
+        "keys": [
+          "KeyD",
+          "KeyW"
+        ],
+        "ms": 10000
+      },
+      {
+        "keys": [
+          "KeyS"
+        ],
+        "ms": 10000
+      }
+    ],
+    "capturesReviewed": [
+      "campaign-bearing-first.jpg",
+      "campaign-bearing-second.jpg",
+      "campaign-bearing-south.jpg"
+    ],
+    "result": "Fence79HP, back plaza30HP, cafe death0HP. Manual mode influences no-progress timing; automatic90s label is not established product P0. No completion."
+  },
+  "broadSweepReview": {
+    "ticks": {
+      "L6": [
+        2720,
+        5427,
+        8129,
+        10834,
+        13543
+      ],
+      "L9": [
+        2710,
+        5412,
+        8117,
+        10825,
+        13528
+      ],
+      "L10": [
+        2713,
+        5418,
+        8136,
+        10854,
+        13560
+      ]
+    },
+    "sheets": [
+      "test-results/b113-l6-broad-review.jpg",
+      "test-results/b113-l9-broad-review.jpg",
+      "test-results/b113-l10-broad-review.jpg"
+    ],
+    "opened": true,
+    "observations": {
+      "L6": "Repeated survivor-lost/rejoin cues; dark readable courier and crowded telegraphs, conspicuous babysitting.",
+      "L9": "Hull pressure then evacuation crowd; stripe corruption visible again at10825/13528.",
+      "L10": "Repeated close combat around same dark crop patch; repetitive sample; driver/backtracking confounds pacing."
+    }
+  }
+}
