@@ -25,7 +25,7 @@ async function checkMortalCellarEscape(): Promise<void> {
     const report = runL4(world, mission, 'complete', { seed: 1, maxSeconds: 540 });
     expect(report.outcome, 'the full mortal native route reaches and bars the cellar').toBe('complete');
     const escapeDeaths = report.deathsAt.filter(sample => sample.endsWith('/collapse'));
-    expect(escapeDeaths.length, 'the line-break horde gap covers the authored Lakeshore route and its checkpoint retry').toBeLessThanOrEqual(3);
+    expect(escapeDeaths.length, 'the full Lakeshore/Metro/Harbor corridor permits completion within three attempts').toBeLessThanOrEqual(2);
     expect(l4.director.escape.gapS).toBeGreaterThanOrEqual(75);
     expect(report.infectedAtBreak).toBeGreaterThan(0);
   } finally { world.dispose(); }

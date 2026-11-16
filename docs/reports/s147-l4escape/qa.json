@@ -454,5 +454,25 @@
       }
     ],
     "finding": "Guidance passes Lakeshore obstruction; repeated deaths on Metro Road. Gap route omitted Metro/Harbor legs. Extended diversion corridor to complete authored route; revalidation pending."
+  },
+  "fullCorridorNativeHigh": {
+    "outcome": "complete",
+    "collapseDeaths": 0,
+    "totalDeaths": 8,
+    "lineBreakSeconds": 222.8167,
+    "cellarSeconds": 293.35,
+    "infectedAtBreak": 61
+  },
+  "fullCorridorVisibleHigh": {
+    "finished": false,
+    "wallSeconds": 480,
+    "firstEscapeDeath": {
+      "tick": 20667,
+      "x": -23.3795,
+      "z": -36.6949
+    },
+    "escapeDeathObservations": 10,
+    "path": "test-results/s147-l4escape/high-full-corridor",
+    "finding": "First escape reached Harbor; subsequent fixed-checkpoint retries failed earlier. Added reached checkpoints at Metro/Harbor turns; pending validation."
   }
 }

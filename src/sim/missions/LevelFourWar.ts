@@ -1582,6 +1582,13 @@ export class LevelFourWar {
       }
       this.spectacle.updateTank(); this.spectacle.updateHeli();
       if (s.phase === 'collapse') {
+        const player = world.entities.get(1)!, checkpoint = player.survivor!.checkpoint;
+        // Reached street turns preserve escape progress without moving the
+        // courier or discarding the live horde and persistent corpses.
+        if (player.health.current > 0 && l4CellarDistance(checkpoint) - l4CellarDistance(player.transform) > 30 &&
+          [[48.5, 20], [48.5, -37.4], [-44, -37.4]].some(([x, z]) => Math.hypot(player.transform.x - x, player.transform.z - z) < 5)) {
+          this.mission.requestCheckpoint('line-break');
+        }
         this.emergeCollapse();
         if (this.breakRadioAt && tick >= this.breakRadioAt) { this.breakRadioAt = 0; this.mission.radio('L4.break'); }
         if (this.gateOpenAt && tick >= this.gateOpenAt) { this.gateOpenAt = 0; this.openGate(); }
