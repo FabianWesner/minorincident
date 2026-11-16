@@ -277,6 +277,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
         const lit = d.decay.lights.includes(o.userData.lightGroup),
           key = `${o.userData.assetId}:${lit}:`;
         const reference = new Object3D();
+        reference.userData.placementId = `${d.id}/${o.userData.name ?? o.name}`;
         const first = anchorsFor(o.userData.assetId)[0];
         if (first) reference.userData.lightBase = deps.materials.lamps.base(placedLightId(d.id, d.origin, o.userData.name ?? o.name, first.name), anchorsFor(o.userData.assetId));
         o.matrixWorld.decompose(

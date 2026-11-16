@@ -87,3 +87,7 @@ Earlier manual fixture teardown omitted `interactables.unblock`, which productio
 ## L5–L7 camera sweep
 
 Sequential HIGH WebGL2 batch completed within one reservation. L5: 25/25 measured, 0 missing; gaps [0]; L6: 0/1 measured, 1 missing; gaps []; L7: 34/38 measured, 4 missing; gaps [0]. Missing rows remain unmeasured; they are not passes. Receipts are preserved in qa.json with per-placement matrices and actual mesh LOD. L6 and four L7 targets need residency/support diagnosis before coverage can be closed. Existing L4 routing regression now uses production barricade break/unblock and passes.
+
+## Baked marker identity
+
+Baked-layout marker references lacked placementId, unlike runtime placements. They now retain district/marker identity for contact audits. Typecheck and lint pass; runtime matching remains to be verified. L9/L10 batch failed admission before execution after 60 s; the quiet guard included this lane’s overlapping typecheck. Future browser admission must run without overlapping CPU checks. No late-level measurements were produced.

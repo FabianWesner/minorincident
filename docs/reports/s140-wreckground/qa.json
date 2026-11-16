@@ -3822,5 +3822,22 @@
         }
       }
     ]
+  },
+  "bakedMarkerIdentity": {
+    "change": "DistrictBuild baked marker references retain district/marker name as placementId",
+    "typecheck": "passed",
+    "lint": "passed",
+    "runtimeValidated": false
+  },
+  "lateSweepAdmission": {
+    "exit": 75,
+    "executed": false,
+    "timeoutSeconds": 60,
+    "load": [
+      4.6572265625,
+      4.00390625,
+      3.80419921875
+    ],
+    "busy": "Own typecheck appeared in quiet guard; future browser admission must not overlap CPU checks."
   }
 }
