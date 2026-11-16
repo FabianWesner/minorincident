@@ -30,6 +30,8 @@ With `PLAYTEST_L9_EVAC_AUDIT=1`, the existing read-only observer now emits an id
 
 The prescribed remote command `sh tools/remote/run.sh "$PWD" -- npm test` could not run because no healthy remote runner is provisioned. The local-slot fallback also rejects the `npm test` wrapper; the full Vitest command was run directly instead.
 
-## Still open
+## Real-input road runs
 
-Required post-fix real-input acceptance is not verified: three HIGH WebGPU road runs and one LOW run reaching L10 with no skips or stalls remain outstanding. The headless playtest could not start because the sandbox rejects the preview listener on port 5009 (`listen EPERM`). The worktree is not committed because `.git/worktrees/s136-l9bridge/index.lock` is denied by the read-only Git metadata boundary. No deployment, push or main movement was performed.
+Headless WebGPU through the browser pool, ports 5009/5010, ordinary mortal input and no skips: HIGH runs reached L10 in 256, 270 and 191 seconds; LOW reached L10 in 244 seconds. The first two HIGH runs logged 3 and 4 stationary-infected P2 flags; the third HIGH and LOW runs logged none. Raw receipts are under `test-results/playtest/s136-*`, with compact results in `qa.json`.
+
+The implementation is committed as `ea5b652a`. The former sandbox restrictions are lifted. Threat and vehicle motion gates, review of the stationary-infected flags, exact old-log fixture reproduction and final acceptance audit remain open.

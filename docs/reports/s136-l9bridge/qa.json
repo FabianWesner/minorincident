@@ -1,17 +1,51 @@
 {
-  "objective": "s136-l9bridge — APC bridge approach must not stall due to product or driver behavior; record an L9 boarding census",
+  "objective": "s136-l9bridge \u2014 APC bridge approach must not stall due to product or driver behavior; record an L9 boarding census",
   "finding": {
     "classification": "playtest-driver route error",
     "evidence": {
       "source": "batch-110-real-input/l9-high-road/log-campaign.jsonl",
       "samples": [
-        { "tick": 16826, "x": 554.1, "z": -3.3, "yaw": -3.02, "speed": 7.2, "bridgeHintMeters": 59 },
-        { "tick": 17077, "x": 560.7, "z": 3.6, "yaw": 1.70, "speed": 7.2, "bridgeHintMeters": 66 },
-        { "tick": 17201, "x": 549.3, "z": -0.3, "yaw": -2.39, "speed": 10.8, "bridgeHintMeters": 54 },
-        { "tick": 28427, "x": 545.4, "z": -4.2, "yaw": 1.86, "speed": 10.8, "bridgeHintMeters": 51 }
+        {
+          "tick": 16826,
+          "x": 554.1,
+          "z": -3.3,
+          "yaw": -3.02,
+          "speed": 7.2,
+          "bridgeHintMeters": 59
+        },
+        {
+          "tick": 17077,
+          "x": 560.7,
+          "z": 3.6,
+          "yaw": 1.7,
+          "speed": 7.2,
+          "bridgeHintMeters": 66
+        },
+        {
+          "tick": 17201,
+          "x": 549.3,
+          "z": -0.3,
+          "yaw": -2.39,
+          "speed": 10.8,
+          "bridgeHintMeters": 54
+        },
+        {
+          "tick": 28427,
+          "x": 545.4,
+          "z": -4.2,
+          "yaw": 1.86,
+          "speed": 10.8,
+          "bridgeHintMeters": 51
+        }
       ],
-      "driverRouteEndpoint": [550, 0],
-      "bridgeMarkerApprox": [470, 0],
+      "driverRouteEndpoint": [
+        550,
+        0
+      ],
+      "bridgeMarkerApprox": [
+        470,
+        0
+      ],
       "limits": "The old run did not log WASD steering. Movement and endpoint mismatch support the tool diagnosis; crowd contact is visible but not proven causal."
     }
   },
@@ -21,22 +55,366 @@
     "Added tests/fixtures/saves/qa/l9-bridge-approach-census.json.br (142645 bytes, seed 1, bridge checkpoint at tick 10810) to the existing engine vehicle checkpoint regression."
   ],
   "checks": {
-    "focusedVehicleSuite": { "command": "npx vitest run tests/engine/vehicles.test.ts", "result": "pass", "files": 1, "tests": 2 },
-    "nativeFixtures": { "command": "node --import tsx tools/qa/check-fixtures.ts", "result": "pass", "includesNewFixture": true },
-    "typecheck": { "command": "npm run typecheck", "result": "pass" },
-    "lint": { "command": "npm run lint", "result": "pass" },
-    "fullUnitSuite": { "command": "node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=4", "result": "pass", "files": 27, "tests": 106 },
-    "qaBuild": { "command": "npm run build:qa", "result": "pass" },
-    "diffCheck": { "command": "git diff --check", "result": "pass" }
+    "focusedVehicleSuite": {
+      "command": "npx vitest run tests/engine/vehicles.test.ts",
+      "result": "pass",
+      "files": 1,
+      "tests": 2
+    },
+    "nativeFixtures": {
+      "command": "node --import tsx tools/qa/check-fixtures.ts",
+      "result": "pass",
+      "includesNewFixture": true
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "result": "pass"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "result": "pass"
+    },
+    "fullUnitSuite": {
+      "command": "node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=4",
+      "result": "pass",
+      "files": 27,
+      "tests": 106
+    },
+    "qaBuild": {
+      "command": "npm run build:qa",
+      "result": "pass"
+    },
+    "diffCheck": {
+      "command": "git diff --check",
+      "result": "pass"
+    }
   },
   "acceptance": {
-    "highWebgpuRoadRuns": { "required": 3, "completed": 0, "status": "blocked: preview server listen denied (EPERM on 127.0.0.1:5009)" },
-    "lowReachL10": { "required": 1, "completed": 0, "status": "blocked: same preview server restriction" },
-    "commit": { "status": "blocked: .git/worktrees/s136-l9bridge/index.lock denied; Git metadata is read-only" },
-    "remoteUnitRunner": { "status": "unavailable: no healthy Hetzner runner provisioned; exact wrapper not admitted by Mac fallback" }
+    "highWebgpuRoadRuns": {
+      "required": 3,
+      "completed": 3,
+      "status": "all reached L10 without skips"
+    },
+    "lowReachL10": {
+      "required": 1,
+      "completed": 1,
+      "status": "reached L10 without skips"
+    },
+    "commit": {
+      "status": "ea5b652a committed"
+    },
+    "remoteUnitRunner": {
+      "status": "unavailable: no healthy Hetzner runner provisioned; exact wrapper not admitted by Mac fallback"
+    }
   },
   "visualSheet": "bridge-stall-sheet.jpg",
   "zombieStatsChanged": false,
   "corpseLifetimeChanged": false,
-  "pushOrDeploy": false
+  "pushOrDeploy": false,
+  "roadRuns": [
+    {
+      "path": "test-results/playtest/s136-high-road-1b",
+      "quality": "high",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 256,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 8.85,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 26
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 14150,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 3,
+        "P3": 0
+      }
+    },
+    {
+      "path": "test-results/playtest/s136-high-road-2",
+      "quality": "high",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 270,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 9.7,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 26
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 4,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0347378253936768,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 14942,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 4,
+        "P3": 0
+      }
+    },
+    {
+      "path": "test-results/playtest/s136-high-road-3",
+      "quality": "high",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 191,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 4.502,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 24
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0400424003601074,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 10206,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    },
+    {
+      "path": "test-results/playtest/s136-low-road-1",
+      "quality": "low",
+      "runs": [
+        {
+          "level": "L9",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 244,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 10.266666666666667,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.shotgun": 16
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.handgun"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "steps": [
+            {
+              "id": "approach",
+              "text": "Drive to the evacuation point \u00b7 1007\u00a0m",
+              "tick": 9,
+              "marker": {
+                "anchor": "crash-approach",
+                "ring": {
+                  "x": 470,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": [
+                  457,
+                  0,
+                  0
+                ],
+                "playerY": 1.0100750923156738,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "reach-outskirts",
+              "text": "",
+              "tick": 13424,
+              "marker": {
+                "anchor": "crawl-end",
+                "ring": {
+                  "x": 547,
+                  "y": 0,
+                  "z": 0
+                },
+                "drawn": null,
+                "playerY": 0.7200000286102295,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "issues": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      }
+    }
+  ]
 }
