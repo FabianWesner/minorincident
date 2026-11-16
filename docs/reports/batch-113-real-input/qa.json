@@ -1711,7 +1711,18 @@
         "manual": false
       }
     ],
-    "review": "Both captures opened; first escaped crowd at96HP near fence; second returned plaza at47HP. Returned driver did not finish. No skips or game-state mutation."
+    "review": "Both captures opened; first escaped crowd at96HP near fence; second returned plaza at47HP. Returned driver did not finish. No skips or game-state mutation.",
+    "stationaryCaptureReview": {
+      "ticks": [
+        10809,
+        11589
+      ],
+      "captures": [
+        "test-results/playtest/b113-l4-manual-high/captures/campaign-L4-10809-enemy-frozen.jpg",
+        "test-results/playtest/b113-l4-manual-high/captures/campaign-L4-11589-enemy-frozen.jpg"
+      ],
+      "result": "Opened full-size; dense truck/perimeter crowd, flagged identity unresolved. Outside route vs hull/crowd obstruction not established. Warnings remain provisional."
+    }
   },
   "observedSouthCrossings": {
     "authoredBoundaryZ": 22.5,

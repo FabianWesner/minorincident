@@ -136,3 +136,7 @@ Another540-second HIGH normal-camera run (`test-results/playtest/b113-l4-manual-
 ## Same-actor south-breach arrivals
 
 Authored L4 south perimeter is z22.5 (`src/data/l4.ts`). Existing identified histories show live HIGH Alpha #372 and LOW #246 crossing from z>22.5 to z≤22.5 within perimeter X bounds. Exact before/after tick/transforms are in `observedSouthCrossings`. These establish exterior-to-interior arrival for the identified actors alongside opened-breach imagery. They do not prove every ordinary infected route or zero crowd stalls across the full level.
+
+## Additional HIGH stationary capture review
+
+Opened manual-attempt warning captures `campaign-L4-10809-enemy-frozen.jpg` (#257,9.1m) and `campaign-L4-11589-enemy-frozen.jpg` (#239,3.2m) under `test-results/playtest/b113-l4-manual-high/captures`. Both show dense truck/perimeter crowd. Actors are inside camp and near wire; flagged identity and obstacle attribution remain unresolved. These do not establish outside-wire frozen AI, and do not clear the warnings either. Provisional classification retained.
