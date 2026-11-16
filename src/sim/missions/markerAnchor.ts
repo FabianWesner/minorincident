@@ -2,7 +2,7 @@ import type { Mission } from './Mission';
 import { cureWeaponPickups } from '../../levels/L10/encounters';
 import { l5 as l5Rescue } from '../../data/l5';
 import { l9Course } from '../../data/l9';
-import { l4CellarDistance } from '../../data/l4';
+import { l4, l4CellarDistance } from '../../data/l4';
 // (l5Rescue.firstRescue.route is the survivor order of the first rescue)
 
 type Anchored = { x: number; z: number; y?: number; radius?: number };
@@ -22,6 +22,13 @@ export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?
     if (player) {
       const next = { x: 0, z: 0 };
       l4CellarDistance(player.transform, next);
+      // Entering the corner ring is enough to show the next street. Requiring
+      // the exact junction leaves a marker-following player waiting at its edge.
+      if (Math.hypot(player.transform.x - next.x, player.transform.z - next.z) < 3) {
+        const index = l4.finale.route.findIndex(([x, z]) => x === next.x && z === next.z);
+        const following = l4.finale.route[index + 1];
+        if (index >= 0 && following) { next.x = following[0]; next.z = following[1]; }
+      }
       return { ...next, radius: 1.4 };
     }
   }

@@ -155,5 +155,11 @@
     "wallSeconds": 480,
     "limitation": "Default driver session.ts markerRing reads def.anchors, bypassing markerAnchor. Use PLAYTEST_VISIBLE_ONLY=1 to read displayed minimap pin.",
     "strictVisibleConfirmation": "pending"
+  },
+  "strictVisibleHigh": {
+    "path": "test-results/s147-l4escape/high-visible-pin",
+    "finished": false,
+    "wallSeconds": 480,
+    "finding": "Escaped camp at full HP, then waited at first corner marker; at tick 14147 (-4,41.49) HP100, tick21010 (-4.01,42.38) HP0. Added 3m corner marker handoff tolerance; revalidation pending."
   }
 }
