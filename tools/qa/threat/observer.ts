@@ -1,3 +1,4 @@
+import { actorRadius } from '../../../src/sim/world/SolidRegistry';
 import { observeAttackStarts } from './attackStarts';
 import { Status } from '../../../src/sim/combat/Status';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -78,7 +79,7 @@ export interface FollowerWaitReceipt {
   followers: { id: number; escortTicks: number; stationaryFarTicks: number }[];
   windows?: { key: string; escortTicks: number; stationaryFarTicks: number; first?: { tick: number; playerX: number; playerZ: number; followerId: number; followerX: number; followerZ: number } }[];
   /** Seeded route metrics: 2 Hz Euclidean player/follower gaps and resolved courier reversals toward a follower over 10 m away. */
-  paceWindows?: { key: string; samples: number; p50GapM: number | null; p90GapM: number | null; maxGapM: number | null; waitingTicks: number; backtrackTicks: number; stuckFollowers: { id: number; maxSeconds: number }[] }[];
+  paceWindows?: { key: string; samples: number; p50GapM: number | null; p90GapM: number | null; maxGapM: number | null; waitingTicks: number; backtrackTicks: number; stuckFollowers: { id: number; maxSeconds: number; geometryContactTicks: number; bodyContactTicks: number }[] }[];
   prompts?: { wait: number; attack: number; lost: number };
 }
 /** Standing during combat is included, so this bounds actual babysitting from
@@ -238,7 +239,7 @@ export function physicalPathEntry(world: SimWorld, entity: EntitySnapshot, grid:
 export class ThreatObserver {
   private readonly followerWait = { escortTicks: 0, stationaryFarTicks: 0, followers: new Map<number, { escortTicks: number; stationaryFarTicks: number }>() };
   private readonly waitWindows = new Map<string, NonNullable<FollowerWaitReceipt['windows']>[number]>();
-  private readonly paceWindows = new Map<string, { gaps: number[]; waitingTicks: number; backtrackTicks: number; stuck: Map<number, { since: number; maxTicks: number }>; stuckMax: Map<number, number> }>();
+  private readonly paceWindows = new Map<string, { gaps: number[]; waitingTicks: number; backtrackTicks: number; stuck: Map<number, { since: number; maxTicks: number }>; stuckMax: Map<number, number>; contacts: Map<number, { geometryContactTicks: number; bodyContactTicks: number }> }>();
   private readonly routeProgress = new Map<string, { progress: number; distance: number; segment: number; x: number; z: number }>();
   private readonly prompts = { wait: 0, attack: 0, lost: 0 };
   private readonly rows = new Map<string, Row>();
@@ -445,7 +446,7 @@ export class ThreatObserver {
     let escorting = false, stationaryFar = false, unnecessaryWait = false, returningToFollower = false;
     const windowKey = this.level === 'L8' ? w.missions!.l8!.protecting() ? 'protect' : w.vehicles!.active !== null ? 'aboard' : w.missions!.l8!.boarding() ? 'boarding' : `escort/${w.missions!.l8!.state.arenas.find(a => a.phase !== 3)?.id ?? 'apc-approach'}` : this.active.map(r => r.key).join('|');
     const window: NonNullable<FollowerWaitReceipt['windows']>[number] = this.waitWindows.get(windowKey) ?? { key: windowKey, escortTicks: 0, stationaryFarTicks: 0 };
-    const pace = this.paceWindows.get(windowKey) ?? { gaps: [], waitingTicks: 0, backtrackTicks: 0, stuck: new Map<number, { since: number; maxTicks: number }>(), stuckMax: new Map<number, number>() };
+    const pace = this.paceWindows.get(windowKey) ?? { gaps: [], waitingTicks: 0, backtrackTicks: 0, stuck: new Map<number, { since: number; maxTicks: number }>(), stuckMax: new Map<number, number>(), contacts: new Map<number, { geometryContactTicks: number; bodyContactTicks: number }>() };
     const priorRoute = this.routeProgress.get(windowKey), route = escortProgress(this.level, player.transform, priorRoute?.segment);
     const reversing = !!(priorRoute && route && priorRoute.distance <= 8 && route.distance <= 8 && route.progress < priorRoute.progress - .01);
     if (route && route.distance <= 8) this.routeProgress.set(windowKey, { ...route, x: player.transform.x, z: player.transform.z }); else this.routeProgress.delete(windowKey);
@@ -481,6 +482,15 @@ export class ThreatObserver {
         (player.transform.x - priorRoute.x) * (e.transform.x - player.transform.x) +
         (player.transform.z - priorRoute.z) * (e.transform.z - player.transform.z) > 0) returningToFollower = true;
       if (leaderSpeed > .2 && gap > 10 && (e.motion.speed ?? 0) < .1) {
+        // Read-only 10 cm probes toward the courier distinguish direct static
+        // contact from actor contact; they do not prove a route is enclosed.
+        const direction = { x: (player.transform.x - e.transform.x) / gap, z: (player.transform.z - e.transform.z) / gap };
+        const staticStep = w.solids.sweep(e, direction, .1, actorRadius(e), false, false);
+        const fullStep = w.solids.sweep(e, direction, .1, actorRadius(e), false, true);
+        const contact = pace.contacts.get(e.id) ?? { geometryContactTicks: 0, bodyContactTicks: 0 };
+        if (staticStep < .01) contact.geometryContactTicks++;
+        else if (fullStep < .01) contact.bodyContactTicks++;
+        pace.contacts.set(e.id, contact);
         const stuck = pace.stuck.get(e.id) ?? { since: w.tick, maxTicks: 0 };
         stuck.maxTicks = Math.max(stuck.maxTicks, w.tick - stuck.since); pace.stuck.set(e.id, stuck); pace.stuckMax.set(e.id, Math.max(pace.stuckMax.get(e.id) ?? 0, stuck.maxTicks));
       } else pace.stuck.delete(e.id);
@@ -653,7 +663,7 @@ export class ThreatObserver {
           const sorted = [...value.gaps].sort((a, b) => a - b), percentile = (p: number) => sorted.length ? sorted[Math.min(sorted.length - 1, Math.ceil(p * sorted.length) - 1)] : null;
           return { key, samples: sorted.length, p50GapM: percentile(.5), p90GapM: percentile(.9), maxGapM: sorted.length ? sorted.at(-1)! : null,
             waitingTicks: value.waitingTicks, backtrackTicks: value.backtrackTicks,
-            stuckFollowers: [...value.stuckMax].map(([id, ticks]) => ({ id, maxSeconds: ticks / 60 })) };
+            stuckFollowers: [...value.stuckMax].map(([id, ticks]) => ({ id, maxSeconds: ticks / 60, ...(value.contacts.get(id) ?? { geometryContactTicks: 0, bodyContactTicks: 0 }) })) };
         }),
         prompts: { ...this.prompts },
       },
