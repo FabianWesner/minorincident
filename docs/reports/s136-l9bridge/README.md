@@ -28,13 +28,13 @@ With `PLAYTEST_L9_EVAC_AUDIT=1`, the existing read-only observer now emits an id
 - `npm run build:qa` — PASS.
 - `git diff --check` — PASS.
 
-The prescribed remote command `sh tools/remote/run.sh "$PWD" -- npm test` could not run because no healthy remote runner is provisioned. The local-slot fallback also rejects the `npm test` wrapper; the full Vitest command was run directly instead.
+The prescribed remote suite passed on the unchanged rerun documented below.
 
 ## Real-input road runs
 
 Headless WebGPU through the browser pool, ports 5009/5010, ordinary mortal input and no skips: HIGH runs reached L10 in 256, 270 and 191 seconds; LOW reached L10 in 244 seconds. The first two HIGH runs logged 3 and 4 stationary-infected P2 flags; the third HIGH and LOW runs logged none. Raw receipts are under `test-results/playtest/s136-*`, with compact results in `qa.json`.
 
-The implementation is committed as `ea5b652a`. The former sandbox restrictions are lifted. Threat and vehicle motion gates, review of the stationary-infected flags, exact old-log fixture reproduction and final acceptance audit remain open.
+The implementation is committed as `ea5b652a`. The former sandbox restrictions are lifted. The threat and vehicle motion results and recovered original save are documented below. Seven stationary-infected observations remain unexplained by the saved logs; they occurred during evacuation and are retained as observations, not dismissed as false positives.
 
 ## Additional gates
 
@@ -47,3 +47,7 @@ Recovered the original batch-110 `campaign-completion.json` campaign save, which
 ## Remote suite rerun
 
 The prescribed unchanged remote rerun passed: 27 files, 105 passed / 1 skipped, 127.2 seconds against 240 seconds, with the complete 150-case collection budget. The earlier attempt timed out at 246 seconds; no tests were removed or changed between attempts.
+
+## Census evidence review
+
+Reviewed all 180 defense-complete observer samples across the four road runs (66/50/16/48). Every sample contains all four survivor identities; none reports a dead or infected survivor. Pending-evacuation samples number 27/15/0/10 respectively. These records now distinguish living stragglers from deaths. The original batch-110 save is already evacuation-complete when loaded; its regression therefore checks preserved completion, rather than claiming the earlier boarding deadline passed.

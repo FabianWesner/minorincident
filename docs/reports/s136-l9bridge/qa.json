@@ -115,7 +115,7 @@
       "status": "ea5b652a committed"
     },
     "remoteUnitRunner": {
-      "status": "unavailable: no healthy Hetzner runner provisioned; exact wrapper not admitted by Mac fallback"
+      "status": "passed unchanged rerun, 127.2 s"
     }
   },
   "visualSheet": "bridge-stall-sheet.jpg",
@@ -511,5 +511,35 @@
     "source": "archived batch-110 l9-high-road/campaign-completion.json campaign, unchanged",
     "nativeLoad": "pass",
     "limitation": "Saved before later loop; not an exact tick-17230 physical snapshot"
-  }
+  },
+  "boardingCensusReview": [
+    {
+      "run": "s136-high-road-1b",
+      "defenseCompleteSamples": 66,
+      "allSamplesHaveFourIdentities": true,
+      "deadIdentities": [],
+      "pendingSamples": 27
+    },
+    {
+      "run": "s136-high-road-2",
+      "defenseCompleteSamples": 50,
+      "allSamplesHaveFourIdentities": true,
+      "deadIdentities": [],
+      "pendingSamples": 15
+    },
+    {
+      "run": "s136-high-road-3",
+      "defenseCompleteSamples": 16,
+      "allSamplesHaveFourIdentities": true,
+      "deadIdentities": [],
+      "pendingSamples": 0
+    },
+    {
+      "run": "s136-low-road-1",
+      "defenseCompleteSamples": 48,
+      "allSamplesHaveFourIdentities": true,
+      "deadIdentities": [],
+      "pendingSamples": 10
+    }
+  ]
 }
