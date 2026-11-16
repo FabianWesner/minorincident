@@ -28,3 +28,7 @@ No zombie stat tuning, corpse removal, driver edits, browser run, deploy, push, 
 ## Remote follow-up
 
 After filesystem/network access was restored, the report and regression were committed as `e656951d`. The prescribed full remote command then ran twice unchanged on 94.130.181.173. Both runs passed the combat battery but failed the existing L4 contact case at its 150-second timeout (104 passed, one skipped, one failed; total budget times 207.8 s and 216.6 s). The original infrastructure-unavailable result above is historical. No test was trimmed or timeout increased. Root-cause attribution and HIGH/LOW browser confirmation remain open; this commit does not close the requested goal.
+
+## Browser fixture follow-up
+
+A headless WebGL2 HIGH check through `E2E_PORT=5029 SCENE_PORT=5030 E2E_UNITS=1 sh tools/e2e-lock.sh` reached the page, but after `loadFixtureInPage` restored and advanced the fixture 60 ticks, no living infected was within 1.5 m of the courier. The browser probe stopped before attacking. This exposes a remaining fixture/resume qualification gap; it is not a passed HIGH confirmation, and LOW was not attempted. The native loader's successful return alone does not prove that the live contact survives the browser restore path. The temporary probe was removed and the browser session closed.
