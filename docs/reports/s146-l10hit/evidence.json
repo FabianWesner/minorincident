@@ -2298,5 +2298,18 @@
       ],
       "errors": []
     }
-  ]
+  ],
+  "finalRemoteGate": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+    "sourceCommit": "3a7995aa",
+    "runner": "46.225.66.90",
+    "filesPassed": 27,
+    "testsPassed": 105,
+    "testsSkipped": 1,
+    "inventory": 150,
+    "budgetSeconds": 240,
+    "elapsedSeconds": 176.1,
+    "exitCode": 0,
+    "l4ContactSeconds": 131.062
+  }
 }

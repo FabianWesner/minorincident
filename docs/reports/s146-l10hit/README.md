@@ -31,4 +31,8 @@ A separate seed-1 `complete` campaign scan covers bounded 120-second windows in 
 
 ## Open requirements
 
-Historical #134 attribution remains unproven; product cone correction and driver detector defect are independently established. The complete post-change remote gate remains required, with the repeated L4 timeout investigated separately. A persistent render regression within the existing hit/render test infrastructure would strengthen the temporary browser assertions. No deployment, push or main movement occurred.
+Historical #134 attribution remains unproven; product cone correction and driver detector defect are independently established. The complete post-change remote gate passed on the final code; earlier L4 timeouts are retained above as historical failures. A persistent render regression within the existing hit/render test infrastructure would strengthen the temporary browser assertions. No deployment, push or main movement occurred.
+
+## Final remote gate
+
+The prescribed unchanged full remote command passed on final source `3a7995aa` using runner 46.225.66.90: 27 files, 105 passed and one existing skip, 150-case inventory, 176.1 seconds within 240 seconds. L4 contact passed in 131.062 seconds without timeout or test changes. The prior two worker timeouts did not reproduce on this worker. No checks remain running.
