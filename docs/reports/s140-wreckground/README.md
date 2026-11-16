@@ -83,3 +83,7 @@ Focused Alpha calls seek on all 600 ticks. Baseline path remains empty with wide
 ## Focused teardown correction
 
 Earlier manual fixture teardown omitted `interactables.unblock`, which production `Barricades.break` performs. Corrected reproduction sets wall HP to zero and runs Barricades.update. Baseline still moves 0 m; broadened recovery now obtains 22 path nodes and moves 0.412 m over 600 ticks. This supersedes the earlier empty admission-path conclusion for that fixture. Recovery alone remains unverified as a fix and its source change was removed. Next diagnosis is collision/steering along the resulting route.
+
+## L5–L7 camera sweep
+
+Sequential HIGH WebGL2 batch completed within one reservation. L5: 25/25 measured, 0 missing; gaps [0]; L6: 0/1 measured, 1 missing; gaps []; L7: 34/38 measured, 4 missing; gaps [0]. Missing rows remain unmeasured; they are not passes. Receipts are preserved in qa.json with per-placement matrices and actual mesh LOD. L6 and four L7 targets need residency/support diagnosis before coverage can be closed. Existing L4 routing regression now uses production barricade break/unblock and passes.

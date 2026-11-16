@@ -652,8 +652,9 @@ async function checkOutsideWireRouting(): Promise<void> {
     const side = 'north', opened = l4Breaches[side].segments[0];
     const wall = [...world.entities.iterate()].find(e => e.barricade?.slot.id === `l4-wall-${opened}`)!;
     expect(wall.barricade?.intact).toBe(true);
-    wall.barricade!.intact = false;
-    wall.kind = 'device';
+    wall.health.current = 0;
+    world.barricades!.update();
+    expect(wall.barricade!.intact).toBe(false);
     world.solids.setBarrier(`l4-wall-${opened}`, null);
     state.breaches = { north: { announcedAt: world.tick, openAt: world.tick } };
     // A slow arrival may reach its exterior waypoint after the war has ended.
