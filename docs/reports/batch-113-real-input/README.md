@@ -108,3 +108,7 @@ Four-minute HIGH observer run produced473 half-second receipts under `test-resul
 ## Identified attack frames reviewed
 
 Matched brute Alpha #372 ordinary attack states at ticks10017/10077 to `test-results/b113-l4-identified-high/sequence/00332-t10017.jpg` and `00334-t10077.jpg`; opened both full-size. Actor is at the upper edge behind the perimeter; fence/tank obscure lower legs. Identity is established, but planted soles remain unqualified. Charge windows are recorded at9325–9445 and9807–9927; these are not roar/slam proof.
+
+## Identified camera tracking succeeds
+
+Four-minute HIGH camera-only Alpha tracking run saved475 samples;218 track living #372 near tank (ticks7273–13804). Opened `test-results/b113-l4-tracked-high/sequence/00332-t10012.jpg`: identified Alpha full body and feet visible beside opened south breach. This provides a useful consecutive review candidate, not yet a no-slide verdict. Tracking supplements ordinary input; it is not a normal-camera completion run.
