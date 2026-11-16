@@ -128,3 +128,7 @@ Opened `test-results/b113-low-charge-review.jpg`, consecutive ticks8161–8342, 
 ## Finding-sheet refresh
 
 Replaced the sole retained contact sheet with four reviewed frames: L3 bridge, provisional L4 stationary warning, L9 visible rendering corruption, provisional L10 close-target warning. Opened the updated sheet at960×584;99,726 bytes. No second report image or raw capture was added.
+
+## Manual HIGH escape attempt
+
+Another540-second HIGH normal-camera run (`test-results/playtest/b113-l4-manual-high`) reached cellar escape but did not finish. Used existing control-file physical input:10s KeyA, then10s KeyW, then returned to driver. Opened `captures/campaign-manual-west.jpg` (96HP near residential fence) and `campaign-manual-north.jpg` (47HP back toward plaza). This manual route did not improve completion; steering/combat attribution remains open. No skips, teleport, immortality or simulation mutation. Additional stationary warnings remain unqualified; intentional cap is not product P0.
