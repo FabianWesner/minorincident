@@ -1,16 +1,30 @@
-# s148 escort pace — work in progress
+# s148 escort pace
 
-Acceptance is **not achieved**. This checkpoint preserves the native measurements and candidate changes for further work.
+Current native seed-1 LOW evidence meets the measured waiting target in the recorded skilled escort windows; full acceptance remains pending the gaps below. Original runtime: `5ee3d0a3`. Current source and evidence are committed on this lane.
 
-Seed 1 native `qa:threat --levels L6,L7,L8` completed all three missions. The JSON contains before/after run outcomes, phase threat rates, follower gaps, stationary far samples, prompts and stuck episodes. The baseline runtime is 5ee3d0a3. Both captures use the added observer; route projection changed between captures, so backtracking totals are not comparable and must not support an acceptance claim. Stationary noncombat time is an estimate, not proof of intentional waiting. Boarding is included.
+| Skilled window | Before waiting ticks | After | Reduction |
+| --- | ---: | ---: | ---: |
+| L6 retreat | 45 | 11 | 75.6% |
+| L7 corridor | 17 | 0 | 100% |
+| L7 boarding | 27 | 0 | 100% |
+| L8 escort | 1 | 0 | 100% |
+| L8 boarding | 218 | 86 | 60.6% |
 
-Candidate changes add distance based catch-up in L6/L7, suppress L7 distance-only warnings, remove bot distance-only pauses, and shorten the L8 boarding queue. Survivor damage and zombie stats are unchanged.
+Other recorded windows have zero estimated waiting in both versions. Corrected noncombat return counts are zero in both; no reduction is claimed from a zero baseline. Group attacks/min in named threat windows: L6 56.590→56.590, L7 4.491→9.049, L8 0.224→0.468. JSON includes gap distributions, prompt counts and stuck episodes.
 
-Latest evidence: L7 has no wait/lost prompts, but has `step/departure:SLOW_FOLLOWER:20`. L8 boarding stationary far time fell from 3.63 s to 2.62 s (28%, below target), and its native audit reports an escape reachability flag. L6 noncombat wait estimate increased from 0.75 s to 0.97 s. No acceptance claim follows from these results.
+L6 catches up to formation slots earlier, L7 uses a compact three-column walked trail, and L8 uses close public-route slots plus a shorter boarding queue. L7 distance-only warnings and bot distance-only pauses are removed. Combat damage, zombie stats, corpse retention and survivor vulnerability are unchanged. Existing navigation/mission/NPC assertions cover movement, obstacle routing and damage; tests were extended without adding cases.
 
-Remaining: correct and rerun comparable backtracking instrumentation; implement and measure the normal-speed marked-route policy; meet the halving target per escort segment; compare group threat; resolve native flags; confirm HIGH then LOW in the headless browser pool and inspect one small sheet. No browser sheet exists yet.
+Independent normal-walk comparisons use fixed route points without follower reads for L6 retreat, L7 corridor and L8 travel between arenas. Shared mandatory interactions and combat remain. L6 baseline stalled at 1,200 s with 10,015 waiting ticks; candidate completed at 200.47 s with zero. L7 has zero waiting in both, no candidate wait/lost prompts, 24/24 saved. L8 boarding waiting 122→0 ticks, no wait/lost prompts; candidate had one player death/retry versus none before. L6 retains four genuine death warnings (text “Survivor lost!”, distinct from L7's “lost behind you”). These limitations are preserved in JSON.
 
-Required remote command was attempted twice: `sh tools/remote/run.sh "$PWD" -- npm test`. Both attempts exited 69: no healthy Hetzner runner, and npm test is ineligible for the local fallback. No remote test process remains live. Focused missions/NPC checks, typecheck and lint passed for this checkpoint (8 focused tests).
+Validation: typecheck/lint and 12 focused tests pass. Required remote `sh tools/remote/run.sh "$PWD" -- npm test` passes, 105 passed / 1 skipped, 185.7 s under 240 s. Repository test-case budget remains 150. HIGH then LOW headless Metal WebGL2 captures through the browser pool show moving/fighting escorts; inspected [sheet](escort-sheet.jpg), one browser, ports 5033/5034, 600 s reservations. [Measurements](measurements.json) are under 200 KB.
+
+Acceptance audit still open: L8 observer aggregates travel across arenas rather than proving every individual route leg; the independent L8 sample retries once; detailed route-policy threat comparisons are not yet summarized; the epic verifier wrapper has not completed (duplicate local runs were stopped after discovering identical gates). Required remote unit command itself has passed. These gaps prevent an unqualified full-goal completion claim.
+
+## Measurement definitions
+
+Waiting: courier resolved speed ≤0.2 m/s, active follower gap >10 m, no living visible infected within 20 m. Returns: active playing escort, route reversal toward a follower >10 m away, same noncombat condition. These are behavioral estimates, not direct intent measurements. Gaps sampled at 2 Hz. Stuck episodes use stationary follower motion while the courier moves >10 m away; collision contact is not separately classified as geometry versus body contact. Earlier backtracking totals in history are superseded.
+
+## Experiment history
 
 Follow-up experiment (native `/private/tmp/s148-final5`): removing L6's remaining tail-distance stop completed 4.98 s sooner, but increased retreat noncombat stationary-far ticks from 58 to 159, p90 gap from 7.36 m to 11.91 m, and damage from 70 to 125. Group threat in step/stop stayed 56.59 attacks/min. The experiment was reverted: removing the bot stop alone does not satisfy the follower behavior target. The next L6 change must improve the column's movement rather than merely advancing the courier faster. Audit terminated normally with exit 1; no check remains live.
 
