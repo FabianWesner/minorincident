@@ -63,3 +63,7 @@ Collected 240 seconds, no skips. **P2 provisional — close infected takes no da
 ### L5 HIGH zoom 1
 
 Collected 240 seconds with no skips. Reviewed `test-results/b112-review/l5.jpg`, ticks 1540–13514: atmospheric ash-dark streets, scattered persistent bodies, readable red Alpha warnings, and recurring combat around the fire station. The repeated search/return feels repetitive in this sample; it is not harmless, but survivor rescue/babysitting is unexercised because the driver remains on “Look for anyone still alive.” No obvious geometric glitch in inspected frames. The sole emitted issue is the sample cap at tick 14142 (`test-results/playtest/b112-l5-high/captures/campaign-L5-14142-cannot-finish.jpg`), not a verified product P0.
+
+### L7 HIGH zoom 1
+
+Completed in 183 seconds with zero skips/issues. Reviewed `test-results/b112-review/l7.jpg`, ticks 931–9470: dense dark escort, strong fire-lit departure, readable courier outline. “Wait for us! Stay with the group” at tick 3449 and “Survivor lost behind you” at 4688 make group-speed management conspicuous: this sample feels like babysitting amid real crowd pressure. The fire/departure staging is visually appealing; no obvious geometry glitch in sampled frames. Initial admission failed `external-exclusive` before execution; normal guarded retry succeeded. Full mission is shorter than the approximate four-minute request. No ordinary off-screen scream arrow judgment established by these frames.
