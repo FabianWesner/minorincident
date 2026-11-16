@@ -238,6 +238,8 @@ export const l4 = {
     [-30.5, -2], [-22, 15], [-16, -11], [-26, 24], [-40.5, 8],                         // plaza ring and west
     [-56, 18], [-44, -37.5], [-4, -37.2], [30, -37.2], [52.5, -2], [60, 22], [58, 43],   // both routes to Kessler Lane
     [38, 43.2], [18, 43.2], [-6, 43.4],
+    // Recovery on the two contact-heavy turns: stay on the escape sidewalk to collect.
+    [-4, 38], [-1, 42], [-73, -39.5], [-79, -42],
   ] as readonly P[] },
   checkpoints: ['arrival', 'turn', 'line-1', 'nests', 'armor', 'line-break'] as const,
   /** Bots (section 8). Bands are provisional until the first green run (staging decision section 6). */

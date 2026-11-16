@@ -2,9 +2,11 @@
 
 ## Status
 
-The goal remains unqualified. Preview/Git permissions are now available. The first candidate HIGH WebGPU run completed in 483 seconds with six escape deaths. A subsequent candidate run capped at 542 seconds with nine escape deaths (one on Lakeshore and eight near central Harbor), so neither meets the five-death target. LOW remains pending. Further experiments with a 150-second diversion capped with nine escape deaths; reducing the near-pursuer exemption to three metres capped with eighteen escape deaths on Lakeshore. Both diversion experiments were reverted to the existing 75 seconds / seven metres.
+HIGH WebGPU visible-input L4 completes in **429 seconds with four escape deaths** (eight defense deaths), no skips. Native HIGH completes in 302.3 sim seconds with zero escape deaths. LOW ran after HIGH on the same build and capped at 541 seconds with eleven escape deaths on central Harbor; LOW completion/regression remains open.
 
-The prescribed remote suite now passes on 46.225.66.90: 174 seconds overall, with the original-route contact test taking 103.2 seconds. The test defers expensive connectivity searches until the stationary observation window is full and resets that window when breaches change. The Harbor shortcut was removed after its Linux timeout.
+The final prescribed remote suite passed on 94.130.181.173 in 201.9 seconds. Earlier checks confirmed the cheaper original-route contact test at 103.2 seconds on 46.225.66.90 and 114.6 seconds on 94.130.181.173. Build, typecheck and lint passed. All browsers were headless, one at a time through the pool/e2e lock, with ten-minute reservations, ports5039/5040, `PLAYTEST_VISIBLE_ONLY=1`, `PLAYTEST_BACKEND=webgpu`, zoom1.5.
+
+Earlier HIGH candidates completed with six or eight escape deaths or capped. Extending diversion to150 seconds and narrowing the pursuer exemption to3 m did not help; both were reverted. The successful final change adds health kits at (-4,38), (-1,42), (-73,-39.5), (-79,-42) and checkpoints at more existing route corners. Bodies, counts, stats and corpses remain intact.
 
 ## Batch-114 diagnosis
 
@@ -20,17 +22,10 @@ The most likely HIGH/LOW difference is encounter admission and crowd size, not r
 - Kept the final waypoint at the actual cellar interaction anchor. Its ground ring now renders through the storefront shell on the final L4 approach, and the contact test verifies that the last Harbor turn points to the cellar door and that the door is clear and path-connected.
 - Kept the original LOW full-route replay and all its completion/stall assertions. Expensive path connectivity is checked only after a stationary observation window fills; breach changes reset that window. The focused test took 33.9 seconds locally, 103.2 seconds on runner 46.225.66.90 and 114.6 seconds on previously failing runner 94.130.181.173.
 
-## Validation
+## Final evidence and limits
 
-| Check | Result |
-| --- | --- |
-| Native HIGH L4, seed 1 | Complete in 301.5 sim seconds; 8 deaths, all during the war at ticks 79–216 s; no escape deaths. |
-| Focused `tests/engine/l4-contact.test.ts` | Passed, 33.9 s locally. |
-| `npm test` unchanged | Passed: 27 files, 106 tests; 109.2 s, under the 240 s budget. |
-| Typecheck / lint / QA build | Passed. |
-| Remote `sh tools/remote/run.sh "$PWD" -- npm test` | Passed on both runners: 174 s on 46.225.66.90; 204.4 s on 94.130.181.173 (150-case inventory). |
-| Real-input HIGH / LOW WebGPU | HIGH completed once with six escape deaths; later candidates capped with nine or eighteen. Target remains unmet; LOW pending. |
+Raw final runs: `test-results/s151-l4high/gpu-high-recovery` and `gpu-low-recovery`. JSON records both results, renderer receipts and death counts. The reviewed [approach sheet](approach-review.jpg) now uses the successful candidate HIGH capture at tick24452 and its cellar bar-door capture. The Harbor frame shows readable text, direction arrow and open street; the cellar frame confirms entry and readable bar-door objective. The actual external door ring is not captured at close range, so its visual assessment is limited; navigation and real-input entry prove reachability.
 
-The reviewed [approach sheet](approach-review.jpg) pairs the batch-114 western Harbor frame at 20 m with an earlier HIGH cellar-interaction frame at 5 m. Both depict the existing marker/door treatment; neither is a screenshot of this candidate after the level-design change. The batch-114 capture shows the off-screen route arrow and readable objective text. The earlier close frame shows the cellar objective and map pin, though the storefront entrance itself is partly occluded; the candidate-only WebGPU visual check remains open.
+The unchanged 150-case inventory and all existing contact assertions remain. Connectivity searches are deferred until a stationary window fills; breach changes reset the window. No timeout increase or other test trimming. Each final browser run emitted one provisional stationary-infected warning during defense. LOW completion remains a regression follow-up; it is not an accepted pass.
 
-`qa.json` is the compact evidence record (under 200 KB). Raw batch-114 logs and captures remain in the archived s149 scratchpad, not in this report. No `tools/playtest` files, specs, protected references, main branch, deployment or remote publishing were changed.
+No tools/playtest, specs or protected references changed. No deploy, push or main movement. Report JSON is below200KB and only one small reviewed sheet is committed.

@@ -218,7 +218,26 @@
     ],
     "hordeAndStatsChanged": false,
     "finalCellarRingDepthTest": false,
-    "contactReplayRoute": "original auto route; connectivity deferred until stationary; breach changes reset window"
+    "contactReplayRoute": "original auto route; connectivity deferred until stationary; breach changes reset window",
+    "recoveryPickups": [
+      [
+        -4,
+        38
+      ],
+      [
+        -1,
+        42
+      ],
+      [
+        -73,
+        -39.5
+      ],
+      [
+        -79,
+        -42
+      ]
+    ],
+    "additionalRouteCheckpoints": true
   },
   "nativeHigh": {
     "level": "L4",
@@ -329,7 +348,12 @@
       ],
       "low": null
     },
-    "buildQA": "passed"
+    "buildQA": "passed",
+    "remoteFinal": {
+      "host": "94.130.181.173",
+      "seconds": 201.9,
+      "passed": true
+    }
   },
   "visualReview": {
     "sheet": "approach-review.jpg",
@@ -351,5 +375,307 @@
     ],
     "candidateScreenshot": false
   },
-  "goalStatus": "incomplete: candidate real-input HIGH and LOW WebGPU qualification is outstanding"
+  "goalStatus": "HIGH target achieved; LOW run capped, regression open",
+  "finalRuns": {
+    "high": {
+      "path": "test-results/s151-l4high/gpu-high-recovery",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 429,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 16.416666666666668,
+            "deaths": 12,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 1538
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 11,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1831,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0.7049999833106995,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2182,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 11\u00a0m",
+                "tick": 13576,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -21.625,
+                    "y": 0.7099999785423279,
+                    "z": -17.125
+                  },
+                  "drawn": [
+                    -40.38,
+                    0,
+                    -18.88
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "bar",
+                "text": "Bar the cellar door \u00b7 5\u00a0m",
+                "tick": 24985,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": {
+                    "x": 74.6,
+                    "y": 0.8100000619888306,
+                    "z": -1.7999999999999998
+                  },
+                  "drawn": [
+                    74.6,
+                    0.05,
+                    -1.8
+                  ],
+                  "playerY": 0.8500000238418579,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "wait",
+                "text": "Stay down \u00b7 0:07 remaining",
+                "tick": 25129,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 1,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "deaths": {
+        "hold": 8,
+        "hide": 4
+      },
+      "renderer": {
+        "t": "2026-11-16T21:14:20.116Z",
+        "renderer": "webgpu"
+      }
+    },
+    "low": {
+      "path": "test-results/s151-l4high/gpu-low-recovery",
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 541,
+            "simSeconds": 538,
+            "maxNoProgressSeconds": 11.95,
+            "deaths": 19,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 12,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1834,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0.7049999833106995,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2240,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 12\u00a0m",
+                "tick": 13644,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -23.625,
+                    "y": 0.7099999785423279,
+                    "z": 7.375
+                  },
+                  "drawn": [
+                    -23.63,
+                    0.05,
+                    7.38
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 1
+        }
+      },
+      "deaths": {
+        "hold": 8,
+        "hide": 11
+      },
+      "renderer": {
+        "t": "2026-11-16T21:22:50.305Z",
+        "renderer": "webgpu"
+      }
+    }
+  },
+  "finalNative": {
+    "outcome": "complete",
+    "time": 302.3333333333333,
+    "deaths": [
+      "67s@-23,2/war",
+      "87s@-21,15/war",
+      "101s@-19,-4/war",
+      "117s@-22,0/war",
+      "135s@-23,0/war",
+      "151s@-20,-3/war",
+      "176s@-14,-15/war",
+      "200s@-8,-10/war"
+    ]
+  }
 }

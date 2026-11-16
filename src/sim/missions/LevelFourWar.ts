@@ -1586,7 +1586,7 @@ export class LevelFourWar {
         // Reached street turns preserve escape progress without moving the
         // courier or discarding the live horde and persistent corpses.
         if (player.health.current > 0 && l4CellarDistance(checkpoint) - l4CellarDistance(player.transform) > 30 &&
-          [[48.5, 20], [48.5, -37.4], [-44, -37.4]].some(([x, z]) => Math.hypot(player.transform.x - x, player.transform.z - z) < 5)) {
+          [[-4, 43], [8, 43], [48.5, 43], [48.5, 20], [48.5, -15], [48.5, -37.4], [-12, -37.4], [-44, -37.4], [-64, -39.5]].some(([x, z]) => Math.hypot(player.transform.x - x, player.transform.z - z) < 5)) {
           this.mission.requestCheckpoint('line-break');
         }
         this.emergeCollapse();
