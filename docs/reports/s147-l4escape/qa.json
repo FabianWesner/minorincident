@@ -6,12 +6,18 @@
     "highEscapeDeathInputReleaseEvents": 24,
     "lowEscapeDeathInputReleaseEvents": 25,
     "objectiveMarker": "Present and points at cellar",
-    "oldCheckpoint": [-4, 16],
+    "oldCheckpoint": [
+      -4,
+      16
+    ],
     "oldGapSeconds": 40,
     "oldCheckpointAssessment": "At the camp perimeter instead of on the first open Lakeshore route leg; repeated collapse retries resumed at the exposed camp edge."
   },
   "change": {
-    "checkpoint": [-4, 28],
+    "checkpoint": [
+      -4,
+      28
+    ],
     "gapSeconds": 75,
     "wavesChanged": false,
     "alphaCountsChanged": false,
@@ -19,9 +25,21 @@
     "corpsesRemoved": false
   },
   "nativeEvidence": {
-    "baselineHigh": {"finished": true, "deaths": 13, "collapseDeaths": 5},
-    "baselineLow": {"finished": true, "deaths": 8, "collapseDeaths": 1},
-    "candidateProbeHigh": {"finished": true, "deaths": 11, "collapseDeaths": 3},
+    "baselineHigh": {
+      "finished": true,
+      "deaths": 13,
+      "collapseDeaths": 5
+    },
+    "baselineLow": {
+      "finished": true,
+      "deaths": 8,
+      "collapseDeaths": 1
+    },
+    "candidateProbeHigh": {
+      "finished": true,
+      "deaths": 11,
+      "collapseDeaths": 3
+    },
     "focusedTest": "tests/engine/l4-contact.test.ts: L4 HIGH collapse escape gives a skilled mortal route at most three deaths before the cellar",
     "focusedTestResult": "passed",
     "hordeIntactAtLineBreak": true
@@ -30,14 +48,25 @@
     "typecheck": "passed",
     "lint": "passed",
     "focusedNativeTest": "passed",
-    "remoteUnitSuite": {"status": "not admitted", "exitCode": 69, "reason": "No healthy Hetzner runner; local Mac fallback unavailable for queued job; not a timeout."},
-    "realInputHigh": "open",
+    "remoteUnitSuite": {
+      "status": "two unchanged runs timed out at 240.4 seconds",
+      "inventoryCases": 150,
+      "exitCode": 124
+    },
+    "realInputHigh": {
+      "finished": false,
+      "wallSeconds": 480,
+      "deaths": 28,
+      "path": "test-results/playtest/campaign-high-2026-11-161422",
+      "assessment": "Current design does not meet target; second automatic segment stopped."
+    },
     "realInputLow": "open"
   },
   "reviewedSheet": "corpse-persistence-sheet.jpg",
   "open": [
     "Real-input HIGH then LOW confirmation",
     "Reliable identification of the infected responsible for individual real-input deaths",
-    "Remote full unit suite"
+    "Remote full unit suite",
+    "HIGH real-input failure must be resolved; native three deaths imply fourth-attempt completion"
   ]
 }

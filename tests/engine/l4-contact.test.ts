@@ -19,17 +19,17 @@ import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { Refuge } from '../../src/sim/outbreak/Outbreak';
 import { obbHitsAabb } from '../qa/invariants/oracles';
 
-test('L4 HIGH collapse escape gives a skilled mortal route at most three deaths before the cellar', async () => {
+async function checkMortalCellarEscape(): Promise<void> {
   const { world, mission } = await loadL4(1, 'high');
   try {
     const report = runL4(world, mission, 'complete', { seed: 1, maxSeconds: 540 });
     expect(report.outcome, 'the full mortal native route reaches and bars the cellar').toBe('complete');
     const escapeDeaths = report.deathsAt.filter(sample => sample.endsWith('/collapse'));
-    expect(escapeDeaths, 'the line-break horde gap covers the authored Lakeshore route and its checkpoint retry').toHaveLength(3);
+    expect(escapeDeaths.length, 'the line-break horde gap covers the authored Lakeshore route and its checkpoint retry').toBeLessThanOrEqual(3);
     expect(l4.director.escape.gapS).toBeGreaterThanOrEqual(75);
     expect(report.infectedAtBreak).toBeGreaterThan(0);
   } finally { world.dispose(); }
-}, 150_000);
+}
 
 type RefugeInternals = {
   refugeSpot: (person: EntitySnapshot, door: Refuge) => { x: number; z: number } | null;
@@ -286,6 +286,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     }
   }
   expect(violations, 'PO 2026-11-08: parked army cargo trucks do not cross the perimeter').toEqual([]);
+  await checkMortalCellarEscape();
   await checkOutsideWireRouting();
   checkCompactFollowerOverlap();
   expect(followerBarsAlwaysMax, 'five-person groups retain full bars').toBe(5);

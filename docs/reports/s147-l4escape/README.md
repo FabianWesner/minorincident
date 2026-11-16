@@ -32,3 +32,9 @@ Reviewed sheet: [corpse-persistence-sheet.jpg](corpse-persistence-sheet.jpg), a 
 ## Remaining uncertainty
 
 The fixed-seed native skilled bot reaches the cellar within three escape-phase deaths, but it still records eight deaths in the preceding HIGH defense. The raw real-input captures do not identify a specific killing infected reliably, so attribution by infected identity and origin remains unresolved. The real-input HIGH and LOW confirmations are still needed to establish the competent-player target beyond this native regression.
+
+## Follow-up validation
+
+Committed initial change as `35cd62ba`. Folded the escape regression into the existing L4 contact test to retain the 150-case suite budget. The first remote run then timed out at 240 seconds; rerun unchanged as requested. HIGH real-input confirmation ran on ports 5031/5032 through the browser pool, mortal with ordinary combat: it failed to finish after 480 seconds and 28 deaths. Its logs are in `test-results/playtest/campaign-high-2026-11-161422`. The automatically started second segment was stopped. This contradicts completion of the target; further route/checkpoint design work is required. Three native escape deaths also mean success on the fourth attempt, so the initial native regression is insufficient to establish the approximately three-attempt goal.
+
+The unchanged remote rerun also timed out at 240.4 seconds (exit 124). No tests were trimmed. The full suite remains unverified.
