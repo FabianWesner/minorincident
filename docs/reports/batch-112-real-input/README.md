@@ -1,6 +1,6 @@
 # Batch 112 real-input browser QA — review in progress
 
-Candidate `cc2f7476c7e7834d5060b07a2b654a5d1cb1c873`. All requested level/tier capture runs are collected. **Not yet a complete acceptance pass:** L4 tank strike/roar/slam foot planting and full L9 route naturalness remain visually unqualified; ordinary off-screen scream arrow review is open.
+Candidate `cc2f7476c7e7834d5060b07a2b654a5d1cb1c873`. All requested level/tier capture runs are collected. **Not yet a complete acceptance pass:** L4 tank strike/roar/slam foot planting and full L9 route naturalness remain visually unqualified; off-screen arrow is helpful in the reviewed LOW hatch event (moving courier remains untested).
 
 ## Method and validation
 
@@ -79,3 +79,7 @@ Opened `test-results/b112-review/low-evac.jpg`, consecutive ticks 13911–14137 
 ### Bridge attribution narrowed
 
 Opened LOW tick-15571 warning capture. Read actual driving telemetry at 15018/15215/15407/15593/15776/15968: vehicle repeatedly turns around x466–481 at roughly 7–11 m/s, then reaches x495 and completes. This supports a recovered driver steering/navigation delay, not a motionless APC freeze. Collision and route-design contribution remains unproven. Close tank crop `test-results/b112-review/l4-close.jpg` was also inspected; overlapping bodies still prevent reliable sole tracking.
+
+### Ordinary off-screen scream arrow found in continuous frames
+
+The earlier callback-window limitation is superseded by continuous captures. Opened `test-results/b112-review/scream-after.jpg` (ticks 8452–8662) and full-size `test-results/playtest/b112-l9-low-road/captures/campaign-L9-t8478.jpg`. Following ordinary scream telegraph 8411, a conspicuous violet upper-edge bearing is visible at 8478 and 8504 and gone by 8529. It gives a useful off-screen direction, is distinct from the yellow objective arrow, and adds little clutter in this encounter. Courier is seated at the hatch, so moving-courier camera tracking is outside this batch observation. This is ordinary scream evidence, not an Alpha roar substitute.
