@@ -95,3 +95,7 @@ Additional 240-second real-input run under `test-results/playtest/b112-l4-native
 Wrapper retry `b112-l4-native-pooled` also used opaque exclusive admission because the classifier recognizes TypeScript entry files. It completed its bounded sample but supplies no native video/observer proof. This is a driver gap; tick-9125 #237 stationary warning remains provisional.
 
 Corrected TypeScript wrapper entry (`b112-l4-video-final`) was verified queued then admitted as a pooled GPU context, but the recording/observer interception still produced no artifacts. It completed the 240-second bounded run. No native-video evidence or tank-foot acceptance is claimed; further identical wrapper retries are not justified.
+
+### Evidence audit
+
+Rechecked all four L9 final census rows: IDs 669–672 are all alive at 100 HP with native `evacuated=true` at the reported ticks. Thus the timing result is not an all-dead/vacuous pass. Candidate diff contains only README, qa.json (about 54 KB), and one reviewed 168 KB contact sheet; raw captures stay ignored. Typecheck/lint/remote suite passed on unchanged production source. Outstanding acceptance remains identifiable continuous L4 tank attack soles and fully visible L9 route beyond the sampled clear segment.
