@@ -140,3 +140,7 @@ Authored L4 south perimeter is z22.5 (`src/data/l4.ts`). Existing identified his
 ## Additional HIGH stationary capture review
 
 Opened manual-attempt warning captures `campaign-L4-10809-enemy-frozen.jpg` (#257,9.1m) and `campaign-L4-11589-enemy-frozen.jpg` (#239,3.2m) under `test-results/playtest/b113-l4-manual-high/captures`. Both show dense truck/perimeter crowd. Actors are inside camp and near wire; flagged identity and obstacle attribution remain unresolved. These do not establish outside-wire frozen AI, and do not clear the warnings either. Provisional classification retained.
+
+## Wider-view HIGH completion attempt
+
+Ordinary HIGH zoom1 ran540 seconds without skips (`test-results/playtest/b113-l4-wide-high`) and again ended at cellar escape, tick32211,80m from objective. The wider view did not resolve the repeated route/death loop. No full L4 completion is claimed. Further unchanged completion replays are not justified by this result.

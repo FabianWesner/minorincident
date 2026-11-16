@@ -1889,5 +1889,128 @@
       }
     ],
     "qualification": "Same living identified Alpha outside-to-inside crossing in each tier; bounded evidence, not every ordinary actor route."
+  },
+  "wideHighCompletionAttempt": {
+    "path": "test-results/playtest/b113-l4-wide-high",
+    "summary": {
+      "mode": "campaign",
+      "acceptanceMode": "STANDARD",
+      "immortal": false,
+      "routeOnly": false,
+      "quality": "high",
+      "heroine": "female",
+      "zoom": 1,
+      "levels": [
+        "L4"
+      ],
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 540,
+          "simSeconds": 537,
+          "maxNoProgressSeconds": 29.896,
+          "deaths": 33,
+          "assists": 0,
+          "attacks": {},
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "",
+              "tick": 13,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1831,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2093,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 81\u00a0m",
+              "tick": 13493,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "issues": 3,
+      "bySeverity": {
+        "P0": 1,
+        "P1": 0,
+        "P2": 2,
+        "P3": 0
+      }
+    },
+    "interpretation": "Zoom1 also fails cellar escape by540s; does not resolve repeated route/death loop. No full completion."
   }
 }
