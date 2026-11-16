@@ -1293,5 +1293,25 @@
       9079
     ],
     "fullSizeReview": "Actors move between frames; no obvious frozen crowd in bounded segment; camera movement/overlap prevents reliable sole tracks."
+  },
+  "nextObservation": {
+    "wrapper": "test-results/b113-video/fixed-tank-entry.ts",
+    "status": "PREPARED, NOT RUN",
+    "camera": {
+      "position": [
+        -6,
+        11,
+        39
+      ],
+      "target": [
+        -20,
+        0,
+        27.5
+      ],
+      "zoom": 1.5,
+      "afterTick": 4500
+    },
+    "basis": "src/data/l4.ts l4-tank-stop anchor",
+    "scope": "Camera-only change and screenshot observer; simulation/input driver unchanged."
   }
 }

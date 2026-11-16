@@ -68,3 +68,7 @@ A permitted ignored wrapper added read-only page screenshots every500ms during a
 ## Full-size sequence review
 
 Opened original sequence frames `00299-t9021.jpg`, `00300-t9049.jpg`, `00301-t9079.jpg` at full size. Large infected and surrounding actors move between frames; no obvious frozen crowd in this short window. Courier-follow camera movement and body overlap still prevent continuous individual sole tracking. These are breach-area frames and do not qualify all tank attacks.
+
+## Prepared next camera observation
+
+Ignored `test-results/b113-video/fixed-tank-entry.ts` is prepared and syntax checked, not yet run. It retains the screenshot observer and sets only camera framing after tick4500: position(−6,11,39), target(−20,0,27.5), zoom1.5, using the authored l4-tank-stop anchor. No gameplay or input-policy modification. This is not collected acceptance evidence.
