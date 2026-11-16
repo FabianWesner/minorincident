@@ -55,3 +55,7 @@ Broadening the existing wide fallback to scripted L4 goals when any breach is op
 ## Renderer contact probe
 
 Added read-only `DistrictView.wreckGroundGaps()`, reusing the existing prop ground-contact measurement against the drawn support. It returns placement identity, asset/decay, selected resident LOD, resolved placement matrix, district origin and gap. It covers only currently resident references and has not yet been exercised in browser; a residency sweep must prove coverage. Typecheck and lint pass. A native static-bake census covers 254/409 resolved placements; 155 need source fallback, so bake-only sampling cannot establish the campaign result.
+
+## First runtime contact result
+
+Browser pool admitted two sequential HIGH WebGL2 L3 probes on port 5018. Initial camera yielded no resident wreck rows. Camera-only positioning over `D-CORRIDOR/l3-jam-3` yielded its selected LOD0 mesh, resolved matrix Y = 0.070005506 m and gap = 0 cm. This validates the probe on one full registered-level placement; it does not cover the remaining campaign inventory or WebGPU. Raw receipt: `test-results/s140-wreckground/probe-L3-webgl2/gaps.json`, also preserved in qa.json. No simulation actor or wreck was repositioned.

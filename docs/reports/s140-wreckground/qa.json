@@ -961,6 +961,40 @@
     "scope": "Resident selected LOD meshes only; returns identity, resolved reference matrix, district origin and minimum vertex-to-drawn-support gap. Full campaign coverage still requires residency sweep.",
     "typecheck": "passed",
     "lint": "passed",
-    "runtimeValidated": false
+    "runtimeValidated": "One L3 resident placement on HIGH WebGL2; camera-only cinematic positioning"
+  },
+  "wreckRuntimeL3Webgl2": {
+    "backend": "webgl",
+    "rows": [
+      {
+        "id": "D-CORRIDOR/l3-jam-3",
+        "asset": "veh.sedan-white",
+        "decay": "wrecked",
+        "lod": "lod0",
+        "matrix": [
+          0.9950041653477906,
+          0,
+          -0.09983341685118896,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0.09983341685118896,
+          0,
+          0.9950041653477906,
+          0,
+          -2,
+          0.07000550627708435,
+          -26.100000381469727,
+          1
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "gapCm": 0
+      }
+    ]
   }
 }
