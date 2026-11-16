@@ -19,3 +19,7 @@ The source-layout inventory is 414 vehicle wrecks. The renderer-shared resolved 
 ## Measurement follow-up
 
 `DistrictBuild.restOnGround` changes rendered vehicle Y using the median of four support samples when authored Y is at most 1 cm. A native contact scan must reproduce this renderer adjustment as well as asset mesh transforms; raw resolved placement coordinates are insufficient. The L4 preliminary scan also needs rolling five-second windows before standstill can be ruled out.
+
+## Rolling-window reproduction
+
+The repeated native seed-1 HIGH complete run finished at tick 18,468 and evaluated 15,405 eligible rolling windows longer than five seconds. Three identities travelled less than 10 cm during a window: Alpha #296 (ticks 3005–3306, zero movement), Alpha #372 (7584–7885, 9.87 cm), and crawler #233 (15676–15977, 9.69 cm). All three retained a scripted destination and targetId 0 despite the independently checked route to the courier. This contradicts a broad no-standstill conclusion from the aggregate scan. Navigation/script ownership still needs diagnosis and correction; no fix is claimed. Exact states and positions are in `qa.json.outsideWireRollingScan`.

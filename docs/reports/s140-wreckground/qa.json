@@ -298,7 +298,7 @@
       }
     ],
     "completionProven": false,
-    "limitation": "Aggregated interval travel does not exclude stationary five-second subwindows; rerun with rolling position windows and actor target/attack state."
+    "limitation": "Superseded by rolling scan: three actor identities have stationary windows despite a path to the courier."
   },
   "existingRegression": {
     "file": "tests/engine/l4-contact.test.ts",
@@ -316,5 +316,79 @@
     "file": "src/render/district/DistrictBuild.ts",
     "function": "restOnGround",
     "behavior": "Vehicle references with authored y <= .01 sample four support locations and raise reference y to their median. Native source placement coordinates alone do not prove rendered contact gaps."
+  },
+  "outsideWireRollingScan": {
+    "seed": 1,
+    "tier": "high",
+    "profile": "complete",
+    "outcome": "complete",
+    "ticks": 18468,
+    "phase": "progression",
+    "turnAt": 1969,
+    "eligibleTicks": 50533,
+    "nearTicks": 64628,
+    "maxConcurrentCandidates": 24,
+    "rollingWindows": 15405,
+    "stationaryThresholdM": 0.1,
+    "stopped": [
+      {
+        "id": 296,
+        "archetype": "infected.alpha",
+        "start": 3005,
+        "end": 3306,
+        "travel": 0,
+        "position": {
+          "x": -36.74867099529254,
+          "y": 0.7,
+          "z": 3.7673575875408876,
+          "yaw": -0.7873789806539067
+        },
+        "state": "attracted",
+        "scripted": {
+          "x": -32.1,
+          "z": 6.105882352941178
+        },
+        "targetId": 0
+      },
+      {
+        "id": 372,
+        "archetype": "infected.alpha",
+        "start": 7584,
+        "end": 7885,
+        "travel": 0.098670225439637,
+        "position": {
+          "x": -15.80683821698411,
+          "y": 0.75,
+          "z": 23.462330424348742,
+          "yaw": 2.395262681268739
+        },
+        "state": "chase",
+        "scripted": {
+          "x": -16.769230769230774,
+          "z": 29.5
+        },
+        "targetId": 0
+      },
+      {
+        "id": 233,
+        "archetype": "infected.crawler",
+        "start": 15676,
+        "end": 15977,
+        "travel": 0.09686655977151304,
+        "position": {
+          "x": -16.738673925564406,
+          "y": 0.75,
+          "z": 24.00853132733217,
+          "yaw": 5.608439777469095
+        },
+        "state": "idle",
+        "scripted": {
+          "x": -16.769230769230774,
+          "z": 24.1
+        },
+        "targetId": 0
+      }
+    ],
+    "qualifyingCount": 29
   }
 }
