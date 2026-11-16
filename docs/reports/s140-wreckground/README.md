@@ -75,3 +75,7 @@ Third bounded attempt admitted and completed. Full registered L3 HIGH WebGL2 cam
 ## West-breach focused reproduction
 
 Native isolated reproduction now opens both actual west segments and places an Alpha at the captured position with the same inside goal. It moves 0 m over 600 ticks. Broadening wide-body recovery to scripted L4 goals still yields 0 m, so that attempted change was removed. This disproves simple fallback broadening as a sufficient fix; preserved source in qa.json. L5 browser sweep separately failed admission before execution after 60 s.
+
+## Steering trace
+
+Focused Alpha calls seek on all 600 ticks. Baseline path remains empty with wide goal 48386. Under the rejected broadened trigger, recovery activates at tick 241 (until 841), selects admission goal 48385, but path stays empty and movement remains zero. Thus fallback trigger alone is insufficient. Removed the attempted change. Further diagnosis must inspect path-search budget/resumption and whether the focused manual breach teardown updates every navigation blocker.
