@@ -27,3 +27,7 @@ The repeated native seed-1 HIGH complete run finished at tick 18,468 and evaluat
 ## Script ownership diagnosis
 
 `InfectedSystem.followScript` suppresses ordinary targeting while a scripted destination remains set and stops seeking within 0.6 m of it. `LevelFourWar.funnel` excludes Alphas from its open-breach routing loop. `L4Collapse` also deliberately assigns stationary scripted holds before battle beats. These sources explain why targetId 0 alone cannot establish a navigation defect. Next capture must match each flagged identity to its director Alpha job, breachApproach and pressure target before changing ownership. The exact rolling-scan source is preserved in `qa.json.rollingScanReproduction` using repository-relative imports.
+
+## Identity ownership capture
+
+Repeated full-run scan reproduces the same three stationary identities. Crawler #233 retains `breachApproach: outside` in collapse at ticks 15676–15977, with a scripted destination only about 10 cm away and an expired pressure target (until tick 3769). This matches the script follower arrival dead zone and needs a focused regression. Alpha job identities are west (#296) and line (#372), but job and breach objects in this capture were retained by reference, so their later stage/open times cannot establish state at the flag. A subsequent capture must clone these objects at observation time. Evidence remains preliminary.
