@@ -185,3 +185,7 @@ LOW full native run completes at tick 15,335 with 6,401 eligible rolling windows
 ## Existing placement gate extended
 
 Scene Lab placement metrics now include resolved wreck contacts. Existing evaluate() gate always rejects sampled wreck rows above 8 cm float, below -10 cm sink, or with null/nonfinite support via wreckGroundOffendersMax=0. Extended existing gate-tools test covers failures and exact threshold boundaries; 8 tests, typecheck and lint pass. This gates sampled identities, not missing campaign inventory; the full sweep must still prove coverage.
+
+## Fifteen paired backend captures reviewed
+
+Captured ten worst baseline measured wrecks plus five seeded random OK wrecks (seed 140), full registered levels, camera-only positioning, zoom setting 1.5. All 30 receipts explicitly identify selected backend (webgl/webgpu), resolved placement ID and matrix; every numerical gap is within thresholds. Reviewed all 30 captures in three paired review sheets. Thirteen pairs show the target and contacts sufficiently to compare backend placement; L6 l6-35 is too dark and L3 roadblock-1-2 is foreground-obstructed, so those two require recapture. Raw closeups are under test-results/s140-wreckground/closeups-{webgl2,webgpu}; compact paired receipts are in qa.json.campaignCloseupPairs. This supersedes earlier requested-backend-only identity caveat for these 15 pairs.
