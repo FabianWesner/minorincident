@@ -201,3 +201,7 @@ Recaptured L6 l6-35 and L3 roadblock-1-2 from a closer opposite angle on explici
 ## Provoked Alpha route ownership fix
 
 Steering trace proves LOW #228 discarded its script because courier provocation bypassed followScript, then sought the courtyard directly every tick. L4 Alphas now retain authored breach routing while the provoker remains behind a body-blocking segment; direct reachable provocation still interrupts. LOW full run completes at tick 17,920 with 5,186 eligible windows and no scripted-waypoint flags. One Alpha #255 flag is attack state targeting #123 beside the closed south breach; event-ledger attribution remains pending. Focused L4 test, typecheck and lint pass. HIGH rerun and latest remote suite required.
+
+## Paired tier attribution on latest routing source
+
+LOW remaining #255 flag is directly attributed to active combat: target #123 is l4-wall-21; five native barricade.damaged events at ticks 7689/7749/7809/7869/7929 reduce HP 600→100, with matching infected.attack and telegraphs. HIGH rerun on the same latest source completes but has two scripted-route flags (#296/#368), so the older clean HIGH result is superseded for completion purposes. Overall routing remains open. Exact latest HIGH states and LOW event ledger retained in qa.json.
