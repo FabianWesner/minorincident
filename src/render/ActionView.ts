@@ -291,7 +291,13 @@ export class ActionView extends Group {
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = loadout.definition(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(def.category === 'throwable' ? '#ffd166' : this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
-    const aim = state.aim, angle = Math.atan2(aim.z, aim.x), halfArc = def.arc * Math.PI / 360;
+    // A swing commits its direction and combo reach at startup. Keep the
+    // visible cone on that committed strike while the cursor moves through
+    // windup/recovery; a live cursor cone can promise hits behind the swing.
+    const swing = combat.runner.running[this.selected];
+    const meleeSwing = swing?.def.category === 'melee' ? swing : undefined;
+    const aim = meleeSwing?.aim ?? state.aim, indicator = meleeSwing?.def ?? def;
+    const angle = Math.atan2(aim.z, aim.x), halfArc = indicator.arc * Math.PI / 360;
     if (def.aimIndicator === 'line') {
       const muzzle = aiming ? this.muzzle(this.socketPosition) : null;
       if (muzzle) {
@@ -306,8 +312,8 @@ export class ActionView extends Group {
       }
     }
     else if (def.aimIndicator === 'cone') {
-      if (this.showCone) this.circle(origin.x, origin.z, def.range, angle - halfArc, halfArc * 2);
-      if (this.showCone) for (let sign = -1; sign <= 1; sign += 2) { const edge = halfArc * sign; this.segment(origin.x, 0.04, origin.z, origin.x + Math.cos(angle + edge) * def.range, 0.04, origin.z + Math.sin(angle + edge) * def.range); }
+      if (this.showCone) this.circle(origin.x, origin.z, indicator.range, angle - halfArc, halfArc * 2);
+      if (this.showCone) for (let sign = -1; sign <= 1; sign += 2) { const edge = halfArc * sign; this.segment(origin.x, 0.04, origin.z, origin.x + Math.cos(angle + edge) * indicator.range, 0.04, origin.z + Math.sin(angle + edge) * indicator.range); }
     } else if (def.aimIndicator === 'arc') {
       const frame = this.world.inputFrame, fire = this.selected === 'LEFT' ? frame.left : frame.right;
       const aimingThrow = !downed && !player.riding && player.health.current > 0 && !!frame.aim
