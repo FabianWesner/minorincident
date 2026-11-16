@@ -79,3 +79,7 @@ Native isolated reproduction now opens both actual west segments and places an A
 ## Steering trace
 
 Focused Alpha calls seek on all 600 ticks. Baseline path remains empty with wide goal 48386. Under the rejected broadened trigger, recovery activates at tick 241 (until 841), selects admission goal 48385, but path stays empty and movement remains zero. Thus fallback trigger alone is insufficient. Removed the attempted change. Further diagnosis must inspect path-search budget/resumption and whether the focused manual breach teardown updates every navigation blocker.
+
+## Focused teardown correction
+
+Earlier manual fixture teardown omitted `interactables.unblock`, which production `Barricades.break` performs. Corrected reproduction sets wall HP to zero and runs Barricades.update. Baseline still moves 0 m; broadened recovery now obtains 22 path nodes and moves 0.412 m over 600 ticks. This supersedes the earlier empty admission-path conclusion for that fixture. Recovery alone remains unverified as a fix and its source change was removed. Next diagnosis is collision/steering along the resulting route.

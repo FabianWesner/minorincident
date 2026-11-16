@@ -1825,5 +1825,14 @@
     },
     "sourceRetained": false,
     "next": "Check search budget/resumption and complete blocker removal in focused fixture; admission goal selection alone does not fix it."
+  },
+  "westAlphaProductionBreak": {
+    "teardown": "Set wall HP zero and run Barricades.update so break invokes interactables.unblock and emits native events; also clear solid barrier.",
+    "baselineTravelM": 0,
+    "experimentalRecoveryTravelM": 0.41226976924330094,
+    "experimentalPathNodes": 22,
+    "ticks": 600,
+    "changeRetained": false,
+    "supersedes": "Earlier manual teardown experiments left interactable navigation blockers installed."
   }
 }
