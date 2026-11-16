@@ -504,7 +504,7 @@ export class DistrictView extends Group {
     let gap = Infinity;
     for (const point of batch.contactPoints()) {
       const v = this.propPoint.copy(point).applyMatrix4(ref.matrix); v.x += entry.origin[0]; v.z += entry.origin[1];
-      const ground = this.groundAt(v.x, v.z);
+      const ground = entry.id.startsWith('veh.') ? this.vehicleSupportAt(v.x, v.z) : this.groundAt(v.x, v.z);
       if (ground !== null) gap = Math.min(gap, v.y - ground);
     }
     return gap;
@@ -523,12 +523,16 @@ export class DistrictView extends Group {
     return gaps;
   }
   private wreckSupport?: GroundField;
-  /** Read-only campaign wreck audit: selected resident mesh and the renderer's resolved placement matrix. */
-  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; contact: number[] | null; groundHeight: number | null; supportSamples: number; contactSamples: number }[] {
+  /** Vehicle contacts include elevated road triangles; the support ceiling excludes overhead geometry. */
+  private vehicleSupportAt(x: number, z: number): number | null {
     if (!this.wreckSupport) {
       this.wreckSupport = new GroundField();
       for (const mesh of this.parts.mergedLayout) this.wreckSupport.add(mesh, Infinity);
     }
+    return this.wreckSupport.height(x, z, this.world.pavingHeight(x, z) + .1) ?? this.groundAt(x, z);
+  }
+  /** Read-only campaign wreck audit: selected resident mesh and the renderer's resolved placement matrix. */
+  wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; contact: number[] | null; groundHeight: number | null; supportSamples: number; contactSamples: number }[] {
     const rows: { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; contact: number[] | null; groundHeight: number | null; supportSamples: number; contactSamples: number }[] = [];
     for (const entry of this.lodBatches) {
       if (!entry.id.startsWith('veh.') || !(entry.id === 'veh.wreck' || entry.decay === 'wrecked' || entry.decay === 'burned')) continue;
@@ -543,7 +547,7 @@ export class DistrictView extends Group {
         for (const point of points) {
           const v = this.propPoint.copy(point).applyMatrix4(ref.matrix);
           v.x += entry.origin[0]; v.z += entry.origin[1];
-          const ground = this.wreckSupport.height(v.x, v.z, this.world.pavingHeight(v.x, v.z) + .1) ?? this.groundAt(v.x, v.z);
+          const ground = this.vehicleSupportAt(v.x, v.z);
           if (ground === null) continue;
           supportSamples++;
           if (v.y - ground < gap) { gap = v.y - ground; contact = v.toArray(); groundHeight = ground; }

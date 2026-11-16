@@ -137,3 +137,7 @@ Loaded all D-FAIR layout GLB layers natively with production GLTFLoader/Meshopt 
 ## Large sink transform cause found
 
 Native asset-vertex + recorded-matrix replay reproduces every military gap, including -194.002 cm. l7-military-3 is authored Y=1.5 m but its renderer reference is Y=-0.290022 m; worst vertex is at [140.3201,-0.2900,24.4840] over road Y=1.65. Vehicles are pushable props; DistrictView sleeping-prop contact correction uses the incomplete low ground field and can lower the elevated reference. Thus the large sink is not dismissed as support contamination. Correct the prop support sampling before modifying authored height; the smaller 15 cm terrace discrepancies remain separate.
+
+## Vehicle prop support correction
+
+Vehicle prop settling now uses the same elevated layout triangle support query as the audit, replacing low-only sampling for vehicles. This targets the sleeping-truck transform that fell from authored Y=1.5 to -0.29 m. Existing 14 render contracts, typecheck and lint pass. L7 after-sweep failed admission before execution (60 s, quiet=false), so runtime correction is pending and not yet claimed verified. Remote suite must run on this source revision.
