@@ -26,6 +26,15 @@ export class PlaytestProgress {
     const band = ['distant', 'approaching', 'near'].indexOf(s.megaBand ?? '');
     const text=s.text.replace(/ · [\d.]+\s?m\b/g,'');
     let reason: string | null=null;
+    // The first playable frames can legitimately have no objective in the HUD.
+    // Do not age a stall clock against an objective the game has not shown yet.
+    if (!text.trim()) {
+      this.context=s.context; this.text=''; this.tick=s.tick; this.wall=s.nowMs;
+      this.best=Infinity; this.nearestBand=band; this.playerOrigin=s.player?{...s.player}:null;
+      this.markerOrigin=null; this.playerFar=this.markerFar=0; this.detourOrigin=null; this.detourTarget=null;
+      this.enemyHealth.clear(); this.previousPlayer=s.player?{...s.player}:null; this.previousTick=s.tick;
+      return { seconds: 0, reason: 'empty-objective' };
+    }
     // Ring reads are cached between frames. A respawn can leave the old gate's
     // ring paired with the new HUD distance; wait for a matching visible sample.
     const marker=s.marker&&s.player&&s.distance!==null&&Math.abs(Math.hypot(s.marker.x-s.player.x,s.marker.z-s.player.z)-s.distance)>5?null:s.marker;
@@ -75,4 +84,12 @@ export class PlaytestProgress {
     if(reason){this.tick=s.tick;this.wall=s.nowMs;}
     return {seconds:Math.max(0,Math.min((s.tick-this.tick)/60,(s.nowMs-this.wall)/1000)),reason};
   }
+}
+
+export interface ResolvedAttackEvidence { attackId: number; tick: number; queryIds: number[]; hitIds: number[]; damage: { targetId: number; amount: number }[] }
+/** Observation time and misses never count as evidence against a named target. */
+export function qualifyingUnhittableAttacks(rows: readonly ResolvedAttackEvidence[], targetId: number, tick: number): ResolvedAttackEvidence[] {
+  const recent = rows.filter(row => row.tick >= tick - 480 && row.tick <= tick);
+  if (recent.some(row => row.damage.some(hit => hit.targetId === targetId && hit.amount > 0))) return [];
+  return [...new Map(recent.filter(row => row.queryIds.includes(targetId)).map(row => [row.attackId, row])).values()];
 }

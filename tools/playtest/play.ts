@@ -74,7 +74,7 @@ try {
   if (mode === 'campaign') {
     const deadline = Date.now() + base.levelMinutes * 60_000;
     for (let segment = 0; ; segment++) {
-      const ok = session({ ...base, levels, entry: segment ? 'continue' : (values.entry as SessionOptions['entry']) ?? (levels[0] === 'L1' ? 'new' : 'debug'), stopAfterLevel: false, tag: segment ? `campaign-${segment + 1}` : 'campaign', sampleSeconds: sessionSeconds });
+      const ok = session({ ...base, levels, entry: segment ? 'continue' : (values.entry as SessionOptions['entry']) ?? (levels[0] === 'L1' ? 'new' : 'debug'), stopAfterLevel: false, tag: segment ? `campaign-${segment + 1}` : 'campaign', sampleSeconds: sessionSeconds, saveOnYield: sessionSeconds !== undefined && levels.length === 1 && levels[0] === 'L10' });
       if (!ok || sessionSeconds === undefined || runs.some(run => run.finished) || Date.now() >= deadline) break;
     }
   }

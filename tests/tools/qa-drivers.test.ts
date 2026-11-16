@@ -1,3 +1,4 @@
+import { campaignCombatWeapon } from '../../tools/playtest/combat';
 import { installScreamObserver } from '../../tools/playtest/scream-observer';
 // QA drivers used by every pre-deploy check: the real-input playtest driver (tools/playtest) and Scene Lab specs.
 // A broken stuck detector or spec validator silently turns the PO-style QA green.
@@ -7,13 +8,14 @@ import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
 import { frameInterval, type FrameState } from '../../tools/playtest/frames';
-import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
+import { PlaytestProgress, qualifyingUnhittableAttacks, type ProgressSample } from '../../tools/playtest/progress';
 import { canShootVehicleObjective, captureZooms, visibleBoarder, visibleGroupTarget } from '../../tools/playtest/eyes';
 import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
 import { PNG } from 'pngjs';
 import { courierBodyPixels } from '../../tools/scenelab/run';
 import { hueDistance, lookStats, LOW_CHROMA } from '../../tools/scenelab/look';
 import { edgeNoise } from '../../tools/scenelab/edge-noise';
+import { VehicleRouteRecovery } from '../../tools/playtest/driving';
 
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
@@ -38,6 +40,10 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
     expect(receipts).toContainEqual(expect.objectContaining({ level: 'L10', kind: 'scream' }));
   } finally { vi.unstubAllGlobals(); }
 
+  for (const gun of ['weapon.hunting-rifle', 'weapon.assault-rifle', 'weapon.nail-gun']) {
+    expect(campaignCombatWeapon('L10', ['weapon.fire-axe', gun])).toBe(gun);
+    expect(campaignCombatWeapon('L10', ['weapon.fire-axe', gun], [gun])).toBe('weapon.fire-axe');
+  }
   expect(canShootVehicleObjective('L9', 'Hold the hatch')).toBe(true);
   expect(captureZooms).toEqual([1, 1.5]);
   expect(canShootVehicleObjective('L9', 'Drive through the horde')).toBe(false);
@@ -49,10 +55,19 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
   expect(visibleGroupTarget('L7', { x: 0, z: 0 }, group)).toBeNull();
   expect(visibleGroupTarget('L7', { x: -7, z: 0 }, group)).toEqual({ x: 12, z: 0 });
   expect(visibleGroupTarget('L6', { x: 0, z: 0 }, group, 8, 'exit')).toEqual({ x: 12, z: 0 });
+  expect(qualifyingUnhittableAttacks([], 7, 540)).toEqual([]); // nine seconds, zero resolved attacks
+  const misses = Array.from({ length: 8 }, (_, i) => ({ attackId: i, tick: 60 + i * 60, queryIds: [], hitIds: [], damage: [] }));
+  expect(qualifyingUnhittableAttacks(misses, 7, 540)).toEqual([]);
+  const accepted = misses.map(row => ({ ...row, queryIds: [7] }));
+  expect(qualifyingUnhittableAttacks(accepted, 7, 540)).toHaveLength(8);
+  expect(qualifyingUnhittableAttacks([...accepted, { attackId: 9, tick: 540, queryIds: [7], hitIds: [7], damage: [{ targetId: 7, amount: 1 }] }], 7, 540)).toEqual([]);
   const follow = new PlaytestProgress(); follow.update(sample(0));
   for (let t = 1; t <= 45; t++) expect(follow.update(sample(t, { player: { x: t * 2.2, z: 15 }, marker: { x: t * 2.2 + 12, z: 15 } })).seconds).toBeLessThan(2);
   const parked = new PlaytestProgress(); parked.update(sample(0));
   expect(parked.update(sample(31, { marker: { x: 80, z: 15 } })).seconds).toBe(31);
+  const emptyHud = new PlaytestProgress(); emptyHud.update(sample(0, { text: '', distance: null, marker: null }));
+  expect(emptyHud.update(sample(30, { text: '', distance: null, marker: null })).seconds).toBe(0);
+  expect(emptyHud.update(sample(31, { text: 'Reach the bridge', distance: 30, marker: { x: 30, z: 15 } })).seconds).toBe(0);
   const loop = new PlaytestProgress(); loop.update(sample(0)); loop.update(sample(1, { player: { x: 3, z: 15 }, marker: { x: 15, z: 15 } }));
   for (let t = 2; t <= 35; t++) loop.update(sample(t, { player: { x: t % 2 ? 3 : 0, z: 15 }, marker: { x: t % 2 ? 15 : 12, z: 15 } }));
   expect(loop.update(sample(36)).seconds).toBeGreaterThan(30);
@@ -70,6 +85,13 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
   const runaway = new PlaytestProgress(); runaway.update(barrier(0, 0));
   for(let t=1;t<=80;t++) runaway.update(barrier(t,-t*2));
   expect(runaway.update(barrier(81,-162)).seconds).toBeGreaterThan(30);
+  const recovery = new VehicleRouteRecovery(), goal = { x: 100, z: 0 };
+  expect(recovery.keys({ x: 0, z: 0 }, goal, 0)).toBeNull();
+  expect(recovery.keys({ x: 4, z: 0 }, goal, 3000)).toBeNull();
+  expect(recovery.keys({ x: 1, z: 1 }, goal, 9000)).toEqual(['KeyS', 'KeyA']);
+  expect(recovery.keys({ x: 1, z: 1 }, goal, 9500)).toEqual(['KeyS', 'KeyA']);
+  expect(recovery.keys({ x: 2, z: 1 }, goal, 11000)).toBeNull();
+  expect(recovery.keys({ x: 10, z: 0 }, { x: 120, z: 0 }, 12000)).toBeNull();
   const fight = new PlaytestProgress(); fight.update(sample(0,{enemies:[{id:1,hp:100}]}));
   expect(fight.update(sample(20,{enemies:[{id:1,hp:75}]})).reason).toBe('damage');
   expect(fight.update(sample(41,{enemies:[{id:1,hp:75}]})).seconds).toBe(21);

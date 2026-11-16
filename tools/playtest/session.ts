@@ -8,16 +8,17 @@ import { canShootVehicleObjective, EscortClearance, look, visibleGroupTarget, ty
 import { assertRenderedBodies, campaignEndingComplete, campaignEndingWaiting, isMandatoryBossObjective, needsZoomInput, observeWithin, shouldResumePause } from './startup';
 import { rangedWeaponPattern as ranged, campaignCombatWeapon, campaignThreat, canCoverVisibleAllies, finaleDodgeGoal, fistsRetreatAttack, keepMovingWithFists, prioritizeAllyThreat, rocketAimPoint } from './combat';
 import { weaponKey } from '../../src/data/weaponKeys';
-import { PlaytestProgress } from './progress';
+import { PlaytestProgress, qualifyingUnhittableAttacks, type ResolvedAttackEvidence } from './progress';
 import { dodgeWalkKeys, markerWalkKeys } from './input';
 import { frameInterval, installFrameProbe, type LongFrame } from './frames';
-import { VehicleRecovery } from './driving';
+import { VehicleRecovery, VehicleRouteRecovery } from './driving';
 import type { Game } from '../../src/Game';
 import { l2Routes } from '../../src/debug/bot/LevelTwoBot';
 import { installFinalAudit } from './final-audit';
 import { installSoftlockAudit } from './softlock-audit';
 import { installL6HoldObserver } from './l6-hold-observer';
 import { crossing } from '../../src/levels/L9/district';
+import { cure } from '../../src/levels/L10/district';
 import { l9Course, l9Groups } from '../../src/data/l9';
 import { l5Survivors } from '../../src/data/l5';
 import { installAcceptanceLedger } from './acceptance-ledger';
@@ -727,6 +728,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     shotAt.clear(); ignored.clear(); reportedUnhittable.clear();
     trail.length = 0; lastErr = null; steering = false;
     vehicleRecovery = new VehicleRecovery();
+    vehicleRouteRecovery = new VehicleRouteRecovery();
     searchedL5Places.clear(); l5SearchStop = null; l5SearchArrived = 0; l5SearchFound = 0;
     cureConsole = null; lastE = lastClick = 0;
     escortClearance = new EscortClearance();
@@ -762,6 +764,26 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       world.events.on('level.completed', event => {
         if (event.type !== 'level.completed') return;
         observation.__playtestCompleted!.push({ level: event.id, tick: world.tick, result: structuredClone(event.result), steps: mission.def.steps.map(s => ({ id: s.id, optional: !!s.optional, status: mission.state.steps[s.id].status })) });
+      });
+      const resolvedAudit = window as unknown as { __playtestResolved: { attackId: number; tick: number; queryIds: number[]; hitIds: number[]; damage: unknown[] }[] };
+      resolvedAudit.__playtestResolved = [];
+      const resolvedSeen = new Set<number>(), attackDamage = new Map<number, unknown[]>();
+      world.events.on('combat.hit', event => {
+        if (event.type === 'combat.hit' && event.sourceId === 1) {
+          const rows = attackDamage.get(event.attackId) ?? []; rows.push(structuredClone(event)); attackDamage.set(event.attackId, rows);
+        }
+      });
+      world.events.on('sim.tick', () => {
+        const combat = world.combat, source = world.entities.get(1);
+        if (!combat || !source) return;
+        for (const attack of Object.values(combat.runner.running)) {
+          if (!attack || !attack.resolved || attack.def.category !== 'melee' || resolvedSeen.has(attack.id)) continue;
+          resolvedSeen.add(attack.id);
+          const queryIds = combat.query.melee(source.id, source.transform, attack.aim, attack.def.range, attack.def.arc, attack.def.maxTargets, attack.inPlace, attack.target).map(target => target.id);
+          resolvedAudit.__playtestResolved.push({ attackId: attack.id, tick: world.tick, queryIds, hitIds: [...attack.hit], damage: attackDamage.get(attack.id) ?? [] });
+          if (resolvedAudit.__playtestResolved.length > 200) resolvedAudit.__playtestResolved.shift();
+          attackDamage.delete(attack.id);
+        }
       });
       world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) observation.__playtestAttacks[event.actionId] = (observation.__playtestAttacks[event.actionId] ?? 0) + 1; });
       observation.__playtestDamage = [];
@@ -901,8 +923,47 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         return true;
       }
       ignored.set(threat.id, Date.now() + 20_000); log({ unhittable: threat.id, d: threat.d, state: threat.state, hp: threat.hp, diagnostic }); await releaseAim();
-      if (!reportedUnhittable.has(threat.id)) { reportedUnhittable.add(threat.id); if (threat.d < 2.2) await issue('P2', 'enemy-unhittable', `Infected #${threat.id} (${threat.state}) ${threat.d.toFixed(1)} m away took no damage from 8 s of attacks (hp ${threat.hp}/${threat.max})`); }
+      const resolvedRows = await page.evaluate(() => (window as unknown as { __playtestResolved?: ResolvedAttackEvidence[] }).__playtestResolved ?? []);
+      const resolvedEvidence = qualifyingUnhittableAttacks(resolvedRows, threat.id, e.tick);
+      log({ unchangedHpDiagnostic: threat.id, resolvedEvidence, reason: 'Observation time alone is not evidence of a qualifying attack' });
+      if (!reportedUnhittable.has(threat.id) && resolvedEvidence.length >= 8) {
+        reportedUnhittable.add(threat.id);
+        await issue('P2', 'enemy-unhittable', `Infected #${threat.id} unchanged after 8 resolved melee queries qualified it; attack IDs ${resolvedEvidence.map(row => row.attackId).join(',')}; query/hit/damage evidence in unchangedHpDiagnostic`);
+      }
       return false;
+    }
+    const l10FarmThreats = e.level === 'L10' && e.player && e.step !== 'mega' && e.step !== 'hold'
+      ? e.enemies.filter(b => b.drawn && b.hp > 0 && !b.corpse && b.d < 6) : [];
+    if (e.level === 'L10' && e.player && e.step !== 'mega' && e.step !== 'hold' &&
+        e.player.hp / e.player.max < .65 && l10FarmThreats.length >= 2) {
+      const kit = e.healthKits?.slice().sort((a, b) => a.d - b.d)[0] ?? null;
+      await releaseAim();
+      if (kit) {
+        const points = await page.evaluate(({ p, goal }) => {
+          const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+          const out = { ...goal }; w.infected!.nav.forPlayer(.45).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, .45, out, Infinity, true);
+          return [a.input.project(p, 'player'), a.input.project(out, 'player')];
+        }, { p: e.player, goal: kit });
+        await press(wasdToward(e, e.view.w / 2 + points[1].x - points[0].x, e.view.h / 2 + points[1].y - points[0].y));
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ l10FarmMedkit: e.tick, hp: e.player.hp, threats: l10FarmThreats.length, goal: kit }); }
+      } else {
+        await press(await l10TravelEscapeKeys(e, threat));
+        if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ l10FarmKite: e.tick, hp: e.player.hp, threats: l10FarmThreats.length, enemy: threat.id }); }
+      }
+      await page.mouse.move(threat.aim.x, threat.aim.y);
+      if (aimHeld === null) await page.mouse.down();
+      aimHeld = threat.id;
+      return true;
+    }
+    if (e.level === 'L10' && e.player && !['mega', 'hold', 'release', 'epilogue'].includes(e.step ?? '') &&
+        !ranged.test(e.player.current ?? '') && threat.d < 2.6) {
+      // Axe travel must create space before damage accumulates, including one
+      // fast contact. Standing to swing lets the following crowd surround us.
+      await press(await l10TravelEscapeKeys(e, threat));
+      await page.mouse.move(threat.aim.x, threat.aim.y);
+      if (aimHeld === null) await page.mouse.down();
+      aimHeld = threat.id;
+      return true;
     }
     if (threat.d > reach) { // walk toward the ally's attacker
       if (Date.now() - lastClick > 700) { const s = safe(threat.screen.x, threat.screen.y, e); await walkTowardScreenPoint(s.x, s.y); lastClick = Date.now(); }
@@ -965,7 +1026,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           const out = { ...goal }, radius = w.entities.get(1)!.combat?.radius ?? .3;
           w.infected!.nav.forPlayer(radius).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, radius, out, Infinity, true);
-          return [a.input.project(p, 'player'), a.input.project(out, 'player')];
+          // Project a nearby point along the route: a far point behind the
+          // camera can reverse its apparent screen bearing.
+          const scale = Math.min(1, 3 / (Math.hypot(out.x - p.x, out.z - p.z) || 1));
+          return [a.input.project(p, 'player'), a.input.project({ x: p.x + (out.x - p.x) * scale, z: p.z + (out.z - p.z) * scale }, 'player')];
         }, { p: e.player, goal: coverGoal });
         retreatKeys = markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12);
         if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ movingCover: e.tick, level: e.level, keys: retreatKeys, input: 'physical WASD + mouse; read-only route steering' }); }
@@ -1032,6 +1096,20 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     aimHeld = threat.id;
     return true;
   };
+  const l10TravelEscapeKeys = async (e: Eyes, threat: Body, destination = ring): Promise<string[]> => {
+    if (!e.player || !destination) return awayKeys(e, threat);
+    const p = e.player;
+    // Keep the map route in charge while making space. Purely fleeing the
+    // nearest contact drifts into corn rows and never reaches the next pickup.
+    const points = await page.evaluate(({ p, goal }) => {
+      const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+      const out = { ...goal }, radius = w.entities.get(1)!.combat?.radius ?? .3;
+      if (!w.infected!.nav.forPlayer(radius).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, radius, out, Infinity, true)) return null;
+      const length = Math.hypot(out.x - p.x, out.z - p.z) || 1;
+      return [a.input.project(p, 'player'), a.input.project({ x: p.x + (out.x - p.x) / length * 3, z: p.z + (out.z - p.z) / length * 3 }, 'player')];
+    }, { p, goal: destination });
+    return points ? markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12) : awayKeys(e, threat);
+  };
   const awayKeys = (e: Eyes, b: Body): string[] => {
     const dx = e.view.w / 2 - b.screen.x, dy = e.view.h / 2 - b.screen.y, out: string[] = [];
     if (Math.abs(dx) > 20) out.push(dx > 0 ? 'KeyD' : 'KeyA');
@@ -1071,8 +1149,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       // velocity flips the sign after a ram/reverse and can circle forever.
       // Keyboard driving is vehicle-relative (src/sim/vehicles/Vehicles.ts): W gas, S brake/reverse, A steers the
       // vehicle's own left, D right. Steer toward the lookahead point by comparing it with the heading.
-      const car = e.driving, recovery = vehicleRecovery.keys(car, Date.now());
-      if (recovery) { await press(recovery); return; }
+      const car = e.driving, now = Date.now(), recovery = vehicleRecovery.keys(car, now) ?? vehicleRouteRecovery.keys(car, goal, now);
+      if (recovery) { log({ l9RouteRecovery: { tick: e.tick, keys: recovery, car: { x: car.x, z: car.z }, goal } }); await press(recovery); return; }
       const want = -Math.atan2(goal.z - car.z, goal.x - car.x);
       const delta = Math.atan2(Math.sin(want - car.yaw), Math.cos(want - car.yaw));
       await press(['KeyW', ...(Math.abs(delta) > .08 ? [delta > 0 ? 'KeyA' : 'KeyD'] : [])]);
@@ -1096,7 +1174,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     await press(keys);
   };
   const trail: { x: number; z: number; t: number }[] = []; let steerSign = 1, steerFlip = 0, lastErr: number | null = null, steering = false;
-  let vehicleRecovery = new VehicleRecovery();
+  let vehicleRecovery = new VehicleRecovery(), vehicleRouteRecovery = new VehicleRouteRecovery();
   const l9Route = crossing.routes.find(r => r.id === o.l9Route);
   const l9Path = o.l9Waypoints ?? l9Route?.points.flatMap((a, i, points) => {
     const b = points[i + 1]; if (!b) return [a];
@@ -1232,7 +1310,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (frame.playMs > 500) await issue(frame.playMs > 2000 ? 'P1' : 'P2', 'hitch', `Frame of ${Math.round(frame.playMs)} ms at tick ${frame.tick}`, false, frame);
       }
     }
-    if (run && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) {
+    if (run && !e.ending && o.sampleSeconds !== undefined && Date.now() - wallStart >= o.sampleSeconds * 1000) {
       await press([]); await releaseAim();
       run.wallSeconds = Math.round((Date.now() - wallStart) / 1000); run.simSeconds = Math.round((e.tick - tickStart) / 60);
       run.weaponsEnd = e.player?.weapons ?? [];
@@ -1670,7 +1748,12 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       const tag = `${key}|${atRing ? 'ring' : 'nav'}`;
       if (!stuckLogged.has(tag)) { stuckLogged.add(tag); await issue('P2', atRing ? 'stuck-at-ring' : 'stuck-navigating', `${Math.round(stuckSim)} s without objective progress ${atRing ? `standing at the ring (${e.distance?.toFixed(1)} m)` : `(distance ${e.distance?.toFixed(1) ?? 'none'} m, no marker: ${!e.marker?.visible})`}; HUD: "${e.tracker}"`); }
     }
-    if (Date.now() > levelDeadline() || stuckSim > 420) {
+    if (Date.now() > levelDeadline()) {
+      await issue('P3', 'sample-cap', `Stopped at the configured ${o.levelMinutes} minute playtest cap on step ${e.step} (objective: "${e.objective}")`);
+      log({ sampleCap: true, level: e.level, tick: e.tick, step: e.step, minutes: o.levelMinutes });
+      break;
+    }
+    if (stuckSim > 420) {
       const mandatory = e.level === 'L9' || isMandatoryBossObjective(e.level, e.step ?? null);
       await issue('P0', 'cannot-finish', `Driver could not finish step ${e.step} ("${e.objective}") after ${Math.round(stuckSim)} s on it (${o.levelMinutes} min level cap: ${Date.now() > levelDeadline()}); ${o.noSkip || mandatory?'stopping without advancing the objective':'skipping it with the debug objective cheat'}`);
       if(o.noSkip) { log({ abortedNoSkip:true, level:e.level, tick:e.tick, step:e.step }); break; }
@@ -1820,7 +1903,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const shortcut = weapon && weaponKey(weapon);
     if (weapon && shortcut && e.player?.current !== weapon) {
       await press([]); await releaseAim();
-      await page.keyboard.press(`Digit${shortcut}`); await hold(300);
+      if (shortcut <= 10) await page.keyboard.press(`Digit${shortcut === 10 ? 0 : shortcut}`);
+      else await page.getByTestId(`weapon-rack-${weapon}`).click();
+      await hold(300);
       log({ selectedCarriedWeapon: weapon, level: e.level, tick: e.tick }); continue;
     }
     const marketEscape = e.level === 'L2' && e.step === 'bridge';
@@ -1836,6 +1921,36 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await press(keys);
       await hold(150);
       continue;
+    }
+    // During L10 travel, collect a visible carried weapon before the next crowd.
+    // Pickups require physical approach; no rack entitlement or world state is written.
+    const l10Gun = e.level === 'L10' && e.player && !['hold', 'mega', 'release', 'epilogue'].includes(e.step ?? '')
+      ? e.weaponPickups?.find(pickup => ranged.test(pickup.action) && !e.player!.weapons.includes(pickup.action)) : undefined;
+    if (l10Gun && !e.enemies.some(body => body.drawn && body.hp > 0 && !body.corpse && body.d < 2)) {
+      await releaseAim();
+      await press(wasdToward(e, l10Gun.screen.x, l10Gun.screen.y));
+      await hold(150); continue;
+    }
+    const l10Kit = e.level === 'L10' && e.player && e.player.hp < e.player.max * .65
+      ? e.healthKits?.slice().sort((a, b) => a.d - b.d)[0] : undefined;
+    if (l10Kit && !e.enemies.some(body => body.drawn && body.hp > 0 && !body.corpse && body.d < 3)) {
+      await releaseAim(); await press(wasdToward(e, l10Kit.screen.x, l10Kit.screen.y));
+      await hold(150); continue;
+    }
+    const rifleAt = cure.anchors['farmhouse-rifle'];
+    if (e.level === 'L10' && e.player && e.step === 'farmstead' &&
+        !e.player.weapons.some(id => ranged.test(id)) && Math.abs(e.player.x - rifleAt[0]) < 180) {
+      const goal = { x: rifleAt[0], y: e.player.y, z: rifleAt[1] };
+      const threat = e.enemies.find(body => body.drawn && body.hp > 0 && !body.corpse);
+      const keys = await l10TravelEscapeKeys(e, threat ?? { screen: { x: e.view.w / 2, y: e.view.h / 2 } } as Body, goal);
+      await press(keys);
+      if (threat && threat.d < 3) {
+        await page.mouse.move(threat.aim.x, threat.aim.y);
+        if (aimHeld === null) await page.mouse.down();
+        aimHeld = threat.id;
+      } else await releaseAim();
+      if (Date.now() - navLog > 3000) { navLog = Date.now(); assist('L10 farmhouse map detour', { goal, input: 'physical WASD + mouse; read-only navigation' }); }
+      await hold(150); continue;
     }
     // Keep the escape route in charge even between dense crowds. Chasing each
     // recovering straggler could pull the driver to the map edge indefinitely.

@@ -1,0 +1,344 @@
+{
+  "objective": "s145-driver \u2014 playtest driver: no false stalls (L9 bridge loops, L10 farm deaths, cap labels)",
+  "candidate": "69562fd1",
+  "status": "acceptance matrix satisfied; retained historical driver failures documented",
+  "changes": [
+    "L9 live bridge steering gains loop detection and physical reverse/re-approach recovery",
+    "L10 low-health crowd retreat and nearby medkit steering during travel",
+    "empty HUD objective resets visible stall timing",
+    "configured level cap emits P3 sample-cap and stops without cannot-finish P0",
+    "Bounded single-level L10 sessions save live Resume through pause/settings before yielding"
+  ],
+  "checks": {
+    "build_qa": "pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "unit": {
+      "command": "npm test",
+      "status": "pass",
+      "files": "27/27",
+      "vitestTests": "106/106",
+      "budgetCases": "150/150",
+      "seconds": 126.1
+    },
+    "remote_unit_wrapper": {
+      "command": "sh tools/remote/run.sh $PWD -- npm test",
+      "status": "pass",
+      "files": 27,
+      "passed": 105,
+      "skipped": 1,
+      "seconds": 185.6,
+      "runner": "46.225.66.90"
+    }
+  },
+  "attempted_current_acceptance": {
+    "L9_HIGH_road": {
+      "status": "pass",
+      "run": "test-results/s145-driver/l9-road-high-1-live",
+      "wallSeconds": 307,
+      "issues": 0,
+      "skips": 0
+    },
+    "L9_HIGH_road_node_loader": "blocked before browser launch: preview server listen on port 5027 returned EPERM",
+    "L9_LOW_road": {
+      "status": "pass",
+      "run": "test-results/s145-driver/l9-road-low-live",
+      "wallSeconds": 246,
+      "skips": 0,
+      "issues": 0
+    },
+    "L9_HIGH_shortcut": {
+      "status": "pass",
+      "run": "test-results/s145-driver/l9-shortcut-high-live",
+      "wallSeconds": 208,
+      "skips": 0,
+      "issues": 0
+    },
+    "L10_HIGH_mortal_full_x2": "not run",
+    "L9_HIGH_road_2": {
+      "status": "pass for navigation acceptance",
+      "run": "test-results/s145-driver/l9-road-high-2-live",
+      "wallSeconds": 303,
+      "skips": 0,
+      "stuckNavigating": 0,
+      "otherIssues": [
+        {
+          "kind": "enemy-frozen",
+          "tick": 4359
+        },
+        {
+          "kind": "enemy-frozen",
+          "tick": 14385
+        }
+      ]
+    },
+    "L9_HIGH_road_3": {
+      "status": "pass for navigation acceptance",
+      "run": "test-results/s145-driver/l9-road-high-3-live",
+      "wallSeconds": 271,
+      "skips": 0,
+      "stuckNavigating": 0,
+      "otherIssues": [
+        {
+          "kind": "enemy-frozen",
+          "tick": 13548
+        }
+      ]
+    },
+    "L10_HIGH_mortal_attempt_1": {
+      "status": "diagnostic failed; stopped after repeated farm navigation warnings",
+      "run": "test-results/s145-driver/l10-high-mortal-1",
+      "deathsObserved": 6,
+      "lastCheckpoint": "cure-pace-3",
+      "navigationWarningTicks": [
+        10335,
+        23244
+      ],
+      "fullRun": false
+    },
+    "L10_HIGH_mortal_attempt_2": {
+      "status": "diagnostic failed; stopped for route diagnosis",
+      "run": "test-results/s145-driver/l10-high-mortal-2",
+      "deathsObserved": 5,
+      "lastCheckpoint": "cure-pace-3",
+      "navigationWarningTicks": [
+        14685
+      ],
+      "lastPlayer": {
+        "x": 934.6,
+        "z": -42.575,
+        "hp": 46.7,
+        "weapon": "weapon.fire-axe"
+      },
+      "fullRun": false,
+      "saveBoundaryVerified": false
+    },
+    "L10_HIGH_mortal_attempt_3": {
+      "status": "sample-cap; farm navigation still fails",
+      "run": "test-results/s145-driver/l10-high-mortal-3-cap",
+      "wallSeconds": 480,
+      "deathsObserved": 10,
+      "fullRun": false,
+      "issueKinds": [
+        "stuck-navigating",
+        "stuck-navigating",
+        "sample-cap"
+      ]
+    },
+    "L10_HIGH_mortal_attempt_4": {
+      "status": "failed at overall budget after four segments; restricted-zone retry loop",
+      "run": "test-results/s145-driver/l10-high-mortal-4-full",
+      "exitCode": 1,
+      "segments": [
+        {
+          "log": "log-campaign-2.jsonl",
+          "observedDeaths": 13,
+          "lastCheckpoint": "cure-pace-8",
+          "lastStep": "restricted-zone",
+          "resumeSaves": [
+            28607
+          ]
+        },
+        {
+          "log": "log-campaign-3.jsonl",
+          "observedDeaths": 19,
+          "lastCheckpoint": "cure-pace-8",
+          "lastStep": "restricted-zone",
+          "resumeSaves": [
+            28633
+          ]
+        },
+        {
+          "log": "log-campaign-4.jsonl",
+          "observedDeaths": 19,
+          "lastCheckpoint": "cure-pace-8",
+          "lastStep": "restricted-zone",
+          "resumeSaves": [
+            28625
+          ]
+        },
+        {
+          "log": "log-campaign.jsonl",
+          "observedDeaths": 9,
+          "lastCheckpoint": "cure-pace-5",
+          "lastStep": "farmstead",
+          "resumeSaves": [
+            28602
+          ]
+        }
+      ],
+      "fullCompletion": false
+    },
+    "L10_HIGH_rifle_attempt_5": {
+      "status": "driver error after confirmed rifle pickup",
+      "run": "test-results/s145-driver/l10-high-rifle-5",
+      "deathsBeforeObservedRifle": 1,
+      "observedRiflePlayer": {
+        "x": 891.13,
+        "z": -9.38,
+        "hp": 100,
+        "weapon": "weapon.hunting-rifle"
+      },
+      "error": "Unknown key Digit19",
+      "fix": "shortcuts above ten select through actual HUD mouse click; ten maps to Digit0",
+      "fullRun": false
+    },
+    "L10_HIGH_rifle_attempt_6": {
+      "status": "stopped after repeated off-road navigation loops",
+      "run": "test-results/s145-driver/l10-high-rifle-6-full",
+      "rifleCollected": true,
+      "extendedSelectionCrash": false,
+      "loopCoordinates": {
+        "x": 1865,
+        "zRange": [
+          -210,
+          -145
+        ]
+      },
+      "fullRun": false
+    },
+    "L10_HIGH_full_pass_1": {
+      "status": "PASS full mortal completion",
+      "run": "test-results/s145-driver/l10-high-rifle-7-full",
+      "segments": 3,
+      "segmentSeconds": [
+        481,
+        480,
+        430
+      ],
+      "observedDeathsBySegment": [
+        2,
+        2,
+        1
+      ],
+      "skips": 0,
+      "bySeverity": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 5,
+        "P3": 0
+      },
+      "creditsVerified": true,
+      "immortal": false
+    },
+    "L10_HIGH_rifle_attempt_8": {
+      "status": "failed save boundary at finale; completion unproven",
+      "run": "test-results/s145-driver/l10-high-rifle-8-full",
+      "error": "pause-settings not visible at sample yield",
+      "fullRun": false
+    },
+    "L10_HIGH_full_pass_2": {
+      "status": "PASS via retained production Continue after ending-yield failure",
+      "run": "test-results/s145-driver/l10-high-rifle-8-full",
+      "completionTag": "campaign-5",
+      "quality": "high",
+      "immortal": false,
+      "creditsFinished": true,
+      "completedLevels": 10,
+      "skips": 0,
+      "observedDeathsBySegment": [
+        7,
+        2,
+        1,
+        0,
+        0
+      ],
+      "endingRetryZoom": 1,
+      "history": "campaign-3 hit sample deadline during credits; campaign-4 failed requested zoom assertion; campaign-5 completed credits through Continue"
+    }
+  },
+  "archived_baseline_only": {
+    "source_report": "docs/reports/batch-112-real-input/README.md",
+    "L9_matrix": [
+      {
+        "run": "b112-l9-high-road-1",
+        "tier": "high",
+        "route": "road",
+        "outcome": "L10",
+        "wallSeconds": 221,
+        "deaths": 0,
+        "skips": 0
+      },
+      {
+        "run": "b112-l9-high-road-2",
+        "tier": "high",
+        "route": "road",
+        "outcome": "L10",
+        "wallSeconds": 235,
+        "deaths": 0,
+        "skips": 0
+      },
+      {
+        "run": "b112-l9-high-shortcut",
+        "tier": "high",
+        "route": "shortcut",
+        "outcome": "L10",
+        "wallSeconds": 190,
+        "deaths": 0,
+        "skips": 0
+      },
+      {
+        "run": "b112-l9-low-road",
+        "tier": "low",
+        "route": "road",
+        "outcome": "L10",
+        "wallSeconds": 287,
+        "deaths": null,
+        "skips": 0
+      }
+    ],
+    "reviewed_capture": {
+      "run": "b112-l9-low-road",
+      "tick": 15571,
+      "file": "campaign-L9-15571-stuck-navigating.jpg",
+      "observation": "APC near bridge marker amid boarders; HUD distance 14 m",
+      "evidence_scope": "single archived frame; not current patch validation"
+    },
+    "L10_death_comparison": "missing; archived L10 full-run death counts not present in the referenced s141 archive"
+  },
+  "acceptance": {
+    "L9_high_road_x3_reaches_L10_no_stuck_navigating": "pass: 307, 303, 271 seconds; zero skips or stuck-navigating flags",
+    "L9_low_road_x1_reaches_L10_no_stuck_navigating": "pass: 246 seconds; zero issues or skips",
+    "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "pass: 208 seconds; zero issues or skips",
+    "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "PASS: both HIGH mortal journeys completed credits; zero deaths before first farmhouse-rifle pickup versus archived entrance counts 13/18",
+    "cap_label_sample_cap_not_p0": "runtime pass: eight minute mortal L10 sample ends P3 sample-cap, zero P0",
+    "empty_opening_hud_no_warning": "PASS: empty-objective clock regression; empty HUD runtime records reset to zero; L9 matrix has no navigation warnings"
+  },
+  "reviewedCurrentContactSheet": {
+    "file": "contact-sheet.jpg",
+    "ticks": [
+      13536,
+      14685
+    ],
+    "scope": "farm diagnostic before early melee retreat; not acceptance"
+  },
+  "farmEntranceComparison": {
+    "baselineSource": "docs/reports/batch-108-real-input/qa.json l10-video (13) / l10-seed2-video (18), README explicitly attributes these loops to farm entrance",
+    "baselineDeaths": [
+      13,
+      18
+    ],
+    "firstObservedRifleTicks": [
+      3025,
+      3093
+    ],
+    "deathsBeforeFirstObservedRifle": [
+      0,
+      0
+    ],
+    "limit": 6.5,
+    "scope": "first farmhouse-rifle pickup is the logged farm-entry exploration boundary; zero prior deaths in both runs; whole-level totals are separately 5 and 10"
+  },
+  "s146Followup": {
+    "status": "implemented; regression and full remote suite pass; no claim of historical attack attribution",
+    "policy": "only recent unique resolved melee queries including named target qualify; positive target damage rejects warning; at least eight qualifying attacks",
+    "records": [
+      "attackId",
+      "tick",
+      "queryIds",
+      "hitIds",
+      "damage amounts"
+    ],
+    "tests": "zero attacks over nine seconds; misses; qualified attacks; positive damage"
+  }
+}
