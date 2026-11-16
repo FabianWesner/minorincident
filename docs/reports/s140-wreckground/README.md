@@ -181,3 +181,7 @@ Real collapse can empty the fence registry, which prevented earlier funnel clean
 ## Latest LOW and remote audit
 
 LOW full native run completes at tick 15,335 with 6,401 eligible rolling windows, but flags two Alphas: #228 at west outer approach after opening and #263 by the still-closed north wire. HIGH clean result does not establish LOW closure. Latest prescribed remote suite on d1cb3a99 passes 27 files, 105 passed / 1 skipped, complete 150-case collection, 127.5 s under 240 s. No process remains running. LOW exact cloned states are in qa.json.l4LatestLowRoutingScan.
+
+## Existing placement gate extended
+
+Scene Lab placement metrics now include resolved wreck contacts. Existing evaluate() gate always rejects sampled wreck rows above 8 cm float, below -10 cm sink, or with null/nonfinite support via wreckGroundOffendersMax=0. Extended existing gate-tools test covers failures and exact threshold boundaries; 8 tests, typecheck and lint pass. This gates sampled identities, not missing campaign inventory; the full sweep must still prove coverage.

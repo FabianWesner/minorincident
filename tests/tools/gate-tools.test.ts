@@ -1,3 +1,4 @@
+import { wreckGroundFailures } from '../../tools/scenelab/session';
 // Shared gate tools: browser/runner admission is used by every lane and gate. If it breaks, the Mac overloads
 // (WindowServer kills, see docs/process/lessons-learned.md) or remote runs lose their caches.
 import { execFile, execFileSync, spawnSync } from 'node:child_process';
@@ -176,6 +177,7 @@ process.exit(mode === 'bad-exit' ? 2 : rows.some(r => !r.pass) ? 1 : 0);
 }
 
 test('scene gate resume requires identical rows, revision and backend identities', () => {
+  expect(wreckGroundFailures([{ id: 'float', gapCm: 8.01 }, { id: 'sink', gapCm: -10.01 }, { id: 'missing', gapCm: null }, { id: 'invalid', gapCm: NaN }, { id: 'edge-float', gapCm: 8 }, { id: 'edge-sink', gapCm: -10 }, { id: 'ok', gapCm: 0 }])).toEqual(['float', 'sink', 'missing', 'invalid']);
   const f = gateFixture();
   expect(f.run().status, 'first run').toBe(0);
   expect(f.run(['--resume']).status, 'identical resume').toBe(0); expect(f.calls()).toBe(1);
