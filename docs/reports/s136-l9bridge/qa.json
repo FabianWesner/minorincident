@@ -1,0 +1,42 @@
+{
+  "objective": "s136-l9bridge — APC bridge approach must not stall due to product or driver behavior; record an L9 boarding census",
+  "finding": {
+    "classification": "playtest-driver route error",
+    "evidence": {
+      "source": "batch-110-real-input/l9-high-road/log-campaign.jsonl",
+      "samples": [
+        { "tick": 16826, "x": 554.1, "z": -3.3, "yaw": -3.02, "speed": 7.2, "bridgeHintMeters": 59 },
+        { "tick": 17077, "x": 560.7, "z": 3.6, "yaw": 1.70, "speed": 7.2, "bridgeHintMeters": 66 },
+        { "tick": 17201, "x": 549.3, "z": -0.3, "yaw": -2.39, "speed": 10.8, "bridgeHintMeters": 54 },
+        { "tick": 28427, "x": 545.4, "z": -4.2, "yaw": 1.86, "speed": 10.8, "bridgeHintMeters": 51 }
+      ],
+      "driverRouteEndpoint": [550, 0],
+      "bridgeMarkerApprox": [470, 0],
+      "limits": "The old run did not log WASD steering. Movement and endpoint mismatch support the tool diagnosis; crowd contact is visible but not proven causal."
+    }
+  },
+  "changes": [
+    "tools/playtest/session.ts follows the live objective marker after the HUD changes to Drive onto the bridge.",
+    "Read-only one-second L9 evacuation observations now include explicit survivor identities, alive/infected state, HP, evacuated/aboard state, and defense-complete tick.",
+    "Added tests/fixtures/saves/qa/l9-bridge-approach-census.json.br (142645 bytes, seed 1, bridge checkpoint at tick 10810) to the existing engine vehicle checkpoint regression."
+  ],
+  "checks": {
+    "focusedVehicleSuite": { "command": "npx vitest run tests/engine/vehicles.test.ts", "result": "pass", "files": 1, "tests": 2 },
+    "nativeFixtures": { "command": "node --import tsx tools/qa/check-fixtures.ts", "result": "pass", "includesNewFixture": true },
+    "typecheck": { "command": "npm run typecheck", "result": "pass" },
+    "lint": { "command": "npm run lint", "result": "pass" },
+    "fullUnitSuite": { "command": "node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=4", "result": "pass", "files": 27, "tests": 106 },
+    "qaBuild": { "command": "npm run build:qa", "result": "pass" },
+    "diffCheck": { "command": "git diff --check", "result": "pass" }
+  },
+  "acceptance": {
+    "highWebgpuRoadRuns": { "required": 3, "completed": 0, "status": "blocked: preview server listen denied (EPERM on 127.0.0.1:5009)" },
+    "lowReachL10": { "required": 1, "completed": 0, "status": "blocked: same preview server restriction" },
+    "commit": { "status": "blocked: .git/worktrees/s136-l9bridge/index.lock denied; Git metadata is read-only" },
+    "remoteUnitRunner": { "status": "unavailable: no healthy Hetzner runner provisioned; exact wrapper not admitted by Mac fallback" }
+  },
+  "visualSheet": "bridge-stall-sheet.jpg",
+  "zombieStatsChanged": false,
+  "corpseLifetimeChanged": false,
+  "pushOrDeploy": false
+}

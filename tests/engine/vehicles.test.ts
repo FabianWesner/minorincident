@@ -304,7 +304,7 @@ async function l9BayAndHatch(): Promise<void> {
 // checkpoint fixture (resume) and after a death at the bridge (retry), nothing solid lies within 8 m ahead of the APC on its route
 // (east to the bridge deck), and the bus is not within 30 m of the bridge restart.
 async function l9CheckpointLanes(): Promise<void> {
-  for (const name of ['l9-at-bridge.json.br', 'l9-before-rail-stall.json.gz']) {
+  for (const name of ['l9-at-bridge.json.br', 'l9-before-rail-stall.json.gz', 'l9-bridge-approach-census.json.br']) {
     const decoded = decodeSave(JSON.stringify(readFixture(`tests/fixtures/saves/qa/${name}`).campaign));
     if (decoded.status !== 'ok') throw new Error(`${name} does not decode`);
     const world = await loadLevel('L9', 1, decoded.save, 0, { quality: 'low' });
@@ -315,7 +315,7 @@ async function l9CheckpointLanes(): Promise<void> {
       expect(validateSave(live), `${name}: live L9 snapshot validates immediately after restore`).toBe(true);
       live.settings.quality = 'low';
       expect(validateSave(live), `${name}: settings-change candidate validates`).toBe(true);
-      const bridge = name.startsWith('l9-at-bridge');
+      const bridge = name.startsWith('l9-at-bridge') || name.startsWith('l9-bridge-approach');
       expect(l9.driving.laneClear(8, bridge ? 0 : undefined, bridge), `${name}: 8 m of clear route ahead of the restored APC`).toBe(true);
       if (!bridge) continue;
       expect(s.evacuationDone).toBe(true);
