@@ -47,3 +47,7 @@ Both road runs and the shortcut completed with zero skips and zero driver issues
 ### L4 HIGH zoom 1.5 sample
 
 Collected 240 seconds of ordinary real-input combat with no objective skips (`test-results/playtest/b112-l4-high-z15`). Reviewed `test-results/b112-review/l4.jpg`, ticks 5993–11507: busy plaza fighting, multiple large Alphas, corpses and explosive pressure; visually lively and dangerous. These wide samples do not establish planted soles during every strike/roar/slam at the tank. Driver gaps: empty opening HUD warns at tick 1253; the four-minute no-skip cap stops on the newly entered cellar route at tick 14236 and emits an automatic cannot-finish label. Neither establishes a product P0. Exact captures are in that run’s captures directory. Tank attack sequence review remains pending.
+
+### L1 HIGH zoom 1
+
+Completed the level in 143 seconds with no skips or driver issues (`test-results/playtest/b112-l1-high`). Reviewed sheet `test-results/b112-review/l1.jpg`, ticks 947–8092: bright readable streets and clear silhouettes; quiet package delivery escalates to pursuit and melee on returning to the clinic. Pleasant and legible rather than spectacular in the quiet opening, then purposeful pressure. No obvious geometry glitch in inspected frames. This covers the complete level but is shorter than the requested approximate four-minute sample because the mission finished.
