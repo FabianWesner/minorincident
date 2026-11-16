@@ -1,0 +1,485 @@
+{
+  "complete": false,
+  "runs": [
+    {
+      "path": "test-results/s139-openchecks/high-webgl2-wreck/metrics.json",
+      "backend": "webgl",
+      "tier": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "canvas.f0.varianceMin",
+            "pass": true,
+            "value": 1035.2128645700977,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f0.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f1.varianceMin",
+            "pass": true,
+            "value": 1035.08307854319,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f1.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f2.varianceMin",
+            "pass": true,
+            "value": 1859.2530392851604,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f2.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f3.varianceMin",
+            "pass": true,
+            "value": 646.7609622682176,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f3.variedTilesMin",
+            "pass": true,
+            "value": 63,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f4.varianceMin",
+            "pass": true,
+            "value": 52.55571062913987,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f4.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "requestedBackend",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          },
+          {
+            "name": "requestedQuality",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          }
+        ]
+      }
+    },
+    {
+      "path": "test-results/s139-openchecks/high-webgpu/foot-slide-brute-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "travelM.subject.min",
+            "pass": true,
+            "value": 7.43082924938786,
+            "limit": 2
+          },
+          {
+            "name": "travelM.subject.max",
+            "pass": true,
+            "value": 7.43082924938786,
+            "limit": 60
+          },
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "footSlideP95MaxCm",
+            "pass": true,
+            "value": 0,
+            "limit": 3
+          },
+          {
+            "name": "footSlideP95Cm.subject",
+            "pass": true,
+            "value": 0,
+            "limit": 3
+          },
+          {
+            "name": "canvas.f0.varianceMin",
+            "pass": true,
+            "value": 244.0176784819123,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f0.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f12.varianceMin",
+            "pass": true,
+            "value": 237.9548751873226,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f12.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f24.varianceMin",
+            "pass": true,
+            "value": 240.15857766346016,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f24.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f30.varianceMin",
+            "pass": true,
+            "value": 243.6201213818931,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f30.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f36.varianceMin",
+            "pass": true,
+            "value": 244.1018274495218,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f36.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f45.varianceMin",
+            "pass": true,
+            "value": 249.3575690720172,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f45.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f48.varianceMin",
+            "pass": true,
+            "value": 241.51252254391147,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f48.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f60.varianceMin",
+            "pass": true,
+            "value": 241.3870968960182,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f60.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f72.varianceMin",
+            "pass": true,
+            "value": 250.95328092800628,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f72.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f75.varianceMin",
+            "pass": true,
+            "value": 247.52676922514365,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f75.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f84.varianceMin",
+            "pass": true,
+            "value": 242.38839444935002,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f84.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f90.varianceMin",
+            "pass": true,
+            "value": 242.50223744894902,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f90.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f96.varianceMin",
+            "pass": true,
+            "value": 246.37145276808587,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f96.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f105.varianceMin",
+            "pass": true,
+            "value": 234.6750596712809,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f105.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f108.varianceMin",
+            "pass": true,
+            "value": 233.1976406185786,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f108.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f120.varianceMin",
+            "pass": true,
+            "value": 236.48778816200502,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f120.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f132.varianceMin",
+            "pass": true,
+            "value": 223.98077758504223,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f132.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f144.varianceMin",
+            "pass": true,
+            "value": 234.82390876996215,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f144.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f156.varianceMin",
+            "pass": true,
+            "value": 225.772363510805,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f156.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f168.varianceMin",
+            "pass": true,
+            "value": 238.25460152518644,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f168.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f180.varianceMin",
+            "pass": true,
+            "value": 246.52734380908078,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f180.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "requestedBackend",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          },
+          {
+            "name": "requestedQuality",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          }
+        ]
+      }
+    },
+    {
+      "path": "test-results/s139-openchecks/high-webgpu/veh-wreck-compare-webgpu/metrics.json",
+      "backend": "webgpu",
+      "tier": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "canvas.f0.varianceMin",
+            "pass": true,
+            "value": 1035.445609864404,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f0.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f1.varianceMin",
+            "pass": true,
+            "value": 1035.3159286755035,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f1.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f2.varianceMin",
+            "pass": true,
+            "value": 1858.7650812988286,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f2.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f3.varianceMin",
+            "pass": true,
+            "value": 646.2995824213103,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f3.variedTilesMin",
+            "pass": true,
+            "value": 63,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f4.varianceMin",
+            "pass": true,
+            "value": 52.501761380301105,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f4.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "requestedBackend",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          },
+          {
+            "name": "requestedQuality",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          }
+        ]
+      }
+    }
+  ]
+}
