@@ -1854,6 +1854,348 @@
             "lost": 5
           }
         }
+      },
+      "independentWalk": {
+        "policy": "independent-l6-tunnel-normal-walk",
+        "run": {
+          "level": "L6",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 200.46666666666667,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 20,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "shelter",
+              "t": 33.2
+            },
+            {
+              "id": "stop",
+              "t": 60.6
+            },
+            {
+              "id": "retreat",
+              "t": 184.93333333333334
+            },
+            {
+              "id": "exit",
+              "t": 195.46666666666667
+            }
+          ],
+          "furthestObjective": "exit",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 161,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "followerWait": {
+          "windows": [
+            {
+              "key": "step/shelter|phase/shelter",
+              "escortTicks": 1992,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/stop|phase/first",
+              "escortTicks": 1261,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/stop|phase/fails",
+              "escortTicks": 383,
+              "stationaryFarTicks": 1,
+              "first": {
+                "tick": 3636,
+                "playerX": 0.33100223541259766,
+                "playerZ": 3.558663845062256,
+                "followerId": 16,
+                "followerX": -8,
+                "followerZ": -11
+              }
+            },
+            {
+              "key": "step/retreat|phase/retreat",
+              "escortTicks": 7460,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "step/exit|phase/exit",
+              "escortTicks": 632,
+              "stationaryFarTicks": 0
+            },
+            {
+              "key": "phase/run-out",
+              "escortTicks": 299,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "escortTicks": 12027,
+          "stationaryFarTicks": 1,
+          "upperBoundPercent": 0.008314625426124553,
+          "followers": [
+            {
+              "id": 15,
+              "escortTicks": 12027,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 16,
+              "escortTicks": 7759,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 19,
+              "escortTicks": 150,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 20,
+              "escortTicks": 7750,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 22,
+              "escortTicks": 7827,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 24,
+              "escortTicks": 6477,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 25,
+              "escortTicks": 7852,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 26,
+              "escortTicks": 253,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 27,
+              "escortTicks": 6594,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 28,
+              "escortTicks": 7879,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 29,
+              "escortTicks": 28,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 31,
+              "escortTicks": 140,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 32,
+              "escortTicks": 7854,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 33,
+              "escortTicks": 7851,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 34,
+              "escortTicks": 80,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 35,
+              "escortTicks": 7882,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 36,
+              "escortTicks": 294,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 37,
+              "escortTicks": 1215,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 38,
+              "escortTicks": 7896,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 39,
+              "escortTicks": 90,
+              "stationaryFarTicks": 1
+            },
+            {
+              "id": 42,
+              "escortTicks": 7896,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 43,
+              "escortTicks": 972,
+              "stationaryFarTicks": 0
+            },
+            {
+              "id": 44,
+              "escortTicks": 7918,
+              "stationaryFarTicks": 0
+            }
+          ],
+          "paceWindows": [
+            {
+              "key": "step/shelter|phase/shelter",
+              "samples": 66,
+              "p50GapM": 1.340388252771011,
+              "p90GapM": 1.340388252771011,
+              "maxGapM": 2.2181952379570027,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "step/stop|phase/first",
+              "samples": 42,
+              "p50GapM": 1.340388252771011,
+              "p90GapM": 1.340388252771011,
+              "maxGapM": 1.340388252771011,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "step/stop|phase/fails",
+              "samples": 13,
+              "p50GapM": 1.340388252771011,
+              "p90GapM": 1.340388252771011,
+              "maxGapM": 1.340388252771011,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "step/retreat|phase/retreat",
+              "samples": 3515,
+              "p50GapM": 4.871232727793342,
+              "p90GapM": 10.537867181163264,
+              "maxGapM": 21.66048053797268,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": [
+                {
+                  "id": 16,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 19,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 20,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 22,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 24,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 25,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 26,
+                  "maxSeconds": 3.4166666666666665
+                },
+                {
+                  "id": 27,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 28,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 29,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 31,
+                  "maxSeconds": 1.3166666666666667
+                },
+                {
+                  "id": 32,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 33,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 34,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 36,
+                  "maxSeconds": 4.85
+                },
+                {
+                  "id": 38,
+                  "maxSeconds": 0.03333333333333333
+                },
+                {
+                  "id": 39,
+                  "maxSeconds": 0.03333333333333333
+                }
+              ]
+            },
+            {
+              "key": "step/exit|phase/exit",
+              "samples": 167,
+              "p50GapM": 5.490568596159828,
+              "p90GapM": 11.102594118585104,
+              "maxGapM": 11.363649436514667,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            },
+            {
+              "key": "phase/run-out",
+              "samples": 10,
+              "p50GapM": 1.2915855701764878,
+              "p90GapM": 1.2944953248492348,
+              "maxGapM": 1.3729158775633086,
+              "waitingTicks": 0,
+              "backtrackTicks": 0,
+              "stuckFollowers": []
+            }
+          ],
+          "prompts": {
+            "wait": 0,
+            "attack": 11,
+            "lost": 4
+          }
+        }
       }
     },
     "L7": {

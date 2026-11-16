@@ -7,9 +7,11 @@ import { ThreatObserver } from './threat/observer';
 // straight-line policy and must not be presented as one.
 const out = process.argv[2] ?? 'test-results/escort-walk';
 const straightL7 = process.argv.includes('--straight-l7');
+const straightL6 = process.argv.includes('--straight-l6');
+const tunnelRoute = [{ x: 6, z: 15 }, { x: 25, z: 15 }, { x: 245, z: 15 }, { x: 250, z: 15 }, { x: 273, z: 15 }];
 const route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: -30, z: 47 }, { x: -36, z: 47 }, { x: -36, z: 41.7 }, { x: -50, z: 41.7 }, { x: -50, z: 47 }, { x: -74, z: 47 }];
 await mkdir(out, { recursive: true });
-for (const level of (straightL7 ? ['L7'] : ['L6', 'L7', 'L8']) as RunnerLevel[]) {
+for (const level of (straightL7 ? ['L7'] : straightL6 ? ['L6'] : ['L6', 'L7', 'L8']) as RunnerLevel[]) {
   let waypoint = 0;
   let observer: ThreatObserver | undefined;
   let observation: ReturnType<ThreatObserver['finish']> | undefined;
@@ -26,11 +28,17 @@ for (const level of (straightL7 ? ['L7'] : ['L6', 'L7', 'L8']) as RunnerLevel[])
           const goal = route[waypoint], dx = goal.x - p.x, dz = goal.z - p.z, length = Math.hypot(dx, dz);
           walking.move = length > .3 ? { x: dx / length, z: dz / length } : { x: 0, z: 0 };
         }
+        if (straightL6 && ['retreat', 'exit'].includes(world.missions!.state.l6!.phase)) {
+          const p = world.entities.get(1)!.transform;
+          while (waypoint < tunnelRoute.length - 1 && Math.hypot(p.x - tunnelRoute[waypoint].x, p.z - tunnelRoute[waypoint].z) < 1) waypoint++;
+          const goal = tunnelRoute[waypoint], dx = goal.x - p.x, dz = goal.z - p.z, length = Math.hypot(dx, dz);
+          walking.move = length > .4 ? { x: dx / length, z: dz / length } : { x: 0, z: 0 };
+        }
         apply(walking, source);
       };
     },
     beforeDispose: () => { observation = observer!.finish(); },
   });
-  await writeFile(`${out}/${level}.json`, JSON.stringify({ policy: straightL7 ? 'independent-l7-corridor-normal-walk' : 'shared-route-normal-walk', seed: 1, run, observation }, null, 2) + '\n');
+  await writeFile(`${out}/${level}.json`, JSON.stringify({ policy: straightL7 ? 'independent-l7-corridor-normal-walk' : straightL6 ? 'independent-l6-tunnel-normal-walk' : 'shared-route-normal-walk', seed: 1, run, observation }, null, 2) + '\n');
   console.log(`[escort-walk] ${level}: ${run.outcome}, ${run.time.toFixed(2)}s`);
 }
