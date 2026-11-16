@@ -209,3 +209,7 @@ LOW remaining #255 flag is directly attributed to active combat: target #123 is 
 ## Preserve crossing lane
 
 Inside landing now first preserves the actor’s safe lateral position within the breach instead of diagonally steering back to center. Both full runs complete: HIGH 33,195 eligible windows, LOW 9,744. Each has one remaining north-wire flag during a closed-breach interval; earlier open-breach scripted stalls are absent. Attack-ledger attribution is still required before dismissing these flags. Focused L4 test, typecheck and lint pass. Older preliminary aggregate/grid traces were removed from compact JSON to retain the <200 KB limit; their findings remain in report history.
+
+## North-wire event attribution
+
+HIGH #345 interval 4253–4554 contains six matching native wall damage/attack events at 100 HP each, reducing l4-wall-6 from 600 to 0 and opening the breach at 4554. This identity is actively breaking the wire. LOW #256 interval 8358–8659 contains one telegraph at 8374 and no damage/attack events; hits immediately before it do not prove continued activity in the flagged interval. Therefore HIGH residual is attributed, LOW remains unresolved. Compact damage/telegraph receipts retained in qa.json.northWireAttribution.
