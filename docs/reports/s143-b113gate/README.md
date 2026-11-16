@@ -32,3 +32,5 @@ The cheap world-space foot solver released a turning stance only after 0.5 radia
 Remote `npm test` passes unchanged on retry: 171.7 seconds within the 240-second budget (first attempt timed out at 246.1 seconds). A radius-visible direct-crossing shortcut retained the north-breach cohort failure and was reverted.
 
 Admission probe: north opens at tick 8458 with pending=7, but arrivals stop at 2 and pending=5 while LOW count=80 and reserved=0. The same debt persists at collapse (first observed tick 13380), when LOW supplemental pressure processing stops. The remaining defect is admission starvation, not a census omission.
+
+Full `qa:vehicle-campaign-motion` now exits 0 across L9, L7 bus, L4 parked and L4 tank at HIGH and LOW. Typecheck and lint pass; the merged s142 diagnostic scan needed an explicit `combat.attack` event guard for TypeScript union narrowing. Threat north-breach admission remains open.

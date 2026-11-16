@@ -42,7 +42,7 @@
   },
   "checks": {
     "l4_contact_regression": "pass; 1 test",
-    "typecheck": "pass",
+    "typecheck": "pass after s142 scan event narrowing",
     "lint": "pass",
     "candidate_vehicle_gate": "not completed; browser pool EPERM / Chromium bootstrap failure",
     "remote_npm_test": "pending"
@@ -137,5 +137,102 @@
     "firstAttackSeconds": 40.96666666666667,
     "spawnedWithin18Seconds": 1,
     "reverted": true
+  },
+  "fullVehicleGate": {
+    "exit": 0,
+    "batches": [
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "L9",
+            "tier": "high",
+            "code": 0,
+            "seconds": 120.079,
+            "file": "test-results/s83-vehicleslide/campaign/L9-high.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          },
+          {
+            "mode": "L9",
+            "tier": "low",
+            "code": 0,
+            "seconds": 77.447,
+            "file": "test-results/s83-vehicleslide/campaign/L9-low.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l7-bus",
+            "tier": "high",
+            "code": 0,
+            "seconds": 14.172,
+            "file": "test-results/s83-vehicleslide/campaign/l7-bus-high.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          },
+          {
+            "mode": "l7-bus",
+            "tier": "low",
+            "code": 0,
+            "seconds": 13.098,
+            "file": "test-results/s83-vehicleslide/campaign/l7-bus-low.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l4-parked",
+            "tier": "high",
+            "code": 0,
+            "seconds": 32.702,
+            "file": "test-results/s83-vehicleslide/campaign/l4-parked-high.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          },
+          {
+            "mode": "l4-parked",
+            "tier": "low",
+            "code": 0,
+            "seconds": 16.99,
+            "file": "test-results/s83-vehicleslide/campaign/l4-parked-low.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "pass": true,
+        "rows": [
+          {
+            "mode": "l4-tank",
+            "tier": "high",
+            "code": 0,
+            "seconds": 51.188,
+            "file": "test-results/s83-vehicleslide/campaign/l4-tank-high.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          },
+          {
+            "mode": "l4-tank",
+            "tier": "low",
+            "code": 0,
+            "seconds": 27.944,
+            "file": "test-results/s83-vehicleslide/campaign/l4-tank-low.json",
+            "sourceHash": "94ff155401b3f734ee9bd1ecbc36d207b73ecd67bc630db2876098bf4b848905",
+            "pass": true
+          }
+        ]
+      }
+    ]
   }
 }
