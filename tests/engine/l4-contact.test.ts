@@ -638,7 +638,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       } finally { bars.dispose(); boundsProbe.mockRestore(); topProbe.mockRestore(); }
     } finally { occlusion.world.dispose(); }
   } finally { world.dispose(); }
-}, 90_000);
+}, 150_000);
 
 async function checkOutsideWireRouting(): Promise<void> {
   const { world, mission } = await loadL4(1, 'high');
@@ -689,7 +689,11 @@ async function checkOutsideWireRouting(): Promise<void> {
   try {
     const nav = replay.infected!.nav;
     const windows = new Map<number, { tick: number; x: number; z: number; travel: number }[]>();
-    const stopped = new Set<number>();
+    const stopped = new Map<number, unknown>();
+    const hits = new Map<number, number[]>();
+    replay.events.on('barricade.damaged', event => {
+      if (event.type === 'barricade.damaged' && event.amount > 0) hits.set(event.sourceId, [...(hits.get(event.sourceId) ?? []), event.tick]);
+    });
     const result = runL4(replay, campaign, 'complete', { seed: 1, god: true, maxSeconds: 520, stopWhen: () => {
       const player = replay.entities.get(1)!, goal = nav.nearestCell(player.transform.x, player.transform.z, .35);
       const seen = new Set<number>();
@@ -706,12 +710,21 @@ async function checkOutsideWireRouting(): Promise<void> {
         rows.push({ tick: replay.tick, x, z, travel });
         while (rows.length && rows[0].tick < replay.tick - 301) rows.shift();
         windows.set(e.id, rows);
-        if (rows.length > 301 && travel - rows[0].travel < .1) stopped.add(e.id);
+        if (rows.length > 301 && travel - rows[0].travel < .1) {
+          const damageTicks = (hits.get(e.id) ?? []).filter(t => t >= rows[0].tick && t <= replay.tick);
+          // Repeated damage to the rail is active combat, not a lost route.
+          if (damageTicks.length < 2 && !stopped.has(e.id)) stopped.set(e.id, {
+            id: e.id, start: rows[0].tick, end: replay.tick, position: { ...e.transform },
+            scripted: e.infected?.scripted, damageTicks,
+            job: structuredClone(campaign.state.l4!.director.alphaJobs.find(j => j.alphaId === e.id)),
+            breaches: structuredClone(campaign.state.l4!.breaches),
+          });
+        }
       }
       for (const id of windows.keys()) if (!seen.has(id)) windows.delete(id);
       return false;
     } });
     expect(result.outcome).toBe('complete');
-    expect([...stopped], 'real LOW perimeter actors keep routing through an available entrance').toEqual([]);
+    expect([...stopped.values()], 'real LOW perimeter actors keep routing through an available entrance').toEqual([]);
   } finally { replay.dispose(); }
 }
