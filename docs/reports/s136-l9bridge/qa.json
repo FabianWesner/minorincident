@@ -87,6 +87,17 @@
     "diffCheck": {
       "command": "git diff --check",
       "result": "pass"
+    },
+    "remoteUnitSuite": {
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test",
+      "result": "pass on unchanged rerun",
+      "passed": 105,
+      "skipped": 1,
+      "files": 27,
+      "seconds": 127.2,
+      "budgetSeconds": 240,
+      "collectionCases": 150,
+      "previousAttempt": "runner timeout at 246 seconds"
     }
   },
   "acceptance": {

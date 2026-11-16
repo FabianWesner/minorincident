@@ -43,3 +43,7 @@ The implementation is committed as `ea5b652a`. The former sandbox restrictions a
 ## Archived reproduction input
 
 Recovered the original batch-110 `campaign-completion.json` campaign save, which is actually tick 13042 (before the bridge loop, near the requested 13140 boundary). Preserved unchanged as `tests/fixtures/saves/qa/s136-b110-l9-road-loop.json.br` (151384 bytes). The native fixture loader passes. This records the original boarding state; the archive does not contain an exact tick-17230 physical snapshot. Later steering evidence remains the recorded observation trace.
+
+## Remote suite rerun
+
+The prescribed unchanged remote rerun passed: 27 files, 105 passed / 1 skipped, 127.2 seconds against 240 seconds, with the complete 150-case collection budget. The earlier attempt timed out at 246 seconds; no tests were removed or changed between attempts.
