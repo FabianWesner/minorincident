@@ -1324,5 +1324,29 @@
     "quality": "high",
     "zoom": 1.5,
     "result": "Camera fixed successfully, but tank hull occludes nearby large infected soles. No foot acceptance."
+  },
+  "oppositeTankObservation": {
+    "path": "test-results/b113-l4-opposite-high/sequence",
+    "frames": 473,
+    "seconds": 240,
+    "quality": "high",
+    "zoom": 1.5,
+    "reviewedTicks": [
+      7258,
+      14140
+    ],
+    "camera": {
+      "position": [
+        -34,
+        11,
+        16
+      ],
+      "target": [
+        -20,
+        0,
+        27.5
+      ]
+    },
+    "result": "South-wall actors partly frame-edge/fence occluded; final frame shows fallen large bodies. No continuous sole track; not accepted."
   }
 }

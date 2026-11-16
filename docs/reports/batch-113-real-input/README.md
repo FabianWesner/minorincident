@@ -76,3 +76,7 @@ Ignored `test-results/b113-video/fixed-tank-entry.ts` is prepared and syntax che
 ## Fixed tank camera run
 
 Prepared wrapper now ran240 seconds HIGH zoom1.5;472 frames saved at `test-results/b113-l4-fixed-high/sequence`. Opened original ticks7250 and14202. Camera holds the tank consistently, but the near hull blocks large infected lower bodies on the far side. Neither frame qualifies planted soles. This corrects the earlier prepared-only status; an opposite-side camera would be needed for that actor cluster. No additional simulation/input changes.
+
+## Opposite tank camera run
+
+Collected240 seconds HIGH zoom1.5 from camera(−34,11,16), target(−20,0,27.5);473 frames under `test-results/b113-l4-opposite-high/sequence`. Opened ticks7258 and14140: south-wall large infected are partly frame-edge/fence occluded, later fallen. This exposes the opposite side but still supplies no continuous planted-sole track. Tank-foot acceptance stays open; another identical view is not useful.
