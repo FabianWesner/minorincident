@@ -59,3 +59,7 @@ Collected 241 seconds without skips, ending at the bridge-route sample cap. Revi
 ### L3 HIGH zoom 1
 
 Collected 240 seconds, no skips. **P2 provisional — close infected takes no damage during driver fire:** tick 10983, `test-results/playtest/b112-l3-high/captures/campaign-L3-10983-enemy-unhittable.jpg` (opened and reviewed). Driver reports #793 at 0.1 m, 60/60 HP after eight seconds of attacks. Capture shows the courier tightly surrounded on a narrow bridge and overlapping red telegraphs. Target selection, muzzle occlusion and product hit logic remain unseparated; this is not proven invulnerability. Bridge crowd pressure reads dangerous and visually dramatic, with clear courier outline, rather than harmless. Repeated confinement is frustrating in this driver sample. Four-minute stop at tick 14270 is a driver cap, not product P0. Broader frame review remains pending.
+
+### L5 HIGH zoom 1
+
+Collected 240 seconds with no skips. Reviewed `test-results/b112-review/l5.jpg`, ticks 1540–13514: atmospheric ash-dark streets, scattered persistent bodies, readable red Alpha warnings, and recurring combat around the fire station. The repeated search/return feels repetitive in this sample; it is not harmless, but survivor rescue/babysitting is unexercised because the driver remains on “Look for anyone still alive.” No obvious geometric glitch in inspected frames. The sole emitted issue is the sample cap at tick 14142 (`test-results/playtest/b112-l5-high/captures/campaign-L5-14142-cannot-finish.jpg`), not a verified product P0.
