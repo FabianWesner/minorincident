@@ -205,3 +205,7 @@ Steering trace proves LOW #228 discarded its script because courier provocation 
 ## Paired tier attribution on latest routing source
 
 LOW remaining #255 flag is directly attributed to active combat: target #123 is l4-wall-21; five native barricade.damaged events at ticks 7689/7749/7809/7869/7929 reduce HP 600→100, with matching infected.attack and telegraphs. HIGH rerun on the same latest source completes but has two scripted-route flags (#296/#368), so the older clean HIGH result is superseded for completion purposes. Overall routing remains open. Exact latest HIGH states and LOW event ledger retained in qa.json.
+
+## Preserve crossing lane
+
+Inside landing now first preserves the actor’s safe lateral position within the breach instead of diagonally steering back to center. Both full runs complete: HIGH 33,195 eligible windows, LOW 9,744. Each has one remaining north-wire flag during a closed-breach interval; earlier open-breach scripted stalls are absent. Attack-ledger attribution is still required before dismissing these flags. Focused L4 test, typecheck and lint pass. Older preliminary aggregate/grid traces were removed from compact JSON to retain the <200 KB limit; their findings remain in report history.

@@ -275,7 +275,8 @@ export class L4Collapse {
         const { centre } = l4BreachSite(job.breach), out = l4Breaches[job.breach].out;
         // Align outside the opening before crossing: a direct inside goal can
         // clip the intact neighbouring segment with the Alpha's wider body.
-        const lateral = Math.abs((e.transform.x - centre.x) * out.z - (e.transform.z - centre.z) * out.x);
+        const along = (e.transform.x - centre.x) * out.z - (e.transform.z - centre.z) * out.x;
+        const lateral = Math.abs(along);
         const halfOpening = l4Breaches[job.breach].segments.reduce((sum, i) => sum + l4PerimeterSegments[i].length, 0) / 2;
         const clearance = Math.max(0, halfOpening - e.combat!.radius - .05);
         if (lateral > clearance) b.scripted = this.h.snap({ x: centre.x + out.x * 1.6, z: centre.z + out.z * 1.6 }, e.combat!.radius);
@@ -283,7 +284,7 @@ export class L4Collapse {
           // Radial snapping must not move an inside crossing goal back outside.
           let landing: Point | undefined;
           for (const depth of [.9, 1.2, 1.6, 2, 3, 4]) {
-            for (const offset of [0, .5, -.5, 1, -1]) {
+            for (const offset of [Math.max(-clearance, Math.min(clearance, along)), 0, .5, -.5, 1, -1]) {
               const p = { x: centre.x - out.x * depth + out.z * offset, z: centre.z - out.z * depth - out.x * offset };
               if (!this.inside(p) || !ai.infectedNav.clear(p.x, p.z, e.combat!.radius)) continue;
               if (world.solids.clear({ ...p, y: world.districts!.groundHeight(p.x, p.z) + .7 }, e.combat!.radius, e.id, false)) { landing = p; break; }
