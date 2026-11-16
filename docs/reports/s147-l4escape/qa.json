@@ -62,7 +62,7 @@
     },
     "realInputLow": "open"
   },
-  "reviewedSheet": "corpse-persistence-sheet.jpg",
+  "reviewedSheet": "corpse-persistence-sheet.jpg (updated: successful HIGH escape and cellar contact sheet)",
   "open": [
     "Real-input HIGH then LOW confirmation",
     "Reliable identification of the infected responsible for individual real-input deaths",
@@ -474,5 +474,26 @@
     "escapeDeathObservations": 10,
     "path": "test-results/s147-l4escape/high-full-corridor",
     "finding": "First escape reached Harbor; subsequent fixed-checkpoint retries failed earlier. Added reached checkpoints at Metro/Harbor turns; pending validation."
+  },
+  "currentAcceptance": {
+    "nativeHigh": {
+      "complete": true,
+      "escapeDeaths": 0,
+      "infectedAtBreak": 61
+    },
+    "realInputHigh": {
+      "complete": true,
+      "escapeDeathObservations": 2,
+      "attempts": 3,
+      "wallSeconds": 384,
+      "path": "test-results/s147-l4escape/high-street-checkpoints"
+    },
+    "realInputLow": {
+      "complete": false,
+      "wallSeconds": 481,
+      "path": "test-results/s147-l4escape/low-street-checkpoints",
+      "status": "observation cutoff; longer bounded run pending"
+    },
+    "remoteSuite": "two latest unchanged runs on different runners timed out at240.4s; full suite unverified"
   }
 }
