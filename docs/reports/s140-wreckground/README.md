@@ -117,3 +117,7 @@ Fresh HIGH WebGL2 L6/L7 sweep completes. All 39 identities resolve; the five pre
 ## Elevated audit field implementation
 
 Added an audit-only GroundField from retained merged layout triangle meshes, including elevated triangles. GroundField queries can limit returned height; wreck probes query beneath authored pavingHeight + 10 cm to exclude overhead roofs, then fall back to existing terrain/ground support. Typecheck and lint pass. This code requires runtime validation on all five elevated wrecks before their grounding can be claimed.
+
+## Height ceiling regression
+
+Extended existing static-placement render contract with stacked road/roof surfaces. It proves unrestricted highest surface, road beneath a height ceiling, null below all surfaces, and query-order independence. All 14 render-contract tests pass; typecheck and lint pass. L6/L7 runtime admission again exited 75 before execution (60 s, quiet=false, load 3.08/3.35/3.40), so five elevated runtime gaps remain unverified.
