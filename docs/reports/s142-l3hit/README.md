@@ -2,11 +2,11 @@
 
 ## Finding
 
-The B112 observation is not evidence of infected invulnerability. The raw issue diagnostic for infected #793 records the handgun selected, `mouseAttack: true`, an aim point exactly at #793, and a rendered-body pick of #793. The capture shows the courier surrounded by a dense group on the bridge. The archived run did not retain a L3 save or per-shot ray/hit events, so it cannot identify which body each of the eight seconds of shots actually struck.
+Product defect reproduced with a real infected spawn: at X=169.65, Z=-0.94 the L3 bridge walking surface is Y=5.7 and the courier body is Y=6.42, but an XZ-only infected spawn was placed at Y=0.7 and remained there after three seconds. The original #793 diagnostic likewise records Y=0.7. A horizontal handgun ray from the deck cannot intersect that body's vertical hit range.
 
-Native combat probes found no point-blank or damage-system rejection. A held handgun and fire axe both damage a living target at 0.1 m in an eight-second trace. The same handgun probe on the authored raised L3 bridge damages its target; the target must be placed at the bridge deck height. Native three-second probes also hit at player start in L1–L8 and L10. L9 begins with the courier inside the APC and has no on-foot carried-weapon attack before its forced crash, so it is outside that scan.
+The spawn path defaulted an omitted height to ground-level support. XZ-only encounter spawns now use the authored walking surface; explicitly supplied heights still use support below that height for stacked routes. The existing combat battery now spawns a real runner on the bridge without manually changing its height and verifies handgun damage over eight seconds. The provisional driver axe fallback was removed. No infected stats or corpse lifecycle changed.
 
-The evidence points to a playtest-driver targeting failure in the crowd: it kept selecting one overlapping body and did not change tactics when the gun's ray could be intercepted by another infected. The driver now switches to the fire axe when an L3 target is within 1.25 m while the handgun is selected. No combat or infected stats changed.
+The original shot-by-shot log is unavailable; the native reproduction establishes the height failure directly. The earlier manually elevated dummy probe hid this defect.
 
 ## Evidence
 
@@ -22,4 +22,4 @@ The evidence points to a playtest-driver targeting failure in the crowd: it kept
 - QA build passed.
 - HIGH browser confirmation could not start: the managed sandbox returned `listen EPERM` for `127.0.0.1:5021`. LOW was not attempted. The browser confirmation remains open.
 - The mandated remote unit suite was unavailable because `tools/remote/run.sh` found no healthy Hetzner runner; its local Mac slot does not admit `npm test`.
-- The archived B112 attack-level ray trace is missing, so the exact intercept for #793 remains unproven even though the point-blank product path passes native tests.
+- The archived B112 attack-level ray trace is missing; the real-spawn native regression proves the product height defect and its correction.

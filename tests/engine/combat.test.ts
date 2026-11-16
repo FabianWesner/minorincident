@@ -277,8 +277,9 @@ test('point-blank handgun and axe attacks damage a living infected', async () =>
   const bridge = await loadLevel('L3', 1, 'high'); worlds.push(bridge);
   missionControls(bridge).teleport('player', { x: 169.548, z: -0.942 });
   equip(bridge, ['weapon.handgun']);
-  const bridgeTarget = dummy(bridge, 169.648, -0.942, 1000);
-  bridge.entities.get(bridgeTarget)!.transform.y = bridge.districts!.groundHeight(169.648, -0.942) + .7;
+  const bridgeTarget = bridge.infected!.spawn('infected.runner', { x: 169.648, z: -0.942 });
+  const bridgeHp = health(bridge, bridgeTarget);
+  expect(bridge.entities.get(bridgeTarget)!.transform.y, 'real infected spawns on bridge deck').toBeCloseTo(6.4);
   const bridgeTrace: { attackId: number; tick: number; weapon: string; aim: { x: number; z: number }; targetChosen: number | null; hitIds: number[]; noDamageReason: string | null }[] = [];
   bridge.events.on('combat.attack', event => {
     if (event.type !== 'combat.attack' || event.sourceId !== 1 || event.actionId !== 'weapon.handgun') return;
@@ -297,7 +298,7 @@ test('point-blank handgun and axe attacks damage a living infected', async () =>
   step(bridge, 480); bridge.clearInput();
   const bridgeEvents = bridge.events.events(), bridgeShots = bridgeEvents.filter(event => event.type === 'combat.attack' && event.sourceId === 1 && event.actionId === 'weapon.handgun');
   expect(bridgeTrace.length, 'each native bridge handgun discharge was traced at its attack tick').toBe(bridgeShots.length);
-  expect(health(bridge, bridgeTarget), `native L3 bridge handgun trace; player=${JSON.stringify(bridge.entities.get(1)!.transform)} target=${JSON.stringify(bridge.entities.get(bridgeTarget)!.transform)} shots=${bridgeShots.length} trace=${JSON.stringify(bridgeTrace)}`).toBeLessThan(1000);
+  expect(health(bridge, bridgeTarget), `native L3 bridge handgun trace; player=${JSON.stringify(bridge.entities.get(1)!.transform)} target=${JSON.stringify(bridge.entities.get(bridgeTarget)!.transform)} shots=${bridgeShots.length} trace=${JSON.stringify(bridgeTrace)}`).toBeLessThan(bridgeHp);
 
   // The hit path is shared campaign-wide. Run the same three-second native
   // point-blank probe at each other on-foot level's player start. L9 starts

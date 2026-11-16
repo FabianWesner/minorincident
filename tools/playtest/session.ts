@@ -925,16 +925,6 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await releaseAim(); await page.mouse.move(threat.screen.x, threat.screen.y); await press(['KeyK']); await hold(60); await press([]);
       return true;
     }
-    if (e.level === 'L3' && threat.d <= 1.25 && e.player?.current === 'weapon.handgun' && e.player.weapons.includes('weapon.fire-axe')) {
-      // The corridor driver can keep selecting one overlapping body while a
-      // crowd intercepts every handgun ray. Switch to the axe at body contact,
-      // which resolves against the whole front arc and gives nearby targets a
-      // deterministic chance to take damage.
-      await releaseAim();
-      const key = weaponKey('weapon.fire-axe');
-      if (key) await page.keyboard.press(`Digit${key}`);
-      return true;
-    }
     if (ranged.test(e.player?.current ?? '')) {
       const l10Travel = e.level === 'L10' && !['hold', 'mega', 'epilogue'].includes(e.step ?? '');
       if (l10Travel && e.player && ring && Math.hypot(ring.x - e.player.x, ring.z - e.player.z) > 1.2) {

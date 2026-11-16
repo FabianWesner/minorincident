@@ -1,6 +1,6 @@
 {
   "slug": "s142-l3hit",
-  "finding": "driver-side crowd targeting failure is the leading explanation; native tests do not reproduce product invulnerability",
+  "finding": "Product: XZ-only infected spawn selects support at ground level below raised L3 bridge; handgun ray misses vertical hit bounds",
   "originalObservation": {
     "source": "batch-112-real-input / b112-l3-high",
     "level": "L3",
@@ -13,8 +13,15 @@
     "input": {
       "mouseAttack": true,
       "rightHeld": true,
-      "aimPoint": { "x": 169.47784594138156, "z": -1.0371285693490804 },
-      "targetTransform": { "x": 169.47784594138156, "z": -1.0371285693490804, "y": 0.7 },
+      "aimPoint": {
+        "x": 169.47784594138156,
+        "z": -1.0371285693490804
+      },
+      "targetTransform": {
+        "x": 169.47784594138156,
+        "z": -1.0371285693490804,
+        "y": 0.7
+      },
       "pointerPickId": 793
     },
     "attackLevelRayEventsAvailable": false,
@@ -24,7 +31,10 @@
     "genericPointBlankTrace": {
       "durationSeconds": 8,
       "distanceM": 0.1,
-      "weapons": ["weapon.handgun", "weapon.fire-axe"],
+      "weapons": [
+        "weapon.handgun",
+        "weapon.fire-axe"
+      ],
       "result": "both targets lost health and had combat.hit events"
     },
     "l3BridgeTrace": {
@@ -37,14 +47,24 @@
     },
     "crossLevelProbe": {
       "durationSeconds": 3,
-      "levels": ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L10"],
+      "levels": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7",
+        "L8",
+        "L10"
+      ],
       "weapon": "weapon.handgun",
       "distanceM": 0.1,
       "result": "all targets took damage",
       "l9": "excluded from opening-segment scan: courier starts in APC without an on-foot carried-weapon attack"
     }
   },
-  "driverChange": "when L3 handgun is selected and the chosen threat is within 1.25 m, switch to the carried fire axe",
+  "driverChange": "provisional axe fallback removed",
   "validation": {
     "combatTest": "8 tests passed after final trace expansion",
     "typecheck": "passed after final cross-level probe and trace edits",
@@ -59,5 +79,15 @@
     "Run HIGH then LOW headless browser confirmation when local server binding is available.",
     "Run the remote npm test suite when a healthy Hetzner runner is available."
   ],
-  "invariants": ["no infected stat changes", "corpses remain persistent"]
+  "invariants": [
+    "no infected stat changes",
+    "corpses remain persistent"
+  ],
+  "productFix": {
+    "beforeInfectedY": 0.7,
+    "bridgeFloorY": 5.7,
+    "courierY": 6.42,
+    "afterInfectedY": 6.4,
+    "regression": "real infected.runner spawn, no manual height adjustment; 8-second handgun test passes"
+  }
 }
