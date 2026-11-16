@@ -25,3 +25,9 @@ After filesystem/network restrictions were removed, the guarded browser pool adm
 ## HIGH L3 collected
 
 The full ordinary-combat HIGH WebGPU run completed in 414 seconds with no skips, no assists and zero driver issues. It recorded seven deaths and 561 handgun attacks. Raw evidence is under `test-results/playtest/b113-l3-high/`. Bridge captures await visual review; completion alone does not establish bridge support or universal hitability. All other requested runs remain pending. No checks remain running.
+
+## HIGH L4 first segment
+
+Collected 480 seconds of ordinary HIGH WebGPU combat at zoom 1.5 without skips. The courier reached the cellar escape objective but did not finish. Three stationary warnings (#214/#328/#208, ticks 11864/11908/11941) await visual attribution; the opening empty-HUD warning is a known driver gap. On normal save continuation, the second segment restarted at the quartermaster rather than the cellar checkpoint; this repeat was interrupted. No full L4 completion is claimed. Raw evidence: `test-results/playtest/b113-l4-high/`.
+
+Opened HIGH L3 bridge capture `test-results/playtest/b113-l3-high/captures/campaign-L3-t21652.jpg`: visible infected are on the deck, and one has reduced health. No obvious bridge sinking/floating in this frame. Universal point-blank hitability is not established.
