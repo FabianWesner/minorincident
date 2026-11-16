@@ -44,3 +44,7 @@ Runs: `test-results/playtest/b113-l3-high`, `b113-l3-low`, `b113-l4-high`, `b113
 L7 camera-only captures: `test-results/b113-wrecks/military-1.jpg`, `military-3.jpg`, `military-4.jpg`. Registered placements are D-FAIR/l7-military-1 (214,25), military-3 (138,25), military-4 (100,6). Backend HIGH WebGPU and camera/tick receipts are in qa.json. These are placement observations, not extra combat runs.
 
 No deployment, push, main movement, zombie stat tuning, corpse removal, protected-reference edits, source fixes or playtest-tool edits occurred. This is an incomplete acceptance report, not batch approval.
+
+## L4 escape telemetry attribution
+
+Read both full logs: HIGH has 24 death-input-release events; LOW summary records 25 deaths. During hide, the courier repeatedly advances from the line-break spawn around x−4/−5,z16 to x−15…−32, then resets. This is repeated failed escape under combat pressure, not a motionless simulation. Driver steering, route design and combat contribution remain unresolved. Representative tick/position/checkpoint samples are in `l4EscapeAudit` in qa.json. Repeating the identical route without a different observation or physical-input approach is unlikely to close acceptance.

@@ -991,5 +991,204 @@
       "L4 HIGH P2 stationary actor warnings"
     ],
     "notProductP0": "Intentional run caps"
+  },
+  "l4EscapeAudit": {
+    "interpretation": "Repeated dying/resetting at line-break checkpoint, not a motionless run. Driver steering vs combat/route product attribution unresolved.",
+    "runs": [
+      {
+        "tier": "high",
+        "hideObservations": 205,
+        "deathInputReleaseEvents": 24,
+        "samples": [
+          {
+            "tick": 13628,
+            "player": {
+              "x": -15.731046676635742,
+              "z": 20.03118896484375,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 15629,
+            "player": {
+              "x": -15.643997751176357,
+              "z": 10.275961510837078,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 17518,
+            "player": {
+              "x": -15.697925567626953,
+              "z": -0.8058217763900757,
+              "hp": 90,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 19257,
+            "player": {
+              "x": -24.76463508605957,
+              "z": -8.051992416381836,
+              "hp": 22,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 21026,
+            "player": {
+              "x": -17.2303321454674,
+              "z": 0.6643182542175055,
+              "hp": 47,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 22803,
+            "player": {
+              "x": -17.368511199951172,
+              "z": 9.3209867477417,
+              "hp": 0,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 24599,
+            "player": {
+              "x": -15.338327407836914,
+              "z": 6.726490497589111,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 26391,
+            "player": {
+              "x": -15.351954460144043,
+              "z": 3.331521511077881,
+              "hp": 60,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 28249,
+            "player": {
+              "x": -15.575894355773926,
+              "z": -0.5118460059165955,
+              "hp": 37,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "hideObservations": 260,
+        "deathInputReleaseEvents": 25,
+        "samples": [
+          {
+            "tick": 13650,
+            "player": {
+              "x": -5.383366107940674,
+              "z": 16.027753829956055,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 16014,
+            "player": {
+              "x": -40.12404251098633,
+              "z": -17.820663452148438,
+              "hp": 20,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 18267,
+            "player": {
+              "x": -16.58597755432129,
+              "z": 2.2150745391845703,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 20617,
+            "player": {
+              "x": -19.156707763671875,
+              "z": -7.070772171020508,
+              "hp": 10,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 22955,
+            "player": {
+              "x": -15.938379287719727,
+              "z": -2.7382261753082275,
+              "hp": 80,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 25325,
+            "player": {
+              "x": -15.47554132482037,
+              "z": -1.0509296674281359,
+              "hp": 60,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 27574,
+            "player": {
+              "x": -16.469846725463867,
+              "z": 9.021162033081055,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 29782,
+            "player": {
+              "x": -18.013450919650495,
+              "z": -4.8359566535800695,
+              "hp": 40,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          },
+          {
+            "tick": 31982,
+            "player": {
+              "x": -14.613007545471191,
+              "z": 10.34599781036377,
+              "hp": 100,
+              "weapon": "weapon.army-mg"
+            },
+            "checkpoint": "line-break"
+          }
+        ]
+      }
+    ]
   }
 }
