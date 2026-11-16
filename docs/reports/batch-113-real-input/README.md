@@ -88,3 +88,7 @@ Collected240 seconds HIGH zoom1.5,478 frames (`test-results/b113-l4-south-high/s
 ## HIGH south-window consecutive review
 
 Opened local crop sheet `test-results/b113-south-feet-review.jpg`, ten consecutive frames ticks14089–14360 (~4.5 s). The large infected visible foot remains near the same paving lines while upper-body pose shifts; no obvious sliding in this bounded HIGH window. Identity and complete strike/roar/slam cycles are not established. This narrows the visual gap but does not close all tank attacks or LOW. Raw review sheet remains ignored.
+
+## LOW matching south-camera run
+
+Collected240 seconds LOW zoom1.5 with identical south camera after the HIGH pass;474 frames (`test-results/b113-l4-south-low/sequence`). Opened local final-ten-frame crop sheet `test-results/b113-south-low-review.jpg`, ticks13974–14245. Ordinary infected moves around sandbags; the large actor is clipped at left edge. This does not supply a comparable Alpha sole track. LOW tank-foot qualification stays open. Cap is intentional; no native video claimed.
