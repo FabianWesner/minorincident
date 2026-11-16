@@ -43,3 +43,9 @@ Authored repeat count: the former four corn scare triggers plus workshop/shed po
 ## Artifact
 
 [Route evidence sheet](route-evidence.png) — small native evidence schematic, opened for review. It is not a browser capture.
+
+## Follow-up with unrestricted execution
+
+Implementation and report committed as `f4ab5a34`. HIGH then LOW browser attempts now reach the pool, but both fail before rendering because SceneLab rejects production `infected.sprinter` actors as retired rigid figures. Visual confirmation remains open.
+
+Required remote suite retry passed: 27 files, 105 tests passed and one skipped; 192.2 s within the 240 s budget, exit 0.

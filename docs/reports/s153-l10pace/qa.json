@@ -8,7 +8,7 @@
     "skilledPolicy": "LevelTenBot complete, HIGH density",
     "normalPolicy": "LevelTenBot complete with walk:true input modifier, LOW density (escort-walk probe pattern)",
     "killCount": "combat.kill events over the route window",
-    "routeWindow": "L10 start x=547 through farmstead objective x≈1857"
+    "routeWindow": "L10 start x=547 through farmstead objective x\u22481857"
   },
   "baseline": {
     "policy": "skilled-bot HIGH",
@@ -16,7 +16,14 @@
     "kills": 156,
     "killsPerMinute": 30.17,
     "deaths": 0,
-    "soloPopoutTargets": [615, 710, 865, 1115, 1405, 1685],
+    "soloPopoutTargets": [
+      615,
+      710,
+      865,
+      1115,
+      1405,
+      1685
+    ],
     "soloPopoutSpanMetres": 1070
   },
   "candidate": {
@@ -26,23 +33,109 @@
     "killsPerMinute": 30.48,
     "deaths": 0,
     "backtrackingMetres": 0,
-    "soloPopoutTargets": [615, 1115],
+    "soloPopoutTargets": [
+      615,
+      1115
+    ],
     "soloPopoutSpanMetres": 500,
-    "distinctEncounterTypes": ["lone-pursuer", "field-horde", "barn-defense", "alpha-ambush"],
-    "farmRegularSlots": {"high": 51, "low": 37},
+    "distinctEncounterTypes": [
+      "lone-pursuer",
+      "field-horde",
+      "barn-defense",
+      "alpha-ambush"
+    ],
+    "farmRegularSlots": {
+      "high": 51,
+      "low": 37
+    },
     "segments": [
-      {"name": "crash entrance to farmhouse", "x": [547, 698], "startSeconds": 0, "endSeconds": 38.3, "durationSeconds": 38.3, "kills": 6, "deaths": 0},
-      {"name": "farmhouse to corn crossing", "x": [698, 936], "startSeconds": 38.3, "endSeconds": 97.3, "durationSeconds": 59.0, "kills": 38, "deaths": 0},
-      {"name": "corn crossing to sheds", "x": [936, 1165], "startSeconds": 97.3, "endSeconds": 148.2, "durationSeconds": 50.9, "kills": 30, "deaths": 0},
-      {"name": "sheds to depot Alpha", "x": [1165, 1517], "startSeconds": 148.2, "endSeconds": 232.7, "durationSeconds": 84.5, "kills": 42, "deaths": 0},
-      {"name": "depot Alpha to restricted marker", "x": [1517, 1857], "startSeconds": 232.7, "endSeconds": 309.1, "durationSeconds": 76.4, "kills": 41, "deaths": 0}
+      {
+        "name": "crash entrance to farmhouse",
+        "x": [
+          547,
+          698
+        ],
+        "startSeconds": 0,
+        "endSeconds": 38.3,
+        "durationSeconds": 38.3,
+        "kills": 6,
+        "deaths": 0
+      },
+      {
+        "name": "farmhouse to corn crossing",
+        "x": [
+          698,
+          936
+        ],
+        "startSeconds": 38.3,
+        "endSeconds": 97.3,
+        "durationSeconds": 59.0,
+        "kills": 38,
+        "deaths": 0
+      },
+      {
+        "name": "corn crossing to sheds",
+        "x": [
+          936,
+          1165
+        ],
+        "startSeconds": 97.3,
+        "endSeconds": 148.2,
+        "durationSeconds": 50.9,
+        "kills": 30,
+        "deaths": 0
+      },
+      {
+        "name": "sheds to depot Alpha",
+        "x": [
+          1165,
+          1517
+        ],
+        "startSeconds": 148.2,
+        "endSeconds": 232.7,
+        "durationSeconds": 84.5,
+        "kills": 42,
+        "deaths": 0
+      },
+      {
+        "name": "depot Alpha to restricted marker",
+        "x": [
+          1517,
+          1857
+        ],
+        "startSeconds": 232.7,
+        "endSeconds": 309.1,
+        "durationSeconds": 76.4,
+        "kills": 41,
+        "deaths": 0
+      }
     ],
     "firstCrossings": [
-      {"x": 698, "seconds": 38.3, "kills": 6},
-      {"x": 936, "seconds": 97.3, "kills": 44},
-      {"x": 1165, "seconds": 148.2, "kills": 74},
-      {"x": 1517, "seconds": 232.7, "kills": 116},
-      {"x": 1855.2, "seconds": 309.1, "kills": 157}
+      {
+        "x": 698,
+        "seconds": 38.3,
+        "kills": 6
+      },
+      {
+        "x": 936,
+        "seconds": 97.3,
+        "kills": 44
+      },
+      {
+        "x": 1165,
+        "seconds": 148.2,
+        "kills": 74
+      },
+      {
+        "x": 1517,
+        "seconds": 232.7,
+        "kills": 116
+      },
+      {
+        "x": 1855.2,
+        "seconds": 309.1,
+        "kills": 157
+      }
     ]
   },
   "normalWalkLow": {
@@ -51,38 +144,162 @@
     "killsPerMinuteObserved": 17.4,
     "completedFarmstead": false,
     "deaths": 42,
-    "deathBinsByX100": {"700": 1, "1000": 1, "1400": 40},
-    "finalPosition": {"x": 1442.1, "objective": "farmstead"},
+    "deathBinsByX100": {
+      "700": 1,
+      "1000": 1,
+      "1400": 40
+    },
+    "finalPosition": {
+      "x": 1442.1,
+      "objective": "farmstead"
+    },
     "backtrackingMetres": 691,
     "firstCrossings": [
-      {"x": 698, "seconds": 86.2, "kills": 7, "deaths": 0},
-      {"x": 936, "seconds": 227.3, "kills": 56, "deaths": 1},
-      {"x": 1165, "seconds": 347.6, "kills": 115, "deaths": 2}
+      {
+        "x": 698,
+        "seconds": 86.2,
+        "kills": 7,
+        "deaths": 0
+      },
+      {
+        "x": 936,
+        "seconds": 227.3,
+        "kills": 56,
+        "deaths": 1
+      },
+      {
+        "x": 1165,
+        "seconds": 347.6,
+        "kills": 115,
+        "deaths": 2
+      }
     ],
     "deathSamples": [
-      {"seconds": 117.6, "x": 759.5},
-      {"seconds": 284.8, "x": 1050.9},
-      {"seconds": 489.3, "x": 1446.8},
-      {"seconds": 499.8, "x": 1455.3},
-      {"seconds": 510.2, "x": 1455.3},
-      {"seconds": 520.6, "x": 1455.3},
-      {"seconds": 531.0, "x": 1455.3},
-      {"seconds": 541.4, "x": 1455.3}
+      {
+        "seconds": 117.6,
+        "x": 759.5
+      },
+      {
+        "seconds": 284.8,
+        "x": 1050.9
+      },
+      {
+        "seconds": 489.3,
+        "x": 1446.8
+      },
+      {
+        "seconds": 499.8,
+        "x": 1455.3
+      },
+      {
+        "seconds": 510.2,
+        "x": 1455.3
+      },
+      {
+        "seconds": 520.6,
+        "x": 1455.3
+      },
+      {
+        "seconds": 531.0,
+        "x": 1455.3
+      },
+      {
+        "seconds": 541.4,
+        "x": 1455.3
+      }
     ],
     "result": "stalled near x=1455; 40 deaths repeated in the local shed/workshop approach"
   },
   "changes": {
     "encounters": [
-      {"id": "farmhouse-defense", "type": "barn-defense", "position": [982, 80], "regularsHighLow": [11, 9], "dogs": 1, "role": "Screamer"},
-      {"id": "corn-field-horde", "type": "field-horde", "position": [830, 80], "regularsHighLow": [14, 7], "dogs": 1, "spreadRadiusMetres": [14, 26]},
-      {"id": "shed-field-crossing", "type": "field-horde", "position": [1125, 25], "regularsHighLow": [17, 12], "dogs": 0, "spreadRadiusMetres": [14, 26]},
-      {"id": "depot-alpha", "type": "alpha-ambush", "position": [1517, 100], "regularsHighLow": [9, 7], "alphas": 1}
+      {
+        "id": "farmhouse-defense",
+        "type": "barn-defense",
+        "position": [
+          982,
+          80
+        ],
+        "regularsHighLow": [
+          11,
+          9
+        ],
+        "dogs": 1,
+        "role": "Screamer"
+      },
+      {
+        "id": "corn-field-horde",
+        "type": "field-horde",
+        "position": [
+          830,
+          80
+        ],
+        "regularsHighLow": [
+          14,
+          7
+        ],
+        "dogs": 1,
+        "spreadRadiusMetres": [
+          14,
+          26
+        ]
+      },
+      {
+        "id": "shed-field-crossing",
+        "type": "field-horde",
+        "position": [
+          1125,
+          25
+        ],
+        "regularsHighLow": [
+          17,
+          12
+        ],
+        "dogs": 0,
+        "spreadRadiusMetres": [
+          14,
+          26
+        ]
+      },
+      {
+        "id": "depot-alpha",
+        "type": "alpha-ambush",
+        "position": [
+          1517,
+          100
+        ],
+        "regularsHighLow": [
+          9,
+          7
+        ],
+        "alphas": 1
+      }
     ],
-    "cornScareTargets": [615, 1115],
-    "removedSoloPopouts": [710, 865, 1405, 1685],
+    "cornScareTargets": [
+      615,
+      1115
+    ],
+    "removedSoloPopouts": [
+      710,
+      865,
+      1405,
+      1685
+    ],
     "medkits": [
-      {"id": "field-approach", "position": [807, 80]},
-      {"id": "industrial-medkit", "position": [1297, 80], "reason": "moved onto the route bend"}
+      {
+        "id": "field-approach",
+        "position": [
+          807,
+          80
+        ]
+      },
+      {
+        "id": "industrial-medkit",
+        "position": [
+          1297,
+          80
+        ],
+        "reason": "moved onto the route bend"
+      }
     ],
     "checkpointPolicy": "existing first 120 m pace checkpoint, then every 200 m; region checkpoints retained",
     "zombieStatChanges": 0,
@@ -91,12 +308,47 @@
   "validation": {
     "typecheck": "pass",
     "lint": "pass",
-    "focusedWorldSystems": {"result": "pass", "testFiles": 1, "testsPassed": 5},
-    "remoteUnitSuite": {"result": "unavailable", "exitCode": 69, "detail": "remote runner reported no healthy host; npm test was ineligible for Mac fallback"},
-    "epicVerify": {"result": "pass", "command": "node --import tsx tools/verify.ts E32", "testFilesPassed": 27, "testsPassed": 106, "seconds": 158, "detail": "npm run verify wrapper hit tsx IPC EPERM; the same verify script then passed through Node's loader"},
-    "browserHighThenLow": {"result": "notRun", "detail": "pool localhost bind returned EPERM; guarded fallback process inspection returned EPERM"},
+    "focusedWorldSystems": {
+      "result": "pass",
+      "testFiles": 1,
+      "testsPassed": 5
+    },
+    "remoteUnitSuite": {
+      "result": "unavailable",
+      "exitCode": 69,
+      "detail": "remote runner reported no healthy host; npm test was ineligible for Mac fallback"
+    },
+    "epicVerify": {
+      "result": "pass",
+      "command": "node --import tsx tools/verify.ts E32",
+      "testFilesPassed": 27,
+      "testsPassed": 106,
+      "seconds": 158,
+      "detail": "npm run verify wrapper hit tsx IPC EPERM; the same verify script then passed through Node's loader"
+    },
+    "browserHighThenLow": {
+      "result": "notRun",
+      "detail": "pool localhost bind returned EPERM; guarded fallback process inspection returned EPERM"
+    },
     "visualClaim": "none; route-evidence.png is a native data schematic, not a browser screenshot"
   },
   "artifact": "route-evidence.png",
-  "openItems": ["Run the HIGH then LOW WebGPU browser scene review once the shared browser pool is reachable.", "Run the required remote unit suite once a healthy runner is available.", "Investigate the normal-walk choke at x≈1455; it was measured and reported but not used as the skilled-bot acceptance policy."]
+  "openItems": [
+    "Run the HIGH then LOW WebGPU browser scene review once the shared browser pool is reachable.",
+    "Run the required remote unit suite once a healthy runner is available.",
+    "Investigate the normal-walk choke at x\u22481455; it was measured and reported but not used as the skilled-bot acceptance policy."
+  ],
+  "browserRetry": {
+    "high": "failed before rendering",
+    "low": "failed before rendering",
+    "reason": "SceneLab rejects production infected.sprinter as retired rigid figure"
+  },
+  "remoteRetry": {
+    "result": "pass",
+    "files": 27,
+    "passed": 105,
+    "skipped": 1,
+    "seconds": 192.2,
+    "exit": 0
+  }
 }
