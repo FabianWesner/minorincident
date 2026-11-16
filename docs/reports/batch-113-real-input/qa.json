@@ -1431,5 +1431,23 @@
       ],
       "result": "Mixed ordinary/armored actors moving at left; no confidently identified Alpha or stable sole track. Available observation rows lack archetype; cannot infer identity from size."
     }
+  },
+  "identityObserverPreparation": {
+    "wrapper": "test-results/b113-video/identified-feet-entry.ts",
+    "status": "PREPARED AND SYNTAX CHECKED; NOT RUN",
+    "filter": "archetype includes alpha OR infected.alphaType exists",
+    "fields": [
+      "id",
+      "archetype",
+      "alphaType",
+      "transform",
+      "health",
+      "brain.state",
+      "brain.specialAttack",
+      "brain.targetId",
+      "projected"
+    ],
+    "intervalMs": 500,
+    "mutation": "camera only; actor/simulation observer read-only"
   }
 }

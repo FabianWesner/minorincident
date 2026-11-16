@@ -96,3 +96,7 @@ Collected240 seconds LOW zoom1.5 with identical south camera after the HIGH pass
 ## Wider LOW crop identity audit
 
 Opened `test-results/b113-low-left-review.jpg` from the same final ten frames, crop(0,160)–(700,650). Mixed ordinary/armored infected move through the left side; no confidently identified Alpha or stable sole track. Nearby sampled observations list IDs/HP but lack archetype; visual size alone cannot establish Alpha identity. A read-only identity observer is required before attributing this window to the requested Alpha. No new replay performed.
+
+## Identity observer prepared
+
+Ignored `test-results/b113-video/identified-feet-entry.ts` is prepared and syntax checked, not run. Each half-second sample records actors selected by archetype containing alpha or infected.alphaType, with ID/type, transform, HP, brain state/special/target and projected position. This will distinguish Alpha identity from visually large ordinary actors. No actor/simulation mutation; existing camera-only framing retained. No new identity evidence is claimed yet.
