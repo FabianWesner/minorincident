@@ -1,7 +1,7 @@
 {
   "objective": "s145-driver \u2014 playtest driver: no false stalls (L9 bridge loops, L10 farm deaths, cap labels)",
   "candidate": "69562fd1",
-  "status": "L9 accepted; L10 policy requires further work",
+  "status": "L9 accepted; first full mortal L10 passed; second run and baseline comparison open",
   "changes": [
     "L9 live bridge steering gains loop detection and physical reverse/re-approach recovery",
     "L10 low-health crowd retreat and nearby medkit steering during travel",
@@ -196,6 +196,30 @@
         ]
       },
       "fullRun": false
+    },
+    "L10_HIGH_full_pass_1": {
+      "status": "PASS full mortal completion",
+      "run": "test-results/s145-driver/l10-high-rifle-7-full",
+      "segments": 3,
+      "segmentSeconds": [
+        481,
+        480,
+        430
+      ],
+      "observedDeathsBySegment": [
+        2,
+        2,
+        1
+      ],
+      "skips": 0,
+      "bySeverity": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 5,
+        "P3": 0
+      },
+      "creditsVerified": true,
+      "immortal": false
     }
   },
   "archived_baseline_only": {
@@ -251,7 +275,7 @@
     "L9_high_road_x3_reaches_L10_no_stuck_navigating": "pass: 307, 303, 271 seconds; zero skips or stuck-navigating flags",
     "L9_low_road_x1_reaches_L10_no_stuck_navigating": "pass: 246 seconds; zero issues or skips",
     "L9_shortcut_x1_reaches_L10_no_stuck_navigating": "pass: 208 seconds; zero issues or skips",
-    "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "not met: latest full-budget attempt never finished",
+    "L10_high_mortal_full_x2_farm_deaths_at_most_half_archived": "partial: one full completion; second full run and archived pre-interior comparison missing",
     "cap_label_sample_cap_not_p0": "runtime pass: eight minute mortal L10 sample ends P3 sample-cap, zero P0",
     "empty_opening_hud_no_warning": "unit/code-path verified; runtime acceptance pending"
   },
