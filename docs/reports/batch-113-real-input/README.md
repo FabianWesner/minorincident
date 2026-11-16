@@ -48,3 +48,7 @@ No deployment, push, main movement, zombie stat tuning, corpse removal, protecte
 ## L4 escape telemetry attribution
 
 Read both full logs: HIGH has 24 death-input-release events; LOW summary records 25 deaths. During hide, the courier repeatedly advances from the line-break spawn around x−4/−5,z16 to x−15…−32, then resets. This is repeated failed escape under combat pressure, not a motionless simulation. Driver steering, route design and combat contribution remain unresolved. Representative tick/position/checkpoint samples are in `l4EscapeAudit` in qa.json. Repeating the identical route without a different observation or physical-input approach is unlikely to close acceptance.
+
+## L3 close damage audit
+
+Existing ordinary-input logs establish close bridge targets losing HP in both tiers. HIGH tick 21837: #545 45→20 HP at 0.69 m and #444 47.5→15 at 0.87 m, courier x161.79. LOW tick 7087: #1472 60→20 at 1.18 m (x164.16); tick 7155: #1242 60→20 at 1.08 m (x166.42). These are sampled same-actor HP changes, not shot-by-shot attribution; companion damage can contribute. They support close-target damage on the bridge during real play, without proving universal hitability. Exact sampled receipts are in `l3CloseDamageAudit`.

@@ -44,7 +44,7 @@
     },
     {
       "check": "L3 LOW full level: bridge close-target damage and infected bridge support",
-      "status": "FULL LEVEL COLLECTED; POST-FIGHT BRIDGE FRAME REVIEWED"
+      "status": "FULL LEVEL; CLOSE BRIDGE HP REDUCTIONS OBSERVED IN LOG AT7087/7155"
     },
     {
       "check": "L4 HIGH full level: breach approaches, waves, Alpha tank foot planting",
@@ -1186,6 +1186,73 @@
               "weapon": "weapon.army-mg"
             },
             "checkpoint": "line-break"
+          }
+        ]
+      }
+    ]
+  },
+  "l3CloseDamageAudit": {
+    "method": "Consecutive sampled observations in bridge approach x155\u2013205; same actor HP reduction while current distance below2m. Ordinary real-input run. Sampling cannot identify damage source or prove every attack/actor.",
+    "runs": [
+      {
+        "tier": "high",
+        "events": [
+          {
+            "tick": 21837,
+            "id": 545,
+            "previousHP": 45,
+            "hp": 20,
+            "distance": 0.6922293452718484,
+            "player": {
+              "x": 161.78716962086037,
+              "z": -2.8459139354526997,
+              "hp": 90,
+              "weapon": "weapon.handgun"
+            }
+          },
+          {
+            "tick": 21837,
+            "id": 444,
+            "previousHP": 47.5,
+            "hp": 15,
+            "distance": 0.8725623376842498,
+            "player": {
+              "x": 161.78716962086037,
+              "z": -2.8459139354526997,
+              "hp": 90,
+              "weapon": "weapon.handgun"
+            }
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "events": [
+          {
+            "tick": 7087,
+            "id": 1472,
+            "previousHP": 60,
+            "hp": 20,
+            "distance": 1.182002249348467,
+            "player": {
+              "x": 164.1593475341797,
+              "z": -3.3801872730255127,
+              "hp": 90,
+              "weapon": "weapon.handgun"
+            }
+          },
+          {
+            "tick": 7155,
+            "id": 1242,
+            "previousHP": 60,
+            "hp": 20,
+            "distance": 1.0819103792612608,
+            "player": {
+              "x": 166.42221069335938,
+              "z": -0.9042387008666992,
+              "hp": 80,
+              "weapon": "weapon.handgun"
+            }
           }
         ]
       }
