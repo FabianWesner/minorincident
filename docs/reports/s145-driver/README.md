@@ -36,3 +36,5 @@ With unrestricted execution, the required remote unit suite passed on 46.225.66.
 Second HIGH road run completed handover in 303 seconds with no skips or `stuck-navigating` flags. Two `enemy-frozen` observations were retained at ticks 4359 and 14385; these are outside the navigation acceptance criterion. Raw evidence: `test-results/s145-driver/l9-road-high-2-live`. Three L9 matrix runs and both full L10 runs remain pending.
 
 Third HIGH road run completed handover in 271 seconds with no skips or `stuck-navigating` flags. One `enemy-frozen` observation was retained at tick 13548. HIGH road ×3 now passes the requested navigation criterion (307 / 303 / 271 seconds). LOW road, shortcut and both full L10 runs remain pending. Raw evidence: `test-results/s145-driver/l9-road-high-3-live`.
+
+LOW road completed handover in 246 seconds with zero issues and no skips. This passes the required LOW navigation criterion. Raw evidence: `test-results/s145-driver/l9-road-low-live`. Shortcut and both full mortal L10 runs remain pending.
