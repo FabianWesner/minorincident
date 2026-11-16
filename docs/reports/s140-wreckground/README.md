@@ -113,3 +113,7 @@ Wreck probe now retains resident mesh identities with no support samples, return
 ## Five missing rows attributed
 
 Fresh HIGH WebGL2 L6/L7 sweep completes. All 39 identities resolve; the five previously absent rows now report actual LOD0 meshes with zero support samples: L6 l6-35 at Y=3.8983 m (21,948 vertices), L7 rocket truck and military 0/1/2 at Y=2.7–3.9 m (17,055–27,083 vertices each). Thus these are ground-field coverage gaps, not missing residency. The other 34 L7 gaps remain 0 cm. Exact elevated road/bridge support sampling is still required. Updated receipts replace earlier missing rows in qa.json.
+
+## Elevated audit field implementation
+
+Added an audit-only GroundField from retained merged layout triangle meshes, including elevated triangles. GroundField queries can limit returned height; wreck probes query beneath authored pavingHeight + 10 cm to exclude overhead roofs, then fall back to existing terrain/ground support. Typecheck and lint pass. This code requires runtime validation on all five elevated wrecks before their grounding can be claimed.

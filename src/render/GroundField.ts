@@ -46,7 +46,7 @@ export class GroundField {
   }
   private static key(x: number, z: number): number { return (x + 32768) * 65536 + (z + 32768); }
   /** Highest drawn ground point at (x, z), or null where the district draws none of its own (off-slice backdrop). */
-  height(x: number, z: number): number | null {
+  height(x: number, z: number, ceiling = Infinity): number | null {
     const key = GroundField.key(Math.floor(x / CELL), Math.floor(z / CELL)), list = this.cells.get(key); if (!list) return null;
     const t = this.tris; let best: number | null = null;
     if (!this.sorted.has(key)) { list.sort((a, b) => t[b * 15 + 10] - t[a * 15 + 10]); this.sorted.add(key); }
@@ -65,7 +65,7 @@ export class GroundField {
       }
       uniform = covered ? height : null; this.uniformCells.set(key, uniform);
     }
-    if (uniform !== null) return uniform;
+    if (uniform !== null && uniform <= ceiling) return uniform;
     for (const id of list) {
       const o = id * 15;
       if (best !== null && best >= t[o + 10]) break;
@@ -74,7 +74,7 @@ export class GroundField {
       const u = (t[o + 2] * dx + t[o + 3] * dz) / d, v = (t[o + 4] * dx + t[o + 5] * dz) / d, w = 1 - u - v;
       if (u < -1e-6 || v < -1e-6 || w < -1e-6) continue;
       const y = t[o + 7] === t[o + 8] && t[o + 8] === t[o + 9] ? t[o + 7] : u * t[o + 7] + v * t[o + 8] + w * t[o + 9];
-      if (best === null || y > best) best = y;
+      if (y <= ceiling && (best === null || y > best)) best = y;
     }
     return best;
   }

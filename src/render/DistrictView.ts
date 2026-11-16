@@ -1,3 +1,4 @@
+import { GroundField } from './GroundField';
 import {
   Box3,
   Group,
@@ -521,8 +522,13 @@ export class DistrictView extends Group {
     }
     return gaps;
   }
+  private wreckSupport?: GroundField;
   /** Read-only campaign wreck audit: selected resident mesh and the renderer's resolved placement matrix. */
   wreckGroundGaps(): { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; supportSamples: number; contactSamples: number }[] {
+    if (!this.wreckSupport) {
+      this.wreckSupport = new GroundField();
+      for (const mesh of this.parts.mergedLayout) this.wreckSupport.add(mesh, Infinity);
+    }
     const rows: { id: string; asset: string; decay: string; lod: string; meshLod: string; matrix: number[]; origin: number[]; gapCm: number | null; supportSamples: number; contactSamples: number }[] = [];
     for (const entry of this.lodBatches) {
       if (!entry.id.startsWith('veh.') || !(entry.id === 'veh.wreck' || entry.decay === 'wrecked' || entry.decay === 'burned')) continue;
@@ -537,7 +543,7 @@ export class DistrictView extends Group {
         for (const point of points) {
           const v = this.propPoint.copy(point).applyMatrix4(ref.matrix);
           v.x += entry.origin[0]; v.z += entry.origin[1];
-          const ground = this.groundAt(v.x, v.z);
+          const ground = this.wreckSupport.height(v.x, v.z, this.world.pavingHeight(v.x, v.z) + .1) ?? this.groundAt(v.x, v.z);
           if (ground === null) continue;
           supportSamples++; gap = Math.min(gap, v.y - ground);
         }
