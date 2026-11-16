@@ -1,35 +1,26 @@
-# s137-screammove — interim evidence
+# s137-screammove
 
-## State
+Ordinary screamer warnings are noticeable during physical movement at zoom 1. HIGH was reviewed first, then LOW. Completed on WebGL2 and WebGPU at zoom 1 and 1.5.
 
-Implementation committed as `ef387646` (`Improve screamer warning readability`). This is not acceptance complete: no real-input frames could be captured or inspected in this sandbox, and HIGH/LOW, zoom 1/1.5, WebGL2/WebGPU visual coverage remains open.
+## Change
 
-## Changes
+The existing violet source rings retain their original size/colour but last 0.8/0.9 seconds instead of 0.34/0.42 seconds. A single reusable violet screen-edge arrow points toward an off-screen scream for 1.1 seconds, updated with the moving camera and removed on disposal. Existing wave pool plus DOM marker: zero additional renderer draw calls. Simulation, zombie tuning and corpse handling are unchanged.
 
-- `src/render/vfx/Vfx.ts`: source rings now last 0.8/0.9 seconds and use larger, brighter existing violet wave geometry. One transient CSS direction marker points toward an off-screen scream source for 1.1 seconds. It adds no draw calls.
-- `tools/playtest/session.ts`: `--scream-captures` now records four screenshots at 4 fps after each scream event.
+## Real input evidence and judgment
+
+`tools/playtest/s137-screammove.ts` restores the existing L10 console checkpoint and places one ordinary screamer in chase state near the courier. This is explicitly bounded encounter setup, not campaign progression proof. It does not change zombie stats. Physical KeyD movement runs in real time for ten seconds; native scream noise events trigger naturally. Captures sample every 250 ms (including screenshot time). JSON records tick, player position, source projection, native events and actual renderer backend. All eight after configurations emitted two screams without browser errors.
+
+The before control reinstates batch-110 source-ring lifetimes/colours/sizes and omits the new bearing; simulation and physical input remain identical. HIGH/WebGL2/zoom 1 contains both on-screen and off-screen before/after sequences.
+
+Opened and inspected `sheet.jpg`, with three consecutive samples around each of two screams for every run. The first scream source is on screen near the upper edge at zoom 1 and clearly inside at zoom 1.5. Before: brief/faint violet rings are easy to lose while tracking the running courier. After: the rings remain conspicuous across consecutive frames within approximately 0.5 seconds. The second scream source is off screen (HIGH/WebGL2/zoom 1 projected x=-1.68). Opened full-size frames 26 and 27: a bright violet arrow at the left edge gives a clear bearing while the courier runs; the before sequence has no bearing. The large faint hearing-radius ring alone does not reliably give that direction. The sheet shows the same persistent source rings and off-screen arrow across HIGH/LOW and both actual backends.
+
+Raw sequences: `test-results/s137-native-{high,low}-{webgl2,webgpu}-{1,1.5}-after/`; baseline: `test-results/s137-native-high-webgl2-1-before/`. Raw captures stay outside committed reports; JSON preserves their paths and observations. One small sheet is committed.
 
 ## Validation
 
-- `npm run typecheck`: pass.
-- `npm run lint`: pass.
-- `MI_LOCAL_FALLBACK=1 npm test`: pass, 106 tests / 27 files (150/150 manifest cases).
-- `sh tools/remote/run.sh "$PWD" -- npm test`: unavailable; no healthy remote runner. The documented local fallback was run and passed.
-- `npm run playtest -- --levels L6 --quality high --zoom 1 --scream-captures ...`: blocked before browser launch; Node 26 `tsx` IPC listener returned `EPERM`.
-- `tools/qa/s124-screamer-ground.ts`: blocked before browser launch; browser pool listeners on 127.0.0.1:4321/4329 returned `EPERM`.
+- Typecheck and lint pass, including the capture tool.
+- Required remote `sh tools/remote/run.sh "$PWD" -- npm test`: passed, 105 tests plus one platform skip, 27 files, 126.9 seconds, unchanged 150-case manifest.
+- Existing `tools/qa/s124-screamer-ground.ts` passes on WebGPU: violet counts 0, 1621, 3340, 2060, 2142, 1990, below 5000; no browser errors. Enlarged ring sizes initially failed this regression and were restored before acceptance.
+- All browser work used e2e-lock, headless, one browser at a time, ten-minute reservations, ports 5011/5012.
 
-## Open acceptance evidence
-
-No before/after sequence or contact sheet exists yet. On-screen noticeability while moving, any off-screen direction cue in rendered gameplay, HIGH then LOW, zoom 1 and 1.5, WebGL2 and WebGPU, and the s124 visual regression result are unverified. The CSS marker is an implementation hypothesis pending those captures. Resume the bounded real-input run in an environment where `tsx` IPC and browser-pool listeners can bind; inspect the resulting frames before closing this report.
-
-## Resumed validation
-
-Browser access is operational. s124 now passes on WebGPU (violet pixel counts 0, 1621, 3340, 2060, 2142, 1990). Enlarged rings initially exceeded its 5000-pixel limit, so ring sizes and colours were restored while retaining longer duration. Typecheck and lint pass. Moving real-input acceptance remains open.
-
-Required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 105 passed, one platform skip, 27 files, 126.9 seconds under the 240-second budget.
-
-## Native moving capture matrix
-
-`tools/playtest/s137-screammove.ts` uses physical KeyD input, a restored L10 checkpoint and an ordinary screamer spawned in chase state (encounter setup, no stat edits). It records 4 fps for ten seconds and observes native noise events. All eight HIGH-then-LOW, WebGL2/WebGPU, zoom 1/1.5 after runs produced two screams and confirmed their actual backend. A HIGH/WebGL2/zoom 1 before run restores the batch-110 VFX constants and omits the bearing.
-
-Opened `sheet.jpg`: after rings remain conspicuous over consecutive moving frames; before is faint and shorter. This is partial evidence: zoom 1 sources sit near the upper edge. A clearly off-screen before/after sequence and full-size frame review remain required. JSON retains capture paths, tick, player movement, source projection and native events.
+The result is a visual judgment from bounded native-scream movement captures, not a general campaign difficulty or performance qualification. No deployment, push or main movement was performed.

@@ -1,5 +1,5 @@
 {
-  "status": "incomplete",
+  "status": "complete",
   "commit": "ef387646",
   "checks": {
     "typecheck": "pass",
@@ -11,7 +11,7 @@
       "manifestCases": 150
     },
     "remoteUnit": "pass: 105 passed, 1 platform skip, 27 files, 126.9 seconds",
-    "playtestCapture": "listeners operational; short L6 run insufficient",
+    "playtestCapture": "pass: physical KeyD movement, 4fps native scream capture matrix",
     "s124ScreamerGround": {
       "status": "pass",
       "backend": "WebGPU",
@@ -26,9 +26,9 @@
     }
   },
   "visualAcceptance": {
-    "beforeAfterFourFps": "not captured",
-    "onScreenMovingNoticeability": "unverified",
-    "offScreenDirectionCue": "unverified",
+    "beforeAfterFourFps": "HIGH WebGL2 zoom 1 before/after for first on-screen and second off-screen native screams; sheet opened",
+    "onScreenMovingNoticeability": "pass: rings persist into consecutive 250ms samples; inspected sheet",
+    "offScreenDirectionCue": "pass: second scream source x=-1.68 NDC; full-size frames 26/27 opened, bright left bearing visible",
     "qualityOrder": [
       "HIGH",
       "LOW"
@@ -41,7 +41,7 @@
       "WebGL2",
       "WebGPU"
     ],
-    "contactSheet": "sheet.jpg, opened and inspected"
+    "contactSheet": "sheet.jpg: both native screams for nine runs, opened"
   },
   "nativeCaptureRuns": [
     {
