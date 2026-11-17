@@ -33,7 +33,7 @@ The opened contact sheet contains HIGH L4 tick29933, HIGH L6 tick16246, HIGH L10
 
 QA build, typecheck and lint passed. Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` retry passed on46.225.66.90:27 files,105 passed,one skipped,183.9 seconds within240. First attempt exceeded240 seconds; no test trimming or timeout changes. No build, static or unit checks remain running. No gameplay process remains running.
 
-Driver gaps: HIGH L4 completion and deliberate side-street fights; final cellar-ring inspection; LOW L6 completion; per-survivor continuous loss positions/causes and reasonable-player escort evaluation; four farm encounter qualification; exact medkit accounting; universal visual-glitch coverage; L10 ending timeout. No source or playtest edits, stat tuning, corpse removal, protected-reference edits, push, deploy or main movement.
+Driver gaps: deliberate L4 side-street fights; final cellar-ring inspection; unassisted LOW L6 stair guidance; per-survivor continuous loss positions/causes and reasonable-player escort evaluation; four farm encounter qualification; exact medkit accounting; universal visual-glitch coverage; L10 ending timeout. No source or playtest edits, stat tuning, corpse removal, protected-reference edits, push, deploy or main movement.
 
 ## HIGH L4 standard-input follow-up
 
@@ -42,3 +42,9 @@ Driver gaps: HIGH L4 completion and deliberate side-street fights; final cellar-
 ## LOW L6 aligned retry
 
 `test-results/playtest/b116-low-l6-align/`: full completion in323 seconds, no skips. Completion panel receipt: **2/29 out**, 27 lost, 4 player deaths. One527ms physical KeyA+KeyS alignment was submitted near x244.04/z11.28 at observed tick15119 and consumed at15142. It is a recorded driver assist. Courier crossed to x255 and HUD2/2 out at16685, then completed. This closes LOW completion coverage but does not erase the first failed attempt or establish unassisted stair guidance. Capture `continue-L6-low-stair-physical-align.jpg` is retained in the raw capture directory.
+
+## Additional capture review
+
+Opened the full HIGH farm sequence as an uncommitted review mosaic and farmhouse tick5413 full size. Frames5413/8117 show farmhouse pursuit and corn lanes,10823/13530 corn and field threats,16250 sheds,18955/21671/24381 the container/depot approach. These support distinct visual spaces and route reach, not proof that every authored encounter was fought completely. Foreground farmhouse roof masks part of the ground while the courier remains visible at5413; no definite visual defect follows. Fairness remains provisional because sparse captures omit attacks between frames. The repeated long open travel is the clearest pacing concern; close threats and five HIGH farm deaths prevent classifying it as harmless.
+
+Interior L4 brace markers at the bar objective are recorded drawn and pinVisible=true in both completed tiers, anchor l4-brace, x74.6/z-1.8. This is interior marker evidence only; exterior cellar-door ring visibility remains unverified.
