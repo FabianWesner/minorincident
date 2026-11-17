@@ -15,6 +15,16 @@ export const objectiveRingRadius = .65;
  * around street closures instead of bearing straight through them.
  */
 export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?: Mission['world']; l4?: Mission['l4']; l8?: Mission['l8']; l9?: Mission['l9'] }) | null | undefined): Anchored | null {
+  // Northgate's narrow escalator starts at x249.4, z15. A direct bearing
+  // to the street from the south platform meets the stair's solid side.
+  // Use fixed landmarks to align west of the flight before asking for ascent.
+  if (mission?.def.id === 'L6' && mission.state.l6?.phase === 'exit') {
+    const p = mission.world?.entities.get(1)?.transform;
+    if (p && p.x < 249.4) {
+      if (Math.abs(p.z - 15) > .7) return { x: 244, z: 15, y: .6, radius: .65 };
+      return { x: 250, z: 15, y: 1.0125, radius: .65 };
+    }
+  }
   // The direct cellar bearing crosses the fallen camp and residential fences.
   // Guide the escape along its open streets, then show the actual door ring.
   if (mission?.def.id === 'L4' && mission.world && mission.state.steps.hide?.status === 'active') {
