@@ -1,5 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { runLevel } from '../sim-runner/levels';
+import type { GameEvent } from '../../src/sim/world/types';
+
+type CombatReceipt = Extract<GameEvent, { type: 'combat.hit' | 'combat.kill' }>;
 
 // Same bot routes, weapons and interactions as runLevel. Walking changes only
 // the ordinary walk input. Neither policy grants health or changes actors.
@@ -25,7 +28,8 @@ for (const level of ['L4', 'L6'] as const) for (const quality of ['low', 'high']
       });
       // Damage emits the death before the combat receipt. Join on that tick;
       // proximity alone is retained separately and never called an attacker.
-      for (const type of ['combat.hit', 'combat.kill'] as const) world.events.on(type, event => {
+      for (const type of ['combat.hit', 'combat.kill'] as const) world.events.on(type, raw => {
+        const event = raw as CombatReceipt;
         if (event.targetId !== 1) return;
         const death = deaths.find(d => d.tick === event.tick);
         if (death) death.attackers.push({ sourceId: event.sourceId, archetype: world.entities.get(event.sourceId)?.archetype,
