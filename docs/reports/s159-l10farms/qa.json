@@ -987,5 +987,28 @@
       "startX",
       "endX"
     ]
+  },
+  "highAdmissionRefinement": {
+    "reviewedVideoSeconds": [
+      [
+        59,
+        63
+      ],
+      [
+        99,
+        103
+      ],
+      [
+        136,
+        140
+      ],
+      [
+        235,
+        239
+      ]
+    ],
+    "framesPerSecond": 4,
+    "result": "No definite abrupt visible appearance identified in sampled windows",
+    "limitations": "small/occluded actors, one-second admission bounds, approximate alignment and pre-existing depot attackers prevent excluding in-view spawn"
   }
 }
