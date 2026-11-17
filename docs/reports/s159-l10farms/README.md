@@ -15,6 +15,10 @@ All HIGH corn, farmhouse and shed kill events were recoverable downs; nine of te
 
 The initial LOW shed count used all IDs seen over the run and included events before that group released. Time-local matching corrects it from 19 to 12 kill events and 31 to 17 telegraphs. Opened event-adjacent frames `s159-events-high/captures/campaign-L10-t7429.jpg` and `t18270.jpg`, and `s159-events-low/captures/campaign-L10-t6849.jpg` and `t16693.jpg` (all under `test-results/playtest/`). Red warning rings are visible in the first three; the LOW depot frame shows pursuit. The frames do not coincide with the referenced event ticks, so they show cues in these fights rather than proving the specific emitted cue was displayed or avoided.
 
+### Alpha cue windows
+
+In the fresh HIGH event trace, a mapped depot Alpha pounce telegraph at tick 18527 had duration 0.6 s. The player moved 15.0 m over the surrounding sampled three-second window, with no recorded player damage or death in that window. This demonstrates survival during that observed window, but the sampled positions do not prove which attack missed or that the cue was seen. LOW mapped Alpha charge telegraphs occurred at tick 16747 (0.8 s; 25.33 total player damage and one death in the next three seconds) and tick 18298 (0.8 s; 10 total damage, no death, 15.5 m sampled movement). Damage events lack an attacker ID, and the first window includes checkpoint displacement, so neither damage nor movement can be assigned to the charge. These observations support a mixed outcome rather than a universal fairness judgment.
+
 ## Actor disappearance audit
 
 `ChunkResidency.sleepOutside` serializes eligible actors outside resident chunks or over the cap, releases living infected and deletes their active entity lookup. `InfectedSystem.settle` instead replaces a dead infected with a persistent corpse under the same ID. Thus an absent lookup can reflect streaming; it cannot prove a kill or clear. The retained observer did not subscribe to target-specific `combat.kill` events, so the existing traces cannot resolve those outcomes retrospectively. This is a driver gap, not evidence that corpses were removed.

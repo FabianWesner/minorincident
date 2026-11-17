@@ -506,5 +506,34 @@
       "s159-events-low/captures/campaign-L10-t16693.jpg"
     ],
     "result": "Red warning rings visible in first three frames, but frames do not coincide with referenced event ticks; LOW depot frame shows pursuit without a visible ring."
+  },
+  "alphaCueWindows": {
+    "high": {
+      "tick": 18527,
+      "special": "alpha.pounce",
+      "durationSeconds": 0.6,
+      "sampledDisplacementM": 15,
+      "damageNext3Seconds": 0,
+      "deathsNext3Seconds": 0
+    },
+    "low": [
+      {
+        "tick": 16747,
+        "special": "alpha.charge",
+        "durationSeconds": 0.8,
+        "damageNext3Seconds": 25.33,
+        "deathsNext3Seconds": 1,
+        "note": "checkpoint displacement confounds movement"
+      },
+      {
+        "tick": 18298,
+        "special": "alpha.charge",
+        "durationSeconds": 0.8,
+        "sampledDisplacementM": 15.5,
+        "damageNext3Seconds": 10,
+        "deathsNext3Seconds": 0
+      }
+    ],
+    "limitation": "Damage has no attacker ID; sample windows do not prove cue visibility or specific attack outcome."
   }
 }
