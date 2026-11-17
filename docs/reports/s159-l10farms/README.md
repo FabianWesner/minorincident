@@ -1,5 +1,18 @@
 # S159 — L10 farm encounter qualification
 
+## Attributed real-input follow-up
+
+A temporary read-only browser-context observer attached at tick 0 in each fresh WebGPU session, with physical-input driver, zoom 1.5 and five-second capture cadence. Its one-second samples record encounter slot keys, actor positions/health, nearest living infected, damage and pickup events. Raw traces are `/tmp/s159-high-observer.jsonl` and `/tmp/s159-low-observer.jsonl`; captures are in `test-results/playtest/s159-observed-high/` and `s159-observed-low/`. These are sample bounds, not exact admission ticks. Checkpoint rewinds can reuse keys and actors.
+
+| Group | HIGH first release sample / distinct slot keys / closest sampled distance | LOW first release sample / distinct slot keys / closest sampled distance |
+| --- | --- | --- |
+| Corn horde | 3299 / 15 / 1.5 m | 3239 / 8 / 1.1 m |
+| Farmhouse | 5579 / 12 / 1.1 m | 5459 / 10 / 0.3 m |
+| Shed crossing | 8099 / 17 / 0.3 m | 28200 / 12 / 23.4 m |
+| Depot Alpha | 17399 / 10 / 1.4 m | Not released by tick 28620 |
+
+HIGH first observed corn admission at tick 4559, after release; other groups had admitted slots in the first release sample. HIGH recorded three deaths and one medkit at tick 19148 near (1516.32,-55.55). LOW recorded ten deaths and no medkit transaction; repeated machete pickups show checkpoint retries. LOW ended at (1039.36,-10.94), after the shed group released but before it reached the sampled player. This sample does not qualify LOW shed or depot. The per-second distance does not prove contact or visibility at spawn; clear times, encounter-specific damage, escape and threat-free travel still require analysis. No product severity is asserted from the death count alone because input policy and retry behavior are confounded.
+
 ## Validation and attribution follow-up
 
 The required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225.66.90: 27 files, 105 tests passed and one skipped, 170.5 s within the 240 s budget. Typecheck and lint passed in the initial attempt.

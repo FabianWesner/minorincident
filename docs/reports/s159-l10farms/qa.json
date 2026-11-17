@@ -106,5 +106,77 @@
     "Periodic observations and captures do not identify encounter membership or reliably capture peaks.",
     "No per-encounter damage, clear time, pickup ledger, or continuous threat-free intervals.",
     "No inspected four-panel peak sheet."
-  ]
+  ],
+  "observedFollowup": {
+    "method": "Temporary read-only browser-context observer; one-second samples; physical input; WebGPU zoom 1.5",
+    "high": {
+      "raw": "/tmp/s159-high-observer.jsonl",
+      "samples": 477,
+      "deaths": 3,
+      "groups": {
+        "corn-field-horde": {
+          "releaseTick": 3299,
+          "firstAdmissionSample": 4559,
+          "distinctSlotKeys": 15,
+          "minimumDistanceM": 1.5
+        },
+        "farmhouse-defense": {
+          "releaseTick": 5579,
+          "firstAdmissionSample": 5579,
+          "distinctSlotKeys": 12,
+          "minimumDistanceM": 1.1
+        },
+        "shed-field-crossing": {
+          "releaseTick": 8099,
+          "firstAdmissionSample": 8099,
+          "distinctSlotKeys": 17,
+          "minimumDistanceM": 0.3
+        },
+        "depot-alpha": {
+          "releaseTick": 17399,
+          "firstAdmissionSample": 17399,
+          "distinctSlotKeys": 10,
+          "minimumDistanceM": 1.4
+        }
+      },
+      "medkit": {
+        "tick": 19148,
+        "position": [
+          1516.32,
+          -55.55
+        ]
+      }
+    },
+    "low": {
+      "raw": "/tmp/s159-low-observer.jsonl",
+      "samples": 477,
+      "deaths": 10,
+      "groups": {
+        "corn-field-horde": {
+          "releaseTick": 3239,
+          "distinctSlotKeys": 8,
+          "minimumDistanceM": 1.1
+        },
+        "farmhouse-defense": {
+          "releaseTick": 5459,
+          "distinctSlotKeys": 10,
+          "minimumDistanceM": 0.3
+        },
+        "shed-field-crossing": {
+          "releaseTick": 28200,
+          "distinctSlotKeys": 12,
+          "minimumDistanceM": 23.4
+        },
+        "depot-alpha": {
+          "released": false
+        }
+      },
+      "medkitsObserved": 0
+    },
+    "limitations": [
+      "Samples are one second apart; earliest release and admission ticks are sample bounds.",
+      "Checkpoint rewinds can reuse slot keys and actor IDs; distinct keys are not independent kill counts.",
+      "Clear times, encounter-specific damage, visibility at admission and LOW depot remain open."
+    ]
+  }
 }
