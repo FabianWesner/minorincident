@@ -1,0 +1,862 @@
+{
+  "id": "s160-l4harbor",
+  "baseRevision": "9dced0693c73625a06eeb85547990f7a72de7d72",
+  "created": "2026-11-17",
+  "policy": {
+    "source": "tools/sim-runner/levels.ts native L4 route probe",
+    "marker": "markerAnchor(mission), the same dynamic position used by the HUD",
+    "combat": "Independent collapse controller: attacks nearby line-of-sight threats inside the native follow-camera frustum",
+    "escapeMovement": "Direct marker bearing, with alternating sideways movement after two seconds without observed progress; no navigation grid path search",
+    "seedSet": [
+      1,
+      2,
+      3
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "browserUsed": false
+  },
+  "acceptance": {
+    "targetEscapeDeathsPerRun": 5,
+    "results": [
+      {
+        "seed": 1,
+        "tier": "high",
+        "policy": "direct HUD marker, observed-stall recovery, camera-frustum LOS combat",
+        "escapeDeaths": 0,
+        "completed": true,
+        "outcome": "complete",
+        "totalDeaths": 8,
+        "simSeconds": 301.25,
+        "deathPositions": [
+          {
+            "tick": 4044,
+            "phase": "war",
+            "x": -23.278581619262695,
+            "z": 2.289206027984619,
+            "hp": 0
+          },
+          {
+            "tick": 5201,
+            "phase": "war",
+            "x": -20.947673797607422,
+            "z": 14.594776153564453,
+            "hp": 0
+          },
+          {
+            "tick": 6059,
+            "phase": "war",
+            "x": -19.205707550048828,
+            "z": -4.209338665008545,
+            "hp": 0
+          },
+          {
+            "tick": 7032,
+            "phase": "war",
+            "x": -21.539270401000977,
+            "z": 0.13138172030448914,
+            "hp": 0
+          },
+          {
+            "tick": 8095,
+            "phase": "war",
+            "x": -22.574113845825195,
+            "z": 0.05681374669075012,
+            "hp": 0
+          },
+          {
+            "tick": 9062,
+            "phase": "war",
+            "x": -20.242612838745117,
+            "z": -3.2081542015075684,
+            "hp": 0
+          },
+          {
+            "tick": 10554,
+            "phase": "war",
+            "x": -13.847757339477539,
+            "z": -15.218085289001465,
+            "hp": 0
+          },
+          {
+            "tick": 12008,
+            "phase": "war",
+            "x": -7.749521255493164,
+            "z": -9.566291809082031,
+            "hp": 0
+          }
+        ],
+        "harbor": {
+          "maxLivingWithin18m": 4,
+          "peakMix": {
+            "tick": 17247,
+            "x": -55.86566162109375,
+            "z": -38.75653839111328,
+            "count": 4,
+            "mix": {
+              "infected.butcher": 1,
+              "infected.hazmat": 1,
+              "infected.riot": 1,
+              "infected.runner": 1
+            },
+            "losCount": 1,
+            "losMix": {
+              "infected.butcher": 1
+            },
+            "marker": {
+              "x": -64,
+              "z": -39.5
+            },
+            "aheadLos": [],
+            "nearestLos": [
+              {
+                "id": 271,
+                "archetype": "infected.butcher",
+                "x": -41.875924468185694,
+                "z": -38.19727030579874,
+                "distance": 14.000911627415814,
+                "yaw": -3.232737581435042
+              }
+            ]
+          },
+          "archetypePeaks": {
+            "infected.crawler": 2,
+            "infected.butcher": 1,
+            "infected.hazmat": 1,
+            "infected.riot": 1,
+            "infected.runner": 1
+          }
+        }
+      },
+      {
+        "seed": 1,
+        "tier": "low",
+        "policy": "direct HUD marker, observed-stall recovery, camera-frustum LOS combat",
+        "escapeDeaths": 1,
+        "completed": true,
+        "outcome": "complete",
+        "totalDeaths": 7,
+        "simSeconds": 295.9166666666667,
+        "deathPositions": [
+          {
+            "tick": 5317,
+            "phase": "war",
+            "x": -20.158824920654297,
+            "z": 5.541829586029053,
+            "hp": 0
+          },
+          {
+            "tick": 7217,
+            "phase": "war",
+            "x": -20.479310989379883,
+            "z": -1.2700798511505127,
+            "hp": 0
+          },
+          {
+            "tick": 8554,
+            "phase": "war",
+            "x": -19.624469757080078,
+            "z": -2.6554861068725586,
+            "hp": 0
+          },
+          {
+            "tick": 9640,
+            "phase": "war",
+            "x": -22.279104232788086,
+            "z": 1.9804681539535522,
+            "hp": 0
+          },
+          {
+            "tick": 11419,
+            "phase": "war",
+            "x": -12.181349754333496,
+            "z": 16.619043350219727,
+            "hp": 0
+          },
+          {
+            "tick": 12384,
+            "phase": "war",
+            "x": -12.738840103149414,
+            "z": 15.172199249267578,
+            "hp": 0
+          },
+          {
+            "tick": 13435,
+            "phase": "collapse",
+            "x": -8.113306045532227,
+            "z": 14.154382705688477,
+            "hp": 0
+          }
+        ],
+        "harbor": {
+          "maxLivingWithin18m": 15,
+          "peakMix": {
+            "tick": 16291,
+            "x": -5.527642250061035,
+            "z": -37.34222412109375,
+            "count": 15,
+            "mix": {
+              "infected.riot": 4,
+              "infected.firefighter": 2,
+              "infected.butcher": 3,
+              "infected.armored": 2,
+              "infected.sprinter": 2,
+              "infected.alpha": 1,
+              "infected.crawler": 1
+            },
+            "losCount": 6,
+            "losMix": {
+              "infected.butcher": 2,
+              "infected.armored": 2,
+              "infected.alpha": 1,
+              "infected.sprinter": 1
+            },
+            "marker": {
+              "x": -12,
+              "z": -37.4
+            },
+            "aheadLos": [],
+            "nearestLos": [
+              {
+                "id": 275,
+                "archetype": "infected.alpha",
+                "x": 0.33799797695743694,
+                "z": -35.797696452097114,
+                "distance": 6.0655833184545,
+                "yaw": -3.150519268362457
+              },
+              {
+                "id": 188,
+                "archetype": "infected.armored",
+                "x": 1.213216871666675,
+                "z": -37.14322910664587,
+                "distance": 6.743795720123408,
+                "yaw": -3.150519268362457
+              },
+              {
+                "id": 212,
+                "archetype": "infected.armored",
+                "x": 4.63414934162209,
+                "z": -38.943825957123295,
+                "distance": 10.287231736185158,
+                "yaw": -3.150519268362457
+              },
+              {
+                "id": 181,
+                "archetype": "infected.butcher",
+                "x": 5.721207569943841,
+                "z": -37.815008337576614,
+                "distance": 11.258780892635714,
+                "yaw": -3.150519268362457
+              },
+              {
+                "id": 222,
+                "archetype": "infected.butcher",
+                "x": 5.760935026587647,
+                "z": -36.1489652076856,
+                "distance": 11.351468793301462,
+                "yaw": -3.150519268362457
+              },
+              {
+                "id": 335,
+                "archetype": "infected.sprinter",
+                "x": 7.789763600005448,
+                "z": -35.35162089761762,
+                "distance": 13.465355538146719,
+                "yaw": -3.150519268362457
+              }
+            ]
+          },
+          "archetypePeaks": {
+            "infected.sprinter": 3,
+            "infected.brute": 2,
+            "infected.butcher": 4,
+            "infected.armored": 2,
+            "infected.runner": 1,
+            "infected.crawler": 1,
+            "infected.alpha": 1,
+            "infected.riot": 4,
+            "infected.firefighter": 2
+          }
+        }
+      },
+      {
+        "seed": 2,
+        "tier": "high",
+        "policy": "direct HUD marker, observed-stall recovery, camera-frustum LOS combat",
+        "escapeDeaths": 1,
+        "completed": true,
+        "outcome": "complete",
+        "totalDeaths": 9,
+        "simSeconds": 292.3,
+        "deathPositions": [
+          {
+            "tick": 4673,
+            "phase": "war",
+            "x": -21.986671447753906,
+            "z": 1.9007751941680908,
+            "hp": 0
+          },
+          {
+            "tick": 5651,
+            "phase": "war",
+            "x": -16.182186126708984,
+            "z": 2.347912311553955,
+            "hp": 0
+          },
+          {
+            "tick": 6682,
+            "phase": "war",
+            "x": -19.283546447753906,
+            "z": -0.8500940203666687,
+            "hp": 0
+          },
+          {
+            "tick": 7683,
+            "phase": "war",
+            "x": -20.19831657409668,
+            "z": -0.15086571872234344,
+            "hp": 0
+          },
+          {
+            "tick": 8591,
+            "phase": "war",
+            "x": -20.833171844482422,
+            "z": -0.4288804531097412,
+            "hp": 0
+          },
+          {
+            "tick": 9510,
+            "phase": "war",
+            "x": -18.974853515625,
+            "z": -6.386530876159668,
+            "hp": 0
+          },
+          {
+            "tick": 11273,
+            "phase": "war",
+            "x": -9.807915687561035,
+            "z": 18.630521774291992,
+            "hp": 0
+          },
+          {
+            "tick": 12224,
+            "phase": "war",
+            "x": -12.230073519051075,
+            "z": 16.777224224992096,
+            "hp": 0
+          },
+          {
+            "tick": 13178,
+            "phase": "collapse",
+            "x": -3.55212140083313,
+            "z": 19.836597442626953,
+            "hp": 0
+          }
+        ],
+        "harbor": {
+          "maxLivingWithin18m": 0,
+          "peakMix": null,
+          "archetypePeaks": {}
+        }
+      },
+      {
+        "seed": 2,
+        "tier": "low",
+        "policy": "direct HUD marker, observed-stall recovery, camera-frustum LOS combat",
+        "escapeDeaths": 0,
+        "completed": true,
+        "outcome": "complete",
+        "totalDeaths": 5,
+        "simSeconds": 253.98333333333332,
+        "deathPositions": [
+          {
+            "tick": 4144,
+            "phase": "war",
+            "x": -21.1881160736084,
+            "z": 4.354835033416748,
+            "hp": 0
+          },
+          {
+            "tick": 5049,
+            "phase": "war",
+            "x": -20.196128845214844,
+            "z": 1.7154227495193481,
+            "hp": 0
+          },
+          {
+            "tick": 7310,
+            "phase": "war",
+            "x": -21.329010009765625,
+            "z": -1.4952713251113892,
+            "hp": 0
+          },
+          {
+            "tick": 8292,
+            "phase": "war",
+            "x": -15.927661895751953,
+            "z": -0.2241401970386505,
+            "hp": 0
+          },
+          {
+            "tick": 10342,
+            "phase": "war",
+            "x": -14.514329900033772,
+            "z": -13.258593635167927,
+            "hp": 0
+          }
+        ],
+        "harbor": {
+          "maxLivingWithin18m": 35,
+          "peakMix": {
+            "tick": 13477,
+            "x": -14.338446617126465,
+            "z": -16.685354232788086,
+            "count": 35,
+            "mix": {
+              "infected.hazmat": 4,
+              "infected.armored": 6,
+              "infected.sprinter": 6,
+              "infected.brute": 3,
+              "infected.riot": 4,
+              "infected.butcher": 4,
+              "infected.firefighter": 4,
+              "infected.runner": 2,
+              "infected.crawler": 2
+            },
+            "losCount": 15,
+            "losMix": {
+              "infected.sprinter": 4,
+              "infected.brute": 2,
+              "infected.riot": 2,
+              "infected.butcher": 1,
+              "infected.firefighter": 2,
+              "infected.armored": 2,
+              "infected.crawler": 1,
+              "infected.runner": 1
+            },
+            "marker": {
+              "x": -40.375,
+              "z": -18.875
+            },
+            "aheadLos": [
+              {
+                "id": 181,
+                "archetype": "infected.butcher",
+                "x": -16.527581498777177,
+                "z": -16.438153680736995,
+                "distance": 2.203047807696021
+              },
+              {
+                "id": 237,
+                "archetype": "infected.firefighter",
+                "x": -14.792642267387551,
+                "z": -13.411201527499838,
+                "distance": 3.3055059561680484
+              },
+              {
+                "id": 238,
+                "archetype": "infected.sprinter",
+                "x": -14.756927347997197,
+                "z": -12.73143047534745,
+                "distance": 3.976007947899951
+              },
+              {
+                "id": 180,
+                "archetype": "infected.riot",
+                "x": -15.12246804400692,
+                "z": -11.936402024850523,
+                "distance": 4.81323557194978
+              },
+              {
+                "id": 265,
+                "archetype": "infected.runner",
+                "x": -15.685483965407764,
+                "z": -11.198324771415454,
+                "distance": 5.649955922627711
+              },
+              {
+                "id": 177,
+                "archetype": "infected.brute",
+                "x": -15.327531067237494,
+                "z": -9.113902005986102,
+                "distance": 7.635782662713507
+              }
+            ],
+            "nearestLos": [
+              {
+                "id": 181,
+                "archetype": "infected.butcher",
+                "x": -16.527581498777177,
+                "z": -16.438153680736995,
+                "distance": 2.203047807696021,
+                "yaw": -3.032805327117987
+              },
+              {
+                "id": 237,
+                "archetype": "infected.firefighter",
+                "x": -14.792642267387551,
+                "z": -13.411201527499838,
+                "distance": 3.3055059561680484,
+                "yaw": -3.032805327117987
+              },
+              {
+                "id": 238,
+                "archetype": "infected.sprinter",
+                "x": -14.756927347997197,
+                "z": -12.73143047534745,
+                "distance": 3.976007947899951,
+                "yaw": -3.032805327117987
+              },
+              {
+                "id": 247,
+                "archetype": "infected.crawler",
+                "x": -13.656045387839843,
+                "z": -12.550891524616176,
+                "distance": 4.190400138769101,
+                "yaw": -3.032805327117987
+              },
+              {
+                "id": 199,
+                "archetype": "infected.riot",
+                "x": -14.318380887947464,
+                "z": -12.207821125928666,
+                "distance": 4.477578068164715,
+                "yaw": -3.032805327117987
+              },
+              {
+                "id": 180,
+                "archetype": "infected.riot",
+                "x": -15.12246804400692,
+                "z": -11.936402024850523,
+                "distance": 4.81323557194978,
+                "yaw": -3.032805327117987
+              },
+              {
+                "id": 188,
+                "archetype": "infected.firefighter",
+                "x": -13.658134066460113,
+                "z": -11.858272346905219,
+                "distance": 4.87478663118835,
+                "yaw": -3.032805327117987
+              },
+              {
+                "id": 266,
+                "archetype": "infected.sprinter",
+                "x": -14.435823192657963,
+                "z": -11.362071275176604,
+                "distance": 5.32417351748223,
+                "yaw": -3.032805327117987
+              }
+            ]
+          },
+          "archetypePeaks": {
+            "infected.hazmat": 4,
+            "infected.armored": 6,
+            "infected.sprinter": 6,
+            "infected.brute": 3,
+            "infected.riot": 4,
+            "infected.butcher": 4,
+            "infected.firefighter": 4,
+            "infected.runner": 2,
+            "infected.crawler": 3
+          }
+        }
+      },
+      {
+        "seed": 3,
+        "tier": "high",
+        "policy": "direct HUD marker, observed-stall recovery, camera-frustum LOS combat",
+        "escapeDeaths": 0,
+        "completed": true,
+        "outcome": "complete",
+        "totalDeaths": 9,
+        "simSeconds": 301.6166666666667,
+        "deathPositions": [
+          {
+            "tick": 4440,
+            "phase": "war",
+            "x": -21.145034790039062,
+            "z": 4.295520782470703,
+            "hp": 0
+          },
+          {
+            "tick": 5469,
+            "phase": "war",
+            "x": -19.591854095458984,
+            "z": 4.1857500076293945,
+            "hp": 0
+          },
+          {
+            "tick": 6433,
+            "phase": "war",
+            "x": -17.870094299316406,
+            "z": -2.4942269325256348,
+            "hp": 0
+          },
+          {
+            "tick": 7428,
+            "phase": "war",
+            "x": -26.693418502807617,
+            "z": -3.8092494010925293,
+            "hp": 0
+          },
+          {
+            "tick": 8372,
+            "phase": "war",
+            "x": -17.185258865356445,
+            "z": 0.8401709794998169,
+            "hp": 0
+          },
+          {
+            "tick": 9367,
+            "phase": "war",
+            "x": -19.145977020263672,
+            "z": -4.14568567276001,
+            "hp": 0
+          },
+          {
+            "tick": 10483,
+            "phase": "war",
+            "x": -7.726612659171224,
+            "z": -14.26270154863596,
+            "hp": 0
+          },
+          {
+            "tick": 11684,
+            "phase": "war",
+            "x": -7.430534839630127,
+            "z": -13.018317222595215,
+            "hp": 0
+          },
+          {
+            "tick": 13202,
+            "phase": "war",
+            "x": -7.764625305309892,
+            "z": 0.26686830818653107,
+            "hp": 0
+          }
+        ],
+        "harbor": {
+          "maxLivingWithin18m": 4,
+          "peakMix": {
+            "tick": 17282,
+            "x": -56.83980178833008,
+            "z": -38.845394134521484,
+            "count": 4,
+            "mix": {
+              "infected.hazmat": 1,
+              "infected.butcher": 2,
+              "infected.brute": 1
+            },
+            "losCount": 1,
+            "losMix": {
+              "infected.butcher": 1
+            },
+            "marker": {
+              "x": -64,
+              "z": -39.5
+            },
+            "aheadLos": [
+              {
+                "id": 486,
+                "archetype": "infected.butcher",
+                "x": -61.004084090388524,
+                "z": -24.330133597275672,
+                "distance": 15.100795858343451
+              }
+            ],
+            "nearestLos": [
+              {
+                "id": 486,
+                "archetype": "infected.butcher",
+                "x": -61.004084090388524,
+                "z": -24.330133597275672,
+                "distance": 15.100795858343451,
+                "yaw": 3.0504232063704517
+              }
+            ]
+          },
+          "archetypePeaks": {
+            "infected.butcher": 2,
+            "infected.hazmat": 1,
+            "infected.brute": 1
+          }
+        }
+      },
+      {
+        "seed": 3,
+        "tier": "low",
+        "policy": "direct HUD marker, observed-stall recovery, camera-frustum LOS combat",
+        "escapeDeaths": 0,
+        "completed": true,
+        "outcome": "complete",
+        "totalDeaths": 8,
+        "simSeconds": 296.3,
+        "deathPositions": [
+          {
+            "tick": 3002,
+            "phase": "war",
+            "x": -21.038591384887695,
+            "z": 2.6889822483062744,
+            "hp": 0
+          },
+          {
+            "tick": 4256,
+            "phase": "war",
+            "x": -22.34988152119331,
+            "z": 3.6888286471366882,
+            "hp": 0
+          },
+          {
+            "tick": 5421,
+            "phase": "war",
+            "x": -22.168272018432617,
+            "z": 4.114558219909668,
+            "hp": 0
+          },
+          {
+            "tick": 7381,
+            "phase": "war",
+            "x": -20.312252044677734,
+            "z": 1.5104012489318848,
+            "hp": 0
+          },
+          {
+            "tick": 8685,
+            "phase": "war",
+            "x": -21.07737159729004,
+            "z": 2.0556960105895996,
+            "hp": 0
+          },
+          {
+            "tick": 10242,
+            "phase": "war",
+            "x": -9.866626739501953,
+            "z": 20.36697006225586,
+            "hp": 0
+          },
+          {
+            "tick": 11951,
+            "phase": "war",
+            "x": -8.996406555175781,
+            "z": 18.265417098999023,
+            "hp": 0
+          },
+          {
+            "tick": 13137,
+            "phase": "war",
+            "x": -10.803988456726074,
+            "z": 16.768367767333984,
+            "hp": 0
+          }
+        ],
+        "harbor": {
+          "maxLivingWithin18m": 2,
+          "peakMix": {
+            "tick": 16935,
+            "x": -54.7485466003418,
+            "z": -38.65420150756836,
+            "count": 2,
+            "mix": {
+              "infected.riot": 1,
+              "infected.runner": 1
+            },
+            "losCount": 1,
+            "losMix": {
+              "infected.riot": 1
+            },
+            "marker": {
+              "x": -64,
+              "z": -39.5
+            },
+            "aheadLos": [],
+            "nearestLos": [
+              {
+                "id": 333,
+                "archetype": "infected.riot",
+                "x": -53.870787326369005,
+                "z": -26.22912900581694,
+                "distance": 12.456038215131828,
+                "yaw": 9.333608083707544
+              }
+            ]
+          },
+          "archetypePeaks": {
+            "infected.riot": 1,
+            "infected.runner": 1
+          }
+        }
+      }
+    ],
+    "passed": true,
+    "maximumObservedEscapeDeaths": 1
+  },
+  "invariants": {
+    "infectedStatsChanged": false,
+    "totalInfectedChanged": false,
+    "authoredEncounterCountsChanged": false,
+    "corpsesRemoved": false,
+    "legacyReceiptsModified": false
+  },
+  "checks": {
+    "typecheck": {
+      "passed": true,
+      "command": "npm run typecheck"
+    },
+    "lint": {
+      "passed": true,
+      "command": "npm run lint"
+    },
+    "l4Contact": {
+      "passed": true,
+      "seconds": 28.7,
+      "command": "npm test -- tests/engine/l4-contact.test.ts --maxWorkers=1"
+    },
+    "threatAudit": {
+      "passed": true,
+      "flags": 0,
+      "seconds": 361.5,
+      "scope": "L1\u2013L10, 4 workers",
+      "command": "npm run qa:threat -- --maxWorkers=4"
+    },
+    "remoteUnitSuite": {
+      "passed": true,
+      "casesExpected": 150,
+      "casesTrimmed": false,
+      "testsPassed": 105,
+      "testsSkipped": 1,
+      "filesPassed": 27,
+      "seconds": 173.9,
+      "budgetSeconds": 240,
+      "runner": "46.225.66.90",
+      "command": "sh tools/remote/run.sh \"$PWD\" -- npm test"
+    }
+  },
+  "preservedReceipts": [
+    "docs/reports/s151-l4high/README.md",
+    "docs/reports/s154-lowexits/README.md"
+  ],
+  "browserQaNeeded": [
+    {
+      "tick": 29933,
+      "position": {
+        "x": 5.1,
+        "z": -34.9
+      },
+      "tier": "HIGH and LOW",
+      "check": "Compare actual camera-visible Harbor crowd and heavy mix, marker/warning clarity, and escape deaths against the native policy."
+    },
+    {
+      "tick": 20963,
+      "position": {
+        "x": 5.1,
+        "z": -34.9
+      },
+      "tier": "HIGH and LOW",
+      "check": "Review the reported 17 m marker gap and whether the next turn is readable from the player view."
+    }
+  ]
+}
