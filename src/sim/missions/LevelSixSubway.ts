@@ -291,6 +291,15 @@ export class LevelSixSubway {
   /** Guide the retreat with fixed gates/platform destinations; only the objective wording reacts to separation. */
   private guide(p:Point):void {
     const s=this.s,m=this.mission,anchors=m.def.anchors,f=l6.follow;
+    // Select fixed Northgate landmarks before bearing toward the street.
+    // The escalator floor begins at x249.4 and spans z14.325..15.675;
+    // approaching from the south otherwise meets its solid side.
+    if(s.phase==='exit'&&p.x<249.4){
+      const aligned=Math.abs(p.z-15)<=.7;
+      m.def.anchors['l6-stair']={x:aligned?250:244,z:15,y:aligned?1.0125:.6,radius:.65};
+      m.state.marker='l6-stair';
+      return;
+    }
     const walkers=this.living().filter(r=>r.status==='following').map(r=>({r,e:this.w.entities.get(r.id)!})).filter(({e})=>!e.hidden);
     if(!walkers.length){s.strayFlipAt=0;if(s.strayed){s.strayed=false;m.state.marker=s.phase==='exit'?'night-exit':'exit-platform';}return;}
     const near=Math.min(...walkers.map(({e})=>distance(e.transform,p)));

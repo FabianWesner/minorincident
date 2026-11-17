@@ -51,3 +51,9 @@ Source inspection confirms substantial driver differences: `prioritizeAllyThreat
 ## Candidate stair guidance fix
 
 The physical layout establishes the narrow escalator floor at x249.4–255.4, z14.325–15.675. Both fresh stall traces approach south of this lane. `markerAnchor` now shows the fixed west-platform alignment (244,15) for an unaligned exit approach, then the first stair waypoint (250,15), before restoring the street ring. No simulation movement or physical geometry changes. A focused marker-selection probe and typecheck/lint pass. Browser HIGH then LOW acceptance, the native matrix, and the full required checks on this candidate remain outstanding; this is not yet a verified fix.
+
+## Marker consumer correction
+
+The render-only candidate's fresh HIGH run capped at 480s near (249.4,11.2), HUD 4/4 out, courier not across. Inspection found the standard driver reads `def.anchors[state.marker]` instead of the rendered `markerAnchor` destination. This is an additional Driver gap. The waypoint selection is now moved into `LevelSixSubway.guide`, assigning `l6-stair` to the same fixed alignment/first-tread landmarks, so mission state and rendered guidance agree. Typecheck and lint pass after this correction. Full browser and regression verification on this revised implementation remains pending.
+
+The preceding render-only candidate reproduced the full 12-run s157 native matrix exactly. Its full threat audit passed at 346.3s with zero flags, and the prescribed remote unit suite passed at 182.6s. These receipts precede the mission-state correction and do not qualify that correction as accepted.
