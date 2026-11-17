@@ -36,6 +36,10 @@ The initial LOW shed count used all IDs seen over the run and included events be
 
 In the fresh HIGH event trace, a mapped depot Alpha pounce telegraph at tick 18527 had duration 0.6 s. The player moved 15.0 m over the surrounding sampled three-second window, with no recorded player damage or death in that window. This demonstrates survival during that observed window, but the sampled positions do not prove which attack missed or that the cue was seen. LOW mapped Alpha charge telegraphs occurred at tick 16747 (0.8 s; 25.33 total player damage and one death in the next three seconds) and tick 18298 (0.8 s; 10 total damage, no death, 15.5 m sampled movement). Damage events lack an attacker ID, and the first window includes checkpoint displacement, so neither damage nor movement can be assigned to the charge. These observations support a mixed outcome rather than a universal fairness judgment.
 
+## First-frame visibility observer
+
+Fresh HIGH then LOW WebGPU physical-input runs recorded the first two `requestAnimationFrame` observations after each slot key appeared in the encounter ledger, using `crowdFigures().drawn`, `input.visible` and screen projection. All authored keys were observed: HIGH corn/farmhouse/shed/depot 15/12/17/10, LOW 8/10/12/8. Across both observed frames for every key, zero projected inside the 1280×720 viewport and zero were reported drawn. Some visibility rays returned true despite offscreen projection, so ray visibility alone is not a screen-visibility result. Raw traces: `/tmp/s159-visibility-high.jsonl` and `/tmp/s159-visibility-low.jsonl`; captures: `test-results/playtest/s159-visibility-high/` and `s159-visibility-low/`. This is evidence that first observed admissions were offscreen in these runs, subject to render/update ordering: the first observer frame may not coincide exactly with the first presented render. It does not prove all later deferred admissions or all seeds are free of pop-in beyond the recorded keys.
+
 ## Admission-triggered capture follow-up
 
 Fresh HIGH then LOW real-input WebGPU runs used a temporary read-only observer to request one screenshot on the first observed slot for each group. Opened all eight captures in an uncommitted review grid. HIGH trigger ticks and paths under `test-results/playtest/s159-admission-high/shots/`: corn `corn-field-horde-4630.jpg`, farmhouse `farmhouse-defense-5620.jpg`, shed `shed-field-crossing-7820.jpg`, depot `depot-alpha-13940.jpg`. LOW under `s159-admission-low/shots/`: corn `corn-field-horde-3220.jpg`, farmhouse `farmhouse-defense-5510.jpg`, shed `shed-field-crossing-14070.jpg`, depot `depot-alpha-19970.jpg`. HIGH farmhouse already shows a crowd at the left edge; other frames mostly show open space near the courier or prior threats. The trigger logs the request tick, while Playwright takes the screenshot asynchronously; neither the actual rendered tick nor the identity of visible actors is recorded. These frames improve local context but cannot prove exact spawn visibility or a pop-in defect.
@@ -158,3 +162,7 @@ The first sandboxed launch failed before gameplay: the default shared build cach
 - Stationary samples need continuous context to determine whether an actor is stuck.
 
 The report, JSON and inspected sheet are committed. Acceptance remains incomplete; no source or playtest tool was edited.
+
+## Time-box closeout
+
+The requested approximately 2.5-hour report-only window is exhausted. The committed report, JSON and inspected sheet retain the HIGH and LOW evidence and open driver gaps. Exact permanent clears, per-group damage attribution, and complete fairness across all four fights remain unproven; this report does not claim acceptance. No source or playtest tool was changed.

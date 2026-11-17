@@ -1,7 +1,7 @@
 {
   "job": "s159-l10farms",
   "candidate": "9dced069",
-  "status": "incomplete-real-input",
+  "status": "incomplete-time-box",
   "mode": "real-input",
   "requiredOrder": [
     "high",
@@ -1051,5 +1051,37 @@
     "paths": "test-results/playtest/s159-admission-{high,low}/shots/<group>-<tick>.jpg",
     "review": "all eight opened in contact grid; HIGH farmhouse shows crowd at left; other views mostly open or prior threats",
     "limitation": "tick is screenshot request, not rendered frame; visible actor identities are not recorded"
+  },
+  "firstFrameVisibility": {
+    "method": "first two requestAnimationFrame samples following each slot key, QA crowdFigures drawn and input.project; viewport 1280x720",
+    "high": {
+      "keys": {
+        "corn-field-horde": 15,
+        "farmhouse-defense": 12,
+        "shed-field-crossing": 17,
+        "depot-alpha": 10
+      },
+      "records": 108,
+      "onscreenProjection": 0,
+      "drawn": 0,
+      "visibleRayTrue": 14
+    },
+    "low": {
+      "keys": {
+        "corn-field-horde": 8,
+        "farmhouse-defense": 10,
+        "shed-field-crossing": 12,
+        "depot-alpha": 8
+      },
+      "records": 76,
+      "onscreenProjection": 0,
+      "drawn": 0,
+      "visibleRayTrue": 22
+    },
+    "raw": [
+      "/tmp/s159-visibility-high.jsonl",
+      "/tmp/s159-visibility-low.jsonl"
+    ],
+    "limitations": "render/update ordering may differ from first presented frame; ray visibility does not mean on-screen; sample-specific"
   }
 }
