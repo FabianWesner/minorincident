@@ -1,5 +1,11 @@
 # S159 — L10 farm encounter qualification
 
+## Validation and attribution follow-up
+
+The required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225.66.90: 27 files, 105 tests passed and one skipped, 170.5 s within the 240 s budget. Typecheck and lint passed in the initial attempt.
+
+Source inspection shows each group is released within 120 m on the X axis and individual admitted actors are recorded in `l10Encounters.state.spawned`; cap, placement, residency and safety can defer individual slots. The existing session logs do not retain those group-to-actor mappings, so source census and proximity cannot establish the observed fights. A subsequent real-input observer must record these mappings and checkpoint rewinds while sampling threat distance and captures.
+
 ## Inspected sample sheet
 
 [HIGH sample sheet](sample-sheet.jpg) was opened. Tick 8123 shows a crowd and red attack rings in the corn; tick 5421 shows sparse action partly obscured by a roof; tick 10828 shows sparse action in an open clearing; tick 18944 shows pursuit near containers. These periodic captures are not identified encounter peaks and do not establish cohort membership or fairness. At the nearest logged observations, player positions were approximately (904,-5), (877,-2), (1078,-16), and (1479,-41), respectively. The requested four encounter peak frames remain open.
