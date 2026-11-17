@@ -6129,5 +6129,134 @@
       ],
       "scope": "480-second follow-up; original LOW campaign count remains unqualified"
     }
-  ]
+  ],
+  "exteriorCellarFollowup": {
+    "rawPath": "test-results/playtest/b116-high-l4-cellar",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 482,
+        "simSeconds": 479,
+        "maxNoProgressSeconds": 5.9,
+        "deaths": 24,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1608
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 10\u00a0m",
+            "tick": 1830,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2092,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 4\u00a0m",
+            "tick": 13498,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -4.13,
+                0.05,
+                31.88
+              ],
+              "playerY": 0.7050990462303162,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "capturesReviewed": [
+      "cellar-t17189.jpg"
+    ],
+    "positions": [
+      {
+        "tick": 17129,
+        "player": {
+          "x": -51.44514083862305,
+          "y": 0.7100301384925842,
+          "z": -23.909006118774414,
+          "yaw": 3.141592653589793
+        }
+      },
+      {
+        "tick": 17189,
+        "player": {
+          "x": -51.44513702392578,
+          "y": 0.7050849199295044,
+          "z": -23.903759002685547,
+          "yaw": 3.141592653589793
+        }
+      }
+    ],
+    "conclusion": "courier dead near x-51.4/z-23.9; final exterior ring not qualified"
+  }
 }

@@ -70,3 +70,7 @@ Neither HIGH nor LOW retained L10 logs contain pickup/heal ledger keys. The game
 ## Validated LOW pickup follow-up
 
 `test-results/playtest/b116-low-l10-pickups-validated/`: validated L10 attachment and weapon pickup events;480-second mortal follow-up recorded **1 medkit transactions** and3 deaths. Repeated machete pickups near x936 reflect checkpoint retries. This is a sample-specific count, not retrospective accounting for the original LOW run that passed depot. Observer files stay raw/ignored; compact events are in JSON.
+
+## Exterior-cellar capture follow-up
+
+`test-results/playtest/b116-high-l4-cellar/`:480-second HIGH WebGPU real-input observation sample with temporary read-only capture trigger. Opened `captures/cellar-t17189.jpg` full size: courier dead near(-51.45,-23.90) among close attackers,11m HUD distance. This is approach-pressure evidence, not final cellar-ring visibility. The gap remains explicitly open. All follow-up processes closed; browser pool released.
