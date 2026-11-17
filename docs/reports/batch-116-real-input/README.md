@@ -11,7 +11,7 @@ Candidate `ea21b122b4e31f6fe866ba6ebe47ab6cb814e01b`. Report only. HIGH ran befo
 | L6 HIGH | Full level completed293 seconds, four player deaths, no skips. Completion receipt:10 survivors out /29 at start,19 lost. Final trace:17 turned, two dead, ten out. |
 | L6 LOW |480-second cap at exit, x249.3/z11.7,14 player deaths, no skips. HUD0/3 out,24m; final roster25 turned, one dead, three following. No completion panel; starting cohort29, actual escaped0. |
 | L10 HIGH | Three production Resume segments, first two480 seconds each. Full objective sequence reaches actual Credits, opened at segment3 tick27061. Driver later times out on ending condition and reports finished=false; visual credits proof is retained. |
-| L10 LOW | Cleared farms/depot in first481-second segment. Production Resume segment2 reaches restricted-zone at x2206.9, tick1291. Extra continuation remains active pending bounded yield. |
+| L10 LOW | Cleared farms/depot in first481-second segment. Production Resume segment2 reaches restricted-zone at x2206.9, tick1291. Extra continuation saved after480 seconds; the process closed at its configured16-minute bound. |
 
 Raw paths: `test-results/playtest/b116-{high-l4-live,low-l4,high-l6,low-l6,high-l10,low-l10}/`. Each includes captures and JSONL logs. Only this report, compact JSON and one inspected contact sheet are intended for git.
 
@@ -31,6 +31,6 @@ The opened contact sheet contains HIGH L4 tick29933, HIGH L6 tick16246, HIGH L10
 
 ## Validation and Driver gaps
 
-QA build, typecheck and lint passed. Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` retry passed on46.225.66.90:27 files,105 passed,one skipped,183.9 seconds within240. First attempt exceeded240 seconds; no test trimming or timeout changes. No build, static or unit checks remain running. LOW L10 extra continuation remains active pending bounded yield.
+QA build, typecheck and lint passed. Required unchanged remote `sh tools/remote/run.sh "$PWD" -- npm test` retry passed on46.225.66.90:27 files,105 passed,one skipped,183.9 seconds within240. First attempt exceeded240 seconds; no test trimming or timeout changes. No build, static or unit checks remain running. No gameplay process remains running.
 
 Driver gaps: HIGH L4 completion and deliberate side-street fights; final cellar-ring inspection; LOW L6 completion; per-survivor continuous loss positions/causes and reasonable-player escort evaluation; four farm encounter qualification; exact medkit accounting; universal visual-glitch coverage; L10 ending timeout. No source or playtest edits, stat tuning, corpse removal, protected-reference edits, push, deploy or main movement.

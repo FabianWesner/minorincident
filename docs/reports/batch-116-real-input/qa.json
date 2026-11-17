@@ -3681,7 +3681,305 @@
             }
           ]
         }
-      ]
+      ],
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L10"
+        ],
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 481,
+            "simSeconds": 478,
+            "maxNoProgressSeconds": 29.766666666666666,
+            "deaths": 2,
+            "assists": 0,
+            "attacks": {
+              "weapon.fire-axe": 33,
+              "weapon.hunting-rifle": 205
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.flashbang"
+            ],
+            "steps": [
+              {
+                "id": "crash",
+                "text": "Get away from the river \u00b7 101\u00a0m",
+                "tick": 0,
+                "marker": {
+                  "anchor": "river-exit",
+                  "ring": {
+                    "x": 647,
+                    "y": 0,
+                    "z": -12.5
+                  },
+                  "drawn": [
+                    647,
+                    0,
+                    -12.5
+                  ],
+                  "playerY": 0.705,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "farmstead",
+                "text": "Find a way through the farms \u00b7 64\u00a0m",
+                "tick": 2129,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    698,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "restricted-zone",
+                "text": "Get through the restricted zone \u00b7 104\u00a0m",
+                "tick": 22951,
+                "marker": {
+                  "anchor": "r4-r5-seam",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    1960,
+                    0,
+                    16
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 478,
+            "maxNoProgressSeconds": 52.13333333333333,
+            "deaths": 1,
+            "assists": 0,
+            "attacks": {
+              "weapon.hunting-rifle": 109,
+              "weapon.rocket-launcher": 78,
+              "weapon.army-mg": 131
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.flashbang"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fists",
+              "weapon.kick",
+              "weapon.bat",
+              "weapon.machete",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.flashbang",
+              "weapon.molotov",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb",
+              "weapon.shotgun",
+              "ability.corgi-lure",
+              "weapon.nail-gun",
+              "weapon.assault-rifle",
+              "weapon.flamethrower"
+            ],
+            "steps": [
+              {
+                "id": "restricted-zone",
+                "text": "Get through the restricted zone \u00b7 197\u00a0m",
+                "tick": 0,
+                "marker": {
+                  "anchor": "r4-r5-seam",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    1960,
+                    0,
+                    16
+                  ],
+                  "playerY": 0.7089999914169312,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-hangar",
+                "text": "Enter the hangar \u00b7 250\u00a0m",
+                "tick": 7923,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2707,
+                    "y": 0,
+                    "z": 59
+                  },
+                  "drawn": [
+                    2707,
+                    0,
+                    59
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research",
+                "text": "Enter the hangar \u00b7 11\u00a0m",
+                "tick": 12293,
+                "marker": {
+                  "anchor": "cure-terminal",
+                  "ring": {
+                    "x": 2699,
+                    "y": 0,
+                    "z": 66
+                  },
+                  "drawn": [
+                    2699,
+                    0,
+                    66
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "cure",
+                "text": "Bring the cure to the dispersal complex \u00b7 6\u00a0m",
+                "tick": 15650,
+                "marker": {
+                  "anchor": "cure-canister",
+                  "ring": {
+                    "x": 2705,
+                    "y": 0,
+                    "z": 66
+                  },
+                  "drawn": [
+                    2705,
+                    0,
+                    66
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-exit",
+                "text": "Bring the cure to the dispersal complex \u00b7 105\u00a0m",
+                "tick": 15755,
+                "marker": {
+                  "anchor": "cure-research",
+                  "ring": {
+                    "x": 2807,
+                    "y": 0,
+                    "z": 45
+                  },
+                  "drawn": [
+                    2807,
+                    0,
+                    45
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "delivery-corridor",
+                "text": "Bring the cure to the dispersal complex \u00b7 141\u00a0m",
+                "tick": 17692,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex \u00b7 760\u00a0m",
+                "tick": 20191,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 6,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 6,
+          "P3": 0
+        }
+      },
+      "closed": true
     }
   ],
   "validation": {
