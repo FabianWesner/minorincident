@@ -1,5 +1,9 @@
 # S159 — L10 farm encounter qualification
 
+## Actor disappearance audit
+
+`ChunkResidency.sleepOutside` serializes eligible actors outside resident chunks or over the cap, releases living infected and deletes their active entity lookup. `InfectedSystem.settle` instead replaces a dead infected with a persistent corpse under the same ID. Thus an absent lookup can reflect streaming; it cannot prove a kill or clear. The retained observer did not subscribe to target-specific `combat.kill` events, so the existing traces cannot resolve those outcomes retrospectively. This is a driver gap, not evidence that corpses were removed.
+
 ## Admission and movement review
 
 Opened an uncommitted four-frame admission review: HIGH `campaign-L10-t4656.jpg` (corn; first admission sample 4559), `t5584.jpg` (farmhouse; 5579), `t8063.jpg` (shed; 8099), and `t17366.jpg` (depot; 17399), all under `test-results/playtest/s159-observed-high/captures/`. These are up to 97 ticks away from sampled admission and cannot establish whether any actor spawned in view. The farmhouse and shed frames show crop edges and an open approach; the depot frame shows a road and industrial props. The fight sheet shows different settings and crowd shapes; role-specific telegraphs, escape routes and fairness remain incompletely observed.

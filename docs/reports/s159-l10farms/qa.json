@@ -363,7 +363,8 @@
     ],
     "entityLookupAudit": {
       "result": "At each first no-living sample every mapped actor lookup lacks hp and position; none has observed zero HP in that sample. This is disappearance from the entity store, not proof of death or clear.",
-      "idChangesObserved": 0
+      "idChangesObserved": 0,
+      "mechanism": "ChunkResidency.sleepOutside can serialize and remove living actors from active entities; InfectedSystem.settle replaces dead actors with same-ID corpses. Retained observer did not capture target-specific combat.kill."
     }
   },
   "admissionReview": {
