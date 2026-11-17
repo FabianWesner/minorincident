@@ -1,5 +1,18 @@
 # S159 — L10 farm encounter qualification
 
+## Sampled encounter windows
+
+These windows run from the first release sample to the first sample with no living recorded group members. Their elapsed time is an observed upper bound on presence, not a confirmed player clear: actors can disappear, IDs can be reused, and checkpoint restores can alter the ledger. Damage is the sum of all `player.damaged` events during the window; the event has no attacker ID and overlapping windows double-count damage and deaths.
+
+| Group | HIGH elapsed / all damage / deaths | LOW elapsed / all damage / deaths |
+| --- | --- | --- |
+| Corn | 186 s / 477.9 / 3 | 78 s / 50 / 0 |
+| Farmhouse | 148 s / 437.9 / 3 | 69 s / 80 / 0 |
+| Shed | 155 s / 387.9 / 3 | 77 s / 100 / 0 |
+| Depot | 100 s / 145 / 0 | 117 s / 240 / 1 |
+
+LOW medkit transactions occurred at tick 3522 near (731.47,28.32) and tick 18703 near (1516.47,-55.70). HIGH collected the service medkit at tick 19148. HIGH death samples were ticks 9059, 10379 and 11459 near x1066–1095; LOW's first was tick 16020 near x1474. Exact killing-blow attribution remains open. First sampled spawn positions form rings around each lane-shifted station; for example HIGH corn begins near (843,17), (817,29), (832,-3), while LOW depot begins near (1585,-60), (1575,-55), (1581,-69). These coordinates do not establish whether the actors appeared on screen.
+
 ## LOW retained-profile follow-up
 
 A second LOW physical-input run retained its profile and resumed after a 480-second reservation. The first segment passed the farms with three deaths. The temporary observer recorded all four groups: corn release sample tick 3240, 8 slot keys, closest 1.1 m; farmhouse tick 5340, 10 keys, 1.1 m; shed tick 7980, 12 keys, 1.2 m; depot tick 14400, 8 keys, 1.0 m. Release positions and raw samples are in `/tmp/s159-low-resume-observer.jsonl`; captures are in `test-results/playtest/s159-observed-low-resume/`. Last samples with living members were ticks 7860, 9420, 12540 and 21360 respectively; these are not proven clear times because checkpoint restores and actor reuse need examination. The prior LOW sample remains evidence of a ten-death retry loop. Per-encounter damage, peak capture inspection, fairness and threat-free travel remain open.

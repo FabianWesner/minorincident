@@ -254,5 +254,91 @@
       }
     },
     "quietIntervalsOver45Seconds": "none observed in one-second samples in either run; gaps and transient threats limit precision"
+  },
+  "windowAnalysis": {
+    "definition": "release sample to first sample with no living recorded group actors; not a confirmed player clear; damage events overlap and have no attacker ID",
+    "high": {
+      "corn-field-horde": [
+        3299,
+        14459,
+        186,
+        477.9,
+        3
+      ],
+      "farmhouse-defense": [
+        5579,
+        14459,
+        148,
+        437.9,
+        3
+      ],
+      "shed-field-crossing": [
+        8099,
+        17399,
+        155,
+        387.9,
+        3
+      ],
+      "depot-alpha": [
+        17399,
+        23399,
+        100,
+        145,
+        0
+      ]
+    },
+    "low": {
+      "corn-field-horde": [
+        3240,
+        7920,
+        78,
+        50,
+        0
+      ],
+      "farmhouse-defense": [
+        5340,
+        9480,
+        69,
+        80,
+        0
+      ],
+      "shed-field-crossing": [
+        7980,
+        12600,
+        77,
+        100,
+        0
+      ],
+      "depot-alpha": [
+        14400,
+        21420,
+        117,
+        240,
+        1
+      ]
+    },
+    "columns": [
+      "startTick",
+      "firstNoLivingSampleTick",
+      "elapsedSeconds",
+      "allPlayerDamageDuringWindow",
+      "deathsDuringWindow"
+    ],
+    "lowMedkits": [
+      {
+        "tick": 3522,
+        "position": [
+          731.47,
+          28.32
+        ]
+      },
+      {
+        "tick": 18703,
+        "position": [
+          1516.47,
+          -55.7
+        ]
+      }
+    ]
   }
 }
