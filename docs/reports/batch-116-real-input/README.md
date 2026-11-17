@@ -62,3 +62,7 @@ Deliverable audit: committed report, JSON below200KB and one82.9KB inspected she
 ## Medkit evidence audit
 
 Neither HIGH nor LOW retained L10 logs contain pickup/heal ledger keys. The game emits pickup.collected, but the existing acceptance ledger filters pickup recording to the L4 army machine gun; it cannot recover L10 medicine use retrospectively. The HIGH campaign snapshot file is absent after the ending timeout. Exact medkit accounting therefore requires a new observation run, not health-delta inference. No tool was edited to fill this gap.
+
+## Validated HIGH pickup follow-up
+
+`test-results/playtest/b116-high-l10-pickups-validated/`: temporary read-only observer in /tmp, unchanged physical-input session; explicit L10 attachment receipt at tick0 and rifle/machete events validate event delivery. In480 seconds it recorded **1 medkit collection transaction(s)**, including tick18068 near(1516.56,-55.76),HP100 after collection. This count belongs to this follow-up, not the original full campaign. Raw event ledger is preserved and compact events are in JSON. No repository source/tool edited.
