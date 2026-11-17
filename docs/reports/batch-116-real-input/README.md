@@ -25,7 +25,7 @@ Raw paths: `test-results/playtest/b116-{high-l4-live,low-l4,high-l6,low-l6,high-
 
 ## Pacing, fairness and visual review
 
-L4 is dangerous rather than harmless in the inspected crowd frame; repeated deaths dominate this sample. L6 requires escort protection and loses most of its cohort; it cannot be described as harmless babysitting. L10 contains long repeated travel and pursuit between landmarks. The inspected late-farm frames show sheds, corn edges, containers and nearby enemies. These sparse frames do not independently qualify farmhouse defence, corn horde, shed crossing and depot Alpha ambush as four distinct fair fights. Full farm encounter identity/fairness remains a Driver gap. Regional deaths grouped by latest HUD are in JSON; they are objective-based event counts, not exact geographical killing-blow locations. Exact medkit use remains unqualified.
+L4 is dangerous rather than harmless in the inspected crowd frame; repeated deaths dominate this sample. L6 requires escort protection and loses most of its cohort; it cannot be described as harmless babysitting. L10 contains long repeated travel and pursuit between landmarks. The inspected late-farm frames show sheds, corn edges, containers and nearby enemies. These sparse frames do not independently qualify farmhouse defence, corn horde, shed crossing and depot Alpha ambush as four distinct fair fights. Full farm encounter identity/fairness remains a Driver gap. Regional deaths grouped by latest HUD are in JSON; they are objective-based event counts, not exact geographical killing-blow locations. Original campaign medkit use remains unqualified; validated follow-ups below each record one collection.
 
 The opened contact sheet contains HIGH L4 tick29933, HIGH L6 tick16246, HIGH L10 ticks16250/24381. No confirmed visual glitch is identified from these frames; this does not establish absence of glitches across every traversal. Actual Credits frame was separately opened. Side-street L4 Alpha/heavy detours were not deliberately fought, and the final cellar-ring close-up was not independently reviewed: both are open coverage.
 
@@ -74,3 +74,7 @@ Neither HIGH nor LOW retained L10 logs contain pickup/heal ledger keys. The game
 ## Exterior-cellar capture follow-up
 
 `test-results/playtest/b116-high-l4-cellar/`:480-second HIGH WebGPU real-input observation sample with temporary read-only capture trigger. Opened `captures/cellar-t17189.jpg` full size: courier dead near(-51.45,-23.90) among close attackers,11m HUD distance. This is approach-pressure evidence, not final cellar-ring visibility. The gap remains explicitly open. All follow-up processes closed; browser pool released.
+
+## Report-only job closeout
+
+Closed near the2.5-hour QA time box after repeated bounded real-input attempts and evidence review. The requested report artifacts are committed and the worktree is clean. Static checks and unchanged remote-suite retry passed. No browser, preview server or check remains running. This closes the report-only job with incomplete acceptance explicitly recorded: deliberate side-street fights, final exterior ring visibility and complete farm encounter fairness are not proven. Further qualification needs a separately budgeted follow-up; this report does not approve the batch.
