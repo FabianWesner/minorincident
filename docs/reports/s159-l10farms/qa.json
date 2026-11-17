@@ -764,5 +764,17 @@
     "alphaChargeEventTick": 14856,
     "windupSeconds": 0.8,
     "limitations": "video and simulation clocks not precisely synchronized; killing blow and escape not established"
+  },
+  "continuousLowReview": {
+    "video": "/tmp/s159-continuous-low-0.webm",
+    "trace": "/tmp/s159-continuous-low.jsonl",
+    "reviewedVideoSeconds": [
+      308,
+      319
+    ],
+    "method": "one frame per second",
+    "observation": "large infected pursues courier near containers; red linear ground warning appears and player continues moving in sampled frames",
+    "alphaChargeEventTick": 18596,
+    "limitations": "approximate clock alignment; one-second sampling can miss 0.8-second cue; specific attack avoidance unproven"
   }
 }
