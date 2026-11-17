@@ -38,3 +38,7 @@ Driver gaps: HIGH L4 completion and deliberate side-street fights; final cellar-
 ## HIGH L4 standard-input follow-up
 
 `test-results/playtest/b116-high-l4-standard/`: explicit WebGPU, zoom1.5, standard map-assisted physical-input driver. Full level completed257 seconds with no skips, five defense deaths and **zero escape deaths**. Hide begins tick13507, cellar bar objective tick14652, wait tick14782. This meets the ≤5 target for this policy and supersedes the HIGH-completion gap, while the original visible-only failure remains retained. No route-corner warning occurred. Deliberate side-street Alpha/heavy combat is still unqualified. Two provisional stationary-infected warnings during defense: ticks10280 and11929; neither prevented completion. The strong policy difference prevents attributing the original failed run solely to product balance.
+
+## LOW L6 aligned retry
+
+`test-results/playtest/b116-low-l6-align/`: full completion in323 seconds, no skips. Completion panel receipt: **2/29 out**, 27 lost, 4 player deaths. One527ms physical KeyA+KeyS alignment was submitted near x244.04/z11.28 at observed tick15119 and consumed at15142. It is a recorded driver assist. Courier crossed to x255 and HUD2/2 out at16685, then completed. This closes LOW completion coverage but does not erase the first failed attempt or establish unassisted stair guidance. Capture `continue-L6-low-stair-physical-align.jpg` is retained in the raw capture directory.
