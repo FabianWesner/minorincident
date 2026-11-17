@@ -2,30 +2,28 @@
 
 ## Result
 
-The native HUD-marker policy completed L4 on HIGH and LOW for seeds 1–3, with **0–3 escape deaths in every run**. All six runs completed, so the ≤5 target passes. The policy followed the same changing route marker exposed by `markerAnchor`, used ordinary movement/interact inputs, and attacked only threats returned by the existing line-of-sight combat policy. No browser or damage/stat/corpse/count override was used.
+The native marker policy completed HIGH and LOW on seeds 1–3 with at most **one escape death** per run. During collapse it follows the dynamic HUD marker and attacks nearby threats with clear simulation line of sight. It does not use the completion bot's route, pickup, or detour choices. It walks through intermediate rings and interacts when near a marker. The local navigation grid models obstacle avoidance, and line of sight is a simulation approximation rather than proof of rendered visibility.
 
 | Seed | HIGH escape deaths | LOW escape deaths | HIGH total deaths | LOW total deaths |
 |---:|---:|---:|---:|---:|
 | 1 | 0 | 1 | 8 | 7 |
-| 2 | 3 | 0 | 11 | 5 |
+| 2 | 1 | 0 | 9 | 5 |
 | 3 | 0 | 0 | 9 | 8 |
 
 ## Harbor crowd observations
 
-The observer counts living, admitted infected within 18 m while the courier is on the Harbor corridor. It separately counts unobstructed navigation-grid line of sight and the subset ahead of the current HUD marker. This is sim visibility evidence, not a camera/render visibility claim.
+The observer counts admitted living infected within 18 m in the Harbor corridor. Clear line of sight uses the simulation navigation grid; ahead means on the marker side of the courier. Details, positions and archetype mixes are in [qa.json](qa.json).
 
-| Tier / seed | Local peak | With clear sim LOS | Ahead of marker | Position (m) | Peak mix |
-|---|---:|---:|---:|---|---|
-| HIGH / 1 | 26 | 3 | 2 | (−5.2, −37.4) | 8 firefighters, 5 crawlers, 5 butchers, 3 hazmats, 3 brutes, 2 sprinters |
-| HIGH / 2 | 48 | 28 | 0 | (−27.8, −37.7) | 10 hazmats, 9 firefighters, 8 riot, 7 crawlers, 4 brutes, 4 Alphas, 3 armored, 3 butchers |
-| HIGH / 3 | 13 | 10 | 1 | (−66.9, −38.0) | 3 armored, 3 riot, 2 runners, and one each butcher, brute, firefighter, Alpha, hazmat |
-| LOW / 1 | 6 | 5 | 0 | (−59.3, −39.1) | 2 butchers, one each runner, riot, Alpha, firefighter |
-| LOW / 2 | 35 | 13 | 1 | (−14.9, −16.7) | 6 armored, 6 sprinters, 4 each hazmat, riot, butcher, firefighter; 3 brutes, 2 each runner/crawler |
-| LOW / 3 | 1 | 0 | 0 | (−24.4, −37.4) | one crawler |
+| Tier / seed | Local peak | Clear LOS | Ahead | Position (m) |
+|---|---:|---:|---:|---|
+| HIGH / 1 | 21 | 4 | 0 | (−5.2, −37.4) |
+| HIGH / 2 | 1 | 1 | 0 | (9.0, −37.3) |
+| HIGH / 3 | 2 | 1 | 0 | (−52.9, −38.5) |
+| LOW / 1 | 14 | 5 | 0 | (−27.5, −37.6) |
+| LOW / 2 | 35 | 13 | 1 | (−14.9, −16.7) |
+| LOW / 3 | 3 | 0 | 0 | (−64.4, −39.4) |
 
-At the largest local peak, HIGH seed 2 had a dense crowd near the westbound street, but its nearest listed threats were at the courier’s side/behind the marker bearing. The most direct ahead samples were two bodies at about 14–15 m in HIGH seed 1, one butcher at 1.7 m in LOW seed 2, and one runner at 7.9 m in HIGH seed 3. The native combat policy completed these routes within the death target. Full positions, archetype counts, LOS lists, marker positions, and death positions are in [qa.json](qa.json).
-
-No level-design change was needed for this native acceptance policy. Zombie definitions, population totals, encounter counts, corpse persistence, and the L4 layout are unchanged. This result does not replace visual review of the camera view or the separate real-input LOW diagnostic that recorded six Harbor escape deaths.
+The LOW seed 2 peak included six armored, six sprinters, four each hazmat, riot, butcher and firefighter, three brutes, and two each runner and crawler. One butcher was ahead at 1.7 m. This simulation cannot establish what the camera actually renders; browser review remains necessary. No level design or zombie data changed.
 
 ## Preserved receipts and checks
 
@@ -34,9 +32,9 @@ No level-design change was needed for this native acceptance policy. Zombie defi
 - `npm run lint` — passed.
 - `npm test -- tests/engine/l4-contact.test.ts --maxWorkers=1` — passed, 28.7 s.
 - Full `npm run qa:threat -- --maxWorkers=4` — **0 fail flags**, 361.5 s.
-- The prescribed `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225.66.90 in 175.8 s within the 240 s budget: 150/150 inventory, 27 files passed, 105 tests passed and one skipped.
+- The prescribed `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225.66.90 in 175.6 s within the 240 s budget: 150/150 inventory, 27 files passed, 105 tests passed and one skipped.
 
-Reproduce the native matrix with `node --import tsx tools/qa/s160-l4-visible.mts`. The runner hook follows the dynamic HUD marker and retains the existing ordinary visible-threat combat policy.
+Reproduce the native matrix with `node --import tsx tools/qa/s160-l4-visible.mts`. The collapse controller follows the dynamic HUD marker and uses nearby line-of-sight combat; the existing bot handles the earlier defense and cellar interaction.
 
 ## Browser QA needed
 

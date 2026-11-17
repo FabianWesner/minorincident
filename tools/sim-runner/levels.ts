@@ -1,4 +1,4 @@
-import { strikeAt } from '../../src/debug/bot/helpers';
+import { strikeAt, visibleThreats } from '../../src/debug/bot/helpers';
 import { LevelNineBot } from '../../src/debug/bot/LevelNineBot';
 import { LevelEightBot } from '../../src/debug/bot/LevelEightBot';
 import { LevelSixBot, type L6Profile } from '../../src/debug/bot/LevelSixBot';
@@ -167,15 +167,16 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       const bot = new LevelFourBot(world, hooks?.l4Profile ?? generalPolicy), markerWalker = new Walker();
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) {
         followFrustum(world);
-        const frame = bot.sample();
-        if (hooks?.l4VisibleMarker && world.missions!.state.l4?.phase === 'collapse') {
-          const marker = markerAnchor(world.missions!), debug = bot.debug(), player = world.entities.get(1)!;
-          // Let the shared combat policy take a visible-threat detour or a
-          // reachable medkit. Otherwise, follow only the dynamic HUD marker.
-          if (marker && !debug.detour && !debug.medkit) {
-            const d = distance(player.transform, marker), door = world.missions!.def.anchors['l4-cellar-door'];
-            frame.move = markerWalker.step(world, marker, marker.radius ?? 1.4, `l4-visible-marker-${marker.x.toFixed(2)}-${marker.z.toFixed(2)}`) ?? { x: 0, z: 0 };
-            frame.interact = Math.hypot(marker.x - door.x, marker.z - door.z) < .5 && d <= (door.radius ?? 1.4);
+        const escape = hooks?.l4VisibleMarker && world.missions!.state.l4?.phase === 'collapse';
+        const frame = escape ? emptyInput() : bot.sample();
+        if (escape) {
+          const marker = markerAnchor(world.missions!), player = world.entities.get(1)!;
+          if (marker) {
+            const d = distance(player.transform, marker);
+            frame.move = markerWalker.step(world, marker, .25, `l4-visible-marker-${marker.x.toFixed(2)}-${marker.z.toFixed(2)}`) ?? { x: 0, z: 0 };
+            frame.interact = d <= (marker.radius ?? 1.4);
+            const target = visibleThreats(world, player.transform, 5)[0];
+            if (target) strikeAt(frame, target, distance(player.transform, target.transform) < 2.4 ? 'LEFT' : 'RIGHT', player.transform, false);
           }
         }
         world.applyInput(frame, 'keyboard'); world.update();
