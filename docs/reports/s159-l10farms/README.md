@@ -23,9 +23,13 @@ The required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225
 
 Source inspection shows each group is released within 120 m on the X axis and individual admitted actors are recorded in `l10Encounters.state.spawned`; cap, placement, residency and safety can defer individual slots. The existing session logs do not retain those group-to-actor mappings, so source census and proximity cannot establish the observed fights. A subsequent real-input observer must record these mappings and checkpoint rewinds while sampling threat distance and captures.
 
-## Inspected sample sheet
+## Inspected encounter sample sheet
 
-[HIGH sample sheet](sample-sheet.jpg) was opened. Tick 8123 shows a crowd and red attack rings in the corn; tick 5421 shows sparse action partly obscured by a roof; tick 10828 shows sparse action in an open clearing; tick 18944 shows pursuit near containers. These periodic captures are not identified encounter peaks and do not establish cohort membership or fairness. At the nearest logged observations, player positions were approximately (904,-5), (877,-2), (1078,-16), and (1479,-41), respectively. The requested four encounter peak frames remain open.
+[HIGH sheet](sample-sheet.jpg) was opened. Each panel is the available five-second capture nearest the highest one-second sample of living group members within 15 m: corn tick 4960 (sample peak 4919: 7), farmhouse 6817 (6899: 5), shed 11463 (11459: 9), depot 18302 (18299: 5). The corn panel shows threats in crop rows; the shed panel shows the courier dead amid a crowd; the depot panel shows several close attackers near containers. The farmhouse image precedes its peak by 82 ticks and shows little of that fight. This sheet does not prove admission visibility or a continuous fairness assessment.
+
+LOW maximum sampled group members within 15 m: corn 2 at tick 4140, farmhouse 3 at 6660, shed 5 at 9060, depot 3 at 18120. No interval longer than 45 seconds without a living infected within 15 m appeared in the one-second samples of either observed run. This is sampled proximity, with transient threats and sampling gaps limiting precision; it does not prove absence of every longer quiet interval.
+
+P2 provisional: the HIGH shed frame `test-results/playtest/s159-observed-high/captures/campaign-L10-t11463.jpg` shows death among a crowd, and the other LOW sample had ten deaths while repeatedly returning to the farmhouse. Driver behavior and overlapping groups prevent assigning a definitive balance cause. Visual distinction is supported by crops, shed clearing and containers, but fairness, spawn-in-view and stuck checks remain unqualified.
 
 ## Follow-up: incomplete real-input samples
 

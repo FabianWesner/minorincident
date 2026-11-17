@@ -209,5 +209,50 @@
       },
       "limitations": "One-second samples; last live is not a proven clear time; checkpoint restores and actor reuse can affect interpretation."
     }
+  },
+  "peakReview": {
+    "definition": "maximum sampled living members within 15 m; one-second sampling; nearest five-second screenshot",
+    "high": {
+      "corn-field-horde": {
+        "sampleTick": 4919,
+        "near": 7,
+        "captureTick": 4960
+      },
+      "farmhouse-defense": {
+        "sampleTick": 6899,
+        "near": 5,
+        "captureTick": 6817
+      },
+      "shed-field-crossing": {
+        "sampleTick": 11459,
+        "near": 9,
+        "captureTick": 11463,
+        "playerHp": 0
+      },
+      "depot-alpha": {
+        "sampleTick": 18299,
+        "near": 5,
+        "captureTick": 18302
+      }
+    },
+    "low": {
+      "corn-field-horde": {
+        "sampleTick": 4140,
+        "near": 2
+      },
+      "farmhouse-defense": {
+        "sampleTick": 6660,
+        "near": 3
+      },
+      "shed-field-crossing": {
+        "sampleTick": 9060,
+        "near": 5
+      },
+      "depot-alpha": {
+        "sampleTick": 18120,
+        "near": 3
+      }
+    },
+    "quietIntervalsOver45Seconds": "none observed in one-second samples in either run; gaps and transient threats limit precision"
   }
 }
