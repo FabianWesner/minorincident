@@ -1034,5 +1034,22 @@
     "framesPerSecond": 4,
     "result": "No definite abrupt visible appearance identified in sampled windows",
     "limitations": "dark crops, occlusion, other actors, 0.25-second gaps and approximate alignment prevent excluding in-view spawn"
+  },
+  "admissionTriggeredCaptures": {
+    "high": {
+      "corn-field-horde": 4630,
+      "farmhouse-defense": 5620,
+      "shed-field-crossing": 7820,
+      "depot-alpha": 13940
+    },
+    "low": {
+      "corn-field-horde": 3220,
+      "farmhouse-defense": 5510,
+      "shed-field-crossing": 14070,
+      "depot-alpha": 19970
+    },
+    "paths": "test-results/playtest/s159-admission-{high,low}/shots/<group>-<tick>.jpg",
+    "review": "all eight opened in contact grid; HIGH farmhouse shows crowd at left; other views mostly open or prior threats",
+    "limitation": "tick is screenshot request, not rendered frame; visible actor identities are not recorded"
   }
 }
