@@ -108,6 +108,18 @@ The required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225
 
 Source inspection shows each group is released within 120 m on the X axis and individual admitted actors are recorded in `l10Encounters.state.spawned`; cap, placement, residency and safety can defer individual slots. The existing session logs do not retain those group-to-actor mappings, so source census and proximity cannot establish the observed fights. A subsequent real-input observer must record these mappings and checkpoint rewinds while sampling threat distance and captures.
 
+## Travel between releases
+
+In the observed HIGH and retained-profile LOW samples, the longest consecutive one-second samples with no living infected within 15 m, clipped to each pair of first release samples, were:
+
+| Release interval | HIGH longest sampled quiet span | LOW longest sampled quiet span |
+| --- | --- | --- |
+| Corn → farmhouse | 3 s, ticks 3599–3779, x732–745 | 9 s, ticks 3240–3780, x713–751 |
+| Farmhouse → shed | 9 s, ticks 7499–8039, x971–1006 | 6 s, ticks 7560–7920, x980–1003 |
+| Shed → depot | 8 s, ticks 8099–8579, x1009–1040 | 10 s, ticks 7980–8580, x1007–1045 |
+
+None exceeds 45 s. Intervals are clipped at release samples and are not isolated post-clear travel; encounters overlap, and one-second sampling can miss transient threats. The longest whole-run sampled quiet span was 19 s in each tier, as noted below.
+
 ## Inspected encounter sample sheet
 
 [HIGH sheet](sample-sheet.jpg) was opened. Each panel is the available five-second capture nearest the highest one-second sample of living group members within 15 m: corn tick 4960 (sample peak 4919: 7), farmhouse 7177 (7140: 6, from the separate continuous HIGH run), shed 11463 (11459: 9), depot 18302 (18299: 5). The corn panel shows threats in crop rows; the shed panel shows the courier dead amid a crowd; the depot panel shows several close attackers near containers. The farmhouse image follows its sampled peak by 37 ticks and shows several attackers near a small building. This sheet does not prove admission visibility or a continuous fairness assessment.

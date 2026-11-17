@@ -923,5 +923,61 @@
     ],
     "observation": "group progressively enters right edge of crop view in sampled frames",
     "limitation": "approximate alignment and 0.25 s gaps cannot prove each admission offscreen"
+  },
+  "interReleaseQuietSamples": {
+    "definition": "longest consecutive samples with nearest living infected >15m, clipped to first release sample boundaries; not post-clear travel",
+    "high": {
+      "cornToFarmhouse": [
+        3599,
+        3779,
+        3,
+        732,
+        745
+      ],
+      "farmhouseToShed": [
+        7499,
+        8039,
+        9,
+        971,
+        1006
+      ],
+      "shedToDepot": [
+        8099,
+        8579,
+        8,
+        1009,
+        1040
+      ]
+    },
+    "low": {
+      "cornToFarmhouse": [
+        3240,
+        3780,
+        9,
+        713,
+        751
+      ],
+      "farmhouseToShed": [
+        7560,
+        7920,
+        6,
+        980,
+        1003
+      ],
+      "shedToDepot": [
+        7980,
+        8580,
+        10,
+        1007,
+        1045
+      ]
+    },
+    "columns": [
+      "startTick",
+      "endTick",
+      "seconds",
+      "startX",
+      "endX"
+    ]
   }
 }
