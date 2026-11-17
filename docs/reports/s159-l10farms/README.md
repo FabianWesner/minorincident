@@ -110,7 +110,7 @@ Source inspection shows each group is released within 120 m on the X axis and in
 
 ## Inspected encounter sample sheet
 
-[HIGH sheet](sample-sheet.jpg) was opened. Each panel is the available five-second capture nearest the highest one-second sample of living group members within 15 m: corn tick 4960 (sample peak 4919: 7), farmhouse 6817 (6899: 5), shed 11463 (11459: 9), depot 18302 (18299: 5). The corn panel shows threats in crop rows; the shed panel shows the courier dead amid a crowd; the depot panel shows several close attackers near containers. The farmhouse image precedes its peak by 82 ticks and shows little of that fight. This sheet does not prove admission visibility or a continuous fairness assessment.
+[HIGH sheet](sample-sheet.jpg) was opened. Each panel is the available five-second capture nearest the highest one-second sample of living group members within 15 m: corn tick 4960 (sample peak 4919: 7), farmhouse 7177 (7140: 6, from the separate continuous HIGH run), shed 11463 (11459: 9), depot 18302 (18299: 5). The corn panel shows threats in crop rows; the shed panel shows the courier dead amid a crowd; the depot panel shows several close attackers near containers. The farmhouse image follows its sampled peak by 37 ticks and shows several attackers near a small building. This sheet does not prove admission visibility or a continuous fairness assessment.
 
 LOW maximum sampled group members within 15 m: corn 2 at tick 4140, farmhouse 3 at 6660, shed 5 at 9060, depot 3 at 18120. The longest sampled spans without a living infected within 15 m were 19 s in each observed run (HIGH ticks 19079–20219, x1513–1596; LOW ticks 16140–17280, x1386–1433). No sampled span exceeded 45 s. This is sampled proximity, with transient threats and sampling gaps limiting precision; it does not prove absence of every longer quiet interval.
 
@@ -129,7 +129,7 @@ The first sandboxed launch failed before gameplay: the default shared build cach
 ## Remaining driver gaps
 
 - Exact admission frames and continuous visibility are missing, so spawn-in-view is not qualified.
-- The farmhouse peak capture misses the sampled peak; no continuous telegraph and escape review covers every fight in both tiers.
+- The farmhouse peak capture is 37 ticks after a sampled peak; no continuous telegraph and escape review covers every fight in both tiers.
 - Damage events lack attacker identity and encounter windows overlap; actor disappearance and checkpoint restoration prevent a proven player-clear time.
 - Stationary samples need continuous context to determine whether an actor is stuck.
 
