@@ -2,7 +2,7 @@
 
 ## Result
 
-The native marker policy completed HIGH and LOW on seeds 1–3 with at most **one escape death** per run. During collapse it follows the dynamic HUD marker and attacks nearby threats with clear simulation line of sight. It does not use the completion bot's route, pickup, or detour choices. It walks through intermediate rings and interacts when near a marker. The local navigation grid models obstacle avoidance, and line of sight is a simulation approximation rather than proof of rendered visibility.
+The native marker policy completed HIGH and LOW on seeds 1–3 with at most **one escape death** per run. During collapse it follows the dynamic HUD marker and attacks nearby threats with clear simulation line of sight inside the native follow-camera frustum. It does not use the completion bot's route, pickup, or detour choices. It walks through intermediate rings and interacts when near a marker. The local navigation grid models obstacle avoidance, and line of sight is a simulation approximation rather than proof of rendered visibility.
 
 | Seed | HIGH escape deaths | LOW escape deaths | HIGH total deaths | LOW total deaths |
 |---:|---:|---:|---:|---:|
@@ -32,9 +32,9 @@ The LOW seed 2 peak included six armored, six sprinters, four each hazmat, riot,
 - `npm run lint` — passed.
 - `npm test -- tests/engine/l4-contact.test.ts --maxWorkers=1` — passed, 28.7 s.
 - Full `npm run qa:threat -- --maxWorkers=4` — **0 fail flags**, 361.5 s.
-- The prescribed `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225.66.90 in 175.6 s within the 240 s budget: 150/150 inventory, 27 files passed, 105 tests passed and one skipped.
+- The prescribed `sh tools/remote/run.sh "$PWD" -- npm test` passed on 46.225.66.90 in 173.1 s within the 240 s budget: 150/150 inventory, 27 files passed, 105 tests passed and one skipped.
 
-Reproduce the native matrix with `node --import tsx tools/qa/s160-l4-visible.mts`. The collapse controller follows the dynamic HUD marker and uses nearby line-of-sight combat; the existing bot handles the earlier defense and cellar interaction.
+Reproduce the native matrix with `node --import tsx tools/qa/s160-l4-visible.mts`. The collapse controller follows the dynamic HUD marker and uses nearby line-of-sight combat restricted to the native camera frustum; the existing bot handles the earlier defense and cellar interaction.
 
 ## Browser QA needed
 

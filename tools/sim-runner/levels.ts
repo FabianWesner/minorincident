@@ -175,7 +175,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
             const d = distance(player.transform, marker);
             frame.move = markerWalker.step(world, marker, .25, `l4-visible-marker-${marker.x.toFixed(2)}-${marker.z.toFixed(2)}`) ?? { x: 0, z: 0 };
             frame.interact = d <= (marker.radius ?? 1.4);
-            const target = visibleThreats(world, player.transform, 5)[0];
+            const target = visibleThreats(world, player.transform, 5).find(e => world.infected!.director.inPlayerView(e.transform, 5));
             if (target) strikeAt(frame, target, distance(player.transform, target.transform) < 2.4 ? 'LEFT' : 'RIGHT', player.transform, false);
           }
         }

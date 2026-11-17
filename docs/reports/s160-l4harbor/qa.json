@@ -5,7 +5,7 @@
   "policy": {
     "source": "tools/sim-runner/levels.ts native L4 route probe",
     "marker": "markerAnchor(mission), the same dynamic position used by the HUD",
-    "combat": "Independent collapse controller: marker-directed movement and attacks at nearby line-of-sight threats; no bot route, pickup or detour decisions",
+    "combat": "Independent collapse controller: attacks nearby line-of-sight threats inside the native follow-camera frustum",
     "escapeMovement": "Walk through the displayed marker using local navigation; interact near marker",
     "seedSet": [
       1,
@@ -24,7 +24,7 @@
       {
         "seed": 1,
         "tier": "high",
-        "policy": "HUD marker and nearby LOS combat",
+        "policy": "HUD marker and camera-frustum LOS combat",
         "escapeDeaths": 0,
         "completed": true,
         "outcome": "complete",
@@ -166,7 +166,7 @@
       {
         "seed": 1,
         "tier": "low",
-        "policy": "HUD marker and nearby LOS combat",
+        "policy": "HUD marker and camera-frustum LOS combat",
         "escapeDeaths": 1,
         "completed": true,
         "outcome": "complete",
@@ -311,7 +311,7 @@
       {
         "seed": 2,
         "tier": "high",
-        "policy": "HUD marker and nearby LOS combat",
+        "policy": "HUD marker and camera-frustum LOS combat",
         "escapeDeaths": 1,
         "completed": true,
         "outcome": "complete",
@@ -420,7 +420,7 @@
       {
         "seed": 2,
         "tier": "low",
-        "policy": "HUD marker and nearby LOS combat",
+        "policy": "HUD marker and camera-frustum LOS combat",
         "escapeDeaths": 0,
         "completed": true,
         "outcome": "complete",
@@ -587,7 +587,7 @@
       {
         "seed": 3,
         "tier": "high",
-        "policy": "HUD marker and nearby LOS combat",
+        "policy": "HUD marker and camera-frustum LOS combat",
         "escapeDeaths": 0,
         "completed": true,
         "outcome": "complete",
@@ -698,7 +698,7 @@
       {
         "seed": 3,
         "tier": "low",
-        "policy": "HUD marker and nearby LOS combat",
+        "policy": "HUD marker and camera-frustum LOS combat",
         "escapeDeaths": 0,
         "completed": true,
         "outcome": "complete",
@@ -827,7 +827,7 @@
       "testsPassed": 105,
       "testsSkipped": 1,
       "filesPassed": 27,
-      "seconds": 175.6,
+      "seconds": 173.1,
       "budgetSeconds": 240,
       "runner": "46.225.66.90",
       "command": "sh tools/remote/run.sh \"$PWD\" -- npm test"
