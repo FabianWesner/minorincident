@@ -399,5 +399,102 @@
       }
     },
     "stationary": "Some actors move under 1 m over 10 s; reasons and permanence unproven"
+  },
+  "eventFollowup": {
+    "method": "fresh HIGH then LOW physical input, WebGPU, zoom 1.5; temporary observer subscribes to combat.kill and telegraph; IDs mapped from one-second samples",
+    "columns": [
+      "releaseSampleTick",
+      "uniqueMappedIds",
+      "uniqueIdsWithKillEvent",
+      "killEvents",
+      "recoverableDownEvents",
+      "lastKillTick",
+      "telegraphEvents"
+    ],
+    "high": {
+      "corn-field-horde": [
+        3359,
+        15,
+        13,
+        24,
+        24,
+        8632,
+        14
+      ],
+      "farmhouse-defense": [
+        6359,
+        12,
+        11,
+        14,
+        14,
+        10858,
+        34
+      ],
+      "shed-field-crossing": [
+        11279,
+        17,
+        16,
+        16,
+        16,
+        13380,
+        5
+      ],
+      "depot-alpha": [
+        17279,
+        10,
+        10,
+        10,
+        9,
+        18866,
+        4
+      ]
+    },
+    "low": {
+      "corn-field-horde": [
+        3241,
+        8,
+        8,
+        9,
+        9,
+        7234,
+        2
+      ],
+      "farmhouse-defense": [
+        5701,
+        10,
+        10,
+        13,
+        13,
+        9362,
+        8
+      ],
+      "shed-field-crossing": [
+        9781,
+        12,
+        12,
+        19,
+        19,
+        11526,
+        31
+      ],
+      "depot-alpha": [
+        15481,
+        8,
+        8,
+        9,
+        8,
+        19252,
+        16
+      ]
+    },
+    "raw": [
+      "/tmp/s159-events-high.jsonl",
+      "/tmp/s159-events-low.jsonl"
+    ],
+    "limitations": [
+      "recoverable downs are not permanent kills",
+      "event mapping uses IDs seen in sampled ledger; ID reuse and checkpoint restoration can confound attribution",
+      "telegraph event emission does not prove player saw it or could escape"
+    ]
   }
 }

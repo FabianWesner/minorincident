@@ -1,5 +1,18 @@
 # S159 — L10 farm encounter qualification
 
+## Kill and telegraph follow-up
+
+Fresh HIGH then LOW 480-second real-input WebGPU samples used a temporary read-only observer for `combat.kill` and `telegraph` events. Group IDs were mapped from one-second actor samples; captures are under `test-results/playtest/s159-events-high/` and `s159-events-low/`, and event traces are `/tmp/s159-events-high.jsonl` and `/tmp/s159-events-low.jsonl`. IDs and checkpoint restores can confound attribution. A `downed` field means a recoverable knockdown, so these are not permanent-clear receipts.
+
+| Group | HIGH unique IDs with kill event / mapped IDs; last event tick; telegraphs | LOW unique IDs with kill event / mapped IDs; last event tick; telegraphs |
+| --- | --- | --- |
+| Corn | 13/15; 8632; 14 | 8/8; 7234; 2 |
+| Farmhouse | 11/12; 10858; 34 | 10/10; 9362; 8 |
+| Shed | 16/17; 13380; 5 | 12/12; 11526; 31 |
+| Depot | 10/10; 18866; 4 | 8/8; 19252; 16 |
+
+All HIGH corn, farmhouse and shed kill events were recoverable downs; nine of ten depot events were downs. LOW recorded recoverable downs for all corn, farmhouse and shed events and eight of nine depot events. Group telegraphs included scream at the farmhouse and Alpha pounce or charge at the depot. Event emission supports mechanical distinction, but does not prove the cue was visible or escapable. The fresh run's first release samples were HIGH corn 3359, farmhouse 6359, shed 11279, depot 17279; LOW 3241, 5701, 9781, 15481. Exact clear times remain unproven.
+
 ## Actor disappearance audit
 
 `ChunkResidency.sleepOutside` serializes eligible actors outside resident chunks or over the cap, releases living infected and deletes their active entity lookup. `InfectedSystem.settle` instead replaces a dead infected with a persistent corpse under the same ID. Thus an absent lookup can reflect streaming; it cannot prove a kill or clear. The retained observer did not subscribe to target-specific `combat.kill` events, so the existing traces cannot resolve those outcomes retrospectively. This is a driver gap, not evidence that corpses were removed.
