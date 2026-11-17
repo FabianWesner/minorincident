@@ -46,7 +46,7 @@ Source inspection shows each group is released within 120 m on the X axis and in
 
 [HIGH sheet](sample-sheet.jpg) was opened. Each panel is the available five-second capture nearest the highest one-second sample of living group members within 15 m: corn tick 4960 (sample peak 4919: 7), farmhouse 6817 (6899: 5), shed 11463 (11459: 9), depot 18302 (18299: 5). The corn panel shows threats in crop rows; the shed panel shows the courier dead amid a crowd; the depot panel shows several close attackers near containers. The farmhouse image precedes its peak by 82 ticks and shows little of that fight. This sheet does not prove admission visibility or a continuous fairness assessment.
 
-LOW maximum sampled group members within 15 m: corn 2 at tick 4140, farmhouse 3 at 6660, shed 5 at 9060, depot 3 at 18120. No interval longer than 45 seconds without a living infected within 15 m appeared in the one-second samples of either observed run. This is sampled proximity, with transient threats and sampling gaps limiting precision; it does not prove absence of every longer quiet interval.
+LOW maximum sampled group members within 15 m: corn 2 at tick 4140, farmhouse 3 at 6660, shed 5 at 9060, depot 3 at 18120. The longest sampled spans without a living infected within 15 m were 19 s in each observed run (HIGH ticks 19079–20219, x1513–1596; LOW ticks 16140–17280, x1386–1433). No sampled span exceeded 45 s. This is sampled proximity, with transient threats and sampling gaps limiting precision; it does not prove absence of every longer quiet interval.
 
 P2 provisional: the HIGH shed frame `test-results/playtest/s159-observed-high/captures/campaign-L10-t11463.jpg` shows death among a crowd, and the other LOW sample had ten deaths while repeatedly returning to the farmhouse. Driver behavior and overlapping groups prevent assigning a definitive balance cause. Visual distinction is supported by crops, shed clearing and containers, but fairness, spawn-in-view and stuck checks remain unqualified.
 
@@ -56,46 +56,15 @@ The environment restrictions below were lifted. HIGH then LOW standard physical-
 
 P3 driver gap: periodic samples cannot attribute infected to individual encounters or establish trigger, peak, clear time, damage, pickup transactions, spawn visibility, or continuous threat-free travel. No peak sheet has been produced. Four-fight fairness and distinctness remain unqualified. LOW navigation warning at tick 19434 near x1497 recovered to x1723 by tick 22742, where another warning occurred; HIGH warning at tick 26440 near x1694. These are progress-observer warnings, not established geometry defects.
 
-The following records the earlier failed attempt; its blocked status is superseded by the runs above.
+## Earlier infrastructure attempt
 
-# S159 — L10 farm encounter qualification
+The first sandboxed launch failed before gameplay: the default shared build cache was unwritable, `tsx` IPC binding failed, and the preview listener on port 5055 failed with `EPERM`. After sandbox permissions changed, the subsequent HIGH and LOW sessions above ran successfully. This history does not describe the current results.
 
-## Outcome: blocked before gameplay
+## Remaining driver gaps
 
-This worktree is at `9dced069` (PROD batch 117). The requested HIGH-then-LOW real-input qualification did not start, so none of the four farm encounters is qualified by this report. No gameplay frame, browser receipt, or fight log was produced. The required inspected four-panel sheet is therefore not included; generating one from old captures or a schematic would misstate the evidence.
+- Exact admission frames and continuous visibility are missing, so spawn-in-view is not qualified.
+- The farmhouse peak capture misses the sampled peak; no continuous telegraph and escape review covers every fight in both tiers.
+- Damage events lack attacker identity and encounter windows overlap; actor disappearance and checkpoint restoration prevent a proven player-clear time.
+- Stationary samples need continuous context to determine whether an actor is stuck.
 
-The work remains report-only. No source, playtest tool, spec, protected reference, or gameplay data was changed.
-
-## Attempt and evidence
-
-- QA build: `MI_BUILD_CACHE=off E2E_PORT=5055 npm run build:qa` passed. The cache override was needed because the default shared cache path is outside this worktree's writable area.
-- Standard playtest wrapper failed when `tsx` could not bind its IPC socket (`EPERM`). Retried the unchanged driver through Node's loader: `E2E_PORT=5055 node --import tsx tools/playtest/play.ts --levels L10 --mode campaign --quality high --zoom 1.5 --session-seconds 480 --level-minutes 150 --out test-results/playtest/s159-l10farms-high`.
-- The retry could not start the preview on port 5055 (`listen EPERM`); the browser pool log at `/private/tmp/mi-browser-pool.log` also records repeated `listen EPERM` on `127.0.0.1:4329`. No HIGH session began. The waiting driver was stopped after confirming the infrastructure failure. LOW was not attempted, preserving the required HIGH-before-LOW ordering.
-- `test-results/playtest/s159-l10farms-high/` contains no session evidence.
-
-## Encounter census from source (not gameplay evidence)
-
-| Encounter | Authored identity | HIGH / LOW regulars | Other authored infected |
-| --- | --- | ---: | --- |
-| Farmhouse defense | `barn-defense`, `farmhouse-defense` | 11 / 9 | 1 dog, Screamer role |
-| Corn horde | `field-horde`, `corn-field-horde` | 14 / 7 | 1 dog |
-| Shed crossing | `field-horde`, `shed-field-crossing` | 17 / 12 | none |
-| Depot Alpha | `alpha-ambush`, `depot-alpha` | 9 / 7 | 1 Alpha |
-
-These counts come from `src/levels/L10/encounters.ts`; they do not establish trigger ticks/positions, spawn origins, reach, clear times, damage, deaths, pickups, fairness, or visual distinctness in real input.
-
-## Findings and open acceptance
-
-**P3 — Driver/environment gap; no encounter qualification.** HIGH browser admission is blocked by sandbox `EPERM` binding the preview and local browser-pool ports. Capture path/tick: none. HIGH and LOW trigger census, peak captures, infected approach/reach, clear time, player damage/deaths, nearby medkits, spawn-in-view/stuck checks, and threat-free travel intervals are all unmeasured. Consequently, the four fights' fairness and mechanical distinction remain unproven. No P1/P2 product finding is asserted from absent gameplay evidence.
-
-The prior batch-116 report's open pacing concern remains relevant but is not remeasured here: “The repeated long open travel is the clearest pacing concern”. The S153 native route measurements and earlier sparse browser frames are historical context only, not substitutes for this requested run.
-
-## Driver gaps
-
-- Browser pool and preview server cannot bind local ports in this execution environment; real-input capture requires a run environment where `tools/e2e-lock.sh` and the pool can start.
-- Per-encounter peak capture and fight-event accounting remain unobserved; no tool edits were made to add instrumentation.
-- No sheet was created or inspected because there are no S159 encounter frames to place in it.
-
-## Status
-
-Incomplete. Required deliverables still missing for acceptance: the HIGH and LOW real-input runs, four encounter capture/review, threat-free travel timing, and the inspected four-panel sheet. This report records the failed attempt; it does not qualify or approve the farm encounters.
+The report, JSON and inspected sheet are committed. Acceptance remains incomplete; no source or playtest tool was edited.

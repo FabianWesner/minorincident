@@ -253,7 +253,28 @@
         "near": 3
       }
     },
-    "quietIntervalsOver45Seconds": "none observed in one-second samples in either run; gaps and transient threats limit precision"
+    "quietIntervalsOver45Seconds": {
+      "result": "none in sampled runs",
+      "highLongest": {
+        "startTick": 19079,
+        "endTick": 20219,
+        "seconds": 19,
+        "startX": 1513,
+        "endX": 1596
+      },
+      "lowLongest": {
+        "startTick": 16140,
+        "endTick": 17280,
+        "seconds": 19,
+        "startX": 1386,
+        "endX": 1433
+      },
+      "maxSampleGapTicks": {
+        "high": 62,
+        "low": 61
+      },
+      "limitation": "One-second sampling cannot prove continuous absence of transient threats"
+    }
   },
   "windowAnalysis": {
     "definition": "release sample to first sample with no living recorded group actors; not a confirmed player clear; damage events overlap and have no attacker ID",
