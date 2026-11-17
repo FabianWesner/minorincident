@@ -1,5 +1,11 @@
 # S159 — L10 farm encounter qualification
 
+## Admission and movement review
+
+Opened an uncommitted four-frame admission review: HIGH `campaign-L10-t4656.jpg` (corn; first admission sample 4559), `t5584.jpg` (farmhouse; 5579), `t8063.jpg` (shed; 8099), and `t17366.jpg` (depot; 17399), all under `test-results/playtest/s159-observed-high/captures/`. These are up to 97 ticks away from sampled admission and cannot establish whether any actor spawned in view. The farmhouse and shed frames show crop edges and an open approach; the depot frame shows a road and industrial props. The fight sheet shows different settings and crowd shapes; role-specific telegraphs, escape routes and fairness remain incompletely observed.
+
+The trace contains actors moving less than 1 m between samples ten seconds apart, including actors initially about 120 m from the courier. This is a stationary candidate, not proof of being stuck. For example, HIGH farmhouse Screamer begins around (987,-7), later moves 43.5 m and approaches within 1.7 m; HIGH shed sprinter moves 79.4 m and approaches within 2.6 m. LOW shed sprinter moves 70.5 m and approaches within 2.2 m. One-second samples do not establish the reason for other stationary intervals. No confirmed spawn-in-view or permanent stuck defect is asserted.
+
 ## Sampled encounter windows
 
 These windows run from the first release sample to the first sample with no living recorded group members. Their elapsed time is an observed upper bound on presence, not a confirmed player clear: actors can disappear, IDs can be reused, and checkpoint restores can alter the ledger. Damage is the sum of all `player.damaged` events during the window; the event has no attacker ID and overlapping windows double-count damage and deaths.

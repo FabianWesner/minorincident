@@ -340,5 +340,38 @@
         ]
       }
     ]
+  },
+  "admissionReview": {
+    "highCaptureTicks": [
+      4656,
+      5584,
+      8063,
+      17366
+    ],
+    "firstAdmissionSampleTicks": [
+      4559,
+      5579,
+      8099,
+      17399
+    ],
+    "result": "No exact spawn-frame evidence; spawn-in-view remains unqualified",
+    "movementExamples": {
+      "highFarmhouseScreamer": {
+        "initialDistanceM": 121,
+        "maxDisplacementM": 43.5,
+        "minimumPlayerDistanceM": 1.7
+      },
+      "highShedSprinter": {
+        "initialDistanceM": 127.3,
+        "maxDisplacementM": 79.4,
+        "minimumPlayerDistanceM": 2.6
+      },
+      "lowShedSprinter": {
+        "initialDistanceM": 132.1,
+        "maxDisplacementM": 70.5,
+        "minimumPlayerDistanceM": 2.2
+      }
+    },
+    "stationary": "Some actors move under 1 m over 10 s; reasons and permanence unproven"
   }
 }
