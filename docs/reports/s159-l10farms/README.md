@@ -1,5 +1,9 @@
 # S159 — L10 farm encounter qualification
 
+## Inspected sample sheet
+
+[HIGH sample sheet](sample-sheet.jpg) was opened. Tick 8123 shows a crowd and red attack rings in the corn; tick 5421 shows sparse action partly obscured by a roof; tick 10828 shows sparse action in an open clearing; tick 18944 shows pursuit near containers. These periodic captures are not identified encounter peaks and do not establish cohort membership or fairness. At the nearest logged observations, player positions were approximately (904,-5), (877,-2), (1078,-16), and (1479,-41), respectively. The requested four encounter peak frames remain open.
+
 ## Follow-up: incomplete real-input samples
 
 The environment restrictions below were lifted. HIGH then LOW standard physical-input WebGPU sessions ran at zoom 1.5 on candidate `9dced069`, each for 480 seconds. HIGH recorded eight deaths and reached x≈1694; LOW recorded five deaths and reached the restricted zone at tick 25165. Neither completed the level in its sample. Raw logs and periodic captures: `test-results/playtest/s159-l10farms-high/` and `test-results/playtest/s159-l10farms-low/`. The initial renderer receipts say `webgpu`.
