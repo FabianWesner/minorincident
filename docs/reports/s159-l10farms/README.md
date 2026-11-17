@@ -2,16 +2,18 @@
 
 ## Kill and telegraph follow-up
 
-Fresh HIGH then LOW 480-second real-input WebGPU samples used a temporary read-only observer for `combat.kill` and `telegraph` events. Group IDs were mapped from one-second actor samples; captures are under `test-results/playtest/s159-events-high/` and `s159-events-low/`, and event traces are `/tmp/s159-events-high.jsonl` and `/tmp/s159-events-low.jsonl`. IDs and checkpoint restores can confound attribution. A `downed` field means a recoverable knockdown, so these are not permanent-clear receipts.
+Fresh HIGH then LOW 480-second real-input WebGPU samples used a temporary read-only observer for `combat.kill` and `telegraph` events. Group IDs were mapped from one-second actor samples; captures are under `test-results/playtest/s159-events-high/` and `s159-events-low/`, and event traces are `/tmp/s159-events-high.jsonl` and `/tmp/s159-events-low.jsonl`. Events are matched to mapped, present IDs in the immediately preceding sample (at most 62 ticks); IDs and checkpoint restores can still confound attribution. A `downed` field means a recoverable knockdown, so these are not permanent-clear receipts.
 
 | Group | HIGH unique IDs with kill event / mapped IDs; last event tick; telegraphs | LOW unique IDs with kill event / mapped IDs; last event tick; telegraphs |
 | --- | --- | --- |
 | Corn | 13/15; 8632; 14 | 8/8; 7234; 2 |
 | Farmhouse | 11/12; 10858; 34 | 10/10; 9362; 8 |
-| Shed | 16/17; 13380; 5 | 12/12; 11526; 31 |
+| Shed | 16/17; 13380; 5 | 12/12; 11526; 17 |
 | Depot | 10/10; 18866; 4 | 8/8; 19252; 16 |
 
 All HIGH corn, farmhouse and shed kill events were recoverable downs; nine of ten depot events were downs. LOW recorded recoverable downs for all corn, farmhouse and shed events and eight of nine depot events. Group telegraphs included scream at the farmhouse and Alpha pounce or charge at the depot. Event emission supports mechanical distinction, but does not prove the cue was visible or escapable. The fresh run's first release samples were HIGH corn 3359, farmhouse 6359, shed 11279, depot 17279; LOW 3241, 5701, 9781, 15481. Exact clear times remain unproven.
+
+The initial LOW shed count used all IDs seen over the run and included events before that group released. Time-local matching corrects it from 19 to 12 kill events and 31 to 17 telegraphs. Opened event-adjacent frames `s159-events-high/captures/campaign-L10-t7429.jpg` and `t18270.jpg`, and `s159-events-low/captures/campaign-L10-t6849.jpg` and `t16693.jpg` (all under `test-results/playtest/`). Red warning rings are visible in the first three; the LOW depot frame shows pursuit. The frames do not coincide with the referenced event ticks, so they show cues in these fights rather than proving the specific emitted cue was displayed or avoided.
 
 ## Actor disappearance audit
 
