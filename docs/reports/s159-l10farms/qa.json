@@ -1010,5 +1010,29 @@
     "framesPerSecond": 4,
     "result": "No definite abrupt visible appearance identified in sampled windows",
     "limitations": "small/occluded actors, one-second admission bounds, approximate alignment and pre-existing depot attackers prevent excluding in-view spawn"
+  },
+  "lowAdmissionRefinement": {
+    "reviewedVideoSeconds": [
+      [
+        60,
+        64
+      ],
+      [
+        98,
+        102
+      ],
+      [
+        282,
+        286
+      ]
+    ],
+    "groups": [
+      "corn",
+      "farmhouse",
+      "depot"
+    ],
+    "framesPerSecond": 4,
+    "result": "No definite abrupt visible appearance identified in sampled windows",
+    "limitations": "dark crops, occlusion, other actors, 0.25-second gaps and approximate alignment prevent excluding in-view spawn"
   }
 }

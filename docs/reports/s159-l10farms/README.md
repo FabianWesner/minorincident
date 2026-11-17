@@ -36,6 +36,10 @@ The initial LOW shed count used all IDs seen over the run and included events be
 
 In the fresh HIGH event trace, a mapped depot Alpha pounce telegraph at tick 18527 had duration 0.6 s. The player moved 15.0 m over the surrounding sampled three-second window, with no recorded player damage or death in that window. This demonstrates survival during that observed window, but the sampled positions do not prove which attack missed or that the cue was seen. LOW mapped Alpha charge telegraphs occurred at tick 16747 (0.8 s; 25.33 total player damage and one death in the next three seconds) and tick 18298 (0.8 s; 10 total damage, no death, 15.5 m sampled movement). Damage events lack an attacker ID, and the first window includes checkpoint displacement, so neither damage nor movement can be assigned to the charge. These observations support a mixed outcome rather than a universal fairness judgment.
 
+## LOW admission refinement
+
+Opened four-frame-per-second LOW grids for seconds 60–64, 98–102 and 282–286 around first corn, farmhouse and depot actor samples; the shed window was reviewed separately below. No definite sudden visible appearance was identified in these sampled windows. The farmhouse crop is dark and partially obscured, and other actors are present near the road and depot; 0.25-second gaps and approximate alignment prevent ruling out in-view admissions.
+
 ## HIGH admission refinement
 
 Opened four-frame-per-second HIGH video grids for seconds 59–63, 99–103, 136–140 and 235–239 around the first sampled corn, farmhouse, shed and depot admissions respectively. No definite actor appearing abruptly in the visible play area was identified in these sampled windows. Actors and terrain are small or occluded, the exact admission is bounded by one-second observer samples, and video alignment is approximate; the review cannot rule out an in-view spawn between frames. The depot window contains existing attackers, making attribution particularly uncertain.
