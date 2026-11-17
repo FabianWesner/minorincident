@@ -817,5 +817,52 @@
     "method": "four frames one second apart per interval, inspected",
     "finding": "farm crowds and red circular cues in HIGH; farmhouse crowd and depot linear warning in LOW; player continues moving in later LOW depot frames",
     "limitation": "tick-to-video conversion inaccurate, including nominal corn sequence still at crash road; not exact peak or spawn proof"
+  },
+  "videoAlignment": {
+    "method": "image-difference match of timestamped driver screenshots to 1 fps video frames",
+    "offsetSecondsApprox": [
+      6,
+      8
+    ],
+    "highPairs": [
+      [
+        7177,
+        125
+      ],
+      [
+        8739,
+        151
+      ],
+      [
+        16742,
+        285
+      ]
+    ],
+    "lowPairs": [
+      [
+        7093,
+        125
+      ],
+      [
+        11791,
+        203
+      ],
+      [
+        18567,
+        316
+      ]
+    ],
+    "reviewedAt4Fps": {
+      "highSeconds": [
+        252,
+        256
+      ],
+      "lowSeconds": [
+        315,
+        319
+      ]
+    },
+    "observation": "linear red warning before large infected advances in both; HIGH player hit amid threats, LOW player moves away",
+    "limitation": "approximate alignment and overlapping threats prevent exact event or damage attribution"
   }
 }
