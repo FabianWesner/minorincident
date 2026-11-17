@@ -701,5 +701,55 @@
       }
     ],
     "limitation": "Damage has no attacker ID; sample windows do not prove cue visibility or specific attack outcome."
+  },
+  "simultaneousDownAudit": {
+    "definition": "samples where all authored slot IDs were present and HP <= 0; recoverable downs are not permanent clears",
+    "high": {
+      "corn-field-horde": {
+        "maximumDown": 12,
+        "total": 15,
+        "tick": 6239
+      },
+      "farmhouse-defense": {
+        "maximumDown": 10,
+        "total": 12,
+        "tick": 10799
+      },
+      "shed-field-crossing": {
+        "maximumDown": 12,
+        "total": 17,
+        "tick": 13439
+      },
+      "depot-alpha": {
+        "maximumDown": 9,
+        "total": 10,
+        "tick": 18899
+      }
+    },
+    "low": {
+      "corn-field-horde": {
+        "maximumDown": 4,
+        "total": 8,
+        "tick": 4981
+      },
+      "farmhouse-defense": {
+        "maximumDown": 10,
+        "total": 10,
+        "tick": 9421,
+        "releaseTick": 5701,
+        "secondsFromRelease": 62
+      },
+      "shed-field-crossing": {
+        "maximumDown": 11,
+        "total": 12,
+        "tick": 11581
+      },
+      "depot-alpha": {
+        "maximumDown": 7,
+        "total": 8,
+        "tick": 18841
+      }
+    },
+    "limitations": "One-second samples, checkpoint restoration and missing streamed actors can conceal or change outcomes."
   }
 }

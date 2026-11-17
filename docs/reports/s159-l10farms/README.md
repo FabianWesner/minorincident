@@ -1,5 +1,9 @@
 # S159 — L10 farm encounter qualification
 
+## Simultaneous down audit
+
+In the fresh event runs, the LOW farmhouse cohort is the only group sampled with every authored slot present and at zero HP: 10/10 at ticks 9421 and 9481, first observed 62 s after release sample 5701. These are recoverable downs, not permanent deaths. Among samples with the full cohort present, the greatest simultaneous down counts for corn/farmhouse/shed/depot were HIGH 12/15, 10/12, 12/17, 9/10 and LOW 4/8, 10/10, 11/12, 7/8. One-second sampling and streamed-out actors can conceal a simultaneous down; no permanent clear is established.
+
 ## First admission samples
 
 In the event follow-up, the first sampled release positions and first sampled actor bounds were as follows. Bounds are X and Z in metres and describe actors present at that sample, not necessarily the full eventual cohort. Admission may occur between samples.
