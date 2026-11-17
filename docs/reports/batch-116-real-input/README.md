@@ -1,6 +1,6 @@
 # Batch 116 real-input QA — incomplete acceptance
 
-Candidate `ea21b122b4e31f6fe866ba6ebe47ab6cb814e01b`. Report only. HIGH ran before LOW for each level, explicit `PLAYTEST_BACKEND=webgpu`, zoom 1.5. Logs contain `renderer: webgpu` receipts. All browser work used the pool through `tools/e2e-lock.sh`, headless Metal, one browser at a time, ports5049/5050, reservations no longer than ten minutes. Initial sandbox admission failures were overcome after permissions changed.
+Candidate `ea21b122b4e31f6fe866ba6ebe47ab6cb814e01b`. Report only. **Latest outcomes:** standard HIGH L4 and LOW L4 complete; HIGH L6 and aligned LOW L6 complete; HIGH L10 reaches inspected credits; LOW L10 passes depot. Earlier failed attempts remain below. HIGH ran before LOW for each level, explicit `PLAYTEST_BACKEND=webgpu`, zoom 1.5. Logs contain `renderer: webgpu` receipts. All browser work used the pool through `tools/e2e-lock.sh`, headless Metal, one browser at a time, ports5049/5050, reservations no longer than ten minutes. Initial sandbox admission failures were overcome after permissions changed.
 
 ## Results
 
@@ -52,3 +52,9 @@ Interior L4 brace markers at the bar objective are recorded drawn and pinVisible
 ## Deliberate L4 detour attempt
 
 `test-results/playtest/b116-high-l4-detours/`: at escape transition13558 near(-11.31,-16.44), submitted ten seconds physical KeyA+KeyW with ordinary combat through control.json. Opened `captures/continue-L4-north-side-street-attempt.jpg`: courier dead among heavy threats. This does not prove arrival at the authored side-street group; deliberate north/south encounter coverage stays open. Standard input resumed and the run subsequently completed. The original zero-escape-death run remains the clean standard-policy receipt.
+
+## Survivor audit and final coverage
+
+The JSON survivorLossAudit covers every final dead/turned ID in all three L6 runs, with first observed status tick, every retained grab tick, and loss-alarm positions when present. These distinguish observed turning/death from merely being left behind; no permanent geometry-stuck survivor is confirmed. Checkpoint restores repeat some trajectories, so counts use final cohorts rather than summing transitions. HIGH saves10/29; first LOW sample0 escaped with3 following at cap; aligned LOW saves2/29. Escort completion is demonstrably possible, but losing19–27 of29 remains a serious attrition concern. These assisted runs do not establish a reasonable-player survival rate.
+
+Deliverable audit: committed report, JSON below200KB and one82.9KB inspected sheet; HIGH-before-LOW passes retained for all three levels; explicit WebGPU receipts; both L4/L6 tiers have full completion evidence including failed attempts; HIGH L10 actual credits inspected and LOW past depot. Report findings retain capture paths/ticks and provisional severity. Open driver gaps are deliberate side-street fight proof, exterior cellar ring, exact medkit consumption, complete four-encounter fight/fairness qualification, and exact survivor killing-blow/continuous obstruction attribution. These are reported incomplete acceptance checks, not inferred passes. Only the three report artifacts differ from the candidate.
