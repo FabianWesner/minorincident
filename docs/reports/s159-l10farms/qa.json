@@ -40,25 +40,24 @@
   ],
   "observations": {
     "encounters": {
-      "farmhouse-defense": null,
-      "corn-field-horde": null,
-      "shed-field-crossing": null,
-      "depot-alpha": null
+      "farmhouse-defense": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples",
+      "corn-field-horde": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples",
+      "shed-field-crossing": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples",
+      "depot-alpha": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples"
     },
-    "travelThreatFreeIntervals": null,
-    "fairnessAndDistinctness": null,
-    "fourPanelSheet": null,
-    "sampleSheet": {
+    "travelThreatFreeIntervals": "sampled; see interReleaseQuietSamples and peakReview",
+    "fairnessAndDistinctness": "visible settings and emitted roles differ; universal fairness and spawn visibility remain unqualified",
+    "fourPanelSheet": {
       "path": "sample-sheet.jpg",
       "inspected": true,
       "tier": "high",
-      "ticks": [
-        8123,
-        5421,
-        10828,
-        18944
+      "captureTicks": [
+        4960,
+        7177,
+        11463,
+        18302
       ],
-      "limitation": "Periodic samples, not proven encounter peaks or attributed cohorts"
+      "limitation": "nearest available frames to sampled peaks; farmhouse comes from separate run"
     }
   },
   "sourceCensusOnly": {
@@ -88,8 +87,8 @@
   },
   "validation": {
     "qaBuild": "pass",
-    "realInput": "HIGH then LOW samples completed; encounter attribution incomplete",
-    "inspectedSheet": "missing",
+    "realInput": "HIGH then LOW real-input samples and attributed follow-ups completed; acceptance incomplete",
+    "inspectedSheet": "pass: four panels opened; nearest sampled peaks",
     "remoteUnitSuite": {
       "status": "pass",
       "runner": "46.225.66.90",
@@ -101,11 +100,20 @@
     "typecheck": "pass",
     "lint": "pass"
   },
-  "productFindings": [],
+  "productFindings": [
+    {
+      "severity": "P2",
+      "status": "provisional",
+      "description": "HIGH shed player death amid crowd and a separate LOW farmhouse retry loop; driver behavior and overlapping groups confound balance attribution.",
+      "capture": "test-results/playtest/s159-observed-high/captures/campaign-L10-t11463.jpg",
+      "tick": 11463
+    }
+  ],
   "driverGaps": [
-    "Periodic observations and captures do not identify encounter membership or reliably capture peaks.",
-    "No per-encounter damage, clear time, pickup ledger, or continuous threat-free intervals.",
-    "No inspected four-panel peak sheet."
+    "Exact admission frames and continuous visibility are missing.",
+    "Per-group damage attribution and permanent clear times are unproven because events overlap, downs recover, and actors stream.",
+    "Continuous telegraph, escape, and stuck assessment across all fights remains incomplete.",
+    "Threat-free intervals are sampled at about one-second cadence."
   ],
   "observedFollowup": {
     "method": "Temporary read-only browser-context observer; one-second samples; physical input; WebGPU zoom 1.5",
