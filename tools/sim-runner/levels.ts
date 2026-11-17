@@ -164,7 +164,8 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L4') {
       // E22: the shared L4 policy (ordinary inputs only), same as the browser bot.
-      const bot = new LevelFourBot(world, hooks?.l4Profile ?? generalPolicy), markerWalker = new Walker();
+      const bot = new LevelFourBot(world, hooks?.l4Profile ?? generalPolicy);
+      let observation = { x: 0, z: 0, tick: 0 }, recoveryUntil = 0, recoveryAttempt = 0;
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) {
         followFrustum(world);
         const escape = hooks?.l4VisibleMarker && world.missions!.state.l4?.phase === 'collapse';
@@ -173,7 +174,15 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
           const marker = markerAnchor(world.missions!), player = world.entities.get(1)!;
           if (marker) {
             const d = distance(player.transform, marker);
-            frame.move = markerWalker.step(world, marker, .25, `l4-visible-marker-${marker.x.toFixed(2)}-${marker.z.toFixed(2)}`) ?? { x: 0, z: 0 };
+            if (world.tick - observation.tick >= 120) {
+              if (Math.hypot(player.transform.x - observation.x, player.transform.z - observation.z) < .7) {
+                recoveryUntil = world.tick + 75; recoveryAttempt++;
+              } else if (world.tick >= recoveryUntil) recoveryAttempt = 0;
+              observation = { x: player.transform.x, z: player.transform.z, tick: world.tick };
+            }
+            const dx = marker.x - player.transform.x, dz = marker.z - player.transform.z, length = Math.hypot(dx, dz) || 1;
+            const turn = world.tick < recoveryUntil ? (recoveryAttempt % 2 ? Math.PI / 2 : -Math.PI / 2) : 0;
+            frame.move = { x: (dx * Math.cos(turn) - dz * Math.sin(turn)) / length, z: (dx * Math.sin(turn) + dz * Math.cos(turn)) / length };
             frame.interact = d <= (marker.radius ?? 1.4);
             const target = visibleThreats(world, player.transform, 5).find(e => world.infected!.director.inPlayerView(e.transform, 5));
             if (target) strikeAt(frame, target, distance(player.transform, target.transform) < 2.4 ? 'LEFT' : 'RIGHT', player.transform, false);
