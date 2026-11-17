@@ -36,6 +36,10 @@ The initial LOW shed count used all IDs seen over the run and included events be
 
 In the fresh HIGH event trace, a mapped depot Alpha pounce telegraph at tick 18527 had duration 0.6 s. The player moved 15.0 m over the surrounding sampled three-second window, with no recorded player damage or death in that window. This demonstrates survival during that observed window, but the sampled positions do not prove which attack missed or that the cue was seen. LOW mapped Alpha charge telegraphs occurred at tick 16747 (0.8 s; 25.33 total player damage and one death in the next three seconds) and tick 18298 (0.8 s; 10 total damage, no death, 15.5 m sampled movement). Damage events lack an attacker ID, and the first window includes checkpoint displacement, so neither damage nor movement can be assigned to the charge. These observations support a mixed outcome rather than a universal fairness judgment.
 
+## Admission-window video samples
+
+Opened one-frame-per-second sequences surrounding first actor samples in the continuous runs: HIGH video seconds 59–62, 99–102, 136–139 and 235–238; LOW 60–63, 98–101, 178–181 and 282–285, in corn/farmhouse/shed/depot order. No definite actor popping into view was identified in these sampled frames. LOW's shed sequence shows a group entering the visible crop area by second 181; the preceding frame does not establish whether they spawned there or approached between frames. The other views include occlusion and offscreen approaches. With one-second gaps and approximate video alignment, spawn-in-view remains unqualified; this is not an absence claim.
+
 ## Video alignment follow-up
 
 Matched timestamped driver screenshots against one-frame-per-second video extractions by image difference. Representative HIGH screenshot ticks 7177, 8739 and 16742 matched video frames at approximately 125, 151 and 285 seconds; LOW ticks 7093, 11791 and 18567 matched approximately 125, 203 and 316 seconds. This puts video roughly 6–8 seconds ahead of simulation tick/60, with about one-second matching resolution and possible capture pauses.
