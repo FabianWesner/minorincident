@@ -30,6 +30,12 @@ async function checkMortalCellarEscape(): Promise<void> {
     expect(nav.clear(door.x, door.z, .45), 'the cellar interaction anchor stays clear at the final approach').toBe(true);
     expect(nav.path(westHarbor, cellar, [], 100000), 'the final Harbor approach remains connected to the cellar door').toBeTruthy();
     const player = world.entities.get(1)!;
+    // Visible-input LOW reached this approach and stopped inside a ring only
+    // 14 cm away while the finer hint grid still required its exact cell.
+    Object.assign(player.transform, { x: -3.3777, z: 40.9899 });
+    const cornerMarker = markerAnchor(mission)!;
+    expect(Math.hypot(cornerMarker.x - player.transform.x, cornerMarker.z - player.transform.z), 'the corner ring leads onward instead of remaining under the courier').toBeGreaterThan(1.4);
+    expect(nav.forPlayer(.37, .25).visible(player.transform, cornerMarker, .35), 'the onward ring has a clear physical approach').toBe(true);
     Object.assign(player.transform, { x: -80, z: -40 });
     const finalMarker = markerAnchor(mission);
     expect(finalMarker, 'the last street turn exposes the cellar entrance').not.toBeNull();

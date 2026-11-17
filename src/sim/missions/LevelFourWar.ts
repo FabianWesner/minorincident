@@ -75,7 +75,17 @@ export class LevelFourWar {
     // Hints must use A*: routed movement owns the resumable nearest-reachable
     // flood. A second flood to the hint cancels the player's pending route
     // every frame at obstructed corners, including after a collapse respawn.
-    if (!nav.visible(p, next, survivor.radius)) nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000);
+    if (!nav.visible(p, next, survivor.radius)) {
+      nav.steer(p, next, this.cellarGuide, survivor.radius, next, 3000);
+      // A grid corner can be closer than the displayed ring's arrival area.
+      // Lead through it along the same clear bearing instead of asking the
+      // player to resolve the navigator's 12 cm cell tolerance.
+      const distance = dist(p, next);
+      if (distance > .01 && distance < .65) {
+        const onward = { x: p.x + (next.x - p.x) * 1.5 / distance, z: p.z + (next.z - p.z) * 1.5 / distance };
+        if (nav.visible(p, onward, survivor.radius)) Object.assign(next, onward);
+      }
+    }
   }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
