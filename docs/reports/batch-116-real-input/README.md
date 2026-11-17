@@ -66,3 +66,7 @@ Neither HIGH nor LOW retained L10 logs contain pickup/heal ledger keys. The game
 ## Validated HIGH pickup follow-up
 
 `test-results/playtest/b116-high-l10-pickups-validated/`: temporary read-only observer in /tmp, unchanged physical-input session; explicit L10 attachment receipt at tick0 and rifle/machete events validate event delivery. In480 seconds it recorded **1 medkit collection transaction(s)**, including tick18068 near(1516.56,-55.76),HP100 after collection. This count belongs to this follow-up, not the original full campaign. Raw event ledger is preserved and compact events are in JSON. No repository source/tool edited.
+
+## Validated LOW pickup follow-up
+
+`test-results/playtest/b116-low-l10-pickups-validated/`: validated L10 attachment and weapon pickup events;480-second mortal follow-up recorded **1 medkit transactions** and3 deaths. Repeated machete pickups near x936 reflect checkpoint retries. This is a sample-specific count, not retrospective accounting for the original LOW run that passed depot. Observer files stay raw/ignored; compact events are in JSON.

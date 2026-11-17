@@ -5919,6 +5919,215 @@
         }
       ],
       "scope": "480-second follow-up only; original campaign count unqualified"
+    },
+    {
+      "quality": "low",
+      "rawPath": "test-results/playtest/b116-low-l10-pickups-validated",
+      "events": [
+        {
+          "observerAttached": true,
+          "level": "L1",
+          "tick": 0
+        },
+        {
+          "observerAttached": true,
+          "level": "L10",
+          "tick": 0
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 2621,
+          "sourceId": 1,
+          "pickupId": 100,
+          "side": "RIGHT",
+          "actionId": "weapon.hunting-rifle",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 694.6917114257812,
+            "y": 0.7099999785423279,
+            "z": 21.98441505432129,
+            "yaw": -0.7853981633974484
+          },
+          "hp": 92.43333333333092
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 6385,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 935.8206176757812,
+            "y": 0.7099999785423279,
+            "z": -13.647241592407227,
+            "yaw": -3.333867543863455
+          },
+          "hp": 60
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 8419,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 935.8379516601562,
+            "y": 0.7099999785423279,
+            "z": -13.707293510437012,
+            "yaw": -0.4065804442610591
+          },
+          "hp": 100
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 10703,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 937.087158203125,
+            "y": 0.7099999785423279,
+            "z": -15.407540321350098,
+            "yaw": -1.9931156509114776
+          },
+          "hp": 30
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 12517,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 935.8295288085938,
+            "y": 0.7099999785423279,
+            "z": -13.549590110778809,
+            "yaw": -0.6155998773223219
+          },
+          "hp": 100
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 22112,
+          "id": 193,
+          "kind": "medkit",
+          "item": null,
+          "level": "L10",
+          "player": {
+            "x": 1516.427490234375,
+            "y": 0.7099999785423279,
+            "z": -55.664405822753906,
+            "yaw": 5.497787143782138
+          },
+          "hp": 100
+        }
+      ],
+      "medkitTransactions": 1,
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 478,
+          "maxNoProgressSeconds": 26.899,
+          "deaths": 3,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 20,
+            "weapon.hunting-rifle": 204,
+            "weapon.machete": 4
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 9,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 63\u00a0m",
+              "tick": 1773,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "restricted-zone",
+              "text": "Get through the restricted zone \u00b7 103\u00a0m",
+              "tick": 27622,
+              "marker": {
+                "anchor": "r4-r5-seam",
+                "ring": {
+                  "x": 2467,
+                  "y": 0,
+                  "z": -5
+                },
+                "drawn": [
+                  1960,
+                  0,
+                  16
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "scope": "480-second follow-up; original LOW campaign count remains unqualified"
     }
   ]
 }
