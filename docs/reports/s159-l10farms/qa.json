@@ -496,7 +496,173 @@
       "event mapping uses IDs seen in sampled ledger; ID reuse and checkpoint restoration can confound attribution",
       "telegraph event emission does not prove player saw it or could escape"
     ],
-    "correction": "Global ID matching previously included LOW shed events before release; time-local matching removes seven kill events and fourteen telegraphs."
+    "correction": "Global ID matching previously included LOW shed events before release; time-local matching removes seven kill events and fourteen telegraphs.",
+    "firstAdmissionSamples": {
+      "columns": [
+        "releaseTick",
+        "releasePlayerXZ",
+        "admissionSampleTick",
+        "admissionPlayerXZ",
+        "actorBoundsXminXmaxZminZmax",
+        "actorsInFirstSample"
+      ],
+      "high": {
+        "corn-field-horde": [
+          3359,
+          [
+            711.2,
+            19
+          ],
+          4739,
+          [
+            802.7,
+            27.5
+          ],
+          [
+            812.1,
+            853.5,
+            -0.9,
+            40.3
+          ],
+          13
+        ],
+        "farmhouse-defense": [
+          6359,
+          [
+            863.9,
+            -0.1
+          ],
+          6359,
+          [
+            863.9,
+            -0.1
+          ],
+          [
+            968.6,
+            988.1,
+            -9,
+            8.6
+          ],
+          5
+        ],
+        "shed-field-crossing": [
+          11279,
+          [
+            1007.2,
+            -33.5
+          ],
+          11279,
+          [
+            1007.2,
+            -33.5
+          ],
+          [
+            1098.8,
+            1138.4,
+            -53.4,
+            -15.3
+          ],
+          6
+        ],
+        "depot-alpha": [
+          17279,
+          [
+            1400.8,
+            -60.1
+          ],
+          17279,
+          [
+            1400.8,
+            -60.1
+          ],
+          [
+            1502.5,
+            1525.7,
+            -68.2,
+            -51.5
+          ],
+          10
+        ]
+      },
+      "low": {
+        "corn-field-horde": [
+          3241,
+          [
+            712.3,
+            20.1
+          ],
+          3241,
+          [
+            712.3,
+            20.1
+          ],
+          [
+            802.2,
+            843.3,
+            0,
+            38.2
+          ],
+          8
+        ],
+        "farmhouse-defense": [
+          5701,
+          [
+            865.6,
+            -2
+          ],
+          5701,
+          [
+            865.6,
+            -2
+          ],
+          [
+            967.3,
+            990.6,
+            -9.9,
+            6.6
+          ],
+          10
+        ],
+        "shed-field-crossing": [
+          9781,
+          [
+            1006.3,
+            -10.9
+          ],
+          9781,
+          [
+            1006.3,
+            -10.9
+          ],
+          [
+            1094.8,
+            1146.5,
+            -30.9,
+            7.3
+          ],
+          12
+        ],
+        "depot-alpha": [
+          15481,
+          [
+            1398.1,
+            -32
+          ],
+          15541,
+          [
+            1402.6,
+            -32
+          ],
+          [
+            1566.5,
+            1586,
+            -41,
+            -23.3
+          ],
+          8
+        ]
+      }
+    }
   },
   "cueFrameReview": {
     "frames": [

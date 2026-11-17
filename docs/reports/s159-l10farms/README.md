@@ -1,5 +1,18 @@
 # S159 — L10 farm encounter qualification
 
+## First admission samples
+
+In the event follow-up, the first sampled release positions and first sampled actor bounds were as follows. Bounds are X and Z in metres and describe actors present at that sample, not necessarily the full eventual cohort. Admission may occur between samples.
+
+| Group | HIGH release tick at player X,Z; first actor sample tick and X/Z bounds | LOW release tick at player X,Z; first actor sample tick and X/Z bounds |
+| --- | --- | --- |
+| Corn | 3359 at (711.2,19.0); 4739, X812.1–853.5 Z-0.9–40.3 (13 actors) | 3241 at (712.3,20.1); 3241, X802.2–843.3 Z0–38.2 (8) |
+| Farmhouse | 6359 at (863.9,-0.1); 6359, X968.6–988.1 Z-9.0–8.6 (5) | 5701 at (865.6,-2.0); 5701, X967.3–990.6 Z-9.9–6.6 (10) |
+| Shed | 11279 at (1007.2,-33.5); 11279, X1098.8–1138.4 Z-53.4–-15.3 (6) | 9781 at (1006.3,-10.9); 9781, X1094.8–1146.5 Z-30.9–7.3 (12) |
+| Depot | 17279 at (1400.8,-60.1); 17279, X1502.5–1525.7 Z-68.2–-51.5 (10) | 15481 at (1398.1,-32.0); 15541, X1566.5–1586.0 Z-41.0–-23.3 (8) |
+
+HIGH corn release preceded its first observed actor sample by 1380 ticks (23 s); this does not establish the reason for deferred admission. The formations enter ahead of the eastbound player in these samples, with the LOW depot offset east. Screen visibility at the exact admission frame remains unobserved.
+
 ## Kill and telegraph follow-up
 
 Fresh HIGH then LOW 480-second real-input WebGPU samples used a temporary read-only observer for `combat.kill` and `telegraph` events. Group IDs were mapped from one-second actor samples; captures are under `test-results/playtest/s159-events-high/` and `s159-events-low/`, and event traces are `/tmp/s159-events-high.jsonl` and `/tmp/s159-events-low.jsonl`. Events are matched to mapped, present IDs in the immediately preceding sample (at most 62 ticks); IDs and checkpoint restores can still confound attribution. A `downed` field means a recoverable knockdown, so these are not permanent-clear receipts.
