@@ -1,0 +1,6274 @@
+{
+  "candidate": "ea21b122b4e31f6fe866ba6ebe47ab6cb814e01b",
+  "status": "incomplete acceptance",
+  "backend": "webgpu",
+  "zoom": 1.5,
+  "runs": [
+    {
+      "name": "high-l4-live",
+      "rawPath": "test-results/playtest/b116-high-l4-live",
+      "segments": [
+        {
+          "log": "test-results/playtest/b116-high-l4-live/log-continue-L4.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Hold the west breach": 1,
+            "Hold the north breach": 3,
+            "Hold the south breach": 7,
+            "Run to the cellar via Lakeshore, Metro Road and Harbor Street": 9
+          },
+          "medkitReceipts": []
+        }
+      ],
+      "summary": {
+        "mode": "continue",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 540,
+            "simSeconds": 537,
+            "maxNoProgressSeconds": 22.816666666666666,
+            "deaths": 20,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 11,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1838,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0.7049999833106995,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2241,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 4\u00a0m",
+                "tick": 13651,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -4.125,
+                    "y": 0.7050990462303162,
+                    "z": 31.875
+                  },
+                  "drawn": [
+                    -4.13,
+                    0.05,
+                    31.88
+                  ],
+                  "playerY": 0.7050990462303162,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 1
+        }
+      }
+    },
+    {
+      "name": "low-l4",
+      "rawPath": "test-results/playtest/b116-low-l4",
+      "segments": [
+        {
+          "log": "test-results/playtest/b116-low-l4/log-continue-L4.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Hold the west breach": 4,
+            "Hold the south breach": 1,
+            "Hold the north breach": 4,
+            "Run to the cellar via Lakeshore, Metro Road and Harbor Street": 6
+          },
+          "medkitReceipts": []
+        }
+      ],
+      "summary": {
+        "mode": "continue",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 463,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 17.294,
+            "deaths": 15,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 1512
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 11,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1833,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0.7049999833106995,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2181,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 9\u00a0m",
+                "tick": 13592,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -4,
+                    "y": 0.7099999785423279,
+                    "z": 16
+                  },
+                  "drawn": [
+                    -4,
+                    0.05,
+                    16
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "bar",
+                "text": "Bar the cellar door \u00b7 5\u00a0m",
+                "tick": 27044,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": {
+                    "x": 74.6,
+                    "y": 0.8300000429153442,
+                    "z": -1.7999999999999998
+                  },
+                  "drawn": [
+                    74.6,
+                    0.05,
+                    -1.8
+                  ],
+                  "playerY": 0.8500000238418579,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "wait",
+                "text": "Stay down \u00b7 0:07 remaining",
+                "tick": 27198,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 0,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 0,
+          "P3": 0
+        }
+      }
+    },
+    {
+      "name": "high-l6",
+      "rawPath": "test-results/playtest/b116-high-l6",
+      "segments": [
+        {
+          "log": "test-results/playtest/b116-high-l6/log-continue-L6.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Cover the retreat through the tunnel": 4
+          },
+          "medkitReceipts": []
+        }
+      ],
+      "summary": {
+        "mode": "continue",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L6"
+        ],
+        "runs": [
+          {
+            "level": "L6",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 293,
+            "simSeconds": 285,
+            "maxNoProgressSeconds": 32.476,
+            "deaths": 4,
+            "assists": 1,
+            "attacks": {
+              "weapon.army-mg": 1633,
+              "weapon.fire-axe": 8
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "shelter",
+                "text": "Look around the shelter \u00b7 rest while you can",
+                "tick": 10,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "stop",
+                "text": "Stop the infected \u00b7 Retreat in 0:36",
+                "tick": 1996,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "retreat",
+                "text": "Cover the retreat through the tunnel \u00b7 245\u00a0m",
+                "tick": 3254,
+                "marker": {
+                  "anchor": "l6-next",
+                  "ring": {
+                    "x": 242,
+                    "y": 0.6,
+                    "z": 15
+                  },
+                  "drawn": [
+                    242,
+                    0.6,
+                    15
+                  ],
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "exit",
+                "text": "Bring the survivors into the night \u00b7 0/10 out \u00b7 30\u00a0m",
+                "tick": 16012,
+                "marker": {
+                  "anchor": "night-exit",
+                  "ring": {
+                    "x": 273,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    273,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 1,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "finalRoster": [
+        {
+          "id": 16,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 17,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 18,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 19,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 20,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 21,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 22,
+          "status": "turned",
+          "hp": 0
+        },
+        {
+          "id": 23,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 24,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 25,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 26,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 27,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 28,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 29,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 30,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 31,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 32,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 33,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 34,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 35,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 36,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 37,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 38,
+          "status": "out",
+          "hp": 60
+        },
+        {
+          "id": 39,
+          "status": "dead",
+          "hp": 0
+        },
+        {
+          "id": 40,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 41,
+          "status": "turned",
+          "hp": 0
+        },
+        {
+          "id": 42,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 43,
+          "status": "dead",
+          "hp": 0
+        },
+        {
+          "id": 44,
+          "status": "turned",
+          "hp": 60
+        }
+      ],
+      "escortEvents": [
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2037,
+          "id": 23,
+          "kind": "attack",
+          "position": {
+            "x": 8.577696547491266,
+            "z": -10.994311941407254
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2037,
+          "sourceId": 69,
+          "targetId": 23,
+          "variant": "inf.cashier",
+          "rescueUntil": 2097
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2071,
+          "sourceId": 67,
+          "targetId": 17,
+          "variant": "inf.cashier",
+          "rescueUntil": 2131
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2097,
+          "id": 23,
+          "kind": "lost",
+          "position": {
+            "x": 8.577603715113284,
+            "z": -10.994349118679855
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2100,
+          "sourceId": 59,
+          "targetId": 18,
+          "variant": "inf.cashier",
+          "rescueUntil": 2160
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2129,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2189
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2140,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2200
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2196,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2256
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2224,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2284
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2225,
+          "sourceId": 63,
+          "targetId": 17,
+          "variant": "inf.cashier",
+          "rescueUntil": 2285
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2234,
+          "sourceId": 59,
+          "targetId": 19,
+          "variant": "inf.cashier",
+          "rescueUntil": 2294
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2291,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2351
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2327,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2387
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2331,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2391
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2347,
+          "sourceId": 23,
+          "targetId": 30,
+          "variant": "inf.cashier",
+          "rescueUntil": 2407
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2381,
+          "sourceId": 59,
+          "targetId": 20,
+          "variant": "inf.cashier",
+          "rescueUntil": 2441
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2385,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2445
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2407,
+          "id": 30,
+          "kind": "lost",
+          "position": {
+            "x": 5.7943047986621625,
+            "z": -8.498631415368413
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2423,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2483
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2436,
+          "sourceId": 18,
+          "targetId": 27,
+          "variant": "inf.cashier",
+          "rescueUntil": 2496
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2459,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2519
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2481,
+          "sourceId": 17,
+          "targetId": 25,
+          "variant": "inf.cashier",
+          "rescueUntil": 2541
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2491,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2551
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2525,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2585
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2552,
+          "sourceId": 19,
+          "targetId": 28,
+          "variant": "inf.cashier",
+          "rescueUntil": 2612
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2586,
+          "sourceId": 19,
+          "targetId": 28,
+          "variant": "inf.cashier",
+          "rescueUntil": 2646
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2588,
+          "sourceId": 18,
+          "targetId": 35,
+          "variant": "inf.cashier",
+          "rescueUntil": 2648
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2603,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2663
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2607,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2667
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2608,
+          "sourceId": 17,
+          "targetId": 33,
+          "variant": "inf.cashier",
+          "rescueUntil": 2668
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2615,
+          "sourceId": 18,
+          "targetId": 35,
+          "variant": "inf.cashier",
+          "rescueUntil": 2675
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2634,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2694
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2681,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2741
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2701,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2761
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2709,
+          "id": 32,
+          "kind": "attack",
+          "position": {
+            "x": -7.101014011134899,
+            "z": -5.999145088417893
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2709,
+          "sourceId": 17,
+          "targetId": 32,
+          "variant": "inf.cashier",
+          "rescueUntil": 2769
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2748,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2808
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2769,
+          "id": 32,
+          "kind": "lost",
+          "position": {
+            "x": -7.101090464815614,
+            "z": -5.9990806304105915
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2777,
+          "sourceId": 25,
+          "targetId": 35,
+          "variant": "inf.cashier",
+          "rescueUntil": 2837
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2780,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2840
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2844,
+          "sourceId": 17,
+          "targetId": 40,
+          "variant": "inf.cashier",
+          "rescueUntil": 2904
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2883,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2943
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 3131,
+          "id": 42,
+          "kind": "attack",
+          "position": {
+            "x": -2.5020386714702103,
+            "z": -3.4949538335760755
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3131,
+          "sourceId": 32,
+          "targetId": 42,
+          "variant": "inf.cashier",
+          "rescueUntil": 3191
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3386,
+          "sourceId": 69,
+          "targetId": 22,
+          "variant": "inf.cashier",
+          "rescueUntil": 3446
+        },
+        {
+          "type": "infected.attack",
+          "tick": 3399,
+          "sourceId": 83,
+          "attackId": 1,
+          "targetId": 31,
+          "special": "shield",
+          "amount": 0
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 3446,
+          "id": 22,
+          "kind": "lost",
+          "position": {
+            "x": 5.201134402391868,
+            "z": -7.3659932731786
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3463,
+          "sourceId": 65,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3523
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 4685,
+          "id": 44,
+          "kind": "attack",
+          "position": {
+            "x": 33.459701091497855,
+            "z": 15.14122007282999
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4685,
+          "sourceId": 57,
+          "targetId": 44,
+          "variant": "inf.cashier",
+          "rescueUntil": 4745
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 4745,
+          "id": 44,
+          "kind": "lost",
+          "position": {
+            "x": 33.45980105217398,
+            "z": 15.141222876974904
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 5429,
+          "id": 42,
+          "kind": "attack",
+          "position": {
+            "x": 62.069197187537206,
+            "z": 15.67892607186845
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5429,
+          "sourceId": 69,
+          "targetId": 42,
+          "variant": "inf.cashier",
+          "rescueUntil": 5489
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5509,
+          "sourceId": 69,
+          "targetId": 42,
+          "variant": "inf.cashier",
+          "rescueUntil": 5569
+        },
+        {
+          "type": "infected.attack",
+          "tick": 5545,
+          "sourceId": 125,
+          "attackId": 45,
+          "targetId": 24,
+          "special": "armor",
+          "amount": 0
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 5569,
+          "id": 42,
+          "kind": "lost",
+          "position": {
+            "x": 64.15212288332602,
+            "z": 15.642688333361573
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5577,
+          "sourceId": 65,
+          "targetId": 34,
+          "variant": "inf.cashier",
+          "rescueUntil": 5637
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5581,
+          "sourceId": 92,
+          "targetId": 43,
+          "variant": "inf.cashier",
+          "rescueUntil": 5641
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5725,
+          "sourceId": 69,
+          "targetId": 22,
+          "variant": "inf.cashier",
+          "rescueUntil": 5785
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5751,
+          "sourceId": 84,
+          "targetId": 31,
+          "variant": "inf.cashier",
+          "rescueUntil": 5811
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 5785,
+          "id": 22,
+          "kind": "lost",
+          "position": {
+            "x": 5.537919545646565,
+            "z": -7.104383088563561
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 6984,
+          "id": 44,
+          "kind": "attack",
+          "position": {
+            "x": 32.250737354937684,
+            "z": 15.11308714203344
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 6984,
+          "sourceId": 17,
+          "targetId": 44,
+          "variant": "inf.cashier",
+          "rescueUntil": 7044
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 7044,
+          "id": 44,
+          "kind": "lost",
+          "position": {
+            "x": 32.250826823962576,
+            "z": 15.113042473324208
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7177,
+          "sourceId": 67,
+          "targetId": 37,
+          "variant": "inf.cashier",
+          "rescueUntil": 7237
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 7825,
+          "id": 42,
+          "kind": "attack",
+          "position": {
+            "x": 64.55646570888202,
+            "z": 15.653040682407996
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7825,
+          "sourceId": 65,
+          "targetId": 42,
+          "variant": "inf.cashier",
+          "rescueUntil": 7885
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 7885,
+          "id": 42,
+          "kind": "lost",
+          "position": {
+            "x": 64.55656290625744,
+            "z": 15.65301717346906
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 9185,
+          "id": 41,
+          "kind": "attack",
+          "position": {
+            "x": 114.30618695897394,
+            "z": 15.376142979259548
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 9185,
+          "sourceId": 102,
+          "targetId": 41,
+          "variant": "inf.cashier",
+          "rescueUntil": 9245
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 9245,
+          "id": 41,
+          "kind": "lost",
+          "position": {
+            "x": 114.30628420330156,
+            "z": 15.376166293219892
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 9507,
+          "sourceId": 144,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 9567
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 9559,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 133.61687627962442,
+            "z": 14.089115474834083
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 9559,
+          "sourceId": 142,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 9619
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 9995,
+          "id": 43,
+          "kind": "attack",
+          "position": {
+            "x": 144.87588362648927,
+            "z": 14.375101795717118
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 9995,
+          "sourceId": 40,
+          "targetId": 43,
+          "variant": "inf.cashier",
+          "rescueUntil": 10055
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 10055,
+          "id": 43,
+          "kind": "lost",
+          "position": {
+            "x": 144.87588362648927,
+            "z": 14.375101795717118
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 10375,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 163.4934382779918,
+            "z": 14.300951172582415
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10375,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10435
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10382,
+          "sourceId": 152,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10442
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10520,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10580
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10520,
+          "sourceId": 152,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10580
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10604,
+          "sourceId": 152,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10664
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10634,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10694
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 10688,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 167.07033091984766,
+            "z": 14.271692087266352
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10688,
+          "sourceId": 152,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10748
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10734,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10794
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 11438,
+          "id": 26,
+          "kind": "attack",
+          "position": {
+            "x": 190.22702720090115,
+            "z": 15.622541658745575
+          }
+        },
+        {
+          "type": "infected.attack",
+          "tick": 11438,
+          "sourceId": 163,
+          "attackId": 122,
+          "targetId": 26,
+          "special": "alpha",
+          "amount": 0
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 11476,
+          "sourceId": 144,
+          "targetId": 38,
+          "variant": "inf.cashier",
+          "rescueUntil": 11536
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 11742,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 165.01128208143749,
+            "z": 14.296883831107753
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 11742,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 11802
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 11770,
+          "sourceId": 152,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 11830
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 11778,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 11838
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 12973,
+          "id": 39,
+          "kind": "attack",
+          "position": {
+            "x": 206.1520214059771,
+            "z": 15.709156491430512
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 12973,
+          "sourceId": 94,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 13033
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13048,
+          "sourceId": 120,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 13108
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13073,
+          "sourceId": 169,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 13133
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13081,
+          "sourceId": 173,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 13141
+        },
+        {
+          "type": "infected.attack",
+          "tick": 13104,
+          "sourceId": 165,
+          "attackId": 170,
+          "targetId": 24,
+          "special": "armor",
+          "amount": 0
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 13108,
+          "id": 39,
+          "kind": "lost",
+          "position": {
+            "x": 208.29033394656204,
+            "z": 15.694237150566112
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 13387,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 165.2416135612282,
+            "z": 14.280805630541652
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13387,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 13447
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13409,
+          "sourceId": 152,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 13469
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13462,
+          "sourceId": 149,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 13522
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13499,
+          "sourceId": 152,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 13559
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 14204,
+          "id": 38,
+          "kind": "attack",
+          "position": {
+            "x": 188.51423108188277,
+            "z": 15.294971577083876
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14204,
+          "sourceId": 28,
+          "targetId": 38,
+          "variant": "inf.cashier",
+          "rescueUntil": 14264
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14261,
+          "sourceId": 144,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 14321
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14268,
+          "sourceId": 25,
+          "targetId": 38,
+          "variant": "inf.cashier",
+          "rescueUntil": 14328
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 14321,
+          "id": 39,
+          "kind": "lost",
+          "position": {
+            "x": 189.21512643960492,
+            "z": 14.859204902275904
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 14884,
+          "id": 38,
+          "kind": "attack",
+          "position": {
+            "x": 213.5040525725865,
+            "z": 14.256431914892854
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14884,
+          "sourceId": 140,
+          "targetId": 38,
+          "variant": "inf.cashier",
+          "rescueUntil": 14944
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 14944,
+          "id": 38,
+          "kind": "lost",
+          "position": {
+            "x": 213.5040525725865,
+            "z": 14.256431914892854
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14991,
+          "sourceId": 69,
+          "targetId": 36,
+          "variant": "inf.cashier",
+          "rescueUntil": 15051
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 15014,
+          "sourceId": 61,
+          "targetId": 34,
+          "variant": "inf.cashier",
+          "rescueUntil": 15074
+        },
+        {
+          "type": "infected.attack",
+          "tick": 15049,
+          "sourceId": 136,
+          "attackId": 197,
+          "targetId": 35,
+          "special": "alpha",
+          "amount": 0
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 15089,
+          "sourceId": 118,
+          "targetId": 35,
+          "variant": "inf.cashier",
+          "rescueUntil": 15149
+        }
+      ]
+    },
+    {
+      "name": "low-l6",
+      "rawPath": "test-results/playtest/b116-low-l6",
+      "segments": [
+        {
+          "log": "test-results/playtest/b116-low-l6/log-continue-L6.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Cover the retreat through the tunnel": 5,
+            "Bring the survivors into the night": 9
+          },
+          "medkitReceipts": []
+        }
+      ],
+      "summary": {
+        "mode": "continue",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L6"
+        ],
+        "runs": [
+          {
+            "level": "L6",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 478,
+            "maxNoProgressSeconds": 32.465,
+            "deaths": 14,
+            "assists": 1,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "shelter",
+                "text": "Look around the shelter \u00b7 rest while you can",
+                "tick": 11,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "stop",
+                "text": "Stop the infected \u00b7 Retreat in 0:36",
+                "tick": 1995,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "retreat",
+                "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+                "tick": 3262,
+                "marker": {
+                  "anchor": "l6-next",
+                  "ring": {
+                    "x": 242,
+                    "y": 0.6,
+                    "z": 15
+                  },
+                  "drawn": [
+                    242,
+                    0.6,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "exit",
+                "text": "Rejoin Marcus \u00b7 11 m",
+                "tick": 17520,
+                "marker": {
+                  "anchor": "night-exit",
+                  "ring": {
+                    "x": 273,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    273,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 1.590000033378601,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 1
+        }
+      },
+      "finalRoster": [
+        {
+          "id": 16,
+          "status": "following",
+          "hp": 60
+        },
+        {
+          "id": 17,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 18,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 19,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 20,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 21,
+          "status": "following",
+          "hp": 60
+        },
+        {
+          "id": 22,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 23,
+          "status": "turned",
+          "hp": 0
+        },
+        {
+          "id": 24,
+          "status": "dead",
+          "hp": 0
+        },
+        {
+          "id": 25,
+          "status": "turned",
+          "hp": 0
+        },
+        {
+          "id": 26,
+          "status": "following",
+          "hp": 60
+        },
+        {
+          "id": 27,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 28,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 29,
+          "status": "turned",
+          "hp": 0
+        },
+        {
+          "id": 30,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 31,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 32,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 33,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 34,
+          "status": "turned",
+          "hp": 0
+        },
+        {
+          "id": 35,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 36,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 37,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 38,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 39,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 40,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 41,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 42,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 43,
+          "status": "turned",
+          "hp": 60
+        },
+        {
+          "id": 44,
+          "status": "turned",
+          "hp": 60
+        }
+      ],
+      "escortEvents": [
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2037,
+          "id": 23,
+          "kind": "attack",
+          "position": {
+            "x": 8.577696547491266,
+            "z": -10.994311941407254
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2037,
+          "sourceId": 69,
+          "targetId": 23,
+          "variant": "inf.cashier",
+          "rescueUntil": 2097
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2071,
+          "sourceId": 67,
+          "targetId": 17,
+          "variant": "inf.cashier",
+          "rescueUntil": 2131
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2097,
+          "id": 23,
+          "kind": "lost",
+          "position": {
+            "x": 8.577603715113284,
+            "z": -10.994349118679855
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2100,
+          "sourceId": 59,
+          "targetId": 18,
+          "variant": "inf.cashier",
+          "rescueUntil": 2160
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2129,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2189
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2140,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2200
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2187,
+          "sourceId": 69,
+          "targetId": 30,
+          "variant": "inf.cashier",
+          "rescueUntil": 2247
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2196,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2256
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2224,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2284
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2225,
+          "sourceId": 63,
+          "targetId": 17,
+          "variant": "inf.cashier",
+          "rescueUntil": 2285
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2234,
+          "sourceId": 59,
+          "targetId": 19,
+          "variant": "inf.cashier",
+          "rescueUntil": 2294
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2291,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2351
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2327,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2387
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2331,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2391
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2381,
+          "sourceId": 59,
+          "targetId": 20,
+          "variant": "inf.cashier",
+          "rescueUntil": 2441
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2385,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2445
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2414,
+          "id": 27,
+          "kind": "attack",
+          "position": {
+            "x": -1.9994398681935361,
+            "z": -8.498994747345984
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2414,
+          "sourceId": 18,
+          "targetId": 27,
+          "variant": "inf.cashier",
+          "rescueUntil": 2474
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2423,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2483
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2441,
+          "id": 20,
+          "kind": "lost",
+          "position": {
+            "x": 1.2396157219551094,
+            "z": -10.983054414106103
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2459,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2519
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2491,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2551
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2496,
+          "sourceId": 17,
+          "targetId": 25,
+          "variant": "inf.cashier",
+          "rescueUntil": 2556
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2525,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2585
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2552,
+          "sourceId": 19,
+          "targetId": 28,
+          "variant": "inf.cashier",
+          "rescueUntil": 2612
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2566,
+          "sourceId": 18,
+          "targetId": 35,
+          "variant": "inf.cashier",
+          "rescueUntil": 2626
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2603,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2663
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2607,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2667
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2608,
+          "sourceId": 59,
+          "targetId": 22,
+          "variant": "inf.cashier",
+          "rescueUntil": 2668
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2623,
+          "sourceId": 17,
+          "targetId": 33,
+          "variant": "inf.cashier",
+          "rescueUntil": 2683
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2634,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2694
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2696,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2756
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2703,
+          "sourceId": 18,
+          "targetId": 43,
+          "variant": "inf.cashier",
+          "rescueUntil": 2763
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2724,
+          "sourceId": 17,
+          "targetId": 32,
+          "variant": "inf.cashier",
+          "rescueUntil": 2784
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2729,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2789
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2730,
+          "sourceId": 19,
+          "targetId": 37,
+          "variant": "inf.cashier",
+          "rescueUntil": 2790
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 2763,
+          "id": 43,
+          "kind": "lost",
+          "position": {
+            "x": -1.0982052933773125,
+            "z": -3.493812753318513
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2789,
+          "sourceId": 20,
+          "targetId": 30,
+          "variant": "inf.cashier",
+          "rescueUntil": 2849
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2794,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2854
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2795,
+          "sourceId": 27,
+          "targetId": 42,
+          "variant": "inf.cashier",
+          "rescueUntil": 2855
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2810,
+          "sourceId": 67,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2870
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2826,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2886
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2851,
+          "sourceId": 59,
+          "targetId": 44,
+          "variant": "inf.cashier",
+          "rescueUntil": 2911
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2859,
+          "sourceId": 17,
+          "targetId": 40,
+          "variant": "inf.cashier",
+          "rescueUntil": 2919
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2888,
+          "sourceId": 57,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 2948
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2922,
+          "sourceId": 19,
+          "targetId": 38,
+          "variant": "inf.cashier",
+          "rescueUntil": 2982
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 2956,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3016
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3042,
+          "sourceId": 33,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3102
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 3143,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": -8,
+            "z": -11
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3143,
+          "sourceId": 33,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3203
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3269,
+          "sourceId": 61,
+          "targetId": 41,
+          "variant": "inf.cashier",
+          "rescueUntil": 3329
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3288,
+          "sourceId": 33,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3348
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3327,
+          "sourceId": 38,
+          "targetId": 21,
+          "variant": "inf.cashier",
+          "rescueUntil": 3387
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3336,
+          "sourceId": 61,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 3396
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3398,
+          "sourceId": 38,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 3458
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3424,
+          "sourceId": 90,
+          "targetId": 41,
+          "variant": "inf.cashier",
+          "rescueUntil": 3484
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 3484,
+          "id": 41,
+          "kind": "lost",
+          "position": {
+            "x": 13.043596328642147,
+            "z": 2.7726198792001084
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3492,
+          "sourceId": 61,
+          "targetId": 26,
+          "variant": "inf.cashier",
+          "rescueUntil": 3552
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3516,
+          "sourceId": 61,
+          "targetId": 34,
+          "variant": "inf.cashier",
+          "rescueUntil": 3576
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3517,
+          "sourceId": 65,
+          "targetId": 31,
+          "variant": "inf.cashier",
+          "rescueUntil": 3577
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3561,
+          "sourceId": 38,
+          "targetId": 26,
+          "variant": "inf.cashier",
+          "rescueUntil": 3621
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3612,
+          "sourceId": 65,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3672
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3639,
+          "sourceId": 90,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 3699
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3644,
+          "sourceId": 92,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3704
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3678,
+          "sourceId": 98,
+          "targetId": 29,
+          "variant": "inf.cashier",
+          "rescueUntil": 3738
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3680,
+          "sourceId": 90,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3740
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3705,
+          "sourceId": 38,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3765
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3741,
+          "sourceId": 61,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3801
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 3805,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 6.083361709320888,
+            "z": 12.739903829006474
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3805,
+          "sourceId": 69,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3865
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3825,
+          "sourceId": 90,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3885
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3836,
+          "sourceId": 100,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3896
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3858,
+          "sourceId": 105,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 3918
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3861,
+          "sourceId": 92,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3921
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3866,
+          "sourceId": 38,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3926
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3900,
+          "sourceId": 107,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3960
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3905,
+          "sourceId": 90,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3965
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3907,
+          "sourceId": 98,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 3967
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 3918,
+          "id": 39,
+          "kind": "lost",
+          "position": {
+            "x": 2.7278535613010013,
+            "z": 15.888865106201003
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3920,
+          "sourceId": 100,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 3980
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3924,
+          "sourceId": 61,
+          "targetId": 36,
+          "variant": "inf.cashier",
+          "rescueUntil": 3984
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3952,
+          "sourceId": 110,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4012
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 3977,
+          "sourceId": 26,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4037
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4006,
+          "sourceId": 100,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4066
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4021,
+          "sourceId": 41,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4081
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4068,
+          "sourceId": 103,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4128
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 4610,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 34.82833675520982,
+            "z": 14.402961561480927
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4610,
+          "sourceId": 28,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4670
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4618,
+          "sourceId": 19,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4678
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4623,
+          "sourceId": 94,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4683
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4664,
+          "sourceId": 35,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4724
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4694,
+          "sourceId": 63,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4754
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4711,
+          "sourceId": 19,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4771
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4711,
+          "sourceId": 37,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4771
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4721,
+          "sourceId": 39,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4781
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4723,
+          "sourceId": 17,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 4783
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4875,
+          "sourceId": 90,
+          "targetId": 31,
+          "variant": "inf.cashier",
+          "rescueUntil": 4935
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 4935,
+          "id": 31,
+          "kind": "lost",
+          "position": {
+            "x": 10.956184369880262,
+            "z": 1.4242203625431011
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4961,
+          "sourceId": 30,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 5021
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4967,
+          "sourceId": 65,
+          "targetId": 34,
+          "variant": "inf.cashier",
+          "rescueUntil": 5027
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4973,
+          "sourceId": 40,
+          "targetId": 41,
+          "variant": "inf.cashier",
+          "rescueUntil": 5033
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4994,
+          "sourceId": 30,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 5054
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 4996,
+          "sourceId": 69,
+          "targetId": 29,
+          "variant": "inf.cashier",
+          "rescueUntil": 5056
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5086,
+          "sourceId": 90,
+          "targetId": 26,
+          "variant": "inf.cashier",
+          "rescueUntil": 5146
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 5137,
+          "sourceId": 65,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 5197
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 6156,
+          "id": 36,
+          "kind": "attack",
+          "position": {
+            "x": 35.26393365951858,
+            "z": 15.636657948714863
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 6156,
+          "sourceId": 38,
+          "targetId": 36,
+          "variant": "inf.cashier",
+          "rescueUntil": 6216
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 6600,
+          "id": 36,
+          "kind": "attack",
+          "position": {
+            "x": 51.696721421016555,
+            "z": 15.975219435088453
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 6600,
+          "sourceId": 102,
+          "targetId": 36,
+          "variant": "inf.cashier",
+          "rescueUntil": 6660
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 6660,
+          "id": 36,
+          "kind": "lost",
+          "position": {
+            "x": 51.69680670679491,
+            "z": 15.975167220760815
+          }
+        },
+        {
+          "type": "infected.attack",
+          "tick": 6770,
+          "sourceId": 124,
+          "attackId": 65,
+          "targetId": 21,
+          "special": "armor",
+          "amount": 0
+        },
+        {
+          "type": "infected.attack",
+          "tick": 6851,
+          "sourceId": 124,
+          "attackId": 70,
+          "targetId": 26,
+          "special": "armor",
+          "amount": 0
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 7298,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 79.8612887060445,
+            "z": 14.288075772112409
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7298,
+          "sourceId": 61,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 7358
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7322,
+          "sourceId": 22,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 7382
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7341,
+          "sourceId": 69,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 7401
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7348,
+          "sourceId": 94,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 7408
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7353,
+          "sourceId": 103,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 7413
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7545,
+          "sourceId": 90,
+          "targetId": 31,
+          "variant": "inf.cashier",
+          "rescueUntil": 7605
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 7605,
+          "id": 31,
+          "kind": "lost",
+          "position": {
+            "x": 10.804429667102472,
+            "z": 1.898648802672967
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7648,
+          "sourceId": 30,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 7708
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7665,
+          "sourceId": 69,
+          "targetId": 41,
+          "variant": "inf.cashier",
+          "rescueUntil": 7725
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7670,
+          "sourceId": 65,
+          "targetId": 29,
+          "variant": "inf.cashier",
+          "rescueUntil": 7730
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7675,
+          "sourceId": 38,
+          "targetId": 34,
+          "variant": "inf.cashier",
+          "rescueUntil": 7735
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7706,
+          "sourceId": 90,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 7766
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7815,
+          "sourceId": 69,
+          "targetId": 34,
+          "variant": "inf.cashier",
+          "rescueUntil": 7875
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7863,
+          "sourceId": 100,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 7923
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7863,
+          "sourceId": 102,
+          "targetId": 34,
+          "variant": "inf.cashier",
+          "rescueUntil": 7923
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 7923,
+          "id": 34,
+          "kind": "lost",
+          "position": {
+            "x": 5.179268560883517,
+            "z": 7.470615782747984
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 7940,
+          "sourceId": 103,
+          "targetId": 39,
+          "variant": "inf.cashier",
+          "rescueUntil": 8000
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 8693,
+          "id": 21,
+          "kind": "attack",
+          "position": {
+            "x": 29.595352781832652,
+            "z": 15.803471869941246
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 8693,
+          "sourceId": 119,
+          "targetId": 21,
+          "variant": "inf.cashier",
+          "rescueUntil": 8753
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 8747,
+          "sourceId": 116,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 8807
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 9135,
+          "id": 36,
+          "kind": "attack",
+          "position": {
+            "x": 43.180503024677414,
+            "z": 15.813120133541412
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 9135,
+          "sourceId": 90,
+          "targetId": 36,
+          "variant": "inf.cashier",
+          "rescueUntil": 9195
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 9195,
+          "id": 36,
+          "kind": "lost",
+          "position": {
+            "x": 43.1805956501873,
+            "z": 15.813082443822408
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 10862,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 108.93194498087482,
+            "z": 14.151252721569247
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10862,
+          "sourceId": 145,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 10922
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 10964,
+          "sourceId": 145,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 11024
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 11926,
+          "id": 24,
+          "kind": "attack",
+          "position": {
+            "x": 146.7468296514875,
+            "z": 16.024425023370636
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 11926,
+          "sourceId": 138,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 11986
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 11943,
+          "sourceId": 157,
+          "targetId": 26,
+          "variant": "inf.cashier",
+          "rescueUntil": 12003
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 11986,
+          "id": 24,
+          "kind": "lost",
+          "position": {
+            "x": 146.7468296514875,
+            "z": 16.024425023370636
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 13183,
+          "id": 24,
+          "kind": "attack",
+          "position": {
+            "x": 187.63899830228033,
+            "z": 15.66171237341566
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 13183,
+          "sourceId": 25,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 13243
+        },
+        {
+          "type": "infected.attack",
+          "tick": 13230,
+          "sourceId": 170,
+          "attackId": 195,
+          "targetId": 16,
+          "special": "alpha",
+          "amount": 0
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 13243,
+          "id": 24,
+          "kind": "lost",
+          "position": {
+            "x": 187.63899830228033,
+            "z": 15.66171237341566
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 14415,
+          "id": 24,
+          "kind": "attack",
+          "position": {
+            "x": 193.93447184213957,
+            "z": 15.747870860399166
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14415,
+          "sourceId": 162,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 14475
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 14808,
+          "id": 26,
+          "kind": "attack",
+          "position": {
+            "x": 209.3870448072554,
+            "z": 15.046306594555809
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14808,
+          "sourceId": 34,
+          "targetId": 26,
+          "variant": "inf.cashier",
+          "rescueUntil": 14868
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14830,
+          "sourceId": 174,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 14890
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 14836,
+          "sourceId": 40,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 14896
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 14868,
+          "id": 26,
+          "kind": "lost",
+          "position": {
+            "x": 209.3870448072554,
+            "z": 15.046306594555809
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 15220,
+          "id": 24,
+          "kind": "attack",
+          "position": {
+            "x": 164.51327676948176,
+            "z": 15.521951769003195
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 15220,
+          "sourceId": 107,
+          "targetId": 24,
+          "variant": "inf.cashier",
+          "rescueUntil": 15280
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 15280,
+          "id": 24,
+          "kind": "lost",
+          "position": {
+            "x": 164.51327676948176,
+            "z": 15.521951769003195
+          }
+        },
+        {
+          "type": "l7.follower-alarm",
+          "tick": 16411,
+          "id": 16,
+          "kind": "attack",
+          "position": {
+            "x": 210.17503439815457,
+            "z": 14.336943184959363
+          }
+        },
+        {
+          "type": "civilian.grabbed",
+          "tick": 16411,
+          "sourceId": 94,
+          "targetId": 16,
+          "variant": "inf.cashier",
+          "rescueUntil": 16471
+        }
+      ]
+    },
+    {
+      "name": "high-l10",
+      "rawPath": "test-results/playtest/b116-high-l10",
+      "segments": [
+        {
+          "log": "test-results/playtest/b116-high-l10/log-campaign-2.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Get through the restricted zone": 3
+          },
+          "medkitReceipts": []
+        },
+        {
+          "log": "test-results/playtest/b116-high-l10/log-campaign-3.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Activate the dispersal console": 1
+          },
+          "medkitReceipts": []
+        },
+        {
+          "log": "test-results/playtest/b116-high-l10/log-campaign.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Find a way through the farms": 5,
+            "Get through the restricted zone": 1
+          },
+          "medkitReceipts": []
+        }
+      ],
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L10"
+        ],
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 477,
+            "maxNoProgressSeconds": 27.083333333333332,
+            "deaths": 6,
+            "assists": 0,
+            "attacks": {
+              "weapon.fire-axe": 36,
+              "weapon.hunting-rifle": 214,
+              "weapon.machete": 2
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.molotov"
+            ],
+            "steps": [
+              {
+                "id": "crash",
+                "text": "Get away from the river \u00b7 101\u00a0m",
+                "tick": 9,
+                "marker": {
+                  "anchor": "river-exit",
+                  "ring": {
+                    "x": 647,
+                    "y": 0,
+                    "z": -12.5
+                  },
+                  "drawn": [
+                    647,
+                    0,
+                    -12.5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "farmstead",
+                "text": "Find a way through the farms \u00b7 64\u00a0m",
+                "tick": 2160,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    698,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "restricted-zone",
+                "text": "Get through the restricted zone \u00b7 104\u00a0m",
+                "tick": 26649,
+                "marker": {
+                  "anchor": "r4-r5-seam",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    1960,
+                    0,
+                    16
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 477,
+            "maxNoProgressSeconds": 51.38,
+            "deaths": 3,
+            "assists": 0,
+            "attacks": {
+              "weapon.hunting-rifle": 16,
+              "weapon.assault-rifle": 717,
+              "weapon.rocket-launcher": 49,
+              "weapon.army-mg": 265
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.molotov"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fists",
+              "weapon.kick",
+              "weapon.bat",
+              "weapon.machete",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.molotov",
+              "weapon.assault-rifle",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb",
+              "weapon.shotgun",
+              "ability.corgi-lure",
+              "weapon.nail-gun",
+              "weapon.flashbang",
+              "weapon.flamethrower"
+            ],
+            "steps": [
+              {
+                "id": "restricted-zone",
+                "text": "Get through the restricted zone \u00b7 21\u00a0m",
+                "tick": 0,
+                "marker": {
+                  "anchor": "r4-r5-seam",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    1960,
+                    0,
+                    16
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-hangar",
+                "text": "Enter the hangar \u00b7 250\u00a0m",
+                "tick": 12736,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2707,
+                    "y": 0,
+                    "z": 59
+                  },
+                  "drawn": [
+                    2707,
+                    0,
+                    59
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research",
+                "text": "Enter the hangar \u00b7 11\u00a0m",
+                "tick": 17088,
+                "marker": {
+                  "anchor": "cure-terminal",
+                  "ring": {
+                    "x": 2699,
+                    "y": 0,
+                    "z": 66
+                  },
+                  "drawn": [
+                    2699,
+                    0,
+                    66
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "cure",
+                "text": "Bring the cure to the dispersal complex \u00b7 6\u00a0m",
+                "tick": 20447,
+                "marker": {
+                  "anchor": "cure-canister",
+                  "ring": {
+                    "x": 2705,
+                    "y": 0,
+                    "z": 66
+                  },
+                  "drawn": [
+                    2705,
+                    0,
+                    66
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-exit",
+                "text": "Bring the cure to the dispersal complex \u00b7 105\u00a0m",
+                "tick": 20549,
+                "marker": {
+                  "anchor": "cure-research",
+                  "ring": {
+                    "x": 2807,
+                    "y": 0,
+                    "z": 45
+                  },
+                  "drawn": [
+                    2807,
+                    0,
+                    45
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "delivery-corridor",
+                "text": "Bring the cure to the dispersal complex \u00b7 141\u00a0m",
+                "tick": 22480,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex \u00b7 760\u00a0m",
+                "tick": 25115,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 6,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 6,
+          "P3": 0
+        }
+      }
+    },
+    {
+      "name": "low-l10",
+      "rawPath": "test-results/playtest/b116-low-l10",
+      "segments": [
+        {
+          "log": "test-results/playtest/b116-low-l10/log-campaign-2.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Get through the restricted zone": 1
+          }
+        },
+        {
+          "log": "test-results/playtest/b116-low-l10/log-campaign.jsonl",
+          "renderer": [
+            "webgpu"
+          ],
+          "deathsByLatestHud": {
+            "Find a way through the farms": 1,
+            "Get through the restricted zone": 1
+          }
+        }
+      ],
+      "depotCoverage": "cleared farms; segment2 restricted-zone at x2206.9 tick1291",
+      "savedSegments": [
+        {
+          "level": "L10",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 481,
+          "simSeconds": 478,
+          "maxNoProgressSeconds": 29.766666666666666,
+          "deaths": 2,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 33,
+            "weapon.hunting-rifle": 205
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.flashbang"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 0,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.705,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 64\u00a0m",
+              "tick": 2129,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "restricted-zone",
+              "text": "Get through the restricted zone \u00b7 104\u00a0m",
+              "tick": 22951,
+              "marker": {
+                "anchor": "r4-r5-seam",
+                "ring": {
+                  "x": 2467,
+                  "y": 0,
+                  "z": -5
+                },
+                "drawn": [
+                  1960,
+                  0,
+                  16
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L10"
+        ],
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 481,
+            "simSeconds": 478,
+            "maxNoProgressSeconds": 29.766666666666666,
+            "deaths": 2,
+            "assists": 0,
+            "attacks": {
+              "weapon.fire-axe": 33,
+              "weapon.hunting-rifle": 205
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.flashbang"
+            ],
+            "steps": [
+              {
+                "id": "crash",
+                "text": "Get away from the river \u00b7 101\u00a0m",
+                "tick": 0,
+                "marker": {
+                  "anchor": "river-exit",
+                  "ring": {
+                    "x": 647,
+                    "y": 0,
+                    "z": -12.5
+                  },
+                  "drawn": [
+                    647,
+                    0,
+                    -12.5
+                  ],
+                  "playerY": 0.705,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "farmstead",
+                "text": "Find a way through the farms \u00b7 64\u00a0m",
+                "tick": 2129,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    698,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "restricted-zone",
+                "text": "Get through the restricted zone \u00b7 104\u00a0m",
+                "tick": 22951,
+                "marker": {
+                  "anchor": "r4-r5-seam",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    1960,
+                    0,
+                    16
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              }
+            ]
+          },
+          {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 480,
+            "simSeconds": 478,
+            "maxNoProgressSeconds": 52.13333333333333,
+            "deaths": 1,
+            "assists": 0,
+            "attacks": {
+              "weapon.hunting-rifle": 109,
+              "weapon.rocket-launcher": 78,
+              "weapon.army-mg": 131
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.flashbang"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fists",
+              "weapon.kick",
+              "weapon.bat",
+              "weapon.machete",
+              "weapon.fire-axe",
+              "weapon.hunting-rifle",
+              "weapon.machete",
+              "weapon.flashbang",
+              "weapon.molotov",
+              "weapon.handgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb",
+              "weapon.shotgun",
+              "ability.corgi-lure",
+              "weapon.nail-gun",
+              "weapon.assault-rifle",
+              "weapon.flamethrower"
+            ],
+            "steps": [
+              {
+                "id": "restricted-zone",
+                "text": "Get through the restricted zone \u00b7 197\u00a0m",
+                "tick": 0,
+                "marker": {
+                  "anchor": "r4-r5-seam",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    1960,
+                    0,
+                    16
+                  ],
+                  "playerY": 0.7089999914169312,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-hangar",
+                "text": "Enter the hangar \u00b7 250\u00a0m",
+                "tick": 7923,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2707,
+                    "y": 0,
+                    "z": 59
+                  },
+                  "drawn": [
+                    2707,
+                    0,
+                    59
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research",
+                "text": "Enter the hangar \u00b7 11\u00a0m",
+                "tick": 12293,
+                "marker": {
+                  "anchor": "cure-terminal",
+                  "ring": {
+                    "x": 2699,
+                    "y": 0,
+                    "z": 66
+                  },
+                  "drawn": [
+                    2699,
+                    0,
+                    66
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "cure",
+                "text": "Bring the cure to the dispersal complex \u00b7 6\u00a0m",
+                "tick": 15650,
+                "marker": {
+                  "anchor": "cure-canister",
+                  "ring": {
+                    "x": 2705,
+                    "y": 0,
+                    "z": 66
+                  },
+                  "drawn": [
+                    2705,
+                    0,
+                    66
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-exit",
+                "text": "Bring the cure to the dispersal complex \u00b7 105\u00a0m",
+                "tick": 15755,
+                "marker": {
+                  "anchor": "cure-research",
+                  "ring": {
+                    "x": 2807,
+                    "y": 0,
+                    "z": 45
+                  },
+                  "drawn": [
+                    2807,
+                    0,
+                    45
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "delivery-corridor",
+                "text": "Bring the cure to the dispersal complex \u00b7 141\u00a0m",
+                "tick": 17692,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex \u00b7 760\u00a0m",
+                "tick": 20191,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 6,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 6,
+          "P3": 0
+        }
+      },
+      "closed": true
+    },
+    {
+      "name": "high-l4-standard",
+      "rawPath": "test-results/playtest/b116-high-l4-standard",
+      "summary": {
+        "mode": "continue",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 257,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 9.966,
+            "deaths": 5,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 1681
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 11,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": {
+                    "x": -17,
+                    "y": 0,
+                    "z": 3
+                  },
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1835,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2098,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 12\u00a0m",
+                "tick": 13507,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -79.29999999999998,
+                    "y": 0,
+                    "z": -45.2801
+                  },
+                  "drawn": [
+                    -23.13,
+                    0.05,
+                    -19.88
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "bar",
+                "text": "Bar the cellar door \u00b7 5\u00a0m",
+                "tick": 14652,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": {
+                    "x": 74.6,
+                    "y": 0,
+                    "z": -1.7999999999999998
+                  },
+                  "drawn": [
+                    74.6,
+                    0.05,
+                    -1.8
+                  ],
+                  "playerY": 0.8500000238418579,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "wait",
+                "text": "Stay down \u00b7 0:07 remaining",
+                "tick": 14782,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 2,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 2,
+          "P3": 0
+        }
+      },
+      "escapeDeaths": 0,
+      "defenseDeaths": 5,
+      "renderer": "webgpu",
+      "hideTick": 13507,
+      "cellarBarTick": 14652
+    },
+    {
+      "name": "low-l6-aligned-retry",
+      "rawPath": "test-results/playtest/b116-low-l6-align",
+      "summary": {
+        "mode": "continue",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L6"
+        ],
+        "runs": [
+          {
+            "level": "L6",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 323,
+            "simSeconds": 315,
+            "maxNoProgressSeconds": 32.617,
+            "deaths": 4,
+            "assists": 1,
+            "attacks": {
+              "weapon.army-mg": 1683,
+              "weapon.fire-axe": 33
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "shelter",
+                "text": "Look around the shelter \u00b7 rest while you can",
+                "tick": 11,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "stop",
+                "text": "Stop the infected \u00b7 Retreat in 0:36",
+                "tick": 2005,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "retreat",
+                "text": "The group waits: cover the rear from the infected \u00b7 239\u00a0m",
+                "tick": 3253,
+                "marker": {
+                  "anchor": "exit-platform",
+                  "ring": {
+                    "x": 242,
+                    "y": 0.6,
+                    "z": 15
+                  },
+                  "drawn": [
+                    242,
+                    0.6,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "exit",
+                "text": "Rejoin Marcus \u00b7 15 m",
+                "tick": 15053,
+                "marker": {
+                  "anchor": "night-exit",
+                  "ring": {
+                    "x": 273,
+                    "y": 3.9,
+                    "z": 15
+                  },
+                  "drawn": [
+                    273,
+                    3.9,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 1,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "completion": {
+        "rescued": 2,
+        "survivorsIn": 29,
+        "survivorsLost": 27,
+        "deaths": 4
+      },
+      "manualInput": {
+        "tick": 15142,
+        "keys": [
+          "KeyA",
+          "KeyS"
+        ],
+        "ms": 527
+      }
+    },
+    {
+      "name": "high-l4-failed-detour",
+      "rawPath": "test-results/playtest/b116-high-l4-detours",
+      "summary": {
+        "mode": "continue",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "high",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L4"
+        ],
+        "runs": [
+          {
+            "level": "L4",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 393,
+            "simSeconds": 0,
+            "maxNoProgressSeconds": 19.191,
+            "deaths": 14,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 1757
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.kick",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "ability.corgi-lure"
+            ],
+            "steps": [
+              {
+                "id": "ride",
+                "text": "",
+                "tick": 11,
+                "marker": {
+                  "anchor": "l4-plaza",
+                  "ring": {
+                    "x": -17,
+                    "y": 0,
+                    "z": 3
+                  },
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "quartermaster",
+                "text": "Report to the quartermaster \u00b7 10\u00a0m",
+                "tick": 1835,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": {
+                    "x": -23.2,
+                    "y": 0,
+                    "z": 0.6
+                  },
+                  "drawn": [
+                    -23.2,
+                    0.05,
+                    0.6
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+                "tick": 2098,
+                "marker": {
+                  "anchor": "l4-quartermaster",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "hide",
+                "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 10\u00a0m",
+                "tick": 13509,
+                "marker": {
+                  "anchor": "l4-cellar-door",
+                  "ring": {
+                    "x": -79.29999999999998,
+                    "y": 0,
+                    "z": -45.2801
+                  },
+                  "drawn": [
+                    -40.38,
+                    0,
+                    -18.63
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "bar",
+                "text": "Bar the cellar door \u00b7 5\u00a0m",
+                "tick": 22815,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": {
+                    "x": 74.6,
+                    "y": 0,
+                    "z": -1.7999999999999998
+                  },
+                  "drawn": [
+                    74.6,
+                    0.05,
+                    -1.8
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "wait",
+                "text": "Stay down \u00b7 0:07 remaining",
+                "tick": 22954,
+                "marker": {
+                  "anchor": "l4-brace",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 3,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 3,
+          "P3": 0
+        }
+      },
+      "manualInput": {
+        "keys": [
+          "KeyA",
+          "KeyW"
+        ],
+        "ms": 10000,
+        "combat": true,
+        "result": "death; resumed standard input; no side-street proof"
+      }
+    }
+  ],
+  "validation": {
+    "qaBuild": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "remoteSuite": "unchanged retry passed: 105 passed, 1 skipped; 183.9 seconds; first attempt timeout"
+  },
+  "creditsEvidence": "b116-high-l10/captures/campaign-3-L10-t27061.jpg opened: actual Credits; driver ending timeout",
+  "additionalReview": {
+    "highFarmFramesOpened": [
+      5413,
+      8117,
+      10823,
+      13530,
+      16250,
+      18955,
+      21671,
+      24381
+    ],
+    "limits": "mosaic plus full-size5413; distinct spaces, not every authored fight or attack fairness",
+    "l4InteriorRing": "bar objective drawn and pinVisible both completed tiers; exterior ring unverified"
+  },
+  "survivorLossAudit": [
+    {
+      "run": "high-l6",
+      "finalCounts": {
+        "out": 10,
+        "turned": 17,
+        "dead": 2
+      },
+      "losses": [
+        {
+          "id": 17,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2310,
+          "lossAlarms": [],
+          "grabTicks": [
+            2071,
+            2225
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 18,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2190,
+          "lossAlarms": [],
+          "grabTicks": [
+            2100
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 19,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2310,
+          "lossAlarms": [],
+          "grabTicks": [
+            2234
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 20,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2460,
+          "lossAlarms": [],
+          "grabTicks": [
+            2381
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 22,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3450,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 3446,
+              "id": 22,
+              "kind": "lost",
+              "position": {
+                "x": 5.201134402391868,
+                "z": -7.3659932731786
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 5785,
+              "id": 22,
+              "kind": "lost",
+              "position": {
+                "x": 5.537919545646565,
+                "z": -7.104383088563561
+              }
+            }
+          ],
+          "grabTicks": [
+            3386,
+            5725
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 23,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2100,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2097,
+              "id": 23,
+              "kind": "lost",
+              "position": {
+                "x": 8.577603715113284,
+                "z": -10.994349118679855
+              }
+            }
+          ],
+          "grabTicks": [
+            2037
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 25,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2550,
+          "lossAlarms": [],
+          "grabTicks": [
+            2481
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 27,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2520,
+          "lossAlarms": [],
+          "grabTicks": [
+            2436
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 28,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2670,
+          "lossAlarms": [],
+          "grabTicks": [
+            2552,
+            2586
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 30,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2430,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2407,
+              "id": 30,
+              "kind": "lost",
+              "position": {
+                "x": 5.7943047986621625,
+                "z": -8.498631415368413
+              }
+            }
+          ],
+          "grabTicks": [
+            2347
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 32,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2790,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2769,
+              "id": 32,
+              "kind": "lost",
+              "position": {
+                "x": -7.101090464815614,
+                "z": -5.9990806304105915
+              }
+            }
+          ],
+          "grabTicks": [
+            2709
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 33,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2670,
+          "lossAlarms": [],
+          "grabTicks": [
+            2608
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 37,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 7260,
+          "lossAlarms": [],
+          "grabTicks": [
+            7177
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 39,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 13110,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 13108,
+              "id": 39,
+              "kind": "lost",
+              "position": {
+                "x": 208.29033394656204,
+                "z": 15.694237150566112
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 14321,
+              "id": 39,
+              "kind": "lost",
+              "position": {
+                "x": 189.21512643960492,
+                "z": 14.859204902275904
+              }
+            }
+          ],
+          "grabTicks": [
+            12973,
+            13048,
+            14261
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 40,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2910,
+          "lossAlarms": [],
+          "grabTicks": [
+            2844
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 41,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 9270,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 9245,
+              "id": 41,
+              "kind": "lost",
+              "position": {
+                "x": 114.30628420330156,
+                "z": 15.376166293219892
+              }
+            }
+          ],
+          "grabTicks": [
+            9185
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 42,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 5580,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 5569,
+              "id": 42,
+              "kind": "lost",
+              "position": {
+                "x": 64.15212288332602,
+                "z": 15.642688333361573
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 7885,
+              "id": 42,
+              "kind": "lost",
+              "position": {
+                "x": 64.55656290625744,
+                "z": 15.65301717346906
+              }
+            }
+          ],
+          "grabTicks": [
+            3131,
+            5429,
+            5509,
+            7825
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 43,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 10080,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 10055,
+              "id": 43,
+              "kind": "lost",
+              "position": {
+                "x": 144.87588362648927,
+                "z": 14.375101795717118
+              }
+            }
+          ],
+          "grabTicks": [
+            5581,
+            9995
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 44,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 4770,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 4745,
+              "id": 44,
+              "kind": "lost",
+              "position": {
+                "x": 33.45980105217398,
+                "z": 15.141222876974904
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 7044,
+              "id": 44,
+              "kind": "lost",
+              "position": {
+                "x": 32.250826823962576,
+                "z": 15.113042473324208
+              }
+            }
+          ],
+          "grabTicks": [
+            4685,
+            6984
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        }
+      ],
+      "limits": "checkpoint resets may repeat/reverse transitions; loss alarm positions prove event location, not continuous obstruction history"
+    },
+    {
+      "run": "low-l6",
+      "finalCounts": {
+        "following": 3,
+        "turned": 25,
+        "dead": 1
+      },
+      "losses": [
+        {
+          "id": 17,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2310,
+          "lossAlarms": [],
+          "grabTicks": [
+            2071,
+            2225
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 18,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2190,
+          "lossAlarms": [],
+          "grabTicks": [
+            2100
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 19,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2310,
+          "lossAlarms": [],
+          "grabTicks": [
+            2234
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 20,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2460,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2441,
+              "id": 20,
+              "kind": "lost",
+              "position": {
+                "x": 1.2396157219551094,
+                "z": -10.983054414106103
+              }
+            }
+          ],
+          "grabTicks": [
+            2381
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 22,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2670,
+          "lossAlarms": [],
+          "grabTicks": [
+            2608
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 23,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2100,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2097,
+              "id": 23,
+              "kind": "lost",
+              "position": {
+                "x": 8.577603715113284,
+                "z": -10.994349118679855
+              }
+            }
+          ],
+          "grabTicks": [
+            2037
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 24,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 13260,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 11986,
+              "id": 24,
+              "kind": "lost",
+              "position": {
+                "x": 146.7468296514875,
+                "z": 16.024425023370636
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 13243,
+              "id": 24,
+              "kind": "lost",
+              "position": {
+                "x": 187.63899830228033,
+                "z": 15.66171237341566
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 15280,
+              "id": 24,
+              "kind": "lost",
+              "position": {
+                "x": 164.51327676948176,
+                "z": 15.521951769003195
+              }
+            }
+          ],
+          "grabTicks": [
+            3336,
+            3907,
+            4961,
+            7353,
+            7648,
+            11926,
+            13183,
+            14415,
+            14836,
+            15220
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 25,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2580,
+          "lossAlarms": [],
+          "grabTicks": [
+            2496
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 27,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2490,
+          "lossAlarms": [],
+          "grabTicks": [
+            2414
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 28,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2640,
+          "lossAlarms": [],
+          "grabTicks": [
+            2552
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 29,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3750,
+          "lossAlarms": [],
+          "grabTicks": [
+            3678,
+            4996,
+            7670
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 30,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2850,
+          "lossAlarms": [],
+          "grabTicks": [
+            2187,
+            2789
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 31,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3600,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 4935,
+              "id": 31,
+              "kind": "lost",
+              "position": {
+                "x": 10.956184369880262,
+                "z": 1.4242203625431011
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 7605,
+              "id": 31,
+              "kind": "lost",
+              "position": {
+                "x": 10.804429667102472,
+                "z": 1.898648802672967
+              }
+            }
+          ],
+          "grabTicks": [
+            3517,
+            4875,
+            7545
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 32,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2790,
+          "lossAlarms": [],
+          "grabTicks": [
+            2724
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 33,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2700,
+          "lossAlarms": [],
+          "grabTicks": [
+            2623
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 34,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3600,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 7923,
+              "id": 34,
+              "kind": "lost",
+              "position": {
+                "x": 5.179268560883517,
+                "z": 7.470615782747984
+              }
+            }
+          ],
+          "grabTicks": [
+            3516,
+            4967,
+            7675,
+            7815,
+            7863
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 35,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2640,
+          "lossAlarms": [],
+          "grabTicks": [
+            2566
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 36,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3990,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 6660,
+              "id": 36,
+              "kind": "lost",
+              "position": {
+                "x": 51.69680670679491,
+                "z": 15.975167220760815
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 9195,
+              "id": 36,
+              "kind": "lost",
+              "position": {
+                "x": 43.1805956501873,
+                "z": 15.813082443822408
+              }
+            }
+          ],
+          "grabTicks": [
+            3924,
+            6156,
+            6600,
+            9135
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 37,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2820,
+          "lossAlarms": [],
+          "grabTicks": [
+            2730
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 38,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3000,
+          "lossAlarms": [],
+          "grabTicks": [
+            2922
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 39,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3930,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 3918,
+              "id": 39,
+              "kind": "lost",
+              "position": {
+                "x": 2.7278535613010013,
+                "z": 15.888865106201003
+              }
+            }
+          ],
+          "grabTicks": [
+            3398,
+            3639,
+            3858,
+            4994,
+            7863,
+            7940
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 40,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2940,
+          "lossAlarms": [],
+          "grabTicks": [
+            2859
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 41,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3510,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 3484,
+              "id": 41,
+              "kind": "lost",
+              "position": {
+                "x": 13.043596328642147,
+                "z": 2.7726198792001084
+              }
+            }
+          ],
+          "grabTicks": [
+            3269,
+            3424,
+            4973,
+            7665
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 42,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2880,
+          "lossAlarms": [],
+          "grabTicks": [
+            2795
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 43,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2790,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2763,
+              "id": 43,
+              "kind": "lost",
+              "position": {
+                "x": -1.0982052933773125,
+                "z": -3.493812753318513
+              }
+            }
+          ],
+          "grabTicks": [
+            2703
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 44,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2940,
+          "lossAlarms": [],
+          "grabTicks": [
+            2851
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        }
+      ],
+      "limits": "checkpoint resets may repeat/reverse transitions; loss alarm positions prove event location, not continuous obstruction history"
+    },
+    {
+      "run": "low-l6-align",
+      "finalCounts": {
+        "out": 2,
+        "turned": 20,
+        "dead": 7
+      },
+      "losses": [
+        {
+          "id": 17,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2310,
+          "lossAlarms": [],
+          "grabTicks": [
+            2071,
+            2225
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 18,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2190,
+          "lossAlarms": [],
+          "grabTicks": [
+            2100
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 19,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2310,
+          "lossAlarms": [],
+          "grabTicks": [
+            2234
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 20,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2460,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2441,
+              "id": 20,
+              "kind": "lost",
+              "position": {
+                "x": 1.2396157219551094,
+                "z": -10.983054414106103
+              }
+            }
+          ],
+          "grabTicks": [
+            2381
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 21,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 12870,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 3587,
+              "id": 21,
+              "kind": "lost",
+              "position": {
+                "x": 4.6295350531933686,
+                "z": 4.318878046360316
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 12848,
+              "id": 21,
+              "kind": "lost",
+              "position": {
+                "x": 179.76778605586534,
+                "z": 15.715041474820627
+              }
+            }
+          ],
+          "grabTicks": [
+            3527,
+            7283,
+            12788
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 22,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2670,
+          "lossAlarms": [],
+          "grabTicks": [
+            2608
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 23,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2100,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2097,
+              "id": 23,
+              "kind": "lost",
+              "position": {
+                "x": 8.577603715113284,
+                "z": -10.994349118679855
+              }
+            }
+          ],
+          "grabTicks": [
+            2037
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 24,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 12990,
+          "lossAlarms": [],
+          "grabTicks": [
+            4028,
+            7274,
+            12906
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 25,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2580,
+          "lossAlarms": [],
+          "grabTicks": [
+            2496
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 26,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 12870,
+          "lossAlarms": [],
+          "grabTicks": [
+            3729,
+            10829,
+            12796
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 27,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2520,
+          "lossAlarms": [],
+          "grabTicks": [
+            2436
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 28,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2640,
+          "lossAlarms": [],
+          "grabTicks": [
+            2552
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 30,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2850,
+          "lossAlarms": [],
+          "grabTicks": [
+            2350,
+            2789
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 31,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 13080,
+          "lossAlarms": [],
+          "grabTicks": [
+            3767,
+            5013,
+            5227,
+            7309,
+            7544,
+            12998
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 32,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2790,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 2784,
+              "id": 32,
+              "kind": "lost",
+              "position": {
+                "x": -7.101090464815614,
+                "z": -5.9990806304105915
+              }
+            }
+          ],
+          "grabTicks": [
+            2724
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 33,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2700,
+          "lossAlarms": [],
+          "grabTicks": [
+            2623
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 34,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 11850,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 11847,
+              "id": 34,
+              "kind": "lost",
+              "position": {
+                "x": 139.20092710433448,
+                "z": 14.8321093583504
+              }
+            }
+          ],
+          "grabTicks": [
+            3419,
+            3533,
+            5104,
+            7630,
+            10091,
+            11787
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 35,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2670,
+          "lossAlarms": [],
+          "grabTicks": [
+            2588
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 36,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 12180,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 6967,
+              "id": 36,
+              "kind": "lost",
+              "position": {
+                "x": 57.80487634307373,
+                "z": 15.796277227641061
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 12154,
+              "id": 36,
+              "kind": "lost",
+              "position": {
+                "x": 149.2891233542939,
+                "z": 16.249281491140795
+              }
+            }
+          ],
+          "grabTicks": [
+            3910,
+            6907,
+            12073,
+            12094
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 37,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2820,
+          "lossAlarms": [],
+          "grabTicks": [
+            2730
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 38,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3030,
+          "lossAlarms": [],
+          "grabTicks": [
+            2956
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 39,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 3870,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 6351,
+              "id": 39,
+              "kind": "lost",
+              "position": {
+                "x": 33.87653566231688,
+                "z": 15.675667487061041
+              }
+            },
+            {
+              "type": "l7.follower-alarm",
+              "tick": 9006,
+              "id": 39,
+              "kind": "lost",
+              "position": {
+                "x": 38.462524254387866,
+                "z": 15.916936815864632
+              }
+            }
+          ],
+          "grabTicks": [
+            3786,
+            5417,
+            5452,
+            6291,
+            7891,
+            8830,
+            8946
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 40,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2940,
+          "lossAlarms": [],
+          "grabTicks": [
+            2859
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 41,
+          "finalStatus": "dead",
+          "firstObservedStatusTick": 13110,
+          "lossAlarms": [
+            {
+              "type": "l7.follower-alarm",
+              "tick": 5139,
+              "id": 41,
+              "kind": "lost",
+              "position": {
+                "x": 4.324456994426326,
+                "z": 1.8216706582181939
+              }
+            }
+          ],
+          "grabTicks": [
+            3337,
+            3808,
+            5079,
+            12012,
+            13021
+          ],
+          "causeQualification": "dead status; exact killing blow unqualified"
+        },
+        {
+          "id": 42,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2940,
+          "lossAlarms": [],
+          "grabTicks": [
+            2810,
+            2853
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 43,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2790,
+          "lossAlarms": [],
+          "grabTicks": [
+            2725
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        },
+        {
+          "id": 44,
+          "finalStatus": "turned",
+          "firstObservedStatusTick": 2940,
+          "lossAlarms": [],
+          "grabTicks": [
+            2851,
+            2876
+          ],
+          "causeQualification": "turned status plus grab/loss evidence"
+        }
+      ],
+      "limits": "checkpoint resets may repeat/reverse transitions; loss alarm positions prove event location, not continuous obstruction history"
+    }
+  ],
+  "coverageAudit": {
+    "allRequestedTiersExercised": true,
+    "fullL4L6CompletionWithDocumentedAssists": true,
+    "highL10CreditsVisuallyInspected": true,
+    "lowL10PastDepot": true,
+    "acceptance": "incomplete: explicit driver gaps remain",
+    "reportOnly": true
+  },
+  "medkitAudit": {
+    "high": "no retained pickup ledger",
+    "low": "no retained pickup ledger",
+    "count": null,
+    "reason": "existing acceptance pickup observer filters to L4 army-mg; health changes confounded by checkpoints",
+    "nextEvidence": "new pickup observation run"
+  },
+  "validatedPickupFollowups": [
+    {
+      "quality": "high",
+      "rawPath": "test-results/playtest/b116-high-l10-pickups-validated",
+      "events": [
+        {
+          "observerAttached": true,
+          "level": "L1",
+          "tick": 0
+        },
+        {
+          "observerAttached": true,
+          "level": "L10",
+          "tick": 0
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 2678,
+          "sourceId": 1,
+          "pickupId": 100,
+          "side": "RIGHT",
+          "actionId": "weapon.hunting-rifle",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 694.7088012695312,
+            "y": 0.7099999785423279,
+            "z": 21.95963478088379,
+            "yaw": 5.497787143782138
+          },
+          "hp": 100
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 6628,
+          "sourceId": 1,
+          "pickupId": 135,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 936.0796508789062,
+            "y": 0.7099999785423279,
+            "z": -14.092780113220215,
+            "yaw": 1.3092220780717438
+          },
+          "hp": 50
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 8769,
+          "sourceId": 1,
+          "pickupId": 135,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 936.1216430664062,
+            "y": 0.7099999785423279,
+            "z": -14.258944511413574,
+            "yaw": -0.3519671015130381
+          },
+          "hp": 70
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 18068,
+          "id": 229,
+          "kind": "medkit",
+          "item": null,
+          "level": "L10",
+          "player": {
+            "x": 1516.561279296875,
+            "y": 0.7099999785423279,
+            "z": -55.76179885864258,
+            "yaw": -1.5707963267948968
+          },
+          "hp": 100
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 25935,
+          "sourceId": 1,
+          "pickupId": 281,
+          "side": "RIGHT",
+          "actionId": "weapon.assault-rifle",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 1960.9827880859375,
+            "y": 0.7099999785423279,
+            "z": 11.62480354309082,
+            "yaw": -2.5597135872335315
+          },
+          "hp": 70
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 27601,
+          "sourceId": 1,
+          "pickupId": 309,
+          "side": "RIGHT",
+          "actionId": "weapon.flashbang",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 2072.546630859375,
+            "y": 0.7099999785423279,
+            "z": -1.5740677118301392,
+            "yaw": -0.742225957627615
+          },
+          "hp": 45.99999999999923
+        }
+      ],
+      "medkitTransactions": 1,
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 478,
+          "maxNoProgressSeconds": 29.166666666666668,
+          "deaths": 3,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 21,
+            "weapon.hunting-rifle": 199,
+            "weapon.machete": 2,
+            "weapon.assault-rifle": 98
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete",
+            "weapon.assault-rifle",
+            "weapon.flashbang"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 9,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 64\u00a0m",
+              "tick": 1823,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "restricted-zone",
+              "text": "Get through the restricted zone \u00b7 105\u00a0m",
+              "tick": 23419,
+              "marker": {
+                "anchor": "r4-r5-seam",
+                "ring": {
+                  "x": 2467,
+                  "y": 0,
+                  "z": -5
+                },
+                "drawn": [
+                  1960,
+                  0,
+                  16
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "scope": "480-second follow-up only; original campaign count unqualified"
+    },
+    {
+      "quality": "low",
+      "rawPath": "test-results/playtest/b116-low-l10-pickups-validated",
+      "events": [
+        {
+          "observerAttached": true,
+          "level": "L1",
+          "tick": 0
+        },
+        {
+          "observerAttached": true,
+          "level": "L10",
+          "tick": 0
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 2621,
+          "sourceId": 1,
+          "pickupId": 100,
+          "side": "RIGHT",
+          "actionId": "weapon.hunting-rifle",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 694.6917114257812,
+            "y": 0.7099999785423279,
+            "z": 21.98441505432129,
+            "yaw": -0.7853981633974484
+          },
+          "hp": 92.43333333333092
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 6385,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 935.8206176757812,
+            "y": 0.7099999785423279,
+            "z": -13.647241592407227,
+            "yaw": -3.333867543863455
+          },
+          "hp": 60
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 8419,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 935.8379516601562,
+            "y": 0.7099999785423279,
+            "z": -13.707293510437012,
+            "yaw": -0.4065804442610591
+          },
+          "hp": 100
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 10703,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 937.087158203125,
+            "y": 0.7099999785423279,
+            "z": -15.407540321350098,
+            "yaw": -1.9931156509114776
+          },
+          "hp": 30
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 12517,
+          "sourceId": 1,
+          "pickupId": 130,
+          "side": "RIGHT",
+          "actionId": "weapon.machete",
+          "replaced": null,
+          "level": "L10",
+          "player": {
+            "x": 935.8295288085938,
+            "y": 0.7099999785423279,
+            "z": -13.549590110778809,
+            "yaw": -0.6155998773223219
+          },
+          "hp": 100
+        },
+        {
+          "type": "pickup.collected",
+          "tick": 22112,
+          "id": 193,
+          "kind": "medkit",
+          "item": null,
+          "level": "L10",
+          "player": {
+            "x": 1516.427490234375,
+            "y": 0.7099999785423279,
+            "z": -55.664405822753906,
+            "yaw": 5.497787143782138
+          },
+          "hp": 100
+        }
+      ],
+      "medkitTransactions": 1,
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": false,
+          "skipped": [],
+          "wallSeconds": 480,
+          "simSeconds": 478,
+          "maxNoProgressSeconds": 26.899,
+          "deaths": 3,
+          "assists": 0,
+          "attacks": {
+            "weapon.fire-axe": 20,
+            "weapon.hunting-rifle": 204,
+            "weapon.machete": 4
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.fire-axe"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.fire-axe",
+            "weapon.hunting-rifle",
+            "weapon.machete"
+          ],
+          "steps": [
+            {
+              "id": "crash",
+              "text": "Get away from the river \u00b7 101\u00a0m",
+              "tick": 9,
+              "marker": {
+                "anchor": "river-exit",
+                "ring": {
+                  "x": 647,
+                  "y": 0,
+                  "z": -12.5
+                },
+                "drawn": [
+                  647,
+                  0,
+                  -12.5
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "farmstead",
+              "text": "Find a way through the farms \u00b7 63\u00a0m",
+              "tick": 1773,
+              "marker": {
+                "anchor": "cure-military",
+                "ring": {
+                  "x": 1857,
+                  "y": 0,
+                  "z": 25
+                },
+                "drawn": [
+                  698,
+                  0,
+                  25
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "restricted-zone",
+              "text": "Get through the restricted zone \u00b7 103\u00a0m",
+              "tick": 27622,
+              "marker": {
+                "anchor": "r4-r5-seam",
+                "ring": {
+                  "x": 2467,
+                  "y": 0,
+                  "z": -5
+                },
+                "drawn": [
+                  1960,
+                  0,
+                  16
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "scope": "480-second follow-up; original LOW campaign count remains unqualified"
+    }
+  ],
+  "exteriorCellarFollowup": {
+    "rawPath": "test-results/playtest/b116-high-l4-cellar",
+    "runs": [
+      {
+        "level": "L4",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 482,
+        "simSeconds": 479,
+        "maxNoProgressSeconds": 5.9,
+        "deaths": 24,
+        "assists": 0,
+        "attacks": {
+          "weapon.army-mg": 1608
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ],
+        "steps": [
+          {
+            "id": "ride",
+            "text": "",
+            "tick": 12,
+            "marker": {
+              "anchor": "l4-plaza",
+              "ring": {
+                "x": -17,
+                "y": 0,
+                "z": 3
+              },
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "quartermaster",
+            "text": "Report to the quartermaster \u00b7 10\u00a0m",
+            "tick": 1830,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": {
+                "x": -23.2,
+                "y": 0,
+                "z": 0.6
+              },
+              "drawn": [
+                -23.2,
+                0.05,
+                0.6
+              ],
+              "playerY": 0.7049999833106995,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "hold",
+            "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+            "tick": 2092,
+            "marker": {
+              "anchor": "l4-quartermaster",
+              "ring": null,
+              "drawn": null,
+              "playerY": 0.7049999833106995,
+              "pinVisible": false
+            }
+          },
+          {
+            "id": "hide",
+            "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 4\u00a0m",
+            "tick": 13498,
+            "marker": {
+              "anchor": "l4-cellar-door",
+              "ring": {
+                "x": -79.29999999999998,
+                "y": 0,
+                "z": -45.2801
+              },
+              "drawn": [
+                -4.13,
+                0.05,
+                31.88
+              ],
+              "playerY": 0.7050990462303162,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "capturesReviewed": [
+      "cellar-t17189.jpg"
+    ],
+    "positions": [
+      {
+        "tick": 17129,
+        "player": {
+          "x": -51.44514083862305,
+          "y": 0.7100301384925842,
+          "z": -23.909006118774414,
+          "yaw": 3.141592653589793
+        }
+      },
+      {
+        "tick": 17189,
+        "player": {
+          "x": -51.44513702392578,
+          "y": 0.7050849199295044,
+          "z": -23.903759002685547,
+          "yaw": 3.141592653589793
+        }
+      }
+    ],
+    "conclusion": "courier dead near x-51.4/z-23.9; final exterior ring not qualified"
+  },
+  "jobCloseout": {
+    "reportArtifactsComplete": true,
+    "acceptance": "incomplete; documented driver gaps",
+    "timeBox": "approximately 2.5 hours",
+    "processesRunning": false,
+    "followupRequiredForAcceptance": [
+      "deliberate L4 side-street fights",
+      "final exterior cellar ring visibility",
+      "complete farm encounter fairness",
+      "original campaign medkit accounting"
+    ]
+  }
+}
