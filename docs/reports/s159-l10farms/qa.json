@@ -776,5 +776,46 @@
     "observation": "large infected pursues courier near containers; red linear ground warning appears and player continues moving in sampled frames",
     "alphaChargeEventTick": 18596,
     "limitations": "approximate clock alignment; one-second sampling can miss 0.8-second cue; specific attack avoidance unproven"
+  },
+  "additionalVideoReview": {
+    "highSeconds": [
+      [
+        74,
+        77
+      ],
+      [
+        123,
+        126
+      ],
+      [
+        152,
+        155
+      ],
+      [
+        283,
+        286
+      ]
+    ],
+    "lowSeconds": [
+      [
+        74,
+        77
+      ],
+      [
+        122,
+        125
+      ],
+      [
+        203,
+        206
+      ],
+      [
+        315,
+        318
+      ]
+    ],
+    "method": "four frames one second apart per interval, inspected",
+    "finding": "farm crowds and red circular cues in HIGH; farmhouse crowd and depot linear warning in LOW; player continues moving in later LOW depot frames",
+    "limitation": "tick-to-video conversion inaccurate, including nominal corn sequence still at crash road; not exact peak or spawn proof"
   }
 }
