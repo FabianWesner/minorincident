@@ -751,5 +751,18 @@
       }
     },
     "limitations": "One-second samples, checkpoint restoration and missing streamed actors can conceal or change outcomes."
+  },
+  "continuousHighReview": {
+    "video": "/tmp/s159-continuous-high-0.webm",
+    "trace": "/tmp/s159-continuous-high.jsonl",
+    "reviewedVideoSeconds": [
+      246,
+      257
+    ],
+    "method": "one frame per second contact sequence",
+    "observation": "red linear warning near depot containers followed by player zero HP in subsequent sampled frames",
+    "alphaChargeEventTick": 14856,
+    "windupSeconds": 0.8,
+    "limitations": "video and simulation clocks not precisely synchronized; killing blow and escape not established"
   }
 }
