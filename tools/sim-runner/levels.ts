@@ -22,6 +22,7 @@ import { LevelSevenBot } from '../../src/debug/bot/LevelSevenBot';
 import { runL1, Walker } from './l1Bots';
 import { runTen, type CureRegionTiming } from './l10';
 import { propVariant } from './propVariants';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 
 export type RunnerLevel = MissionId;
 /** Playable campaign order; L7 now participates in the ordinary mission graph. */
@@ -59,6 +60,8 @@ export interface LevelRunHooks {
   l6Profile?: L6Profile;
   /** Native L4 stationary QA policy; gameplay runs keep the ordinary policy. */
   l4Profile?: L4Profile;
+  /** Follow the same per-turn L4 marker position shown by the HUD in focused native probes. */
+  l4VisibleMarker?: boolean;
 }
 /** Internal signal used to end an intentionally partial observer route. */
 export class LevelRunStopped extends Error {
@@ -161,8 +164,22 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L4') {
       // E22: the shared L4 policy (ordinary inputs only), same as the browser bot.
-      const bot = new LevelFourBot(world, hooks?.l4Profile ?? generalPolicy);
-      for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { followFrustum(world); world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+      const bot = new LevelFourBot(world, hooks?.l4Profile ?? generalPolicy), markerWalker = new Walker();
+      for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) {
+        followFrustum(world);
+        const frame = bot.sample();
+        if (hooks?.l4VisibleMarker && world.missions!.state.l4?.phase === 'collapse') {
+          const marker = markerAnchor(world.missions!), debug = bot.debug(), player = world.entities.get(1)!;
+          // Let the shared combat policy take a visible-threat detour or a
+          // reachable medkit. Otherwise, follow only the dynamic HUD marker.
+          if (marker && !debug.detour && !debug.medkit) {
+            const d = distance(player.transform, marker), door = world.missions!.def.anchors['l4-cellar-door'];
+            frame.move = markerWalker.step(world, marker, marker.radius ?? 1.4, `l4-visible-marker-${marker.x.toFixed(2)}-${marker.z.toFixed(2)}`) ?? { x: 0, z: 0 };
+            frame.interact = Math.hypot(marker.x - door.x, marker.z - door.z) < .5 && d <= (door.radius ?? 1.4);
+          }
+        }
+        world.applyInput(frame, 'keyboard'); world.update();
+      }
     } else if (level === 'L3') {
       // E21: the shared L3 policy (ordinary inputs only), same as the browser bot.
       const bot = new LevelThreeBot(world, generalPolicy, street);
