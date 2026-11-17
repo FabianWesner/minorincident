@@ -8,7 +8,7 @@ The trace contains actors moving less than 1 m between samples ten seconds apart
 
 ## Sampled encounter windows
 
-These windows run from the first release sample to the first sample with no living recorded group members. Their elapsed time is an observed upper bound on presence, not a confirmed player clear: actors can disappear, IDs can be reused, and checkpoint restores can alter the ledger. Damage is the sum of all `player.damaged` events during the window; the event has no attacker ID and overlapping windows double-count damage and deaths.
+These windows run from the first release sample to the first sample with no living recorded group members. At each first no-living sample every mapped actor lookup lacks HP and position; none is observed at zero HP in that sample. These are disappearance times from the entity store, not proof of death or a player clear. Mapped IDs did not change while continuously present in these traces, but checkpoint restores can alter the ledger. Damage is the sum of all `player.damaged` events during the window; the event has no attacker ID and overlapping windows double-count damage and deaths.
 
 | Group | HIGH elapsed / all damage / deaths | LOW elapsed / all damage / deaths |
 | --- | --- | --- |
@@ -21,7 +21,7 @@ LOW medkit transactions occurred at tick 3522 near (731.47,28.32) and tick 18703
 
 ## LOW retained-profile follow-up
 
-A second LOW physical-input run retained its profile and resumed after a 480-second reservation. The first segment passed the farms with three deaths. The temporary observer recorded all four groups: corn release sample tick 3240, 8 slot keys, closest 1.1 m; farmhouse tick 5340, 10 keys, 1.1 m; shed tick 7980, 12 keys, 1.2 m; depot tick 14400, 8 keys, 1.0 m. Release positions and raw samples are in `/tmp/s159-low-resume-observer.jsonl`; captures are in `test-results/playtest/s159-observed-low-resume/`. Last samples with living members were ticks 7860, 9420, 12540 and 21360 respectively; these are not proven clear times because checkpoint restores and actor reuse need examination. The prior LOW sample remains evidence of a ten-death retry loop. Per-encounter damage, peak capture inspection, fairness and threat-free travel remain open.
+A second LOW physical-input run retained its profile and resumed after a 480-second reservation. The first segment passed the farms with three deaths. The temporary observer recorded all four groups: corn release sample tick 3240, 8 slot keys, closest 1.1 m; farmhouse tick 5340, 10 keys, 1.1 m; shed tick 7980, 12 keys, 1.2 m; depot tick 14400, 8 keys, 1.0 m. Release positions and raw samples are in `/tmp/s159-low-resume-observer.jsonl`; captures are in `test-results/playtest/s159-observed-low-resume/`. Last samples with living members were ticks 7860, 9420, 12540 and 21360 respectively; at the next sample all corresponding entity lookups were absent, so these are not proven clear times. The prior LOW sample remains evidence of a ten-death retry loop. Per-encounter damage, peak capture inspection, fairness and threat-free travel remain open.
 
 ## Attributed real-input follow-up
 
