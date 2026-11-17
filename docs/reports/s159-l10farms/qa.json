@@ -905,5 +905,22 @@
     "method": "one frame per second; approximate alignment around first actor samples",
     "result": "No definite pop identified; LOW shed group appears in visible crop area by second 181, but approach versus spawn between samples unresolved",
     "limitation": "one-second gaps, occlusion and alignment uncertainty prevent exclusion of in-view spawns"
+  },
+  "lowShedAdmissionRefinement": {
+    "video": "/tmp/s159-continuous-low-0.webm",
+    "reviewedSeconds": [
+      177,
+      182
+    ],
+    "framesPerSecond": 4,
+    "firstActorSampleTick": 10380,
+    "previousSampleTick": 10320,
+    "actorCount": 12,
+    "playerXZ": [
+      1008.6,
+      -25.9
+    ],
+    "observation": "group progressively enters right edge of crop view in sampled frames",
+    "limitation": "approximate alignment and 0.25 s gaps cannot prove each admission offscreen"
   }
 }
