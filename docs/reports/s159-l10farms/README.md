@@ -1,5 +1,9 @@
 # S159 — L10 farm encounter qualification
 
+## LOW retained-profile follow-up
+
+A second LOW physical-input run retained its profile and resumed after a 480-second reservation. The first segment passed the farms with three deaths. The temporary observer recorded all four groups: corn release sample tick 3240, 8 slot keys, closest 1.1 m; farmhouse tick 5340, 10 keys, 1.1 m; shed tick 7980, 12 keys, 1.2 m; depot tick 14400, 8 keys, 1.0 m. Release positions and raw samples are in `/tmp/s159-low-resume-observer.jsonl`; captures are in `test-results/playtest/s159-observed-low-resume/`. Last samples with living members were ticks 7860, 9420, 12540 and 21360 respectively; these are not proven clear times because checkpoint restores and actor reuse need examination. The prior LOW sample remains evidence of a ten-death retry loop. Per-encounter damage, peak capture inspection, fairness and threat-free travel remain open.
+
 ## Attributed real-input follow-up
 
 A temporary read-only browser-context observer attached at tick 0 in each fresh WebGPU session, with physical-input driver, zoom 1.5 and five-second capture cadence. Its one-second samples record encounter slot keys, actor positions/health, nearest living infected, damage and pickup events. Raw traces are `/tmp/s159-high-observer.jsonl` and `/tmp/s159-low-observer.jsonl`; captures are in `test-results/playtest/s159-observed-high/` and `s159-observed-low/`. These are sample bounds, not exact admission ticks. Checkpoint rewinds can reuse keys and actors.

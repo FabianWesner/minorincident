@@ -177,6 +177,37 @@
       "Samples are one second apart; earliest release and admission ticks are sample bounds.",
       "Checkpoint rewinds can reuse slot keys and actor IDs; distinct keys are not independent kill counts.",
       "Clear times, encounter-specific damage, visibility at admission and LOW depot remain open."
-    ]
+    ],
+    "lowResume": {
+      "raw": "/tmp/s159-low-resume-observer.jsonl",
+      "firstSegmentDeaths": 3,
+      "groups": {
+        "corn-field-horde": {
+          "releaseSample": 3240,
+          "slotKeys": 8,
+          "closestM": 1.1,
+          "lastLiveSample": 7860
+        },
+        "farmhouse-defense": {
+          "releaseSample": 5340,
+          "slotKeys": 10,
+          "closestM": 1.1,
+          "lastLiveSample": 9420
+        },
+        "shed-field-crossing": {
+          "releaseSample": 7980,
+          "slotKeys": 12,
+          "closestM": 1.2,
+          "lastLiveSample": 12540
+        },
+        "depot-alpha": {
+          "releaseSample": 14400,
+          "slotKeys": 8,
+          "closestM": 1.0,
+          "lastLiveSample": 21360
+        }
+      },
+      "limitations": "One-second samples; last live is not a proven clear time; checkpoint restores and actor reuse can affect interpretation."
+    }
   }
 }
