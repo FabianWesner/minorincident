@@ -1,0 +1,88 @@
+{
+  "job": "s159-l10farms",
+  "candidate": "9dced069",
+  "status": "incomplete-real-input",
+  "mode": "real-input",
+  "requiredOrder": [
+    "high",
+    "low"
+  ],
+  "requested": {
+    "quality": [
+      "high",
+      "low"
+    ],
+    "zoom": 1.5,
+    "encounters": [
+      "farmhouse-defense",
+      "corn-field-horde",
+      "shed-field-crossing",
+      "depot-alpha"
+    ],
+    "peakCapturePerEncounter": true,
+    "inspectFourPanelSheet": true
+  },
+  "attempts": [
+    {
+      "tier": "high",
+      "status": "480-second sample",
+      "renderer": "webgpu",
+      "deaths": 8,
+      "raw": "test-results/playtest/s159-l10farms-high/"
+    },
+    {
+      "tier": "low",
+      "status": "481-second sample",
+      "renderer": "webgpu",
+      "deaths": 5,
+      "raw": "test-results/playtest/s159-l10farms-low/"
+    }
+  ],
+  "observations": {
+    "encounters": {
+      "farmhouse-defense": null,
+      "corn-field-horde": null,
+      "shed-field-crossing": null,
+      "depot-alpha": null
+    },
+    "travelThreatFreeIntervals": null,
+    "fairnessAndDistinctness": null,
+    "fourPanelSheet": null
+  },
+  "sourceCensusOnly": {
+    "farmhouse-defense": {
+      "regularHigh": 11,
+      "regularLow": 9,
+      "dogs": 1,
+      "roles": [
+        "infected.screamer"
+      ]
+    },
+    "corn-field-horde": {
+      "regularHigh": 14,
+      "regularLow": 7,
+      "dogs": 1
+    },
+    "shed-field-crossing": {
+      "regularHigh": 17,
+      "regularLow": 12,
+      "dogs": 0
+    },
+    "depot-alpha": {
+      "regularHigh": 9,
+      "regularLow": 7,
+      "alphas": 1
+    }
+  },
+  "validation": {
+    "qaBuild": "pass",
+    "realInput": "HIGH then LOW samples completed; encounter attribution incomplete",
+    "inspectedSheet": "missing"
+  },
+  "productFindings": [],
+  "driverGaps": [
+    "Periodic observations and captures do not identify encounter membership or reliably capture peaks.",
+    "No per-encounter damage, clear time, pickup ledger, or continuous threat-free intervals.",
+    "No inspected four-panel peak sheet."
+  ]
+}
