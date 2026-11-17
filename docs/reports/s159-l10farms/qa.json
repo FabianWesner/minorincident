@@ -1,0 +1,1087 @@
+{
+  "job": "s159-l10farms",
+  "candidate": "9dced069",
+  "status": "incomplete-time-box",
+  "mode": "real-input",
+  "requiredOrder": [
+    "high",
+    "low"
+  ],
+  "requested": {
+    "quality": [
+      "high",
+      "low"
+    ],
+    "zoom": 1.5,
+    "encounters": [
+      "farmhouse-defense",
+      "corn-field-horde",
+      "shed-field-crossing",
+      "depot-alpha"
+    ],
+    "peakCapturePerEncounter": true,
+    "inspectFourPanelSheet": true
+  },
+  "attempts": [
+    {
+      "tier": "high",
+      "status": "480-second sample",
+      "renderer": "webgpu",
+      "deaths": 8,
+      "raw": "test-results/playtest/s159-l10farms-high/"
+    },
+    {
+      "tier": "low",
+      "status": "481-second sample",
+      "renderer": "webgpu",
+      "deaths": 5,
+      "raw": "test-results/playtest/s159-l10farms-low/"
+    }
+  ],
+  "observations": {
+    "encounters": {
+      "farmhouse-defense": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples",
+      "corn-field-horde": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples",
+      "shed-field-crossing": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples",
+      "depot-alpha": "observed HIGH and LOW; see eventFollowup and firstAdmissionSamples"
+    },
+    "travelThreatFreeIntervals": "sampled; see interReleaseQuietSamples and peakReview",
+    "fairnessAndDistinctness": "visible settings and emitted roles differ; universal fairness and spawn visibility remain unqualified",
+    "fourPanelSheet": {
+      "path": "sample-sheet.jpg",
+      "inspected": true,
+      "tier": "high",
+      "captureTicks": [
+        4960,
+        7177,
+        11463,
+        18302
+      ],
+      "limitation": "nearest available frames to sampled peaks; farmhouse comes from separate run"
+    }
+  },
+  "sourceCensusOnly": {
+    "farmhouse-defense": {
+      "regularHigh": 11,
+      "regularLow": 9,
+      "dogs": 1,
+      "roles": [
+        "infected.screamer"
+      ]
+    },
+    "corn-field-horde": {
+      "regularHigh": 14,
+      "regularLow": 7,
+      "dogs": 1
+    },
+    "shed-field-crossing": {
+      "regularHigh": 17,
+      "regularLow": 12,
+      "dogs": 0
+    },
+    "depot-alpha": {
+      "regularHigh": 9,
+      "regularLow": 7,
+      "alphas": 1
+    }
+  },
+  "validation": {
+    "qaBuild": "pass",
+    "realInput": "HIGH then LOW real-input samples and attributed follow-ups completed; acceptance incomplete",
+    "inspectedSheet": "pass: four panels opened; nearest sampled peaks",
+    "remoteUnitSuite": {
+      "status": "pass",
+      "runner": "46.225.66.90",
+      "files": 27,
+      "passed": 105,
+      "skipped": 1,
+      "seconds": 170.5
+    },
+    "typecheck": "pass",
+    "lint": "pass"
+  },
+  "productFindings": [
+    {
+      "severity": "P2",
+      "status": "provisional",
+      "description": "HIGH shed player death amid crowd and a separate LOW farmhouse retry loop; driver behavior and overlapping groups confound balance attribution.",
+      "capture": "test-results/playtest/s159-observed-high/captures/campaign-L10-t11463.jpg",
+      "tick": 11463
+    }
+  ],
+  "driverGaps": [
+    "Exact admission frames and continuous visibility are missing.",
+    "Per-group damage attribution and permanent clear times are unproven because events overlap, downs recover, and actors stream.",
+    "Continuous telegraph, escape, and stuck assessment across all fights remains incomplete.",
+    "Threat-free intervals are sampled at about one-second cadence."
+  ],
+  "observedFollowup": {
+    "method": "Temporary read-only browser-context observer; one-second samples; physical input; WebGPU zoom 1.5",
+    "high": {
+      "raw": "/tmp/s159-high-observer.jsonl",
+      "samples": 477,
+      "deaths": 3,
+      "groups": {
+        "corn-field-horde": {
+          "releaseTick": 3299,
+          "firstAdmissionSample": 4559,
+          "distinctSlotKeys": 15,
+          "minimumDistanceM": 1.5
+        },
+        "farmhouse-defense": {
+          "releaseTick": 5579,
+          "firstAdmissionSample": 5579,
+          "distinctSlotKeys": 12,
+          "minimumDistanceM": 1.1
+        },
+        "shed-field-crossing": {
+          "releaseTick": 8099,
+          "firstAdmissionSample": 8099,
+          "distinctSlotKeys": 17,
+          "minimumDistanceM": 0.3
+        },
+        "depot-alpha": {
+          "releaseTick": 17399,
+          "firstAdmissionSample": 17399,
+          "distinctSlotKeys": 10,
+          "minimumDistanceM": 1.4
+        }
+      },
+      "medkit": {
+        "tick": 19148,
+        "position": [
+          1516.32,
+          -55.55
+        ]
+      }
+    },
+    "low": {
+      "raw": "/tmp/s159-low-observer.jsonl",
+      "samples": 477,
+      "deaths": 10,
+      "groups": {
+        "corn-field-horde": {
+          "releaseTick": 3239,
+          "distinctSlotKeys": 8,
+          "minimumDistanceM": 1.1
+        },
+        "farmhouse-defense": {
+          "releaseTick": 5459,
+          "distinctSlotKeys": 10,
+          "minimumDistanceM": 0.3
+        },
+        "shed-field-crossing": {
+          "releaseTick": 28200,
+          "distinctSlotKeys": 12,
+          "minimumDistanceM": 23.4
+        },
+        "depot-alpha": {
+          "released": false
+        }
+      },
+      "medkitsObserved": 0
+    },
+    "limitations": [
+      "Samples are one second apart; earliest release and admission ticks are sample bounds.",
+      "Checkpoint rewinds can reuse slot keys and actor IDs; distinct keys are not independent kill counts.",
+      "Clear times, encounter-specific damage, visibility at admission and LOW depot remain open."
+    ],
+    "lowResume": {
+      "raw": "/tmp/s159-low-resume-observer.jsonl",
+      "firstSegmentDeaths": 3,
+      "groups": {
+        "corn-field-horde": {
+          "releaseSample": 3240,
+          "slotKeys": 8,
+          "closestM": 1.1,
+          "lastLiveSample": 7860
+        },
+        "farmhouse-defense": {
+          "releaseSample": 5340,
+          "slotKeys": 10,
+          "closestM": 1.1,
+          "lastLiveSample": 9420
+        },
+        "shed-field-crossing": {
+          "releaseSample": 7980,
+          "slotKeys": 12,
+          "closestM": 1.2,
+          "lastLiveSample": 12540
+        },
+        "depot-alpha": {
+          "releaseSample": 14400,
+          "slotKeys": 8,
+          "closestM": 1.0,
+          "lastLiveSample": 21360
+        }
+      },
+      "limitations": "One-second samples; last live is not a proven clear time; checkpoint restores and actor reuse can affect interpretation."
+    }
+  },
+  "peakReview": {
+    "definition": "maximum sampled living members within 15 m; one-second sampling; nearest five-second screenshot",
+    "high": {
+      "corn-field-horde": {
+        "sampleTick": 4919,
+        "near": 7,
+        "captureTick": 4960
+      },
+      "farmhouse-defense": {
+        "sampleTick": 7140,
+        "near": 6,
+        "captureTick": 7177,
+        "run": "s159-continuous-high"
+      },
+      "shed-field-crossing": {
+        "sampleTick": 11459,
+        "near": 9,
+        "captureTick": 11463,
+        "playerHp": 0
+      },
+      "depot-alpha": {
+        "sampleTick": 18299,
+        "near": 5,
+        "captureTick": 18302
+      }
+    },
+    "low": {
+      "corn-field-horde": {
+        "sampleTick": 4140,
+        "near": 2
+      },
+      "farmhouse-defense": {
+        "sampleTick": 6660,
+        "near": 3
+      },
+      "shed-field-crossing": {
+        "sampleTick": 9060,
+        "near": 5
+      },
+      "depot-alpha": {
+        "sampleTick": 18120,
+        "near": 3
+      }
+    },
+    "quietIntervalsOver45Seconds": {
+      "result": "none in sampled runs",
+      "highLongest": {
+        "startTick": 19079,
+        "endTick": 20219,
+        "seconds": 19,
+        "startX": 1513,
+        "endX": 1596
+      },
+      "lowLongest": {
+        "startTick": 16140,
+        "endTick": 17280,
+        "seconds": 19,
+        "startX": 1386,
+        "endX": 1433
+      },
+      "maxSampleGapTicks": {
+        "high": 62,
+        "low": 61
+      },
+      "limitation": "One-second sampling cannot prove continuous absence of transient threats"
+    }
+  },
+  "windowAnalysis": {
+    "definition": "release sample to first sample with no living recorded group actors; not a confirmed player clear; damage events overlap and have no attacker ID",
+    "high": {
+      "corn-field-horde": [
+        3299,
+        14459,
+        186,
+        477.9,
+        3
+      ],
+      "farmhouse-defense": [
+        5579,
+        14459,
+        148,
+        437.9,
+        3
+      ],
+      "shed-field-crossing": [
+        8099,
+        17399,
+        155,
+        387.9,
+        3
+      ],
+      "depot-alpha": [
+        17399,
+        23399,
+        100,
+        145,
+        0
+      ]
+    },
+    "low": {
+      "corn-field-horde": [
+        3240,
+        7920,
+        78,
+        50,
+        0
+      ],
+      "farmhouse-defense": [
+        5340,
+        9480,
+        69,
+        80,
+        0
+      ],
+      "shed-field-crossing": [
+        7980,
+        12600,
+        77,
+        100,
+        0
+      ],
+      "depot-alpha": [
+        14400,
+        21420,
+        117,
+        240,
+        1
+      ]
+    },
+    "columns": [
+      "startTick",
+      "firstNoLivingSampleTick",
+      "elapsedSeconds",
+      "allPlayerDamageDuringWindow",
+      "deathsDuringWindow"
+    ],
+    "lowMedkits": [
+      {
+        "tick": 3522,
+        "position": [
+          731.47,
+          28.32
+        ]
+      },
+      {
+        "tick": 18703,
+        "position": [
+          1516.47,
+          -55.7
+        ]
+      }
+    ],
+    "entityLookupAudit": {
+      "result": "At each first no-living sample every mapped actor lookup lacks hp and position; none has observed zero HP in that sample. This is disappearance from the entity store, not proof of death or clear.",
+      "idChangesObserved": 0,
+      "mechanism": "ChunkResidency.sleepOutside can serialize and remove living actors from active entities; InfectedSystem.settle replaces dead actors with same-ID corpses. Retained observer did not capture target-specific combat.kill."
+    }
+  },
+  "admissionReview": {
+    "highCaptureTicks": [
+      4656,
+      5584,
+      8063,
+      17366
+    ],
+    "firstAdmissionSampleTicks": [
+      4559,
+      5579,
+      8099,
+      17399
+    ],
+    "result": "No exact spawn-frame evidence; spawn-in-view remains unqualified",
+    "movementExamples": {
+      "highFarmhouseScreamer": {
+        "initialDistanceM": 121,
+        "maxDisplacementM": 43.5,
+        "minimumPlayerDistanceM": 1.7
+      },
+      "highShedSprinter": {
+        "initialDistanceM": 127.3,
+        "maxDisplacementM": 79.4,
+        "minimumPlayerDistanceM": 2.6
+      },
+      "lowShedSprinter": {
+        "initialDistanceM": 132.1,
+        "maxDisplacementM": 70.5,
+        "minimumPlayerDistanceM": 2.2
+      }
+    },
+    "stationary": "Some actors move under 1 m over 10 s; reasons and permanence unproven"
+  },
+  "eventFollowup": {
+    "method": "fresh HIGH then LOW physical input, WebGPU, zoom 1.5; events matched to living mapped ID in immediately preceding one-second sample (maximum 62 ticks)",
+    "columns": [
+      "releaseSampleTick",
+      "uniqueMappedIds",
+      "uniqueIdsWithKillEvent",
+      "killEvents",
+      "recoverableDownEvents",
+      "lastKillTick",
+      "telegraphEvents"
+    ],
+    "high": {
+      "corn-field-horde": [
+        3359,
+        15,
+        13,
+        24,
+        24,
+        8632,
+        14
+      ],
+      "farmhouse-defense": [
+        6359,
+        12,
+        11,
+        14,
+        14,
+        10858,
+        34
+      ],
+      "shed-field-crossing": [
+        11279,
+        17,
+        16,
+        16,
+        16,
+        13380,
+        5
+      ],
+      "depot-alpha": [
+        17279,
+        10,
+        10,
+        10,
+        9,
+        18866,
+        4
+      ]
+    },
+    "low": {
+      "corn-field-horde": [
+        3241,
+        8,
+        8,
+        9,
+        9,
+        7234,
+        2
+      ],
+      "farmhouse-defense": [
+        5701,
+        10,
+        10,
+        13,
+        13,
+        9362,
+        8
+      ],
+      "shed-field-crossing": [
+        9781,
+        12,
+        12,
+        12,
+        12,
+        11526,
+        17
+      ],
+      "depot-alpha": [
+        15481,
+        8,
+        8,
+        9,
+        8,
+        19252,
+        16
+      ]
+    },
+    "raw": [
+      "/tmp/s159-events-high.jsonl",
+      "/tmp/s159-events-low.jsonl"
+    ],
+    "limitations": [
+      "recoverable downs are not permanent kills",
+      "event mapping uses IDs seen in sampled ledger; ID reuse and checkpoint restoration can confound attribution",
+      "telegraph event emission does not prove player saw it or could escape"
+    ],
+    "correction": "Global ID matching previously included LOW shed events before release; time-local matching removes seven kill events and fourteen telegraphs.",
+    "firstAdmissionSamples": {
+      "columns": [
+        "releaseTick",
+        "releasePlayerXZ",
+        "admissionSampleTick",
+        "admissionPlayerXZ",
+        "actorBoundsXminXmaxZminZmax",
+        "actorsInFirstSample"
+      ],
+      "high": {
+        "corn-field-horde": [
+          3359,
+          [
+            711.2,
+            19
+          ],
+          4739,
+          [
+            802.7,
+            27.5
+          ],
+          [
+            812.1,
+            853.5,
+            -0.9,
+            40.3
+          ],
+          13
+        ],
+        "farmhouse-defense": [
+          6359,
+          [
+            863.9,
+            -0.1
+          ],
+          6359,
+          [
+            863.9,
+            -0.1
+          ],
+          [
+            968.6,
+            988.1,
+            -9,
+            8.6
+          ],
+          5
+        ],
+        "shed-field-crossing": [
+          11279,
+          [
+            1007.2,
+            -33.5
+          ],
+          11279,
+          [
+            1007.2,
+            -33.5
+          ],
+          [
+            1098.8,
+            1138.4,
+            -53.4,
+            -15.3
+          ],
+          6
+        ],
+        "depot-alpha": [
+          17279,
+          [
+            1400.8,
+            -60.1
+          ],
+          17279,
+          [
+            1400.8,
+            -60.1
+          ],
+          [
+            1502.5,
+            1525.7,
+            -68.2,
+            -51.5
+          ],
+          10
+        ]
+      },
+      "low": {
+        "corn-field-horde": [
+          3241,
+          [
+            712.3,
+            20.1
+          ],
+          3241,
+          [
+            712.3,
+            20.1
+          ],
+          [
+            802.2,
+            843.3,
+            0,
+            38.2
+          ],
+          8
+        ],
+        "farmhouse-defense": [
+          5701,
+          [
+            865.6,
+            -2
+          ],
+          5701,
+          [
+            865.6,
+            -2
+          ],
+          [
+            967.3,
+            990.6,
+            -9.9,
+            6.6
+          ],
+          10
+        ],
+        "shed-field-crossing": [
+          9781,
+          [
+            1006.3,
+            -10.9
+          ],
+          9781,
+          [
+            1006.3,
+            -10.9
+          ],
+          [
+            1094.8,
+            1146.5,
+            -30.9,
+            7.3
+          ],
+          12
+        ],
+        "depot-alpha": [
+          15481,
+          [
+            1398.1,
+            -32
+          ],
+          15541,
+          [
+            1402.6,
+            -32
+          ],
+          [
+            1566.5,
+            1586,
+            -41,
+            -23.3
+          ],
+          8
+        ]
+      }
+    }
+  },
+  "cueFrameReview": {
+    "frames": [
+      "s159-events-high/captures/campaign-L10-t7429.jpg",
+      "s159-events-high/captures/campaign-L10-t18270.jpg",
+      "s159-events-low/captures/campaign-L10-t6849.jpg",
+      "s159-events-low/captures/campaign-L10-t16693.jpg"
+    ],
+    "result": "Red warning rings visible in first three frames, but frames do not coincide with referenced event ticks; LOW depot frame shows pursuit without a visible ring."
+  },
+  "alphaCueWindows": {
+    "high": {
+      "tick": 18527,
+      "special": "alpha.pounce",
+      "durationSeconds": 0.6,
+      "sampledDisplacementM": 15,
+      "damageNext3Seconds": 0,
+      "deathsNext3Seconds": 0
+    },
+    "low": [
+      {
+        "tick": 16747,
+        "special": "alpha.charge",
+        "durationSeconds": 0.8,
+        "damageNext3Seconds": 25.33,
+        "deathsNext3Seconds": 1,
+        "note": "checkpoint displacement confounds movement"
+      },
+      {
+        "tick": 18298,
+        "special": "alpha.charge",
+        "durationSeconds": 0.8,
+        "sampledDisplacementM": 15.5,
+        "damageNext3Seconds": 10,
+        "deathsNext3Seconds": 0
+      }
+    ],
+    "limitation": "Damage has no attacker ID; sample windows do not prove cue visibility or specific attack outcome."
+  },
+  "simultaneousDownAudit": {
+    "definition": "samples where all authored slot IDs were present and HP <= 0; recoverable downs are not permanent clears",
+    "high": {
+      "corn-field-horde": {
+        "maximumDown": 12,
+        "total": 15,
+        "tick": 6239
+      },
+      "farmhouse-defense": {
+        "maximumDown": 10,
+        "total": 12,
+        "tick": 10799
+      },
+      "shed-field-crossing": {
+        "maximumDown": 12,
+        "total": 17,
+        "tick": 13439
+      },
+      "depot-alpha": {
+        "maximumDown": 9,
+        "total": 10,
+        "tick": 18899
+      }
+    },
+    "low": {
+      "corn-field-horde": {
+        "maximumDown": 4,
+        "total": 8,
+        "tick": 4981
+      },
+      "farmhouse-defense": {
+        "maximumDown": 10,
+        "total": 10,
+        "tick": 9421,
+        "releaseTick": 5701,
+        "secondsFromRelease": 62
+      },
+      "shed-field-crossing": {
+        "maximumDown": 11,
+        "total": 12,
+        "tick": 11581
+      },
+      "depot-alpha": {
+        "maximumDown": 7,
+        "total": 8,
+        "tick": 18841
+      }
+    },
+    "limitations": "One-second samples, checkpoint restoration and missing streamed actors can conceal or change outcomes."
+  },
+  "continuousHighReview": {
+    "video": "/tmp/s159-continuous-high-0.webm",
+    "trace": "/tmp/s159-continuous-high.jsonl",
+    "reviewedVideoSeconds": [
+      246,
+      257
+    ],
+    "method": "one frame per second contact sequence",
+    "observation": "red linear warning near depot containers followed by player zero HP in subsequent sampled frames",
+    "alphaChargeEventTick": 14856,
+    "windupSeconds": 0.8,
+    "limitations": "video and simulation clocks not precisely synchronized; killing blow and escape not established"
+  },
+  "continuousLowReview": {
+    "video": "/tmp/s159-continuous-low-0.webm",
+    "trace": "/tmp/s159-continuous-low.jsonl",
+    "reviewedVideoSeconds": [
+      308,
+      319
+    ],
+    "method": "one frame per second",
+    "observation": "large infected pursues courier near containers; red linear ground warning appears and player continues moving in sampled frames",
+    "alphaChargeEventTick": 18596,
+    "limitations": "approximate clock alignment; one-second sampling can miss 0.8-second cue; specific attack avoidance unproven"
+  },
+  "additionalVideoReview": {
+    "highSeconds": [
+      [
+        74,
+        77
+      ],
+      [
+        123,
+        126
+      ],
+      [
+        152,
+        155
+      ],
+      [
+        283,
+        286
+      ]
+    ],
+    "lowSeconds": [
+      [
+        74,
+        77
+      ],
+      [
+        122,
+        125
+      ],
+      [
+        203,
+        206
+      ],
+      [
+        315,
+        318
+      ]
+    ],
+    "method": "four frames one second apart per interval, inspected",
+    "finding": "farm crowds and red circular cues in HIGH; farmhouse crowd and depot linear warning in LOW; player continues moving in later LOW depot frames",
+    "limitation": "tick-to-video conversion inaccurate, including nominal corn sequence still at crash road; not exact peak or spawn proof"
+  },
+  "videoAlignment": {
+    "method": "image-difference match of timestamped driver screenshots to 1 fps video frames",
+    "offsetSecondsApprox": [
+      6,
+      8
+    ],
+    "highPairs": [
+      [
+        7177,
+        125
+      ],
+      [
+        8739,
+        151
+      ],
+      [
+        16742,
+        285
+      ]
+    ],
+    "lowPairs": [
+      [
+        7093,
+        125
+      ],
+      [
+        11791,
+        203
+      ],
+      [
+        18567,
+        316
+      ]
+    ],
+    "reviewedAt4Fps": {
+      "highSeconds": [
+        252,
+        256
+      ],
+      "lowSeconds": [
+        315,
+        319
+      ]
+    },
+    "observation": "linear red warning before large infected advances in both; HIGH player hit amid threats, LOW player moves away",
+    "limitation": "approximate alignment and overlapping threats prevent exact event or damage attribution"
+  },
+  "admissionVideoReview": {
+    "highSeconds": [
+      [
+        59,
+        62
+      ],
+      [
+        99,
+        102
+      ],
+      [
+        136,
+        139
+      ],
+      [
+        235,
+        238
+      ]
+    ],
+    "lowSeconds": [
+      [
+        60,
+        63
+      ],
+      [
+        98,
+        101
+      ],
+      [
+        178,
+        181
+      ],
+      [
+        282,
+        285
+      ]
+    ],
+    "method": "one frame per second; approximate alignment around first actor samples",
+    "result": "No definite pop identified; LOW shed group appears in visible crop area by second 181, but approach versus spawn between samples unresolved",
+    "limitation": "one-second gaps, occlusion and alignment uncertainty prevent exclusion of in-view spawns"
+  },
+  "lowShedAdmissionRefinement": {
+    "video": "/tmp/s159-continuous-low-0.webm",
+    "reviewedSeconds": [
+      177,
+      182
+    ],
+    "framesPerSecond": 4,
+    "firstActorSampleTick": 10380,
+    "previousSampleTick": 10320,
+    "actorCount": 12,
+    "playerXZ": [
+      1008.6,
+      -25.9
+    ],
+    "observation": "group progressively enters right edge of crop view in sampled frames",
+    "limitation": "approximate alignment and 0.25 s gaps cannot prove each admission offscreen"
+  },
+  "interReleaseQuietSamples": {
+    "definition": "longest consecutive samples with nearest living infected >15m, clipped to first release sample boundaries; not post-clear travel",
+    "high": {
+      "cornToFarmhouse": [
+        3599,
+        3779,
+        3,
+        732,
+        745
+      ],
+      "farmhouseToShed": [
+        7499,
+        8039,
+        9,
+        971,
+        1006
+      ],
+      "shedToDepot": [
+        8099,
+        8579,
+        8,
+        1009,
+        1040
+      ]
+    },
+    "low": {
+      "cornToFarmhouse": [
+        3240,
+        3780,
+        9,
+        713,
+        751
+      ],
+      "farmhouseToShed": [
+        7560,
+        7920,
+        6,
+        980,
+        1003
+      ],
+      "shedToDepot": [
+        7980,
+        8580,
+        10,
+        1007,
+        1045
+      ]
+    },
+    "columns": [
+      "startTick",
+      "endTick",
+      "seconds",
+      "startX",
+      "endX"
+    ]
+  },
+  "highAdmissionRefinement": {
+    "reviewedVideoSeconds": [
+      [
+        59,
+        63
+      ],
+      [
+        99,
+        103
+      ],
+      [
+        136,
+        140
+      ],
+      [
+        235,
+        239
+      ]
+    ],
+    "framesPerSecond": 4,
+    "result": "No definite abrupt visible appearance identified in sampled windows",
+    "limitations": "small/occluded actors, one-second admission bounds, approximate alignment and pre-existing depot attackers prevent excluding in-view spawn"
+  },
+  "lowAdmissionRefinement": {
+    "reviewedVideoSeconds": [
+      [
+        60,
+        64
+      ],
+      [
+        98,
+        102
+      ],
+      [
+        282,
+        286
+      ]
+    ],
+    "groups": [
+      "corn",
+      "farmhouse",
+      "depot"
+    ],
+    "framesPerSecond": 4,
+    "result": "No definite abrupt visible appearance identified in sampled windows",
+    "limitations": "dark crops, occlusion, other actors, 0.25-second gaps and approximate alignment prevent excluding in-view spawn"
+  },
+  "admissionTriggeredCaptures": {
+    "high": {
+      "corn-field-horde": 4630,
+      "farmhouse-defense": 5620,
+      "shed-field-crossing": 7820,
+      "depot-alpha": 13940
+    },
+    "low": {
+      "corn-field-horde": 3220,
+      "farmhouse-defense": 5510,
+      "shed-field-crossing": 14070,
+      "depot-alpha": 19970
+    },
+    "paths": "test-results/playtest/s159-admission-{high,low}/shots/<group>-<tick>.jpg",
+    "review": "all eight opened in contact grid; HIGH farmhouse shows crowd at left; other views mostly open or prior threats",
+    "limitation": "tick is screenshot request, not rendered frame; visible actor identities are not recorded"
+  },
+  "firstFrameVisibility": {
+    "method": "first two requestAnimationFrame samples following each slot key, QA crowdFigures drawn and input.project; viewport 1280x720",
+    "high": {
+      "keys": {
+        "corn-field-horde": 15,
+        "farmhouse-defense": 12,
+        "shed-field-crossing": 17,
+        "depot-alpha": 10
+      },
+      "records": 108,
+      "onscreenProjection": 0,
+      "drawn": 0,
+      "visibleRayTrue": 14
+    },
+    "low": {
+      "keys": {
+        "corn-field-horde": 8,
+        "farmhouse-defense": 10,
+        "shed-field-crossing": 12,
+        "depot-alpha": 8
+      },
+      "records": 76,
+      "onscreenProjection": 0,
+      "drawn": 0,
+      "visibleRayTrue": 22
+    },
+    "raw": [
+      "/tmp/s159-visibility-high.jsonl",
+      "/tmp/s159-visibility-low.jsonl"
+    ],
+    "limitations": "render/update ordering may differ from first presented frame; ray visibility does not mean on-screen; sample-specific"
+  }
+}
