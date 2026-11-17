@@ -41,3 +41,9 @@ No source or playtest tools were changed. No zombie stats, wave counts, survivor
 Fresh HIGH WebGPU zoom 1.5 ran for 480 seconds through the required browser pool on port 5053. It failed to finish at the stairs, with 17 deaths, one recorded driver assist, no logged attack totals, and HUD 0/1 out. At tick 22658 the courier was at (246.16,12.16); at the cap it was near (242.9,13.6). Raw receipts: `test-results/playtest/s158-high-l6/`. The retained sheet is now a fresh stair capture, replacing the earlier schematic. LOW remains to run, and the gameplay/driver diagnosis remains open.
 
 The prescribed remote suite now passes on 46.225.66.90: 105 passed, one platform skip, 150/150 inventory, 186.0 seconds. This supersedes the earlier runner outage.
+
+## Fresh LOW and driver policy evidence
+
+LOW followed HIGH through the same pool, WebGPU, zoom 1.5, ports 5053/5054. It reached the eight-minute cap without completing, HUD 0/2 out, near (240,13.9), tick 28825. Earlier at tick 10905 it stood beside the stairs at (249.34,13.05). The run summary in qa.json records deaths and assists; raw logs remain in `test-results/playtest/s158-low-l6/`. Both tiers now reproduce the stair approach failure.
+
+Source inspection confirms substantial driver differences: `prioritizeAllyThreat` gives an armed courier its nearest personal threat before a nearby ally attacker; native sorts group bite risk first. Driver ranged reach is 14m (3m after 30s without objective progress), versus native 22m. During L6 stop the driver backs away from contacts within 5m: fresh HIGH walks from (3,0) to (3,9.26) while residents remain near z=-11. During L6 retreat ranged combat holds still; native continues moving with the column. These are Driver gaps, and tools/playtest remains unchanged. They explain why native results cannot validate this driver as a competent-player policy, but do not yet rule out a game-side guidance issue.
