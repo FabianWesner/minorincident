@@ -880,7 +880,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     // or mission coordinates are consulted.
     const l6VisibleThreat = e.level === 'L6' && e.step !== 'shelter'
       ? e.enemies.filter(b => b.drawn && b.hp > 0 && b.d <= 22 && ok(b))
-        .sort((a, b) => Number(!!b.attacking && e.allies.some(s => s.drawn && s.hp > 0 && !s.corpse && Math.hypot(s.x-b.x,s.z-b.z)<3)) - Number(!!a.attacking && e.allies.some(s => s.drawn && s.hp > 0 && !s.corpse && Math.hypot(s.x-a.x,s.z-a.z)<3)) || a.d-b.d)[0]
+        .sort((a, b) => Number(e.allies.some(s => s.drawn && s.hp > 0 && !s.corpse && s.kind !== 'companion' && Math.hypot(s.x-b.x,s.z-b.z)<1.6)) - Number(e.allies.some(s => s.drawn && s.hp > 0 && !s.corpse && s.kind !== 'companion' && Math.hypot(s.x-a.x,s.z-a.z)<1.6)) || a.d-b.d)[0]
       : null;
     const threat = l6VisibleThreat ?? prioritizeAllyThreat(unarmed, nearby, allyThreat);
     if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
@@ -1849,7 +1849,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (e.level === 'L6' && e.step === 'retreat' && e.player?.weapons.includes('weapon.army-mg')) {
       l6CrowdUntil = 0;
       const targets = e.enemies.filter(b => b.drawn && b.hp > 0 && b.d < 22);
-      const threat = targets.find(b => b.attacking && e.allies.some(a => a.drawn && a.hp > 0 && !a.corpse && Math.hypot(a.x - b.x, a.z - b.z) < 3)) ?? targets[0];
+      const threat = targets.find(b => e.allies.some(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion' && Math.hypot(a.x - b.x, a.z - b.z) < 1.6)) ?? targets[0];
       if (threat) {
         // The fixed HUD/minimap objective keeps the column moving while the
         // mouse remains on the highest visible survivor threat.
