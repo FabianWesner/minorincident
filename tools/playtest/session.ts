@@ -1853,7 +1853,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       if (threat) {
         // The fixed HUD/minimap objective keeps the column moving while the
         // mouse remains on the highest visible survivor threat.
-        const destination = e.cue && /^Rejoin /.test(e.objective) ? await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), e.cue) : e.marker?.visible ? e.marker : null;
+        const destination = /^Rejoin /.test(e.objective) ? e.survivorCueScreen : e.marker?.visible ? e.marker : null;
         const keys = destination ? markerWalkKeys(destination.x-e.view.w/2,destination.y-e.view.h/2,(stairFrame++%12)/12) : [];
         if (e.player.current !== 'weapon.army-mg') {
           await press([]); await releaseAim(); await page.keyboard.press('Digit5'); await hold(100); continue;
