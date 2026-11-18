@@ -17,6 +17,8 @@ export interface Eyes {
   route: { dx: number; dz: number } | null;
   cue?: { x: number; z: number; text: string } | null;
   followerWarning?: string | null;
+  alarmScreen?: { x: number; y: number } | null;
+  survivorCueScreen?: { x: number; y: number } | null;
   panel: { visible: boolean; heading: string; button: string | null };
   menu: string | null; loading: boolean; prompt: string; subtitle: string;
   player: { x: number; y: number; z: number; hp: number; max: number; riding: boolean; weapons: string[]; emptyWeapons?: string[]; current: string | null } | null;
@@ -150,6 +152,8 @@ export function look(): Eyes {
     route: shown(route) ? { dx: (parseFloat(route!.style.left) - 50) * (route === hudRoute ? 30 / 44 : 100 / 40), dz: (parseFloat(route!.style.top) - 50) * (route === hudRoute ? 30 / 44 : 100 / 40) } : null,
     cue: shown(cue) && Number.isFinite(Number(cue!.dataset.worldX)) && Number.isFinite(Number(cue!.dataset.worldZ)) ? { x: Number(cue!.dataset.worldX), z: Number(cue!.dataset.worldZ), text: cue!.getAttribute('aria-label') ?? '' } : null,
     followerWarning: shown(q('survivor-world-cue')) && q('survivor-world-cue')!.dataset.alarm === 'true' ? q('survivor-world-cue')!.textContent : null,
+    alarmScreen: shown(q('survivor-world-cue')) && q('survivor-world-cue')!.dataset.alarm === 'true' ? (() => { const r = q('survivor-world-cue')!.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; })() : null,
+    survivorCueScreen: shown(q('survivor-world-cue')) ? (() => { const r = q('survivor-world-cue')!.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; })() : null,
     panel: { visible: shown(panel), heading: q('mission-heading')?.textContent ?? '', button: button && shown(button) ? button.textContent : null },
     menu, loading: shown(q('menu-loading')) || !!q('level-transition') && !q('level-transition')!.hidden,
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
