@@ -42,6 +42,6 @@ S153 receipts and the farmhouse/shed/depot member counts are unchanged. The prev
 
 ## Validation
 
-`npm run typecheck`, `npm run lint` pass. `npm run qa:threat` and the remote `sh tools/remote/run.sh $PWD -- npm test` results are recorded below after the source settled.
+`npm run typecheck` and `npm run lint` pass. `npm run qa:threat` passes: **0 acceptance fail flags** (234.3 s; L10 skilled completes, the passive window cap is the normal outcome). The unit suite is green locally: `npm test` **106/106 tests, 150/150 cases, 105.8 s** of the 240 s budget. The remote `sh tools/remote/run.sh $PWD -- npm test` was killed at the runner's ~239 s browser-reservation cap **three times — 246.0 s, 245.8 s plain and 246.1 s with both slots held via `timing-isolated.sh --all`** — with **zero test failures in every attempt** (the suite is unchanged from the previous lane's 189.8 s remote receipt on this same worktree; the shared runner is currently that much slower). Per the lane rule the suite was rerun unchanged and not trimmed; the runner's own message ("split the batch") is out of scope for this lane.
 
 _(updated by s163-l10retry: retry-loop fix + capped set-piece lanes + killing-blow death attribution)_
