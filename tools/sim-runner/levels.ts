@@ -62,6 +62,8 @@ export interface LevelRunHooks {
   l4Profile?: L4Profile;
   /** Follow the same per-turn L4 marker position shown by the HUD in focused native probes. */
   l4VisibleMarker?: boolean;
+  /** Keep the skilled L10 policy while applying the player's walk modifier. */
+  l10Walk?: boolean;
 }
 /** Internal signal used to end an intentionally partial observer route. */
 export class LevelRunStopped extends Error {
@@ -128,6 +130,10 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     if (level === 'L7') return runSeven(world, report, maxSeconds, onComplete);
     const mission = world.missions!, walker = new Walker(), rng = new Rng(seed, `campaign-${policy}`);
     const generalPolicy = policy === 'typical' ? 'complete' : policy;
+    if (level === 'L10' && hooks?.l10Walk) {
+      const apply = world.applyInput.bind(world);
+      world.applyInput = (frame, scheme) => apply({ ...frame, walk: true }, scheme);
+    }
     const stops = [world.events.on('mission.failed', e => { if (e.type === 'mission.failed') report.failures[e.reason] = (report.failures[e.reason] ?? 0) + 1; }), world.events.on('player.died', () => { report.failures['player-died'] = (report.failures['player-died'] ?? 0) + 1; }), world.events.on('objective.completed', e => { if (e.type === 'objective.completed') report.objectiveTimeline.push({ id: e.id, t: world.tick / 60 }); })];
     if (level === 'L10') {
       report.cureReleases = 0;
