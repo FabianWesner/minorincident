@@ -1870,6 +1870,11 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const points = follow && Math.hypot(follow.x-e.player.x, follow.z-e.player.z) > 2 ? await page.evaluate(({ p, goal }) => [window.__SS__!.input.project(p, 'player'), window.__SS__!.input.project(goal, 'player')], { p: e.player, goal: follow }) : null;
         const destination = /^Rejoin /.test(e.objective) ? e.survivorCueScreen : null;
         const keys = points ? markerWalkKeys(points[1].x-points[0].x, points[1].y-points[0].y,(stairFrame++%12)/12) : destination ? markerWalkKeys(destination.x-e.view.w/2,destination.y-e.view.h/2,(stairFrame++%12)/12) : [];
+        const closeCrowd = targets.filter(b => b.d < 2.2).length >= 2 && e.player.weapons.includes('weapon.fire-axe');
+        if (closeCrowd) {
+          await releaseAim(); await page.mouse.move(threat.aim.x, threat.aim.y);
+          await press([...keys, 'KeyJ']); await hold(150); continue;
+        }
         if (e.player.current !== 'weapon.army-mg') {
           await press([]); await releaseAim(); await page.keyboard.press('Digit5'); await hold(100); continue;
         }

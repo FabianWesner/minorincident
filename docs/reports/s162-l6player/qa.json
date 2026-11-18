@@ -19,193 +19,14 @@
             "heroine": "female",
             "finished": true,
             "skipped": [],
-            "wallSeconds": 455,
-            "simSeconds": 446,
-            "maxNoProgressSeconds": 32.473,
-            "deaths": 14,
+            "wallSeconds": 222,
+            "simSeconds": 214,
+            "maxNoProgressSeconds": 32.506,
+            "deaths": 3,
             "assists": 0,
             "attacks": {
-              "weapon.army-mg": 2560,
-              "weapon.fire-axe": 4
-            },
-            "weaponsStart": [
-              "weapon.fire-axe",
-              "weapon.bat",
-              "weapon.army-mg",
-              "weapon.handgun",
-              "weapon.kick",
-              "weapon.shotgun"
-            ],
-            "weaponsEnd": [
-              "weapon.fire-axe",
-              "weapon.bat",
-              "weapon.army-mg",
-              "weapon.handgun",
-              "weapon.kick",
-              "weapon.shotgun"
-            ],
-            "steps": [
-              {
-                "id": "shelter",
-                "text": "Look around the shelter · rest while you can",
-                "tick": 10,
-                "marker": {
-                  "anchor": null,
-                  "ring": null,
-                  "drawn": null,
-                  "playerY": 1.3200000524520874,
-                  "pinVisible": false
-                }
-              },
-              {
-                "id": "stop",
-                "text": "Stop the infected · Retreat in 0:36",
-                "tick": 1998,
-                "marker": {
-                  "anchor": null,
-                  "ring": null,
-                  "drawn": null,
-                  "playerY": 1.3200000524520874,
-                  "pinVisible": false
-                }
-              },
-              {
-                "id": "retreat",
-                "text": "The group waits: cover the rear from the infected · 248 m",
-                "tick": 3258,
-                "marker": {
-                  "anchor": "l6-next",
-                  "ring": {
-                    "x": 242,
-                    "y": 1.3200000524520874,
-                    "z": 15
-                  },
-                  "drawn": [
-                    242,
-                    0.6,
-                    15
-                  ],
-                  "playerY": 1.3200000524520874,
-                  "pinVisible": true
-                }
-              },
-              {
-                "id": "exit",
-                "text": "Bring the survivors into the night · 0/17 out · 2 m",
-                "tick": 25197,
-                "marker": {
-                  "anchor": "l6-stair",
-                  "ring": {
-                    "x": 244,
-                    "y": 1.2699999809265137,
-                    "z": 15
-                  },
-                  "drawn": [
-                    250,
-                    1.01,
-                    15
-                  ],
-                  "playerY": 1.2699999809265137,
-                  "pinVisible": true
-                }
-              }
-            ]
-          }
-        ],
-        "issues": 1,
-        "bySeverity": {
-          "P0": 0,
-          "P1": 0,
-          "P2": 1,
-          "P3": 0
-        }
-      },
-      "result": {
-        "stats": {
-          "time": 446.48333333333335,
-          "kills": 0,
-          "knockdowns": 403,
-          "damage": 1578.0333333333283,
-          "deaths": 14,
-          "rescued": 11,
-          "optionalObjectives": []
-        },
-        "rescued": 16,
-        "survivorsIn": 29,
-        "survivorsLost": 13
-      },
-      "renderer": "webgpu",
-      "assists": [],
-      "gateInteractions": [
-        {
-          "t": "2026-11-18T17:12:12.266Z",
-          "l6GateInteraction": 18151,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:12:37.672Z",
-          "l6GateInteraction": 19676,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:13:28.219Z",
-          "l6GateInteraction": 22709,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        }
-      ],
-      "finalGates": [
-        {
-          "id": 45,
-          "x": 90,
-          "closedAt": 21784,
-          "hold": 0,
-          "requested": false,
-          "passed": true
-        },
-        {
-          "id": 46,
-          "x": 150,
-          "closedAt": 23490,
-          "hold": 0,
-          "requested": false,
-          "passed": true
-        },
-        {
-          "id": 47,
-          "x": 210,
-          "closedAt": 0,
-          "hold": 0,
-          "requested": false,
-          "passed": true
-        }
-      ]
-    },
-    "low": {
-      "summary": {
-        "mode": "campaign",
-        "acceptanceMode": "STANDARD",
-        "immortal": false,
-        "routeOnly": false,
-        "quality": "low",
-        "heroine": "female",
-        "zoom": 1.5,
-        "levels": [
-          "L6"
-        ],
-        "runs": [
-          {
-            "level": "L6",
-            "entry": "debug",
-            "heroine": "female",
-            "finished": true,
-            "skipped": [],
-            "wallSeconds": 391,
-            "simSeconds": 383,
-            "maxNoProgressSeconds": 32.581,
-            "deaths": 11,
-            "assists": 0,
-            "attacks": {
-              "weapon.army-mg": 1931
+              "weapon.army-mg": 832,
+              "weapon.fire-axe": 31
             },
             "weaponsStart": [
               "weapon.fire-axe",
@@ -239,7 +60,7 @@
               {
                 "id": "stop",
                 "text": "Stop the infected · Retreat in 0:36",
-                "tick": 2003,
+                "tick": 1999,
                 "marker": {
                   "anchor": null,
                   "ring": null,
@@ -250,7 +71,187 @@
               },
               {
                 "id": "retreat",
-                "text": "Cover the retreat through the tunnel · 246 m",
+                "text": "Cover the retreat through the tunnel · 241 m",
+                "tick": 3257,
+                "marker": {
+                  "anchor": "l6-next",
+                  "ring": {
+                    "x": 242,
+                    "y": 1.440000057220459,
+                    "z": 15
+                  },
+                  "drawn": [
+                    242,
+                    0.6,
+                    15
+                  ],
+                  "playerY": 1.440000057220459,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "exit",
+                "text": "Bring the survivors into the night · 0/16 out · 7 m",
+                "tick": 11180,
+                "marker": {
+                  "anchor": "l6-stair",
+                  "ring": {
+                    "x": 250,
+                    "y": 1.2699999809265137,
+                    "z": 15
+                  },
+                  "drawn": [
+                    250,
+                    1.01,
+                    15
+                  ],
+                  "playerY": 1.2699999809265137,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "issues": 1,
+        "bySeverity": {
+          "P0": 0,
+          "P1": 0,
+          "P2": 1,
+          "P3": 0
+        }
+      },
+      "result": {
+        "stats": {
+          "time": 213.91666666666666,
+          "kills": 0,
+          "knockdowns": 138,
+          "damage": 412.9999999999971,
+          "deaths": 3,
+          "rescued": 9,
+          "optionalObjectives": []
+        },
+        "rescued": 16,
+        "survivorsIn": 29,
+        "survivorsLost": 13
+      },
+      "renderer": "webgpu",
+      "assists": [],
+      "gateInteractions": [
+        {
+          "t": "2026-11-18T17:32:13.713Z",
+          "l6GateInteraction": 6386,
+          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 1 m"
+        },
+        {
+          "t": "2026-11-18T17:32:49.626Z",
+          "l6GateInteraction": 8540,
+          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
+        },
+        {
+          "t": "2026-11-18T17:33:19.875Z",
+          "l6GateInteraction": 10355,
+          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
+        }
+      ],
+      "finalGates": [
+        {
+          "id": 45,
+          "x": 90,
+          "closedAt": 7855,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 46,
+          "x": 150,
+          "closedAt": 9518,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        },
+        {
+          "id": 47,
+          "x": 210,
+          "closedAt": 11217,
+          "hold": 0,
+          "requested": false,
+          "passed": true
+        }
+      ]
+    },
+    "low": {
+      "summary": {
+        "mode": "campaign",
+        "acceptanceMode": "STANDARD",
+        "immortal": false,
+        "routeOnly": false,
+        "quality": "low",
+        "heroine": "female",
+        "zoom": 1.5,
+        "levels": [
+          "L6"
+        ],
+        "runs": [
+          {
+            "level": "L6",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 270,
+            "simSeconds": 262,
+            "maxNoProgressSeconds": 32.539,
+            "deaths": 4,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 1149,
+              "weapon.fire-axe": 46
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.bat",
+              "weapon.army-mg",
+              "weapon.handgun",
+              "weapon.kick",
+              "weapon.shotgun"
+            ],
+            "steps": [
+              {
+                "id": "shelter",
+                "text": "Look around the shelter · rest while you can",
+                "tick": 11,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "stop",
+                "text": "Stop the infected · Retreat in 0:36",
+                "tick": 2001,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 1.3200000524520874,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "retreat",
+                "text": "Cover the retreat through the tunnel · 242 m",
                 "tick": 3261,
                 "marker": {
                   "anchor": "l6-next",
@@ -270,12 +271,12 @@
               },
               {
                 "id": "exit",
-                "text": "Bring the survivors into the night · 0/19 out · 7 m",
-                "tick": 21428,
+                "text": "Bring the survivors into the night · 0/18 out · 1 m",
+                "tick": 13702,
                 "marker": {
                   "anchor": "l6-stair",
                   "ring": {
-                    "x": 250,
+                    "x": 244,
                     "y": 1.2699999809265137,
                     "z": 15
                   },
@@ -301,59 +302,34 @@
       },
       "result": {
         "stats": {
-          "time": 382.9,
+          "time": 262.1666666666667,
           "kills": 0,
-          "knockdowns": 273,
-          "damage": 1248.999999999997,
-          "deaths": 11,
-          "rescued": 18,
+          "knockdowns": 209,
+          "damage": 502.66666666666356,
+          "deaths": 4,
+          "rescued": 8,
           "optionalObjectives": []
         },
-        "rescued": 19,
+        "rescued": 18,
         "survivorsIn": 29,
-        "survivorsLost": 10
+        "survivorsLost": 11
       },
       "renderer": "webgpu",
       "assists": [],
       "gateInteractions": [
         {
-          "t": "2026-11-18T17:17:03.420Z",
-          "l6GateInteraction": 6844,
+          "t": "2026-11-18T17:36:51.199Z",
+          "l6GateInteraction": 8064,
+          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 1 m"
+        },
+        {
+          "t": "2026-11-18T17:37:33.796Z",
+          "l6GateInteraction": 10620,
           "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
         },
         {
-          "t": "2026-11-18T17:17:50.465Z",
-          "l6GateInteraction": 9668,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:18:06.631Z",
-          "l6GateInteraction": 10638,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:18:23.465Z",
-          "l6GateInteraction": 11648,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:18:41.976Z",
-          "l6GateInteraction": 12759,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:19:00.874Z",
-          "l6GateInteraction": 13893,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:19:44.591Z",
-          "l6GateInteraction": 16516,
-          "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
-        },
-        {
-          "t": "2026-11-18T17:20:05.023Z",
-          "l6GateInteraction": 17742,
+          "t": "2026-11-18T17:38:11.143Z",
+          "l6GateInteraction": 12860,
           "objective": "Cover the retreat through the tunnel · Everyone through · E or click the gate to close it · 0 m"
         }
       ],
@@ -361,7 +337,7 @@
         {
           "id": 45,
           "x": 90,
-          "closedAt": 17877,
+          "closedAt": 0,
           "hold": 0,
           "requested": false,
           "passed": true
@@ -369,7 +345,7 @@
         {
           "id": 46,
           "x": 150,
-          "closedAt": 0,
+          "closedAt": 12767,
           "hold": 0,
           "requested": false,
           "passed": true
@@ -377,7 +353,7 @@
         {
           "id": 47,
           "x": 210,
-          "closedAt": 0,
+          "closedAt": 14383,
           "hold": 0,
           "requested": false,
           "passed": true
