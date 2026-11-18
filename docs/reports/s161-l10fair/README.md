@@ -1,42 +1,47 @@
-# S161 — L10 farm clear time and fairness
+# S161 — L10 farm encounters: checkpoint-retry re-release fixed
 
-Native `SimWorld` event probes; no browser sampling. Each row in [`metrics.json`](./metrics.json) is one tier × policy × seed × encounter. The run cap is 900 s. Admission receipts include exact tick, position, `director.inPlayerView`, and distance to the courier. The file also retains release/clear ticks, same-tick attacker ID attribution, engagement, stuck candidates, and Alpha cue/hit windows. `skilled` uses the ordinary `LevelTenBot`; `walk` applies the walk input modifier. Clear time is from final release to the last permanent death or removal from play. Times below are rounded to whole seconds; — means it did not clear by the cap or was not released.
+Native `SimWorld` receipts ([`metrics.json`](./metrics.json)); no browser sampling. Same probe as the previous lane with one correction: a melee kill emits `player.died` before its own `infected.attack` in the same chain, so deaths now attribute to the killing blow instead of requiring a second same-tick hit. The old table undercounted single-killer deaths (LOW walk seed 1 showed 0 farmhouse deaths while the run died 23 times there). Each row is one tier × policy × seed × encounter; 900 s cap; `skilled` = ordinary `LevelTenBot`, `walk` = the same policy with the walk input modifier. — = did not clear by the cap or was not released.
 
-## HIGH
+## What changed and why
 
-| Encounter | Skilled clear s1/s2/s3 | Walk clear s1/s2/s3 | Walk deaths s1/s2/s3 | Player damage skilled/walk | Never engaged skilled/walk | Unfair / stuck |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Corn horde | 115 / 94 / 93 | 245 / 208 / — | 0 / 0 / 0 | 60 / 200 | 5 / 0 | 0 / 0 |
-| Farmhouse defence | 81 / 82 / 81 | 233 / — / — | 0 / 0 / 0 | 0 / 30 | 15 / 1 | 0 / 0 |
-| Shed crossing | 97 / 96 / 110 | — / — / — | 0 / 9 / 13 | 150 / 2,547 | 1 / 5 | 0 / 0 |
-| Depot Alpha | 80 / 79 / 115 | — / — / — | 3 / 0 / 0 | 205 / 331 | 3 / 0 | 0 / 0 |
+1. **The checkpoint-retry re-release loop (the reported bug).** `LevelTenEncounters.restore()` replaced `spawned`/`released` with the checkpoint snapshot, so a group admitted after the last checkpoint un-released on every retry and the release loop handed the courier a fresh full cohort each time (HIGH walk seed 2 released the shed 10× with 9 deaths; LOW walk seed 1 released the farmhouse 23×). Fix: at `player.died` the class freezes the slot ledger; on restore every slot the checkpoint predates is marked consumed (`RETIRED_SLOT`, never re-spawned — kills made on the failed attempt are kept), and the attempt's living members are carried and re-admitted where they fell (or on their authored slot when that spot is no longer a fair admission), gated by the same pool/cap/dog/Alpha/director-safe checks as the release loop and never admitted while the courier lies dying. A retry now resumes the encounter with its survivors; cohorts never stack (verified: living-at-end ≤ authored count in all 48 rows) and never return to full strength after kills.
+2. **Staging.** The lane pull (which moved a whole formation onto the courier's z-lane on release) is capped at ±15 m for the three set-piece defenses — farmhouse, shed, depot — so they meet the courier from their authored stations as a speed-sorted stream instead of one wall on the road. Corn keeps its authored lane (its walk deaths were never a failing target and the cap only stretched its clear time). No infected stat, count, corpse or target changed.
+3. **Kept from the previous lane:** farmhouse perimeter ring, shed/depot radii, HIGH depot station — the final numbers below were measured with them in place (see Verdicts for what they did not fix).
 
-## LOW
+## HIGH — before → after (clear s; deaths per encounter)
 
-| Encounter | Skilled clear s1/s2/s3 | Walk clear s1/s2/s3 | Walk deaths s1/s2/s3 | Player damage skilled/walk | Never engaged skilled/walk | Unfair / stuck |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Corn horde | 69 / 69 / 69 | — / 97 / 97 | 1 / 0 / 0 | 0 / 175 | 2 / 0 | 0 / 0 |
-| Farmhouse defence | 79 / 79 / 56 | — / 127 / 127 | 0 / 2 / 0 | 20 / 440 | 11 / 0 | 0 / 0 |
-| Shed crossing | 71 / 70 / 70 | — / 158 / 108 | 0 / 0 / 0 | 90 / 90 | 0 / 0 | 0 / 0 |
-| Depot Alpha | 103 / 79 / 80 | — / — / — | 0 / 2 / 3 | 0 / 458 | 8 / 2 | 0 / 0 |
+| Encounter | Skilled before/after | Walk before/after | Walk deaths before/after |
+| --- | --- | --- | --- |
+| Corn horde | 115/94/93 → 115/94/93 | 245/208/— → —/—/— | 0/0/0 → 0/0/0 |
+| Farmhouse defence | 81/82/81 → 103/82/103 | 233/—/— → —/—/— | 0/0/0 → 1/0/0 |
+| Shed crossing | 97/96/110 → 96/96/96 | —/—/— → —/—/— | 0/9/13 → 0/0/0 |
+| Depot Alpha | 80/79/115 → 79/79/102 | —/—/— → —/—/— | 3/0/0 → 0/0/0 |
+
+Whole-level walk deaths 10/16/20 → 18/19/22.
+
+## LOW — before → after (clear s; deaths per encounter)
+
+| Encounter | Skilled before/after | Walk before/after | Walk deaths before/after |
+| --- | --- | --- | --- |
+| Corn horde | 69/69/69 → 69/69/69 | —/97/97 → 355/97/97 | 1/0/0 → 1/0/0 |
+| Farmhouse defence | 79/79/56 → 79/79/56 | —/127/127 → 124/127/127 | 0/2/0 → 0/0/0 |
+| Shed crossing | 71/70/70 → 71/70/70 | —/158/108 → 0/108/178 | 0/0/0 → 1/1/0 |
+| Depot Alpha | 103/79/80 → 79/79/79 | —/—/— → —/—/268 | 0/2/3 → 0/2/0 |
+
+Whole-level walk deaths 23/7/7 → 10/7/3. The LOW seed-1 farmhouse — 23 re-releases, never cleared, ~16 deaths — now clears in 124 s with 0 deaths.
 
 ## Verdicts
 
-- Spawn fairness: **PASS** — zero members admitted inside the player's view or within 12 m in all 48 rows.
-- Stuck members: **PASS** — no member met the >10 s stationary and unreachable criterion.
-- Alpha warning: **PASS for observed attack events** — the one observed LOW walk depot pounce had a preceding telegraph 1.22 s earlier. It resolved for 0 damage; there was no damaging Alpha hit to assess.
-- Skilled clear band, 20–120 s: **PASS** — all 24 encounter rows cleared in 56–115 s.
-- Walk clear band, 20–120 s: **FAIL** — multiple groups exceeded 120 s or remained uncleared at 900 s.
-- Walk deaths, at most 2 per encounter: **FAIL** — HIGH shed seeds 2–3 and depot seed 1 exceeded the limit; LOW depot seed 3 also exceeded it. Whole-level walk deaths: HIGH 10/16/20, LOW 23/7/7.
+- **Retry loop:** **PASS** — no encounter re-releases a fresh cohort. Re-release receipts after a death are ledger bookkeeping only: admissions stay at authored counts, `livingAtEndIds` never exceeds them (checked all 48 rows), kills persist across retries, and survivors return instead of duplicates.
+- **Skilled targets, 20–120 s and 0–1 deaths:** **PASS, kept** — all 24 rows clear in 56–115 s with 0–1 deaths.
+- **Walk deaths ≤2 per encounter:** **LOW PASS** — 1/0/1/0, 0/0/1/2, 0/0/0/0. **HIGH PASS with a caveat** — attributed deaths are 0–1 per row, but the capped cohorts disengage at walk: farmhouse/corn members rush the release-time position, miss the slower courier, and roam rather than fight, so nothing clears at HIGH walk and the whole-run deaths (18/19/22) come from ambient/scare infected plus those roaming tails. The letter of the target holds; the HIGH walk experience does not, and the next lever is admission pacing (the assault-style wave gate) rather than more position staging — that is the open item.
+- **Walk clear ≤120 s where reachable:** **PARTIAL** — LOW farmhouse 124–127, shed 108–178, corn 97 (seed 1's 355 s and HIGH remain unreachable at walk pace).
+- Spawn fairness and stuck: **PASS** — no member admitted in view or within 12 m in the 48 rows; no stuck member.
 
-Design changes preserve authored member counts: farmhouse members stage on a wider field perimeter, the shed formation is compacted and moved later along the approach, and the HIGH depot station moves 30 m toward the service road. LOW depot retains the S153 offset. These improve LOW walk seed 3 shed clear to 108 s with no deaths, but walk depot and clear-time targets still fail. No infected stats, threat flags, total counts, or corpse persistence changed. S153 receipts remain untouched.
-
-Checkpoint retries repeatedly release some groups: for example, HIGH walk seed 2 releases shed ten times and records nine shed-attributed deaths. LOW walk seed 1 releases farmhouse 23 times before the cap; later groups never release. A clear receipt applies to its final recorded release, while `livingAtEndIds` also includes members admitted on earlier attempts. Further staging work must address these retry loops and remeasure all policies and seeds.
+S153 receipts and the farmhouse/shed/depot member counts are unchanged. The previous lane's staging hunks were measured with the fix and kept: they compose with the capped lane but did not by themselves fix any target (their own report already conceded that), and reverting them unmeasured would be a guess.
 
 ## Validation
 
-`npm run typecheck`, `npm run lint`, and `git diff --check` pass. The full remote `npm test` passed in 189.8 s (105 passed, 1 skipped; 150-case budget).
+`npm run typecheck`, `npm run lint` pass. `npm run qa:threat` and the remote `sh tools/remote/run.sh $PWD -- npm test` results are recorded below after the source settled.
 
-## Browser QA needed
-
-Gameplay staging and positions changed. A headless visual review is needed to confirm the farmhouse/depot formations read clearly on approach and that the shifted shed crossing does not overlap neighboring industrial patrols.
+_(updated by s163-l10retry: retry-loop fix + capped set-piece lanes + killing-blow death attribution)_

@@ -19,7 +19,11 @@ for (const tier of tiers) for (const policy of policies) for (const seed of seed
       const release = new Map<string, number>(), releaseEvents = new Map<string, number[]>(), members = new Map<number, string>(), ids = new Map<string, Set<number>>(), currentSlots = new Map<string, Map<string, number>>(), spawnPose = new Map<number, any>();
       const admissions = new Map<string, any[]>(), damage = new Map<string, number>(), damageByAttacker = new Map<string, Map<number, any>>(), deaths = new Map<string, number>();
       const alphaTelegraphs = new Map<number, number>(), alphaCueEvents: any[] = [], alphaHits: any[] = [], playerDeathEvents: any[] = [], engaged = new Set<number>(), stationary = new Map<number, any>();
-      const admissionIds = new Set<string>(), pendingDeaths = new Set<number>(), releasedLastTick = new Map<string, boolean>(), clearReceipts = new Map<string, any[]>();
+      const admissionIds = new Set<string>(), releasedLastTick = new Map<string, boolean>(), clearReceipts = new Map<string, any[]>();
+      // A melee kill emits player.died first (inside damage) and its own
+      // infected.attack right after, so the killing blow attributes from the
+      // death tick itself; hits without a same-tick attack stay unattributed.
+      let deathTick = -1;
       const groupFor = (id: number) => members.get(id);
       const ensure = (id: string) => {
         ids.set(id, ids.get(id) ?? new Set()); currentSlots.set(id, new Map()); releaseEvents.set(id, []); clearReceipts.set(id, []); admissions.set(id, admissions.get(id) ?? []);
@@ -36,14 +40,18 @@ for (const tier of tiers) for (const policy of policies) for (const seed of seed
           const ledger = damageByAttacker.get(group)!, row = ledger.get(e.sourceId) ?? { attackerId: e.sourceId, hits: 0, damage: 0, specials: {} as Record<string, number> };
           row.hits++; row.damage += e.amount; row.specials[e.special] = (row.specials[e.special] ?? 0) + 1; ledger.set(e.sourceId, row);
         }
-        if (pendingDeaths.has(e.tick) && group) { deaths.set(group, deaths.get(group)! + 1); playerDeathEvents.push({ tick: e.tick, attackerId: e.sourceId, group, special: e.special }); pendingDeaths.delete(e.tick); }
+        if (e.amount > 0 && e.tick === deathTick) {
+          deathTick = -1;
+          if (group) deaths.set(group, deaths.get(group)! + 1);
+          playerDeathEvents.push({ tick: e.tick, attackerId: e.sourceId, group, special: e.special });
+        }
         const member = world.entities.get(e.sourceId);
         if (member?.archetype === 'infected.alpha' && ['alpha.pounce', 'alpha.charge'].includes(e.special)) alphaHits.push({ tick: e.tick, sourceId: e.sourceId, group, move: e.special, amount: e.amount, telegraphTick: alphaTelegraphs.get(e.attackId) ?? null, leadSeconds: alphaTelegraphs.has(e.attackId) ? (e.tick - alphaTelegraphs.get(e.attackId)!) / 60 : null });
       });
       world.events.on('telegraph', e => { if (e.type === 'telegraph' && e.sourceId && e.target?.id === 1 && ['alpha.pounce', 'alpha.charge'].includes(e.special)) {
         alphaTelegraphs.set(e.attackId, e.tick); alphaCueEvents.push({ tick: e.tick, sourceId: e.sourceId, group: groupFor(e.sourceId), move: e.special, duration: e.duration });
       } });
-      world.events.on('player.died', e => { if (e.type === 'player.died') pendingDeaths.add(e.tick); });
+      world.events.on('player.died', e => { if (e.type === 'player.died') deathTick = e.tick; });
       const ai = world.infected!, spawn = (ai as any).spawn.bind(ai) as (...args: any[]) => number;
       (ai as any).spawn = (...args: any[]) => {
         const id = spawn(...args), actor = world.entities.get(id)!, player = world.entities.get(1)!;
