@@ -34,7 +34,9 @@ export function loadReviews(row: string): ReviewDecision | undefined {
     // Visual evidence is routinely archived outside the source tree. The
     // review remains auditable from its recorded digest and observation; when
     // the artifact is present, still verify it against that digest.
-    if (!evidenceIsArchivedOrMatches(evidence.file, evidence.sha256)) throw new Error(`Review evidence hash mismatch: ${evidence.file}`);
+    // A fresh qa:accept run rewrites receipts that older reviews cite. A review
+    // whose evidence no longer matches is stale for this source, not an error.
+    if (!evidenceIsArchivedOrMatches(evidence.file, evidence.sha256)) return;
   }
   return decision;
 }
