@@ -67,6 +67,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const log = (entry: object) => appendFileSync(logFile, JSON.stringify({ t: new Date().toISOString(), ...entry }) + '\n');
   const cueAudio = process.env.PLAYTEST_AUDIO_CUES === '1';
   const args = process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+  args.push('--explicitly-allowed-ports=5061');
   if (cueAudio) args.push('--mute-audio'); // Keep real cue scheduling while silencing the host's speakers.
   const webgpu = process.env.PLAYTEST_BACKEND === 'webgpu';
   if (webgpu) args.push('--enable-unsafe-webgpu');
@@ -249,7 +250,6 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let l10ConsoleWalk = process.env.PLAYTEST_L10_CONSOLE_WALK === '1' ? 0 : -1;
   let l10PullAway = process.env.PLAYTEST_L10_PULL_AWAY === '1';
   const escortAlarms = new Set<string>();
-  const l6GroupMemory: { rear: { x: number; z: number; tick: number } | null } = { rear: null };
   const see = async () => {
     if (process.env.PLAYTEST_APC_TILT === '1') await page.evaluate(disableTilt => {
       const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
@@ -440,10 +440,6 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); window.__SS__!.resume(); (window as unknown as { __threatAudit: { capturePaused: boolean } }).__threatAudit.capturePaused = false; }, o.zoom);
       }
       eyes = await observeWithin(page.evaluate(look));
-    }
-    if (eyes.level === 'L6' && (eyes.step === 'retreat' || eyes.step === 'exit')) {
-      const group = eyes.allies.filter(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion');
-      if (group.length) { const rear = group.reduce((last, a) => a.x < last.x ? a : last); l6GroupMemory.rear = { x: rear.x, z: rear.z, tick: eyes.tick }; }
     }
     const openingCapture = !l6FightCaptured && eyes.step === 'stop' && eyes.enemies.filter(e => e.drawn && e.d < 15 && e.hp > 0).length >= 3;
     const retreatCapture = !l6RetreatFightCaptured && eyes.step === 'retreat' && eyes.enemies.some(e => e.drawn && e.d < 3 && e.hp > 0);
@@ -826,7 +822,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   // --- combat and following ---
   const shotAt = new Map<number, { hp: number; ms: number; last: number }>(), ignored = new Map<number, number>(), reportedUnhittable = new Set<number>();
-  let aimHeld: number | null = null, lastCrowdKick = 0, l6CrowdUntil = 0, l6RetreatRouteLogged = false;
+  let aimHeld: number | null = null, lastCrowdKick = 0, l6CrowdUntil = 0;
   let dodgePosition = { x: 0, z: 0, at: 0 }, dodgeAttempt = 0, dodgeDetourUntil = 0, dodgeDetourKeys: string[] = [];
   const releaseAim = async () => { if (aimHeld !== null) { aimHeld = null; await page.mouse.up(); } };
   const aimArmyGun = async (e: Eyes, target: Body, keys: string[]) => {
@@ -874,24 +870,19 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const unarmed = !e.player?.current || /fists|kick|unarmed/.test(e.player.current);
     // While the objective is not progressing, only fight what is close: walking on matters more than ranged shots.
     const lostTime = (Date.now() - lastProgress.wall) / 1000 > 30;
-    const reach = e.level === 'L10' && (e.step === 'mega' || e.step === 'hold') && ranged.test(e.player?.current ?? '') ? 30 : lostTime ? 3 : ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
+    const reach = e.level === 'L6' ? 22 : e.level === 'L10' && (e.step === 'mega' || e.step === 'hold') && ranged.test(e.player?.current ?? '') ? 30 : lostTime ? 3 : ranged.test(e.player?.current ?? '') ? 14 : unarmed ? 1.6 : 4.5;
     // Threats to the group within 16 m count too (keep the group alive).
     const ok = (b: Body) => (ignored.get(b.id) ?? 0) < Date.now();
     const nearby = campaignThreat(e.level, e.step, e.enemies.filter(ok), reach);
-    const allyThreat = e.enemies.find(b => b.d < 16 && ok(b) && e.allies.some(a => canCoverVisibleAllies(e.level,e.step,unarmed,{ drawn:a.drawn, hp:a.hp, corpse:a.corpse, underAttack:b.attacking },e.objective) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5));
-    const threat = prioritizeAllyThreat(unarmed, nearby, allyThreat);
-    if (e.level === 'L6' && e.step === 'stop' && unarmed) {
-      const close = e.enemies.find(b => b.d < 5);
-      if (close) {
-        // With no route ring during the shelter defence, keep space from the
-        // visible crowd instead of standing at the spawn until it surrounds us.
-        await releaseAim();
-        const feet = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), { x: close.x, z: close.z });
-        await page.mouse.move(feet.x, feet.y);
-        await press([...awayKeys(e, close), fistsRetreatAttack(e.enemies.filter(b => b.d < 3).length)]);
-        return true;
-      }
-    }
+    const allyThreat = e.enemies.find(b => b.d < (e.level === 'L6' ? 22 : 16) && ok(b) && e.allies.some(a => canCoverVisibleAllies(e.level,e.step,unarmed,{ drawn:a.drawn, hp:a.hp, corpse:a.corpse, underAttack:b.attacking },e.objective) && Math.hypot(a.x - b.x, a.z - b.z) < 2.5));
+    // L6's screen-visible survivor attackers outrank courier threats. The
+    // player can see these bodies and their attack animation; no spawn table
+    // or mission coordinates are consulted.
+    const l6VisibleThreat = e.level === 'L6' && e.step !== 'shelter'
+      ? e.enemies.filter(b => b.drawn && b.hp > 0 && b.d <= 22 && ok(b))
+        .sort((a, b) => Number(!!b.attacking && e.allies.some(s => s.drawn && s.hp > 0 && !s.corpse && Math.hypot(s.x-b.x,s.z-b.z)<3)) - Number(!!a.attacking && e.allies.some(s => s.drawn && s.hp > 0 && !s.corpse && Math.hypot(s.x-a.x,s.z-a.z)<3)) || a.d-b.d)[0]
+      : null;
+    const threat = l6VisibleThreat ?? prioritizeAllyThreat(unarmed, nearby, allyThreat);
     if (!threat) { if (keysDown.has('Space')||keysDown.has('KeyJ')||keysDown.has('KeyK')) await press([]); await releaseAim(); return false; }
     // Time spent on a target without hurting it accumulates across target switches.
     const now = Date.now(), seen = shotAt.get(threat.id) ?? { hp: threat.hp, ms: 0, last: now };
@@ -1663,7 +1654,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       run.deaths++;
       // Automatic checkpoint respawns release the game's device state too.
       // Keep the driver's held-key cache synchronized with that release.
-      await press([]); await releaseAim(); l6GroupMemory.rear = null; log({ releasedInputAfterDeath: e.tick, level: e.level });
+      await press([]); await releaseAim(); log({ releasedInputAfterDeath: e.tick, level: e.level });
     }
     if (e.player && e.player.hp <= 0) { await releaseAim(); await press([]); lastHp = 0; await hold(120); continue; }
     lastHp = e.player?.hp ?? 0;
@@ -1703,7 +1694,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         log({ fixture: 'mortal-death-by-input', tick: e.tick, hp: e.player.hp, target: threat?.id });
         await hold(250); continue;
       }
-      l6DeathExercise = false; l6GroupMemory.rear = null;
+      l6DeathExercise = false;
       log({ fixture: 'mortal-death-by-input-complete', tick: e.tick, deaths });
     }
 
@@ -1787,14 +1778,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (Date.now() - navLog > 3000) { navLog = Date.now(); log({ visibleEscortClearance: clearance, tick: e.tick }); }
         await hold(200); continue;
       }
-      const coverRear = e.level === 'L6' && e.step === 'retreat' && /Stay with the group|cover the rear|group waits/i.test(e.objective);
-      // The visible column keeps walking at 2.2 m/s while the courier covers it.
-      // Advance its remembered track position while covering. The explicit
-      // group-waits instruction means the column is paused. Stay with the
-      // group instead means the courier strayed; the column keeps walking.
-      const rememberedRear = l6GroupMemory.rear && { x: Math.min(263, l6GroupMemory.rear.x + (/group waits|Bring the injured/i.test(e.objective) ? 0 : 2.2 * Math.max(0, e.tick - l6GroupMemory.rear.tick) / 60)), z: l6GroupMemory.rear.z };
       const groupTarget = e.level === 'L6' && /^Rejoin /.test(e.objective) && e.cue ? e.cue
-        : coverRear && rememberedRear ? { x: rememberedRear.x + 3, z: rememberedRear.z }
         // A repeated bark can outlive the missing-member condition. Follow
         // the objective's actual group check instead of turning back when it
         // already says everyone is nearby (or while boarding owns the group).
@@ -1815,13 +1799,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       }
       if (groupTarget && !(e.level === 'L6' && e.step === 'retreat' && e.player.weapons.includes('weapon.army-mg') && e.enemies.some(b => b.drawn && b.hp > 0 && b.d < 16))) {
         if (e.level === 'L6') {
-          const points = await page.evaluate(({ p, goal }) => {
-            const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
-            const out = { ...goal };
-            w.infected!.nav.forPlayer(.45).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, .45, out, Infinity, true);
-            return [a.input.project(p, 'player'), a.input.project(out, 'player')];
-          }, { p: e.player, goal: groupTarget });
-          await releaseAim(); await press(markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12)); await hold(150); continue;
+          const goal = e.cue && /^Rejoin /.test(e.objective) ? await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), e.cue) : e.allies.find(a => a.drawn && a.hp > 0 && !a.corpse)?.screen;
+          if (goal) { await releaseAim(); await press(markerWalkKeys(goal.x-e.view.w/2, goal.y-e.view.h/2, (stairFrame++%12)/12)); await hold(150); continue; }
         }
         const screen = await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), groupTarget);
         const sp = safe(screen.x, screen.y, e); await walkTowardScreenPoint(sp.x, sp.y); await hold(150); continue;
@@ -1866,27 +1845,13 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (e.level === 'L6' && e.step === 'retreat' && e.player?.weapons.includes('weapon.army-mg')) {
       l6CrowdUntil = 0;
-      const targets = e.enemies.filter(b => b.drawn && b.hp > 0 && b.d < 16);
+      const targets = e.enemies.filter(b => b.drawn && b.hp > 0 && b.d < 22);
       const threat = targets.find(b => b.attacking && e.allies.some(a => a.drawn && a.hp > 0 && !a.corpse && Math.hypot(a.x - b.x, a.z - b.z) < 3)) ?? targets[0];
       if (threat) {
-        // Follow the visible station stairs into the track before heading along
-        // it. Pure backpedalling from each nearest body circles in the shelter.
-        const group = e.allies.filter(a => a.drawn && a.hp > 0 && !a.corpse && a.kind !== 'companion');
-        const groupX = group.length ? Math.min(...group.map(a => a.x)) : l6GroupMemory.rear ? Math.min(263, l6GroupMemory.rear.x + (/group waits|Bring the injured/i.test(e.objective) ? 0 : 2.2 * Math.max(0, e.tick - l6GroupMemory.rear.tick) / 60)) : e.player.x;
-        const goal = e.player.x < 25 && e.player.z < 13.8 ? { x: 6, z: 15 }
-          : ring && /Everyone through|Let everyone pass|group waits/i.test(e.objective) && Math.hypot(e.player.x - ring.x, e.player.z - ring.z) < 8 ? ring
-          : e.player.x > groupX + 6 ? { x: e.player.x, z: 15 }
-          : { x: Math.min(263, e.player.x + 16), z: 15 };
-        const points = await page.evaluate(({ p, goal }) => {
-          const a = window.__SS__!, w = (window.__SCENE__ as unknown as { game: Game }).game.world;
-          const out = { ...goal };
-          w.infected!.nav.forPlayer(.45).steer(p, goal, { path: [], goal: -1, pathIndex: 0 }, .45, out, Infinity, true);
-          return [a.input.project(p, 'player'), a.input.project(out, 'player')];
-        }, { p: e.player, goal });
-        const keys = Math.hypot(goal.x - e.player.x, goal.z - e.player.z) < .8 ? [] : markerWalkKeys(points[1].x - points[0].x, points[1].y - points[0].y, (stairFrame++ % 12) / 12);
-        if (!l6RetreatRouteLogged) { l6RetreatRouteLogged = true; run.assists++; assist('L6 retreat map route', { via: 'station stairs (6,15), then the track', input: 'physical WASD + mouse, no world writes' }); }
-        // Keyboard fire auto-aims along the movement cone. On a retreat that
-        // points away from the pursuers; use the same cursor aim as the hold.
+        // The fixed HUD/minimap objective keeps the column moving while the
+        // mouse remains on the highest visible survivor threat.
+        const destination = e.cue && /^Rejoin /.test(e.objective) ? await page.evaluate(at => window.__SS__!.input.project(at, 'destination'), e.cue) : e.marker?.visible ? e.marker : null;
+        const keys = destination ? markerWalkKeys(destination.x-e.view.w/2,destination.y-e.view.h/2,(stairFrame++%12)/12) : [];
         if (e.player.current !== 'weapon.army-mg') {
           await press([]); await releaseAim(); await page.keyboard.press('Digit5'); await hold(100); continue;
         }

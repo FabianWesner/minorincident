@@ -1,4 +1,5 @@
 import { spawn, spawnSync, type ChildProcess } from 'node:child_process';
+import { get } from 'node:http';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -49,7 +50,10 @@ if (port === 3300) throw new Error('The playtest must not use the shared dev-ser
 const origin = `http://127.0.0.1:${port}`;
 if (!existsSync('dist/index.html')) throw new Error('Run npm run build:qa first: the playtest requires QA hooks');
 
-const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
+const up = () => new Promise<boolean>(done => {
+  const request = get(origin, response => { response.resume(); done((response.statusCode ?? 500) < 400); });
+  request.on('error', () => done(false));
+});
 let server: ChildProcess | null = null;
 if (!(await up())) {
   server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
