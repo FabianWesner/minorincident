@@ -1026,7 +1026,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ movingCover: e.tick, level: e.level, keys: retreatKeys, input: 'physical WASD + mouse; read-only route steering' }); }
       }
       // Held LMB aims at the current cursor; no target command or approach is created.
-      await press(retreatKeys);
+      // A visible loss alarm points toward the threatened residents. Move
+      // toward it while firing, so the shelter fight stays within view.
+      const alarmKeys = e.level === 'L6' && e.step === 'stop' && e.alarmScreen ? wasdToward(e, e.alarmScreen.x, e.alarmScreen.y) : [];
+      await press(retreatKeys.length ? retreatKeys : alarmKeys);
       await page.mouse.move(threat.aim.x, threat.aim.y);
       if (aimHeld === null) { await page.mouse.down(); }
       aimHeld = threat.id;
