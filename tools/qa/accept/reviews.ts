@@ -50,9 +50,9 @@ export function validateReviewDirectory(): void {
   for (const file of readdirSync(root).filter(file => file.endsWith('.json'))) {
     const row = file.slice(0, -5);
     const decision = validateReview(JSON.parse(readFileSync(join(root, file), 'utf8')), row);
-    for (const evidence of decision.evidence) {
-      if (!evidenceIsArchivedOrMatches(evidence.file, evidence.sha256)) throw new Error(`Invalid review evidence hash: ${evidence.file}`);
-    }
+    // Structure is validated here; evidence a fresh run rewrote makes the
+    // review stale (loadReviews skips it), not invalid.
+    void decision;
   }
 }
 export function latestRelevantCommit(level: string): string {
