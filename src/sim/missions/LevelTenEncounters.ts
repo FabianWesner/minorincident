@@ -2,11 +2,14 @@ import { emergeResident, walkResidents, layoutHouseDoors, type HouseEmergence } 
 import { finale } from '../../data/l10Finale';
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
-import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups } from '../../levels/L10/encounters';
-import { cureAlphaCap } from '../../levels/L10/alphaContracts';
+import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups, type CureEncounter } from '../../levels/L10/encounters';
+import { cureAlphaCap, cureAlphaPopulation, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { cureCorgiToy, insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
 
+/** A slot whose member died on a discarded retry timeline: consumed for the run, never re-spawned. Never a valid entity id. */
+const RETIRED_SLOT = -1;
+interface CarriedMember { archetype: string; x: number; z: number; group: string; region: CureRegion }
 export interface CureEncounterState {
   finaleEntry?: HouseEmergence; finaleEntryNext?: number; finaleEntrySlot?: boolean;
   farmScares?: FarmScareState; toy?: number;
@@ -17,6 +20,11 @@ export interface CureEncounterState {
 /** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
   private assaultReservation = 0;
+  /** Living members of released cohorts at the courier's death; re-admitted after the checkpoint restore, never re-spawned. */
+  private readonly carried = new Map<string, CarriedMember>();
+  /** Slot keys as they stood at the death; only these are consumed by the following restore. */
+  private readonly deathLedger = new Set<string>();
+  private died = false;
   state: CureEncounterState = { spawned: {}, medkits: {}, weapons: {}, assaultTicks: 0 };
   constructor(private readonly world: SimWorld) {
     world.events.on('telegraph', event => {
@@ -28,12 +36,43 @@ export class LevelTenEncounters {
     world.events.on('infected.attack', event => {
       if (event.type === 'infected.attack' && event.special === 'escort-hit' && event.targetId === 1) this.state.pressureAttackAt = event.tick;
     });
+    world.events.on('player.died', event => {
+      if (event.type !== 'player.died' || !this.world.infected) return;
+      // A death freezes every released cohort: members killed on this attempt
+      // stay dead across the restore, living ones are carried back into play.
+      // The ledger is captured here, before any death-window admission adds
+      // keys the checkpoint never held; only these slots are consumed.
+      this.died = true;
+      this.carried.clear();
+      this.deathLedger.clear();
+      for (const [key, id] of Object.entries(this.state.spawned)) {
+        if (key.startsWith('dispersal-assault:')) continue;
+        this.deathLedger.add(key);
+        const actor = this.world.entities.get(id);
+        if (!actor || actor.corpse || actor.health.current <= 0 && (actor.infected?.recoverAt ?? -1) < 0) continue;
+        const group = this.encounterFor(key);
+        if (group) this.carried.set(key, { archetype: actor.archetype, x: actor.transform.x, z: actor.transform.z, group: group.id, region: group.region });
+      }
+    });
     world.events.on('sim.tick', event => { if (event.type === 'sim.tick') this.pressure(event.tick); });
   }
   snapshot(): CureEncounterState { return structuredClone({ ...this.state, pressureTick: this.world.tick }); }
   restore(value: unknown): void {
     const heldEntrySlot = this.state.finaleEntrySlot ? 1 : 0;
-    this.state = structuredClone(value as CureEncounterState); this.state.weapons ??= {};
+    const incoming = structuredClone(value as CureEncounterState);
+    // A death retry resumes released encounters rather than replaying them:
+    // every slot the checkpoint predates stays consumed (kills made on the
+    // failed attempt are kept), so the release loop can never hand the
+    // courier a fresh full cohort on every retry. Survivors wait for
+    // re-admission where they stood, so nothing stacks either.
+    const discarded = this.died ? [...this.deathLedger] : [];
+    this.died = false;
+    this.state = incoming; this.state.weapons ??= {};
+    const slots = this.state.spawned ??= {};
+    for (const key of discarded) {
+      if (key in slots) { this.carried.delete(key); continue; }
+      slots[key] = RETIRED_SLOT;
+    }
     if (this.world.infected) this.world.infected.director.reserved += (this.state.finaleEntrySlot ? 1 : 0) - heldEntrySlot;
     const delta = this.world.tick - (this.state.pressureTick ?? this.world.tick);
     if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
@@ -118,6 +157,7 @@ export class LevelTenEncounters {
     }
     updateFarmScares(w, this.state.farmScares ??= {});
     const pendingScares = Object.values(this.state.farmScares).filter(s=>s.actor===undefined).length;
+    this.admitCarried(Math.max(1, pendingScares));
 
     for (const kit of cureMedkits) {
       if (this.state.medkits[kit.id] || !chunks.resident(...kit.at)) continue;
@@ -136,8 +176,15 @@ export class LevelTenEncounters {
       if (!assault && !released.includes(group.id)) {
         if (Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
-        // A field crossing meets the same once-only hunting group on its own lane. No group relocates after admission.
-        lanes[group.id] = Math.abs(player.transform.z - group.at[1]) > 15 ? player.transform.z - group.at[1] : 0;
+        // A field crossing meets the same once-only hunting group on its own
+        // lane. No group relocates after admission. The farm set pieces keep
+        // their authored stations though: the pull is capped, so a walking
+        // courier meets a speed-sorted stream from the yard/field rather than
+        // the whole cohort arriving as one wall on her lane.
+        const flank = group.id === 'depot-alpha' ? 8 : 0;
+        const pull = Math.abs(player.transform.z - group.at[1]) > 15 ? player.transform.z - group.at[1] : 0;
+        const capped = ['farmhouse-defense', 'shed-field-crossing', 'depot-alpha'].includes(group.id);
+        lanes[group.id] = (capped ? Math.max(-15, Math.min(15, pull)) : pull) + flank;
       }
       // A 30 s wave period, at most 5 s of admission, then 25 s with no new arrivals.
       // If a wave is still alive, postpone the next one until it has been cleared plus an 8 s breather.
@@ -176,5 +223,36 @@ export class LevelTenEncounters {
     const earliest = Math.max(clock, (this.state.lastAssaultAdmission ?? -1500) + 1500);
     this.state.nextAssaultAt = Math.min(this.state.nextAssaultAt ?? earliest, earliest);
     this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'mega-escort-called' });
+  }
+  /** The authored group that owns a spawned slot key (finale assault waves excluded). */
+  private encounterFor(key: string): CureEncounter | undefined {
+    return [...cureEncounters, ...curePaceEncounters].find(group => !group.assault &&
+      cureEncounterSlots(group, this.world.infected!.director.tier).some(slot => `${slot.key}:0` === key));
+  }
+  /** Re-admit death-retry survivors where they fell, or on their authored slot when that spot is no longer a fair admission. */
+  private admitCarried(scareReserve: number): void {
+    if (!this.carried.size) return;
+    const w = this.world, ai = w.infected!, chunks = w.chunks!;
+    // Never admit while the courier lies dying: the checkpoint restore rebuilds
+    // the world anyway, and a death-window admission would silently consume the
+    // carried member it placed.
+    if (w.entities.get(1)!.health.current <= 0) return;
+    for (const [key, member] of this.carried) {
+      const room = ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns - scareReserve;
+      const dogs = member.archetype === 'infected.dog' && ai.active.filter(e => e.archetype === member.archetype && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= 2;
+      const alphas = member.archetype === 'infected.alpha' && cureRegularAlphaCount(cureAlphaPopulation(w), member.region) >= cureAlphaCap(member.region, ai.director.tier);
+      if (!room || dogs || alphas) continue;
+      const fair = (x: number, z: number) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(member.archetype, { x, z });
+      const group = [...cureEncounters, ...curePaceEncounters].find(g => g.id === member.group);
+      const slot = group ? cureEncounterSlots(group, ai.director.tier).find(s => `${s.key}:0` === key) : undefined;
+      const lane = (this.state.laneOffsets ?? {})[member.group] ?? 0;
+      const at = fair(member.x, member.z) ? { x: member.x, z: member.z }
+        : slot ? cureEncounterSpot(ai.nav, { ...slot, z: slot.z + lane }, fair, 33) : null;
+      if (!at) continue;
+      const id = ai.spawn(member.archetype, at, { state: 'chase', cureRegion: member.region });
+      this.state.spawned[key] = id;
+      this.carried.delete(key);
+      ai.pursueTarget(id, 1);
+    }
   }
 }
