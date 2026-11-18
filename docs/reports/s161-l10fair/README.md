@@ -31,6 +31,8 @@ Native `SimWorld` event probes; no browser sampling. Each row in [`metrics.json`
 
 Design changes preserve authored member counts: farmhouse members stage on a wider field perimeter, the shed formation is compacted and moved later along the approach, and the HIGH depot station moves 30 m toward the service road. LOW depot retains the S153 offset. These improve LOW walk seed 3 shed clear to 108 s with no deaths, but walk depot and clear-time targets still fail. No infected stats, threat flags, total counts, or corpse persistence changed. S153 receipts remain untouched.
 
+Checkpoint retries repeatedly release some groups: for example, HIGH walk seed 2 releases shed ten times and records nine shed-attributed deaths. LOW walk seed 1 releases farmhouse 23 times before the cap; later groups never release. A clear receipt applies to its final recorded release, while `livingAtEndIds` also includes members admitted on earlier attempts. Further staging work must address these retry loops and remeasure all policies and seeds.
+
 ## Validation
 
 `npm run typecheck`, `npm run lint`, and `git diff --check` pass. The full remote `npm test` passed in 189.8 s (105 passed, 1 skipped; 150-case budget).
