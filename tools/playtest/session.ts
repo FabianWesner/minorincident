@@ -1026,7 +1026,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (now - lastCrowdKick > 1500) { lastCrowdKick = now; log({ movingCover: e.tick, level: e.level, keys: retreatKeys, input: 'physical WASD + mouse; read-only route steering' }); }
       }
       // Held LMB aims at the current cursor; no target command or approach is created.
-      await press(retreatKeys.length ? retreatKeys : e.level === 'L6' && e.step === 'stop' && threat.d < 5 ? awayKeys(e, threat) : []);
+      await press(retreatKeys);
       await page.mouse.move(threat.aim.x, threat.aim.y);
       if (aimHeld === null) { await page.mouse.down(); }
       aimHeld = threat.id;
