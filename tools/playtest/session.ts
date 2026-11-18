@@ -1846,6 +1846,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
       log({ prompt: e.prompt, tick: e.tick }); continue;
     }
+    if (e.level === 'L6' && e.step === 'retreat' && /Everyone through.*close/i.test(e.objective)) {
+      await releaseAim();
+      if (e.distance !== null && e.distance < 2) {
+        await press([]); await page.keyboard.down('KeyE'); await hold(1400); await page.keyboard.up('KeyE');
+        log({ l6GateInteraction: e.tick, objective: e.objective });
+      } else {
+        const goal = await goalScreen(e);
+        await press(goal ? wasdToward(e, goal.x, goal.y) : []); await hold(150);
+      }
+      continue;
+    }
     if (e.level === 'L6' && e.step === 'retreat' && e.player?.weapons.includes('weapon.army-mg')) {
       l6CrowdUntil = 0;
       const targets = e.enemies.filter(b => b.drawn && b.hp > 0 && b.d < 22);
