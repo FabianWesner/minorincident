@@ -439,7 +439,8 @@ export class LevelEightZoo {
       }
     }
     else if(seated)this.mission.state.marker=null;
-    else if(this.protecting())this.mission.state.marker=this.mission.state.steps.escape.status==='active'?'central-plaza':null;
+    // PO 2026-11-18: "Back to the plaza!" must show the plaza on the radar, whichever step is active.
+    else if(this.protecting())this.mission.state.marker=this.mission.state.steps.escape.status==='active'||this.awayFromPlaza()?'central-plaza':null;
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active') {
       const next = s.arenas.find(a => a.phase !== 3);
       const step = this.mission.def.steps.find(value => value.id === 'escape');
