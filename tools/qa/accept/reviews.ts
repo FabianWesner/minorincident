@@ -55,7 +55,13 @@ export function validateReviewDirectory(): void {
 }
 export function latestRelevantCommit(level: string): string {
   const paths = [`src/levels/${level}`, 'src/data', 'src/render', 'src/ui', 'src/assets', 'public'];
-  return execFileSync('git', ['log', '-1', '--format=%H', '--', ...paths], { encoding: 'utf8' }).trim();
+  try {
+    return execFileSync('git', ['log', '-1', '--format=%H', '--', ...paths], { encoding: 'utf8' }).trim();
+  } catch {
+    // Remote job dirs carry a file manifest but no Git commits; the receipt's
+    // revision (QA_ACCEPT_REVISION) remains the recorded provenance there.
+    return 'manifest-only';
+  }
 }
 const digestCache = new Map<string, string>();
 function relevantPaths(level: string): string[] {

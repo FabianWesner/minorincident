@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from '
 import { dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import type { RunnerLevel } from '../../sim-runner/levels';
+import { checkKindOrder, deriveCheckKinds, type CheckKind } from './check-kinds';
 import { completeNativeRows, evaluate, type Clause, type Verdict } from './evaluate';
 import type { NativeReceipt } from './probe';
 import type { FixtureReceipt } from './fixtures';
@@ -15,6 +16,8 @@ export interface AcceptanceRow {
   id: string; status: Verdict; currentStatus: Verdict; value: string; receipt: string[];
   automatedComplete: boolean;
   expected: string; checks: Clause[]; historical: BaselineRow; remaining: string;
+  /** Lane routing for NOT CHECKED rows; at least one kind is always named. */
+  checkKinds?: CheckKind[];
   review?: { tag: 'O' | 'P'; instruction: string; clause?: string };
   reviewDecision?: ReviewDecision & { freshness: 'FRESH' | 'STALE'; latestRelevantCommit: string };
   performanceRemeasurement?: { id: string; scopedVerdict: string; wholeRowVerdict: string; value: string; remaining: string; sourceRevision: string; receipt: string; freshness: 'CURRENT' | 'STALE'; measuredSourceHash: string; criteriaSha256: string };
@@ -189,7 +192,9 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const reviewClause = objectiveReview || source.id === 'L5-11' ? source.expected : undefined;
   const failed = checks.filter(check => check.status === 'FAIL');
   const required = completeNativeRows.get(source.id);
-  const complete = !!required && ['low', 'high'].every(tier => required.every(requirement => checks.some(check => check.tier === tier && check.policy === requirement.policy && (!requirement.level || check.level === requirement.level) && check.clause === requirement.clause && check.status === 'PASS'))) && checks.every(check => check.status !== 'FAIL');
+  const satisfies = (requirement: { clause: string; policy: string; level?: string }, tier: string) => checks.some(check => check.tier === tier && check.policy === requirement.policy && (!requirement.level || check.level === requirement.level) && check.clause === requirement.clause && check.status === 'PASS');
+  const unmet = (required ?? []).filter(requirement => !['low', 'high'].every(tier => satisfies(requirement, tier)));
+  const complete = !!required && unmet.length === 0 && checks.every(check => check.status !== 'FAIL');
   const decision = loadReviews(source.id);
   // Display review provenance on plain numeric rows too. The existing native
   // completion and exact-criterion gates below still determine qualification.
@@ -198,28 +203,30 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const matchingReview = reviewClause ? reviewCheck?.clauses.find(clause => clause.clause === reviewClause) : undefined;
   const allReviewPass = !reviewClause || (!!reviewCheck && !!matchingReview && freshness === 'FRESH' && reviewCheck.status === 'PASS' && matchingReview.verdict === 'PASS');
   const reviewFailed = !!reviewCheck && freshness === 'FRESH' && (reviewCheck.status === 'FAIL' || reviewCheck.clauses.some(clause => clause.verdict === 'FAIL'));
-  // An older/manual decision can remain useful as history without qualifying a
-  // changed exact criterion. Keep the row open rather than aborting the whole
-  // acceptance report; matching text is still required for a reviewed PASS.
+  // Fresh-only verdicts: every status is backed by a measurement on the current
+  // source. Inherited PASS/FAIL from an older batch is no longer displayed as a
+  // verdict; a previously failing row closes only through fresh evidence.
   const currentStatus: Verdict = failed.length || reviewFailed ? 'FAIL' : complete && allReviewPass ? 'PASS' : 'NOT CHECKED';
-  // A prior failure needs both complete current measurements and an explicit
-  // fresh review of the entire unchanged criterion before it can close.
-  const requalified = source.baseline.status === 'FAIL' && currentStatus === 'PASS' && freshness === 'FRESH' && reviewCheck?.status === 'PASS' &&
-    reviewCheck.clauses.some(clause => clause.clause === source.expected && clause.verdict === 'PASS');
-  const status = source.baseline.status === 'FAIL' && !requalified ? 'FAIL' : currentStatus === 'NOT CHECKED' && source.baseline.status === 'PASS' ? 'PASS' : currentStatus;
+  const status = currentStatus;
   const display = failed.length ? failed : checks;
   const measurement = display.map(check => `${check.tier}/${check.policy} ${check.clause}: ${concise(check.value)} (target ${check.target}; ${check.status})`).join('; ');
-  const historical = source.baseline.status === 'FAIL' ? `${requalified ? 'Requalified' : 'Open'} prior FAIL: ${source.baseline.value}` : !checks.length ? source.baseline.value : '';
-  const reviewed = reviewCheck ? `Manual review ${reviewCheck.status} (${freshness}, ${reviewCheck.reviewer}): ${reviewCheck.clauses.map(clause => clause.note ?? clause.clause).join('; ')}` : '';
-  const remaining = requalified ? 'All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.' : complete ? 'All implemented row clauses measured at both qualities; prior PO findings still need PO closure.' : remainingChecks[source.id] ?? source.baseline.method;
+  // Only a review taken on the current source counts as evidence; a stale
+  // decision stays recorded in the row JSON and the reviews directory.
+  const reviewed = reviewCheck && freshness === 'FRESH' ? `Manual review ${reviewCheck.status} (${reviewCheck.reviewer}): ${reviewCheck.clauses.map(clause => clause.note ?? clause.clause).join('; ')}` : '';
+  const remaining = complete ? 'All implemented row clauses measured at both qualities; prior PO findings still need PO closure.' : remainingChecks[source.id] ?? source.baseline.method;
+  const finalRemaining = !failed.length && /^(?:Fix|Requalify .*after .*fix)/i.test(remaining)
+    ? `Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: ${source.expected}` : remaining;
+  const reviewTag = review ? objectiveReview ? 'O' as const : 'P' as const : undefined;
+  const reviewEntry = review && reviewTag ? { tag: reviewTag, instruction: review, ...(reviewClause ? { clause: reviewClause } : {}) } : undefined;
+  const checkKinds = status === 'NOT CHECKED' ? deriveCheckKinds({ id: source.id, check: source.check, remaining: finalRemaining, review: reviewEntry, unmet: unmet.map(({ clause, policy }) => ({ clause, policy })) }) : undefined;
   return {
-    id: source.id, status, currentStatus, value: [measurement, reviewed, historical].filter(Boolean).join(' '),
+    id: source.id, status, currentStatus, value: [measurement, reviewed].filter(Boolean).join(' '),
     automatedComplete: complete,
-    receipt: [...new Set([...checks.map(check => check.receipt), ...(reviewCheck?.evidence.map(evidence => evidence.file) ?? []), ...(source.baseline.status !== 'NOT CHECKED' ? source.baseline.evidence : [])])],
+    receipt: [...new Set([...checks.map(check => check.receipt), ...(reviewCheck && freshness === 'FRESH' ? reviewCheck.evidence.map(evidence => evidence.file) : [])])],
     expected: source.expected, checks, historical: source.baseline,
-    remaining: !failed.length && /^(?:Fix|Requalify .*after .*fix)/i.test(remaining)
-      ? `Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: ${source.expected}` : remaining,
-    ...(review ? { review: { tag: objectiveReview ? 'O' as const : 'P' as const, instruction: review, ...(reviewClause ? { clause: reviewClause } : {}) } } : {}),
+    remaining: finalRemaining,
+    ...(checkKinds ? { checkKinds } : {}),
+    ...(reviewEntry ? { review: reviewEntry } : {}),
     ...(reviewCheck && freshness ? { reviewDecision: { ...reviewCheck, freshness, latestRelevantCommit: latestRelevantCommit(source.level) } } : {}),
   };
 }
@@ -239,49 +246,54 @@ const clean = (value: string) => value.replaceAll('|', '\\|').replaceAll('\n', '
 const countStatuses = (rows: AcceptanceRow[]) => rows.reduce<Record<string, number>>((result, row) => { result[row.status] = (result[row.status] ?? 0) + 1; return result; }, {});
 
 /** perf2 measured this exact game-source hash, retained by its merge e851b81cd.
- * These scoped receipts never qualify a whole compound row or erase prior FAILs. */
+ * These scoped receipts never qualify a whole compound row or erase prior FAILs.
+ * A remeasurement of older source is not cited as current evidence. */
 export function attachPerformanceRemeasurements(rows: AcceptanceRow[], sourceHash: string): AcceptanceRow[] {
   const path = 'docs/reports/fix51-perf2/criteria.json';
   const data = readFileSync(path);
   const measuredSourceHash = '710a965e75362a3a634730b032b1d68d1f840cb9dd52f4d6fd039fa9dfeb0a23';
+  if (sourceHash !== measuredSourceHash) return rows;
   const criteria = JSON.parse(data.toString()) as { rows: Omit<NonNullable<AcceptanceRow['performanceRemeasurement']>, 'freshness' | 'measuredSourceHash' | 'criteriaSha256'>[] };
   return rows.map(row => {
     const measurement = criteria.rows.find(item => item.id === row.id);
     if (!measurement) return row;
-    const freshness = sourceHash === measuredSourceHash ? 'CURRENT' : 'STALE';
     return { ...row,
-      value: `fix51-perf2 scoped ${measurement.scopedVerdict} (${freshness}): ${measurement.value} Whole row ${row.currentStatus}. ${row.value}`,
+      value: `fix51-perf2 scoped ${measurement.scopedVerdict} (CURRENT): ${measurement.value} Whole row ${row.currentStatus}. ${row.value}`,
       receipt: [...new Set([...row.receipt, path, measurement.receipt])],
       remaining: `${measurement.remaining} ${row.remaining}`,
-      performanceRemeasurement: { ...measurement, freshness, measuredSourceHash, criteriaSha256: createHash('sha256').update(data).digest('hex') },
+      performanceRemeasurement: { ...measurement, freshness: 'CURRENT', measuredSourceHash, criteriaSha256: createHash('sha256').update(data).digest('hex') },
     };
   });
 }
 
 /** Merge only reports from the same game/observer; keep historical findings attributed. */
-export function writeIndexes(identity: { sourceHash: string; observerHash: string; fixtureHash?: string; checkpointHash?: string }): void {
+export function writeIndexes(identity: { sourceHash: string; observerHash: string; revision?: string; fixtureHash?: string; checkpointHash?: string }): void {
   validateReviewDirectory();
   const reports = Array.from({ length: 10 }, (_, i) => join(reportRoot, `L${i + 1}.json`)).filter(existsSync).map(path => JSON.parse(readFileSync(path, 'utf8')) as LevelAcceptance)
     .filter(report => report.version === 2 && report.sourceHash === identity.sourceHash && report.observerHash === identity.observerHash && report.fixtureHash === identity.fixtureHash && report.checkpointHash === identity.checkpointHash);
   const sources = sourceRows(), globals = attachPerformanceRemeasurements(sources.filter(source => source.level === 'global').map(source => rowResult(source, reports.flatMap(report => report.globals.find(row => row.id === source.id)?.checks ?? []))), identity.sourceHash);
   atomicJson(join(reportRoot, 'global.json'), { ...identity, generatedAt: new Date().toISOString(), levels: reports.map(report => report.level), rows: globals });
   const allRows = sources.map(source => source.level === 'global' ? globals.find(row => row.id === source.id)! : reports.find(report => report.level === source.level)?.rows.find(row => row.id === source.id) ?? rowResult(source, []));
+  // Every NOT CHECKED row must name its lane kind; deriveCheckKinds guarantees
+  // this, and the assertion keeps the tracker's routing contract honest.
+  const kindless = allRows.filter(row => row.status === 'NOT CHECKED' && !row.checkKinds?.length);
+  if (kindless.length) throw new Error(`NOT CHECKED rows without a check kind: ${kindless.map(row => row.id).join(', ')}`);
   const counts = countStatuses(allRows), measured = allRows.filter(row => row.checks.some(check => check.status !== 'NOT CHECKED')), failures = allRows.filter(row => row.currentStatus === 'FAIL');
   const nativeRuns = reports.reduce((n, report) => n + report.policies.filter(policy => policy.policy === 'complete' || policy.policy === 'stationary').length, 0);
   const controls = reports.reduce((n, report) => n + report.policies.filter(policy => policy.receipt.endsWith('-checkpoints.json')).length, 0);
   const checkpointCases = reports.reduce((n, report) => n + (report.globals.find(row => row.id === 'G-21')?.checks.length ?? 0), 0);
   const browserRuns = reports.reduce((n, report) => n + report.policies.filter(policy => policy.receipt.endsWith('-browser.json')).length, 0);
   const freshPasses = allRows.filter(row => row.currentStatus === 'PASS').map(row => row.id);
-  const inheritedPasses = allRows.filter(row => row.status === 'PASS' && row.currentStatus !== 'PASS').map(row => row.id);
-  const top = `# Acceptance status — fix51-verify\n\n**NO-GO.** NOT CHECKED is not a pass. Targets remain unchanged in [level-acceptance.md](level-acceptance.md). Native receipts identify exact source hashes and policies. Browser, timing and review clauses remain open. Prior FAILs stay open until their full row is requalified on current source and a fresh exact-criterion PASS review closes the finding.\n\nMachine reports: [fix51-verify](../reports/fix51-verify/README.md). Historical observations: [batch51](../reports/batch51-qa/criteria.json).\n\nStatus counts: ${Object.entries(counts).map(([key, value]) => `${key}: ${value}`).join(', ')}. Current clause measurements cover ${measured.length}/${sources.length} rows; ${failures.length} have fresh failing clauses.\n\n`;
-  const table = (rows: AcceptanceRow[]) => '| ID | Status | Measured value / gap | Receipt | Remaining / PO review |\n|---|---|---|---|---|\n' + rows.map(row => `| ${row.id} | ${row.status} | ${clean(row.value)} | ${row.receipt.map(path => `[JSON](../../${path})`).join(', ') || '—'} | ${clean(row.remaining)}${row.review ? ` ${row.review.tag}${row.reviewDecision ? ` ${row.reviewDecision.freshness}` : ''}: ${clean(row.review.instruction)}` : ''} |`).join('\n');
+  const kindCounts = checkKindOrder.map(kind => `${kind}: ${allRows.filter(row => row.status === 'NOT CHECKED' && row.checkKinds?.includes(kind)).length}`).join(', ');
+  const top = `# Acceptance status — main ${(identity.revision ?? 'current').slice(0, 8)}\n\n**NO-GO.** NOT CHECKED is not a pass. Targets remain unchanged in [level-acceptance.md](level-acceptance.md). Every status below comes from fresh native receipts on this source; browser, timing and review clauses remain open. Each NOT CHECKED row names its check kind (browser-visual, browser-input, perf-quiet-window, PO) for lane routing.\n\nMachine reports: [fix51-verify](../reports/fix51-verify/README.md). Historical observations: [batch51](../reports/batch51-qa/criteria.json).\n\nStatus counts: ${Object.entries(counts).map(([key, value]) => `${key}: ${value}`).join(', ')}. Current clause measurements cover ${measured.length}/${sources.length} rows; ${failures.length} have fresh failing clauses. NOT CHECKED kinds: ${kindCounts}.\n\n`;
+  const table = (rows: AcceptanceRow[]) => '| ID | Status | Measured value / gap | Receipt | Remaining / PO review |\n|---|---|---|---|---|\n' + rows.map(row => `| ${row.id} | ${row.status} | ${clean(row.value)} | ${row.receipt.map(path => `[JSON](../../${path})`).join(', ') || '—'} | ${row.checkKinds?.length ? `[${row.checkKinds.join(', ')}] ` : ''}${clean(row.remaining)}${row.review ? ` ${row.review.tag}: ${clean(row.review.instruction)}` : ''} |`).join('\n');
   const sections = ['global', ...Array.from({ length: 10 }, (_, i) => `L${i + 1}`)].map(level => `## ${level}\n\n${table(allRows.filter(row => level === 'global' ? row.id.startsWith('G-') : row.id.startsWith(`${level}-`)))}\n`);
   const reviewQueue = ['global', ...Array.from({ length: 10 }, (_, i) => `L${i + 1}`)].map(level => {
     const queued = allRows.filter(row => (level === 'global' ? row.id.startsWith('G-') : row.id.startsWith(`${level}-`)) && !!row.review?.clause && row.automatedComplete && row.currentStatus === 'NOT CHECKED');
     return `### ${level}\n\n${queued.length ? queued.map(row => `- **${row.id}:** ${clean(row.expected)}`).join('\n') : 'No rows currently have all automated clauses passing with only the review clause outstanding.'}`;
   }).join('\n\n');
-  writeFileSync(process.env.QA_ACCEPT_ROOT ? join(reportRoot, 'acceptance-status.md') : 'docs/qa/acceptance-status.md', top + sections.join('\n') + `\n\n## Review queue\n\nRows listed here have passing measured automated clauses and need only their manual review clause. Stale decisions remain NOT CHECKED until reviewed against current level/render source.\n\n${reviewQueue}\n`);
-  const summary = `# fix51-verify acceptance automation\n\n**NO-GO; incomplete acceptance coverage.** ${measured.length}/${sources.length} rows have current measured clauses; ${failures.length} have fresh FAILs. Status totals: ${Object.entries(counts).map(([key, value]) => `${key}: ${value}`).join(', ')}. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.\n\n## Run\n\nRun \`npm run qa:accept -- --level L1\` (L1–L10), or \`--level all\`. The default includes low/high native completion and stationary observations, controlled mechanics and edge cases, checkpoint deaths with an uninstrumented control, and headless physical WASD/mouse WebGL2 playthroughs. Global clauses are evaluated before each level's clauses. \`--skip-browser\` runs only native stages and preserves matching prior browser receipts; missing physical coverage remains open. \`--reuse\` requires matching source and stage hashes. \`--tier low|high\` and \`--policy complete|stationary\` narrow a diagnostic run and cannot alone qualify both qualities. Reports update atomically. Exit1 means FAIL/error; exit2 means incomplete; exit0 means all reported rows qualify.\n\nThe command writes the level JSON, [global.json](global.json) and [acceptance tracker](../../qa/acceptance-status.md). Each row retains the unchanged absolute target, every clause's value/status, source and observer hashes, receipt paths, historical finding, and next check.\n\n## Scope and evidence\n\nCurrent receipts include ${nativeRuns} observed native routes, ${controls} uninstrumented control routes, ${checkpointCases} individual checkpoint deaths, and ${browserRuns} physical browser runs. Each physical receipt states its backend, tier, completion, console errors and ordinary-input coverage. Browser completion metadata is kept under [receipts](receipts); raw screenshots and profiles are deleted. The full desktop backend matrix and separate quiet performance results are summarized in [fix51-r4](../fix51-r4/README.md); phone/zoom/visual coverage remains open.\n\nFresh complete-row passes: ${freshPasses.join(', ') || 'none'}. Inherited historical passes: ${inheritedPasses.join(', ') || 'none'}; these are explicitly attributed, not new visual qualification. Prior FAILs without complete current requalification and a fresh full-row review remain open. G-16 requires all20 level/quality starts, including exactly axe in L10; a 19/20 matrix cannot pass.\n\n[Audit](audit.json) rebuilds every row, checks all169 IDs, source/target immutability, receipt provenance and missing files. [Control proof](control-proof.json) compares full final native state hashes with the ${controls} uninstrumented runs. [Evaluator proof](evaluator-proof.json) injects bad receipts and tests compound/global coverage. [Fault proof](fault-proof.json) exercises process-local broken production mechanics, then restores them without editing game source. Final repository gates are recorded in [validation.json](validation.json). These tools are separate from the registered unit-test budget.\n\nNo performance timings are collected. G-01 through G-05 timing clauses require the orchestrator quiet window; G-05 native population is only a count clause. Native checks cannot qualify rendered bars, shadows, silhouettes, camera framing, audio audibility or route clarity. L2 no-axe completion is measured independently of the rack visibility review. L6 fists-only mortal attempts that time out remain inconclusive. L3 pending population slots are reported separately from live concurrent entities. L10 regional peak bounds allow one Mega and do not certify species/group composition.\n\nCheckpoint cases deliberately dirty live racks, gates, pickup membership and follower health before mortal death. L1/L4 world-preserving retries and L8 expose snapshot mismatches; locations restore correctly. These controlled mismatches are scoped evidence, not a claim that an ordinary input run loses its arsenal. L10 cases additionally perturb cure ownership and boss HP/death before retry. Stationary policies are labelled survival-protected and cannot establish mortal difficulty; L9's no-fire policy continues driving.\n\n## Reports\n\n| Level | Report | Policies |\n|---|---|---|\n` + reports.map(report => `| ${report.level} | [${report.level}.json](${report.level}.json) | ${report.policies.map(policy => `[${policy.tier}/${policy.policy}](${policy.receipt.replace(`${reportRoot}/`, '')})`).join(', ')} |`).join('\n') +
+  writeFileSync(process.env.QA_ACCEPT_ROOT ? join(reportRoot, 'acceptance-status.md') : 'docs/qa/acceptance-status.md', top + sections.join('\n') + `\n\n## Review queue\n\nRows listed here have passing measured automated clauses and need only their manual review clause. A recorded decision stays open until it is re-reviewed against current level/render source.\n\n${reviewQueue}\n`);
+  const summary = `# fix51-verify acceptance automation\n\n**NO-GO; incomplete acceptance coverage.** ${measured.length}/${sources.length} rows have current measured clauses; ${failures.length} have fresh FAILs. Status totals: ${Object.entries(counts).map(([key, value]) => `${key}: ${value}`).join(', ')}. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.\n\n## Run\n\nRun \`npm run qa:accept -- --level L1\` (L1–L10), or \`--level all\`. The default includes low/high native completion and stationary observations, controlled mechanics and edge cases, checkpoint deaths with an uninstrumented control, and headless physical WASD/mouse WebGL2 playthroughs. Global clauses are evaluated before each level's clauses. \`--skip-browser\` runs only native stages and preserves matching prior browser receipts; missing physical coverage remains open. \`--reuse\` requires matching source and stage hashes. \`--tier low|high\` and \`--policy complete|stationary\` narrow a diagnostic run and cannot alone qualify both qualities. Reports update atomically. Exit1 means FAIL/error; exit2 means incomplete; exit0 means all reported rows qualify.\n\nThe command writes the level JSON, [global.json](global.json) and [acceptance tracker](../../qa/acceptance-status.md). Each row retains the unchanged absolute target, every clause's value/status, source and observer hashes, receipt paths, historical finding, and next check.\n\n## Scope and evidence\n\nCurrent receipts include ${nativeRuns} observed native routes, ${controls} uninstrumented control routes, ${checkpointCases} individual checkpoint deaths, and ${browserRuns} physical browser runs. Each physical receipt states its backend, tier, completion, console errors and ordinary-input coverage. Browser completion metadata is kept under [receipts](receipts); raw screenshots and profiles are deleted. The full desktop backend matrix and separate quiet performance results are summarized in [fix51-r4](../fix51-r4/README.md); phone/zoom/visual coverage remains open.\n\nFresh complete-row passes: ${freshPasses.join(', ') || 'none'}. Rows previously marked FAIL stay open until their failing clauses pass on current source; rows previously marked PASS keep only the measurements listed, not the old verdict. G-16 requires all20 level/quality starts, including exactly axe in L10; a 19/20 matrix cannot pass.\n\n[Audit](audit.json), [control proof](control-proof.json), [evaluator proof](evaluator-proof.json) and [fault proof](fault-proof.json) record the fix51-verify batch that built this tooling against its own source hashes; rerun them from their scripts after changing the evaluator. Final repository gates are recorded in [validation.json](validation.json). These tools are separate from the registered unit-test budget.\n\nNo performance timings are collected. G-01 through G-05 timing clauses require the orchestrator quiet window; G-05 native population is only a count clause. Native checks cannot qualify rendered bars, shadows, silhouettes, camera framing, audio audibility or route clarity. L2 no-axe completion is measured independently of the rack visibility review. L6 fists-only mortal attempts that time out remain inconclusive. L3 pending population slots are reported separately from live concurrent entities. L10 regional peak bounds allow one Mega and do not certify species/group composition.\n\nCheckpoint cases deliberately dirty live racks, gates, pickup membership and follower health before mortal death. L1/L4 world-preserving retries and L8 expose snapshot mismatches; locations restore correctly. These controlled mismatches are scoped evidence, not a claim that an ordinary input run loses its arsenal. L10 cases additionally perturb cure ownership and boss HP/death before retry. Stationary policies are labelled survival-protected and cannot establish mortal difficulty; L9's no-fire policy continues driving.\n\n## Reports\n\n| Level | Report | Policies |\n|---|---|---|\n` + reports.map(report => `| ${report.level} | [${report.level}.json](${report.level}.json) | ${report.policies.map(policy => `[${policy.tier}/${policy.policy}](${policy.receipt.replace(`${reportRoot}/`, '')})`).join(', ')} |`).join('\n') +
     '\n\n## Open items\n\nEvery remaining row and next check is listed here. P preserves the exact PO-review scene/behavior; quantitative clauses in those rows remain automated work.\n\n| ID | Status | Current clauses | Remaining / PO review |\n|---|---|---|---|\n' + allRows.filter(row => row.currentStatus !== 'PASS').map(row => `| ${row.id} | ${row.status} | ${row.checks.length} | ${clean(row.remaining)}${row.review ? ` ${row.review.tag}: ${clean(row.review.instruction)}` : ''} |`).join('\n') + '\n';
   writeFileSync(join(reportRoot, 'README.md'), summary);
 }
