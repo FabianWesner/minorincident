@@ -198,7 +198,7 @@ export class LevelTenEncounters {
       if (weapons[pickup.id] || !at || !chunks.resident(...at)) continue;
       // Roadline story finds must survive ordinary walking past the prop; the
       // old 0.6 m trigger was narrower than the bot's 2 m waypoint tolerance.
-      weapons[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: at[0], z: at[1] }, false, { retain: true, reachM: 4.5 });
+      weapons[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: at[0], z: at[1] }, false, { retain: true, reachM: pickup.id === 'crash-machete' ? 1.5 : 4.5 });
     }
     updateFarmScares(w, this.state.farmScares ??= {});
     const pendingScares = Object.values(this.state.farmScares).filter(s=>s.actor===undefined).length;

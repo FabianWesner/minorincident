@@ -9,7 +9,7 @@
 
 ## Evidence
 
-- Native L10-05 fixture, LOW and HIGH: PASS. Both tiers began at 100 HP with fists in both racks; the pickup was visible, walkable, 5.025 m from start, collected at tick 11 (0.183 s) at 4.448 m, and caused no health loss. Exactly one authored machete exists, the pickup did not respawn, and the story found-state was set.
+- Native L10-05 fixture, LOW and HIGH: PASS. Both tiers began at 100 HP with fists in both racks; the pickup was visible, walkable, 5.025 m from start, collected at tick 52 (0.867 s) at 1.434 m, and caused no health loss. Exactly one authored machete exists, the pickup did not respawn, and the story found-state was set.
 - Focused combat/save progression tests: 13/13 passed. Full local `npm test`: 106 tests across 27 files passed (101.2 s).
 - `npm run typecheck` and `npm run lint`: passed after the final fixture edits.
 - L9 acceptance (LOW/HIGH): L9-08 passed at both tiers and all five crossing checkpoints passed. Command still exits 1 for the unrelated L9-04 durability-contact row.
@@ -27,3 +27,5 @@ Review the machete on the crash-site ground in HIGH and LOW quality. Confirm the
 - Run the prescribed remote acceptance for L9 and L10, `npm run qa:threat`, and the remote unit suite on a healthy runner; retain final receipts only outside `docs/reports/fix51-verify`.
 - Complete HIGH/LOW browser review.
 - Current `main` was merged in commit `78e29faf` after filesystem permissions changed. A fresh L10-only threat run on the merged source reproduces the skilled wave timing and passive stuck-chaser flags. The earlier s165 report identifies the stationary chaser as the Mega cycling slams at close range and documents the finale wave timing sensitivity; the present run still needs a source-level fix and full verification.
+
+The crash machete now collects within 1.5 m, leaving time to see it during the approach. Both LOW and HIGH native fixtures pass without health loss. The unrelated G-10 evaluator relaxation and its observer changes were removed; the original distance criterion is retained. Typecheck passes. An L10-only threat rerun still reports the skilled wave and passive stuck-chaser flags.

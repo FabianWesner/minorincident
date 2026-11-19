@@ -10,7 +10,7 @@ import { observeAttackStarts } from '../threat/attackStarts';
 import { L5FormationObserver } from './l5-formation';
 
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
-type PickupReceipt = { tick: number; id: number; item: string | null; collector: number | null; distance: number | null; reachM: number | null; shelf: boolean; interact: boolean; speed: number };
+type PickupReceipt = { tick: number; id: number; item: string | null; collector: number | null; distance: number | null; shelf: boolean; interact: boolean; speed: number };
 type Region = { ticks: number; attacks: number; groupAttacks: number; peak: number; normalPeak: number; regularPeak: number; dogPeak: number; alphaPeak: number; regularGroupPeaks: Record<string, number> };
 const cureEncounterRegion = new Map(cureEncounters.map(group => [group.id, group.region]));
 
@@ -21,7 +21,7 @@ export class AcceptanceObserver {
   private eventCounts: Record<string, number> = {};
   private ledger: GameEvent[] = [];
   private pickups: PickupReceipt[] = [];
-  private pickupPositions = new Map<number, { x: number; z: number; shelf: boolean; item: string | null; reachM: number | null }>();
+  private pickupPositions = new Map<number, { x: number; z: number; shelf: boolean; item: string | null }>();
   private collected = new Set<number>();
   private duplicatePickups: number[] = [];
   private peakAlive = 0;
@@ -161,7 +161,7 @@ export class AcceptanceObserver {
       if (!e.pickup) continue;
       const p = e.pickup;
       this.pickupPositions.set(e.id, { x: e.transform.x, z: e.transform.z, shelf: 'surfaceY' in p && p.surfaceY !== undefined,
-        item: 'actionId' in p ? p.actionId : p.item, reachM: 'reachM' in p && typeof p.reachM === 'number' ? p.reachM : null });
+        item: 'actionId' in p ? p.actionId : p.item });
     }
   }
 
@@ -189,7 +189,6 @@ export class AcceptanceObserver {
       this.collected.add(id);
       this.pickups.push({ tick: event.tick, id, item: 'actionId' in event ? event.actionId : event.item, collector,
         distance: at ? distance(at, w.entities.get(collector ?? 1)?.transform ?? player.transform) : null,
-        reachM: known?.reachM ?? null,
         shelf: known?.shelf ?? false, interact: w.inputFrame.interact, speed: player.motion?.speed ?? 0 });
     }
     if (event.type === 'mission.signal' && event.name === 'cure-released') {
