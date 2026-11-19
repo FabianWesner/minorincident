@@ -306,6 +306,19 @@ export class L4Collapse {
             }
             if (landing) break;
           }
+          // The low tier's full horde can keep every physically clear landing at a busy mouth
+          // occupied while the gap itself stays open. Fall back to a nav-clear point on the
+          // same lattice: separation and depenetration shove the transit bodies aside, instead
+          // of parking the Alpha at its alignment point outside the wire.
+          if (!landing && this.h.low()) {
+            for (const depth of [.9, 1.2, 1.6, 2, 3, 4]) {
+              for (const offset of [Math.max(-clearance, Math.min(clearance, along)), 0, .5, -.5, 1, -1]) {
+                const p = { x: centre.x - out.x * depth + out.z * offset, z: centre.z - out.z * depth - out.x * offset };
+                if (this.inside(p) && ai.infectedNav.clear(p.x, p.z, e.combat!.radius)) { landing = p; break; }
+              }
+              if (landing) break;
+            }
+          }
           if (landing) b.scripted = landing;
         }
         continue;

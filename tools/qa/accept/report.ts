@@ -42,11 +42,14 @@ export function sourceRows(): SourceRow[] {
     const old = baseline.rows.find(row => row.id === id) ?? (/^L9-1[0-8]$/.test(id) ? {
       id, level: 'L9', status: 'NOT CHECKED' as const, value: 'New PO 2026-11-08 driving criterion; no historical qualification.', evidence: [],
       method: 'Measure the complete PO 2026-11-08 criterion on current source at both qualities; keep browser clauses open until reviewed.',
+    } : /^G-2[89]$/.test(id) ? {
+      id, level: 'global', status: 'NOT CHECKED' as const, value: 'New PO 2026-11-19 difficulty criterion; no historical qualification.', evidence: [],
+      method: 'Measure the complete difficulty criterion on current source; retain unmeasured clauses as not checked.',
     } : undefined);
     if (!old) throw new Error(`Missing historical criterion: ${id}`);
     rows.push({ id, level: old.level, expected: cells[id.startsWith('G-') ? 2 : 3], check: cells.at(-2)!, baseline: old });
   }
-  if (rows.length !== 178 || new Set(rows.map(row => row.id)).size !== 178) throw new Error('Acceptance source inventory changed; reconcile all IDs');
+  if (rows.length !== 180 || new Set(rows.map(row => row.id)).size !== 180) throw new Error('Acceptance source inventory changed; reconcile all IDs');
   return rows;
 }
 const subjectiveReview: Record<string, string> = {

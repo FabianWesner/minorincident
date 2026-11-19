@@ -11,5 +11,5 @@ export const levelStartWeapons: Readonly<Record<Level, { LEFT: readonly string[]
   7: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.assault-rifle'] },
   8: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'] },
   9: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.assault-rifle'] },
-  10: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] },
+  10: { LEFT: [], RIGHT: [] },
 };

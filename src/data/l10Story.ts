@@ -18,7 +18,7 @@ export const cureEscapeGaps = [
   { x: 925, z: -12, detourZ: -52 },
   { x: 2110, z: -2, detourZ: 38 },
 ] as const;
-/** The hangar returns every carried weapon, including optional campaign finds and abilities. */
+/** Capacity leaves room for carried actions and checkpoint compatibility. */
 export const cureRackCapacity = 32;
 /** Exact line IDs from docs/design/story-script.md. Durations are active simulation ticks. */
 export const cureHangarConversation = [

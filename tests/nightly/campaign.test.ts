@@ -70,9 +70,10 @@ test('nightly campaign: one continuous seed-1 bot run L1 → credits with the re
       if (n === 5) expect(save.stationOccupants).toBeDefined();
       if (n === 7) expect(save.racks.RIGHT).toContain('weapon.rocket-launcher');
       if (n === 9) {
-        expect(save.racks).toEqual({ LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] });
-        expect(save.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
-        expect(save.selectedAction).toBe('weapon.fire-axe');
+        // PO 2026-11-19: the crossing loses the axe too; the committed L10 handover is unarmed.
+        expect(save.racks).toEqual({ LEFT: ['weapon.fists'], RIGHT: ['weapon.fists'] });
+        expect(save.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fists']);
+        expect(save.selectedAction).toBe('weapon.fists');
         expect(save.ownedActions.filter(id => id.startsWith('ability.'))).toEqual(abilities);
         expect(save.crossingHandover!.shelteredPassengers.map(e => e.id).sort((a, b) => a - b)).toEqual(shelteredPassengers);
         expect(save.crossingHandover!.researchCompanion?.id).toBe(researchCompanion);

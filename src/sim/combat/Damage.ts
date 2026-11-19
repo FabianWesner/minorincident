@@ -196,6 +196,7 @@ export class Damage {
     if (target.escort?.state === 'downed' || target.escort?.state === 'dead') return 0;
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
     const mega = target.infected?.pursuit;
+    const pipeDown = hit.actionId === 'weapon.pipe-bomb' && hit.type === 'explosive' && !!target.infected && target.health.current > 0 && (!mega || this.world.tick >= (target.infected.pipeBombReady ?? 0));
     if (mega && hit.actionId === 'weapon.rocket-launcher' && hit.type === 'explosive') {
       const ids = target.infected!.megaRocketIds ??= [];
       if (ids.includes(hit.attackId)) return 0;
@@ -265,7 +266,7 @@ export class Damage {
       const from = { x: target.transform.x, z: target.transform.z };
       if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback, hit.actionId === 'weapon.shotgun' ? 8 : 1);
       if (target.combat && target.faction === 'infected' && (!mega || megaReact || target.health.current === 0)) {
-        const heavy = target.health.current === 0 || !target.infected?.arenaBoss && !mega && ( (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle')));
+        const heavy = target.health.current === 0 || !target.infected?.arenaBoss && !mega && ( (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' && hit.actionId !== 'weapon.molotov' || hit.type === 'vehicle')));
         const downed = target.combat.reaction?.heavy && target.combat.reaction.until > this.world.tick;
         const previous = target.combat.reaction?.index ?? target.id % 3;
         if (downed && target.health.current === 0) target.combat.reaction!.groundDeath = true;
@@ -290,6 +291,14 @@ export class Damage {
             other.combat.reaction = { index: ((other.combat.reaction?.index ?? 0) + 1) % 6, started: this.world.tick, until: this.world.tick + 54, direction: { ...hit.direction }, from: otherFrom, to: { x: other.transform.x, z: other.transform.z }, heavy: true };
           }
         }
+      }
+      if (pipeDown && target.health.current > 0 && target.combat && target.infected) {
+        const until = this.world.tick + 150, from = { x: target.transform.x, z: target.transform.z };
+        if (mega) target.infected.pipeBombReady = until + 600;
+        this.world.infected?.cancelSpecial(target.id);
+        target.infected.specialRecoveryUntil = Math.max(target.infected.specialRecoveryUntil ?? 0, until);
+        target.combat.staggerUntil = Math.max(target.combat.staggerUntil, until); target.combat.attacking = false;
+        target.combat.reaction = { index: target.id % 6, started: this.world.tick, until, direction: { ...hit.direction }, from, to: { ...from }, heavy: true };
       }
       // The impact freeze is the courier's feedback: allied fighters' (E20) strikes do not freeze the screen.
       if (hit.type === 'melee' && !source.civilian) this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: hit.hitStopMs ?? 50 });

@@ -48,6 +48,7 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
     const level=/^L([1-9]|10)$/.exec(world.scenario??'');
     const startLevel=level?Number(level[1]):save.unlockedLevel;
     const {size,LEFT,RIGHT}=campaignLoadout(save,startLevel);
+    save.racks={LEFT:[...LEFT],RIGHT:[...RIGHT]};
     world.progression.campaign!.racks={LEFT:[...LEFT],RIGHT:[...RIGHT]};
     for(const id of [...LEFT,...RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
     world.progression.campaign!.ownedActions=[...save.ownedActions];

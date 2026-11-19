@@ -108,7 +108,11 @@ export const l4 = {
     heap: { cellM: 4 },
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 120,
-    caps: { infected: { high: 160, low: 80 }, characters: { high: 230, low: 120 } },
+    /** L4-04 (amended 2026-11-02 to retain ≥60 living at first breach): "downed/recoverable bodies excluded from low
+     * living cap". The low tier counts living infected only; a rising body waits for a free living slot and character
+     * room like any admission (SpawnDirector.recoveryRoom), so living + reservations stay ≤ 80 and characters ≤ 120.
+     * HIGH keeps false: a recoverable body reserves its slot there, as shipped. */
+    caps: { infected: { high: 160, low: 80 }, characters: { high: 230, low: 120 }, downedExcluded: { high: false, low: true } },
     /**
      * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
      * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
