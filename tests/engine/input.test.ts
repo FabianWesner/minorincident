@@ -90,6 +90,7 @@ test('keyboard aim (Q-196): WASD/arrows follow the screen at every camera yaw; k
   c.pointerUp();
   c.key('Space', true); const space = c.sample();
   expect(space.activeAttack).toBe(true); expect(space.aimSource).toBe('assist'); expect(space.aim).toBeNull(); expect(space.move.x).toBeLessThan(0);
+  c.key('KeyG', true); expect(c.sample().corgiLure).toBe(true); c.key('KeyG', false); expect(c.sample().corgiLure).toBeUndefined();
   c.key('KeyQ', true); expect(c.sample().selector).toBe(1); c.key('KeyQ', false);
   c.key('ShiftLeft', true); c.key('KeyQ', true); const reverse = c.sample();
   expect(reverse.selector).toBe(-1); expect(reverse.selectorActive).toBe(true);
@@ -170,7 +171,7 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect([...Object.keys(catalog), ...Object.keys(mountedActions)].filter(id => !(weaponOrder as readonly string[]).includes(id))).toEqual([]);
   const left = ['weapon.fire-axe', 'weapon.bat', 'weapon.kick'], right = ['ability.corgi-lure', 'weapon.molotov', 'weapon.handgun'];
   const loadout = new Loadout(left, right);
-  const expected = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov', 'ability.corgi-lure'];
+  const expected = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov'];
   expect(loadout.activeEntries().map(e => e.id)).toEqual(expected);
   for (let index = 0; index < expected.length; index++) {
     loadout.input({ ...emptyInput(), selectedActiveSlot: index }, 30 * index + 30);

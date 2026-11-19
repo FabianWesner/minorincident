@@ -13,6 +13,7 @@ import { AimAssist } from './AimAssist';
 import { Status } from './Status';
 import { ticks } from '../../data/actions/schema';
 import { actionExplosions } from '../../data/explosions';
+import { action } from '../../data/actions/catalog';
 import { weaponFallbackPriority } from '../../data/weaponKeys';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot } from '../world/types';
@@ -90,6 +91,12 @@ export class Combat {
       }
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
+    }
+    const hasLure = this.world.progression?.campaign?.ownedActions.includes('ability.corgi-lure') || (['LEFT', 'RIGHT'] as const).some(side => loadout.state[side].rack.some(slot => slot.id === 'ability.corgi-lure'));
+    if (frame.corgiLure && hasLure && player.health.current > 0 && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick) && this.world.tick >= (loadout.state.corgiReady ?? 0)) {
+      const def = loadout.definition('ability.corgi-lure') ?? action('ability.corgi-lure'), tick = this.world.tick;
+      loadout.state.corgiReady = tick + ticks(def.cooldown);
+      this.effects.create({ id: -tick - 1, sourceId: 1, side: loadout.state.selectedSide, def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, player.transform);
     }
     this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
     this.updateProjectiles();

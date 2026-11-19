@@ -30,6 +30,8 @@ export interface InputFrame {
   pointerTarget?: boolean;
   /** One-based position in the visible carried rack. */
   selectedWeaponKey?: number;
+  /** Activate the corgi lure independently of the weapon rack. */
+  corgiLure?: boolean;
   /** Historical catalog shortcut decoded from recordings made before rack positions. */
   selectedLegacyWeaponKey?: number;
   /** Carried-list index for HUD/test/replay commands. */

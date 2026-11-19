@@ -61,6 +61,7 @@ export class Hud {
   private readonly weapon = this.weaponIcon();
   private weaponActionId = '';
   private readonly weaponRack = node('div', 'weapon-rack');
+  private readonly corgiLure = button('corgi-lure', 'Corgi lure · G', () => this.game.input.corgiLureOnce());
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
@@ -431,7 +432,8 @@ export class Hud {
       this.game.input.touch.setWeapon(touchSide, actionIconUrl(def.iconId), `${name}, ${stats}`, progress, selected, slot.magazine, slot.charges);
     }
     const entries = player.weapons ? world.combat?.runner.loadout.activeEntries() ?? [] : [];
-    const signature = entries.map(entry => entry.id).join(',');
+    const hasLure = !!world.progression?.campaign?.ownedActions.includes('ability.corgi-lure') || !!player.weapons && sides.some(side => player.weapons![side].rack.some(slot => slot.id === 'ability.corgi-lure'));
+    const signature = entries.map(entry => entry.id).join(',') + (hasLure ? ',corgi-lure' : '');
     if (signature !== this.weaponRackSignature) {
       this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
       for (const [index, entry] of entries.entries()) {
@@ -448,6 +450,11 @@ export class Hud {
         if (key <= 10) { const badge = node('span', `weapon-key-${key}`, shortcut); badge.className = 'hud-weapon-key'; item.append(badge); }
         this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
       }
+      if (hasLure) {
+        this.corgiLure.className = 'hud-weapon-choice'; this.corgiLure.title = 'Corgi lure · G'; this.corgiLure.setAttribute('aria-label', this.corgiLure.title);
+        const icon = document.createElement('img'); icon.src = actionIconUrl('icon.corgi-lure'); icon.alt = '';
+        const badge = node('span', 'corgi-lure-key', 'G'); badge.className = 'hud-weapon-key'; this.corgiLure.replaceChildren(icon, badge); this.weaponRack.append(this.corgiLure);
+      }
     }
     const selectedId = shown?.id === 'weapon.kick' ? 'weapon.fists' : shown?.id;
     for (const [id, item] of this.weaponRackItems) {
@@ -459,7 +466,8 @@ export class Hud {
       item.title = `${label(id)}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
       item.setAttribute('aria-label', item.title);
     }
-    setHidden(this.weaponRack, !entries.length);
+    this.corgiLure.disabled = (player.weapons?.corgiReady ?? 0) > world.tick;
+    setHidden(this.weaponRack, !entries.length && !hasLure);
     attribute(this.weaponRack, 'data-touch', String(this.game.input.scheme === 'touch'));
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
     if (gun?.mounted) shown = { id: 'weapon.rotary-minigun', name: 'Minigun', stats: gun.locked ? 'Overheated' : `Heat ${Math.round(gun.heat * 100)}%`, progress: 1, ammo: 0, charges: 0, state: gun.locked ? 'cooldown' : 'ready' };

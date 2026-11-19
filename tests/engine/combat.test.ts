@@ -720,3 +720,14 @@ test('attack lifetime: ids survive re-equipping, dead sources cannot attack, sna
   const snapshot = s.getState(); snapshot.combat!.projectiles[0].landing!.x = 999; snapshot.combat!.water[0].radius = 999;
   expect(s.getState().combat!.projectiles[0].landing!.x).toBeCloseTo(10); expect(s.getState().combat!.water[0].radius).toBe(2);
 });
+
+test('corgi lure activates independently of the selected weapon and respects cooldown', async () => {
+  const w = await arena(); equip(w, ['weapon.fire-axe'], ['ability.corgi-lure', 'weapon.handgun']);
+  const loadout = w.combat!.runner.loadout;
+  w.setInput({ corgiLure: true }); step(w, 1); w.clearInput();
+  expect(w.combat!.effects.zones.filter(zone => zone.kind === 'lure')).toHaveLength(1);
+  expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.fire-axe');
+  w.setInput({ corgiLure: true }); step(w, 1); w.clearInput();
+  expect(w.combat!.effects.zones.filter(zone => zone.kind === 'lure')).toHaveLength(1);
+  expect(loadout.state.corgiReady).toBeGreaterThan(w.tick);
+});

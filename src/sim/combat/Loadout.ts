@@ -5,7 +5,7 @@ import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number }
 export interface SideState { rack: ActionSlot[]; index: number; aim: Vec2; aimPoint: Vec2 | null; swapUntil: number; unarmed?: ActionSlot }
-export interface LoadoutState { selectedSide: Side; LEFT: SideState; RIGHT: SideState }
+export interface LoadoutState { corgiReady?: number; selectedSide: Side; LEFT: SideState; RIGHT: SideState }
 const slot = (id: string, resolve: (id:string)=>ActionDef): ActionSlot => { const def = resolve(id); return { id, magazine: def.magazine, reserve: 'infinite', charges: def.charges, nextCharge: 0, reloadUntil: 0, readyAt: 0 }; };
 /** Rack timers belong to slots and survive cycling. Aim belongs to sides and survives cycling too. */
 export class Loadout {
@@ -24,6 +24,7 @@ export class Loadout {
   activeEntries(): { side: Side; index: number; id: string }[] {
     const seen = new Set<string>();
     const entries = (['LEFT', 'RIGHT'] as const).flatMap(side => this.state[side].rack.flatMap((slot, index) => {
+      if (slot.id === 'ability.corgi-lure') return [];
       const id = slot.id === 'weapon.kick' ? 'weapon.fists' : slot.id;
       if (seen.has(id)) return [];
       seen.add(id); return [{ side, index, id }];

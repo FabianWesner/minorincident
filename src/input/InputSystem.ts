@@ -49,6 +49,8 @@ export class InputSystem implements Lifecycle {
   private cancelMove = false;
   private readonly clicks: { x: number; y: number }[] = [];
   private selectedWeaponKey: number | undefined;
+  private lure = false;
+  corgiLureOnce(): void { if (!this.drivingContext && !this.mountedGunContext) this.lure = true; }
   private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
   cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push({ direction: 1, side }); }
   private pause = false;
@@ -159,6 +161,7 @@ export class InputSystem implements Lifecycle {
   }
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
+    if (code === 'KeyG') { if (held) this.corgiLureOnce(); return; }
     if (code === 'KeyQ') {
       if (held && !this.drivingContext && !this.mountedGunContext) this.selectors.push({ direction: this.shift() ? -1 : 1, active: true });
       return;
@@ -306,6 +309,7 @@ export class InputSystem implements Lifecycle {
       if (this.touch.holdingLeft) frame.left.held = true;
       frame.right.held = this.touch.holdingRight;
     }
+    delete frame.corgiLure; if (this.lure) { frame.corgiLure = true; this.lure = false; }
     if (this.selectedWeaponKey !== undefined) { frame.selectedWeaponKey = this.selectedWeaponKey; this.selectedWeaponKey = undefined; }
     if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; frame.orderedSelection = true; this.selectedSlot = undefined; }
     const selection = this.selectors.shift();
@@ -347,7 +351,7 @@ export class InputSystem implements Lifecycle {
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
     this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.space.release(); this.active.clear(); this.heldTokens.clear();
-    this.clicks.length = 0; this.cancelMove = true; this.selectedSlot = undefined; this.selectedWeaponKey = undefined;
+    this.lure = false; this.clicks.length = 0; this.cancelMove = true; this.selectedSlot = undefined; this.selectedWeaponKey = undefined;
     this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
