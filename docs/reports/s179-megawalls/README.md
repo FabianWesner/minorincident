@@ -54,3 +54,7 @@ Coarse pursuit now constructs a bounded local navigation grid from district coll
 ## Unloaded spawn follow-up
 
 A forced spawn at the centre of `bld.cure-duplex:7/geometry-1` now selects clear offscreen ground using the nonresident grid; district-authored blockers are included in that grid. The focused spawn/detour check and full native overlap probe pass. Typecheck and lint pass; full `qa:threat` on `a6c05fb4` reported 0 flags in 258.3 seconds. Two unchanged remote unit runs on this code timed out at 240 seconds under load, with combat and L4 contact tests also exceeding their individual limits. Current-code remote acceptance remains outstanding. The clear-spot search has a bounded range and still falls back to the requested point if no candidate exists; that case remains open.
+
+## Deferred introduction
+
+If neither resident nor nonresident clear-spot search finds ground, introduction now returns 0, preserves the reserved slot and retries after one second instead of placing the Mega inside a solid. A focused test fills the spawn area, verifies deferral and then removes the blocker; the retry succeeds. The full native overlap/detour regression, typecheck and lint pass. A full threat run on `7acc5e8d` reached its 600-second time limit under load without a final verdict; both L9/L10 stages completed. The last full zero-flag result predates this change. Current-code remote unit and L9/L10 acceptance remain outstanding.
