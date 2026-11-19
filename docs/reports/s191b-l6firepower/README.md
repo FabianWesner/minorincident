@@ -34,6 +34,8 @@ With real guns active, assigning them to the latter half of the roster yielded 1
 
 A read-only `ally.attack` event ledger on the current HIGH seed 1 complete run confirms actual firing: during the first breach, 49 pistol shots (18 hits) and four shotgun shots (three hits); during retreat, 154 pistol shots (59 hits) and 23 shotgun shots (nine hits). This establishes that the current candidate changes combat throughout the level, including the opening. The run saved 29/29; it does not resolve the missing player-pressure target.
 
+After the retreat-order correction, a fresh HIGH seed 1 event trace recorded 147 pistol/shotgun shots from moving shooters while the column was moving and 27 shots while the column was held (some shooters were still repositioning). The route completed with 28/29 saved. The pressure probe nevertheless failed: one complete 30-second post-closure window contained only one party-targeted attack start, below its two-start floor. This confirms firing in both column states and also exposes an uneven-pressure gap.
+
 Further HIGH seed 1 probes with real guns active: reducing both added weapon ranges to 5 m resulted in zero player attacks/min, zero retreat damage and a follower pace failure; reducing pistol accuracy to 5% and shotgun accuracy to 20% near range resulted in 1.39 player attacks/min and zero retreat damage. Both candidates were reverted.
 
 The existing L6 perception already biases the player by six metres when selecting visible targets. Changing the new civilian allies from held posts to free posts produced identical HIGH seed 1 results (2.85 player attacks/min, zero retreat damage, zero survivor losses); that experiment was reverted. The post flag is therefore not the cause of the measured pressure change.
