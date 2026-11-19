@@ -12,12 +12,12 @@ export class Loadout {
   readonly state: LoadoutState;
   constructor(left: string[], right: string[], readonly definition: (id:string)=>ActionDef = action, readonly capacity = 3) {
     for (const rack of [left, right]) if (rack.length < 1 || rack.length > this.capacity) throw new RangeError(`Racks require 1–${this.capacity} actions`);
-    const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
+    const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: rack.findIndex(id => id !== 'ability.corgi-lure'), aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
     this.state = { selectedSide: 'LEFT', LEFT: side(left), RIGHT: side(right) };
   }
   /** Presentation order leaves slot storage, checkpoint indices and cooldowns intact. */
   orderedEntries(side: Side): { side: Side; index: number; id: string }[] {
-    return this.state[side].rack.map((slot, index) => ({ side, index, id: slot.id })).sort((a, b) => compareWeapons(a.id, b.id));
+    return this.state[side].rack.flatMap((slot, index) => slot.id === 'ability.corgi-lure' ? [] : [{ side, index, id: slot.id }]).sort((a, b) => compareWeapons(a.id, b.id));
   }
   /** Ordered carried actions for mouse selection; kick is part of unarmed, not a slot. */
   activeEntries(): { side: Side; index: number; id: string }[] {
@@ -70,7 +70,7 @@ export class Loadout {
     else if (frame.selector && tick >= this.state[this.state.selectedSide].swapUntil) {
       const cycling = this.state[this.state.selectedSide];
       const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
-      cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15;
+      if (entries.length) { cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15; }
     }
     const selectedSide = this.state.selectedSide, selectedId = this.current(selectedSide).id;
     if (selectedId !== beforeId) this.state.previous = { side: beforeSide, index: beforeIndex, id: beforeId };

@@ -177,6 +177,10 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   const loadout = new Loadout(left, right);
   const expected = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov'];
   expect(loadout.activeEntries().map(e => e.id)).toEqual(expected);
+  expect(loadout.orderedEntries('RIGHT').map(e => e.id)).toEqual(['weapon.handgun', 'weapon.molotov']);
+  const lureOnly = new Loadout(['weapon.fire-axe'], ['ability.corgi-lure']);
+  lureOnly.input({ ...emptyInput(), selectorSide: 'RIGHT', selector: 1 }, 30);
+  expect(lureOnly.current('RIGHT').id).toBe('weapon.fists');
   for (let index = 0; index < expected.length; index++) {
     loadout.input({ ...emptyInput(), selectedActiveSlot: index }, 30 * index + 30);
     const id = loadout.current(loadout.state.selectedSide).id;

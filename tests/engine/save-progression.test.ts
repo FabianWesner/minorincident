@@ -140,6 +140,10 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
 });
 
 test('selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun', () => {
+  const oldLure = preset('L3-default'); oldLure.selectedAction = 'ability.corgi-lure';
+  const oldLoadout = new Loadout(['weapon.fire-axe'], ['ability.corgi-lure', 'weapon.handgun']);
+  oldLure.ownedActions.push('weapon.handgun');
+  expect(restoreSelectedAction(oldLoadout, oldLure)).toBe('weapon.handgun');
   const lost = preset('L8-default'); lost.selectedAction = 'weapon.shotgun';
   lost.ownedActions = lost.ownedActions.filter(id => id !== 'weapon.shotgun'); lost.racks.RIGHT = lost.racks.RIGHT.filter(id => id !== 'weapon.shotgun');
   const r = resume(lost, 9); restoreSelectedAction(r, lost);

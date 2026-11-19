@@ -763,4 +763,7 @@ async function checkCorgiLure(): Promise<void> {
   w.setInput({ corgiLure: true }); step(w, 1); w.clearInput();
   expect(w.combat!.effects.zones.filter(zone => zone.kind === 'lure')).toHaveLength(1);
   expect(loadout.state.corgiReady).toBeGreaterThan(w.tick);
+  const ready = loadout.state.corgiReady;
+  equip(w, ['weapon.fire-axe'], ['weapon.handgun']);
+  expect(w.combat!.runner.loadout.state.corgiReady).toBe(ready);
 }

@@ -51,6 +51,7 @@ export class Combat {
   }
   setLoadout(left: string[], right: string[], sequence = this.runner.lastAttackId): void {
     const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions), this.rackCapacity), infinite = this.runner.infiniteCharges;
+    if (this.runner.loadout.state.corgiReady !== undefined) loadout.state.corgiReady = this.runner.loadout.state.corgiReady;
     this.runner = new ActionRunner(1, loadout, Math.max(this.runner.lastAttackId, sequence)); this.runner.infiniteCharges = infinite; this.attach();
   }
   /**
