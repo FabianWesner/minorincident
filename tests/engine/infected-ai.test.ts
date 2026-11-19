@@ -542,6 +542,7 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
 });
 
 test('all levels recover nonlethal downs after seeded 10-20 s at full HP; explosives and burns kill for good', async () => {
+  await checkPipeBombMega();
   const downTicks: number[] = [];
   for (const seed of [1, 2, 3, 1]) {
     const w = await arena(seed); w.infected!.configureL1v2();
@@ -662,7 +663,7 @@ test('recovered infected forget the chase: re-acquisition needs sight, not memor
   expect(e.infected!.l1!.mode).not.toBe('chase');
 });
 
-test('pipe bomb knocks the Mega down for 2.5 seconds and cannot repeat for ten seconds after recovery', async () => {
+async function checkPipeBombMega(): Promise<void> {
   const w = await arena();
   const id = w.infected!.spawn('infected.alpha', { x: 3, z: 0 }, { state: 'chase' });
   const mega = w.entities.get(id)!; mega.infected!.pursuit = true; mega.health.current = mega.health.max = 5000;
@@ -676,4 +677,4 @@ test('pipe bomb knocks the Mega down for 2.5 seconds and cannot repeat for ten s
   step(w, 151); blast();
   expect(mega.combat!.reaction!.until).toBeLessThanOrEqual(w.tick);
   expect(mega.infected!.pipeBombReady).toBe(ready);
-});
+}
