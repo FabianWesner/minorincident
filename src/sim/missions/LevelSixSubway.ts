@@ -288,6 +288,10 @@ export class LevelSixSubway {
   private living() {return this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following');}
   /** A service gate can be closed once every living survivor is more than 2 m past its line (E24 §5: nobody trapped). */
   private closable(g:{x:number;closedAt:number}):boolean {return !g.closedAt&&this.living().every(r=>this.w.entities.get(r.id)!.transform.x>g.x+2);}
+  /** Fixed escalator-foot exit waypoints (orchestrator 2026-11-17: "Exit guidance now leads to the escalator foot."):
+   * the aligned lane head at the escalator top, the south approach foot beside its solid side. The marker stays at
+   * these fixed anchors and never walks ahead of the group. */
+  static readonly stairSpots:readonly {x:number;z:number}[]=[{x:250,z:15},{x:244,z:15}];
   /** Guide the retreat with fixed gates/platform destinations; only the objective wording reacts to separation. */
   private guide(p:Point):void {
     const s=this.s,m=this.mission,anchors=m.def.anchors,f=l6.follow;
@@ -296,7 +300,8 @@ export class LevelSixSubway {
     // approaching from the south otherwise meets its solid side.
     if(s.phase==='exit'&&p.x<249.4){
       const aligned=Math.abs(p.z-15)<=.7;
-      m.def.anchors['l6-stair']={x:aligned?250:244,z:15,y:aligned?1.0125:.6,radius:.65};
+      const spot=LevelSixSubway.stairSpots[aligned?0:1];
+      m.def.anchors['l6-stair']={x:spot.x,z:spot.z,y:aligned?1.0125:.6,radius:.65};
       m.state.marker='l6-stair';
       return;
     }

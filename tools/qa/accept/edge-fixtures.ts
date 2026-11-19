@@ -2,6 +2,7 @@ import { loadLevel, runLevel, type RunnerLevel } from '../../sim-runner/levels';
 import { preset } from '../../../src/sim/progression/Campaign';
 import { completeCampaignLevel } from '../../../src/sim/progression/carryover';
 import type { MissionResult } from '../../../src/sim/missions/types';
+import { LevelSixSubway } from '../../../src/sim/missions/LevelSixSubway';
 import type { Tier } from './probe';
 import { runL6 } from '../../sim-runner/l6Bots';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -37,12 +38,16 @@ export async function l6MarkerFixture(tier: Tier, add: Add, observations: Record
         const anchor = state.marker ? mission.def.anchors[state.marker] : undefined;
         const row = { tick: world.tick, phase, marker: state.marker, ...(anchor ? { x: anchor.x, z: anchor.z } : {}) };
         const at = (point: { x: number; z: number }) => !!anchor && Math.hypot(anchor.x - point.x, anchor.z - point.z) <= 1e-6;
+        // The exit may also sit at the fixed escalator-foot stair waypoints (the
+        // 2026-11-17 exit-guidance decision; LevelSixSubway.stairSpots). They are
+        // fixed anchors that never move with the group, exactly like the platform.
+        const atStair = !!anchor && LevelSixSubway.stairSpots.some(spot => anchor.x === spot.x && anchor.z === spot.z);
         samples++;
         const gate = phase === 'retreat' ? gates.find(at) : undefined;
         if (gate) seenGates.add(gate.gateX);
         if (phase === 'retreat' && at(platform)) platformSeen = true;
         if (phase === 'exit' && at(night)) nightSeen = true;
-        if (!(phase === 'retreat' ? !!gate || at(platform) : at(night)) && offenders.length < 5) offenders.push(row);
+        if (!(phase === 'retreat' ? !!gate || at(platform) : at(night) || atStair) && offenders.length < 5) offenders.push(row);
         const next = `${phase}/${state.marker}/${anchor?.x}/${anchor?.z}`;
         if (next !== signature) { trajectory.push(row); signature = next; }
       };
@@ -75,9 +80,9 @@ export async function l6MarkerFixture(tier: Tier, add: Add, observations: Record
   } finally { branchWorld.dispose(); }
   const branchesPass = branchChecks.length === 12 && branchChecks.every(check => check.pass);
   const value = { run, samples, gateCount, seenGates: [...seenGates], platformSeen, nightSeen, trajectory, offenders, nativeStateHash, branchChecks,
-    branchSetup: 'separate native L6 guide; following visible roster beyond all three open gates; four courier positions per gate' };
+    stairSpots: LevelSixSubway.stairSpots, branchSetup: 'separate native L6 guide; following visible roster beyond all three open gates; four courier positions per gate' };
   observations['L6/fixed-markers'] = value;
-  add('L6-10', 'native fixed-gate/platform marker trajectory', value, 'every active retreat/exit tick at an initial gate wait spot or fixed platform/exit; all3 gate branches at four courier positions', offenders.length || !branchesPass ? false : run.completed && samples > 0 && gateCount === 3 && platformSeen && nightSeen ? true : undefined);
+  add('L6-10', 'native fixed-gate/platform marker trajectory', value, 'every active retreat/exit tick at an initial gate wait spot or a fixed platform/stair/exit anchor; all3 gate branches at four courier positions', offenders.length || !branchesPass ? false : run.completed && samples > 0 && gateCount === 3 && platformSeen && nightSeen ? true : undefined);
 }
 
 /** Explicit initial-state edge cases, followed by normal production bot input and objectives. */
