@@ -159,28 +159,6 @@ export class LevelSixSubway {
       if(ai.director.count+ai.director.pendingTurns<capacity)return;
     }
   }
-  /**
-   * A retreat leaves the cohorts it has already walked past behind for good: the column walks at the
-   * same speed as a chaser, so a pressure cohort admitted far behind the tail can never rejoin the
-   * encounter. On a no-kill run those abandoned chasers stack up - 56-63 live bodies while only 8-15
-   * are ever inside the column's camera - and the acceptance probe counts them as concurrent
-   * pressure although they never reach the group. This trims only that dead tail, using the same
-   * 40 m "route already safely past" rule the hatch reopening already applies: a candidate must be
-   * more than 45 m behind the column's own tail, outside the camera envelope, unengaged, and clear
-   * of every survivor. The living slot returns to the pool (never a corpse), so the authored pressure
-   * keeps flowing instead of stacking into unreachable chasers.
-   */
-  private recycleFallenBehind(tail:number):void {
-    const w=this.w,ai=w.infected!,p=w.entities.get(1)!.transform,group=this.living().map(r=>w.entities.get(r.id)!).filter(Boolean);
-    for(const e of [...ai.active]){
-      const b=e.infected;
-      if(!b||e.health.current<=0||e.corpse||e.transform.x>=tail-45||this.s.survivors.some(r=>r.id===e.id))continue;
-      if(e.combat?.attacking||b.specialAttack||b.l1?.mode==='bite'||e.infectionRise)continue;
-      if(distance(e.transform,p)<35||group.some(member=>distance(e.transform,member.transform)<25))continue;
-      if(!ai.director.offscreen(e.transform,e.transform.y-.7))continue;
-      ai.release(e);this.s.distantRecycled=(this.s.distantRecycled??0)+1;
-    }
-  }
   private spawn(n:number,doors:number[],wave:number):number {
     const w=this.w,ai=w.infected!,o=w.npcs!.civilians.outbreak!,player=w.entities.get(1)!.transform;let spawned=0;
     // Saves from before the hold telemetry do not contain this optional ledger.
@@ -480,7 +458,6 @@ export class LevelSixSubway {
     else if(!s.waitFlipAt)s.waitFlipAt=t;
     else if(t-s.waitFlipAt>=ticks(l6.follow.strayDwellS)){s.waitFor=want;s.waitFlipAt=0;}
     s.tailX=tail;
-    this.recycleFallenBehind(tail);
     if(!s.paused){if(s.leaderZ<15)s.leaderZ=Math.min(15,s.leaderZ+2.2/60);else s.leaderX=Math.min(276,s.leaderX+2.2/60);}
     if(!s.injuryLineAt&&s.leaderX>34){s.injuryLineAt=t;this.say(1,l6InjuryLines.retreat);}
     for(const r of live){const e=w.entities.get(r.id)!;
