@@ -30,3 +30,7 @@ Updated G-16, L7-02, L8-01 and L9-08 to cite the 2026-11-19 authored sets. Corre
 The L8-01 arrival receipt evaluator now checks the authored post-armory weapons and selected handgun, while retaining its roster, full-health and control-hash checks. Historical captures remain stale and must be regenerated; typecheck and lint pass. The remaining L10 integration and threat failures remain open.
 
 L8 skilled-route follow-up: the bot now uses its existing private corpse-aware route planner between animal arenas. A focused `qa:threat -- --levels L8 --maxWorkers 1` completed the skilled route and reported zero L8 passive flags in 129.9 s; the command exits 1 for its intentional partial-level flag. Corpse collision and persistence are unchanged. The full ten-level audit remains required.
+
+## L10 integration
+
+Merged current main containing s176 and s177 into this lane. The authored L10 start table is now empty; the crash-site machete and its save contract come from s176. The incoming campaign racks are synchronized with the live boundary snapshot so the cure checkpoint validates. Focused save-progression suite passes (6 tests), as do typecheck and lint. Full threat and remote unit gates remain open on the integrated source.
