@@ -34,6 +34,8 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
 export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   if (world.scenario === 'L10') enforceCureArsenal(save);
   if(!world.player)throw new Error('Progression needs a survivor');
+  // s178: the campaign's difficulty owns the live world (level select, checkpoint restore and restart keep it).
+  world.difficulty = save.difficulty === 'hard' ? 'hard' : 'simple';
   if (world.scenario === 'L10' && save.crossingHandover?.corgi && world.npcs) {
     for (const e of [...world.entities.iterate()]) if (e.companion) { world.entities.remove(e.id); world.spatial.delete(e.id); }
     const corgi = structuredClone(save.crossingHandover.corgi); delete corgi.passengerOf; corgi.hidden = false;
@@ -73,7 +75,8 @@ export function campaignLoadout(save:CampaignSave,level:number):{size:number;LEF
 }
 /** Story grants become selectable at the next level boundary. Current-level pickups stay withheld until collected. */
 function storyWeaponsBefore(level:number):Set<string> {
-  if (level === 10) return new Set(['weapon.fire-axe','weapon.fists','weapon.kick']); // the mandatory L9 crash strips the combat arsenal
+  // PO 2026-11-19: the unarmed crash start owns nothing; the crash-site machete arrives as a retained pickup.
+  if (level === 10) return new Set(['weapon.fists','weapon.kick']);
   const earned = new Set<string>(['weapon.fists','weapon.kick', ...(level > 1 ? fixedUnlocks[1].filter(id => catalog[id]?.category !== 'ability') : [])]);
   // These ids are the weapon pickup/action ids authored by each level's mission data.
   // The grant level is the level containing the pickup, so the weapon is usable starting in level + 1.

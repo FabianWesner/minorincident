@@ -224,7 +224,11 @@ export class LevelFourWar {
     const per = l4.perimeter, within = (p: Point) => p.x > per.x0 && p.x < per.x1 && p.z > per.z0 && p.z < per.z1;
     for (const [k, [x, z]] of l4.campShelters.entries()) if (!outbreak.refuges.some(r => r.id === `refuge-door-camp-${k + 1}`)) outbreak.refuges.push({ id: `refuge-door-camp-${k + 1}`, x, z });
     outbreak.options.reachable = (from, r) => this.s.phase !== 'war' || within(from) === within(r);
-    world.infected.director.levelCap = l4.war.caps.infected.high; world.infected.director.strict = true; this.reserveSlots();
+    world.infected.director.levelCap = l4.war.caps.infected.high; world.infected.director.strict = true;
+    // L4-04 amendment: the low tier excludes recovering bodies from its living cap (get-ups stay bounded by
+    // admission); the high tier keeps strict reserved slots, so its shipped horde behaviour is unchanged.
+    world.infected.director.downedExcluded = l4.war.caps.downedExcluded[this.low ? 'low' : 'high'];
+    this.reserveSlots();
     world.npcs.setAmbient(0);
     // L4-default progression (bat, axe, handgun) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.handgun', 'weapon.kick']);
@@ -534,11 +538,33 @@ export class LevelFourWar {
     const breaches = s.breaches ??= {}, b = breaches[side] ??= { announcedAt: 0, openAt: 0 };
     if (b.openAt) return;
     b.openAt = this.world.tick; b.arrivals = 0;
+    b.mouth = this.breachMouth(side);
     s.perimeterAt = this.world.tick;
     // The perimeter opening admits the horde. The defense line falls on the
     // director's separate casualty/deadline beat, 50–62 seconds after the turn.
     this.mission.radio(`L4.breach-${side}`);
     this.mission.state.marker = `l4-breach-${side}`;
+  }
+  /**
+   * The wall's walkable layout gap can sit off a breach site's centre (the west site's clear band lies between
+   * the fallen rail and the church frontage). Scan the site span for the nearest outside/inside shoulder pair
+   * on clear ground whose straight line crosses it, so the low tier's inside leg steers straight through the
+   * actual gap instead of queueing every body on the shared per-tick route budget behind the full horde
+   * (a starved leg stands at the rail; see the l4-contact routing oracle).
+   */
+  private breachMouth(side: L4BreachSide): { outer: { x: number; z: number }; inner: { x: number; z: number } } {
+    const { centre } = l4BreachSite(side), o = l4Breaches[side].out, nav = this.infected.nav;
+    const along = { x: o.x ? 0 : 1, z: o.x ? 1 : 0 };
+    for (let d = 0; d <= 6; d += .25) for (const sign of d ? [1, -1] : [1]) {
+      const x = centre.x + along.x * d * sign, z = centre.z + along.z * d * sign;
+      for (const ro of [2.2, 1.5, 1.0, .7]) for (const ri of [.7, 1.0, 1.5, 2.2]) {
+        const outer = { x: x + o.x * ro, z: z + o.z * ro }, inner = { x: x - o.x * ri, z: z - o.z * ri };
+        if (!nav.clear(outer.x, outer.z, .45) || !nav.clear(inner.x, inner.z, .45)) continue;
+        if (this.outsidePerimeter(inner) || !this.outsidePerimeter(outer) || !nav.visible(outer, inner, .45)) continue;
+        return { outer, inner };
+      }
+    }
+    return { outer: this.snap({ x: centre.x + o.x * 1.6, z: centre.z + o.z * 1.6 }, .45), inner: this.snap({ x: centre.x - o.x * 1.6, z: centre.z - o.z * 1.6 }, .45) };
   }
   /**
    * The flood (PO 10-23 "tear them down and then float oin"): once a breach is open, the pile clawing at the wire runs along it to the
@@ -618,7 +644,12 @@ export class LevelFourWar {
       else { l1!.goalX = wire.x; l1!.goalZ = wire.z; }
     }
     if (!open.length) return;
-    const sites = open.map(side => { const { centre } = l4BreachSite(side), o = l4Breaches[side].out; return { outer: this.snap({ x: centre.x + o.x * 1.6, z: centre.z + o.z * 1.6 }, .45) }; });
+    const sites = open.map(side => {
+      const { centre } = l4BreachSite(side), o = l4Breaches[side].out, mouth = this.s.breaches?.[side]?.mouth;
+      // LOW ends the outside leg at the site's actually walkable crossing, so the
+      // inside leg is a clear straight step instead of a budgeted route search.
+      return { outer: this.low && mouth ? mouth.outer : this.snap({ x: centre.x + o.x * 1.6, z: centre.z + o.z * 1.6 }, .45), mouth };
+    });
     const player = this.world.entities.get(1)!.transform;
     for (const e of this.infected.active) {
       const b = e.infected!; if (released.has(e.id) || e.health.current <= 0 || e.hidden || e.archetype === 'infected.alpha' || b.specialAttack || b.vault) continue;
@@ -638,13 +669,16 @@ export class LevelFourWar {
       if (b.breachApproach && b.scripted) {
         const target = this.low && !b.l4FlankTarget ? player : this.world.entities.get(b.l4FlankTarget ?? b.l1?.focusId ?? 1)?.transform ?? player;
         const followsHold = this.s.phase === 'war' && this.s.origin[e.id] >= l4Emergence.length && !b.l4FlankTarget && (!b.l1?.focusId || b.l1.focusId === 1);
+        const flip = b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4);
         // Follow a moving hold position while crossing the plaza. A cached
         // inside waypoint otherwise strands a slow cohort at the previous post.
-        if (b.breachApproach === 'outside' && (inside(e.transform) || dist(e.transform, b.scripted) < 1.4) || followsHold && b.breachApproach === 'inside' && dist(b.scripted, target) > 10) {
-          // The courier already occupies a reachable point. A snapped six-metre
-          // ring can land inside a reception shed and strand the whole approach.
-          // Ordinary party perception takes over before bodies reach her feet.
-          b.scripted = { x: target.x, z: target.z };
+        if (flip || followsHold && b.breachApproach === 'inside' && (inside(e.transform) || !this.low) && dist(b.scripted, target) > 10) {
+          // LOW stages the crossing through the walkable mouth: the flip happens
+          // at the gap itself, so the inside leg steers straight in without a
+          // per-body route the full horde can starve. HIGH keeps the direct hold
+          // waypoint; its shipped behaviour must not change.
+          const mouth = flip && !inside(e.transform) ? sites.reduce((best, site) => dist(site.outer, e.transform) < dist(best.outer, e.transform) ? site : best).mouth : undefined;
+          b.scripted = this.low && mouth ? { x: mouth.inner.x, z: mouth.inner.z } : { x: target.x, z: target.z };
           b.breachApproach = 'inside';
         } else if (b.breachApproach === 'inside' && (dist(e.transform, b.scripted) < 1.4 || dist(e.transform, target) < 3 && this.infected.hearing.notices(e, target))) {
           delete b.scripted; delete b.breachApproach;
@@ -807,10 +841,17 @@ export class LevelFourWar {
   }
   /** Room under the characters cap; `keep` slots stay free (the Alphas still to come, l4-po-round). */
   private spawnRoom(keep = 0, slots = 1): boolean {
-    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - keep - (this.low ? 1 : 0) - slots + 1;
+    // Low leaves one character slot clear so arrivals and same-tick recoveries
+    // cannot overlap at the authored ceiling.
+    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - (this.low ? 1 : 0) - keep - slots + 1;
     if (!(limit > 0)) return false;
     let count = 0;
-    for (const e of this.world.entities.iterate()) if ((!e.hidden || this.low) && e.health.current > 0 && (e.infected || e.civilian) && ++count >= limit) return false;
+    for (const e of this.world.entities.iterate()) {
+      const character = this.low
+        ? e.id === 1 || e.infected || e.companion || e.civilian && !e.civilian.pet && !e.civilian.zooAnimal
+        : (!e.hidden || this.low) && (e.infected || e.civilian);
+      if (e.health.current > 0 && !e.corpse && character && ++count >= limit) return false;
+    }
     return true;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
@@ -1220,7 +1261,12 @@ export class LevelFourWar {
       const target = world.entities.get(1)!;
       ai.press(id, target.id, tick + ticks(45), 30);
       const body = world.entities.get(id)!, state = body.infected!;
-      state.breachApproach = 'inside'; state.scripted = this.snap(target.transform, .45);
+      // LOW walks its breach cohort in through the site's walkable mouth (a clear
+      // straight crossing), not a per-body route across the wall that the full
+      // horde can starve on the shared budget; the authored courier press is unchanged.
+      const mouth = this.low && breach ? breach.mouth : undefined;
+      state.breachApproach = mouth ? 'outside' : 'inside';
+      state.scripted = mouth ? { x: mouth.outer.x, z: mouth.outer.z } : this.snap(target.transform, .45);
       if (spearhead) state.spearheadUntil = tick + ticks(l4.war.spearhead.untilS);
       const brain = world.entities.get(id)?.infected?.l1;
       if (brain) { brain.search.completeApproach = true; brain.goalX = target.transform.x; brain.goalZ = target.transform.z; brain.search.originX = target.transform.x; brain.search.originZ = target.transform.z; }
@@ -1289,6 +1335,16 @@ export class LevelFourWar {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'war') return;
     s.phase = 'collapse'; s.lineBreakAt = tick; s.lineCause = cause; s.markerAt = tick; s.collapseWaveAt = tick + ticks(4);
+    // The collapse director stops updating at the phase change. An Alpha still holding
+    // an authored crossing leg outside the wire would keep that frozen waypoint for the
+    // rest of the level and park at the mouth once it rises (a downed Alpha recovers
+    // later at full health); release the leg to ordinary collapse combat — the wall
+    // itself stops blocking anyone at "Fall back!".
+    for (const job of s.director.alphaJobs) {
+      const e = world.entities.get(job.alphaId), b = e?.infected;
+      if (!e || !b || e.health.current <= 0 && (b.recoverAt ?? -1) < 0 || e.hidden || !this.outsidePerimeter(e.transform)) continue;
+      delete b.scripted; job.stage = 'done';
+    }
     s.killsAtBreak = s.kills.player + s.kills.soldiers + s.kills.armedCivilians + s.kills.unarmedCivilians + s.kills.heli + s.kills.tank + s.kills.other;
     s.infectedAtBreak = this.infected.active.filter(e => e.health.current > 0).length; s.soldiersAtBreak = this.liveSoldiers().length;
     world.events.emit({ type: 'l4.lineBreaks', tick, cause });

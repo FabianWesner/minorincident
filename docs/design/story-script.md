@@ -108,7 +108,7 @@ The music drops to a quiet theme. This is the breath before the end.
 - Voss: "The sample you carried that morning came from here. We sent it to the Annex for testing. The container failed. That's on us. Not on you."
 - Courier (her second line in the whole game): "I carried it."
 - Voss: "Then carry this one." (She hands over the cure canister.) "It's airborne. It doesn't kill them — it brings them back. Whoever is still in there. The dispersal complex is two kilometres east. Plug it into the main console, hold it while it charges, and release it."
-- Sergeant **Ruiz** (armory): "Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty — and one of ours." — she gets every weapon back, the rocket launcher included.
+- Sergeant **Ruiz** (armory): "Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty — and one of ours." — the hangar issues a focused ten-weapon set, including the rocket launcher.
 - Voss (giving the flamethrower): "Prototype. Burns hot. Don't use it in the corn."
 - Sam: "I'm coming." — Voss: "You're bleeding into my floor. You're staying." — Sam (to the courier): "Go finish your delivery."
 

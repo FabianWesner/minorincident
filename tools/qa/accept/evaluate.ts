@@ -75,8 +75,10 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   }
   const allowed = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'];
   const offered = [...new Set([...(initial.racks?.LEFT ?? []), ...(initial.racks?.RIGHT ?? [])])].filter(id => id.startsWith('weapon.') && !['weapon.fists', 'weapon.kick'].includes(id));
-  const n = Number(receipt.level.slice(1)), maximum = n === 10 ? ['weapon.fire-axe'] : allowed.slice(0, n <= 5 ? n : n < 7 ? 5 : 6);
-  add('G-16', 'weapons offered in the ordinary initial racks', offered, n === 10 ? 'exactly [axe]' : `subset of ${JSON.stringify(n === 1 ? [] : maximum)}`, n === 10 ? offered.length === 1 && offered[0] === 'weapon.fire-axe' : offered.every(id => (n === 1 ? [] : maximum).includes(id)));
+  // PO 2026-11-19 (level-acceptance L9-08): the L9 crossing loses the whole arsenal including
+  // the axe; L10 starts unarmed and the crash-site machete is a retained pickup, not a rack weapon.
+  const n = Number(receipt.level.slice(1)), maximum = n === 10 ? [] : allowed.slice(0, n <= 5 ? n : n < 7 ? 5 : 6);
+  add('G-16', 'weapons offered in the ordinary initial racks', offered, n === 10 ? 'none (fists only; the crash-site machete is a pickup)' : `subset of ${JSON.stringify(n === 1 ? [] : maximum)}`, n === 10 ? offered.length === 0 : offered.every(id => (n === 1 ? [] : maximum).includes(id)));
   add('G-19', 'corgi health and real infected attack targets', observation.corgi, 'health fraction=1; zero target windups and damaging hits', observation.corgi.samples ? observation.corgi.minimumHealthFraction === 1 && observation.corgi.targeted === 0 && observation.corgi.hit === 0 : undefined);
   const runOut = observation.runOut;
   add('G-20', 'engaged run-out duration and invulnerability', runOut, '300 ticks ±1; invulnerability through deadline', runOut ? Math.abs(runOut.until - runOut.tick - 300) <= 1 && runOut.minimumInvulnerableUntil >= runOut.until : undefined);
@@ -501,7 +503,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L10-03', 'route duration near fifteen-minute target', competent && receipt.run?.completed ? receipt.run.time : null, 600, 1200);
       number('L10-04', 'ordinary route concurrent bound', story?.outsideAssaultPeak, 0, 15);
       add('L10-04', 'infected move before first widest-frame entry', story, 'nonempty observed census; zero first-entry idle actors', story?.seen ? story.idleEntries.length === 0 : undefined);
-      add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'every returned weapon plus flamethrower present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
+      add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'exactly the ten issued hangar weapons present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
       number('L10-07', 'continuous Mega maximum step', observation.maxMegaStep, 0, 1);
       const hold = phase('step/hold');
       if (hold && !competent) {
@@ -692,7 +694,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['ordinary route concurrent bound', 'infected move before first widest-frame entry'].map(clause => ({ clause, policy: 'complete' })),
     { clause: 'observed quiet stretches and authored scare cadence', policy: 'complete' },
   ]],
-  ['L10-05', ['six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
+  ['L10-05', ['crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', 'inventory alone does not release enemies at the crash start', 'inventory alone does not change admissions at pickup locations', 'six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L10-06', [
     ...['native dog speed ratio', 'actual dog hit damage/reach', 'actual dog telegraph duration', 'dog cooldown between hit and next windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...[.5, 1.5].map(zoom => ({ clause: `reviewed living infected dog distinct from corgi at zoom${zoom}`, policy: 'real-input-webgl2' })),

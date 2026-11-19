@@ -19,7 +19,7 @@ export function installCampaignNpcs(world: SimWorld, carriedCompanion?: EntitySn
     installNpcSystems(world); if (/^L[1-6]$/.test(districts.composition.id)) world.npcs!.civilians.level = Number(districts.composition.id[1]);
     world.npcs!.companion.spawn(); return;
   }
-  if (districts.composition.id === 'L10') { installNpcSystems(world); world.combat!.setLoadout(['weapon.fire-axe'], ['weapon.fire-axe']); world.npcs!.companion.forceSafe = true; world.npcs!.companion.spawn(); return; }
+  if (districts.composition.id === 'L10') { installNpcSystems(world); world.combat!.setLoadout(['weapon.fists'], ['weapon.fists']); world.npcs!.companion.forceSafe = true; world.npcs!.companion.spawn(); return; }
   if (districts.composition.id === 'L8' || districts.composition.id === 'L9') {
     installNpcSystems(world); world.npcs!.companion.forceSafe = true;
     // L9 restores its APC occupants first, then supplies a corgi for standalone starts.

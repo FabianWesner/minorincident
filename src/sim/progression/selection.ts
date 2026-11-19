@@ -18,7 +18,7 @@ export function restoreSelectedAction(loadout: Loadout, save: CampaignSave): str
   const previous = save.selectedAction;
   const entries = (['LEFT', 'RIGHT'] as const).flatMap(side => loadout.state[side].rack.map((slot, index) => ({ side, index, id: slot.id })));
   const usable = (entry: { side: Side; index: number }) => loadout.hasAmmo(loadout.state[entry.side].rack[entry.index]);
-  let entry: { side: Side; index: number; id: string } | undefined = previous ? entries.find(e => e.id === previous && usable(e)) : undefined;
+  let entry: { side: Side; index: number; id: string } | undefined = previous && previous !== 'ability.corgi-lure' ? entries.find(e => e.id === previous && usable(e)) : undefined;
   if (!entry) {
     const priority = (id: string): number => {
       const def = action(id);

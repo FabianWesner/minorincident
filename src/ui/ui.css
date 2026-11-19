@@ -27,6 +27,9 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .settings-fields label{display:grid;gap:6px;align-content:start}
 .settings-fields label:has(input[type=checkbox]){min-height:56px;grid-template-columns:1fr 56px;align-items:center;cursor:pointer}
 .settings-fields input[type=checkbox]{width:28px;height:28px;accent-color:#f8bf70;justify-self:center}
+/* s178: the difficulty pickers on the character and settings screens share the settings row look. */
+.menu-character label[data-testid=label-character-difficulty]{display:grid;gap:6px;align-content:start;margin-top:10px}
+.menu-character [data-testid=character-difficulty-note]{margin:2px 0 0;color:#d8cbb5;font-size:calc(14px * var(--text-scale));line-height:1.35}
 .settings-controls{display:grid;gap:10px}
 .full-ui[data-ui-screen] [data-testid=pause-button]{position:fixed;z-index:25;top:max(16px,env(safe-area-inset-top));left:50%;transform:translateX(-50%)}
 .full-ui .mission-panel{z-index:30;max-height:calc(100dvh - 32px);overflow:auto;font-size:calc(18px * var(--text-scale));border-color:#bc9c70}

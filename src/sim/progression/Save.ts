@@ -89,11 +89,12 @@ export function migrate(raw:unknown):unknown {
     raw = { ...raw, l9Crash: copy };
   }
   // S6 saves written after the crawl had no L10 transaction yet. Commit the same reset on load.
+  // PO 2026-11-19: the reset is unarmed (fists); the axe joins the lost arsenal history.
   if (record(raw) && raw.completedLevels === 9 && raw.unlockedLevel === 9 && validCrash(raw.l9Crash) && strings(raw.ownedActions)) {
     const crash = raw.l9Crash as NonNullable<CampaignSave['l9Crash']>;
     if (crash.state.finished) {
       const transport = validTransport(raw.transport) ? raw.transport as NonNullable<CampaignSave['transport']> : null;
-      const out = { ...raw, unlockedLevel: 10, ownedActions: ['weapon.fire-axe', ...raw.ownedActions.filter(id => catalog[id]?.category === 'ability')], racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] }, selectedAction: 'weapon.fire-axe', crossingHandover: { applied: true, checkpoint: 'cure-crash', anchor: { ...crash.player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons: raw.ownedActions.filter(id => catalog[id]?.category !== 'ability' && id !== 'weapon.fire-axe'), shelteredPassengers: transport?.occupants.filter(e => e.id !== 1 && !e.companion) ?? [] } } as Record<string, unknown>;
+      const out = { ...raw, unlockedLevel: 10, ownedActions: ['weapon.fists', ...raw.ownedActions.filter(id => catalog[id]?.category === 'ability')], racks: { LEFT: ['weapon.fists'], RIGHT: ['weapon.fists'] }, selectedAction: 'weapon.fists', crossingHandover: { applied: true, checkpoint: 'cure-crash', anchor: { ...crash.player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons: raw.ownedActions.filter(id => catalog[id]?.category !== 'ability'), shelteredPassengers: transport?.occupants.filter(e => e.id !== 1 && !e.companion) ?? [] } } as Record<string, unknown>;
       delete out.l9Crash; delete out.transport; delete out.pending; raw = out;
     }
   }
@@ -101,6 +102,7 @@ export function migrate(raw:unknown):unknown {
 }
 export function validateSave(raw:unknown):raw is CampaignSave {
   if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>lastLevel||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>lastLevel||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(Number(raw.completedLevels)>=6&&Number(raw.unlockedLevel)>=Number(raw.completedLevels))))return false;
+  if(raw.difficulty!==undefined&&!['simple','hard'].includes(String(raw.difficulty)))return false;
   if(!strings(raw.ownedActions)||(raw.crossingHandover === undefined && (!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')))||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
   const save=raw as unknown as CampaignSave;
   // A scripted loss may leave a known historical selection; loadout restoration resolves and logs its fallback.
@@ -113,7 +115,10 @@ export function validateSave(raw:unknown):raw is CampaignSave {
       const e = h.researchCompanion;
       if (!record(e) || !Number.isSafeInteger(e.id) || Number(e.id) <= 1 || e.infected || e.infection || !record(e.civilian) || !record(e.civilian.survivor) || !['sam', 'reyes'].includes(String(e.civilian.survivor.key)) || !record(e.health) || !Number.isFinite(e.health.current) || !Number.isFinite(e.health.max) || Number(e.health.current) <= 0 || Number(e.health.current) > Number(e.health.max) || !record(e.transform) || !['x', 'y', 'z', 'yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) return false;
     }
-    if (!record(h) || h.applied !== true || h.checkpoint !== 'cure-crash' || !record(h.anchor) || !['x','y','z','yaw'].every(k => Number.isFinite((h.anchor as Record<string, unknown>)[k])) || !Number.isFinite(h.preCrashDurability) || Number(h.preCrashDurability) < 0 || !strings(h.lostWeapons) || h.lostWeapons.some(id => !Object.hasOwn(catalog,id) || catalog[id].category === 'ability' || id === 'weapon.fire-axe') || !Array.isArray(h.shelteredPassengers) || !h.shelteredPassengers.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && ['civilian','escort'].includes(String(e.kind)) && record(e.health) && Number(e.health.current) > 0 && Number(e.health.current) <= Number(e.health.max) && record(e.transform) && ['x','y','z','yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) || new Set(h.shelteredPassengers.map(e => e.id)).size !== h.shelteredPassengers.length || save.completedLevels < 9 || save.unlockedLevel !== 10 || save.l9Crash || save.transport || save.pending || !save.ownedActions.includes('weapon.fire-axe')) return false;
+    // PO 2026-11-19: new handovers commit unarmed (fists owned; the axe is in lostWeapons).
+    // Saves committed before that date keep their axe shape and must stay loadable, so
+    // either start weapon is valid and the axe is no longer excluded from the lost history.
+    if (!record(h) || h.applied !== true || h.checkpoint !== 'cure-crash' || !record(h.anchor) || !['x','y','z','yaw'].every(k => Number.isFinite((h.anchor as Record<string, unknown>)[k])) || !Number.isFinite(h.preCrashDurability) || Number(h.preCrashDurability) < 0 || !strings(h.lostWeapons) || h.lostWeapons.some(id => !Object.hasOwn(catalog,id) || catalog[id].category === 'ability') || !Array.isArray(h.shelteredPassengers) || !h.shelteredPassengers.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && ['civilian','escort'].includes(String(e.kind)) && record(e.health) && Number(e.health.current) > 0 && Number(e.health.current) <= Number(e.health.max) && record(e.transform) && ['x','y','z','yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) || new Set(h.shelteredPassengers.map(e => e.id)).size !== h.shelteredPassengers.length || save.completedLevels < 9 || save.unlockedLevel !== 10 || save.l9Crash || save.transport || save.pending || !(save.ownedActions.includes('weapon.fists') || save.ownedActions.includes('weapon.fire-axe'))) return false;
   }
 
   if(!validRacks(save,save.racks,save.unlockedLevel,true)||save.upgrades.length!==Math.min(5,save.completedLevels)*2)return false;

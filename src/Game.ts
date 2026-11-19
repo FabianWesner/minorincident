@@ -20,6 +20,7 @@ import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
 import { heldAction } from './sim/progression/selection';
 import { applyCampaign, campaignLoadout } from './sim/progression/apply';
+import { resetCampaignStoryForReplay } from './sim/progression/Campaign';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel, recordL8Transport } from './sim/progression/carryover';
 import type { SurvivorVariant } from './data/survivor';
@@ -386,7 +387,7 @@ export class Game {
     this.view.settings(settings);this.audio.set(save.settings);
     // Settings can save the previous live world: clear its resume only after those updates.
     // An explicit level is a whole-level restart; the menu's Resume action omits it.
-    if (level !== undefined) { delete this.campaign.cureResume; delete this.campaign.l9Crash; }
+    if (level !== undefined) resetCampaignStoryForReplay(this.campaign);
     await this.loadLevel(`L${level??save.unlockedLevel}`);
     this.view.settings(settings);
   }
@@ -403,7 +404,9 @@ export class Game {
         for (const id of [...this.campaign.racks.LEFT, ...this.campaign.racks.RIGHT]) if (!this.campaign.ownedActions.includes(id)) this.campaign.ownedActions.push(id);
       }
       if (liveCampaign && (this.world.entities.get(1)?.health.current ?? 0) > 0 && this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
-      if (liveCampaign && this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
+      // PO 2026-11-19 ("It still shows "resume", although I finished the game"): a finished L10 keeps no resume point.
+      if (liveCampaign && this.world.scenario === 'L10' && (phase === 'result' || phase === 'progression' || !!this.world.missions?.state.result)) delete this.campaign.cureResume;
+      else if (liveCampaign && this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
         const live = this.world.progression?.campaign;
         if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
         this.campaign.cureResume = { ...this.world.missions.saveResume(atCheckpoint), cameraZoom: this.view.view.getState().targetZoom };

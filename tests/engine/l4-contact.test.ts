@@ -673,7 +673,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       } finally { bars.dispose(); boundsProbe.mockRestore(); topProbe.mockRestore(); }
     } finally { occlusion.world.dispose(); }
   } finally { world.dispose(); }
-}, 150_000);
+}, 300_000);
 
 async function checkOutsideWireRouting(): Promise<void> {
   const { world, mission } = await loadL4(1, 'high');

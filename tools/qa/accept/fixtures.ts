@@ -99,7 +99,7 @@ export async function runFixtures(level: RunnerLevel, tier: Tier, sourceHash: st
         'first ambush visible in actual camera within0.5s after doorsOpen', allOffscreen ? false : undefined);
     }
   });
-  if (level === 'L5' || level === 'L6' || level === 'L7' || level === 'L9') await fixture('campaign edge cases', async () => { result.observations ??= {}; await edgeFixtures(level, tier, add, result.observations); });
+  if (level === 'L5' || level === 'L6' || level === 'L7' || level === 'L9' || level === 'L10') await fixture('campaign edge cases', async () => { result.observations ??= {}; await edgeFixtures(level, tier, add, result.observations); });
   if (level === 'L4') await fixture('L4 camera and bar timers', () => l4TimingFixtures(tier, add));
 
   if (level === 'L3') await fixture('L3 exact fallback boundaries', async () => {

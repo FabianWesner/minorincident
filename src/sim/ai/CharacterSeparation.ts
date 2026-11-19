@@ -136,6 +136,13 @@ export function installCharacterSeparation(world: SimWorld): void {
       // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
       let shift = overlap * scale;
+      if (e.infected?.pursuit) {
+        // Several nearby bodies can otherwise push the Mega more than a
+        // metre in one frame, visibly snapping it off the finale stairs.
+        const used = courierShifts.get(e.id) ?? 0;
+        shift = Math.min(shift, Math.max(0, .35 - used));
+        courierShifts.set(e.id, used + shift);
+      }
       if (neighbor.courier && courierFollower(e)) {
         // Soft contact may leave the courier inside a confined column for a
         // few ticks. Ease its members aside instead of snapping a full overlap.

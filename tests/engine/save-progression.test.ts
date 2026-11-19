@@ -10,10 +10,10 @@ import { l3WeaponPickup } from '../../src/data/l3';
 import { l4 } from '../../src/data/l4';
 import { l5DroppedWeapons, l5WeaponPickup } from '../../src/data/l5';
 import { l7Rocket } from '../../src/data/l7';
-import { enforceCureArsenal } from '../../src/sim/progression/arsenal';
+import { enforceCureArsenal, transactArsenal } from '../../src/sim/progression/arsenal';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
-import { beginRewards, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
+import { beginRewards, debugCampaign, finishRewards, gearTier, newCampaign, pickUpgrades, preset, resetCampaignStoryForReplay, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
 import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progression/apply';
 import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progression/carryover';
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
@@ -30,13 +30,30 @@ const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgu
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
 test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', async () => {
+  const hangarSave = preset('L10-default');
+  hangarSave.ownedActions.push('weapon.bat', 'weapon.army-mg', 'weapon.flashbang', 'weapon.grenade');
+  hangarSave.racks.LEFT.push('weapon.bat'); hangarSave.racks.RIGHT.push('weapon.grenade', 'weapon.army-mg', 'weapon.flashbang');
+  const combat = { rackCapacity: 32, runner: { loadout: new Loadout(['weapon.fire-axe'], ['weapon.fire-axe']) }, setLoadout(left: string[], right: string[]) { this.runner.loadout = new Loadout(left, right, undefined, 32); } };
+  const hangarWorld = { scenario: 'L10', progression: { campaign: hangarSave }, combat, events: { emit() {} }, tick: 0 };
+  transactArsenal(hangarWorld as never, cureHangarWeapons, ['weapon.bat', 'weapon.army-mg', 'weapon.flashbang']);
+  expect(combat.runner.loadout.activeEntries().map(entry => entry.id).sort()).toEqual([...cureHangarWeapons].sort());
+  expect(hangarSave.ownedActions).toContain('ability.corgi-lure');
+
   // The public pause overlay accepts both query spellings used in production reports.
   expect(['1', 'true'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([true, true]);
   expect(['', '0', 'false'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([false, false, false]);
   expect(debugFlagEnabled(new URLSearchParams())).toBe(false);
+  const finished = preset('L10-default'); finished.completedLevels = 10;
+  finished.world = { infectionCleared: { level: 10, releasedAt: 123, epilogueSeen: true } };
+  finished.cureResume = { current: {} } as CampaignSave['cureResume']; finished.l9Crash = {} as NonNullable<CampaignSave['l9Crash']>;
+  resetCampaignStoryForReplay(finished);
+  expect(finished.world?.infectionCleared).toBeUndefined(); expect(finished.cureResume).toBeUndefined();
+  expect(finished.l9Crash).toBeUndefined(); expect(finished.completedLevels).toBe(10);
   const bat = 'weapon.bat', axe = 'weapon.fire-axe', handgun = 'weapon.handgun', mg = 'weapon.army-mg', shotgun = 'weapon.shotgun', rifle = 'weapon.assault-rifle', rocket = 'weapon.rocket-launcher';
   // Expected story boundaries are independent of the production pickup declarations below.
-  const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle], [axe]];
+  // PO 2026-11-19: the L9 crossing loses the axe too — the level-10 start owns nothing
+  // (fists/kick are unarmed, filtered here); the crash-site machete is a retained pickup.
+  const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle], []];
   const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[...new Set([l5WeaponPickup, ...l5DroppedWeapons.map(p => p.actionId)])], 7:[l7Rocket.action] };
   const weapons = (racks: CampaignSave['racks']) => [...new Set([...racks.LEFT,...racks.RIGHT].filter(id => !['weapon.fists','weapon.kick'].includes(id) && catalog[id].category !== 'ability'))].sort();
   const fresh = newCampaign();
@@ -131,6 +148,10 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
 });
 
 test('selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun', () => {
+  const oldLure = preset('L3-default'); oldLure.selectedAction = 'ability.corgi-lure';
+  const oldLoadout = new Loadout(['weapon.fire-axe'], ['ability.corgi-lure', 'weapon.handgun']);
+  oldLure.ownedActions.push('weapon.handgun');
+  expect(restoreSelectedAction(oldLoadout, oldLure)).toBe('weapon.handgun');
   const lost = preset('L8-default'); lost.selectedAction = 'weapon.shotgun';
   lost.ownedActions = lost.ownedActions.filter(id => id !== 'weapon.shotgun'); lost.racks.RIGHT = lost.racks.RIGHT.filter(id => id !== 'weapon.shotgun');
   const r = resume(lost, 9); restoreSelectedAction(r, lost);
@@ -154,13 +175,13 @@ test('selection fallback: lost or empty weapons fall back to the best usable own
   expect(restoreSelectedAction(bottomless, mg)).toBe('weapon.army-mg');
 });
 
-test('bare hands are innate: key 1 selects fists without them entering the carried racks; the L8 sanctuary gate takes the launcher', async () => {
+test('bare hands are innate and hidden while carrying melee; the L8 sanctuary gate takes the launcher', async () => {
   const save = preset('L8-default');
   expect([...save.racks.LEFT, ...save.racks.RIGHT]).not.toContain('weapon.fists');
   const live = campaignLoadout(save, 8), input = new Loadout(live.LEFT, live.RIGHT, undefined, live.size);
   expect(live.LEFT).toEqual(save.racks.LEFT);
   input.input({ ...emptyInput(), selectedWeaponKey: 1 }, 1);
-  expect(input.current(input.state.selectedSide).id).toBe('weapon.fists');
+  expect(input.current(input.state.selectedSide).id).toBe('weapon.bat');
   save.selectedAction = 'weapon.fists';
   expect(restoreSelectedAction(resume(save, 8), save)).toBe('weapon.rocket-launcher');
   // PO 2026-11-10: the launcher arrives at L8 but the gate soldier collects it; L9 never offers it, even to an older save still carrying it.
@@ -226,6 +247,22 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   expect(store.write(large)).toBe(true);
   expect(store.load()).toEqual({ status: 'ok', save: large });
   expect(decodeSave(encoded.slice(0, -20)).status).toBe('error');
+
+  // s178 (PO 2026-11-19): the difficulty persists with the campaign save; absent (older saves) means simple,
+  // unknown values are rejected, a debug level-list start keeps it (level-select rule) and applyCampaign
+  // copies it onto the live world at every level boundary.
+  const fresh = newCampaign('female', 1);
+  expect(validateSave(fresh), 'a save without the field (pre-s178) stays valid').toBe(true);
+  const decodedFresh = decodeSave(JSON.stringify(fresh));
+  expect(decodedFresh.status).toBe('ok');
+  if (decodedFresh.status === 'ok') expect(decodedFresh.save.difficulty).toBeUndefined();
+  const hard: CampaignSave = { ...fresh, difficulty: 'hard' };
+  expect(validateSave(hard)).toBe(true);
+  expect(decodeSave(encodeSave(hard))).toEqual({ status: 'ok', save: hard });
+  expect(validateSave({ ...fresh, difficulty: 'nightmare' as never })).toBe(false);
+  expect(decodeSave(encodeSave({ ...fresh, difficulty: 'nightmare' as never })).status).toBe('error');
+  expect(debugCampaign(3, hard).difficulty, 'a debug level-list start keeps the difficulty').toBe('hard');
+  expect(debugCampaign(3, fresh).difficulty).toBeUndefined();
 
   const cure = preset('L10-default'), definition = levelTenMission(() => ({ x: 0, z: 0, radius: 2 }));
   const checkpoint = {
@@ -328,7 +365,7 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
   expect(early.save.transport).toBeDefined();
 
   const { save, world, player, projectiles, setLoadout, removed } = make(true);
-  const before = [...new Set([...save.ownedActions, 'weapon.bat', 'weapon.shotgun'])].filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
+  const before = [...new Set([...save.ownedActions, 'weapon.bat', 'weapon.shotgun'])].filter(id => catalog[id].category !== 'ability');
   commitCrossingHandover(save, world as never);
   expect(player.survivor.scriptedClip, 'L10 handover releases the completed L9 crawl pose').toBeUndefined();
   expect(player.survivor.knockdown).toBeUndefined(); expect(player.survivor.attack).toBeUndefined();
@@ -340,13 +377,13 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
   expect(handover.preCrashDurability).toBe(55);
   expect(handover.shelteredPassengers.map(e => e.id), 'living non-companion passengers shelter').toEqual([8]);
   expect(handover.corgi?.id, 'the corgi comes along').toBe(7);
-  expect(save.racks).toEqual({ LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] });
-  expect(save.selectedAction).toBe('weapon.fire-axe');
-  expect(save.ownedActions.filter(id => catalog[id].category !== 'ability')).toEqual(['weapon.fire-axe']);
+  expect(save.racks).toEqual({ LEFT: ['weapon.fists'], RIGHT: ['weapon.fists'] });
+  expect(save.selectedAction).toBe('weapon.fists');
+  expect(save.ownedActions.filter(id => catalog[id].category !== 'ability')).toEqual(['weapon.fists']);
   expect([save.completedLevels, save.unlockedLevel]).toEqual([9, 10]);
   expect([save.transport, save.pending, save.l9Crash], 'transport and L9 state are removed').toEqual([undefined, undefined, undefined]);
   expect([projectiles.length, removed, world.progression.pickups], 'projectiles and weapon pickups are cleared (other pickups stay)').toEqual([0, [20], []]);
-  expect(setLoadout).toHaveBeenCalledWith(['weapon.fire-axe'], ['weapon.fire-axe']);
+  expect(setLoadout).toHaveBeenCalledWith(['weapon.fists'], ['weapon.fists']);
   expect(player.health.current, 'healed').toBe(100);
 
   const snapshot = structuredClone(save), healthAfter = player.health.current;

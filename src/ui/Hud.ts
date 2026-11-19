@@ -13,7 +13,6 @@ import { l8BossArenas, l8Route, inRect } from '../data/l8Bosses';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
 import type { Game } from '../Game';
-import { weaponKey } from '../data/weaponKeys';
 import { action } from '../data/actions/catalog';
 import { actionIconUrl } from '../assets/icons';
 import { button, node, text as domText, setHidden, attribute, style } from './dom';
@@ -62,6 +61,7 @@ export class Hud {
   private readonly weapon = this.weaponIcon();
   private weaponActionId = '';
   private readonly weaponRack = node('div', 'weapon-rack');
+  private readonly corgiLure = button('corgi-lure', 'Corgi lure · G', () => this.game.input.corgiLureOnce());
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
@@ -123,6 +123,7 @@ export class Hud {
     const bars = node('div', 'vital-bars'); bars.className = 'hud-bars'; bars.append(this.health.root);
     this.corgiBadge.className = 'hud-corgi-badge';
     this.weaponRack.className = 'hud-weapon-rack hud-panel'; this.weaponRack.setAttribute('aria-label', 'Carried weapons and number keys');
+    this.corgiLure.tabIndex = -1; this.corgiLure.addEventListener('mousedown', event => event.preventDefault());
     vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
@@ -432,22 +433,28 @@ export class Hud {
       this.game.input.touch.setWeapon(touchSide, actionIconUrl(def.iconId), `${name}, ${stats}`, progress, selected, slot.magazine, slot.charges);
     }
     const entries = player.weapons ? world.combat?.runner.loadout.activeEntries() ?? [] : [];
-    const signature = entries.map(entry => entry.id).join(',');
+    const hasLure = !!world.progression?.campaign?.ownedActions.includes('ability.corgi-lure') || !!player.weapons && sides.some(side => player.weapons![side].rack.some(slot => slot.id === 'ability.corgi-lure'));
+    const signature = entries.map(entry => entry.id).join(',') + (hasLure ? ',corgi-lure' : '');
     if (signature !== this.weaponRackSignature) {
       this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
-      for (const entry of entries) {
-        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
+      for (const [index, entry] of entries.entries()) {
+        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = index + 1;
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
-        const shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q';
+        const shortcut = key <= 9 ? String(key) : key === 10 ? '0' : '';
         item.title = `${label(entry.id)}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
-        item.type = 'button'; item.tabIndex = -1; item.disabled = key === undefined;
+        item.type = 'button'; item.tabIndex = -1; 
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
-        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (key !== undefined) this.game.input.selectWeaponKey(key); });
+        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); this.game.input.selectWeaponKey(key); });
         item.append(icon);
-        if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, shortcut); badge.className = 'hud-weapon-key'; item.append(badge); }
+        if (key <= 10) { const badge = node('span', `weapon-key-${key}`, shortcut); badge.className = 'hud-weapon-key'; item.append(badge); }
         this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
+      }
+      if (hasLure) {
+        this.corgiLure.className = 'hud-weapon-choice'; this.corgiLure.title = 'Corgi lure · G'; this.corgiLure.setAttribute('aria-label', this.corgiLure.title);
+        const icon = document.createElement('img'); icon.src = actionIconUrl('icon.corgi-lure'); icon.alt = '';
+        const badge = node('span', 'corgi-lure-key', 'G'); badge.className = 'hud-weapon-key'; this.corgiLure.replaceChildren(icon, badge); this.weaponRack.append(this.corgiLure);
       }
     }
     const selectedId = shown?.id === 'weapon.kick' ? 'weapon.fists' : shown?.id;
@@ -456,11 +463,12 @@ export class Hud {
       const entry = entries.find(entry => entry.id === id)!;
       const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
       attribute(item, 'data-empty', String(empty));
-      const key = weaponKey(id), shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q (cycle)';
+      const key = entries.findIndex(entry => entry.id === id) + 1, shortcut = key <= 9 ? String(key) : key === 10 ? '0' : '';
       item.title = `${label(id)}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
       item.setAttribute('aria-label', item.title);
     }
-    setHidden(this.weaponRack, !entries.length);
+    this.corgiLure.disabled = (player.weapons?.corgiReady ?? 0) > world.tick;
+    setHidden(this.weaponRack, !entries.length && !hasLure);
     attribute(this.weaponRack, 'data-touch', String(this.game.input.scheme === 'touch'));
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
     if (gun?.mounted) shown = { id: 'weapon.rotary-minigun', name: 'Minigun', stats: gun.locked ? 'Overheated' : `Heat ${Math.round(gun.heat * 100)}%`, progress: 1, ammo: 0, charges: 0, state: gun.locked ? 'cooldown' : 'ready' };
@@ -476,7 +484,7 @@ export class Hud {
         : null;
       text(this.weapon.hint, emptyCue ?? shown.name); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
-      attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot, RMB or Q to switch'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
+      attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot or Q / Shift+Q to cycle'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));
       style(w, '--progress', String(shown.progress));
     }
