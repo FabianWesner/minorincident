@@ -109,7 +109,7 @@ trade-off is explicit rather than hidden.
 
 Main reverted the first landing (19714978) because on the post-s170 tree `npm run qa:threat` grew 6 passive
 flags — `early-close/step/exit` and `early-close/phase/exit` `SLOW_FOLLOWER:28/:38/:42` — while each change
-alone measured 0 flags. This lane re-lands commit 0c893122 unchanged (cherry-pick) plus the one-line
+alone measured 0 flags. This lane re-lands commit 0c893122 unchanged (cherry-pick) plus the one-file
 column fix below; `tools/qa/**`, zombie stats, corpses and s170's L6 escort response are untouched.
 
 ### Cause
@@ -146,7 +146,7 @@ anchors (`stairSpots`, `guide`) are untouched — L6-10's fixed-anchor clauses a
 | `qa:threat` passive flags (L6 early-close exit) | 6 × SLOW_FOLLOWER (28/38/42, both step/ and phase/exit) | **0** |
 | follower 28 / 38 / 42 exit median (ratio vs group) | 2.089 / 2.099 / 2.119 (0.934 / 0.939 / 0.947) | 2.264 / 2.227 / 2.275 (**1.003 / 0.987 / 1.008**) |
 | skilled route worst step/exit pace ratio | — | 0.966 (retreat 0.996; G-13/L6-08 pace clauses PASS) |
-| `qa:threat` full gate | 6 fail flags | **279.8 s, 0 fail flags** |
+| `qa:threat` full gate | 6 fail flags | **0 fail flags** (re-verified at the current main head after the s172-geom merge) |
 
 L6-07 stays PASS on both tiers with the recycling untouched (fresh remote `qa:accept -- --level L6
 --skip-browser`): route complete, windups 20.57/min (≥ 4), retreat damage 40 HP (≥ 30), **concurrent cap
@@ -165,6 +165,6 @@ run cannot check, as before.
 |---|---|
 | `npm run typecheck` | pass |
 | `npm run lint` | pass |
-| remote `npm test` | 27 files, 105 passed, 1 skipped; 173.8 s ≤ 240 budget |
+| remote `npm test` | 27 files, 105 passed, 1 skipped; 207.2 s ≤ 240 budget (first attempt hit the runner's slot-contention timeout, rerun unchanged) |
 | remote `npm run qa:accept -- --level L6 --skip-browser` | L6-07 **PASS** low/high (cap 28, damage 40, windups 20.57/min); L6-03/05/10 PASS; G-13/L6-08 pace clauses PASS; 0 fresh failing rows |
-| `npm run qa:threat` | 279.8 s, **0 fail flags**; L6: skilled complete, passive complete, 0 passive flags |
+| `npm run qa:threat` full gate (at this head, after the s172-geom main merge) | 339.8 s, **0 fail flags**; L6: skilled complete, passive complete, 0 passive flags |
