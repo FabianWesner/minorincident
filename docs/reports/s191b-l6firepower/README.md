@@ -4,6 +4,10 @@
 
 **Superseded balance figures below:** inspection found the follower update skipped ally combat during retreat. Those earlier runs did not exercise the added guns. The current worktree assigns real guns at shelter setup and routes armed followers through the existing ally combat update while their column movement continues. The HIGH seed 1 probe saves 29/29 but records only 2.85 player attacks/min, 3.79 follower attacks/min and zero player HP lost during retreat; L6-05 also fails. The player attack and L6-07 damage targets remain unmet. Typecheck and lint pass. Full acceptance, threat, unit and capture gates remain open.
 
+The same HIGH seed 1 acceptance probe was rerun against the unchanged pre-fix mission and outbreak code: player attack starts were 9.57/min, follower attack starts 11.00/min, retreat damage 40 HP, and nine of 29 survivors were lost. Thus the 11/min player-only floor is also below target in this matched baseline; the armed candidate reduces it further to 2.85/min. The baseline probe completed the route and passed the existing evaluator's combined-rate clause, which does not establish the separate player-only floor.
+
+Matched `l6-pressure.ts` HIGH complete runs on seeds 1–3 now show survivor losses **9/8/8 → 0/1/0** (25 → 1 total); player deaths were zero throughout. The party-targeted post-first-closure attack rates were **23.61/15.47/20.45 → 11.84/15.73/12.74 per minute**. These combine player and follower targets and cannot establish the separate player-only floor. Authored counts, caps and cadence are unchanged, but actual wave-3 admissions differed for seed 3 (52 before, 44 after) as the runs evolved; seeds 1 and 2 admitted 40 in each version. Opening wave admissions were 8 and 10 and hatch wave admissions 12 in all six runs.
+
 With real guns active from the shelter, reducing civilian accuracy and cadence to 20% near hit chance and one shot per three seconds yielded 2.32 player attacks/min, 6.03 follower attacks/min, 35 HP lost and four survivors lost; L6-05 still had no player windups. Sending the pressure arrivals toward the player yielded 2.33/min and 25 HP lost. Both experiments were reverted.
 
 With real guns active, assigning them to the latter half of the roster yielded 1.44 player attacks/min, 1.92 follower attacks/min, 25 HP damage and three losses. Alternating roster positions yielded 2.23 player attacks/min, 10.24 follower attacks/min, zero HP damage and three losses. Both had zero player windups in the opening. The prior allocation was restored.
@@ -11,6 +15,10 @@ With real guns active, assigning them to the latter half of the roster yielded 1
 A read-only `ally.attack` event ledger on the current HIGH seed 1 complete run confirms actual firing: during the first breach, 49 pistol shots (18 hits) and four shotgun shots (three hits); during retreat, 154 pistol shots (59 hits) and 23 shotgun shots (nine hits). This establishes that the current candidate changes combat throughout the level, including the opening. The run saved 29/29; it does not resolve the missing player-pressure target.
 
 Further HIGH seed 1 probes with real guns active: reducing both added weapon ranges to 5 m resulted in zero player attacks/min, zero retreat damage and a follower pace failure; reducing pistol accuracy to 5% and shotgun accuracy to 20% near range resulted in 1.39 player attacks/min and zero retreat damage. Both candidates were reverted.
+
+The existing L6 perception already biases the player by six metres when selecting visible targets. Changing the new civilian allies from held posts to free posts produced identical HIGH seed 1 results (2.85 player attacks/min, zero retreat damage, zero survivor losses); that experiment was reverted. The post flag is therefore not the cause of the measured pressure change.
+
+The allocation now counts firearms carried from L5 and preserves their ally state instead of replacing it. The actual L5 completion handover probe passed at both qualities: the carried rifle remained with its owner, with 14 of 28 survivors armed on LOW and 15 of 29 on HIGH, including one shotgun at each quality. Shelter identity, health and routine checks passed; seated and resting guns remain stored in the renderer. Typecheck and lint passed after this change. The player-pressure and full acceptance gates remain unresolved.
 
 The HIGH native complete run reduced survivor losses from 9/29 to 6/29 (33.3%) while keeping the authored L6 infected counts and entry cadence unchanged. Party-targeted infected attack starts remained above the 11/min floor: 23.61/min before and 15.38/min after, measured from first gate closure through exit. This is one seed (seed 1), using the same current-source `l6-pressure.ts` probe and bot policy for both runs.
 
@@ -38,7 +46,8 @@ The current-source native evaluator reports no failing L6 clauses for HIGH/LOW �
 
 - `npm run typecheck` — PASS.
 - `npm run lint` — PASS.
-- Focused L6 threat audit — 0 L6 threat flags; audit exits nonzero for the intentional partial-level-selection flag, and its passive route reports tick-budget rather than a completed result.
+- Focused L6 threat audit on the current handover-aware source — FAIL: both early-close breach waves lack a player attack within 20 seconds, the skilled route has less than 30 HP damage and no kiting sample, and follower 16 is below the pace ratio in two retreat windows (median 2.212 m/s versus group 2.356 m/s). The separate partial-level-selection flag reflects the diagnostic scope.
+- Allowing the column's movement update during an ally's hit flinch did not change those six L6 flags; the experiment was reverted.
 - Full `npm run qa:threat` — did not finish within its 600-second batch/reservation limit; no final flag count was produced.
 - `qa:accept -- --level L6 --skip-browser` via the remote runner — runner unavailable (no healthy runner). Direct HIGH/LOW complete/stationary probes evaluated with zero failing L6 clauses. The full acceptance report writer also hits the repository's missing historical G-28 criterion before producing a report.
 - Remote unit suite — a subsequent attempt remained queued for over eight minutes and was cancelled before admission; no test result was produced.
