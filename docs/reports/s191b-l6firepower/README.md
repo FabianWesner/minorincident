@@ -16,7 +16,11 @@ With those retreat orders, directing three quarters of the pressure cohort towar
 
 A further HIGH seed 1 probe with six-second pistol cadence and four-second shotgun cadence produced 3.21 player attacks/min, 10 retreat HP damage and one survivor loss; L6-05 still had no player windups. It was reverted.
 
+A nine-candidate HIGH seed 1 sweep varied added pistol damage (8–15), cadence (1–3 seconds), and range (8 or 16 m), with 30% near hit chance and the same shotgun. The highest player retreat rate was 8.92/min, but that candidate lost seven survivors and failed the L6-05 rate. One candidate passed L6-05 at 5.00/min but recorded only 2.32 player attacks/min and 10 HP damage in retreat. None met all targets; the original candidate values were restored.
+
 With the corrected retreat orders and real guns active from shelter setup, assigning new guns to even roster positions yielded 0.45 player attacks/min and 25 HP retreat damage; assigning odd positions yielded 0.93/min and zero damage. Both retained passing observed follower pace and failed L6-05 and L6-07 damage. The original allocation was restored.
+
+Prioritizing residents farther back in the shelter for the new guns yielded 0.48 player attacks/min, zero retreat damage and one survivor loss in the HIGH seed 1 native probe. It also failed L6-05; this allocation was reverted.
 
 The same HIGH seed 1 acceptance probe was rerun against the unchanged pre-fix mission and outbreak code: player attack starts were 9.57/min, follower attack starts 11.00/min, retreat damage 40 HP, and nine of 29 survivors were lost. Thus the 11/min player-only floor is also below target in this matched baseline; the armed candidate reduces it further to 2.85/min. The baseline probe completed the route and passed the existing evaluator's combined-rate clause, which does not establish the separate player-only floor.
 
@@ -35,6 +39,8 @@ Further HIGH seed 1 probes with real guns active: reducing both added weapon ran
 The existing L6 perception already biases the player by six metres when selecting visible targets. Changing the new civilian allies from held posts to free posts produced identical HIGH seed 1 results (2.85 player attacks/min, zero retreat damage, zero survivor losses); that experiment was reverted. The post flag is therefore not the cause of the measured pressure change.
 
 The allocation now counts firearms carried from L5 and preserves their ally state instead of replacing it. The actual L5 completion handover probe passed at both qualities: the carried rifle remained with its owner, with 14 of 28 survivors armed on LOW and 15 of 29 on HIGH, including one shotgun at each quality. Shelter identity, health and routine checks passed; seated and resting guns remain stored in the renderer. Typecheck and lint passed after this change. The player-pressure and full acceptance gates remain unresolved.
+
+The L6 render selection now gives an armed survivor's gun precedence over an appearance-carried prop when no story prop is active. The carried-save render fixture completed for 28 LOW and 29 HIGH residents without browser errors. I also inspected a staged HIGH close-up with a shotgun ally assigned a cane appearance prop: the long gun is visible in both hands. The raw image is `test-results/s191b-l6firepower/prop-priority-4.png`; it is a controlled presentation check, not an ordinary-route capture.
 
 The HIGH native complete run reduced survivor losses from 9/29 to 6/29 (33.3%) while keeping the authored L6 infected counts and entry cadence unchanged. Party-targeted infected attack starts remained above the 11/min floor: 23.61/min before and 15.38/min after, measured from first gate closure through exit. This is one seed (seed 1), using the same current-source `l6-pressure.ts` probe and bot policy for both runs.
 
@@ -56,18 +62,18 @@ Spreading armed survivors over alternating roster positions was also measured. E
 
 ## Implementation and checks
 
-The 29-person roster arms 15 people: the existing officer with a pistol, one shotgun carrier, and 13 pistol carriers. Weapon visuals follow each ally's weapon type. Added allies are armed visibly in the shelter and become active shooters when the retreat starts. This timing preserves the L6-05 breach combat window while allowing the armed column to fire during the retreat.
+The standalone 29-person roster arms 15 people: the existing officer with a pistol, one shotgun carrier, and 13 pistol carriers. Campaign carryover guns count toward the allocation and retain their identity. Added allies can fire during the breach and while following the retreat; the breach remains an open balance problem.
 
-The current-source native evaluator reports no failing L6 clauses for HIGH/LOW × complete/stationary. In HIGH complete, L6-05 is 4.35 player/group windups per minute, L6-07 is 16.13 player/group windups per minute, retreat damage is 45 HP, and L6-08 follower pace passes. All L6 authored wave admission counts match before and after.
+The earlier four-policy native result with no failing L6 clauses was measured before the follower combat fix and is superseded. The later HIGH complete probe and focused L6 threat audit report the failures described above. Actual wave admissions can differ between runs even though authored wave counts, caps and cadence are unchanged.
 
 - `npm run typecheck` — PASS.
 - `npm run lint` — PASS.
-- Focused L6 threat audit on the current handover-aware source — FAIL: both early-close breach waves lack a player attack within 20 seconds, the skilled route has less than 30 HP damage and no kiting sample, and follower 16 is below the pace ratio in two retreat windows (median 2.212 m/s versus group 2.356 m/s). The separate partial-level-selection flag reflects the diagnostic scope.
+- Focused L6 threat audit after clearing the stationary retreat orders — FAIL: both early-close breach waves lack a player attack within 20 seconds, and the skilled route has less than 30 HP damage and no kiting sample. The two earlier follower pace flags cleared. The separate partial-level-selection flag reflects the diagnostic scope.
 - Allowing the column's movement update during an ally's hit flinch did not change those six L6 flags; the experiment was reverted.
-- Full `npm run qa:threat` — completed in 498.1 seconds and failed with the same six L6 flags listed above; no other levels produced flags. Raw local receipt: `test-results/qa-threat/audit.json`.
+- Full `npm run qa:threat` — before the retreat-order correction, completed in 498.1 seconds and failed with six L6 flags (the four above plus two follower pace flags); no other levels produced flags. A later full run after the correction hit its 600-second limit before completion, so a current full audit is still required. The older raw local receipt is `test-results/qa-threat/audit.json`.
 - `qa:accept -- --level L6 --skip-browser --tier high` via the remote runner — FAIL: both native routes completed, eight fixture clauses had zero errors, and all seven checkpoints passed with an identical control. L6-05 and L6-07 failed on player windups and retreat damage, with 12 rows incomplete; [summary](high-accept-summary.json). The manifest-only remote job printed missing Git HEAD messages while producing the report, so it cannot establish review freshness. This single-tier, skip-browser run does not qualify the full acceptance gate. Pulled `fix51-verify` files were restored after inspection.
 - LOW remote acceptance — queued for more than eight minutes and cancelled before admission; no LOW result was produced.
-- Remote unit suite — PASS on the current candidate: `RUNNER_SLOTS=1 MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh "$PWD" -- npm test`, 150/150 collected cases, 27 files passed, 105 tests passed and one skipped in 159.8 seconds (240-second budget). Earlier attempts under elevated runner load hit suite or individual timeouts.
+- Remote unit suite — PASS before the later L6 rendering adjustment: `RUNNER_SLOTS=1 MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh "$PWD" -- npm test`, 150/150 collected cases, 27 files passed, 105 tests passed and one skipped in 159.8 seconds (240-second budget). Earlier attempts under elevated runner load hit suite or individual timeouts.
 - HIGH zoom-1 firing capture — [reviewed](high-z1.jpg). Headless WebGL2 with Metal, HIGH, 1280×720, seed 1; a controlled scene teleported the column and courier to the tunnel and spawned eight runners. Fifteen roster members had guns and two had firing clips when the frame was captured. Muzzle flashes and the column are visible, though the crowd overlaps heavily; this staged frame does not prove an ordinary route or balance outcome. No browser errors.
 
-The implementation is not committed. Git could not create the shared worktree index lock under the current filesystem permissions.
+The gameplay implementation is uncommitted while its acceptance and threat failures remain open. The earlier index-lock permission failure was superseded by the current unrestricted environment.
