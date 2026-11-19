@@ -42,3 +42,7 @@ On integrated commit `f21f7ecc`, the direct full audit hit its 600 s watchdog un
 ## L7 moving-sample diagnosis
 
 A traced unchanged L7 retreat sample starts at tick 31, moves 39.81 m in 20 s, and records one infected windup and zero landed hits. By tick 360 the nearest visible runners are over 11 m away; the query reports no threats for 491 frames. A trial requiring a pursuer within 6 m chose the same sample and still had zero hits. A 3 m trial selected a different encounter at tick 74 (six windups, two hits, 20 s); it was rejected and reverted because selecting a different encounter does not establish that the original escape is unsafe. No gate threshold, enemy stats, or production behavior changed. The L7 issue remains open.
+
+## Remote gate and checkpoint audit
+
+The required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on integrated source: 27 files, 105 tests passed, one skipped, 185.8 s / 240 s. The prior table test's checkpoint fixture only calls `campaignLoadout`; it does not exercise actual checkpoint restoration. `Mission.restore()` reinstates the captured entity weapons, and L10 `loadResume()` also restores its saved arsenal. Therefore fixed racks on actual checkpoint restore are unproven and can differ after a pickup; L8's rocket handover and L10's separately owned pickup/hangar contracts need to be reconciled when implementing that path. L7's moving-hit flag remains open.
