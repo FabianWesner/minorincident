@@ -2,7 +2,7 @@
 // named screens, visibility classes, first focus, and separate gameplay input context.
 import homePlaceholders from '../../public/ui/home/placeholders.json';
 import type { Game } from '../Game';
-import { debugCampaign, newCampaign, type CampaignSave, type Level } from '../sim/progression/Campaign';
+import { debugCampaign, newCampaign, type CampaignSave, type Difficulty, type Level } from '../sim/progression/Campaign';
 import { campaignLoadout } from '../sim/progression/apply';
 import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
@@ -28,6 +28,10 @@ export class GameUI {
   private back: Screen = 'title';
   private levelsBack: 'title' | 'character' = 'character';
   private variant: 'male' | 'female' = 'female';
+  /** s178 campaign difficulty: the pending choice for a new campaign (character screen) and the live campaign's value. */
+  private difficulty: Difficulty = 'simple';
+  private characterDifficulty: HTMLSelectElement | null = null;
+  private settingsDifficulty: HTMLSelectElement | null = null;
   private nextLevel = 'L1';
   private started = false;
   private missionPhase = '';
@@ -91,8 +95,13 @@ export class GameUI {
       this.levelsBack = 'character';
       this.variant = variant; this.game.world.player?.select(variant, 0);
       this.game.campaign = newCampaign(variant, Number(this.game.params.get('seed') ?? 1));
+      this.game.campaign.difficulty = this.difficulty;
       this.game.campaign.settings = { ...this.game.audio.settings }; this.applySettings(); this.show('levels');
     }));
+    const characterDifficultyRow = node('label', 'label-character-difficulty', 'Difficulty');
+    this.characterDifficulty = this.difficultySelect('character-difficulty');
+    characterDifficultyRow.append(this.characterDifficulty);
+    character.append(characterDifficultyRow, node('p', 'character-difficulty-note', 'Hard: auto-healing is off and friendly fire hurts them and you. Zombies, weapons and encounters are unchanged.'));
     character.append(button('character-back', 'Back', () => this.show('title')));
     const levels = this.panel('levels', 'Choose a level', 'Replay any unlocked level.');
     const levelList = node('div', 'level-list'); levelList.className = 'level-list'; levels.append(levelList);
@@ -177,6 +186,11 @@ export class GameUI {
     this.select(form, 'aimAssist', 'Aim assist', ['Off', 'Low', 'Default', 'High']);
     this.select(form, 'gore', 'Blood', ['Off', 'Reduced', 'Full']);
     this.select(form, 'quality', 'Quality', ['auto', 'high', 'low']);
+    // s178: difficulty is shown and changeable here, so the pause menu can switch it mid-run.
+    const difficultyRow = node('label', 'label-difficulty', 'Difficulty');
+    this.settingsDifficulty = this.difficultySelect('setting-difficulty');
+    difficultyRow.append(this.settingsDifficulty);
+    form.append(difficultyRow);
     for (const [key, label] of [['cameraShake', 'Camera shake'], ['flashReduction', 'Reduce flashes'], ['colorblind', 'Colorblind telegraphs'], ['slowMotion', 'Explosion slow motion'], ['muted', 'Mute audio']] as const) {
       const row = node('label', `label-${key}`, label), input = node('input', `setting-${key}`);
       input.type = 'checkbox'; input.checked = this.settings.value[key];
@@ -219,6 +233,28 @@ export class GameUI {
     select.value = String(this.settings.value[key]);
     select.addEventListener('change', () => { this.settings.patch({ [key]: key === 'textSize' ? Number(select.value) : select.value } as Partial<UISettings>); this.applySettings(); });
     row.append(select); parent.append(row);
+  }
+  /** s178 difficulty pick (Simple = status quo; Hard = no auto-heal, friendly fire both ways), shared by the character and settings screens. */
+  private difficultySelect(id: string): HTMLSelectElement {
+    const select = node('select', id);
+    for (const value of ['simple', 'hard'] as const) {
+      const option = node('option', `${id}-${value}`, value === 'simple' ? 'Simple' : 'Hard');
+      option.value = value; select.append(option);
+    }
+    select.addEventListener('change', () => this.setDifficulty(select.value === 'hard' ? 'hard' : 'simple'));
+    return select;
+  }
+  /** Persists the choice with the campaign save (when one exists) and applies it to a live level at once. */
+  private setDifficulty(value: Difficulty): void {
+    this.difficulty = value;
+    if (this.game.campaign) { this.game.campaign.difficulty = value; this.game.saveCampaign(); }
+    this.game.world.difficulty = value;
+    this.syncDifficultyControls();
+  }
+  private syncDifficultyControls(): void {
+    const value = this.game.campaign?.difficulty ?? this.difficulty;
+    if (this.characterDifficulty) this.characterDifficulty.value = value;
+    if (this.settingsDifficulty) this.settingsDifficulty.value = value;
   }
   applySettings(persist = true): void {
     const value = this.settings.value;
@@ -289,6 +325,7 @@ export class GameUI {
         ? 'P / Esc to resume · R to restart · H hides the UI for screenshots'
         : 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · E / F interact · Q / RMB switch · P / Esc resume · R restart · H hide UI';
     }
+    if (screen === 'settings' || screen === 'character') this.syncDifficultyControls();
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;
     this.root.hidden = screen === null;
     if (screen === null && this.root.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();

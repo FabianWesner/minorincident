@@ -30,6 +30,15 @@ const health = (w: SimWorld, id: number) => w.entities.get(id)!.health.current;
 const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
+const soldierAlly = { role: 'soldier' as const, engaged: false, run: null, runSpeed: 2, post: null, hold: false, targetId: 0, nextAttack: 0, hits: 0, forceUntil: 0 };
+/** s178: a living human (Civilians' component shape), optionally an allied fighter, for friendly-fire checks. */
+function humanAt(w: SimWorld, x: number, z: number, extra: Partial<import('../../src/sim/npc/types').Civilian> = {}): number {
+  const e = w.entities.create({
+    kind: 'civilian', archetype: 'npc.adult', faction: 'civilian', transform: { x, y: .7, z, yaw: 0 }, health: { current: 100, max: 100 },
+    civilian: { state: 'calm', ambient: true, adult: true, pet: null, owner: null, variant: 'a', routine: '', waypoints: [], waypoint: 0, pauseUntil: 0, entered: 0, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: { x, z }, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0, ...extra },
+  });
+  w.spatial.set(e.id, x, z); return e.id;
+}
 
 function checkArsenalRoles(): void {
   const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
@@ -240,6 +249,18 @@ test('melee: the swing hits inside its arc/range once per target and respects ma
     expect(attacks(w).map(e => e.tick)).toEqual(mouseAttack ? [1, ready] : [1]);
     expect(w.entities.get(1)!.transform.x).toBe(start.x); expect(w.entities.get(1)!.transform.z).toBe(start.z);
   }
+
+  // s178 Hard (PO 2026-11-19 "friendly fire hurts them and me"): the courier's bat and bullets hit living
+  // humans (allied soldiers, civilians, escorts; never the corgi, pets or zoo animals). Simple never targets them.
+  for (const difficulty of ['simple', 'hard'] as const) {
+    const fireWorld = await arena(); fireWorld.difficulty = difficulty;
+    const ally = humanAt(fireWorld, 1.4, 0, { ally: soldierAlly }), civilian = humanAt(fireWorld, 2, 3);
+    equip(fireWorld, ['weapon.bat'], ['weapon.pistol']);
+    fire(fireWorld, 'RIGHT', { x: 2 / Math.hypot(2, 3), z: 3 / Math.hypot(2, 3) });
+    fire(fireWorld); step(fireWorld, 30);
+    expect(health(fireWorld, ally), `${difficulty}: the bat and an allied soldier`).toBe(difficulty === 'hard' ? 78 : 100);
+    expect(health(fireWorld, civilian), `${difficulty}: the pistol and a civilian`).toBe(difficulty === 'hard' ? 80 : 100);
+  }
 });
 
 test('guns: held fire cadence, reload timing, infinite reserve and seeded, bounded, serialized spread', async () => {
@@ -431,6 +452,32 @@ test('explosives: landing clamps to range, fuse, distance falloff, cover line of
   const f = await arena(); equip(f); const escort = f.spawnDummy('escort.dummy', { x: 0, z: 0 }, { faction: 'escort' });
   fire(f, 'RIGHT', { x: 1, z: 0 }, { x: 0, z: 0 }); step(f, 90);
   expect(health(f, escort)).toBe(0); expect(health(f, 1)).toBeCloseTo(70, 1);
+  // s178 Hard (PO 2026-11-19 "friendly fire hurts them and me"): the courier's own grenade deals its normal
+  // damage to her (Simple keeps the authored 30% asserted above), the corgi stays safe, and allied fire
+  // damages the courier and other humans. Simple keeps every pre-s178 guard (allies hold fire through
+  // humans, so such hits never occur; the pre-existing E11 30% allied/environmental blast rule stays).
+  const selfHard = await arena(); selfHard.difficulty = 'hard'; equip(selfHard);
+  const corgi = selfHard.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { x: .8, y: .3, z: 0, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
+  selfHard.spatial.set(corgi.id, .8, 0);
+  fire(selfHard, 'RIGHT', { x: 1, z: 0 }, { x: 0, z: 0 }); step(selfHard, 91);
+  expect(health(selfHard, 1), 'hard: full self-damage (the same feet-offset falloff that leaves 70 in Simple)').toBeCloseTo(0.125, 6);
+  expect(health(selfHard, corgi.id), 'campaign rule "corgi safe"').toBe(100);
+  const bullet = { attackId: 0, actionId: 'weapon.pistol', base: 20, multiplier: 1, type: 'bullet' as const, knockback: 0, stagger: 0 };
+  const blast = { attackId: 0, actionId: 'explosion.shell', base: 60, multiplier: 1, type: 'explosive' as const, knockback: 0, stagger: 0 };
+  for (const difficulty of ['simple', 'hard'] as const) {
+    const fireWorld = await arena(); fireWorld.difficulty = difficulty;
+    const soldier = humanAt(fireWorld, 0, -3, { ally: soldierAlly });
+    fireWorld.combat!.damage.apply({ ...bullet, sourceId: soldier, targetId: 1, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, 1), `${difficulty}: an allied bullet and the courier`).toBe(difficulty === 'hard' ? 80 : 100);
+    const other = humanAt(fireWorld, 2, 0);
+    fireWorld.combat!.damage.apply({ ...bullet, sourceId: soldier, targetId: other, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, other), `${difficulty}: an allied bullet and another human`).toBe(difficulty === 'hard' ? 80 : 100);
+    step(fireWorld, 40);
+    fireWorld.combat!.damage.apply({ ...blast, sourceId: soldier, targetId: 1, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, 1), `${difficulty}: an allied blast and the courier`).toBeCloseTo(difficulty === 'hard' ? 20 : 100 - 60 * 0.3, 6);
+    fireWorld.combat!.damage.apply({ ...blast, sourceId: soldier, targetId: other, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, other), `${difficulty}: an allied blast and another human`).toBe(difficulty === 'hard' ? 20 : 100);
+  }
   // An angled wreck's broad-phase corners are empty for movement and blasts alike.
   const rotated = await arena(); equip(rotated); rotated.combat!.damage.god = true;
   walls(rotated).push({ x: 0, y: 1, z: 0, halfX: 2.5, halfY: 1, halfZ: 2.5,

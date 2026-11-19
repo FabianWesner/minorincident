@@ -59,6 +59,7 @@ import { Physics } from '../../physics/Physics';
 import { SpatialHash } from '../spatial/SpatialHash';
 import { EntityStore } from './EntityStore';
 import { emptyInput, type EntityFilter, type EntitySnapshot, type GameEvent, type GameStateSnapshot, type InputFrame, type Transform } from './types';
+import type { Difficulty } from '../progression/Campaign';
 
 /** Headless composition root: survivor gameplay and the preserved E01/E02 cube fixtures. */
 /** An open building door (see SimWorld.openDoors). */
@@ -66,6 +67,9 @@ export interface OpenDoor { x: number; z: number; nx: number; nz: number; at: nu
 export class SimWorld implements Lifecycle {
   /** Explicit inspection courier option; false for every normal game and bot run. */
   inspectionGhost = false;
+  /** s178 campaign difficulty: 'simple' is byte-identical to the pre-difficulty sim; 'hard' turns auto-healing
+   * and friendly fire on (set by applyCampaign from the campaign save, 'simple' for every bare fixture load). */
+  difficulty: Difficulty = 'simple';
   readonly physics = new Physics();
   readonly solids = new SolidRegistry(this);
   // The fixed-tick record contains only type/tick. Keep every logged record,
@@ -206,7 +210,7 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => this.weather?.update(), SimPhase.input - 1);
     this.physics.load(definition);
     this.entities.create({ kind: 'player', archetype: definition.survivor ? 'player.survivor' : 'player.stub', transform: { ...this.physics.playerBody!.translation(), yaw: this.rng.next() * Math.PI * 2 }, health: { current: 100, max: 100 }, faction: 'survivor' });
-    if (definition.survivor) this.player = new Player(this.entities.get(1)!, this.physics, this.events);
+    if (definition.survivor) this.player = new Player(this.entities.get(1)!, this.physics, this.events, () => this.difficulty === 'hard');
     this.previousPlayer = { ...this.entities.get(1)!.transform };
     this.spatial.set(1, definition.player.x, definition.player.z);
     if (this.player) this.interactables = new Interactables(this);
@@ -480,6 +484,7 @@ export class SimWorld implements Lifecycle {
     this.stopTrapRescue?.(); this.stopTrapRescue = null; this.trapRescue = null;
     this.chunks?.dispose(); this.chunks = null;
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
+    this.difficulty = 'simple';
     this.vehicles?.dispose(); this.vehicles = null;
     this.carriedSurvivors = undefined; this.l7Encounters = null; this.l10Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.mountedGun = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.destruction = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();

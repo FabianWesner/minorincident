@@ -57,6 +57,17 @@ describe('input log codec', () => {
     const frame = emptyInput(); frame.move = { x: 0.1 + 0.2, z: -Math.PI }; frame.aimPoint = { x: 12345.678901234, z: -0.000123456789 };
     const exact = decodeLog(encode([{ frame, scheme: 'mouse-only' }]).chunks);
     expect(exact.frames[0].move).toEqual(frame.move); expect(exact.frames[0].aimPoint).toEqual(frame.aimPoint);
+    // s178: the replay meta carries the campaign difficulty with the campaign snapshot (replays reproduce
+    // it); pre-s178 logs decode without the field and replay as simple.
+    const s178: Uint8Array[] = [];
+    const withDifficulty = new InputLogEncoder(bytes => s178.push(bytes));
+    withDifficulty.begin({ level: 'L1', seed: 5, difficulty: 'hard', campaign: { version: 2, difficulty: 'hard' } });
+    withDifficulty.add(emptyInput(), 'mouse-only');
+    withDifficulty.end();
+    const s178Log = decodeLog(s178);
+    expect(s178Log.meta).toMatchObject({ difficulty: 'hard' });
+    expect((s178Log.meta!.campaign as { difficulty?: string }).difficulty).toBe('hard');
+    expect(log.meta).not.toHaveProperty('difficulty');
   });
 
   it('cuts independent chunks under the upload cap, decodes them in order, survives gzip and rejects gaps and garbage', async () => {
