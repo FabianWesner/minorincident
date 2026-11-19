@@ -1,5 +1,11 @@
 # s175-l4horde — L4 hold repair and verification
 
+## Merged-source follow-up
+
+Main `1b213208` was merged at `da4f1775`. The full threat audit was run in two local deterministic shards (235.8 s and 301.6 s) and merged: **0 flags**. LOW stationary is 50.15 s / 66 at breach / 52 sustained, peak living 80; HIGH is 51.08 s / 62 / 46. Remote acceptance completed all native routes, fixtures and checkpoints, but report construction failed on missing historical criterion `G-28`; its pulled receipts show LOW complete/stationary peak infected plus reservations 80/80 and living character identities 120/119, HIGH 103/130 and 162/163. The generated acceptance report was therefore not produced.
+
+Remote `npm test` passed unchanged on rerun: 27 files, 105 passed, one skipped, 214.9 s. The first run had a 30 s combat-test timeout under load. Typecheck and lint passed after the merge. Both remote threat shards hit their 600 s budget under load; the completed local shards above cover all stages. The historical result and blocker statements below describe the earlier pre-merge checkout.
+
 ## Result
 
 On the current checkout, the fresh native L4 acceptance run passes L4-04 and L4-06 at both qualities. LOW reaches its 80 infected cap while keeping the living character census at or below 120. LOW first breaches at 50.15 s with 66 living infected and holds at least 52 living infected in the plaza after +45 s. HIGH remains within its L4-06 thresholds: 51.08 s, 62 at breach, and 46 minimum in the plaza.
