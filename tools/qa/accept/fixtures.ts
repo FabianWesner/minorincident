@@ -187,17 +187,37 @@ export async function runFixtures(level: RunnerLevel, tier: Tier, sourceHash: st
     const world = await arena(tier);
     try {
       const id = world.infected!.spawn('infected.runner', { x: 10, z: 0 }), specimen = world.entities.get(id)!;
-      const cells = ['infected.alpha', 'infected.lion', 'infected.gorilla', 'infected.elephant', 'infected.zebra', 'infected.flamingo'].map(archetype => {
-        const e = structuredClone(specimen); e.archetype = archetype;
-        const flag = !!infectedDefinitions.find(def => def.id === archetype)!.bar;
-        e.transform.x = 15; const near = barEligible(e, { x: 0, z: 0 }, flag);
-        e.transform.x = 15.01; const farHealthy = barEligible(e, { x: 0, z: 0 }, flag);
-        e.health.current--; const farDamaged = barEligible(e, { x: 0, z: 0 }, flag);
-        e.health.current = 0; const dead = barEligible(e, { x: 0, z: 0 }, flag);
-        delete e.infected; e.faction = 'civilian'; e.health.current = e.health.max; const healthyAnimal = barEligible(e, { x: 0, z: 0 }, flag);
-        return { archetype, near, farHealthy, farDamaged, dead, healthyAnimal };
-      });
-      add('G-24', 'production enemy-bar eligibility at distance/health boundaries', cells, 'near/full and far/damaged true; far/full, dead and healthy animals false', cells.every(cell => cell.near && !cell.farHealthy && cell.farDamaged && !cell.dead && !cell.healthyAnimal));
+      // PO 2026-11-10 interaction rule (G-24, target restated 2026-11-19): shielded riot infected,
+      // Alphas, the pursuing Mega and engaged arena bosses always keep the bar; every other infected
+      // (incl. infected zoo animals) shows it after a player hit or while targeting the player within
+      // ~6 m; dead ones show none; healthy animals none.
+      const cell = (label: string, archetype: string, expected: boolean, mutate: (e: EntitySnapshot) => void) => {
+        const e = structuredClone(specimen); e.archetype = archetype; mutate(e);
+        const flag = !!infectedDefinitions.find(def => def.id === archetype)?.bar;
+        return { label, archetype, distance: Math.hypot(e.transform.x, e.transform.z), expected, eligible: barEligible(e, { x: 0, z: 0 }, flag) };
+      };
+      const mandatory: [string, string, (e: EntitySnapshot) => void][] = [
+        ['shielded riot infected', 'infected.riot', e => { e.combat!.shield = true; }],
+        ['pursuing Mega', 'infected.alpha', e => { e.infected!.pursuit = true; }],
+        ['engaged arena boss', 'infected.gorilla', e => { e.infected!.arenaBoss = { arena: 'gorilla', slot: 0, engaged: true, exposedUntil: 0, readyAt: 0 }; }],
+      ];
+      const cells = [
+        cell('alpha far/healthy', 'infected.alpha', true, e => { e.transform.x = 40; }),
+        ...mandatory.map(([label, archetype, mutate]) => cell(`${label} far/healthy`, archetype, true, e => { e.transform.x = 40; mutate(e); })),
+        ...['infected.runner', 'infected.lion', 'infected.gorilla', 'infected.zebra', 'infected.flamingo'].flatMap(archetype => [
+          cell(`${archetype} far/healthy unengaged`, archetype, false, e => { e.transform.x = 15; }),
+          cell(`${archetype} targeting player at 6 m`, archetype, true, e => { e.transform.x = 6; e.infected!.targetId = 1; }),
+          cell(`${archetype} targeting player at 6.01 m`, archetype, false, e => { e.transform.x = 6.01; e.infected!.targetId = 1; }),
+          cell(`${archetype} player-hit at 40 m`, archetype, true, e => { e.transform.x = 40; e.infected!.hitByPlayer = true; }),
+          cell(`${archetype} dead after player hit`, archetype, false, e => { e.transform.x = 2; e.infected!.hitByPlayer = true; e.health.current = 0; }),
+        ]),
+        cell('runner heard the player within 6 m', 'infected.runner', true, e => { e.transform.x = 6; e.infected!.heardTargetId = 1; }),
+        // r32: the elephant's bar appears only when his finale fight engages, never while he waits in his enclosure.
+        cell('elephant waiting in its arena, player-hit', 'infected.elephant', false, e => { e.transform.x = 6; e.infected!.hitByPlayer = true; e.infected!.arenaBoss = { arena: 'elephant', slot: 0, engaged: false, exposedUntil: 0, readyAt: 0 }; }),
+        cell('elephant engaged finale boss far/healthy', 'infected.elephant', true, e => { e.transform.x = 40; e.infected!.arenaBoss = { arena: 'elephant', slot: 0, engaged: true, exposedUntil: 0, readyAt: 0 }; }),
+        cell('healthy zoo animal near', 'animal.zebra', false, e => { e.transform.x = 3; delete e.infected; e.faction = 'civilian'; e.health.current = e.health.max; }),
+      ];
+      add('G-24', 'production enemy-bar eligibility at interaction boundaries', cells, 'PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off', cells.every(entry => entry.eligible === entry.expected));
       // A real civilian component supplies all fields expected by the production eligibility function.
       const followers: EntitySnapshot[] = Array.from({ length: 35 }, (_, i) => ({ ...structuredClone(specimen), id: 1000 + i, faction: 'civilian', infected: undefined, hidden: false,
         civilian: { state: 'calm', ambient: false, adult: true, pet: null, owner: null, variant: '', routine: '', waypoints: [], waypoint: 0, pauseUntil: 0, entered: 0, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: { x: 0, z: 0 }, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0, survivor: { key: `fixture-${i}`, mode: 'follow', leader: 1, slot: i, cover: false, waitAt: 0, foundAt: 0 } } }));
