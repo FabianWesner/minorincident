@@ -41,6 +41,11 @@ if (values.control) {
     retreat.attacksPerMinute = 11; retreat.groupAttacksPerMinute = 4.99;
     assert.equal(check(player), 'PASS'); assert.equal(check(follower), 'FAIL');
     retreat.groupAttacksPerMinute = 5; assert.equal(check(follower), 'PASS');
+    receipt.l6PressureSeeds = [1, 2, 3].map(seed => ({ seed, valid: true, outcome: 'complete', seconds: 60, playerRate: 11, followerRate: 5, arrivals: 5, ahead: 3, behind: 2 }));
+    const multi = 'retreat pressure and arrivals across seeds 1–3';
+    assert.equal(check(multi), 'PASS');
+    receipt.l6PressureSeeds[1].behind = 0; assert.equal(check(multi), 'FAIL');
+    receipt.l6PressureSeeds[1].behind = 2; receipt.l6PressureSeeds[2].valid = false; assert.equal(check(multi), 'NOT CHECKED');
     const source = sourceRows().find(row => row.id === 'L6-07')!;
     const requirements = completeNativeRows.get('L6-07')!;
     const checks: Clause[] = ['low', 'high'].flatMap(tier => requirements.map(item => ({ ...item, id: 'L6-07', tier, level: 'L6', status: 'PASS' as const, value: 1, target: 'fixture', receipt: 'fixture' })));

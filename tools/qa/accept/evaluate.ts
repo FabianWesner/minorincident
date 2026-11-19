@@ -31,8 +31,8 @@ const attackRows: Record<string, { id: string; phase: string; first?: number; ra
 /** Each clause states its limited scope. Passing a subset never closes a compound source row. */
 export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   const checks: Clause[] = [];
-  const add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined, evidencePath = path) => {
-    checks.push({ id, clause, level: receipt.level, tier: receipt.tier, policy: receipt.policy, status: pass === undefined ? 'NOT CHECKED' : pass ? 'PASS' : 'FAIL', value, target, receipt: evidencePath });
+  const add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined, evidencePath = path, policy: string = receipt.policy) => {
+    checks.push({ id, clause, level: receipt.level, tier: receipt.tier, policy, status: pass === undefined ? 'NOT CHECKED' : pass ? 'PASS' : 'FAIL', value, target, receipt: evidencePath });
   };
   const number = (id: string, clause: string, value: number | null | undefined, min: number, max: number) => add(id, clause, value ?? null, `${min} ≤ value ≤ ${max}`, value == null ? undefined : value >= min && value <= max);
   const observation = receipt.observation, threat = receipt.threat;
@@ -305,6 +305,11 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
         add('L6-07', 'ordinary retreat route completion', receipt.run?.outcome, 'complete', receipt.run?.completed);
         number('L6-07', 'retreat player windups per minute (seed 1)', phase('step/retreat')?.attacksPerMinute, 11, Infinity);
         number('L6-07', 'retreat follower windups per minute (seed 1)', phase('step/retreat')?.groupAttacksPerMinute, 5, Infinity);
+        const pressureSeeds = receipt.l6PressureSeeds;
+        const pressureComplete = pressureSeeds?.length === 3 && [1, 2, 3].every(seed => pressureSeeds.some(row => row.seed === seed && row.valid && row.seconds !== null && row.seconds > 0 && row.playerRate !== null && row.followerRate !== null));
+        add('L6-07', 'retreat pressure and arrivals across seeds 1–3', pressureSeeds ?? null,
+          'each complete seed: arrivals≥4.4/min, ahead≥1, behind≥1, player≥11/min, followers≥5/min',
+          pressureComplete ? pressureSeeds!.every(row => row.arrivals * 60 / row.seconds! >= 4.4 && row.ahead >= 1 && row.behind >= 1 && row.playerRate! >= 11 && row.followerRate! >= 5) : undefined, path, 'multi-seed');
         number('L6-07', 'actual HP lost during retreat', observation.l6RetreatDamage, 30, Infinity);
         number('L6-07', 'retreat concurrent infected cap', observation.phasePeaks.retreat?.alive, 0, low ? 30 : 60);
         const result = state.result;
