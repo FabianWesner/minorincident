@@ -58,3 +58,11 @@ A forced spawn at the centre of `bld.cure-duplex:7/geometry-1` now selects clear
 ## Deferred introduction
 
 If neither resident nor nonresident clear-spot search finds ground, introduction now returns 0, preserves the reserved slot and retries after one second instead of placing the Mega inside a solid. A focused test fills the spawn area, verifies deferral and then removes the blocker; the retry succeeds. The full native overlap/detour regression, typecheck and lint pass. A full threat run on `7acc5e8d` reached its 600-second time limit under load without a final verdict; both L9/L10 stages completed. The last full zero-flag result predates this change. Current-code remote unit and L9/L10 acceptance remain outstanding.
+
+## Time-box handoff — current revision
+
+The full threat command timed out under load, then both supported shards completed and their merged audit reported **0 gate flags** on `a739f482` (same source as `7acc5e8d`). Remote `npm test` passed on that revision: 27 files, 105 passed, one skipped, 162.4 seconds. Typecheck, lint, and the full native overlap/detour/introduction regression passed on the same source.
+
+Remote L9 acceptance exited 1: L9-04 durability failed; 16 rows incomplete, including Mega row L9-16 (NOT CHECKED). Remote L10 acceptance exited 1: five level rows failed (L10-01, -02, -03, -04, -11) and seven were incomplete. L10-07 has no failing clause in this run but remains NOT CHECKED overall; L10-02 walk Mega immunity fixture fails (3000 HP → 1050), and L10-13 passes. Both levels’ fixtures and checkpoint probes completed without execution errors. `docs/reports/fix51-verify` was restored after each run.
+
+Open for follow-up: qualify all L9/L10 Mega acceptance rows rather than infer them from the threat gate; investigate the existing L10-02 fixture discrepancy and other acceptance failures; check nonresident spawn/restore and streaming handoff across arbitrary dynamic geometry, including `keepGap` relocation and stale local-grid blockers; verify pursuit recovery without a reachable local path; review the Scene Lab direct callers that may receive the deferred introduction sentinel. The graph audit samples conservative static AABBs at 0.5 m intervals, and the native tests cover seed 1 and their documented policies, not every possible position. Browser QA needed; no capture or visual review was performed.
