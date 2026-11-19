@@ -155,7 +155,7 @@ export class LevelTenEncounters {
         const district = w.districts!.districts.find(d => d.id === 'D-CURE')!;
         const door = layoutHouseDoors(district.layout, district.origin).find(d => d.house === 'kit.zoo-tunnel-mouth:l10-service');
         const c = mission.def.anchors['cure-console'];
-        const route = [finale.platformStair.at, finale.platformStair.top, finale.gun.at].map(([x,z]) => [c.x+x,c.z+z] as [number,number]);
+        const route = ['dispersal-stair-foot', 'dispersal-stair-top', 'dispersal-gun'].map(name => cure.anchors[name] as [number, number]);
         if (door) this.state.finaleEntry = { ...door, sx: c.x+finale.serviceEntry.spawn[0], sz: c.z+finale.serviceEntry.spawn[1], route, ox: route[2][0], oz: route[2][1], next: 0, ids: [], finishRoute: true };
       }
       const entry = this.state.finaleEntry, clock = this.state.assaultTicks ?? 0;
