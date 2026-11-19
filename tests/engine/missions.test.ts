@@ -59,7 +59,7 @@ async function l6FollowersCatchUpOnRoute(): Promise<void> {
   } finally { w.dispose(); }
 }
 
-test('L6 equips carried survivors without guns while retaining carried guns', async () => {
+async function l6EquipsCarriedSurvivors(): Promise<void> {
   const w = await loadMissionLevel('L6', 1);
   try {
     const residents = w.missions!.state.l6!.survivors.slice(0, 8).map(row => structuredClone(w.entities.get(row.id)!));
@@ -77,7 +77,7 @@ test('L6 equips carried survivors without guns while retaining carried guns', as
     expect(roster[1].civilian!.ally?.weapon).toBe('shotgun');
     expect(roster[2].civilian!.ally?.gun).toEqual(carriedGun);
   } finally { w.dispose(); }
-});
+}
 
 async function l7DistanceAloneDoesNotPrompt(): Promise<void> {
   const w = await loadMissionLevel('L7', 1);
@@ -324,6 +324,7 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   await shelterRecoveryIsShared();
   await northgateSurvivorsStayVisible();
   await l6FollowersCatchUpOnRoute();
+  await l6EquipsCarriedSurvivors();
   await l7DistanceAloneDoesNotPrompt();
 });
 
