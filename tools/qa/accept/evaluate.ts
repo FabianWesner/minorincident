@@ -303,7 +303,8 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       }
       if (competent) {
         add('L6-07', 'ordinary retreat route completion', receipt.run?.outcome, 'complete', receipt.run?.completed);
-        number('L6-07', 'retreat player/group windups per minute', phase('step/retreat') ? phase('step/retreat')!.attacksPerMinute + phase('step/retreat')!.groupAttacksPerMinute : null, 4, Infinity);
+        number('L6-07', 'retreat player windups per minute (seed 1)', phase('step/retreat')?.attacksPerMinute, 11, Infinity);
+        number('L6-07', 'retreat follower windups per minute (seed 1)', phase('step/retreat')?.groupAttacksPerMinute, 5, Infinity);
         number('L6-07', 'actual HP lost during retreat', observation.l6RetreatDamage, 30, Infinity);
         number('L6-07', 'retreat concurrent infected cap', observation.phasePeaks.retreat?.alive, 0, low ? 30 : 60);
         const result = state.result;
@@ -639,7 +640,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),
     ...['l6.breach1', 'l6.breach2'].map(name => ({ clause: `stationary first attack after ${name}`, policy: 'stationary' })),
   ]],
-  ['L6-07', ['ordinary retreat route completion', 'retreat player/group windups per minute', 'actual HP lost during retreat', 'retreat concurrent infected cap'].map(clause => ({ clause, policy: 'complete' }))],
+  ['L6-07', [
+    ...['ordinary retreat route completion', 'retreat player windups per minute (seed 1)', 'retreat follower windups per minute (seed 1)', 'actual HP lost during retreat', 'retreat concurrent infected cap'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'retreat pressure and arrivals across seeds 1–3', policy: 'multi-seed' },
+  ]],
   ['L7-01', [
     { clause: 'native launcher horizontal distance from night-exit checkpoint', policy: 'complete' },
     ...['physical launcher approach pickup and first rocket frame gate', 'reviewed actual launcher first-rocket captures'].map(clause => ({ clause, policy: 'physical-pickup' })),

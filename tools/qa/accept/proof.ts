@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { parseArgs } from 'node:util';
-import { evaluate } from './evaluate';
+import { completeNativeRows, evaluate, type Clause } from './evaluate';
 import { atomicJson, reportRoot, rowResult, sourceRows } from './report';
 import { provenance, type NativeReceipt } from './probe';
 import { runLevel, type RunnerLevel } from '../../sim-runner/levels';
@@ -30,6 +30,23 @@ if (values.control) {
   assert(results.every(result => result.identical), 'observation must not change native state');
 } else {
   const results: { name: string; id: string; clause: string; detected: boolean }[] = [];
+  {
+    const receipt = structuredClone(receipts.get('L6')!);
+    const retreat = receipt.threat?.phases.find(phase => phase.key === 'step/retreat');
+    assert(retreat, 'L6 proof requires a retreat observation');
+    const check = (clause: string) => evaluate(receipt, 'fixture').find(row => row.id === 'L6-07' && row.clause === clause)?.status;
+    const player = 'retreat player windups per minute (seed 1)', follower = 'retreat follower windups per minute (seed 1)';
+    retreat.attacksPerMinute = 10.99; retreat.groupAttacksPerMinute = 20;
+    assert.equal(check(player), 'FAIL'); assert.equal(check(follower), 'PASS');
+    retreat.attacksPerMinute = 11; retreat.groupAttacksPerMinute = 4.99;
+    assert.equal(check(player), 'PASS'); assert.equal(check(follower), 'FAIL');
+    retreat.groupAttacksPerMinute = 5; assert.equal(check(follower), 'PASS');
+    const source = sourceRows().find(row => row.id === 'L6-07')!;
+    const requirements = completeNativeRows.get('L6-07')!;
+    const checks: Clause[] = ['low', 'high'].flatMap(tier => requirements.map(item => ({ ...item, id: 'L6-07', tier, level: 'L6', status: 'PASS' as const, value: 1, target: 'fixture', receipt: 'fixture' })));
+    assert.equal(rowResult(source, checks.filter(row => row.policy !== 'multi-seed')).currentStatus, 'NOT CHECKED', 'seed 1 alone cannot satisfy the multi-seed requirement');
+    assert.equal(rowResult(source, checks).currentStatus, 'PASS');
+  }
   const reviewFixture = JSON.parse(readFileSync('docs/qa/reviews/L5-11.json', 'utf8'));
   for (const [name, mutate] of [
     ['review missing evidence hash', (x: ReviewDecision) => { x.evidence[0].sha256 = ''; }],
