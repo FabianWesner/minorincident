@@ -328,7 +328,8 @@ test('guns: held fire cadence, reload timing, infinite reserve and seeded, bound
     }
     expect(directions[0]).toEqual(directions[1]);
   } finally { pistol.spread = previous; }
-});
+// Loads the authored L3 bridge natively; a shared 2-vCPU runner needs more than the 30 s default.
+}, 90_000);
 
 async function checkPointBlankCombat() {
   // An infected can overlap the courier in a crowd. Neither a gun muzzle at
