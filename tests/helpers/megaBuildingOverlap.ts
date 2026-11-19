@@ -52,6 +52,32 @@ export async function checkBlockedLinks(): Promise<void> {
   } finally { world.dispose(); }
 }
 
+export async function checkUnloadedDetour(): Promise<void> {
+  const world = await loadLevel('L10', 1);
+  try {
+    const pursuit = world.megaPursuit!, mega = world.entities.get(pursuit.introduce({ x: 823, z: 88.8199 }))!;
+    Object.assign(pursuit.state, { target: { x: 850, z: 100 }, route: [], passed: null, routeAt: Infinity });
+    expect(world.chunks!.resident(mega.transform.x, mega.transform.z)).toBe(false);
+    let path = 0, prev = { x: mega.transform.x, z: mega.transform.z };
+    for (let tick = 0; tick < 600 && mega.transform.x < 845; tick++) {
+      world.update();
+      const p = mega.transform; path += Math.hypot(p.x - prev.x, p.z - prev.z); prev = { x: p.x, z: p.z };
+      for (const district of world.districts!.districts) for (const collider of district.decay.colliders) {
+        if (!collider.id.startsWith('bld.') || collider.walkable) continue;
+        const b = collider.aabb;
+        if (b.max[1] <= p.y - .6 || b.min[1] >= p.y + .65) continue;
+        const box = { x: (b.min[0] + b.max[0]) / 2 + district.origin[0], z: (b.min[2] + b.max[2]) / 2 + district.origin[1], y: 1,
+          halfX: (b.max[0] - b.min[0]) / 2, halfZ: (b.max[2] - b.min[2]) / 2, halfY: 1 };
+        if (Math.abs(p.x - box.x) > box.halfX + megaAlpha.radius || Math.abs(p.z - box.z) > box.halfZ + megaAlpha.radius) continue;
+        const c = boxContact(box, p.x, p.z, megaAlpha.radius, { depth: 0, nx: 0, nz: 0, inside: false });
+        expect(c.depth, `${collider.id} at tick ${world.tick}`).toBeLessThanOrEqual(1e-8);
+      }
+    }
+    expect(mega.transform.x, 'nonresident Mega reaches the far side').toBeGreaterThanOrEqual(845);
+    expect(path, 'detour costs distance').toBeGreaterThan(26);
+  } finally { world.dispose(); }
+}
+
 async function checkRouteSolids(): Promise<void> {
   const world = await loadLevel('L10', 1);
   try {
@@ -78,6 +104,7 @@ async function checkRouteSolids(): Promise<void> {
 export async function megaBuildingOverlap(): Promise<void> {
   await checkRouteSolids();
   await checkBlockedLinks();
+  await checkUnloadedDetour();
   const clear = await detour(false), blocked = await detour(true);
   expect(blocked.ticks, 'wall costs real time').toBeGreaterThan(clear.ticks + 60);
   expect(blocked.path, 'wall requires a longer path').toBeGreaterThan(clear.path + 2);
