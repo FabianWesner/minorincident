@@ -73,12 +73,12 @@ export class LevelSevenEncounters {
     if (this.prepared) return;
     this.prepared = true;
     const w = this.world, ai = w.infected!, director = ai.director;
-    director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
+    director.levelCap = l7Encounters.concurrentCap[director.tier]; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
     w.npcs!.setAmbient(0);
     const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier });
     w.npcs!.civilians.outbreak = outbreak;
     // Outbreak initialization can configure the shared director; the level owns its cap.
-    director.levelCap = 200; director.strict = true;
+    director.levelCap = l7Encounters.concurrentCap[director.tier]; director.strict = true;
     const roster = carried ?? this.carried ?? w.progression?.campaign?.results?.L6?.escapedSurvivors;
     // Quality thins infected, never the community that escaped L6. Standalone
     // entries have the same 24-person shelter group on every quality/path.
@@ -127,17 +127,18 @@ export class LevelSevenEncounters {
     // playable. Deferring the nearest group through the offscreen spawn gate
     // admitted it one victim at a time at rocket range and removed all contact.
     this.state.requestedGroups = [l7Encounters.firstStreetGroup];
-    this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], 20, 1, true);
-    // Four ordinary rifle soldiers cover the column; pairs hold the road junction and boarding approach.
-    // These are support soldiers, not extra evacuees in the incoming campaign roster, and can be grabbed or killed.
-    for (let slot = 0; slot < 8; slot++) {
-      const at = this.clearPoint(slot < 4
-        ? { x: leader.x + 3 + (slot >> 1) * 2, z: leader.z + (slot % 2 ? 4 : -4) }
-        : { x: slot < 6 ? -63 : 45, z: slot % 2 ? 51 : 42 }, .4);
+    this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], 28, 1, true);
+    // Eight ordinary rifle soldiers screen the moving column; four more hold
+    // the road junction and boarding approach. These remain normal, mortal
+    // allies using the shared L3 rifle stats and can be grabbed or killed.
+    for (let slot = 0; slot < 12; slot++) {
+      const at = this.clearPoint(slot < 8
+        ? { x: leader.x + 3 + ((slot % 4) >> 1) * 2, z: leader.z + (slot % 2 ? 4 : -4) + (slot >= 4 ? 3.5 : 0) }
+        : { x: slot < 10 ? -63 : 45, z: slot % 2 ? 51 : 42 }, .4);
       const guard = w.entities.get(outbreak.spawnPedestrian(at, { model: 'npc.national-guard', role: 'cashier' }))!;
       guard.health.current = guard.health.max = l3.soldiers.hp;
       guard.civilian!.ally = { ...allyState('soldier', at, true), gun: { ...l3.soldiers.gun }, weapon: 'rifle', engaged: true,
-        ...(slot < 4 ? { follow: { targetId: 1, slot, minM: 3, maxM: 6, engageM: 18, leashM: 9, moveMs: 5.2 } } : {}) };
+        ...(slot < 8 ? { follow: { targetId: 1, slot, minM: 3, maxM: 6, engageM: 18, leashM: 9, moveMs: 6.5 } } : {}) };
       w.solids.admit(guard, 'l7.column.guard');
     }
     // Roadside aid at the bend gives the courier a physical resupply stop
@@ -189,19 +190,22 @@ export class LevelSevenEncounters {
     }
     // Only the final horde spans the wide corridor. Street packs stay on the
     // road; the wide rows put Lakeshore residents behind frontage obstacles.
-    const rows = Math.ceil(count / 10), rowGap = group === l7Encounters.finalGroup ? Math.min(4, 20 / Math.max(1, rows - 1)) : 1.3;
+    const perRow = group === l7Encounters.finalGroup ? 10 : 14;
+    const rows = Math.ceil(count / perRow), rowGap = group === l7Encounters.finalGroup ? Math.min(4, 20 / Math.max(1, rows - 1)) : 1.3;
     for (let i = 0; i < count; i++) {
       // Spread along the road so one rocket cannot erase a whole compact row
       // before its unhit neighbours have time to approach from the flanks.
-      let p = { x: centre.x + (i % 10 - 4.5) * 2.8, z: centre.z + (Math.floor(i / 10) - (rows - 1) / 2) * rowGap };
+      let p = { x: centre.x + (i % perRow - (perRow - 1) / 2) * (group === l7Encounters.finalGroup ? 2.8 : 2), z: centre.z + (Math.floor(i / perRow) - (rows - 1) / 2) * rowGap };
       if (group === l7Encounters.firstStreetGroup) {
-        // fix69-r (L7-05/G-13): a 25 m column along the road reached from the launcher into the forming party, so a group
-        // following a courier who walks on was dragged through the whole pack. A close cluster (4 low / 5 high) waits on
-        // both kerbs just west of the pickup, clear of the party's middle lane, for the first contact; the rest stands on
-        // both verges ahead of the courier, ranks stepping back west. Arming sends only the verge ranks at her.
-        const close = 4, j = i - close;
-        p = j < 0 ? { x: centre.x + 14 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
-          : { x: centre.x - Math.floor(j / 6) * 9, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 6 >> 1) * 1.8) };
+        // The opening fight surrounds the launch point with four road
+        // approaches. Keep the closest ranks outside the player/escort lane;
+        // ranks behind and in both side streets can attack without one rocket
+        // removing every direction at once.
+        const rank = Math.floor(i / 4), direction = i % 4;
+        if (direction === 0) p = { x: centre.x + 5 - rank * 2, z: centre.z + (rank - 3) * 1.1 };
+        else if (direction === 1) p = { x: centre.x + 19, z: centre.z + (rank - 3) * 1.3 };
+        else if (direction === 2) p = { x: centre.x + 14 + (rank - 3) * 1.2, z: centre.z - 6.5 };
+        else p = { x: centre.x + 14 + (rank - 3) * 1.2, z: centre.z + 6.5 };
       } else {
         const row = Math.floor(i / 10);
         // High and low tiers both enter through the road and its two verges.
@@ -210,10 +214,12 @@ export class LevelSevenEncounters {
         const flank = [-1, 0, 1, 0][row % 4];
         const spacing = group === l7Encounters.finalGroup ? 10 : 6.5;
         p.z = centre.z + flank * spacing;
-        p.x += (row % 2 ? 1 : -1) * (group === l7Encounters.finalGroup ? 3.5 : 1.5);
+        // Each street block is released as a road-connected four-way wave:
+        // ahead, behind, and both sides enter together inside one 5 s window.
+        p.x += group === l7Encounters.finalGroup ? (row % 2 ? 3.5 : -3.5) : [-3, 3, -1.5, 1.5][row % 4]!;
         // Reinforcements trail in separated road ranks, rather than reaching
         // the escort as a single simultaneous surround after one rocket clear.
-        if (group >= l7Encounters.firstStreetGroup + 4) p.x += row * 12;
+        if (group >= l7Encounters.firstStreetGroup + 4) p.x += row * 6;
       }
       // A ruined frontage may hide a cell; search locally rather than putting a figure in its mesh.
       admit('infected.runner', streetPoint(p, .35), { pack: group, state: 'idle', yaw: Math.PI });
@@ -229,8 +235,22 @@ export class LevelSevenEncounters {
     const player = this.world.entities.get(1)!;
     const opening = this.world.infected!.active.filter(e => e.infected!.pack === l7Encounters.firstStreetGroup && e.health.current > 0)
       .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform));
-    const count = 6;
-    for (const e of opening.filter(e => e.archetype === 'infected.runner').slice(0, count)) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+    // Start runners across all four approaches together, then fill the advance
+    // party to keep the first 20 seconds dangerous without exhausting the
+    // skilled route before its rocket pickup.
+    const runners = opening.filter(e => e.archetype === 'infected.runner');
+    const sectors = new Map<number, EntitySnapshot>();
+    for (const e of runners) {
+      const dx = e.transform.x - player.transform.x, dz = e.transform.z - player.transform.z;
+      const sector = Math.floor((Math.atan2(dz, dx) + Math.PI) / (Math.PI / 2)) % 4;
+      if (!sectors.has(sector)) sectors.set(sector, e);
+    }
+    const selected = [...sectors.values()];
+    for (const e of runners) {
+      if (selected.length >= 16) break;
+      if (!selected.includes(e)) selected.push(e);
+    }
+    for (const e of selected) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
     for (const e of opening.filter(e => e.archetype === 'infected.alpha')) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
   }
   /** Admit each offscreen block ahead of the column, preserving the total authored population. */
@@ -242,14 +262,14 @@ export class LevelSevenEncounters {
       const group = l7Encounters.firstStreetGroup + i + 1;
       if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
-      this.group(group, l7Encounters.streets[i + 1], 35, i !== 1 ? 1 : 0);
+      this.group(group, l7Encounters.streets[i + 1], 49, i !== 1 ? 1 : 0);
     }
     // The opening's remaining ranks follow from the east once the column
     // clears pickup; high-tier blocks also release a second approach behind it.
     const rearGroup = l7Encounters.firstStreetGroup + 4;
     if (p.x <= 185 && !requested.includes(rearGroup)) {
       requested.push(rearGroup);
-      this.group(rearGroup, { x: 225, z: 15 }, low ? 15 : 50, 0);
+      this.group(rearGroup, { x: 225, z: 15 }, low ? 21 : 70, 0);
     }
     if (!low) for (const [i, centre] of l7Encounters.streets.slice(1).entries()) {
       const group = l7Encounters.firstStreetGroup + i + 11;
@@ -260,11 +280,14 @@ export class LevelSevenEncounters {
       const threshold = i === 2 ? centre.x : centre.x - 35;
       if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
-      this.group(group, { x: centre.x + 10, z: centre.z }, 35, 0);
+      this.group(group, { x: centre.x + 10, z: centre.z }, 49, 0);
     }
-    if (p.x <= 95 && !requested.includes(l7Encounters.finalGroup)) {
+    // Stage the long corridor horde while the courier is still on the final
+    // junction so its complete authored cohort clears the offscreen admission
+    // gate before the group reaches the boarding lane.
+    if (p.x <= 140 && !requested.includes(l7Encounters.finalGroup)) {
       requested.push(l7Encounters.finalGroup);
-      this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 60 : 120, 2);
+      this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 84 : 168, 2);
     }
   }
   /** Run before AI so external explosion fixtures and combat ticks share the same active-pool cap. */
@@ -590,7 +613,7 @@ export class LevelSevenEncounters {
     this.seen.clear(); for (const arrival of this.state.arrivals) this.seen.add(`${arrival.group}:${arrival.id}`);
     const director = this.world.infected!.director;
     director.queue.splice(0, director.queue.length, ...structuredClone(record.queue));
-    director.levelCap = 200; director.strict = true; director.ambientTarget = 0;
+    director.levelCap = l7Encounters.concurrentCap[director.tier]; director.strict = true; director.ambientTarget = 0;
     this.reserveSlots();
   }
 }
