@@ -164,6 +164,10 @@ test('bindings: every action rebinds and persists without conflicts; broken or b
   expect(migrated.action('Mouse2')).toBe('selector'); expect(migrated.action('KeyK')).toBe('right');
   expect(migrated.action('KeyQ')).toBeNull(); expect(migrated.action('KeyL')).toBe('selector');
   expect(migrated.rebind('selector', 'KeyQ').ok).toBe(false);
+  const custom = { ...defaultBindings, moveUp: ['KeyG'], selector: ['KeyQ'] };
+  const migratedCustom = new Bindings({ getItem: () => JSON.stringify({ version: 1, bindings: custom }), setItem() {} });
+  expect(migratedCustom.action('KeyG')).toBeNull(); expect(migratedCustom.action('KeyQ')).toBeNull();
+  expect(migratedCustom.get().moveUp.length).toBeGreaterThan(0); expect(migratedCustom.action('Mouse2')).toBe('selector');
 });
 
 test('weapon selection: one fixed order drives number keys, cycling and touch slots, and survives a rack rebuild', () => {
@@ -196,6 +200,13 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(c.input.selectWeaponKey(0)).toBe(false); expect(c.input.selectWeaponKey(10)).toBe(true);
   c.input.clear(); c.key('Digit0', true); c.key('Digit0', false); expect(c.sample().selectedWeaponKey).toBe(10);
   c.input.setDriving(true); expect(c.input.selectWeaponKey(3)).toBe(false); expect(c.sample().selectedWeaponKey).toBeUndefined();
+  c.key('ShiftLeft', true); c.key('Digit1', true); c.key('KeyQ', true); c.key('KeyG', true);
+  const driving = c.sample(); expect(driving.selectedSlot).toBeUndefined(); expect(driving.selectedWeaponKey).toBeUndefined(); expect(driving.selector).toBe(0); expect(driving.corgiLure).toBeUndefined();
+  for (const code of ['ShiftLeft', 'Digit1', 'KeyQ', 'KeyG']) c.key(code, false);
+  c.input.setDriving(false); c.input.setMountedGun(true); c.key('Digit1', true); c.key('KeyQ', true); c.key('KeyG', true);
+  const mounted = c.sample(); expect(mounted.selectedWeaponKey).toBeUndefined(); expect(mounted.selector).toBe(0); expect(mounted.corgiLure).toBeUndefined();
+  for (const code of ['Digit1', 'KeyQ', 'KeyG']) c.key(code, false);
+  c.input.setMountedGun(false); c.key('ShiftLeft', true); c.key('Digit1', true); expect(c.sample().selectedWeaponKey).toBe(1);
 
   const ids = Object.keys(catalog).filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.pistol');
   expect(Object.keys(weaponKeys).sort()).toEqual(ids.sort());

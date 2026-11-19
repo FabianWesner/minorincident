@@ -17,9 +17,13 @@ export class Bindings {
         }
         if (saved.version === 1 && this.valid(saved.bindings)) {
           this.map = saved.bindings;
-          this.map.selector = this.map.selector.filter(code => code !== 'KeyQ');
-          for (const name of Object.keys(this.map) as Action[]) this.map[name] = this.map[name].filter(code => code !== 'Mouse2');
+          for (const name of Object.keys(this.map) as Action[]) this.map[name] = this.map[name].filter(code => code !== 'Mouse2' && code !== 'KeyQ' && code !== 'KeyG');
           this.map.selector.unshift('Mouse2');
+          const used = new Set(Object.values(this.map).flat());
+          for (const name of Object.keys(this.map) as Action[]) if (!this.map[name].length) {
+            const replacement = [...defaultBindings[name], ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => `Key${letter}`)].find(code => !used.has(code) && code !== 'KeyQ' && code !== 'KeyG');
+            if (replacement) { this.map[name].push(replacement); used.add(replacement); }
+          }
         }
       }
     } catch { /* Storage unavailable or corrupt: keep defaults. */ }

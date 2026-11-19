@@ -168,8 +168,7 @@ export class InputSystem implements Lifecycle {
     }
     if (held && /^Digit[0-9]$/.test(code)) {
       const key = code === 'Digit0' ? 10 : Number(code.slice(-1));
-      if (this.shift()) { if (key <= 3) this.selectedSlot = { side: 'RIGHT', index: key - 1 }; }
-      else if (!this.drivingContext && !this.mountedGunContext) this.selectedWeaponKey = key;
+      if (!this.drivingContext && !this.mountedGunContext) this.selectedWeaponKey = key;
       this.setScheme(this.pointer.valid ? 'mouse-keyboard' : 'keyboard'); return;
     }
     const action = held ? this.boundAction(code) : this.heldTokens.get(code);
