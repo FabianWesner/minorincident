@@ -81,6 +81,20 @@ export class LevelFiveBot {
     // ---------------------------------------------------------------- the first seconds of silence: look around, walk nowhere
     if (s.phase === 'emerged') return frame;
     if (fight(newbie ? 12 : 18)) return frame;
+    // A grabbed follower is bitten to death inside the rescue window unless the courier
+    // intervenes: any hit on the grabber frees the victim. The alarm names them; the
+    // complete courier turns back at once instead of completing the tour first (L5-09).
+    if (fights) {
+      const grabbed = friends.find(f => f.civilian?.state === 'grabbed');
+      const hot = grabbed && (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && dist(e.transform, grabbed.transform) < 2)
+        .sort((x, y) => dist(x.transform, grabbed!.transform) - dist(y.transform, grabbed!.transform))[0];
+      if (grabbed && hot) {
+        if (!w.infected!.nav.visible(p, hot.transform, 0)) go(hot.transform, 1.6, `grab-visible-${hot.id}`);
+        else if (dist(p, hot.transform) > 2.4) go(hot.transform, 1.6, `grab-${grabbed.id}`);
+        else strike(hot, 'LEFT');
+        return frame;
+      }
+    }
     const hp = player.health.current / player.health.max;
     if (!this.medkit && hp <= (newbie ? .8 : .55)) {
       const kit = nearestKit(w, s.medkitIds, p, e => dist(e.transform, p) < (newbie ? 30 : 20));
