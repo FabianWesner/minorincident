@@ -7,3 +7,5 @@ Review: the beam is visible on the ground. The lamp appears as a small white poi
 Validation after merging main: typecheck and lint passed; remote `npm test` passed (105 passed, 1 skipped, 239.2 s). Scene gate remains outstanding.
 
 Update: the housing and lens were enlarged, the original scenario gate restored, and the head-origin fallback removed when the held model is unavailable. The sheet was refreshed for that change. HIGH and LOW at zoom 1.5 show the ground pool; the lamp is still too small in the full frame to judge its housing confidently. Ten selected courier/L10 scene gate rows passed, including WebGL2 and WebGPU rows; this is not the complete set of player-visible gate rows. Typecheck and lint passed after the change.
+
+Further gate run: 70/70 selected player-related and adjacent scene rows passed across HIGH/LOW and WebGL2/WebGPU (`test-results/s180-player-gate/summary.md`), with one browser per batch. Selection was based on courier/player references plus related named scenes; it is not a proof that every player-visible gate row was selected. The remote unit suite after the attachment adjustment passed 105 tests with one skipped in 209.1 seconds.
