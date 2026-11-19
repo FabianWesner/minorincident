@@ -476,7 +476,7 @@ export class Hud {
         : null;
       text(this.weapon.hint, emptyCue ?? shown.name); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
-      attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot, RMB or Q to switch'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
+      attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot or Q / Shift+Q to cycle'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));
       style(w, '--progress', String(shown.progress));
     }

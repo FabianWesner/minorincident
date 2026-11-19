@@ -122,7 +122,7 @@ export class GameUI {
     levels.append(lockHint);
     levels.append(button('levels-back', 'Back', () => this.show(this.levelsBack)));
     // PO: pausing freezes the game but leaves the scene fully visible; the menu is a compact bar on top (screenshots).
-    const pause = this.panel('pause', 'Paused', 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · E / F interact · Q / RMB switch · P / Esc resume · R restart · H hide UI');
+    const pause = this.panel('pause', 'Paused', 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · E / F interact · Q / Shift+Q cycle · RMB next · P / Esc resume · R restart · H hide UI');
     pause.setAttribute('aria-modal', 'false');
     pause.append(button('resume-game', 'Resume', () => this.resume()),
       button('pause-settings', 'Settings', () => { this.back = 'pause'; this.show('settings'); }),
@@ -203,7 +203,7 @@ export class GameUI {
       input.addEventListener('change', () => this.game.audio.set({ [key]: input.checked })); row.append(input); form.append(row);
     }
     const controls = node('div', 'settings-controls'); controls.className = 'settings-controls';
-    controls.append(node('p', 'controls-guide', 'WASD / arrows move; mouse aims; LMB shoots; Space shoots with aim assist. Q / RMB switches weapons; E / F interacts. In a vehicle: W gas, S brake then reverse, A / D steer the front wheels left / right.'));
+    controls.append(node('p', 'controls-guide', 'WASD / arrows move; mouse aims; LMB shoots; Space shoots with aim assist. Q / Shift+Q cycle · RMB nextes weapons; E / F interacts. In a vehicle: W gas, S brake then reverse, A / D steer the front wheels left / right.'));
     const action = node('select', 'binding-action'); action.setAttribute('aria-label', 'Action to rebind');
     for (const name of Object.keys(defaultBindings) as Action[]) { const option = node('option', `binding-${name}`, name); option.value = name; action.append(option); }
     const code = node('input', 'binding-code'); code.setAttribute('aria-label', 'Keyboard code'); code.placeholder = 'KeyZ';
@@ -323,7 +323,7 @@ export class GameUI {
       this.setRestartConfirm(false);
       this.screens.get('pause')!.querySelector('[data-testid=detail-pause]')!.textContent = this.game.input.scheme === 'touch'
         ? 'P / Esc to resume · R to restart · H hides the UI for screenshots'
-        : 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · E / F interact · Q / RMB switch · P / Esc resume · R restart · H hide UI';
+        : 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · E / F interact · Q / Shift+Q cycle · RMB next · P / Esc resume · R restart · H hide UI';
     }
     if (screen === 'settings' || screen === 'character') this.syncDifficultyControls();
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;

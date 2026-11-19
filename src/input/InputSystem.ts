@@ -131,9 +131,9 @@ export class InputSystem implements Lifecycle {
     this.hint.textContent = this.drivingContext && scheme !== 'touch' ? scheme === 'mouse-only'
       ? 'Hold LMB and steer toward the cursor · release to brake · E / F exit'
       : 'W gas · S brake / reverse · A / D steer left / right · Space / K handbrake (throws boarders) · J / LMB horn / boost · E / F exit' : {
-      'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
-      'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
-      keyboard: 'WASD / arrows move · J / K / Space aim assist · 1–9 slots · Q · E / F interact',
+      'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / Shift+Q cycle · RMB next · E / F interact · number keys select weapons',
+      'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / Shift+Q cycle · RMB next · E / F interact · number keys select weapons',
+      keyboard: 'WASD / arrows move · J / K / Space aim assist · number keys select weapons · Q / Shift+Q cycle · E / F interact',
       touch: 'Stick to move (driving: up gas, down brake / reverse, left / right steer) · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
     }[scheme];
   }
