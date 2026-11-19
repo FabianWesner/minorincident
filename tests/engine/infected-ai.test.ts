@@ -661,3 +661,19 @@ test('recovered infected forget the chase: re-acquisition needs sight, not memor
   expect(e.health.current).toBe(e.health.max);
   expect(e.infected!.l1!.mode).not.toBe('chase');
 });
+
+test('pipe bomb knocks the Mega down for 2.5 seconds and cannot repeat for ten seconds after recovery', async () => {
+  const w = await arena();
+  const id = w.infected!.spawn('infected.alpha', { x: 3, z: 0 }, { state: 'chase' });
+  const mega = w.entities.get(id)!; mega.infected!.pursuit = true; mega.health.current = mega.health.max = 5000;
+  const blast = () => w.combat!.damage.apply({ attackId: w.tick + 1, actionId: 'weapon.pipe-bomb', sourceId: 1, targetId: id, origin: { x: 2, z: 0 }, direction: { x: 1, z: 0 }, base: 150, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
+  blast();
+  expect(mega.combat!.reaction?.heavy).toBe(true);
+  expect(mega.combat!.reaction!.until - w.tick).toBe(150);
+  expect(mega.combat!.staggerUntil - w.tick).toBe(150);
+  const ready = mega.infected!.pipeBombReady!;
+  expect(ready - w.tick).toBe(750);
+  step(w, 151); blast();
+  expect(mega.combat!.reaction!.until).toBeLessThanOrEqual(w.tick);
+  expect(mega.infected!.pipeBombReady).toBe(ready);
+});

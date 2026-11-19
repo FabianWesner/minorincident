@@ -289,7 +289,7 @@ export class InfectedSystem {
     delete entity.emerging; delete entity.doorLane;
     delete entity.infected!.scripted; delete entity.infected!.clearingStreet; delete entity.infected!.breachApproach; delete entity.infected!.l4FlankTarget;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
-    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.staggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
+    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.pipeBombReady; delete entity.infected!.staggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
     delete entity.infected!.arenaBoss; delete entity.infected!.arenaCarrier;
     delete entity.infected!.megaPhase; delete entity.infected!.megaWeakTicks; delete entity.infected!.megaBurnTicks; delete entity.infected!.megaArmourBroken;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
@@ -1625,6 +1625,7 @@ export class InfectedSystem {
     if (b.alphaSpecialStarted !== undefined) b.alphaSpecialStarted += delta;
     if (b.pressureTarget) b.pressureTarget.until += delta;
     if (b.megaStaggerReady !== undefined) b.megaStaggerReady += delta;
+    if (b.pipeBombReady !== undefined) b.pipeBombReady += delta;
     if (b.staggerReady !== undefined) b.staggerReady += delta;
     if (b.specialAttack?.grabReleaseTick !== undefined) b.specialAttack.grabReleaseTick += delta;
     if (b.roar) { b.roar.until += delta; if (b.roar.speedUntil !== undefined) b.roar.speedUntil += delta; }
