@@ -65,10 +65,12 @@ export class SpawnDirector {
    * the cap; `clampReserved` keeps reservations consistent once it rises) and the character headroom of L4-04's caps. */
   recoveryRoom(): boolean {
     if (this.count + this.pendingTurns >= this.cap) return false;
-    const cap = l4.war.caps.characters[this.tier === 'low' ? 'low' : 'high'] - 1;
+    // Leave one low-tier character slot uncommitted so another same-tick
+    // admission cannot overlap a rising body at the ceiling.
+    const cap = l4.war.caps.characters[this.tier === 'low' ? 'low' : 'high'] - (this.downedExcluded ? 1 : 0);
     let characters = 0;
     for (const e of this.ai.world.entities.iterate())
-      if ((!e.hidden || this.tier === 'low') && e.health.current > 0 && (e.infected || e.civilian) && ++characters >= cap) return false;
+      if (e.health.current > 0 && !e.corpse && (e.id === 1 || e.infected || e.companion || e.civilian && !e.civilian.pet && !e.civilian.zooAnimal) && ++characters >= cap) return false;
     return true;
   }
   /** Low-tier reservations are elastic: after a get-up adds a living body, keep count + reserved + pending turns

@@ -841,10 +841,17 @@ export class LevelFourWar {
   }
   /** Room under the characters cap; `keep` slots stay free (the Alphas still to come, l4-po-round). */
   private spawnRoom(keep = 0, slots = 1): boolean {
-    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - keep - (this.low ? 1 : 0) - slots + 1;
+    // Low leaves one character slot clear so arrivals and same-tick recoveries
+    // cannot overlap at the authored ceiling.
+    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - (this.low ? 1 : 0) - keep - slots + 1;
     if (!(limit > 0)) return false;
     let count = 0;
-    for (const e of this.world.entities.iterate()) if ((!e.hidden || this.low) && e.health.current > 0 && (e.infected || e.civilian) && ++count >= limit) return false;
+    for (const e of this.world.entities.iterate()) {
+      const character = this.low
+        ? e.id === 1 || e.infected || e.companion || e.civilian && !e.civilian.pet && !e.civilian.zooAnimal
+        : (!e.hidden || this.low) && (e.infected || e.civilian);
+      if (e.health.current > 0 && !e.corpse && character && ++count >= limit) return false;
+    }
     return true;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
