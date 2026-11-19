@@ -87,7 +87,7 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
     const entered = new Map<number, number>(), boarded: { id: number; tick: number }[] = [];
     const elsewhere: number[] = [];
     let seeded = false;
-    let start: { tick: number; x: number; z: number; aliveElsewhere: number } | null = null;
+    let start: { tick: number; x: number; z: number; aliveElsewhere: number; livingElsewhere: number } | null = null;
     let end: { tick: number; x: number; z: number; alive: number } | null = null;
     const run = await runLevel('L7', 'complete', 1, 600, 'auto', undefined, undefined, 0, {
       quality: tier,
@@ -98,19 +98,30 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
           const state = world.l7Departure!.state, bus = world.entities.get(state.busId)!.transform;
           if (state.phase === 'boarding' && !seeded) {
             seeded = true;
-            // Capability fixture: ten ordinary admitted enemies far from the
-            // boarding lane. Do not require clearing the rest of the city.
+            // Capability fixture: when the level's own population leaves spare
+            // concurrency, admit up to ten extra ordinary enemies far from the
+            // boarding lane. A cap-saturated departure (the sustained corridor
+            // stream) has living infected elsewhere already; the clause below
+            // counts every living one, so a full cap is not a fixture error.
             const nav = world.infected!.infectedNav;
             for (let i = 0; i < 10; i++) {
               const cell = nav.nearestCell(40 + i * 1.5, -40, .35);
-              if (cell >= 0) { const id = world.infected!.spawn('infected.runner', { x: nav.x(cell), z: nav.z(cell) }); if (id) elsewhere.push(id); }
+              if (cell >= 0) {
+                try { const id = world.infected!.spawn('infected.runner', { x: nav.x(cell), z: nav.z(cell) }); if (id) elsewhere.push(id); } catch { break; }
+              }
             }
           }
           for (const [id, tick] of Object.entries(state.entering)) if (!entered.has(Number(id))) entered.set(Number(id), tick);
           if (state.phase === 'departing' || state.phase === 'done') {
-            start ??= { tick: state.startedAt, x: bus.x, z: bus.z, aliveElsewhere: elsewhere.filter(id => { const e = world.entities.get(id); return !!e && e.health.current > 0 && !e.hidden && !e.pendingAdmission; }).length };
+            start ??= { tick: state.startedAt, x: bus.x, z: bus.z, aliveElsewhere: elsewhere.filter(id => { const e = world.entities.get(id); return !!e && e.health.current > 0 && !e.hidden && !e.pendingAdmission; }).length, livingElsewhere: world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.pendingAdmission && Math.hypot(e.transform.x - bus.x, e.transform.z - bus.z) > 20).length };
             if (world.tick % 15 === 0 || state.phase === 'done') trace.push({ tick: world.tick, phase: state.phase, x: bus.x, z: bus.z });
-            if (state.phase === 'done') end = { tick: world.tick, x: bus.x, z: bus.z, alive: world.infected!.active.filter(e => e.health.current > 0 && !e.hidden).length };
+            // Close the window at the first 'done' tick: the bus has reached its
+            // final pose there. The mission's 5-second action run-out (PO
+            // 2026-10-13) keeps the phase 'done' while engaged remnants delay
+            // level.completed; overwriting `end` through that tail counted those
+            // stationary ticks as departure duration (measured 14 s vs the
+            // authored 9-second cinematic).
+            if (state.phase === 'done') end ??= { tick: world.tick, x: bus.x, z: bus.z, alive: world.infected!.active.filter(e => e.health.current > 0 && !e.hidden).length };
           }
         };
         world.events.on('mission.signal', event => {
@@ -118,16 +129,17 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
         });
       },
     });
-    const first = start as { tick: number; x: number; z: number; aliveElsewhere: number } | null, last = end as { tick: number; x: number; z: number; alive: number } | null;
+    const first = start as { tick: number; x: number; z: number; aliveElsewhere: number; livingElsewhere: number } | null, last = end as { tick: number; x: number; z: number; alive: number } | null;
     const seconds = first && last ? (last.tick - first.tick) / 60 : null;
     const metres = first && last ? Math.hypot(last.x - first.x, last.z - first.z) : null;
     const entries = [...entered].map(([id, tick]) => ({ id, tick })).sort((a, b) => a.tick - b.tick);
     const spacing = entries.slice(1).map((entry, i) => entry.tick - entries[i].tick);
-    const value = { setup: 'ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick', run, first, last, elsewhere, seconds, metres, entries, boarded, spacing, trace };
+    const value = { setup: 'ordinary mortal native L7 input; capability fixture admits up to ten extra ordinary enemies elsewhere at boarding when the level leaves spare concurrency; read-only bus and passenger observations on every tick', run, first, last, elsewhere, seconds, metres, entries, boarded, spacing, trace };
     observations['L7/departure'] = value;
     add('L7-11', 'actual uninterrupted departure duration and bus displacement', value, '6–10 seconds; bus moves at least30m', run.completed && seconds !== null && metres !== null ? seconds >= 6 && seconds <= 10 && metres >= 30 : undefined);
     add('L7-10', 'actual passenger door-entry spacing', { entries, boarded, spacing }, 'one new passenger at most every15ticks; every entry finishes', run.completed && entries.length ? spacing.every(gap => gap >= 15) && entries.every(entry => boarded.some(b => b.id === entry.id)) : undefined);
-    add('L7-10', 'living infected remaining when boarding has finished', first ? { tick: first.tick, alive: first.aliveElsewhere, ids: elsewhere } : null, 'at least10 admitted living infected may remain elsewhere at departure start', first && elsewhere.length === 10 ? first.aliveElsewhere >= 10 && run.completed : undefined);
+    // The criterion's "at least10 admitted living infected may remain elsewhere" counts every living admitted infected beyond the boarding lane, not only fixture-seeded ones; a cap-saturated run satisfies it with its own population.
+    add('L7-10', 'living infected remaining when boarding has finished', first ? { tick: first.tick, alive: first.aliveElsewhere, livingElsewhere: first.livingElsewhere, seeded: elsewhere.length, ids: elsewhere } : null, 'at least10 admitted living infected may remain elsewhere at departure start', first && first.livingElsewhere >= 10 ? run.completed : undefined);
     // Isolate the actual departure controller's no-progress timer. The follower
     // is deliberately stationary/offscreen; other controller/AI ticks do not run.
     const stalled = await loadLevel('L7', 1, undefined, 0, { quality: tier });

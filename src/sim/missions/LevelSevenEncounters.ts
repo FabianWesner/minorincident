@@ -33,6 +33,7 @@ export class LevelSevenEncounters {
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
+  private readonly spawnRoute: number[] = [];
   private corpseRoutes?: { source: NavGrid; revision: number; bodies: string; nav: NavGrid };
   private routeTick = -1;
   private routeNav?: NavGrid;
@@ -149,6 +150,20 @@ export class LevelSevenEncounters {
   private clearPoint(at: Point, radius: number): Point {
     return requireClearPoint(this.world, at, radius, 4, 'L7 encounter');
   }
+  /** An authored street pack must stand on a cell connected to its own road. A
+   * clear cell inside an enclosed frontage strip (the service alleys behind the
+   * Lakeshore promenade) is a trapped stand-in that never engages and tanks the
+   * L7-05 reachable share; pull such spawns toward the road until connected. */
+  private roadConnected(at: Point, centre: Point, radius: number): Point {
+    const nav = this.world.infected!.nav, road = nav.nearestCell(centre.x, centre.z, radius);
+    let p = at;
+    for (let step = 0; step < 8 && road >= 0; step++) {
+      const from = nav.nearestCell(p.x, p.z, radius);
+      if (nav.clear(p.x, p.z, radius) && from >= 0 && nav.path(from, road, this.spawnRoute, 900)) return p;
+      p = { x: p.x + (centre.x - p.x) / 4, z: p.z + (centre.z - p.z) / 4 };
+    }
+    return this.clearPoint(centre, radius);
+  }
   /** r42: Alpha slots in encounter order (opening street = Brute, 2nd street = Screamer, 4th street = Thrower, then the two final-corridor Alphas Brute + Thrower) take the shared L7 mix (Brute, Thrower, Screamer). */
   private alphaType(group: number, i: number) {
     const first = l7Encounters.firstStreetGroup, mix = alphaMixFor('L7');
@@ -162,7 +177,7 @@ export class LevelSevenEncounters {
     // terraces. Supply their layer explicitly; the generic spawn defaults to
     // ground level so actors beneath an overhead deck remain beneath it.
     const streetPoint = (at: Point, radius: number) => {
-      const p = this.clearPoint(at, radius);
+      const p = this.roadConnected(this.clearPoint(at, radius), centre, radius);
       return { ...p, y: .7 + this.world.districts!.pavingHeight(p.x, p.z) };
     };
     for (let i = 0; i < alphas; i++) {
@@ -238,11 +253,16 @@ export class LevelSevenEncounters {
     }
     if (!low) for (const [i, centre] of l7Encounters.streets.slice(1).entries()) {
       const group = l7Encounters.firstStreetGroup + i + 11;
-      if (p.x > centre.x - 35 || requested.includes(group)) continue;
+      // The Lakeshore junction turns west into the corridor only ~40 m past its
+      // street; a trailing rank requested 35 m beyond it is cap-queued behind
+      // the corridor window and never arrives (L7-04 delivery). Request it on
+      // arrival so it presses the junction fight from behind like the others.
+      const threshold = i === 2 ? centre.x : centre.x - 35;
+      if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
       this.group(group, { x: centre.x + 10, z: centre.z }, 35, 0);
     }
-    if (p.x <= 85 && !requested.includes(l7Encounters.finalGroup)) {
+    if (p.x <= 95 && !requested.includes(l7Encounters.finalGroup)) {
       requested.push(l7Encounters.finalGroup);
       this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 60 : 120, 2);
     }
@@ -274,6 +294,16 @@ export class LevelSevenEncounters {
     }
     const finals = s.finalReady ? [] : s.arrivals.filter(a => a.group === l7Encounters.finalGroup);
     s.finalReady ||= finals.filter(a => !a.alpha).length >= (ai.director.tier === 'low' ? 60 : 120) && finals.filter(a => a.alpha).length >= 2;
+    const p = w.entities.get(1)!.transform;
+    // PO 2026-11-08: the corridor horde attacks in separated ranks over the
+    // whole fight ("arrivals separated so one rocket cannot clear all
+    // approaches"), not one pressed wave that leaves the rear ranks standing.
+    // While the courier is on the junction/corridor lane, distant final-pack
+    // members re-acquire her, so the authored population funnels in, engages
+    // and is delivered instead of holding its slots offscreen forever.
+    if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 300 === 0) {
+      for (const e of ai.active) if (e.infected!.pack === l7Encounters.finalGroup && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && distance(e.transform, p) > 25) ai.press(e.id, 1, w.tick + 20 * 60);
+    }
     for (const r of s.roster) {
       const e = w.entities.get(r.id);
       if (r.status !== 'following') continue;
@@ -285,7 +315,6 @@ export class LevelSevenEncounters {
         w.events.emit({ type: 'mission.signal', tick: w.tick, name: `l7.survivor-${r.status}`, actorId: r.id });
       }
     }
-    const p = w.entities.get(1)!.transform;
     // The crowd already builds this field above twenty infected. Keep it
     // available for out-of-range followers after the fighting has thinned out too.
     if (ai.active.length <= 20 && s.roster.some(r => r.status === 'following' && distance(w.entities.get(r.id)!.transform, p) > l7FollowerRangeM)) ai.nav.flow(p.x, p.z, 1500);
