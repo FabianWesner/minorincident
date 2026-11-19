@@ -20,6 +20,7 @@ import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, reservedCampaignIds, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
 import { heldAction } from './sim/progression/selection';
 import { applyCampaign, campaignLoadout } from './sim/progression/apply';
+import { resetCampaignStoryForReplay } from './sim/progression/Campaign';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel, recordL8Transport } from './sim/progression/carryover';
 import type { SurvivorVariant } from './data/survivor';
@@ -386,7 +387,7 @@ export class Game {
     this.view.settings(settings);this.audio.set(save.settings);
     // Settings can save the previous live world: clear its resume only after those updates.
     // An explicit level is a whole-level restart; the menu's Resume action omits it.
-    if (level !== undefined) { delete this.campaign.cureResume; delete this.campaign.l9Crash; }
+    if (level !== undefined) resetCampaignStoryForReplay(this.campaign);
     await this.loadLevel(`L${level??save.unlockedLevel}`);
     this.view.settings(settings);
   }
