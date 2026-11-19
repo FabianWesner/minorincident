@@ -26,10 +26,11 @@ export function focusedCriteria(levels: LevelReceipt[]): CriterionRow[] {
   add('L3-07 squad hits and player damage', '—', 'officer hits>0; player damage<100HP; 2 of 3 valid seeds pass', s1Vote.pass, `${s1Vote.within}/${s1Vote.measured} seeds pass (${survival.map(seed => `s${seed.seed}:${seed.s1?.officerHits ?? '—'} hits, ${seed.s1?.damage ?? '—'}HP`).join(', ')})`);
   const densityVote = l3SeedVerdict(survival.map(seed => ({ seed: seed.seed, valid: seed.valid, pass: seed.valid ? seed.density.near30[0] < seed.density.near30[1] && seed.density.near30[1] < seed.density.near30[2] && seed.density.maxConcurrent <= 100 : null })));
   add('L3-08 segment density and concurrent cap', '—', 'medianS1<S2<S3;max≤100 low; 2 of 3 valid seeds pass', densityVote.pass, `${densityVote.within}/${densityVote.measured} seeds pass (${survival.map(seed => `s${seed.seed}:${seed.density.near30.join('/')}`).join(', ')})`);
-  const attackSeeds = army?.seeds.map(seed => ({ seed: seed.seed, valid: seed.valid && seed.attacksPerMinute != null, pass: seed.attacksPerMinute == null ? null : seed.attacksPerMinute >= 3 && seed.attacksPerMinute <= 25 })) ?? [];
+  // PO 2026-11-19 raised L3-11's ceiling to 40/min; keep this summary aligned with the authoritative acceptance evaluator.
+  const attackSeeds = army?.seeds.map(seed => ({ seed: seed.seed, valid: seed.valid && seed.attacksPerMinute != null, pass: seed.attacksPerMinute == null ? null : seed.attacksPerMinute >= 3 && seed.attacksPerMinute <= 40 })) ?? [];
   const attackVote = l3SeedVerdict(attackSeeds);
   const attackValues = army?.seeds.map(seed => `s${seed.seed}:${seed.valid && seed.attacksPerMinute != null ? seed.attacksPerMinute.toFixed(2) + '/min' : 'unmeasured'}`).join(', ') ?? 'not measured';
-  add('L3-11 native competent rate', '—', '3–25 infected attacks against player/min; 2 of 3 valid seeds pass', attackVote.pass, `${attackValues}; ${attackVote.within}/${attackVote.measured}`);
+  add('L3-11 native competent rate', '—', '3–40 infected attacks against player/min (PO 2026-11-19); 2 of 3 valid seeds pass', attackVote.pass, `${attackValues}; ${attackVote.within}/${attackVote.measured}`);
   const hold = l4?.highHold;
   const lowHold = l4?.lowHold;
   const lowInfo = lowHold ? `LOW information (not gated): first breach ${lowHold.firstBreachLevelSeconds?.toFixed(2) ?? '—'} s / ${lowHold.aliveAtFirstBreach ?? '—'} alive; peak ${lowHold.peakAlive}; plaza minimum ${lowHold.minPlazaAliveAfter45Seconds ?? '—'}` : 'LOW information: not measured';
