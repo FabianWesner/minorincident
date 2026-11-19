@@ -11,6 +11,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 import { isCurrentOpenL6Gate } from '../../src/sim/missions/interaction';
 import { LevelSixBot } from '../../src/debug/bot/LevelSixBot';
 import { LevelSixSubway } from '../../src/sim/missions/LevelSixSubway';
+import { allyState } from '../../src/sim/outbreak/Allies';
 import { loadLevel as loadMissionLevel } from '../qa/invariants/world';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { l6, l6Entries, l6SpawnCandidates } from '../../src/data/l6';
@@ -55,6 +56,26 @@ async function l6FollowersCatchUpOnRoute(): Promise<void> {
     const injuredStart = { x: follower.transform.x, z: follower.transform.z };
     for (let i = 0; i < 300; i++) w.update();
     expect(Math.hypot(follower.transform.x - injuredStart.x, follower.transform.z - injuredStart.z), 'an injured follower leaves the side floor and joins retreat movement').toBeGreaterThan(1);
+  } finally { w.dispose(); }
+}
+
+async function l6EquipsCarriedSurvivors(): Promise<void> {
+  const w = await loadMissionLevel('L6', 1);
+  try {
+    const residents = w.missions!.state.l6!.survivors.slice(0, 8).map(row => structuredClone(w.entities.get(row.id)!));
+    for (const e of residents) delete e.civilian!.ally;
+    for (const e of residents.slice(1)) e.civilian!.ally = { ...allyState('civilian'), melee: { damage: 5, reachM: 1, swingS: 1 } };
+    const carriedGun = { damage: 17, shotS: 1, rangeM: 12, nearM: 8, hitNear: .5, hitFar: .2 };
+    residents[2].civilian!.ally = { ...allyState('civilian'), gun: carriedGun, weapon: 'pistol' };
+    w.progression!.campaign!.stationOccupants = residents;
+    w.progression!.campaign!.survivors = [];
+    vi.spyOn(w.barricades!, 'spawn').mockReturnValue(w.missions!.state.l6!.gates[0].id);
+    w.missions!.l6!.prepare();
+    const roster = w.missions!.state.l6!.survivors.map(row => w.entities.get(row.id)!);
+    expect(roster.filter(e => e.civilian!.ally?.gun)).toHaveLength(4);
+    expect(roster[0].civilian!.ally?.weapon).toBe('pistol');
+    expect(roster[1].civilian!.ally?.weapon).toBe('shotgun');
+    expect(roster[2].civilian!.ally?.gun).toEqual(carriedGun);
   } finally { w.dispose(); }
 }
 
@@ -242,7 +263,10 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   const def = missionSandbox('kill'); def.steps.push({ ...def.steps[0], id: 'reach', type: 'reach', start: { kind: 'objectives', ids: ['kill'], mode: 'all' }, complete: { kind: 'volume', anchor: 'goal', edge: 'inside' } }); def.finish = ['reach'];
   const api = await load(def), actor = api.state()!.actors;
   kill(actor.boss); api.completeObjective('kill'); world!.entities.get(1)!.weapons!.RIGHT.rack[0].charges = 2;
-  teleport(1, 1); api.checkpoint('C'); const saved = api.state()!;
+  teleport(1, 1); world!.entities.get(1)!.weapons!.corgiReady = world!.tick + 500;
+  api.checkpoint('C'); const saved = api.state()!;
+  step(30); world!.missions!.restore('C');
+  expect(world!.entities.get(1)!.weapons!.corgiReady! - world!.tick).toBe(500);
   teleport(actor.escort, 20); world!.entities.get(1)!.weapons!.RIGHT.rack[0].charges = 0;
   world!.player!.damage(1000, world!.tick); step(120);
   expect(api.state()!.completedObjectives).toEqual(saved.completedObjectives); expect(world!.entities.get(1)!.health.current).toBe(100);
@@ -303,6 +327,7 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   await shelterRecoveryIsShared();
   await northgateSurvivorsStayVisible();
   await l6FollowersCatchUpOnRoute();
+  await l6EquipsCarriedSurvivors();
   await l7DistanceAloneDoesNotPrompt();
 });
 

@@ -49,6 +49,8 @@ export class InputSystem implements Lifecycle {
   private cancelMove = false;
   private readonly clicks: { x: number; y: number }[] = [];
   private selectedWeaponKey: number | undefined;
+  private lure = false;
+  corgiLureOnce(): void { if (!this.drivingContext && !this.mountedGunContext) this.lure = true; }
   private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
   cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push({ direction: 1, side }); }
   private pause = false;
@@ -131,9 +133,9 @@ export class InputSystem implements Lifecycle {
     this.hint.textContent = this.drivingContext && scheme !== 'touch' ? scheme === 'mouse-only'
       ? 'Hold LMB and steer toward the cursor · release to brake · E / F exit'
       : 'W gas · S brake / reverse · A / D steer left / right · Space / K handbrake (throws boarders) · J / LMB horn / boost · E / F exit' : {
-      'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
-      'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
-      keyboard: 'WASD / arrows move · J / K / Space aim assist · 1–9 slots · Q · E / F interact',
+      'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / Shift+Q cycle · RMB next · G corgi lure · E / F interact · number keys select weapons',
+      'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / Shift+Q cycle · RMB next · G corgi lure · E / F interact · number keys select weapons',
+      keyboard: 'WASD / arrows move · J / K / Space aim assist · number keys select weapons · Q / Shift+Q cycle · G corgi lure · E / F interact',
       touch: 'Stick to move (driving: up gas, down brake / reverse, left / right steer) · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
     }[scheme];
   }
@@ -159,10 +161,14 @@ export class InputSystem implements Lifecycle {
   }
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
+    if (code === 'KeyG') { if (held) this.corgiLureOnce(); return; }
+    if (code === 'KeyQ') {
+      if (held && !this.drivingContext && !this.mountedGunContext) this.selectors.push({ direction: this.shift() ? -1 : 1, active: true });
+      return;
+    }
     if (held && /^Digit[0-9]$/.test(code)) {
       const key = code === 'Digit0' ? 10 : Number(code.slice(-1));
-      if (this.shift()) { if (key <= 3) this.selectedSlot = { side: 'RIGHT', index: key - 1 }; }
-      else if (!this.drivingContext && !this.mountedGunContext) this.selectedWeaponKey = key;
+      if (!this.drivingContext && !this.mountedGunContext) this.selectedWeaponKey = key;
       this.setScheme(this.pointer.valid ? 'mouse-keyboard' : 'keyboard'); return;
     }
     const action = held ? this.boundAction(code) : this.heldTokens.get(code);
@@ -302,6 +308,7 @@ export class InputSystem implements Lifecycle {
       if (this.touch.holdingLeft) frame.left.held = true;
       frame.right.held = this.touch.holdingRight;
     }
+    delete frame.corgiLure; if (this.lure) { frame.corgiLure = true; this.lure = false; }
     if (this.selectedWeaponKey !== undefined) { frame.selectedWeaponKey = this.selectedWeaponKey; this.selectedWeaponKey = undefined; }
     if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; frame.orderedSelection = true; this.selectedSlot = undefined; }
     const selection = this.selectors.shift();
@@ -332,6 +339,7 @@ export class InputSystem implements Lifecycle {
   }
   private frameNeutral(): InputFrame {
     delete this.frame.strafe;
+    delete this.frame.corgiLure; delete this.frame.selectedLegacyWeaponKey;
     const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.orderedSelection; delete frame.selectedActiveSlot; delete frame.selectedWeaponKey; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; delete frame.interactHeld; frame.pause = false; return frame;
@@ -343,7 +351,7 @@ export class InputSystem implements Lifecycle {
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
     this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.space.release(); this.active.clear(); this.heldTokens.clear();
-    this.clicks.length = 0; this.cancelMove = true; this.selectedSlot = undefined; this.selectedWeaponKey = undefined;
+    this.lure = false; this.clicks.length = 0; this.cancelMove = true; this.selectedSlot = undefined; this.selectedWeaponKey = undefined;
     this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }

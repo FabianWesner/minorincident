@@ -310,6 +310,16 @@ export class SolidRegistry {
     }
     return clear;
   }
+  /** Exact static contacts at a pose, for diagnostics and collision audits. */
+  staticContacts(at: Point, radius: number, ignoreId?: number): { id: number | string; depth: number; inside: boolean }[] {
+    const contacts: { id: number | string; depth: number; inside: boolean }[] = [];
+    const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
+    this.solids(at, radius, e, (box, id) => {
+      const c = boxContact(box, at.x, at.z, radius, this.contact);
+      if (c.inside || c.depth > 0) contacts.push({ id, depth: c.depth, inside: c.inside });
+    });
+    return contacts;
+  }
   /** Project every footprint probe, including the corgi's head/rear, along the contacted face. */
   private projectStatics(at: Point, radius: number, e: EntitySnapshot | undefined): boolean {
     let moved = false;

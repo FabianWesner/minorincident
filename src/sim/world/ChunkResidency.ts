@@ -116,7 +116,9 @@ export class ChunkResidency {
     const ai = this.world.infected, excess = new Set<number>();
     if (ai && ai.director.count > ai.director.cap - ai.director.reserved - ai.director.pendingTurns) {
       let count = ai.director.count; const player = this.world.entities.get(1)!.transform;
-      const candidates = ai.active.filter(e => this.managed(e) && e.health.current > 0);
+      // Door walkers have a live scripted route keyed by entity ID. Sleeping one
+      // during emergence makes its controller lose the route before it wakes.
+      const candidates = ai.active.filter(e => this.managed(e) && e.health.current > 0 && !e.emerging);
       candidates.sort((a, b) => Math.hypot(b.transform.x - player.x, b.transform.z - player.z) - Math.hypot(a.transform.x - player.x, a.transform.z - player.z) || b.id - a.id);
       for (const e of candidates) { if (count <= ai.director.cap - ai.director.reserved - ai.director.pendingTurns) break; excess.add(e.id); count -= e.archetype === 'infected.crow' ? e.infected!.birds * .25 : 1; }
     }

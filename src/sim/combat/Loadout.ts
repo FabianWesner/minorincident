@@ -1,36 +1,39 @@
-import { weaponKey } from '../../data/weaponKeys';
+import { weaponFallbackPriority, weaponKey } from '../../data/weaponKeys';
 import { compareWeapons } from '../../data/weaponOrder';
 import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number }
 export interface SideState { rack: ActionSlot[]; index: number; aim: Vec2; aimPoint: Vec2 | null; swapUntil: number; unarmed?: ActionSlot }
-export interface LoadoutState { selectedSide: Side; LEFT: SideState; RIGHT: SideState }
+export interface LoadoutState { corgiReady?: number; previous?: { side: Side; index: number; id: string }; selectedSide: Side; LEFT: SideState; RIGHT: SideState }
 const slot = (id: string, resolve: (id:string)=>ActionDef): ActionSlot => { const def = resolve(id); return { id, magazine: def.magazine, reserve: 'infinite', charges: def.charges, nextCharge: 0, reloadUntil: 0, readyAt: 0 }; };
 /** Rack timers belong to slots and survive cycling. Aim belongs to sides and survives cycling too. */
 export class Loadout {
   readonly state: LoadoutState;
-  private throwableReturn: { side: Side; index: number } | null = null;
   constructor(left: string[], right: string[], readonly definition: (id:string)=>ActionDef = action, readonly capacity = 3) {
     for (const rack of [left, right]) if (rack.length < 1 || rack.length > this.capacity) throw new RangeError(`Racks require 1–${this.capacity} actions`);
-    const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
+    const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: rack.findIndex(id => id !== 'ability.corgi-lure'), aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
     this.state = { selectedSide: 'LEFT', LEFT: side(left), RIGHT: side(right) };
   }
   /** Presentation order leaves slot storage, checkpoint indices and cooldowns intact. */
   orderedEntries(side: Side): { side: Side; index: number; id: string }[] {
-    return this.state[side].rack.map((slot, index) => ({ side, index, id: slot.id })).sort((a, b) => compareWeapons(a.id, b.id));
+    return this.state[side].rack.flatMap((slot, index) => slot.id === 'ability.corgi-lure' ? [] : [{ side, index, id: slot.id }]).sort((a, b) => compareWeapons(a.id, b.id));
   }
   /** Ordered carried actions for mouse selection; kick is part of unarmed, not a slot. */
   activeEntries(): { side: Side; index: number; id: string }[] {
     const seen = new Set<string>();
     const entries = (['LEFT', 'RIGHT'] as const).flatMap(side => this.state[side].rack.flatMap((slot, index) => {
+      if (slot.id === 'ability.corgi-lure') return [];
       const id = slot.id === 'weapon.kick' ? 'weapon.fists' : slot.id;
       if (seen.has(id)) return [];
       seen.add(id); return [{ side, index, id }];
     }));
     // Innate fists have no carried rack slot. The sentinel preserves campaign
     // arsenal/checkpoint invariants even at the axe-only L10 crash start.
-    if (!seen.has('weapon.fists')) entries.push({ side: 'LEFT', index: -1, id: 'weapon.fists' });
+    if (!seen.has('weapon.fists') && !entries.some(entry => this.definition(entry.id).category === 'melee')) entries.push({ side: 'LEFT', index: -1, id: 'weapon.fists' });
+    else if (entries.some(entry => entry.id !== 'weapon.fists' && this.definition(entry.id).category === 'melee')) {
+      const fists = entries.findIndex(entry => entry.id === 'weapon.fists'); if (fists >= 0) entries.splice(fists, 1);
+    }
     return entries.sort((a, b) => compareWeapons(a.id, b.id));
   }
   cycleActive(direction: number, tick: number): void {
@@ -53,7 +56,8 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    const keyed = frame.selectedWeaponKey === undefined ? undefined : this.activeEntries().find(entry => weaponKey(entry.id) === frame.selectedWeaponKey);
+    const legacyEntries = frame.selectedLegacyWeaponKey === undefined ? [] : (['LEFT', 'RIGHT'] as const).flatMap(name => this.state[name].rack.map((slot, index) => ({ side: name, index, id: slot.id })));
+    const keyed = frame.selectedLegacyWeaponKey === weaponKey('weapon.fists') ? { side: 'LEFT' as const, index: -1 } : frame.selectedLegacyWeaponKey !== undefined ? legacyEntries.find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
     const choice = keyed ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];
@@ -66,14 +70,28 @@ export class Loadout {
     else if (frame.selector && tick >= this.state[this.state.selectedSide].swapUntil) {
       const cycling = this.state[this.state.selectedSide];
       const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
-      cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15;
+      if (entries.length) { cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15; }
     }
     const selectedSide = this.state.selectedSide, selectedId = this.current(selectedSide).id;
-    if (selectedId !== beforeId) {
-      if (this.definition(selectedId).category === 'throwable') {
-        if (this.definition(beforeId).category !== 'throwable') this.throwableReturn = { side: beforeSide, index: beforeIndex };
-      } else this.throwableReturn = null;
-    }
+    if (selectedId !== beforeId) this.state.previous = { side: beforeSide, index: beforeIndex, id: beforeId };
+  }
+  /** Return to the last selection only if that same slot is still usable. */
+  returnToPrevious(tick: number): boolean {
+    const previous = this.state.previous;
+    if (!previous) return false;
+    const state = this.state[previous.side];
+    const slot = previous.index === -1 ? state.unarmed : state.rack[previous.index];
+    if (!slot || slot.id !== previous.id || !this.hasAmmo(slot)) return false;
+    delete this.state.previous;
+    this.state.selectedSide = previous.side; state.index = previous.index; state.swapUntil = tick + 15;
+    return true;
+  }
+  fallback(tick: number): void {
+    if (this.returnToPrevious(tick)) return;
+    const best = this.activeEntries().filter(e => weaponFallbackPriority(e.id) !== undefined && (e.index === -1 || this.hasAmmo(this.state[e.side].rack[e.index])))
+      .sort((a, b) => weaponFallbackPriority(b.id)! - weaponFallbackPriority(a.id)!)[0] ?? { side: 'LEFT' as const, index: -1 };
+    this.state.selectedSide = best.side; this.state[best.side].index = best.index; this.state[best.side].swapUntil = tick + 15;
+    delete this.state.previous;
   }
   /** Adds to selected rack; retained campaign pickups expand it, other full racks replace the current slot. */
   collect(side: Side, id: string, retain = false): string | null {
@@ -108,10 +126,7 @@ export class Loadout {
     if (def.magazine && --slot.magazine === 0) slot.reloadUntil = tick + ticks(def.reloadTime);
     if (def.charges && !infiniteCharges) {
       slot.charges--; if (!slot.nextCharge) slot.nextCharge = tick + ticks(def.recharge);
-      if (slot.charges === 0 && this.throwableReturn) {
-        const previous = this.throwableReturn; this.throwableReturn = null;
-        this.state.selectedSide = previous.side; this.state[previous.side].index = previous.index; this.state[previous.side].swapUntil = tick + 15;
-      }
     }
+    if (!this.hasAmmo(slot) && this.state.selectedSide === side) this.fallback(tick);
   }
 }

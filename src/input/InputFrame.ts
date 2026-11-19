@@ -28,8 +28,12 @@ export interface InputFrame {
   pointerGround?: boolean;
   /** Ignored legacy field retained for decoding historical recordings. */
   pointerTarget?: boolean;
-  /** Fixed campaign weapon shortcut (1–9); missing weapons are ignored. */
+  /** One-based position in the visible carried rack. */
   selectedWeaponKey?: number;
+  /** Activate the corgi lure independently of the weapon rack. */
+  corgiLure?: boolean;
+  /** Historical catalog shortcut decoded from recordings made before rack positions. */
+  selectedLegacyWeaponKey?: number;
   /** Carried-list index for HUD/test/replay commands. */
   selectedActiveSlot?: number;
   /** Direct rack slot choice. Out-of-range slots are ignored. */

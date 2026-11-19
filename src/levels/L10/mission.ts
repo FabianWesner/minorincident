@@ -22,8 +22,8 @@ export const cureAnchorNames = [...cureCheckpoints, ...cureWeaponPickups.map(p =
 /** Elapsed eligible simulation ticks (durations, not absolute timestamps), available to S7/S9. */
 export const cureCounters = ['charge-ticks', 'epilogue-ticks', 'story-region', 'pace-checkpoint', 'pace-mm', 'hangar-line', 'hangar-line-ticks'];
 export const cureStates = ['charge-active', 'console-held', 'terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished', 'story-initialized', 'sam-alive', 'gap-hint', 'hangar-radio', 'hangar-cast', 'hangar-dialogue-done', 'arena-equipped', 'gate-spent', 'delivery-notified', 'epilogue-rosa', 'epilogue-sam', ...cureWeaponPickups.map(p => `found-${p.id}`)];
-/** The safe hangar returns the whole pre-crash arsenal and issues the experimental final weapon. */
-export const cureHangarWeapons = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher', 'weapon.pipe-bomb', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.machete', 'weapon.molotov', 'weapon.assault-rifle', 'weapon.flashbang', 'weapon.flamethrower'];
+/** The hangar issues one weapon for each combat role. */
+export const cureHangarWeapons = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb'];
 /** Optional anchors let region lanes land independently. Missing anchors cannot complete spatial objectives. */
 export function levelTenMission(resolve: (name: string) => Anchor | undefined): MissionDef {
   const crash = resolve('cure-crash');
@@ -50,7 +50,7 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('research', 'Enter the hangar', 'cure-terminal', flag('hangar-dialogue-done'), [{ kind: 'state', key: 'terminal-read', value: true }]);
   step('cure', 'Bring the cure to the dispersal complex', 'cure-canister', spatial('cure-canister'), [
     { kind: 'grant', item: 'cure-canister' }, { kind: 'state', key: 'cure-carried', value: true },
-    { kind: 'arsenal', add: cureHangarWeapons, remove: [] }, { kind: 'checkpoint', id: 'cure-research' },
+    { kind: 'arsenal', add: cureHangarWeapons, remove: ['weapon.bat', 'weapon.army-mg', 'weapon.flashbang'] }, { kind: 'checkpoint', id: 'cure-research' },
   ], 'collect');
   step('research-exit', 'Bring the cure to the dispersal complex', 'cure-research', spatial('cure-research'), [{ kind: 'checkpoint', id: 'cure-research' }], 'reach');
   step('delivery-corridor', 'Bring the cure to the dispersal complex', 'cure-corridor', spatial('cure-corridor'), [{ kind: 'checkpoint', id: 'cure-corridor' }], 'reach');

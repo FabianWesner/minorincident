@@ -289,7 +289,7 @@ export class InfectedSystem {
     delete entity.emerging; delete entity.doorLane;
     delete entity.infected!.scripted; delete entity.infected!.clearingStreet; delete entity.infected!.breachApproach; delete entity.infected!.l4FlankTarget;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
-    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.staggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
+    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.pipeBombReady; delete entity.infected!.staggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
     delete entity.infected!.arenaBoss; delete entity.infected!.arenaCarrier;
     delete entity.infected!.megaPhase; delete entity.infected!.megaWeakTicks; delete entity.infected!.megaBurnTicks; delete entity.infected!.megaArmourBroken;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
@@ -370,8 +370,9 @@ export class InfectedSystem {
       // G-22: an L4 cohort routed to the courier already walks to the shooter.
       // Her gunfire must not swap its wire, vault or inside leg for a straight
       // walk to the heard point, which stalls the body against the camp wire.
-      // An exterior leg to an open breach may still take the heard shortcut.
-      if (this.world.scenario === 'L4' && b.breachApproach && b.breachApproach !== 'outside' && (b.pressureTarget?.id ?? b.l1?.focusId ?? b.l4FlankTarget ?? 1) === source.id) continue;
+      // An exterior leg to an open breach may still take the heard shortcut,
+      // except on the low tier, whose breach cohorts keep their mouth leg.
+      if (this.world.scenario === 'L4' && b.breachApproach && (this.director.tier === 'low' || b.breachApproach !== 'outside') && (b.pressureTarget?.id ?? b.l1?.focusId ?? b.l4FlankTarget ?? 1) === source.id) continue;
       delete b.scripted; delete b.breachApproach;
       if (b.l1) this.rush(e.id, position, this.world.tick + 360);
       else { b.investigate = { ...position }; b.until = this.world.tick + 360; b.state = 'attracted'; }
@@ -945,7 +946,7 @@ export class InfectedSystem {
     if (b.special === 'scream') { this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: e.id, actionId: e.archetype, position: { ...e.transform }, ...noise.scream, kind: 'scream' }); return true; }
     if (b.special === 'revive' && !b.reviveUsed) {
       const downed = this.revivable(e);
-      if (downed && this.director.count + (this.director.strict ? 0 : 1) <= this.director.cap) {
+      if (downed && this.director.count + (this.director.strict && !this.director.downedExcluded ? 0 : 1) <= this.director.cap) {
         downed.health.current = downed.health.max; downed.infected!.recoverAt = -1; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true;
       }
     }
@@ -1022,15 +1023,18 @@ export class InfectedSystem {
     const [low, high] = infectedRecovery.downS;
     const u = new Rng(this.world.seed, `infected-recover:${e.id}:${b.downs++}`).next();
     b.downedAt = this.world.tick;
-    const recoverAt = b.recoverAt = this.world.tick + Math.round((low + (high - low) * u) * 60);
-    return recoverAt;
+    return b.recoverAt = this.world.tick + Math.round((low + (high - low) * u) * 60);
   }
   /** Downed infected stay active and groan once on the ground; at `recoverAt` they get up at full health and hunt by sight again. */
   private recover(e: EntitySnapshot): void {
     const b = e.infected!, c = e.combat!, tick = this.world.tick, getUp = Math.round(infectedRecovery.getUpS * 60);
+    // L4 low (downed excluded from the living cap): a get-up is an admission and waits for a free living slot.
+    if (this.director.downedExcluded && !this.director.recoveryRoom()) { b.recoverAt = tick + 30; return; }
     // Tent residents wait for a clear footprint before visibly standing back up.
     if (this.world.scenario === 'L4' && e.emerging && !this.world.solids.clear(e.transform, e.combat!.radius, e.id)) return;
     e.health.current = e.health.max; b.recoverAt = -1; b.downedAt = undefined; b.deadAt = -1; b.grabUntil = 0; b.until = 0; b.cooldown = tick + getUp; b.targetId = 0; b.heardTargetId = 0;
+    // The risen body now holds a living slot: shrink the elastic low-tier reservations to keep the caps.
+    if (this.director.downedExcluded) this.director.clampReserved();
     c.attacking = false; c.statuses.length = 0; c.staggerUntil = tick + getUp;
     // The CrowdView heavy reaction plays `get-up` from its 0.7 s mark: start the reaction there and hold still meanwhile.
     c.reaction = { index: c.reaction?.index ?? 0, started: tick - 42, until: tick + getUp, direction: { x: 0, z: 0 }, from: { x: e.transform.x, z: e.transform.z }, to: { x: e.transform.x, z: e.transform.z }, heavy: true };
@@ -1625,6 +1629,7 @@ export class InfectedSystem {
     if (b.alphaSpecialStarted !== undefined) b.alphaSpecialStarted += delta;
     if (b.pressureTarget) b.pressureTarget.until += delta;
     if (b.megaStaggerReady !== undefined) b.megaStaggerReady += delta;
+    if (b.pipeBombReady !== undefined) b.pipeBombReady += delta;
     if (b.staggerReady !== undefined) b.staggerReady += delta;
     if (b.specialAttack?.grabReleaseTick !== undefined) b.specialAttack.grabReleaseTick += delta;
     if (b.roar) { b.roar.until += delta; if (b.roar.speedUntil !== undefined) b.roar.speedUntil += delta; }

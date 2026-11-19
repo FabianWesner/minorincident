@@ -1,0 +1,141 @@
+{
+  "method": "Headless real-input HIGH zoom 1 Simple seed 1 with PLAYTEST_ACCEPTANCE_LEDGER=1; attack starts attributed by active objective; checkpoint retries included.",
+  "run": {
+    "level": "L6",
+    "entry": "debug",
+    "heroine": "female",
+    "finished": true,
+    "skipped": [],
+    "wallSeconds": 292,
+    "simSeconds": 284,
+    "maxNoProgressSeconds": 32.495,
+    "deaths": 4,
+    "assists": 0,
+    "attacks": {
+      "weapon.army-mg": 1053,
+      "weapon.fire-axe": 65
+    },
+    "weaponsStart": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "weapon.kick",
+      "weapon.shotgun"
+    ],
+    "weaponsEnd": [
+      "weapon.fire-axe",
+      "weapon.bat",
+      "weapon.army-mg",
+      "weapon.handgun",
+      "weapon.kick",
+      "weapon.shotgun"
+    ],
+    "steps": [
+      {
+        "id": "shelter",
+        "text": "Look around the shelter · rest while you can",
+        "tick": 13,
+        "marker": {
+          "anchor": null,
+          "ring": null,
+          "drawn": null,
+          "playerY": 1.3200000524520874,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "stop",
+        "text": "Stop the infected · Retreat in 0:36",
+        "tick": 1998,
+        "marker": {
+          "anchor": null,
+          "ring": null,
+          "drawn": null,
+          "playerY": 1.3200000524520874,
+          "pinVisible": false
+        }
+      },
+      {
+        "id": "retreat",
+        "text": "Cover the retreat through the tunnel · 241 m",
+        "tick": 3259,
+        "marker": {
+          "anchor": "l6-next",
+          "ring": {
+            "x": 242,
+            "y": 0.6,
+            "z": 15
+          },
+          "drawn": [
+            242,
+            0.6,
+            15
+          ],
+          "playerY": 1.440000057220459,
+          "pinVisible": true
+        }
+      },
+      {
+        "id": "exit",
+        "text": "Bring the survivors into the night · 0/7 out · 9 m",
+        "tick": 15382,
+        "marker": {
+          "anchor": "l6-stair",
+          "ring": {
+            "x": 250,
+            "y": 1.0125,
+            "z": 15
+          },
+          "drawn": [
+            250,
+            1.01,
+            15
+          ],
+          "playerY": 1.2699999809265137,
+          "pinVisible": true
+        }
+      }
+    ]
+  },
+  "issues": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 1,
+    "P3": 0
+  },
+  "steps": {
+    "shelter": {
+      "ticks": 1991,
+      "playerWindups": 0,
+      "groupWindups": 0,
+      "playerDamage": 0,
+      "peakAlive": 0
+    },
+    "stop": {
+      "ticks": 1261,
+      "playerWindups": 6,
+      "groupWindups": 21,
+      "playerDamage": 40,
+      "peakAlive": 8
+    },
+    "retreat": {
+      "ticks": 12121,
+      "playerWindups": 154,
+      "groupWindups": 135,
+      "playerDamage": 417.09999999999786,
+      "peakAlive": 49
+    },
+    "exit": {
+      "ticks": 1354,
+      "playerWindups": 80,
+      "groupWindups": 6,
+      "playerDamage": 120,
+      "peakAlive": 48
+    }
+  },
+  "retreatRates": {
+    "playerPerMinute": 45.738800429007505,
+    "followersPerMinute": 40.095701674779306
+  }
+}

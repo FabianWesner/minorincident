@@ -1,0 +1,163 @@
+{
+  "scope": "HIGH only, skip-browser; not full acceptance",
+  "sourceHash": "d6a78d691618bec3146b857d3cfd8d96fd023054c03532673cfd55c9651c3b32",
+  "observerHash": "fb99889ee494c524f44bcb2e289fe1d7f21b82abb2fd6ca824315c771de3ede7",
+  "run": {
+    "level": "L6",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 214.25,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 20,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "shelter",
+        "t": 33.2
+      },
+      {
+        "id": "stop",
+        "t": 69.21666666666667
+      },
+      {
+        "id": "retreat",
+        "t": 200.6
+      },
+      {
+        "id": "exit",
+        "t": 209.25
+      }
+    ],
+    "furthestObjective": "exit",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 156,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "l6PressureSeeds": [
+    {
+      "seed": 1,
+      "valid": true,
+      "outcome": "complete",
+      "seconds": 131.38333333333333,
+      "playerRate": 5.023468222757833,
+      "followerRate": 10.046936445515666,
+      "arrivals": 40,
+      "ahead": 40,
+      "behind": 0
+    },
+    {
+      "seed": 2,
+      "valid": true,
+      "outcome": "complete",
+      "seconds": 127.23333333333333,
+      "playerRate": 3.772596279800891,
+      "followerRate": 7.545192559601782,
+      "arrivals": 36,
+      "ahead": 36,
+      "behind": 0
+    },
+    {
+      "seed": 3,
+      "valid": true,
+      "outcome": "complete",
+      "seconds": 134.08333333333334,
+      "playerRate": 2.237414543194531,
+      "followerRate": 4.474829086389062,
+      "arrivals": 40,
+      "ahead": 40,
+      "behind": 0
+    }
+  ],
+  "rows": [
+    {
+      "id": "L6-05",
+      "status": "FAIL",
+      "failures": [
+        {
+          "clause": "combat hard rule on actual player windups",
+          "value": {
+            "seconds": 36.016666666666666,
+            "playerWindups": 0,
+            "groupWindups": 15,
+            "attacksPerMinute": 0
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "value": 0,
+          "target": "4 \u2264 value \u2264 Infinity"
+        }
+      ]
+    },
+    {
+      "id": "L6-07",
+      "status": "FAIL",
+      "failures": [
+        {
+          "clause": "retreat player windups per minute (seed 1)",
+          "value": 5.023468222757833,
+          "target": "11 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "retreat pressure and arrivals across seeds 1\u20133",
+          "value": [
+            {
+              "seed": 1,
+              "valid": true,
+              "outcome": "complete",
+              "seconds": 131.38333333333333,
+              "playerRate": 5.023468222757833,
+              "followerRate": 10.046936445515666,
+              "arrivals": 40,
+              "ahead": 40,
+              "behind": 0
+            },
+            {
+              "seed": 2,
+              "valid": true,
+              "outcome": "complete",
+              "seconds": 127.23333333333333,
+              "playerRate": 3.772596279800891,
+              "followerRate": 7.545192559601782,
+              "arrivals": 36,
+              "ahead": 36,
+              "behind": 0
+            },
+            {
+              "seed": 3,
+              "valid": true,
+              "outcome": "complete",
+              "seconds": 134.08333333333334,
+              "playerRate": 2.237414543194531,
+              "followerRate": 4.474829086389062,
+              "arrivals": 40,
+              "ahead": 40,
+              "behind": 0
+            }
+          ],
+          "target": "each complete seed: arrivals\u22654.4/min, ahead\u22651, behind\u22651, player\u226511/min, followers\u22655/min"
+        },
+        {
+          "clause": "actual HP lost during retreat",
+          "value": 20,
+          "target": "30 \u2264 value \u2264 Infinity"
+        }
+      ]
+    }
+  ],
+  "fixtures": "8 clauses, 0 errors",
+  "checkpoints": "7 passed, identical control, 0 errors",
+  "incompleteRows": 12,
+  "limitations": "Manifest-only runner printed missing Git HEAD errors; review freshness not established."
+}

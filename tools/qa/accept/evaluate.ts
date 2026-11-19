@@ -31,8 +31,8 @@ const attackRows: Record<string, { id: string; phase: string; first?: number; ra
 /** Each clause states its limited scope. Passing a subset never closes a compound source row. */
 export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   const checks: Clause[] = [];
-  const add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined, evidencePath = path) => {
-    checks.push({ id, clause, level: receipt.level, tier: receipt.tier, policy: receipt.policy, status: pass === undefined ? 'NOT CHECKED' : pass ? 'PASS' : 'FAIL', value, target, receipt: evidencePath });
+  const add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined, evidencePath = path, policy: string = receipt.policy) => {
+    checks.push({ id, clause, level: receipt.level, tier: receipt.tier, policy, status: pass === undefined ? 'NOT CHECKED' : pass ? 'PASS' : 'FAIL', value, target, receipt: evidencePath });
   };
   const number = (id: string, clause: string, value: number | null | undefined, min: number, max: number) => add(id, clause, value ?? null, `${min} ≤ value ≤ ${max}`, value == null ? undefined : value >= min && value <= max);
   const observation = receipt.observation, threat = receipt.threat;
@@ -75,8 +75,10 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   }
   const allowed = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'];
   const offered = [...new Set([...(initial.racks?.LEFT ?? []), ...(initial.racks?.RIGHT ?? [])])].filter(id => id.startsWith('weapon.') && !['weapon.fists', 'weapon.kick'].includes(id));
-  const n = Number(receipt.level.slice(1)), maximum = n === 10 ? ['weapon.fire-axe'] : allowed.slice(0, n <= 5 ? n : n < 7 ? 5 : 6);
-  add('G-16', 'weapons offered in the ordinary initial racks', offered, n === 10 ? 'exactly [axe]' : `subset of ${JSON.stringify(n === 1 ? [] : maximum)}`, n === 10 ? offered.length === 1 && offered[0] === 'weapon.fire-axe' : offered.every(id => (n === 1 ? [] : maximum).includes(id)));
+  // PO 2026-11-19 (level-acceptance L9-08): the L9 crossing loses the whole arsenal including
+  // the axe; L10 starts unarmed and the crash-site machete is a retained pickup, not a rack weapon.
+  const n = Number(receipt.level.slice(1)), maximum = n === 10 ? [] : allowed.slice(0, n <= 5 ? n : n < 7 ? 5 : 6);
+  add('G-16', 'weapons offered in the ordinary initial racks', offered, n === 10 ? 'none (fists only; the crash-site machete is a pickup)' : `subset of ${JSON.stringify(n === 1 ? [] : maximum)}`, n === 10 ? offered.length === 0 : offered.every(id => (n === 1 ? [] : maximum).includes(id)));
   add('G-19', 'corgi health and real infected attack targets', observation.corgi, 'health fraction=1; zero target windups and damaging hits', observation.corgi.samples ? observation.corgi.minimumHealthFraction === 1 && observation.corgi.targeted === 0 && observation.corgi.hit === 0 : undefined);
   const runOut = observation.runOut;
   add('G-20', 'engaged run-out duration and invulnerability', runOut, '300 ticks ±1; invulnerability through deadline', runOut ? Math.abs(runOut.until - runOut.tick - 300) <= 1 && runOut.minimumInvulnerableUntil >= runOut.until : undefined);
@@ -303,7 +305,13 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       }
       if (competent) {
         add('L6-07', 'ordinary retreat route completion', receipt.run?.outcome, 'complete', receipt.run?.completed);
-        number('L6-07', 'retreat player/group windups per minute', phase('step/retreat') ? phase('step/retreat')!.attacksPerMinute + phase('step/retreat')!.groupAttacksPerMinute : null, 4, Infinity);
+        number('L6-07', 'retreat player windups per minute (seed 1)', phase('step/retreat')?.attacksPerMinute, 11, Infinity);
+        number('L6-07', 'retreat follower windups per minute (seed 1)', phase('step/retreat')?.groupAttacksPerMinute, 5, Infinity);
+        const pressureSeeds = receipt.l6PressureSeeds;
+        const pressureComplete = pressureSeeds?.length === 3 && [1, 2, 3].every(seed => pressureSeeds.some(row => row.seed === seed && row.valid && row.seconds !== null && row.seconds > 0 && row.playerRate !== null && row.followerRate !== null));
+        add('L6-07', 'retreat pressure and arrivals across seeds 1–3', pressureSeeds ?? null,
+          'each complete seed: arrivals≥4.4/min, ahead≥1, behind≥1, player≥11/min, followers≥5/min',
+          pressureComplete ? pressureSeeds!.every(row => row.arrivals * 60 / row.seconds! >= 4.4 && row.ahead >= 1 && row.behind >= 1 && row.playerRate! >= 11 && row.followerRate! >= 5) : undefined, path, 'multi-seed');
         number('L6-07', 'actual HP lost during retreat', observation.l6RetreatDamage, 30, Infinity);
         number('L6-07', 'retreat concurrent infected cap', observation.phasePeaks.retreat?.alive, 0, low ? 30 : 60);
         const result = state.result;
@@ -501,7 +509,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L10-03', 'route duration near fifteen-minute target', competent && receipt.run?.completed ? receipt.run.time : null, 600, 1200);
       number('L10-04', 'ordinary route concurrent bound', story?.outsideAssaultPeak, 0, 15);
       add('L10-04', 'infected move before first widest-frame entry', story, 'nonempty observed census; zero first-entry idle actors', story?.seen ? story.idleEntries.length === 0 : undefined);
-      add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'every returned weapon plus flamethrower present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
+      add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'exactly the ten issued hangar weapons present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
       number('L10-07', 'continuous Mega maximum step', observation.maxMegaStep, 0, 1);
       const hold = phase('step/hold');
       if (hold && !competent) {
@@ -639,7 +647,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),
     ...['l6.breach1', 'l6.breach2'].map(name => ({ clause: `stationary first attack after ${name}`, policy: 'stationary' })),
   ]],
-  ['L6-07', ['ordinary retreat route completion', 'retreat player/group windups per minute', 'actual HP lost during retreat', 'retreat concurrent infected cap'].map(clause => ({ clause, policy: 'complete' }))],
+  ['L6-07', [
+    ...['ordinary retreat route completion', 'retreat player windups per minute (seed 1)', 'retreat follower windups per minute (seed 1)', 'actual HP lost during retreat', 'retreat concurrent infected cap'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'retreat pressure and arrivals across seeds 1–3', policy: 'multi-seed' },
+  ]],
   ['L7-01', [
     { clause: 'native launcher horizontal distance from night-exit checkpoint', policy: 'complete' },
     ...['physical launcher approach pickup and first rocket frame gate', 'reviewed actual launcher first-rocket captures'].map(clause => ({ clause, policy: 'physical-pickup' })),
@@ -692,7 +703,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['ordinary route concurrent bound', 'infected move before first widest-frame entry'].map(clause => ({ clause, policy: 'complete' })),
     { clause: 'observed quiet stretches and authored scare cadence', policy: 'complete' },
   ]],
-  ['L10-05', ['six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
+  ['L10-05', ['crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', 'inventory alone does not release enemies at the crash start', 'inventory alone does not change admissions at pickup locations', 'six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L10-06', [
     ...['native dog speed ratio', 'actual dog hit damage/reach', 'actual dog telegraph duration', 'dog cooldown between hit and next windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...[.5, 1.5].map(zoom => ({ clause: `reviewed living infected dog distinct from corgi at zoom${zoom}`, policy: 'real-input-webgl2' })),

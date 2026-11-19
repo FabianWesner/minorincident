@@ -8,11 +8,12 @@ import { ActionRunner, type Attack } from './ActionRunner';
 import { Loadout } from './Loadout';
 import { Damage } from './Damage';
 import { HitQuery } from './HitQuery';
+import { fireTarget } from './friendlyFire';
 import { AimAssist } from './AimAssist';
 import { Status } from './Status';
 import { ticks } from '../../data/actions/schema';
-import { actionExplosions } from '../../data/explosions';
-import { weaponFallbackPriority } from '../../data/weaponKeys';
+import { actionExplosions, blastDamage, explosionDef } from '../../data/explosions';
+import { action } from '../../data/actions/catalog';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
@@ -37,7 +38,7 @@ export class Combat {
   private readonly origin = { x: 0, y: 0, z: 0 };
   constructor(private readonly world: SimWorld, readonly definition: ScenarioDefinition) {
     this.rng = new Rng(world.seed, 'combat');
-    this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? [], world.interactables?.walls);
+    this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? [], world.interactables?.walls, () => world.difficulty === 'hard');
     this.effects = new ActionEffects(world); this.pickups = new Pickups(world);
     this.damage = new Damage(world); this.status = new Status(world); this.assist = new AimAssist(world.entities, this.query, point => world.infected?.director.inPlayerView(point, Infinity, 1) ?? true);
     this.runner = new ActionRunner(1, new Loadout(['weapon.bat', 'weapon.pistol'], ['weapon.grenade', 'ability.ground-slam']));
@@ -50,6 +51,7 @@ export class Combat {
   }
   setLoadout(left: string[], right: string[], sequence = this.runner.lastAttackId): void {
     const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions), this.rackCapacity), infinite = this.runner.infiniteCharges;
+    if (this.runner.loadout.state.corgiReady !== undefined) loadout.state.corgiReady = this.runner.loadout.state.corgiReady;
     this.runner = new ActionRunner(1, loadout, Math.max(this.runner.lastAttackId, sequence)); this.runner.infiniteCharges = infinite; this.attach();
   }
   /**
@@ -82,11 +84,15 @@ export class Combat {
     const canUseCarriedWeapon = (this.world.vehicles?.active == null || !!this.world.missions?.l9?.driving.hatch) && this.world.missions?.l9?.state.phase !== 'crawl';
     if (emptySide && player.health.current > 0 && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick)) {
       this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: loadout.current(emptySide).id, position: { ...player.transform } });
-      const best = loadout.activeEntries().filter(e => weaponFallbackPriority(e.id) !== undefined && (e.index === -1 || loadout.hasAmmo(loadout.state[e.side].rack[e.index])))
-        .sort((a, b) => weaponFallbackPriority(b.id)! - weaponFallbackPriority(a.id)!)[0]!;
-      loadout.state.selectedSide = best.side; loadout.state[best.side].index = best.index; loadout.state[best.side].swapUntil = this.world.tick + 15;
+      loadout.fallback(this.world.tick);
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
+    }
+    const hasLure = this.world.progression?.campaign?.ownedActions.includes('ability.corgi-lure') || (['LEFT', 'RIGHT'] as const).some(side => loadout.state[side].rack.some(slot => slot.id === 'ability.corgi-lure'));
+    if (frame.corgiLure && hasLure && player.health.current > 0 && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick) && this.world.tick >= (loadout.state.corgiReady ?? 0)) {
+      const def = loadout.definition('ability.corgi-lure') ?? action('ability.corgi-lure'), tick = this.world.tick;
+      loadout.state.corgiReady = tick + ticks(def.cooldown);
+      this.effects.create({ id: -tick - 1, sourceId: 1, side: loadout.state.selectedSide, def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, player.transform);
     }
     this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
     this.updateProjectiles();
@@ -135,7 +141,8 @@ export class Combat {
   private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1, shotOrigin?: Vec2, centreShot = false): void {
     if (attack.hit.has(target.id)) return;
     attack.hit.add(target.id);
-    if (attack.inPlace && type === 'melee' && target.faction === 'civilian' && target.civilian) {
+    // s178 Hard: an in-place swing on a civilian deals friendly-fire damage instead of the harmless "Hey!" annoy.
+    if (attack.inPlace && type === 'melee' && target.faction === 'civilian' && target.civilian && this.world.difficulty !== 'hard') {
       this.world.npcs?.civilians.annoy(target, attack.aim); return;
     }
     if (attack.def.id === 'weapon.kick' && this.world.props?.kick(target.id, attack.aim)) return;
@@ -161,8 +168,9 @@ export class Combat {
       return;
     }
     for (const target of this.query.splash(position, splash.radius)) {
-      const distance = Math.hypot(target.transform.x - position.x, target.transform.z - position.z, target.transform.y - 0.7);
-      const falloff = Math.max(0, 1 - splash.falloff * distance / splash.radius);
+      const distance = def.id === 'weapon.molotov' ? Math.hypot(target.transform.x - position.x, target.transform.z - position.z) : Math.hypot(target.transform.x - position.x, target.transform.z - position.z, target.transform.y - 0.7);
+      const molotov = def.id === 'weapon.molotov' ? explosionDef('explosion.molotov') : null;
+      const falloff = molotov ? blastDamage(molotov, distance, splash.radius) / molotov.damage : Math.max(0, 1 - splash.falloff * distance / splash.radius);
       if (def.category === 'ability' && target.faction !== 'infected') continue;
       this.hit(attack, target, position, def.category === 'ability' ? 'melee' : 'explosive', falloff);
     }
@@ -255,9 +263,11 @@ export class Combat {
     const def = attack.def, window = Math.max(1, attack.recoveryAt - attack.activeAt);
     const swept = Math.PI * 2 * Math.min(1, (this.world.tick - attack.activeAt + 1) / window), start = deterministicAtan2(attack.aim.z, attack.aim.x);
     // The sweep connects with the nearest few only (PO: fight a few, never the whole crowd at once).
+    // s178 Hard: living humans are swept too (friendly fire both ways; corgi/pets/zoo animals stay out).
     if (!attack.sweep) {
       const d = (e: EntitySnapshot) => Math.hypot(e.transform.x - source.transform.x, e.transform.z - source.transform.z);
-      attack.sweep = this.query.melee(source.id, source.transform, attack.aim, def.range, 360, 1000).filter(e => e.faction === 'infected')
+      attack.sweep = this.query.melee(source.id, source.transform, attack.aim, def.range, 360, 1000)
+        .filter(e => e.faction === 'infected' || this.world.difficulty === 'hard' && fireTarget(e))
         .sort((a, b) => d(a) - d(b) || a.id - b.id).slice(0, def.maxTargets).map(e => e.id);
     }
     for (const id of attack.sweep) {

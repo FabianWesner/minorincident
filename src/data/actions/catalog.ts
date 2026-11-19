@@ -19,8 +19,10 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // the crowd battery: the PO's "fight a few, not all at once" - stand vs 4-6 wins, stand vs 10 loses (l1-crowd.test).
   { ...fixtures['weapon.bat'], damage: 22, knockback: .25, stagger: .2, roundhouse: { threshold: 3, radius: 2.2, maxTargets: 3, damage: 7, knockback: .45, stagger: .3, windup: .1, active: .17, recovery: .18, cooldown: .45, hitStopMs: 45 } },
   melee('crowbar', 'wpn.crowbar', 30, 1.8, 95, 0.6, 0),
-  // The compact blade clears native ordinary infected in two hits and recovers faster than the fire axe.
-  melee('machete', 'wpn.machete', 40, 1.8, 110, 0.4, 0, 0.2),
+  // PO 2026-11-19 parity with the fire axe (s86 tuning basis): one hit kills an ordinary 40 HP infected
+  // and the single-cut DPS matches the axe single swing (45 / 0.4 s = 112.5 vs axe 56 / 0.5 s = 112),
+  // while the three-cut combo keeps its own faster feel, sounds and animations.
+  melee('machete', 'wpn.machete', 45, 1.8, 110, 0.4, 0, 0.2),
   melee('knife', 'wpn.knife', 18, 1.3, 60, 0.3, 0, 0.1),
   { ...melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1), upgradeHooks: ['damage', 'knockback', 'status'] },
   melee('shovel', 'wpn.shovel', 40, 2.2, 110, 0.75, 1, 0.4),
@@ -34,7 +36,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // No ammunition system (00 §6.1): no magazine, no reload, no reserve; the fire rate is the only limit.
   // Its own id: 'weapon.pistol' stays the E05 magazine-and-reload reference gun (fixtures, tests); the campaign carries this one.
   fixtures['weapon.pistol'],
-  { ...fixtures['weapon.pistol'], id: 'weapon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
+  { ...fixtures['weapon.pistol'], id: 'weapon.handgun', iconId: 'icon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
   // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
   { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65, knockdown: true },
   // Close-mid precision tool: three nails drop a standard 40 HP infected.
@@ -50,10 +52,10 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
   // (a round passes through one infected and hits the next). No ammunition system (00 §6.1): no magazine, reload or overheat.
   // Its own id: 'weapon.machine-gun' stays the E06 magazine-and-reload reference (fixtures, balance rows, tests).
-  { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
+  { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.army-mg', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
   { ...gun('rocket-launcher', 180, 35, 1.2, 0, 0, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 6, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, knockdown: true, upgradeHooks: ['damage', 'spread'], noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
   fixtures['weapon.grenade'],
-  { ...thrown('molotov', 10, 4, 0), effect: { kind: 'fire', radius: 4, duration: 8 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 28, slow: 0 } },
+  { ...thrown('molotov', 135, 4.5, 0), splash: { radius: 4.5, falloff: 0.6 }, knockback: 0, stagger: 0, effect: { kind: 'fire', radius: 4, duration: 8 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 28, slow: 0 } },
   thrown('pipe-bomb', 150, 4.5, 2),
   { ...thrown('firecracker-lure', 0, 15, 0), splash: null, effect: { kind: 'lure', radius: 15, duration: 5 } },
   { ...thrown('smoke-grenade', 0, 6, 0), splash: null, effect: { kind: 'smoke', radius: 6, duration: 12 } },
