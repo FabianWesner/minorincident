@@ -309,11 +309,12 @@ export class LevelSevenEncounters {
     // ranks it has left behind (offscreen, beyond any approach they could still
     // press) free their slots for the queued tail of the authored population —
     // the same offscreen-recycling rule L2/L3 street encounters already use
-    // ("offscreen actors free slots for the next encounter"). Every authored
-    // request is still admitted exactly once; visible actors, corpses, downed
-    // bodies and biters are never touched, and the final corridor horde keeps
-    // its sustained boarding stream.
-    if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 10 === 0) {
+    // ("offscreen actors free slots for the next encounter"). The recycling runs
+    // only while authored requests are still queued, so the encounter's own
+    // late-corridor flow is untouched once the authored 400/200 have all arrived.
+    // Corpses, downed bodies, biters and the final corridor horde's boarding
+    // stream are never recycled; every authored request admits exactly once.
+    if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 10 === 0 && ai.director.queue.length) {
       for (const e of ai.active) if (e.infected!.pack > l7Encounters.firstStreetGroup && e.infected!.pack <= l7Encounters.firstStreetGroup + 13
         && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && (e.infected!.recoverAt ?? -1) < 0 && e.infected!.l1?.mode !== 'bite'
         && distance(e.transform, p) > 80 && ai.director.offscreen(e.transform, e.transform.y - .7)) ai.release(e);
