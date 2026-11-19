@@ -50,3 +50,7 @@ The native per-tick probe now independently checks authored building colliders w
 ## Nonresident detour
 
 Coarse pursuit now constructs a bounded local navigation grid from district colliders when outside resident chunks, and advances along it using the ordinary per-tick movement budget. The forced unloaded duplex scenario starts at (823, 88.82), reaches x ≥ 845 via a longer route, and checks its footprint against building colliders every tick. The focused test and full native overlap/detour probe pass. Typecheck and lint pass. Full `npm run qa:threat` on `4b9feeef` passed with 0 gate flags in 335.7 seconds. The earlier x=820 forced start was itself inside the expanded footprint of a neighboring duplex; recovery from an invalid nonresident spawn remains to be checked. Current-code remote unit and L9/L10 acceptance reruns remain outstanding.
+
+## Unloaded spawn follow-up
+
+A forced spawn at the centre of `bld.cure-duplex:7/geometry-1` now selects clear offscreen ground using the nonresident grid; district-authored blockers are included in that grid. The focused spawn/detour check and full native overlap probe pass. Typecheck and lint pass; full `qa:threat` on `a6c05fb4` reported 0 flags in 258.3 seconds. Two unchanged remote unit runs on this code timed out at 240 seconds under load, with combat and L4 contact tests also exceeding their individual limits. Current-code remote acceptance remains outstanding. The clear-spot search has a bounded range and still falls back to the requested point if no candidate exists; that case remains open.
