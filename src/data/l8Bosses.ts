@@ -71,7 +71,11 @@ export const l8Route: readonly L8RouteStage[] = [
 export const l8PlazaGates = {
   w: { x: -14, z: 0, halfX: .25, halfZ: 3 }, e: { x: 14, z: 0, halfX: .25, halfZ: 3 }, s: { x: 24, z: 12, halfX: 2.5, halfZ: .25 },
 } as const;
-/** Unused road branches stay open for the tour and outbreak, then seal the visitor route. */
+/** Unused road branches stay open for the tour and outbreak, then seal the visitor route.
+ * The zebra lane's east arm stays open: it dead-ends at the yard's west wall (and gate)
+ * until the five enclosure fights clear, and at the evacuation it is the one legal
+ * approach for infected left on the zebra approach — a connector there sealed the
+ * lane's stragglers behind one-way geometry through the whole finale (L8-06). */
 export const l8ConnectorGates = [
   // Nadia crosses this arm during the calm tour; close it only at the seal.
   { x: 56.9, z: 0, halfX: .25, halfZ: 12 },
@@ -79,7 +83,6 @@ export const l8ConnectorGates = [
   { x: 24, z: 67.1, halfX: 4.5, halfZ: .25 },
   { x: 60, z: 67.1, halfX: 4.5, halfZ: .25 },
   { x: 20.9, z: 64, halfX: .25, halfZ: 3.2 },
-  { x: 63.1, z: 64, halfX: .25, halfZ: 3.2 },
   { x: 92.9, z: 0, halfX: .25, halfZ: 3.2 },
   { x: 99.1, z: 0, halfX: .25, halfZ: 3.2 },
 ] as const;

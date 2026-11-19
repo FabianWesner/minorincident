@@ -250,8 +250,28 @@ export class LevelEightZoo {
   private trySeal(): void {
     const s = this.state, w = this.w, p = w.entities.get(1)!.transform;
     if (s.sealedAt || !this.breached || this.protecting() || !inRect(p, l8PlazaCell)) return;
+    // The hold's survivors — including walkers still knocked down that will get
+    // up again — are fought to the end before the one-way doors shut, and the
+    // straggler grace covers that whole clear-down (L8-06: no infected sealed
+    // inside the abandoned cell reading unreachable while the courier fights
+    // the arenas). Pre-seal cohorts still queued inside their tunnel mouths
+    // finish their authored approach first. Past the deadline the leftovers
+    // are swept to the open north approach (the L2 gate-strip contract) rather
+    // than left behind the shut doors; a courier still camping by then has the
+    // plaza fight continued around them.
+    const deadline = w.tick >= s.breachedAt + (s.protectAway ?? 0) + 150 * 60;
     const outside = this.followers().filter(e => !inRect(e.transform, l8PlazaCell));
-    if (outside.length && w.tick < s.breachedAt + (s.protectAway ?? 0) + 75 * 60) return;
+    if (outside.length && !deadline) return;
+    const leftovers = [...w.infected!.active].filter(e => (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0) && !e.hidden && inRect(e.transform, l8PlazaCell));
+    if ((leftovers.length || s.outlets.some(o => o.walking?.length)) && !deadline) return;
+    for (const e of leftovers) {
+      const to = this.point({ x: Math.min(11, Math.max(-11, e.transform.x)), z: -14 });
+      if (w.solids.relocate(e, { x: to.x, z: to.z, y: e.transform.y }, 'l8.seal-clear', 1.5)) {
+        w.spatial.set(e.id, e.transform.x, e.transform.z);
+        if (e.locomotion) { e.locomotion.vx = e.locomotion.vz = 0; }
+        if (e.infected) { e.infected.path.length = 0; e.infected.goal = -1; }
+      }
+    }
     s.sealedAt = w.tick;
     this.bosses.updateGates();
     this.mission.checkpoint('sealed');
@@ -262,7 +282,8 @@ export class LevelEightZoo {
     const keeper = this.w.entities.get(this.state.keeperId), alive = !!keeper?.civilian && !keeper.infection && keeper.health.current > 0;
     this.mission.radio(alive ? key : `${key}.soldier`);
   }
-  /** Tunnel runners that walk in from the region the courier is crossing (north path, south field, east lane); the plaza, the lion and the primate leg have none. */
+  /** Tunnel runners that walk in from the region the courier is crossing (north path, south field, east lane); the plaza, the lion and the primate leg have none.
+   * The east lane releases nothing: the east tunnel mouth opens into the sealed east service pocket (the always-on x 99.1 path wall spans z -35..46 between the apron and the visitor lane, the maintenance corridor caps it south and the yard wall north), so a cohort admitted there can never walk out — it would stand behind one-way geometry for the rest of the level reading unreachable (L8-06). */
   private region(p: Point): 0 | 1 | 2 | 4 | 8 {
     if (inRect(p, l8PlazaCell)) return 8;
     if (p.x >= 82) return p.z > -64 ? 4 : 0;
@@ -270,7 +291,7 @@ export class LevelEightZoo {
     if (p.z > 12 && !inRect(p, l8Route[2].zone) && !inRect(p, l8Route[3].zone)) return 2;
     return 0;
   }
-  private regionOutlets(region: number, index: number): boolean { return region === 1 ? index === 2 : region === 2 ? index === 0 || index === 3 : region === 4 ? index === 1 : region === 8 ? index >= 4 : false; }
+  private regionOutlets(region: number, index: number): boolean { return region === 1 ? index === 2 : region === 2 ? index === 0 || index === 3 : region === 8 ? index >= 4 : false; }
   /** The opening shock keeps the group in the plaza before the APC route appears. */
   protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60 + (this.state.protectAway ?? 0); }
   /** r36-l8gates (QA P2 "the courier and some civilians can run far out of the plaza during 'Protect the group'"): the hold is
@@ -516,7 +537,7 @@ export class LevelEightZoo {
       s.outlets.forEach((outlet, i) => { if (i >= 4) for (let n = 0; n < (ai.director.tier === 'low' ? 2 : 3); n++) this.release(outlet, i); });
     }
     // A courier camping in the sealed plaza keeps being hunted from the two hatches in the cell (the flamingo fight has not started).
-    if (here === 8 && s.arenas[0]?.phase === 0 && t >= (s.plazaWaveAt ||= t + 40 * 60)) {
+    if (s.sealedAt && here === 8 && s.arenas[0]?.phase === 0 && t >= (s.plazaWaveAt ||= t + 40 * 60)) {
       s.plazaWaveAt = t + 40 * 60;
       const inCell = [...w.entities.iterate()].filter(e => e.infected && e.health.current > 0 && !e.hidden && inRect(e.transform, l8PlazaCell)).length;
       if (inCell < 6) s.outlets.forEach((outlet, i) => { if (i >= 4) this.release(outlet, i); });

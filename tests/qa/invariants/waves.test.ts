@@ -278,12 +278,16 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     const firstMovement = reach(w, initial.map(a => a.id), (id, x, z) => { const door = initialGoals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames);
     for (let outlet = 0; outlet < c.state.outlets.length; outlet++) {
       const ids = initial.filter(a => a.outlet === outlet).map(a => a.id);
-      const authored = !initiallyConnected[outlet] ? 0 : outlet >= 4 ? tier === 'low' ? 3 : 5 : (tier === 'low' ? 3 : 6) + (outlet === 2 ? 1 : 0);
+      // The east tunnel (outlet 1) opens into the sealed east service pocket (the
+      // x 99.1 path wall spans z -35..46 between its apron and the visitor lane),
+      // so no cohort is ever admitted from it; the breach census expects none.
+      const authored = outlet === 1 || !initiallyConnected[outlet] ? 0 : outlet >= 4 ? tier === 'low' ? 3 : 5 : (tier === 'low' ? 3 : 6) + (outlet === 2 ? 1 : 0);
       record(`L8/tunnel-breach-${outlet}`, authored, ids, w, { admitted: ids.filter(id => firstMovement.admittedIds.includes(id)).length, reached: ids.filter(id => firstMovement.reachedIds.includes(id)).length });
     }
     for (const e of [...w.infected!.active]) w.infected!.release(e);
     // Seal the plaza, then cross every production region. Region entry releases
-    // each outlet's authored cohort once; the east leg also opens initial outlet 1.
+    // each outlet's authored cohort once; the east leg admits nothing (its
+    // tunnel mouth is sealed behind the x 99.1 service wall).
     c.state.sealedAt = w.tick || 1;
     c.state.breachedAt = (w.tick || 1) - 2000;
     c.state.arenas[0]!.phase = 1;
@@ -308,7 +312,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       const movement = reach(w, ids, (id, x, z) => { const door = goals.get(id)!; return Math.hypot(x - door.ox, z - door.oz) < 12; }, routeFrames, undefined, true);
       for (const outlet of region.outlets) {
         const cohort = released.filter(a => a.outlet === outlet).map(a => a.id);
-        const expected = outlet >= 4 ? 1 : (tier === 'low' ? 3 : 5);
+        const expected = outlet === 1 ? 0 : outlet >= 4 ? 1 : (tier === 'low' ? 3 : 5);
         record(`L8/region-${region.name}-outlet-${outlet}`, expected, cohort, w, {
           admitted: cohort.filter(id => movement.admittedIds.includes(id)).length,
           reached: cohort.filter(id => movement.reachedIds.includes(id)).length,
@@ -316,7 +320,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       }
     }
     const eastIds = c.state.arrivals.filter(a => a.outlet === 1).map(a => a.id);
-    if (!eastIds.some(id => !initial.some(a => a.id === id))) errors.push('L8/outlet-1: east region did not release the initially route-gated outlet');
+    if (eastIds.length) errors.push('L8/outlet-1: a cohort was admitted from the sealed east service pocket');
   });
   await withWorld('L10', tier, w => {
     const m = w.missions!; m.loadCheckpoint('cure-disperse-ready');
