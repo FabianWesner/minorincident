@@ -10,7 +10,7 @@ import { l3WeaponPickup } from '../../src/data/l3';
 import { l4 } from '../../src/data/l4';
 import { l5DroppedWeapons, l5WeaponPickup } from '../../src/data/l5';
 import { l7Rocket } from '../../src/data/l7';
-import { enforceCureArsenal, transactArsenal } from '../../src/sim/progression/arsenal';
+import { transactArsenal } from '../../src/sim/progression/arsenal';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
 import { beginRewards, debugCampaign, finishRewards, gearTier, newCampaign, pickUpgrades, preset, resetCampaignStoryForReplay, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
@@ -68,7 +68,6 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
     progressed.ownedActions = [...new Set([...progressed.ownedActions,...Object.keys(catalog).filter(id=>id.startsWith('weapon.') && id!=='weapon.rotary-minigun'),...progressed.racks.LEFT,...progressed.racks.RIGHT])];
     progressed.selectedAction = handgun;
     expect(validateSave(progressed), `L${level} finished-L10 fixture`).toBe(true);
-    if (level === 10) enforceCureArsenal(progressed);
     const checkpoint = structuredClone(level===1?newCampaign():preset(`L${level}-default` as `L${2|3|4|5|6|7|8|9|10}-default`));
     checkpoint.racks={LEFT:[axe,bat,'weapon.knife'],RIGHT:[rocket,rifle,shotgun,mg,handgun,'weapon.smg']};
     checkpoint.ownedActions=[...new Set([...checkpoint.ownedActions,...checkpoint.racks.LEFT,...checkpoint.racks.RIGHT])];
@@ -104,6 +103,16 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   // Each saved state gets the same authored list, and the L8 gate takes only the rocket.
   const l8 = preset('L8-default'), l8Start = campaignLoadout(l8, 8);
   expect([...l8Start.LEFT,...l8Start.RIGHT].filter(id=>id.startsWith('weapon.')&&!['weapon.fists','weapon.kick'].includes(id)).sort()).toEqual([axe,handgun,mg,shotgun,rocket].sort());
+  const finishedL6 = preset('L10-default'); finishedL6.completedLevels = 10;
+  finishedL6.ownedActions = [...new Set([...finishedL6.ownedActions,...Object.keys(catalog).filter(id=>id.startsWith('weapon.') && id!=='weapon.rotary-minigun')])];
+  finishedL6.racks = { LEFT:[bat,axe], RIGHT:[rocket,rifle,shotgun,mg,handgun] }; finishedL6.selectedAction=rocket;
+  const replay = await loadLevel('L6', 1, finishedL6, 0, { quality:'low' });
+  try {
+    const actual = replay.combat!.runner.loadout.state;
+    expect(actual.LEFT.rack.map(slot=>slot.id)).toEqual([axe]);
+    expect(actual.RIGHT.rack.map(slot=>slot.id)).toEqual([handgun,mg,shotgun]);
+    expect(actual.RIGHT.rack[actual.RIGHT.index].id).toBe(handgun);
+  } finally { replay.dispose(); }
   const { Game } = await import('../../src/Game');
   // Native checkpoint sweep shares this campaign progression regression's case budget.
   for (let level = 1; level <= 10; level++) {
@@ -114,6 +123,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
       expect({ LEFT:checkpointWeapons.LEFT.rack.map(slot=>slot.id).filter(id=>catalog[id].category!=='ability'), RIGHT:checkpointWeapons.RIGHT.rack.map(slot=>slot.id).filter(id=>catalog[id].category!=='ability') }, `L${level} actual initialized rack`).toEqual(expectedSides[level-1]);
       const defaultSelected = expectedSides[level-1].RIGHT.find(id=>id!=='weapon.kick') ?? expectedSides[level-1].LEFT.filter(id=>id!=='weapon.fists').sort((a,b)=>action(b).tier-action(a).tier)[0] ?? 'weapon.fists';
       expect(save.selectedAction, `L${level} authored selected weapon`).toBe(defaultSelected);
+      expect(world.combat!.runner.loadout.current(checkpointWeapons.selectedSide).id, `L${level} live selected weapon`).toBe(defaultSelected);
       const checkpoints = world.missions!.def.checkpoints;
       for (const checkpoint of checkpoints) {
         world.missions!.checkpoint(checkpoint);
