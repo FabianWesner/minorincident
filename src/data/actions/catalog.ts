@@ -19,8 +19,8 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // the crowd battery: the PO's "fight a few, not all at once" - stand vs 4-6 wins, stand vs 10 loses (l1-crowd.test).
   { ...fixtures['weapon.bat'], damage: 22, knockback: .25, stagger: .2, roundhouse: { threshold: 3, radius: 2.2, maxTargets: 3, damage: 7, knockback: .45, stagger: .3, windup: .1, active: .17, recovery: .18, cooldown: .45, hitStopMs: 45 } },
   melee('crowbar', 'wpn.crowbar', 30, 1.8, 95, 0.6, 0),
-  // The compact blade clears native ordinary infected in two hits and recovers faster than the fire axe.
-  melee('machete', 'wpn.machete', 40, 1.8, 110, 0.4, 0, 0.2),
+  // Match the fire axe single-swing damage per second while keeping the machete’s faster cadence.
+  melee('machete', 'wpn.machete', 45, 1.8, 110, 0.4, 0, 0.2),
   melee('knife', 'wpn.knife', 18, 1.3, 60, 0.3, 0, 0.1),
   { ...melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1), upgradeHooks: ['damage', 'knockback', 'status'] },
   melee('shovel', 'wpn.shovel', 40, 2.2, 110, 0.75, 1, 0.4),
