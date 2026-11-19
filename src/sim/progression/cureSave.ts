@@ -26,7 +26,7 @@ export function validCureCheckpoint(v: unknown): v is MissionCheckpoint {
     const value = s.steps[step.id];
     if (!record(value) || !['pending','active','completed','cancelled'].includes(String(value.status)) || !Number.isSafeInteger(value.started) || !Number.isFinite(value.interaction) || !Array.isArray(value.kills) || !record(value.events)) return false;
   }
-  if (!strings(a.ownedActions) || !a.ownedActions.includes('weapon.fire-axe') || a.ownedActions.some(id => !catalog[id]) || !record(a.racks)) return false;
+  if (!strings(a.ownedActions) || !(a.ownedActions.includes('weapon.fists') || a.ownedActions.includes('weapon.fire-axe')) || a.ownedActions.some(id => !catalog[id]) || !record(a.racks)) return false;
   if (!['LEFT','RIGHT'].every(side => { const rack = (a.racks as Record<string, unknown>)[side]; return strings(rack) && rack.length > 0 && rack.length <= cureRackCapacity && rack.every(id => (a.ownedActions as string[]).includes(id)); })) return false;
   const ids = new Set<number>();
   for (const e of v.entities) {

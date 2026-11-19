@@ -142,11 +142,15 @@ export function preset(name:ProgressionPreset, previous?:CampaignSave|null):Camp
   }
   if (name === 'L10-default') {
     const save = preset('L8-default');
-    const lostWeapons = save.ownedActions.filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
+    // PO 2026-11-19: the crossing loses the axe as well; L10 starts unarmed (fists).
+    // Same lost set as the real handover: every non-ability weapon, the axe included,
+    // keeping the upgrade history and outfit tier of the pre-crash arsenal.
+    const lostWeapons = save.ownedActions.filter(id => catalog[id].category !== 'ability');
     save.completedLevels = 9; save.unlockedLevel = 10;
     save.crossingHandover = { applied: true, checkpoint: 'cure-crash', anchor: { x: 0, y: .7, z: 0, yaw: 0 }, preCrashDurability: 0, lostWeapons, shelteredPassengers: [] };
-    save.ownedActions = ['weapon.fire-axe', ...save.ownedActions.filter(id => catalog[id].category === 'ability')];
-    save.racks = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] };
+    save.ownedActions = ['weapon.fists', ...save.ownedActions.filter(id => catalog[id].category === 'ability')];
+    save.racks = { LEFT: ['weapon.fists'], RIGHT: ['weapon.fists'] };
+    save.selectedAction = 'weapon.fists';
     return save;
   }
   if(!/^L[2-8]-default$/.test(name))throw new Error('Unknown progression preset');

@@ -63,10 +63,13 @@ export const cureMedkits = [
   { id: 'military-motor-pool', at: [2137, 110] as Point },
 ];
 
-/** L10 story pickups; the placed objects are retained in the courier's rack and never respawn after collection. */
+/** L10 story pickups; the placed objects are retained in the courier's rack and never respawn after collection.
+ * PO 2026-11-19: the unarmed crash start takes the machete at the crash site (~6 m from the start, on the
+ * river-exit path) instead of the axe, so it leads the list and the farmstead marker points back for it
+ * until it is found. */
 export const cureWeaponPickups = [
+  { id: 'crash-machete', action: 'weapon.machete', anchor: 'crash-machete' },
   { id: 'farmhouse-rifle', action: 'weapon.hunting-rifle', anchor: 'farmhouse-rifle' },
-  { id: 'barn-machete', action: 'weapon.machete', anchor: 'barn-machete' },
   { id: 'shed-molotov', action: 'weapon.molotov', anchor: 'shed-molotov' },
   { id: 'workshop-nailgun', action: 'weapon.nail-gun', anchor: 'workshop-nailgun' },
   { id: 'guard-tower-rifle', action: 'weapon.assault-rifle', anchor: 'guard-tower-rifle' },

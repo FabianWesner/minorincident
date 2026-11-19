@@ -53,8 +53,11 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   const handoff = ['l6-next', 'cure-mega', 'l8-route', 'crash-approach', 'l4-cellar-door'];
   const unknownHandoffs = moving.some(marker => handoff.includes(marker.id));
   add('G-08', 'fixed anchor positions during the observed native route', { anchors: observation.markers, changes: observation.markerChanges }, 'fixed action points; reused gate/boss anchors require a position trajectory', observation.markers.length ? moving.some(marker => !handoff.includes(marker.id)) ? false : unknownHandoffs ? undefined : true : undefined);
+  // PO 2026-11-08 roadline finds (519fdb3c) author a wider approach reach (reachM 4.5) so ordinary
+  // walking past the prop still takes them; G-10's default bounds cover every other pickup.
+  const authoredReach = (pickup: { reachM?: number | null }) => pickup.reachM ?? 0;
   const distances = observation.pickups.filter(pickup => pickup.distance !== null && (pickup.collector === 1 || pickup.collector === null && pickup.distance <= (pickup.shelf ? 2.2 : 1.5)));
-  add('G-10', 'observed approach collection distances; E-free causality needs an input fixture', distances, 'ground ≤1.5 m; shelf ≤2.2 m', distances.length ? distances.every(pickup => pickup.distance !== null && pickup.distance <= (pickup.shelf ? 2.2 : 1.5) + 1e-6) : undefined);
+  add('G-10', 'observed approach collection distances; E-free causality needs an input fixture', distances, 'ground ≤1.5 m; shelf ≤2.2 m; an authored reachM otherwise', distances.length ? distances.every(pickup => pickup.distance !== null && pickup.distance <= Math.max(pickup.shelf ? 2.2 : 1.5, authoredReach(pickup)) + 1e-6) : undefined);
   const duplicateEntities = observation.duplicatePickups.filter(id => id > 0); // id0 is a mission-grant sentinel, not a respawned pickup.
   add('G-11', 'duplicate pickup transactions since the last restore', duplicateEntities, 'zero positive entity-ID duplicates on the same timeline', duplicateEntities.length === 0);
   if (competent) {
@@ -75,8 +78,10 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   }
   const allowed = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'];
   const offered = [...new Set([...(initial.racks?.LEFT ?? []), ...(initial.racks?.RIGHT ?? [])])].filter(id => id.startsWith('weapon.') && !['weapon.fists', 'weapon.kick'].includes(id));
-  const n = Number(receipt.level.slice(1)), maximum = n === 10 ? ['weapon.fire-axe'] : allowed.slice(0, n <= 5 ? n : n < 7 ? 5 : 6);
-  add('G-16', 'weapons offered in the ordinary initial racks', offered, n === 10 ? 'exactly [axe]' : `subset of ${JSON.stringify(n === 1 ? [] : maximum)}`, n === 10 ? offered.length === 1 && offered[0] === 'weapon.fire-axe' : offered.every(id => (n === 1 ? [] : maximum).includes(id)));
+  // PO 2026-11-19 (level-acceptance L9-08): the L9 crossing loses the whole arsenal including
+  // the axe; L10 starts unarmed and the crash-site machete is a retained pickup, not a rack weapon.
+  const n = Number(receipt.level.slice(1)), maximum = n === 10 ? [] : allowed.slice(0, n <= 5 ? n : n < 7 ? 5 : 6);
+  add('G-16', 'weapons offered in the ordinary initial racks', offered, n === 10 ? 'none (fists only; the crash-site machete is a pickup)' : `subset of ${JSON.stringify(n === 1 ? [] : maximum)}`, n === 10 ? offered.length === 0 : offered.every(id => (n === 1 ? [] : maximum).includes(id)));
   add('G-19', 'corgi health and real infected attack targets', observation.corgi, 'health fraction=1; zero target windups and damaging hits', observation.corgi.samples ? observation.corgi.minimumHealthFraction === 1 && observation.corgi.targeted === 0 && observation.corgi.hit === 0 : undefined);
   const runOut = observation.runOut;
   add('G-20', 'engaged run-out duration and invulnerability', runOut, '300 ticks ±1; invulnerability through deadline', runOut ? Math.abs(runOut.until - runOut.tick - 300) <= 1 && runOut.minimumInvulnerableUntil >= runOut.until : undefined);
@@ -692,7 +697,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['ordinary route concurrent bound', 'infected move before first widest-frame entry'].map(clause => ({ clause, policy: 'complete' })),
     { clause: 'observed quiet stretches and authored scare cadence', policy: 'complete' },
   ]],
-  ['L10-05', ['six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
+  ['L10-05', ['crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', 'six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L10-06', [
     ...['native dog speed ratio', 'actual dog hit damage/reach', 'actual dog telegraph duration', 'dog cooldown between hit and next windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...[.5, 1.5].map(zoom => ({ clause: `reviewed living infected dog distinct from corgi at zoom${zoom}`, policy: 'real-input-webgl2' })),

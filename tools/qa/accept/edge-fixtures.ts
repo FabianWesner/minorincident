@@ -10,6 +10,9 @@ import { stateHash } from '../../../src/sim/world/stateHash';
 import { relocatePlayer } from '../../../src/sim/missions/missionHelpers';
 import { l7CorridorAnchors } from '../../../src/levels/L7/corridor';
 import { fistsOnlyRoute, fistsCompletionPass } from './fix53-fists';
+import { cure } from '../../../src/levels/L10/district';
+import { cureWeaponPickups } from '../../../src/levels/L10/encounters';
+import { emptyInput } from '../../../src/input/InputFrame';
 
 type Add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined) => void;
 
@@ -237,7 +240,56 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
       const companions = [...world.entities.iterate()].filter(e => e.companion).map(e => ({ id: e.id, hp: e.health.current, maxHp: e.health.max, hidden: !!e.hidden }));
       const value = { setup: 'normal L9 completion → completeCampaignLevel → fresh L10 with same save', run, handover: campaign.crossingHandover, weapons, hp: player.health.current, maxHp: player.health.max, hidden: !!player.hidden, activeVehicle: world.vehicles?.active ?? null, companions };
       observations['L9/crossing-handover'] = value;
-      add('L9-08', 'actual crossing transaction into L10', value, 'onfoot;exactlyaxe;full ordinary health;corgi safe', !world.vehicles?.active && !player.hidden && weapons.length === 1 && weapons[0] === 'weapon.fire-axe' && player.health.current === player.health.max && companions.length === 1 && companions[0].hp === companions[0].maxHp);
+      // PO 2026-11-19: the crossing takes the axe too — L10 starts with no weapon (fists);
+      // the crash-site machete (level-acceptance L10-05) lies within ~6 m of the start.
+      add('L9-08', 'actual crossing transaction into L10', value, 'onfoot;exactlyfists;full ordinary health;corgi safe', !world.vehicles?.active && !player.hidden && weapons.length === 1 && weapons[0] === 'weapon.fists' && player.health.current === player.health.max && companions.length === 1 && companions[0].hp === companions[0].maxHp);
+    } finally { world.dispose(); }
+  }
+  if (level === 'L10') {
+    const campaign = preset('L10-default'); campaign.settings.quality = tier;
+    const world = await loadLevel('L10', 1, campaign, 0, { quality: tier });
+    try {
+      const player = world.entities.get(1)!, start = { x: player.transform.x, z: player.transform.z };
+      const at = cure.anchors['crash-machete'];
+      const distance = Math.hypot(at[0] - start.x, at[1] - start.z);
+      const navClear = world.infected!.nav.clear(at[0], at[1], .5);
+      const lineOfSight = world.infected!.nav.visible(start, { x: at[0], z: at[1] }, 0);
+      const initialRacks = {
+        LEFT: world.combat!.runner.loadout.state.LEFT.rack.map(slot => slot.id),
+        RIGHT: world.combat!.runner.loadout.state.RIGHT.rack.map(slot => slot.id),
+      };
+      const initialHealth = player.health.current;
+      const collection: { value: { tick: number; distance: number } | null; count: number } = { value: null, count: 0 };
+      const stop = world.events.on('pickup.collected', event => {
+        if (event.type !== 'pickup.collected' || !('actionId' in event) || event.actionId !== 'weapon.machete') return;
+        collection.count++;
+        collection.value = { tick: event.tick, distance: Math.hypot(player.transform.x - at[0], player.transform.z - at[1]) };
+      });
+      for (let ticks = 0; ticks < 60 && collection.count === 0; ticks++) {
+        world.applyInput({ ...emptyInput(), move: { x: 1, z: 0 } }, 'keyboard');
+        world.update();
+      }
+      for (let ticks = 0; ticks < 60 && collection.count > 0; ticks++) {
+        world.applyInput(emptyInput(), 'keyboard'); world.update();
+      }
+      stop();
+      const racks = world.combat!.runner.loadout.state;
+      const weapons = [...racks.LEFT.rack, ...racks.RIGHT.rack].map(slot => slot.id);
+      const pickupCopies = [...world.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.machete').length;
+      const value = {
+        setup: 'fresh L10 unarmed start; walk east on the crash-site exit line for at most 1 s, then check no respawn',
+        start, anchor: { x: at[0], z: at[1] }, distance, navClear, lineOfSight,
+        initialRacks, initialHealth, collected: collection.value, collectionCount: collection.count, healthAfter: player.health.current,
+        found: world.missions!.state.states['found-crash-machete'], weapons, pickupCopies,
+        authoredMacheteCount: cureWeaponPickups.filter(pickup => pickup.action === 'weapon.machete').length,
+      };
+      observations['L10/crash-site-machete'] = value;
+      const beforePickup = [...initialRacks.LEFT, ...initialRacks.RIGHT].every(id => id === 'weapon.fists');
+      add('L10-05', 'crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', value,
+        'both racks fists-only; one machete ≤6 m, clear walk and sight; picked up within 1 s without health loss; no barn copy or respawn',
+        beforePickup && distance <= 6 && navClear && lineOfSight && !!collection.value && collection.value.tick <= 60 && collection.count === 1 &&
+          initialHealth === player.health.current && world.missions!.state.states['found-crash-machete'] === true &&
+          weapons.includes('weapon.machete') && pickupCopies === 0 && cureWeaponPickups.filter(pickup => pickup.action === 'weapon.machete').length === 1);
     } finally { world.dispose(); }
   }
 }
