@@ -127,8 +127,21 @@ export class LevelTenEncounters {
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
     if (!ai || !chunks || mission?.state.phase !== 'playing') return;
-    const admitted = Object.keys(this.state.spawned).filter(key => key.startsWith('dispersal-assault:')).length;
-    const wantedReservation = mission.state.states['cure-installed'] && !mission.state.states['cure-released'] ? Math.max(0, 4 - admitted) : 0;
+    // The console's authored cohort owns its slots: ambient pressure — the resident director and the
+    // chunk stream's farthest-first excess trim — must not eat the wave the console announced. The s165
+    // pressure gate left the hold's ambient count at cap when the assault opened, so wave 0 admitted 5
+    // of its 7 slots and the late arrivals were trimmed before they could fight. Reserve every living
+    // assault member plus the slots the current wave still owes; the count cap then trims only ambient
+    // hunters around them, and the assault's own admission gate keeps cancelling its own reservation.
+    const assaultGroup = cureEncounters.find(group => group.assault);
+    const waveIndex = this.state.assaultWave ?? 0;
+    const livingAssault = Object.entries(this.state.spawned).filter(([key, id]) =>
+      key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0).length;
+    // Only the authored station slots count towards what the current wave still owes: the
+    // service-tunnel walkers join the same ledger without consuming a station slot.
+    const owedAssault = assaultGroup ? cureEncounterSlots(assaultGroup, ai.director.tier).filter(slot =>
+      this.state.spawned[`${slot.key}:${waveIndex}`] === undefined).length : 0;
+    const wantedReservation = mission.state.states['cure-installed'] && !mission.state.states['cure-released'] ? livingAssault + owedAssault : 0;
     ai.director.reserved += wantedReservation - this.assaultReservation;
     this.assaultReservation = wantedReservation;
     if (mission.state.states['cure-released']) {
@@ -152,12 +165,22 @@ export class LevelTenEncounters {
           const b = w.entities.get(id)!.infected!;
           if (b.l1) { b.l1.mode = 'chase'; b.l1.targetId = 1; b.state = 'chase'; b.heardTargetId = 1; }
         }
-        if (clock >= (this.state.finaleEntryNext ?? 300)) {
+        // The first tunnel walker steps out with the announcement itself: the assault's own
+        // approach pressure begins at the wave opening, so the deck threat it carries across
+        // the platform stair reaches the gun at ~11–12 s instead of ~16 s. The wave's ≤20 s
+        // first-attack window then opens into a real ground fight (the Mega alone arrives
+        // around 16 s; every reinforcement before it was 5 s of dead air).
+        if (clock >= (this.state.finaleEntryNext ?? 0)) {
           if (!this.state.finaleEntrySlot) { ai.director.reserved++; this.state.finaleEntrySlot = true; }
           else if (ai.director.count + ai.director.pendingTurns < ai.director.cap - Math.max(0, ai.director.reserved - 1) && ai.pool.length) {
             ai.director.reserved--; this.state.finaleEntrySlot = false;
             const id = emergeResident(w, entry, w.tick, { archetype: entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner' });
             entry.ids.push(id); this.state.finaleEntryNext = clock + 480;
+            // The tunnel walker is part of the assault cohort the console announced: it is the
+            // one approach that physically crosses the platform stair, so ledgering it keeps
+            // the wave's own pressure honest against the protected gun deck (its route and
+            // archetype are unchanged — only the announced wave's ledger gains the member).
+            this.state.spawned[`dispersal-assault:service:${entry.ids.length}:${this.state.assaultWave ?? 0}`] = id;
           }
         }
       }
@@ -192,10 +215,24 @@ export class LevelTenEncounters {
       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);
     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};
     const pacedWaves = this.state.pacedWave ??= {};
+    const consoleAt = mission.def.anchors['cure-console'];
     for (const group of [...cureEncounters, ...curePaceEncounters]) {
       const assault = !!group.assault;
       if (assaultActive && !assault) continue;
-      if (assault && !assaultActive) continue;
+      // The dispersal assault's opening wave paces itself on her arrival at the arena — the depot
+      // ambush's own rule. The wave admits once she reaches the cure installation's apron (within
+      // holdRadius - 20 of the console), so the cohort the console announces is already closing on her
+      // live position when the assault clock opens: the announcement's ≤20 s first-attack window then
+      // measures the fight she actually faces at any pace, instead of an approach race against the
+      // mounted platform gun that the s165 ambient gate no longer pads out. The apron release keeps
+      // the pre-announcement exposure short enough that the cohort meets her at the press itself —
+      // a longer lead time just feeds the roster to her approach fire one member at a time. Only the
+      // opening wave pre-stages; later waves keep the charge clock. The arrivals stay fair through
+      // the same director.safe spot search as every other admission (≥18 m from her, off-screen or
+      // occluded).
+      const assaultApproach = assault && !assaultActive && waveIndex === 0 && !!consoleAt &&
+        Math.hypot(player.transform.x - consoleAt.x, player.transform.z - consoleAt.z) <= finale.holdRadius - 20;
+      if (assault && !assaultActive && !assaultApproach) continue;
       const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
         if (Math.abs(player.transform.x - group.at[0]) > 120) continue;
@@ -207,7 +244,17 @@ export class LevelTenEncounters {
       }
       // A 30 s wave period, at most 5 s of admission, then 25 s with no new arrivals.
       // If a wave is still alive, postpone the next one until it has been cleared plus an 8 s breather.
+      // The pre-staged opening wave can spend itself against her approach (every slot admitted,
+      // no survivor): the frozen pre-charge clock would then hold the dead wave's whole 30 s period
+      // past the announcement, so the spent wave hands the console's opening beat to the next wave —
+      // the charge's first ticks admit the fresh cohort at the press itself.
       const clock = this.state.assaultTicks ?? 0;
+      if (assault && !assaultActive && (this.state.assaultWave ?? 0) === 0 && this.state.nextAssaultAt === 1800 &&
+        cureEncounterSlots(group, ai.director.tier).every(slot => this.state.spawned[`${slot.key}:0`] !== undefined) &&
+        !Object.entries(this.state.spawned).some(([key, id]) => key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0)) {
+        this.state.assaultWave = 1;
+        this.state.nextAssaultAt = 1800;
+      }
       if (assault && clock >= (this.state.nextAssaultAt ?? 0)) {
         const living = Object.entries(this.state.spawned).filter(([key, id]) => key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0);
         if (living.length) this.state.nextAssaultAt = clock + 480;

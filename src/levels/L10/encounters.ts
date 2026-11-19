@@ -83,14 +83,22 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
   const indices = new Map<string, number>();
   return roles.map((archetype, i) => {
     const index = indices.get(archetype) ?? 0; indices.set(archetype, index + 1);
-    // Each small finale wave approaches from three directions outside the hold disc.
+    // Each small finale wave approaches from three directions around the console.
     // Road arrivals scatter around their fixed authored anchors.
     const assault = group.assault === true, roadFight = group.region === 'crash-outskirts' || group.region === 'destroyed-corridor';
     const angle = assault ? [Math.PI, -Math.PI / 2, Math.PI / 2][i % 3] : i * 2.399963229728653;
     const fieldHorde = group.type === 'field-horde', stagedAmbush = group.id === 'farmhouse-defense';
     // The barn group stages on the field perimeter so the full crowd does not
     // collapse into a single close lane before a walking player can engage.
-    const radius = assault ? finale.holdRadius + 8 + Math.floor(i / 3) % 4 * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
+    // Each small finale wave approaches from three directions behind the arena's backdrop
+    // cover ring (fan housing west, turbine hall south, filtration towers north). The old
+    // 48–54 m ring made the announced cohort's own approach the whole ≤20 s first-attack
+    // window: a courier who mounts the protected platform gun mows the cohort down at the
+    // 8–10 m standoff before any windup starts (qa:threat WAVE_FIRST_ATTACK_OVER_20_SECONDS,
+    // 63.4 s at 48 m). Staging at the cover ring's inner edge keeps the surround readable
+    // while the arrivals spend their exposure closing the last metres instead of the empty
+    // 20 metres outside it; director.safe still rejects any spot within 18 m of her.
+    const radius = assault ? finale.holdRadius - 16 + Math.floor(i / 3) % 4 * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
     // The checkpoint-bearing patrols approach from the military road side.
     // A circle on the bearing sent bodies around both flanks and funnelled
     // a retreat into the full road groups. Staggered rows retain every slot

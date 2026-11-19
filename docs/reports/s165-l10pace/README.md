@@ -64,3 +64,33 @@ Whole-level walk deaths 10/7/3 → 2/4/5.
 Diag note: the per-death attribution came from scratch probes (killer archetype + provenance + member traces + per-slot resolution, seeds 1–3 both tiers) that wrapped `ai.spawn`, ledger ids and `player.died`; they were removed before commit — `tools/qa/s165-l10pace.mts` is the committed measurement.
 
 _(updated by the s165 follow-up: depot wave clock on the near half of its band; HIGH walk 12/12 clears)_
+
+## s169 follow-up — the qa:threat finale flag closed: 0 fail flags
+
+The follow-up lane (`s169-l10assault`) resolved the open item above. Measuring first, on the exact s165 code and on its parent `8caa9644`, separated what the failing full run actually carried:
+
+- **The gating flag was `L10/step/hold:STUCK_CHASER_OVER_30_SECONDS`, not the assault diagnostic.** The audit's exit-code flags come from the passive observation only; the full-run receipt on disk shows exactly that one flag. In the passive hold the Mega Alpha parks 3.4 m from the standing courier and cycles ground-slams in place; the r42 safe-pocket rule reads thirty still seconds of that as a stuck chaser. Pre-s165 receipts have no such flag — the old pressure machine-gun's 12-wide ambient rows bumped the Mega every 15 s, and the s165 admission gate removed that churn without replacing it.
+- **The skilled `wave/dispersal-assault:WAVE_FIRST_ATTACK_OVER_20_SECONDS` predates the lane but was worsened by it: 20.98 s on `8caa9644`, 63.4 s on the s165 code** (the parent also flags; r16 already called it informational). A scratch trace (deleted before commit) showed the race the cohort cannot win: the wave opens at the console press, the courier mounts the protected platform gun 3.5 s later, and the cohort — admitted at 48–54 m stations — is deleted at the 8–10 m standoff before any windup starts. The first member windup landed only when the release step finally put her on the ground. The same ambient budget starved wave 0 (5 of 7 slots: the resident director refilled the count to cap while the wave admitted) and, in the passive run, the chunk stream's farthest-first excess trim removed each member one tick after admission — the s165 gate had left the hold's ambient count at cap when the assault opened.
+
+### What changed (level design / admission / approach only; no zombie stat, speed, damage or count change, no corpse rule, no target or threshold change in `tools/qa/threat`)
+
+1. **The assault's station ring pulls in from `holdRadius + 8…+14` (48–54 m) to `holdRadius - 16…-10` (24–30 m)** — behind the arena's backdrop cover (fan housing west, turbine hall south, filtration towers north). `director.safe` still rejects any admission spot within 18 m of her or in view, so the ring self-regulates wherever she stands.
+2. **The opening wave releases on her arrival at the cure installation apron (within `holdRadius - 20` of the console)** — the depot ambush's own precedent. The cohort converges on her live position and meets her at the press at any pace; nothing is tied to an arrival tick.
+3. **The assault's authored slots own their cap share**: the admission reservation counts every living assault member plus the slots the current wave still owes, so the resident director and the excess trim can only take ambient hunters around the cohort (the assault's own gate keeps cancelling its own reservation, as before).
+4. **A spent opening wave hands the console's opening beat to the next wave**: with every slot admitted and no survivor, the pre-charge clock (frozen at zero) would otherwise hold the dead wave's whole 30 s period past the announcement — instead the charge's first ticks admit a fresh cohort at the press.
+5. **The service-tunnel walkers join the announced wave's ledger** (route and archetype unchanged), and the first walker steps out with the announcement itself instead of 5 s into it. The tunnel is the one authored approach that physically crosses the platform stair, so the wave's own pressure now reaches the protected gun deck.
+
+### Receipts
+
+- **`npm run qa:threat` (full, final code): 0 fail flags, exit 0** — 236–239 s, L1–L9 all complete and green, the L4/L6/L8 informational skilled diagnostics unchanged (`breach-south` first-attack, `SLOW_FOLLOWER:42`, escape reachability). Verified twice; the L10-only diagnostic run agrees.
+- **The dispersal-assault wave**: skilled first attack **63.4 s → 16.42 s** (criterion ≤ 20 s), 22 cohort members (stations + tunnel walkers); passive first attack 0.18 → 0.73 s — the cohort itself now delivers it, not just the opening vicinity.
+- **The passive hold row**: 278 attacks/min (floor 8), first attack 0.12 s, no flags, **no stuck chaser** — the cohort's churn around the console replaces the ambient rows the Mega used to get.
+- **Skilled route**: complete, 0 deaths, damage 485 → 515 HP.
+
+### s165 farm metrics kept (rerun of `tools/qa/s165-l10pace.mts` on the final code)
+
+All 48 encounter rows are byte-identical to the committed `metrics.json` — clear seconds, admissions, members, per-encounter deaths, unfair-spawn ids, stuck members and `livingAtEnd` for HIGH/LOW × skilled/walk × seeds 1–3 — and the whole-run walk counters are unchanged (HIGH 7/8/5, LOW 2/4/5). The only movement is the skilled rows' whole-run kills (+2…+6) and damage (±30 HP): the 900 s probe window now includes the real assault fight, because the skilled press lands at ~882 s. No farm encounter or walk row regressed.
+
+### Validation
+
+`npm run typecheck` and `npm run lint` pass. The remote unit suite on this exact code: `sh tools/remote/run.sh $PWD -- npm test` — **105/105 tests (150/150 cases), exit 0, 162.3 s of the 240 s budget**, including the L10 deterministic-replay case. Scratch trace probes were removed before commit.
