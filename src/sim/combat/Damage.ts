@@ -2,6 +2,7 @@ import { megaAlpha } from '../../data/megaAlpha';
 import { insideCureHangar } from '../../data/l10Story';
 import { alphaDamageMultiplier, infectedDef, riotShieldResponse } from '../../data/infected';
 import { cureCanKill, storyProtected } from '../npc/storyProtection';
+import { fireTarget, friendlyCapable, friendlySource } from './friendlyFire';
 import { Status } from './Status';
 import { l1v2 } from '../../data/l1v2';
 import { combatHeightReachable } from './height';
@@ -29,10 +30,11 @@ export interface DamageEvent {
 export function downed(e: EntitySnapshot): boolean { return e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0; }
 const lethal = (hit: DamageEvent) => hit.type === 'explosive' || !!hit.permanent;
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
-export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpen = false, shieldFaceDot = 0.5, megaVulnerable = false): number {
+export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpen = false, shieldFaceDot = 0.5, megaVulnerable = false, hardFullExplosive = false): number {
   let amount = hit.base * hit.multiplier;
   // E11 environmental blasts retain 30% player damage; E07 enemy bursts keep their authored damage.
-  if (hit.type === 'explosive' && target.kind === 'player' && (target.id === hit.sourceId || !hit.actionId.startsWith('infected.'))) amount *= 0.3;
+  // s178 Hard: friendly fire hurts me — the courier's own explosives and allied fire deal their normal damage.
+  if (hit.type === 'explosive' && target.kind === 'player' && !hardFullExplosive && (target.id === hit.sourceId || !hit.actionId.startsWith('infected.'))) amount *= 0.3;
   if (hit.type === 'bullet' && target.combat?.shield && !shieldOpen) {
     const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     const dot = distance ? (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance : 1;
@@ -68,7 +70,7 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
 }
 export class Damage {
   god = false;
-  private amount(hit: DamageEvent, target: EntitySnapshot): number {
+  private amount(hit: DamageEvent, target: EntitySnapshot, hardFullExplosive = false): number {
     // Shared riot counter: a flinch lowers the shield, and a muzzle inside its
     // forward edge can shoot past it at contact distance. Hit origins are body
     // centres: 0.8 m includes the raised gun's barrel and the shield offset.
@@ -78,7 +80,7 @@ export class Damage {
       (glance || Status.stunned(target, this.world.tick) || this.world.tick < (target.combat.shieldBrokenUntil ?? 0) || Math.hypot(origin.x - target.transform.x, origin.z - target.transform.z) <= target.combat.radius + .8);
     const faceDot = target.archetype === 'infected.riot' ? Math.cos(riotShieldResponse.faceHalfAngleDeg * Math.PI / 180) : 0.5;
     const directionalHit = target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
-    let amount = damageAmount(directionalHit, target, open, faceDot, this.world.scenario === 'L10' && !!this.world.missions?.state.states['cure-installed']);
+    let amount = damageAmount(directionalHit, target, open, faceDot, this.world.scenario === 'L10' && !!this.world.missions?.state.states['cure-installed'], hardFullExplosive);
     if (this.world.scenario === 'L10' && target.infected?.pursuit && target.infected.megaPhase === 2 && !target.infected.megaArmourBroken && !hit.actionId.includes('flamethrower') && !hit.actionId.startsWith('environment.')) {
       const dx = origin.x - target.transform.x, dz = origin.z - target.transform.z, d = Math.hypot(dx, dz) || 1;
       const back = (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / d < -.3;
@@ -120,6 +122,9 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    // s178 Hard friendly fire: a friendly source (the courier or an allied fighter) hitting the courier
+    // or a living human. The flag only relaxes existing guards; every other damage rule is unchanged.
+    const hardHit = friendlySource(this.world, source) && (target.id === 1 || fireTarget(target));
     if (target.environmentObject) return 0; // placement parts own this prop's durability
     if (target.infected?.arenaBoss) hit = { ...hit, permanent: true, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
     if (hit.type === 'melee' && !combatHeightReachable(source, target)) return 0;
@@ -165,7 +170,11 @@ export class Damage {
       }
       return 0;
     }
-    if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
+    if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction && !hardHit) return 0;
+    // s178: in Simple, friendly-capable bullets never damage the courier. No path produces such a hit today
+    // (allies only ever aim at infected and hold fire through humans, HitQuery.alliedShotClear); the guard
+    // makes the no-friendly-fire rule explicit at the damage seam. Hard removes it.
+    if ((hit.type === 'bullet' || hit.type === 'projectile') && target.id === 1 && !hardHit && friendlyCapable(source)) return 0;
     // Light firearm hits still produce the one-frame visual reaction below, but
     // must not repeatedly cancel an attack cycle. Heavies and Alphas get a
     // longer shared poise window; ordinary infected can flinch at most once
@@ -182,7 +191,7 @@ export class Damage {
       else brain.staggerReady = this.world.tick + (heavy ? 90 : 48);
     }
     const alphaSoldierHit = source.archetype === 'infected.alpha' && target.civilian?.ally?.role === 'soldier';
-    if (target.civilian && !alphaSoldierHit && !hit.knockdownTicks && !(hit.stagger > 0 && hit.actionId.startsWith('infected.'))) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
+    if (target.civilian && !alphaSoldierHit && !hardHit && !hit.knockdownTicks && !(hit.stagger > 0 && hit.actionId.startsWith('infected.'))) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
     if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
     if (target.escort?.state === 'downed' || target.escort?.state === 'dead') return 0;
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
@@ -218,7 +227,7 @@ export class Damage {
     }
     if (mega) hit = { ...hit, knockback: megaReact ? Math.min(.4, hit.knockback) : 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
     const wasAlive = target.health.current > 0;
-    let amount = this.amount(hit, target);
+    let amount = this.amount(hit, target, hardHit);
     const shieldBlocked = hit.type === 'bullet' && target.combat?.shield && amount === 0;
     if (target.combat?.allyResist !== undefined && hit.sourceId !== 1) amount *= target.combat.allyResist;
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
