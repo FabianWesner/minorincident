@@ -65,7 +65,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   for (let level = 1; level <= 10; level++) {
     const progressed = preset('L10-default'); progressed.completedLevels = 10;
     progressed.racks = { LEFT:[bat,axe,'weapon.pistol','weapon.knife'], RIGHT:[rocket,rifle,shotgun,mg,handgun,'weapon.smg'] };
-    progressed.ownedActions = [...new Set([...progressed.ownedActions,...progressed.racks.LEFT,...progressed.racks.RIGHT])];
+    progressed.ownedActions = [...new Set([...progressed.ownedActions,...Object.keys(catalog).filter(id=>id.startsWith('weapon.') && id!=='weapon.rotary-minigun'),...progressed.racks.LEFT,...progressed.racks.RIGHT])];
     progressed.selectedAction = handgun;
     expect(validateSave(progressed), `L${level} finished-L10 fixture`).toBe(true);
     if (level === 10) enforceCureArsenal(progressed);
