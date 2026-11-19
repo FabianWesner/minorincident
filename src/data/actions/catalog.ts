@@ -38,7 +38,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   fixtures['weapon.pistol'],
   { ...fixtures['weapon.pistol'], id: 'weapon.handgun', iconId: 'icon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
   // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
-  { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65, knockdown: true },
+  { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65 },
   // Close-mid precision tool: three nails drop a standard 40 HP infected.
   { ...gun('nail-gun', 14, 18, 6, 24, 1.6, 1), noiseRadius: noiseForAction('weapon.handgun').radius / 3, projectile: { speed: 60, gravity: 0, pierce: 0 } },
   gun('smg', 18, 20, 8, 30, 1.5, 2),

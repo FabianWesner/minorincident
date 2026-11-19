@@ -17,6 +17,6 @@ Ordinary infected remain at 40 HP. These jobs are the selection hint; special da
 | Rocket launcher | Blow apart groups and heavies | 180 | 35 m; 6 m blast | 1.2 rockets/s; unlimited | everything in blast knocked down |
 | Flashbang | Stun a crowd; break grabs | 0 | 7 m radius | 2 charges; 12 s recharge | 3 s stun; frees grabbed courier/follower |
 
-## Sound cue plan
+## Sound work remaining
 
-Weapon fire uses each action's own recorded `action.weapon.*` take and its per-action `weaponSlices` timing. Reloads use the existing recorded `weapon.reload` cue; shotgun uses `weapon.pump`. Impacts use the recorded hit material cues (`impact.body.*`) with weapon-specific tails for shotgun, rifle and rocket. The nail gun uses its own short pneumatic action take; the flame action uses a roaring loop plus ignition and sputter cues; the rifle action uses its heavy crack take and outdoor tail. The imported source and license for every recorded take remain listed in `assets/audio/imports.json`.
+The weapon-specific reload and impact takes, pneumatic nail-gun fire, and flamethrower loop, ignition and sputter remain to be implemented and verified.

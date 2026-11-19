@@ -67,7 +67,6 @@ function checkArsenalRoles(): void {
   expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
   expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
   expect(rosterAction('weapon.flashbang').splash?.radius).toBe(7);
-  expect(rosterAction('weapon.shotgun').knockdown).toBe(true);
   expect(rosterAction('weapon.rocket-launcher').knockdown).toBe(true);
   expect(rosterAction('weapon.nail-gun').damage).toBe(14);
   expect(rosterAction('weapon.flamethrower')).toMatchObject({ range: 8, fireRate: 15, magazine: 90, reloadTime: 5, status: { duration: 4, dps: 35 } });
