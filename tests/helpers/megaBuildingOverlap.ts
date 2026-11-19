@@ -1,9 +1,9 @@
-import { expect, test } from 'vitest';
-import { emptyInput } from '../../../src/input/InputFrame';
-import { runLevel } from '../../../tools/sim-runner/levels';
+import { expect } from 'vitest';
+import { emptyInput } from '../../src/input/InputFrame';
+import { runLevel } from '../../tools/sim-runner/levels';
 
-for (const level of ['L9', 'L10'] as const) for (const passive of [false, true]) {
-  test(`${level} ${passive ? 'passive' : 'complete'} Mega stays clear of solids when visible or in frame`, async () => {
+export async function megaBuildingOverlap(): Promise<void> {
+  for (const level of ['L9', 'L10'] as const) for (const passive of [false, true]) {
     const intersections: string[] = [];
     let samples = 0, stationaryTicks = 0;
     const report = await runLevel(level, 'complete', 1, level === 'L10' ? 3600 : 900, 'auto', undefined, undefined, 0, {
@@ -35,5 +35,5 @@ for (const level of ['L9', 'L10'] as const) for (const passive of [false, true])
     expect(samples).toBeGreaterThan(0);
     if (passive && level === 'L10') expect(stationaryTicks).toBeGreaterThan(60);
     expect(intersections.join('\n')).toBe('');
-  }, 300_000);
+  }
 }
