@@ -4,7 +4,7 @@
 
 L7 now authors **560 HIGH / 280 LOW** regular infected (+40%) and keeps concurrent caps at **200 / 100**. The higher 240 / 120 caps were not enabled: the native sim proxy measured HIGH update p95 at **4.12 ms** at 200 active and **4.31 ms** at 240, against the 4 ms HIGH budget. HIGH peak active count in the final native acceptance route was 200; peak living characters were 236. Real-device frame timing remains pending.
 
-Opening and subsequent street groups use road-connected placements split across ahead, behind and both side approaches, with every scheduled wave requested in one tick. The opening engages a 16-runner advance party selected across four sectors; the full authored population still arrives through the existing queue/recycling path. The final HIGH horde is 168 (LOW 84). Zombie stats are unchanged.
+Opening and subsequent street groups use road-connected placements spread across the road and its verges, with each scheduled wave requested in one tick. The opening selects a 16-runner advance party using angular sectors; the authored population is delivered through the existing queue/recycling path. Requests do not prove actual arrivals from three directions within five seconds: admission, pathing, and the moving column must be measured for every fight. That requirement remains open. The final HIGH horde is 168 (LOW 84). Zombie stats are unchanged.
 
 ## Survival and completion
 
