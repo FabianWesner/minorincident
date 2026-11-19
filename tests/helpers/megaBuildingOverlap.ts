@@ -1,5 +1,9 @@
 import { expect } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
+import { curePursuitRoute } from '../../src/levels/L10/district';
+import { boxContact } from '../../src/sim/world/SolidGeometry';
+import { megaAlpha } from '../../src/data/megaAlpha';
+import { loadLevel } from '../../tools/sim-runner/levels';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { installMegaPursuit } from '../../src/sim/ai/MegaPursuit';
 import { runLevel } from '../../tools/sim-runner/levels';
@@ -31,7 +35,31 @@ async function detour(wall: boolean): Promise<{ ticks: number; path: number; sid
   } finally { world.dispose(); }
 }
 
+async function checkRouteSolids(): Promise<void> {
+  const world = await loadLevel('L10', 1);
+  try {
+    const nodes = new Map(curePursuitRoute.nodes.map(node => [node.id, node]));
+    const hits: string[] = [];
+    for (const [a, b] of curePursuitRoute.links) {
+      const from = nodes.get(a)!, to = nodes.get(b)!;
+      const steps = Math.max(1, Math.ceil(Math.hypot(to.x - from.x, to.z - from.z) * 2));
+      for (const district of world.districts!.districts) for (const collider of district.decay.colliders) {
+        const bounds = collider.aabb;
+        if (collider.walkable || bounds.max[1] <= .1 || bounds.min[1] >= 1.35) continue;
+        const box = { x: (bounds.min[0] + bounds.max[0]) / 2 + district.origin[0], z: (bounds.min[2] + bounds.max[2]) / 2 + district.origin[1], y: 1,
+          halfX: (bounds.max[0] - bounds.min[0]) / 2, halfZ: (bounds.max[2] - bounds.min[2]) / 2, halfY: 1 };
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps, contact = boxContact(box, from.x + (to.x - from.x) * t, from.z + (to.z - from.z) * t, megaAlpha.radius, { depth: 0, nx: 0, nz: 0, inside: false });
+          if (contact.depth > 1e-8) { hits.push(`${a} -> ${b}: ${collider.id}`); break; }
+        }
+      }
+    }
+    expect(hits.join('\n'), 'authored pursuit links clear static colliders').toBe('');
+  } finally { world.dispose(); }
+}
+
 export async function megaBuildingOverlap(): Promise<void> {
+  await checkRouteSolids();
   const clear = await detour(false), blocked = await detour(true);
   expect(blocked.ticks, 'wall costs real time').toBeGreaterThan(clear.ticks + 60);
   expect(blocked.path, 'wall requires a longer path').toBeGreaterThan(clear.path + 2);
