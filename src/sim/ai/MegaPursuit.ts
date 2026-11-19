@@ -355,18 +355,19 @@ export class MegaPursuit {
     const farSpeed = finalApproach ? (tier === 'low' ? 1.2 : 1.24) : tier === 'low' ? 1.15 : 1.11;
     let budget = this.cruiseSpeed * Status.speed(e) * (farHidden ? farSpeed : 1) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
+    let obstructed = false;
     while (budget > 1e-6) {
       if (this.legBlocked(t)) break;
       const next = s.route.length ? this.nodes.get(s.route[0])! : s.target;
       const d = dist(t, next), stop = s.route.length ? 0 : this.radius + 1;
       if (d - stop <= budget) {
         const travel = Math.max(0, d - stop), k = d > 1e-9 ? travel / d : 0;
-        if (!this.coarseLeg(e, next, travel, d)) break;
+        if (!this.coarseLeg(e, next, travel, d)) { obstructed = true; break; }
         t.x += (next.x - t.x) * k; t.z += (next.z - t.z) * k; budget -= travel;
         if (!s.route.length) break;
         this.pass();
       } else {
-        if (!this.coarseLeg(e, next, budget, d)) break;
+        if (!this.coarseLeg(e, next, budget, d)) { obstructed = true; break; }
         t.x += (next.x - t.x) / d * budget; t.z += (next.z - t.z) / d * budget; budget = 0;
       }
     }
@@ -379,14 +380,20 @@ export class MegaPursuit {
     const motion = e.locomotion ??= motionResponse();
     motion.vx = motion.vz = motion.ax = motion.az = 0; motion.updatedAt = tick;
     this.world.spatial.set(e.id, t.x, t.z);
+    if (obstructed && this.resident(t.x, t.z)) {
+      // Pressure can select coarse travel even inside the resident nav grid.
+      // Let the ordinary navigator find a way around instead of retrying the
+      // same blocked straight step forever.
+      e.infected!.hidden = false; s.mode = 'recover';
+      this.steer(e, dist(t, player.transform));
+    }
   }
   /** Coarse actors still obey building and barricade solids; only the hidden mesh/crowd work is skipped. */
   private coarseLeg(e: EntitySnapshot, target: { x: number; z: number }, requested: number, full: number): boolean {
     if (requested <= 1e-8 || full <= 1e-8) return true;
     const dx = (target.x - e.transform.x) / full, dz = (target.z - e.transform.z) / full;
     const allowed = this.world.solids.sweep(e, { x: dx, z: dz }, requested, this.radius, false, false);
-    // A hit ends this coarse leg. The actor transitions to detailed steering on its next resident tick and can route around it.
-    return allowed >= requested - .01;
+    return allowed >= requested - 1e-8;
   }
   /** Detailed steering on the shared nav grid at cruise speed. */
   private steer(e: EntitySnapshot, d: number): void {
