@@ -13,7 +13,7 @@ import { l7Rocket } from '../../src/data/l7';
 import { enforceCureArsenal, transactArsenal } from '../../src/sim/progression/arsenal';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
-import { beginRewards, debugCampaign, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
+import { beginRewards, debugCampaign, finishRewards, gearTier, newCampaign, pickUpgrades, preset, resetCampaignStoryForReplay, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
 import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progression/apply';
 import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progression/carryover';
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
@@ -43,6 +43,12 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   expect(['1', 'true'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([true, true]);
   expect(['', '0', 'false'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([false, false, false]);
   expect(debugFlagEnabled(new URLSearchParams())).toBe(false);
+  const finished = preset('L10-default'); finished.completedLevels = 10;
+  finished.world = { infectionCleared: { level: 10, releasedAt: 123, epilogueSeen: true } };
+  finished.cureResume = { current: {} } as CampaignSave['cureResume']; finished.l9Crash = {} as NonNullable<CampaignSave['l9Crash']>;
+  resetCampaignStoryForReplay(finished);
+  expect(finished.world?.infectionCleared).toBeUndefined(); expect(finished.cureResume).toBeUndefined();
+  expect(finished.l9Crash).toBeUndefined(); expect(finished.completedLevels).toBe(10);
   const bat = 'weapon.bat', axe = 'weapon.fire-axe', handgun = 'weapon.handgun', mg = 'weapon.army-mg', shotgun = 'weapon.shotgun', rifle = 'weapon.assault-rifle', rocket = 'weapon.rocket-launcher';
   // Expected story boundaries are independent of the production pickup declarations below.
   const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle], [axe]];
