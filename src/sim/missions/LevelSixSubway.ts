@@ -84,7 +84,7 @@ export class LevelSixSubway {
     const existingGuns=residents.slice(1).filter(e=>!!e?.civilian?.ally?.gun).length;
     const hasShotgun=residents.slice(1).some(e=>e?.civilian?.ally?.weapon==='shotgun'&&!!e.civilian.ally.gun);
     const needed=Math.max(hasShotgun?0:1,Math.ceil(all.length/2)-1-existingGuns);
-    const issued=all.map((_,i)=>i).filter(i=>i>0&&!residents[i]?.civilian?.ally).slice(0,needed);
+    const issued=all.map((_,i)=>i).filter(i=>i>0&&!residents[i]?.civilian?.ally?.gun).slice(0,needed);
     const shotgun=hasShotgun?undefined:issued[0];
     all.forEach((key,i)=>{
       const injured=key!=='rosa'&&i>0&&i%5===0, routine=key==='rosa'?'treat':i===3&&keys.includes('rosa')?'talk':i===0?'guard':(['sit','talk','treat','rest','share'] as const)[(i-1)%5];
