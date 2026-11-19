@@ -85,7 +85,9 @@ export class Combat {
       this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: loadout.current(emptySide).id, position: { ...player.transform } });
       const best = loadout.activeEntries().filter(e => weaponFallbackPriority(e.id) !== undefined && (e.index === -1 || loadout.hasAmmo(loadout.state[e.side].rack[e.index])))
         .sort((a, b) => weaponFallbackPriority(b.id)! - weaponFallbackPriority(a.id)!)[0]!;
-      loadout.state.selectedSide = best.side; loadout.state[best.side].index = best.index; loadout.state[best.side].swapUntil = this.world.tick + 15;
+      if (!loadout.returnToPrevious(this.world.tick)) {
+        loadout.state.selectedSide = best.side; loadout.state[best.side].index = best.index; loadout.state[best.side].swapUntil = this.world.tick + 15;
+      }
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
     }
