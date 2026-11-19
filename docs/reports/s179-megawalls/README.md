@@ -30,3 +30,9 @@ The low stationary acceptance scenario reproduced a 1.034 m step at tick 70983. 
 ## Sharded threat audit and unit rerun
 
 The missing first shard subsequently completed in 341 seconds. Merging it with the saved second shard from the same code revision (`53e96b38`, followed only by report edits) produced 0 threat flags, including L9/L10. Two unchanged remote `npm test` attempts on the current code timed out at the 240-second runner limit under load; both showed the long combat and L4 contact cases exceeding their individual limits before the overall timeout. No completed current-code unit result is claimed.
+
+## Temporary route avoidance
+
+Temporary stuck-link avoidance no longer starts the authored breach timer. A focused arena probe passed for temporary and explicitly blocked links; typecheck and lint passed. The L9/L10 threat diagnostic completed its native stages, but its partial selection is not a full gate. Its L10 skilled dispersal-assault wave recorded a first-attack flag also present in the earlier merged audit; the audit summary counts only its selected gate flags. The previous full zero-flag result predates this change.
+
+Two further unchanged remote unit attempts on this change did not pass: the first completed with 104 passed, one skipped and the combat test timing out at 30 seconds; the second reached the 240-second overall timeout. The current-code unit gate remains open.
