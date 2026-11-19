@@ -144,7 +144,7 @@ export class MegaPursuit {
     }
     if (this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
     const resident = this.resident(spot.x, spot.z);
-    const place = resident ? this.clearNear(spot) ?? spot : spot;
+    const place = resident ? this.clearNear(spot) ?? spot : this.world.chunks ? this.coarseClearNear(spot) ?? spot : spot;
     const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !resident });
     const e = this.world.entities.get(id)!, b = e.infected!;
     b.pursuit = true; b.hidden = !resident; b.speed = this.cruiseSpeed; e.combat!.radius = this.radius;
@@ -406,16 +406,15 @@ export class MegaPursuit {
       this.steer(e, dist(t, player.transform));
     }
   }
-  /** A bounded grid from district colliders keeps nonresident route joins out of unloaded buildings. */
-  private coarseNavigate(e: EntitySnapshot, budget: number): void {
-    const p = e.transform, s = this.state;
+  /** Build a bounded grid using district solids even outside streamed chunks. */
+  private coarseGridAt(p: { x: number; z: number }): NavGrid {
     let grid = this.coarseGrid;
     if (!grid || Math.abs(p.x - grid.center.x) > 24 || Math.abs(p.z - grid.center.z) > 24) {
       const walls: ConstructorParameters<typeof NavGrid>[1][number][] = [];
       for (const district of this.world.districts!.districts) {
-        for (const collider of district.decay.colliders) {
-          if (collider.walkable) continue;
-          const b = collider.aabb, x = (b.min[0] + b.max[0]) / 2 + district.origin[0], z = (b.min[2] + b.max[2]) / 2 + district.origin[1];
+        const solids = [...district.decay.colliders.filter(collider => !collider.walkable).map(collider => collider.aabb), ...district.blockers];
+        for (const b of solids) {
+          const x = (b.min[0] + b.max[0]) / 2 + district.origin[0], z = (b.min[2] + b.max[2]) / 2 + district.origin[1];
           const halfX = (b.max[0] - b.min[0]) / 2, halfZ = (b.max[2] - b.min[2]) / 2;
           if (Math.abs(x - p.x) > 42 + halfX || Math.abs(z - p.z) > 42 + halfZ) continue;
           walls.push({ x, z, y: (b.min[1] + b.max[1]) / 2, halfX, halfZ, halfY: (b.max[1] - b.min[1]) / 2 });
@@ -424,6 +423,21 @@ export class MegaPursuit {
       grid = this.coarseGrid = new NavGrid({ width: 80, depth: 80 }, walls, this.radius, { x: p.x, z: p.z }, null, .5);
       this.coarsePath.path.length = 0; this.coarsePath.goal = -1;
     }
+    return grid;
+  }
+  /** Spawn offscreen on clear ground even if the requested point is inside an unloaded building. */
+  private coarseClearNear(p: { x: number; z: number }): { x: number; z: number } | null {
+    const grid = this.coarseGridAt(p), visible = (q: { x: number; z: number }) => this.world.infected!.director.inFrame(q, 1, true);
+    if (grid.clear(p.x, p.z, this.radius)) return p;
+    for (let d = .5; d <= 32; d += .5) for (let k = 0; k < 32; k++) {
+      const angle = k * Math.PI / 16, q = { x: p.x + Math.cos(angle) * d, z: p.z + Math.sin(angle) * d };
+      if (grid.clear(q.x, q.z, this.radius) && !visible(q)) return q;
+    }
+    return null;
+  }
+  /** A bounded grid from district colliders keeps nonresident route joins out of unloaded buildings. */
+  private coarseNavigate(e: EntitySnapshot, budget: number): void {
+    const p = e.transform, s = this.state, grid = this.coarseGridAt(p);
     while (s.route.length && dist(p, this.nodes.get(s.route[0])!) < .02) this.pass();
     const target = s.route.length ? this.nodes.get(s.route[0])! : s.target;
     const dx = target.x - p.x, dz = target.z - p.z, d = Math.hypot(dx, dz), stop = s.route.length ? 0 : this.radius + 1;

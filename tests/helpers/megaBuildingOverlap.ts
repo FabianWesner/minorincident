@@ -53,6 +53,12 @@ export async function checkBlockedLinks(): Promise<void> {
 }
 
 export async function checkUnloadedDetour(): Promise<void> {
+  const spawnWorld = await loadLevel('L10', 1);
+  try {
+    const pursuit = spawnWorld.megaPursuit!, entity = spawnWorld.entities.get(pursuit.introduce({ x: 833, z: 88.8199 }))!;
+    expect(Math.hypot(entity.transform.x - 833, entity.transform.z - 88.8199), 'invalid unloaded spawn is moved to clear ground').toBeGreaterThan(0);
+    expect(spawnWorld.infected!.director.inFrame(entity.transform, 1, true), 'spawn correction stays offscreen').toBe(false);
+  } finally { spawnWorld.dispose(); }
   const world = await loadLevel('L10', 1);
   try {
     const pursuit = world.megaPursuit!, mega = world.entities.get(pursuit.introduce({ x: 823, z: 88.8199 }))!;
