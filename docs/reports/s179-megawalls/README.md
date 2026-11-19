@@ -26,3 +26,7 @@ Open: investigate the L10-07 displacement; verify coarse handoff and nonresident
 ## Follow-up: L10-07
 
 The low stationary acceptance scenario reproduced a 1.034 m step at tick 70983. Phase instrumentation traced it to accumulated crowd separation corrections, not a special attack. Mega separation is now limited to 0.2 m per tick; the same local probe measured 0.2485 m maximum. The native overlap and continuity regression passes after this change. Full threat audit attempts on the updated code timed out at 600 seconds locally and remotely under load. Shard 2 completed within 592 seconds, but shard 1 remained queued for over 20 minutes and the attempt was stopped; the merged verdict is outstanding. The earlier zero-flag audit predates the separation change. Remote acceptance and unit checks also need rerunning on current code.
+
+## Sharded threat audit and unit rerun
+
+The missing first shard subsequently completed in 341 seconds. Merging it with the saved second shard from the same code revision (`53e96b38`, followed only by report edits) produced 0 threat flags, including L9/L10. Two unchanged remote `npm test` attempts on the current code timed out at the 240-second runner limit under load; both showed the long combat and L4 contact cases exceeding their individual limits before the overall timeout. No completed current-code unit result is claimed.
