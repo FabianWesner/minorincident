@@ -78,6 +78,19 @@ async function checkFlameCluster(): Promise<void> {
 }
 
 async function checkBlastClusters(): Promise<void> {
+  // Compare the two actual splash resolvers at their centres and at equal fractions of their radii.
+  for (const fraction of [0, .5, .9]) {
+    const losses: number[] = [];
+    for (const id of ['weapon.rocket-launcher', 'weapon.molotov']) {
+      const w = await arena(), def = rosterAction(id), radius = def.splash!.radius;
+      walls(w).length = 0;
+      const target = dummy(w, 10 + radius * fraction, 0, 1000);
+      const tick = w.tick;
+      w.combat!['splash']({ id: 1, sourceId: 1, side: 'RIGHT', def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, { x: 10, z: 0 });
+      losses.push(1000 - health(w, target));
+    }
+    expect(losses[1]).toBeCloseTo(losses[0] * .75, 5);
+  }
   for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
     const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
     const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
