@@ -235,7 +235,7 @@ export class MegaPursuit {
     const pressure = this.options.route?.pressure;
     // D-CURE progresses east along its authored R6/R7 delivery approach.
     const pressured = !!pressure && this.nodes.size > 0 && this.nearestNode(s.target).x >= this.nodes.get(pressure.from)!.x;
-    if (!this.resident(e.transform.x, e.transform.z) || (pressured && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e, pressured); return true; }
+    if (!this.resident(e.transform.x, e.transform.z) || (pressured && s.stuck.level === 0 && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e, pressured); return true; }
     b.hidden = false;
     // Coarse actors expose zero locomotion intent. Seed the detailed response
     // from their resolved travel only at the handoff, preserving that contract.
@@ -385,6 +385,8 @@ export class MegaPursuit {
       // Let the ordinary navigator find a way around instead of retrying the
       // same blocked straight step forever.
       e.infected!.hidden = false; s.mode = 'recover';
+      s.stuck.level = 1; s.stuck.since = tick;
+      motion.updatedAt = -1;
       this.steer(e, dist(t, player.transform));
     }
   }
