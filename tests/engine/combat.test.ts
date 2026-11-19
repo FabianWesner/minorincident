@@ -51,6 +51,9 @@ function checkArsenalRoles(): void {
   expect(assault.damage * assault.fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
   expect(rosterAction('weapon.molotov').effect?.duration).toBeGreaterThanOrEqual(6);
   expect(rosterAction('weapon.molotov').status?.dps).toBeGreaterThanOrEqual(20);
+  const molotov = rosterAction('weapon.molotov'), rocket = rosterAction('weapon.rocket-launcher');
+  expect(molotov.damage).toBe(rocket.damage * 0.75);
+  expect(molotov.splash).toEqual({ radius: rocket.splash!.radius * 0.75, falloff: rocket.splash!.falloff });
   expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
   expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
   expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
