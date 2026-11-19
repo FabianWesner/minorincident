@@ -1,5 +1,9 @@
 # s175-l4horde — L4 hold repair and verification
 
+## Acceptance report blocker, verified after merge
+
+The prescribed remote acceptance run completes both tier simulations, fixtures and checkpoint controls, then `sourceRows()` aborts before producing `L4.json`: `G-28` and `G-29` exist in `docs/qa/level-acceptance.md` but have no batch51 historical baseline. The same function hard-codes 178 source rows, while the current source contains 180 unique rows. The task forbids changes under `tools/qa`; resolving this separate inventory migration requires the owner to reconcile the new global rows and count without changing the L4 targets or measurement. The existing full threat audit retains the merged-source horde evidence: LOW and HIGH hold complete with 8,700 samples each, LOW 66/52 and peak 80, HIGH 62/46, zero flags.
+
 ## Merged-source follow-up
 
 Main `1b213208` was merged at `da4f1775`. The full threat audit was run in two local deterministic shards (235.8 s and 301.6 s) and merged: **0 flags**. LOW stationary is 50.15 s / 66 at breach / 52 sustained, peak living 80; HIGH is 51.08 s / 62 / 46. Remote acceptance completed all native routes, fixtures and checkpoints, but report construction failed on missing historical criterion `G-28`; its pulled receipts show LOW complete/stationary peak infected plus reservations 80/80 and living character identities 120/119, HIGH 103/130 and 162/163. The generated acceptance report was therefore not produced.
