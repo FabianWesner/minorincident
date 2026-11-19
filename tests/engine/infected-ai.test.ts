@@ -688,7 +688,7 @@ async function checkPipeBombMega(): Promise<void> {
   expect(mega.infected!.pipeBombReady).toBe(ready);
   step(w, ready - w.tick); blast();
   expect(mega.combat!.reaction?.heavy).toBe(true);
-  const boss = spawn(w, 'alpha', 5, 5); boss.infected!.arenaBoss = true; boss.health.current = boss.health.max = 5000;
+  const boss = spawn(w, 'alpha', 5, 5); boss.infected!.arenaBoss = { arena: 'elephant', slot: 0, engaged: true, exposedUntil: 0, readyAt: 0 }; boss.health.current = boss.health.max = 5000;
   const tick = w.tick, def = action('weapon.pipe-bomb');
   w.combat!['splash']({ id: tick + 2, sourceId: 1, side: 'RIGHT', def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, boss.transform);
   expect(boss.combat!.reaction?.heavy).toBe(true);
