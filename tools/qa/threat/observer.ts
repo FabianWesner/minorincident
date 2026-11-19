@@ -608,22 +608,27 @@ export class ThreatObserver {
       const disconnected = goal === at && Math.hypot(at.x - player.transform.x, at.z - player.transform.z) > 2.5;
       const legalBarrierPath = (stretch: number) => this.level === 'L4' && !e.pendingAdmission
         && Number.isFinite(this.barrierDistance(source, e, player.transform, stretch * Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)));
-      let boundedPath = false;
-      if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30) {
-        nearby++;
-        boundedPath = !!((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5));
-        if (boundedPath) boundedReachable++;
-        else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
-      }
       // L4's every-infected clause needs a continuous path at the actual body
       // radius too, rather than only A* connectivity on the narrower AI bake.
       const legalStretch = this.level === 'L4' ? 1e9 : Infinity;
+      const within = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30;
+      const boundedPath = within && !!((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5));
+      // The legal (unbounded) route witness: ground/vault/attack-through-barrier.
+      const legalRoute = !disconnected && ((!e.pendingAdmission || entrance || authored.length) && this.paths.query(source, routed, goal, legalStretch, authored) || legalBarrierPath(Infinity));
       // A body-clear route within 2.5× direct distance already proves the
-      // unbounded route to that same destination. Reuse the witness instead
+      // unbounded route to the same destination. Reuse the witness instead
       // of doing a second independent A* / destructible-barrier search.
-      if (boundedPath && (this.level === 'L4' || (e.combat?.radius ?? .35) <= source.clearance) && goal.x === player.transform.x && goal.z === player.transform.z
-        || (!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, goal, legalStretch, authored) || legalBarrierPath(Infinity)) reachable.add(token);
+      if (legalRoute || boundedPath && (this.level === 'L4' || (e.combat?.radius ?? .35) <= source.clearance) && goal.x === player.transform.x && goal.z === player.transform.z) reachable.add(token);
       else positions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z });
+      // The reachable-share clause targets locked clumps ("no permanent geometry
+      // trap"). An infected whose legal route merely detours beyond 2.5x direct
+      // (breach funnels, yard strips) is travelling, not locked; count only
+      // routeless infected against the share.
+      if (within) {
+        nearby++;
+        if (boundedPath || legalRoute) boundedReachable++;
+        else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
+      }
     }
     // Geometry is sampled after the sim tick. Charge it to the phases now
     // active, not a combat phase that ended when that tick closed a safe gate.

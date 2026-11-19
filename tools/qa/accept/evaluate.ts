@@ -100,7 +100,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     // L8's competent route still has an explicit breach-phase attacks/minute
     // target. The native phase ledger supplies that window after the 60 s calm.
     if (!competent || ['L1', 'L2', 'L3', 'L5', 'L6', 'L7', 'L8'].includes(receipt.level)) number(attack.id, 'real player/group windups per minute', (combat.seconds >= 20 || finishedDefense || completedAssignedPhase) ? combat.attacksPerMinute + (attack.group ? combat.groupAttacksPerMinute : 0) : null, attack.rate, Infinity);
-    if (attack.reach !== undefined) number(attack.id, 'minimum bounded-path reachable share within30m (path≤2.5×direct)', combat.boundedPaths?.samples ? combat.boundedPaths.minimumPercent : null, attack.reach, 100);
+    if (attack.reach !== undefined) number(attack.id, 'minimum reachable share within30m (legal ground/vault/barrier route; 2.5×direct or legal detour)', combat.boundedPaths?.samples ? combat.boundedPaths.minimumPercent : null, attack.reach, 100);
     if (receipt.level === 'L4') add(attack.id, 'post-opening legal ground or barrier path for every sampled infected', combat.legalPaths ?? null,
       'every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open',
       combat.legalPaths?.samples && combat.legalPaths.minimumPercent === 100 ? true : undefined);
