@@ -5,6 +5,7 @@ import { action as rosterAction, catalog } from '../../src/data/actions/catalog'
 import { action } from '../../src/data/actions/fixtures';
 import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
+import { combatArchetypes } from '../../src/data/balance';
 import { infectedDef, INFECTED_TOUGHNESS, riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
 import { Loadout } from '../../src/sim/combat/Loadout';
@@ -43,7 +44,11 @@ function humanAt(w: SimWorld, x: number, z: number, extra: Partial<import('../..
 
 function checkArsenalRoles(): void {
   const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
-  expect(rosterAction('weapon.machete').damage * 2).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
+  // PO 2026-11-19 axe parity: one machete cut kills a design-table 40 HP ordinary infected
+  // and its single-cut DPS equals the axe swing (45/0.4 s = 112.5 vs 56/0.5 s = 112).
+  expect(rosterAction('weapon.machete').damage).toBeGreaterThanOrEqual(combatArchetypes.runner.hp);
+  expect(Math.abs(rosterAction('weapon.machete').damage / rosterAction('weapon.machete').cooldown
+    - rosterAction('weapon.fire-axe').damage / rosterAction('weapon.fire-axe').cooldown)).toBeLessThanOrEqual(1);
   expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
   const machete = rosterAction('weapon.machete'), axe = rosterAction('weapon.fire-axe');
   expect((machete.damage / machete.cooldown) / (axe.damage / axe.cooldown)).toBeCloseTo(1, 2);

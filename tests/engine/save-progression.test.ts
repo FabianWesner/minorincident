@@ -51,7 +51,9 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   expect(finished.l9Crash).toBeUndefined(); expect(finished.completedLevels).toBe(10);
   const bat = 'weapon.bat', axe = 'weapon.fire-axe', handgun = 'weapon.handgun', mg = 'weapon.army-mg', shotgun = 'weapon.shotgun', rifle = 'weapon.assault-rifle', rocket = 'weapon.rocket-launcher';
   // Expected story boundaries are independent of the production pickup declarations below.
-  const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle], [axe]];
+  // PO 2026-11-19: the L9 crossing loses the axe too — the level-10 start owns nothing
+  // (fists/kick are unarmed, filtered here); the crash-site machete is a retained pickup.
+  const expected = [[], [bat], [bat,axe], [bat,axe,handgun], [bat,axe,handgun,mg], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle], [bat,axe,handgun,mg,shotgun,rifle,rocket], [bat,axe,handgun,mg,shotgun,rifle], []];
   const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[...new Set([l5WeaponPickup, ...l5DroppedWeapons.map(p => p.actionId)])], 7:[l7Rocket.action] };
   const weapons = (racks: CampaignSave['racks']) => [...new Set([...racks.LEFT,...racks.RIGHT].filter(id => !['weapon.fists','weapon.kick'].includes(id) && catalog[id].category !== 'ability'))].sort();
   const fresh = newCampaign();
@@ -363,7 +365,7 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
   expect(early.save.transport).toBeDefined();
 
   const { save, world, player, projectiles, setLoadout, removed } = make(true);
-  const before = [...new Set([...save.ownedActions, 'weapon.bat', 'weapon.shotgun'])].filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
+  const before = [...new Set([...save.ownedActions, 'weapon.bat', 'weapon.shotgun'])].filter(id => catalog[id].category !== 'ability');
   commitCrossingHandover(save, world as never);
   expect(player.survivor.scriptedClip, 'L10 handover releases the completed L9 crawl pose').toBeUndefined();
   expect(player.survivor.knockdown).toBeUndefined(); expect(player.survivor.attack).toBeUndefined();
@@ -375,13 +377,13 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
   expect(handover.preCrashDurability).toBe(55);
   expect(handover.shelteredPassengers.map(e => e.id), 'living non-companion passengers shelter').toEqual([8]);
   expect(handover.corgi?.id, 'the corgi comes along').toBe(7);
-  expect(save.racks).toEqual({ LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] });
-  expect(save.selectedAction).toBe('weapon.fire-axe');
-  expect(save.ownedActions.filter(id => catalog[id].category !== 'ability')).toEqual(['weapon.fire-axe']);
+  expect(save.racks).toEqual({ LEFT: ['weapon.fists'], RIGHT: ['weapon.fists'] });
+  expect(save.selectedAction).toBe('weapon.fists');
+  expect(save.ownedActions.filter(id => catalog[id].category !== 'ability')).toEqual(['weapon.fists']);
   expect([save.completedLevels, save.unlockedLevel]).toEqual([9, 10]);
   expect([save.transport, save.pending, save.l9Crash], 'transport and L9 state are removed').toEqual([undefined, undefined, undefined]);
   expect([projectiles.length, removed, world.progression.pickups], 'projectiles and weapon pickups are cleared (other pickups stay)').toEqual([0, [20], []]);
-  expect(setLoadout).toHaveBeenCalledWith(['weapon.fire-axe'], ['weapon.fire-axe']);
+  expect(setLoadout).toHaveBeenCalledWith(['weapon.fists'], ['weapon.fists']);
   expect(player.health.current, 'healed').toBe(100);
 
   const snapshot = structuredClone(save), healthAfter = player.health.current;

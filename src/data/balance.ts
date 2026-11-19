@@ -278,6 +278,10 @@ Object.assign(ttkBands, {
     gorilla: [18.59, 28.51],
     flamingo: [0.01, 0.43],
   },
+  // PO 2026-11-19 axe parity (45 / 0.4 s): bands recomputed with the row convention
+  // n = ceil(hp / (damage × (1 - armor))), t = 0.25 × swing + (n - 1) × swing,
+  // [max(0.01, floor(0.8t - 0.25)), ceil(1.2t + 0.25)]. One cut drops 40 HP runners;
+  // tougher ordinary archetypes keep their own hit-count bands.
   'weapon.machete': {
     runner: [0.01, 0.37],
     crawler: [0.01, 0.37],

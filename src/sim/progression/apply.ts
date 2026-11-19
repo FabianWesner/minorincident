@@ -75,7 +75,8 @@ export function campaignLoadout(save:CampaignSave,level:number):{size:number;LEF
 }
 /** Story grants become selectable at the next level boundary. Current-level pickups stay withheld until collected. */
 function storyWeaponsBefore(level:number):Set<string> {
-  if (level === 10) return new Set(['weapon.fire-axe','weapon.fists','weapon.kick']); // the mandatory L9 crash strips the combat arsenal
+  // PO 2026-11-19: the unarmed crash start owns nothing; the crash-site machete arrives as a retained pickup.
+  if (level === 10) return new Set(['weapon.fists','weapon.kick']);
   const earned = new Set<string>(['weapon.fists','weapon.kick', ...(level > 1 ? fixedUnlocks[1].filter(id => catalog[id]?.category !== 'ability') : [])]);
   // These ids are the weapon pickup/action ids authored by each level's mission data.
   // The grant level is the level containing the pickup, so the weapon is usable starting in level + 1.

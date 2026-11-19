@@ -353,6 +353,9 @@ export class ThreatObserver {
         return id;
       };
       observeAttackStarts(world, (sourceId, targetId, tick) => {
+        // An attack aimed at the courier is engagement, not a stationary safe pocket.
+        // Some special moves retain the chase state throughout their animation.
+        if (targetId === 1) this.chaseWatch.delete(sourceId);
         const target = world.entities.get(targetId);
         const groupTarget = !!target && (target.civilian?.survivor?.mode === 'follow' || target.escort?.state === 'follow' || target.civilian?.ally?.follow?.targetId === 1 || target.companion?.state === 'follow');
         if (targetId !== 1 && !groupTarget) return;

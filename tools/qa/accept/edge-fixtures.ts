@@ -10,6 +10,10 @@ import { stateHash } from '../../../src/sim/world/stateHash';
 import { relocatePlayer } from '../../../src/sim/missions/missionHelpers';
 import { l7CorridorAnchors } from '../../../src/levels/L7/corridor';
 import { fistsOnlyRoute, fistsCompletionPass } from './fix53-fists';
+import { cure } from '../../../src/levels/L10/district';
+import { cureWeaponPickups } from '../../../src/levels/L10/encounters';
+import { emptyInput } from '../../../src/input/InputFrame';
+import { transactArsenal } from '../../../src/sim/progression/arsenal';
 
 type Add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined) => void;
 
@@ -237,7 +241,162 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
       const companions = [...world.entities.iterate()].filter(e => e.companion).map(e => ({ id: e.id, hp: e.health.current, maxHp: e.health.max, hidden: !!e.hidden }));
       const value = { setup: 'normal L9 completion → completeCampaignLevel → fresh L10 with same save', run, handover: campaign.crossingHandover, weapons, hp: player.health.current, maxHp: player.health.max, hidden: !!player.hidden, activeVehicle: world.vehicles?.active ?? null, companions };
       observations['L9/crossing-handover'] = value;
-      add('L9-08', 'actual crossing transaction into L10', value, 'onfoot;exactlyaxe;full ordinary health;corgi safe', !world.vehicles?.active && !player.hidden && weapons.length === 1 && weapons[0] === 'weapon.fire-axe' && player.health.current === player.health.max && companions.length === 1 && companions[0].hp === companions[0].maxHp);
+      // PO 2026-11-19: the crossing takes the axe too — L10 starts with no weapon (fists);
+      // the crash-site machete (level-acceptance L10-05) lies within ~6 m of the start.
+      add('L9-08', 'actual crossing transaction into L10', value, 'onfoot;exactlyfists;full ordinary health;corgi safe', !world.vehicles?.active && !player.hidden && weapons.length === 1 && weapons[0] === 'weapon.fists' && player.health.current === player.health.max && companions.length === 1 && companions[0].hp === companions[0].maxHp);
     } finally { world.dispose(); }
+  }
+  if (level === 'L10') {
+    const campaign = preset('L10-default'); campaign.settings.quality = tier;
+    const world = await loadLevel('L10', 1, campaign, 0, { quality: tier });
+    try {
+      const player = world.entities.get(1)!, start = { x: player.transform.x, z: player.transform.z };
+      const at = cure.anchors['crash-machete'];
+      const distance = Math.hypot(at[0] - start.x, at[1] - start.z);
+      const navClear = world.infected!.nav.clear(at[0], at[1], .5);
+      const lineOfSight = world.infected!.nav.visible(start, { x: at[0], z: at[1] }, 0);
+      const initialRacks = {
+        LEFT: world.combat!.runner.loadout.state.LEFT.rack.map(slot => slot.id),
+        RIGHT: world.combat!.runner.loadout.state.RIGHT.rack.map(slot => slot.id),
+      };
+      const initialHealth = player.health.current;
+      const collection: { value: { tick: number; distance: number } | null; count: number } = { value: null, count: 0 };
+      const stop = world.events.on('pickup.collected', event => {
+        if (event.type !== 'pickup.collected' || !('actionId' in event) || event.actionId !== 'weapon.machete') return;
+        collection.count++;
+        collection.value = { tick: event.tick, distance: Math.hypot(player.transform.x - at[0], player.transform.z - at[1]) };
+      });
+      for (let ticks = 0; ticks < 60 && collection.count === 0; ticks++) {
+        world.applyInput({ ...emptyInput(), move: { x: 1, z: 0 } }, 'keyboard');
+        world.update();
+      }
+      for (let ticks = 0; ticks < 60 && collection.count > 0; ticks++) {
+        world.applyInput(emptyInput(), 'keyboard'); world.update();
+      }
+      stop();
+      const racks = world.combat!.runner.loadout.state;
+      const weapons = [...racks.LEFT.rack, ...racks.RIGHT.rack].map(slot => slot.id);
+      const pickupCopies = [...world.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.machete').length;
+      const value = {
+        setup: 'fresh L10 unarmed start; walk east on the crash-site exit line for at most 1 s, then check no respawn',
+        start, anchor: { x: at[0], z: at[1] }, distance, navClear, lineOfSight,
+        initialRacks, initialHealth, collected: collection.value, collectionCount: collection.count, healthAfter: player.health.current,
+        found: world.missions!.state.states['found-barn-machete'], weapons, pickupCopies,
+        authoredMacheteCount: cureWeaponPickups.filter(pickup => pickup.action === 'weapon.machete').length,
+      };
+      observations['L10/crash-site-machete'] = value;
+      const beforePickup = [...initialRacks.LEFT, ...initialRacks.RIGHT].every(id => id === 'weapon.fists');
+      add('L10-05', 'crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', value,
+        'both racks fists-only; one machete ≤6 m, clear walk and sight; picked up within 1 s without health loss; no barn copy or respawn',
+        beforePickup && distance <= 6 && navClear && lineOfSight && !!collection.value && collection.value.tick <= 60 && collection.count === 1 &&
+          initialHealth === player.health.current && world.missions!.state.states['found-barn-machete'] === true &&
+          weapons.includes('weapon.machete') && pickupCopies === 0 && cureWeaponPickups.filter(pickup => pickup.action === 'weapon.machete').length === 1);
+    } finally { world.dispose(); }
+    const inventoryRuns: { added: string[]; censuses: string[]; spawned: Record<string, number> }[] = [];
+    for (const added of [[], cureWeaponPickups.map(pickup => pickup.action)]) {
+      const save = preset('L10-default'); save.settings.quality = tier;
+      const comparison = await loadLevel('L10', 1, save, 0, { quality: tier });
+      try {
+        if (added.length) transactArsenal(comparison, [...added], []);
+        const censuses: string[] = [];
+        for (let tick = 0; tick < 240; tick++) {
+          comparison.applyInput(emptyInput(), 'keyboard'); comparison.update();
+          censuses.push(JSON.stringify(comparison.infected!.active.map(e => ({ id: e.id, archetype: e.archetype, x: e.transform.x, z: e.transform.z, hp: e.health.current }))));
+        }
+        inventoryRuns.push({ added: [...added], censuses, spawned: { ...comparison.l10Encounters!.state.spawned } });
+      } finally { comparison.dispose(); }
+    }
+    const same = JSON.stringify(inventoryRuns[0].censuses) === JSON.stringify(inventoryRuns[1].censuses) &&
+      JSON.stringify(inventoryRuns[0].spawned) === JSON.stringify(inventoryRuns[1].spawned);
+    observations['L10/inventory-only-opening'] = { ticks: 240, runs: inventoryRuns.map(({ added, spawned }) => ({ added, spawned })), identical: same };
+    add('L10-05', 'inventory alone does not release enemies at the crash start', observations['L10/inventory-only-opening'],
+      'same seed and stationary input at the crash start, with or without all six pickup weapons: identical 240-tick infected census and encounter ledger', same);
+    const locationChecks: { anchor: string; identical: boolean; births: number[] }[] = [];
+    for (const find of cureWeaponPickups) {
+      const cases: { census: string[]; spawned: Record<string, number>; births: number }[] = [];
+      for (const grant of [false, true]) {
+        const save = preset('L10-default'); save.settings.quality = tier;
+        const comparison = await loadLevel('L10', 1, save, 0, { quality: tier });
+        try {
+          const [x, z] = cure.anchors[find.anchor];
+          relocatePlayer(comparison, x, z);
+          if (grant) transactArsenal(comparison, cureWeaponPickups.map(pickup => pickup.action), []);
+          let births = 0;
+          const spawn = comparison.infected!.spawn.bind(comparison.infected!);
+          comparison.infected!.spawn = (...args: Parameters<typeof spawn>) => { const id = spawn(...args); births++; return id; };
+          const census: string[] = [];
+          for (let tick = 0; tick < 240; tick++) {
+            comparison.applyInput(emptyInput(), 'keyboard'); comparison.update();
+            census.push(JSON.stringify(comparison.infected!.active.map(e => ({ id: e.id, archetype: e.archetype, x: e.transform.x, z: e.transform.z, hp: e.health.current }))));
+          }
+          cases.push({ census, spawned: { ...comparison.l10Encounters!.state.spawned }, births });
+        } finally { comparison.dispose(); }
+      }
+      locationChecks.push({ anchor: find.anchor, births: cases.map(c => c.births), identical: JSON.stringify(cases[0]) === JSON.stringify(cases[1]) });
+    }
+    observations['L10/inventory-only-locations'] = { ticks: 240, locationChecks };
+    add('L10-05', 'inventory alone does not change admissions at pickup locations', observations['L10/inventory-only-locations'],
+      'matched fresh-world four-second stationary comparisons at all six pickup anchors, with and without all six weapons', locationChecks.every(c => c.identical));
+    const routeSave = preset('L10-default'); routeSave.settings.quality = tier;
+    const finds: { action: string; tick: number; retained: boolean }[] = [];
+    const beforeFind = new Map<string, ReturnType<NonNullable<SimWorld['missions']>['saveResume']>>();
+    let storyOnly = false;
+    const route = await runLevel('L10', 'complete', 1, undefined, 'auto', routeSave, undefined, 0, {
+      quality: tier,
+      beforeBegin: routeWorld => {
+        storyOnly = routeWorld.missions!.def.steps.every(step => !/\b(machete|rifle|molotov|nail.?gun|flashbang|weapon)\b/i.test(step.text));
+        const update = routeWorld.update.bind(routeWorld);
+        routeWorld.update = () => {
+          const player = routeWorld.entities.get(1)!;
+          for (const pickup of cureWeaponPickups) {
+            const id = routeWorld.l10Encounters?.state.weapons?.[pickup.id];
+            const entity = id === undefined ? undefined : routeWorld.entities.get(id);
+            if (!beforeFind.has(pickup.id) && entity?.pickup && Math.hypot(player.transform.x - entity.transform.x, player.transform.z - entity.transform.z) <= 8)
+              beforeFind.set(pickup.id, routeWorld.missions!.saveResume());
+          }
+          update();
+        };
+        routeWorld.events.on('pickup.collected', event => {
+          if (event.type !== 'pickup.collected' || !('actionId' in event) || event.pickupId <= 0 || !cureWeaponPickups.some(pickup => pickup.action === event.actionId && routeWorld.l10Encounters?.state.weapons?.[pickup.id] === event.pickupId)) return;
+          const racks = routeWorld.combat!.runner.loadout.state;
+          finds.push({ action: event.actionId, tick: event.tick, retained: [...racks.LEFT.rack, ...racks.RIGHT.rack].some(slot => slot.id === event.actionId) });
+        });
+      },
+    });
+    const expected = cureWeaponPickups.map(pickup => pickup.action);
+    const completeFinds = expected.every(action => finds.some(find => find.action === action && find.retained));
+    const routeValue = { run: route, storyOnly, expected, finds };
+    observations['L10/story-pickup-route'] = routeValue;
+    add('L10-05', 'six retained approach pickups and story-only objectives', routeValue,
+      'ordinary complete route collects each of six physical story finds into a rack; objective text names no weapon',
+      route.completed ? storyOnly && completeFinds : undefined);
+    const naturalCases: { pickup: string; captured: boolean; identical?: boolean; births?: number[] }[] = [];
+    for (const pickup of cureWeaponPickups) {
+      const snapshot = beforeFind.get(pickup.id);
+      if (!snapshot) { naturalCases.push({ pickup: pickup.id, captured: false }); continue; }
+      const cases: { census: string[]; spawned: Record<string, number>; births: number }[] = [];
+      for (const grant of [false, true]) {
+        const save = preset('L10-default'); save.settings.quality = tier;
+        const comparison = await loadLevel('L10', 1, save, 0, { quality: tier });
+        try {
+          comparison.missions!.loadResume(structuredClone(snapshot));
+          if (grant) transactArsenal(comparison, cureWeaponPickups.map(find => find.action), []);
+          let births = 0;
+          const spawn = comparison.infected!.spawn.bind(comparison.infected!);
+          comparison.infected!.spawn = (...args: Parameters<typeof spawn>) => { const id = spawn(...args); births++; return id; };
+          const census: string[] = [];
+          for (let tick = 0; tick < 240; tick++) {
+            comparison.applyInput(emptyInput(), 'keyboard'); comparison.update();
+            census.push(JSON.stringify(comparison.infected!.active.map(e => ({ id: e.id, archetype: e.archetype, x: e.transform.x, z: e.transform.z, hp: e.health.current }))));
+          }
+          cases.push({ census, spawned: { ...comparison.l10Encounters!.state.spawned }, births });
+        } finally { comparison.dispose(); }
+      }
+      naturalCases.push({ pickup: pickup.id, captured: true, identical: JSON.stringify(cases[0]) === JSON.stringify(cases[1]), births: cases.map(c => c.births) });
+    }
+    observations['L10/inventory-only-natural-route'] = { ticks: 240, cases: naturalCases };
+    add('L10-05', 'inventory alone cannot release enemies', observations['L10/inventory-only-natural-route'],
+      'same naturally reached pre-pickup state with and without all six story weapons: identical infected census, births and encounter ledger over 240 ticks',
+      naturalCases.every(c => c.captured) ? naturalCases.every(c => c.identical) : undefined);
   }
 }
