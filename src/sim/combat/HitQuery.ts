@@ -1,4 +1,5 @@
 import { downed } from './Damage';
+import { fireTarget } from './friendlyFire';
 import type { EntityStore } from '../world/EntityStore';
 import type { EntitySnapshot } from '../world/types';
 import type { SpatialHash } from '../spatial/SpatialHash';
@@ -13,7 +14,8 @@ export class HitQuery {
   readonly hits: EntitySnapshot[] = [];
   private readonly area = { x: 0, z: 0, r: 0 };
   private readonly wallGroups: readonly (readonly CoverWall[])[];
-  constructor(private readonly entities: EntityStore, private readonly spatial: SpatialHash, readonly walls: readonly CoverWall[], readonly dynamicWalls: readonly CoverWall[] = []) { this.wallGroups = [walls, dynamicWalls]; }
+  /** s178 Hard: when true the courier's melee and guns may also target living humans (friendly fire both ways). */
+  constructor(private readonly entities: EntityStore, private readonly spatial: SpatialHash, readonly walls: readonly CoverWall[], readonly dynamicWalls: readonly CoverWall[] = [], private readonly friendlyFire: () => boolean = () => false) { this.wallGroups = [walls, dynamicWalls]; }
   nearby(origin: Vec2, range: number): readonly number[] {
     this.area.x = origin.x; this.area.z = origin.z; this.area.r = range;
     return this.spatial.query(this.area, this.neighbors);
@@ -154,9 +156,12 @@ export class HitQuery {
   melee(sourceId: number, origin: Vec2, aim: Vec2, range: number, arc: number, maxTargets: number, civilianGag = false, ground?: number): readonly EntitySnapshot[] {
     this.hits.length = 0;
     const limit = Math.cos(arc * Math.PI / 360);
+    const friendly = this.friendlyFire();
     for (const id of this.nearby(origin, range + 1e-6)) {
       const target = this.entities.get(id)!;
-      if (target.environmentObject || id === sourceId || (target.health.current <= 0 && !(id === ground && downed(target))) || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(civilianGag && target.civilian?.adult && !target.civilian.pet) && !(target.faction === 'environment' && target.combat))) continue;
+      // s178 Hard: a living human (ally, follower, civilian, escort; never the corgi/pets/zoo) is a melee target.
+      const fire = friendly && target.health.current > 0 && fireTarget(target);
+      if (target.environmentObject || id === sourceId || (target.health.current <= 0 && !(id === ground && downed(target))) || (!fire && target.faction !== 'infected' && !target.civilian?.eyesGlow && !(civilianGag && target.civilian?.adult && !target.civilian.pet) && !(target.faction === 'environment' && target.combat))) continue;
       const source = this.entities.get(sourceId);
       if (source && !combatHeightReachable(source, target)) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
@@ -173,10 +178,13 @@ export class HitQuery {
    * Its pitched shot still intersects the same XYZ cover slabs. */
   ray(sourceId: number, origin: RayPoint, direction: RayPoint, range: number, excluded?: ReadonlySet<number>, trackElevation = false): EntitySnapshot | null {
     const wallDistance = trackElevation ? range : this.clearDistance(origin, direction, range);
+    const friendly = this.friendlyFire();
     let nearest = wallDistance, hit: EntitySnapshot | null = null;
     for (const id of this.nearby(origin, range + 0.5)) {
       const target = this.entities.get(id)!;
-      if (target.environmentObject || id === sourceId || excluded?.has(id) || target.health.current <= 0 || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(target.faction === 'environment' && target.combat))) continue;
+      // s178 Hard: bullets (guns, mounted gun, flying throwables) can also strike living humans.
+      const fire = friendly && target.health.current > 0 && fireTarget(target);
+      if (target.environmentObject || id === sourceId || excluded?.has(id) || target.health.current <= 0 || (!fire && target.faction !== 'infected' && !target.civilian?.eyesGlow && !(target.faction === 'environment' && target.combat))) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z;
       const along = dx * direction.x + dz * direction.z, perpendicular = dx * dx + dz * dz - along * along;
       const radius = target.combat?.radius ?? 0.4;

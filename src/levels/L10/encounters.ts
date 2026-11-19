@@ -98,7 +98,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // 63.4 s at 48 m). Staging at the cover ring's inner edge keeps the surround readable
     // while the arrivals spend their exposure closing the last metres instead of the empty
     // 20 metres outside it; director.safe still rejects any spot within 18 m of her.
-    const radius = assault ? finale.holdRadius - 16 + Math.floor(i / 3) % 4 * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
+    const radius = assault ? finale.holdRadius - 20 + Math.floor(i / 3) % 4 * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
     // The checkpoint-bearing patrols approach from the military road side.
     // A circle on the bearing sent bodies around both flanks and funnelled
     // a retreat into the full road groups. Staggered rows retain every slot

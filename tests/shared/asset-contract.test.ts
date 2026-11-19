@@ -1,7 +1,7 @@
 // Asset contract: every shipped GLB (all levels, all LODs) passes the one validator in tools/assets/validate.ts.
 // Validator rejection cases and atlas identity details are shared across every figure build.
 import { Document } from '@gltf-transform/core';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { assetIO } from '../../tools/assets/io';
@@ -9,6 +9,7 @@ import { crewRoofs } from '../../src/data/vehicles';
 import { cloneDocument } from '@gltf-transform/functions';
 import { expect, test } from 'vitest';
 import manifest from '../../src/assets/manifest.json';
+import { catalog } from '../../src/data/actions/catalog';
 import type { AssetDef } from '../../src/assets/types';
 import { variantPath } from '../../src/assets/types';
 import { validateAssets, validateDocument } from '../../tools/assets/validate';
@@ -147,6 +148,13 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
 });
 
 test('the asset validator rejects every contract violation, and every production asset passes it', async () => {
+  const weaponIcons = Object.values(catalog).filter(def => def.id.startsWith('weapon.')).map(def => def.iconId);
+  expect(new Set(weaponIcons).size).toBe(weaponIcons.length);
+  for (const id of weaponIcons) {
+    const asset = manifest.find(entry => entry.id === id);
+    expect(asset?.icon, id).toBeTruthy();
+    expect(readFileSync(asset!.icon!, 'utf8'), id).not.toMatch(/<text\b/i);
+  }
   const crowdIO = await assetIO(), temporary = mkdtempSync(join(tmpdir(), 'crowd-delivery-'));
   try {
     const { doc, def } = fixture(), buffer = doc.getRoot().listBuffers()[0];

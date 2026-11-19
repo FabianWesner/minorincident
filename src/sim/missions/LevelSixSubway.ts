@@ -14,6 +14,7 @@ import type { L6State } from './types';
 import { survivorName } from './survivorName';
 const distance = (a: Point, b: Point) => Math.hypot(a.x-b.x,a.z-b.z);
 const ticks = (s: number) => Math.round(s*60);
+
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
 export class LevelSixSubway {
   private readonly aroundCourier = new Map<number, Point>();
@@ -388,7 +389,15 @@ export class LevelSixSubway {
     const row=Math.max(0,live.filter(q=>this.w.entities.get(q.id)!.civilian!.survivor!.slot%3===column).findIndex(q=>q.id===e.id));
     const target=r.collected?this.w.entities.get(1)!.transform:{x:s.leaderX-row*1.4,z:s.leaderZ+(column-1)*1.2};
     // Keep the authored tunnel approach until this walker reaches the platform; then align with the escalator.
-    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?(e.transform.x<246?l6.exit.approachZ:l6.tunnel.z):15+(r.collected?0:(column-1)*.725)};
+    // s173b: the escalator window must keep the column's three formation lanes. Folding every lane onto
+    // the courier's own line (z 15) left the three lanes' row-4/row-5 members all steering at the SAME
+    // slot point, so each merge point ground three bodies against each other and the interior walkers
+    // resolved a stride below the column pace (qa:threat SLOW_FOLLOWER 28/38/42 at the early-close
+    // exit once the retreat recycling keeps the mouth's pressure flowing). Lane centres 14.275/15/15.725
+    // are body-clear along the whole approach, so the file keeps unique slot points exactly like the
+    // tunnel and the street legs already do; only the platform-edge approach (walker still south of the
+    // escalator foot) keeps its authored single approach lane.
+    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258&&e.transform.x<246?l6.exit.approachZ:15+(r.collected?0:(column-1)*.725)};
     // Three 0.7 m bodies share the 2.2 m mouth with 2.5 cm between bodies and each barrier.
     const reach=r.collected?1.8:.4;
     // Injured survivors still walk with the retreating column. Holding them at

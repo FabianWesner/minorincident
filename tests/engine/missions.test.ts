@@ -242,7 +242,10 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   const def = missionSandbox('kill'); def.steps.push({ ...def.steps[0], id: 'reach', type: 'reach', start: { kind: 'objectives', ids: ['kill'], mode: 'all' }, complete: { kind: 'volume', anchor: 'goal', edge: 'inside' } }); def.finish = ['reach'];
   const api = await load(def), actor = api.state()!.actors;
   kill(actor.boss); api.completeObjective('kill'); world!.entities.get(1)!.weapons!.RIGHT.rack[0].charges = 2;
-  teleport(1, 1); api.checkpoint('C'); const saved = api.state()!;
+  teleport(1, 1); world!.entities.get(1)!.weapons!.corgiReady = world!.tick + 500;
+  api.checkpoint('C'); const saved = api.state()!;
+  step(30); world!.missions!.restore('C');
+  expect(world!.entities.get(1)!.weapons!.corgiReady! - world!.tick).toBe(500);
   teleport(actor.escort, 20); world!.entities.get(1)!.weapons!.RIGHT.rack[0].charges = 0;
   world!.player!.damage(1000, world!.tick); step(120);
   expect(api.state()!.completedObjectives).toEqual(saved.completedObjectives); expect(world!.entities.get(1)!.health.current).toBe(100);

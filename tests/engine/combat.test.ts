@@ -7,6 +7,7 @@ import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
 import { infectedDef, INFECTED_TOUGHNESS, riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
+import { Loadout } from '../../src/sim/combat/Loadout';
 import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -30,11 +31,22 @@ const health = (w: SimWorld, id: number) => w.entities.get(id)!.health.current;
 const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
+const soldierAlly = { role: 'soldier' as const, engaged: false, run: null, runSpeed: 2, post: null, hold: false, targetId: 0, nextAttack: 0, hits: 0, forceUntil: 0 };
+/** s178: a living human (Civilians' component shape), optionally an allied fighter, for friendly-fire checks. */
+function humanAt(w: SimWorld, x: number, z: number, extra: Partial<import('../../src/sim/npc/types').Civilian> = {}): number {
+  const e = w.entities.create({
+    kind: 'civilian', archetype: 'npc.adult', faction: 'civilian', transform: { x, y: .7, z, yaw: 0 }, health: { current: 100, max: 100 },
+    civilian: { state: 'calm', ambient: true, adult: true, pet: null, owner: null, variant: 'a', routine: '', waypoints: [], waypoint: 0, pauseUntil: 0, entered: 0, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: { x, z }, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0, ...extra },
+  });
+  w.spatial.set(e.id, x, z); return e.id;
+}
 
 function checkArsenalRoles(): void {
   const handgun = rosterAction('weapon.handgun'), assault = rosterAction('weapon.assault-rifle');
   expect(rosterAction('weapon.machete').damage * 2).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
   expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
+  const machete = rosterAction('weapon.machete'), axe = rosterAction('weapon.fire-axe');
+  expect((machete.damage / machete.cooldown) / (axe.damage / axe.cooldown)).toBeCloseTo(1, 2);
   expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
   expect(rosterAction('weapon.nail-gun').damage * rosterAction('weapon.nail-gun').fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
   expect(rosterAction('weapon.hunting-rifle').damage).toBeGreaterThanOrEqual(300);
@@ -42,6 +54,9 @@ function checkArsenalRoles(): void {
   expect(assault.damage * assault.fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
   expect(rosterAction('weapon.molotov').effect?.duration).toBeGreaterThanOrEqual(6);
   expect(rosterAction('weapon.molotov').status?.dps).toBeGreaterThanOrEqual(20);
+  const molotov = rosterAction('weapon.molotov'), rocket = rosterAction('weapon.rocket-launcher');
+  expect(molotov.damage).toBe(rocket.damage * 0.75);
+  expect(molotov.splash).toEqual({ radius: rocket.splash!.radius * 0.75, falloff: rocket.splash!.falloff });
   expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
   expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
   expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
@@ -66,6 +81,20 @@ async function checkFlameCluster(): Promise<void> {
 }
 
 async function checkBlastClusters(): Promise<void> {
+  // Compare the actual splash resolvers at equal distances inside the smaller blast.
+  for (const distance of [0, 1, 3, 4.4, 4.6]) {
+    const losses: number[] = [];
+    for (const id of ['weapon.rocket-launcher', 'weapon.molotov']) {
+      const w = await arena(), def = rosterAction(id);
+      walls(w).length = 0;
+      const target = dummy(w, 10 + distance, 0, 1000);
+      const tick = w.tick;
+      w.combat!['splash']({ id: 1, sourceId: 1, side: 'RIGHT', def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, { x: 10, z: 0 });
+      losses.push(1000 - health(w, target));
+    }
+    if (distance > 4.5) { expect(losses[0]).toBeGreaterThan(0); expect(losses[1]).toBe(0); }
+    else expect(losses[1]).toBeCloseTo(losses[0] * .75, 5);
+  }
   for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
     const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
     const ids = [-1.2, -0.6, 0, 0.6, 1.2].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
@@ -147,6 +176,7 @@ async function checkRaisedMountedGun(): Promise<void> {
 }
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
+  await checkCorgiLure();
   checkArsenalRoles(); await checkMolotovCluster(); await checkFlameCluster(); await checkBlastClusters();
   const rifle = await arena(); equip(rifle, ['weapon.hunting-rifle']);
   const rifleHp = infectedDef('infected.runner').hp * INFECTED_TOUGHNESS;
@@ -179,7 +209,7 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   h.setInput({ aim: { x: 0, z: 1 }, right: { down: false, held: false, up: false } }); step(h, 1);
   expect(h.entities.get(1)!.weapons!.selectedSide).toBe('RIGHT');
 
-  for (const previousWeapon of ['weapon.fire-axe', 'weapon.handgun', 'weapon.machete']) {
+  for (const previousWeapon of ['weapon.fire-axe', 'weapon.handgun', 'weapon.machete', 'weapon.hunting-rifle']) {
     const throwable = await arena(); equip(throwable, [previousWeapon], ['weapon.molotov']);
     throwable.setInput({ selectorSide: 'RIGHT', aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
     const loadout = throwable.combat!.runner.loadout, molotov = loadout.state.RIGHT.rack[0];
@@ -192,6 +222,23 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
     step(throwable, 15);
     expect(throwable.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: previousWeapon }));
   }
+  const sameRack = await arena(); equip(sameRack, ['weapon.fire-axe'], ['weapon.hunting-rifle', 'weapon.molotov']);
+  const sameLoadout = sameRack.combat!.runner.loadout;
+  const choose = (id: string) => sameLoadout.activeEntries().findIndex(entry => entry.id === id) + 1;
+  sameRack.setInput({ selectedWeaponKey: choose('weapon.hunting-rifle') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
+  sameRack.setInput({ selectedWeaponKey: choose('weapon.molotov') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
+  fire(sameRack, 'RIGHT'); step(sameRack, 20); fire(sameRack, 'RIGHT');
+  expect(sameLoadout.current(sameLoadout.state.selectedSide).id).toBe('weapon.hunting-rifle');
+  const prior = new Loadout(['weapon.fire-axe'], ['weapon.molotov', 'weapon.pipe-bomb']);
+  prior.input({ ...emptyInput(), selectedActiveSlot: prior.activeEntries().findIndex(e => e.id === 'weapon.molotov') }, 30);
+  prior.state.RIGHT.rack[0].charges = 0;
+  prior.input({ ...emptyInput(), selectedActiveSlot: prior.activeEntries().findIndex(e => e.id === 'weapon.pipe-bomb') }, 60);
+  const snapshot = structuredClone(prior.state);
+  const restored = new Loadout(['weapon.fire-axe'], ['weapon.molotov', 'weapon.pipe-bomb']);
+  Object.assign(restored.state, snapshot);
+  restored.state.RIGHT.rack[1].charges = 1;
+  restored.spend('RIGHT', 90, restored.definition('weapon.pipe-bomb'), false);
+  expect(restored.current(restored.state.selectedSide).id).toBe('weapon.fire-axe');
 });
 
 test('melee: the swing hits inside its arc/range once per target and respects maxTargets', async () => {
@@ -240,6 +287,18 @@ test('melee: the swing hits inside its arc/range once per target and respects ma
     expect(attacks(w).map(e => e.tick)).toEqual(mouseAttack ? [1, ready] : [1]);
     expect(w.entities.get(1)!.transform.x).toBe(start.x); expect(w.entities.get(1)!.transform.z).toBe(start.z);
   }
+
+  // s178 Hard (PO 2026-11-19 "friendly fire hurts them and me"): the courier's bat and bullets hit living
+  // humans (allied soldiers, civilians, escorts; never the corgi, pets or zoo animals). Simple never targets them.
+  for (const difficulty of ['simple', 'hard'] as const) {
+    const fireWorld = await arena(); fireWorld.difficulty = difficulty;
+    const ally = humanAt(fireWorld, 1.4, 0, { ally: soldierAlly }), civilian = humanAt(fireWorld, 2, 3);
+    equip(fireWorld, ['weapon.bat'], ['weapon.pistol']);
+    fire(fireWorld, 'RIGHT', { x: 2 / Math.hypot(2, 3), z: 3 / Math.hypot(2, 3) });
+    fire(fireWorld); step(fireWorld, 30);
+    expect(health(fireWorld, ally), `${difficulty}: the bat and an allied soldier`).toBe(difficulty === 'hard' ? 78 : 100);
+    expect(health(fireWorld, civilian), `${difficulty}: the pistol and a civilian`).toBe(difficulty === 'hard' ? 80 : 100);
+  }
 });
 
 test('guns: held fire cadence, reload timing, infinite reserve and seeded, bounded, serialized spread', async () => {
@@ -247,10 +306,11 @@ test('guns: held fire cadence, reload timing, infinite reserve and seeded, bound
   await checkRocketCadence();
   const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5, 0, 10000);
   w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 82);
-  const slot = w.combat!.runner.loadout.current('LEFT');
+  const slot = w.combat!.runner.loadout.state.LEFT.rack[0];
+  expect(w.combat!.runner.loadout.current('LEFT').id).toBe('weapon.fists');
   expect(attacks(w).map(e => e.tick)).toEqual([7, 22, 37, 52, 67, 82]);
   expect(slot.magazine).toBe(0); expect(slot.reloadUntil).toBe(142); expect(slot.reserve).toBe('infinite');
-  step(w, 60); expect(slot.magazine).toBe(5);
+  step(w, 60); expect(slot.magazine).toBe(6);
 
   const pistol = action('weapon.pistol'), previous = pistol.spread, directions = [];
   try {
@@ -431,6 +491,32 @@ test('explosives: landing clamps to range, fuse, distance falloff, cover line of
   const f = await arena(); equip(f); const escort = f.spawnDummy('escort.dummy', { x: 0, z: 0 }, { faction: 'escort' });
   fire(f, 'RIGHT', { x: 1, z: 0 }, { x: 0, z: 0 }); step(f, 90);
   expect(health(f, escort)).toBe(0); expect(health(f, 1)).toBeCloseTo(70, 1);
+  // s178 Hard (PO 2026-11-19 "friendly fire hurts them and me"): the courier's own grenade deals its normal
+  // damage to her (Simple keeps the authored 30% asserted above), the corgi stays safe, and allied fire
+  // damages the courier and other humans. Simple keeps every pre-s178 guard (allies hold fire through
+  // humans, so such hits never occur; the pre-existing E11 30% allied/environmental blast rule stays).
+  const selfHard = await arena(); selfHard.difficulty = 'hard'; equip(selfHard);
+  const corgi = selfHard.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { x: .8, y: .3, z: 0, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
+  selfHard.spatial.set(corgi.id, .8, 0);
+  fire(selfHard, 'RIGHT', { x: 1, z: 0 }, { x: 0, z: 0 }); step(selfHard, 91);
+  expect(health(selfHard, 1), 'hard: full self-damage (the same feet-offset falloff that leaves 70 in Simple)').toBeCloseTo(0.125, 6);
+  expect(health(selfHard, corgi.id), 'campaign rule "corgi safe"').toBe(100);
+  const bullet = { attackId: 0, actionId: 'weapon.pistol', base: 20, multiplier: 1, type: 'bullet' as const, knockback: 0, stagger: 0 };
+  const blast = { attackId: 0, actionId: 'explosion.shell', base: 60, multiplier: 1, type: 'explosive' as const, knockback: 0, stagger: 0 };
+  for (const difficulty of ['simple', 'hard'] as const) {
+    const fireWorld = await arena(); fireWorld.difficulty = difficulty;
+    const soldier = humanAt(fireWorld, 0, -3, { ally: soldierAlly });
+    fireWorld.combat!.damage.apply({ ...bullet, sourceId: soldier, targetId: 1, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, 1), `${difficulty}: an allied bullet and the courier`).toBe(difficulty === 'hard' ? 80 : 100);
+    const other = humanAt(fireWorld, 2, 0);
+    fireWorld.combat!.damage.apply({ ...bullet, sourceId: soldier, targetId: other, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, other), `${difficulty}: an allied bullet and another human`).toBe(difficulty === 'hard' ? 80 : 100);
+    step(fireWorld, 40);
+    fireWorld.combat!.damage.apply({ ...blast, sourceId: soldier, targetId: 1, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, 1), `${difficulty}: an allied blast and the courier`).toBeCloseTo(difficulty === 'hard' ? 20 : 100 - 60 * 0.3, 6);
+    fireWorld.combat!.damage.apply({ ...blast, sourceId: soldier, targetId: other, origin: { x: 0, z: -3 }, direction: { x: 0, z: 1 } });
+    expect(health(fireWorld, other), `${difficulty}: an allied blast and another human`).toBe(difficulty === 'hard' ? 20 : 100);
+  }
   // An angled wreck's broad-phase corners are empty for movement and blasts alike.
   const rotated = await arena(); equip(rotated); rotated.combat!.damage.god = true;
   walls(rotated).push({ x: 0, y: 1, z: 0, halfX: 2.5, halfY: 1, halfZ: 2.5,
@@ -670,3 +756,17 @@ test('attack lifetime: ids survive re-equipping, dead sources cannot attack, sna
   const snapshot = s.getState(); snapshot.combat!.projectiles[0].landing!.x = 999; snapshot.combat!.water[0].radius = 999;
   expect(s.getState().combat!.projectiles[0].landing!.x).toBeCloseTo(10); expect(s.getState().combat!.water[0].radius).toBe(2);
 });
+
+async function checkCorgiLure(): Promise<void> {
+  const w = await arena(); equip(w, ['weapon.fire-axe'], ['ability.corgi-lure', 'weapon.handgun']);
+  const loadout = w.combat!.runner.loadout;
+  w.setInput({ corgiLure: true }); step(w, 1); w.clearInput();
+  expect(w.combat!.effects.zones.filter(zone => zone.kind === 'lure')).toHaveLength(1);
+  expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.fire-axe');
+  w.setInput({ corgiLure: true }); step(w, 1); w.clearInput();
+  expect(w.combat!.effects.zones.filter(zone => zone.kind === 'lure')).toHaveLength(1);
+  expect(loadout.state.corgiReady).toBeGreaterThan(w.tick);
+  const ready = loadout.state.corgiReady;
+  equip(w, ['weapon.fire-axe'], ['weapon.handgun']);
+  expect(w.combat!.runner.loadout.state.corgiReady).toBe(ready);
+}

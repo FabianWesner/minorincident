@@ -8,10 +8,15 @@ import { cureRackCapacity } from '../../data/l10Story';
 import { isSanctuaryHeavy } from '../../data/l8Gate';
 /** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
 export type Level = 1|2|3|4|5|6|7|8|9|10;
+/** s178 PO 2026-11-19 difficulty: 'simple' is the status quo; 'hard' turns auto-healing and friendly fire on.
+ * Absent (old saves/replays) means 'simple'. */
+export type Difficulty = 'simple' | 'hard';
 export type ProgressionPreset = `L${2|3|4|5|6|7|8|9|10}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
   version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
+  /** s178 difficulty of this campaign; absent (older saves) = 'simple'. */
+  difficulty?: Difficulty;
   ownedActions:string[]; upgrades:string[]; racks:{LEFT:string[];RIGHT:string[]}; settings:CampaignSettings;
   /** Last selected campaign action, restored when a new level loadout is materialized. */
   selectedAction?: string;
@@ -51,6 +56,12 @@ export function nextLevelAfter(finished:number):Level|null {return finished>=1&&
 export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignSave {
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
   return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
+}
+/** Explicit level selection is a story replay; clear endgame world state that suppresses authored infection beats. */
+export function resetCampaignStoryForReplay(save:CampaignSave):void {
+  delete save.cureResume;
+  delete save.l9Crash;
+  if (save.world?.infectionCleared) delete save.world.infectionCleared;
 }
 export function rackSize(level:number):number {return level===10?cureRackCapacity:level<2?1:level<4?2:level<7?3:4;}
 /** A carried rack may exceed the level's size by the weapons picked up on the way (Pickups adds a slot per pickup); bounded for saves. */
@@ -192,6 +203,6 @@ export function debugCampaign(level:Level, current:CampaignSave|null):CampaignSa
   // Level-list starts use the level's normal boundary arsenal, but still honor the
   // weapon the player was carrying when it exists in that arsenal.
   if (current?.selectedAction && [...save.racks.LEFT, ...save.racks.RIGHT].includes(current.selectedAction)) save.selectedAction = current.selectedAction;
-  if(current){save.character=current.character;save.seed=current.seed;save.settings=structuredClone(current.settings);}
+  if(current){save.character=current.character;save.seed=current.seed;save.settings=structuredClone(current.settings);if(current.difficulty)save.difficulty=current.difficulty;}
   return save;
 }
