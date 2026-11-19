@@ -1,3 +1,4 @@
+import { megaBuildingOverlap } from '../helpers/megaBuildingOverlap';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { newCampaign, nextLevelAfter, type Level } from '../../src/sim/progression/Campaign';
@@ -6,6 +7,7 @@ import { validateSave } from '../../src/sim/progression/Save';
 import { runLevel, type LevelReport, type RunnerLevel } from '../../tools/sim-runner/levels';
 
 test('nightly campaign: one continuous seed-1 bot run L1 → credits with the real campaign handovers', async () => {
+  await megaBuildingOverlap();
   const save = newCampaign('female', 1);
   const reports: (LevelReport & { racks: typeof save.racks; survivors: string[] })[] = [];
   const out = 'test-results/nightly/campaign-seed-1.json';

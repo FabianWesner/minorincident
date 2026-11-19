@@ -39,7 +39,10 @@ export function sourceRows(): SourceRow[] {
   for (const line of readFileSync('docs/qa/level-acceptance.md', 'utf8').split('\n')) {
     const cells = line.split('|').map(cell => cell.trim()), id = cells[1];
     if (!/^(?:G-\d{2}|L\d+-\d{2})$/.test(id ?? '')) continue;
-    const old = baseline.rows.find(row => row.id === id) ?? (/^L9-1[0-8]$/.test(id) ? {
+    const old = baseline.rows.find(row => row.id === id) ?? ((id === 'G-28' || id === 'G-29') ? {
+      id, level: 'global', status: 'NOT CHECKED' as const, value: 'New PO 2026-11-19 difficulty criterion; no historical qualification.', evidence: [],
+      method: 'Measure the difficulty criterion on current source.',
+    } : /^L9-1[0-8]$/.test(id) ? {
       id, level: 'L9', status: 'NOT CHECKED' as const, value: 'New PO 2026-11-08 driving criterion; no historical qualification.', evidence: [],
       method: 'Measure the complete PO 2026-11-08 criterion on current source at both qualities; keep browser clauses open until reviewed.',
     } : /^G-2[89]$/.test(id) ? {
