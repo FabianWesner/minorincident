@@ -240,7 +240,12 @@ export class LevelTenEncounters {
           const id = this.state.spawned[`${slot.key}:0`];
           return id !== undefined && id !== RETIRED_SLOT && (w.entities.get(id)?.health.current ?? 0) > 0;
         }).length;
-        const share = 240 / Math.ceil(slots.length / pacedWaveSize);
+        // The depot ambush runs on a tighter clock: its yard sits 60–120 m off
+        // her road, so the crossing itself paces the arrivals (as the s161
+        // full dump proved); holding its second wave for the far end of the
+        // band lets it spawn behind her and wander instead of fighting, which
+        // on seed 3 left the last fight two members short at the cap.
+        const share = (group.id === 'depot-alpha' ? 120 : 240) / Math.ceil(slots.length / pacedWaveSize);
         const reached = index === 0 || player.transform.x - (group.at[0] - 120) >= index * share;
         const outpaced = player.transform.x - group.at[0] > 120;
         if (!slice.length || !outpaced && !(reached || living <= pacedWaveLiving)) admission = [];
