@@ -4,10 +4,12 @@ The HIGH WebGL2 capture [rack-l10.jpg](rack-l10.jpg) uses the production L10 mis
 
 The picture shows ten separate dark tiles and the corgi tile in one row. The machete is a diagonal blade; handgun and shotgun have short and long barrel outlines; hunting rifle has a long stock and scope; assault rifle has a magazine; flamethrower has a tank and flame; launcher has a tube; nail gun has a broad body and nail magazine; molotov is a bottle with a flame; pipe bomb is a horizontal cylinder with a fuse; the corgi icon is a pointed-eared dog face. The silhouettes are small at this viewport, especially the guns, so their distinction needs player review.
 
+The headless HIGH and LOW WebGL2 interaction probe (`tools/qa/s177-rack-input.ts`) verified the rendered quality, ten badges, Digit0, Q and Shift+Q wrap, shotgun click, corgi button, G activation after cooldown, and an unchanged selected shotgun. Both runs used a controlled handoff and reported no browser errors.
+
 ## Browser QA needed
 
 - Check badge readability in normal gameplay on HIGH and LOW, with at least four weapons in the L10 rack.
-- Exercise Q and Shift+Q through wraparound, number keys, clicking and touch, including vehicle and mounted-gun guards.
+- Review number keys, cycling and touch in ordinary gameplay, including vehicle and mounted-gun guards.
 - Review the full hangar rack and separate corgi button in ordinary gameplay, including icon legibility and the button's cooldown.
 - Verify the pipe-bomb Mega fall, recovery and immunity visually, and review the molotov impact and fire field.
 
