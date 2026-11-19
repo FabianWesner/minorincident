@@ -7,6 +7,7 @@ import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
 import { infectedDef, INFECTED_TOUGHNESS, riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
+import { Loadout } from '../../src/sim/combat/Loadout';
 import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -218,6 +219,16 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
     step(throwable, 15);
     expect(throwable.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: previousWeapon }));
   }
+  const prior = new Loadout(['weapon.fire-axe'], ['weapon.molotov', 'weapon.pipe-bomb']);
+  prior.input({ ...emptyInput(), selectedActiveSlot: prior.activeEntries().findIndex(e => e.id === 'weapon.molotov') }, 30);
+  prior.state.RIGHT.rack[0].charges = 0;
+  prior.input({ ...emptyInput(), selectedActiveSlot: prior.activeEntries().findIndex(e => e.id === 'weapon.pipe-bomb') }, 60);
+  const snapshot = structuredClone(prior.state);
+  const restored = new Loadout(['weapon.fire-axe'], ['weapon.molotov', 'weapon.pipe-bomb']);
+  Object.assign(restored.state, snapshot);
+  restored.state.RIGHT.rack[1].charges = 1;
+  restored.spend('RIGHT', 90, restored.definition('weapon.pipe-bomb'), false);
+  expect(restored.current(restored.state.selectedSide).id).toBe('weapon.fire-axe');
 });
 
 test('melee: the swing hits inside its arc/range once per target and respects maxTargets', async () => {
@@ -285,10 +296,11 @@ test('guns: held fire cadence, reload timing, infinite reserve and seeded, bound
   await checkRocketCadence();
   const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5, 0, 10000);
   w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 82);
-  const slot = w.combat!.runner.loadout.current('LEFT');
+  const slot = w.combat!.runner.loadout.state.LEFT.rack[0];
+  expect(w.combat!.runner.loadout.current('LEFT').id).toBe('weapon.fists');
   expect(attacks(w).map(e => e.tick)).toEqual([7, 22, 37, 52, 67, 82]);
   expect(slot.magazine).toBe(0); expect(slot.reloadUntil).toBe(142); expect(slot.reserve).toBe('infinite');
-  step(w, 60); expect(slot.magazine).toBe(5);
+  step(w, 60); expect(slot.magazine).toBe(6);
 
   const pistol = action('weapon.pistol'), previous = pistol.spread, directions = [];
   try {
