@@ -30,7 +30,10 @@ export class Loadout {
     }));
     // Innate fists have no carried rack slot. The sentinel preserves campaign
     // arsenal/checkpoint invariants even at the axe-only L10 crash start.
-    if (!seen.has('weapon.fists')) entries.push({ side: 'LEFT', index: -1, id: 'weapon.fists' });
+    if (!seen.has('weapon.fists') && !entries.some(entry => this.definition(entry.id).category === 'melee')) entries.push({ side: 'LEFT', index: -1, id: 'weapon.fists' });
+    else if (entries.some(entry => entry.id !== 'weapon.fists' && this.definition(entry.id).category === 'melee')) {
+      const fists = entries.findIndex(entry => entry.id === 'weapon.fists'); if (fists >= 0) entries.splice(fists, 1);
+    }
     return entries.sort((a, b) => compareWeapons(a.id, b.id));
   }
   cycleActive(direction: number, tick: number): void {
@@ -53,7 +56,7 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    const keyed = frame.selectedLegacyWeaponKey !== undefined ? this.activeEntries().find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
+    const keyed = frame.selectedLegacyWeaponKey === weaponKey('weapon.fists') ? { side: 'LEFT' as const, index: -1 } : frame.selectedLegacyWeaponKey !== undefined ? this.activeEntries().find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
     const choice = keyed ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];

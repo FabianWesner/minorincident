@@ -170,7 +170,7 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect([...Object.keys(catalog), ...Object.keys(mountedActions)].filter(id => !(weaponOrder as readonly string[]).includes(id))).toEqual([]);
   const left = ['weapon.fire-axe', 'weapon.bat', 'weapon.kick'], right = ['ability.corgi-lure', 'weapon.molotov', 'weapon.handgun'];
   const loadout = new Loadout(left, right);
-  const expected = ['weapon.fists', 'weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov', 'ability.corgi-lure'];
+  const expected = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov', 'ability.corgi-lure'];
   expect(loadout.activeEntries().map(e => e.id)).toEqual(expected);
   for (let index = 0; index < expected.length; index++) {
     loadout.input({ ...emptyInput(), selectedActiveSlot: index }, 30 * index + 30);
@@ -200,14 +200,14 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(Object.keys(weaponKeys).sort()).toEqual(ids.sort());
   expect(new Set(Object.values(weaponKeys)).size).toBe(ids.length);
   const catalogLoadout = new Loadout(ids, ['weapon.bat'], undefined, ids.length);
-  ids.forEach((id, index) => {
+  ids.filter(id => id !== 'weapon.fists').forEach((id, index) => {
     const key = weaponKey(id)!;
     expect(key).toBeGreaterThan(0);
     catalogLoadout.input({ ...emptyInput(), selectedLegacyWeaponKey: key }, index * 30 + 30);
     expect(catalogLoadout.current(catalogLoadout.state.selectedSide).id).toBe(id);
   });
   const sparse = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
-  expect(sparse.activeEntries().map(e => e.id)).toEqual(['weapon.fists', 'weapon.fire-axe', 'weapon.machete', 'weapon.handgun']);
+  expect(sparse.activeEntries().map(e => e.id)).toEqual(['weapon.fire-axe', 'weapon.machete', 'weapon.handgun']);
   sparse.activeEntries().forEach((entry, index) => {
     sparse.input({ ...emptyInput(), selectedWeaponKey: index + 1 }, 30 * (index + 1));
     expect(sparse.current(sparse.state.selectedSide).id).toBe(entry.id);

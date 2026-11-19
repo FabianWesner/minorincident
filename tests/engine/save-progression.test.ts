@@ -154,13 +154,13 @@ test('selection fallback: lost or empty weapons fall back to the best usable own
   expect(restoreSelectedAction(bottomless, mg)).toBe('weapon.army-mg');
 });
 
-test('bare hands are innate: key 1 selects fists without them entering the carried racks; the L8 sanctuary gate takes the launcher', async () => {
+test('bare hands are innate and hidden while carrying melee; the L8 sanctuary gate takes the launcher', async () => {
   const save = preset('L8-default');
   expect([...save.racks.LEFT, ...save.racks.RIGHT]).not.toContain('weapon.fists');
   const live = campaignLoadout(save, 8), input = new Loadout(live.LEFT, live.RIGHT, undefined, live.size);
   expect(live.LEFT).toEqual(save.racks.LEFT);
   input.input({ ...emptyInput(), selectedWeaponKey: 1 }, 1);
-  expect(input.current(input.state.selectedSide).id).toBe('weapon.fists');
+  expect(input.current(input.state.selectedSide).id).toBe('weapon.bat');
   save.selectedAction = 'weapon.fists';
   expect(restoreSelectedAction(resume(save, 8), save)).toBe('weapon.rocket-launcher');
   // PO 2026-11-10: the launcher arrives at L8 but the gate soldier collects it; L9 never offers it, even to an older save still carrying it.
