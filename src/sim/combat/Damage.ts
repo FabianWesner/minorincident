@@ -25,6 +25,8 @@ export interface DamageEvent {
   sweep?: boolean;
   /** A lethal hit kills an infected for good (a burning DoT); explosive hits always do (PO "Infected recover"). */
   permanent?: boolean;
+  /** Fire damage leaves ash; permanence alone also applies to bosses and explosives. */
+  fire?: boolean;
 }
 /** A knocked-down infected that will get up again (PO "Infected recover"): 0 HP, yet not a corpse. */
 export function downed(e: EntitySnapshot): boolean { return e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0; }
@@ -166,7 +168,7 @@ export class Damage {
       // Explosives and lethal fire finish a downed infected in every level.
       if (downed(target) && this.amount(hit, target) > 0) {
         if (!lethal(hit)) { this.world.infected!.down(target, false); return 0; }
-        if (hit.permanent || hit.actionId === 'weapon.flamethrower') target.ashDeath = { at: this.world.tick };
+        if (hit.fire || hit.actionId === 'weapon.flamethrower') target.ashDeath = { at: this.world.tick };
         this.world.infected!.down(target, true);
         this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount: 0, damageType: hit.type });
       }
@@ -310,7 +312,7 @@ export class Damage {
     if (wasAlive && target.health.current === 0) {
       if (target.infected) target.infected.knockdowns = (target.infected.knockdowns ?? 0) + 1;
       // Default hits down infected; explosions and explicit permanent counters leave a corpse.
-      const fireDeath = lethal(hit) && (hit.permanent || hit.actionId === 'weapon.flamethrower');
+      const fireDeath = lethal(hit) && (hit.fire || hit.actionId === 'weapon.flamethrower');
       if (fireDeath && target.infected) target.ashDeath = { at: this.world.tick };
       const up = target.infected && this.world.infected ? this.world.infected.down(target, lethal(hit)) : -1;
       this.world.events.emit({ ...event, type: 'combat.kill', ...(up >= 0 ? { downed: up } : {}) } satisfies GameEvent);
