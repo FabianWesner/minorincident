@@ -10,6 +10,7 @@ import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
 import { megaAlpha } from '../../src/data/megaAlpha';
+import { installMegaPursuit } from '../../src/sim/ai/MegaPursuit';
 import { alphaMixFor, alphaTypeFor, alphaTypes } from '../../src/data/alphaTypes';
 import { l3 } from '../../src/data/l3';
 import { l6HatchAlphas } from '../../src/data/l6';
@@ -665,16 +666,31 @@ test('recovered infected forget the chase: re-acquisition needs sight, not memor
 
 async function checkPipeBombMega(): Promise<void> {
   const w = await arena();
-  const id = w.infected!.spawn('infected.alpha', { x: 3, z: 0 }, { state: 'chase' });
-  const mega = w.entities.get(id)!; mega.infected!.pursuit = true; mega.health.current = mega.health.max = 5000;
-  const blast = () => w.combat!.damage.apply({ attackId: w.tick + 1, actionId: 'weapon.pipe-bomb', sourceId: 1, targetId: id, origin: { x: 2, z: 0 }, direction: { x: 1, z: 0 }, base: 150, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
+  const pursuit = installMegaPursuit(w, { introduceTick: null, resident: () => true });
+  const id = pursuit.introduce({ x: 12, z: 0 });
+  const mega = w.entities.get(id)!; mega.health.current = mega.health.max = 5000;
+  const blast = () => {
+    const tick = w.tick, def = action('weapon.pipe-bomb');
+    w.combat!['splash']({ id: tick + 1, sourceId: 1, side: 'RIGHT', def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, { x: mega.transform.x, z: mega.transform.z });
+  };
   blast();
   expect(mega.combat!.reaction?.heavy).toBe(true);
   expect(mega.combat!.reaction!.until - w.tick).toBe(150);
   expect(mega.combat!.staggerUntil - w.tick).toBe(150);
   const ready = mega.infected!.pipeBombReady!;
   expect(ready - w.tick).toBe(750);
-  step(w, 151); blast();
-  expect(mega.combat!.reaction!.until).toBeLessThanOrEqual(w.tick);
+  const before = { ...mega.transform };
+  step(w, 144);
+  expect(Math.hypot(mega.transform.x - before.x, mega.transform.z - before.z)).toBeLessThan(.01);
+  expect(mega.combat!.reaction!.until).toBeGreaterThan(w.tick);
+  step(w, 7); blast();
+  expect(mega.combat!.reaction?.heavy).toBe(false);
   expect(mega.infected!.pipeBombReady).toBe(ready);
+  step(w, ready - w.tick); blast();
+  expect(mega.combat!.reaction?.heavy).toBe(true);
+  const boss = spawn(w, 'alpha', 5, 5); boss.infected!.arenaBoss = true; boss.health.current = boss.health.max = 5000;
+  const tick = w.tick, def = action('weapon.pipe-bomb');
+  w.combat!['splash']({ id: tick + 2, sourceId: 1, side: 'RIGHT', def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, boss.transform);
+  expect(boss.combat!.reaction?.heavy).toBe(true);
+  expect(boss.combat!.reaction!.until - tick).toBe(150);
 }
