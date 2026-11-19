@@ -1360,9 +1360,8 @@ export class GameView implements Lifecycle {
     lighting.subwayDarkness.value = lighting.preset === 'L6-subway' ? 1 : 0;
     const loadout = this.world.combat?.runner.loadout;
     // PO 2026-11-19 ("the machine gun has a light ... let the gun show this light"): the L10 rifle carries a torch whose
-    // beam leaves the drawn lens along the barrel. The mission id joins the scenario test so Scene Lab cure fixtures
-    // render the same condition the shipped L10 runs (the cure canister's existing gate).
-    const rifleTorch = (this.world.scenario === 'L10' || this.world.missions?.state.id === 'L10') && !this.world.missions?.state.states['cure-released'] && !this.world.mountedGun?.mounted && loadout?.current(loadout.state.selectedSide).id === 'weapon.assault-rifle';
+    // beam leaves the drawn lens along the barrel, under the existing L10 gate.
+    const rifleTorch = this.world.scenario === 'L10' && !this.world.missions?.state.states['cure-released'] && !this.world.mountedGun?.mounted && loadout?.current(loadout.state.selectedSide).id === 'weapon.assault-rifle';
     this.actions?.showRifleTorch(rifleTorch);
     this.character?.showHeadlamp(!!metro?.flashlight, !!metro);
     lighting.headlampOn.value = metro?.flashlight || rifleTorch ? 1 : 0;
@@ -1377,7 +1376,7 @@ export class GameView implements Lifecycle {
     if (field.active) {
       const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
-      if (hero && (this.world.missions?.state.l6?.flashlight || rifleTorch)) {
+      if (hero && (this.world.missions?.state.l6?.flashlight || torch)) {
         // Same colour/intensity/range/angle as the worn headlamp's beam; only the origin (the lens) and the
         // heading (the barrel) change. The -0.3 slope keeps the pool on the ground ahead in every gun pose.
         if (torch) flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[this.torchLens.x, this.torchLens.y, this.torchLens.z],direction:[this.torchAim.x, -.3, this.torchAim.y]});
