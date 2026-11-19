@@ -34,7 +34,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // No ammunition system (00 §6.1): no magazine, no reload, no reserve; the fire rate is the only limit.
   // Its own id: 'weapon.pistol' stays the E05 magazine-and-reload reference gun (fixtures, tests); the campaign carries this one.
   fixtures['weapon.pistol'],
-  { ...fixtures['weapon.pistol'], id: 'weapon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
+  { ...fixtures['weapon.pistol'], id: 'weapon.handgun', iconId: 'icon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
   // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
   { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65 },
   // Close-mid precision tool: three nails drop a standard 40 HP infected.
@@ -50,7 +50,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
   // (a round passes through one infected and hits the next). No ammunition system (00 §6.1): no magazine, reload or overheat.
   // Its own id: 'weapon.machine-gun' stays the E06 magazine-and-reload reference (fixtures, balance rows, tests).
-  { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
+  { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.army-mg', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
   { ...gun('rocket-launcher', 180, 35, 1.2, 0, 0, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 6, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, upgradeHooks: ['damage', 'spread'], noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
   fixtures['weapon.grenade'],
   { ...thrown('molotov', 135, 4.5, 0), splash: { radius: 4.5, falloff: 0.6 }, knockback: 0, stagger: 0, effect: { kind: 'fire', radius: 4, duration: 8 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 28, slow: 0 } },

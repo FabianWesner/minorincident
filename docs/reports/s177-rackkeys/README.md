@@ -4,6 +4,8 @@ The HIGH WebGL2 capture [rack-l10.jpg](rack-l10.jpg) uses the production L10 mis
 
 The picture shows ten separate dark tiles and the corgi tile in one row. The machete is a diagonal blade; handgun and shotgun have short and long barrel outlines; hunting rifle has a long stock and scope; assault rifle has a magazine; flamethrower has a tank and flame; launcher has a tube; nail gun has a broad body and nail magazine; molotov is a bottle with a flame; pipe bomb is a horizontal cylinder with a fuse; the corgi icon is a pointed-eared dog face. The silhouettes are small at this viewport, especially the guns, so their distinction needs player review.
 
+The other weapon icons use a red axe head, nailed wooden bat, spade, curved sword, short knife, side-handle baton, compact SMG, segmented grenade, smoking canister, bundled firecrackers, and distinct pistol and machine-gun profiles. A catalog check requires unique icon IDs and rejects text captions on every weapon icon.
+
 The headless HIGH and LOW WebGL2 interaction probe (`tools/qa/s177-rack-input.ts`) verified the rendered quality, ten badges, Digit0, Q and Shift+Q wrap, shotgun click, corgi button, G activation after cooldown, and an unchanged selected shotgun. Both desktop runs and a LOW phone viewport used a controlled handoff and reported no browser errors. The phone run tapped the weapon and corgi controls; all runs also verified that an added eleventh weapon had no badge and remained selectable.
 
 ## Browser QA needed
