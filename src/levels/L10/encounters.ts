@@ -68,7 +68,8 @@ export const cureMedkits = [
  * river-exit path) instead of the axe, so it leads the list and the farmstead marker points back for it
  * until it is found. */
 export const cureWeaponPickups = [
-  { id: 'crash-machete', action: 'weapon.machete', anchor: 'crash-machete' },
+  // Keep the original saved pickup ID so checkpoints made before the move do not spawn a second machete.
+  { id: 'barn-machete', action: 'weapon.machete', anchor: 'crash-machete' },
   { id: 'farmhouse-rifle', action: 'weapon.hunting-rifle', anchor: 'farmhouse-rifle' },
   { id: 'shed-molotov', action: 'weapon.molotov', anchor: 'shed-molotov' },
   { id: 'workshop-nailgun', action: 'weapon.nail-gun', anchor: 'workshop-nailgun' },

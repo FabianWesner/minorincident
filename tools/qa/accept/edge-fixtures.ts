@@ -280,7 +280,7 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
         setup: 'fresh L10 unarmed start; walk east on the crash-site exit line for at most 1 s, then check no respawn',
         start, anchor: { x: at[0], z: at[1] }, distance, navClear, lineOfSight,
         initialRacks, initialHealth, collected: collection.value, collectionCount: collection.count, healthAfter: player.health.current,
-        found: world.missions!.state.states['found-crash-machete'], weapons, pickupCopies,
+        found: world.missions!.state.states['found-barn-machete'], weapons, pickupCopies,
         authoredMacheteCount: cureWeaponPickups.filter(pickup => pickup.action === 'weapon.machete').length,
       };
       observations['L10/crash-site-machete'] = value;
@@ -288,7 +288,7 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
       add('L10-05', 'crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', value,
         'both racks fists-only; one machete ≤6 m, clear walk and sight; picked up within 1 s without health loss; no barn copy or respawn',
         beforePickup && distance <= 6 && navClear && lineOfSight && !!collection.value && collection.value.tick <= 60 && collection.count === 1 &&
-          initialHealth === player.health.current && world.missions!.state.states['found-crash-machete'] === true &&
+          initialHealth === player.health.current && world.missions!.state.states['found-barn-machete'] === true &&
           weapons.includes('weapon.machete') && pickupCopies === 0 && cureWeaponPickups.filter(pickup => pickup.action === 'weapon.machete').length === 1);
     } finally { world.dispose(); }
   }
