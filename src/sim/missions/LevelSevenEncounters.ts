@@ -301,8 +301,29 @@ export class LevelSevenEncounters {
     // While the courier is on the junction/corridor lane, distant final-pack
     // members re-acquire her, so the authored population funnels in, engages
     // and is delivered instead of holding its slots offscreen forever.
+    // L7-04 delivery: the trailing street packs (the rear group and the
+    // junction/corridor reinforcement ranks) pressed only once on admission
+    // for twenty seconds, then stood mid-street holding their cap slots while
+    // the last authored rank's tail stayed queued behind the saturated cap.
+    // They re-acquire her on the same five-second cadence, so they stream in,
+    // join the corridor fight from behind and their casualties free the slots
+    // the queued tail still needs before the bus departs.
     if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 300 === 0) {
-      for (const e of ai.active) if (e.infected!.pack === l7Encounters.finalGroup && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && distance(e.transform, p) > 25) ai.press(e.id, 1, w.tick + 20 * 60);
+      for (const e of ai.active) if ((e.infected!.pack === l7Encounters.finalGroup || e.infected!.pack >= l7Encounters.firstStreetGroup + 4) && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && distance(e.transform, p) > 25) ai.press(e.id, 1, w.tick + 20 * 60);
+    }
+    // L7-04 delivery, second half: the 450 HP street population mostly survives
+    // allied fire, so once the column is on the junction/corridor lane the street
+    // ranks it has left behind (offscreen, beyond any approach they could still
+    // press) free their slots for the queued tail of the authored population —
+    // the same offscreen-recycling rule L2/L3 street encounters already use
+    // ("offscreen actors free slots for the next encounter"). Every authored
+    // request is still admitted exactly once; visible actors, corpses, downed
+    // bodies and biters are never touched, and the final corridor horde keeps
+    // its sustained boarding stream.
+    if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 10 === 0) {
+      for (const e of ai.active) if (e.infected!.pack > l7Encounters.firstStreetGroup && e.infected!.pack <= l7Encounters.firstStreetGroup + 13
+        && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && (e.infected!.recoverAt ?? -1) < 0 && e.infected!.l1?.mode !== 'bite'
+        && distance(e.transform, p) > 80 && ai.director.offscreen(e.transform, e.transform.y - .7)) ai.release(e);
     }
     for (const r of s.roster) {
       const e = w.entities.get(r.id);
