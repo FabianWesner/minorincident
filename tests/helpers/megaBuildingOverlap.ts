@@ -89,6 +89,20 @@ export async function megaBuildingOverlap(): Promise<void> {
     const report = await runLevel(level, 'complete', 1, level === 'L10' ? 3600 : 900, 'auto', undefined, undefined, 0, {
       passive,
       beforeBegin: world => {
+        // District collider data remains available even when streaming unloads
+        // the corresponding navigation cells. Bucket buildings independently
+        // so the audit does not inherit the resident query's blind spot.
+        const buildings = new Map<string, { id: string; box: { x: number; z: number; y: number; halfX: number; halfZ: number; halfY: number } }[]>();
+        for (const district of world.districts!.districts) for (const collider of district.decay.colliders) {
+          if (!collider.id.startsWith('bld.') || collider.walkable) continue;
+          const b = collider.aabb;
+          const box = { x: (b.min[0] + b.max[0]) / 2 + district.origin[0], z: (b.min[2] + b.max[2]) / 2 + district.origin[1], y: (b.min[1] + b.max[1]) / 2,
+            halfX: (b.max[0] - b.min[0]) / 2, halfZ: (b.max[2] - b.min[2]) / 2, halfY: (b.max[1] - b.min[1]) / 2 };
+          for (let x = Math.floor((box.x - box.halfX - megaAlpha.radius) / 16); x <= Math.floor((box.x + box.halfX + megaAlpha.radius) / 16); x++)
+            for (let z = Math.floor((box.z - box.halfZ - megaAlpha.radius) / 16); z <= Math.floor((box.z + box.halfZ + megaAlpha.radius) / 16); z++) {
+              const key = `${x},${z}`, bucket = buildings.get(key) ?? []; bucket.push({ id: collider.id, box }); buildings.set(key, bucket);
+            }
+        }
         if (passive && level === 'L10') {
           const apply = world.applyInput.bind(world);
           world.applyInput = (frame, scheme) => {
@@ -108,6 +122,12 @@ export async function megaBuildingOverlap(): Promise<void> {
             maxStep = Math.max(maxStep, Math.hypot(mega.transform.x - previous.x, mega.transform.z - previous.z));
           }
           previous = { id: mega.id, tick: world.tick, x: mega.transform.x, z: mega.transform.z };
+          for (const building of buildings.get(`${Math.floor(mega.transform.x / 16)},${Math.floor(mega.transform.z / 16)}`) ?? []) {
+            const p = mega.transform, box = building.box;
+            if (box.y + box.halfY <= p.y - .6 || box.y - box.halfY >= p.y + .65) continue;
+            const contact = boxContact(box, p.x, p.z, mega.combat!.radius, { depth: 0, nx: 0, nz: 0, inside: false });
+            if (contact.depth > 1e-8) intersections.push(`tick=${world.tick} x=${p.x.toFixed(2)} z=${p.z.toFixed(2)} mode=${world.megaPursuit?.state.mode ?? 'sighting'} building=${building.id} depth=${contact.depth}`);
+          }
           if (!world.solids.clear(mega.transform, mega.combat!.radius, mega.id, false, 1e-8)) {
             intersections.push(`tick=${world.tick} x=${mega.transform.x.toFixed(2)} z=${mega.transform.z.toFixed(2)} mode=${world.megaPursuit?.state.mode ?? 'sighting'} hidden=${!!mega.infected?.hidden} contacts=${JSON.stringify(world.solids.staticContacts(mega.transform, mega.combat!.radius, mega.id))}`);
           }
