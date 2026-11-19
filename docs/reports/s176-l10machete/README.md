@@ -26,4 +26,4 @@ Review the machete on the crash-site ground in HIGH and LOW quality. Confirm the
 - Resolve the L10 threat flags and the existing acceptance failures before claiming a zero-flag L10 gate.
 - Run the prescribed remote acceptance for L9 and L10, `npm run qa:threat`, and the remote unit suite on a healthy runner; retain final receipts only outside `docs/reports/fix51-verify`.
 - Complete HIGH/LOW browser review.
-- Merge current `main` and commit the explicit task paths. `git merge main` was attempted but the sandbox denied the linked worktree metadata write for `.git/worktrees/s176-l10machete/ORIG_HEAD.lock`. The current `main` ref is 8 commits ahead of this worktree, so the commit below remains based on the current worktree HEAD.
+- Current `main` was merged in commit `78e29faf` after filesystem permissions changed. A fresh L10-only threat run on the merged source reproduces the skilled wave timing and passive stuck-chaser flags. The earlier s165 report identifies the stationary chaser as the Mega cycling slams at close range and documents the finale wave timing sensitivity; the present run still needs a source-level fix and full verification.
