@@ -2,7 +2,15 @@
 
 ## Current result
 
+The matched HIGH real-input driver (seed 1, zoom 1, Simple) completed both routes without skips or assists: player deaths were **6 before → 4 after**, a one-third reduction. The baseline and candidate took 276 and 264 simulated seconds respectively. Each run emitted one P2 no-progress warning during the timed shelter opening. This is one automated physical run per version, not evidence of human play or of the player attack-rate floor. [Before](high-physical-before.json) · [after](high-physical-after.json).
+
 **Superseded balance figures below:** inspection found the follower update skipped ally combat during retreat. Those earlier runs did not exercise the added guns. The current worktree assigns real guns at shelter setup and routes armed followers through the existing ally combat update while their column movement continues. The HIGH seed 1 probe saves 29/29 but records only 2.85 player attacks/min, 3.79 follower attacks/min and zero player HP lost during retreat; L6-05 also fails. The player attack and L6-07 damage targets remain unmet. Typecheck and lint pass. Full acceptance, threat, unit and capture gates remain open.
+
+After clearing stationary post/hold orders when the column retreats, a fresh HIGH seed 1 probe saves 28/29, records 5.02 player attacks/min and 10.05 follower attacks/min, and loses 20 HP during retreat. L6-05 and L6-07 damage still fail. The focused L6 threat audit no longer flags follower pace; its four remaining gameplay flags are the two breach first-attack limits, missing kiting sample and skilled damage below 30 HP. This is a diagnostic partial-level run, not a full zero-flag audit.
+
+With those retreat orders, directing three quarters of the pressure cohort toward the player reduced the HIGH seed 1 player rate to 0.46/min and retreat damage to zero. Separately, reducing added guns to one shot per three seconds and 20% pistol near hit chance produced 3.77 player attacks/min and 10 HP damage. Both experiments were reverted; neither met the attack or damage targets.
+
+With the corrected retreat orders and real guns active from shelter setup, assigning new guns to even roster positions yielded 0.45 player attacks/min and 25 HP retreat damage; assigning odd positions yielded 0.93/min and zero damage. Both retained passing observed follower pace and failed L6-05 and L6-07 damage. The original allocation was restored.
 
 The same HIGH seed 1 acceptance probe was rerun against the unchanged pre-fix mission and outbreak code: player attack starts were 9.57/min, follower attack starts 11.00/min, retreat damage 40 HP, and nine of 29 survivors were lost. Thus the 11/min player-only floor is also below target in this matched baseline; the armed candidate reduces it further to 2.85/min. The baseline probe completed the route and passed the existing evaluator's combined-rate clause, which does not establish the separate player-only floor.
 
