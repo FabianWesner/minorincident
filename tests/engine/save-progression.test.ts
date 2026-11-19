@@ -13,7 +13,7 @@ import { l7Rocket } from '../../src/data/l7';
 import { enforceCureArsenal } from '../../src/sim/progression/arsenal';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
-import { beginRewards, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
+import { beginRewards, debugCampaign, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
 import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progression/apply';
 import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progression/carryover';
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
@@ -226,6 +226,22 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   expect(store.write(large)).toBe(true);
   expect(store.load()).toEqual({ status: 'ok', save: large });
   expect(decodeSave(encoded.slice(0, -20)).status).toBe('error');
+
+  // s178 (PO 2026-11-19): the difficulty persists with the campaign save; absent (older saves) means simple,
+  // unknown values are rejected, a debug level-list start keeps it (level-select rule) and applyCampaign
+  // copies it onto the live world at every level boundary.
+  const fresh = newCampaign('female', 1);
+  expect(validateSave(fresh), 'a save without the field (pre-s178) stays valid').toBe(true);
+  const decodedFresh = decodeSave(JSON.stringify(fresh));
+  expect(decodedFresh.status).toBe('ok');
+  if (decodedFresh.status === 'ok') expect(decodedFresh.save.difficulty).toBeUndefined();
+  const hard: CampaignSave = { ...fresh, difficulty: 'hard' };
+  expect(validateSave(hard)).toBe(true);
+  expect(decodeSave(encodeSave(hard))).toEqual({ status: 'ok', save: hard });
+  expect(validateSave({ ...fresh, difficulty: 'nightmare' as never })).toBe(false);
+  expect(decodeSave(encodeSave({ ...fresh, difficulty: 'nightmare' as never })).status).toBe('error');
+  expect(debugCampaign(3, hard).difficulty, 'a debug level-list start keeps the difficulty').toBe('hard');
+  expect(debugCampaign(3, fresh).difficulty).toBeUndefined();
 
   const cure = preset('L10-default'), definition = levelTenMission(() => ({ x: 0, z: 0, radius: 2 }));
   const checkpoint = {
