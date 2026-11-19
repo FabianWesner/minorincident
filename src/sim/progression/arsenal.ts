@@ -11,7 +11,7 @@ export function transactArsenal(world: SimWorld, add: string[], remove: string[]
   const acquired = add.filter(id => !save.ownedActions.includes(id));
   const owned = [...new Set([...save.ownedActions.filter(id => !remove.includes(id)), ...add])];
   const racks = structuredClone(save.racks), size = rackSize(save.unlockedLevel);
-  for (const side of ['LEFT', 'RIGHT'] as const) racks[side] = racks[side].filter(id => owned.includes(id) && (!cureHangar || id !== 'weapon.fire-axe')); 
+  for (const side of ['LEFT', 'RIGHT'] as const) racks[side] = racks[side].filter(id => owned.includes(id) && (!cureHangar || catalog[id].category === 'ability' || add.includes(id)));
   for (const id of add) {
     const side = catalog[id].category === 'melee' ? 'LEFT' : 'RIGHT';
     if (!racks[side].includes(id)) racks[side] = [...racks[side], id].slice(-size);

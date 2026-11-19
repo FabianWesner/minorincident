@@ -501,7 +501,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L10-03', 'route duration near fifteen-minute target', competent && receipt.run?.completed ? receipt.run.time : null, 600, 1200);
       number('L10-04', 'ordinary route concurrent bound', story?.outsideAssaultPeak, 0, 15);
       add('L10-04', 'infected move before first widest-frame entry', story, 'nonempty observed census; zero first-entry idle actors', story?.seen ? story.idleEntries.length === 0 : undefined);
-      add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'every returned weapon plus flamethrower present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
+      add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'exactly the ten issued hangar weapons present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
       number('L10-07', 'continuous Mega maximum step', observation.maxMegaStep, 0, 1);
       const hold = phase('step/hold');
       if (hold && !competent) {

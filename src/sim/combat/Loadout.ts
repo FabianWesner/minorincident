@@ -57,7 +57,8 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    const keyed = frame.selectedLegacyWeaponKey === weaponKey('weapon.fists') ? { side: 'LEFT' as const, index: -1 } : frame.selectedLegacyWeaponKey !== undefined ? this.activeEntries().find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
+    const legacyEntries = frame.selectedLegacyWeaponKey === undefined ? [] : (['LEFT', 'RIGHT'] as const).flatMap(name => this.state[name].rack.map((slot, index) => ({ side: name, index, id: slot.id })));
+    const keyed = frame.selectedLegacyWeaponKey === weaponKey('weapon.fists') ? { side: 'LEFT' as const, index: -1 } : frame.selectedLegacyWeaponKey !== undefined ? legacyEntries.find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
     const choice = keyed ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];

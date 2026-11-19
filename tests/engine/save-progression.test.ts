@@ -10,7 +10,7 @@ import { l3WeaponPickup } from '../../src/data/l3';
 import { l4 } from '../../src/data/l4';
 import { l5DroppedWeapons, l5WeaponPickup } from '../../src/data/l5';
 import { l7Rocket } from '../../src/data/l7';
-import { enforceCureArsenal } from '../../src/sim/progression/arsenal';
+import { enforceCureArsenal, transactArsenal } from '../../src/sim/progression/arsenal';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Loadout } from '../../src/sim/combat/Loadout';
 import { beginRewards, debugCampaign, finishRewards, gearTier, newCampaign, pickUpgrades, preset, revealCards, type CampaignSave, type Level } from '../../src/sim/progression/Campaign';
@@ -30,6 +30,15 @@ const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgu
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
 test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', async () => {
+  const hangarSave = preset('L10-default');
+  hangarSave.ownedActions.push('weapon.bat', 'weapon.army-mg', 'weapon.flashbang', 'weapon.grenade');
+  hangarSave.racks.LEFT.push('weapon.bat'); hangarSave.racks.RIGHT.push('weapon.grenade', 'weapon.army-mg', 'weapon.flashbang');
+  const combat = { rackCapacity: 32, runner: { loadout: new Loadout(['weapon.fire-axe'], ['weapon.fire-axe']) }, setLoadout(left: string[], right: string[]) { this.runner.loadout = new Loadout(left, right, undefined, 32); } };
+  const hangarWorld = { scenario: 'L10', progression: { campaign: hangarSave }, combat, events: { emit() {} }, tick: 0 };
+  transactArsenal(hangarWorld as never, cureHangarWeapons, ['weapon.bat', 'weapon.army-mg', 'weapon.flashbang']);
+  expect(combat.runner.loadout.activeEntries().map(entry => entry.id).sort()).toEqual([...cureHangarWeapons].sort());
+  expect(hangarSave.ownedActions).toContain('ability.corgi-lure');
+
   // The public pause overlay accepts both query spellings used in production reports.
   expect(['1', 'true'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([true, true]);
   expect(['', '0', 'false'].map(value => debugFlagEnabled(new URLSearchParams(`debug=${value}`)))).toEqual([false, false, false]);

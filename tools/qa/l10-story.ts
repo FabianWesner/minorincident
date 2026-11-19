@@ -224,7 +224,8 @@ for (const tier of tiers) {
         }
         if (world.missions!.state.states['cure-carried']) {
           const ids = [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id);
-          fullArsenal ||= cureHangarWeapons.every(id => ids.includes(id));
+          const weapons = [...new Set(ids.filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.fists'))];
+          fullArsenal ||= weapons.length === cureHangarWeapons.length && cureHangarWeapons.every(id => weapons.includes(id));
         }
         if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, player: { ...p.transform, hp: p.health.current }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
       };
