@@ -36,3 +36,9 @@ The missing first shard subsequently completed in 341 seconds. Merging it with t
 Temporary stuck-link avoidance no longer starts the authored breach timer. A focused arena probe passed for temporary and explicitly blocked links; typecheck and lint passed. The L9/L10 threat diagnostic completed its native stages, but its partial selection is not a full gate. Its L10 skilled dispersal-assault wave recorded a first-attack flag also present in the earlier merged audit; the audit summary counts only its selected gate flags. The previous full zero-flag result predates this change.
 
 Two further unchanged remote unit attempts on this change did not pass: the first completed with 104 passed, one skipped and the combat test timing out at 30 seconds; the second reached the 240-second overall timeout. The current-code unit gate remains open.
+
+## Current full threat audit
+
+The full `npm run qa:threat` on `9b4fcc65` completed in 336.6 seconds with 0 gate flags, including L9 and L10. The previously noted L10 skilled wave observation is retained in its detailed receipt. Unloaded-chunk collision remains unproven: the coarse sweep queries the resident navigation grid, and the graph scan covers authored links rather than every off-graph join.
+
+The unchanged remote `npm test` rerun on the current code passed: 27 files, 105 tests passed, one skipped, 195.4 seconds within the 240-second budget.
