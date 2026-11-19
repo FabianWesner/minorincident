@@ -304,6 +304,21 @@ export class LevelSevenEncounters {
     if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 300 === 0) {
       for (const e of ai.active) if (e.infected!.pack === l7Encounters.finalGroup && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && distance(e.transform, p) > 25) ai.press(e.id, 1, w.tick + 20 * 60);
     }
+    // L7-04 delivery, second half: the 450 HP street population mostly survives
+    // allied fire, so once the column is on the junction/corridor lane the street
+    // ranks it has left behind (offscreen, beyond any approach they could still
+    // press) free their slots for the queued tail of the authored population —
+    // the same offscreen-recycling rule L2/L3 street encounters already use
+    // ("offscreen actors free slots for the next encounter"). The recycling runs
+    // only while authored requests are still queued, so the encounter's own
+    // late-corridor flow is untouched once the authored 400/200 have all arrived.
+    // Corpses, downed bodies, biters and the final corridor horde's boarding
+    // stream are never recycled; every authored request admits exactly once.
+    if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 10 === 0 && ai.director.queue.length) {
+      for (const e of ai.active) if (e.infected!.pack > l7Encounters.firstStreetGroup && e.infected!.pack <= l7Encounters.firstStreetGroup + 13
+        && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && (e.infected!.recoverAt ?? -1) < 0 && e.infected!.l1?.mode !== 'bite'
+        && distance(e.transform, p) > 80 && ai.director.offscreen(e.transform, e.transform.y - .7)) ai.release(e);
+    }
     for (const r of s.roster) {
       const e = w.entities.get(r.id);
       if (r.status !== 'following') continue;
