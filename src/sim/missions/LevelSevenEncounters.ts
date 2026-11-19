@@ -301,15 +301,8 @@ export class LevelSevenEncounters {
     // While the courier is on the junction/corridor lane, distant final-pack
     // members re-acquire her, so the authored population funnels in, engages
     // and is delivered instead of holding its slots offscreen forever.
-    // L7-04 delivery: the trailing street packs (the rear group and the
-    // junction/corridor reinforcement ranks) pressed only once on admission
-    // for twenty seconds, then stood mid-street holding their cap slots while
-    // the last authored rank's tail stayed queued behind the saturated cap.
-    // They re-acquire her on the same five-second cadence, so they stream in,
-    // join the corridor fight from behind and their casualties free the slots
-    // the queued tail still needs before the bus departs.
     if (s.started && p.x <= l7Encounters.streets[3].x && w.tick % 300 === 0) {
-      for (const e of ai.active) if ((e.infected!.pack === l7Encounters.finalGroup || e.infected!.pack >= l7Encounters.firstStreetGroup + 4) && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && distance(e.transform, p) > 25) ai.press(e.id, 1, w.tick + 20 * 60);
+      for (const e of ai.active) if (e.infected!.pack === l7Encounters.finalGroup && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && distance(e.transform, p) > 25) ai.press(e.id, 1, w.tick + 20 * 60);
     }
     // L7-04 delivery, second half: the 450 HP street population mostly survives
     // allied fire, so once the column is on the junction/corridor lane the street
