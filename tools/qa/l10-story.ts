@@ -20,6 +20,10 @@ const finaleOnly = process.env.L10_STORY_FINAL_ONLY === '1';
 const tiers = (process.env.L10_STORY_TIERS ?? 'low,high').split(',') as ('low' | 'high')[];
 const rows: unknown[] = [], checks: { tier: string; name: string; pass: boolean; observed?: unknown }[] = [];
 const check = (tier: string, name: string, pass: boolean, observed?: unknown) => { checks.push({ tier, name, pass, observed: observed === undefined ? undefined : structuredClone(observed) }); };
+function isHangarIssue(ids: string[]): boolean {
+  const weapons = [...new Set(ids.filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.fists'))];
+  return weapons.length === cureHangarWeapons.length && cureHangarWeapons.every(id => weapons.includes(id));
+}
 function place(w: SimWorld, x: number, z: number): void {
   const at = { x, y: .705 + (w.districts?.groundHeight(x, z) ?? 0), z };
   Object.assign(w.entities.get(1)!.transform, at); w.physics.playerBody!.setTranslation(at, true);
@@ -81,7 +85,7 @@ for (const tier of tiers) {
     check(tier, 'hangar entrance connects to indoor handoff', nav.path(nav.cell(cureHangar.outside.x, cureHangar.outside.z), nav.cell(cureHangar.canister.x, cureHangar.canister.z), path, Infinity), { cells: path.length });
     place(w, cureHangar.canister.x + 1, cureHangar.canister.z); advance(w, 5);
     const player = w.entities.get(1)!, racks = () => [...player.weapons!.LEFT.rack, ...player.weapons!.RIGHT.rack].map(slot => slot.id);
-    check(tier, 'cure handoff restores every campaign weapon and the prototype into selectable racks', m.state.states['cure-carried'] && cureHangarWeapons.every(id => racks().includes(id)), racks());
+    check(tier, 'cure handoff issues exactly ten selectable weapons', m.state.states['cure-carried'] && isHangarIssue(racks()), racks());
     const resume = m.saveResume(), save = structuredClone(w.progression!.campaign!); save.cureResume = resume;
     const decoded = decodeSave(encodeSave(save));
     check(tier, 'full hangar inventory and conversation survive save validation and codec', validateSave(save) && decoded.status === 'ok' &&
@@ -149,7 +153,7 @@ for (const tier of tiers) {
     m.loadResume(resume);
     const restored = w.entities.get(1)!;
     check(tier, 'production resume restores indoor cast, completed dialogue, cure and every selectable weapon', m.state.states['cure-carried'] &&
-      m.state.states['hangar-dialogue-done'] && cureHangarWeapons.every(id => [...restored.weapons!.LEFT.rack, ...restored.weapons!.RIGHT.rack].some(slot => slot.id === id)) &&
+      m.state.states['hangar-dialogue-done'] && isHangarIssue([...restored.weapons!.LEFT.rack, ...restored.weapons!.RIGHT.rack].map(slot => slot.id)) &&
       Object.entries(m.state.actors).filter(([key, id]) => key.startsWith('hangar-') && w!.entities.get(id)?.health.current).length === 6);
     const sam = structuredClone(w.entities.get(m.state.actors['hangar-sam'])!);
     sam.civilian!.model = 'npc.civilian-man-a';
@@ -224,7 +228,7 @@ for (const tier of tiers) {
         }
         if (world.missions!.state.states['cure-carried']) {
           const ids = [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id);
-          fullArsenal ||= cureHangarWeapons.every(id => ids.includes(id));
+          fullArsenal ||= isHangarIssue(ids);
         }
         if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, player: { ...p.transform, hp: p.health.current }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
       };

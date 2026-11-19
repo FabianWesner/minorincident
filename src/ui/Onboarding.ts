@@ -44,7 +44,7 @@ export class Onboarding {
   }
   private glyph(lesson: Lesson, scheme: Scheme): string {
     if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? lesson === 'attack' ? '☝ LEFT' : '☝ RIGHT' : lesson === 'selector' ? 'Swipe up LEFT / RIGHT' : 'ACTION / Stand';
-    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? 'WASD / arrows move' : lesson === 'attack' ? 'LMB shoots · Space aim assist' : lesson === 'second-side' ? 'RMB / Q cycle · LMB / Space attack' : lesson === 'selector' ? 'RMB / Q' : 'Stand / E / F';
+    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? 'WASD / arrows move' : lesson === 'attack' ? 'LMB shoots · Space aim assist' : lesson === 'second-side' ? 'Q / Shift+Q cycle · LMB / Space attack' : lesson === 'selector' ? 'Q / Shift+Q cycle · RMB next' : 'Stand / E / F';
     return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
   }
   /** Prime native font fallback/text shaping without selecting or consuming a lesson. */

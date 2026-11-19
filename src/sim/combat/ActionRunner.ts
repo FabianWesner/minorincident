@@ -1,4 +1,3 @@
-import { weaponKey } from '../../data/weaponKeys';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import { Loadout } from './Loadout';
@@ -39,7 +38,7 @@ export class ActionRunner {
   /** `crowd(radius)` counts the living infected a sweep of that radius would reach from the source right now. */
   update(frame: InputFrame, tick: number, enabled: boolean, started: (attack: Attack) => void, resolve: (attack: Attack) => void, crowd?: (radius: number) => number, canFire?: (attack: Attack) => boolean): void {
     const selected = this.loadout.state.selectedSide, selectedId = this.loadout.current(selected).id;
-    const keyedChoice = frame.selectedWeaponKey !== undefined && this.loadout.activeEntries().some(entry => weaponKey(entry.id) === frame.selectedWeaponKey);
+    const keyedChoice = frame.selectedWeaponKey !== undefined || frame.selectedLegacyWeaponKey !== undefined;
     if (!enabled || this.gunReady.id !== selectedId || this.gunReady.side !== selected) {
       Object.assign(this.gunReady, { id: selectedId, side: selected, ticks: 0, until: -1 });
     }
