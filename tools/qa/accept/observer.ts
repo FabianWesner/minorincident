@@ -283,8 +283,8 @@ export class AcceptanceObserver {
         }
       }
       if (s.states['cure-carried']) {
-        const racks = [...player.weapons!.LEFT.rack, ...player.weapons!.RIGHT.rack].map(slot => slot.id);
-        story.fullArsenal ||= cureHangarWeapons.every(id => racks.includes(id));
+        const racks = [...new Set([...player.weapons!.LEFT.rack, ...player.weapons!.RIGHT.rack].map(slot => slot.id).filter(id => id.startsWith('weapon.') && id !== 'weapon.fists' && id !== 'weapon.kick'))];
+        story.fullArsenal ||= racks.length === cureHangarWeapons.length && cureHangarWeapons.every(id => racks.includes(id));
       }
       const r = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]);
       if (r && !s.states['cure-released']) {
