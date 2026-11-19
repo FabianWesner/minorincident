@@ -46,3 +46,7 @@ The unchanged remote `npm test` rerun on the current code passed: 27 files, 105 
 ## Unloaded collider follow-up
 
 The native per-tick probe now independently checks authored building colliders whether or not their chunks are resident; the four sampled runs still pass with zero intersections. A focused off-graph nonresident probe nevertheless confirms a gap: the unloaded `bld.cure-duplex:7/geometry-1` at (833, 88.82) is reported clear by `world.solids`; a hidden coarse Mega forced from x=820 toward x=850 crossed to x=847.95 through it. This case is outside the observed native runs and needs a real nonresident detour before the invariant can be claimed.
+
+## Nonresident detour
+
+Coarse pursuit now constructs a bounded local navigation grid from district colliders when outside resident chunks, and advances along it using the ordinary per-tick movement budget. The forced unloaded duplex scenario starts at (823, 88.82), reaches x ≥ 845 via a longer route, and checks its footprint against building colliders every tick. The focused test and full native overlap/detour probe pass. Typecheck and lint pass. Full `npm run qa:threat` on `4b9feeef` passed with 0 gate flags in 335.7 seconds. The earlier x=820 forced start was itself inside the expanded footprint of a neighboring duplex; recovery from an invalid nonresident spawn remains to be checked. Current-code remote unit and L9/L10 acceptance reruns remain outstanding.
