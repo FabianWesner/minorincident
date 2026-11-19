@@ -12,11 +12,10 @@ try {
     for (let i = 0; i < 30 && m.state.steps.research.status !== 'active'; i++) m.completeObjective();
     if (m.state.steps.research.status !== 'active') throw new Error('research not active');
     a.teleport(1, { x: 2701, z: 66 }); await a.step(1); await a.step(3400);
-    a.teleport(1, { x: 2706, z: 66 }); await a.step(300); game.campaignUI.hide(); game.ui.show(null); game.ui.update(); await a.screenshotReady(); game.campaignUI.hide(); game.ui.update();
-    (document.querySelector('[data-testid=weapon-rack]') as HTMLElement).style.visibility = 'visible';
-    return { carried: m.state.states['cure-carried'], rack: game.world.combat!.runner.loadout.activeEntries().map(e => e.id), owned: game.world.progression?.campaign?.ownedActions, phase: m.state.phase, cinematic: m.state.cinematic, storyLock: game.world.storyLock, ui: document.body.dataset.uiScreen, hud: (() => { const e = document.querySelector('[data-testid=weapon-rack]') as HTMLElement; const root = e.closest('.hud') as HTMLElement; return { body: document.body.className, root: root.outerHTML.slice(0, 200), css: getComputedStyle(root).cssText, visibility: getComputedStyle(e).visibility, display: getComputedStyle(e).display, rect: e.getBoundingClientRect().toJSON() }; })(), backend: a.perf().backend };
+    a.teleport(1, { x: 2706, z: 66 }); await a.step(300); game.campaignUI.hide(); game.ui.show(null); game.ui.update(); await a.screenshotReady(); game.campaignUI.hide(); game.ui.hud.root.dataset.sceneHud = ''; game.ui.update();
+    return { carried: m.state.states['cure-carried'], rack: game.world.combat!.runner.loadout.activeEntries().map(e => e.id), owned: game.world.progression?.campaign?.ownedActions, phase: m.state.phase, cinematic: m.state.cinematic, storyLock: game.world.storyLock, ui: document.body.dataset.uiScreen, hudVisible: getComputedStyle(document.querySelector('[data-testid=weapon-rack]')!).visibility === 'visible', backend: a.perf().backend };
   });
   console.log(JSON.stringify({ info, errors: session.errors }));
-  if (!info.carried || info.rack.length !== 10 || session.errors.length) throw new Error('Hangar rack fixture did not reach expected state');
+  if (!info.carried || !info.hudVisible || info.rack.length !== 10 || session.errors.length) throw new Error('Hangar rack fixture did not reach expected state');
   await session.page.screenshot({ path: 'docs/reports/s177-rackkeys/rack-l10.jpg', type: 'jpeg', quality: 90 });
 } finally { await session.close(); stopServer(); }
