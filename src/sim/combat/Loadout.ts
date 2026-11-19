@@ -53,7 +53,7 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    const keyed = frame.selectedWeaponKey === undefined ? undefined : this.activeEntries().find(entry => weaponKey(entry.id) === frame.selectedWeaponKey);
+    const keyed = frame.selectedLegacyWeaponKey !== undefined ? this.activeEntries().find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
     const choice = keyed ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];

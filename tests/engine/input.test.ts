@@ -203,8 +203,14 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   ids.forEach((id, index) => {
     const key = weaponKey(id)!;
     expect(key).toBeGreaterThan(0);
-    catalogLoadout.input({ ...emptyInput(), selectedWeaponKey: key }, index * 30 + 30);
+    catalogLoadout.input({ ...emptyInput(), selectedLegacyWeaponKey: key }, index * 30 + 30);
     expect(catalogLoadout.current(catalogLoadout.state.selectedSide).id).toBe(id);
+  });
+  const sparse = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
+  expect(sparse.activeEntries().map(e => e.id)).toEqual(['weapon.fists', 'weapon.fire-axe', 'weapon.machete', 'weapon.handgun']);
+  sparse.activeEntries().forEach((entry, index) => {
+    sparse.input({ ...emptyInput(), selectedWeaponKey: index + 1 }, 30 * (index + 1));
+    expect(sparse.current(sparse.state.selectedSide).id).toBe(entry.id);
   });
   const cycle = new Loadout(ids.slice(0, 3), ids.slice(3, 6));
   const entries = cycle.activeEntries();

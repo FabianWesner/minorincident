@@ -13,7 +13,6 @@ import { l8BossArenas, l8Route, inRect } from '../data/l8Bosses';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
 import type { Game } from '../Game';
-import { weaponKey } from '../data/weaponKeys';
 import { action } from '../data/actions/catalog';
 import { actionIconUrl } from '../assets/icons';
 import { button, node, text as domText, setHidden, attribute, style } from './dom';
@@ -435,18 +434,18 @@ export class Hud {
     const signature = entries.map(entry => entry.id).join(',');
     if (signature !== this.weaponRackSignature) {
       this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
-      for (const entry of entries) {
-        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
+      for (const [index, entry] of entries.entries()) {
+        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = index + 1;
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
-        const shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q';
+        const shortcut = key <= 9 ? String(key) : key === 10 ? '0' : '';
         item.title = `${label(entry.id)}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
-        item.type = 'button'; item.tabIndex = -1; item.disabled = key === undefined;
+        item.type = 'button'; item.tabIndex = -1; 
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
-        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (key !== undefined) this.game.input.selectWeaponKey(key); });
+        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); this.game.input.selectWeaponKey(key); });
         item.append(icon);
-        if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, shortcut); badge.className = 'hud-weapon-key'; item.append(badge); }
+        if (key <= 10) { const badge = node('span', `weapon-key-${key}`, shortcut); badge.className = 'hud-weapon-key'; item.append(badge); }
         this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
       }
     }
@@ -456,7 +455,7 @@ export class Hud {
       const entry = entries.find(entry => entry.id === id)!;
       const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
       attribute(item, 'data-empty', String(empty));
-      const key = weaponKey(id), shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q (cycle)';
+      const key = entries.findIndex(entry => entry.id === id) + 1, shortcut = key <= 9 ? String(key) : key === 10 ? '0' : '';
       item.title = `${label(id)}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
       item.setAttribute('aria-label', item.title);
     }

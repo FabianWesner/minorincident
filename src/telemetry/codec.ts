@@ -47,7 +47,7 @@ export class InputLogEncoder {
   get samples(): number { return this.sample; }
   get active(): boolean { return this.pos > 0; }
   begin(meta: object): void {
-    const bytes = new TextEncoder().encode(JSON.stringify(meta));
+    const bytes = new TextEncoder().encode(JSON.stringify({ ...meta, weaponKeyVersion: 2 }));
     if (bytes.length + 64 > 1024 + this.chunkBytes / 2) throw new RangeError('Replay metadata too large');
     this.sample = 0; this.pendingMeta = bytes; this.startChunk();
   }
@@ -170,7 +170,9 @@ export function decodeLog(chunks: Uint8Array[]): DecodedLog {
       } else {
         const mask = r.view.getUint32(r.pos, true); r.pos += 4;
         for (let i = 0; i < SLOTS; i++) if (mask & 1 << i) cur[i] = i < FLOAT_SLOTS ? r.f64() : r.optional();
-        last = frameFrom(cur); scheme = cur[18];
+        last = frameFrom(cur);
+        if (meta?.weaponKeyVersion !== 2 && last.selectedWeaponKey !== undefined) { last.selectedLegacyWeaponKey = last.selectedWeaponKey; delete last.selectedWeaponKey; }
+        scheme = cur[18];
         frames.push(last); schemeList.push(scheme);
       }
     }
