@@ -1,4 +1,4 @@
-import { emergeResident, walkResidents, layoutHouseDoors, type HouseEmergence } from '../outbreak/HouseEmergence';
+import { layoutHouseDoors, type HouseEmergence } from '../outbreak/HouseEmergence';
 import { finale } from '../../data/l10Finale';
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
@@ -20,6 +20,10 @@ const pacedSetPieces = ['corn-field-horde', 'farmhouse-defense', 'shed-field-cro
 const pacedWaveSize = 5;
 /** A wave also opens once at most this many living members remain anywhere in the cohort. */
 const pacedWaveLiving = 2;
+/** The charge gets a fresh escalation beat every four seconds. */
+const assaultWavePeriod = 240;
+/** The staged opening cohort gets one full half-minute to meet the courier before charging. */
+const prechargeAssaultDelay = 1800;
 interface CarriedMember { archetype: string; x: number; z: number; group: string; region: CureRegion }
 export interface CureEncounterState {
   finaleEntry?: HouseEmergence; finaleEntryNext?: number; finaleEntrySlot?: boolean;
@@ -29,6 +33,9 @@ export interface CureEncounterState {
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
   /** Paced set pieces: the wave currently admitting, and the next re-target pass. */
   pacedWave?: Record<string, number>; pacedPress?: number;
+  /** Once-only halfway breach cue, retained with the encounter snapshot. */
+  assaultBreach?: boolean;
+  assaultAnnouncedWave?: number;
 }
 /** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
@@ -72,6 +79,11 @@ export class LevelTenEncounters {
   snapshot(): CureEncounterState { return structuredClone({ ...this.state, pressureTick: this.world.tick }); }
   restore(value: unknown): void {
     const heldEntrySlot = this.state.finaleEntrySlot ? 1 : 0;
+    const retainedAssault = this.died && this.world.missions?.state.states['cure-installed'] ? {
+      assaultTicks: this.state.assaultTicks, assaultWave: this.state.assaultWave,
+      nextAssaultAt: this.state.nextAssaultAt, assaultBreach: this.state.assaultBreach,
+      assaultAnnouncedWave: this.state.assaultAnnouncedWave,
+    } : undefined;
     const incoming = structuredClone(value as CureEncounterState);
     // A death retry resumes released encounters rather than replaying them:
     // every slot the checkpoint predates stays consumed (kills made on the
@@ -81,6 +93,13 @@ export class LevelTenEncounters {
     const discarded = this.died ? [...this.deathLedger] : [];
     this.died = false;
     this.state = incoming; this.state.weapons ??= {};
+    if (retainedAssault) {
+      this.state.assaultTicks = Math.max(this.state.assaultTicks ?? 0, retainedAssault.assaultTicks ?? 0);
+      this.state.assaultWave = Math.max(this.state.assaultWave ?? 0, retainedAssault.assaultWave ?? 0);
+      this.state.nextAssaultAt = Math.max(this.state.nextAssaultAt ?? 0, retainedAssault.nextAssaultAt ?? 0);
+      this.state.assaultBreach ||= retainedAssault.assaultBreach;
+      this.state.assaultAnnouncedWave = Math.max(this.state.assaultAnnouncedWave ?? 0, retainedAssault.assaultAnnouncedWave ?? 0);
+    }
     const slots = this.state.spawned ??= {};
     for (const key of discarded) {
       if (key in slots) { this.carried.delete(key); continue; }
@@ -89,6 +108,7 @@ export class LevelTenEncounters {
     if (this.world.infected) this.world.infected.director.reserved += (this.state.finaleEntrySlot ? 1 : 0) - heldEntrySlot;
     const delta = this.world.tick - (this.state.pressureTick ?? this.world.tick);
     if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
+    if (this.state.finaleEntryNext !== undefined) this.state.finaleEntryNext += delta;
     for (const walker of this.state.finaleEntry?.walking ?? []) {
       walker.until += delta;
       if (walker.startAt !== undefined) walker.startAt += delta;
@@ -136,9 +156,10 @@ export class LevelTenEncounters {
     const assaultGroup = cureEncounters.find(group => group.assault);
     const waveIndex = this.state.assaultWave ?? 0;
     const livingAssault = Object.entries(this.state.spawned).filter(([key, id]) =>
-      key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0).length;
-    // Only the authored station slots count towards what the current wave still owes: the
-    // service-tunnel walkers join the same ledger without consuming a station slot.
+      key.startsWith('dispersal-assault:') && !key.startsWith('dispersal-assault:service:') &&
+      (w.entities.get(id)?.health.current ?? 0) > 0).length;
+    // Service arrivals consume their director occupant slot, but do not reserve
+    // a second slot as though they were members of the authored station cohort.
     const owedAssault = assaultGroup ? cureEncounterSlots(assaultGroup, ai.director.tier).filter(slot =>
       this.state.spawned[`${slot.key}:${waveIndex}`] === undefined).length : 0;
     const wantedReservation = mission.state.states['cure-installed'] && !mission.state.states['cure-released'] ? livingAssault + owedAssault : 0;
@@ -148,38 +169,67 @@ export class LevelTenEncounters {
       if (this.state.finaleEntrySlot) { ai.director.reserved--; this.state.finaleEntrySlot = false; }
       return;
     }
-    const assaultActive = !!mission.state.states['charge-active'];
-    if (assaultActive) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
-    if (assaultActive) {
+    // Keep the finale assault clock alive from cure installation. The courier
+    // can kill the Mega or fight at the gun before she activates the console;
+    // that early route must not create a quiet pre-charge seam.
+    const assaultActive = !!mission.state.states['cure-installed'];
+    const chargeComplete = (mission.state.counters['charge-ticks'] ?? 0) >= 3600;
+    if (assaultActive && !chargeComplete) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
+    const consoleAt = mission.def.anchors['cure-console'];
+    const courier = w.entities.get(1)!;
+    const assaultApproach = !!mission.state.states['cure-installed'] && !!consoleAt &&
+      Math.hypot(courier.transform.x - consoleAt.x, courier.transform.z - consoleAt.z) <= finale.holdRadius - 20;
+    if (assaultActive || assaultApproach) {
+      // Once the hold begins, wave escalation follows the charge clock even
+      // when an earlier cohort is still alive. Admission remains cap-bound.
+      const timedWave = Math.floor((this.state.assaultTicks ?? 0) / assaultWavePeriod);
+      this.state.assaultWave = Math.max(this.state.assaultWave ?? 0, timedWave);
+      this.state.nextAssaultAt = ((this.state.assaultWave ?? 0) + 1) * assaultWavePeriod;
+      const activeWave = this.state.assaultWave ?? 0;
+      if (this.state.assaultAnnouncedWave !== activeWave) {
+        this.state.assaultAnnouncedWave = activeWave;
+        w.events.emit({ type: 'mission.signal', tick: w.tick, name: `cure-assault-wave-${activeWave}` });
+      }
       if (!this.state.finaleEntry) {
         const district = w.districts!.districts.find(d => d.id === 'D-CURE')!;
         const door = layoutHouseDoors(district.layout, district.origin).find(d => d.house === 'kit.zoo-tunnel-mouth:l10-service');
         const c = mission.def.anchors['cure-console'];
         const route = [finale.platformStair.at, finale.platformStair.top, finale.gun.at].map(([x,z]) => [c.x+x,c.z+z] as [number,number]);
-        if (door) this.state.finaleEntry = { ...door, sx: c.x+finale.serviceEntry.spawn[0], sz: c.z+finale.serviceEntry.spawn[1], route, ox: route[2][0], oz: route[2][1], next: 0, ids: [], finishRoute: true };
+        if (door) this.state.finaleEntry = { ...door, sx: c.x+finale.serviceEntry.spawn[0], sz: c.z+finale.serviceEntry.spawn[1], route,
+          ox: route[2][0], oz: route[2][1], next: 0, ids: [] };
       }
-      const entry = this.state.finaleEntry, clock = this.state.assaultTicks ?? 0;
+      const entry = this.state.finaleEntry;
       if (entry) {
-        for (const id of walkResidents(w, entry, w.tick)) {
-          ai.pursueTarget(id, 1);
-          const b = w.entities.get(id)!.infected!;
-          if (b.l1) { b.l1.mode = 'chase'; b.l1.targetId = 1; b.state = 'chase'; b.heardTargetId = 1; }
+        if (!this.state.assaultBreach && (mission.state.counters['charge-ticks'] ?? 0) >= 1800) {
+          this.state.assaultBreach = true;
+          w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'cure-assault-breach' });
+          w.events.emit({ type: 'vfx.effect', tick: w.tick, kind: 'smoke', position: { x: entry.x, y: 0, z: entry.z }, radius: 5 });
         }
-        // The first tunnel walker steps out with the announcement itself: the assault's own
-        // approach pressure begins at the wave opening, so the deck threat it carries across
-        // the platform stair reaches the gun at ~11–12 s instead of ~16 s. The wave's ≤20 s
-        // first-attack window then opens into a real ground fight (the Mega alone arrives
-        // around 16 s; every reinforcement before it was 5 s of dead air).
-        if (clock >= (this.state.finaleEntryNext ?? 0)) {
+        // The service breach admits a fighter on the courier's hold side every
+        // half-second, so the elevated platform can't make its arrivals inert.
+        // Admission
+        // uses the same reserved director slot and population cap as other arrivals.
+        if (w.tick >= (this.state.finaleEntryNext ?? 0)) {
           if (!this.state.finaleEntrySlot) { ai.director.reserved++; this.state.finaleEntrySlot = true; }
           else if (ai.director.count + ai.director.pendingTurns < ai.director.cap - Math.max(0, ai.director.reserved - 1) && ai.pool.length) {
             ai.director.reserved--; this.state.finaleEntrySlot = false;
-            const id = emergeResident(w, entry, w.tick, { archetype: entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner' });
-            entry.ids.push(id); this.state.finaleEntryNext = clock + 480;
-            // The tunnel walker is part of the assault cohort the console announced: it is the
-            // one approach that physically crosses the platform stair, so ledgering it keeps
-            // the wave's own pressure honest against the protected gun deck (its route and
-            // archetype are unchanged — only the announced wave's ledger gains the member).
+            const livingButchers = ai.active.filter(e => e.archetype === 'infected.butcher' && e.health.current > 0).length;
+            const heavyBreach = this.state.assaultBreach && livingButchers === 0;
+            const archetype = heavyBreach ? 'infected.butcher'
+              : entry.ids.length % 2 === 1 ? 'infected.sprinter'
+                : entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner';
+            const offsets = [[-3, 0], [3, 0], [0, -3], [0, 3], [-2, -2], [2, 2]] as const;
+            const [dx, dz] = offsets[entry.ids.length % offsets.length];
+            const x = courier.transform.x + dx, z = courier.transform.z + dz;
+            const support = w.districts?.supportBelow(x, z, courier.transform.y - .7 + .05) ?? w.districts?.groundHeight(x, z) ?? 0;
+            const id = ai.spawn(archetype, { x, y: support + .7, z }, { state: 'chase', cureRegion: 'dispersal-complex' });
+            const actor = w.entities.get(id)!;
+            actor.transform.y = support + .7;
+            ai.pursueTarget(id, 1);
+            if (actor.infected?.l1) { actor.infected.l1.mode = 'chase'; actor.infected.l1.targetId = 1; actor.infected.heardTargetId = 1; }
+            actor.infected!.state = 'chase';
+            entry.ids.push(id);
+            this.state.finaleEntryNext = w.tick + 30;
             this.state.spawned[`dispersal-assault:service:${entry.ids.length}:${this.state.assaultWave ?? 0}`] = id;
           }
         }
@@ -215,7 +265,6 @@ export class LevelTenEncounters {
       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);
     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};
     const pacedWaves = this.state.pacedWave ??= {};
-    const consoleAt = mission.def.anchors['cure-console'];
     for (const group of [...cureEncounters, ...curePaceEncounters]) {
       const assault = !!group.assault;
       if (assaultActive && !assault) continue;
@@ -242,28 +291,47 @@ export class LevelTenEncounters {
         // the courier's current lane at its own gate below.
         lanes[group.id] = this.lanePull(group, player, paced);
       }
-      // A 30 s wave period, at most 5 s of admission, then 25 s with no new arrivals.
-      // If a wave is still alive, postpone the next one until it has been cleared plus an 8 s breather.
-      // The pre-staged opening wave can spend itself against her approach (every slot admitted,
-      // no survivor): the frozen pre-charge clock would then hold the dead wave's whole 30 s period
-      // past the announcement, so the spent wave hands the console's opening beat to the next wave —
-      // the charge's first ticks admit the fresh cohort at the press itself.
+      // The pre-staged opening wave can be spent on the approach. Before the
+      // charge clock starts, hand off to the next cohort only when that wave
+      // is empty; once charging, timed windows continue independently of it.
       const clock = this.state.assaultTicks ?? 0;
-      if (assault && !assaultActive && (this.state.assaultWave ?? 0) === 0 && this.state.nextAssaultAt === 1800 &&
+      if (assault && !assaultActive && (this.state.assaultWave ?? 0) === 0 && this.state.nextAssaultAt === prechargeAssaultDelay &&
         cureEncounterSlots(group, ai.director.tier).every(slot => this.state.spawned[`${slot.key}:0`] !== undefined) &&
         !Object.entries(this.state.spawned).some(([key, id]) => key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0)) {
         this.state.assaultWave = 1;
-        this.state.nextAssaultAt = 1800;
+        this.state.nextAssaultAt = prechargeAssaultDelay;
       }
-      if (assault && clock >= (this.state.nextAssaultAt ?? 0)) {
+      if (assault && !assaultActive && clock >= (this.state.nextAssaultAt ?? 0)) {
         const living = Object.entries(this.state.spawned).filter(([key, id]) => key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0);
         if (living.length) this.state.nextAssaultAt = clock + 480;
-        else { this.state.assaultWave = (this.state.assaultWave ?? -1) + 1; this.state.nextAssaultAt = clock + 1800; }
+        else { this.state.assaultWave = (this.state.assaultWave ?? -1) + 1; this.state.nextAssaultAt = clock + assaultWavePeriod; }
       }
-      if (assault && clock < (this.state.nextAssaultAt ?? 1800) - 1800) continue;
-      if (assault && clock - ((this.state.nextAssaultAt ?? 1800) - 1800) >= 300) continue;
+      if (assault && clock < (this.state.nextAssaultAt ?? prechargeAssaultDelay) - assaultWavePeriod) continue;
+      if (assault && clock - ((this.state.nextAssaultAt ?? prechargeAssaultDelay) - assaultWavePeriod) >= 300) continue;
       const wave = assault ? this.state.assaultWave ?? 0 : 0;
       let slots = cureEncounterSlots(group, ai.director.tier);
+      if (assault && wave > 0) {
+        const dogSlots = Math.min(3, wave);
+        const extraDogs = Array.from({ length: dogSlots }, (_, i) => {
+          const [dx, dz] = [[-20, 0], [0, -20], [0, 20]][i];
+          return { key: `dispersal-assault:charge-dog:${i}`, archetype: 'infected.dog',
+            x: consoleAt!.x + dx, z: consoleAt!.z + dz };
+        });
+        const breachBrute = this.state.assaultBreach ? [{ key: 'dispersal-assault:breach-brute', archetype: 'infected.brute',
+          x: consoleAt!.x - 20, z: consoleAt!.z }] : [];
+        slots = [...breachBrute, ...slots.filter(slot => slot.archetype === 'infected.dog'), ...extraDogs,
+          ...slots.filter(slot => slot.archetype !== 'infected.dog')];
+        // Cleared charge waves return faster infected in a larger share of
+        // the authored cap, and dogs lead the admission for a fast contact beat.
+        let ordinary = 0;
+        slots = slots.map(slot => {
+          if (slot.archetype === 'infected.dog' || slot.archetype === 'infected.alpha') return slot;
+          const rank = ordinary++;
+          const promoteEvery = wave >= 2 ? 2 : 3;
+          if (rank % promoteEvery !== 0) return slot;
+          return { ...slot, archetype: wave >= 2 ? 'infected.firefighter' : 'infected.sprinter' };
+        });
+      }
       if (paced && group.id === 'depot-alpha') {
         // The ambush's Alpha leads the yard: first across the gap while the
         // courier still approaches, instead of trailing the last wave into
@@ -309,6 +377,7 @@ export class LevelTenEncounters {
         const scareReserve = assault ? pendingScares : Math.max(1, pendingScares);
         if (this.state.spawned[key] || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved + (assault ? this.assaultReservation : 0) - ai.director.pendingTurns - scareReserve) continue;
         if (slot.archetype === 'infected.dog' && ai.active.filter(e => e.archetype === slot.archetype && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= (assault ? 4 : 2)) continue;
+        if (assault && slot.archetype === 'infected.brute' && ai.active.filter(e => e.archetype === slot.archetype && e.health.current > 0).length >= 2) continue;
         if (slot.archetype === 'infected.alpha' && ai.active.filter(e => e.archetype === slot.archetype && !e.infected?.pursuit && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= cureAlphaCap(group.region, ai.director.tier)) continue;
         const at = cureEncounterSpot(ai.nav, slot, (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(slot.archetype, { x, z }), assault ? 129 : 33);
         if (!at) continue;
