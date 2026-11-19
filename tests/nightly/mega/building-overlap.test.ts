@@ -1,13 +1,22 @@
 import { expect, test } from 'vitest';
+import { emptyInput } from '../../../src/input/InputFrame';
 import { runLevel } from '../../../tools/sim-runner/levels';
 
 for (const level of ['L9', 'L10'] as const) for (const passive of [false, true]) {
   test(`${level} ${passive ? 'passive' : 'complete'} Mega stays clear of solids when visible or in frame`, async () => {
     const intersections: string[] = [];
-    let samples = 0;
+    let samples = 0, stationaryTicks = 0;
     const report = await runLevel(level, 'complete', 1, level === 'L10' ? 3600 : 900, 'auto', undefined, undefined, 0, {
       passive,
       beforeBegin: world => {
+        if (passive && level === 'L10') {
+          const apply = world.applyInput.bind(world);
+          world.applyInput = (frame, scheme) => {
+            const stationary = !!world.missions?.state.states['charge-active'];
+            if (stationary) stationaryTicks++;
+            apply(stationary ? emptyInput() : frame, scheme);
+          };
+        }
         const update = world.update.bind(world);
         world.update = (...args: Parameters<typeof world.update>) => {
           update(...args);
@@ -24,6 +33,7 @@ for (const level of ['L9', 'L10'] as const) for (const passive of [false, true])
     expect(report.outcome).not.toBe('load-error');
     if (!passive) expect(report.completed, `${level}: ${report.outcome}`).toBe(true);
     expect(samples).toBeGreaterThan(0);
+    if (passive && level === 'L10') expect(stationaryTicks).toBeGreaterThan(60);
     expect(intersections.join('\n')).toBe('');
   }, 300_000);
 }
