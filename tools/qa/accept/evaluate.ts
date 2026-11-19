@@ -84,7 +84,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   };
   const offered = [...new Set([...(initial.racks?.LEFT ?? []), ...(initial.racks?.RIGHT ?? [])])].filter(id => id.startsWith('weapon.') && !['weapon.fists', 'weapon.kick'].includes(id));
   const n = Number(receipt.level.slice(1)), expected = startSets[n] ?? [];
-  add('G-16', 'exact PO-authored level start weapons (L8 after its rocket-only armory handover; PO 2026-11-19 s190)', offered, JSON.stringify(expected), offered.length===expected.length&&expected.every(id=>offered.includes(id)));
+  add('G-16', 'weapons offered in the ordinary initial racks', offered, `PO 2026-11-19 s190 exact set: ${JSON.stringify(expected)}`, offered.length===expected.length&&expected.every(id=>offered.includes(id)));
   add('G-19', 'corgi health and real infected attack targets', observation.corgi, 'health fraction=1; zero target windups and damaging hits', observation.corgi.samples ? observation.corgi.minimumHealthFraction === 1 && observation.corgi.targeted === 0 && observation.corgi.hit === 0 : undefined);
   const runOut = observation.runOut;
   add('G-20', 'engaged run-out duration and invulnerability', runOut, '300 ticks ±1; invulnerability through deadline', runOut ? Math.abs(runOut.until - runOut.tick - 300) <= 1 && runOut.minimumInvulnerableUntil >= runOut.until : undefined);
