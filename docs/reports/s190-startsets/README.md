@@ -38,3 +38,7 @@ Merged current main containing s176 and s177 into this lane. The authored L10 st
 ## Integrated threat audit
 
 On integrated commit `f21f7ecc`, the direct full audit hit its 600 s watchdog under local load. Two deterministic stage shards completed in 406.3 s and 571.9 s, then the audit merger reported all ten skilled routes complete and **one** flag: `L7/KITING_LANDED_HITS_BELOW_2:0.00`. L8 skilled completed with zero passive flags. The L7 sample records 20 s of movement, one rocket attack, one infected windup and zero landed hits. The full zero-flag requirement remains open; no threshold or enemy stat was changed. The remote unit suite also remains open on the integrated source.
+
+## L7 moving-sample diagnosis
+
+A traced unchanged L7 retreat sample starts at tick 31, moves 39.81 m in 20 s, and records one infected windup and zero landed hits. By tick 360 the nearest visible runners are over 11 m away; the query reports no threats for 491 frames. A trial requiring a pursuer within 6 m chose the same sample and still had zero hits. A 3 m trial selected a different encounter at tick 74 (six windups, two hits, 20 s); it was rejected and reverted because selecting a different encounter does not establish that the original escape is unsafe. No gate threshold, enemy stats, or production behavior changed. The L7 issue remains open.
