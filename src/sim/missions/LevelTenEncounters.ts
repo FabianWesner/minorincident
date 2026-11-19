@@ -6,9 +6,20 @@ import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSp
 import { cureAlphaCap, cureAlphaPopulation, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { cureCorgiToy, insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
+import type { EntitySnapshot } from '../world/types';
 
 /** A slot whose member died on a discarded retry timeline: consumed for the run, never re-spawned. Never a valid entity id. */
 const RETIRED_SLOT = -1;
+/** Farm set pieces that admit as assault-style waves rather than one whole-cohort dump.
+ * A full dump released 120 m ahead disengages at walk pace: the faster members rush the
+ * release-time spot, the rest starve the shared path budget behind the farm buildings and
+ * stand in `chase` until the courier passes them. Bounded waves keep every member near
+ * her current position as one winnable fight that clears. */
+const pacedSetPieces = ['corn-field-horde', 'farmhouse-defense', 'shed-field-crossing', 'depot-alpha'] as const;
+/** Members per paced wave; the remainder admits as its own final small wave. */
+const pacedWaveSize = 5;
+/** A wave also opens once at most this many living members remain anywhere in the cohort. */
+const pacedWaveLiving = 2;
 interface CarriedMember { archetype: string; x: number; z: number; group: string; region: CureRegion }
 export interface CureEncounterState {
   finaleEntry?: HouseEmergence; finaleEntryNext?: number; finaleEntrySlot?: boolean;
@@ -16,6 +27,8 @@ export interface CureEncounterState {
   pressureAttackAt?: number; pressureTick?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
+  /** Paced set pieces: the wave currently admitting, and the next re-target pass. */
+  pacedWave?: Record<string, number>; pacedPress?: number;
 }
 /** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
@@ -91,6 +104,15 @@ export class LevelTenEncounters {
     const player = w.entities.get(1)!;
     if (player.health.current <= 0) return;
     const at = { x: player.transform.x + 40, z: player.transform.z };
+    // Assault-style admission pacing: hold the next off-camera row while the
+    // previous one still hunts her. Stacked rows (a fresh 8–12 sprinters every
+    // 15 s while the last row is still closing) grind a walking courier down
+    // where a running one simply outpaces them; admitting replacement
+    // pressure keeps the lane alive without machine-gunning it.
+    let hunting = 0;
+    for (const e of ai.active) if (e.health.current > 0 && e.infected && !e.infected.cureRegion && !e.infected.pursuit &&
+        Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 60) hunting++;
+    if (hunting >= 3) return;
     const room = () => ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns - 1;
     if (!room() || !chunks.resident(at.x, at.z)) return;
     for (const offset of ai.director.tier === 'low' ? [-7, -5, -3, -1, 1, 3, 5, 7] : [-11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11]) {
@@ -105,8 +127,21 @@ export class LevelTenEncounters {
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
     if (!ai || !chunks || mission?.state.phase !== 'playing') return;
-    const admitted = Object.keys(this.state.spawned).filter(key => key.startsWith('dispersal-assault:')).length;
-    const wantedReservation = mission.state.states['cure-installed'] && !mission.state.states['cure-released'] ? Math.max(0, 4 - admitted) : 0;
+    // The console's authored cohort owns its slots: ambient pressure — the resident director and the
+    // chunk stream's farthest-first excess trim — must not eat the wave the console announced. The s165
+    // pressure gate left the hold's ambient count at cap when the assault opened, so wave 0 admitted 5
+    // of its 7 slots and the late arrivals were trimmed before they could fight. Reserve every living
+    // assault member plus the slots the current wave still owes; the count cap then trims only ambient
+    // hunters around them, and the assault's own admission gate keeps cancelling its own reservation.
+    const assaultGroup = cureEncounters.find(group => group.assault);
+    const waveIndex = this.state.assaultWave ?? 0;
+    const livingAssault = Object.entries(this.state.spawned).filter(([key, id]) =>
+      key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0).length;
+    // Only the authored station slots count towards what the current wave still owes: the
+    // service-tunnel walkers join the same ledger without consuming a station slot.
+    const owedAssault = assaultGroup ? cureEncounterSlots(assaultGroup, ai.director.tier).filter(slot =>
+      this.state.spawned[`${slot.key}:${waveIndex}`] === undefined).length : 0;
+    const wantedReservation = mission.state.states['cure-installed'] && !mission.state.states['cure-released'] ? livingAssault + owedAssault : 0;
     ai.director.reserved += wantedReservation - this.assaultReservation;
     this.assaultReservation = wantedReservation;
     if (mission.state.states['cure-released']) {
@@ -130,12 +165,22 @@ export class LevelTenEncounters {
           const b = w.entities.get(id)!.infected!;
           if (b.l1) { b.l1.mode = 'chase'; b.l1.targetId = 1; b.state = 'chase'; b.heardTargetId = 1; }
         }
-        if (clock >= (this.state.finaleEntryNext ?? 300)) {
+        // The first tunnel walker steps out with the announcement itself: the assault's own
+        // approach pressure begins at the wave opening, so the deck threat it carries across
+        // the platform stair reaches the gun at ~11–12 s instead of ~16 s. The wave's ≤20 s
+        // first-attack window then opens into a real ground fight (the Mega alone arrives
+        // around 16 s; every reinforcement before it was 5 s of dead air).
+        if (clock >= (this.state.finaleEntryNext ?? 0)) {
           if (!this.state.finaleEntrySlot) { ai.director.reserved++; this.state.finaleEntrySlot = true; }
           else if (ai.director.count + ai.director.pendingTurns < ai.director.cap - Math.max(0, ai.director.reserved - 1) && ai.pool.length) {
             ai.director.reserved--; this.state.finaleEntrySlot = false;
             const id = emergeResident(w, entry, w.tick, { archetype: entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner' });
             entry.ids.push(id); this.state.finaleEntryNext = clock + 480;
+            // The tunnel walker is part of the assault cohort the console announced: it is the
+            // one approach that physically crosses the platform stair, so ledgering it keeps
+            // the wave's own pressure honest against the protected gun deck (its route and
+            // archetype are unchanged — only the announced wave's ledger gains the member).
+            this.state.spawned[`dispersal-assault:service:${entry.ids.length}:${this.state.assaultWave ?? 0}`] = id;
           }
         }
       }
@@ -169,26 +214,47 @@ export class LevelTenEncounters {
       ['idle', 'wander'].includes(e.infected.state) && (e.infected.pressureTarget?.until ?? 0) <= w.tick &&
       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);
     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};
+    const pacedWaves = this.state.pacedWave ??= {};
+    const consoleAt = mission.def.anchors['cure-console'];
     for (const group of [...cureEncounters, ...curePaceEncounters]) {
       const assault = !!group.assault;
       if (assaultActive && !assault) continue;
-      if (assault && !assaultActive) continue;
+      // The dispersal assault's opening wave paces itself on her arrival at the arena — the depot
+      // ambush's own rule. The wave admits once she reaches the cure installation's apron (within
+      // holdRadius - 20 of the console), so the cohort the console announces is already closing on her
+      // live position when the assault clock opens: the announcement's ≤20 s first-attack window then
+      // measures the fight she actually faces at any pace, instead of an approach race against the
+      // mounted platform gun that the s165 ambient gate no longer pads out. The apron release keeps
+      // the pre-announcement exposure short enough that the cohort meets her at the press itself —
+      // a longer lead time just feeds the roster to her approach fire one member at a time. Only the
+      // opening wave pre-stages; later waves keep the charge clock. The arrivals stay fair through
+      // the same director.safe spot search as every other admission (≥18 m from her, off-screen or
+      // occluded).
+      const assaultApproach = assault && !assaultActive && waveIndex === 0 && !!consoleAt &&
+        Math.hypot(player.transform.x - consoleAt.x, player.transform.z - consoleAt.z) <= finale.holdRadius - 20;
+      if (assault && !assaultActive && !assaultApproach) continue;
+      const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
         if (Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
         // A field crossing meets the same once-only hunting group on its own
-        // lane. No group relocates after admission. The farm set pieces keep
-        // their authored stations though: the pull is capped, so a walking
-        // courier meets a speed-sorted stream from the yard/field rather than
-        // the whole cohort arriving as one wall on her lane.
-        const flank = group.id === 'depot-alpha' ? 8 : 0;
-        const pull = Math.abs(player.transform.z - group.at[1]) > 15 ? player.transform.z - group.at[1] : 0;
-        const capped = ['farmhouse-defense', 'shed-field-crossing', 'depot-alpha'].includes(group.id);
-        lanes[group.id] = (capped ? Math.max(-15, Math.min(15, pull)) : pull) + flank;
+        // lane. No group relocates after admission; a paced wave restages on
+        // the courier's current lane at its own gate below.
+        lanes[group.id] = this.lanePull(group, player, paced);
       }
       // A 30 s wave period, at most 5 s of admission, then 25 s with no new arrivals.
       // If a wave is still alive, postpone the next one until it has been cleared plus an 8 s breather.
+      // The pre-staged opening wave can spend itself against her approach (every slot admitted,
+      // no survivor): the frozen pre-charge clock would then hold the dead wave's whole 30 s period
+      // past the announcement, so the spent wave hands the console's opening beat to the next wave —
+      // the charge's first ticks admit the fresh cohort at the press itself.
       const clock = this.state.assaultTicks ?? 0;
+      if (assault && !assaultActive && (this.state.assaultWave ?? 0) === 0 && this.state.nextAssaultAt === 1800 &&
+        cureEncounterSlots(group, ai.director.tier).every(slot => this.state.spawned[`${slot.key}:0`] !== undefined) &&
+        !Object.entries(this.state.spawned).some(([key, id]) => key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0)) {
+        this.state.assaultWave = 1;
+        this.state.nextAssaultAt = 1800;
+      }
       if (assault && clock >= (this.state.nextAssaultAt ?? 0)) {
         const living = Object.entries(this.state.spawned).filter(([key, id]) => key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0);
         if (living.length) this.state.nextAssaultAt = clock + 480;
@@ -197,8 +263,45 @@ export class LevelTenEncounters {
       if (assault && clock < (this.state.nextAssaultAt ?? 1800) - 1800) continue;
       if (assault && clock - ((this.state.nextAssaultAt ?? 1800) - 1800) >= 300) continue;
       const wave = assault ? this.state.assaultWave ?? 0 : 0;
-      const slots = cureEncounterSlots(group, ai.director.tier);
-      for (const slot of slots) {
+      let slots = cureEncounterSlots(group, ai.director.tier);
+      if (paced && group.id === 'depot-alpha') {
+        // The ambush's Alpha leads the yard: first across the gap while the
+        // courier still approaches, instead of trailing the last wave into
+        // whatever else the road has reached by then.
+        slots = [...slots.filter(slot => slot.archetype === 'infected.alpha'), ...slots.filter(slot => slot.archetype !== 'infected.alpha')];
+      }
+      let admission = slots;
+      if (paced) {
+        // The wave gate: the courier's own progress through the release band
+        // is the wave clock — each wave opens as she advances another equal
+        // share of it (or once the cohort is nearly cleared), so a running
+        // courier meets overlapping waves and a walking one meets them one
+        // bounded fight at a time. Every open wave restages on her current
+        // lane, so it arrives head-on in view rather than roaming back to the
+        // release-time spot. A courier who leaves the band dumps the remainder.
+        const index = pacedWaves[group.id] ?? 0;
+        const slice = slots.slice(index * pacedWaveSize, (index + 1) * pacedWaveSize);
+        admission = slice;
+        const admitted = (slot: { key: string }) => this.state.spawned[`${slot.key}:0`] !== undefined;
+        const living = slots.filter(slot => {
+          const id = this.state.spawned[`${slot.key}:0`];
+          return id !== undefined && id !== RETIRED_SLOT && (w.entities.get(id)?.health.current ?? 0) > 0;
+        }).length;
+        // The depot ambush runs on a tighter clock: its yard sits 60–120 m off
+        // her road, so the crossing itself paces the arrivals (as the s161
+        // full dump proved); holding its second wave for the far end of the
+        // band lets it spawn behind her and wander instead of fighting, which
+        // on seed 3 left the last fight two members short at the cap.
+        const share = (group.id === 'depot-alpha' ? 120 : 240) / Math.ceil(slots.length / pacedWaveSize);
+        const reached = index === 0 || player.transform.x - (group.at[0] - 120) >= index * share;
+        const outpaced = player.transform.x - group.at[0] > 120;
+        if (!slice.length || !outpaced && !(reached || living <= pacedWaveLiving)) admission = [];
+        else if (slice.every(admitted)) {
+          pacedWaves[group.id] = index + 1;
+          admission = [];
+        } else lanes[group.id] = this.lanePull(group, player, true);
+      }
+      for (const slot of admission) {
         const key = `${slot.key}:${wave}`;
         slot.z += lanes[group.id] ?? 0;
         // Keep one journey slot available before the next warning, otherwise
@@ -216,6 +319,39 @@ export class LevelTenEncounters {
         if (assault) break; // Bounded actor setup per director tick.
       }
     }
+    // Paced waves keep tracking the courier's current position instead of the
+    // release-time spot they were pressed at: while she is still at the set
+    // piece's ground, every living member is re-sent at her live position, so
+    // a walking courier meets them as a fight and they never roam off to their
+    // search origins. Once she has moved on, the ordinary disengage rule owns
+    // the survivors again (the finale assault keeps its own authored pressure,
+    // and a member far behind her is left to that rule rather than re-sent).
+    if (!assaultActive && w.tick >= (this.state.pacedPress ?? 0)) {
+      this.state.pacedPress = w.tick + 300;
+      for (const group of [...cureEncounters, ...curePaceEncounters]) {
+        if (!(pacedSetPieces as readonly string[]).includes(group.id) || !released.includes(group.id) ||
+            player.transform.x - group.at[0] > 60) continue;
+        for (const slot of cureEncounterSlots(group, ai.director.tier)) {
+          const id = this.state.spawned[`${slot.key}:0`];
+          const e = id === undefined || id === RETIRED_SLOT ? undefined : w.entities.get(id);
+          if (!e || e.health.current <= 0 || e.infected!.pursuit || e.transform.x < player.transform.x - 24) continue;
+          if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 140) ai.press(e.id, 1, w.tick + 600);
+        }
+      }
+    }
+  }
+  /** The lane a group's members stage on: the courier's current lane, pulled whole for paced waves and capped for one-shot pace groups. */
+  private lanePull(group: CureEncounter, player: EntitySnapshot, paced: boolean): number {
+    const flank = group.id === 'depot-alpha' ? 8 : 0;
+    const pull = Math.abs(player.transform.z - group.at[1]) > 15 ? player.transform.z - group.at[1] : 0;
+    // Paced waves stage uncapped on the courier's current lane: each wave of
+    // five meets her head-on in view rather than as the one-wall arrival the
+    // s161 cap held back (the wave gate now bounds the arrivals instead). The
+    // depot ambush is the exception: its yard sits 60–90 m off her road, so
+    // its cohort crosses that gap as a chase instead of teleporting onto her
+    // lane together with its Alpha.
+    const capped = paced ? group.id === 'depot-alpha' : group.id === 'farmhouse-defense' || group.id === 'shed-field-crossing' || group.id === 'depot-alpha';
+    return (capped ? Math.max(-15, Math.min(15, pull)) : pull) + flank;
   }
   /** A rage roar requests the next escort wave through the same cap/breather gate. */
   callWave(): void {
