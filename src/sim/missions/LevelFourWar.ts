@@ -1328,6 +1328,16 @@ export class LevelFourWar {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'war') return;
     s.phase = 'collapse'; s.lineBreakAt = tick; s.lineCause = cause; s.markerAt = tick; s.collapseWaveAt = tick + ticks(4);
+    // The collapse director stops updating at the phase change. An Alpha still holding
+    // an authored crossing leg outside the wire would keep that frozen waypoint for the
+    // rest of the level and park at the mouth once it rises (a downed Alpha recovers
+    // later at full health); release the leg to ordinary collapse combat — the wall
+    // itself stops blocking anyone at "Fall back!".
+    for (const job of s.director.alphaJobs) {
+      const e = world.entities.get(job.alphaId), b = e?.infected;
+      if (!e || !b || e.health.current <= 0 && (b.recoverAt ?? -1) < 0 || e.hidden || !this.outsidePerimeter(e.transform)) continue;
+      delete b.scripted; job.stage = 'done';
+    }
     s.killsAtBreak = s.kills.player + s.kills.soldiers + s.kills.armedCivilians + s.kills.unarmedCivilians + s.kills.heli + s.kills.tank + s.kills.other;
     s.infectedAtBreak = this.infected.active.filter(e => e.health.current > 0).length; s.soldiersAtBreak = this.liveSoldiers().length;
     world.events.emit({ type: 'l4.lineBreaks', tick, cause });
