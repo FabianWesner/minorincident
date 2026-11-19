@@ -57,6 +57,12 @@ export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignS
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
   return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
 }
+/** Explicit level selection is a story replay; clear endgame world state that suppresses authored infection beats. */
+export function resetCampaignStoryForReplay(save:CampaignSave):void {
+  delete save.cureResume;
+  delete save.l9Crash;
+  if (save.world?.infectionCleared) delete save.world.infectionCleared;
+}
 export function rackSize(level:number):number {return level===10?cureRackCapacity:level<2?1:level<4?2:level<7?3:4;}
 /** A carried rack may exceed the level's size by the weapons picked up on the way (Pickups adds a slot per pickup); bounded for saves. */
 export const carriedRackMax=6;
