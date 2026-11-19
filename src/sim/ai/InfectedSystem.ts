@@ -2133,7 +2133,9 @@ export class InfectedSystem {
     if (this.wideNav && nav === this.wideNav && (breachApproach || Math.hypot(target.x - this.world.entities.get(1)!.transform.x, target.z - this.world.entities.get(1)!.transform.z) < 2)) {
       const gap = Math.hypot(e.transform.x - target.x, e.transform.z - target.z), mark = b.wideStuck;
       if (gap > 10 || !mark || gap < mark.d - .5) b.wideStuck = { d: gap, at: this.world.tick };
-      else if (this.world.tick - mark.at >= 240 && gap > e.combat!.radius + 1.5) { b.wideFallbackUntil = this.world.tick + 600; b.wideStuck = { d: gap, at: this.world.tick }; b.path.length = 0; b.goal = -1; }
+      // An open-breach waypoint is a walking destination, so the usual combat
+      // clearance can leave a wide Alpha parked outside the opening.
+      else if (this.world.tick - mark.at >= 240 && gap > (breachApproach ? .6 : e.combat!.radius + 1.5)) { b.wideFallbackUntil = this.world.tick + 600; b.wideStuck = { d: gap, at: this.world.tick }; b.path.length = 0; b.goal = -1; }
     }
     // Only a courier chase can share its flow field; soldier and investigation goals need their own route.
     // Courier-assigned L4 breach walkers have the same destination as the
