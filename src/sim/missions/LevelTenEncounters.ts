@@ -99,7 +99,9 @@ export class LevelTenEncounters {
   /** Ordinary off-camera arrivals replace pressure lost to outpaced hunters; installed-cure retries belong to the finale. */
   private pressure(tick: number): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
-    if (tick % 300 !== 0 || tick - (this.state.pressureAttackAt ?? 0) < 900 || !ai || !chunks ||
+    // The crash opening has its own authored encounters; replacement rows
+    // begin after its first minute, when the normal population pacing resumes.
+    if (tick <= 3600 || tick % 300 !== 0 || tick - (this.state.pressureAttackAt ?? 0) < 900 || !ai || !chunks ||
         mission?.state.phase !== 'playing' || mission.state.states['cure-installed'] || w.storyLock) return;
     const player = w.entities.get(1)!;
     if (player.health.current <= 0) return;
@@ -303,6 +305,10 @@ export class LevelTenEncounters {
       }
       for (const slot of admission) {
         const key = `${slot.key}:${wave}`;
+        // Keep recoverable downs in the first-minute allowance: they can
+        // stand back up, and do not free a slot for a second opening actor.
+        if (w.tick <= 3600 && (slot.archetype === 'infected.dog' || slot.archetype === 'infected.alpha' ||
+          ai.active.filter(e => !e.infected?.pursuit && (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length >= 8)) continue;
         slot.z += lanes[group.id] ?? 0;
         // Keep one journey slot available before the next warning, otherwise
         // old hunters fill the cap and every later authored ambush is starved.
