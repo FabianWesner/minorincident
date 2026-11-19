@@ -694,7 +694,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['ordinary route concurrent bound', 'infected move before first widest-frame entry'].map(clause => ({ clause, policy: 'complete' })),
     { clause: 'observed quiet stretches and authored scare cadence', policy: 'complete' },
   ]],
-  ['L10-05', ['crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', 'six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
+  ['L10-05', ['crash-site machete is a visible, walkable one-time pickup within ~6 m of the unarmed start', 'inventory alone does not release enemies at the crash start', 'six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L10-06', [
     ...['native dog speed ratio', 'actual dog hit damage/reach', 'actual dog telegraph duration', 'dog cooldown between hit and next windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...[.5, 1.5].map(zoom => ({ clause: `reviewed living infected dog distinct from corgi at zoom${zoom}`, policy: 'real-input-webgl2' })),

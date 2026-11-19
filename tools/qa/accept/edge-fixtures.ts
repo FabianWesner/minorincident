@@ -13,6 +13,7 @@ import { fistsOnlyRoute, fistsCompletionPass } from './fix53-fists';
 import { cure } from '../../../src/levels/L10/district';
 import { cureWeaponPickups } from '../../../src/levels/L10/encounters';
 import { emptyInput } from '../../../src/input/InputFrame';
+import { transactArsenal } from '../../../src/sim/progression/arsenal';
 
 type Add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined) => void;
 
@@ -291,5 +292,24 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
           initialHealth === player.health.current && world.missions!.state.states['found-barn-machete'] === true &&
           weapons.includes('weapon.machete') && pickupCopies === 0 && cureWeaponPickups.filter(pickup => pickup.action === 'weapon.machete').length === 1);
     } finally { world.dispose(); }
+    const inventoryRuns: { added: string[]; censuses: string[]; spawned: Record<string, number> }[] = [];
+    for (const added of [[], cureWeaponPickups.map(pickup => pickup.action)]) {
+      const save = preset('L10-default'); save.settings.quality = tier;
+      const comparison = await loadLevel('L10', 1, save, 0, { quality: tier });
+      try {
+        if (added.length) transactArsenal(comparison, [...added], []);
+        const censuses: string[] = [];
+        for (let tick = 0; tick < 240; tick++) {
+          comparison.applyInput(emptyInput(), 'keyboard'); comparison.update();
+          censuses.push(JSON.stringify(comparison.infected!.active.map(e => ({ id: e.id, archetype: e.archetype, x: e.transform.x, z: e.transform.z, hp: e.health.current }))));
+        }
+        inventoryRuns.push({ added: [...added], censuses, spawned: { ...comparison.l10Encounters!.state.spawned } });
+      } finally { comparison.dispose(); }
+    }
+    const same = JSON.stringify(inventoryRuns[0].censuses) === JSON.stringify(inventoryRuns[1].censuses) &&
+      JSON.stringify(inventoryRuns[0].spawned) === JSON.stringify(inventoryRuns[1].spawned);
+    observations['L10/inventory-only-opening'] = { ticks: 240, runs: inventoryRuns.map(({ added, spawned }) => ({ added, spawned })), identical: same };
+    add('L10-05', 'inventory alone does not release enemies at the crash start', observations['L10/inventory-only-opening'],
+      'same seed and stationary input at the crash start, with or without all six pickup weapons: identical 240-tick infected census and encounter ledger', same);
   }
 }
