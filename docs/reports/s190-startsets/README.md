@@ -22,3 +22,7 @@ No encounter stats, zombie behavior, corpse persistence, or gameplay targets wer
 ## Follow-up
 
 Saved ability slots now survive the authored weapon reset, including the corgi lure. The focused progression suite, typecheck and lint pass after this change. The requested L10 empty start remains open: changing the table to empty causes the existing `cure-crash` checkpoint validation to fail because the current L10 save contract requires the axe. Lane s176 must provide its crash-site machete/save contract before this can be completed without breaking checkpoint saves. Threat flags and the remote suite remain open as above.
+
+## Acceptance and remote follow-up
+
+Updated G-16, L7-02, L8-01 and L9-08 to cite the 2026-11-19 authored sets. Corrected the L3-11 two-of-three test fixture to use 41/min as the failing seed under the existing 40/min PO ceiling; focused gate-tools passes (8 tests). The remote suite ran 26 passing files and one failing file in 198.9 s: that failure was the stale fixture. After the fix, two unchanged remote attempts both exceeded 240 s under shared runner load; both showed combat and L4 contact test failures before the watchdog ended the runs, with no final assertion detail. The progression file passed in both. The complete remote gate remains open.

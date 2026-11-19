@@ -124,7 +124,7 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   expect(focusedCriteria([l3([4, 2, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('PASS');
   expect(focusedCriteria([l3([3, 0, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('FAIL');
   const seeded = l3([3, 0, 0]);
-  seeded.l3Army!.seeds.forEach((row, i) => { row.attacksPerMinute = [30, 5, 6][i]; });
+  seeded.l3Army!.seeds.forEach((row, i) => { row.attacksPerMinute = [41, 5, 6][i]; }); // PO 2026-11-19 ceiling is 40/min
   seeded.l3SurvivalSeeds = [1, 2, 3].map(seed => ({ seed, valid: true,
     s1: { completed: true, officerHits: 1, damage: seed === 1 ? 100 : 11 },
     density: { near30: seed === 1 ? [2, 1, 3] : [1, 2, 3], maxConcurrent: 100, cap: 100 } }));
