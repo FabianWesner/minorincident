@@ -35,3 +35,7 @@ The HIGH zoom-1 headless playtest ran under the browser lock on port 5125, but i
 ## Changed acceptance rows
 
 `docs/qa/level-acceptance.md` L7-04 / L7-05 and Epic 29 AC08 / AC19 record the PO quote, revised population, conditional cap ceiling and the requirement for at least three road-connected arrival directions within five seconds per street/junction fight. Existing unrelated targets are retained.
+
+## Acceptance report repair
+
+The report inventory now recognizes G-28 and G-29 as new, historically unqualified rows. A fresh HIGH complete acceptance run assembled successfully but returned exit 1: current G-13 / L7-09 follower pace flags include survivor 107, and L7-01 lacks a passing physical pickup/frame gate. Ten L7 rows remain incomplete. These results require follow-up and are not a passing acceptance report.
