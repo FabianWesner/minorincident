@@ -79,18 +79,19 @@ async function checkFlameCluster(): Promise<void> {
 }
 
 async function checkBlastClusters(): Promise<void> {
-  // Compare the two actual splash resolvers at their centres and at equal fractions of their radii.
-  for (const fraction of [0, .5, .9]) {
+  // Compare the actual splash resolvers at equal distances inside the smaller blast.
+  for (const distance of [0, 1, 3, 4.4, 4.6]) {
     const losses: number[] = [];
     for (const id of ['weapon.rocket-launcher', 'weapon.molotov']) {
-      const w = await arena(), def = rosterAction(id), radius = def.splash!.radius;
+      const w = await arena(), def = rosterAction(id);
       walls(w).length = 0;
-      const target = dummy(w, 10 + radius * fraction, 0, 1000);
+      const target = dummy(w, 10 + distance, 0, 1000);
       const tick = w.tick;
       w.combat!['splash']({ id: 1, sourceId: 1, side: 'RIGHT', def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, { x: 10, z: 0 });
       losses.push(1000 - health(w, target));
     }
-    expect(losses[1]).toBeCloseTo(losses[0] * .75, 5);
+    if (distance > 4.5) { expect(losses[0]).toBeGreaterThan(0); expect(losses[1]).toBe(0); }
+    else expect(losses[1]).toBeCloseTo(losses[0] * .75, 5);
   }
   for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
     const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);

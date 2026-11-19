@@ -266,7 +266,7 @@ export class Damage {
       const from = { x: target.transform.x, z: target.transform.z };
       if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback, hit.actionId === 'weapon.shotgun' ? 8 : 1);
       if (target.combat && target.faction === 'infected' && (!mega || megaReact || target.health.current === 0)) {
-        const heavy = target.health.current === 0 || !target.infected?.arenaBoss && !mega && ( (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle')));
+        const heavy = target.health.current === 0 || !target.infected?.arenaBoss && !mega && ( (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' && hit.actionId !== 'weapon.molotov' || hit.type === 'vehicle')));
         const downed = target.combat.reaction?.heavy && target.combat.reaction.until > this.world.tick;
         const previous = target.combat.reaction?.index ?? target.id % 3;
         if (downed && target.health.current === 0) target.combat.reaction!.groundDeath = true;

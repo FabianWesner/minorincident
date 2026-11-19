@@ -12,7 +12,7 @@ import { fireTarget } from './friendlyFire';
 import { AimAssist } from './AimAssist';
 import { Status } from './Status';
 import { ticks } from '../../data/actions/schema';
-import { actionExplosions } from '../../data/explosions';
+import { actionExplosions, blastDamage, explosionDef } from '../../data/explosions';
 import { action } from '../../data/actions/catalog';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot } from '../world/types';
@@ -162,8 +162,9 @@ export class Combat {
       return;
     }
     for (const target of this.query.splash(position, splash.radius)) {
-      const distance = Math.hypot(target.transform.x - position.x, target.transform.z - position.z, target.transform.y - 0.7);
-      const falloff = Math.max(0, 1 - splash.falloff * distance / splash.radius);
+      const distance = def.id === 'weapon.molotov' ? Math.hypot(target.transform.x - position.x, target.transform.z - position.z) : Math.hypot(target.transform.x - position.x, target.transform.z - position.z, target.transform.y - 0.7);
+      const molotov = def.id === 'weapon.molotov' ? explosionDef('explosion.molotov') : null;
+      const falloff = molotov ? blastDamage(molotov, distance, splash.radius) / molotov.damage : Math.max(0, 1 - splash.falloff * distance / splash.radius);
       if (def.category === 'ability' && target.faction !== 'infected') continue;
       this.hit(attack, target, position, def.category === 'ability' ? 'melee' : 'explosive', falloff);
     }

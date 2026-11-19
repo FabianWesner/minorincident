@@ -693,4 +693,9 @@ async function checkPipeBombMega(): Promise<void> {
   w.combat!['splash']({ id: tick + 2, sourceId: 1, side: 'RIGHT', def, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, boss.transform);
   expect(boss.combat!.reaction?.heavy).toBe(true);
   expect(boss.combat!.reaction!.until - tick).toBe(150);
+  const ordinary = spawn(w, 'runner', -5, 5); ordinary.health.current = ordinary.health.max = 1000;
+  const molotov = action('weapon.molotov');
+  w.combat!['splash']({ id: tick + 3, sourceId: 1, side: 'RIGHT', def: molotov, combo: 0, inPlace: false, aim: { x: 1, z: 0 }, aimPoint: null, started: tick, activeAt: tick, recoveryAt: tick, endsAt: tick, resolved: true, hit: new Set() }, ordinary.transform);
+  expect(ordinary.health.current).toBeLessThan(1000);
+  expect(ordinary.combat!.reaction?.heavy).toBe(false);
 }

@@ -5,12 +5,12 @@ export const blastClasses = ['small', 'medium', 'large', 'mega', 'toxic', 'incen
 export type BlastClass = typeof blastClasses[number];
 
 /** Sim side of a blast. Distances in metres, durations in sim ticks (60 Hz) unless named seconds.
- * Damage curve (horizontal distance d, line of sight required): `damage × (1 − falloff × d / radius)` for d ≤ radius.
+ * Damage curve (horizontal distance d, line of sight required): `damage × (1 − falloff × d / (radius × falloffRadiusScale))` for d ≤ radius; the scale defaults to 1.
  * Impulse (Bruno Simon folio-2025 Explosions.js, MIT): direction = horizontal unit × 1/upward + up, normalised;
  * velocity change = impulse × linear falloff (1 at ≤ 1 m … 0 at radius) × mass response; applied one tick later. */
 export interface ExplosionDef {
   id: string; class: BlastClass; fx: string;
-  radius: number; damage: number; falloff: number;
+  radius: number; damage: number; falloff: number; falloffRadiusScale?: number;
   /** Peak velocity change (m/s) for a reference-mass body at the centre. */
   impulse: number;
   /** Ratio of vertical to horizontal impulse; Bruno uses 2 (0.5 out, 1 up). */
@@ -61,7 +61,7 @@ export const explosionDefs: Readonly<Record<string, ExplosionDef>> = Object.from
   // Throwables leave scorch and smoke only: aftermath fires would change the E05/E06 TTK bands.
   fromAction('explosion.pipe-bomb', 'weapon.pipe-bomb', 'small', 7),
   fromAction('explosion.rocket', 'weapon.rocket-launcher', 'medium', 8, { stagger: .8 }),
-  fromAction('explosion.molotov', 'weapon.molotov', 'incendiary', 0, { knockback: 0, stagger: 0 }),
+  fromAction('explosion.molotov', 'weapon.molotov', 'incendiary', 0, { knockback: 0, stagger: 0, falloffRadiusScale: 4 / 3 }),
   def('explosion.toxic', 'toxic', 6, 0, 1, 0, { knockback: 0, stagger: 0, gas: { kind: 'toxic', seconds: 12 } }),
   // E11 propane/barrel retain their tested 100 × (r − d) / r curve and 18-tick (0.3 s) chain fuse.
   def('explosion.propane', 'medium', 5, 100, 1, 8, { fires: { count: 2, radius: 1.1, seconds: 14, spread: 1 } }),
@@ -111,7 +111,7 @@ export function validateExplosions(defs: Readonly<Record<string, ExplosionDef>> 
   for (const [id, d] of Object.entries(defs)) {
     if (d.id !== id || !blastClasses.includes(d.class)) throw new Error(`Invalid explosion identity ${id}`);
     if (!presets[d.fx]) throw new Error(`Explosion ${id} references missing preset ${d.fx}`);
-    if (!positive(d.radius) || !nonNegative(d.damage) || !(d.falloff >= 0 && d.falloff <= 1) || !nonNegative(d.impulse) || !positive(d.upward)) throw new Error(`Invalid explosion curve ${id}`);
+    if (!positive(d.radius) || !nonNegative(d.damage) || !(d.falloff >= 0 && d.falloff <= 1) || (d.falloffRadiusScale !== undefined && !positive(d.falloffRadiusScale)) || !nonNegative(d.impulse) || !positive(d.upward)) throw new Error(`Invalid explosion curve ${id}`);
     if (![d.knockback, d.stagger, d.barricade, d.vehicle].every(nonNegative) || !Number.isInteger(d.chainDelay) || d.chainDelay < 9 || d.chainDelay > 18) throw new Error(`Invalid explosion response ${id}`);
     if (!Number.isInteger(d.fires.count) || d.fires.count < 0 || d.fires.count > 8 || !positive(d.fires.radius) || !positive(d.fires.seconds) || !Number.isInteger(d.fires.spread) || d.fires.spread < 0) throw new Error(`Invalid explosion fires ${id}`);
     if (d.slowMo && (!(d.slowMo.scale > 0 && d.slowMo.scale < 1) || !positive(d.slowMo.seconds) || d.slowMo.seconds > 1 || !positive(d.slowMo.within))) throw new Error(`Invalid explosion slow motion ${id}`);
@@ -135,5 +135,6 @@ export function validateExplosions(defs: Readonly<Record<string, ExplosionDef>> 
 /** Sim curve shared by blasts and tests: damage at horizontal distance d. */
 export function blastDamage(d: ExplosionDef, distance: number, radius = d.radius): number {
   // (r − f·d) / r keeps E11's exact 100 × (r − d) / r values (no 1 − d/r rounding below a hazard's HP).
-  return distance > radius ? 0 : d.damage * Math.max(0, radius - d.falloff * distance) / radius;
+  const falloffRadius = radius * (d.falloffRadiusScale ?? 1);
+  return distance > radius ? 0 : d.damage * Math.max(0, falloffRadius - d.falloff * distance) / falloffRadius;
 }
