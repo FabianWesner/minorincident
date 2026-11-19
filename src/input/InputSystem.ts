@@ -159,6 +159,10 @@ export class InputSystem implements Lifecycle {
   }
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
+    if (code === 'KeyQ') {
+      if (held && !this.drivingContext && !this.mountedGunContext) this.selectors.push({ direction: this.shift() ? -1 : 1, active: true });
+      return;
+    }
     if (held && /^Digit[0-9]$/.test(code)) {
       const key = code === 'Digit0' ? 10 : Number(code.slice(-1));
       if (this.shift()) { if (key <= 3) this.selectedSlot = { side: 'RIGHT', index: key - 1 }; }

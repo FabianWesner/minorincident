@@ -90,7 +90,10 @@ test('keyboard aim (Q-196): WASD/arrows follow the screen at every camera yaw; k
   c.pointerUp();
   c.key('Space', true); const space = c.sample();
   expect(space.activeAttack).toBe(true); expect(space.aimSource).toBe('assist'); expect(space.aim).toBeNull(); expect(space.move.x).toBeLessThan(0);
-  c.key('KeyQ', true); expect(c.sample().selectorActive).toBe(true); c.key('KeyQ', false);
+  c.key('KeyQ', true); expect(c.sample().selector).toBe(1); c.key('KeyQ', false);
+  c.key('ShiftLeft', true); c.key('KeyQ', true); const reverse = c.sample();
+  expect(reverse.selector).toBe(-1); expect(reverse.selectorActive).toBe(true);
+  c.key('KeyQ', false); c.key('ShiftLeft', false);
   c.pointer(1200, 350); expect(c.sample().aimSource).toBe('assist');
   const recording = Recorder.parse(Recorder.serialize(c.input.recorder.stop()));
   const legacy = Recorder.parse(JSON.stringify({ ...recording, frames: [{ ...recording.frames[0], moveTarget: { x: 20, z: 20 }, attackTarget: { id: 3, side: 'LEFT' }, attackInPlace: true, pointerGround: true, pointerTarget: true }] }));
@@ -158,6 +161,8 @@ test('bindings: every action rebinds and persists without conflicts; broken or b
   const old = { ...defaultBindings, right: ['Mouse2', 'KeyK'], selector: ['KeyQ', 'KeyL'] };
   const migrated = new Bindings({ getItem: () => JSON.stringify({ version: 1, bindings: old }), setItem() {} });
   expect(migrated.action('Mouse2')).toBe('selector'); expect(migrated.action('KeyK')).toBe('right');
+  expect(migrated.action('KeyQ')).toBeNull(); expect(migrated.action('KeyL')).toBe('selector');
+  expect(migrated.rebind('selector', 'KeyQ').ok).toBe(false);
 });
 
 test('weapon selection: one fixed order drives number keys, cycling and touch slots, and survives a rack rebuild', () => {
