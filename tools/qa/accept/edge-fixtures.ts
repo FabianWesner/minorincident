@@ -311,5 +311,26 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
     observations['L10/inventory-only-opening'] = { ticks: 240, runs: inventoryRuns.map(({ added, spawned }) => ({ added, spawned })), identical: same };
     add('L10-05', 'inventory alone does not release enemies at the crash start', observations['L10/inventory-only-opening'],
       'same seed and stationary input at the crash start, with or without all six pickup weapons: identical 240-tick infected census and encounter ledger', same);
+    const routeSave = preset('L10-default'); routeSave.settings.quality = tier;
+    const finds: { action: string; tick: number; retained: boolean }[] = [];
+    let storyOnly = false;
+    const route = await runLevel('L10', 'complete', 1, undefined, 'auto', routeSave, undefined, 0, {
+      quality: tier,
+      beforeBegin: routeWorld => {
+        storyOnly = routeWorld.missions!.def.steps.every(step => !/\b(machete|rifle|molotov|nail.?gun|flashbang|weapon)\b/i.test(step.text));
+        routeWorld.events.on('pickup.collected', event => {
+          if (event.type !== 'pickup.collected' || !('actionId' in event) || event.pickupId <= 0 || !cureWeaponPickups.some(pickup => pickup.action === event.actionId && routeWorld.l10Encounters?.state.weapons?.[pickup.id] === event.pickupId)) return;
+          const racks = routeWorld.combat!.runner.loadout.state;
+          finds.push({ action: event.actionId, tick: event.tick, retained: [...racks.LEFT.rack, ...racks.RIGHT.rack].some(slot => slot.id === event.actionId) });
+        });
+      },
+    });
+    const expected = cureWeaponPickups.map(pickup => pickup.action);
+    const completeFinds = expected.every(action => finds.some(find => find.action === action && find.retained));
+    const routeValue = { run: route, storyOnly, expected, finds };
+    observations['L10/story-pickup-route'] = routeValue;
+    add('L10-05', 'six retained approach pickups and story-only objectives', routeValue,
+      'ordinary complete route collects each of six physical story finds into a rack; objective text names no weapon',
+      route.completed ? storyOnly && completeFinds : undefined);
   }
 }
