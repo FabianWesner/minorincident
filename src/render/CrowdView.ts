@@ -139,6 +139,7 @@ export class CrowdView extends Group {
   private readonly staticCorpses = new StaticCorpses();
   private sharedDogCoats = false;
   private readonly dogCoatTints = [new Color(0, 0, 0), new Color(1, 0, 0)];
+  private readonly ashTint = new Color('#171713');
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
   private readonly corpseClips = new Map<string, BakedBatch['clip']>();
   private entityRevision = -1;
@@ -840,6 +841,7 @@ export class CrowdView extends Group {
       // visible after the sim's strike tick (shipped atlases older than the move set keep the shared clips).
       const alphaMove = !heavy && !e.infectionRise && batch.poses.clip.frames >= alphaCrowdClips.length * framesPerClip ? this.alphaMoves.sample(e, renderTick, batch.windup, motion.speed) : undefined;
       if (alphaMove) clip = alphaMove.clip;
+      if (e.health.current > 0 && e.combat.statuses.some(status => status.kind === 'pinned' && status.expires > this.world.tick) && motion.speed <= .06) clip = Math.floor(renderTick / 14) % 2 ? 'stagger-left' : 'stagger-right';
       const heavyGait = mega && !heavy && !specialAttack && b.state !== 'attack' && b.state !== 'dead';
       const megaRun = Math.max(0, Math.min(1, (motion.speed - 1.5) / 1.5));
       const megaRate = 1.05 + (megaCycleRate - 1.05) * megaRun;
@@ -851,7 +853,7 @@ export class CrowdView extends Group {
         : zebraTell ? .5 * Math.min(1, (renderTick - specialAttack!.startTick) / Math.max(1, specialAttack!.activeTick - specialAttack!.startTick)) * ((renderTick / 9 | 0) % 2 ? 1 : .6)
         : species === 'zebra' && clip === 'zebra-stampede' && !specialAttack ? .5 + (this.gait.sample(e.id, gaitDistance, 'corgi-gallop', batch.strideScale, motion.speed) % 1) / 3 : -1;
       let frame = alphaCrowdClips.indexOf(clip) * framesPerClip + (animalPhase >= 0 ? animalPhase : phase) * (framesPerClip - 1);
-      const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
+      const tint = e.ashDeath ? this.ashTint : batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
       const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
@@ -886,7 +888,7 @@ export class CrowdView extends Group {
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         // r32: flying flamingos and leaping animals cast a contact shadow on the ground under them (reads height top-down).
         if (animalLift > .3 && this.shadows.count < 350) { const g = this.world.districts?.groundHeight(x, z) ?? 0; this.shadowMatrix.makeTranslation(x, g + .02, z); this.shadows.setMatrixAt(this.shadows.count++, this.shadowMatrix); this.shadows.instanceMatrix.needsUpdate = true; }
-        if (e.corpse) {
+        if (e.corpse || e.ashDeath) {
           // Start with the intact corpse source; ordinary limb severance is
           // applied below, while the Mega keeps its complete creature outline.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
@@ -898,6 +900,11 @@ export class CrowdView extends Group {
           // blast/gunshot dismemberment lives in the gib VFX. The Mega keeps its complete creature silhouette (fix72-c, L10-12).
           const mask = this.goreEnabled && b.legLost && !isMega(e) ? 4 : 0;
           const hidden = crowdLimbParts(batch.animal).flatMap((names, bit) => mask & 1 << bit ? names : []);
+          if (e.ashDeath) {
+            const age = Math.max(0, (this.world.tick - e.ashDeath.at) / 60), scale = age < 1.5 ? Math.max(.08, 1 - age / 1.5) : .08;
+            this.transform.scale(this.silhouette.set(scale, Math.max(.08, scale * .45), scale));
+            this.transform.elements[13] = (this.world.districts?.groundHeight(x, z) ?? 0) + .025;
+          }
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), hidden, !batch.animal ? look : undefined, near);
           this.k9Vest?.place(e, batch.poses, frame, [0, 1], this.transform);
           continue;

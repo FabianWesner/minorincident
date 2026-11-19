@@ -15,6 +15,7 @@ import { l8BossArenas, l8Route, inRect } from '../data/l8Bosses';
 import type { Game } from '../Game';
 import { weaponKey } from '../data/weaponKeys';
 import { action } from '../data/actions/catalog';
+import { weaponRoles } from '../data/weaponRoles';
 import { actionIconUrl } from '../assets/icons';
 import { button, node, text as domText, setHidden, attribute, style } from './dom';
 import { Onboarding } from './Onboarding';
@@ -440,7 +441,7 @@ export class Hud {
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
         const shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q';
-        item.title = `${label(entry.id)}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
+        item.title = `${label(entry.id)} · ${weaponRoles[entry.id] ?? ''}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
         item.type = 'button'; item.tabIndex = -1; item.disabled = key === undefined;
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
@@ -457,7 +458,7 @@ export class Hud {
       const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
       attribute(item, 'data-empty', String(empty));
       const key = weaponKey(id), shortcut = key === undefined ? '' : key <= 9 ? String(key) : key === 10 ? '0' : 'Q (cycle)';
-      item.title = `${label(id)}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
+      item.title = `${label(id)} · ${weaponRoles[id] ?? ''}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
       item.setAttribute('aria-label', item.title);
     }
     setHidden(this.weaponRack, !entries.length);
@@ -474,7 +475,7 @@ export class Hud {
       const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until
         ? this.emptyWeapon.tooClose ? 'Too close!' : `${label(this.emptyWeapon.id)} · Empty`
         : null;
-      text(this.weapon.hint, emptyCue ?? shown.name); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
+      text(this.weapon.hint, emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot, RMB or Q to switch'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));

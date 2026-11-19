@@ -14,6 +14,8 @@ export interface EntitySnapshot {
   /** Persistent death pose: no brain or collision obstacle; only explicit
    * throws and cosmetic blast flights move its retained transform. */
   corpse?: boolean;
+  /** Fire death animation start; the retained corpse settles into a permanent ash heap. */
+  ashDeath?: { at: number };
   /** A retained death pose in flight; the crowd view follows its actual transform. */
   corpseThrown?: boolean;
   /** Cosmetic fixed-step blast flight; no collider, brain, or contact damage.

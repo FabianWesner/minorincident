@@ -132,7 +132,7 @@ export class Combat {
     this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim }, ...(attack.style ? { style: attack.style } : {}) });
     if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
   }
-  private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1, shotOrigin?: Vec2): void {
+  private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1, shotOrigin?: Vec2, centreShot = false): void {
     if (attack.hit.has(target.id)) return;
     attack.hit.add(target.id);
     if (attack.inPlace && type === 'melee' && target.faction === 'civilian' && target.civilian) {
@@ -144,9 +144,15 @@ export class Combat {
     const def = attack.def, distanceFalloff = def.distanceFalloff;
     if (distanceFalloff) falloff *= 1 - (1 - distanceFalloff.minimum) * Math.max(0, Math.min(1, (distance - distanceFalloff.start) / (distanceFalloff.end - distanceFalloff.start)));
     const alive = target.health.current > 0;
-    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, ...(shotOrigin ? { shotOrigin } : {}), direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(attack.style ? { sweep: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
+    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, ...(shotOrigin ? { shotOrigin } : {}), direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(def.id === 'weapon.shotgun' && centreShot && distance <= 3 ? { knockdownTicks: 90 } : {}), ...(def.id === 'weapon.flamethrower' ? { permanent: true } : {}), ...(attack.style ? { sweep: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
     if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
     if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
+    if (alive && amount > 0 && target.faction === 'infected' && def.id === 'weapon.army-mg') this.status.apply(target, { kind: 'slowed', duration: .5, maxStacks: 1, dps: 0, slow: .2 }, attack.sourceId, def.id, attack.id);
+    if (alive && amount > 0 && target.faction === 'infected' && def.id === 'weapon.nail-gun' && !target.infected?.pursuit && !target.infected?.arenaBoss) {
+      const heavy = ['infected.brute', 'infected.armored', 'infected.riot', 'infected.bloated', 'infected.firefighter', 'infected.hazmat'].includes(target.archetype ?? '');
+      const duration = heavy ? 1 : target.archetype === 'infected.alpha' ? .5 : 2;
+      this.status.apply(target, { kind: 'pinned', duration, maxStacks: 1, dps: 0, slow: 1 }, attack.sourceId, def.id, attack.id);
+    }
   }
   private splash(attack: Attack, position: Vec2 & { y?: number }, directTargetId?: number): void {
     const def = attack.def, splash = def.splash!;
@@ -229,7 +235,8 @@ export class Combat {
         const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, this.pelletDirection, def.range, target, 1/count);
         if (target && !blocked) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
       }
-      for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count);
+      const centreTarget = def.id === 'weapon.shotgun' ? this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range) : undefined;
+      for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count, undefined, target === centreTarget);
       if (def.id === 'weapon.flamethrower') {
         const origin = { ...source.transform, y: source.transform.y + .45 };
         const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
