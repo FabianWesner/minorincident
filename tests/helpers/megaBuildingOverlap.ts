@@ -52,6 +52,25 @@ export async function checkBlockedLinks(): Promise<void> {
   } finally { world.dispose(); }
 }
 
+export async function checkDeferredIntroduction(): Promise<void> {
+  const world = new SimWorld();
+  try {
+    await world.init(); world.loadScenario('horde-arena');
+    const pursuit = installMegaPursuit(world, { introduceTick: null, spawn: { x: 0, z: 0 }, resident: () => true });
+    const wall = { x: 0, z: 0, y: 1, halfX: 10, halfZ: 10, halfY: 1 };
+    world.solids.setBarrier('spawn-test', wall);
+    world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: 123456, blocked: true, wall });
+    const reserved = world.infected!.director.reserved;
+    expect(pursuit.introduce()).toBe(0);
+    expect(pursuit.entity()).toBeNull();
+    expect(world.infected!.director.reserved).toBe(reserved);
+    world.solids.setBarrier('spawn-test', null);
+    world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: 123456, blocked: false, wall });
+    for (let i = 0; i < 61; i++) world.update();
+    expect(pursuit.entity(), 'introduction retries when ground clears').not.toBeNull();
+  } finally { world.dispose(); }
+}
+
 export async function checkUnloadedDetour(): Promise<void> {
   const spawnWorld = await loadLevel('L10', 1);
   try {
@@ -110,6 +129,7 @@ async function checkRouteSolids(): Promise<void> {
 export async function megaBuildingOverlap(): Promise<void> {
   await checkRouteSolids();
   await checkBlockedLinks();
+  await checkDeferredIntroduction();
   await checkUnloadedDetour();
   const clear = await detour(false), blocked = await detour(true);
   expect(blocked.ticks, 'wall costs real time').toBeGreaterThan(clear.ticks + 60);

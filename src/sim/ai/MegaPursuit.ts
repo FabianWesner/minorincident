@@ -128,7 +128,7 @@ export class MegaPursuit {
   blockLink(a: string, b: string): void { this.state.blocked[key(a, b)] = -1; this.state.routeAt = -Infinity; }
   unblockLink(a: string, b: string): void { delete this.state.blocked[key(a, b)]; this.state.routeAt = -Infinity; }
 
-  /** Spawn the one Mega Alpha (idempotent: a second call returns the same entity id). */
+  /** Spawn the one Mega Alpha (idempotent). Returns 0 and retries when no clear position is available. */
   introduce(at?: { x: number; z: number }): number {
     if (this.state.id) return this.state.id;
     const ai = this.world.infected!;
@@ -142,16 +142,18 @@ export class MegaPursuit {
         if (this.resident(candidate.x, candidate.z) && this.grid.clear(candidate.x, candidate.z, this.radius) && !ai.director.inFrame(candidate, 1, true)) { spot = candidate; break; }
       }
     }
-    if (this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
     const resident = this.resident(spot.x, spot.z);
-    const place = resident ? this.clearNear(spot) ?? spot : this.world.chunks ? this.coarseClearNear(spot) ?? spot : spot;
-    const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !resident });
+    const place = resident ? this.clearNear(spot) : this.world.chunks ? this.coarseClearNear(spot) : spot;
+    if (!place) { this.state.introduceTick = this.world.tick + 60; return 0; }
+    if (this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
+    const placedResident = this.resident(place.x, place.z);
+    const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !placedResident });
     const e = this.world.entities.get(id)!, b = e.infected!;
-    b.pursuit = true; b.hidden = !resident; b.speed = this.cruiseSpeed; e.combat!.radius = this.radius;
+    b.pursuit = true; b.hidden = !placedResident; b.speed = this.cruiseSpeed; e.combat!.radius = this.radius;
     e.health.current = e.health.max = megaAlpha.hp;
     const player = this.world.entities.get(1)!.transform;
     e.transform.yaw = -Math.atan2(player.z - place.z, player.x - place.x);
-    Object.assign(this.state, { id, mode: resident ? 'detailed' : 'coarse', introducedAt: this.world.tick, x: place.x, z: place.z, hp: e.health.current, maxHp: e.health.max, routeAt: -Infinity });
+    Object.assign(this.state, { id, mode: placedResident ? 'detailed' : 'coarse', introducedAt: this.world.tick, x: place.x, z: place.z, hp: e.health.current, maxHp: e.health.max, routeAt: -Infinity });
     this.state.stuck = { level: 0, since: -1, sampleAt: this.world.tick, x: place.x, z: place.z, noPath: 0, goal: null };
     return id;
   }
