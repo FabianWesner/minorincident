@@ -1,0 +1,50 @@
+{
+  "slug": "s167-failB",
+  "base": "5edb62ea",
+  "head": "this lane (qa(l5/l4) driver + observer fix)",
+  "remeasured": {
+    "command": "sh tools/remote/run.sh $PWD --pull docs/reports/fix51-verify -- npm run qa:accept -- --level <L4|L5|L6> --skip-browser",
+    "rows": { "L4": "3 fresh failing rows", "L5": "2 fresh failing rows (L5-09 fixed)", "L6": "3 fresh failing rows (all class 3, unchanged values)" },
+    "receiptsNotCommitted": "restored with git checkout -- docs/reports/fix51-verify"
+  },
+  "clauses": {
+    "L4-04": { "class": 3, "clause": "war living infected plus reserved slots and pending turns (high/stationary)", "sheetBefore": 130, "freshAfter": 130, "target": "<=120", "proposed": "<=160 (po-decisions 2026-11-14 HIGH keeps 160/230, batch 99)" },
+    "L4-06": { "class": 3, "clauses": { "low/stationary living infected at first breach": { "sheetBefore": 41, "freshAfter": 41, "target": ">=60" }, "low/stationary sustained plaza living minimum after +45s": { "sheetBefore": 13, "freshAfter": 13, "target": ">=40" }, "high/stationary (passes)": { "freshAfter": { "atFirstBreach": 62, "plazaMin": 46 } } }, "proposed": "judge on HIGH; LOW census informational (po-decisions 2026-11-12 + 2026-11-14)" },
+    "L4-07": {
+      "class": "2 (probe fixed) + 3 (high/complete remainder)",
+      "probeFix": "observer proves the legal unbounded route and counts only routeless infected against the >=90% share",
+      "readings": {
+        "low/complete": { "sheetBefore": 75, "freshAfter": 93.75, "status": "PASS" },
+        "low/stationary": { "sheetBefore": 86.95652173913044, "freshAfter": 100, "status": "PASS" },
+        "high/stationary": { "sheetBefore": 90.9090909090909, "freshAfter": 100, "status": "PASS" },
+        "high/complete": { "sheetBefore": 58.620689655172406, "freshAfter": 58.620689655172406, "status": "FAIL", "class": 3, "worstTick": { "nearby": 29, "routeless": 12, "queuedAt": "north breach funnel", "windupsPerMinute": 218.84 } }
+      },
+      "proposed": "zero STUCK_CHASER + no routeless share >30% sustained beyond the cohort cadence (po-decisions 2026-11-14 horde, batch 99)"
+    },
+    "L5-05": {
+      "class": "2 (reach clause, fixed by the same probe fix) + 3 (attack clauses)",
+      "readings": {
+        "low/complete reachable share": { "sheetBefore": 84.61538461538461, "freshAfter": 100, "status": "PASS", "worstTickBefore": "ids 190/212 tailing through an adjacent yard strip at (23.7-24.7, 44.6), legal detour route; maxBlockedSeconds 0, no lock flags" },
+        "low+high/stationary windups": { "sheetBefore": 0, "freshAfter": 0, "windowSeconds": 228.35, "status": "FAIL", "class": 3, "cause": "passive courier stands inside the PO-mandated quiet first-rescue corridor at the cellar exit (po-decisions 2026-11-10, batch 87 acceptance)" },
+        "high/complete windups per minute": { "sheetBefore": 2.2568174694389302, "freshAfter": 2.2568174694389302, "status": "FAIL", "class": 3 }
+      },
+      "proposed": "measure passive first-attack and >=3 windups/min outside the quiet first-rescue corridor, or a PO-decided corridor expectation"
+    },
+    "L5-08": {
+      "class": "1 (defect, OPEN — not fixed in this box)",
+      "low/complete in-band share": { "sheetBefore": { "31": 92.12, "32": 89.22, "28": 85.26 }, "freshAfter": { "31 (mia)": 91.6, "28 (dale)": 89.85, "30 (okafor)": 98.36, "32 (sam)": 100, "29 (rosa)": 98.76 }, "target": ">=95", "maxBadRunTicks": { "31": 90, "28": 63 } },
+      "high/complete look pace": { "freshAfter": { "seed1 id28 (dale)": 0.8823, "seed3 id28 (dale)": 0.9152 }, "vote": "fails on 2 of 3 seeds", "target": ">=0.95" },
+      "diagnosis": "rear follower falls out of the calm-escort branch at corners/wrecks and rides the 3.8 m/s base pace (dale look median 3.69 vs 4.10 catch-up-inflated group median); needs src/sim/outbreak/Survivors.ts work"
+    },
+    "L5-09": {
+      "class": "2 (FIXED — complete driver never responded to grabbed followers)",
+      "fix": "LevelFiveBot turns back and strikes the grabber inside the in-game free-on-hit window (victims went calm->flee->grabbed without ever cowering; the rescue branch only triggered for cowering followers)",
+      "readings": { "low/complete rescued": { "sheetBefore": 3, "freshAfter": 4, "status": "PASS (target 4-5)" }, "high/complete rescued": { "sheetBefore": 5, "freshAfter": 5, "status": "PASS" } },
+      "beforeEvidence": "okafor (id 30) and mia (id 31) died at full HP 4.6-7.7 m behind the courier (ticks 8340-8400 / 8580-8612) while the l5 alarm 'Survivor under attack! Turn back!' fired"
+    },
+    "L6-07": { "class": 3, "clause": "retreat concurrent infected cap (low/complete)", "sheetBefore": 56, "freshAfter": 56, "target": "<=30", "otherClausesPass": { "windupsPerMinute": 16.21, "retreatDamage": 55 }, "proposed": "<=60 aligned with the deployed tier-independent 4/14s pacing (po-decisions 2026-11-13 batch94)" },
+    "L6-08": { "class": 3, "clause": "observed human follower pace versus phase group median", "failingRow": { "phase": "step/exit", "id": 42, "who": "okafor (healthy, L5-carried, slot 26)", "ratio": 0.9268, "samples": 11, "median": 2.09, "groupMedian": 2.26 }, "passing": { "injured followers": "0.9726-1.0", "sustained retreat walk (126s)": "min ratio 0.9948" }, "proposed": "compare against the authored 2.2 m/s base or restrict to sustained walk phases (po-decisions 2026-11-16 s148 catch-up pacing)" },
+    "L6-10": { "class": 3, "clause": "native fixed-gate/platform marker trajectory", "offenders": "exactly the fixed l6-stair waypoint at (250, 15) during exit ticks 11198-11233", "holds": { "gateBranchChecks": "12/12 pass", "seenGates": [90, 150, 210], "platformSeen": true, "nightSeen": true }, "proposed": "accept the fixed l6-stair escalator-lane waypoint as a valid exit marker (po-decisions 2026-11-17 'Exit guidance now leads to the escalator foot.')" }
+  },
+  "validation": { "typecheck": "pass", "lint": "pass", "unitTests": "106/106 (104.6s of 240s budget)", "qaThreat": "0 fail flags, 253.6s", "gameplayChanged": false }
+}
