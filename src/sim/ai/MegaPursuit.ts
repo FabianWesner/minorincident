@@ -360,10 +360,15 @@ export class MegaPursuit {
       const next = s.route.length ? this.nodes.get(s.route[0])! : s.target;
       const d = dist(t, next), stop = s.route.length ? 0 : this.radius + 1;
       if (d - stop <= budget) {
-        const k = d > 1e-9 ? Math.max(0, d - stop) / d : 0; t.x += (next.x - t.x) * k; t.z += (next.z - t.z) * k; budget -= Math.max(0, d - stop);
+        const travel = Math.max(0, d - stop), k = d > 1e-9 ? travel / d : 0;
+        if (!this.coarseLeg(e, next, travel, d)) break;
+        t.x += (next.x - t.x) * k; t.z += (next.z - t.z) * k; budget -= travel;
         if (!s.route.length) break;
         this.pass();
-      } else { t.x += (next.x - t.x) / d * budget; t.z += (next.z - t.z) / d * budget; budget = 0; }
+      } else {
+        if (!this.coarseLeg(e, next, budget, d)) break;
+        t.x += (next.x - t.x) / d * budget; t.z += (next.z - t.z) / d * budget; budget = 0;
+      }
     }
     const moved = Math.hypot(t.x - startX, t.z - startZ);
     if (moved > 1e-6) t.yaw = -Math.atan2(t.z - startZ, t.x - startX);
@@ -374,6 +379,14 @@ export class MegaPursuit {
     const motion = e.locomotion ??= motionResponse();
     motion.vx = motion.vz = motion.ax = motion.az = 0; motion.updatedAt = tick;
     this.world.spatial.set(e.id, t.x, t.z);
+  }
+  /** Coarse actors still obey building and barricade solids; only the hidden mesh/crowd work is skipped. */
+  private coarseLeg(e: EntitySnapshot, target: { x: number; z: number }, requested: number, full: number): boolean {
+    if (requested <= 1e-8 || full <= 1e-8) return true;
+    const dx = (target.x - e.transform.x) / full, dz = (target.z - e.transform.z) / full;
+    const allowed = this.world.solids.sweep(e, { x: dx, z: dz }, requested, this.radius, false, false);
+    // A hit ends this coarse leg. The actor transitions to detailed steering on its next resident tick and can route around it.
+    return allowed >= requested - .01;
   }
   /** Detailed steering on the shared nav grid at cruise speed. */
   private steer(e: EntitySnapshot, d: number): void {
@@ -438,10 +451,11 @@ export class MegaPursuit {
   /** Nearest nav-clear spot within `range` (rings, no line test: the body may stand inside a solid). */
   private clearNear(p: { x: number; z: number }, range = 6): { x: number; z: number } | null {
     const nav = this.grid, r = this.radius;
-    if (nav.clear(p.x, p.z, r)) return { x: p.x, z: p.z };
+    const clear = (x: number, z: number) => nav.clear(x, z, r) && this.world.solids.clear({ x, z, y: .7 + (this.world.districts?.groundHeight(x, z) ?? 0) }, r, this.state.id || undefined, false, 0);
+    if (clear(p.x, p.z)) return { x: p.x, z: p.z };
     for (let d = .5; d <= range; d += .5) for (let k = 0; k < 24; k++) {
       const a = k * Math.PI / 12, x = p.x + Math.cos(a) * d, z = p.z + Math.sin(a) * d;
-      if (nav.clear(x, z, r)) return { x, z };
+      if (clear(x, z)) return { x, z };
     }
     return null;
   }
