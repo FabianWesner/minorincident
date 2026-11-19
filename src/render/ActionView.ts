@@ -203,11 +203,11 @@ export class ActionView extends Group {
     const torch = new Group(); torch.name = 'rifle-torch'; torch.visible = false;
     // The rifle is authored in metres, +X muzzle (assets/wpn.assault-rifle/build.py); the barrel line sits at y .267.
     const housing = new CylinderGeometry(.023, .023, .075, 12).rotateZ(Math.PI / 2);
-    const body = new Mesh(housing, this.materials.fromColor('action:swatch', new Color('#25222c')));
-    body.position.set(.327, .224, 0);
-    const mountGeometry = new BoxGeometry(.03, .025, .023);
+    const body = new Mesh(housing, this.materials.fromColor('action:swatch', new Color('#817b78')));
+    body.position.set(.327, .205, 0);
+    const mountGeometry = new BoxGeometry(.03, .045, .023);
     const mount = new Mesh(mountGeometry, this.materials.fromColor('action:swatch', new Color('#5b4f5c')));
-    mount.position.set(.318, .24, 0);
+    mount.position.set(.318, .232, 0);
     const lensMaterial = this.materials.fromColor('rifle-torch:lens', new Color(lightPalette.light_led_white), .8);
     const lensHeld = this.materials.fromColor('rifle-torch:lens-held', new Color(lightPalette.light_led_white), .8);
     lensHeld.movingFigure.value = 1; lensHeld.heroFigure.value = 1; lensHeld.userData.sharedPalette = true;
@@ -215,11 +215,11 @@ export class ActionView extends Group {
     this.heldMaterials.set(lensMaterial, lensHeld);
     const lensGeometry = new CylinderGeometry(.018, .018, .005, 12).rotateZ(Math.PI / 2);
     const lens = new Mesh(lensGeometry, lensMaterial);
-    lens.position.set(.367, .224, 0);
+    lens.position.set(.367, .205, 0);
     const glowMaterial = new SpriteMaterial({ map: torchGlowTexture(), color: lightPalette.light_led_white, transparent: true, depthWrite: false, blending: AdditiveBlending, toneMapped: false, fog: false });
     const glow = new Sprite(glowMaterial); glow.name = 'torch-glow';
-    glow.position.set(.371, .224, 0); glow.scale.setScalar(.16);
-    const node = new Object3D(); node.name = 'torch-lens'; node.position.set(.37, .224, 0);
+    glow.position.set(.371, .205, 0); glow.scale.setScalar(.16);
+    const node = new Object3D(); node.name = 'torch-lens'; node.position.set(.37, .205, 0);
     torch.add(body, mount, lens, glow, node);
     torch.traverse(part => { if (part instanceof Mesh) part.castShadow = true; });
     this.torchGeometries.push(housing, mountGeometry, lensGeometry);
