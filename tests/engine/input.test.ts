@@ -228,6 +228,15 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
     sparse.input({ ...emptyInput(), selectedWeaponKey: index + 1 }, 30 * (index + 1));
     expect(sparse.current(sparse.state.selectedSide).id).toBe(entry.id);
   });
+  const recorded = { seed: 1, level: 'L10', frames: [{ ...emptyInput(), selectedWeaponKey: 3 }] };
+  const legacyRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 1 }));
+  const legacyRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
+  legacyRack.input(legacyRecording.frames[0], 30);
+  expect(legacyRack.current(legacyRack.state.selectedSide).id).toBe('weapon.fire-axe');
+  const currentRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 2 }));
+  const currentRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
+  currentRack.input(currentRecording.frames[0], 30);
+  expect(currentRack.current(currentRack.state.selectedSide).id).toBe('weapon.handgun');
   const cycle = new Loadout(ids.slice(0, 3), ids.slice(3, 6));
   const entries = cycle.activeEntries();
   const currentId = cycle.current(cycle.state.selectedSide).id;
