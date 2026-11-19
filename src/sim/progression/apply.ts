@@ -52,8 +52,8 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
     for(const id of [...LEFT,...RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
     world.progression.campaign!.ownedActions=[...save.ownedActions];
     world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(LEFT,RIGHT);
-    const ranged=RIGHT.find(id=>id!=='weapon.kick');
-    const melee=[...LEFT].filter(id=>id!=='weapon.fists');
+    const ranged=RIGHT.find(id=>catalog[id]?.category==='ranged');
+    const melee=[...LEFT].filter(id=>catalog[id]?.category==='melee'&&id!=='weapon.fists');
     const preferred=ranged??melee.sort((a,b)=>catalog[b].tier-catalog[a].tier)[0]??'weapon.fists';
     save.selectedAction=restoreSelectedAction(world.combat.runner.loadout,{...save,selectedAction:preferred});
     world.progression.campaign!.selectedAction=save.selectedAction;
@@ -67,6 +67,9 @@ export function campaignLoadout(save:CampaignSave,level:number):{size:number;LEF
   const LEFT=[...authored.LEFT],RIGHT=[...authored.RIGHT];
   if(!LEFT.length)LEFT.push('weapon.fists');
   if(!RIGHT.length)RIGHT.push('weapon.kick');
+  for(const side of ['LEFT','RIGHT'] as const) for(const id of save.racks[side]) {
+    if(catalog[id]?.category==='ability') (side==='LEFT'?LEFT:RIGHT).push(id);
+  }
   const size=Math.max(rackSize(level),LEFT.length,RIGHT.length);
   return {size,LEFT,RIGHT};
 }

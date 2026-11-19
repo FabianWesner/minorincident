@@ -102,7 +102,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
     const world = await loadLevel(`L${level}` as `L${1|2|3|4|5|6|7|8|9|10}`, 1, save, 0, { quality: 'low' });
     try {
       const checkpointWeapons = world.combat!.runner.loadout.state;
-      expect({ LEFT:checkpointWeapons.LEFT.rack.map(slot=>slot.id), RIGHT:checkpointWeapons.RIGHT.rack.map(slot=>slot.id) }, `L${level} actual initialized rack`).toEqual(expectedSides[level-1]);
+      expect({ LEFT:checkpointWeapons.LEFT.rack.map(slot=>slot.id).filter(id=>catalog[id].category!=='ability'), RIGHT:checkpointWeapons.RIGHT.rack.map(slot=>slot.id).filter(id=>catalog[id].category!=='ability') }, `L${level} actual initialized rack`).toEqual(expectedSides[level-1]);
       const defaultSelected = expectedSides[level-1].RIGHT.find(id=>id!=='weapon.kick') ?? expectedSides[level-1].LEFT.filter(id=>id!=='weapon.fists').sort((a,b)=>action(b).tier-action(a).tier)[0] ?? 'weapon.fists';
       expect(save.selectedAction, `L${level} authored selected weapon`).toBe(defaultSelected);
       const checkpoints = world.missions!.def.checkpoints;

@@ -18,3 +18,7 @@ The L8 arrival list includes axe, handgun, army MG, shotgun, and rocket launcher
 ## Scope
 
 No encounter stats, zombie behavior, corpse persistence, or gameplay targets were changed. L10's authored start was read from the PO table and remains axe-only. The objective is incomplete until the remaining threat flags are resolved and the requested remote unit suite runs.
+
+## Follow-up
+
+Saved ability slots now survive the authored weapon reset, including the corgi lure. The focused progression suite, typecheck and lint pass after this change. The requested L10 empty start remains open: changing the table to empty causes the existing `cure-crash` checkpoint validation to fail because the current L10 save contract requires the axe. Lane s176 must provide its crash-site machete/save contract before this can be completed without breaking checkpoint saves. Threat flags and the remote suite remain open as above.
