@@ -90,3 +90,5 @@ Remote E13 verification on `ad82a844`: typecheck and lint passed. The first full
 The acceptance-status tracker still presented pre-decision receipts and an axe-only L10 crossing as current. Only G-16, L8-01 and L9-08 were updated: their old measurements are explicitly historical, the status is NOT CHECKED, and their next checks cite the 2026-11-19 PO sets and s176. Fresh acceptance receipts remain outstanding; no gameplay target was loosened.
 
 The L9-08 native crossing fixture was run directly on both quality settings. Both L9 runs completed and initialized L10 on foot, at full health, with the corgi safe and only `weapon.fists` and `weapon.kick` in the rack. Its old assertion incorrectly expected fists alone; the fixture now requires both innate actions and no additional weapon. The corrected fixture passed at low and high quality. This scoped check is not a full acceptance receipt or a checkpoint restore test.
+
+After the L9-08 fixture correction, local `npm run typecheck` and `npm run lint` both pass.
