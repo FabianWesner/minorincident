@@ -339,6 +339,7 @@ export class InputSystem implements Lifecycle {
   }
   private frameNeutral(): InputFrame {
     delete this.frame.strafe;
+    delete this.frame.corgiLure; delete this.frame.selectedLegacyWeaponKey;
     const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.orderedSelection; delete frame.selectedActiveSlot; delete frame.selectedWeaponKey; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; delete frame.interactHeld; frame.pause = false; return frame;

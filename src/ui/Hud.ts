@@ -123,6 +123,7 @@ export class Hud {
     const bars = node('div', 'vital-bars'); bars.className = 'hud-bars'; bars.append(this.health.root);
     this.corgiBadge.className = 'hud-corgi-badge';
     this.weaponRack.className = 'hud-weapon-rack hud-panel'; this.weaponRack.setAttribute('aria-label', 'Carried weapons and number keys');
+    this.corgiLure.tabIndex = -1; this.corgiLure.addEventListener('mousedown', event => event.preventDefault());
     vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
