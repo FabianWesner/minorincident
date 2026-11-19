@@ -34,3 +34,7 @@ L8 skilled-route follow-up: the bot now uses its existing private corpse-aware r
 ## L10 integration
 
 Merged current main containing s176 and s177 into this lane. The authored L10 start table is now empty; the crash-site machete and its save contract come from s176. The incoming campaign racks are synchronized with the live boundary snapshot so the cure checkpoint validates. Focused save-progression suite passes (6 tests), as do typecheck and lint. Full threat and remote unit gates remain open on the integrated source.
+
+## Integrated threat audit
+
+On integrated commit `f21f7ecc`, the direct full audit hit its 600 s watchdog under local load. Two deterministic stage shards completed in 406.3 s and 571.9 s, then the audit merger reported all ten skilled routes complete and **one** flag: `L7/KITING_LANDED_HITS_BELOW_2:0.00`. L8 skilled completed with zero passive flags. The L7 sample records 20 s of movement, one rocket attack, one infected windup and zero landed hits. The full zero-flag requirement remains open; no threshold or enemy stat was changed. The remote unit suite also remains open on the integrated source.
