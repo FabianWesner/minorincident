@@ -66,7 +66,8 @@ export async function megaBuildingOverlap(): Promise<void> {
   expect(blocked.side, 'Mega goes around the wall').toBeGreaterThan(5);
   for (const level of ['L9', 'L10'] as const) for (const passive of [false, true]) {
     const intersections: string[] = [];
-    let samples = 0, stationaryTicks = 0;
+    let samples = 0, stationaryTicks = 0, maxStep = 0;
+    let previous: { id: number; tick: number; x: number; z: number } | undefined;
     const report = await runLevel(level, 'complete', 1, level === 'L10' ? 3600 : 900, 'auto', undefined, undefined, 0, {
       passive,
       beforeBegin: world => {
@@ -85,6 +86,10 @@ export async function megaBuildingOverlap(): Promise<void> {
           const mega = id ? world.entities.get(id) : undefined;
           if (!mega || (mega.hidden || mega.infected?.hidden) && !world.infected!.director.inFrame(mega.transform)) return;
           samples++;
+          if (previous?.id === mega.id && previous.tick === world.tick - 1) {
+            maxStep = Math.max(maxStep, Math.hypot(mega.transform.x - previous.x, mega.transform.z - previous.z));
+          }
+          previous = { id: mega.id, tick: world.tick, x: mega.transform.x, z: mega.transform.z };
           if (!world.solids.clear(mega.transform, mega.combat!.radius, mega.id, false, 1e-8)) {
             intersections.push(`tick=${world.tick} x=${mega.transform.x.toFixed(2)} z=${mega.transform.z.toFixed(2)} mode=${world.megaPursuit?.state.mode ?? 'sighting'} hidden=${!!mega.infected?.hidden} contacts=${JSON.stringify(world.solids.staticContacts(mega.transform, mega.combat!.radius, mega.id))}`);
           }
@@ -94,6 +99,7 @@ export async function megaBuildingOverlap(): Promise<void> {
     expect(report.outcome).not.toBe('load-error');
     if (!passive) expect(report.completed, `${level}: ${report.outcome}`).toBe(true);
     expect(samples).toBeGreaterThan(0);
+    expect(maxStep, `${level} Mega maximum visible step`).toBeLessThanOrEqual(1);
     if (passive && level === 'L10') expect(stationaryTicks).toBeGreaterThan(60);
     expect(intersections.join('\n')).toBe('');
   }
