@@ -206,7 +206,7 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   h.setInput({ aim: { x: 0, z: 1 }, right: { down: false, held: false, up: false } }); step(h, 1);
   expect(h.entities.get(1)!.weapons!.selectedSide).toBe('RIGHT');
 
-  for (const previousWeapon of ['weapon.fire-axe', 'weapon.handgun', 'weapon.machete']) {
+  for (const previousWeapon of ['weapon.fire-axe', 'weapon.handgun', 'weapon.machete', 'weapon.hunting-rifle']) {
     const throwable = await arena(); equip(throwable, [previousWeapon], ['weapon.molotov']);
     throwable.setInput({ selectorSide: 'RIGHT', aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
     const loadout = throwable.combat!.runner.loadout, molotov = loadout.state.RIGHT.rack[0];
@@ -219,6 +219,13 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
     step(throwable, 15);
     expect(throwable.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: previousWeapon }));
   }
+  const sameRack = await arena(); equip(sameRack, ['weapon.fire-axe'], ['weapon.hunting-rifle', 'weapon.molotov']);
+  const sameLoadout = sameRack.combat!.runner.loadout;
+  const choose = (id: string) => sameLoadout.activeEntries().findIndex(entry => entry.id === id) + 1;
+  sameRack.setInput({ selectedWeaponKey: choose('weapon.hunting-rifle') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
+  sameRack.setInput({ selectedWeaponKey: choose('weapon.molotov') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
+  fire(sameRack, 'RIGHT'); step(sameRack, 20); fire(sameRack, 'RIGHT');
+  expect(sameLoadout.current(sameLoadout.state.selectedSide).id).toBe('weapon.hunting-rifle');
   const prior = new Loadout(['weapon.fire-axe'], ['weapon.molotov', 'weapon.pipe-bomb']);
   prior.input({ ...emptyInput(), selectedActiveSlot: prior.activeEntries().findIndex(e => e.id === 'weapon.molotov') }, 30);
   prior.state.RIGHT.rack[0].charges = 0;
