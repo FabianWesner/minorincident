@@ -311,6 +311,32 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
     observations['L10/inventory-only-opening'] = { ticks: 240, runs: inventoryRuns.map(({ added, spawned }) => ({ added, spawned })), identical: same };
     add('L10-05', 'inventory alone does not release enemies at the crash start', observations['L10/inventory-only-opening'],
       'same seed and stationary input at the crash start, with or without all six pickup weapons: identical 240-tick infected census and encounter ledger', same);
+    const locationChecks: { anchor: string; identical: boolean; births: number[] }[] = [];
+    for (const find of cureWeaponPickups) {
+      const cases: { census: string[]; spawned: Record<string, number>; births: number }[] = [];
+      for (const grant of [false, true]) {
+        const save = preset('L10-default'); save.settings.quality = tier;
+        const comparison = await loadLevel('L10', 1, save, 0, { quality: tier });
+        try {
+          const [x, z] = cure.anchors[find.anchor];
+          relocatePlayer(comparison, x, z);
+          if (grant) transactArsenal(comparison, cureWeaponPickups.map(pickup => pickup.action), []);
+          let births = 0;
+          const spawn = comparison.infected!.spawn.bind(comparison.infected!);
+          comparison.infected!.spawn = (...args: Parameters<typeof spawn>) => { const id = spawn(...args); births++; return id; };
+          const census: string[] = [];
+          for (let tick = 0; tick < 240; tick++) {
+            comparison.applyInput(emptyInput(), 'keyboard'); comparison.update();
+            census.push(JSON.stringify(comparison.infected!.active.map(e => ({ id: e.id, archetype: e.archetype, x: e.transform.x, z: e.transform.z, hp: e.health.current }))));
+          }
+          cases.push({ census, spawned: { ...comparison.l10Encounters!.state.spawned }, births });
+        } finally { comparison.dispose(); }
+      }
+      locationChecks.push({ anchor: find.anchor, births: cases.map(c => c.births), identical: JSON.stringify(cases[0]) === JSON.stringify(cases[1]) });
+    }
+    observations['L10/inventory-only-locations'] = { ticks: 240, locationChecks };
+    add('L10-05', 'inventory alone does not change admissions at pickup locations', observations['L10/inventory-only-locations'],
+      'matched fresh-world four-second stationary comparisons at all six pickup anchors, with and without all six weapons', locationChecks.every(c => c.identical));
     const routeSave = preset('L10-default'); routeSave.settings.quality = tier;
     const finds: { action: string; tick: number; retained: boolean }[] = [];
     let storyOnly = false;
