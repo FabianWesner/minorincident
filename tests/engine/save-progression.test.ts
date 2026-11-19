@@ -79,6 +79,9 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
       expect(decoded.status, `L${level} save reload`).toBe('ok');
       const loadout = campaignLoadout(save, level);
       expect(weapons(loadout), `L${level} ${save === fresh ? 'fresh handover' : 'finished L10 save'}`).toEqual([...expected[level - 1]].sort());
+      const actualSides = { LEFT:loadout.LEFT.filter(id=>catalog[id].category!=='ability'), RIGHT:loadout.RIGHT.filter(id=>catalog[id].category!=='ability') };
+      const openingSides = level===8 ? { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rocket] } : expectedSides[level-1];
+      expect(actualSides, `L${level} authored rack order for each save`).toEqual(openingSides);
       const live = new Loadout(loadout.LEFT, loadout.RIGHT, undefined, loadout.size), selected = restoreSelectedAction(live, save);
       if (save.selectedAction && [...loadout.LEFT,...loadout.RIGHT].includes(save.selectedAction)) expect(selected, `L${level} carry selection`).toBe(save.selectedAction);
       expect(live.current(live.state.selectedSide).id).toBe(selected);

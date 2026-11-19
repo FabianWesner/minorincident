@@ -70,3 +70,5 @@ L7 opening correction: two of the four existing close runners now stand farther 
 ## Current gates
 
 On source at `190ece36`, the direct full `npm run qa:threat` passed in 593.1 / 600 s: all ten skilled routes completed, zero fail flags, including L6 and L7. The required remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 27 files / 105 tests, one skipped, in 205.7 / 240 s. The actual checkpoint restore discrepancy and its interaction with the L8 handover and L10 pickup/hangar issue remain unresolved; these gates do not prove that requirement.
+
+The table-driven boundary test now checks exact left/right rack order for each of its fresh, finished and checkpoint-shaped save fixtures, including the L8 rocket before armory handover. The focused six-test file passes. This still does not cover the actual `Mission.restore()` checkpoint path; that requirement remains open pending the checkpoint clarification.
