@@ -554,7 +554,11 @@ export class ThreatObserver {
   private observePaths(): void {
     const w = this.world, player = w.entities.get(1)!, alive = this.living(), positions: Position[] = [];
     this.observeChasers(alive);
-    const l8GateContext = this.level === 'L8' && this.active.some(row => row.key === 'step/escape')
+    // Orchestrator rule 2026-11-12: infected confined inside intentionally
+    // closed arena pens are not unreachable threats, in any post-breach census
+    // (escape step or breach phase); only those, and only while their pen gates
+    // are closed. All other living infected stay in every census.
+    const l8GateContext = this.level === 'L8' && this.active.some(row => row.key === 'step/escape' || row.key === 'phase/breached')
       ? { arenas: w.missions!.l8!.state.arenas, sealed: !!w.missions!.l8!.state.sealedAt } : undefined;
     const excluded = new Set<string>(l8GateContext ? alive.filter(e => isConfinedInClosedL8Pen(e.transform, l8GateContext)).map(e => this.identity(e)) : []);
     // L4-07: the intact camp perimeter is intentional. Its scheduling clock
@@ -610,10 +614,15 @@ export class ThreatObserver {
         && Number.isFinite(this.barrierDistance(source, e, player.transform, stretch * Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)));
       let boundedPath = false;
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30) {
-        nearby++;
-        boundedPath = !!((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5));
-        if (boundedPath) boundedReachable++;
-        else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
+        if (excluded.has(token)) {
+          // Intentionally confined behind closed L8 pen gates: no threat
+          // census counts it, bounded reachability included.
+        } else {
+          nearby++;
+          boundedPath = !!((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5));
+          if (boundedPath) boundedReachable++;
+          else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
+        }
       }
       // L4's every-infected clause needs a continuous path at the actual body
       // radius too, rather than only A* connectivity on the narrower AI bake.
@@ -628,7 +637,7 @@ export class ThreatObserver {
     // Geometry is sampled after the sim tick. Charge it to the phases now
     // active, not a combat phase that ended when that tick closed a safe gate.
     for (const row of phases(w, this.level).map(phase => this.row(phase))) {
-      const escapeCensus = this.level === 'L8' && row.key === 'step/escape';
+      const escapeCensus = this.level === 'L8' && (row.key === 'step/escape' || row.key === 'phase/breached');
       const rowAlive = escapeCensus ? alive.length - excluded.size : alive.length;
       const rowReachable = escapeCensus ? new Set([...reachable].filter(token => !excluded.has(token))) : reachable;
       const rowPositions = escapeCensus ? positions.filter(position => !excluded.has(position.identity)) : positions;
