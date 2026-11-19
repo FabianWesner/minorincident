@@ -230,6 +230,17 @@ test('health: invulnerability window, delayed regeneration, one death event, res
   expect(p.entity.transform.x).toBeCloseTo(4); expect(p.entity.transform.z).toBeCloseTo(-2);
   expect(p.entity.health.current).toBe(100);
   expect({ mission: d.mission, progression: d.progression }).toEqual(retained);
+
+  // s178 Hard (PO 2026-11-19 "auto-healing is off"): no regeneration after the delay; medkits and
+  // checkpoint/scripted heals still restore. Simple keeps the authored schedule asserted above.
+  const hard = await setup(); hard.difficulty = 'hard';
+  hard.player!.damage(40, hard.tick); step(hard, 360);
+  expect(hard.player!.entity.health.current, 'hard: no regeneration after 6 s').toBe(60);
+  const feet = hard.player!.entity.transform;
+  hard.pickups!.spawn('medkit', { x: feet.x, z: feet.z }); step(hard, 1);
+  expect(hard.player!.entity.health.current, 'hard: a medkit still restores the courier to full').toBe(100);
+  hard.player!.damage(50, hard.tick); hard.player!.restoreVitals(hard.tick);
+  expect(hard.player!.entity.health.current, 'hard: a checkpoint/scripted restore still heals').toBe(100);
 });
 
 // r2-bike: keyboard movement held head-on into a post or a box corner sidesteps round it instead of stopping dead; a long

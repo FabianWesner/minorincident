@@ -14,6 +14,7 @@ import type { L6State } from './types';
 import { survivorName } from './survivorName';
 const distance = (a: Point, b: Point) => Math.hypot(a.x-b.x,a.z-b.z);
 const ticks = (s: number) => Math.round(s*60);
+
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
 export class LevelSixSubway {
   private readonly aroundCourier = new Map<number, Point>();
@@ -157,6 +158,28 @@ export class LevelSixSubway {
       ai.release(e);
       this.s.distantRecycled=(this.s.distantRecycled??0)+1;
       if(ai.director.count+ai.director.pendingTurns<capacity)return;
+    }
+  }
+  /**
+   * A retreat leaves the cohorts it has already walked past behind for good: the column walks at the
+   * same speed as a chaser, so a pressure cohort admitted far behind the tail can never rejoin the
+   * encounter. On a no-kill run those abandoned chasers stack up - 56-63 live bodies while only 8-15
+   * are ever inside the column's camera - and the acceptance probe counts them as concurrent
+   * pressure although they never reach the group. This trims only that dead tail, using the same
+   * 40 m "route already safely past" rule the hatch reopening already applies: a candidate must be
+   * more than 45 m behind the column's own tail, outside the camera envelope, unengaged, and clear
+   * of every survivor. The living slot returns to the pool (never a corpse), so the authored pressure
+   * keeps flowing instead of stacking into unreachable chasers.
+   */
+  private recycleFallenBehind(tail:number):void {
+    const w=this.w,ai=w.infected!,p=w.entities.get(1)!.transform,group=this.living().map(r=>w.entities.get(r.id)!).filter(Boolean);
+    for(const e of [...ai.active]){
+      const b=e.infected;
+      if(!b||e.health.current<=0||e.corpse||e.transform.x>=tail-45||this.s.survivors.some(r=>r.id===e.id))continue;
+      if(e.combat?.attacking||b.specialAttack||b.l1?.mode==='bite'||e.infectionRise)continue;
+      if(distance(e.transform,p)<35||group.some(member=>distance(e.transform,member.transform)<25))continue;
+      if(!ai.director.offscreen(e.transform,e.transform.y-.7))continue;
+      ai.release(e);this.s.distantRecycled=(this.s.distantRecycled??0)+1;
     }
   }
   private spawn(n:number,doors:number[],wave:number):number {
@@ -366,7 +389,15 @@ export class LevelSixSubway {
     const row=Math.max(0,live.filter(q=>this.w.entities.get(q.id)!.civilian!.survivor!.slot%3===column).findIndex(q=>q.id===e.id));
     const target=r.collected?this.w.entities.get(1)!.transform:{x:s.leaderX-row*1.4,z:s.leaderZ+(column-1)*1.2};
     // Keep the authored tunnel approach until this walker reaches the platform; then align with the escalator.
-    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?(e.transform.x<246?l6.exit.approachZ:l6.tunnel.z):15+(r.collected?0:(column-1)*.725)};
+    // s173b: the escalator window must keep the column's three formation lanes. Folding every lane onto
+    // the courier's own line (z 15) left the three lanes' row-4/row-5 members all steering at the SAME
+    // slot point, so each merge point ground three bodies against each other and the interior walkers
+    // resolved a stride below the column pace (qa:threat SLOW_FOLLOWER 28/38/42 at the early-close
+    // exit once the retreat recycling keeps the mouth's pressure flowing). Lane centres 14.275/15/15.725
+    // are body-clear along the whole approach, so the file keeps unique slot points exactly like the
+    // tunnel and the street legs already do; only the platform-edge approach (walker still south of the
+    // escalator foot) keeps its authored single approach lane.
+    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258&&e.transform.x<246?l6.exit.approachZ:15+(r.collected?0:(column-1)*.725)};
     // Three 0.7 m bodies share the 2.2 m mouth with 2.5 cm between bodies and each barrier.
     const reach=r.collected?1.8:.4;
     // Injured survivors still walk with the retreating column. Holding them at
@@ -458,6 +489,7 @@ export class LevelSixSubway {
     else if(!s.waitFlipAt)s.waitFlipAt=t;
     else if(t-s.waitFlipAt>=ticks(l6.follow.strayDwellS)){s.waitFor=want;s.waitFlipAt=0;}
     s.tailX=tail;
+    this.recycleFallenBehind(tail);
     if(!s.paused){if(s.leaderZ<15)s.leaderZ=Math.min(15,s.leaderZ+2.2/60);else s.leaderX=Math.min(276,s.leaderX+2.2/60);}
     if(!s.injuryLineAt&&s.leaderX>34){s.injuryLineAt=t;this.say(1,l6InjuryLines.retreat);}
     for(const r of live){const e=w.entities.get(r.id)!;

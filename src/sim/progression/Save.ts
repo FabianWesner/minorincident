@@ -102,6 +102,7 @@ export function migrate(raw:unknown):unknown {
 }
 export function validateSave(raw:unknown):raw is CampaignSave {
   if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>lastLevel||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>lastLevel||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(Number(raw.completedLevels)>=6&&Number(raw.unlockedLevel)>=Number(raw.completedLevels))))return false;
+  if(raw.difficulty!==undefined&&!['simple','hard'].includes(String(raw.difficulty)))return false;
   if(!strings(raw.ownedActions)||(raw.crossingHandover === undefined && (!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')))||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
   const save=raw as unknown as CampaignSave;
   // A scripted loss may leave a known historical selection; loadout restoration resolves and logs its fallback.

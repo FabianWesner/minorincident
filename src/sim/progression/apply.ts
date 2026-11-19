@@ -34,6 +34,8 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
 export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   if (world.scenario === 'L10') enforceCureArsenal(save);
   if(!world.player)throw new Error('Progression needs a survivor');
+  // s178: the campaign's difficulty owns the live world (level select, checkpoint restore and restart keep it).
+  world.difficulty = save.difficulty === 'hard' ? 'hard' : 'simple';
   if (world.scenario === 'L10' && save.crossingHandover?.corgi && world.npcs) {
     for (const e of [...world.entities.iterate()]) if (e.companion) { world.entities.remove(e.id); world.spatial.delete(e.id); }
     const corgi = structuredClone(save.crossingHandover.corgi); delete corgi.passengerOf; corgi.hidden = false;
