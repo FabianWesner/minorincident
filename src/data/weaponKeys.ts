@@ -1,6 +1,6 @@
 import { catalog } from './actions/catalog';
 
-/** Stable legacy shortcuts stay first; the remaining carried weapons get unique rack indices. */
+/** Historical catalog shortcuts are retained solely for old recordings and fallback priority. */
 const preferred = [
   'weapon.fists', 'weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg',
   'weapon.shotgun', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb',
