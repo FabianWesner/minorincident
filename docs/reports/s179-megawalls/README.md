@@ -42,3 +42,7 @@ Two further unchanged remote unit attempts on this change did not pass: the firs
 The full `npm run qa:threat` on `9b4fcc65` completed in 336.6 seconds with 0 gate flags, including L9 and L10. The previously noted L10 skilled wave observation is retained in its detailed receipt. Unloaded-chunk collision remains unproven: the coarse sweep queries the resident navigation grid, and the graph scan covers authored links rather than every off-graph join.
 
 The unchanged remote `npm test` rerun on the current code passed: 27 files, 105 tests passed, one skipped, 195.4 seconds within the 240-second budget.
+
+## Unloaded collider follow-up
+
+The native per-tick probe now independently checks authored building colliders whether or not their chunks are resident; the four sampled runs still pass with zero intersections. A focused off-graph nonresident probe nevertheless confirms a gap: the unloaded `bld.cure-duplex:7/geometry-1` at (833, 88.82) is reported clear by `world.solids`; a hidden coarse Mega forced from x=820 toward x=850 crossed to x=847.95 through it. This case is outside the observed native runs and needs a real nonresident detour before the invariant can be claimed.
