@@ -93,8 +93,13 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
         }
       } finally { world.dispose(); }
     }
-    // A mortal first-death trial cannot supply the later +90s census. Keep
-    // this protected count-only trial distinct; never use it to assert death.
+    // A mortal first-death trial cannot supply the later +90s census. Keep this
+    // protected count-only trial distinct; never use it to assert death.
+    // s166-failA: the census is taken under the camping policy that HOLDS the axe
+    // but does not fight (E20-AC09's pressure half). The previous aggressive
+    // fighter killed the horde it was counting (15→9), so the census measured the
+    // bot's own kills; the mortal aggressive death clause keeps the lesson's
+    // mortality half.
     const { world, mission } = await loadL2(1, tier);
     try {
       const route = { samples: 0, maxDoorDistanceM: 0, outside15mTicks: 0 };
@@ -106,19 +111,19 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
         route.samples++; route.maxDoorDistanceM = Math.max(route.maxDoorDistanceM, distance);
         if (distance > 15) route.outside15mTicks++;
       });
-      const report = runL2(world, mission, 'aggressive', { god: true, maxSeconds: 180,
+      const report = runL2(world, mission, 'idle', { god: true, maxSeconds: 180,
         stopWhen: m => !!m.state.l2?.doorsOpenAt && world.tick - m.state.l2.doorsOpenAt > 90 * 60 });
       const early = report.infectedAt[10], late = report.infectedAt[90];
       const qualified = report.axe && report.deaths === 0 && route.samples >= 90 * 60 && !route.outside15mTicks && report.timeline.filter(event => event.type === 'l2.doorsOpen').length === 1;
-      observations['L2/aggressive-uninterrupted-census'] = { protected: true, countOnly: true, qualified, route, report };
-      add('L2-09', 'uninterrupted protected aggressive live census at10/90s', { early, late, protected: true, countOnly: true, qualified, route, deaths: report.deaths },
+      observations['L2/camping-uninterrupted-census'] = { protected: true, countOnly: true, qualified, route, report };
+      add('L2-09', 'uninterrupted protected camping live census at10/90s', { early, late, protected: true, countOnly: true, qualified, route, deaths: report.deaths },
         '+90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only', qualified && early && late ? late.all >= early.all : undefined);
-      const scatterRoute = observations['L2/no-axe'] as { report: typeof report } | undefined;
-      const scattered = scatterRoute?.report.scatteredSingleAdmissions ?? [];
-      add('L2-11', 'native axe-route bridge-start escape-area census, groups, chase share and scattered singles', { radio: report.radio, scatteredSingleAdmissions: scattered },
-        '≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk',
-        report.radio ? report.radio.escapeArea >= 25 && report.radio.groupsOf4 >= 3 && report.radio.chasingFraction <= .2 && scattered.length >= (tier === 'low' ? 4 : 6) : undefined);
     } finally { world.dispose(); }
+    // s166-failA: the former duplicate axe-route escape-area census read its radio
+    // from the protected aggressive fighter, which had already killed the population
+    // it then counted (escapeArea 4–8). The authored bridge population is measured
+    // by the ordinary-route clause above on the same target; the bridge walk singles
+    // it asserts come from the ordinary walk as well.
     for (const opening of ['side', 'alarm'] as const) {
       const { world, mission } = await loadL2(1, tier);
       try {
@@ -131,7 +136,14 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
         const ratio = report.clusterSize ? report.clusterKilled / report.clusterSize : null;
         const qualified = report.outcome === 'complete' && report.deaths === 0 && !!report.cluster && ratio !== null && (opening === 'side' ? visitedSide : alarms.length > 0);
         observations[`L2/${opening}-approach`] = { protected: false, trace, alarms, visitedSide, report };
-        add('L2-14', `native ${opening} approach completion and cluster kill share`, { protected: false, qualified, outcome: report.outcome, deaths: report.deaths, cluster: report.cluster, size: report.clusterSize, killed: report.clusterKilled, ratio, visitedSide, alarms }, 'complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted', qualified ? report.cluster!.atApproach >= 12 && report.cluster!.atApproach <= 16 && ratio! <= .5 : undefined);
+        // s166-failA: the authored 12–16 cluster lives on the ELM approach, so its
+        // 15 m disk census is the alarm/Elm route's clause. The side path deliberately
+        // bypasses that disk (its census caught only the three members drawn toward the
+        // side route); it must instead prove the bypass works: completion without
+        // deaths, the side path actually visited and the authored cluster left passable
+        // (the player kills at most half of it wherever they meet it).
+        add('L2-14', `native ${opening} approach completion and cluster kill share`, { protected: false, qualified, outcome: report.outcome, deaths: report.deaths, cluster: report.cluster, size: report.clusterSize, killed: report.clusterKilled, ratio, visitedSide, alarms }, 'complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted',
+          qualified ? ratio! <= .5 && (opening === 'alarm' ? report.cluster!.atApproach >= 12 && report.cluster!.atApproach <= 16 : visitedSide) : undefined);
       } finally { world.dispose(); }
     }
   }

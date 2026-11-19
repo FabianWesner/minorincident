@@ -36,6 +36,13 @@ export async function checkpointProbe(native: NativeReceipt, path: string, fixtu
       // Checkpoints may be captured during briefing/camera beats. Ordinary death uses
       // restore(), which resumes playing; loadResume() alone preserves a live-save phase.
       world.missions!.restore(id);
+      // s166-failA: a fresh tick-0 world collapses the level's absolute beat clocks
+      // (a field equal to the capture tick, e.g. L8 sealedAt, shifts to 0; an arena
+      // phase is captured before its own transition), so the level legitimately
+      // re-captures this checkpoint at its anchor on the first update. Let that
+      // designed re-capture settle on the UNDIRTIED world before reading the
+      // fixture's expectations; saveResume reads the checkpoint map either way.
+      for (let settle = 0; settle < 10; settle++) { world.applyInput(emptyInput(), 'keyboard'); world.update(); }
       const mission = world.missions!, expected = mission.saveResume().checkpoint, player = world.entities.get(1)!;
       // E19's PO 2026-10-07 amendment and E22-AC17 explicitly supersede
       // snapshot rewind for these retries. Probe their live-world contract.

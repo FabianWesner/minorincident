@@ -775,6 +775,22 @@ export class LevelTwoRescue {
     if (!s.radioAt || s.phase === 'done') return;
     if (!s.crossedAt && player.health.current > 0 && this.inZone(player.transform)) { s.crossedAt = tick; s.phase = 'checkpoint'; this.mission.radio('L2.checkpoint'); }
     if (s.crossedAt && !s.gateClosedAt && tick - s.crossedAt >= ticks(.6) && this.world.npcs!.companion.insideBeforeClosing({ x: l2.checkpoint.gateX, z: player.transform.z }, { x: l2.checkpoint.gateX + 1, z: player.transform.z })) {
+      // L2-15: the slam must not depenetrate a pursuer pressed against the gate
+      // through the new collider to the protected side (one infected crossed
+      // inside in the closure tick). Clear living bodies out of the gate strip
+      // before the colliders exist, on the same relocation contract as the
+      // respawn threat clear.
+      const [z0, z1] = l2.checkpoint.gateZ;
+      for (const e of this.world.infected!.active) {
+        if (e.health.current <= 0 || e.corpse) continue;
+        if (e.transform.x < l2.checkpoint.gateX - 1.6 || e.transform.x > l2.checkpoint.gateX + 1.6 || e.transform.z < z0 - 1.2 || e.transform.z > z1 + 1.2) continue;
+        const to = snapToClear(this.world, { x: l2.checkpoint.gateX - 2.4, z: Math.min(z1 - .6, Math.max(z0 + .6, e.transform.z)) }, e.combat?.radius ?? .45);
+        if (this.world.solids.relocate(e, { x: to.x, z: to.z, y: e.transform.y }, 'l2.gate-close-clear', 1.5)) {
+          this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+          if (e.locomotion) { e.locomotion.vx = e.locomotion.vz = 0; }
+          if (e.infected) { e.infected.path.length = 0; e.infected.goal = -1; }
+        }
+      }
       s.gateClosedAt = tick; for (const id of ['gate-main', 'gate-north', 'gate-south']) this.wall(id, true);
       // People still on their way can no longer get in: they make for the front of the closed gate instead.
       const g = l2.rescue.havenGate;

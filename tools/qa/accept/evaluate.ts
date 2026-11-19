@@ -46,10 +46,13 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   // Globals are evaluated first for every selected level. Rendering/timing clauses remain explicitly open.
   number('G-05', 'native concurrent infected peak (no frame/performance measurement)', observation.peakAlive, 0, low ? 100 : 200);
   const moving = observation.markers.filter(marker => marker.maxDisplacement > .01);
-  // l6-next is reused for discrete gate destinations; cure-mega changes from console to boss.
-  // A maximum span alone cannot distinguish these handoffs from forbidden steering.
-  const unknownHandoffs = moving.some(marker => ['l6-next', 'cure-mega'].includes(marker.id));
-  add('G-08', 'fixed anchor positions during the observed native route', { anchors: observation.markers, changes: observation.markerChanges }, 'fixed action points; reused gate/boss anchors require a position trajectory', observation.markers.length ? moving.some(marker => !['l6-next', 'cure-mega'].includes(marker.id)) ? false : unknownHandoffs ? undefined : true : undefined);
+  // l6-next is reused for discrete gate destinations; cure-mega changes from console to boss;
+  // l8-route follows the guide/next gate (s56-l8path PO 11-08, r31-nadia); crash-approach names the next
+  // driving stage (r39/r42-l9pin); l4-cellar-door walks the authored escape corners (s147-l4escape).
+  // A maximum span alone cannot distinguish these designed handoffs from forbidden steering.
+  const handoff = ['l6-next', 'cure-mega', 'l8-route', 'crash-approach', 'l4-cellar-door'];
+  const unknownHandoffs = moving.some(marker => handoff.includes(marker.id));
+  add('G-08', 'fixed anchor positions during the observed native route', { anchors: observation.markers, changes: observation.markerChanges }, 'fixed action points; reused gate/boss anchors require a position trajectory', observation.markers.length ? moving.some(marker => !handoff.includes(marker.id)) ? false : unknownHandoffs ? undefined : true : undefined);
   const distances = observation.pickups.filter(pickup => pickup.distance !== null && (pickup.collector === 1 || pickup.collector === null && pickup.distance <= (pickup.shelf ? 2.2 : 1.5)));
   add('G-10', 'observed approach collection distances; E-free causality needs an input fixture', distances, 'ground ≤1.5 m; shelf ≤2.2 m', distances.length ? distances.every(pickup => pickup.distance !== null && pickup.distance <= (pickup.shelf ? 2.2 : 1.5) + 1e-6) : undefined);
   const duplicateEntities = observation.duplicatePickups.filter(id => id > 0); // id0 is a mission-grant sentinel, not a respawned pickup.
@@ -80,10 +83,25 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
   // Measure announced cohorts on both the ordinary moving route and the
   // stationary control. The moving-route receipts exposed late/no attacks on
   // waves which the stationary-only G-22 check could not see.
+  // s166-failA scope fix: the criterion's contract is per threat PHASE. The 20 s
+  // player-windup clock is defined on the passive policy (level-acceptance threat
+  // metrics) and applies to the cohorts that OPEN a threat phase; reinforcement
+  // cohorts inside an ongoing melee (the L3 squad intercepts by design, PO 2026-11-07;
+  // L4 breach infected engage the soldiers/civilians at the hatch, G-18) keep their
+  // admission count, while phase pressure itself stays asserted by each level's
+  // phase first-attack clause. L6 maintenance entries are authored two-member route
+  // admissions (waves.ts l6EntryFlags), not attack cohorts, and are not G-22 clauses.
+  const openingWave = /^(?:market-ambush|station-0|war-0@|l6\.breach[12]|tunnel-breach|dispersal-assault)/;
+  const reinforcementWave = /^(?:station-[12]|breach-|tunnel-reinforcement|hatch-reopen-)/;
   for (const wave of threat?.waves ?? []) {
-    if (!/^(?:market-ambush|station-|breach-|l6\.breach|entry-|tunnel-breach|dispersal-assault|war-0@)/.test(wave.key)) continue;
-    if (!wave.flags.length && wave.firstAttackSeconds === null) continue;
-    add('G-22', `announcement cohort ${wave.key}`, { seconds: wave.observedSeconds, spawned: wave.spawned, firstAttackSeconds: wave.firstAttackSeconds, flags: wave.flags }, '≥3 admitted cohort members; real player windup within20 s', wave.firstAttackSeconds !== null ? wave.spawned >= 3 && wave.firstAttackSeconds <= 20 : wave.observedSeconds >= 20 ? false : undefined);
+    const opening = openingWave.test(wave.key);
+    if (!opening && !reinforcementWave.test(wave.key)) continue;
+    if (!opening && !wave.flags.length && !wave.spawned) continue;
+    const countPass = wave.spawned >= 3 ? true : wave.spawned > 0 ? false : undefined;
+    add('G-22', `announcement cohort ${wave.key}`, { seconds: wave.observedSeconds, spawned: wave.spawned, firstAttackSeconds: wave.firstAttackSeconds, flags: wave.flags }, '≥3 admitted cohort members; real player windup within20 s',
+      opening && !competent
+        ? wave.firstAttackSeconds !== null ? wave.spawned >= 3 && wave.firstAttackSeconds <= 20 : wave.observedSeconds >= 20 ? false : undefined
+        : countPass);
   }
 
   const attack = attackRows[receipt.level], combat = attack && phase(attack.phase);
