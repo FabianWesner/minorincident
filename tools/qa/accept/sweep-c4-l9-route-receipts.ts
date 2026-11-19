@@ -28,14 +28,16 @@ export function sweepC4L9RouteReceipts(sourceHash: string, browserHash: string, 
     const valid = (row: Route) => !row.errors.length && row.setup.backend === 'webgl' && row.setup.quality === tier && row.setup.before === row.setup.after && row.setup.after > 0 && row.result.phase === 'approach' && row.result.preCrashDurability === row.samples.at(-1)?.hp && row.commands.some(command => command.keys.includes('KeyW')) && row.result.inputs.some(input => (input.drive?.throttle ?? 0) > 0) && seen(row);
     const pair = valid(safe) && valid(shortcut) && safe.setup.after === shortcut.setup.after && safe.samples[0].position.x === shortcut.samples[0].position.x && safe.samples[0].position.z === shortcut.samples[0].position.z && review.sheets.length > 0 && review.sheets.every(sheet => evidenceIsArchivedOrMatches(sheet.file, sheet.sha256));
     const hits = [...safe.result.events, ...shortcut.result.events].filter(event => event.type === 'vehicle.durability-hit' && ['contact', 'attack'].includes(event.source ?? ''));
+    // PO 2026-11-11 billing (implemented 77747c73): the authored route groups are ordinary
+    // runners/Alphas, so a moving contact bills 0; hull attacks bill 10.
     const billing = [safe, shortcut].every(row => {
       const events = row.result.events.filter(event => event.type === 'vehicle.durability-hit' && ['contact', 'attack'].includes(event.source ?? ''));
-      return new Set(events.map(event => `${event.source}/${event.targetId}/${event.contactId}/${event.attackId}`)).size === events.length && events.every(event => event.after === Math.max(0, event.before - 10));
+      return new Set(events.map(event => `${event.source}/${event.targetId}/${event.contactId}/${event.attackId}`)).size === events.length && events.every(event => event.after === Math.max(0, event.before - (event.source === 'attack' ? 10 : 0)));
     });
     const path = `${reportRoot}/receipts/L9-${tier}-${evidenceRoot.split('/').at(-1)}-routes.json`;
     const receipt: FixtureReceipt = { version: 1, level: 'L9', tier, sourceHash, fixtureHash: sha(readFileSync(new URL(import.meta.url))), errors: [...safe.errors, ...shortcut.errors], observations: { proofPath, reviewPath }, checks: [
       { id: 'L9-04', clause: 'physical matched safe route retains more durability than shortcut', tier, policy: 'real-input-webgl2', value: { validPair: pair, safe: safe.result.preCrashDurability, shortcut: shortcut.result.preCrashDurability }, target: 'same healthy seed1 start; both physical drives finish at normal pre-crash approach; safe pre-crash HP strictly greater', status: !pair ? 'NOT CHECKED' : safe.result.preCrashDurability > shortcut.result.preCrashDurability ? 'PASS' : 'FAIL', receipt: proofPath },
-      { id: 'L9-04', clause: 'physical route contact and attack billing', tier, policy: 'real-input-webgl2', value: hits, target: 'nonempty actual hit ledger; ten damage per unique contact/attack transaction', status: !pair || !hits.length ? 'NOT CHECKED' : billing ? 'PASS' : 'FAIL', receipt: proofPath },
+      { id: 'L9-04', clause: 'physical route contact and attack billing', tier, policy: 'real-input-webgl2', value: hits, target: 'nonempty actual hit ledger; moving regular contact onset 0 and stopped/surround attack 10 per unique transaction', status: !pair || !hits.length ? 'NOT CHECKED' : billing ? 'PASS' : 'FAIL', receipt: proofPath },
     ] };
     atomicJson(path, receipt); results.push({ path, receipt });
   }

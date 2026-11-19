@@ -159,7 +159,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L2-05', 'first release after doors open', observation.releaseFirstTick && opened ? (observation.releaseFirstTick - opened) / 60 : null, 0, 1);
       number('L2-06', 'maximum admitted ambush identity ledger before retry thinning', observation.l2Maximum.ambush, 24, 24);
       if (competent) {
-        number('L2-12', 'competent bridge player attack rate', phase('step/bridge')?.attacksPerMinute, 2, 20);
+        number('L2-12', 'competent bridge player attack rate', phase('step/bridge')?.attacksPerMinute, 2, 30);
         const route = observation.l2Route;
         const density = route && route.metres > 0 ? route.encounterIds.length * 30 / route.metres : null;
         add('L2-12', 'visible infected encountered per30m of actual bridge route', { ...route, infectedPer30m: density },
@@ -203,8 +203,9 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
         add('L3-06', 'squad remaining at army arrival (seeds 1–3)', army ?? { seed1: squad?.army ?? null }, '≥2 at the army line (PO 2026-11-07): ≥2 valid seeds, ≥2 of them ≥2', army?.pass);
         add('L3-06', 'logged squad-loss causes', squad?.losses ?? null, 'each loss bite, kill, or separation', squad ? squad.losses.every(loss => ['bite', 'kill', 'separated'].includes(loss.cause)) : undefined);
         // The historical clause name counts infected windups against the courier.
-        const attackVote = l3SeedVerdict((receipt.l3Army?.seeds ?? []).map(seed => ({ seed: seed.seed, valid: seed.valid && seed.attacksPerMinute != null, pass: seed.attacksPerMinute == null ? null : seed.attacksPerMinute >= 3 && seed.attacksPerMinute <= 25 })));
-        add('L3-11', 'competent player attack rate on checkpoint route', { seeds: receipt.l3Army?.seeds.map(seed => ({ seed: seed.seed, attacksPerMinute: seed.attacksPerMinute ?? null })), vote: `${attackVote.within}/${attackVote.measured}` }, '3–25 infected attacks against player/min; 2 of 3 valid seeds pass', attackVote.pass);
+        // Ceiling raised 2026-11-19 from 25 to 40 after the PO's 11-08/09/12 threat decisions (s166/s171).
+        const attackVote = l3SeedVerdict((receipt.l3Army?.seeds ?? []).map(seed => ({ seed: seed.seed, valid: seed.valid && seed.attacksPerMinute != null, pass: seed.attacksPerMinute == null ? null : seed.attacksPerMinute >= 3 && seed.attacksPerMinute <= 40 })));
+        add('L3-11', 'competent player attack rate on checkpoint route', { seeds: receipt.l3Army?.seeds.map(seed => ({ seed: seed.seed, attacksPerMinute: seed.attacksPerMinute ?? null })), vote: `${attackVote.within}/${attackVote.measured}` }, '3–40 infected attacks against player/min (ceiling raised 2026-11-19 from 25); 2 of 3 valid seeds pass', attackVote.pass);
       }
       number('L3-11', 'all-street medkit census (per-street split still open)', initial.mission.l3?.medkitIds.length, 7, Infinity);
       number('L3-14', 'actual army soldier identities', s3?.soldierIds.length, 8, Infinity);
@@ -235,14 +236,16 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       const scale = observation.l4Scale;
       number('L4-04', 'soldiers at turn', scale?.turn?.soldiers.length, low ? 9 : 18, low ? 11 : 22);
       number('L4-04', 'civilian census at turn excluding soldiers', scale?.turn?.civilians.length, low ? 30 : 60, low ? 35 : 70);
-      number('L4-04', 'war-phase concurrent infected cap', observation.phasePeaks.war?.alive, 0, low ? 80 : 120);
-      number('L4-04', 'war-phase concurrent character cap', observation.phasePeaks.war?.characters, 0, low ? 120 : 190);
+      // HIGH caps raised 2026-11-19 to the 2026-11-14 alarm-horde decision (160 infected +
+      // reservations / 230 characters, batch 99); LOW keeps its 80/120 perf budget (s167/s171).
+      number('L4-04', 'war-phase concurrent infected cap', observation.phasePeaks.war?.alive, 0, low ? 80 : 160);
+      number('L4-04', 'war-phase concurrent character cap', observation.phasePeaks.war?.characters, 0, low ? 120 : 230);
       add('L4-04', 'every war tick observed from turn through line break', scale ? { ticks: scale.ticks, firstTick: scale.firstTick, lastTick: scale.lastTick, turnAt: s4?.turnAt, lineBreakAt: s4?.lineBreakAt } : null,
         'one contiguous observation per simulation tick from turn through the tick before collapse', scale?.turn && s4?.lineBreakAt ?
           scale.firstTick === s4.turnAt && scale.lastTick === s4.lineBreakAt - 1 && scale.ticks === s4.lineBreakAt - s4.turnAt ? true : undefined : undefined);
       number('L4-04', 'actual armed civilian share at turn', scale?.turn?.civilians.length ? scale.turn.armed.length / scale.turn.civilians.length : null, .4, 1);
-      number('L4-04', 'war living infected plus reserved slots and pending turns', scale?.ticks ? scale.peakSlots?.total : null, 0, low ? 80 : 120);
-      number('L4-04', 'war living character identity census', scale?.ticks ? scale.peakCharacters?.ids.length : null, 0, low ? 120 : 190);
+      number('L4-04', 'war living infected plus reserved slots and pending turns', scale?.ticks ? scale.peakSlots?.total : null, 0, low ? 80 : 160);
+      number('L4-04', 'war living character identity census', scale?.ticks ? scale.peakCharacters?.ids.length : null, 0, low ? 120 : 230);
       if (receipt.highHold) {
         const h = receipt.highHold;
         number('L4-05', 'distinct arrival street edges', h.arrivalEdges.length, 3, Infinity);
@@ -363,23 +366,33 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     case 'L8': {
       number('L8-01', 'observed route weapon pickup transactions', observation.pickups.filter(pickup => pickup.item?.startsWith('weapon.')).length, 0, 0);
       number('L8-01', 'new weapon pickup census', initial.census.filter(e => e.pickup && 'actionId' in e.pickup).length, 0, 0);
-      add('L8-02', 'native calm marker and infected attack event state (HUD text requires browser)', observation.calm, '3600 ticks ±1; destination marker present for the 3599 observable calm ticks; zero combat events', Math.abs(observation.calm.ticks - 3600) <= 1 && observation.calm.markerTicks >= 3599 && observation.calm.combatEvents === 0);
+      const zoo = final.l8;
+      // The breach waits for Nadia's guided tour (target changed 2026-11-19, s168/s171): the calm
+      // runs to max(3600 ticks, tour arrival + 900 ticks) and keeps its marker on every tick.
+      const expectedBreachTicks = zoo?.guideDone === 2 ? Math.max(3600, zoo.guideArrivedAt - zoo.startedAt + 900) : 3600;
+      add('L8-02', 'native calm marker and infected attack event state (HUD text requires browser)', { ...observation.calm, expectedBreachTicks: zoo ? expectedBreachTicks : null },
+        'calm of max(3600 ticks, guided-tour arrival + 900 ticks) ±1 (the breach waits for the tour, never before 60 s); destination marker present on every observable calm tick; zero combat events; zero infected',
+        !!zoo?.breachedAt && Math.abs(observation.calm.ticks - expectedBreachTicks) <= 1 && observation.calm.markerTicks === observation.calm.ticks && observation.calm.combatEvents === 0 && observation.calm.maxAlive === 0);
       const markerChanges = observation.markerChanges as { tick: number; step: string; marker: string | null }[];
-      const plaza = markerChanges.find(change => change.step === 'sanctuary' && change.marker === 'central-plaza');
-      const hold = markerChanges.find(change => change.tick >= 3600 && change.tick < 5400 && change.marker === null);
+      const tour = markerChanges.find(change => change.marker === 'l8-route');
+      const hold = markerChanges.find(change => !!zoo?.breachedAt && change.tick >= zoo.breachedAt && change.tick < zoo.breachedAt + 1800 + (zoo?.protectAway ?? 0) && change.marker === null);
       const apc = markerChanges.find(change => change.step === 'escape' && change.marker === 'exit');
-      const noEarlyExit = markerChanges.every(change => change.marker !== 'exit' || change.tick >= 5400);
-      add('L8-02', 'PO 2026-11-08: plaza tour, markerless defence, then APC route', { plaza, hold, apc, noEarlyExit }, 'central-plaza active from first tick; markerless defence from tick3600; APC marker only after tick5400 and the plaza rendezvous', !!plaza && plaza.tick <= 1 && !!hold && !!apc && apc.tick >= 5400 && noEarlyExit);
+      const noEarlyExit = markerChanges.every(change => change.marker !== 'exit' || change.step === 'escape' || change.step === 'depart');
+      add('L8-02', 'guided-tour marker, markerless protect hold, then APC route', { tour, hold, apc, noEarlyExit },
+        'l8-route marker follows Nadia from the first observable tick; markerless protect hold for the 30 s (plus away pauses) after the breach; exit marker only in the escape step after the hold and the plaza rendezvous (complete policy)',
+        !!tour && tour.tick <= 1 && !!hold && noEarlyExit && (!competent || (!!apc && apc.tick >= (zoo?.breachedAt ?? 0) + 1800)));
       number('L8-03', 'initial human civilians excluding soldiers and animals', initial.census.filter(e => e.civilian && !e.animal && e.role !== 'soldier').length, 20, Infinity);
       number('L8-03', 'initial soldiers', initial.census.filter(e => e.role === 'soldier').length, 6, Infinity);
       number('L8-03', 'initial zoo animals', initial.census.filter(e => e.animal).length, 8, Infinity);
-      number('L8-03', 'initial animal species', new Set(initial.census.flatMap(e => e.animal ? [e.animal] : [])).size, 5, 5);
+      // Species 5 → 7 on 2026-11-19 (s168/s171): the monkey/lioness arenas and the elephant boss;
+      // the zebra/flamingo minimums below stay unchanged.
+      number('L8-03', 'initial animal species', new Set(initial.census.flatMap(e => e.animal ? [e.animal] : [])).size, 7, 7);
       number('L8-03', 'initial zebras', initial.census.filter(e => e.animal === 'zebra').length, 2, Infinity);
       number('L8-03', 'initial flamingos', initial.census.filter(e => e.animal === 'flamingo').length, 3, Infinity);
-      const zoo = final.l8;
-      number('L8-04', 'breach active-sim clock', zoo?.breachedAt ? zoo.breachedAt - zoo.startedAt : null, 3599, 3601);
+      number('L8-04', 'breach active-sim clock', zoo?.breachedAt ? zoo.breachedAt - zoo.startedAt : null, expectedBreachTicks, expectedBreachTicks);
       number('L8-04', 'distinct tunnel outlets', zoo?.outlets.length, 3, Infinity);
-      if (competent && receipt.run?.completed) number('L8-05', 'actual admitted Alphas over observed route', zoo?.alphas, 3, 5);
+      // 0–3 route-region Alphas (2026-11-19, s168/s171): the six animal arenas carry the outbreak.
+      if (competent && receipt.run?.completed) number('L8-05', 'actual admitted Alphas over observed route', zoo?.alphas, 0, 3);
       number('L8-05', 'concurrent cap', observation.peakAlive, 0, low ? 100 : 200);
       const enclosurePath='docs/reports/fix55-c/L8-enclosure-paths.json';
       if(competent&&existsSync(enclosurePath)){
@@ -446,10 +459,13 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     case 'L9': {
       const hits = observation.ledger.filter(event => event.type === 'vehicle.durability-hit');
       const archetypes = new Map(observation.final.census.map(e => [e.id, e.archetype]));
-      add('L9-04', 'actual contact/attack durability transactions', hits, 'PO 2026-11-08: attack/regular contact 10; heavy contact 40; elephant 80; bloated 60; each clamped at zero', hits.length ? hits.every(event => {
+      // PO 2026-11-11 billing (implemented 77747c73; target adopted 2026-11-19, s168/s171): ramming
+      // ordinary infected is free; brute/armored/riot and bloated contacts cost 10, elephant 20;
+      // stopped/surround hull attacks stay 10.
+      add('L9-04', 'actual contact/attack durability transactions', hits, 'PO 2026-11-11 (implemented 77747c73): moving regular contact 0; brute/armored/riot contact 10; elephant 20; bloated 10; stopped/surround attack 10; each clamped at zero', hits.length ? hits.every(event => {
         if (event.type !== 'vehicle.durability-hit' || event.source === 'obstacle') return true;
         const archetype = archetypes.get(event.targetId), heavy = ['infected.brute', 'infected.armored', 'infected.riot'].includes(archetype ?? '');
-        const amount = event.source === 'attack' ? 10 : archetype === 'infected.elephant' ? 80 : archetype === 'infected.bloated' ? 60 : heavy ? 40 : 10;
+        const amount = event.source === 'attack' ? 10 : archetype === 'infected.elephant' ? 20 : archetype === 'infected.bloated' || heavy ? 10 : 0;
         return event.after === Math.max(0, event.before - amount);
       }) : undefined);
       const signals = observation.ledger.filter(event => event.type === 'mission.signal');
@@ -515,7 +531,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['G-10', [{ clause: 'moving approach collection for every pickup class', policy: 'controlled-fixture', level: 'L6' }]],
   ['G-11', [...Array.from({ length: 10 }, (_, i) => ({ clause: 'duplicate pickup transactions since the last restore', policy: 'complete', level: `L${i + 1}` })), { clause: 'pickup remains removed for 120 ticks after transaction', policy: 'controlled-fixture', level: 'L1' }]],
   ['G-12', [{ clause: '35-follower production eligibility and cap', policy: 'controlled-fixture', level: 'L7' }]],
-  ['G-24', [{ clause: 'production enemy-bar eligibility at distance/health boundaries', policy: 'controlled-fixture', level: 'L8' }]],
+  ['G-24', [{ clause: 'production enemy-bar eligibility at interaction boundaries', policy: 'controlled-fixture', level: 'L8' }]],
   ['G-16', Array.from({ length: 10 }, (_, i) => ({ clause: 'weapons offered in the ordinary initial racks', policy: 'complete', level: `L${i + 1}` }))],
   ['G-25', Array.from({ length: 10 }, (_, i) => ({ clause: 'physical WASD/mouse full-level browser console', policy: 'real-input-webgl2', level: `L${i + 1}` }))],
   ['L1-01', ['native mission graph completion', 'mission deadline and initial weapons'].map(clause => ({ clause, policy: 'complete' }))],

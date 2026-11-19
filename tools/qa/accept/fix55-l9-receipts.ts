@@ -42,7 +42,7 @@ export function fix55L9Receipts(sourceHash:string):{path:string;receipt:FixtureR
   }
   add('L9-04','safe route retains more durability than risky shortcut',{safe:canonical.preCrashDurability,shortcut:shortcut.preCrashDurability},'both routes complete; safe pre-crash durability strictly greater',canonical.finished&&shortcut.finished&&canonical.preCrashDurability>shortcut.preCrashDurability);
   const hits=shortcut.hits as {source:string;before:number;after:number;contactId:number|null;attackId:number|null}[];
-  add('L9-04','shortcut durability billing per unique contact onset',hits,'nonempty contact ledger; ten damage per onset, no duplicate contact/attack charge',hits.length>0&&hits.every(hit=>hit.after===Math.max(0,hit.before-10))&&new Set(hits.map(hit=>`${hit.source}/${hit.contactId}/${hit.attackId}`)).size===hits.length);
+  add('L9-04','shortcut durability billing per unique contact onset',hits,'nonempty ledger; moving regular/alpha contact onset 0, stopped/surround attack 10, obstacle 10; no duplicate contact/attack charge',hits.length>0&&hits.every(hit=>hit.after===Math.max(0,hit.before-(hit.source==='contact'?0:10)))&&new Set(hits.map(hit=>`${hit.source}/${hit.contactId}/${hit.attackId}`)).size===hits.length);
   const surroundRow=surroundFresh?surround!.rows.find(row=>row.tier===tier):undefined;
   if(surroundRow){
    const windups=surroundRow.events.filter(event=>event.type==='vehicle.attack-windup');
