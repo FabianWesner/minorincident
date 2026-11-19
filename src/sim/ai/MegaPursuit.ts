@@ -322,6 +322,9 @@ export class MegaPursuit {
     }
     const link = this.legBlocked();
     if (!link) return false;
+    // A temporary avoidance is a navigation decision, not an authored
+    // barricade. Wait for its expiry or a replan rather than breaching it.
+    if (s.blocked[link] !== -1) return true;
     s.breach = { link, until: tick + Math.round(megaAlpha.breachS * 60) };
     return true;
   }

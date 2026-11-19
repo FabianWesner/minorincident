@@ -35,6 +35,23 @@ async function detour(wall: boolean): Promise<{ ticks: number; path: number; sid
   } finally { world.dispose(); }
 }
 
+export async function checkBlockedLinks(): Promise<void> {
+  const world = new SimWorld();
+  try {
+    await world.init(); world.loadScenario('horde-arena');
+    const pursuit = installMegaPursuit(world, { introduceTick: null, spawn: { x: -10, z: 0 }, resident: () => true,
+      route: { nodes: [{ id: 'a', x: -10, z: 0 }, { id: 'b', x: 10, z: 0 }], links: [['a', 'b']], pressure: { from: 'a', trailM: 1 } } });
+    const mega = world.entities.get(pursuit.introduce())!;
+    Object.assign(pursuit.state, { passed: 'a', route: ['b'], target: { x: 10, z: 0 }, blocked: { 'a|b': world.tick + 120 } });
+    pursuit.drive(mega);
+    expect(pursuit.state.breach, 'temporary avoidance cannot be breached').toBeNull();
+    expect(pursuit.state.blocked['a|b']).toBe(world.tick + 120);
+    pursuit.blockLink('a', 'b');
+    pursuit.drive(mega);
+    expect(pursuit.state.breach?.link, 'authored closure can be breached').toBe('a|b');
+  } finally { world.dispose(); }
+}
+
 async function checkRouteSolids(): Promise<void> {
   const world = await loadLevel('L10', 1);
   try {
@@ -60,6 +77,7 @@ async function checkRouteSolids(): Promise<void> {
 
 export async function megaBuildingOverlap(): Promise<void> {
   await checkRouteSolids();
+  await checkBlockedLinks();
   const clear = await detour(false), blocked = await detour(true);
   expect(blocked.ticks, 'wall costs real time').toBeGreaterThan(clear.ticks + 60);
   expect(blocked.path, 'wall requires a longer path').toBeGreaterThan(clear.path + 2);
