@@ -1,0 +1,49 @@
+{
+  "scope": "Focused L6 only, LOW, seed 1; not full qa:threat",
+  "sourceHash": "d6a78d691618bec3146b857d3cfd8d96fd023054c03532673cfd55c9651c3b32",
+  "observerHash": "fb99889ee494c524f44bcb2e289fe1d7f21b82abb2fd6ca824315c771de3ede7",
+  "revision": "742c773f7d32b9fd63a330fbe2857ddeccd07692",
+  "seconds": 22.339729167,
+  "flags": [
+    "L6/early-close/wave/l6.breach1:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+    "L6/early-close/wave/l6.breach2:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+    "L6/MISSING_KITING_ON_FOOT_SAMPLE",
+    "L6/SKILLED_DAMAGE_BELOW_30_HP",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate",
+    "BASELINE_MAIN_SOURCE_NOT_VERIFIED"
+  ],
+  "levelFlags": [
+    "wave/l6.breach1:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+    "wave/l6.breach2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+  ],
+  "passiveFlags": [
+    "early-close/wave/l6.breach1:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+    "early-close/wave/l6.breach2:WAVE_NO_ATTACK_WITHIN_20_SECONDS",
+    "MISSING_KITING_ON_FOOT_SAMPLE",
+    "SKILLED_DAMAGE_BELOW_30_HP"
+  ],
+  "kiting": {
+    "kitingSeconds": 0,
+    "attacks": 0,
+    "attacksPerMinute": 0,
+    "samples": 0,
+    "style": "retreat",
+    "minimumHordeSize": 3,
+    "minimumMoveSpeedMps": 0.05,
+    "diagnostics": {
+      "startTick": null,
+      "endTick": null,
+      "firingFrames": 0,
+      "playerAttackStarts": 0,
+      "framesWithoutThreats": 0,
+      "movingSeconds": 0,
+      "immobilizedSeconds": 0,
+      "distanceMeters": 0,
+      "bodyAvoidanceFrames": 0,
+      "phases": []
+    },
+    "hits": 0,
+    "stationaryHits": 0,
+    "hitsPerMinute": 0
+  }
+}

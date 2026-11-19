@@ -1,0 +1,279 @@
+{
+  "method": "HIGH seed 1 complete native input, read-only combat.hit/combat.kill and attack-start event observers; grouped by mission phase. Down counts are event counts, not unique deaths. Baseline temporarily restores the two files from d34d854a^; candidate restores current committed files. The other field for windups includes non-player targets such as barricades.",
+  "baseline": {
+    "run": {
+      "level": "L6",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 199.75,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 40,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "shelter",
+          "t": 33.2
+        },
+        {
+          "id": "stop",
+          "t": 60.766666666666666
+        },
+        {
+          "id": "retreat",
+          "t": 186.16666666666666
+        },
+        {
+          "id": "exit",
+          "t": 194.75
+        }
+      ],
+      "furthestObjective": "exit",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 153,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    "phases": {
+      "shelter": {
+        "hits": {},
+        "damage": {},
+        "down": {},
+        "windups": {},
+        "samples": 33,
+        "aliveSum": 0
+      },
+      "first": {
+        "hits": {
+          "player": 103,
+          "ally": 7
+        },
+        "damage": {
+          "player": 1083.4,
+          "ally": 56
+        },
+        "down": {
+          "player": 12
+        },
+        "windups": {
+          "other": 15,
+          "player": 1
+        },
+        "samples": 21,
+        "aliveSum": 42
+      },
+      "fails": {
+        "hits": {
+          "player": 56,
+          "ally": 2
+        },
+        "damage": {
+          "player": 641.5999999999999,
+          "ally": 16
+        },
+        "down": {
+          "player": 8
+        },
+        "windups": {
+          "other": 11,
+          "player": 1
+        },
+        "samples": 6,
+        "aliveSum": 30
+      },
+      "retreat": {
+        "hits": {
+          "player": 966
+        },
+        "damage": {
+          "player": 10593
+        },
+        "down": {
+          "player": 136
+        },
+        "windups": {
+          "other": 135,
+          "player": 20
+        },
+        "samples": 126,
+        "aliveSum": 1941
+      },
+      "exit": {
+        "hits": {
+          "player": 11
+        },
+        "damage": {
+          "player": 194
+        },
+        "down": {
+          "player": 3
+        },
+        "windups": {
+          "other": 4,
+          "player": 3
+        },
+        "samples": 8,
+        "aliveSum": 189
+      },
+      "done": {
+        "hits": {},
+        "damage": {},
+        "down": {},
+        "windups": {},
+        "samples": 5,
+        "aliveSum": 113
+      }
+    }
+  },
+  "candidate": {
+    "run": {
+      "level": "L6",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 214.25,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 20,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "shelter",
+          "t": 33.2
+        },
+        {
+          "id": "stop",
+          "t": 69.21666666666667
+        },
+        {
+          "id": "retreat",
+          "t": 200.6
+        },
+        {
+          "id": "exit",
+          "t": 209.25
+        }
+      ],
+      "furthestObjective": "exit",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 156,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    "phases": {
+      "shelter": {
+        "hits": {},
+        "damage": {},
+        "down": {},
+        "windups": {},
+        "samples": 33,
+        "aliveSum": 0
+      },
+      "first": {
+        "hits": {
+          "player": 97,
+          "ally": 24
+        },
+        "damage": {
+          "player": 860,
+          "ally": 280
+        },
+        "down": {
+          "player": 12,
+          "ally": 1
+        },
+        "windups": {
+          "other": 9
+        },
+        "samples": 21,
+        "aliveSum": 25
+      },
+      "fails": {
+        "hits": {
+          "ally": 23,
+          "player": 71
+        },
+        "damage": {
+          "ally": 270,
+          "player": 855
+        },
+        "down": {
+          "player": 14,
+          "ally": 2
+        },
+        "windups": {
+          "other": 6
+        },
+        "samples": 15,
+        "aliveSum": 24
+      },
+      "retreat": {
+        "hits": {
+          "ally": 85,
+          "player": 887
+        },
+        "damage": {
+          "ally": 905,
+          "player": 9738
+        },
+        "down": {
+          "player": 131,
+          "ally": 7
+        },
+        "windups": {
+          "other": 77,
+          "player": 11
+        },
+        "samples": 131,
+        "aliveSum": 1391
+      },
+      "exit": {
+        "hits": {
+          "ally": 4,
+          "player": 14
+        },
+        "damage": {
+          "ally": 76,
+          "player": 164
+        },
+        "down": {
+          "player": 3,
+          "ally": 1
+        },
+        "windups": {
+          "other": 3,
+          "player": 4
+        },
+        "samples": 9,
+        "aliveSum": 173
+      },
+      "done": {
+        "hits": {
+          "player": 1
+        },
+        "damage": {
+          "player": 14
+        },
+        "down": {},
+        "windups": {},
+        "samples": 5,
+        "aliveSum": 100
+      }
+    }
+  }
+}
