@@ -198,6 +198,8 @@ export class InteractionView extends Group {
   }
   private assetId(e: EntitySnapshot): string | undefined {
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
+    if (this.world.l10Encounters?.state.convoyCrates?.includes(e.id)) return 'prop.crates';
+    if (pickup?.kind === 'throwable' && pickup.item === 'weapon.molotov') return 'thr.molotov';
     return e.archetype === 'pickup.headlamp' ? 'acc.headlamp' : e.barricade?.slot.sandbag ? 'prop.sandbag-pallet' : e.archetype === 'l6.service-gate' ? 'prop.service-gate' : pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
   }
   /** L1 v2 toys: gameplay-shaped code art (hinged gate leaf, dumpster, car-alarm LED + beacons, car-wash foam curtain and brushes). */

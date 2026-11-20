@@ -66,6 +66,7 @@ export const curePaceEncounters: readonly CureEncounter[] = [
 ];
 // Destructible fuel drums flank the convoy; damage and blast behavior use the shared hazard catalog.
 export const cureConvoyBarrels: readonly Point[] = [[3248, 68], [3264, 70], [3275, 87]];
+export const cureConvoyCrates: readonly Point[] = [[3258, 73], [3271, 83]];
 
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },

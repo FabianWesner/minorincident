@@ -2,7 +2,7 @@ import { layoutHouseDoors, type HouseEmergence } from '../outbreak/HouseEmergenc
 import { finale } from '../../data/l10Finale';
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
-import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups, cureConvoyBarrels, type CureEncounter } from '../../levels/L10/encounters';
+import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups, cureConvoyBarrels, cureConvoyCrates, type CureEncounter } from '../../levels/L10/encounters';
 import { cureAlphaCap, cureAlphaPopulation, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { cureCorgiToy, insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
@@ -29,7 +29,7 @@ const prechargeAssaultDelay = 1800;
 interface CarriedMember { archetype: string; x: number; z: number; group: string; region: CureRegion }
 export interface CureEncounterState {
   finaleEntry?: HouseEmergence; finaleEntryNext?: number; finaleEntrySlot?: boolean;
-  farmScares?: FarmScareState; toy?: number; convoyBarrels?: number[];
+  farmScares?: FarmScareState; toy?: number; convoyBarrels?: number[]; convoyCrates?: number[]; convoySupplies?: Record<string, number>;
   pressureAttackAt?: number; pressureTick?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
@@ -79,6 +79,12 @@ export class LevelTenEncounters {
         const group = this.encounterFor(key);
         if (group) this.carried.set(key, { archetype: actor.archetype, x: actor.transform.x, z: actor.transform.z, group: group.id, region: group.region });
       }
+    });
+    world.events.on('prop.broken', event => {
+      if (event.type !== 'prop.broken' || !this.state.convoyCrates?.includes(event.id)) return;
+      const supplies = this.state.convoySupplies ??= {}, key = String(event.id), crate = world.entities.get(event.id);
+      if (supplies[key] || !crate || !world.pickups) return;
+      supplies[key] = world.pickups.spawn('throwable', crate.transform, 'weapon.molotov');
     });
     world.events.on('sim.tick', event => { if (event.type === 'sim.tick') this.pressure(event.tick); });
   }
@@ -261,6 +267,8 @@ export class LevelTenEncounters {
     }
     if (!this.state.convoyBarrels && cureConvoyBarrels.every(([x, z]) => chunks.resident(x, z)))
       this.state.convoyBarrels = cureConvoyBarrels.map(([x, z]) => w.hazards!.spawn('barrel', { x, z }));
+    if (!this.state.convoyCrates && cureConvoyCrates.every(([x, z]) => chunks.resident(x, z)))
+      this.state.convoyCrates = cureConvoyCrates.map(([x, z]) => w.hazards!.spawn('crate', { x, z }));
     updateFarmScares(w, this.state.farmScares ??= {});
     const pendingScares = Object.values(this.state.farmScares).filter(s=>s.actor===undefined).length;
     this.admitCarried(Math.max(1, pendingScares));

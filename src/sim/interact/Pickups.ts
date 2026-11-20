@@ -72,7 +72,7 @@ export class Pickups {
         let refilled = false;
         for (const side of ['LEFT', 'RIGHT'] as const) for (const slot of loadout.state[side].rack) {
           const def = action(slot.id);
-          if (def.category === 'throwable' && slot.charges < def.charges) { slot.charges++; if (slot.charges === def.charges) slot.nextCharge = 0; refilled = true; }
+          if (def.category === 'throwable' && (!p.item || p.item === slot.id) && slot.charges < def.charges) { slot.charges++; if (slot.charges === def.charges) slot.nextCharge = 0; refilled = true; }
         }
         if (!refilled) continue;
       }
