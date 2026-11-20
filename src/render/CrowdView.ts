@@ -823,9 +823,10 @@ export class CrowdView extends Group {
         // Eight overlapping, irregular clumps settle in over the same 1.5 s
         // that the charred body dissolves. Both stages share the existing two instanced draws.
         for (const [pieceIndex, [dx, dz, sx, sy, sz, turn]] of pieces.slice(0, heapPieces).entries()) {
-          const settle = ashProgress, emerge = Math.min(1, Math.max(0, ashProgress * 8 - pieceIndex));
+          const settle = Math.min(1, Math.max(0, (ashProgress - pieceIndex * .06) / .55));
+          const emerge = Math.min(1, Math.max(0, ashProgress * 8 - pieceIndex));
           this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 1.5 * emerge, sy * emerge, sz * 1.5 * emerge));
-          this.transform.setPosition(x + dx * 1.5, ground + .045 + sy * .5 + (1 - settle) * (.22 + sy), z + dz * 1.5);
+          this.transform.setPosition(x + dx * (.7 + .8 * settle), ground + .045 + sy * .5 + (1 - settle) * (.55 + sy), z + dz * (.7 + .8 * settle));
           this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
           this.ashSwatch.set(pieceIndex === 5 ? '#514c45' : '#c5c3bb').lerp(this.emberAsh, (1 - ashProgress) * .16);
           this.ashSwatch.lerp(this.charAsh, 1 - ashProgress);
