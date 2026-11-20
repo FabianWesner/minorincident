@@ -503,7 +503,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
     ctx.fillStyle = '#17242b'; ctx.fillRect(px + 2, py + 2, cellW - 4, cellH - 4);
     ctx.strokeStyle = '#c4d2d2'; ctx.lineWidth = 6; ctx.strokeRect(px + 8, py + 8, cellW - 16, cellH - 16);
     const title = b.label.trim().replace(/(^|\s)\S/g, c => c.toUpperCase());
-    ctx.fillStyle = '#f5f3e9'; ctx.font = '600 60px Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#f5f3e9'; ctx.font = b.id.startsWith('bld.cure-lab-main:') ? '600 96px Arial, sans-serif' : '600 60px Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(title, px + cellW / 2, py + cellH / 2, cellW - 50);
     parts.signs.push(title);
     const min = b.aabb.min, max = b.aabb.max;
@@ -513,9 +513,9 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
     const base = positions.length / 3, u0 = (px + 1) / canvas.width, u1 = (px + cellW - 1) / canvas.width;
     const v0 = 1 - (py + cellH - 1) / canvas.height, v1 = 1 - (py + 1) / canvas.height;
     if (b.id.startsWith('bld.cure-lab-main:')) {
-      // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
-      const faceX = cx + 16.205, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
-      positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
+      // The vestibule wall above the canopy backs the full board.
+      const faceX = cx + 13.705, cz = (min[2] + max[2]) / 2, signY = 4.1, halfWidth = 2.3, halfHeight = .19;
+      positions.push(faceX,signY-halfHeight,cz+halfWidth, faceX,signY-halfHeight,cz-halfWidth, faceX,signY+halfHeight,cz-halfWidth, faceX,signY+halfHeight,cz+halfWidth);
     } else if (b.id.startsWith('bld.supermarket:') || b.id.startsWith('bld.pharmacy:')) {
       const p = placements.find(row => row.id === b.id)!;
       const market = b.id.startsWith('bld.supermarket:');

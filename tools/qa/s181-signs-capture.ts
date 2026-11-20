@@ -26,7 +26,7 @@ try {
       if (level === 'L3P' || level === 'L1F' || level === 'D-CIVIC' || level === 'D-CIVICH' || level === 'D-SHOPM' || level === 'D-SHOPP' || level === 'D-SCHOOLG') { a.teleport('player', { x: x + (level === 'D-CIVICH' || level === 'D-SCHOOLG' ? 30 : 5), z }); game.view.view.reset(game.world.entities.get(1)!.transform, true); }
       a.camera.cinematic({ target: [x, y, z], position: level === 'D-SCHOOLG' ? [x, y + .5, z + 3] : level.startsWith('L9') ? [x - 4, y + 2, z - 9] : [x + 9, y + 2, z - 4] }, true);
     }
-    else { a.teleport('player', { x: x + 1, z: z + 1 }); a.camera.follow(); game.view.view.reset(game.world.entities.get(1)!.transform, true); }
+    else { a.teleport('player', { x: x + 1, z: z + (level === 'L10' ? -1 : 1) }); a.camera.follow(); game.view.view.reset(game.world.entities.get(1)!.transform, true); }
     await a.screenshotReady();
     return { districtId, label, x, y, z, signs: a.getState().render.districts?.signs, visibility: a.getState().render.districts?.signVisibility };
   }, process.argv[3] ?? 'L10');
