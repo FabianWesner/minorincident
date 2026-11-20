@@ -6,4 +6,10 @@ export const weaponRoles: Readonly<Record<string, string>> = {
   'weapon.hunting-rifle': 'Pick off Alphas and specials from afar', 'weapon.nail-gun': 'Nail them to the ground, quietly',
   'weapon.assault-rifle': 'Accurate all-rounder with a torch', 'weapon.flamethrower': 'Melt crowds up close',
   'weapon.rocket-launcher': 'Blow apart groups and heavies', 'weapon.flashbang': 'Stun a crowd and break grabs',
+  'weapon.molotov': 'Set a patch of ground ablaze', 'weapon.pipe-bomb': 'Delayed blast against a crowd',
+  'weapon.grenade': 'Blast a group at range', 'weapon.smoke-grenade': 'Cover an escape with smoke',
+  'weapon.firecracker-lure': 'Draw infected toward the thrown firecracker', 'weapon.smg': 'Fast fire at close range',
+  'weapon.pistol': 'Ammunition-fed sidearm', 'weapon.machine-gun': 'Sustained automatic fire',
+  'weapon.machete': 'Fast, lethal cuts',
+  'ability.corgi-lure': 'Draw nearby infected toward the corgi for 5 seconds',
 };

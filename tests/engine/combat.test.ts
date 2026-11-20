@@ -20,6 +20,7 @@ import { loadLevel } from '../qa/invariants/world';
 import { checkRocketCadence, checkRocketEndpoints } from '../helpers/l7Uat';
 import { emptyInput } from '../../src/input/InputFrame';
 import { weaponRoles } from '../../src/data/weaponRoles';
+import { weaponName } from '../../src/data/weaponNames';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -258,6 +259,10 @@ async function checkRaisedMountedGun(): Promise<void> {
 }
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
+  expect(['weapon.army-mg', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.molotov', 'weapon.pipe-bomb'].map(weaponName))
+    .toEqual(['Army MG', 'Hunting Rifle', 'Nail Gun', 'Molotov Cocktail', 'Pipe Bomb']);
+  expect(rosterAction('ability.corgi-lure')).toMatchObject({ range: 15, cooldown: 12, effect: { kind: 'lure', duration: 5, radius: 15 } });
+  expect(weaponRoles['ability.corgi-lure']).toContain('5 seconds');
   await checkCorgiLure();
   checkArsenalRoles(); await checkPinnedVault(); await checkMolotovCluster(); await checkFlameCluster(); await checkFireAshPersistence(); await checkWeaponControlRoles(); await checkBlastClusters();
   const rifle = await arena(); equip(rifle, ['weapon.hunting-rifle']);
