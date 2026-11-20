@@ -317,7 +317,7 @@ export class LevelTenEncounters {
       if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
           Math.hypot(player.transform.x - 3082, player.transform.z - 30) <= 10) this.state.billboardFallAt = w.tick;
       if (group.setPiece === 'field-hospital' && released.includes(group.id) && this.state.hospitalOpenAt === undefined &&
-          Math.hypot(player.transform.x - 3508, player.transform.z - 25) <= 18) this.state.hospitalOpenAt = w.tick;
+          Math.hypot(player.transform.x - 3508, player.transform.z - 31) <= 10) this.state.hospitalOpenAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
       // charge clock starts, hand off to the next cohort only when that wave
       // is empty; once charging, timed windows continue independently of it.

@@ -150,6 +150,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - Native HIGH hospital trigger trials: 14 m from the first tent did not fire on the route; 17 m fired at tick 47290 while the tent remained outside frame. A 10 m trigger at the middle tent fired at tick 47580, showing a stretcher, cooler and later a partial canvas edge, but no opening or emerging infected. Both timing-only trials were reverted.
 
+- Moved the middle hospital tent six metres toward the crossing, moved its cooler clear, and triggered opening within 10 m of the relocated tent. In the [native HIGH frame](native-hospital-opening-high.jpg) at tick 47520, the canvas flaps are open at the right edge; the tent is cropped, and no silhouettes or emerging infected are visible. HIGH Scene Lab reports only the existing corn/scarecrow overlap. Typecheck, lint and focused world systems (5 tests) pass; HIGH and LOW skilled seed 1 simulations complete in 1091.33 s and 1057.55 s. This is a composition improvement, not acceptance of the hospital moment; full threat and remote suite predate it.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
