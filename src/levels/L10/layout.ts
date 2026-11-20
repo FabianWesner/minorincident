@@ -102,8 +102,11 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // A planted line of scarecrows masks the handful of live hazmat runners.
     for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.farm-scarecrow', 3170 + i * 7, 84 + (i % 2) * 2, [.5, 1.3, .5], i % 2 ? .16 : -.12);
     // Wrecked military vehicles and sandbag islands create a broad fight lane.
-    beat('convoy-truck-a', 'veh.military-truck', 3240, 66, [3.8, 1.5, 1.5], -.35);
-    beat('convoy-truck-b', 'veh.military-truck', 3280, 125, [3.8, 1.5, 1.5], Math.PI + .28);
+    for (const [id, x, z, yaw] of [['a', 3240, 60, -.35], ['b', 3280, 125, Math.PI + .28]] as const) {
+      const truck = beat(`convoy-truck-${id}`, 'veh.military-truck', x, z, [3.8, 1.5, 1.5], yaw);
+      truck.decay = 'wrecked';
+      truck.fieldLight = 'wreckfire';
+    }
     beat('convoy-cover-a', 'prop.sandbag-pallet', 3238, 103, [1.4, .7, .8]);
     beat('convoy-cover-b', 'prop.sandbag-pallet', 3285, 69, [1.4, .7, .8], Math.PI / 2);
     // Concrete culvert mouth with emergency lamps and low visibility inside.
