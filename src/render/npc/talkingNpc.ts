@@ -57,6 +57,13 @@ export function speakingNpc(world: SimWorld, id: number): boolean {
     if (subtitle.id === 'L8.hale-greeting' || subtitle.id === 'L8.hale-breach') return zoo?.haleId === id;
     if (subtitle.id.startsWith('L8.route-') && !subtitle.id.endsWith('.soldier')) return zoo?.keeperId === id;
   }
+  if (world.scenario === 'L9') {
+    const driving = mission.l9?.driving.state;
+    if (['L9.briefing', 'L9.mega-drive', 'L9.stall.sam', 'L9.sam-stays'].includes(subtitle.id)) return driving?.samId === id;
+    const key = ['L9.mega-what', 'L9.clingers'].includes(subtitle.id) ? 'mia'
+      : ['L9.bus.dale', 'L9.bus.dale-beat'].includes(subtitle.id) ? 'dale' : subtitle.id === 'L9.okafor' ? 'okafor' : undefined;
+    return !!key && (driving?.roster.some(actorId => actorId === id && world.entities.get(actorId)?.civilian?.survivor?.key === key) ?? false);
+  }
   if (world.scenario !== 'L10') return false;
   const speaker = subtitle && subtitle.until > world.tick ? inPersonSpeaker[subtitle.id] : undefined;
   if (!speaker) return false;
