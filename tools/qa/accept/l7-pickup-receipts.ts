@@ -1,6 +1,5 @@
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
-import { gzipSync } from 'node:zlib';
 import { atomicJson, reportRoot } from './report';
 import { evidenceIsArchivedOrMatches } from './reviews';
 import type { FixtureReceipt } from './fixtures';
@@ -21,7 +20,7 @@ export function measurePickup(d: Input, sourceHash: string, browserHash: string,
   // The producer retains its failed gate assertion as a measured FAIL, not a collection error.
   const collected = d.errors.length === 0 || !d.gate.pass && d.errors.length === 1 && d.errors[0] === `AssertionError [ERR_ASSERTION]: L7-01 frame gate ${JSON.stringify(d.gate)}`;
   const valid = collected && d.sourceHash === sourceHash && d.browserHash === browserHash && d.setup.backend === 'webgl' && d.setup.quality === d.tier && d.setup.driverDetached && !d.setup.god &&
-    d.toolSha256 === sha(archive?.tool ?? 'tools/qa/accept/fix72-c-l7-pickup.mjs') && d.probeSha256 === sha('tools/playtest/frames.ts') && d.seed.sha256 === (archive ? createHash('sha256').update(gzipSync(readFileSync(archive.seed))).digest('hex') : sha(d.seed.file));
+    d.toolSha256 === sha(archive?.tool ?? 'tools/qa/accept/fix72-c-l7-pickup.mjs') && d.probeSha256 === sha('tools/playtest/frames.ts') && d.seed.sha256 === (archive ? createHash('sha256').update(Buffer.from((JSON.parse(readFileSync(archive.seed, 'utf8')) as { gzipBase64: string }).gzipBase64, 'base64')).digest('hex') : sha(d.seed.file));
   const pickups = d.result.events.filter(e => e.type === 'pickup.collected' && e.actionId === 'weapon.rocket-launcher' && e.pickupId === d.setup.pickup.id);
   const shots = d.result.events.filter(e => e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.rocket-launcher');
   const p = d.setup.player, q = d.setup.pickup.position, distance = Math.hypot(p.x - q.x, p.z - q.z);
