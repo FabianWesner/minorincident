@@ -30,7 +30,7 @@ L10 already has a full warm-up behind the loading card. `CrowdView` registers th
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
 - Focused L10 camera framing tests: 3 passed. The WebGL2 checkpoint trace above exercises the changed loading path.
-- Remote `sh tools/remote/run.sh "$PWD" -- npm test`: first execution hit the 240 s budget; unchanged rerun also timed out at 240.7 s and reported one save-progression test failure after 30.2 s before termination. A third unchanged run passed the previously failing save-progression case but again hit the 240 s budget (245.1 s), with another test failure reported before termination. Suite is not green.
+- Remote `sh tools/remote/run.sh "$PWD" -- npm test`: first execution hit the 240 s budget; unchanged rerun also timed out at 240.7 s and reported one save-progression test failure after 30.2 s before termination. A third unchanged run passed the previously failing save-progression case but again hit the 240 s budget (245.1 s), with another test failure reported before termination. A fourth unchanged run again timed out (245.6 s); the save-progression and player cases passed in that run, but the suite did not finish. Suite is not green.
 - Before → after worst frame and p99: WebGL2 high above; low baseline pending.
 - Backend/tier coverage: WebGPU high, WebGL2 high, and WebGPU low traced after the fix.
 
