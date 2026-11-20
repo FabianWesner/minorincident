@@ -4,7 +4,7 @@ The controlled WebGL2 fixture uses HIGH and LOW, zoom 1.5, and steps the convers
 
 The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-talkers-capture.ts`, shows Voss clear of the canister, turned toward the courier with an arm raised. Her precise gaze direction and the eastward indication remain difficult to judge at this scale.
 
-[Ruiz HIGH](ruiz-talking-high.jpg) shows him to the courier's right during his subtitle after a controlled lead-in. The contact sheet is too small to verify his gaze and gesture quality.
+[Ruiz HIGH](ruiz-talking-high.jpg) shows him to the courier's right during his subtitle after a controlled lead-in. A second [hangar motion sheet](hangar-motion.jpg) and joint probe sampled every half second show Ruiz moving his left hand more than 10 cm during `npc-plead`, and both guards taking short walks. The researcher cycles `npc-glance`; these small figures do not establish the quality of her subtle motion or Ruiz's gaze by eye.
 
 [Rosa epilogue HIGH](rosa-epilogue.jpg) uses an injected healthy Rosa roster entry and release time. Rosa and the existing courier appear together beside the truck, with Rosa gesturing and her subtitle visible. This fixture does not verify the full campaign transition.
 
