@@ -441,7 +441,6 @@ export class SimWorld implements Lifecycle {
   }
   /** E05 impulse is the authored displacement in metres, swept against full cover. */
   knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number, ticks = 1): void {
-    if (entity.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > this.tick)) return;
     if (ticks > 1) {
       entity.knockbackSlide = { x: direction.x * impulse, z: direction.z * impulse, ticks };
       this.slideKnockback(entity);

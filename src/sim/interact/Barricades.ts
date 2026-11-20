@@ -227,13 +227,6 @@ export class Barricades {
   /** Fixed tick vault over low sandbags and L4 military wire; crawlers and Alphas keep attacking. */
   vault(attacker: EntitySnapshot, target?: EntitySnapshot): boolean {
     const brain = attacker.infected!;
-    // A nail fixes the body in place even if it lands during a vault. Pause
-    // the vault clock so it resumes from the same point when the pin expires.
-    if (attacker.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > this.world.tick)) {
-      if (brain.vault) brain.vault.pausedAt ??= this.world.tick;
-      return !!brain.vault;
-    }
-    if (brain.vault?.pausedAt !== undefined) { brain.vault.started += this.world.tick - brain.vault.pausedAt; delete brain.vault.pausedAt; }
     const slot = target?.barricade?.slot;
     const militaryWire = this.world.scenario === 'L4' && slot?.groupId === 'l4-wall' && slot.height <= 1.12;
     const leaperClimb = attacker.archetype === 'infected.alpha' && brain.alphaType === 'leaper' && !!slot && slot.height <= 1.2;

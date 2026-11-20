@@ -14,7 +14,6 @@ import { l8BossArenas, l8Route, inRect } from '../data/l8Bosses';
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
 import type { Game } from '../Game';
 import { action } from '../data/actions/catalog';
-import { weaponRoles } from '../data/weaponRoles';
 import { actionIconUrl } from '../assets/icons';
 import { button, node, text as domText, setHidden, attribute, style } from './dom';
 import { Onboarding } from './Onboarding';
@@ -66,8 +65,6 @@ export class Hud {
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
-  private readonly seenWeaponRoles = new Set<string>();
-  private pickupRole: { id: string; until: number } | null = null;
   private emptyWeapon: { id: string; until: number; tooClose?: boolean } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
@@ -218,16 +215,13 @@ export class Hud {
     this.clear();
     this.shieldBlockUntil = -1;
     this.damagedUntil = this.barkUntil = this.civilianBarkUntil = this.weaponHintUntil = -1; this.weaponActionId = '';
-    this.emptyWeapon = null; this.pickupRole = null;
+    this.emptyWeapon = null;
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
-    for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout', 'pickup.collected'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
+    for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
-    if (event.type === 'pickup.collected' && 'actionId' in event && weaponRoles[event.actionId] && !this.seenWeaponRoles.has(event.actionId)) {
-      this.seenWeaponRoles.add(event.actionId); this.pickupRole = { id: event.actionId, until: event.tick + 240 };
-    }
     if (event.type === 'combat.hit' && (event.blocked || event.shieldGlance) && event.sourceId === 1) {
       const p = this.game.view.project(event.position.x, event.position.y + 1.2, event.position.z);
       this.shieldBlock.textContent = event.shieldBreak ? 'SHIELD BROKEN · 1.5s' : event.shieldGlance ? 'SHIELD STRAIN · CHIP' : 'BLOCKED · FLANK';
@@ -448,8 +442,8 @@ export class Hud {
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
         const shortcut = key <= 9 ? String(key) : key === 10 ? '0' : '';
-        item.title = `${label(entry.id)}${weaponRoles[entry.id] ? ` · ${weaponRoles[entry.id]}` : ''}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
-        item.type = 'button'; item.tabIndex = -1;
+        item.title = `${label(entry.id)}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
+        item.type = 'button'; item.tabIndex = -1; 
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
         item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); this.game.input.selectWeaponKey(key); });
@@ -470,7 +464,7 @@ export class Hud {
       const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
       attribute(item, 'data-empty', String(empty));
       const key = entries.findIndex(entry => entry.id === id) + 1, shortcut = key <= 9 ? String(key) : key === 10 ? '0' : '';
-      item.title = `${label(id)}${weaponRoles[id] ? ` · ${weaponRoles[id]}` : ''}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
+      item.title = `${label(id)}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
       item.setAttribute('aria-label', item.title);
     }
     this.corgiLure.disabled = (player.weapons?.corgiReady ?? 0) > world.tick;
@@ -488,8 +482,7 @@ export class Hud {
       const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until
         ? this.emptyWeapon.tooClose ? 'Too close!' : `${label(this.emptyWeapon.id)} · Empty`
         : null;
-      const pickup = this.pickupRole && world.tick <= this.pickupRole.until ? this.pickupRole.id : null;
-      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup]}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`); setHidden(this.weapon.hint, !pickup && !emptyCue && world.tick > this.weaponHintUntil);
+      text(this.weapon.hint, emptyCue ?? shown.name); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot or Q / Shift+Q to cycle'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));

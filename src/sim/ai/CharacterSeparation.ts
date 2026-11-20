@@ -73,11 +73,11 @@ export function installCharacterSeparation(world: SimWorld): void {
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
       body.hullContact = !!drivenHull && drivenHull.speed < .2 && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
       body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow' && !world.missions?.state.l5?.metroAt;
-      body.fixed = !!e.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > world.tick) || !!(e.emerging && world.scenario === 'L4') || !!(e.infected?.pursuit && e.infected.specialAttack) || !!(e.infected?.arenaBoss?.arena === 'elephant' && e.infected.specialAttack && e.infected.specialAttack.stage !== 'recovery') || body.courier && !yieldCourier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
+      body.fixed = !!(e.emerging && world.scenario === 'L4') || !!(e.infected?.pursuit && e.infected.specialAttack) || !!(e.infected?.arenaBoss?.arena === 'elephant' && e.infected.specialAttack && e.infected.specialAttack.stage !== 'recovery') || body.courier && !yieldCourier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
       body.charge = !!attack && attack.stage === 'active' && (attack.move === 'alpha.charge' || attack.move === 'elephant.charge' || attack.move === 'zebra.stampede');
       radii[e.id] = body; radiusIds.push(e.id); maximumRadius = Math.max(maximumRadius, r);
-      if (e.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > world.tick) || e.emerging && world.scenario === 'L4') continue;
+      if (e.emerging && world.scenario === 'L4') continue;
       if ((e.infected?.specialAttack && (e.infected.pursuit || e.infected.specialAttack.stage !== 'recovery') && e.infected.specialAttack.move !== 'lion.flank') || e.survivor && !yieldCourier || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
       bodies[bodyCount++] = body;
     }

@@ -646,10 +646,7 @@ export class AudioService implements Lifecycle {
         for (const side of player.weapons ? [player.weapons.LEFT, player.weapons.RIGHT] : [])
             for (const slot of side.rack) {
                 const was = this.reloading.get(slot) ?? 0;
-                if (slot.reloadUntil && !was) {
-                    const ownCue = `weapon.reload.${slot.id.replace(/^weapon\./, '')}`;
-                    this.play(audioCues[ownCue] ? ownCue : /rifle|machine-gun|army-mg|smg/.test(slot.id) ? 'weapon.reload-rifle' : 'weapon.reload', { position: player.transform, gain: 0.8 }, 1);
-                }
+                if (slot.reloadUntil && !was) this.play(/rifle|machine-gun|army-mg|smg/.test(slot.id) ? 'weapon.reload-rifle' : 'weapon.reload', { position: player.transform, gain: 0.8 }, 1);
                 this.reloading.set(slot, slot.reloadUntil);
             }
         if (this.world.tick % 6 === 0) {

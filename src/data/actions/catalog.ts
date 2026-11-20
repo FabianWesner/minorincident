@@ -40,26 +40,26 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
   { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65 },
   // Close-mid precision tool: three nails drop a standard 40 HP infected.
-  { ...gun('nail-gun', 14, 18, 6, 24, 1.6, 1), noiseRadius: noiseForAction('weapon.handgun').radius / 3, projectile: { speed: 60, gravity: 0, pierce: 0 } },
+  { ...gun('nail-gun', 20, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
   gun('smg', 18, 20, 8, 30, 1.5, 2),
   // Deliberate precision rifle: one ordinary infected; two landed shots remove a 300 HP Alpha.
-  { ...gun('hunting-rifle', 300, 40, 1, 5, 2.4, 0), tier: 1, projectile: { speed: 110, gravity: 0, pierce: 2 }, maxTargets: 3 },
+  { ...gun('hunting-rifle', 300, 32, 1, 5, 2.4, 0), tier: 1, projectile: { speed: 110, gravity: 0, pierce: 1 }, maxTargets: 2 },
   gun('assault-rifle', 26, 28, 7.5, 30, 2, 1, 2),
   // L10 signature issue from the safe hangar: a short-range, five-ray fire cone.
-  { ...gun('flamethrower', 4.5, 8, 15, 90, 5, 25, 3), pellets: 7, stagger: .15,
-    status: { kind: 'burning', duration: 4, maxStacks: 1, dps: 35, slow: 0 } },
+  { ...gun('flamethrower', 20, 6, 3, 60, 3, 20, 3), pellets: 7, stagger: .15,
+    status: { kind: 'burning', duration: 3, maxStacks: 1, dps: 24, slow: 0 } },
   fixtures['weapon.machine-gun'],
   // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
   // (a round passes through one infected and hits the next). No ammunition system (00 §6.1): no magazine, reload or overheat.
   // Its own id: 'weapon.machine-gun' stays the E06 magazine-and-reload reference (fixtures, balance rows, tests).
   { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.army-mg', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
-  { ...gun('rocket-launcher', 180, 35, 1.2, 0, 0, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 6, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, knockdown: true, upgradeHooks: ['damage', 'spread'], noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
+  { ...gun('rocket-launcher', 180, 35, 1.2, 0, 0, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 6, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, upgradeHooks: ['damage', 'spread'], noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
   fixtures['weapon.grenade'],
   { ...thrown('molotov', 135, 4.5, 0), splash: { radius: 4.5, falloff: 0.6 }, knockback: 0, stagger: 0, effect: { kind: 'fire', radius: 4, duration: 8 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 28, slow: 0 } },
   thrown('pipe-bomb', 150, 4.5, 2),
   { ...thrown('firecracker-lure', 0, 15, 0), splash: null, effect: { kind: 'lure', radius: 15, duration: 5 } },
   { ...thrown('smoke-grenade', 0, 6, 0), splash: null, effect: { kind: 'smoke', radius: 6, duration: 12 } },
-  { ...thrown('flashbang', 0, 7, 1), tier: 2, status: { kind: 'stunned', duration: 3, maxStacks: 1, dps: 0, slow: 0 } },
+  { ...thrown('flashbang', 0, 5, 1), tier: 2, status: { kind: 'stunned', duration: 3, maxStacks: 1, dps: 0, slow: 0 } },
   { ...ability('corgi-lure', 15, 5, 12, 'lure'), tier: 1 },
   { ...fixtures['ability.ground-slam'], knockdown: true },
   ability('shield-bubble', 2.5, 4, 14, 'shield'),

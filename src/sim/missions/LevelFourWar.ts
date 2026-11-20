@@ -602,9 +602,7 @@ export class LevelFourWar {
       // Fast arrivals climb the authored low wire while the heavy horde waits
       // for the Alpha's breach. Scripted wire goals otherwise bypass the normal
       // barricade chase branch that starts a vault.
-      // An actor already crossing an open breach must keep that route; trying
-      // an adjacent intact rail can repeatedly fail against the physical wall.
-      if (e.health.current > 0 && !e.hidden && !inside(e.transform) && !(open.length && b.breachApproach === 'inside') &&
+      if (e.health.current > 0 && !e.hidden && !inside(e.transform) &&
           e.archetype !== 'infected.crawler' && (l4InfectedArchetypes as readonly string[]).includes(e.archetype)) {
         const wall = intactWalls.find(w => {
           const inward = w!.barricade!.slot.inward!;

@@ -138,7 +138,7 @@ export class Combat {
     this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim }, ...(attack.style ? { style: attack.style } : {}) });
     if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
   }
-  private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1, shotOrigin?: Vec2, centreShot = false): void {
+  private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1, shotOrigin?: Vec2): void {
     if (attack.hit.has(target.id)) return;
     attack.hit.add(target.id);
     // s178 Hard: an in-place swing on a civilian deals friendly-fire damage instead of the harmless "Hey!" annoy.
@@ -151,16 +151,9 @@ export class Combat {
     const def = attack.def, distanceFalloff = def.distanceFalloff;
     if (distanceFalloff) falloff *= 1 - (1 - distanceFalloff.minimum) * Math.max(0, Math.min(1, (distance - distanceFalloff.start) / (distanceFalloff.end - distanceFalloff.start)));
     const alive = target.health.current > 0;
-    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, ...(shotOrigin ? { shotOrigin } : {}), direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.id === 'weapon.shotgun' ? centreShot && distance <= 3 : def.knockdown, ...(def.id === 'weapon.shotgun' && centreShot && distance <= 3 ? { knockdownTicks: 90 } : {}), ...(def.id === 'weapon.flamethrower' ? { permanent: true } : {}), ...(attack.style ? { sweep: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
+    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, ...(shotOrigin ? { shotOrigin } : {}), direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(attack.style ? { sweep: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
     if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
     if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
-    // Long-range suppressive fire holds distant approaches; nearby hits retain normal movement.
-    if (alive && amount > 0 && target.faction === 'infected' && def.id === 'weapon.army-mg' && Math.hypot(target.transform.x - (shotOrigin?.x ?? origin.x), target.transform.z - (shotOrigin?.z ?? origin.z)) >= 20) this.status.apply(target, { kind: 'slowed', duration: .5, maxStacks: 1, dps: 0, slow: .2 }, attack.sourceId, def.id, attack.id);
-    if (alive && amount > 0 && target.faction === 'infected' && def.id === 'weapon.nail-gun' && !target.infected?.pursuit && !target.infected?.arenaBoss) {
-      const heavy = ['infected.brute', 'infected.armored', 'infected.riot', 'infected.bloated', 'infected.firefighter', 'infected.hazmat'].includes(target.archetype ?? '');
-      const duration = heavy ? 1 : target.archetype === 'infected.alpha' ? .5 : 2;
-      this.status.apply(target, { kind: 'pinned', duration, maxStacks: 1, dps: 0, slow: 1 }, attack.sourceId, def.id, attack.id);
-    }
   }
   private splash(attack: Attack, position: Vec2 & { y?: number }, directTargetId?: number): void {
     const def = attack.def, splash = def.splash!;
@@ -234,23 +227,6 @@ export class Combat {
     else if (def.category === 'melee' || def.category === 'ability') {
       this.environment(attack, { ...source.transform, y: source.transform.y+.3 }, attack.aim, def.range);
       for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace, attack.target)) this.hit(attack, target, source.transform, 'melee');
-    } else if (def.id === 'weapon.flamethrower') {
-      const origin = { ...source.transform, y: source.transform.y + .45 };
-      const halfCone = Math.cos(def.spread * Math.PI / 360);
-      // Heat fills the cone: each exposed infected receives the full stream tick,
-      // independently of other bodies. Walls and destructibles still stop it.
-      for (const id of [...this.query.nearby(origin, def.range)]) {
-        const target = this.world.entities.get(id);
-        if (!target || target.faction !== 'infected' || target.health.current <= 0 || target.hidden) continue;
-        const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
-        if (!distance || distance > def.range || (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone) continue;
-        const direction = { x: dx / distance, y: 0, z: dz / distance };
-        if (!this.query.visible(origin, target.transform, target.id) || (this.world.destruction?.trace(origin, direction, distance)?.distance ?? distance) < distance - .05) continue;
-        this.hit(attack, target, source.transform, 'bullet');
-      }
-      const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
-      const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
-      this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
     } else if ((def.pellets ?? 1) > 1) {
       this.pelletHits.clear();
       const count = def.pellets!, angle = deterministicAtan2(attack.aim.z, attack.aim.x);
@@ -261,8 +237,13 @@ export class Combat {
         const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, this.pelletDirection, def.range, target, 1/count);
         if (target && !blocked) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
       }
-      const centreTarget = def.id === 'weapon.shotgun' ? this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range) : undefined;
-      for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count, undefined, target === centreTarget);
+      for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count);
+      if (def.id === 'weapon.flamethrower') {
+        const origin = { ...source.transform, y: source.transform.y + .45 };
+        const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
+        const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
+        this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
+      }
     } else {
       const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range);
       const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, attack.aim, def.range, target);
@@ -316,7 +297,7 @@ export class Combat {
           // Impact alerts use an explosion cue, rather than replaying the launch
           // sprite and competing with the next rocket's discharge voice.
           this.effects.noise(p, def.noiseRadius, 'explosion.rocket', p.attack.sourceId, 'explosionLarge');
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, ...(def.id === 'weapon.flashbang' ? { actionId: def.id } : {}), radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1);
         }
       } else if (p.landing) {
@@ -328,7 +309,7 @@ export class Combat {
           if (def.splash) { this.splash(p.attack, p); this.blast(p.attack, p); }
           this.effects.create(p.attack, p);
           if (def.category === 'throwable' && def.damage) this.effects.noise(p, def.noiseRadius, def.id);
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, ...(def.id === 'weapon.flashbang' ? { actionId: def.id } : {}), radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1);
         }
       } else if (age > 0) {
@@ -341,7 +322,7 @@ export class Combat {
           if (target) { p.x = target.transform.x; p.z = target.transform.z; }
           else { p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; }
           this.splash(p.attack, p, target?.id); this.blast(p.attack, p); this.effects.noise(p, def.noiseRadius, def.id);
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, ...(def.id === 'weapon.flashbang' ? { actionId: def.id } : {}), radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1); continue;
         }
         while (target && p.attack.hit.size < def.maxTargets) {

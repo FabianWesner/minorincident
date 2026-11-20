@@ -23,7 +23,7 @@ export interface InfectedState {
   /** Fixed roar origin; convergence lasts 300 ticks, with an independent non-stacking speed boost. */
   roar?: { sourceId: number; attackId: number; x: number; z: number; until: number; speedScale?: number; speedUntil?: number };
   state: 'idle' | 'wander' | 'alerted' | 'chase' | 'attack' | 'stagger' | 'dead' | 'migration' | 'scatter' | 'search' | 'attracted' | 'bite';
-  vault?: { started: number; pausedAt?: number; from: { x: number; z: number }; to: { x: number; z: number }; height: number };
+  vault?: { started: number; from: { x: number; z: number }; to: { x: number; z: number }; height: number };
   pathGrid: number; grabNextTick: number;
   combo: number;
   targetId: number;

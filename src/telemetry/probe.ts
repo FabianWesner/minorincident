@@ -27,7 +27,7 @@ export class RunProbe {
     this.stops.push(events.on('objective.started', e => { if (e.type === 'objective.started') this.started.set(e.id, e.tick); }));
     this.stops.push(events.on('objective.completed', e => { if (e.type === 'objective.completed') { const from = this.started.get(e.id) ?? null; this.objectives.push({ id: e.id, startedTick: from, completedTick: e.tick, seconds: from === null ? null : Math.round((e.tick - from) / 60 * 10) / 10 }); } }));
     this.stops.push(events.on('checkpoint.set', e => { if (e.type === 'checkpoint.set') this.checkpoints.push({ id: e.id, tick: e.tick }); }));
-    this.stops.push(events.on('pickup.collected', e => { if ('actionId' in e && typeof e.actionId === 'string') this.pickups.push({ id: e.actionId, tick: e.tick }); }));
+    this.stops.push(events.on('pickup.collected', e => { if ('actionId' in e) this.pickups.push({ id: e.actionId, tick: e.tick }); }));
     this.stops.push(events.on('level.completed', e => { if (e.type === 'level.completed') this.completed = { tick: e.tick, time: e.result.time, deaths: e.result.deaths, kills: e.result.kills }; }));
   }
   detach(): void { for (const stop of this.stops) stop(); this.stops = []; }

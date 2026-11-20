@@ -40,9 +40,8 @@ export function packedAppearance(id: number, shirt: Color, accessory = 0, hidesH
   // Keep the remainder strictly below 2, including HDR story tints.
   return [Math.min(1, shirt.r) + 2 * a.hair + 16 * (accessory % 32) + (hidesHair ? 512 : 0), Math.min(1, shirt.g) + 2 * a.skin, Math.min(1, shirt.b) + 2 * a.trousers + 16 * crowdAppearance(id + 503).shirt];
 }
-export function writeCrowdAppearance(target: InstancedBufferAttribute | InterleavedBufferAttribute, index: number, id: number, shirt: Color, blend: number, accessory = 0, hidesHair = false, charred = false): void {
-  const [x, y, z] = packedAppearance(id, shirt, accessory, hidesHair);
-  target.setXYZW(index, x + (charred ? 1024 : 0), y, z, blend);
+export function writeCrowdAppearance(target: InstancedBufferAttribute | InterleavedBufferAttribute, index: number, id: number, shirt: Color, blend: number, accessory = 0, hidesHair = false): void {
+  target.setXYZW(index, ...packedAppearance(id, shirt, accessory, hidesHair), blend);
 }
 export function crowdShirt(id: number): Color { return colors.shirt[crowdAppearance(id).shirt]; }
 const pickColor = (palette: Color[], index: Node<'float'>) => {

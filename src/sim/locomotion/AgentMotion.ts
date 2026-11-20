@@ -42,10 +42,6 @@ export function trackingFor(world: SimWorld, e: EntitySnapshot): Parameters<type
 export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGrid, tick: number, radius = actorRadius(e), impulse = false, tracking?: Parameters<typeof respond>[3]): void {
   const state = e.locomotion ??= motionResponse();
   if (state.updatedAt === tick) return;
-  // A nail fixes the foot immediately, including during a committed charge.
-  if (e.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > tick)) {
-    resetResponse(state); state.updatedAt = tick; return;
-  }
   if (impulse) { state.vx = vx; state.vz = vz; state.ax = state.az = 0; }
   else {
     const speed = Status.speed(e) / (nav.movementCost?.(e.transform.x, e.transform.z) ?? 1), ally = e.civilian?.ally;

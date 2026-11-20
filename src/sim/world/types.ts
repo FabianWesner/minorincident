@@ -14,8 +14,6 @@ export interface EntitySnapshot {
   /** Persistent death pose: no brain or collision obstacle; only explicit
    * throws and cosmetic blast flights move its retained transform. */
   corpse?: boolean;
-  /** Fire death animation start; the retained corpse settles into a permanent ash heap. */
-  ashDeath?: { at: number };
   /** A retained death pose in flight; the crowd view follows its actual transform. */
   corpseThrown?: boolean;
   /** Cosmetic fixed-step blast flight; no collider, brain, or contact damage.
@@ -144,7 +142,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }
   | { tick: number; type: 'combat.empty'; sourceId: number; actionId: string; position: Transform; reason?: 'too-close' }
   | { tick: number; type: 'combat.landed'; sourceId: number; attackId: number; position: { x: number; y: number; z: number } }
-  | { tick: number; type: 'combat.exploded'; sourceId: number; attackId: number; actionId?: string; position: { x: number; y: number; z: number }; radius: number }
+  | { tick: number; type: 'combat.exploded'; sourceId: number; attackId: number; position: { x: number; y: number; z: number }; radius: number }
   | { tick: number; type: 'player.died' | 'player.respawned'; id: number }
   | { tick: number; type: 'player.damaged'; id: number; amount: number }
   | { tick: number; type: 'sim.tick' }

@@ -3,7 +3,7 @@ import { compareWeapons } from '../../data/weaponOrder';
 import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
-export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number; lastFuelUse?: number }
+export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number }
 export interface SideState { rack: ActionSlot[]; index: number; aim: Vec2; aimPoint: Vec2 | null; swapUntil: number; unarmed?: ActionSlot }
 export interface LoadoutState { corgiReady?: number; previous?: { side: Side; index: number; id: string }; selectedSide: Side; LEFT: SideState; RIGHT: SideState }
 const slot = (id: string, resolve: (id:string)=>ActionDef): ActionSlot => { const def = resolve(id); return { id, magazine: def.magazine, reserve: 'infinite', charges: def.charges, nextCharge: 0, reloadUntil: 0, readyAt: 0 }; };
@@ -103,7 +103,7 @@ export class Loadout {
   /** Zero capacity means bottomless campaign ammo, not an exhausted magazine. */
   hasAmmo(slot: ActionSlot): boolean {
     const def = this.definition(slot.id);
-    return (!def.magazine || slot.magazine >= 1) && (!def.charges || slot.charges > 0);
+    return (!def.magazine || slot.magazine > 0) && (!def.charges || slot.charges > 0);
   }
   update(tick: number, switched: (side: Side, id: string) => void): void {
     for (const name of ['LEFT', 'RIGHT'] as const) {
@@ -111,11 +111,6 @@ export class Loadout {
       if (side.swapUntil && tick >= side.swapUntil) { side.swapUntil = 0; switched(name, this.current(name).id); }
       for (const slot of side.unarmed ? [...side.rack, side.unarmed] : side.rack) {
         const def = this.definition(slot.id);
-        // Fuel refills continuously whenever the stream is idle, including while holstered.
-        if (slot.id === 'weapon.flamethrower' && tick - (slot.lastFuelUse ?? -Infinity) > ticks(1 / def.fireRate)) {
-          slot.magazine = Math.min(def.magazine, slot.magazine + def.magazine / ticks(def.reloadTime));
-          slot.reloadUntil = 0;
-        }
         if (slot.reloadUntil && tick >= slot.reloadUntil) { slot.magazine = def.magazine; slot.reloadUntil = 0; }
         if (slot.nextCharge && tick >= slot.nextCharge) { slot.charges++; slot.nextCharge = slot.charges < def.charges ? tick + ticks(def.recharge) : 0; }
       }
@@ -128,11 +123,7 @@ export class Loadout {
   spend(side: Side, tick: number, def: ActionDef, infiniteCharges: boolean): void {
     const slot = this.current(side);
     slot.readyAt = tick + Math.max(ticks(def.cooldown), def.fireRate ? ticks(1 / def.fireRate) : 0, ticks(def.windup + def.active + def.recovery));
-    if (def.magazine) {
-      slot.magazine = Math.max(0, slot.magazine - 1);
-      if (def.id === 'weapon.flamethrower') slot.lastFuelUse = tick;
-      else if (slot.magazine === 0) slot.reloadUntil = tick + ticks(def.reloadTime);
-    }
+    if (def.magazine && --slot.magazine === 0) slot.reloadUntil = tick + ticks(def.reloadTime);
     if (def.charges && !infiniteCharges) {
       slot.charges--; if (!slot.nextCharge) slot.nextCharge = tick + ticks(def.recharge);
     }

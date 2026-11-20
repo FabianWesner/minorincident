@@ -8,8 +8,6 @@ import { comboDefinition } from '../../src/data/meleeCombos';
 import { combatArchetypes } from '../../src/data/balance';
 import { infectedDef, INFECTED_TOUGHNESS, riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
-import { moveAgent } from '../../src/sim/locomotion/AgentMotion';
-import { motionResponse } from '../../src/sim/locomotion/MotionResponse';
 import { Loadout } from '../../src/sim/combat/Loadout';
 import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
@@ -18,7 +16,6 @@ import { missionControls } from '../../src/sim/missions/controls';
 import { loadLevel } from '../qa/invariants/world';
 import { checkRocketCadence, checkRocketEndpoints } from '../helpers/l7Uat';
 import { emptyInput } from '../../src/input/InputFrame';
-import { weaponRoles } from '../../src/data/weaponRoles';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -55,11 +52,10 @@ function checkArsenalRoles(): void {
   expect(rosterAction('weapon.machete').cooldown).toBeLessThan(rosterAction('weapon.fire-axe').cooldown);
   const machete = rosterAction('weapon.machete'), axe = rosterAction('weapon.fire-axe');
   expect((machete.damage / machete.cooldown) / (axe.damage / axe.cooldown)).toBeCloseTo(1, 2);
-  expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(40);
+  expect(rosterAction('weapon.nail-gun').damage * 3).toBeGreaterThanOrEqual(infectedDef('infected.runner').hp * INFECTED_TOUGHNESS);
   expect(rosterAction('weapon.nail-gun').damage * rosterAction('weapon.nail-gun').fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
   expect(rosterAction('weapon.hunting-rifle').damage).toBeGreaterThanOrEqual(300);
-  expect(rosterAction('weapon.hunting-rifle').range).toBe(40);
-  expect(rosterAction('weapon.hunting-rifle').projectile?.pierce).toBe(2);
+  expect(rosterAction('weapon.hunting-rifle').projectile?.pierce).toBe(1);
   expect(assault.damage * assault.fireRate).toBeGreaterThan(handgun.damage * handgun.fireRate);
   expect(rosterAction('weapon.molotov').effect?.duration).toBeGreaterThanOrEqual(6);
   expect(rosterAction('weapon.molotov').status?.dps).toBeGreaterThanOrEqual(20);
@@ -68,11 +64,6 @@ function checkArsenalRoles(): void {
   expect(molotov.splash).toEqual({ radius: rocket.splash!.radius * 0.75, falloff: rocket.splash!.falloff });
   expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
   expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
-  expect(rosterAction('weapon.flashbang').splash?.radius).toBe(7);
-  expect(rosterAction('weapon.rocket-launcher').knockdown).toBe(true);
-  expect(rosterAction('weapon.nail-gun').damage).toBe(14);
-  expect(rosterAction('weapon.flamethrower')).toMatchObject({ range: 8, fireRate: 15, magazine: 90, reloadTime: 5, status: { duration: 4, dps: 35 } });
-  expect(weaponRoles['weapon.flamethrower']).toBe('Melt crowds up close');
   expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
 }
 
@@ -92,72 +83,6 @@ async function checkFlameCluster(): Promise<void> {
   const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
   fire(w); step(w, 180);
   expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
-  const stream = await arena(); equip(stream, ['weapon.flamethrower']);
-  const near = dummy(stream, 3, 0, 40), behind = dummy(stream, 5, 0, 40);
-  stream.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } });
-  step(stream, 45);
-  expect([health(stream, near), health(stream, behind)], 'the held stream melts both exposed bodies in about 0.6 s plus the gun raise').toEqual([0, 0]);
-  const spread = await arena(), burning = spread.entities.get(dummy(spread, 5, 0, 200))!, touching = spread.entities.get(dummy(spread, 5.5, 0, 200))!;
-  spread.combat!.status.apply(burning, rosterAction('weapon.flamethrower').status!, 1, 'weapon.flamethrower');
-  step(spread, 30);
-  expect(touching.combat!.statuses.some(status => status.kind === 'burning')).toBe(true);
-}
-
-async function checkFireAshPersistence(): Promise<void> {
-  const flash = await arena(); equip(flash, ['weapon.fire-axe'], ['weapon.flashbang']);
-  fire(flash, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 }); step(flash, 150);
-  expect(flash.events.events().some(event => event.type === 'combat.exploded' && event.actionId === 'weapon.flashbang')).toBe(true);
-  const w = await loadLevel('L1', 1); worlds.push(w);
-  const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
-  w.combat!.damage.apply({ attackId: 1, actionId: 'weapon.flamethrower', sourceId: 1, targetId: id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: target.health.current, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
-  step(w, 1);
-  expect(target.ashDeath).toEqual({ at: w.tick - 1 }); expect(target.infected!.recoverAt).toBe(-1); expect(target.infected!.state).toBe('dead');
-  const other = w.infected!.spawn('infected.runner', { x: 6, z: 4 }), body = w.entities.get(other)!;
-  w.combat!.damage.apply({ attackId: 2, actionId: 'weapon.handgun', sourceId: 1, targetId: other, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: body.health.current, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
-  expect(body.ashDeath).toBeUndefined();
-  const grabberId = w.infected!.spawn('infected.lion', { x: 8, z: 4 }), grabber = w.entities.get(grabberId)!;
-  const player = w.entities.get(1)!, releaseAt = w.tick + 120, hp = grabber.health.current;
-  grabber.infected!.grabUntil = releaseAt; grabber.infected!.heardTargetId = player.id;
-  player.combat!.staggerUntil = releaseAt; w.npcs!.civilians.hold(grabberId);
-  w.combat!.status.apply(grabber, rosterAction('weapon.flashbang').status!, 1, 'weapon.flashbang');
-  expect(grabber.infected!.grabUntil).toBe(0); expect(player.combat!.staggerUntil).toBe(w.tick);
-  expect(w.npcs!.civilians.holds(grabberId)).toBe(false); expect(grabber.health.current).toBe(hp);
-  expect(Status.stunned(grabber, w.tick)).toBe(true);
-}
-
-async function checkWeaponControlRoles(): Promise<void> {
-  const w = await arena(); equip(w, ['weapon.nail-gun']);
-  const pinned = dummy(w, 2, 0, 100); fire(w); step(w, 4);
-  expect(w.entities.get(pinned)?.combat?.statuses.find(status => status.kind === 'pinned')?.expires).toBeGreaterThan(w.tick);
-  expect(Status.speed(w.entities.get(pinned)!)).toBe(0);
-  const target = w.entities.get(pinned)!;
-  target.locomotion = motionResponse(); target.locomotion.vx = 5;
-  const before = target.transform.x;
-  moveAgent(target, 5, 0, w.combat!.query as never, w.tick, .4, true);
-  expect(target.transform.x).toBe(before); expect(target.locomotion.vx).toBe(0);
-  w.knockback(target, { x: 1, z: 0 }, 2);
-  expect(target.transform.x).toBe(before);
-  w.entities.delete(pinned); w.spatial.delete(pinned);
-  w.entities.get(1)!.transform.x = -10; w.spatial.set(1, -10, 0);
-  const suppressed = dummy(w, 11, 0, 100); w.entities.get(suppressed)!.combat!.radius = 2; equip(w, ['weapon.army-mg']); fire(w); step(w, 20);
-  expect(w.entities.get(suppressed)?.combat?.statuses.find(status => status.kind === 'slowed')?.def.slow).toBe(.2);
-}
-
-async function checkPinnedVault(): Promise<void> {
-  const w = await loadLevel('L1', 1, 'low'); worlds.push(w);
-  const climber = w.entities.get(w.infected!.spawn('infected.runner', { x: 2, z: 0 }))!;
-  climber.infected!.vault = { started: w.tick, from: { x: 2, z: 0 }, to: { x: 4, z: 0 }, height: 1 };
-  w.tick += 25; w.barricades!.vault(climber);
-  const before = { ...climber.transform }, started = climber.infected!.vault!.started;
-  w.combat!.status.apply(climber, { kind: 'pinned', duration: 2, maxStacks: 1, dps: 0, slow: 1 }, 1, 'weapon.nail-gun', 1);
-  w.barricades!.vault(climber); w.barricades!.vault(climber); // Multiple callers in one tick must not extend the pause.
-  w.tick += 120; w.barricades!.vault(climber);
-  expect(climber.infected!.vault!.started).toBe(started + 120);
-  expect(climber.transform.x).toBeCloseTo(before.x);
-  expect(climber.transform.y).toBeCloseTo(before.y);
-  w.tick += 35; w.barricades!.vault(climber);
-  expect(climber.infected!.vault).toBeUndefined();
-  expect(climber.transform.x).toBeCloseTo(4);
 }
 
 async function checkBlastClusters(): Promise<void> {
@@ -257,7 +182,7 @@ async function checkRaisedMountedGun(): Promise<void> {
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
   await checkCorgiLure();
-  checkArsenalRoles(); await checkPinnedVault(); await checkMolotovCluster(); await checkFlameCluster(); await checkFireAshPersistence(); await checkWeaponControlRoles(); await checkBlastClusters();
+  checkArsenalRoles(); await checkMolotovCluster(); await checkFlameCluster(); await checkBlastClusters();
   const rifle = await arena(); equip(rifle, ['weapon.hunting-rifle']);
   const rifleHp = infectedDef('infected.runner').hp * INFECTED_TOUGHNESS;
   const pierced = [dummy(rifle, 2, 0, rifleHp), dummy(rifle, 4, 0, rifleHp)];

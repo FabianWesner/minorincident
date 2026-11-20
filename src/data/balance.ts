@@ -637,24 +637,6 @@ for (const [weapon, factor] of [['weapon.bat', .7], ['weapon.fire-axe', .8 * .8]
   for (const archetype of Object.keys(ttkBands[weapon]) as CombatArchetype[]) { const [low, high] = ttkBands[weapon][archetype]; ttkBands[weapon][archetype] = [+Math.max(.01, low * factor - (weapon === 'weapon.fire-axe' ? .5 : 0)).toFixed(2), high]; }
 }
 
-// S184: lower nail damage from 20 to 14 HP per hit. Control time (the pin) is not damage or TTK.
-for (const archetype of Object.keys(ttkBands['weapon.nail-gun']) as CombatArchetype[]) {
-  const [low, high] = ttkBands['weapon.nail-gun'][archetype];
-  ttkBands['weapon.nail-gun'][archetype] = [+Math.max(.01, low * 20 / 14).toFixed(2), +(high * 20 / 14).toFixed(2)];
-}
-
-// Continuous flamethrower: direct stream DPS is 4.5 × 15, plus its 35 DPS burn.
-// TTK is a damage budget only; the in-game pin/stagger utility is measured separately.
-ttkBands['weapon.flamethrower'] = Object.fromEntries(Object.entries(combatArchetypes).map(([key, target]) => {
-  const directDps = 67.5 * (1 - target.armor), burnDps = key === 'firefighter' ? 0 : 35;
-  const effectiveDps = directDps + burnDps;
-  const seconds = Math.max(.01, target.hp / effectiveDps);
-  // Fuel lasts six seconds; burning can continue for four seconds of the
-  // five-second refill. Include that refill for targets surviving a full tank.
-  const refills = Math.floor((target.hp - 1) / (directDps * 6 + burnDps * 10));
-  return [key, [+(Math.max(.01, seconds * .8 - .25)).toFixed(2), +(seconds * 1.2 + .25 + refills * 5).toFixed(2)]];
-})) as unknown as Record<CombatArchetype, readonly [number, number]>;
-
 /** PO 2026-10-10 axe x1.25 (45 -> 56 damage): these profiles need fewer 0.5 s swings.
  * Remove that saved time from their authored floors; retain the existing pursuit allowances and upper limits. */
 for (const [archetype, savedSwings] of [['brute', 1], ['riot', 1], ['firefighter', 1], ['armored', 3], ['butcher', 3], ['lion', 1], ['gorilla', 5]] as const) {

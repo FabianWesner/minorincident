@@ -34,9 +34,6 @@ function master(id: string): string {
     if (!source) throw new Error(`Unknown recording: ${id}`);
     const root = join(cache, source.pack), download = join(root, source.downloadFile), path = join(root, source.member);
     mkdirSync(root, { recursive: true });
-    // A previously extracted master is sufficient when its own pinned hash matches.
-    // This also permits a verified cache when an upstream archive URL has moved.
-    if (existsSync(path) && hash(path) === source.sha256) return path;
     if (!existsSync(download)) {
         const result = spawnSync('curl', ['--fail', '--location', '--retry', '2', '--max-time', '120', '--silent', '--show-error', source.downloadUrl, '-o', download]);
         if (result.status !== 0) throw new Error(`Recording download failed: ${id}`);
