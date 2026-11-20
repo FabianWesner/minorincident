@@ -10,6 +10,7 @@
 - `6aec445a` checks the explicit key list for every level and verifies that acquiring each listed key fills its hole without changing the other positions. Focused input, typecheck and lint passed.
 - `c0b2809e` versions new fixed-key recordings and decodes older position-based recordings using their historical ordering. Focused input, codec and combat tests (14), typecheck and lint passed.
 - `e39b2f9b` restores the original version 1 recording behavior for selecting innate fists even when another melee weapon is carried. Input and codec tests, typecheck and lint passed.
+- `05dcec15` orders side-specific touch selection by fixed key and applies L8's swap lock to historical replay selections too. Input and combat tests (12), typecheck and lint passed.
 - `8ff43012` keeps the rack visible when a level has holes but the player carries no weapons. Typecheck, lint and the focused input test passed after this change.
 - `895d2cb7` filters carried weapons by the predefined level keys when drawing a campaign rack, including when an older save contains an out-of-set weapon. Typecheck, lint and the focused input test passed.
 
