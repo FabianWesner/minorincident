@@ -8,7 +8,7 @@ The existing two instanced ash and bone meshes are reused regardless of heap cou
 
 ## Implementation status
 
-Fire deaths now dissolve over the existing 90-tick (1.5 s) charred-body interval instead of disappearing at the end of a body-only shrink. Screen-door fading, a gradual sink, eight irregular instanced ash clumps, and two crossed bone meshes share the transition. The ash clumps begin grey-white with two darker charred pieces and a small warm tint that fades as the heap settles. The existing pooled VFX path emits repeated smoke puffs during the same interval. Settled heaps remain represented by the dead entity and are rebuilt in the existing ash instance batches; this adds no mesh or draw call per heap. HIGH and LOW use the same presentation and both renderer backends use the same Three.js instancing path.
+Fire deaths dissolve over the existing 90-tick (1.5 s) charred-body interval. A model-space breakup mask, gradual sink, eight irregular instanced ash clumps, and two crossed bone meshes share the transition. The clumps lighten from char to grey-white, with one darker piece and a warm tint that fades after settling. The existing pooled VFX path emits smoke puffs and sparks during the interval. Settled heaps remain represented by the dead entity and are rebuilt in the existing ash instance batches; this adds no mesh or draw call per heap. HIGH and LOW use the same presentation and both renderer backends use the same Three.js instancing path.
 
 ## Validation
 
