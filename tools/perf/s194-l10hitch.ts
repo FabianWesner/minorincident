@@ -1,0 +1,52 @@
+/** Trace the first L10 outbreak from the PO's cure-crash checkpoint.
+ * Run with: E2E_UNITS=1 SCENE_PORT=5144 sh tools/e2e-lock.sh npx tsx tools/perf/s194-l10hitch.ts webgpu high before
+ */
+import assert from 'node:assert/strict';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { SceneSession, stopServer } from '../scenelab/session';
+import type { Game } from '../../src/Game';
+
+const backend = (process.argv[2] ?? 'webgpu') as 'webgpu' | 'webgl2';
+const tier = (process.argv[3] ?? 'high') as 'high' | 'low';
+const label = process.argv[4] ?? 'before';
+const out = `test-results/s194-l10hitch/${label}-${backend}-${tier}`;
+mkdirSync(out, { recursive: true });
+const session = new SceneSession({ backend, tier, seed: 1, nativeFrameTiming: true, viewport: { width: 1600, height: 900 }, query: { loadProfile: '2' } });
+try {
+  await session.open();
+  await session.page.evaluate('globalThis.__name = fn => fn');
+  await session.page.evaluate(async () => {
+    const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
+    await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
+    a.pause(); a.cheats.god(true); a.camera.follow(); a.debug.cpuProfile();
+    if (g.world.missions?.state.phase === 'briefing') g.world.missions.begin();
+    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
+    trace.hitchTrace = { frames: [], running: true };
+    let last = performance.now();
+    const sample = (now: number) => {
+      const infected = g.world.infected?.active ?? [];
+      trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, infected: infected.length,
+        alive: infected.filter(e => e.health.current > 0).length, sim: a.perf().simMs, update: a.perf().updateCpuMs,
+        render: a.perf().renderCpuMs, categories: a.debug.cpuProfile() });
+      last = now;
+      if (trace.hitchTrace.running) requestAnimationFrame(sample);
+    };
+    requestAnimationFrame(sample); a.resume();
+  });
+  await session.page.waitForFunction(() => window.__SS__!.tick() >= 600, null, { timeout: 120_000, polling: 20 });
+  const result = await session.page.evaluate(() => {
+    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
+    trace.hitchTrace.running = false; window.__SS__!.pause();
+    const frames = trace.hitchTrace.frames;
+    const sorted = frames.map(f => f.dt).sort((a,b)=>a-b);
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    return { backend: window.__SS__!.perf().backend, tier: window.__SS__!.getState().render.quality, checkpoint: game.world.missions?.state.checkpoint,
+      frames, max: Math.max(...sorted), p99: sorted[Math.ceil(sorted.length*.99)-1], hitches: frames.filter(f=>f.dt>100), errors: [] as string[] };
+  });
+  result.errors = session.errors;
+  writeFileSync(`${out}/trace.json`, JSON.stringify(result, null, 2));
+  const worst = [...result.hitches].sort((a,b)=>b.dt-a.dt)[0];
+  console.log(JSON.stringify({ backend: result.backend, tier: result.tier, samples: result.frames.length, max: result.max, p99: result.p99, worst, hitches: result.hitches.length, errors: result.errors }, null, 2));
+  assert.equal(result.backend, backend === 'webgpu' ? 'webgpu' : 'webgl');
+  assert.deepEqual(result.errors, []);
+} finally { await session.close(); stopServer(); }
