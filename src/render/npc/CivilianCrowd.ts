@@ -296,9 +296,7 @@ class CivilianBatch extends Group {
       // rigid cane baked into his original hand, with the same visible identity.
       const authoredCane = this.model === 'npc.mr-okafor.aftermath' && !!this.bakedClip.binds;
       const carried = e.appearance?.handProp ?? (authoredCane ? 'cane' : undefined);
-      const allyProp = c.ally?.weapon === 'hmg' ? 'rifle' : c.ally?.weapon;
-      const weaponFirst = this.world.scenario === 'L6' && !!c.ally?.gun ? allyProp : undefined;
-      const handProp = (c.story ? c.story.prop : activity?.prop) ?? weaponFirst ?? (carried ? carried as CivilianProp : c.ally?.role === 'officer' ? 'pistol' : c.ally?.gun ? 'rifle' : undefined);
+      const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : c.ally?.role === 'officer' ? 'pistol' : c.ally?.gun ? 'rifle' : undefined);
       // Q-304 (PO 10-31 "What is that"): a gun is only held in an upright pose. Seated, lying (the L6 'rest' routine), cowering
       // and downed bodies stow it: the aim layer squares the torso to the barrel and twisted a lying survivor around a vertical rifle.
       const stowed = !!handProp && isCrowdGun(handProp) && (/sit|death|die|collapse|rise|cower|hug|crawl|knockdown|flung|get-up/.test(clip) || !!activity?.seat && (performing || noticingSeated));
