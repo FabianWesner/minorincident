@@ -48,3 +48,5 @@ The L1 fire-station asset has a prominent physical Sunset Grove Fire Dept sign a
 The fire-station mismatch was a baked marker ID mismatch (`853` in layout versus `inst:...:854` in the marker), not a cutaway. Sign visibility now matches the selected supporting asset and local placement position within its district. The L1 HIGH close view shows Fire Station 3 on the entrance board; the L3 cutaway repro still suppresses its floating sign. LOW and transition coverage remain open.
 
 A LOW close view confirms Fire Station 3 lettering on its entrance support. The LOW follow-camera near → away → return probe (`tools/qa/s181-signs-transition.ts`) reported visibility 1 → 0 → 1; this does not cover every camera or LOD transition.
+
+Maple Hardware already has large physical facade lettering; its authored LOW recipe retains that lettering. A trial overlay conflicted with the existing sign, so the duplicate generated board is omitted for this asset. The earlier fallback distance in the audit no longer applies to that sign.
