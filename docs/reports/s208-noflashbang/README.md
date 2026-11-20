@@ -8,7 +8,7 @@
 - [x] Molotov direct blast is 90 damage (half of the 180 rocket impact), retaining 4.5 m splash and 0.6 falloff. Pipe Bomb is 270 damage, 6 m splash, 2 s fuse, 5 s cooldown, and knockdown. Pickup hint identifies throwable replacement. Melee hits interrupt grabs; cling grabs release when the courier moves clear.
 - [x] Checked main for pool-driven burning status. Its current sources show burning DoT processing and separate hazard damage, but no application of `burning` status from an infected standing in a Molotov pool; the requested pool-status behavior is therefore not verified on main and may be missing.
 - [x] `npm run typecheck` and `npm run lint` passed. Focused combat/save tests passed (13 tests, ≤150 suite cases). `npm run qa:threat` passed: all skilled routes completed, 0 flags. Local `npm test` passed all 106 tests (150-case budget).
-- [ ] `npm run test:smoke` built successfully, then failed when the browser pool could not bind `127.0.0.1:4329` (`EPERM`) in the sandbox. Retrying with a writable cache path produced the same browser-pool restriction.
+- [ ] Full `npm run test:smoke` remains incomplete: its script starts two workers, so the retry was interrupted to respect the one-browser limit. The L10 rack section passed within the single-worker `L1 handover + outbreak` smoke test through `tools/e2e-lock.sh` (1 passed). Earlier attempts were blocked by sandbox browser-pool binding.
 - [ ] `sh tools/remote/run.sh "$PWD" -- npm test` could not run: no healthy Hetzner runner is provisioned and the remote command is ineligible for local Mac fallback.
 
 ## Remaining `flashbang` references
@@ -25,4 +25,4 @@ No references remain in `tools/` or `docs/design/`.
 
 ## Open
 
-Commit: `f8cfdad7` (explicit paths). Remaining gates are smoke/browser-pool startup, remote npm test/runner provisioning, and Molotov pool burning-status verification on main.
+Commit: `f8cfdad7` (explicit paths). Remaining gates are the full smoke suite with one browser and remote npm test/runner provisioning. Molotov pool burning status was not demonstrated on main. The time-box ending records these open items.
