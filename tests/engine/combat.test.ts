@@ -135,7 +135,7 @@ async function checkWeaponControlRoles(): Promise<void> {
   expect(w.entities.get(suppressed)?.combat?.statuses.find(status => status.kind === 'slowed')?.def.slow).toBe(.2);
 }
 
-test('a nail pin freezes a vault and resumes its remaining motion on release', async () => {
+async function checkPinnedVault(): Promise<void> {
   const w = await loadLevel('L1', 1, 'low'); worlds.push(w);
   const climber = w.entities.get(w.infected!.spawn('infected.runner', { x: 2, z: 0 }))!;
   climber.infected!.vault = { started: w.tick, from: { x: 2, z: 0 }, to: { x: 4, z: 0 }, height: 1 };
@@ -150,7 +150,7 @@ test('a nail pin freezes a vault and resumes its remaining motion on release', a
   w.tick += 35; w.barricades!.vault(climber);
   expect(climber.infected!.vault).toBeUndefined();
   expect(climber.transform.x).toBeCloseTo(4);
-});
+}
 
 async function checkBlastClusters(): Promise<void> {
   // Compare the actual splash resolvers at equal distances inside the smaller blast.
@@ -249,7 +249,7 @@ async function checkRaisedMountedGun(): Promise<void> {
 
 test('loadout: both sides keep independent aims, racks wrap both ways with a switch lock, a cooling gun does not steal selection', async () => {
   await checkCorgiLure();
-  checkArsenalRoles(); await checkMolotovCluster(); await checkFlameCluster(); await checkFireAshPersistence(); await checkWeaponControlRoles(); await checkBlastClusters();
+  checkArsenalRoles(); await checkPinnedVault(); await checkMolotovCluster(); await checkFlameCluster(); await checkFireAshPersistence(); await checkWeaponControlRoles(); await checkBlastClusters();
   const rifle = await arena(); equip(rifle, ['weapon.hunting-rifle']);
   const rifleHp = infectedDef('infected.runner').hp * INFECTED_TOUGHNESS;
   const pierced = [dummy(rifle, 2, 0, rifleHp), dummy(rifle, 4, 0, rifleHp)];
