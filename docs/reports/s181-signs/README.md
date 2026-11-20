@@ -58,3 +58,5 @@ Pharmacy and gym boards now use the local +X entrance headers with placement sca
 The elementary-school asset already has a physical Sunset Grove Elementary inscription on its entrance pediment. Its native LOW recipe does not omit the lettering, so the extra AABB-positioned board is omitted. The hospital LOW recipe does omit its name lettering; its fallback remains unresolved.
 
 The power-substation asset already carries a physical Sunset Grove Power sign, so its duplicate fallback board is omitted; LOW readability remains unverified. The hospital overlay is limited to the LOD2 model, whose name panel has no lettering. Nine LOD2 samples across the intended panel hit x=3.825 m; the board is at x=3.835 m before placement scaling. The diagnostic camera was obstructed and did not establish rendered appearance or transition correctness.
+
+The LOW hospital follow-camera transition probe selected LOD1 → LOD2 → culled → LOD1 and reported overlay visibility 0 → 1 → 0 → 0, matching the intended name-panel replacement. This is a state probe; the obstructed visual view still does not establish readability.
