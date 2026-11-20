@@ -156,6 +156,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - Current source `522fc01f`: full `npm run qa:threat` passed in 322.2 s with zero fail flags and L10 skilled complete (LOW). Required remote full `npm test` exceeded its 240 s budget without a reported test failure. The specified fallback passed locally (27 files, 106 tests, 114.5 s) and the L4 contact test passed remotely (141.91 s). This is the timeout fallback, not a fresh remote full-suite pass.
 
+- Trialled an authored hospital exit using the shared house emergence walker and the existing hospital slots. HIGH and LOW seed 1 simulations completed (1103.17 s / four deaths and 1079.02 s / one death), with all 10/8 slots recorded and no walkers left queued. Native HIGH opening frames showed two infected exposed inside the tent by the foreground cut, without a readable burst through the opening; hidden admission and absence of pop-in were not established. The trial was reverted. Typecheck, lint and focused world systems passed during the trial.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
