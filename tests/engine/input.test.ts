@@ -256,6 +256,8 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(legacyCycle.current(legacyCycle.state.selectedSide).id).toBe('weapon.army-mg');
   legacyCycle.input({ ...emptyInput(), selector: 1, selectorActive: true, legacyWeaponOrder: true }, 60);
   expect(legacyCycle.current(legacyCycle.state.selectedSide).id).toBe('weapon.shotgun');
+  legacyCycle.input({ ...emptyInput(), selectedSlot: { side: 'RIGHT', index: 0 }, orderedSelection: true, legacyWeaponOrder: true }, 90);
+  expect(legacyCycle.current('RIGHT').id).toBe('weapon.army-mg');
   const pickups = new Loadout(['weapon.fire-axe', 'weapon.nail-gun', 'weapon.army-mg'], ['weapon.handgun']);
   pickups.input({ ...emptyInput(), selectedWeaponKey: 7 }, 30);
   expect(pickups.current(pickups.state.selectedSide).id).toBe('weapon.nail-gun');
