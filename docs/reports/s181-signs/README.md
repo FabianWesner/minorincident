@@ -46,3 +46,5 @@ Sign quads now follow the supporting placement’s drawn, non-placeholder LOD an
 The L1 fire-station asset has a prominent physical Sunset Grove Fire Dept sign at its entrance, confirmed in a close HIGH view. Its LOD2 removes the lettering, so it cannot by itself satisfy low-tier readability. An overlay trial was suppressed by the current cutaway visibility logic in that view; its supporting placement and transition behavior still need correction.
 
 The fire-station mismatch was a baked marker ID mismatch (`853` in layout versus `inst:...:854` in the marker), not a cutaway. Sign visibility now matches the selected supporting asset and local placement position within its district. The L1 HIGH close view shows Fire Station 3 on the entrance board; the L3 cutaway repro still suppresses its floating sign. LOW and transition coverage remain open.
+
+A LOW close view confirms Fire Station 3 lettering on its entrance support. The LOW follow-camera near → away → return probe (`tools/qa/s181-signs-transition.ts`) reported visibility 1 → 0 → 1; this does not cover every camera or LOD transition.
