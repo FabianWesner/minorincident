@@ -9,7 +9,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - Added ranged debris throws, living infected throws, a leap slam, and a pursuit roar for the Mega Alpha. The roar rallies infected in range; the Mega call reuses the existing roar event. Charge range and wind-up were increased, with a wall collision stun. Existing close-range slam and grab remain.
 - Mega prop throws select a movable prop within 3 m or create a concrete chunk from the ground. The chunk uses the existing debris pool and has a blocking collider for its eight-second lifetime. Living infected can be thrown when within 3 m of the Mega and the courier is 8–30 m away. These share the throw cooldown. Thrown infected take fall damage; projectile hits damage and knock down the courier.
 - Added Scene Lab scenarios for zombie throw, leap, and roar under `tests/scenes/l10-mega-moves/`.
-- Reused existing rig poses and audio cues. New leap and roar clips are not present; their motion uses procedural timing/effects. No new rig assets were authored.
+- Reused existing rig poses and audio cues. Asset request: dedicated Mega throw, leap and roar clips; the current motion uses existing poses and procedural timing/effects. No new rig assets were authored.
 
 ## Validation
 
