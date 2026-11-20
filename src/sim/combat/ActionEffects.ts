@@ -60,7 +60,7 @@ export class ActionEffects {
           zone.spreadDone = true; this.world.hazards?.spreadFire(zone, zone.radius, (zone.expires - this.world.tick) / 60, 0, zone.attack.id, zone.attack.sourceId === 1);
         }
         const pulse = this.world.tick >= zone.nextPulse;
-        for (const entity of this.world.entities.iterate()) if ((entity.faction === 'infected' || entity.kind === 'player') && entity.health.current > 0 && this.contains(zone, entity.transform) && (pulse || !entity.combat?.statuses.some((s) => s.kind === 'burning'))) this.world.combat!.status.apply(entity, groundBurn, zone.attack.sourceId, zone.attack.def.id);
+        for (const entity of this.world.entities.iterate()) if ((entity.faction === 'infected' || entity.kind === 'player') && entity.health.current > 0 && this.contains(zone, entity.transform) && (pulse || !entity.combat?.statuses.some((s) => s.kind === 'burning' && s.def.dps >= groundBurn.dps))) this.world.combat!.status.apply(entity, groundBurn, zone.attack.sourceId, zone.attack.def.id);
         if (pulse) zone.nextPulse += 60;
       } else if (zone.kind === 'turret' && this.world.tick >= zone.nextPulse) {
         const combat = this.world.combat!;
