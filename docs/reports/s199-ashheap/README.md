@@ -17,3 +17,5 @@ Fire deaths now dissolve over the existing 90-tick (1.5 s) charred-body interval
 ## Open acceptance
 
 The latest HIGH zoom 1.5 capture shows two tan crossed bones over a lighter irregular pile with dark patches. HIGH and LOW zoom 1 on WebGL2, HIGH zoom 1.5 and LOW zoom 1 on WebGPU were also captured and personally reviewed; all four passed their scene checks. They show a similar bone-dominated silhouette over a dark, flat-looking patch, which does not yet read as grey-white ash. The crumble sequence also remains unaccepted. Refine both and repeat the visual review. Typecheck, lint, and the seven focused combat tests passed after the latest code revision.
+
+Follow-up HIGH WebGL2 zoom 1.5: making the largest clumps pale produces a pale irregular patch and visible tan bones. The sequence still reads as a dark figure falling followed quickly by a light patch; convincing crumbling remains open. The scene checks, typecheck, lint and seven combat tests pass. The other tier/backend captures and remote suite precede this colour revision and need repeating for final acceptance.
