@@ -16,11 +16,11 @@ interface Input {
   captures: { file: string; sha256: string; zoom: number }[];
 }
 interface Review { sourceHash: string; browserHash: string; allPersonallyReviewed: boolean; tiers: { tier: string; inputSha256: string; captures: { file: string; sha256: string; seen: string }[] }[] }
-export function measurePickup(d: Input, sourceHash: string, browserHash: string) {
+export function measurePickup(d: Input, sourceHash: string, browserHash: string, archive?: { tool: string; seed: string }) {
   // The producer retains its failed gate assertion as a measured FAIL, not a collection error.
   const collected = d.errors.length === 0 || !d.gate.pass && d.errors.length === 1 && d.errors[0] === `AssertionError [ERR_ASSERTION]: L7-01 frame gate ${JSON.stringify(d.gate)}`;
   const valid = collected && d.sourceHash === sourceHash && d.browserHash === browserHash && d.setup.backend === 'webgl' && d.setup.quality === d.tier && d.setup.driverDetached && !d.setup.god &&
-    d.toolSha256 === sha('tools/qa/accept/fix72-c-l7-pickup.mjs') && d.probeSha256 === sha('tools/playtest/frames.ts') && d.seed.sha256 === sha(d.seed.file);
+    d.toolSha256 === sha(archive?.tool ?? 'tools/qa/accept/fix72-c-l7-pickup.mjs') && d.probeSha256 === sha('tools/playtest/frames.ts') && d.seed.sha256 === (archive ? createHash('sha256').update(Buffer.from((JSON.parse(readFileSync(archive.seed, 'utf8')) as { gzipBase64: string }).gzipBase64, 'base64')).digest('hex') : sha(d.seed.file));
   const pickups = d.result.events.filter(e => e.type === 'pickup.collected' && e.actionId === 'weapon.rocket-launcher' && e.pickupId === d.setup.pickup.id);
   const shots = d.result.events.filter(e => e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.rocket-launcher');
   const p = d.setup.player, q = d.setup.pickup.position, distance = Math.hypot(p.x - q.x, p.z - q.z);
@@ -38,7 +38,11 @@ export function l7PickupReceipts(sourceHash: string, browserHash: string): { pat
   if (!existsSync(`${root}/review.json`)) return [];
   const review = JSON.parse(readFileSync(`${root}/review.json`, 'utf8')) as Review;
   return ['low', 'high'].map(tier => {
-    const file = `${root}/${tier}.json`, d = JSON.parse(readFileSync(file, 'utf8')) as Input, m = measurePickup(d, sourceHash, browserHash);
+    const current = `docs/reports/s192-l7harder/pickup-${tier}.json`, seed = `docs/reports/s192-l7harder/seed-${tier}.json`;
+    const currentInput = existsSync(current) && existsSync(seed) ? JSON.parse(readFileSync(current, 'utf8')) as Input : undefined;
+    const file = currentInput?.sourceHash === sourceHash && currentInput.browserHash === browserHash ? current : `${root}/${tier}.json`;
+    const d = file === current ? currentInput! : JSON.parse(readFileSync(file, 'utf8')) as Input;
+    const m = measurePickup(d, sourceHash, browserHash, file === current ? { tool: 'tools/qa/accept/s192-l7-pickup.mjs', seed } : undefined);
     const r = review.tiers.find(r => r.tier === tier);
     const seen = review.sourceHash === sourceHash && review.browserHash === browserHash && review.allPersonallyReviewed && r?.inputSha256 === sha(file) &&
       [.5, 1.5].every(z => d.captures.some(c => c.zoom === z)) && d.captures.every(c => r.captures.some(v => v.file === c.file && v.sha256 === c.sha256 && !!v.seen.trim()) && evidenceIsArchivedOrMatches(c.file, c.sha256));

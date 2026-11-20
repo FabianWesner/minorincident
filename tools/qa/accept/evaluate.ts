@@ -352,7 +352,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
         // the spawn observer. Its initial census and later birth transactions are
         // disjoint: l7.started is still false in this first-tick snapshot.
         const residents = (archetype: string) => initial.census.filter(e => e.infected && e.hp > 0 && e.archetype === archetype).length;
-        number('L7-04', 'actual resident and later regular admissions', residents('infected.runner') + (observation.births['infected.runner'] ?? 0), low ? 200 : 400, Infinity);
+        number('L7-04', 'actual resident and later regular admissions', residents('infected.runner') + (observation.births['infected.runner'] ?? 0), low ? 280 : 560, Infinity);
         number('L7-04', 'actual resident and later Alpha admissions', residents('infected.alpha') + (observation.births['infected.alpha'] ?? 0), 4, 6);
       }
       number('L7-04', 'concurrent cap', observation.peakAlive, 0, low ? 100 : 200);
@@ -656,6 +656,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L7-05', [
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),
     { clause: 'stationary first real player attack (phase clock)', policy: 'stationary' },
+    { clause: 'three road-connected arrival directions within five seconds per street fight', policy: 'direction-trace' },
   ]],
   ['L7-08', ['initial admitted final horde census with canonical control','physical rocket-cleared disc used by living carried human','reviewed physical corridor strips'].map(clause=>({clause,policy:'physical-corridor'}))],
   ['L10-08', ['physical five-region road framing matrix', 'production road and finale maximal zoom clamp', 'reviewed night road verges clothing and natural ground-slam telegraph'].map(clause => ({ clause, policy: 'physical-framing' }))],
