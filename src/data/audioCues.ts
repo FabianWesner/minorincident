@@ -356,6 +356,8 @@ for (const [id, stock, caption, rate, priority] of [
   ['mega.charge', 'telegraph.brute', 'Mega Alpha charging: clear the marked path', .5, 150],
   ['mega.slam', 'telegraph.gorilla', 'Mega Alpha slam: leave the marked circle', .55, 150],
   ['mega.grab', 'telegraph.alpha.grab-throw', 'Mega Alpha grabbing: get out of its reach', .5, 150],
+  ['mega.rip', 'prop.break', 'Mega Alpha ripping up debris', .65, 150],
+  ['mega.throw-whoosh', 'weapon.rocket-whoosh', 'Mega Alpha hurling a projectile', .8, 150],
   ['mega.zombie-throw', 'telegraph.gorilla.grab-throw', 'Mega Alpha throwing an infected', .55, 150],
   ['mega.leap', 'telegraph.lion.pounce', 'Mega Alpha leaping: clear the landing ring', .5, 150],
   ['cure.recording', 'music.L6.base', undefined, 1, 120],
