@@ -47,3 +47,5 @@ Further investigation explains the loader failure: `Mission.loadCheckpoint` reco
 A native complete-policy L10 route was run with `node --import tsx tools/qa/make-checkpoint.ts --out /tmp/s207-native-saves --what l10 --max-l10 1800`. It exited successfully after writing ten saves through `cure-pace-3`; it did not reach `cure-pace-15`. The requested real checkpoint capture therefore remains open. Generated saves are temporary and were not committed.
 
 The sheet now includes both L10-coordinate fixture zooms as well as the daylight comparison. The route generator's manifest shows the last pace checkpoint at tick 7,321, with a live save at tick 8,521; the configured 1,800 simulated seconds ended without another checkpoint. A longer native route or an appropriate captured resume is needed to reproduce the actual pace-15 state.
+
+A second unchanged native route with `--max-l10 3600` also completed with only the same ten saves through pace-3; increasing the duration did not produce the requested resume. The pace-15 checkpoint remains unverified.
