@@ -342,6 +342,7 @@ export class DistrictView extends Group {
   }
   syncVegetationFire(objects: readonly import('../sim/interact/VegetationFire').BurningObject[]): void {
     const states = new Map(objects.map(o => [o.id, o.state]));
+    this.foliage.syncFire(states);
     for (const entry of this.lodBatches) {
       let changed = false;
       for (const ref of entry.refs) {

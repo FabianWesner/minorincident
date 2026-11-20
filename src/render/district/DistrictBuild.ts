@@ -334,6 +334,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
             const [cx, cy, cz] = crown.position.map((v, a) => v * p.scale[a]);
             ref.position.set(p.position[0] + cx * Math.cos(p.yaw) + cz * Math.sin(p.yaw), p.position[1] + cy, p.position[2] - cx * Math.sin(p.yaw) + cz * Math.cos(p.yaw));
             ref.scale.set(crown.radius[0] * p.scale[0], crown.radius[1] * p.scale[1], crown.radius[2] * p.scale[2]);
+            ref.userData.placementId = `${d.id}/${p.id}`;
             if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
           }
         }
