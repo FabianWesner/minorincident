@@ -1,0 +1,21 @@
+# s207 — ash heap appearance fix
+
+## Change
+
+The fire heap and bone instance batches in `src/render/CrowdView.ts` now use `MeshLambertNodeMaterial`, so they take scene lighting like nearby corpses instead of staying self-lit under WebGPU or WebGL2. Settled ash clumps are dark grey with charcoal pieces, narrower across the body's width, and no more than about 10 cm high by the geometry dimensions. The two crossed bone meshes are reduced to small, dark fragments. There is no emissive material or warm coal tint.
+
+The supplied before capture shows two bright white, broad heaps with large tan crossed bones at night. It is available at `/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad2360-311d-4d06-a844-c0ced149d4ee/scratchpad/po-ashheap-white.png`. I inspected it. A post-change before/after image sheet is **not available**: local Scene Lab could not start its browser pool (`listen EPERM` on loopback port 4329), and `scene:gate` also failed at `tsx` IPC startup (`listen EPERM`). I have not visually reviewed the changed look.
+
+## Validation
+
+- `npm run typecheck` — PASS.
+- `npm run lint` — PASS.
+- `npx vitest run --project default tests/engine/combat.test.ts` — PASS, 7 tests.
+- `npm test` — PASS locally, 106 tests / 27 files in 208.5 s (the 150-case budget manifest includes browser/invariant cases not exercised by this default Vitest command).
+- Remote `sh tools/remote/run.sh "$PWD" -- npm test` — NOT RUN: no healthy/provisioned runner; command exited 69.
+- `npm run scene:gate -- --filter 'corpse-*,alpha-hit-corpse-*'` — NOT RUN: environment rejected local IPC socket creation with `EPERM` before gate selection.
+- Requested L10 night and L4/daylight views, zoom 1 and 1.5, HIGH/LOW, WebGL2/WebGPU, comparison against a normal corpse, and the before/after sheet — OPEN pending an environment that permits browser capture.
+
+## Visual evidence
+
+Before: the supplied PO screenshot, described above. After: not captured or reviewed. No claim of visual acceptance is made.
