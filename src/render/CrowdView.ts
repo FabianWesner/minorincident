@@ -154,7 +154,7 @@ export class CrowdView extends Group {
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
   private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new IcosahedronGeometry(.5, 0), new MeshBasicNodeMaterial({ color: '#ffffff' }), 2800);
-  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(mergeGeometries([new CapsuleGeometry(.04, .46, 2, 6).rotateZ(Math.PI / 2), ...[-.27, .27].flatMap(x => [-.045, .045].map(z => new SphereGeometry(.065, 6, 4).translate(x, 0, z)))])!, new MeshBasicNodeMaterial({ color: '#ddd4bd' }), 700);
+  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(mergeGeometries([new CapsuleGeometry(.055, .65, 2, 6).rotateZ(Math.PI / 2), ...[-.38, .38].flatMap(x => [-.05, .05].map(z => new SphereGeometry(.075, 6, 4).translate(x, 0, z)))])!, new MeshBasicNodeMaterial({ color: '#c0aa86' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -167,6 +167,8 @@ export class CrowdView extends Group {
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.staticCorpses.matrixAutoUpdate = this.staticCorpses.matrixWorldAutoUpdate = false; }
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
     this.nails.frustumCulled = false; this.nails.count = 0; this.add(this.nails);
+    // Allocate the colour attribute before shader compilation, including warm-up draws.
+    this.ashHeaps.setColorAt(0, this.ashSwatch.set('#77746d'));
     for (const mesh of [this.ashHeaps, this.ashBones]) { mesh.frustumCulled = false; mesh.count = 0; this.add(mesh); }
     this.registry = sharedRegistry ?? new AssetRegistry((event) => this.logs.push(event), { materials: this.shading, textureSize: this.low ? 512 : 1024 });
     const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
@@ -806,10 +808,10 @@ export class CrowdView extends Group {
         // that the charred body dissolves. Both stages share the existing two instanced draws.
         for (const [pieceIndex, [dx, dz, sx, sy, sz, turn]] of pieces.slice(0, heapPieces).entries()) {
           const settle = ashProgress;
-          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx, sy, sz));
-          this.transform.setPosition(x + dx, ground + .045 + sy * .5 + (1 - settle) * (.22 + sy), z + dz);
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 1.5, sy, sz * 1.5));
+          this.transform.setPosition(x + dx * 1.5, ground + .045 + sy * .5 + (1 - settle) * (.22 + sy), z + dz * 1.5);
           this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
-          this.ashSwatch.set(pieceIndex < 2 ? '#514d45' : '#c7c4bb').lerp(this.emberAsh, (1 - ashProgress) * .16);
+          this.ashSwatch.set(pieceIndex < 2 ? '#38342f' : '#77746d').lerp(this.emberAsh, (1 - ashProgress) * .16);
           this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
         }
         if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {

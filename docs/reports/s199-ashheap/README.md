@@ -16,4 +16,4 @@ Fire deaths now dissolve over the existing 90-tick (1.5 s) charred-body interval
 
 ## Open acceptance
 
-The HIGH sequence fails visual review. Settled HIGH zoom 1, LOW zoom 1, and WebGPU appearance remain unreviewed. Refine the heap and crumble, repeat the requested captures, and inspect them. Also run the focused corpse/fire scene gate rows and remote unit suite when their runners are available.
+The revised HIGH zoom 1.5 capture shows two tan crossed bones over an irregular dark pile. Allocating instance colours before shader compilation fixed the previously white heap, but the ash still reads too dark; the sequence remains unaccepted. Settled HIGH zoom 1, LOW zoom 1, and WebGPU appearance remain unreviewed. Refine the heap and crumble, repeat the requested captures, and inspect them. Also run the focused corpse/fire scene gate rows and remote unit suite when their runners are available. Typecheck, lint, and the seven focused combat tests passed again after this revision.
