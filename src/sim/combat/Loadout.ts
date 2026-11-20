@@ -127,6 +127,7 @@ export class Loadout {
     if (def.charges && !infiniteCharges) {
       slot.charges--; if (!slot.nextCharge) slot.nextCharge = tick + ticks(def.recharge);
     }
-    if (!this.hasAmmo(slot) && this.state.selectedSide === side) this.fallback(tick);
+    // PO 2026-11-20: a recharging throwable stays selected after the throw (its slot shows "!" until a charge is back).
+    if (!this.hasAmmo(slot) && this.state.selectedSide === side && !(def.charges && slot.nextCharge)) this.fallback(tick);
   }
 }

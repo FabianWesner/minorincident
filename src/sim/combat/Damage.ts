@@ -43,8 +43,10 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
   if (target.infected?.pursuit) {
     if (hit.actionId === 'weapon.rocket-launcher' && hit.type === 'explosive') amount = target.health.max * (hit.direct ? megaAlpha.directRocketFraction : megaAlpha.splashRocketFraction);
     if (megaVulnerable) return Math.max(0, amount);
-    // PO 2026-11-12: before the cure every hit hurts, down to the floor; MegaPursuit regenerates it.
-    return Math.min(Math.max(0, amount), Math.max(0, target.health.current - target.health.max * megaAlpha.conventionalFloor));
+    // PO 2026-11-12/11-20: before the cure every hit hurts but less the lower it is (headroom² above the floor),
+    // so the Mega can never be brought down; MegaPursuit regenerates it.
+    const floor = target.health.max * megaAlpha.conventionalFloor, headroom = Math.max(0, Math.min(1, (target.health.current - floor) / Math.max(1e-6, target.health.max - floor)));
+    return Math.min(Math.max(0, amount) * headroom * headroom, Math.max(0, target.health.current - floor));
   }
   if (target.archetype === 'infected.alpha') {
     let multiplier = alphaDamageMultiplier(hit.actionId, hit.type);

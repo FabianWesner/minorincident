@@ -38,7 +38,10 @@ export class Player {
     }
     // s178 Hard: auto-healing is off (PO 2026-11-19). Medkits, checkpoint restores and scripted heals
     // (restoreVitals, pickups) never pass through here and still heal.
-    if (state.diedAt === null && !this.hardMode() && tick - this.lastDamage >= survivor.regenDelayTicks) health.current = Math.min(health.max, health.current + survivor.regenPerSecond * FIXED_DT);
+    // PO 2026-11-20: "Auto-healing ... needs to [be] much slower when I walk ... I need to rest somewhere to get healing speed
+    // which we have now." Standing still heals at the full rate; any movement heals at movingRegenFactor of it.
+    const resting = Math.hypot(this.locomotion.velocity.x, this.locomotion.velocity.z) < survivor.restingSpeed;
+    if (state.diedAt === null && !this.hardMode() && tick - this.lastDamage >= survivor.regenDelayTicks) health.current = Math.min(health.max, health.current + survivor.regenPerSecond * (resting ? 1 : survivor.movingRegenFactor) * FIXED_DT);
     if (input.interact && state.diedAt === null) this.act('interact', tick);
     // E19 §5.5: running is the default; holding Walk caps the intent at walk speed (not on the bicycle).
     const walking = (input as InputFrame & { walk?: boolean }).walk && (this.entity as { riding?: number }).riding === undefined;

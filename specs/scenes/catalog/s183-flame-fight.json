@@ -1,0 +1,18 @@
+{
+  "name": "s183-flame-fight",
+  "note": "Flamethrower firing at a group: inspect the moving stream, embers and target impact.",
+  "ground": "asphalt", "size": 30, "time": "L1", "weather": "clear",
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "look": { "model": "female" }, "loadout": ["weapon.flamethrower", "weapon.fire-axe"] },
+    { "id": "target", "kind": "infected", "at": [5.2, 0], "state": "idle" },
+    { "id": "infected2", "kind": "infected", "at": [6, 1], "state": "idle" },
+    { "id": "infected3", "kind": "infected", "at": [6, -1], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1.5 },
+  "script": [
+    { "frame": 0, "actor": "courier", "do": { "select": "LEFT" } },
+    { "frame": 0, "actor": "courier", "do": { "aim": "target", "seconds": 2 } },
+    { "frame": 30, "actor": "courier", "do": { "attack": "target", "seconds": 1, "move": [0, 0] } }
+  ],
+  "frames": 90, "shots": [40, 46, 52, 58, 64, 70], "expect": { "consoleErrors": 0 }
+}

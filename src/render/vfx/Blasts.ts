@@ -21,13 +21,13 @@ type Blast = Extract<GameEvent, { type: 'explosion' }>;
 interface Column { visible?: boolean; /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
-export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
+export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void; move?(x: number, z: number): void } | null;
 export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight; field?: LightField; ambient?: Node<'float'>; sunDirection?(): { x: number; y: number; z: number } }
 
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
 // F-290: 2.4 rockets/s overlaps ~3 hot cores, ~8 soot clusters and up to
 // 15 debris bursts. Retain their lifetimes at both tiers without recycling live slots.
-const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 192, FIREBALLS_LOW = 96, DEBRIS = 256, FLAMES = 128, JET_FLAMES = 32, GLOWS = 40, PARTS = 12;
+const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 192, FIREBALLS_LOW = 96, DEBRIS = 256, FLAMES = 128, JET_FLAMES = 32, JET_FLAMES_LOW = 24, GLOWS = 40, PARTS = 12;
 const wind = { x: .55, z: .25 };
 /** Q-132: smoke grenade clouds and small debris fires (size < 1, a lick of flame) cast no long moon/sun shadow strip. */
 export const castsColumnShadow = (c: { cloud?: number; size: number }): boolean => !c.cloud && c.size >= 1;
@@ -98,7 +98,14 @@ export class Blasts extends Group {
   private glowCount = 0;
   /** Latest flamethrower discharge; a short hold bridges discrete sim attacks into one visible jet. */
   private flameJet: { x: number; y: number; z: number; dx: number; dz: number; range: number; until: number; seed: number } | null = null;
-  private jetLight: { remove(): void } | null = null;
+  private readonly jetBirth = new Float64Array(JET_FLAMES).fill(-Infinity);
+  private readonly jetX = new Float32Array(JET_FLAMES); private readonly jetY = new Float32Array(JET_FLAMES); private readonly jetZ = new Float32Array(JET_FLAMES);
+  private readonly jetDX = new Float32Array(JET_FLAMES); private readonly jetDZ = new Float32Array(JET_FLAMES); private readonly jetRange = new Float32Array(JET_FLAMES);
+  private jetCursor = 0; private jetNext = 0; private jetStopped = false;
+  private jetLight: { remove(): void; move?(x: number, z: number): void } | null = null;
+  private nozzleLight: { remove(): void; move?(x: number, z: number): void } | null = null;
+  private nozzleLightX = Infinity;
+  private nozzleLightZ = Infinity;
   private jetLightX = Infinity;
   private jetLightZ = Infinity;
   quality: 'high' | 'low' = 'high';
@@ -342,7 +349,10 @@ export class Blasts extends Group {
   }
   get flash(): number { return this.flashAt < 0 ? 0 : this.flashPeak * Math.max(0, 1 - (this.time - this.flashAt) / .16); }
   set(patch: { quality?: 'high' | 'low'; flashReduction?: boolean; slowMotion?: boolean }): void {
-    if (patch.quality) { this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; this.fireballs.count = patch.quality === 'low' ? FIREBALLS_LOW : FIREBALLS; }
+    if (patch.quality) {
+      if (patch.quality !== this.quality) { this.jetBirth.fill(-Infinity); this.jetCursor = 0; this.jetNext = this.time; }
+      this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; this.fireballs.count = patch.quality === 'low' ? FIREBALLS_LOW : FIREBALLS;
+    }
     if (patch.flashReduction !== undefined) { this.flashReduction = patch.flashReduction; this.heat.value = patch.flashReduction ? .6 : 1; }
     if (patch.slowMotion !== undefined) { this.slowMotion = patch.slowMotion; if (!this.slowMotion) this.bullet = { scale: 1, remaining: 0, progress: 0 }; }
   }
@@ -469,15 +479,42 @@ export class Blasts extends Group {
   flashPool(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void { this.glow(x, z, radius, color, intensity, life, ground); }
   /** Refresh a cover-clipped, pooled flame jet from a rendered flamethrower discharge. */
   flameJetAt(x: number, y: number, z: number, dx: number, dz: number, range: number, until: number, seed: number): void {
-    this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until, seed };
+    if (this.flameJet) {
+      const j = this.flameJet;
+      j.x = x; j.y = y; j.z = z; j.dx = dx; j.dz = dz; j.range = Math.max(0, range); j.until = until + .24; j.seed = seed;
+    } else { this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until: until + .24, seed }; this.jetBirth.fill(-Infinity); this.jetNext = this.time; }
+    if (this.jetStopped) { this.jetNext = this.time; this.jetStopped = false; }
+    const interval = this.quality === 'high' ? .004 : .128 / JET_FLAMES_LOW;
+    // Bounded catch-up, with fixed slots; each puff retains its own nozzle pose.
+    for (let emitted = 0; emitted < 16 && this.jetNext <= this.time; emitted++, this.jetNext += interval) {
+      const slot = this.jetCursor++ % (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW);
+      // Recycle a small fraction into the shared smoke pool as their hot cards expire.
+      if (slot % 8 === 0 && this.time - this.jetBirth[slot] >= .128 && Number.isFinite(this.jetBirth[slot])) {
+        const dx = this.jetDX[slot], dz = this.jetDZ[slot], distance = this.jetRange[slot] * .85;
+        this.host.particles.spawn(this.time, .65, this.jetX[slot] + dx * distance, this.jetY[slot] + .45, this.jetZ[slot] + dz * distance,
+          dx * .25, .65, dz * .25, .32, particleShape.smoke, 0x49312a, -.3);
+      }
+      this.jetBirth[slot] = this.jetNext; this.jetX[slot] = x; this.jetY[slot] = y; this.jetZ[slot] = z;
+      this.jetDX[slot] = dx; this.jetDZ[slot] = dz; this.jetRange[slot] = Math.max(0, range);
+    }
+    if (this.jetNext < this.time - .1) this.jetNext = this.time;
     const lx = x + dx * range * .4, lz = z + dz * range * .4;
-    if (!this.jetLight || Math.hypot(lx - this.jetLightX, lz - this.jetLightZ) > .25) {
+    if (this.jetLight?.move) this.jetLight.move(lx, lz);
+    else if (!this.jetLight || Math.hypot(lx - this.jetLightX, lz - this.jetLightZ) > .25) {
       this.jetLight?.remove();
       this.jetLight = this.host.light?.(lx, lz, '#ffad42', this.flashReduction ? 1 : 3, 5, Infinity, true) ?? null;
       this.jetLightX = lx; this.jetLightZ = lz;
     }
+    if (this.nozzleLight?.move) this.nozzleLight.move(x, z);
+    else if (!this.nozzleLight || Math.hypot(x - this.nozzleLightX, z - this.nozzleLightZ) > .25) {
+      this.nozzleLight?.remove();
+      this.nozzleLight = this.host.light?.(x, z, '#ffb44e', this.flashReduction ? .7 : 2, 2.8, Infinity, true) ?? null;
+      this.nozzleLightX = x; this.nozzleLightZ = z;
+    }
   }
-  clearFlameJet(): void { this.flameJet = null; this.jetLight?.remove(); this.jetLight = null; }
+  /** Let the last cards burn out after the source stops refreshing. */
+  stopFlameJet(): void { if (this.flameJet) { this.flameJet.until = this.time + .24; this.jetStopped = true; } }
+  clearFlameJet(): void { this.flameJet = null; this.jetLight?.remove(); this.jetLight = null; this.nozzleLight?.remove(); this.nozzleLight = null; }
   /** Rewrite the shared cards after the drawn nozzle has moved in the current render. */
   refreshFlameJet(): void { this.writeFlamesAndGlows(this.time); }
   private glow(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void {
@@ -740,73 +777,97 @@ export class Blasts extends Group {
     if (!this.host.camera) return true;
     this.sourcePoint.set(x, (this.world.districts?.groundHeight(x, z) ?? 0) + 9, z);
     // Plane distances avoid allocating bounds for each of the 22 persistent fires.
-    return this.frustum.planes.every(plane => plane.distanceToPoint(this.sourcePoint) >= -radius);
+    for (let i = 0; i < this.frustum.planes.length; i++) if (this.frustum.planes[i].distanceToPoint(this.sourcePoint) < -radius) return false;
+    return true;
   }
+  private frameFlames = 0; private frameGlows = 0; private frameReserved = 0; private frameShadows = 0;
+  private frameSun: { x: number; y: number; z: number } = this.sunNode.value; private frameHorizontal = 0;
+  private readonly writeFireShadow = (c: Column): void => { this.frameShadows = this.writeColumnShadow(c, this.frameSun, this.frameHorizontal, this.frameShadows); };
+  private writeFlame(x: number, y: number, z: number, seed: number, width: number, height: number, intensity: number, jet = false): void {
+    const slot = this.frameFlames;
+    if (slot >= (jet ? FLAMES : FLAMES - this.frameReserved)) return;
+    this.fl.fOrigin.setXYZW(slot, x, y, z, seed); this.fl.fStyle.setXYZW(slot, width, height, intensity, 1);
+    this.fl.fJet.setXYZW(slot, 0, 0, 0, 0); this.frameFlames++;
+  }
+  private writeGlow(x: number, z: number, radius: number, color: number, intensity: number, ground?: number): void {
+    const slot = this.frameGlows;
+    if (slot >= GLOWS) return;
+    this.gl.gOrigin.setXYZW(slot, x, (ground ?? this.world.districts?.groundHeight(x,z) ?? 0) + .03, z, radius);
+    this.gl.gColor.setXYZW(slot, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255, intensity); this.frameGlows++;
+  }
+  private writeColumnShadow(c: Column, sun: { x: number; y: number; z: number }, horizontal: number, slot: number): number {
+    if (slot >= 64 || !castsColumnShadow(c) || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) return slot;
+    const length = Math.min(30, (c.size >= 2 ? 18 : 10) * horizontal / Math.max(.15, Math.abs(sun.y)));
+    this.pos.set(c.x - sun.x / horizontal * length / 2, (c.ground ?? 0) + .025, c.z - sun.z / horizontal * length / 2);
+    this.quat.setFromAxisAngle(up, Math.atan2(sun.x, sun.z)); this.scl.set(c.size * 1.6, 1, length);
+    this.columnShadows.setMatrixAt(slot, this.partMatrix.compose(this.pos, this.quat, this.scl));
+    return slot + 1;
+  }
+  private readonly writeFireColumn = (c: Column, id: number): void => {
+    const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) return;
+    if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) return;
+    const big = c.ambient ? c.ambient.car : !!e!.vehicle, radius = c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
+    // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
+    const grow = c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
+    const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
+    for (let i = 0; i < n; i++) {
+      const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
+      this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+    }
+    this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life));
+  };
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
-    let flames = 0, glows = 0;
-    const reserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2) : 0;
-    const sun = this.host.sunDirection?.() ?? { x: .45, y: .78, z: .43 }, horizontal = Math.hypot(sun.x, sun.z);
-    let shadows = 0;
-    for (const c of [...this.columns, ...this.fireColumns.values()]) {
-      // Q-132: small debris fires (size < 1) are a lick of flame, not a column: no long moon-cast shadow strip across the verge.
-      if (shadows >= 64 || !castsColumnShadow(c) || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) continue;
-      const length = Math.min(30, (c.size >= 2 ? 18 : 10) * horizontal / Math.max(.15, Math.abs(sun.y)));
-      this.pos.set(c.x - sun.x / horizontal * length / 2, (c.ground ?? 0) + .025, c.z - sun.z / horizontal * length / 2);
-      this.quat.setFromAxisAngle(up, Math.atan2(sun.x, sun.z));
-      this.scl.set(c.size * 1.6, 1, length);
-      this.columnShadows.setMatrixAt(shadows++, this.partMatrix.compose(this.pos, this.quat, this.scl));
-    }
-    this.columnShadows.count = shadows; this.columnShadows.instanceMatrix.needsUpdate = true;
-    const flame = (x: number, y: number, z: number, seed: number, width: number, height: number, intensity: number, jet = false) => {
-      if (flames >= (jet ? FLAMES : FLAMES - reserved)) return;
-      this.fl.fOrigin.setXYZW(flames, x, y, z, seed); this.fl.fStyle.setXYZW(flames, width, height, intensity, 1);
-      this.fl.fJet.setXYZW(flames, 0, 0, 0, 0); flames++;
-    };
-    const pool = (x: number, z: number, radius: number, color: number, intensity: number, ground?: number) => {
-      if (glows >= GLOWS) return;
-      this.gl.gOrigin.setXYZW(glows, x, (ground ?? this.world.districts?.groundHeight(x,z) ?? 0)+.03, z, radius);
-      this.gl.gColor.setXYZW(glows, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255, intensity); glows++;
-    };
-    for (const [id, c] of this.fireColumns) {
-      const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) continue;
-      if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) continue;
-      const big = c.ambient ? c.ambient.car : !!e!.vehicle, radius = c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
-      // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
-      const grow = c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
-      const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
-      for (let i = 0; i < n; i++) {
-        const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-        flame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
-      }
-      pool(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + sid)) * (.3 + .7 * life));
-    }
+    this.frameFlames = this.frameGlows = 0;
+    this.frameReserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW) + 3 : 0;
+    const sun = this.host.sunDirection?.() ?? this.sunNode.value, horizontal = Math.hypot(sun.x, sun.z);
+    this.frameShadows = 0; this.frameSun = sun; this.frameHorizontal = horizontal;
+    for (let i = 0; i < this.columns.length; i++) this.frameShadows = this.writeColumnShadow(this.columns[i], sun, horizontal, this.frameShadows);
+    this.fireColumns.forEach(this.writeFireShadow);
+    this.columnShadows.count = this.frameShadows; this.columnShadows.instanceMatrix.needsUpdate = true;
+    this.fireColumns.forEach(this.writeFireColumn);
     if (this.flameJet && now >= this.flameJet.until) this.clearFlameJet();
     if (this.flameJet) {
-      const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2;
-      const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .12);
+      const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW;
+      const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .24);
+      // Centre the 8 Hz oscillation at 90% of the clipped ray: ±11% around that
+      // visible length without carrying flame through cover at the high point.
+      const reachScale = .9 + .1 * Math.sin(now * Math.PI * 16);
       for (let i = 0; i < count; i++) {
-        const t = (i + .5) / count, wave = Math.sin(now * 17 + i * 2.13 + j.seed) * .045 * t;
-        const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .16 * t) + wave;
-        const x = j.x + j.dx * j.range * t + sideX * spread;
-        const z = j.z + j.dz * j.range * t + sideZ * spread;
-        const rise = t * t * .45 + Math.sin(now * 13 + i) * .025 * t;
-        const length = Math.min(.9 + t * .8, j.range * t * 2, j.range * (1 - t) * 2);
-        flame(x, j.y + rise, z, j.seed + i * .713, .22 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
-        this.fl.fJet.setXYZW(flames - 1, j.dx, t * .15, j.dz, t);
+        // As the source dies, retain scattered individual tongues, not a whole
+        // uniformly dimming cone. The hash is stable for each pooled card.
+        const order = ((i * 17) % count) / count;
+        if (order >= fade) continue;
+        const t = (now - this.jetBirth[i]) / .128;
+        if (t < 0 || t >= 1) continue;
+        const dx = this.jetDX[i], dz = this.jetDZ[i], reach = this.jetRange[i] * reachScale;
+        const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
+        const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .3 * t) + wave;
+        const x = this.jetX[i] + dx * reach * t - dz * spread;
+        const z = this.jetZ[i] + dz * reach * t + dx * spread;
+        const rise = t * t * .5 + Math.sin(now * 19 + i) * .08 * t;
+        const length = Math.min(.5 + t * .65, reach * t * 2, reach * (1 - t) * 2);
+        this.writeFlame(x, this.jetY[i] + rise, z, j.seed + i * .713, .2 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
+        this.fl.fJet.setXYZW(this.frameFlames - 1, dx, t * .15, dz, t);
       }
       const ix = j.x + j.dx * j.range, iz = j.z + j.dz * j.range;
-      pool(ix, iz, 1.05, 0xff5a1e, .8 * fade, this.world.districts?.groundHeight(ix, iz));
+      // Short upright tongues turn the forward jet into a splash at its clipped end.
+      for (let i = 0; i < 3; i++) {
+        const offset = (i - 1) * .25;
+        this.writeFlame(ix - j.dx * .12 + sideX * offset, j.y - .15, iz - j.dz * .12 + sideZ * offset,
+          j.seed + 20 + i, .32, .55 + .13 * Math.sin(now * 21 + i * 2), fade * .65, true);
+      }
+      this.writeGlow(ix, iz, 1.05, 0xff5a1e, .8 * fade, this.world.districts?.groundHeight(ix, iz));
     }
     for (let i = this.glowList.length - 1; i >= 0; i--) {
       const g = this.glowList[i], k = (now - g.born) / g.life;
       if (k >= 1) { this.glowList.splice(i, 1); continue; }
-      pool(g.x, g.z, g.radius, g.color, g.intensity * (1 - k) ** 2, g.ground);
+      this.writeGlow(g.x, g.z, g.radius, g.color, g.intensity * (1 - k) ** 2, g.ground);
     }
-    this.glowCount = glows;
+    this.glowCount = this.frameGlows;
     this.fl.fOrigin.needsUpdate = this.fl.fStyle.needsUpdate = this.fl.fJet.needsUpdate = this.gl.gOrigin.needsUpdate = this.gl.gColor.needsUpdate = true;
-    this.flames.count = Math.max(1, flames); this.flames.visible = flames > 0;
-    this.glows.count = Math.max(1, glows); this.glows.visible = glows > 0;
+    this.flames.count = Math.max(1, this.frameFlames); this.flames.visible = this.frameFlames > 0;
+    this.glows.count = Math.max(1, this.frameGlows); this.glows.visible = this.frameGlows > 0;
   }
   private syncParts(): void {
     let n = 0;
@@ -872,7 +933,7 @@ export class Blasts extends Group {
     for (let i = 0; i < this.fireballs.count; i++) if (this.fbExpiry[i] > this.time) fireballs++;
     let chunks = 0; for (let i = 0; i < DEBRIS; i++) if (this.debrisExpiry[i] > this.time) chunks++;
     return { wind: { x: this.windNode.value.x, z: this.windNode.value.z }, blasts: this.blasts, puffs, puffCap: this.puffs.count, fireballs, fireballCap: this.fireballs.count, chunks, chunkCap: DEBRIS, poolOverwrites: { ...this.poolOverwrites }, flames: this.flames.visible ? this.flames.count : 0, glows: this.glows.visible ? this.glows.count : 0,
-      flameJet: this.flameJet ? { ...this.flameJet, cards: this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2, light: !!this.jetLight } : null,
+      flameJet: this.flameJet ? { ...this.flameJet, cards: this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW, light: !!this.jetLight } : null,
       vehicleSmokeColumns: this.vehicleColumns.size, columns: this.columns.length + this.fireColumns.size + this.vehicleColumns.size, transientColumns: this.columns.length, fireColumns: this.fireColumns.size, columnShadows: this.columnShadows.count, clouds: this.cloudColumns.size, scorch: this.scorch.count, parts: this.parts.count, flash: this.flash, bulletTime: { ...this.bullet }, slowMotion: this.slowMotion };
   }
   dispose(): void {

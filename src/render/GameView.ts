@@ -91,6 +91,7 @@ export class GameView implements Lifecycle {
   private cinematicId: string | null = null;
   private departureShot = false;
   private storyFraming = false;
+  private megaRevealFraming = false;
   /** L5 Metro finale framing target (eased), or null while the ordinary follow camera runs. */
   private l5Focus: Vector3 | null = null;
   private readonly l5Offset = new Vector3();
@@ -821,6 +822,14 @@ export class GameView implements Lifecycle {
         this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
         this.storyFraming = true;
       } else if (this.storyFraming) { this.storyFraming = false; this.view.follow(); }
+      const reveal = this.world.scenario === 'L10' && this.world.missions?.state.states['mega-reveal-active'] ? this.world.megaPursuit?.entity() : null;
+      if (reveal && !this.view.spot) {
+        const focus = this.world.entities.get(1)!.transform;
+        this.storyFocus.set((focus.x + reveal.transform.x) / 2, .8, (focus.z + reveal.transform.z) / 2);
+        this.storyOffset.setFromSphericalCoords(Math.max(13, this.view.radius), this.view.polar, this.view.azimuth);
+        this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
+        this.megaRevealFraming = true;
+      } else if (this.megaRevealFraming) { this.megaRevealFraming = false; this.view.follow(); }
       // l5-finale (PO 11-01: "Check the camera view and needd movements at the end of L5. It'S a bit strange."): the Metro
       // ending retains the player's zoom. It used to cut to a reverse wide shot of the residents (the group filing in was off
       // screen while the HUD asked to stand still), then to a close shot over the shutter, then onto a red shaft. Ease the

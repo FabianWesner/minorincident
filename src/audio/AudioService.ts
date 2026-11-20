@@ -556,8 +556,10 @@ export class AudioService implements Lifecycle {
             if (!sanctuary && story.beat !== 'released' && (input.danger || band === 'near' || band === 'approaching')) this.loop('l10-heartbeat', 'l10.heartbeat', { gain: .65 });
             else this.stopLoop('l10-heartbeat');
         }
-        const minimum = Math.max(story.minimum, input.minimum ?? 0, band === 'near' ? .5 : band ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
-        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), ...(sanctuary ? { alerted: 0, danger: false, minimum: 0 } : {}), incident: !sanctuary && this.eventMapper.incident, complete: sanctuary || this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
+        const revealActive = !!this.world.missions?.state.states['mega-reveal-active'];
+        const storyMinimum = this.level === 'L10' && story.beat === 'hunter' ? (revealActive ? .5 : band === 'near' ? .5 : band === 'approaching' ? .25 : 0) : story.minimum;
+        const minimum = Math.max(storyMinimum, input.minimum ?? 0, band === 'near' ? .5 : band && band !== 'distant' ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
+        this.music.update(t, { ...input, ...(input.danger !== undefined || storyMinimum > 0 || band ? { minimum } : {}), ...(this.level === 'L10' && story.beat === 'hunter' ? { dangerHoldS: 4 } : {}), ...(sanctuary ? { alerted: 0, danger: false, minimum: 0 } : {}), incident: !sanctuary && this.eventMapper.incident, complete: sanctuary || this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
         // A dense fight escalates within the combat state (also when a story floor already holds it there).
         if (this.music.peak !== this.score.peak) {
             this.score.setPeak(this.music.peak);
@@ -574,7 +576,7 @@ export class AudioService implements Lifecycle {
                 v.gain.gain.cancelScheduledValues(at);
                 v.gain.gain.setValueAtTime(v.gain.gain.value, at);
                 // The recording carries the theme. Add filtered recorded rhythm/dread accents only.
-                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * (this.music.peak ? 0.5 : 0.18) : 0, at + (transition.immediate ? 0.8 : 2));
+                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * (this.music.peak ? 0.5 : 0.18) : 0, at + (this.level === 'L10' && story.beat === 'hunter' ? 1 : transition.immediate ? 0.8 : 2));
             }
         }
     }

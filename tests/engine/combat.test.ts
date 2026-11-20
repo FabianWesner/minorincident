@@ -223,9 +223,8 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
     step(throwable, 20);
     throwable.setInput({ aim: { x: 1, z: 0 }, right: { down: true, held: false, up: true } }); step(throwable, 1); throwable.clearInput();
     expect(molotov.charges).toBe(0);
-    expect(loadout.current(loadout.state.selectedSide).id).toBe(previousWeapon);
-    step(throwable, 15);
-    expect(throwable.events.events()).toContainEqual(expect.objectContaining({ type: 'loadout.switched', actionId: previousWeapon }));
+    // PO 2026-11-19/20: a recharging throwable stays selected after its last charge (no switch back to melee).
+    expect(loadout.current(loadout.state.selectedSide).id, `not back to ${previousWeapon}`).toBe('weapon.molotov');
   }
   const sameRack = await arena(); equip(sameRack, ['weapon.fire-axe'], ['weapon.hunting-rifle', 'weapon.molotov']);
   const sameLoadout = sameRack.combat!.runner.loadout;
@@ -233,7 +232,7 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   sameRack.setInput({ selectedWeaponKey: choose('weapon.hunting-rifle') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
   sameRack.setInput({ selectedWeaponKey: choose('weapon.molotov') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
   fire(sameRack, 'RIGHT'); step(sameRack, 20); fire(sameRack, 'RIGHT');
-  expect(sameLoadout.current(sameLoadout.state.selectedSide).id).toBe('weapon.hunting-rifle');
+  expect(sameLoadout.current(sameLoadout.state.selectedSide).id).toBe('weapon.molotov');
   const prior = new Loadout(['weapon.fire-axe'], ['weapon.molotov', 'weapon.pipe-bomb']);
   prior.input({ ...emptyInput(), selectedActiveSlot: prior.activeEntries().findIndex(e => e.id === 'weapon.molotov') }, 30);
   prior.state.RIGHT.rack[0].charges = 0;
@@ -243,7 +242,7 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   Object.assign(restored.state, snapshot);
   restored.state.RIGHT.rack[1].charges = 1;
   restored.spend('RIGHT', 90, restored.definition('weapon.pipe-bomb'), false);
-  expect(restored.current(restored.state.selectedSide).id).toBe('weapon.fire-axe');
+  expect(restored.current(restored.state.selectedSide).id).toBe(restored.definition('weapon.pipe-bomb').recharge ? 'weapon.pipe-bomb' : 'weapon.fire-axe');
 });
 
 test('melee: the swing hits inside its arc/range once per target and respects maxTargets', async () => {
