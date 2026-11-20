@@ -178,6 +178,11 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     expect(player.transform.z, `${quality}: courier walks into the hangar`).toBeGreaterThan(53);
     expect(dog.transform.z, `${quality}: corgi follows a normal walking approach into the hangar`).toBeGreaterThan(53);
     expect(Math.hypot(dog.transform.x - player.transform.x, dog.transform.z - player.transform.z)).toBeLessThan(6);
+    w.missions!.restore('cure-research-entry');
+    const restoredDog = w.entities.get(dog.id)!;
+    for (let tick = 0; tick < 900 && restoredDog.transform.z < 53; tick++) w.update();
+    expect(restoredDog.transform.z, `${quality}: corgi is inside within 15 s after restoring the hangar checkpoint`).toBeGreaterThanOrEqual(53);
+    expect(Math.hypot(restoredDog.transform.x - player.transform.x, restoredDog.transform.z - player.transform.z)).toBeLessThan(6);
   }
 });
 

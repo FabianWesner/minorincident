@@ -8,15 +8,15 @@ The hangar opening was 2 m wide, formed by the west/east door wall colliders in 
 
 Widened the hangar's clear entrance to 4 m. While the courier is inside the hangar and the corgi is still outside, the follower continues toward the centered entrance/interior target with a 0.1 m stop distance. This uses ordinary navigation and collision movement; it does not relocate the corgi.
 
-Folded the regression into the existing `tests/engine/npcs.test.ts` case. HIGH and LOW each cover a fresh `cure-research-entry` checkpoint at the doorway and a courier walking the final approach into the hangar. The corgi crosses the hangar boundary within 15 seconds and stays within 6 m of the courier.
+Folded the regression into the existing `tests/engine/npcs.test.ts` case. HIGH and LOW each cover a captured `cure-research-entry` checkpoint at the doorway, its actual restore, and a courier walking the final approach into the hangar. After restore the test reacquires the corgi entity, since restore replaces its snapshot. The corgi crosses the hangar boundary within 15 seconds and stays within 6 m of the courier.
 
 ## Validation
 
-- `npx vitest run tests/engine/npcs.test.ts --project default --configLoader runner` — PASS (3 tests; includes HIGH/LOW checkpoint and walking approaches).
+- `npx vitest run tests/engine/npcs.test.ts --project default --configLoader runner` — PASS (3 tests; includes HIGH/LOW checkpoint restore and walking approaches; rerun after adding the restore assertion).
 - `npm run typecheck` — PASS.
 - `npm run lint` — PASS.
 - `npm run qa:threat -- --levels L10` — FAIL: passive audit reported zero threat flags, but the skilled native route hit the 1,800 s tick budget at “Kill the Mega Alpha”, leaving `INCOMPLETE_NATIVE_POLICY:tick-budget` (1 acceptance flag). An unchanged retry produced the same flag and zero passive flags (144.8 s). A baseline comparison restored both changed runtime files to `78f69ba6` for the same audit and restored HEAD afterward: it also produced the same flag at “Kill the Mega Alpha”, zero passive flags, and 29 deaths (79.3 s). The changed run had 22 deaths. This establishes that the gate failure exists without the hangar changes; it does not satisfy the zero-flags gate.
-- `sh tools/remote/run.sh "$PWD" -- npm test` — PASS on remote retry: 27 files, 105 passed, 1 skipped; 207.3 s (240 s budget).
+- `sh tools/remote/run.sh "$PWD" -- npm test` — PASS on remote retry: 27 files, 105 passed, 1 skipped; 207.3 s (240 s budget), before the subsequent restore-only test assertion was added.
 - HIGH, zoom 1 headless real-level capture: `test-results/scenes/s196-native-hangar.png` (untracked). Courier and corgi were placed at (2707, 59) and (2707, 56), respectively, with the latter inside the authored hangar bounds. The opened frame shows the packed corgi and courier between two guards, but heavy shadow and overlays obscure the doorway and interior; it does not visually establish the corgi walking inside. The PO screenshot shows the courier on the apron, two riflemen, and the packed corgi behind the marked bay edge.
 
 A second HIGH zoom 1 real-level still, `test-results/scenes/s196-native-hangar-deep.png` (untracked), places the courier at (2707, 66) and corgi at (2707, 63), inside the authored hangar. Opened and inspected: the packed corgi stands beside the courier near the glowing cure pedestal and a researcher; the image is staged and the native regression provides the movement evidence. The clean L10 threat audit remains open. The first commit attempt was blocked by read-only Git metadata; filesystem access was subsequently restored.
