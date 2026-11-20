@@ -35,13 +35,17 @@ try {
       return frame ?? null;
     } };
     g.input.feed = feed;
-    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; x: number; z: number; builds: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
+    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; x: number; z: number; builds: number; builtMaterials: Record<string, number>; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
     trace.hitchTrace = { frames: [], running: true };
+    let previousMaterials = { ...g.view.renderer.nodeBuildMaterials };
     let last = performance.now();
     const sample = (now: number) => {
       const infected = g.world.infected?.active ?? [];
       const p = g.world.entities.get(1)!.transform;
-      trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, infected: infected.length,
+      const materials = { ...g.view.renderer.nodeBuildMaterials };
+      const builtMaterials = Object.fromEntries(Object.entries(materials).filter(([name, count]) => count > (previousMaterials[name] ?? 0)).map(([name, count]) => [name, count - (previousMaterials[name] ?? 0)]));
+      previousMaterials = materials;
+      trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, builtMaterials, infected: infected.length,
         alive: infected.filter(e => e.health.current > 0).length, sim: a.perf().simMs, update: a.perf().updateCpuMs,
         render: a.perf().renderCpuMs, categories: a.debug.cpuProfile() });
       last = now;

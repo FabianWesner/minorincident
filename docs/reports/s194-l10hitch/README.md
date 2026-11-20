@@ -17,13 +17,13 @@ A quiet headless run on 2026-11-20 produced these baseline numbers (1600×900, D
 | WebGPU high | 1,658 | 54.7 ms | 26.8 ms | 0 |
 | WebGL2 high | 1,001 | 312.6 ms | 45.1 ms | 1 |
 
-Both runs had seven infected already alive at tick 10; the WebGPU replay was at x=581.19 at tick 489, rather than the PO's x=551.55. Thus this checkpoint trace does not establish that it reproduces the first visible spawn. The WebGL2 worst interval ended at tick 28. The preceding sample at tick 10 recorded the first seven infected, ten new shader builds, and 295.3 ms in render; that render falls inside the following RAF interval. This implicates the first draw and shader/pipeline work, although the trace does not separate compilation from uploads. The loading path had prepared only the runner fallback corpse tier before play. The fix prepares the planned living tiers for the opening regular looks and crawler behind the loading card. On the same quiet trace WebGL2 high improved from 312.6 to 95.1 ms worst and 45.1 to 33.2 ms p99 (1,269 frames, no frames over 100 ms). WebGPU high changed from 54.7 to 90.4 ms worst and 26.8 to 24.0 ms p99 (1,765 frames, no frames over 100 ms). A subsequent quiet WebGPU low after run measured 57.4 ms worst and 21.8 ms p99 across 2,001 frames, with no frames over 100 ms; a low baseline is unavailable. Audio was muted, so audio decode was not measured.
+Both runs first showed seven infected at tick 10; the WebGPU replay was at x=581.19 at tick 489, rather than the PO's x=551.55. Thus this checkpoint trace does not establish that it reproduces the first visible spawn. The WebGL2 worst interval ended at tick 28. The preceding sample at tick 10 recorded the first seven infected, ten new shader builds, and 295.3 ms in render; that render falls inside the following RAF interval. This implicates the first draw and shader/pipeline work, although the trace does not separate compilation from uploads. The loading path had prepared only the runner fallback corpse tier before play. The fix prepares the planned living tiers for the opening regular looks and crawler behind the loading card. On the same quiet trace WebGL2 high improved from 312.6 to 95.1 ms worst and 45.1 to 33.2 ms p99 (1,269 frames, no frames over 100 ms). WebGPU high changed from 54.7 to 90.4 ms worst and 26.8 to 24.0 ms p99 (1,765 frames, no frames over 100 ms). A subsequent quiet WebGPU low after run measured 57.4 ms worst and 21.8 ms p99 across 2,001 frames, with no frames over 100 ms; a low baseline is unavailable. Audio was muted, so audio decode was not measured.
 
 Earlier attempts were blocked by sandbox `spawn EPERM` and browser-pool `listen EPERM`; those restrictions have since been lifted. Raw traces are in `test-results/s194-l10hitch/` locally.
 
 ## Code review findings
 
-L10 already has a full warm-up behind the loading card. `CrowdView` registers the cure encounter slots, schedules the L10 infected models and corpse pages, and requests warm batches. The staged startup now includes the opening regular looks and crawler at their planned tiers in the loading barrier. This can increase loading time; it has not been measured.
+L10 already has a full warm-up behind the loading card. `CrowdView` registers the cure encounter slots, schedules the L10 infected models and corpse pages, and requests warm batches. The staged startup now includes the opening regular looks and crawler at their planned tiers in the loading barrier. This can increase loading time; it has not been measured. The after traces still show 10–11 new builds at first spawn, so further cold graphs remain; the harness now records material names for a follow-up trace.
 
 ## Checks
 
@@ -36,4 +36,4 @@ L10 already has a full warm-up behind the loading card. `CrowdView` registers th
 
 ## Remaining work
 
-Confirm the reported location and trigger, then assess loading-time impact and capture a low baseline. Run focused tests and the remote unit suite, update this report with evidence, and commit the fix.
+Identify the remaining first-spawn material builds, confirm the reported location and trigger, then assess loading-time impact and capture a low baseline. Run focused tests and the remote unit suite, update this report with evidence, and commit the fix.
