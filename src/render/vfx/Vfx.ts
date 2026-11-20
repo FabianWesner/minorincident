@@ -845,7 +845,8 @@ export class Vfx extends Group {
           liveAsh.add(e.id);
           if ((this.ashPuffAt.get(e.id) ?? e.ashDeath.at) <= this.world.tick) {
             const ground = this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0;
-            this.burst(e.transform.x, ground + .2, e.transform.z, 0xaaa69a, this.quality === 'low' ? 3 : 6, .13, .7, -.35, particleShape.smoke, .35, .25);
+            this.burst(e.transform.x, ground + .25, e.transform.z, 0xaaa69a, 8, .3, .9, -.35, particleShape.smoke, .2, .35);
+            this.burst(e.transform.x, ground + .35 + .45 * (1 - age / 90), e.transform.z, 0xff7730, 6, .09, .5, .5, particleShape.spark, .35, .25);
             this.ashPuffAt.set(e.id, this.world.tick + 15);
           }
         } else this.ashPuffAt.delete(e.id);
