@@ -291,6 +291,9 @@ export class Lighting {
     this.look.nodes.gradeSaturation.value = nightLook.gradeSaturation! + (warmLook.gradeSaturation! - nightLook.gradeSaturation!) * t;
     this.look.nodes.haze.value.set(nightLook.haze!).lerp(this.dawnColor.set(warmLook.haze!), t);
     this.look.nodes.hazeAmount.value = nightLook.hazeAmount! + (warmLook.hazeAmount! - nightLook.hazeAmount!) * t;
+    // The standard haze begins beyond the 19 m follow lens, so the close
+    // corridor ground never receives the warm preset's dust colour.
+    this.hazeNear.value *= 1 - .65 * t;
     this.fogColor.value.set(night.fog).lerp(this.dawnColor.set(dust.fog), t);
     this.fogColorA.value.set(night.sky).lerp(this.dawnColor.set(dust.sky), t);
     this.fogNear.value = night.fogNear + (dust.fogNear - night.fogNear) * t;

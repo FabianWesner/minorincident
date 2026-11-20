@@ -134,6 +134,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - Corrected the corridor ambient blend to write the actual lighting uniforms used by materials. Typecheck, lint and focused world systems (5 tests) pass. A fresh HIGH native browser sample at tick 40560, the same gate position as the previous diagnostic, remains dark violet with a cropped gantry. Amber mood and gate composition remain unaccepted.
 
+- Brought the existing L3 haze toward the follow camera only within the corridor. The [native HIGH gate sample](native-high-haze.jpg), tick 40560, now reads warm dusty brown with visible motes instead of the earlier dark violet; the gantry remains cropped. This single view does not establish the mood throughout the corridor or on LOW. Typecheck, lint and focused world systems (5 tests) pass.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
