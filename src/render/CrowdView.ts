@@ -833,6 +833,8 @@ export class CrowdView extends Group {
           this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
           this.ashSwatch.set(pieceIndex === 5 ? '#514c45' : '#c5c3bb').lerp(this.emberAsh, (1 - ashProgress) * .16);
           this.ashSwatch.lerp(this.charAsh, 1 - ashProgress);
+          // One small coal stays warm briefly after the heap settles, then cools.
+          if (pieceIndex === 2) this.ashSwatch.lerp(this.emberAsh, .65 * Math.max(0, 1 - ashAge / 210));
           this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
         }
         if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {
