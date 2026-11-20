@@ -1,5 +1,7 @@
 # s187-megamoves: Mega signature moves
 
+**Status: incomplete.** The latest full threat audit fails one L10 hold flag and the skilled route does not complete. Coarse pursuit can stall, the service approach needs visible-arrival review, and the moving DPS ceiling is unverified. The implementation and evidence are committed for handoff.
+
 ## Implementation
 
 Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
@@ -16,7 +18,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - Focused infected AI and save-progression tests: passed after selecting an existing throw cue.
 - Remote `npm test`: reached the 240 s budget without a reported test failure. The specified fallback passed: local `npm test` (27 files, 106 tests, 183.9 s) and remote `tests/engine/l4-contact.test.ts` (1 test).
 - Latest remote `sh tools/remote/run.sh "$PWD" -- npm test` on `3f2ac658`: passed in 215.3 s (27 files, 105 passed, 1 skipped).
-- `npm run qa:threat`: completed with 0 fail flags. L10 skilled and passive routes both hit the audit tick budget; the required L10 acceptance rows therefore remain unverified.
+- Earlier `npm run qa:threat` before the safe admission change reported 0 fail flags, but L10 skilled hit its tick budget. The later full run below supersedes that result and failed.
 - An isolated `node --import tsx/esm tools/qa/threat-audit.ts --levels L10` reproduced the skilled tick-budget outcome at 1,800 simulated seconds. The passive hold window was measured (468.86 attacks/minute, L10-11 PASS); its tick-budget is the documented observation cap. The partial run's only fail flag was `PARTIAL_LEVEL_SELECTION`, so it is diagnostic and does not replace the full gate.
 - Regression comparison, isolated L10 native skilled audit, seed 1, LOW: baseline `bc57d840` completed in 1,120.02 s with 2 deaths and 559.99 total damage taken; `02fd92c6` hit 1,800 s at the Mega objective with 41 deaths and 4,526.12 total damage taken. These are whole-route totals, not Mega-only DPS or the requested HIGH walk measurement. The new behavior fails skilled route completion and needs balance/behavior investigation.
 - A native replay attributed only 45 damage to the Mega directly; ordinary infected dealt most damage. Restricting the existing encounter-wave request to its original rage phase did not change the 41-death outcome. Typecheck, lint and the focused infected AI test passed after that correction.
@@ -30,7 +32,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - HIGH native pacing comparison, seed 1, `complete` profile, 1,800 s: baseline `bc57d840` had 38 deaths; `b12551b8` had 36. Both timed out at the farmstead. [Comparison](high-pacing-comparison.json). This route does not complete and the totals include all causes, so it does not establish the Mega-only moving DPS ceiling or replace a completed HIGH walk.
 - HIGH native `l10Walk` input, seed 1, 1,800 s: baseline `bc57d840` timed out at farmstead with 35 deaths and 1,227.49 direct Mega damage; current `44a928f7` timed out at research hangar with 16 deaths and 936.05 direct Mega damage. These damage totals include stationary moments and unequal encounters; they do not establish the moving DPS ceiling or a completed route.
 - LOW finale diagnostic: baseline killed the Mega during hold and completed; the current route reached the Mega objective and accumulated 44 deaths there in the instrumented run. A temporary policy experiment prioritizing an ordinary infected within 5 m reduced a subsequent run to 23 deaths but still timed out; that policy change was reverted. This supports further investigation of the horde and retry interaction, not a passing balance result.
-- Pursuit roar can start without line of sight or an on-screen Mega, preserving roars between sightings. A focused AI check forces both visibility gates false and confirms roar selection; typecheck and lint pass. L10 balance must be remeasured after this change.
+- Pursuit roar can start without line of sight or an on-screen Mega, preserving roars between sightings. A focused AI check forces both visibility gates false and confirms roar selection; typecheck and lint pass. The subsequent L10 measurements below do not establish the moving DPS ceiling.
 - After the roar change, isolated LOW L10 still hit the skilled tick budget at the Mega objective, with 6 deaths and 1,317.75 total damage taken. The partial audit is diagnostic, not a complete gate.
 - Ranged throw markers now use the predicted target direction used by the projectile. A focused moving-target check verifies the direction; typecheck, lint and that AI test pass.
 - The 6-death LOW timeout left the Mega near x=1882 in hidden coarse pursuit while the courier reached x=4018. Its route began at an old node near x=807. Resetting the route on restore had no effect; an experimental distant-leg rejoin moved it about 93 m but still timed out and introduced a passive stuck-chaser flag. Both experiments were reverted. The coarse pursuit stall remains open.
@@ -48,4 +50,5 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - Review ground rubble appearance and landing in browser QA.
 - Measure the requested ~25% moving DPS ceiling; the HIGH walking death comparison above did not complete the route.
 - Confirm scripted sidestep dodges, damage/knockdown outcomes, and all move telegraphs in browser QA.
-- Complete L10 skilled and passive threat audit routes.
+- Complete the L10 skilled route and clear all full threat audit flags; the passive hold uses a documented observation cap.
+- Verify service arrivals can be seen approaching, and repair the coarse pursuit stall without bypassing collision.
