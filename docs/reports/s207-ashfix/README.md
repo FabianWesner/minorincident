@@ -49,3 +49,5 @@ A native complete-policy L10 route was run with `node --import tsx tools/qa/make
 The sheet now includes both L10-coordinate fixture zooms as well as the daylight comparison. The route generator's manifest shows the last pace checkpoint at tick 7,321, with a live save at tick 8,521; the configured 1,800 simulated seconds ended without another checkpoint. A longer native route or an appropriate captured resume is needed to reproduce the actual pace-15 state.
 
 A second unchanged native route with `--max-l10 3600` also completed with only the same ten saves through pace-3; increasing the duration did not produce the requested resume. The pace-15 checkpoint remains unverified.
+
+A seed-327 native route succeeded where seed 1 stalled: `make-checkpoint.ts --what l10 --seed 327 --max-l10 1800` produced `l10-22-cure-pace-15.json.gz` and its live counterpart under `/tmp/s207-native-seed327`. The route ran to completion and wrote 49 saves. These temporary native saves provide a route-derived state for a follow-up capture; the earlier constructed location views did not use them.
