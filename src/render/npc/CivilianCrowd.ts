@@ -95,7 +95,7 @@ const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
-  private readonly conversationPositions = new Map<number, { x: number; z: number; tick: number; distance: number }>();
+  private readonly conversationPositions = new Map<number, { x: number; z: number; tick: number; distance: number; speed: number; yaw: number }>();
   private readonly corpses = new StaticCorpses();
   private readonly probe = new CrowdFigureProbe();
   private locomotion!: CrowdLocomotion;
@@ -238,18 +238,18 @@ class CivilianBatch extends Group {
       const joining = !!c && c.state === 'calm' && joiningHangarConversation(this.world, e.id);
       let conversation = this.conversationPositions.get(e.id);
       if ((speaking || joining) && !conversation) {
-        conversation = { x: e.transform.x, z: e.transform.z, tick: this.world.tick, distance: 0 };
+        conversation = { x: e.transform.x, z: e.transform.z, tick: this.world.tick, distance: 0, speed: 0, yaw: e.transform.yaw };
         this.conversationPositions.set(e.id, conversation);
       }
-      let conversationSpeed = 0, conversationYaw = e.transform.yaw;
+      let conversationSpeed = conversation?.speed ?? 0, conversationYaw = conversation?.yaw ?? e.transform.yaw;
       if (conversation) {
         const player = this.world.entities.get(1)!.transform;
         const dx = e.transform.x - player.x, dz = e.transform.z - player.z, length = Math.hypot(dx, dz) || 1;
         const goal = (speaking || joining) && length > 3 ? { x: player.x + dx / length * 3, z: player.z + dz / length * 3 } : e.transform;
         const gx = goal.x - conversation.x, gz = goal.z - conversation.z, remaining = Math.hypot(gx, gz);
-        if (remaining > .001) conversationYaw = -Math.atan2(gz, gx);
         const dt = Math.max(0, Math.min(1, (this.world.tick - conversation.tick) / 60));
         const step = Math.min(remaining, dt * 1.5);
+        if (dt > 0) conversationSpeed = 0;
         if (remaining > .001 && step > 0) {
           const nav = this.world.infected?.nav;
           const origin = { x: conversation.x, z: conversation.z };
@@ -262,7 +262,7 @@ class CivilianBatch extends Group {
             conversationYaw = -Math.atan2(sz, sx); conversationSpeed = 1.5; break;
           }
         }
-        conversation.tick = this.world.tick;
+        conversation.tick = this.world.tick; conversation.speed = conversationSpeed; conversation.yaw = conversationYaw;
         if (!speaking && !joining && remaining < .02) { this.conversationPositions.delete(e.id); conversation = undefined; }
       }
       const drawTransform = closingPose ?? (conversation ? { ...e.transform, x: conversation.x, z: conversation.z } : e.transform);
@@ -320,7 +320,7 @@ class CivilianBatch extends Group {
       if (closingPose) clip = 'idle';
       const duration = authoredClips.get(clip)!.duration, gaitDistance = conversation ? conversation.distance : Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
-      const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
+      const storyElapsed = !talking && storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : loopingStory.has(clip) ? (storyElapsed + idleOffset(e.id) / duration) % 1 : Math.min(.999, storyElapsed);
       const facingPlayer = this.world.entities.get(1)!.transform;
       const targetYaw = -Math.atan2(facingPlayer.z - drawTransform.z, facingPlayer.x - drawTransform.x);
