@@ -5,6 +5,8 @@ import { buildingDoors, doorwayOf } from '../../data/buildingDoors';
 import type { PedestrianOptions } from './Outbreak';
 import { actorRadius } from '../world/SolidRegistry';
 import type { EntitySnapshot } from '../world/types';
+/** Courier distance at which a scripted walker stops its route and reacts (PO 2026-11-20). */
+const SCRIPTED_WALKER_NOTICE_M = 9;
 
 /**
  * Residents coming out of a house's front door (L1 beat 9, PO rule 2026-10-07: "10 ... come out of the house ... No
@@ -179,6 +181,12 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     if (tick < (w.startAt ?? 0)) { w.until++; continue; }
     const p = e.transform, before = house.strictRoute ? { ...e.transform } : undefined, beforeLeg = w.leg;
     const route = w.route ?? house.route;
+    // PO 2026-11-20 (L10 stair horde): "while they walk they don't react on my presence ... So I can just walk by".
+    // A scripted walker already outside its door hands over to the AI once the courier comes close or it is hurt.
+    if (w.leg >= 0 && w.leg < route.length && !house.strictRoute && !e.pendingAdmission) {
+      const courier = world.entities.get(1)?.transform;
+      if (courier && Math.hypot(courier.x - p.x, courier.z - p.z) <= SCRIPTED_WALKER_NOTICE_M || e.health.current < e.health.max) w.leg = route.length;
+    }
     if (swinging) { if (e.combat) e.combat.staggerUntil = Math.max(e.combat.staggerUntil ?? 0, tick + 2); w.until++; continue; }
     if (house.house.startsWith('kit.zoo-tunnel-mouth:') && e.pendingAdmission
       && !world.solids.admit(e, 'house.emergence.queue', 0, false)) {

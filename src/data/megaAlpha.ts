@@ -15,8 +15,11 @@ export const megaAlpha = {
   /** E32-AC12: ten direct rockets, independent of stock Alpha resistance/upgrades. */
   hp: 3000,
   /** PO 2026-11-12: "Make it so I can hurt it, but it recovers very fast, so I cannot kill it." Before the cure, conventional hits
-   * take it down to this share of max HP (was .9: hits looked like they did nothing) and it regenerates once hits stop. */
-  conventionalFloor: .35,
+   * take it down toward this share of max HP (was .9: hits looked like they did nothing) and it regenerates once hits stop.
+   * PO 2026-11-20: "every additional hit takes less damage, so I can never kill it" (no drop to 1/3, then a "magic" heal):
+   * each hit is scaled by headroom² (headroom = how far health is above the floor, 0..1), so the bar approaches the floor
+   * but never reaches it; regeneration is unchanged. */
+  conventionalFloor: .5,
   /** Regeneration before the cure: starts this many ticks after the last hit, heals this share of max HP per second. */
   regenDelayTicks: 60,
   regenPerSecond: .12,
