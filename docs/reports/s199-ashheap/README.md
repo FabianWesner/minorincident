@@ -1,5 +1,11 @@
 # s199 — Flamethrower ash heap
 
+## Final review (2026-11-20)
+
+The current implementation is `415413a3`. The [six-frame HIGH WebGL2 sequence](sequence.jpg) shows a dark body falling and separating into dark patches as pale fragments form, followed by smoke, small embers and a settled heap. At HIGH zoom 1 and 1.5 and LOW zoom 1, the pile reads as pale irregular ash with two tan bones. A faint warm area is visible at settling and cools away by frame 240. The fragments are stylized and angular, and the individual breakup is clearer in the full-size frames than in the contact sheet. HIGH and LOW WebGL2 and WebGPU captures passed scene checks; I inspected the requested views. The heap remains small at the farthest view, and Alpha placement was checked only in an isolated fixture.
+
+The existing two instanced ash and bone meshes are reused regardless of heap count, and the retained dead entity continues to represent the corpse. Typecheck, lint and the seven focused combat tests passed on this code. The selected corpse/fire `scene:gate` rows passed 7/7; remote `npm test` passed 105 tests with one skipped in 196.2 s. Earlier visual failures and exploratory trials below are historical.
+
 ## Implementation status
 
 Fire deaths now dissolve over the existing 90-tick (1.5 s) charred-body interval instead of disappearing at the end of a body-only shrink. Screen-door fading, a gradual sink, eight irregular instanced ash clumps, and two crossed bone meshes share the transition. The ash clumps begin grey-white with two darker charred pieces and a small warm tint that fades as the heap settles. The existing pooled VFX path emits repeated smoke puffs during the same interval. Settled heaps remain represented by the dead entity and are rebuilt in the existing ash instance batches; this adds no mesh or draw call per heap. HIGH and LOW use the same presentation and both renderer backends use the same Three.js instancing path.
