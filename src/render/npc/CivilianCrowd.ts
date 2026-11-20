@@ -1,6 +1,6 @@
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
-import { hangarCastMember, joiningHangarConversation, speakingNpc, talkClip } from './talkingNpc';
+import { bubbleSpeaker, hangarCastMember, joiningHangarConversation, speakingNpc, talkClip } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
 import { cureHangar } from '../../data/l10Story';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
@@ -330,7 +330,10 @@ class CivilianBatch extends Group {
       const walkClip: Clip = activity?.prop === 'cane' ? 'npc-cane' : activity?.prop ? 'npc-carry' : e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed';
       // E19 story beats override the routine (render-only, set by the mission script).
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
-      const talking = !down && !rising && c.state === 'calm' && speaking;
+      // A bubble already points at the simulation actor. Keep scripted physical
+      // actions such as prying and banging, and animate only an idle speaker.
+      const bubbleTalking = !storyClip || storyClip === 'idle' ? bubbleSpeaker(this.world, e.id) : false;
+      const talking = !down && !rising && c.state === 'calm' && (speaking || bubbleTalking);
       const lineTick = this.world.missions?.state.counters['hangar-line-ticks'] ?? 0;
       const indicatingEast = talking && this.world.missions?.state.subtitle?.id === 'L10.voss-delivery' && lineTick >= 300 && lineTick < 480;
       const conversationClip = talking ? indicatingEast ? 'npc-gesture' : talkClip(e.id, this.world.tick) as Clip : null;

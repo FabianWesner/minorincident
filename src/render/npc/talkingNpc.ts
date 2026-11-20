@@ -8,6 +8,13 @@ const inPersonSpeaker: Record<string, 'voss' | 'ruiz' | 'sam'> = {
   'L10.sam-delivery': 'sam', 'L10.sam-delivery.reyes': 'sam',
 };
 
+/** Actor-anchored speech bubbles in L1, L2 and L6 carry their speaker ID. */
+export function bubbleSpeaker(world: SimWorld, id: number): boolean {
+  const state = world.missions?.state;
+  const say = state?.l1?.say ?? state?.l2?.say ?? state?.l6?.say;
+  return id !== 1 && !!say && say.id === id && world.tick >= say.at && world.tick < say.until;
+}
+
 /** Resolve authored in-person lines to their existing actor; radio and narration have no actor. */
 export function speakingNpc(world: SimWorld, id: number): boolean {
   const mission = world.missions, subtitle = mission?.state.subtitle;
