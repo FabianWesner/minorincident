@@ -18,3 +18,5 @@
 
 Run the browser smoke and visually inspect its four hint captures plus the molotov/pipe-bomb rack capture when the browser pool can start. The capture Done item remains unverified. A subsequent attempt to trigger a pickup through the VFX test hook failed because that hook does not dispatch pickup events to the HUD.
 
+
+A further headless smoke run reached L10 but timed out waiting for a separate pipe-bomb tile: fixed slot 0 displays a single throwable representative. A phone capture showed the pipe-bomb hint below the companion and clear of the rack and health, although it overlaps the weather label. Attempts to inject a long hint were overwritten by the running HUD, so the four long-hint captures still need a reliable fixture and review.
