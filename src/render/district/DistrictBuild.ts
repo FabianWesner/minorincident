@@ -1,7 +1,8 @@
 import { groundDepth, groundLayers } from '../GroundLayers';
+import { texture as sampleTexture } from 'three/tsl';
 import { worldTiers } from '../../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
-import { BoxGeometry, CircleGeometry, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Sprite, SpriteMaterial, Box3, CanvasTexture, ConeGeometry, Group, Sphere, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type BufferGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, CircleGeometry, DoubleSide, DynamicDrawUsage, Float32BufferAttribute, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Box3, BufferGeometry, CanvasTexture, ConeGeometry, Group, Sphere, SRGBColorSpace, Uint16BufferAttribute, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type Material } from 'three/webgpu';
 import type { DistrictWorld } from '../../sim/world/DistrictWorld';
 import type { DistrictAssets } from '../../assets/DistrictAssets';
 import type { Materials } from '../Materials';
@@ -39,7 +40,7 @@ const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(
 export interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; /** Local footprint of LOD0 (centre offset and half extents): occluder tests use the real oriented box, not the longest side squared. */ foot: { cx: number; cz: number; hx: number; hz: number }; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
 export interface DressingEntry { id: string; batch: InstancedGroup; refs: Object3D[]; origin: [number, number]; center: Vector3; radius: number; foot: LodBatch['foot']; height: number }
 
-/** Everything a district load builds: instanced batches, baked layout, terrain, labels and the resources it owns. */
+/** Everything a district load builds: instanced batches, baked layout, terrain, facade signs and owned resources. */
 export class DistrictParts {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
@@ -57,7 +58,8 @@ export class DistrictParts {
   readonly ownedGeometry: BufferGeometry[] = [];
   readonly perimeterPosts: InstancedMesh[] = [];
   readonly ownedMaterials: Material[] = [];
-  readonly tags: { sprite: Sprite; entered: number | null; done: boolean }[] = [];
+  readonly signs: string[] = [];
+  readonly signBatches: { geometry: BufferGeometry; district: string; origin: [number, number]; ids: string[]; indicesBySign: number[][]; supports: { asset: string; position: [number, number, number] }[]; visible: string }[] = [];
   readonly textures: CanvasTexture[] = [];
   ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
@@ -408,10 +410,16 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       }
       const grassLayout=d.id==='D-CURE'?{...d.layout,surfaces:[...d.layout.surfaces,...cureEvacuationLane(d.decay.placements)]}:d.layout;
       for (const grass of Grass.tiles(grassLayout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
-      for (const b of d.layout.buildings) {
-        const p = d.layout.placements.find((p) => p.id === b.id)!;
-        tag(parts, root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
-      }
+      // A label may outlive its placement in later decay tiers. Only sign buildings
+      // that are actually present in this district load.
+      const present = new Set(d.decay.placements.map(p => p.id));
+      const signPlacements = d.decay.placements.map(p => {
+        if (!d.layout.buildings.some(b => b.id === p.id)) return p;
+        const ref = [...references.entries()].filter(([key]) => key.startsWith(`${p.assetId}:`)).flatMap(([, refs]) => refs)
+          .find(r => r.position.distanceToSquared(new Vector3().fromArray(p.position)) < .0001);
+        return ref ? { ...p, scale: ref.scale.toArray() as [number, number, number], yaw: ref.rotation.y } : p;
+      });
+      buildFacadeSigns(parts, root, d.id, d.origin, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), signPlacements, deps.materials);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
@@ -479,16 +487,138 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
   mesh.receiveShadow = true;
   root.add(mesh);
 }
-/** Small camera-facing location tags; show once on approach, then fade over one second. */
-function tag(parts: DistrictParts, root: Group, text: string, p: [number, number, number]): void {
-  const canvas = document.createElement('canvas'); canvas.width = 320; canvas.height = 64;
+/** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
+function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, origin: [number, number], buildings: { id: string; assetId: string; label: string; aabb: { min: number[]; max: number[] } }[], placements: { id: string; position: [number, number, number]; yaw: number; scale: [number, number, number] }[], materials: Materials): void {
+  const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
+  const chosen = new Map<string, typeof buildings[number]>();
+  // These assets already carry named physical signs in their authored LODs.
+  for (const building of buildings) if (!/^bld\.(gas-station|maple-hardware|school|substation):/.test(building.id) && (!building.id.startsWith('bld.joes-diner:') || building.label.trim().toLowerCase() === 'food court') && (!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
+  const rows = [...chosen.values()]; if (!rows.length) return;
+  const cellW = 512, cellH = 128, columns = 4, canvas = document.createElement('canvas');
+  canvas.width = cellW * columns; canvas.height = cellH * Math.ceil(rows.length / columns);
   const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = '#352c38dd'; ctx.roundRect(0, 0, 320, 64, 16); ctx.fill();
-  ctx.fillStyle = '#ffc773'; ctx.font = 'bold 28px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 160, 32, 300);
-  const texture = new CanvasTexture(canvas); parts.textures.push(texture);
-  const material = new SpriteMaterial({ map: texture, transparent: true, depthWrite: false }); parts.ownedMaterials.push(material);
-  const sprite = new Sprite(material); sprite.name = text; sprite.position.fromArray(p); sprite.scale.set(1.8, .36, 1); sprite.visible = false; root.add(sprite);
-  parts.tags.push({ sprite, entered: null, done: false });
+  const positions: number[] = [], uvs: number[] = [], indices: number[] = [];
+  rows.forEach((b, i) => {
+    const x = i % columns, y = Math.floor(i / columns), px = x * cellW, py = y * cellH;
+    ctx.fillStyle = '#17242b'; ctx.fillRect(px + 2, py + 2, cellW - 4, cellH - 4);
+    ctx.strokeStyle = '#c4d2d2'; ctx.lineWidth = 6; ctx.strokeRect(px + 8, py + 8, cellW - 16, cellH - 16);
+    const title = b.label.trim().replace(/(^|\s)\S/g, c => c.toUpperCase());
+    ctx.fillStyle = '#f5f3e9'; ctx.font = b.id.startsWith('bld.cure-lab-main:') ? '600 96px Arial, sans-serif' : '600 60px Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(title, px + cellW / 2, py + cellH / 2, cellW - 50);
+    parts.signs.push(title);
+    const min = b.aabb.min, max = b.aabb.max;
+    const width = Math.max(.95, Math.min(2.35, (max[0] - min[0]) * .46));
+    const height = .58, cx = (min[0] + max[0]) / 2, z = max[2] + .045;
+    const cy = Math.max(1.65, Math.min(3.1, min[1] + (max[1] - min[1]) * .55));
+    const base = positions.length / 3, u0 = (px + 1) / canvas.width, u1 = (px + cellW - 1) / canvas.width;
+    const v0 = 1 - (py + cellH - 1) / canvas.height, v1 = 1 - (py + 1) / canvas.height;
+    if (b.id.startsWith('bld.cure-lab-main:')) {
+      // The vestibule wall above the canopy backs the full board.
+      const faceX = cx + 13.705, cz = (min[2] + max[2]) / 2, signY = 4.1, halfWidth = 2.3, halfHeight = .19;
+      positions.push(faceX,signY-halfHeight,cz+halfWidth, faceX,signY-halfHeight,cz-halfWidth, faceX,signY+halfHeight,cz-halfWidth, faceX,signY+halfHeight,cz+halfWidth);
+    } else if (b.id.startsWith('bld.supermarket:') || b.id.startsWith('bld.pharmacy:')) {
+      const p = placements.find(row => row.id === b.id)!;
+      const market = b.id.startsWith('bld.supermarket:');
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceZ = (market ? 4.563 : 3.22) * p.scale[2];
+      const vertex = (side: number, vertical: number) => {
+        const x = side * 1.1 * p.scale[0];
+        positions.push(p.position[0] + c * x + s * faceZ, p.position[1] + (3.1 + vertical * .2) * p.scale[1], p.position[2] - s * x + c * faceZ);
+      };
+      vertex(-1, -1); vertex(1, -1); vertex(1, 1); vertex(-1, 1);
+    } else if (district === 'D-PARK' && b.id.startsWith('bld.park-lodge:')) {
+      const p = placements.find(row => row.id === b.id)!;
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceZ = 5.1 * p.scale[2];
+      const vertex = (side: number, vertical: number) => {
+        const x = (3 + side * 1.1) * p.scale[0];
+        positions.push(p.position[0] + c * x + s * faceZ, p.position[1] + (1.65 + vertical * .3) * p.scale[1], p.position[2] - s * x + c * faceZ);
+      };
+      vertex(-1, -1); vertex(1, -1); vertex(1, 1); vertex(-1, 1);
+    } else if (b.id.startsWith('bld.gym:')) {
+      // The camera-facing entrance is on local +Z; a tree screens the +X side.
+      const p = placements.find(row => row.id === b.id)!;
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceZ = 7.05 * p.scale[2];
+      const vertex = (side: number, vertical: number) => {
+        const x = side * 1.5 * p.scale[0];
+        positions.push(p.position[0] + c * x + s * faceZ, p.position[1] + (3.2 + vertical * .35) * p.scale[1], p.position[2] - s * x + c * faceZ);
+      };
+      vertex(-1, -1); vertex(1, -1); vertex(1, 1); vertex(-1, 1);
+    } else if (b.id.startsWith('bld.joes-diner:')) {
+      // The Food Court reuses the diner lot; its low entrance monument is not tree-screened.
+      const p = placements.find(row => row.id === b.id)!;
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = 1.405 * p.scale[0];
+      const vertex = (side: number, vertical: number) => {
+        const z = (4.2175 + side * 1.35) * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * z, p.position[1] + (2.24 + vertical * .9) * p.scale[1], p.position[2] - s * faceX + c * z);
+      };
+      vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
+    } else if (/^bld\.(garage-detached|hospital|mainstreet-brick|park-lodge|zoo-gate|police|police-station|fire-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
+      // These entrance headers and fascia face local +X; rotate with the lot.
+      // The hospital LOD2 board covers the unlettered top row of its entrance directory.
+      const p = placements.find(row => row.id === b.id)!;
+      const garage = b.id.startsWith('bld.garage-detached:'), lodge = b.id.startsWith('bld.park-lodge:'), zoo = b.id.startsWith('bld.zoo-gate:'), police = b.id.startsWith('bld.police-station:');
+      const fire = b.id.startsWith('bld.fire-station:'), legacyPolice = b.id.startsWith('bld.police:'), hospital = b.id.startsWith('bld.hospital:'), mall = b.id.startsWith('bld.mainstreet-brick:');
+      const security = b.id.startsWith('bld.cure-security-post:'), motor = b.id.startsWith('bld.cure-motor-shelter:'), warehouse = b.id.startsWith('bld.cure-warehouse:');
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : hospital ? 10.54 : mall ? 2.86 : lodge ? 3.955 : zoo ? 4.75 : police ? 4.19 : legacyPolice ? 4.19 * 10 / 12 : fire ? 1.88 : security ? 4.69 : motor ? 4.45 : warehouse ? 12.61 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : hospital ? 3.09 : mall ? 5.6 : lodge ? 2.64 : zoo ? 3.21 : police ? 2.96 : legacyPolice ? 2.96 * 5 / 6.85 : fire ? 4.76 : security ? 4.38 : motor ? 4.3 : warehouse ? 5.75 : 2.84) * p.scale[1];
+      const vertex = (side: number, vertical: number) => {
+        const localZ = (garage ? side * .7 : zoo ? side * .9 : police ? 3 + side * 1.2 : legacyPolice ? 1.5 + side * .6 : hospital ? -8 + side * 2.35 : mall ? -.025 + side * .525 : fire ? -.16 + side * 2.25 : security ? -.25 + side * 1.1 : lodge || motor || warehouse ? side * 1.1 : -.65 + side * .55) * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : lodge ? .075 : zoo || police ? .17 : legacyPolice ? .17 * 5 / 6.85 : hospital ? .35 : mall ? .25 : fire ? .5 : motor ? .2 : warehouse ? .1 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
+      };
+      vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
+    } else if (b.id.startsWith('bld.reptile-house:')) {
+      // Replace the lettering on the authored entrance board, on the +X face.
+      const faceX = cx + 5.08, cz = (min[2] + max[2]) / 2, y = min[1] + 3;
+      positions.push(faceX,y-.28,cz+1.2, faceX,y-.28,cz-1.2, faceX,y+.28,cz-1.2, faceX,y+.28,cz+1.2);
+    } else positions.push(cx-width/2,cy-height/2,z, cx+width/2,cy-height/2,z, cx+width/2,cy+height/2,z, cx-width/2,cy+height/2,z);
+    uvs.push(u0,v0,u1,v0,u1,v1,u0,v1); indices.push(base,base+1,base+2,base,base+2,base+3);
+  });
+  const indicesBySign = rows.map((_, i) => indices.slice(i * 6, i * 6 + 6));
+  // The lodge entrance marker is freestanding; its two posts share the sign batch.
+  rows.forEach((b, i) => {
+    if (district !== 'D-PARK' || !b.id.startsWith('bld.park-lodge:')) return;
+    const p = placements.find(row => row.id === b.id)!, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+    const uvX = (i % columns * cellW + 24) / canvas.width, uvY = 1 - (Math.floor(i / columns) * cellH + 24) / canvas.height;
+    const vertex = (x: number, y: number, z: number) => [p.position[0] + c * x * p.scale[0] + s * z * p.scale[2], p.position[1] + y * p.scale[1], p.position[2] - s * x * p.scale[0] + c * z * p.scale[2]];
+    const face = (vertices: number[][]) => {
+      const n = positions.length / 3;
+      for (const v of vertices) { positions.push(...v); uvs.push(uvX, uvY); }
+      indicesBySign[i].push(n, n + 1, n + 2, n, n + 2, n + 3);
+    };
+    for (const x of [2.05, 3.95]) {
+      const x0 = x - .06, x1 = x + .06, z0 = 5.04, z1 = 5.16;
+      face([vertex(x0,0,z1), vertex(x1,0,z1), vertex(x1,1.4,z1), vertex(x0,1.4,z1)]);
+      face([vertex(x1,0,z0), vertex(x0,0,z0), vertex(x0,1.4,z0), vertex(x1,1.4,z0)]);
+      face([vertex(x0,0,z0), vertex(x0,0,z1), vertex(x0,1.4,z1), vertex(x0,1.4,z0)]);
+      face([vertex(x1,0,z1), vertex(x1,0,z0), vertex(x1,1.4,z0), vertex(x1,1.4,z1)]);
+    }
+  });
+  // The zoo board stands clear of raised original lettering; two short brackets
+  // connect it to the old entrance panel without adding a draw call.
+  rows.forEach((b, i) => {
+    if (!b.id.startsWith('bld.reptile-house:')) return;
+    const cx = (b.aabb.min[0] + b.aabb.max[0]) / 2, cz = (b.aabb.min[2] + b.aabb.max[2]) / 2;
+    const x0 = cx + 4.755, x1 = cx + 5.08, y0 = b.aabb.min[1] + 2.96, y1 = b.aabb.min[1] + 3.04;
+    const uvX = (i % columns * cellW + 24) / canvas.width, uvY = 1 - (Math.floor(i / columns) * cellH + 24) / canvas.height;
+    const face = (vertices: number[][]) => {
+      const n = positions.length / 3;
+      for (const v of vertices) { positions.push(...v); uvs.push(uvX, uvY); }
+      indicesBySign[i].push(n, n + 1, n + 2, n, n + 2, n + 3);
+    };
+    for (const z of [cz - 1.1, cz + 1.1]) {
+      const z0 = z - .04, z1 = z + .04;
+      face([[x0,y0,z0], [x1,y0,z0], [x1,y0,z1], [x0,y0,z1]]);
+      face([[x0,y1,z1], [x1,y1,z1], [x1,y1,z0], [x0,y1,z0]]);
+      face([[x0,y0,z0], [x0,y1,z0], [x1,y1,z0], [x1,y0,z0]]);
+      face([[x0,y0,z1], [x1,y0,z1], [x1,y1,z1], [x0,y1,z1]]);
+    }
+  });
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(new Uint16BufferAttribute(indicesBySign.flat(), 1).setUsage(DynamicDrawUsage)); geometry.computeVertexNormals();
+  parts.signBatches.push({ geometry, district, origin, ids: rows.map(b => b.id), indicesBySign, supports: rows.map(b => ({ asset: b.assetId, position: placements.find(p => p.id === b.id)!.position })), visible: 'uninitialized' });
+  parts.ownedGeometry.push(geometry);
+  const texture = new CanvasTexture(canvas); texture.colorSpace = SRGBColorSpace; texture.generateMipmaps = true; parts.textures.push(texture);
+  const material = materials.shaded(sampleTexture(texture).rgb.mul(2.5)); material.side = DoubleSide; parts.ownedMaterials.push(material);
+  const mesh = new Mesh(geometry, material); mesh.name = 'facility-signs'; mesh.frustumCulled = true; root.add(mesh);
 }
 /** Baked layout transforms are immutable after attachment. Visibility and
  * material cutaways remain live, but rendering need not revisit every child matrix. */
