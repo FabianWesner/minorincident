@@ -109,3 +109,5 @@ A target-distance trial retained the old contact hold within 6 m of the current 
 A collision trial preserved the clear portion of a rejected infected stride before projecting the remainder. Local L4 passed, but focused L8 and L10 retained the same kiting and stuck-chaser flags; it was discarded.
 
 Focused L10 tracing identified flagged actor 115 as the Mega Alpha at the console: it repeatedly telegraphed ground slam and charge near the elevated courier; at tick 68100 its active charge was blocked by actor 99. The observer flags the 30-second stationary chase interval despite these special attempts because no attack landed on the courier. Temporary tracing was removed.
+
+L8 kiting trace on the broad projection candidate: by tick 10500 the courier was at (-12.0, 3.9); actors 464 and 466 were chasing her while mutually blocking, and several other infected were attracted or chasing another target. By tick 10800 no living infected were within 30 m of the retreating courier. This explains the empty second half of the sample but does not yet isolate whether contact resolution, targeting, or player fire caused the loss of pressure. Temporary trace removed.
