@@ -242,13 +242,14 @@ export class Hazards {
       }
       const burns = d && !d.broken && d.burningUntil > tick;
       const harms = h && tick < h.activeUntil && harmfulKinds.includes(h.kind);
-      if ((burns || harms) && (tick % 60 === 0 || burns || h?.kind === 'fire')) {
+      const weaponFire = !!e.playerDamageSource && (!!burns || h?.kind === 'fire');
+      if ((burns || harms) && (tick % 60 === 0 || weaponFire)) {
         for (const id of this.nearby(e, h?.radius ?? 1)) {
           const target = this.world.entities.get(id)!;
           if (target.faction === 'environment' || target.health.current <= 0 || (h?.kind === 'toxic' && target.archetype === 'infected.hazmat') || (h?.kind === 'fire' && target.archetype === 'infected.firefighter')) continue;
-          if ((burns || h?.kind === 'fire') && (target.faction === 'infected' || target.kind === 'player')) this.world.combat?.status.apply(target, groundBurn, e.id, 'hazard.fire');
+          if (weaponFire && (target.faction === 'infected' || target.kind === 'player')) this.world.combat?.status.apply(target, groundBurn, e.id, 'hazard.fire');
           if (tick % 60 !== 0) continue;
-          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', fire: !!burns || h?.kind === 'fire', permanent: !!burns || h?.kind === 'fire', knockback: 0, stagger: 0 });
+          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', fire: weaponFire, permanent: weaponFire, knockback: 0, stagger: 0 });
         }
       }
     }

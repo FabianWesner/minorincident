@@ -241,14 +241,14 @@ async function checkDynamicCover(): Promise<void> {
 
 async function checkS202Combat2(): Promise<void> {
   const w = await arena(), player = w.entities.get(1)!, hp = player.health.current;
-  w.hazards!.spawn('fire', { x: player.transform.x, z: player.transform.z }, { radius: 1, duration: 3 });
+  w.hazards!.spawn('fire', { x: player.transform.x, z: player.transform.z }, { radius: 1, duration: 3, playerDamageSource: true });
   step(w, 1); expect(player.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
   step(w, 60); expect(player.health.current).toBeLessThan(hp);
 }
 
 async function checkS202Combat3(): Promise<void> {
   const w = await arena(), id = dummy(w, 5, 0, 200), target = w.entities.get(id)!;
-  w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3 });
+  w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3, playerDamageSource: true });
   step(w, 1);
   expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
 }
@@ -257,7 +257,7 @@ async function checkS202Combat4(): Promise<void> {
   const w = await loadLevel('L1', 1); worlds.push(w);
   const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
   target.health.current = 5;
-  w.hazards!.spawn('fire', { x: 4, z: 4 }, { radius: 1, duration: 3 });
+  w.hazards!.spawn('fire', { x: 4, z: 4 }, { radius: 1, duration: 3, playerDamageSource: true });
   step(w, 60);
   expect(target.health.current).toBe(0);
   expect(target.ashDeath).toBeDefined();
