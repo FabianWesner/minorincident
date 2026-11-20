@@ -98,7 +98,7 @@ LOW skilled seed 1 completed in 1,154.6 s with two deaths. During each continuou
 
 ## Open
 
-This is not a completion report. The brief still requires scene captures (HIGH zoom 1 for each beat and LOW gate), visual review, a successful required remote unit suite, and final cadence evidence showing nearby fights no more than 20 seconds apart at each beat. The authored static props also do not yet deliver the requested readable quarantine/billboard copy, swaying warning effigies, an in-view billboard collapse with crowd reveal, a synchronized hospital burst, or route-specific amber dust and embers. No zombies were stat-tuned and no corpses are removed.
+This is not a completion report. The seven linked views are staged diagnostics, not accepted native key-moment captures. The LOW nearby-fight sample meets the 20-second bound within each visit, but does not establish continuous travel gaps, HIGH behavior, or attacks by each scene’s own cohort. The gate copy is cropped and its burst is unproven; the billboard lacks its official portrait, shooting trigger and in-view crowd reveal; the field figures do not tear free; convoy crates and reward remain open; the underpass roof, torch contrast and silence are unproven; and the hospital lacks moving silhouettes and synchronized emergence. The road has a siren, orange motes and blended fog, but the visual result is still dark blue. Existing hazmat and crawler TRELLIS lineage remains unresolved. No zombies were stat-tuned and no corpses are removed.
 
 ## Commit status
 
