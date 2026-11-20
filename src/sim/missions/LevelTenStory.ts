@@ -26,6 +26,23 @@ export class LevelTenStory {
   update(): void {
     const { state, world } = this.mission, p = world.entities.get(1)!;
     if (state.phase !== 'playing' || p.health.current <= 0 || state.states['cure-released']) return;
+    const mega = world.megaPursuit?.entity();
+    // The reveal is keyed to the first actual camera sighting, not the offscreen spawn.
+    // Its complete/duration flags live in MissionState, so later checkpoint restores cannot replay it.
+    if (!state.states['mega-reveal-seen'] && mega && mega.health.current > 0 && !mega.infected?.hidden
+      && Math.hypot(mega.transform.x - p.transform.x, mega.transform.z - p.transform.z) <= 40
+      && world.infected?.director.inFrame(mega.transform, 1, true)) {
+      state.states['mega-reveal-seen'] = true;
+      state.states['mega-reveal-active'] = true;
+      state.counters['mega-reveal-ticks'] = 0;
+      this.say('L10.mega-roar', 120);
+      world.events.emit({ type: 'mega.cue', tick: world.tick, sourceId: mega.id, kind: 'roar', band: world.megaPursuit!.band()! });
+    }
+    if (state.states['mega-reveal-active']) {
+      const elapsed = ++state.counters['mega-reveal-ticks'];
+      if (elapsed === 120) this.say('L10.mega-identity', 180);
+      if (elapsed >= 300) state.states['mega-reveal-active'] = false;
+    }
     if (!state.states['story-initialized']) {
       state.states['story-initialized'] = true;
       state.states['sam-alive'] = !!this.savedSam();

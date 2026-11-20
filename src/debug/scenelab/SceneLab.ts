@@ -422,6 +422,7 @@ export class SceneLab {
       this.mega = { last: null, speeds: [], stepMaxM: 0, stepFrame: -1, modes: {}, samples: [], stuckLevelMax: 0, distanceMinM: Infinity };
     }
     if (spec.cureProgression) {
+      world.scenario = 'L10';
       // Restored epilogue fixtures advance the controller before loadLevel applies quality.
       world.requireInfected().director.setTier(fixtureHost.tier);
       this.cureStats = { mistPuffs: 0, smokeOverBudget: 0, healthyDamage: 0, lateDeaths: 0, insideMisses: 0, health: {}, chargeTicks: 0, insideFrames: 0, boundaryFrames: 0, outsideFrames: 0, outsideAdvance: 0, releaseCount: 0, radius: 0, titleFrames: 0, creditsFrames: 0, playableTravel: 0, survivors: 0, fanFrames: 0, pullScale: 1, last: null, samples: [] };
