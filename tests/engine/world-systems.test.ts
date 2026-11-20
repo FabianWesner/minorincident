@@ -72,6 +72,13 @@ test('pickups: exact one-time effects with caps, rack join/replacement, dead pla
   w.combat!.setLoadout(['weapon.bat'], ['weapon.grenade']);
   const grenade = w.combat!.runner.loadout.current('RIGHT'); grenade.charges = 0; grenade.nextCharge = w.tick + 600;
   pickups.spawn('throwable', { x: 0, z: 0 }); step(w, 1); expect(grenade.charges).toBe(1);
+  // The convoy crate supplies a molotov charge only, leaving other throwables alone.
+  w.combat!.setLoadout(['weapon.bat'], ['weapon.grenade', 'weapon.molotov']);
+  const [spareGrenade, molotov] = w.combat!.runner.loadout.state.RIGHT.rack;
+  spareGrenade.charges = 0; molotov.charges = 0; spareGrenade.nextCharge = molotov.nextCharge = w.tick + 600;
+  pickups.spawn('throwable', { x: 0, z: 0 }, 'weapon.molotov'); step(w, 1);
+  expect(molotov.charges).toBe(1); expect(spareGrenade.charges).toBe(0);
+
   pickups.spawn('weapon', { x: 0, z: 0 }, 'weapon.pistol'); step(w, 1);
   expect(w.combat!.runner.loadout.state.LEFT.rack.map(s => s.id)).toContain('weapon.pistol');
   step(w, 60); expect(events(w, 'pickup.collected').filter(e => 'id' in e && e.id === med)).toHaveLength(1);
@@ -80,6 +87,18 @@ test('pickups: exact one-time effects with caps, rack join/replacement, dead pla
   step(w, 150); expect(p.inventory).toContain('key.house');
   w.player!.damage(100, w.tick); step(w, 150); expect(p.inventory).toContain('key.house');
   expect(() => pickups.spawn('weapon', { x: 0, z: 0 }, 'unknown')).toThrow();
+
+  // Breaking a convoy crate yields exactly one targeted supply, even if its
+  // break event is repeated after a checkpoint or duplicate notification.
+  const crateWorld = await world(), { LevelTenEncounters } = await import('../../src/sim/missions/LevelTenEncounters');
+  const crateEncounters = new LevelTenEncounters(crateWorld), crate = crateWorld.hazards!.spawn('crate', { x: 2, z: 0 });
+  crateEncounters.state.convoyCrates = [crate];
+  crateWorld.combat!.damage.apply({ attackId: 1, actionId: 'weapon.pistol', sourceId: 1, targetId: crate,
+    origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 100, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
+  const supply = crateEncounters.state.convoySupplies?.[String(crate)];
+  expect(supply).toBeDefined(); expect(crateWorld.entities.get(supply!)?.pickup).toMatchObject({ kind: 'throwable', item: 'weapon.molotov' });
+  crateWorld.events.emit({ type: 'prop.broken', tick: crateWorld.tick, id: crate, pieces: 1 });
+  expect(crateEncounters.state.convoySupplies?.[String(crate)]).toBe(supply);
 
   const r = await world(); r.combat!.setLoadout(['weapon.bat', 'weapon.knife', 'weapon.crowbar'], ['weapon.grenade']);
   const rack = r.combat!.runner.loadout; rack.state.LEFT.index = 1;
@@ -338,7 +357,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const { cureCrossingLines, cureCrossingStories, crossingScenesBlock } = await import('../../src/levels/L10/crossingStories');
   const { cureRoadsideBelt } = await import('../../src/levels/L10/roadsideBelt');
   const { cure } = await import('../../src/levels/L10/district');
-  const { cureEncounters, curePaceEncounters, cureEncounterSlots, cureMedkits } = await import('../../src/levels/L10/encounters');
+  const { cureEncounters, curePaceEncounters, cureEncounterSlots, cureMedkits, cureConvoyBarrels, cureConvoyCrates } = await import('../../src/levels/L10/encounters');
   const farmGroups = [...cureEncounters, ...curePaceEncounters].filter(g => g.region === 'crash-outskirts' || g.region === 'residential-fringe');
   const farmTypes = [...new Set(farmGroups.map(g => g.type).filter(Boolean))].sort();
   expect(farmTypes).toEqual(['barn-defense', 'field-horde', 'lone-pursuer'].sort());
@@ -347,6 +366,25 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(Math.min(...cureEncounterSlots(depot, 'low').map(s => s.x))).toBeGreaterThan(1560);
   expect(cureEncounterSlots(depot, 'low').filter(s => s.archetype === 'infected.alpha')).toHaveLength(1);
   expect(cureMedkits.find(k => k.id === 'industrial-service')?.at).toEqual([1517, -55]);
+  const dispersalBeats = curePaceEncounters.filter(g => g.setPiece);
+  // A checkpoint captured during the billboard fall must preserve its phase
+  // when the simulation clock has advanced before restore.
+  const { LevelTenEncounters } = await import('../../src/sim/missions/LevelTenEncounters');
+  const clockWorld = { tick: 1000, events: { on: () => {} }, infected: null } as unknown as import('../../src/sim/world/SimWorld').SimWorld;
+  const encounterClock = new LevelTenEncounters(clockWorld);
+  encounterClock.state.billboardFallAt = 970;
+  encounterClock.state.hospitalOpenAt = 985;
+  const encounterSnapshot = encounterClock.snapshot();
+  clockWorld.tick = 1600;
+  encounterClock.restore(encounterSnapshot);
+  expect(encounterClock.state.billboardFallAt).toBe(1570);
+  expect(encounterClock.state.hospitalOpenAt).toBe(1585);
+  expect(dispersalBeats.map(g => g.setPiece)).toEqual([
+    'quarantine-gate', 'propaganda-billboard', 'scarecrow-field', 'burning-convoy', 'dark-underpass', 'field-hospital',
+  ]);
+  for (const tier of ['high', 'low'] as const) for (const group of dispersalBeats) {
+    expect(cureEncounterSlots(group, tier).length, `${group.id} has a fight on ${tier}`).toBeGreaterThan(0);
+  }
   for (const tier of ['high', 'low'] as const) {
     expect(farmGroups.reduce((sum, g) => sum + cureEncounterSlots(g, tier).filter(s => s.archetype !== 'infected.dog').length, 0))
       .toBe(tier === 'high' ? 51 : 37);
@@ -364,6 +402,11 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   }
   expect(groundMismatches, 'rasterized L10 supports and slabs match every exact nav-cell query').toBe(0);
   const actualFarm = assembled.districts[0].layout.placements;
+  for (const beat of dispersalBeats) expect(actualFarm.some(p => p.id === `l10-setpiece-${beat.setPiece === 'quarantine-gate' ? 'gate-gantry' : beat.setPiece === 'propaganda-billboard' ? 'billboard-frame' : beat.setPiece === 'scarecrow-field' ? 'scarecrow-0' : beat.setPiece === 'burning-convoy' ? 'convoy-truck-a' : beat.setPiece === 'dark-underpass' ? 'underpass-mouth' : 'hospital-tent-0'}`), `${beat.setPiece} has fixed district dressing`).toBe(true);
+  for (const [x, z] of [...cureConvoyBarrels, ...cureConvoyCrates]) for (const [dx, dz] of [[0, 0], [.6, 0], [-.6, 0], [0, .6], [0, -.6]]) {
+    const column = Math.floor((x + dx - nav.min[0]) / nav.cellSize), row = Math.floor((z + dz - nav.min[1]) / nav.cellSize);
+    expect(nav.cells[row * nav.width + column], `convoy barrel at ${x},${z} has clear ground`).toBe(1);
+  }
   expect(actualFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   for (const [x, z] of [[1350, 19], [1650, -38.45], [3150, 51.05], [3450, 53]]) {
     expect(actualFarm.some(p => p.id.startsWith('decor-cure-route-corn-') && Math.hypot(p.position[0] - x, p.position[2] - z) < 25), `crop edge near QA route ${x}`).toBe(true);

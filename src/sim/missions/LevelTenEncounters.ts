@@ -2,7 +2,7 @@ import { layoutHouseDoors, type HouseEmergence } from '../outbreak/HouseEmergenc
 import { finale } from '../../data/l10Finale';
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
-import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups, type CureEncounter } from '../../levels/L10/encounters';
+import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups, cureConvoyBarrels, cureConvoyCrates, type CureEncounter } from '../../levels/L10/encounters';
 import { cureAlphaCap, cureAlphaPopulation, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { cureCorgiToy, insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
@@ -15,7 +15,9 @@ const RETIRED_SLOT = -1;
  * release-time spot, the rest starve the shared path budget behind the farm buildings and
  * stand in `chase` until the courier passes them. Bounded waves keep every member near
  * her current position as one winnable fight that clears. */
-const pacedSetPieces = ['corn-field-horde', 'farmhouse-defense', 'shed-field-crossing', 'depot-alpha'] as const;
+const pacedSetPieces = ['corn-field-horde', 'farmhouse-defense', 'shed-field-crossing', 'depot-alpha',
+  'setpiece-quarantine-gate', 'setpiece-propaganda-billboard', 'setpiece-scarecrow-field', 'setpiece-burning-convoy',
+  'setpiece-dark-underpass', 'setpiece-field-hospital'] as const;
 /** Members per paced wave; the remainder admits as its own final small wave. */
 const pacedWaveSize = 5;
 /** A wave also opens once at most this many living members remain anywhere in the cohort. */
@@ -27,12 +29,16 @@ const prechargeAssaultDelay = 1800;
 interface CarriedMember { archetype: string; x: number; z: number; group: string; region: CureRegion }
 export interface CureEncounterState {
   finaleEntry?: HouseEmergence; finaleEntryNext?: number; finaleEntrySlot?: boolean;
-  farmScares?: FarmScareState; toy?: number;
+  farmScares?: FarmScareState; toy?: number; convoyBarrels?: number[]; convoyCrates?: number[]; convoySupplies?: Record<string, number>;
   pressureAttackAt?: number; pressureTick?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
   /** Paced set pieces: the wave currently admitting, and the next re-target pass. */
   pacedWave?: Record<string, number>; pacedPress?: number;
+  /** Tick at which the billboard fell; checkpointed with the encounter ledger. */
+  billboardFallAt?: number;
+  /** The hospital flaps open when the courier reaches the triage tents. */
+  hospitalOpenAt?: number;
   /** Once-only halfway breach cue, retained with the encounter snapshot. */
   assaultBreach?: boolean;
   assaultAnnouncedWave?: number;
@@ -74,6 +80,12 @@ export class LevelTenEncounters {
         if (group) this.carried.set(key, { archetype: actor.archetype, x: actor.transform.x, z: actor.transform.z, group: group.id, region: group.region });
       }
     });
+    world.events.on('prop.broken', event => {
+      if (event.type !== 'prop.broken' || !this.state.convoyCrates?.includes(event.id)) return;
+      const supplies = this.state.convoySupplies ??= {}, key = String(event.id), crate = world.entities.get(event.id);
+      if (supplies[key] || !crate || !world.pickups) return;
+      supplies[key] = world.pickups.spawn('throwable', crate.transform, 'weapon.molotov');
+    });
     world.events.on('sim.tick', event => { if (event.type === 'sim.tick') this.pressure(event.tick); });
   }
   snapshot(): CureEncounterState { return structuredClone({ ...this.state, pressureTick: this.world.tick }); }
@@ -108,6 +120,8 @@ export class LevelTenEncounters {
     if (this.world.infected) this.world.infected.director.reserved += (this.state.finaleEntrySlot ? 1 : 0) - heldEntrySlot;
     const delta = this.world.tick - (this.state.pressureTick ?? this.world.tick);
     if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
+    if (this.state.billboardFallAt !== undefined) this.state.billboardFallAt += delta;
+    if (this.state.hospitalOpenAt !== undefined) this.state.hospitalOpenAt += delta;
     if (this.state.finaleEntryNext !== undefined) this.state.finaleEntryNext += delta;
     for (const walker of this.state.finaleEntry?.walking ?? []) {
       walker.until += delta;
@@ -251,6 +265,10 @@ export class LevelTenEncounters {
       // old 0.6 m trigger was narrower than the bot's 2 m waypoint tolerance.
       weapons[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: at[0], z: at[1] }, false, { retain: true, reachM: pickup.anchor === 'crash-machete' ? 1.5 : 4.5 });
     }
+    if (!this.state.convoyBarrels && cureConvoyBarrels.every(([x, z]) => chunks.resident(x, z)))
+      this.state.convoyBarrels = cureConvoyBarrels.map(([x, z]) => w.hazards!.spawn('barrel', { x, z }));
+    if (!this.state.convoyCrates && cureConvoyCrates.every(([x, z]) => chunks.resident(x, z)))
+      this.state.convoyCrates = cureConvoyCrates.map(([x, z]) => w.hazards!.spawn('crate', { x, z }));
     updateFarmScares(w, this.state.farmScares ??= {});
     const pendingScares = Object.values(this.state.farmScares).filter(s=>s.actor===undefined).length;
     this.admitCarried(Math.max(1, pendingScares));
@@ -285,13 +303,21 @@ export class LevelTenEncounters {
       if (assault && !assaultActive && !assaultApproach) continue;
       const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
-        if (Math.abs(player.transform.x - group.at[0]) > 120) continue;
+        const releaseRadius = group.setPiece === 'propaganda-billboard' ? 25 : 35;
+        if (group.setPiece ? Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]) > releaseRadius : Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
         // A field crossing meets the same once-only hunting group on its own
         // lane. No group relocates after admission; a paced wave restages on
         // the courier's current lane at its own gate below.
         lanes[group.id] = this.lanePull(group, player, paced);
       }
+      // Let the cohort begin its safe offscreen approach first. The visible
+      // board falls only when the courier is near the actual sign, which sits
+      // offset from the encounter station.
+      if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
+          Math.hypot(player.transform.x - 3082, player.transform.z - 30) <= 10) this.state.billboardFallAt = w.tick;
+      if (group.setPiece === 'field-hospital' && released.includes(group.id) && this.state.hospitalOpenAt === undefined &&
+          Math.hypot(player.transform.x - 3508, player.transform.z - 31) <= 10) this.state.hospitalOpenAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
       // charge clock starts, hand off to the next cohort only when that wave
       // is empty; once charging, timed windows continue independently of it.
@@ -361,9 +387,10 @@ export class LevelTenEncounters {
         // full dump proved); holding its second wave for the far end of the
         // band lets it spawn behind her and wander instead of fighting, which
         // on seed 3 left the last fight two members short at the cap.
-        const share = (group.id === 'depot-alpha' ? 120 : 240) / Math.ceil(slots.length / pacedWaveSize);
-        const reached = index === 0 || player.transform.x - (group.at[0] - 120) >= index * share;
-        const outpaced = player.transform.x - group.at[0] > 120;
+        const band = group.setPiece ? 35 : 120;
+        const share = (group.id === 'depot-alpha' ? 120 : band * 2) / Math.ceil(slots.length / pacedWaveSize);
+        const reached = index === 0 || player.transform.x - (group.at[0] - band) >= index * share;
+        const outpaced = player.transform.x - group.at[0] > band;
         if (!slice.length || !outpaced && !(reached || living <= pacedWaveLiving)) admission = [];
         else if (slice.every(admitted)) {
           pacedWaves[group.id] = index + 1;
@@ -416,6 +443,7 @@ export class LevelTenEncounters {
   }
   /** The lane a group's members stage on: the courier's current lane, pulled whole for paced waves and capped for one-shot pace groups. */
   private lanePull(group: CureEncounter, player: EntitySnapshot, paced: boolean): number {
+    if (group.setPiece === 'quarantine-gate') return 0;
     const flank = group.id === 'depot-alpha' ? 8 : 0;
     const pull = Math.abs(player.transform.z - group.at[1]) > 15 ? player.transform.z - group.at[1] : 0;
     // Paced waves stage uncapped on the courier's current lane: each wave of

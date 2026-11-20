@@ -16,6 +16,8 @@ export interface CureEncounter {
   type?: 'lone-pursuer' | 'field-horde' | 'barn-defense' | 'alpha-ambush';
   /** Separate formations can enter as one regional cohort without moving their stations. */
   releaseWith?: string;
+  /** Authored dispersal story beat; presentation is fixed in the district and the cohort is admitted by route progress. */
+  setPiece?: 'quarantine-gate' | 'propaganda-billboard' | 'scarecrow-field' | 'burning-convoy' | 'dark-underpass' | 'field-hospital';
   /** Low-budget patrol station, after the corridor horde receives its slots. */
   atLow?: Point; regular: readonly [number, number]; dogs: number; alphas: number; alphasLow?: number; tough?: number; roles?: readonly string[]; assault?: boolean;
 }
@@ -36,6 +38,14 @@ export const cureEncounters: readonly CureEncounter[] = [
 ];
 /** Route cadence groups intentionally stay outside the vignette exclusion map: they move to the courier's lane on admission. */
 export const curePaceEncounters: readonly CureEncounter[] = [
+  // L10 PO 2026-11-19: every authored scene has an encounter attached so the courier
+  // has to fight through the beat. Route positions follow the eastbound corridor.
+  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [3010, 16], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3076, 33], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.runner', 'infected.runner'] },
+  { id: 'setpiece-scarecrow-field', type: 'field-horde', setPiece: 'scarecrow-field', region: 'destroyed-corridor', at: [3190, 64], regular: [5, 4], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.hazmat', 'infected.runner'] },
+  { id: 'setpiece-burning-convoy', type: 'field-horde', setPiece: 'burning-convoy', region: 'destroyed-corridor', at: [3260, 95], regular: [11, 8], dogs: 1, alphas: 0, roles: ['infected.firefighter', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-dark-underpass', type: 'field-horde', setPiece: 'dark-underpass', region: 'destroyed-corridor', at: [3390, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.crawler', 'infected.crawler', 'infected.crawler'] },
+  { id: 'setpiece-field-hospital', type: 'field-horde', setPiece: 'field-hospital', region: 'destroyed-corridor', at: [3502, 37], regular: [9, 7], dogs: 1, alphas: 0, roles: ['infected.nurse', 'infected.nurse', 'infected.runner'] },
   { id: 'corn-field-horde', type: 'field-horde', region: 'residential-fringe', at: [830, 80], regular: [14, 7], dogs: 1, alphas: 0 },
   { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [17, 12], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [7, 6], dogs: 0, alphas: 0 },
@@ -54,6 +64,10 @@ export const curePaceEncounters: readonly CureEncounter[] = [
   { id: 'complex-approach-pair-1', region: 'dispersal-complex', at: [3650, 25], regular: [3, 3], dogs: 0, alphas: 0 },
   { id: 'complex-approach-pair-2', region: 'dispersal-complex', at: [3740, -41], regular: [3, 3], dogs: 0, alphas: 0 },
 ];
+// Destructible fuel drums flank the convoy; damage and blast behavior use the shared hazard catalog.
+export const cureConvoyBarrels: readonly Point[] = [[3248, 68], [3264, 70], [3275, 87]];
+export const cureConvoyCrates: readonly Point[] = [[3258, 73], [3271, 83]];
+
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },
   { id: 'field-approach', at: [807, 80] as Point },
@@ -82,7 +96,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
   const at = tier === 'low' ? group.atLow ?? group.at : group.at;
   const regular = group.regular[tier === 'high' ? 0 : 1];
   const hunters = ['infected.sprinter', 'infected.firefighter', 'infected.armored', 'infected.runner'];
-  const roles = [...Array.from({ length: regular }, (_, i) => group.roles?.[i] ?? (i < (group.tough ?? 0) ? 'infected.firefighter' : group.region === 'crash-outskirts' ? 'infected.runner' : hunters[i % hunters.length])),
+  const roles = [...Array.from({ length: regular }, (_, i) => group.roles?.[i] ?? (group.setPiece ? 'infected.runner' : i < (group.tough ?? 0) ? 'infected.firefighter' : group.region === 'crash-outskirts' ? 'infected.runner' : hunters[i % hunters.length])),
     ...Array<string>(group.dogs).fill('infected.dog'), ...Array<string>(tier === 'low' ? group.alphasLow ?? group.alphas : group.alphas).fill('infected.alpha')];
   const indices = new Map<string, number>();
   return roles.map((archetype, i) => {
@@ -90,7 +104,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // Each small finale wave approaches from three directions around the console.
     // Road arrivals scatter around their fixed authored anchors.
     const assault = group.assault === true, roadFight = group.region === 'crash-outskirts' || group.region === 'destroyed-corridor';
-    const angle = assault ? [Math.PI, -Math.PI / 2, Math.PI / 2][i % 3] : i * 2.399963229728653;
+    const angle = assault ? [Math.PI, -Math.PI / 2, Math.PI / 2][i % 3] : group.setPiece === 'burning-convoy' ? [0, -Math.PI / 2, Math.PI / 2][i % 3] : i * 2.399963229728653;
     const fieldHorde = group.type === 'field-horde', stagedAmbush = group.id === 'farmhouse-defense';
     // The barn group stages on the field perimeter so the full crowd does not
     // collapse into a single close lane before a walking player can engage.
@@ -102,18 +116,21 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // 63.4 s at 48 m). Staging at the cover ring's inner edge keeps the surround readable
     // while the arrivals spend their exposure closing the last metres instead of the empty
     // 20 metres outside it; director.safe still rejects any spot within 18 m of her.
-    const radius = assault ? finale.holdRadius - 20 + Math.floor(i / 3) % 4 * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
+    const radius = assault ? finale.holdRadius - 20 + Math.floor(i / 3) % 4 * 2 : group.setPiece === 'burning-convoy' ? 20 + Math.floor(i / 3) * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
     // The checkpoint-bearing patrols approach from the military road side.
     // A circle on the bearing sent bodies around both flanks and funnelled
     // a retreat into the full road groups. Staggered rows retain every slot
     // while leaving the northern verge open for an eastbound escape.
     const militaryPatrol = group.id.startsWith('military-zone-direct-');
+    // The quarantine cohort gathers behind the tower base, rather than being
+    // scattered over the road. The ordinary safe admission still prevents pop-in.
+    const gateTower = group.setPiece === 'quarantine-gate';
     // Moving the industrial Alpha into the first cohort must retain its old
     // once-only slot, so a carried save cannot admit it a second time.
     const slotOwner = group.id === 'depot-workers' && archetype === 'infected.alpha' ? 'depot-alpha' : group.id;
     return { key: `${slotOwner}:${archetype}:${index}`, archetype,
-      x: at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
-      z: at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
+      x: gateTower ? at[0] + 5 + (i % 3 - 1) * 2 : at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
+      z: gateTower ? at[1] + 15 + Math.floor(i / 3) * 2 : at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
   });
 }
 

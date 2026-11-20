@@ -80,6 +80,58 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
         p.fixed = true;
       }
     }
+    // The six dispersal beats sit beside the playable corridor. These use the
+    // ordinary district placement/LOD pipeline so both tiers load them before
+    // they enter view; encounter cohorts are authored separately in encounters.ts.
+    const beat = (id: string, asset: string, x: number, z: number, half: [number, number, number], yaw = 0, scale: [number, number, number] = [1, 1, 1]) => {
+      // Move each landmark with its encounter onto the measured objective
+      // crossing. The old R6 road is 60–80 m away from the skilled route.
+      const offset = id.startsWith('gate-') ? [20, -79] : id.startsWith('billboard-') ? [16, -62] : id.startsWith('hospital-') ? [-18, -58] : [0, 0];
+      x += offset[0]; z += offset[1];
+      const p = place(`l10-setpiece-${id}`, asset, x, z, half, yaw, scale, true);
+      p.fixed = true;
+      return p;
+    };
+    // Gate warning: wire, sandbag approach, empty tower and an abandoned bus.
+    beat('gate-gantry', 'prop.l10-quarantine-gantry', 2990, 95, [.4, 2.45, 4.48], 0, [1, .7, .7]);
+    for (const z of [93.25, 96.75]) beat(`gate-effigy-${z}`, 'prop.l10-warning-effigy', 2990, z, [.46, 1.86, .39], 0, [.7, .7, .7]);
+    for (const z of [86, 104]) beat(`gate-wire-${z}`, 'prop.cure-mil-fence', 2994, z, [3.3, 1.4, .22], Math.PI / 2);
+    beat('gate-sandbags', 'prop.sandbag-pallet', 2982, 99, [1.4, .7, .8]);
+    beat('gate-tower', 'kit.guard-tower', 2995, 107, [1.6, 2.5, 1.5]);
+    beat('gate-bus', 'veh.evac-bus', 2950, 126, [5, 1.6, 1.5], Math.PI / 2);
+    // An abandoned public information board beside the objective crossing.
+    beat('billboard-frame', 'prop.l10-cure-billboard', 3066, 92, [.4, 2.9, 3.8]);
+    beat('billboard-wreck', 'prop.l10-abandoned-sedan-blue', 3072, 124, [2.5, .8, 1.1], Math.PI / 2);
+    // The hazmat effigies use the retained TRELLIS source; the nearby cohort is separately admitted.
+    for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.l10-hazmat-scarecrow', 3170 + i * 7, 56 + (i % 2) * 2, [.7, 1.3, .6], i % 2 ? .16 : -.12);
+    // Wrecked military vehicles and sandbag islands create a broad fight lane.
+    for (const [id, x, z, yaw] of [['a', 3240, 60, -.35], ['b', 3280, 125, Math.PI + .28]] as const) {
+      const truck = beat(`convoy-truck-${id}`, 'veh.military-truck', x, z, [3.8, 1.5, 1.5], yaw);
+      truck.decay = 'wrecked';
+      truck.fieldLight = 'wreckfire';
+    }
+    beat('convoy-cover-a', 'prop.sandbag-pallet', 3238, 103, [1.4, .7, .8]);
+    beat('convoy-cover-b', 'prop.sandbag-pallet', 3285, 69, [1.4, .7, .8], Math.PI / 2);
+    // Open-ended overpass spans the measured crossing, with lights at its sides.
+    beat('underpass-mouth', 'prop.l10-underpass', 3383, 74, [6, 3.2, 7]);
+    // Four independent pier footprints leave the full centre passage open to
+    // navigation and physics; the overhead deck is not a ground-level wall.
+    for (const x of [3378.2, 3387.8]) for (const z of [67.3, 80.7]) {
+      layout.colliders.push({ id: `l10-underpass-pier-${x}-${z}`, minTier: 0, maxTier: 6,
+        aabb: { min: [x - .5, 0, z - .4], max: [x + .5, 4.9, z + .4] } });
+    }
+    layout.lightGroups.push({ id: 'l10-underpass', offAt: 6 });
+    for (const z of [67, 81]) {
+      const lamp = beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3383, z, [.4, 1.5, .4]);
+      lamp.lightGroup = 'l10-underpass';
+      lamp.decorLights = true;
+    }
+    // Field triage on the final approach: quarantine tents and a marked transport.
+    for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.l10-field-tent', x, i === 1 ? 89 : 83, [2.2, 1.6, 3.4], i % 2 ? Math.PI : 0);
+    beat('hospital-truck', 'veh.ambulance', 3538, 98, [1.5, 1.7, 3.4], Math.PI / 2);
+    beat('hospital-supplies', 'prop.medical-cooler', 3531, 91, [.5, .5, .5]);
+    beat('hospital-stretcher-a', 'prop.l10-field-stretcher', 3504, 90, [1.1, .85, .65], .2);
+    beat('hospital-stretcher-b', 'prop.l10-field-stretcher', 3521, 91, [1.1, .85, .65], -.15);
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
       const low = gap.z - 35, high = gap.z + 35;
