@@ -6,7 +6,7 @@
 - Number-key selection, rack labels, pickup hints, and next/previous ordering use those fixed keys. Owned variants stay available for cycling; the HUD displays the highest-tier owned weapon for a shared key. Per-level weapons that have not been acquired render as dimmed, numbered holes.
 - The previous recording key map remains available for v1 recordings. Saves still store weapon IDs; the migration test loads a v1 save containing nail gun and army MG and verifies keys 7 and 4.
 - The native pickup regression collects the nail gun, selects it on 7, collects the army MG, then selects the MG on 4. The nail gun remains available on 7.
-- Bot weapon selection required no changes: the threat audit still reports zero fail flags.
+- `5fbb8e3d` updates the L9 bot to use fixed keys 3 and 4 and fixes the playtest driver's key-0 spelling. The existing input test now checks repeated key 1 and 0 cycling.
 - `8ff43012` keeps the rack visible when a level has holes but the player carries no weapons. Typecheck, lint and the focused input test passed after this change.
 - `895d2cb7` filters carried weapons by the predefined level keys when drawing a campaign rack, including when an older save contains an out-of-set weapon. Typecheck, lint and the focused input test passed.
 
@@ -16,7 +16,7 @@
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
 - `npm test` — passed locally: 106 tests in 27 files; test-budget reported 150/150 planned cases and 117.0 s / 240 s.
-- `npm run qa:threat` — passed: 0 fail flags in 277.0 s. The bot weapon paths required no changes.
+- `npm run qa:threat` — passed after the bot change: 0 fail flags in 424.6 s.
 - Remote `sh tools/remote/run.sh "$PWD" -- npm test`: three attempts timed out around 240 s. The unchanged rerun completed in 227.6 s with 104 passed, one skipped and one failure in `tests/engine/l4-contact.test.ts`: the LOW perimeter routing assertion at line 780. The remote gate remains open; investigate that failure before treating the suite as green.
 - Follow-up: `npx vitest run tests/engine/l4-contact.test.ts --project default --configLoader runner` passed locally (63.43 s). Two subsequent unchanged remote suite attempts both timed out at 241.1 s and 240.8 s, so neither reproduced nor cleared the remote routing failure.
 - A focused remote run reproduced the routing failure in 175.60 s: actor 373 remained near (-6.23, 9.49) for 301 ticks, with scripted target (-3.18, 6) and no rail damage. The same test passes locally. Its relationship to the weapon change has not been established; no zombie behavior or test criteria were altered.
