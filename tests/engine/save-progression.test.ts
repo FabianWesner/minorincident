@@ -206,7 +206,9 @@ async function checkCheckpointRacks() {
     field.ignite(cell, l10.tick); field.update(l10.tick + 420);
     const vegetation = l10.hazards!.vegetationFire!, tree = vegetation.objects[0];
     expect(tree).toBeDefined();
-    vegetation.ignite(tree, l10.tick, .01); vegetation.update(l10.tick + 600);
+    l10.hazards!.ignitePatch(tree, .65, 5);
+    expect(tree.state).toBe('burning');
+    vegetation.update(l10.tick + 600);
     l10.missions!.checkpoint('cure-crash');
     cell.state = 'intact'; tree.state = 'intact';
     l10.combat!.setLoadout(['weapon.fire-axe'], ['weapon.rocket-launcher']);
