@@ -87,7 +87,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       return p;
     };
     // Gate warning: wire, sandbag approach, empty tower and an abandoned bus.
-    for (const z of [79, 111]) beat(`gate-wire-${z}`, 'prop.cure-mil-fence', 2940, z, [3.3, 1.4, .22], Math.PI / 2);
+    for (const z of [89, 101]) beat(`gate-wire-${z}`, 'prop.cure-mil-fence', 2990, z, [3.3, 1.4, .22], Math.PI / 2);
     beat('gate-sandbags', 'prop.sandbag-pallet', 2925, 72, [1.4, .7, .8]);
     beat('gate-tower', 'kit.guard-tower', 2938, 122, [1.6, 2.5, 1.5]);
     beat('gate-bus', 'veh.evac-bus', 2950, 126, [5, 1.6, 1.5], Math.PI / 2);
@@ -95,17 +95,17 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     beat('billboard-frame', 'prop.scoreboard', 3060, 62, [3, 2, .35], Math.PI / 2, [1.2, 1.2, 1]);
     beat('billboard-wreck', 'prop.l10-abandoned-sedan-blue', 3072, 124, [2.5, .8, 1.1], Math.PI / 2);
     // A planted line of scarecrows masks the handful of live hazmat runners.
-    for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.farm-scarecrow', 3170 + i * 7, 66 + (i % 2) * 5, [.5, 1.3, .5], i % 2 ? .16 : -.12);
+    for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.farm-scarecrow', 3170 + i * 7, 84 + (i % 2) * 2, [.5, 1.3, .5], i % 2 ? .16 : -.12);
     // Wrecked military vehicles and sandbag islands create a broad fight lane.
     beat('convoy-truck-a', 'veh.military-truck', 3240, 66, [3.8, 1.5, 1.5], -.35);
     beat('convoy-truck-b', 'veh.military-truck', 3280, 125, [3.8, 1.5, 1.5], Math.PI + .28);
-    beat('convoy-cover-a', 'prop.sandbag-pallet', 3238, 116, [1.4, .7, .8]);
+    beat('convoy-cover-a', 'prop.sandbag-pallet', 3238, 103, [1.4, .7, .8]);
     beat('convoy-cover-b', 'prop.sandbag-pallet', 3285, 69, [1.4, .7, .8], Math.PI / 2);
     // Concrete culvert mouth with emergency lamps and low visibility inside.
     beat('underpass-mouth', 'kit.zoo-tunnel-mouth', 3390, 69, [4.5, 3, 3], Math.PI);
-    for (const z of [74, 116]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3390, z, [.4, 1.5, .4]);
+    for (const z of [87, 103]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3390, z, [.4, 1.5, .4]);
     // Field triage on the final approach: quarantine tents and a marked transport.
-    for (let i = 0; i < 3; i++) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', 3508 + i * 13, 65 + (i % 2) * 8, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
+    for (let i = 0; i < 3; i++) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', 3508 + i * 13, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
     beat('hospital-truck', 'veh.military-truck', 3530, 126, [3.8, 1.5, 1.5], Math.PI / 2);
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {

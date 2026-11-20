@@ -40,8 +40,8 @@ export const cureEncounters: readonly CureEncounter[] = [
 export const curePaceEncounters: readonly CureEncounter[] = [
   // L10 PO 2026-11-19: every authored scene has an encounter attached so the courier
   // has to fight through the beat. Route positions follow the eastbound corridor.
-  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [2940, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
-  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3060, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.sprinter', 'infected.sprinter'] },
+  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [2990, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3060, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.runner', 'infected.runner'] },
   { id: 'setpiece-scarecrow-field', type: 'field-horde', setPiece: 'scarecrow-field', region: 'destroyed-corridor', at: [3190, 95], regular: [5, 4], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.hazmat', 'infected.runner'] },
   { id: 'setpiece-burning-convoy', type: 'field-horde', setPiece: 'burning-convoy', region: 'destroyed-corridor', at: [3260, 95], regular: [11, 8], dogs: 1, alphas: 0, roles: ['infected.firefighter', 'infected.runner', 'infected.runner'] },
   { id: 'setpiece-dark-underpass', type: 'field-horde', setPiece: 'dark-underpass', region: 'destroyed-corridor', at: [3390, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.crawler', 'infected.crawler', 'infected.crawler'] },
@@ -92,7 +92,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
   const at = tier === 'low' ? group.atLow ?? group.at : group.at;
   const regular = group.regular[tier === 'high' ? 0 : 1];
   const hunters = ['infected.sprinter', 'infected.firefighter', 'infected.armored', 'infected.runner'];
-  const roles = [...Array.from({ length: regular }, (_, i) => group.roles?.[i] ?? (i < (group.tough ?? 0) ? 'infected.firefighter' : group.region === 'crash-outskirts' ? 'infected.runner' : hunters[i % hunters.length])),
+  const roles = [...Array.from({ length: regular }, (_, i) => group.roles?.[i] ?? (group.setPiece ? 'infected.runner' : i < (group.tough ?? 0) ? 'infected.firefighter' : group.region === 'crash-outskirts' ? 'infected.runner' : hunters[i % hunters.length])),
     ...Array<string>(group.dogs).fill('infected.dog'), ...Array<string>(tier === 'low' ? group.alphasLow ?? group.alphas : group.alphas).fill('infected.alpha')];
   const indices = new Map<string, number>();
   return roles.map((archetype, i) => {
