@@ -269,7 +269,7 @@ export class LevelSevenEncounters {
     const requested = this.state.requestedGroups ??= [l7Encounters.firstStreetGroup];
     // LOW has fewer concurrent slots: queue the middle street early enough
     // for its approach ranks to enter before the column reaches it.
-    for (const [i, threshold] of [225, low ? 195 : 165, 95].entries()) {
+    for (const [i, threshold] of [225, low ? 195 : 165, low ? 95 : 140].entries()) {
       const group = l7Encounters.firstStreetGroup + i + 1;
       if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
