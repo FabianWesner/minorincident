@@ -481,7 +481,7 @@ export class Hud {
     const selectedId = shown?.id === 'weapon.kick' ? 'weapon.fists' : shown?.id;
     for (const [id, item] of this.weaponRackItems) {
       if (id.startsWith('slot-hole-')) { attribute(item, 'data-selected', 'false'); continue; }
-      attribute(item, 'data-selected', String(id === selectedId && !gun?.mounted));
+      attribute(item, 'data-selected', String(selectedId !== undefined && weaponKey(id) === weaponKey(selectedId) && !gun?.mounted));
       const entry = entries.find(entry => entry.id === id)!;
       const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
       attribute(item, 'data-empty', String(empty));
