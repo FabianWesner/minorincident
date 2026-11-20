@@ -151,6 +151,8 @@ export class CrowdView extends Group {
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
+  private readonly ashHeaps = new InstancedMesh(new BoxGeometry(.8, .12, .55), new MeshBasicNodeMaterial({ color: '#292824' }), 350);
+  private readonly ashBones = new InstancedMesh(new BoxGeometry(.38, .035, .045), new MeshBasicNodeMaterial({ color: '#b6aa8e' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -163,6 +165,7 @@ export class CrowdView extends Group {
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.staticCorpses.matrixAutoUpdate = this.staticCorpses.matrixWorldAutoUpdate = false; }
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
     this.nails.frustumCulled = false; this.nails.count = 0; this.add(this.nails);
+    for (const mesh of [this.ashHeaps, this.ashBones]) { mesh.frustumCulled = false; mesh.count = 0; this.add(mesh); }
     this.registry = sharedRegistry ?? new AssetRegistry((event) => this.logs.push(event), { materials: this.shading, textureSize: this.low ? 512 : 1024 });
     const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
     this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
@@ -710,7 +713,7 @@ export class CrowdView extends Group {
     }
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
-    this.shadows.count = 0; this.caps.count = 0; this.nails.count = 0; this.texturedCaps = 0;
+    this.shadows.count = 0; this.caps.count = 0; this.nails.count = 0; this.ashHeaps.count = 0; this.ashBones.count = 0; this.texturedCaps = 0;
     this.k9Vest?.begin(this.world);
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
@@ -766,6 +769,12 @@ export class CrowdView extends Group {
         const yaw = e.transform.yaw, x = e.transform.x + Math.sin(yaw) * .18, z = e.transform.z + Math.cos(yaw) * .18;
         this.transform.makeRotationY(yaw); this.transform.setPosition(x, (this.world.districts?.groundHeight(x, z) ?? 0) + .16, z);
         this.nails.setMatrixAt(this.nails.count++, this.transform);
+      }
+      if (e.ashDeath && this.world.tick - e.ashDeath.at >= 90 && this.ashHeaps.count < 350) {
+        const x = e.transform.x, z = e.transform.z, ground = this.world.districts?.groundHeight(x, z) ?? 0;
+        this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(x, ground + .06, z); this.ashHeaps.setMatrixAt(this.ashHeaps.count++, this.transform);
+        for (const offset of [-.12, .12]) { this.transform.makeRotationY(e.transform.yaw + offset * 4); this.transform.setPosition(x + offset, ground + .13, z); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform); }
+        continue;
       }
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e) && e.appearance?.asset !== 'inf.common-worker') { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
@@ -896,7 +905,7 @@ export class CrowdView extends Group {
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         // r32: flying flamingos and leaping animals cast a contact shadow on the ground under them (reads height top-down).
         if (animalLift > .3 && this.shadows.count < 350) { const g = this.world.districts?.groundHeight(x, z) ?? 0; this.shadowMatrix.makeTranslation(x, g + .02, z); this.shadows.setMatrixAt(this.shadows.count++, this.shadowMatrix); this.shadows.instanceMatrix.needsUpdate = true; }
-        if (e.corpse || e.ashDeath) {
+        if (e.corpse && !e.ashDeath) {
           // Start with the intact corpse source; ordinary limb severance is
           // applied below, while the Mega keeps its complete creature outline.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
@@ -908,14 +917,13 @@ export class CrowdView extends Group {
           // blast/gunshot dismemberment lives in the gib VFX. The Mega keeps its complete creature silhouette (fix72-c, L10-12).
           const mask = this.goreEnabled && b.legLost && !isMega(e) ? 4 : 0;
           const hidden = crowdLimbParts(batch.animal).flatMap((names, bit) => mask & 1 << bit ? names : []);
-          if (e.ashDeath) {
-            const age = Math.max(0, (this.world.tick - e.ashDeath.at) / 60), scale = age < 1.5 ? Math.max(.08, 1 - age / 1.5) : .08;
-            this.transform.scale(this.silhouette.set(scale, Math.max(.08, scale * .45), scale));
-            this.transform.elements[13] = (this.world.districts?.groundHeight(x, z) ?? 0) + .025;
-          }
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), hidden, !batch.animal ? look : undefined, near);
           this.k9Vest?.place(e, batch.poses, frame, [0, 1], this.transform);
           continue;
+        }
+        if (e.ashDeath) {
+          const crumble = Math.max(0, Math.min(1, (this.world.tick - e.ashDeath.at) / 90));
+          this.transform.scale(this.silhouette.set(1 - .35 * crumble, 1 - .85 * crumble, 1 - .35 * crumble));
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
         const band = crowdLod(this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y), this.footBands.get(e.id)); this.footBands.set(e.id, band);
@@ -1013,6 +1021,7 @@ export class CrowdView extends Group {
       }
     }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0; this.nails.visible = this.nails.count > 0;
+    for (const mesh of [this.ashHeaps, this.ashBones]) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
     if (this.nails.count) { this.nails.instanceMatrix.clearUpdateRanges(); this.nails.instanceMatrix.addUpdateRange(0, this.nails.count * 16); this.nails.instanceMatrix.needsUpdate = true; }
     if (this.caps.count) { this.caps.instanceMatrix.clearUpdateRanges(); this.caps.instanceMatrix.addUpdateRange(0, this.caps.count * 16); this.caps.instanceMatrix.needsUpdate = true; }
     if (this.shadows.count) { this.shadows.instanceMatrix.clearUpdateRanges(); this.shadows.instanceMatrix.addUpdateRange(0, this.shadows.count * 16); this.shadows.instanceMatrix.needsUpdate = true; }
@@ -1062,7 +1071,7 @@ export class CrowdView extends Group {
     this.corpseGeometry.clear(); this.corpseClips.clear();
     const released = new Set<MeshLambertNodeMaterial>();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); const material = batch.mesh.material as MeshLambertNodeMaterial; if (!released.has(material)) { released.add(material); material.dispose(); } batch.mesh.dispose(); batch.texture.dispose(); }
-    for (const mesh of [this.shadows, this.caps, this.nails]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
+    for (const mesh of [this.shadows, this.caps, this.nails, this.ashHeaps, this.ashBones]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
     this.batches.clear(); this.sharedSkinMaterials.clear(); this.clear(); if (!this.sharedRegistry) void this.registry.dispose();
   }
 }
