@@ -119,6 +119,9 @@ export class ActionView extends Group {
   /** Loads the carried actions, pickups on the ground and any weapons the mission grants later. */
   async init(): Promise<void> {
     const loadout = this.world.combat?.runner.loadout, needed = new Set(['weapon.fists', 'weapon.kick', 'weapon.bat']);
+    // The crash pickup is created on the first mission tick, after init scans
+    // resident entities. Load its model before the loading draw.
+    if (this.world.scenario === 'L10') needed.add('weapon.machete');
     if (loadout) for (const side of sides) for (const slot of loadout.state[side].rack) needed.add(slot.id);
     for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) needed.add(entity.pickup.actionId);
     // perf-w6: the L4 quartermaster issues the machine gun on the alarm tick (no pickup entity). Loading it on first
@@ -147,7 +150,11 @@ export class ActionView extends Group {
       // The torch's emissive lens and glow compile here too (drawn at `at` behind the opaque loading card).
       const torch = clone.getObjectByName('rifle-torch'); if (torch) torch.visible = true;
       group.add(clone);
+      // L10's first pickup appears with the opening encounter. Its ground
+      // model uses the ordinary swatches, not the held courier materials.
+      if (this.world.scenario === 'L10') group.add(asset.model.clone(true));
     }
+    if (this.world.scenario === 'L10') group.add(new Mesh(this.pickupRingGeometry, this.pickupRingMaterial));
     if (!group.children.length) return () => {};
     this.add(group); group.updateMatrixWorld(true);
     return () => group.removeFromParent();

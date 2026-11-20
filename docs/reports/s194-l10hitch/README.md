@@ -23,7 +23,7 @@ Earlier attempts were blocked by sandbox `spawn EPERM` and browser-pool `listen 
 
 ## Code review findings
 
-L10 already has a full warm-up behind the loading card. `CrowdView` registers the cure encounter slots, schedules the L10 infected models and corpse pages, and requests warm batches. The staged startup now includes the opening regular looks and crawler at their planned tiers in the loading barrier. This can increase loading time; it has not been measured. The after traces still show 10–11 new builds at first spawn, so further cold graphs remain; the harness now records material names for a follow-up trace.
+L10 already has a full warm-up behind the loading card. `CrowdView` registers the cure encounter slots, schedules the L10 infected models and corpse pages, and requests warm batches. The staged startup now includes the opening regular looks and crawler at their planned tiers in the loading barrier. This can increase loading time; it has not been measured. The after traces still show 10–11 new builds at first spawn, so further cold graphs remain; a capped diagnostic on a loaded host identified seven `action:swatch` builds, a shadow material and two basic material builds. The crash machete pickup is created after the initial asset scan. A second loading change preloads the machete and warms ground swatches and pickup ring; a capped diagnostic afterward showed only two basic material builds at first spawn and an 8 ms render. These diagnostic timings are not quiet performance measurements; remeasurement is pending.
 
 ## Checks
 
@@ -36,4 +36,4 @@ L10 already has a full warm-up behind the loading card. `CrowdView` registers th
 
 ## Remaining work
 
-Identify the remaining first-spawn material builds, confirm the reported location and trigger, then assess loading-time impact and capture a low baseline. Run focused tests and the remote unit suite, update this report with evidence, and commit the fix.
+Identify the two remaining basic material builds, remeasure both changes on a quiet host, confirm the reported location and trigger, then assess loading-time impact and capture a low baseline. Run focused tests and the remote unit suite, update this report with evidence, and commit the fix.

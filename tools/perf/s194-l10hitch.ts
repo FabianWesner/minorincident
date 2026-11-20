@@ -19,7 +19,7 @@ for (let tick = 0; tick < 600; tick++) {
 }
 const out = `test-results/s194-l10hitch/${label}-${backend}-${tier}`;
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend, tier, seed: 1, nativeFrameTiming: true, viewport: { width: 1600, height: 900 }, query: { loadProfile: '2' } });
+const session = new SceneSession({ backend, tier, seed: 1, nativeFrameTiming: process.env.S194_DIAGNOSTIC !== '1', viewport: { width: 1600, height: 900 }, query: { loadProfile: '2' } });
 try {
   await session.open();
   await session.page.evaluate('globalThis.__name = fn => fn');
