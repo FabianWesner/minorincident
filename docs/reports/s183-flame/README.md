@@ -58,3 +58,5 @@ Allocation audit follow-up: the flame cover query reuses its direction object, a
 Remote unit suite on source `6a30d39e`: `sh tools/remote/run.sh "$PWD" -- npm test` exited 0; 27 files, 105 passed and one skipped, 184.1 s against 240 s. The collector reported 150/150 cases.
 
 Latest-source capture refresh (`6a30d39e`): the committed sheet was regenerated and inspected on headless Metal WebGL2. HIGH frames show the short initial gap followed by a changing orange stream at the infected; LOW frame 52 reaches the group. Frame 52 counts remain HIGH 62 draws / 27 shared particles / 38 flame cards and LOW 56 / 11 / 30, versus baseline 62 / 15 / 35 and 56 / 5 / 19. No console errors; timing pending.
+
+Shared writer allocation cleanup: replaced its per-refresh flame/glow closures and combined column array with reusable counters and methods, and removed the frustum callback allocation. Typecheck, lint and the HIGH/LOW fight run passed without captured console errors. This is source-level cleanup, not proof of zero allocations throughout the renderer; a heap profile remains open.

@@ -771,34 +771,39 @@ export class Blasts extends Group {
     if (!this.host.camera) return true;
     this.sourcePoint.set(x, (this.world.districts?.groundHeight(x, z) ?? 0) + 9, z);
     // Plane distances avoid allocating bounds for each of the 22 persistent fires.
-    return this.frustum.planes.every(plane => plane.distanceToPoint(this.sourcePoint) >= -radius);
+    for (const plane of this.frustum.planes) if (plane.distanceToPoint(this.sourcePoint) < -radius) return false;
+    return true;
+  }
+  private frameFlames = 0; private frameGlows = 0; private frameReserved = 0;
+  private writeFlame(x: number, y: number, z: number, seed: number, width: number, height: number, intensity: number, jet = false): void {
+    const slot = this.frameFlames;
+    if (slot >= (jet ? FLAMES : FLAMES - this.frameReserved)) return;
+    this.fl.fOrigin.setXYZW(slot, x, y, z, seed); this.fl.fStyle.setXYZW(slot, width, height, intensity, 1);
+    this.fl.fJet.setXYZW(slot, 0, 0, 0, 0); this.frameFlames++;
+  }
+  private writeGlow(x: number, z: number, radius: number, color: number, intensity: number, ground?: number): void {
+    const slot = this.frameGlows;
+    if (slot >= GLOWS) return;
+    this.gl.gOrigin.setXYZW(slot, x, (ground ?? this.world.districts?.groundHeight(x,z) ?? 0) + .03, z, radius);
+    this.gl.gColor.setXYZW(slot, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255, intensity); this.frameGlows++;
+  }
+  private writeColumnShadow(c: Column, sun: { x: number; y: number; z: number }, horizontal: number, slot: number): number {
+    if (slot >= 64 || !castsColumnShadow(c) || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) return slot;
+    const length = Math.min(30, (c.size >= 2 ? 18 : 10) * horizontal / Math.max(.15, Math.abs(sun.y)));
+    this.pos.set(c.x - sun.x / horizontal * length / 2, (c.ground ?? 0) + .025, c.z - sun.z / horizontal * length / 2);
+    this.quat.setFromAxisAngle(up, Math.atan2(sun.x, sun.z)); this.scl.set(c.size * 1.6, 1, length);
+    this.columnShadows.setMatrixAt(slot, this.partMatrix.compose(this.pos, this.quat, this.scl));
+    return slot + 1;
   }
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
-    let flames = 0, glows = 0;
-    const reserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW) + 3 : 0;
-    const sun = this.host.sunDirection?.() ?? { x: .45, y: .78, z: .43 }, horizontal = Math.hypot(sun.x, sun.z);
+    this.frameFlames = this.frameGlows = 0;
+    this.frameReserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW) + 3 : 0;
+    const sun = this.host.sunDirection?.() ?? this.sunNode.value, horizontal = Math.hypot(sun.x, sun.z);
     let shadows = 0;
-    for (const c of [...this.columns, ...this.fireColumns.values()]) {
-      // Q-132: small debris fires (size < 1) are a lick of flame, not a column: no long moon-cast shadow strip across the verge.
-      if (shadows >= 64 || !castsColumnShadow(c) || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) continue;
-      const length = Math.min(30, (c.size >= 2 ? 18 : 10) * horizontal / Math.max(.15, Math.abs(sun.y)));
-      this.pos.set(c.x - sun.x / horizontal * length / 2, (c.ground ?? 0) + .025, c.z - sun.z / horizontal * length / 2);
-      this.quat.setFromAxisAngle(up, Math.atan2(sun.x, sun.z));
-      this.scl.set(c.size * 1.6, 1, length);
-      this.columnShadows.setMatrixAt(shadows++, this.partMatrix.compose(this.pos, this.quat, this.scl));
-    }
+    for (const c of this.columns) shadows = this.writeColumnShadow(c, sun, horizontal, shadows);
+    for (const c of this.fireColumns.values()) shadows = this.writeColumnShadow(c, sun, horizontal, shadows);
     this.columnShadows.count = shadows; this.columnShadows.instanceMatrix.needsUpdate = true;
-    const flame = (x: number, y: number, z: number, seed: number, width: number, height: number, intensity: number, jet = false) => {
-      if (flames >= (jet ? FLAMES : FLAMES - reserved)) return;
-      this.fl.fOrigin.setXYZW(flames, x, y, z, seed); this.fl.fStyle.setXYZW(flames, width, height, intensity, 1);
-      this.fl.fJet.setXYZW(flames, 0, 0, 0, 0); flames++;
-    };
-    const pool = (x: number, z: number, radius: number, color: number, intensity: number, ground?: number) => {
-      if (glows >= GLOWS) return;
-      this.gl.gOrigin.setXYZW(glows, x, (ground ?? this.world.districts?.groundHeight(x,z) ?? 0)+.03, z, radius);
-      this.gl.gColor.setXYZW(glows, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255, intensity); glows++;
-    };
     for (const [id, c] of this.fireColumns) {
       const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) continue;
       if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) continue;
@@ -808,9 +813,9 @@ export class Blasts extends Group {
       const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
       for (let i = 0; i < n; i++) {
         const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-        flame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+        this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
       }
-      pool(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + sid)) * (.3 + .7 * life));
+      this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + sid)) * (.3 + .7 * life));
     }
     if (this.flameJet && now >= this.flameJet.until) this.clearFlameJet();
     if (this.flameJet) {
@@ -832,27 +837,27 @@ export class Blasts extends Group {
         const z = this.jetZ[i] + dz * reach * t + dx * spread;
         const rise = t * t * .5 + Math.sin(now * 19 + i) * .08 * t;
         const length = Math.min(.5 + t * .65, reach * t * 2, reach * (1 - t) * 2);
-        flame(x, this.jetY[i] + rise, z, j.seed + i * .713, .2 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
-        this.fl.fJet.setXYZW(flames - 1, dx, t * .15, dz, t);
+        this.writeFlame(x, this.jetY[i] + rise, z, j.seed + i * .713, .2 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
+        this.fl.fJet.setXYZW(this.frameFlames - 1, dx, t * .15, dz, t);
       }
       const ix = j.x + j.dx * j.range, iz = j.z + j.dz * j.range;
       // Short upright tongues turn the forward jet into a splash at its clipped end.
       for (let i = 0; i < 3; i++) {
         const offset = (i - 1) * .25;
-        flame(ix - j.dx * .12 + sideX * offset, j.y - .15, iz - j.dz * .12 + sideZ * offset,
+        this.writeFlame(ix - j.dx * .12 + sideX * offset, j.y - .15, iz - j.dz * .12 + sideZ * offset,
           j.seed + 20 + i, .32, .55 + .13 * Math.sin(now * 21 + i * 2), fade * .65, true);
       }
-      pool(ix, iz, 1.05, 0xff5a1e, .8 * fade, this.world.districts?.groundHeight(ix, iz));
+      this.writeGlow(ix, iz, 1.05, 0xff5a1e, .8 * fade, this.world.districts?.groundHeight(ix, iz));
     }
     for (let i = this.glowList.length - 1; i >= 0; i--) {
       const g = this.glowList[i], k = (now - g.born) / g.life;
       if (k >= 1) { this.glowList.splice(i, 1); continue; }
-      pool(g.x, g.z, g.radius, g.color, g.intensity * (1 - k) ** 2, g.ground);
+      this.writeGlow(g.x, g.z, g.radius, g.color, g.intensity * (1 - k) ** 2, g.ground);
     }
-    this.glowCount = glows;
+    this.glowCount = this.frameGlows;
     this.fl.fOrigin.needsUpdate = this.fl.fStyle.needsUpdate = this.fl.fJet.needsUpdate = this.gl.gOrigin.needsUpdate = this.gl.gColor.needsUpdate = true;
-    this.flames.count = Math.max(1, flames); this.flames.visible = flames > 0;
-    this.glows.count = Math.max(1, glows); this.glows.visible = glows > 0;
+    this.flames.count = Math.max(1, this.frameFlames); this.flames.visible = this.frameFlames > 0;
+    this.glows.count = Math.max(1, this.frameGlows); this.glows.visible = this.frameGlows > 0;
   }
   private syncParts(): void {
     let n = 0;
