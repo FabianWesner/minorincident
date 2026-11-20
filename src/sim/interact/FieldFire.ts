@@ -34,7 +34,7 @@ export class FieldFire {
       if (cell.state !== 'intact') continue;
       for (const source of this.neighbors.get(cell.id) ?? []) if (source.state === 'burning') {
         const distance = Math.hypot(cell.x - source.x, cell.z - source.z);
-        if (distance <= Math.max(0, (tick - source.ignitedAt) / 60)) { ignite.push(cell); break; }
+        if (distance <= 9 + Math.max(0, (tick - source.ignitedAt) / 60)) { ignite.push(cell); break; }
       }
     }
     for (const cell of ignite) { cell.state = 'burning'; cell.ignitedAt = tick; }

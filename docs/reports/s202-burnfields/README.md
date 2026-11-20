@@ -6,7 +6,7 @@ Partial implementation; the requested feature is not complete. This report recor
 
 ## Completed
 
-- Added an initial deterministic L10 corn-cell state with a seven-second burn interval and snapshot/restore methods. These methods are not wired into mission checkpoints. The present spread cannot reach typical 10 m crop spacing during a seven-second burn and needs correction.
+- Added an initial deterministic L10 corn-cell state with a seven-second burn interval and snapshot/restore methods. These methods are not wired into mission checkpoints. Spread now reaches neighbouring crop blocks at 10 m spacing; the approximation still needs validation against real field footprints and road boundaries.
 - Flamethrower impacts and existing spreading fire zones now ignite nearby authored corn cells. Crop cells are sourced only from `veg.corn-block` placements, so roads and other surfaces are excluded.
 - Added an isolated unit test for deterministic spread, exclusion of a non-crop placement, and restoring a saved state. It does not exercise real road geometry or checkpoint restore.
 - Focused test, lint, and TypeScript checks pass.
@@ -18,7 +18,7 @@ Partial implementation; the requested feature is not complete. This report recor
 - Fire crackle and patch-catch sound; pickup caption if needed.
 - Capture and review HIGH/LOW L10 sequences; measure whole-field frame time.
 - Run full unit suite, `npm run qa:threat`, and remote `npm test`; verify skilled routes and resolve any failures.
-- Wire state into actual checkpoint capture and restore, and correct spread across real crop spacing.
+- Wire state into actual checkpoint capture and restore, and verify spread across actual field footprints and road boundaries.
 
 ## Validation
 
