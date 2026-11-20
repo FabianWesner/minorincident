@@ -8,7 +8,7 @@ Implemented a distinct L10 motorbike ride state on the established bicycle inter
 
 - `npm run typecheck` — pass
 - `npm run lint` — pass
-- Focused `tests/engine/vehicles.test.ts` — pass (2 tests)
+- Focused `tests/engine/vehicles.test.ts` — pass (2 tests), including handgun hit, blocked second weapon, corgi sidecar attachment, and faster speed cap.
 
 ## Open
 

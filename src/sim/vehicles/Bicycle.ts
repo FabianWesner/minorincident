@@ -214,7 +214,13 @@ export class Bicycle {
     const off = { down: false, held: false, up: false };
     const weapon = player.weapons;
     const handgunSide = b.motorbike && weapon ? (['LEFT', 'RIGHT'] as const).find(side => weapon[side].rack[weapon[side].index]?.id === 'weapon.handgun') : undefined;
-    const next: InputFrame = { ...frame, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: handgunSide === 'LEFT' ? frame.left : off, right: handgunSide === 'RIGHT' ? frame.right : off, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined, selectedLegacyWeaponKey: undefined, selectedPositionWeaponKey: undefined, interact: !!claimed && frame.interact };
+    let aim = frame.aim;
+    if (b.motorbike && handgunSide && aim && Math.hypot(aim.x, aim.z) > .01) {
+      const angle = Math.atan2(aim.z, aim.x), delta = Math.atan2(Math.sin(angle - b.heading), Math.cos(angle - b.heading));
+      const limited = Math.max(-100 * Math.PI / 180, Math.min(100 * Math.PI / 180, delta));
+      aim = { x: Math.cos(b.heading + limited), z: Math.sin(b.heading + limited) };
+    }
+    const next: InputFrame = { ...frame, aim, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: handgunSide === 'LEFT' ? frame.left : off, right: handgunSide === 'RIGHT' ? frame.right : off, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined, selectedLegacyWeaponKey: undefined, selectedPositionWeaponKey: undefined, interact: !!claimed && frame.interact };
     delete next.navigation; // the bicycle has its own acceleration and turning model
     return next;
   }

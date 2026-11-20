@@ -903,16 +903,32 @@ async function bikeMountIntent(): Promise<void> {
 }
 
 async function motorbikeRide(): Promise<void> {
-  const world = new SimWorld(); await world.init(); world.loadScenario('survivor', 1);
+  const world = new SimWorld(); await world.init(); world.loadScenario('combat-arena', 1);
   try {
     const bike = world.vehicles!.bicycle, player = world.entities.get(1)!;
+    world.combat!.setLoadout(['weapon.handgun'], ['weapon.shotgun']);
+    const dogEntity = world.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { x: player.transform.x, y: 0, z: player.transform.z + 2, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
+    const dogId = dogEntity.id;
     bike.spawnMotorbike({ x: player.transform.x + 1, z: player.transform.z }, Math.PI / 2);
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
     expect(bike.riding).toBe(true);
-    for (let i = 0; i < 180; i++) { world.setInput({ move: { x: 0, z: 1 } }); world.update(); }
-    expect(bike.entity!.bicycle!.speed).toBeGreaterThan(8);
-    expect(bike.entity!.bicycle!.speed).toBeLessThanOrEqual(9.5);
+    const dog = world.entities.get(dogId)!;
+    expect(dog.passengerOf).toBe(bike.entity!.id);
+    const target = world.spawnDummy('infected.dummy', { x: player.transform.x + 5, z: player.transform.z }, { hp: 1000 });
+    for (let i = 0; i < 30; i++) { world.setInput({ aim: { x: 1, z: 0 }, left: { down: i === 0, held: true, up: false } }); world.update(); }
+    expect(world.events.events().some(e => e.type === 'combat.hit' && e.targetId === target)).toBe(true);
+    world.entities.get(target)!.hidden = true;
+    for (const entity of world.entities.iterate()) if (entity.infected) { entity.hidden = true; entity.infected.hidden = true; }
+    const beforeOtherWeapon = world.events.events().filter(e => e.type === 'combat.attack').length;
+    world.setInput({ right: { down: true, held: true, up: false }, selectedWeaponKey: 2 }); world.update();
+    expect(world.events.events().filter(e => e.type === 'combat.attack')).toHaveLength(beforeOtherWeapon);
+    expect(player.weapons!.selectedSide).toBe('LEFT');
+    let peakSpeed = 0;
+    for (let i = 0; i < 180; i++) { world.setInput({ move: { x: 0, z: 1 } }); world.update(); peakSpeed = Math.max(peakSpeed, bike.entity!.bicycle!.speed); }
+    expect(peakSpeed).toBeGreaterThan(8);
+    expect(peakSpeed).toBeLessThanOrEqual(9.5);
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
     expect(bike.riding).toBe(false);
+    expect(dog.passengerOf).toBeUndefined();
   } finally { world.dispose(); }
 }
