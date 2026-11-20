@@ -10,10 +10,12 @@ export class Status {
   apply(target: EntitySnapshot, def: StatusDef, sourceId: number, actionId: string, attackId = 0): void {
     if (!target.combat || target.health.current <= 0 || (target.infected?.special === 'fire-immune' && def.kind === 'burning') || (target.archetype === 'infected.hazmat' && def.kind === 'toxic')) return;
     if (target.infected?.pursuit && def.kind === 'stunned') {
-      if (this.world.scenario === 'L10' && this.world.missions?.state.states['cure-installed'] && actionId === 'weapon.flashbang') {
-        this.world.infected!.cancelSpecial(target.id);
-        target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + 60);
-        target.infected.megaWeakTicks = Math.max(target.infected.megaWeakTicks ?? 0, 60);
+      if (actionId === 'weapon.flashbang') {
+        this.world.infected?.cancelSpecial(target.id);
+        this.world.infected?.releasePin(target);
+        this.world.npcs?.civilians.release(target.id);
+        target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + ticks(def.duration));
+        if (this.world.scenario === 'L10' && this.world.missions?.state.states['cure-installed']) target.infected.megaWeakTicks = Math.max(target.infected.megaWeakTicks ?? 0, 60);
         return;
       }
       this.world.combat!.damage.apply({ sourceId, targetId: target.id, attackId, actionId, origin: target.transform, direction: { x: 0, z: 0 }, base: 1, multiplier: 1, type: 'status', knockback: 0, stagger: def.duration });
@@ -22,7 +24,14 @@ export class Status {
     const statuses = target.combat.statuses, existing = statuses.find((status) => status.kind === def.kind);
     if (existing) { existing.stacks = Math.min(def.maxStacks, existing.stacks + 1); existing.expires = this.world.tick + ticks(def.duration); }
     else statuses.push({ attackId, kind: def.kind, stacks: 1, expires: this.world.tick + ticks(def.duration), nextDot: this.world.tick + 60, ...(def.kind === 'burning' ? { nextSpread: this.world.tick + 30 } : {}), def, sourceId, actionId });
-    if (def.kind === 'stunned') target.combat.attacking = false;
+    if (def.kind === 'stunned') {
+      target.combat.attacking = false;
+      if (actionId === 'weapon.flashbang' && target.infected) {
+        this.world.infected?.cancelSpecial(target.id);
+        this.world.infected?.releasePin(target);
+        this.world.npcs?.civilians.release(target.id);
+      }
+    }
   }
   update(): void {
     for (const entity of this.world.entities.iterate()) {

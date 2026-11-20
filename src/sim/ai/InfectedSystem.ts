@@ -854,7 +854,7 @@ export class InfectedSystem {
     }
     return 1;
   }
-  private releasePin(source: EntitySnapshot): void {
+  releasePin(source: EntitySnapshot): void {
     const b = source.infected!, target = this.world.entities.get(b.heardTargetId || 1), until = b.grabUntil;
     b.grabUntil = 0;
     if ((source.archetype !== 'infected.lion' && b.alphaType !== 'leaper') || until <= this.world.tick || !target) return;
