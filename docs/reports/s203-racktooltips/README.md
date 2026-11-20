@@ -38,3 +38,8 @@
 - Re-ran `E2E_PORT=5171 SCENE_PORT=5172 SMOKE_WORKERS=1 npm run test:smoke`. Both GPU limit checks, the gameplay/L10 rack case, and WebGL pedestrian case passed; the run reached the 240-second budget and exited 124 before completing the remaining cases and public smoke. This is not a full smoke pass.
 - Inspected the refreshed 390×844 Corgi capture after the stacking change: the tooltip is above the navigation arrow, its role, G key and Ready state are readable, and it sits above the rack within the viewport.
 - A direct L4 scene fixture confirmed Army MG in the loadout, but the HUD became hidden between frames and the key 4 hover timed out. Temporary capture code was removed. Key 4 captures and a full smoke pass remain open.
+
+## Follow-up (20:43 CET)
+
+- Captured and inspected key 4 at 1280×720 and 390×844 in L4 with Army MG equipped. Both show a legible bold “Army MG”, its role and key 4 above the rack, fully within the viewport. The scene fixture cleared L4's intro story lock and cinematic state before displaying the HUD; it does not verify the natural intro transition. Images are in `test-results/s203/`.
+- Together with the earlier inspected hole and Corgi captures, the requested views have been visually reviewed. The complete `npm run test:smoke` gate remains open because the one-worker run exceeded 240 seconds after four passing cases; the focused gameplay and L10 rack case passed separately.
