@@ -6,10 +6,11 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { SceneSession, origin, port, stopServer } from './session';
 
 const spec = JSON.parse(readFileSync('specs/scenes/catalog/s183-flame-fight.json', 'utf8')) as SceneSpec;
+if (process.env.SCENE_WALL === '1') spec.props = [{ id: 'wall', asset: 'prop.cure-garden-wall', at: [3.5, 0], yaw: 90 }];
 const backend = process.env.SCENE_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const session = new SceneSession({ backend, viewport: { width: 1280, height: 720 } });
 const baseline = process.env.SCENE_BASELINE === '1';
-const out = `test-results/s183-flame${baseline ? '-baseline' : backend === 'webgpu' ? '-webgpu' : ''}`;
+const out = `test-results/s183-flame${process.env.SCENE_WALL === '1' ? '-wall' : baseline ? '-baseline' : backend === 'webgpu' ? '-webgpu' : ''}`;
 const originals = new Map(baseline ? ['src/render/vfx/Vfx.ts', 'src/render/vfx/Blasts.ts'].map(path => [resolve(path), execFileSync('git', ['show', `3d9e12b1:${path}`], { encoding: 'utf8' })]) : []);
 const server = baseline ? await createServer({ configFile: resolve('vite.config.ts'), cacheDir: '/private/tmp/s183-baseline-vite',
   plugins: [{ name: 's183-baseline', enforce: 'pre', load(id) { return originals.get(id.split('?')[0]); } }],

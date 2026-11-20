@@ -750,7 +750,7 @@ export class Blasts extends Group {
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
     let flames = 0, glows = 0;
-    const reserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW) : 0;
+    const reserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW) + 3 : 0;
     const sun = this.host.sunDirection?.() ?? { x: .45, y: .78, z: .43 }, horizontal = Math.hypot(sun.x, sun.z);
     let shadows = 0;
     for (const c of [...this.columns, ...this.fireColumns.values()]) {
@@ -803,6 +803,12 @@ export class Blasts extends Group {
         this.fl.fJet.setXYZW(flames - 1, j.dx, t * .15, j.dz, t);
       }
       const ix = j.x + j.dx * j.range, iz = j.z + j.dz * j.range;
+      // Short upright tongues turn the forward jet into a splash at its clipped end.
+      for (let i = 0; i < 3; i++) {
+        const offset = (i - 1) * .25;
+        flame(ix - j.dx * .12 + sideX * offset, j.y - .15, iz - j.dz * .12 + sideZ * offset,
+          j.seed + 20 + i, .32, .55 + .13 * Math.sin(now * 21 + i * 2), fade * .65, true);
+      }
       pool(ix, iz, 1.05, 0xff5a1e, .8 * fade, this.world.districts?.groundHeight(ix, iz));
     }
     for (let i = this.glowList.length - 1; i >= 0; i--) {
