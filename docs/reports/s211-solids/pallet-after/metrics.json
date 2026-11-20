@@ -1,0 +1,849 @@
+{
+  "spec": "/private/tmp/s211-pallet.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "actualTier": "high",
+  "frames": 2,
+  "timing": {
+    "openMs": 2335,
+    "loadMs": 6856,
+    "runMs": 267,
+    "sceneMs": 7123
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "wreckGroundOffendersMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 1240.269870869201,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 57,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f2.varianceMin",
+        "pass": true,
+        "value": 1240.360745154487,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f2.variedTilesMin",
+        "pass": true,
+        "value": 56,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "courierForeground": [],
+  "vehicleSilhouettes": [],
+  "flatSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          34.88398980034722,
+          35.69577582465278,
+          40.007725694444446
+        ],
+        "variance": 1240.269870869201,
+        "variedTiles": 57,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 2,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          34.873370225694444,
+          35.68231011284722,
+          39.992838541666664
+        ],
+        "variance": 1240.360745154487,
+        "variedTiles": 56,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "lookSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "s211-l10-pallet-contact",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "prop.cure-mil-fence:2338",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3728.15,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2339",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3731.45,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2340",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3734.75,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2341",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3738.05,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2342",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3741.35,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2343",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3744.65,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2344",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3747.95,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2345",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3751.25,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2346",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3754.55,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2347",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3757.85,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2348",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3761.15,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2349",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3764.45,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2350",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3767.75,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2351",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3771.05,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2352",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3774.35,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2353",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3777.65,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2354",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3780.95,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-mil-fence:2355",
+        "asset": "prop.cure-mil-fence",
+        "at": [
+          3784.25,
+          -70
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.emergency-light:2473",
+        "asset": "prop.emergency-light",
+        "at": [
+          3754.821277329983,
+          -31.45593169161637
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.emergency-light:2474",
+        "asset": "prop.emergency-light",
+        "at": [
+          3761.703554867269,
+          -31.88005194744005
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "decor-cure-belt-r7-1-lamp",
+        "asset": "prop.pallet",
+        "at": [
+          3747.2925051099155,
+          -31
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-cross-6-1-0",
+        "asset": "veh.military-truck",
+        "at": [
+          3748.213462441535,
+          -37.51324415511598
+        ],
+        "yawDeg": 8.5
+      },
+      {
+        "id": "decor-cure-cross-6-1-2",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          3741.833449040004,
+          -35.835320141257625
+        ],
+        "yawDeg": 157.2
+      },
+      {
+        "id": "decor-cure-cross-6-1-3",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          3753.8471898717858,
+          -34.781739946509354
+        ],
+        "yawDeg": 183.7
+      },
+      {
+        "id": "decor-cure-cross-6-2-0",
+        "asset": "veh.police-sedan",
+        "at": [
+          3783.9878452787593,
+          -36.349398144169285
+        ],
+        "yawDeg": 50.9
+      },
+      {
+        "id": "decor-cure-cross-6-2-1",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          3779.802790616287,
+          -35.09827166290571
+        ],
+        "yawDeg": 73.6
+      },
+      {
+        "id": "decor-cure-cross-6-2-2",
+        "asset": "prop.trash-bags",
+        "at": [
+          3777.3907748463657,
+          -36.06893119417842
+        ],
+        "yawDeg": 308.2
+      },
+      {
+        "id": "decor-cure-cross-7-0-0",
+        "asset": "prop.cure-iso-tent",
+        "at": [
+          3758.3162757303676,
+          -44.87371599771571
+        ],
+        "yawDeg": 26.1
+      },
+      {
+        "id": "decor-cure-cross-7-0-1",
+        "asset": "prop.cure-generator",
+        "at": [
+          3764.765787574864,
+          -44.81209645780014
+        ],
+        "yawDeg": 21.9
+      },
+      {
+        "id": "decor-cure-apron-0",
+        "asset": "prop.cure-generator",
+        "at": [
+          3740,
+          -33
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-4",
+        "asset": "prop.cure-generator",
+        "at": [
+          3784,
+          -61
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-90",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          3727.0490594899225,
+          -29.354554253988503
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-91",
+        "asset": "prop.crates",
+        "at": [
+          3743.0454310115756,
+          -21.54903709359074
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-92",
+        "asset": "prop.pallet",
+        "at": [
+          3745.145274871942,
+          -21.574644945546428
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-93",
+        "asset": "prop.crates",
+        "at": [
+          3760.946538950122,
+          -29.767938149844593
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-94",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          3763.0463828104885,
+          -29.79354600180028
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-95",
+        "asset": "prop.crates",
+        "at": [
+          3779.042754332141,
+          -21.98802884140252
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-96",
+        "asset": "prop.pallet",
+        "at": [
+          3781.1425981925076,
+          -22.013636693358208
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-119",
+        "asset": "prop.crates",
+        "at": [
+          3771.618188587046,
+          -45.66295058550249
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-apron-120",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          3773.4513698995343,
+          -46.68737543659887
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decor-cure-cross-6-1-remains-0",
+        "asset": "prop.l10-grave-cross",
+        "at": [
+          3745.213462441535,
+          -41.51324415511598
+        ],
+        "yawDeg": 8.5
+      },
+      {
+        "id": "decor-cure-cross-6-1-remains-1",
+        "asset": "decay.body-bag",
+        "at": [
+          3751.213462441535,
+          -41.51324415511598
+        ],
+        "yawDeg": 49.2
+      },
+      {
+        "id": "decor-cure-cross-6-2-remains-1",
+        "asset": "prop.l10-quarantine-tape",
+        "at": [
+          3780.9878452787593,
+          -38.349398144169285
+        ],
+        "yawDeg": 91.6
+      },
+      {
+        "id": "decor-cure-vignette-crossing-7-400-0",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          3754.801189151755,
+          -51.15735956130763
+        ],
+        "yawDeg": 14.3
+      },
+      {
+        "id": "decor-cure-vignette-crossing-7-400-1",
+        "asset": "prop.l10-corpse-side",
+        "at": [
+          3756.983547857098,
+          -52.37691295546998
+        ],
+        "yawDeg": 38.9
+      },
+      {
+        "id": "decor-cure-vignette-crossing-7-400-2",
+        "asset": "decay.body-bag",
+        "at": [
+          3752.6188304464117,
+          -49.937806167145276
+        ],
+        "yawDeg": 63.6
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 0,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "s211-l10-pallet-contact",
+    "frame": 2,
+    "tick": 2,
+    "backend": "webgl",
+    "quality": "high",
+    "convoyOverlapFrames": 0,
+    "courierAttachments": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "worst": null,
+      "worstAt": null,
+      "attachments": 0
+    },
+    "animalLimbs": {
+      "samples": 0,
+      "gapMaxCm": 0,
+      "frame": -1,
+      "actor": null
+    },
+    "corgiTongue": {
+      "idleSamples": 0,
+      "idleOutFrames": 0,
+      "firstIdleOut": -1,
+      "movingSamples": 0,
+      "movingInFrames": 0,
+      "firstMovingIn": -1
+    },
+    "propPenetration": {
+      "samples": 2,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "wrecks": [],
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 43,
+        "p95": 43,
+        "max": 43
+      },
+      "triangles": {
+        "p50": 108166,
+        "p95": 108166,
+        "max": 108166
+      },
+      "shadowDrawCalls": {
+        "p50": 23,
+        "p95": 23,
+        "max": 23
+      },
+      "shadowTriangles": {
+        "p50": 13944,
+        "p95": 13944,
+        "max": 13944
+      },
+      "stepMs": {
+        "p50": 4.8,
+        "p95": 4.8,
+        "max": 8.2
+      },
+      "lastFrame": {
+        "drawCalls": 43,
+        "triangles": 108166,
+        "shadowDrawCalls": 23,
+        "shadowTriangles": 13944,
+        "stepMs": 4.799999952316284,
+        "categories": {
+          "other": 38,
+          "shadows": 23,
+          "props": 5
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "aim": {
+      "shots": 0,
+      "hitShare": 0,
+      "intentErrorMaxDeg": 0,
+      "misses": []
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 2,
+      "solidRadiusMax": 0.205,
+      "occluders": [
+        "prop.cure-iso-tent@3759.1,-45.3"
+      ],
+      "cutLowProps": [],
+      "cutPlacements": [
+        "prop.cure-iso-tent@3758.3,-44.9"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          3756.12,
+          -50.82
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": 3756.1201171875,
+        "heldWeapon": null,
+        "targetId": null,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 2,
+        "inViewFrames": 2,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 2
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3756.12,
+            -50.82
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 2,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 2.9,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 2,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "prop.cure-mil-fence:2338": "culled",
+      "prop.cure-mil-fence:2339": "culled",
+      "prop.cure-mil-fence:2340": "culled",
+      "prop.cure-mil-fence:2341": "culled",
+      "prop.cure-mil-fence:2342": "culled",
+      "prop.cure-mil-fence:2343": "culled",
+      "prop.cure-mil-fence:2344": "culled",
+      "prop.cure-mil-fence:2345": "culled",
+      "prop.cure-mil-fence:2346": "lod2",
+      "prop.cure-mil-fence:2347": "culled",
+      "prop.cure-mil-fence:2348": "culled",
+      "prop.cure-mil-fence:2349": "culled",
+      "prop.cure-mil-fence:2350": "culled",
+      "prop.cure-mil-fence:2351": "culled",
+      "prop.cure-mil-fence:2352": "culled",
+      "prop.cure-mil-fence:2353": "culled",
+      "prop.cure-mil-fence:2354": "culled",
+      "prop.cure-mil-fence:2355": "culled",
+      "prop.emergency-light:2473": "culled",
+      "prop.emergency-light:2474": "culled",
+      "decor-cure-belt-r7-1-lamp": "culled",
+      "decor-cure-cross-6-1-0": "culled",
+      "decor-cure-cross-6-1-2": "culled",
+      "decor-cure-cross-6-1-3": "culled",
+      "decor-cure-cross-6-2-0": "culled",
+      "decor-cure-cross-6-2-1": "culled",
+      "decor-cure-cross-6-2-2": "culled",
+      "decor-cure-cross-7-0-0": "lod0",
+      "decor-cure-cross-7-0-1": "culled",
+      "decor-cure-apron-0": "culled",
+      "decor-cure-apron-4": "culled",
+      "decor-cure-apron-90": "culled",
+      "decor-cure-apron-91": "culled",
+      "decor-cure-apron-92": "culled",
+      "decor-cure-apron-93": "culled",
+      "decor-cure-apron-94": "culled",
+      "decor-cure-apron-95": "culled",
+      "decor-cure-apron-96": "culled",
+      "decor-cure-apron-119": "culled",
+      "decor-cure-apron-120": "culled",
+      "decor-cure-cross-6-1-remains-0": "culled",
+      "decor-cure-cross-6-1-remains-1": "culled",
+      "decor-cure-cross-6-2-remains-1": "culled",
+      "decor-cure-vignette-crossing-7-400-0": "lod0",
+      "decor-cure-vignette-crossing-7-400-1": "lod0",
+      "decor-cure-vignette-crossing-7-400-2": "lod1"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
