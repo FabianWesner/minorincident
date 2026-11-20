@@ -20,3 +20,5 @@ Run the browser smoke and visually inspect its four hint captures plus the molot
 
 
 A further headless smoke run reached L10 but timed out waiting for a separate pipe-bomb tile: fixed slot 0 displays a single throwable representative. A phone capture showed the pipe-bomb hint below the companion and clear of the rack and health, although it overlaps the weather label. Attempts to inject a long hint were overwritten by the running HUD, so the four long-hint captures still need a reliable fixture and review.
+
+The phone hint width is now capped at 55vw (220px maximum) to leave the weather label room. QA build and lint passed. A follow-up long-hint capture attempt selected the fire axe instead of the gun; the retry timed out acquiring a browser. The revised mobile layout has not yet been visually verified.
