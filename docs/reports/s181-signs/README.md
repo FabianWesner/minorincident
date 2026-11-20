@@ -104,3 +104,5 @@ The LOW hospital name board now covers the otherwise unlettered top row of the e
 The full remote unit suite passed on commit `2645de28`: 27 files, 105 tests passed, one skipped, in 202.1 s (`sh tools/remote/run.sh "$PWD" -- npm test`). Typecheck and lint also passed after the hospital-directory change.
 
 A full-plane support-mesh check found small intersections at one end of the generated diner boards that the earlier ray grid missed. The diner asset already has a prominent physical Joe’s Diner sign in both HIGH and LOW; the duplicate generated boards are now omitted for that asset, avoiding conflicting names at its reused placements. `diner-sheet.jpg` shows the existing sign in both tiers. For the remaining generated boards, the non-coplanar support-triangle check found no crossings across the reviewed building LODs; the supporting rays and other-placement limitations still apply. The passing unit-suite run predates this change.
+
+The full remote unit suite passed on commit `5fa7b2e4`: 27 files, 105 tests passed, one skipped, in 208.0 s. Typecheck and lint passed after the diner-sign change.
