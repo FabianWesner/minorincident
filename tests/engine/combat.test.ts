@@ -252,7 +252,7 @@ async function checkFlamethrowerFuel(): Promise<void> {
   step(w, 60);
   expect(health(w, enemy)).toBeLessThan(100);
   expect(patch.hazard!.activeUntil).toBeGreaterThan(w.tick);
-  step(w, 180);
+  step(w, 300);
   expect(patch.hazard!.activeUntil).toBeLessThanOrEqual(w.tick);
 }
 

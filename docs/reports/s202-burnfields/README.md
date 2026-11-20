@@ -11,6 +11,11 @@ Partial implementation; the requested feature is not complete. This report recor
 - Added an isolated unit test for deterministic spread, exclusion of a non-crop placement, and restoring a saved state. It does not exercise real road geometry. A loaded L10 checkpoint test verifies restoration of a scorched cell.
 - Molotov pools, burning field cells, and existing hazard fires apply a 35 DPS, four-second burning status to infected and the courier. A focused test checks an infected entering a landed molotov pool, upgrading a weaker burn to 35 DPS, and taking damage. Focused tests, lint, and TypeScript checks pass.
 
+## Additional PO requirements (2026-11-20)
+
+- Pointer aim now controls the stream range (2–8 m); non-pointer input retains full reach. The stream deposits five-second fire patches along its clipped path. These changes need focused short/long range and visual capture verification.
+- Burning trees, bushes, hedges and wooden props, their persistent char, and the requested captures remain open.
+
 ## Open
 
 - Crop instances use district-prefixed IDs matching field cells and have an unreviewed collapse and tint hook for burning and scorched states. The existing pooled flame, smoke, ember and light renderer now receives up to 24 visible burning cells. Capture, review and measure the resulting appearance and performance.

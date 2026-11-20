@@ -825,7 +825,8 @@ export class Vfx extends Group {
     return muzzle;
   }
   private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
-    const range = actions['weapon.flamethrower'].range;
+    const maxRange = actions['weapon.flamethrower'].range, input = this.world.inputFrame, player = this.world.entities.get(1);
+    const range = input.aimSource === 'pointer' && input.aimPoint && player ? Math.max(2, Math.min(maxRange, Math.hypot(input.aimPoint.x - player.transform.x, input.aimPoint.z - player.transform.z))) : maxRange;
     this.flameTraceDirection.x = direction.x; this.flameTraceDirection.z = direction.z;
     return Math.min(this.world.combat?.query.clearDistance(origin, direction, range) ?? range,
       this.world.destruction?.trace(origin, this.flameTraceDirection, range)?.distance ?? range);
