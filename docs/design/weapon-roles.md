@@ -15,7 +15,10 @@ Ordinary infected remain at 40 HP. These jobs are the selection hint; special da
 | Assault rifle | Accurate all-rounder with a torch | 26 | 28 m | 7.5 shots/s; 30 rounds; 2 s reload | unchanged |
 | Flamethrower | Melt crowds up close | 4.5 per stream tick; 35 DPS burn | 8 m; 25° cone | 15 ticks/s; 6 s fuel; 5 s refill | burn lasts 4 s and spreads to touching infected; fire kills char bodies to permanent ash heaps over 1.5 s |
 | Rocket launcher | Blow apart groups and heavies | 180 | 35 m; 6 m blast | 1.2 rockets/s; unlimited | infected in blast knocked down; existing boss and L7 follower exceptions remain open against the requested universal knockdown |
-| Pipe bomb | Heavy delayed blast; key 0 swaps with Molotov | 0 | 6 m radius | 5 s between throws | 270 centre damage; knockdown in blast |
+| Molotov | Splash blast and hurting flames | 90 | 4.5 m blast; 4 m fire pool | single use | 50% of rocket impact; fire persists 8 s |
+| Pipe bomb | Heavy delayed blast; key 0 swaps with Molotov | 270 | 6 m radius | 5 s between throws | 2 s fuse; knockdown in blast |
+
+Thrown weapons are selected on key 0. A Molotov and Pipe Bomb pickup swaps the key-0 throwable and names the replaced item in the pickup hint. A courier caught by an infected can fight out with melee hits on the attacker; cling grabs also release after moving clear.
 
 ## Sound cues
 
