@@ -11,7 +11,6 @@ import type { MusicIntensity } from './MusicDirector';
 import { l1v2 } from '../data/l1v2';
 import { l5 } from '../data/l5';
 import { humanInfected } from '../data/infected';
-import { weaponRoles } from '../data/weaponRoles';
 import type { L1ArcDirector } from './L1Arc';
 import type { BaseAlarm } from './BaseAlarm';
 
@@ -55,7 +54,6 @@ export class AudioEventMapper {
     private external: MusicIntensity | null = null;
     private incidentSeen = false;
     private completed = false;
-    private readonly roleHintsShown = new Set<string>();
     constructor(private readonly host: AudioEventHost) {}
     /** Music policy the service feeds the director: read-only views of what the events decided. */
     get attackMusicUntil(): number { return this.attackUntil; }
@@ -428,12 +426,6 @@ export class AudioEventMapper {
         if (event.type === 'pickup.collected' && 'actionId' in event) {
             // A weapon or ability: its own fanfare replaces the generic pickup tick and the old L1 score stinger (they never stack). The silent L5 city keeps the quiet tick.
             this.host.pickupFanfare(event.actionId);
-            const role = weaponRoles[event.actionId];
-            if (role && !this.roleHintsShown.has(event.actionId)) {
-                this.roleHintsShown.add(event.actionId);
-                const name = event.actionId.split('.').at(-1)!.replaceAll('-', ' ');
-                this.host.caption(`${name}: ${role}`, position, 3);
-            }
             return;
         }
         const id = eventCues[event.type];

@@ -66,6 +66,8 @@ export class Hud {
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
+  private readonly seenWeaponRoles = new Set<string>();
+  private pickupRole: { id: string; until: number } | null = null;
   private emptyWeapon: { id: string; until: number; tooClose?: boolean } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
@@ -216,13 +218,16 @@ export class Hud {
     this.clear();
     this.shieldBlockUntil = -1;
     this.damagedUntil = this.barkUntil = this.civilianBarkUntil = this.weaponHintUntil = -1; this.weaponActionId = '';
-    this.emptyWeapon = null;
+    this.emptyWeapon = null; this.pickupRole = null;
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
-    for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
+    for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout', 'pickup.collected'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
+    if (event.type === 'pickup.collected' && 'actionId' in event && weaponRoles[event.actionId] && !this.seenWeaponRoles.has(event.actionId)) {
+      this.seenWeaponRoles.add(event.actionId); this.pickupRole = { id: event.actionId, until: event.tick + 240 };
+    }
     if (event.type === 'combat.hit' && (event.blocked || event.shieldGlance) && event.sourceId === 1) {
       const p = this.game.view.project(event.position.x, event.position.y + 1.2, event.position.z);
       this.shieldBlock.textContent = event.shieldBreak ? 'SHIELD BROKEN · 1.5s' : event.shieldGlance ? 'SHIELD STRAIN · CHIP' : 'BLOCKED · FLANK';
@@ -483,7 +488,8 @@ export class Hud {
       const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until
         ? this.emptyWeapon.tooClose ? 'Too close!' : `${label(this.emptyWeapon.id)} · Empty`
         : null;
-      text(this.weapon.hint, emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
+      const pickup = this.pickupRole && world.tick <= this.pickupRole.until ? this.pickupRole.id : null;
+      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup]}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`); setHidden(this.weapon.hint, !pickup && !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot or Q / Shift+Q to cycle'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));
