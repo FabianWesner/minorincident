@@ -58,7 +58,7 @@ import { Occlusion } from './Occlusion';
 import { projectHullReveal, projectReveal, seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import type { TimeOfDay } from '../data/timeOfDay';
-import { Vector3, Vector4 } from 'three';
+import { Vector2, Vector3, Vector4 } from 'three';
 import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
 import { LabAccidentFx } from './vfx/labAccident';
@@ -218,6 +218,9 @@ export class GameView implements Lifecycle {
   private readonly occlusion = new Occlusion();
   private readonly playerPosition = new Vector3();
   private readonly flameOrigin = new Vector3();
+  /** L10 rifle torch: world lens position and drawn barrel heading, filled by ActionView.rifleTorchBeam each frame. */
+  private readonly torchLens = new Vector3();
+  private readonly torchAim = new Vector2();
   private readonly projection = new Vector3();
   private weatherPowerRevision = 0;
   /** QA builds only (__QA_HOOKS__): Scene Lab / e2e render probes. */
@@ -1356,20 +1359,28 @@ export class GameView implements Lifecycle {
     // L6 night key. Only the underground preset owns the emergency-darkness grade.
     lighting.subwayDarkness.value = lighting.preset === 'L6-subway' ? 1 : 0;
     const loadout = this.world.combat?.runner.loadout;
+    // PO 2026-11-19 ("the machine gun has a light ... let the gun show this light"): the L10 rifle carries a torch whose
+    // beam leaves the drawn lens along the barrel, under the existing L10 gate.
     const rifleTorch = this.world.scenario === 'L10' && !this.world.missions?.state.states['cure-released'] && !this.world.mountedGun?.mounted && loadout?.current(loadout.state.selectedSide).id === 'weapon.assault-rifle';
+    this.actions?.showRifleTorch(rifleTorch);
     this.character?.showHeadlamp(!!metro?.flashlight, !!metro);
     lighting.headlampOn.value = metro?.flashlight || rifleTorch ? 1 : 0;
-    // Q-303: the beam follows the drawn head (WASD + mouse aim turns the body to the cursor while it moves elsewhere).
+    // Q-303: the L6 beam follows the drawn head (WASD + mouse aim turns the body to the cursor while it moves elsewhere).
+    // The L10 torch follows the drawn gun instead: its lens and barrel heading come from the held rifle's posed transform.
     const headlampYaw = (this.character?.visible ? this.character.headYaw() : null) ?? this.world.entities.get(1)?.transform.yaw ?? 0;
-    lighting.headlampAim.value.set(Math.cos(headlampYaw), -Math.sin(headlampYaw));
+    const torch = rifleTorch ? this.actions?.rifleTorchBeam(this.torchLens, this.torchAim) ?? false : false;
+    if (torch) lighting.headlampAim.value.copy(this.torchAim);
+    else lighting.headlampAim.value.set(Math.cos(headlampYaw), -Math.sin(headlampYaw));
     if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
     lighting.setPlayerSmoke(!!hero && (this.world.combat?.effects.inSmoke(hero) ?? false));
     if (field.active) {
       const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
-      if (hero && (this.world.missions?.state.l6?.flashlight || rifleTorch)) {
-        const yaw=headlampYaw;
-        flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
+      if (hero && (this.world.missions?.state.l6?.flashlight || torch)) {
+        // Same colour/intensity/range/angle as the worn headlamp's beam; only the origin (the lens) and the
+        // heading (the barrel) change. The -0.3 slope keeps the pool on the ground ahead in every gun pose.
+        if (torch) flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[this.torchLens.x, this.torchLens.y, this.torchLens.z],direction:[this.torchAim.x, -.3, this.torchAim.y]});
+        else flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(headlampYaw),-.3,-Math.sin(headlampYaw)]});
         flashlight.id = 'headlamp';
         field.push(flashlight);
       }

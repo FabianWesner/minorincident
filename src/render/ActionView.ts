@@ -1,11 +1,12 @@
 import { useCourierDepth } from './characters/courierDepth';
 import { gunCarryElevation, gunHoldOffset, longGunHolds, mountedGunHold } from './characters/GunAim';
 import { meleeChains } from '../data/meleeCombos';
-import { AdditiveBlending, Box3, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, Quaternion, RingGeometry, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
+import { AdditiveBlending, Box3, BoxGeometry, BufferAttribute, BufferGeometry, Color, CylinderGeometry, DataTexture, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, Object3D, Quaternion, RGBAFormat, RingGeometry, SphereGeometry, Sprite, SpriteMaterial, Vector2, Vector3, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
 import { heldActionScale } from './heldActionScale';
 import { catalog, action } from '../data/actions/catalog';
 import { l4 } from '../data/l4';
+import { lightPalette } from '../data/lights';
 import { AssetRegistry, type PlaceholderLog } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -17,6 +18,19 @@ interface LoadedActionAsset { model: Object3D; source: 'glb' | 'placeholder'; re
 const sides = ['LEFT', 'RIGHT'] as const;
 const restTilt = 0.9;
 const holsters = { back: { rot: [0, 0, 2.2] as const, pos: [-0.14, 0.02, 0] as const }, hip: { rot: [0, 0, -0.3] as const, pos: [0.02, -0.05, 0.2] as const } };
+
+let torchGlowMap: DataTexture | null = null;
+/** Soft round lens flare: a smooth hot core fading to nothing, generated once (no DOM needed). */
+function torchGlowTexture(): DataTexture {
+  if (torchGlowMap) return torchGlowMap;
+  const n = 64, data = new Uint8Array(n * n * 4);
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const u = (x + .5) / n * 2 - 1, v = (y + .5) / n * 2 - 1, a = Math.max(0, 1 - Math.hypot(u, v)) ** 2.4;
+    const i = (y * n + x) * 4; data[i] = data[i + 1] = data[i + 2] = 255; data[i + 3] = Math.round(a * 255);
+  }
+  torchGlowMap = new DataTexture(data, n, n, RGBAFormat); torchGlowMap.needsUpdate = true;
+  return torchGlowMap;
+}
 
 /** Selected-side telegraph; fixed geometry buffers and reusable projectile meshes.
  * The ribbon update is adapted from Bruno Trails.js (MIT): reuse positions, update in place.
@@ -85,6 +99,10 @@ export class ActionView extends Group {
   }
   private selected: Side = 'LEFT';
   private shape = 'cone';
+  /** PO 2026-11-19: the L10 assault rifle's under-barrel torch, shown only while GameView's rifleTorch condition holds. */
+  private rifleTorchOn = false;
+  private readonly torchGeometries: BufferGeometry[] = [];
+  private readonly torchGlowMaterials: SpriteMaterial[] = [];
   /** PO 10-12: the yellow/cyan melee sector on the ground is not wanted in normal play; debug (?debug) or ?aimcone=1 brings it back. */
   showCone = false;
   private landing = { x: 0, z: 0 };
@@ -126,6 +144,8 @@ export class ActionView extends Group {
         node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material;
         node.userData.preRenderShared = true;
       } });
+      // The torch's emissive lens and glow compile here too (drawn at `at` behind the opaque loading card).
+      const torch = clone.getObjectByName('rifle-torch'); if (torch) torch.visible = true;
       group.add(clone);
     }
     if (!group.children.length) return () => {};
@@ -169,10 +189,64 @@ export class ActionView extends Group {
         node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material); node.castShadow = node.receiveShadow = true;
       });
       const grip = model.getObjectByName('grip')!; model.updateMatrixWorld(true); grip.getWorldPosition(this.gripPosition); model.position.sub(this.gripPosition);
+      // PO 2026-11-19 ("let the gun show this light"): a code-built torch child under the rifle's barrel near the
+      // muzzle, so the asset GLB is never re-exported and both LODs get the same lamp. Gated by GameView's rifleTorch.
+      if (def.id === 'weapon.assault-rifle') this.attachRifleTorch(model);
       const log = this.placeholders.find((e) => e.id === def.viewAssetId);
       if (this.world.scenario === 'L1' && ['weapon.bat', 'weapon.crowbar', 'weapon.machete'].includes(def.id)) this.prototypes.add(model);
       this.assets.set(def.viewAssetId, { model, source: model.userData.placeholder ? 'placeholder' : 'glb', reason: log?.reason ?? null });
     }
+  }
+  /** A small lamp housing under the barrel ahead of the handguard with an emissive warm-white lens (the beam colour),
+   * a soft camera-facing glow sprite and a `torch-lens` node the light field aims its beam from. */
+  private attachRifleTorch(model: Object3D): void {
+    const torch = new Group(); torch.name = 'rifle-torch'; torch.visible = false;
+    // The rifle is authored in metres, +X muzzle (assets/wpn.assault-rifle/build.py); the barrel line sits at y .267.
+    const housing = new CylinderGeometry(.03, .03, .095, 12).rotateZ(Math.PI / 2);
+    const body = new Mesh(housing, this.materials.fromColor('action:swatch', new Color('#817b78')));
+    body.position.set(.327, .205, 0);
+    const mountGeometry = new BoxGeometry(.03, .045, .023);
+    const mount = new Mesh(mountGeometry, this.materials.fromColor('action:swatch', new Color('#5b4f5c')));
+    mount.position.set(.318, .232, 0);
+    const lensMaterial = this.materials.fromColor('rifle-torch:lens', new Color(lightPalette.light_led_white), .8);
+    const lensHeld = this.materials.fromColor('rifle-torch:lens-held', new Color(lightPalette.light_led_white), .8);
+    lensHeld.movingFigure.value = 1; lensHeld.heroFigure.value = 1; lensHeld.userData.sharedPalette = true;
+    useCourierDepth(lensHeld);
+    this.heldMaterials.set(lensMaterial, lensHeld);
+    const lensGeometry = new CylinderGeometry(.024, .024, .005, 12).rotateZ(Math.PI / 2);
+    const lens = new Mesh(lensGeometry, lensMaterial);
+    lens.position.set(.377, .205, 0);
+    const glowMaterial = new SpriteMaterial({ map: torchGlowTexture(), color: lightPalette.light_led_white, transparent: true, depthWrite: false, blending: AdditiveBlending, toneMapped: false, fog: false });
+    const glow = new Sprite(glowMaterial); glow.name = 'torch-glow';
+    glow.position.set(.381, .205, 0); glow.scale.setScalar(.32);
+    const node = new Object3D(); node.name = 'torch-lens'; node.position.set(.38, .205, 0);
+    torch.add(body, mount, lens, glow, node);
+    torch.traverse(part => { if (part instanceof Mesh) part.castShadow = true; });
+    this.torchGeometries.push(housing, mountGeometry, lensGeometry);
+    this.torchGlowMaterials.push(glowMaterial);
+    model.add(torch);
+  }
+  /** Show or hide the rifle's torch on every drawn held clone (GameView owns the L10 condition). */
+  showRifleTorch(on: boolean): void {
+    if (this.rifleTorchOn === on) return;
+    this.rifleTorchOn = on;
+    for (const side of sides) this.applyRifleTorch(this.held[side]);
+  }
+  private applyRifleTorch(held?: { id: string; model: Object3D }): void {
+    const torch = held?.id === 'weapon.assault-rifle' ? held.model.getObjectByName('rifle-torch') : null;
+    if (torch) torch.visible = this.rifleTorchOn;
+  }
+  /** World lens position and the drawn barrel heading for the torch beam; false while the rifle is not in hand. */
+  rifleTorchBeam(lens: Vector3, aim: Vector2): boolean {
+    const held = this.held[this.world.combat?.runner.loadout.state.selectedSide ?? this.selected];
+    const torch = held?.holder.visible ? held.model.getObjectByName('rifle-torch') : null;
+    if (!torch?.visible) return false;
+    const node = torch.getObjectByName('torch-lens');
+    if (!node) return false;
+    node.updateWorldMatrix(true, false);
+    lens.setFromMatrixPosition(node.matrixWorld);
+    aim.set(node.matrixWorld.elements[0], node.matrixWorld.elements[2]).normalize();
+    return true;
   }
   /** Six vertices form a thick ribbon segment; all buffers are allocated once. */
   private segment(ax: number, ay: number, az: number, bx: number, by: number, bz: number, width = 0.035): void {
@@ -274,7 +348,7 @@ export class ActionView extends Group {
       if (held?.id !== def.id) { const model = this.model(def); if (!model) { if (held) held.holder.visible = false; continue; } held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group();
         // Pickups keep the ordinary world materials; only carried instances receive the courier fill.
         clone.traverse(node => { if (node instanceof Mesh) node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material; });
-        holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
+        holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; this.applyRifleTorch(held); }
       const prop = def.category === 'melee' || def.category === 'ranged' || (def.category === 'throwable' && held.model.userData.placeholder !== true);
       const inHand = side === selectedSide, crawlAxe = crawling && def.id === 'weapon.fire-axe' && inHand, mount = crawlAxe ? this.holsterMount('melee') : inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
       if (mount && held.holder.parent !== mount) mount.add(held.holder);
@@ -463,7 +537,12 @@ export class ActionView extends Group {
     const held = this.held[this.selected], result: { entity: number; geometry: import('three').BufferGeometry; matrix: import('three').Matrix4 }[] = [];
     if (!held?.holder.visible || action(held.id).category !== 'ranged') return result;
     held.model.updateWorldMatrix(true,true);
-    held.model.traverse(node => { if (node instanceof Mesh) result.push({ entity:1,geometry:node.geometry,matrix:node.matrixWorld }); });
+    held.model.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      // A gated attachment (the L10 rifle torch, off outside its condition) is not part of the drawn gun.
+      for (let parent = node.parent; parent && parent !== held.model; parent = parent.parent) if (!parent.visible) return;
+      result.push({ entity:1,geometry:node.geometry,matrix:node.matrixWorld });
+    });
     return result;
   }
   getState() {
@@ -478,5 +557,5 @@ export class ActionView extends Group {
     });
     return { aimCue: this.cue, targetMarker: null, trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
-  dispose(): void { for (const held of Object.values(this.held)) held.holder.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.exhaustMaterial.dispose(); this.pickupRingGeometry.dispose(); this.pickupRingMaterial.dispose(); this.pickups.clear(); this.clear(); }
+  dispose(): void { for (const held of Object.values(this.held)) held.holder.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.exhaustMaterial.dispose(); this.pickupRingGeometry.dispose(); this.pickupRingMaterial.dispose(); for (const geometry of this.torchGeometries) geometry.dispose(); for (const material of this.torchGlowMaterials) material.dispose(); this.pickups.clear(); this.clear(); }
 }
