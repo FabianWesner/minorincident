@@ -103,3 +103,5 @@ Focused L8/L10 comparison with the original crowd hold cleared both scenario fla
 Merged main `6dbf06ad`. A general retry window after 1.5 s without 0.2 m movement, retaining the old crowd hold otherwise, caused the local L4 completion route to time out and was discarded. The committed broad projection change still has the two threat flags; a general solution remains open.
 
 A general trial projecting every other crowded collision retry left two local L4 actors stalled (249 at a staging point and 343 near the west mouth); it was discarded. The broad every-tick projection is still the only remotely passing candidate, with its L8 and L10 threat regressions unresolved.
+
+A target-distance trial retained the old contact hold within 6 m of the current target and used full projection farther away. Local L4 passed and focused L10 cleared, but focused L8 had both zero kiting hits and follower wait over 10%. It also retained the hold for close crowd stalls, so the trial was discarded.
