@@ -388,10 +388,11 @@ test('guns: held fire cadence, reload timing, infinite reserve and seeded, bound
   const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5, 0, 10000);
   w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 82);
   const slot = w.combat!.runner.loadout.state.LEFT.rack[0];
-  expect(w.combat!.runner.loadout.current('LEFT').id).toBe('weapon.fists');
+  // PO 2026-11-20: an empty magazine reloads in hand (no switch back to fists while it reloads).
+  expect(w.combat!.runner.loadout.current('LEFT').id).toBe('weapon.pistol');
   expect(attacks(w).map(e => e.tick)).toEqual([7, 22, 37, 52, 67, 82]);
   expect(slot.magazine).toBe(0); expect(slot.reloadUntil).toBe(142); expect(slot.reserve).toBe('infinite');
-  step(w, 60); expect(slot.magazine).toBe(6);
+  w.clearInput(); step(w, 60); expect(slot.magazine).toBe(6);
 
   const pistol = action('weapon.pistol'), previous = pistol.spread, directions = [];
   try {
