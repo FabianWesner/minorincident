@@ -777,7 +777,10 @@ export class Vfx extends Group {
     const jet = this.flameSource;
     if (!jet) return;
     const source = this.world.entities.get(jet.id), side = source?.weapons?.[source.weapons.selectedSide];
-    if (!this.enabled || this.time >= jet.until || !source || source.health.current <= 0 || side?.rack[side.index]?.id !== 'weapon.flamethrower') {
+    const input = this.world.inputFrame;
+    const button = source?.weapons?.selectedSide === 'RIGHT' ? input.right : input.left;
+    const released = jet.id === 1 && !button.down && !button.held;
+    if (!this.enabled || released || this.time >= jet.until || !source || source.health.current <= 0 || side?.rack[side.index]?.id !== 'weapon.flamethrower') {
       this.flameSource = null;
       if (this.enabled) this.blasts.stopFlameJet(); else this.blasts.clearFlameJet();
       return;
