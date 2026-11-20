@@ -22,4 +22,4 @@ Rocket knockdown is not yet universal: existing arena-boss and Mega handling sup
 
 Remote `npm test` passed with 105 tests passing and one skipped after the gameplay and TTK changes. The subsequent contact-spread assertion passed in the focused combat test. Typecheck and lint passed; both HIGH and LOW capture runs had zero console errors.
 
-Main was merged through `ef72dad9`, integrating the assault-rifle torch and fixed start racks. The post-merge L6 diagnostic still reports the same four L6 flags (plus the expected partial-level diagnostic marker). The separate `s191c-l6balance` lane also reports unresolved L6 pressure failures and has not supplied a passing L6 fix.
+Main was merged through `ef72dad9`, integrating the assault-rifle torch and fixed start racks. The post-merge L6 diagnostic still reports the same four L6 flags (plus the expected partial-level diagnostic marker). The post-merge L10 diagnostic again reached its skilled-route tick budget without completing. The separate `s191c-l6balance` lane also reports unresolved L6 pressure failures and has not supplied a passing L6 fix.
