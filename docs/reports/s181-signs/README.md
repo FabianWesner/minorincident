@@ -62,3 +62,5 @@ The power-substation asset already carries a physical Sunset Grove Power sign, s
 The LOW hospital follow-camera transition probe selected LOD1 → LOD2 → culled → LOD1 and reported overlay visibility 0 → 1 → 0 → 0, matching the intended name-panel replacement. This is a state probe; the obstructed visual view still does not establish readability.
 
 The Maple Mini Mall board now sits between the second-floor windows. A close HIGH capture shows its frame clear of the nearby raised trim, with foliage obscuring part of the surrounding facade. Sparse LOD0 and LOD2 ray samples found wall behind the chosen area; full clearance and game-camera readability remain unverified.
+
+A further LOD0 laboratory mesh probe sampled five points across the board at each of several heights: the canopy front was at local x=16.20 m at y=3.85 m, while the board is at x=16.23 m. At y=3.70 m and y=4.00 m the first hit was the set-back wall at x=13.70 m. The board therefore spans the narrow canopy edge rather than being fully backed by a facade; the visual captures show the overhang. This probe does not verify other LODs or collision clearance.
