@@ -16,11 +16,11 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 | L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory; shared relaxed walk, idle and gestures. Visual check pending. |
 | L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
-| L8 | Nadia on tour and route lines; Hale on greeting and breach | Existing keeper and major actors; shared relaxed walk, idle and gestures. Visual check pending. |
+| L8 | Nadia on tour and route lines; Hale on greeting and breach; nearest living guard for generic soldier lines | Existing keeper, major and guard actors; shared relaxed walk, idle and gestures. Visual check pending, including when no guard is nearby. |
 | L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
 | L10 epilogue | Rosa | Existing survivor montage actor beside the existing courier; glance and gesture. Controlled HIGH capture reviewed; full campaign transition remains open. |
 
-Radio lines retain their existing radio labels. L8's generic soldier fallback and other levels' in-person lines remain to be mapped; this table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips; nearby prop walks remain open. No new animation clips or rigs were added.
+Radio lines retain their existing radio labels. Other in-person lines remain to be mapped; this table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips and short clear walks; their activity needs closer visual review. No new animation clips or rigs were added.
 
 Latest typecheck and lint passed. The remote unit suite and its unchanged retry both exceeded the 240-second budget (241.3 s and 240.3 s, exit 124). The first run's save-progression case exceeded its 30-second case limit; it passed in 27.4 s on retry. Neither full run completed. `qa:threat` byte identity and the full visual coverage have not been verified. The objective is incomplete.
 

@@ -7,6 +7,22 @@ const inPersonSpeaker: Record<string, 'voss' | 'ruiz' | 'sam'> = {
   'L10.ruiz': 'ruiz', 'L10.sam-coming': 'sam', 'L10.sam-coming.reyes': 'sam',
   'L10.sam-delivery': 'sam', 'L10.sam-delivery.reyes': 'sam',
 };
+const soldierSpeakers = new WeakMap<SimWorld, { line: string; until: number; at: number; id: number }>();
+
+/** Choose one living guard for a generic soldier line and retain that identity for its duration. */
+function zooSoldier(world: SimWorld, line: string, until: number): number {
+  const previous = soldierSpeakers.get(world);
+  if (previous?.line === line && previous.until === until && world.tick >= previous.at) return previous.id;
+  const zoo = world.missions?.l8?.state, player = world.entities.get(1)?.transform;
+  const guards = zoo && player ? [...zoo.guards, zoo.reyesId, zoo.haleId].flatMap(id => {
+    const actor = world.entities.get(id);
+    return actor?.civilian && !actor.hidden && actor.health.current > 0 && !actor.infection && !actor.infected
+      ? [{ id, distance: Math.hypot(actor.transform.x - player.x, actor.transform.z - player.z) }] : [];
+  }).sort((a, b) => a.distance - b.distance || a.id - b.id) : [];
+  const id = guards[0]?.id ?? 0;
+  soldierSpeakers.set(world, { line, until, at: world.tick, id });
+  return id;
+}
 
 /** Actor-anchored speech bubbles in L1, L2 and L6 carry their speaker ID. */
 export function bubbleSpeaker(world: SimWorld, id: number): boolean {
@@ -28,6 +44,7 @@ export function speakingNpc(world: SimWorld, id: number): boolean {
   }
   if (world.scenario === 'L8') {
     const zoo = mission.l8?.state;
+    if (subtitle.id === 'L8.gate-soldier' || subtitle.id.startsWith('L8.route-') && subtitle.id.endsWith('.soldier')) return zooSoldier(world, subtitle.id, subtitle.until) === id;
     if (['L8.nadia-path', 'L8.nadia-lion', 'L8.nadia-elephant'].includes(subtitle.id)) return zoo?.keeperId === id;
     if (subtitle.id === 'L8.hale-greeting' || subtitle.id === 'L8.hale-breach') return zoo?.haleId === id;
     if (subtitle.id.startsWith('L8.route-') && !subtitle.id.endsWith('.soldier')) return zoo?.keeperId === id;
