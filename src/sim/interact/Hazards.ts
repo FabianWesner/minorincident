@@ -9,6 +9,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Vec2 } from '../../input/InputFrame';
 import { FieldFire } from './FieldFire';
+import { VegetationFire } from './VegetationFire';
 import { groundBurn } from '../combat/Status';
 import { cure } from '../../levels/L10/district';
 import { cureCrossingLines } from '../../levels/L10/crossingStories';
@@ -28,6 +29,7 @@ export interface HazardOptions { hp?: number; radius?: number; burnTime?: number
 export class Hazards {
   readonly debris: DebrisPool;
   fieldFire: FieldFire | null = null;
+  vegetationFire: VegetationFire | null = null;
   private fallbackDamage: Damage | null = null;
   /** r39-l10nan: campaign levels replace world.combat after the hazards exist (npc install). A cached Damage kept the old
    * instance, so the god cheat (set on the live one) did not cover fire/toxic zones and the courier lost HP in god mode. */
@@ -65,6 +67,7 @@ export class Hazards {
       }));
     };
     const districts = this.world.districts;
+    this.vegetationFire = districts ? new VegetationFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] })))) : null;
     this.fieldFire = districts?.composition.id === 'L10' ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked) : null;
   }
   spawn(kind: HazardKind | DestructibleKind, pos: Vec2, opts: HazardOptions = {}): number {
@@ -87,6 +90,7 @@ export class Hazards {
   /** Deposit fuel at a clipped weapon impact, sharing the existing fire cap, damage and expiry path. */
   ignitePatch(position: Vec2, radius: number, duration: number): number | null {
     this.fieldFire?.ignite(position, this.world.tick, Math.max(4, radius * 2));
+    this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
     const until = this.world.tick + Math.ceil(duration * 60 * (this.world.weather?.modifiers.fireDuration ?? 1));
     let fires = 0, reusable: EntitySnapshot | undefined;
     for (const e of this.world.entities.iterate()) {
@@ -190,6 +194,8 @@ export class Hazards {
   update(): void {
     const tick = this.world.tick;
     this.fieldFire?.update(tick);
+    this.vegetationFire?.update(tick);
+    if (tick % 60 === 0) for (const cell of this.fieldFire?.cells ?? []) if (cell.state === 'burning') this.vegetationFire?.ignite(cell, tick, 5);
     if (this.fieldFire && tick % 30 === 0) {
       for (const entity of this.world.entities.iterate()) {
         if (entity.health.current <= 0 || (entity.faction !== 'infected' && entity.kind !== 'player')) continue;
