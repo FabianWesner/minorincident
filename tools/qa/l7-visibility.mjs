@@ -28,7 +28,7 @@ try {
     ai.spawn = (id, pos, options = {}, conversion = false) => {
       if (options.pack >= 700 && options.pack <= 714 && !conversion) {
         const d = ai.director;
-        window.__l7Visibility.push({ tick: w.tick, id, pack: options.pack, pos: { ...pos }, offscreen: d.offscreen(pos, pos.y ? pos.y - .7 : 0), occluded: d.occluded(pos), frustum: d.hasFrustum });
+        window.__l7Visibility.push({ tick: w.tick, id, pack: options.pack, pos: { ...pos }, offscreen: d.offscreen(pos, pos.y ? pos.y - .7 : 0), occluded: d.occluded(pos), frustum: d.hasFrustum, actualZoom: a.getState().render.camera.zoom });
       }
       return original(id, pos, options, conversion);
     };
@@ -43,6 +43,10 @@ try {
   const data = await page.evaluate(() => ({ events: window.__l7Visibility, tick: window.__SCENE__.game.world.tick, phase: window.__SCENE__.game.world.missions.state.phase }));
   const summary = { ...provenance(), browserHash: browserHash(), tier, seed: 1, zoom, setup, ...data };
   writeFileSync(`docs/reports/s192-l7harder/visibility-${tier}-z${zoom}.json`, JSON.stringify(summary, null, 2) + '\n');
-  console.log(JSON.stringify({ tier, phase: data.phase, count: data.events.length, noFrustum: data.events.filter(x => !x.frustum).length, visible: data.events.filter(x => !x.offscreen && !x.occluded).length }));
+  const expected = tier === 'low' ? 256 : 536;
+  const noFrustum = data.events.filter(x => !x.frustum).length, visible = data.events.filter(x => !x.offscreen).length;
+  const zoomMismatch = data.events.filter(x => Math.abs(x.actualZoom - zoom) > .02).length;
+  console.log(JSON.stringify({ tier, phase: data.phase, count: data.events.length, expected, noFrustum, visible, zoomMismatch }));
+  if (data.phase !== 'result' || data.events.length !== expected || noFrustum || visible || zoomMismatch) process.exitCode = 1;
   await context.close();
 } finally { await browser?.close(); server.kill(); }
