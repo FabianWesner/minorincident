@@ -13,7 +13,7 @@ Partial implementation; the requested feature is not complete. This report recor
 
 ## Additional PO requirements (2026-11-20)
 
-- Pointer aim now controls the stream range (2–8 m); non-pointer input retains full reach. The stream deposits five-second fire patches along its clipped path. These changes need focused short/long range and visual capture verification.
+- Pointer aim now controls the stream range (2–8 m); non-pointer input retains full reach. The stream deposits five-second fire patches along its clipped path. A focused simulation test covers short pointer damage and patch placement plus full touch reach. Long pointer range and visual captures still need verification.
 - Burning trees, bushes, hedges and wooden props, their persistent char, and the requested captures remain open.
 
 ## Open

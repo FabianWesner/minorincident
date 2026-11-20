@@ -238,6 +238,21 @@ async function checkDynamicCover(): Promise<void> {
   devices.rebuildBlockers(); compare();
 }
 
+test('flamethrower pointer range limits damage and leaves ground patches', async () => {
+  const short = await arena(); equip(short, ['weapon.flamethrower']);
+  const near = dummy(short, 1.5, 0, 200), far = dummy(short, 6, 0, 200);
+  short.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: 3, z: 0 }, aimSource: 'pointer', left: { down: true, held: true, up: false } });
+  step(short, 30); short.clearInput();
+  expect(health(short, near)).toBeLessThan(200); expect(health(short, far)).toBe(200);
+  const patches = [...short.entities.iterate()].filter(e => e.hazard?.fuelPatch);
+  expect(patches.length).toBeGreaterThan(1);
+  expect(Math.max(...patches.map(e => e.transform.x))).toBeLessThanOrEqual(3);
+  const long = await arena(); equip(long, ['weapon.flamethrower']);
+  const distant = dummy(long, 6, 0, 200);
+  long.setInput({ aim: { x: 1, z: 0 }, aimSource: 'touch', left: { down: true, held: true, up: false } });
+  step(long, 30); expect(health(long, distant)).toBeLessThan(200);
+});
+
 /** Fuel is a real, cover-clipped hazard that persists after trigger release. */
 async function checkFlamethrowerFuel(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
