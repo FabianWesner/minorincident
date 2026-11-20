@@ -34,3 +34,5 @@ Workshop signs now use the local +X gable and rotate with each placement. A clos
 Security, Motor Pool, and Depot Warehouse boards now sit on the +X entrance fascia, following placement rotation. Close HIGH views in `l10-fascia-sheet.jpg` show each board on its fascia; sampled LOD0 and LOD2 front surfaces support the positions. Full clearance and game-camera readability are still open.
 
 The gas-station asset already has a physical Sunset Fuel facade sign. A close L9 inspection showed a new board at the shop fascia would be hidden by the existing raised branding, so the duplicate generated board is omitted for that asset. The L9 highway-stop label remains in layout data. Other fallback placements remain unresolved.
+
+The supermarket board now uses its local +X entrance header, rotated with the placement. A close HIGH L9 view shows the Roadside Shop sign above the middle doorway; LOD0–2 ray samples at the board area hit the header at x=4.24 m, with the board at x=4.25 m. Game-camera readability and full clearance remain to be checked.
