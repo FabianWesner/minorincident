@@ -4,7 +4,7 @@ import { l7Encounters } from '../../../src/data/l7';
 import type { FixtureReceipt } from './fixtures';
 
 type Point = { x: number; z: number };
-type Witness = { tick: number; street: number; sector: string; source: number; target: number; roadReachable: boolean; sourcePosition: Point; targetPosition: Point; playerPosition: Point };
+type Witness = { tick: number; street: number; sector: string; source: number; target: number; pack: number; roadReachable: boolean; sourcePosition: Point; targetPosition: Point; playerPosition: Point };
 type Input = { sourceHash: string; producerHash: string; tier: string; seed: number; completed: boolean; streets: { street: number; witnesses: Witness[] }[] };
 const sha = (path: string) => createHash('sha256').update(readFileSync(path)).digest('hex');
 export function l7DirectionReceipts(sourceHash: string): { path: string; receipt: FixtureReceipt }[] {
@@ -20,7 +20,7 @@ export function l7DirectionReceipts(sourceHash: string): { path: string; receipt
       const valid = events.length > 0 && sources.size === events.length && Math.max(...ticks) - Math.min(...ticks) < 300 && events.every(x => {
         const dx = x.sourcePosition.x - x.targetPosition.x, dz = x.sourcePosition.z - x.targetPosition.z;
         const sector = Math.abs(dx) > Math.abs(dz) ? dx > 0 ? 'east' : 'west' : dz > 0 ? 'south' : 'north';
-        return x.street === street && x.roadReachable && x.sector === sector && Math.hypot(x.playerPosition.x - anchor.x, x.playerPosition.z - anchor.z) <= 25 && Math.hypot(x.targetPosition.x - x.playerPosition.x, x.targetPosition.z - x.playerPosition.z) <= 25;
+        return x.street === street && x.pack === l7Encounters.firstStreetGroup + street && x.roadReachable && x.sector === sector && Math.hypot(x.playerPosition.x - anchor.x, x.playerPosition.z - anchor.z) <= 25 && Math.hypot(x.targetPosition.x - x.playerPosition.x, x.targetPosition.z - x.playerPosition.z) <= 25;
       });
       return { street, valid, sectors: [...new Set(events.map(x => x.sector))], witnesses: events.length };
     });
