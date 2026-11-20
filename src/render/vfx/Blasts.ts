@@ -798,8 +798,14 @@ export class Blasts extends Group {
     if (this.flameJet) {
       const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW;
       const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .24);
-      const reach = j.range * (.94 + .06 * Math.sin(now * Math.PI * 16));
+      // Centre the 8 Hz oscillation at 90% of the clipped ray: ±11% around that
+      // visible length without carrying flame through cover at the high point.
+      const reach = j.range * (.9 + .1 * Math.sin(now * Math.PI * 16));
       for (let i = 0; i < count; i++) {
+        // As the source dies, retain scattered individual tongues, not a whole
+        // uniformly dimming cone. The hash is stable for each pooled card.
+        const order = ((i * 17) % count) / count;
+        if (order >= fade) continue;
         const t = (now * 1.2 + i / count) % 1;
         const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
         const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .3 * t) + wave;
