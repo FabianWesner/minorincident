@@ -431,7 +431,7 @@ export class InfectedSystem {
       if (this.hangarBoundary(e, courier)) continue;
       if (this.pursuitOrVault(e, b)) continue;
       if (this.farCrowdSlot(e, b, courier)) continue;
-      if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if (!b.specialAttack && !e.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > this.world.tick) && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       this.noticeDuringApproach(e, courier);
       if (this.followScript(e, b)) continue;
       if (this.perceiveTargets(e, b)) continue;
