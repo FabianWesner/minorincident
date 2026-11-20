@@ -275,6 +275,18 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
     expect(slots.every(slot => !slot.owned)).toBe(true);
     expect(weaponRackSlots(level, levelWeaponSets[level]).every(slot => slot.owned)).toBe(true);
   }
+  const expectedLevelKeys = [[1], [1], [1, 2], [1, 2, 4], [1, 2, 3, 4, 5], [1, 2, 3, 4], [1, 2, 3, 4, 5, 9], [1, 2, 3, 4, 9], [1, 2, 5], [1, 2, 3, 5, 6, 7, 8, 9, 10]];
+  expectedLevelKeys.forEach((keys, index) => {
+    const level = (index + 1) as keyof typeof levelWeaponSets;
+    const holes = weaponRackSlots(level, []);
+    expect(holes.map(slot => slot.key), `L${level} fixed slots`).toEqual(keys);
+    for (const key of keys) {
+      const found = levelWeaponSets[level].find(id => weaponKey(id) === key)!;
+      const acquired = weaponRackSlots(level, [found]);
+      expect(acquired.map(slot => slot.key)).toEqual(keys);
+      expect(acquired.filter(slot => slot.owned).map(slot => slot.key)).toEqual([key]);
+    }
+  });
 });
 
 test('click pick: head-to-feet body capsule picks the infected; downed stay pickable; corpses, hidden and civilians never', () => {
