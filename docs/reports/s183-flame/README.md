@@ -54,3 +54,5 @@ Lifecycle probe on `b7718b38`: `E2E_PORT=5107 SCENE_PORT=5108 E2E_UNITS=1 sh too
 Remote unit suite on source `b7718b38` (including the lifecycle probe tooling): `sh tools/remote/run.sh "$PWD" -- npm test` exited 0; 27 files, 105 passed and one skipped, 212.7 s against 240 s. The collector reported 150/150 cases. This does not establish the remaining visual requirements.
 
 Allocation audit follow-up: the flame cover query reuses its direction object, and the two light-field transient handles move in place instead of being destroyed and recreated as the nozzle moves. Typecheck and lint passed. The adapted moving night probe again passed on both tiers with two lights, 0.105 uploaded flicker range and zero maximum muzzle gap. This removes identified flame-specific churn; it is not a heap-allocation profile of the entire shared VFX renderer.
+
+Remote unit suite on source `6a30d39e`: `sh tools/remote/run.sh "$PWD" -- npm test` exited 0; 27 files, 105 passed and one skipped, 184.1 s against 240 s. The collector reported 150/150 cases.
