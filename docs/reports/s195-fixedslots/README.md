@@ -18,6 +18,7 @@
 - `npm run qa:threat` — passed: 0 fail flags in 277.0 s. The bot weapon paths required no changes.
 - Remote `sh tools/remote/run.sh "$PWD" -- npm test`: three attempts timed out around 240 s. The unchanged rerun completed in 227.6 s with 104 passed, one skipped and one failure in `tests/engine/l4-contact.test.ts`: the LOW perimeter routing assertion at line 780. The remote gate remains open; investigate that failure before treating the suite as green.
 - Follow-up: `npx vitest run tests/engine/l4-contact.test.ts --project default --configLoader runner` passed locally (63.43 s). Two subsequent unchanged remote suite attempts both timed out at 241.1 s and 240.8 s, so neither reproduced nor cleared the remote routing failure.
+- A focused remote run reproduced the routing failure in 175.60 s: actor 373 remained near (-6.23, 9.49) for 301 ticks, with scripted target (-3.18, 6) and no rail damage. The same test passes locally. Its relationship to the weapon change has not been established; no zombie behavior or test criteria were altered.
 
 ## Visual captures
 
