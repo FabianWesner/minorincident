@@ -249,8 +249,19 @@ class CivilianBatch extends Group {
         if (remaining > .001) conversationYaw = -Math.atan2(gz, gx);
         const dt = Math.max(0, Math.min(1, (this.world.tick - conversation.tick) / 60));
         const step = Math.min(remaining, dt * 1.5);
-        if (remaining > .001) { conversation.x += gx / remaining * step; conversation.z += gz / remaining * step; conversation.distance += step; }
-        conversationSpeed = step > .001 ? 1.5 : 0; conversation.tick = this.world.tick;
+        if (remaining > .001 && step > 0) {
+          const nav = this.world.infected?.nav;
+          const origin = { x: conversation.x, z: conversation.z };
+          // Steer around nearby solids without touching the simulation's path search state.
+          for (const angle of [0, .55, -.55, 1.1, -1.1, 1.57, -1.57]) {
+            const cos = Math.cos(angle), sin = Math.sin(angle);
+            const sx = (gx * cos - gz * sin) / remaining * step, sz = (gx * sin + gz * cos) / remaining * step;
+            if (nav && !nav.visible(origin, { x: origin.x + sx, z: origin.z + sz }, .35)) continue;
+            conversation.x += sx; conversation.z += sz; conversation.distance += step;
+            conversationYaw = -Math.atan2(sz, sx); conversationSpeed = 1.5; break;
+          }
+        }
+        conversation.tick = this.world.tick;
         if (!speaking && remaining < .02) { this.conversationPositions.delete(e.id); conversation = undefined; }
       }
       const drawTransform = closingPose ?? (conversation ? { ...e.transform, x: conversation.x, z: conversation.z } : e.transform);

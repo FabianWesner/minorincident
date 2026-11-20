@@ -9,7 +9,7 @@ for (const tier of ['high', 'low'] as const) {
   const session = new SceneSession({ backend: 'webgl2', tier, seed: 32, viewport: { width: 1280, height: 720 } });
   try {
     await session.open();
-    await session.page.addStyleTag({ content: '.mission-subtitle,.story-bubble { visibility: visible !important; }' });
+    await session.page.addStyleTag({ content: 'html:not([data-scene-hud]) .mission-subtitle { visibility: visible !important; }' });
     await session.page.evaluate(async () => {
       const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
       await api.loadLevel('L10', { seed: 32, checkpoint: 'cure-crash' });
@@ -39,14 +39,16 @@ for (const tier of ['high', 'low'] as const) {
       const frames: Buffer[] = [];
       for (let i = 0; i < count; i++) {
         await session.page.evaluate(ticks => window.__SS__!.step(ticks), i === 0 ? 0 : 72);
+        const displayed = await session.page.locator('.mission-subtitle').isVisible();
+        if (!displayed) throw new Error(`subtitle is not visible for ${id}, frame ${i}`);
         frames.push(await session.snapshot());
       }
       await session.makeSheet(frames.map((jpeg, frame) => ({ frame, jpeg })), `${out}/${id}-${tier}.jpg`, 420, 240);
-      rows.push({ id, tier, speaker, files: `${id}-${tier}.jpg`, frames: count, spanSeconds: count === 1 ? 0 : 6, zoom: 1.5, errors: session.errors.length });
+      rows.push({ id, tier, speaker, files: `${id}-${tier}.jpg`, frames: count, spanSeconds: (count - 1) * 1.2, zoom: 1.5, errors: session.errors.length });
     };
 
     await captureTalk('voss-talking', 'voss', 4, tier === 'high' ? 6 : 1);
-    await captureTalk('sam-delivery', 'sam', 9);
+    await captureTalk('sam-delivery', 'sam', 9, 4);
   } finally { await session.close(); stopServer(); }
 }
 writeFileSync(`${out}/capture.json`, JSON.stringify({ rows, errors: [] }, null, 2) + '\n');
