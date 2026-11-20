@@ -505,7 +505,7 @@ export class Hud {
     attribute(this.corgiLure, 'aria-disabled', String(corgiRecharging));
     const corgiCooldown = Math.max(0, ((player.weapons?.corgiReady ?? 0) - world.tick) / 60);
     this.corgiLure.dataset.tipName = 'Corgi Lure'; this.corgiLure.dataset.tipRole = 'Draws infected within 15 m to the corgi for 5 seconds';
-    this.corgiLure.dataset.tipKey = 'G'; this.corgiLure.dataset.tipExtra = corgiCooldown > 0 ? `Recharging · ${corgiCooldown.toFixed(1)}s` : 'Ready';
+    this.corgiLure.dataset.tipKey = 'G'; this.corgiLure.dataset.tipExtra = corgiCooldown > 0 ? ` · Recharging · ${corgiCooldown.toFixed(1)}s` : ' · Ready';
     setHidden(this.weaponRack, !entries.length && !holes.length && !hasLure);
     attribute(this.weaponRack, 'data-touch', String(this.game.input.scheme === 'touch'));
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
@@ -566,7 +566,7 @@ export class Hud {
     const extra = source.dataset.tipExtra ?? '';
     this.rackTooltip.replaceChildren();
     const title = document.createElement('strong'); title.textContent = name;
-    const body = document.createElement('span'); body.textContent = source.dataset.hole === 'true' ? `Not found yet · key ${key}` : `${role}${key ? ` · ${key}` : ''}${extra}`;
+    const body = document.createElement('span'); body.textContent = source.dataset.hole === 'true' ? `Key ${key}` : `${role}${key ? ` · ${key}` : ''}${extra}`;
     this.rackTooltip.append(title, body); this.rackTooltip.hidden = false;
     const rack = this.weaponRack.getBoundingClientRect(), target = source.getBoundingClientRect();
     const box = this.rackTooltip.getBoundingClientRect();
