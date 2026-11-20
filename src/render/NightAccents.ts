@@ -283,6 +283,18 @@ export function cureAccents(placements: readonly Placement[], origin: P2 = [0, 0
   // 3) Road life (road-life lane): roadside light points on the dressing pieces just outside the 6 m clearance. Burning barrels,
   // a burning car per region, lit bus stops and police light bars; render-only, kept off the encounter spots and the console.
   const points: Accent[] = [], put = (a: Omit<Accent, 'seed'> & { seed?: number }) => points.push({ ...a, x: a.x + origin[0], z: a.z + origin[1], seed: a.seed ?? Math.abs(a.x * 12.9898 + a.z * 78.233) % 6.283 });
+  // A failing work lamp illuminates the public-health board at both quality tiers.
+  for (const p of placements) if (p.id === 'l10-setpiece-billboard-frame') {
+    const [x, , z] = p.position;
+    put({ kind: 'lantern', x: x + 1.2, y: .25, z, yaw: p.yaw, color: '#ffc070', glow: 8, flicker: 1, strobe: false,
+      pool: { color: 'light_window_warm', intensity: 4, range: 6 } });
+  }
+  // Work lamps light the triage tents and the approach in both quality tiers.
+  for (const p of placements) if (p.id.startsWith('l10-setpiece-hospital-tent-')) {
+    const [x, , z] = p.position, side = Math.cos(p.yaw) >= 0 ? 1 : -1;
+    put({ kind: 'lantern', x: x + side * 2.4, y: 1.1, z, yaw: p.yaw, color: '#ffc070', glow: 7, flicker: 0, strobe: false,
+      pool: { color: 'light_window_warm', intensity: 5, range: 7 } });
+  }
   for (const p of placements) {
     if (p.decor && p.roadLife) {
       const [x, , z] = p.position;

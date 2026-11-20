@@ -1,0 +1,66 @@
+{
+  "name": "s186-l10-quarantine-gate",
+  "note": "L10 dispersal set-piece dressing: quarantine-gate; inspect at zoom 1 for approach readability, ground contact and clear combat lane.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2968,
+        -31
+      ],
+      [
+        3052,
+        63
+      ]
+    ],
+    "level": "L10"
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3005,
+        16
+      ],
+      "look": {
+        "model": "female"
+      }
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        3014,
+        18
+      ],
+      "archetype": "infected.hazmat",
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      3005,
+      16
+    ],
+    "zoom": 1.0
+  },
+  "frames": 30,
+  "shots": [
+    29
+  ],
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

@@ -465,15 +465,15 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     Object.assign(courier.transform, { x: -25, z: 3 });
     Object.assign(soldier.transform, { x: -17, z: 3 });
     for (const human of world.entities.iterate()) if (human.civilian && human.id !== soldier.id) human.hidden = true;
-    // Nearby camp troops must not steal a street arrival from its authored
-    // approach. Q-279 contact acquisition is for the courier; native civilian
-    // bites remain handled by the regular contact path below.
+    // A courier within the scripted notice radius owns the handoff even when
+    // an army soldier is at contact range.
     const arrival = world.entities.get(ai.spawn(l4InfectedArchetypes[0], { x: -17, z: 3.8 }))!;
     mission.state.l4!.origin[arrival.id] = 3;
     arrival.infected!.scripted = { x: -27, z: 3 };
     world.tick++;
     ai.update();
-    expect(arrival.infected!.scripted, 'an army soldier at the arrival mouth must not cancel its route').toEqual({ x: -27, z: 3 });
+    expect(arrival.infected!.scripted, 'nearby courier interrupts the authored arrival').toBeUndefined();
+    expect(arrival.infected!.heardTargetId).toBe(1);
     ai.release(arrival);
     soldier.hidden = false; soldier.civilian!.state = 'calm'; soldier.civilian!.l1!.graceUntil = 0;
     const riot = world.entities.get(ai.spawn('infected.riot', { x: -17, z: 3.8 }))!;

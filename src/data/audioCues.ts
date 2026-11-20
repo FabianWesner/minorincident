@@ -102,6 +102,8 @@ for (const weapon of ['shotgun', 'hunting-rifle', 'nail-gun', 'assault-rifle'])
     cue(`weapon.reload.${weapon}`, 'weapons', 'step', 1, 800, { gain: .5 });
 for (const weapon of ['fire-axe', 'handgun', 'army-mg', 'shotgun', 'hunting-rifle', 'nail-gun', 'assault-rifle', 'flamethrower'])
     cue(`weapon.impact.${weapon}`, 'impacts', 'step', .35, 150, { category: 'weapons', gain: .45, antiSpam: .12, rateSpread: 0 });
+cue('weapon.impact.nail-gun.infected', 'impacts', 'step', .25, 120, { category: 'weapons', gain: .45, antiSpam: .04, rateSpread: .04 });
+cue('weapon.impact.nail-gun.hard', 'impacts', 'step', .18, 1800, { category: 'weapons', gain: .35, antiSpam: .04, rateSpread: .04 });
 cue('weapon.impact.flashbang', 'impacts', 'shot', 1, 500, { category: 'weapons', gain: .65, antiSpam: 0, rateSpread: 0 });
 cue('weapon.dry', 'weapons', 'step', 0.2, 1000, { gain: 0.5 });
 /** Shotgun pump/rack after each shell, 0.45 s behind the shot. */

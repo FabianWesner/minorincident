@@ -82,6 +82,7 @@ export class AudioService implements Lifecycle {
     private readonly individualVocals = new Map<number, GraphVoice>();
     private readonly stemVoices = new Map<string, GraphVoice>();
     private metroAmbientAt = -600;
+    private l10CorridorSirenAt = -2700;
     private readonly footsteps = new Map<number, {
         x: number;
         z: number;
@@ -750,6 +751,12 @@ export class AudioService implements Lifecycle {
         if(metro?.phase==='shelter'&&this.world.tick-this.metroAmbientAt>=600){this.metroAmbientAt=this.world.tick;this.play('dialogue.radio',{position:{x:-4,z:2},gain:.15,lowpass:1800});}
         const zooCalm = this.world.missions?.state.id === 'L8' && !this.world.missions.state.states.breached;
         if (zooCalm) this.loop('l8:animals', 'bed.zoo-animals', { position: player.transform, gain: 0.65 }); else this.stopLoop('l8:animals');
+        // A distant, intermittent warning on the dispersal road. Leave the
+        // underpass itself quiet; this uses the recorded one-shot, never a bed loop.
+        const x = player.transform.x;
+        if (this.level === 'L10' && !front && x >= 2960 && x <= 3565 && (x < 3340 || x > 3425) && this.world.tick - this.l10CorridorSirenAt >= 2700 &&
+            this.play('ambient.siren', { position: { x: x + 28, z: player.transform.z - 18 }, gain: .55, lowpass: 1200 }))
+            this.l10CorridorSirenAt = this.world.tick;
         const ambient = metro || this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
         if (ambient)
             this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z }, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
@@ -816,7 +823,7 @@ export class AudioService implements Lifecycle {
         this.loops.clear();
         this.stemVoices.clear();
         this.individualVocals.clear();
-        this.metroAmbientAt=-600;this.footsteps.clear();
+        this.metroAmbientAt=-600;this.l10CorridorSirenAt=-2700;this.footsteps.clear();
         this.log.length = 0;
         this.captions.length = 0;
         this.clearRings();

@@ -24,6 +24,7 @@ import { Perception, WorldHumans } from './Perception';
 import { planSearch, searchPlan, wanderGoal, type L1Brain } from './Search';
 import { Rng } from '../../core/Rng';
 import { Status } from '../combat/Status';
+import { SCRIPTED_WALKER_NOTICE_M } from '../outbreak/HouseEmergence';
 import { combatHeightReachable } from '../combat/height';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -472,6 +473,9 @@ export class InfectedSystem {
     if (!(b.scripted || b.investigate || e.noiseTarget || brain?.mode === 'attracted' || !brain && b.heardTargetId ||
         b.pressureTarget && this.world.tick < b.pressureTarget.until) ||
         e.emerging || b.specialAttack || b.state === 'attack' || b.grabUntil > this.world.tick || Status.stunned(e, this.world.tick)) return;
+    const courierDistance = Math.hypot(e.transform.x - courier.transform.x, e.transform.z - courier.transform.z);
+    if (this.world.scenario === 'L4' && b.breachApproach && b.scripted &&
+        (courierDistance > 3 || !this.world.combat!.query.visible(e.transform, courier.transform))) return;
     if (this.world.scenario === 'L4' && b.breachApproach && b.scripted) {
       const assigned = this.world.entities.get(b.pressureTarget?.id ?? brain?.focusId ?? b.l4FlankTarget ?? 1) ?? courier;
       // Hearing the courtyard through a reception shed must not cancel the
@@ -479,8 +483,11 @@ export class InfectedSystem {
       if (Math.hypot(e.transform.x - assigned.transform.x, e.transform.z - assigned.transform.z) > 3 ||
           !this.world.combat!.query.visible(e.transform, assigned.transform)) return;
     }
-    let target: EntitySnapshot | undefined, nearest = Infinity;
+    const courierNotice = !!b.scripted && !courier.hidden && courier.health.current > 0 && courierDistance <= SCRIPTED_WALKER_NOTICE_M &&
+      (this.world.scenario !== 'L4' || this.world.combat!.query.visible(e.transform, courier.transform));
+    let target: EntitySnapshot | undefined = courierNotice ? courier : undefined, nearest = courierNotice ? 0 : Infinity;
     for (const candidate of this.approachParty) {
+      if (courierNotice) break;
       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
       // L8's gate-side sprinters retain their announced courier approach. A person at actual grab contact still interrupts it.
       const gateFocus = b.pressureTarget && this.world.tick < b.pressureTarget.until ? b.pressureTarget.id : brain?.focusBiasM === 30 && this.world.tick < (brain.focusUntil ?? 0) ? brain.focusId : 0;
@@ -565,11 +572,11 @@ export class InfectedSystem {
   }
   /** Phase 4: an unnoticed scripted walker keeps its authored point. */
   private followScript(e: EntitySnapshot, b: InfectedState): boolean {
-    const provoker = b.alphaType ? this.provoker(b) : undefined;
-    // A hit still selects the target, but must not erase the route through
-    // L4's wire while that target remains behind a body-blocking segment.
-    if (provoker && !(this.world.scenario === 'L4' && b.scripted && !this.infectedNav.visible(e.transform, provoker.transform, e.combat!.radius))) {
-      delete b.scripted; return false;
+    const provoker = this.provoker(b);
+    // A hit interrupts authored travel, except when an L4 breach actor still
+    // needs its geometry-owned wire approach to reach the attacker.
+    if (provoker && !(this.world.scenario === 'L4' && b.breachApproach && b.scripted)) {
+      delete b.scripted; delete b.breachApproach; return false;
     }
     // A windup already in progress must resolve before scripted travel resumes.
     if (!b.scripted || b.specialAttack || b.state === 'attack') return false;

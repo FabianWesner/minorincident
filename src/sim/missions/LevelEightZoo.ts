@@ -526,7 +526,17 @@ export class LevelEightZoo {
       s.outlets.forEach((outlet, i) => { if (this.regionOutlets(here, i)) for (let n = 0; n < (ai.director.tier === 'low' ? 2 : 4); n++) this.release(outlet, i); });
     }
     for (const [index, outlet] of s.outlets.entries()) for (const id of walkResidents(w, outlet, t)) {
-      if (w.entities.get(id)?.infected?.arenaCarrier) { ai.pursueTarget(id, w.entities.get(id)!.infected!.arenaCarrier!); continue; }
+      const walker = w.entities.get(id)!;
+      if (walker.infected?.arenaCarrier) {
+        const courier = w.entities.get(1)!, animal = w.entities.get(walker.infected.arenaCarrier);
+        // A carrier normally heads for its animal. If the scripted walk was
+        // interrupted by the courier (or it was hurt), keep that first contact
+        // on the courier instead of turning the nearby escort column into its
+        // target. Otherwise preserve the authored animal interception.
+        const courierNotice = distance(walker.transform, courier.transform) <= 9 || walker.health.current < walker.health.max;
+        ai.pursueTarget(id, courierNotice || !animal || animal.health.current <= 0 ? 1 : animal.id);
+        continue;
+      }
       else if (id === s.animalInterceptionId) ai.pursueTarget(id, s.animals[5]);
       else if (id === s.dogId) ai.pursueTarget(id, s.pondKeeperId);
       else ai.pursueTarget(id, 1);
@@ -735,9 +745,12 @@ export class LevelEightZoo {
     if (!boarding && arena && distance(p.transform, arena.centre) < arena.radius + 8) {
       const dx = arena.centre.x - arena.entry.x, dz = arena.centre.z - arena.entry.z, length = Math.hypot(dx, dz) || 1;
       const heading = { x: dx / length, z: dz / length };
-      const flank = { x: p.transform.x - heading.z * 6, z: p.transform.z + heading.x * 6 };
-      const other = { x: p.transform.x + heading.z * 6, z: p.transform.z - heading.x * 6 };
-      const hold = arena.id === 'elephant' ? arena.entry : w.infected!.nav.clear(flank.x, flank.z, .4) ? flank : other;
+      const flank = { x: p.transform.x - heading.z * 5.5, z: p.transform.z + heading.x * 5.5 };
+      const other = { x: p.transform.x + heading.z * 5.5, z: p.transform.z - heading.x * 5.5 };
+      // The old elephant entry hold left the entire party 25 m from the courier
+      // during the charge. Keep the group on a clear perpendicular flank so it
+      // stays with the escort and out of the charge line.
+      const hold = w.infected!.nav.clear(flank.x, flank.z, .4) ? flank : other;
       Object.assign(goal, formationSlot(hold, heading, slot));
       // r33-l8route: the group holds INSIDE the enclosure with the courier (a hold point behind a fence would leave it outside the closing gate).
       const zone = l8Route.find(r => r.id === arena.id)!.zone;

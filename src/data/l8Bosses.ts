@@ -86,7 +86,7 @@ export const l8ConnectorGates = [
 /** The plaza cell: the group must be inside it for the gates to shut. */
 export const l8PlazaCell = { x0: -13, z0: -11, x1: 13, z1: 7 } as const;
 
-export interface L8GateContext { arenas: readonly { id: L8BossId; phase: number; armed?: boolean }[]; sealed: boolean }
+export interface L8GateContext { arenas: readonly { id: L8BossId; phase: number; armed?: boolean }[]; sealed: boolean; followers?: readonly { x: number; z: number }[] }
 /** One rule for the sim barriers and the drawn fences: `<id>.entry`, `<id>.exit` or `plaza.<w|e|s>`. */
 export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
   if (key.startsWith('plaza.') || key.startsWith('connector.')) return ctx.sealed;
@@ -100,7 +100,11 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
     || arena.phase === 3 && (!!ctx.arenas[index + 1]?.armed || ctx.arenas[index + 1]?.phase === 3);
   // Keep a completed section's exit open until the whole party is through the next entry gate.
   const next = ctx.arenas[index + 1];
-  if (arena.phase === 3 && next?.phase && (next.phase === 3 || next.armed)) return true;
+  if (arena.phase === 3 && next?.phase && (next.phase === 3 || next.armed)) {
+    const stage = l8Route.find(route => route.id === id)!, exit = stage.exit;
+    const straggler = ctx.followers?.some(f => inRect(f, stage.zone) || !!exit && Math.abs(f.x - exit.x) <= exit.halfX + 2 && Math.abs(f.z - exit.z) <= exit.halfZ + 2);
+    if (!straggler) return true;
+  }
   // The pond's north door stays open while the tunnel runners need it (the opening alarm); it shuts with the plaza.
   if (id === 'flamingo') return ctx.sealed && arena.phase !== 3;
   return arena.phase !== 3;

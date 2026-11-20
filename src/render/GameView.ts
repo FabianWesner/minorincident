@@ -1185,6 +1185,13 @@ export class GameView implements Lifecycle {
     this.fixtureProps?.update();
     if (this.world.hazards?.fieldFire) this.districts?.syncFieldFire(this.world.hazards.fieldFire.cells);
     if (this.world.hazards?.vegetationFire) this.districts?.syncVegetationFire(this.world.hazards.vegetationFire.objects);
+    if (this.world.scenario === 'L10' && this.world.l10Encounters) {
+      this.districts?.updateCureEffigies(this.world.tick);
+      const start = this.world.l10Encounters.state.billboardFallAt;
+      this.districts?.updateCureBillboard(start === undefined ? 0 : Math.min(1, Math.max(0, (this.world.tick - start) / 60)));
+      const hospital = this.world.l10Encounters.state.hospitalOpenAt;
+      this.districts?.updateCureHospital(hospital === undefined ? 0 : Math.min(1, Math.max(0, (this.world.tick - hospital) / 30)));
+    }
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);
     if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }
@@ -1195,6 +1202,10 @@ export class GameView implements Lifecycle {
     // Weather restores the authored night key each frame. The released cure's
     // dawn must be the final lighting write, including paused cinematic redraws.
     const cureFront = this.world.missions?.state.cureFront;
+    if (this.world.scenario === 'L10' && this.weather && current) {
+      const dust = cureFront ? 0 : Math.max(0, Math.min(1, (current.x - 2880) / 120, (3650 - current.x) / 120));
+      this.lighting?.cureRoadDust(dust);
+    }
     if (cureFront) this.lighting?.cureDawn(cureFront.elapsed / (8 * 60));
     const drivenCar = this.world.vehicles?.cars.get(this.world.vehicles.active ?? -1);
     this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel() ?? survivor?.velocity);
@@ -1224,7 +1235,7 @@ export class GameView implements Lifecycle {
       // courier herself is visible. Reveal that nearby objective through the
       // existing occluder cut; the camera and the frozen encounter stay put.
       // The service vestibule is already open; preserve its frame during emergence.
-      if (this.districts && this.world.scenario === 'L10') this.districts.occlusion.keepWhole = 'kit.zoo-tunnel-mouth';
+      if (this.districts && this.world.scenario === 'L10') this.districts.occlusion.keepWhole = current.x >= 2990 && current.x <= 3025 ? 'prop.l10-quarantine-gantry' : 'kit.zoo-tunnel-mouth';
       if (this.world.scenario === 'L5') {
         const mission = this.world.missions, step = mission?.def.steps.find(item => item.id === 'metro' && mission.state.steps[item.id]?.status === 'active');
         const anchor = step && mission?.def.anchors[step.anchor], l5 = mission?.state.l5;

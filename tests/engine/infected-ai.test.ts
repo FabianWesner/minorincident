@@ -479,6 +479,14 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
   expect(pressed.infected!.provoked?.id).toBe(1);
   expect(pressed.infected!.pressureTarget).toBeUndefined();
   w.infected!.release(pressed);
+  const noticedScript = spawn(w, 'runner', 8, 0, 'chase'); noticedScript.infected!.scripted = { x: 40, z: 0 };
+  step(w, 1);
+  expect(noticedScript.infected!.scripted, 'scripted AI walks hands over within 9 m').toBeUndefined();
+  expect(noticedScript.infected!.heardTargetId).toBe(1);
+  const hurtScript = spawn(w, 'runner', 15, 0, 'chase'); hurtScript.infected!.scripted = { x: 40, z: 0 };
+  hit(w, hurtScript, 'bullet', 1); step(w, 1);
+  expect(hurtScript.infected!.scripted, 'a hit hands a scripted walker over to its attacker').toBeUndefined();
+  expect(hurtScript.infected!.heardTargetId).toBe(1);
   const inside = w.infected!.spawn('infected.runner', { x: -10, z: 0 }), outside = w.infected!.spawn('infected.runner', { x: 10, z: 0 });
   const far = w.infected!.spawn('infected.runner', { x: -15, z: 0 }), angle = w.infected!.spawn('infected.runner', { x: -5, z: 10 });
   step(w, 18);
