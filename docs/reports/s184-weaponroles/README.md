@@ -93,3 +93,5 @@ Tracing the trial at tick 3900 showed actor 231 had `breachApproach: vault`, wit
 A second local trial reduced the vault staging arrival band to 0.1 m while using the previous contact steering trial. It also produced 13 stopped actors, mainly at the west mouth, and was reverted. This does not establish a routing fix.
 
 Removing the crowded-contact hold shortcut allows each rejected infected proposal to run the existing collision projection. Focused L4 passed remotely (193.9 s test; 201.1 s total) and locally (65.0 s total); pre-change local replay took about 47 s. Typecheck and lint pass on the cleaned-up change. The full remote suite and full threat audit remain required; the extra collision work is a performance risk.
+
+Remote full `npm test` completed in 212.6 s: 104 passed, 1 skipped, 1 failed. L4 passed; the failure is the combat loadout assertion at `tests/engine/combat.test.ts:143`, which still expects 20% MG suppression removed by prior commit `73a3e8af`. This is a completed assertion failure, not a timeout. Full threat audit remains open.
