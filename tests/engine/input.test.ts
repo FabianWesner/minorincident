@@ -239,6 +239,8 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   const legacyRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
   legacyRack.input(legacyRecording.frames[0], 30);
   expect(legacyRack.current(legacyRack.state.selectedSide).id).toBe('weapon.fire-axe');
+  legacyRack.input({ ...emptyInput(), selectedLegacyWeaponKey: 1 }, 60);
+  expect(legacyRack.current(legacyRack.state.selectedSide).id).toBe('weapon.fists');
   const currentRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 2 }));
   const currentRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
   currentRack.input(currentRecording.frames[0], 30);

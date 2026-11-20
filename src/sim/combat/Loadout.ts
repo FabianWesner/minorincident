@@ -57,10 +57,11 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    const legacyEntries = frame.selectedLegacyWeaponKey === undefined ? [] : this.activeEntries();
+    const legacyEntries = frame.selectedLegacyWeaponKey === undefined ? [] : (['LEFT', 'RIGHT'] as const).flatMap(name => this.state[name].rack.map((slot, index) => ({ side: name, index, id: slot.id })));
     const key = frame.selectedWeaponKey;
     let keyed: { side: Side; index: number; id: string } | undefined;
-    if (frame.selectedLegacyWeaponKey !== undefined) keyed = legacyEntries.find(entry => weaponLegacyKey(entry.id) === frame.selectedLegacyWeaponKey);
+    if (frame.selectedLegacyWeaponKey === weaponLegacyKey('weapon.fists')) keyed = { side: 'LEFT', index: -1, id: 'weapon.fists' };
+    else if (frame.selectedLegacyWeaponKey !== undefined) keyed = legacyEntries.find(entry => weaponLegacyKey(entry.id) === frame.selectedLegacyWeaponKey);
     else if (key !== undefined) {
       const matching = this.activeEntries().filter(entry => weaponKey(entry.id) === key)
         .sort((a, b) => this.definition(b.id).tier - this.definition(a.id).tier || compareWeapons(a.id, b.id));
