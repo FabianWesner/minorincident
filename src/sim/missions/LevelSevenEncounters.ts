@@ -266,7 +266,9 @@ export class LevelSevenEncounters {
     if (!this.state.started) return;
     const p = this.world.entities.get(1)!.transform, low = this.world.infected!.director.tier === 'low';
     const requested = this.state.requestedGroups ??= [l7Encounters.firstStreetGroup];
-    for (const [i, threshold] of [225, 165, 95].entries()) {
+    // LOW has fewer concurrent slots: queue the middle street early enough
+    // for its approach ranks to enter before the column reaches it.
+    for (const [i, threshold] of [225, low ? 195 : 165, 95].entries()) {
       const group = l7Encounters.firstStreetGroup + i + 1;
       if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
