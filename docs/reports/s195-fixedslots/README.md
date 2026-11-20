@@ -20,9 +20,9 @@
 
 ## Visual captures
 
-The requested high-quality, zoom-1 L4/L8/L10 start and post-pickup HUD captures remain open. A headless capture attempt reached each level, but inspection showed the rack was hidden during the opening scenes; those images do not establish the HUD appearance. Update `tools/scenelab/s195-fixedslots.ts` to expose the live HUD and verify pickup acquisition, then inspect the six images and add a contact sheet.
+The [contact sheet](rack-captures.jpg) shows HIGH, zoom 1, headless WebGL2: L4 start and after MG, L8 start and after launcher, L10 start and after machete (left to right, top to bottom). The rack sits at the lower left. In L4 the dim 4 becomes the MG icon, with 1 and 2 staying put. In L8 the dim 9 becomes the launcher, with the other tiles stationary. In L10 the unarmed icon becomes the machete at 1 and the dim weapon holes remain in place. The icons are small at this full-screen scale, but the selected tile and hole contrast are visible.
 
-Capture investigation: the test URL needs `ui=1`; without it `GameUI` is disabled and no HUD is mounted. With `ui=1`, L8 and L10 showed rack tiles, while L4 was still in its opening cinematic and its HUD was hidden. A subsequent attempt to advance past the cinematic did not produce a visible rack; the required six-image proof is still incomplete.
+The harness enables the UI and asserts each spawned, retained pickup was collected. L4's opening story lock and cinematic are cleared by the fixture to expose the HUD; the resulting view is a staged HUD capture, not a playthrough of the arrival. The other pickups are also spawned at the player for this comparison.
 
 ## Commits
 
@@ -34,4 +34,4 @@ Capture investigation: the test URL needs `ui=1`; without it `GameUI` is disable
 - `ee511111` Update s195 verification report
 - `5574a8ee` Complete per-level weapon slot sets
 
-This report records current progress; the visual capture review and remote test gate remain incomplete. The test-budget count was kept at 150 by folding the v1 save assertion into the existing save-decoding test.
+The remote test gate remains incomplete. The test-budget count was kept at 150 by folding the v1 save assertion into the existing save-decoding test.
