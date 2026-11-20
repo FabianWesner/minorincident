@@ -122,7 +122,8 @@ export class LevelTenBot {
 
     // Moving targets need room for the rocket to arm before contact. Keep the
     // launcher for distant packs/Mega and the carried shotgun for close defence.
-    const travelWeapon = ['weapon.army-mg', 'weapon.assault-rifle', 'weapon.nail-gun', 'weapon.hunting-rifle', 'weapon.machete', 'weapon.fire-axe'].find(id => rack.some(slot => slot.id === id));
+    // Prefer the long-range rifle to the quiet pinning tool while crossing open ground.
+    const travelWeapon = ['weapon.army-mg', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.machete', 'weapon.fire-axe'].find(id => rack.some(slot => slot.id === id));
     const targetDistance = target ? distance(target.transform) : 0;
     const rocket = target && isMega(target) && targetDistance >= 18 && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
       { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, targetDistance) >= targetDistance;

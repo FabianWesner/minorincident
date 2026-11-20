@@ -246,6 +246,7 @@ class CivilianBatch extends Group {
         continue;
       }
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
+      if (e.ashDeath) continue; // CrowdView owns the char, crumble and retained heap.
       if (e.corpse) { if (this.lod === this.corpseLod && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (shotId === undefined && !this.visibility.visible(drawTransform.x, drawTransform.y + .2, drawTransform.z, 1.8)) continue;
