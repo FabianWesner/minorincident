@@ -8,7 +8,7 @@
 - The native pickup regression collects the nail gun, selects it on 7, collects the army MG, then selects the MG on 4. The nail gun remains available on 7.
 - `5fbb8e3d` updates the L9 bot to use fixed keys 3 and 4 and fixes the playtest driver's key-0 spelling. The existing input test now checks repeated key 1 and 0 cycling.
 - `6aec445a` checks the explicit key list for every level and verifies that acquiring each listed key fills its hole without changing the other positions. Focused input, typecheck and lint passed.
-- `c0b2809e` versions new fixed-key recordings and decodes older position-based number-key selections using their historical ordering. This covers number-key recordings; historical wheel and side-specific ordered selections are not migrated to their former ordering. Focused input, codec and combat tests (14), typecheck and lint passed.
+- `c0b2809e` versions new fixed-key recordings and decodes older position-based number-key selections using their historical ordering. `71ff414c` also restores historical wheel and side-specific ordering on replay. Focused input, codec and combat tests (14), typecheck and lint passed after the changes.
 - `e39b2f9b` restores the original version 1 recording behavior for selecting innate fists even when another melee weapon is carried. Input and codec tests, typecheck and lint passed.
 - `05dcec15` orders side-specific touch selection by fixed key and applies L8's swap lock to historical replay selections too. Input and combat tests (12), typecheck and lint passed.
 - `99995b82` highlights the shared rack key when any of its owned variants is selected, while retaining the best owned icon. Input tests, typecheck and lint passed.
