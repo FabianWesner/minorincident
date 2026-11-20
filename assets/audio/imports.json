@@ -5792,27 +5792,27 @@
     },
     "action.weapon.nail-gun": {
       "source": "s184-nailgun",
-      "start": 0,
-      "filter": "highpass=f=120,asetrate=48000,aresample=48000",
-      "level": -14
+      "start": 0.05,
+      "filter": "highpass=f=120,asetrate=48000,aresample=48000,afade=t=out:st=0.11:d=0.04",
+      "level": -24.5
     },
     "action.weapon.nail-gun.v1": {
       "source": "s184-nailgun",
-      "start": 0,
-      "filter": "highpass=f=120,asetrate=48300,aresample=48000",
-      "level": -14
+      "start": 0.05,
+      "filter": "highpass=f=120,asetrate=46560,aresample=48000,afade=t=out:st=0.13:d=0.04",
+      "level": -26.5
     },
     "action.weapon.nail-gun.v2": {
       "source": "s184-nailgun",
-      "start": 0,
-      "filter": "highpass=f=120,asetrate=48600,aresample=48000",
-      "level": -14
+      "start": 0.05,
+      "filter": "highpass=f=120,asetrate=49440,aresample=48000,afade=t=out:st=0.14:d=0.04",
+      "level": -26.8
     },
     "action.weapon.nail-gun.v3": {
       "source": "s184-nailgun",
-      "start": 0,
-      "filter": "highpass=f=120,asetrate=48900,aresample=48000",
-      "level": -14
+      "start": 0.05,
+      "filter": "highpass=f=120,asetrate=48000,aresample=48000,afade=t=out:st=0.12:d=0.04",
+      "level": -26.8
     },
     "action.weapon.shotgun": {
       "source": "fw-Model_12-K_22P",
@@ -5886,28 +5886,28 @@
       "level": -8
     },
     "action.weapon.assault-rifle": {
-      "source": "fw-AK-47-C_28P",
-      "start": 0.59,
+      "source": "fw-AR-15-D_32P",
+      "start": 0.68,
       "filter": "volume=26dB,asoftclip=type=tanh",
-      "level": -8
+      "level": -26
     },
     "action.weapon.assault-rifle.v1": {
       "source": "fw-AK-47-C_28P",
-      "start": 3.23,
+      "start": 0.59,
       "filter": "volume=26dB,asoftclip=type=tanh",
-      "level": -8
+      "level": -27
     },
     "action.weapon.assault-rifle.v2": {
-      "source": "fw-AK-47-C_28P",
-      "start": 6,
+      "source": "fw-AR-15-D_32P",
+      "start": 5.62,
       "filter": "volume=26dB,asoftclip=type=tanh",
-      "level": -8
+      "level": -26
     },
     "action.weapon.assault-rifle.v3": {
       "source": "fw-AK-47-C_28P",
-      "start": 9.13,
+      "start": 3.23,
       "filter": "volume=26dB,asoftclip=type=tanh",
-      "level": -8
+      "level": -27
     },
     "action.weapon.machine-gun": {
       "source": "fw-AK-47-C_28P",
@@ -5923,7 +5923,7 @@
     },
     "action.weapon.machine-gun.v2": {
       "source": "fw-AK-47-C_28P",
-      "start": 6,
+      "start": 6.0,
       "filter": "bass=g=5:f=120,asetrate=42240,aresample=48000,volume=28dB,asoftclip=type=tanh",
       "level": -8
     },
@@ -5995,7 +5995,7 @@
     },
     "action.weapon.rotary-minigun.v2": {
       "source": "fw-AK-47-C_28P",
-      "start": 6,
+      "start": 6.0,
       "filter": "bass=g=4:f=130,asetrate=48000,aresample=48000,volume=22dB,asoftclip=type=tanh",
       "level": -8
     },
@@ -6408,7 +6408,7 @@
     },
     "tail.street": {
       "source": "fw-Model_12-K_17P",
-      "start": 1,
+      "start": 1.0,
       "filter": "lowpass=f=3200,highpass=f=200",
       "level": -31
     },
@@ -6503,6 +6503,16 @@
       "source": "s184-flashbang",
       "start": 0,
       "level": -12
+    },
+    "weapon.impact.nail-gun.infected": {
+      "source": "sfx2-k-impactSoft_medium_002",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.nail-gun.hard": {
+      "source": "sfx2-k-impactMetal_light_000",
+      "start": 0,
+      "level": -20
     }
   },
   "streams": {
