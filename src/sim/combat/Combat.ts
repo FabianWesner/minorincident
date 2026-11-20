@@ -233,6 +233,23 @@ export class Combat {
     else if (def.category === 'melee' || def.category === 'ability') {
       this.environment(attack, { ...source.transform, y: source.transform.y+.3 }, attack.aim, def.range);
       for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace, attack.target)) this.hit(attack, target, source.transform, 'melee');
+    } else if (def.id === 'weapon.flamethrower') {
+      const origin = { ...source.transform, y: source.transform.y + .45 };
+      const halfCone = Math.cos(def.spread * Math.PI / 360);
+      // Heat fills the cone: each exposed infected receives the full stream tick,
+      // independently of other bodies. Walls and destructibles still stop it.
+      for (const id of [...this.query.nearby(origin, def.range)]) {
+        const target = this.world.entities.get(id);
+        if (!target || target.faction !== 'infected' || target.health.current <= 0 || target.hidden) continue;
+        const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
+        if (!distance || distance > def.range || (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone) continue;
+        const direction = { x: dx / distance, y: 0, z: dz / distance };
+        if (!this.query.visible(origin, target.transform, target.id) || (this.world.destruction?.trace(origin, direction, distance)?.distance ?? distance) < distance - .05) continue;
+        this.hit(attack, target, source.transform, 'bullet');
+      }
+      const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
+      const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
+      this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
     } else if ((def.pellets ?? 1) > 1) {
       this.pelletHits.clear();
       const count = def.pellets!, angle = deterministicAtan2(attack.aim.z, attack.aim.x);
@@ -245,12 +262,6 @@ export class Combat {
       }
       const centreTarget = def.id === 'weapon.shotgun' ? this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range) : undefined;
       for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count, undefined, target === centreTarget);
-      if (def.id === 'weapon.flamethrower') {
-        const origin = { ...source.transform, y: source.transform.y + .45 };
-        const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
-        const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
-        this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
-      }
     } else {
       const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range);
       const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, attack.aim, def.range, target);
