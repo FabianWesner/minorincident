@@ -4,6 +4,7 @@ import type { Game } from '../../src/Game';
 
 const out = 'docs/reports/s182-talkers';
 mkdirSync(out, { recursive: true });
+mkdirSync('test-results/s182-talkers', { recursive: true });
 const rows: unknown[] = [];
 for (const tier of ['high', 'low'] as const) {
   const session = new SceneSession({ backend: 'webgl2', tier, seed: 32, viewport: { width: 1280, height: 720 } });
@@ -46,7 +47,9 @@ for (const tier of ['high', 'low'] as const) {
         await session.page.evaluate(ticks => window.__SS__!.step(ticks), i === 0 ? 0 : 72);
         const displayed = await session.page.locator('.mission-subtitle').isVisible();
         if (!displayed) throw new Error(`subtitle is not visible for ${id}, frame ${i}`);
-        frames.push(await session.snapshot());
+        const image = await session.snapshot();
+        if (tier === 'high' && speaker === 'voss') writeFileSync(`test-results/s182-talkers/voss-${i}.jpg`, image);
+        frames.push(image);
       }
       await session.makeSheet(frames.map((jpeg, frame) => ({ frame, jpeg })), `${out}/${id}-${tier}.jpg`, 420, 240);
       rows.push({ id, tier, speaker, files: `${id}-${tier}.jpg`, frames: count, spanSeconds: (count - 1) * 1.2, zoom: 1.5, errors: session.errors.length });

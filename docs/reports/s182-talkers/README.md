@@ -2,6 +2,8 @@
 
 The controlled WebGL2 fixture uses HIGH and LOW, zoom 1.5, and steps the conversation before sampling. [Conversation sheet](conversations.jpg): top six frames are Voss over 6 seconds on HIGH; middle four are Sam over 3.6 seconds on HIGH; bottom is Voss on LOW. Subtitles are visible. The HIGH Sam sequence shows him near the courier. Voss is near the courier in the HIGH sequence; the figures are too small to judge the quality of her gaze and hand movement confidently. These fixtures do not establish natural-play framing or obstacle avoidance.
 
+The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-talkers-capture.ts`, shows Voss with an arm raised beside the console. Her figure overlaps the console and her gaze direction cannot be judged reliably at this scale; the eastward indication remains unverified.
+
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
 | L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory; shared relaxed walk, idle and gestures. Visual check pending. |
