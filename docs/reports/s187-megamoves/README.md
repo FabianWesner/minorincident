@@ -15,6 +15,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - `npm run lint`: passed.
 - Focused infected AI and save-progression tests: passed after selecting an existing throw cue.
 - Remote `npm test`: reached the 240 s budget without a reported test failure. The specified fallback passed: local `npm test` (27 files, 106 tests, 183.9 s) and remote `tests/engine/l4-contact.test.ts` (1 test).
+- Latest remote `sh tools/remote/run.sh "$PWD" -- npm test` on `3f2ac658`: passed in 215.3 s (27 files, 105 passed, 1 skipped).
 - `npm run qa:threat`: completed with 0 fail flags. L10 skilled and passive routes both hit the audit tick budget; the required L10 acceptance rows therefore remain unverified.
 - An isolated `node --import tsx/esm tools/qa/threat-audit.ts --levels L10` reproduced the skilled tick-budget outcome at 1,800 simulated seconds. The passive hold window was measured (468.86 attacks/minute, L10-11 PASS); its tick-budget is the documented observation cap. The partial run's only fail flag was `PARTIAL_LEVEL_SELECTION`, so it is diagnostic and does not replace the full gate.
 - Regression comparison, isolated L10 native skilled audit, seed 1, LOW: baseline `bc57d840` completed in 1,120.02 s with 2 deaths and 559.99 total damage taken; `02fd92c6` hit 1,800 s at the Mega objective with 41 deaths and 4,526.12 total damage taken. These are whole-route totals, not Mega-only DPS or the requested HIGH walk measurement. The new behavior fails skilled route completion and needs balance/behavior investigation.
