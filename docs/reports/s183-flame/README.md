@@ -7,3 +7,5 @@ Visual review: the HIGH stream has a ragged orange outline that changes between 
 Reproduce: `E2E_PORT=5107 SCENE_PORT=5108 E2E_UNITS=1 sh tools/e2e-lock.sh node --import tsx tools/scenelab/s183-flame.ts`. Raw captures and runtime evidence are in `test-results/s183-flame/` after running. Performance before/after and timing: pending.
 
 Validation on source commit `515db9b4`: `npm run typecheck` and `npm run lint` passed. `sh tools/remote/run.sh "$PWD" -- npm test` passed on the remote runner: 27 files, 105 tests passed, one skipped; 201.3 s of the 240 s budget. The budget collector reported 150/150 cases. This suite does not establish visual quality or backend compatibility.
+
+WebGPU check on source `515db9b4`: run the same command with `SCENE_BACKEND=webgpu`. The runtime reported `webgpu` for all seven captures, with 32 HIGH and 24 LOW jet cards, actual attack events and no captured console errors. I inspected HIGH frame 52: the orange stream, dark smoke flecks and fires at the infected are visible. This is a headless scene check, not a manual interactive WebGPU playthrough; release and wall impacts remain unverified.

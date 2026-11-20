@@ -3,8 +3,9 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { SceneSession, origin, stopServer } from './session';
 
 const spec = JSON.parse(readFileSync('specs/scenes/catalog/s183-flame-fight.json', 'utf8')) as SceneSpec;
-const session = new SceneSession({ backend: 'webgl2', viewport: { width: 1280, height: 720 } });
-const out = 'test-results/s183-flame';
+const backend = process.env.SCENE_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const session = new SceneSession({ backend, viewport: { width: 1280, height: 720 } });
+const out = `test-results/s183-flame${backend === 'webgpu' ? '-webgpu' : ''}`;
 mkdirSync(out, { recursive: true });
 const rows: unknown[] = [];
 try {
@@ -12,7 +13,7 @@ try {
   for (const tier of ['high', 'low'] as const) {
     session.options.tier = tier;
     if (tier === 'low') {
-      await session.page.goto(`${origin}/?test=1&scenelab=1&renderer=webgl&profile=1&dpr=1&quality=low&audio=muted&seed=1`);
+      await session.page.goto(`${origin}/?test=1&scenelab=1&${backend === 'webgl2' ? 'renderer=webgl&' : ''}profile=1&dpr=1&quality=low&audio=muted&seed=1`);
       await session.page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
       await session.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     }
