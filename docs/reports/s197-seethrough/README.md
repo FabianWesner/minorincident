@@ -11,9 +11,9 @@ Focused coverage in `tests/shared/render-contracts.test.ts` checks a foreground 
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
 - `npm test -- --run tests/shared/render-contracts.test.ts` — passed (14 tests).
-- `sh tools/remote/run.sh "$PWD" -- npm test` — not run: runner returned 69 because no healthy remote runner was available and local Mac fallback is disabled.
+- `sh tools/remote/run.sh "$PWD" -- npm test` — passed on unchanged rerun: 27 files, 105 passed, 1 skipped, 233.4 s. The first remote run exceeded the 240 s budget.
 - `E2E_PORT=5151 SCENE_PORT=5152 npm run scene:gate -- --filter 'seethrough-*' --jobs 1` — passed all 3 rows.
-- HIGH WebGL2 captures at zoom 1 and 1.5: L4 behind-building and an L3 house/corgi fixture passed their scene gates. Reviewed sheets: the courier is visible by the L4 facade, and the house fixture opens around the courier and corgi. L1 and the L10 platform captures remain open.
+- HIGH WebGL2 captures at zoom 1 and 1.5: L4 behind-building and an L3 house/corgi fixture passed their scene gates. Reviewed sheets: the courier is visible by the L4 facade, and the house fixture opens around the courier and corgi. An L1-lit house fixture also passed and was reviewed at both zooms: the courier and corgi remain visible through the opening. An L10-lit simple fence fixture passed and was reviewed at both zooms: the fence remains solid behind them. The actual L10 platform or an equivalent long-panel fixture remains open; these simple fixtures are not production level captures.
 
 ## PO screenshot review
 
@@ -22,4 +22,4 @@ Opened the supplied L10 screenshot. It shows the courier and corgi unobstructed 
 ## Commits
 
 - `1a6a57c9` — `Fix see-through wall eligibility` (implementation and focused test).
-- Report commit follows separately.
+- `6639d457` — initial report; subsequent report update records the remote rerun and captures.
