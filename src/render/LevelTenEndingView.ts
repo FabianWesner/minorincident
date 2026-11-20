@@ -96,7 +96,7 @@ const shots: ShotDef[] = [
   },
 ];
 const townCast = ['npc.depot-clerk', 'npc.civilian-woman-a', 'npc.civilian-man-b', 'npc.civilian-elderly', 'npc.civilian-kid', 'npc.civilian-woman-b', 'npc.civilian-man-a'];
-interface Actor { root: Object3D; mixer: AnimationMixer; shot: number; x: number; z: number; walk: number; partner?: Actor; cured: boolean; clip: string; action?: AnimationAction }
+interface Actor { root: Object3D; mixer: AnimationMixer; shot: number; x: number; z: number; walk: number; partner?: Actor; cured: boolean; clip: string; action?: AnimationAction; survivorKey?: string }
 
 /** Bounded, prewarmed reconstructions using the journey's existing assets. The simulation stays at the console.
  * r31-epilogue: also owns the release's glowing dust (column, tide, settling motes) and the dust wall of the wave shots. */
@@ -194,7 +194,7 @@ export class LevelTenEndingView extends Group {
       }));
       if (i === 5) for (const [n, person] of named.entries()) {
         const actor = await this.figure(group, person!.civilian!.model ?? 'npc.civilian-man-a', -6 + n * 4, -.5, .6, i, true);
-        if (actor) actor.walk = .5;
+        if (actor) { actor.walk = .5; actor.survivorKey = person!.civilian!.survivor?.key; }
       }
       if (i === 6) for (const [id, x] of [['npc.lab-tech-b', -1.2], ['npc.national-guard', 1.2], [this.world.missions!.state.states['sam-alive'] ? 'npc.sam.aftermath' : 'npc.national-guard', 0]] as const) {
         const actor = await this.figure(group, id, x, -8 + (x === 0 ? .4 : 0), 0, i, true);
@@ -265,6 +265,10 @@ export class LevelTenEndingView extends Group {
         this.play(a, since < 2.4 ? 'npc-cower' : since < 3.4 ? 'npc-stand-up' : a.x % 2 ? 'npc-wave' : 'npc-look-around', since < 3.4);
       }
       a.partner.mixer.update(dt);
+    } else if (a.survivorKey === 'rosa' && this.world.missions?.state.subtitle?.id === 'L10.epilogue-rosa') {
+      // Rosa's line belongs to this montage actor, not a separate simulated crowd member.
+      this.play(a, Math.floor(age / 2) % 2 ? 'npc-gesture' : 'npc-glance');
+      a.root.rotation.y = -.6;
     } else if (a.cured && a.walk) {
       this.play(a, 'npc-walk');
       a.root.position.set(a.x, 0, a.z + Math.min(age, 5) * a.walk);
