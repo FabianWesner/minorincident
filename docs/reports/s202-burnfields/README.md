@@ -18,7 +18,7 @@ Partial implementation; the requested feature is not complete. This report recor
 - Fire crackle and patch-catch sound; pickup caption if needed.
 - Capture and review HIGH/LOW L10 sequences; measure whole-field frame time.
 - Run full unit suite, `npm run qa:threat`, and remote `npm test`; verify skilled routes and resolve any failures.
-- Verify spread across actual field footprints and road boundaries, and validate live-save resume.
+- Spread links now reject crossings of authored L10 route centerlines. Verify actual road surfaces and other barriers, direct ignition near roads, and live-save resume.
 
 ## Validation
 

@@ -10,6 +10,8 @@ import type { EntitySnapshot } from '../world/types';
 import type { Vec2 } from '../../input/InputFrame';
 import { FieldFire } from './FieldFire';
 import { groundBurn } from '../combat/Status';
+import { cure } from '../../levels/L10/district';
+import { cureCrossingLines } from '../../levels/L10/crossingStories';
 export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'tear-gas', 'extinguisher', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
@@ -54,8 +56,16 @@ export class Hazards {
     });
   }
   installFieldFire(): void {
+    const roads = [...cure.regions.map(r => r.route), ...cure.detours.map(r => r.route), ...cureCrossingLines.map(r => r.line)];
+    const blocked = (a: Vec2, b: Vec2): boolean => {
+      const side = (p: Vec2, q: Vec2, x: number, z: number) => (q.x - p.x) * (z - p.z) - (q.z - p.z) * (x - p.x);
+      return roads.some(line => line.slice(1).some((end, i) => {
+        const start = line[i], c = { x: start[0], z: start[1] }, d = { x: end[0], z: end[1] };
+        return side(a, b, c.x, c.z) * side(a, b, d.x, d.z) <= 0 && side(c, d, a.x, a.z) * side(c, d, b.x, b.z) <= 0;
+      }));
+    };
     const districts = this.world.districts;
-    this.fieldFire = districts?.composition.id === 'L10' ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] })))) : null;
+    this.fieldFire = districts?.composition.id === 'L10' ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked) : null;
   }
   spawn(kind: HazardKind | DestructibleKind, pos: Vec2, opts: HazardOptions = {}): number {
     if (![...hazardKinds, ...destructibleKinds].includes(kind) || ![pos.x, pos.z, opts.hp ?? 1, opts.radius ?? 1, opts.burnTime ?? 1, opts.halfX ?? .5, opts.halfZ ?? .15, opts.duration ?? 1].every(Number.isFinite)
