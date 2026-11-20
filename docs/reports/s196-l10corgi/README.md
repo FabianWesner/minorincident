@@ -16,7 +16,7 @@ Folded the regression into the existing `tests/engine/npcs.test.ts` case. HIGH a
 - `npm run typecheck` — PASS.
 - `npm run lint` — PASS.
 - `npm run qa:threat -- --levels L10` — FAIL: passive audit reported zero threat flags, but the skilled native route hit the 1,800 s tick budget at “Kill the Mega Alpha”, leaving `INCOMPLETE_NATIVE_POLICY:tick-budget` (1 acceptance flag).
-- `sh tools/remote/run.sh "$PWD" -- npm test` — NOT RUN: no healthy Hetzner runner was available; local fallback rejects this command.
-- HIGH, zoom 1 headless capture — NOT CAPTURED: the Scene Lab command was attempted with `SCENE_PORT=5150` and `E2E_PORT=5149`, but the browser-pool daemon could not bind `127.0.0.1:4329` (`EPERM`). The PO screenshot was opened: it shows the courier on the apron with torch light, two riflemen at the bay edge, and the packed corgi on the far side of the marked apron/low wall. The native reproduction identifies the hangar door collider opening as the blocker.
+- `sh tools/remote/run.sh "$PWD" -- npm test` — PASS on remote retry: 27 files, 105 passed, 1 skipped; 207.3 s (240 s budget).
+- HIGH, zoom 1 headless real-level capture: `test-results/scenes/s196-native-hangar.png` (untracked). Courier and corgi were placed at (2707, 59) and (2707, 56), respectively, with the latter inside the authored hangar bounds. The opened frame shows the packed corgi and courier between two guards, but heavy shadow and overlays obscure the doorway and interior; it does not visually establish the corgi walking inside. The PO screenshot shows the courier on the apron, two riflemen, and the packed corgi behind the marked bay edge.
 
-The requested capture, clean L10 threat audit, and remote unit-suite result remain open. The first commit attempt was blocked by read-only Git metadata; filesystem access was subsequently restored.
+A visually conclusive movement capture and the clean L10 threat audit remain open. The first commit attempt was blocked by read-only Git metadata; filesystem access was subsequently restored.
