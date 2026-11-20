@@ -1,7 +1,7 @@
 import { groundDepth, groundLayers } from '../GroundLayers';
 import { worldTiers } from '../../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
-import { BoxGeometry, CircleGeometry, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Sprite, SpriteMaterial, Box3, CanvasTexture, ConeGeometry, Group, Sphere, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type BufferGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, CircleGeometry, DoubleSide, Float32BufferAttribute, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Box3, BufferGeometry, CanvasTexture, ConeGeometry, Group, Sphere, SRGBColorSpace, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type Material } from 'three/webgpu';
 import type { DistrictWorld } from '../../sim/world/DistrictWorld';
 import type { DistrictAssets } from '../../assets/DistrictAssets';
 import type { Materials } from '../Materials';
@@ -39,7 +39,7 @@ const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(
 export interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; /** Local footprint of LOD0 (centre offset and half extents): occluder tests use the real oriented box, not the longest side squared. */ foot: { cx: number; cz: number; hx: number; hz: number }; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
 export interface DressingEntry { id: string; batch: InstancedGroup; refs: Object3D[]; origin: [number, number]; center: Vector3; radius: number; foot: LodBatch['foot']; height: number }
 
-/** Everything a district load builds: instanced batches, baked layout, terrain, labels and the resources it owns. */
+/** Everything a district load builds: instanced batches, baked layout, terrain, facade signs and owned resources. */
 export class DistrictParts {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
@@ -57,7 +57,7 @@ export class DistrictParts {
   readonly ownedGeometry: BufferGeometry[] = [];
   readonly perimeterPosts: InstancedMesh[] = [];
   readonly ownedMaterials: Material[] = [];
-  readonly tags: { sprite: Sprite; entered: number | null; done: boolean }[] = [];
+  readonly signs: string[] = [];
   readonly textures: CanvasTexture[] = [];
   ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
@@ -408,10 +408,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       }
       const grassLayout=d.id==='D-CURE'?{...d.layout,surfaces:[...d.layout.surfaces,...cureEvacuationLane(d.decay.placements)]}:d.layout;
       for (const grass of Grass.tiles(grassLayout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
-      for (const b of d.layout.buildings) {
-        const p = d.layout.placements.find((p) => p.id === b.id)!;
-        tag(parts, root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
-      }
+      buildFacadeSigns(parts, root, d.layout.buildings, d.origin);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
@@ -479,16 +476,40 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
   mesh.receiveShadow = true;
   root.add(mesh);
 }
-/** Small camera-facing location tags; show once on approach, then fade over one second. */
-function tag(parts: DistrictParts, root: Group, text: string, p: [number, number, number]): void {
-  const canvas = document.createElement('canvas'); canvas.width = 320; canvas.height = 64;
+/** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
+function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], origin: [number, number]): void {
+  const generic = /^(house|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building)$/i;
+  const chosen = new Map<string, typeof buildings[number]>();
+  for (const building of buildings) if (!generic.test(building.label.trim()) && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
+  const rows = [...chosen.values()]; if (!rows.length) return;
+  const cellW = 512, cellH = 128, columns = 4, canvas = document.createElement('canvas');
+  canvas.width = cellW * columns; canvas.height = cellH * Math.ceil(rows.length / columns);
   const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = '#352c38dd'; ctx.roundRect(0, 0, 320, 64, 16); ctx.fill();
-  ctx.fillStyle = '#ffc773'; ctx.font = 'bold 28px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 160, 32, 300);
-  const texture = new CanvasTexture(canvas); parts.textures.push(texture);
-  const material = new SpriteMaterial({ map: texture, transparent: true, depthWrite: false }); parts.ownedMaterials.push(material);
-  const sprite = new Sprite(material); sprite.name = text; sprite.position.fromArray(p); sprite.scale.set(1.8, .36, 1); sprite.visible = false; root.add(sprite);
-  parts.tags.push({ sprite, entered: null, done: false });
+  const positions: number[] = [], uvs: number[] = [], indices: number[] = [];
+  rows.forEach((b, i) => {
+    const x = i % columns, y = Math.floor(i / columns), px = x * cellW, py = y * cellH;
+    ctx.fillStyle = '#17242b'; ctx.fillRect(px + 2, py + 2, cellW - 4, cellH - 4);
+    ctx.strokeStyle = '#c4d2d2'; ctx.lineWidth = 6; ctx.strokeRect(px + 8, py + 8, cellW - 16, cellH - 16);
+    const title = b.label.trim().replace(/\b\w/g, c => c.toUpperCase());
+    ctx.fillStyle = '#f5f3e9'; ctx.font = '600 40px Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(title, px + cellW / 2, py + cellH / 2, cellW - 50);
+    parts.signs.push(title);
+    const min = b.aabb.min, max = b.aabb.max;
+    const width = Math.max(.95, Math.min(2.35, (max[0] - min[0]) * .46));
+    const height = .58, cx = (min[0] + max[0]) / 2 + origin[0], z = max[2] + origin[1] + .045;
+    const cy = Math.max(1.65, Math.min(3.1, min[1] + (max[1] - min[1]) * .55));
+    const base = positions.length / 3, u0 = (px + 1) / canvas.width, u1 = (px + cellW - 1) / canvas.width;
+    const v0 = 1 - (py + cellH - 1) / canvas.height, v1 = 1 - (py + 1) / canvas.height;
+    positions.push(cx-width/2,cy-height/2,z, cx+width/2,cy-height/2,z, cx+width/2,cy+height/2,z, cx-width/2,cy+height/2,z);
+    uvs.push(u0,v0,u1,v0,u1,v1,u0,v1); indices.push(base,base+1,base+2,base,base+2,base+3);
+  });
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(indices); geometry.computeVertexNormals();
+  parts.ownedGeometry.push(geometry);
+  const texture = new CanvasTexture(canvas); texture.colorSpace = SRGBColorSpace; texture.generateMipmaps = true; parts.textures.push(texture);
+  const material = new MeshBasicNodeMaterial({ map: texture, side: DoubleSide }); parts.ownedMaterials.push(material);
+  const mesh = new Mesh(geometry, material); mesh.name = 'facility-signs'; mesh.frustumCulled = true; root.add(mesh);
 }
 /** Baked layout transforms are immutable after attachment. Visibility and
  * material cutaways remain live, but rendering need not revisit every child matrix. */

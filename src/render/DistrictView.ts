@@ -112,8 +112,6 @@ export class DistrictView extends Group {
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
   private readonly saved = new Map<Mesh, Material | Material[]>();
-  private readonly tags = this.parts.tags;
-  private labelTime = 0;
   /** Courier see-through, interiors, roofs and the bar line of sight (district/DistrictOcclusion). */
   readonly occlusion: DistrictOcclusion;
   constructor(
@@ -252,7 +250,7 @@ export class DistrictView extends Group {
     this.cameraPosition = [Infinity, Infinity, Infinity];
   }
   advance(seconds: number): void {
-    this.frameSeconds = seconds; this.phase.value += seconds; this.labelTime += seconds;
+    this.frameSeconds = seconds; this.phase.value += seconds;
     this.updateSpin(seconds);
   }
   private spinActive = false;
@@ -310,13 +308,6 @@ export class DistrictView extends Group {
       this.parts.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
     }
     this.parts.ambient?.focus.value.set(view.focus.x, view.focus.z);
-    for (const tag of this.tags) {
-      const position = tag.sprite.getWorldPosition(this.bounds.center);
-      if (!tag.done && tag.entered === null && Math.hypot(position.x - view.focus.x, position.z - view.focus.z) < 14) tag.entered = this.labelTime;
-      const age = tag.entered === null ? Infinity : this.labelTime - tag.entered;
-      tag.sprite.visible = age < 3; tag.sprite.material.opacity = Math.max(0, Math.min(1, 3 - age));
-      if (age >= 3 && tag.entered !== null) tag.done = true;
-    }
     const p = view.camera.position;
     const rotation = view.camera.quaternion.toArray();
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
@@ -724,7 +715,7 @@ export class DistrictView extends Group {
   }
   getState() {
     return {
-      labels: this.tags.map(({ sprite }) => ({ text: sprite.name, visible: sprite.visible, opacity: sprite.material.opacity, width: sprite.scale.x, height: sprite.scale.y })),
+      signs: [...this.parts.signs],
       districts: this.world.districts.map((d) => d.id),
       terrain: this.terrainState(),
       batches: this.batches.map((b) => ({
