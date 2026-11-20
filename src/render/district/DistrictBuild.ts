@@ -478,9 +478,9 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
 }
 /** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
 function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[]): void {
-  const generic = /^(house|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building)$/i;
+  const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
-  for (const building of buildings) if (!generic.test(building.label.trim()) && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
+  for (const building of buildings) if ((!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
   const rows = [...chosen.values()]; if (!rows.length) return;
   const cellW = 512, cellH = 128, columns = 4, canvas = document.createElement('canvas');
   canvas.width = cellW * columns; canvas.height = cellH * Math.ceil(rows.length / columns);
