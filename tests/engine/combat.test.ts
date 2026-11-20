@@ -96,7 +96,9 @@ test('infected entering a landed molotov pool catches fire and takes burn damage
   expect(zone).toBeDefined();
   const id = dummy(w, zone!.x + zone!.radius + 1, zone!.z, 200), target = w.entities.get(id)!;
   step(w, 1); expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(false);
+  w.combat!.status.apply(target, { kind: 'burning', duration: 2, maxStacks: 1, dps: 10, slow: 0 }, 1, 'weapon.molotov');
   target.transform.x = zone!.x; target.transform.z = zone!.z; w.spatial.set(id, zone!.x, zone!.z);
+  step(w, 60);
   step(w, 1); expect(target.combat!.statuses.find(s => s.kind === 'burning')?.def).toMatchObject({ dps: 35, duration: 4 });
   step(w, 61); expect(target.health.current).toBeLessThan(200);
 });

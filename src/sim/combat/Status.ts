@@ -23,7 +23,7 @@ export class Status {
       return;
     }
     const statuses = target.combat.statuses, existing = statuses.find((status) => status.kind === def.kind);
-    if (existing) { existing.stacks = Math.min(def.maxStacks, existing.stacks + 1); existing.expires = this.world.tick + ticks(def.duration); }
+    if (existing) { existing.stacks = Math.min(def.maxStacks, existing.stacks + 1); existing.expires = this.world.tick + ticks(def.duration); if (def.kind === 'burning' && def.dps > existing.def.dps) { existing.def = def; existing.sourceId = sourceId; existing.actionId = actionId; existing.attackId = attackId; } }
     else statuses.push({ attackId, kind: def.kind, stacks: 1, expires: this.world.tick + ticks(def.duration), nextDot: this.world.tick + 60, ...(def.kind === 'burning' ? { nextSpread: this.world.tick + 30 } : {}), def, sourceId, actionId });
     if (def.kind === 'stunned') {
       target.combat.attacking = false;
