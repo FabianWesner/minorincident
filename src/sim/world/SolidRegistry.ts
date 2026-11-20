@@ -667,16 +667,6 @@ export class SolidRegistry {
       const old = this.committedPoses[e.id]; if (!old !== admission) continue;
       const radius = this.bodyRadii[e.id], p = e.transform, proposed = this.proposalPoints[e.id]!;
       const proof = this.contactProofs[e.id];
-      const mayHold = !!(e.infected && !e.infected.specialAttack && proof && (this.world.tick + e.id) % 10 !== 0 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e));
-      if (mayHold && proof!.crowded && proof!.crowdUntil > this.world.tick) {
-        const blocker = this.live[this.bodyRejections[e.id] ?? 0];
-        // Reuse the actual failed contact only while it still blocks this proposal
-        // after rollback. A neighbour that vacated it must still permit movement.
-        if (blocker && layers(proposed, blocker.transform) &&
-            (proposed.x - blocker.transform.x) ** 2 + (proposed.z - blocker.transform.z) ** 2 < (radius + this.bodyRadii[blocker.id] - tolerance) ** 2) {
-          proof!.blocked++; continue; // The previous valid pose is already reserved and published.
-        }
-      }
       p.x = proposed.x; p.y = proposed.y; p.z = proposed.z; p.yaw = proposed.yaw;
       const blocker = this.live[this.bodyRejections[e.id] ?? 0];
       const blocked = blocker && !pairExempt(e, blocker) && layers(p, blocker.transform) &&
@@ -689,26 +679,6 @@ export class SolidRegistry {
       else valid = this.clear(p, radius, e.id, true, tolerance);
       if (valid && proof) proof.blocked = 0;
       if (!valid) {
-        let crowded = false;
-        if (this.bodyConflict && e.infected && proof) {
-          if (proof.crowdUntil <= this.world.tick) {
-            // The contact query has a one-body reach: twelve nonpenetrating
-            // centres cannot fit there. Count the local crowd in a 2 m ring.
-            this.bodyIndex.query({ x: p.x, z: p.z, r: Math.max(2, radius + this.maxActor) }, this.nearby, false);
-            // Small classic bodies can already form a blocked cluster at four
-            // neighbours. L1 pursuit and larger footprints retain their cadence.
-            const cluster = !e.infected?.l1 && radius <= .35 ? 4 : 8;
-            proof.crowded = this.nearby.length >= cluster; proof.crowdUntil = this.world.tick + 30;
-          }
-          crowded = proof.crowded;
-        }
-        if (crowded && mayHold) {
-          // Every earlier transaction respected this reserved pose. With the same solid geometry,
-          // footprint and attachment mask, rejecting motion needs no second contact search.
-          // Stagger the one-in-ten projection retries by actor ID, avoiding a
-          // synchronized repair frame that dominates the E18 p95 window.
-          proof!.blocked++; p.x = old!.x; p.y = old!.y; p.z = old!.z; p.yaw = old!.yaw; this.publish(e); continue;
-        }
         if (proof) proof.blocked = 0;
         for (let pass = 0; pass < 4; pass++) {
           let moved = false;
