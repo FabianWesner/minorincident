@@ -117,6 +117,13 @@ export class LevelTenEndingView extends Group {
   private readonly shotReady: boolean[] = [];
   /** QA probe: leading shots that are loaded and warmed. */
   get readyShots(): number { const i = this.shotReady.findIndex(r => !r); return i < 0 ? this.shotReady.length : i; }
+  /** Presentation position for the existing courier during Rosa's montage line. */
+  rosaCourierPose(): { x: number; z: number; yaw: number } | undefined {
+    if (!this.montage || this.lastShot !== 5 || this.world.missions?.state.subtitle?.id !== 'L10.epilogue-rosa') return;
+    const rosa = this.actors.find(a => a.shot === 5 && a.survivorKey === 'rosa');
+    if (!rosa) return;
+    return { x: this.position.x + rosa.root.position.x + 2, z: this.position.z + away + rosa.root.position.z + 1, yaw: -Math.atan2(-1, -2) };
+  }
   private lastShot = -1;
   readonly errors: string[] = [];
   constructor(private readonly world: SimWorld, private readonly scene: Scene, private readonly materials: Materials, private readonly warm: (model: Object3D) => Promise<void>) {
@@ -268,7 +275,7 @@ export class LevelTenEndingView extends Group {
     } else if (a.survivorKey === 'rosa' && this.world.missions?.state.subtitle?.id === 'L10.epilogue-rosa') {
       // Rosa's line belongs to this montage actor, not a separate simulated crowd member.
       this.play(a, Math.floor(age / 2) % 2 ? 'npc-gesture' : 'npc-glance');
-      a.root.rotation.y = -.6;
+      a.root.rotation.y = -Math.atan2(1, 2);
     } else if (a.cured && a.walk) {
       this.play(a, 'npc-walk');
       a.root.position.set(a.x, 0, a.z + Math.min(age, 5) * a.walk);

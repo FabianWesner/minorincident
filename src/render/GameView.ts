@@ -1133,6 +1133,8 @@ export class GameView implements Lifecycle {
       this.character.carStep(carPose.crouch);
       this.character.position.y -= carPose.crouch * .18;
     }
+    const rosaCourier = this.endingView?.rosaCourierPose();
+    if (this.character && rosaCourier) { this.character.position.set(rosaCourier.x, 0, rosaCourier.z); this.character.rotation.y = rosaCourier.yaw; }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
       this.cube.rotation.y = current.yaw;
