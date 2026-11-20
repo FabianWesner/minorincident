@@ -1,0 +1,16 @@
+{
+  "name": "l10-mega-leap",
+  "note": "PO s187: Mega Alpha's 0.9 s crouch tell, growing landing shadow and four metre landing shockwave.",
+  "seed": 188,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "megaAlpha": { "id": "mega", "at": [-15, 0] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [0, 0], "god": true, "state": "idle" }],
+  "camera": { "mode": "game", "target": [-6, 2.5, 0], "zoom": 1 },
+  "script": [{ "frame": 0, "actor": "mega", "do": { "special": "alpha.pounce", "target": "courier" } }],
+  "frames": 144,
+  "sheet": 24,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "drawCallsMax": 300, "trianglesMax": 500000, "actorHitsMax": 0 }
+}

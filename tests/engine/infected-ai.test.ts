@@ -214,6 +214,45 @@ async function alphaTypeContracts() {
       expect(Math.hypot(missile.transform.x, missile.transform.z)).toBeLessThanOrEqual(3);
       step(missileWorld, 37); expect(['chase', 'attack']).toContain(missile.infected!.state);
     }
+    {
+      const thrownWorld = await arena(57, false), player = thrownWorld.entities.get(1)!;
+      player.health.current = player.health.max = 1000;
+      const pursuit = installMegaPursuit(thrownWorld, { introduceTick: null, resident: () => true });
+      const mega = thrownWorld.entities.get(pursuit.introduce({ x: 20, z: 0 }))!;
+      const thrown = spawn(thrownWorld, 'runner', 21.5, 0, 'idle');
+      mega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.grab-throw': Infinity };
+      step(thrownWorld, 1);
+      expect(mega.infected!.specialAttack?.move).toBe('alpha.living-missile');
+      expect(mega.infected!.specialAttack!.activeTick - mega.infected!.specialAttack!.startTick).toBe(megaAlpha.moves['alpha.living-missile'].windup);
+      step(thrownWorld, 160);
+      expect(thrown.infected!.thrownBy).toBeUndefined();
+      expect(thrown.health.current).toBeLessThan(thrown.health.max);
+      expect(thrownWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === mega.id && event.targetId === player.id && event.special === 'alpha.living-missile' && event.amount === 20)).toBe(true);
+
+      const debrisWorld = await arena(59, false), debrisPlayer = debrisWorld.entities.get(1)!;
+      debrisPlayer.health.current = debrisPlayer.health.max = 1000;
+      const debrisPursuit = installMegaPursuit(debrisWorld, { introduceTick: null, resident: () => true });
+      const debrisMega = debrisWorld.entities.get(debrisPursuit.introduce({ x: 20, z: 0 }))!;
+      debrisMega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.living-missile': Infinity };
+      debrisWorld.props = new PropSystem(debrisWorld);
+      debrisWorld.props.spawn({ id: 'mega-test-debris', assetId: 'prop.traffic-cone', position: [21, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [20.5, 0, -.5], max: [21.5, 1, .5] } });
+      step(debrisWorld, 1);
+      expect(debrisMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
+      expect(debrisWorld.events.events().some(event => event.type === 'telegraph' && event.sourceId === debrisMega.id && event.special === 'alpha.grab-throw' && event.duration >= .8)).toBe(true);
+      for (let i = 0; i < 150; i++) { debrisWorld.props.prePhysics(); step(debrisWorld, 1); debrisWorld.props.postPhysics(); }
+      expect(debrisWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === debrisMega.id)).toBe(true);
+
+      const leapWorld = await arena(58, false), courier = leapWorld.entities.get(1)!;
+      courier.health.current = courier.health.max = 1000;
+      const leapPursuit = installMegaPursuit(leapWorld, { introduceTick: null, resident: () => true });
+      const leaper = leapWorld.entities.get(leapPursuit.introduce({ x: 20, z: 0 }))!;
+      expect(leapWorld.infected!.startSpecial(leaper.id, 'alpha.pounce', { id: courier.id, x: 0, z: 0 }, { x: 20, z: 0, radius: 4, dx: -1, dz: 0 })).toBe(true);
+      expect(leaper.infected!.specialAttack!.activeTick - leaper.infected!.specialAttack!.startTick).toBe(54);
+      step(leapWorld, 130);
+      expect(leapWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === leaper.id && event.targetId === courier.id && event.amount === 30)).toBe(true);
+      expect(courier.health.current).toBe(970);
+      expect(courier.survivor!.knockdown?.until).toBeGreaterThan(leapWorld.tick);
+    }
   } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
 }
 
@@ -670,46 +709,6 @@ test('recovered infected forget the chase: re-acquisition needs sight, not memor
   step(w, e.infected!.recoverAt - w.tick + 2);
   expect(e.health.current).toBe(e.health.max);
   expect(e.infected!.l1!.mode).not.toBe('chase');
-});
-
-test('Mega signature specials throw a nearby infected and leap into a landing shockwave', async () => {
-  const thrownWorld = await arena(57, false), player = thrownWorld.entities.get(1)!;
-  player.health.current = player.health.max = 1000;
-  const pursuit = installMegaPursuit(thrownWorld, { introduceTick: null, resident: () => true });
-  const mega = thrownWorld.entities.get(pursuit.introduce({ x: 20, z: 0 }))!;
-  const thrown = spawn(thrownWorld, 'runner', 21.5, 0, 'idle');
-  mega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.grab-throw': Infinity };
-  step(thrownWorld, 1);
-  expect(mega.infected!.specialAttack?.move).toBe('alpha.living-missile');
-  expect(mega.infected!.specialAttack!.activeTick - mega.infected!.specialAttack!.startTick).toBe(megaAlpha.moves['alpha.living-missile'].windup);
-  step(thrownWorld, 160);
-  expect(thrown.infected!.thrownBy).toBeUndefined();
-  expect(thrown.health.current).toBeLessThan(thrown.health.max);
-  expect(thrownWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === mega.id && event.targetId === player.id && event.special === 'alpha.living-missile' && event.amount === 20)).toBe(true);
-
-  const debrisWorld = await arena(59, false), debrisPlayer = debrisWorld.entities.get(1)!;
-  debrisPlayer.health.current = debrisPlayer.health.max = 1000;
-  const debrisPursuit = installMegaPursuit(debrisWorld, { introduceTick: null, resident: () => true });
-  const debrisMega = debrisWorld.entities.get(debrisPursuit.introduce({ x: 20, z: 0 }))!;
-  debrisMega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.living-missile': Infinity };
-  debrisWorld.props = new PropSystem(debrisWorld);
-  debrisWorld.props.spawn({ id: 'mega-test-debris', assetId: 'prop.traffic-cone', position: [21, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [20.5, 0, -.5], max: [21.5, 1, .5] } });
-  step(debrisWorld, 1);
-  expect(debrisMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
-  expect(debrisWorld.events.events().some(event => event.type === 'telegraph' && event.sourceId === debrisMega.id && event.special === 'alpha.grab-throw' && event.duration >= .8)).toBe(true);
-  for (let i = 0; i < 150; i++) { debrisWorld.props.prePhysics(); step(debrisWorld, 1); debrisWorld.props.postPhysics(); }
-  expect(debrisWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === debrisMega.id)).toBe(true);
-
-  const leapWorld = await arena(58, false), courier = leapWorld.entities.get(1)!;
-  courier.health.current = courier.health.max = 1000;
-  const leapPursuit = installMegaPursuit(leapWorld, { introduceTick: null, resident: () => true });
-  const leaper = leapWorld.entities.get(leapPursuit.introduce({ x: 20, z: 0 }))!;
-  expect(leapWorld.infected!.startSpecial(leaper.id, 'alpha.pounce', { id: courier.id, x: 0, z: 0 }, { x: 20, z: 0, radius: 4, dx: -1, dz: 0 })).toBe(true);
-  expect(leaper.infected!.specialAttack!.activeTick - leaper.infected!.specialAttack!.startTick).toBe(54);
-  step(leapWorld, 130);
-  expect(leapWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === leaper.id && event.targetId === courier.id && event.amount === 30)).toBe(true);
-  expect(courier.health.current).toBe(970);
-  expect(courier.survivor!.knockdown?.until).toBeGreaterThan(leapWorld.tick);
 });
 
 async function checkPipeBombMega(): Promise<void> {
