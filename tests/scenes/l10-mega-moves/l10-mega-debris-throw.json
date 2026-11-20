@@ -1,0 +1,17 @@
+{
+  "name": "l10-mega-debris-throw",
+  "note": "Mega lifts a nearby bin and throws it toward the courier.",
+  "seed": 190,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "megaAlpha": { "id": "mega", "at": [-15, 0] },
+  "props": [{ "id": "bin", "asset": "prop.trash-bin", "at": [-13, 0] }],
+  "actors": [{ "id": "courier", "kind": "courier", "at": [0, 0], "god": true, "state": "idle" }],
+  "camera": { "mode": "game", "target": [-6, 2.5, 0], "zoom": 1 },
+  "script": [{ "frame": 0, "actor": "mega", "do": { "special": "alpha.grab-throw", "target": "courier" } }],
+  "frames": 144,
+  "sheet": 24,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "drawCallsMax": 300, "trianglesMax": 500000, "actorHitsMax": 0 }
+}

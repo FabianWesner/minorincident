@@ -16,11 +16,11 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - Focused infected AI and save-progression tests: passed after selecting an existing throw cue.
 - Remote `npm test`: reached the 240 s budget without a reported test failure. The specified fallback passed: local `npm test` (27 files, 106 tests, 183.9 s) and remote `tests/engine/l4-contact.test.ts` (1 test).
 - `npm run qa:threat`: completed with 0 fail flags. L10 skilled and passive routes both hit the audit tick budget; the required L10 acceptance rows therefore remain unverified.
-- Headless WebGL2 Scene Lab under `tools/e2e-lock.sh`: all nine HIGH scenarios and the zombie throw, leap, and roar LOW scenarios passed their configured gates. [Contact sheet](moves-contact-sheet.jpg) contains their six-frame HIGH and LOW strips; visual review remains for the orchestrator. These isolated scripted scenes do not establish the dodge or DPS criteria. A debris throw capture remains needed.
+- Headless WebGL2 Scene Lab under `tools/e2e-lock.sh`: all nine original HIGH scenarios and the zombie throw, leap, roar and debris throw HIGH/LOW scenarios passed their configured gates. [Contact sheet](moves-contact-sheet.jpg) contains their six-frame HIGH and LOW strips; visual review remains for the orchestrator. The debris scenario records active and recovery stages; these isolated scripted scenes do not establish hit, dodge or DPS criteria.
 
 ## Open acceptance items
 
 - Provide a ground rubble chunk when no breakable prop is within 3 m; the current throw path requires a nearby breakable prop.
 - Measure debris-hit damage and the L10 HIGH walking death count before and after; the requested ~25% DPS ceiling is not measured.
-- Confirm scripted sidestep dodges, damage/knockdown outcomes, and all move telegraphs in browser QA; capture the debris throw.
+- Confirm scripted sidestep dodges, damage/knockdown outcomes, and all move telegraphs in browser QA.
 - Complete L10 skilled and passive threat audit routes.
