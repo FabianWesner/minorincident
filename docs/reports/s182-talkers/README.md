@@ -10,6 +10,8 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [Hangar entry HIGH](hangar-entry.jpg) advances prior objectives and places the courier outside, then uses movement input through the entrance. Voss enters from the left and walks toward the courier during her visible first subtitle; she is still several metres away during the sampled line. The earlier campaign route is not exercised.
 
+[L8 Hale HIGH](l8-hale.jpg) injects the authored injury and key-handoff state near the gate. The probe sees `npc-give` while Hale is alive, followed by `death-back` when the script kills him; the subtitle remains visible after his fall. The sheet is too small to judge the handoff clearly and does not exercise the elephant encounter.
+
 [L8 gate HIGH](l8-gate.jpg) starts the normal briefing with default progression. The nearest recorded guard begins about 27 m away in simulation; the existing guard is staged in presentation during the opening briefing, and the sheet shows a guard near the courier during the subtitle. Other camera positions and later fallback soldier lines remain unverified.
 
 [L5 Rosa HIGH](l5-rosa.jpg) injects the search phase and survivor discovery at the pharmacy. The subtitle appears, but infected crowd the rescue point and Rosa cannot be distinguished confidently in the sheet. A render probe confirms her actor is drawn while in the `flee` state, using locomotion clips during the line. An existing gesture is now layered on unarmed moving speakers; the crowded recapture is still not a gesture pass, and ordinary rescue play needs review.
@@ -32,7 +34,7 @@ An earlier experimental walk from off-screen left the guard entering at the edge
 | L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory, staged near the courier during opening narration when his post is off-screen; shared relaxed walk, idle and gestures. Normal-start opening captured; handgun pickup remains unverified. |
 | L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
-| L8 | Nadia on tour and route lines; Hale on greeting and breach; nearest living guard for generic soldier lines | Existing keeper, major and guard actors; shared relaxed walk, idle and gestures. Visual check pending, including when no guard is nearby. |
+| L8 | Nadia on tour and route lines; Hale on greeting, breach and the dying key handoff; nearest living guard for generic soldier lines | Existing keeper, major and guard actors; shared relaxed walk, idle and gestures. The controlled dying-handoff capture is partial; other visual checks remain pending, including when no guard is nearby. |
 | L9 | Sam/Reyes, Mia, Dale and Okafor on identified lines | On-foot actors use shared presentation; seated copies use seeded shared idle and upper-body conversation clips and the APC cutaway. Individual speaker readability remains unresolved. |
 | L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
 | L10 epilogue | Rosa | Existing survivor montage actor beside the existing courier; glance and gesture. Controlled HIGH capture reviewed; full campaign transition remains open. |

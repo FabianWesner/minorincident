@@ -237,7 +237,9 @@ class CivilianBatch extends Group {
       const closingPose = l10ClosingPose(this.world, e);
       const lineSpeaker = !!c && speakingNpc(this.world, e.id);
       const bubbleLine = !!c && bubbleSpeaker(this.world, e.id);
-      const speaking = lineSpeaker && c?.state === 'calm';
+      // Hale gives the keys while injured; keep that authored pose and location.
+      const haleGiving = lineSpeaker && this.world.missions?.state.subtitle?.id === 'L8.hale-dying' && c?.story?.clip === 'npc-give' && e.health.current > 0;
+      const speaking = lineSpeaker && !haleGiving && c?.state === 'calm';
       const gateGuard = !!c && c.state === 'calm' && zooGateGuard(this.world, e.id);
       const armoryBriefing = !!c && c.state === 'calm' && joiningArmoryBriefing(this.world, e.id);
       const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard || armoryBriefing);
@@ -332,7 +334,7 @@ class CivilianBatch extends Group {
       if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, this.world.scenario !== 'L4' && (e.health?.current ?? 1) <= 0 ? pixels * .55 : pixels, this.model)) !== this.lod) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha, low)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
-      const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
+      const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil && !haleGiving;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const speed = conversation ? conversationSpeed : workSpeed || (closingPose || e.motion && !e.motion.moving ? 0 : motion.speed);
@@ -410,7 +412,7 @@ class CivilianBatch extends Group {
         const directionBlend = indicatingEast ? Math.min(1, (lineTick - 300) / 30, (480 - lineTick) / 30) : 0;
         const gazeYaw = targetYaw + Math.atan2(Math.sin(-targetYaw), Math.cos(-targetYaw)) * directionBlend;
         const headTurn = Math.atan2(Math.sin(gazeYaw - presented.yaw), Math.cos(gazeYaw - presented.yaw));
-        pose.layers = (talking || bubbleLine) && Math.abs(headTurn) > .01 ? { headYaw: Math.max(-.5, Math.min(.5, headTurn * .7)) } : undefined;
+        pose.layers = (talking || bubbleLine || haleGiving) && Math.abs(headTurn) > .01 ? { headYaw: Math.max(-.5, Math.min(.5, headTurn * .7)) } : undefined;
         pose.style = undefined;
         pose.procedural = !baked;
         pose.cadence = undefined;
