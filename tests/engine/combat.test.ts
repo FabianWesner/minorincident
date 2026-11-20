@@ -11,6 +11,7 @@ import { Status } from '../../src/sim/combat/Status';
 import { moveAgent } from '../../src/sim/locomotion/AgentMotion';
 import { motionResponse } from '../../src/sim/locomotion/MotionResponse';
 import { Loadout } from '../../src/sim/combat/Loadout';
+import { weaponKey } from '../../src/data/weaponKeys';
 import { Explosions } from '../../src/sim/combat/Explosions';
 import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -304,7 +305,7 @@ test('loadout: both sides keep independent aims, racks wrap both ways with a swi
   }
   const sameRack = await arena(); equip(sameRack, ['weapon.fire-axe'], ['weapon.hunting-rifle', 'weapon.molotov']);
   const sameLoadout = sameRack.combat!.runner.loadout;
-  const choose = (id: string) => sameLoadout.activeEntries().findIndex(entry => entry.id === id) + 1;
+  const choose = (id: string) => weaponKey(id)!;
   sameRack.setInput({ selectedWeaponKey: choose('weapon.hunting-rifle') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
   sameRack.setInput({ selectedWeaponKey: choose('weapon.molotov') }); step(sameRack, 1); sameRack.clearInput(); step(sameRack, 15);
   fire(sameRack, 'RIGHT'); step(sameRack, 20); fire(sameRack, 'RIGHT');

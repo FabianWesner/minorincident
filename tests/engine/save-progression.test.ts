@@ -22,6 +22,7 @@ import { debugFlagEnabled } from '../../src/ui/debugFlag';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { cureHangarWeapons, levelTenMission } from '../../src/levels/L10/mission';
 import { surrenderHeavyWeapons } from '../../src/sim/missions/L8Gate';
+import { weaponKey } from '../../src/data/weaponKeys';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
@@ -280,6 +281,16 @@ test('bare hands are innate and hidden while carrying melee; the L8 sanctuary ga
 });
 
 test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely', () => {
+  const oldWeapons = { ...newCampaign(), version: 1, racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'] },
+    ownedActions: ['weapon.fists', 'weapon.kick', 'weapon.fire-axe', 'weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'], selectedAction: 'weapon.nail-gun' };
+  const migratedWeapons = decodeSave(JSON.stringify(oldWeapons));
+  expect(migratedWeapons.status).toBe('ok');
+  if (migratedWeapons.status === 'ok') {
+    const loadout = new Loadout(migratedWeapons.save.racks.LEFT, migratedWeapons.save.racks.RIGHT);
+    expect(restoreSelectedAction(loadout, migratedWeapons.save)).toBe('weapon.nail-gun');
+    expect(weaponKey('weapon.nail-gun')).toBe(7);
+    expect(weaponKey('weapon.army-mg')).toBe(4);
+  }
   for (const level of [2, 3, 4, 5, 6, 7, 8, 10] as const) {
     const save = preset(`L${level}-default`);
     if (level === 6) {
