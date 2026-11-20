@@ -132,3 +132,5 @@ Writer call-chain follow-up: `Blasts.advance` calls `writeFlamesAndGlows`, and a
 Fallback muzzle reuse: when neither drawn nor resolved muzzle is available, flame refresh now fills a reusable position instead of spreading a new transform object. Typecheck, lint and the lifecycle probe passed (release tail, two attacks, no console errors); the normal scene uses a drawn muzzle, so this probe does not independently exercise the fallback branch. Shared collision-query and sampled writer allocations remain open.
 
 Remote suite on fallback-muzzle reuse `fd28ae9f`: the full command and one unchanged retry timed out at 240.7 s and 241.4 s respectively under high runner load, with no reported test failure before timeout. No tests were trimmed. The full remote suite remains open on this source; the previous source `7db9f506` passed.
+
+Remote suite retry on fallback-muzzle source `fd28ae9f`: the unchanged full command passed after the two timeouts above, with 27 files, 105 tests passed and one skipped; collector 150/150, 231.9 s against 240 s, exit 0. No tests were trimmed.
