@@ -9,6 +9,7 @@ for (const tier of ['high', 'low'] as const) {
   const session = new SceneSession({ backend: 'webgl2', tier, seed: 32, viewport: { width: 1280, height: 720 } });
   try {
     await session.open();
+    await session.page.addStyleTag({ content: '.mission-subtitle,.story-bubble { visibility: visible !important; }' });
     await session.page.evaluate(async () => {
       const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game;
       await api.loadLevel('L10', { seed: 32, checkpoint: 'cure-crash' });
@@ -29,6 +30,8 @@ for (const tier of ['high', 'low'] as const) {
         mission.state.counters['hangar-line'] = line; mission.state.counters['hangar-line-ticks'] = 0;
         mission.state.subtitle = null;
         await api.step(1);
+        const subtitle = mission.state.subtitle;
+        if (!subtitle || !subtitle.id.startsWith(speaker === 'voss' ? 'L10.voss-' : 'L10.sam-')) throw new Error(`unexpected subtitle ${subtitle?.id}`);
         const actorId = mission.state.actors[`hangar-${speaker}`];
         if (!actorId) throw new Error(`missing hangar speaker ${speaker}`);
         api.camera.follow();
