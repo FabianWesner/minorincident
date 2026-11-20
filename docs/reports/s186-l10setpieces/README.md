@@ -16,6 +16,7 @@ The six scenes are arranged around the existing corridor groups at 2940, 3060, 3
 - Supplemental local `npm test`: **FAIL**, 26 files / 105 passed and one failed in 112.0 s. The failing `tests/engine/l4-contact.test.ts` LOW perimeter-routing assertion matches the previously recorded Mac-specific failure; this does not replace the missing remote result.
 - Catalog enumeration through `node --import tsx/esm tools/scenelab/catalog.ts --list --filter 's186-l10-*'`: **PASS**, all six scene fixtures load. The `tsx` executable form itself cannot open its IPC socket in this sandbox.
 - Headless Scene Lab capture attempt: **BLOCKED** before browser launch. Browser-pool startup failed because its listener could not bind `127.0.0.1:4329` (`listen EPERM`). No image captures were produced.
+- Retried with unrestricted socket access: HIGH WebGL2 catalog completed, **2/6 passed**. Convoy, underpass and scarecrow fixtures reported clipping; billboard rejected the retired rigid sprinter. The gate sheet was opened: it shows a tiny courier against a dark empty background, without the authored gate. These fixtures do not demonstrate production composition or the requested key moments and their sheets are not acceptance captures. Fix the fixture's production L10 composition before interpreting placement results.
 
 ## Open
 
