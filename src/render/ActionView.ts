@@ -218,7 +218,7 @@ export class ActionView extends Group {
     lens.position.set(.367, .205, 0);
     const glowMaterial = new SpriteMaterial({ map: torchGlowTexture(), color: lightPalette.light_led_white, transparent: true, depthWrite: false, blending: AdditiveBlending, toneMapped: false, fog: false });
     const glow = new Sprite(glowMaterial); glow.name = 'torch-glow';
-    glow.position.set(.371, .205, 0); glow.scale.setScalar(.16);
+    glow.position.set(.371, .205, 0); glow.scale.setScalar(.24);
     const node = new Object3D(); node.name = 'torch-lens'; node.position.set(.37, .205, 0);
     torch.add(body, mount, lens, glow, node);
     torch.traverse(part => { if (part instanceof Mesh) part.castShadow = true; });
