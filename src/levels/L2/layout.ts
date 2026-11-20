@@ -135,6 +135,19 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
     const superseded = supersededIds(layout);
     layout.placements = layout.placements.filter(p => !superseded.has(p.id));
     layout.colliders = layout.colliders.filter(c => !superseded.has(c.id));
+    // The depot bike rack stands mid-forecourt with its three hoop strips
+    // straddling the courier's doors approach lane: chasing infected jam into
+    // the strip gaps 2 m from her stand and read unreachable (L2-07 worst
+    // ticks at the 90% line). The forecourt keeps its street furniture, but the
+    // rack moves 2.8 m south of the lane: the doors approach passes clear north
+    // of it and bodies pressed against its north face escape straight into that
+    // lane instead of across the strips.
+    const rack = layout.placements.find(p => p.assetId === 'prop.bike-rack' && Math.abs(p.position[0] + 43.6) < .05 && Math.abs(p.position[2] + 36.2) < .05);
+    if (rack) {
+      const shift = [0, 0, -2.8] as [number, number, number];
+      rack.position = [rack.position[0] + shift[0], rack.position[1], rack.position[2] + shift[2]];
+      rack.visualAabb = { min: [rack.visualAabb.min[0] + shift[0], rack.visualAabb.min[1], rack.visualAabb.min[2] + shift[2]], max: [rack.visualAabb.max[0] + shift[0], rack.visualAabb.max[1], rack.visualAabb.max[2] + shift[2]] };
+    }
     // A tree's canopy can screen the required axe even when its trunk is outside the interaction ring.
     const blocking = new Set(layout.placements.filter(p => {
       const canopy = p.assetId.startsWith('prop.street-tree') ? (p.visualAabb.max[0] - p.visualAabb.min[0]) / 2 : 0;
