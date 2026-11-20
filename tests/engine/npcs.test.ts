@@ -183,6 +183,16 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     for (let tick = 0; tick < 900 && restoredDog.transform.z < 53.84; tick++) w.update();
     expect(restoredDog.transform.z, `${quality}: corgi is inside within 15 s after restoring the hangar checkpoint`).toBeGreaterThanOrEqual(53.84);
     expect(Math.hypot(restoredDog.transform.x - player.transform.x, restoredDog.transform.z - player.transform.z)).toBeLessThan(6);
+    Object.assign(player.transform, { x: 2707, z: 59 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.spatial.set(1, 2707, 59);
+    for (const x of [2699, 2715]) {
+      expect(w.solids.relocate(restoredDog, { x, y: .3, z: 43 }, 'test.l10-apron', 0, false)).toBe(true);
+      const c = restoredDog.companion!;
+      c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.velocity = { x: 0, z: 0 };
+      delete restoredDog.locomotion; delete restoredDog.motion;
+      for (let tick = 0; tick < 900 && restoredDog.transform.z < 53.84; tick++) w.update();
+      expect(restoredDog.transform.z, `${quality}: corgi clears the threshold from apron x=${x}`).toBeGreaterThanOrEqual(53.84);
+    }
   }
 });
 
