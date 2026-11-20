@@ -243,7 +243,7 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
       observations['L9/crossing-handover'] = value;
       // PO 2026-11-19: the crossing takes the axe too — L10 starts with no weapon (fists);
       // the crash-site machete (level-acceptance L10-05) lies within ~6 m of the start.
-      add('L9-08', 'actual crossing transaction into L10', value, 'onfoot;exactlyfists;full ordinary health;corgi safe', !world.vehicles?.active && !player.hidden && weapons.length === 1 && weapons[0] === 'weapon.fists' && player.health.current === player.health.max && companions.length === 1 && companions[0].hp === companions[0].maxHp);
+      add('L9-08', 'actual crossing transaction into L10', value, 'onfoot;fists and kick only;full ordinary health;corgi safe', !world.vehicles?.active && !player.hidden && weapons.length === 2 && weapons.includes('weapon.fists') && weapons.includes('weapon.kick') && player.health.current === player.health.max && companions.length === 1 && companions[0].hp === companions[0].maxHp);
     } finally { world.dispose(); }
   }
   if (level === 'L10') {
