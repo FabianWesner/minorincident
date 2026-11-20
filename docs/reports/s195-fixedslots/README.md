@@ -13,8 +13,8 @@
 - Focused: `tests/engine/input.test.ts`, `tests/engine/combat.test.ts`, `tests/engine/world-systems.test.ts`, `tests/engine/save-progression.test.ts` — 24 passed.
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
-- `npm test` — passed locally: 106 tests in 27 files; test-budget reported 150/150 planned cases and 167.1 s / 240 s.
-- `npm run qa:threat` — passed: 0 fail flags in 511.9 s.
+- `npm test` — passed locally: 106 tests in 27 files; test-budget reported 150/150 planned cases and 106.2 s / 240 s.
+- `npm run qa:threat` — passed: 0 fail flags in 277.0 s. The bot weapon paths required no changes.
 - Remote `sh tools/remote/run.sh "$PWD" -- npm test` could not run: no healthy Hetzner runner is provisioned. The required remote green result remains open.
 
 ## Visual captures
@@ -28,4 +28,4 @@ The requested high-quality, zoom-1 L4/L8/L10 start and post-pickup captures are 
 - `e6a10e75` Keep level weapon rack holes visible
 - `e896a7c3` Align weapon cycling and save migration
 
-This report records current progress; the visual capture review and remote test gate remain incomplete.
+This report records current progress; the visual capture review and remote test gate remain incomplete. The test-budget count was kept at 150 by folding the v1 save assertion into the existing save-decoding test.
