@@ -286,6 +286,19 @@ async function alphaTypeContracts() {
       step(rubbleWorld, 120);
       expect(rubbleWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === rubbleMega.id)).toBe(true);
       expect(chunk!.body.isEnabled()).toBe(true);
+
+      const dodgeWorld = await arena(62, false), dodger = dodgeWorld.entities.get(1)!;
+      dodger.health.current = dodger.health.max = 1000;
+      const dodgePursuit = installMegaPursuit(dodgeWorld, { introduceTick: null, resident: () => true });
+      const throwerMega = dodgeWorld.entities.get(dodgePursuit.introduce({ x: 20, z: 0 }))!;
+      throwerMega.infected!.specialCooldowns = { 'alpha.roar': Infinity };
+      step(dodgeWorld, 1);
+      expect(throwerMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
+      // A sidestep begins at the tell and clears the landing radius before launch.
+      for (let i = 0; i < 60; i++) { dodger.transform.z += .06; dodgeWorld.spatial.set(dodger.id, dodger.transform.x, dodger.transform.z); step(dodgeWorld, 1); }
+      expect(dodger.transform.z).toBeGreaterThan(3.5);
+      step(dodgeWorld, 160);
+      expect(dodger.health.current).toBe(1000);
     }
   } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
 }

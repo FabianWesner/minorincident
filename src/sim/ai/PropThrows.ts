@@ -173,6 +173,11 @@ export class PropThrows {
     for (const human of this.world.infected!.hearing.humans.within(p, hitRadius + .2)) {
       const e = this.world.entities.get(human.id);
       if (!e || e.health.current <= 0 || e.companion || e.escort?.child || storyProtected(this.world, e)) continue;
+      if (source.infected?.pursuit) {
+        const floor = this.world.districts?.groundHeight(p.x, p.z) ?? 0;
+        const height = body ? body.translation().y : floor + .7 + 1.3 * (1 - next / f.range) + Math.sin(Math.PI * next / f.range) * .6;
+        if (Math.abs(height - e.transform.y) > 1.4) continue;
+      }
       const vx = e.transform.x - old.x, vz = e.transform.z - old.z, t = Math.max(0, Math.min(Math.hypot(p.x - old.x, p.z - old.z), vx * f.dx + vz * f.dz));
       if (Math.hypot(old.x + f.dx * t - e.transform.x, old.z + f.dz * t - e.transform.z) > hitRadius || !this.world.infected!.hearing.lineOfSight(old, e.transform)) continue;
       if (t < along || t === along && e.id < (victim?.id ?? Infinity)) { victim = e; along = t; }
