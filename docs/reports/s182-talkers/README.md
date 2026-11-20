@@ -35,7 +35,7 @@ An earlier experimental walk from off-screen left the guard entering at the edge
 
 Radio lines retain their existing radio labels. Other in-person lines remain to be mapped; this table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips and short clear walks; their activity needs closer visual review. No new animation clips or rigs were added.
 
-Latest typecheck and lint passed. The remote unit suite and its unchanged retry both exceeded the 240-second budget (241.3 s and 240.3 s, exit 124). The first run's save-progression case exceeded its 30-second case limit; it passed in 27.4 s on retry. Neither full run completed. `qa:threat` byte identity and the full visual coverage have not been verified. The objective is incomplete.
+Latest typecheck and lint passed. The full remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on the third attempt: 27 files, 105 tests passed and one skipped, in 232.3 s against the 240-second budget. The two earlier attempts timed out. `qa:threat` byte identity and the full visual coverage have not been verified. The objective is incomplete.
 
 An L10-only remote threat diagnostic completed the skilled route, reached the passive hold budget, and reported zero L10 skilled or passive flags (native state hash `2c15e7eb`). Its overall result correctly flags partial level selection, so it is not a full gate or a byte comparison. There are no branch changes under `src/sim`, `src/data`, `src/levels`, `tools/qa/threat`, or `tools/sim-runner` relative to the merge base.
 
