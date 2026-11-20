@@ -92,6 +92,7 @@ export class Vfx extends Group {
   private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
   private readonly flameSourceSlot = { id: 0, until: 0, direction: { x: 0, z: 0 } };
   private readonly flameTraceDirection = { x: 0, y: 0, z: 0 };
+  private readonly flameFallbackMuzzle = { x: 0, y: 0, z: 0 };
   private flameEmberAt = 0;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
@@ -396,7 +397,7 @@ export class Vfx extends Group {
     if (def?.category === 'ranged') {
       if (event.actionId === 'weapon.flamethrower') {
         if (!this.enabled) return;
-        const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
+        const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? this.flameMuzzleFallback(event.position);
         const range = this.flameRange(muzzle, event.direction);
         if (!this.flameSource || this.time >= this.flameSource.until) {
           this.particles.spawn(this.time, .18, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .9, particleShape.flash, 0xffd16a);
@@ -797,7 +798,7 @@ export class Vfx extends Group {
       return;
     }
     const direction = side.aim ?? jet.direction;
-    const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };
+    const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? this.flameMuzzleFallback(source.transform);
     const range = this.flameRange(muzzle, direction);
     this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, direction.x, direction.z, range, jet.until, jet.id);
     if (this.time >= this.flameEmberAt) {
@@ -811,6 +812,11 @@ export class Vfx extends Group {
       this.particles.spawn(this.time, .7, x, muzzle.y + .3, z, direction.x * .3, .7, direction.z * .3,
         .3, particleShape.smoke, 0x4a3028, -.3);
     }
+  }
+  private flameMuzzleFallback(position: { x: number; y: number; z: number }): { x: number; y: number; z: number } {
+    const muzzle = this.flameFallbackMuzzle;
+    muzzle.x = position.x; muzzle.y = position.y + .45; muzzle.z = position.z;
+    return muzzle;
   }
   private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
     const range = actions['weapon.flamethrower'].range;
