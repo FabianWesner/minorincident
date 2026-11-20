@@ -480,9 +480,9 @@ export class Blasts extends Group {
       const j = this.flameJet;
       j.x = x; j.y = y; j.z = z; j.dx = dx; j.dz = dz; j.range = Math.max(0, range); j.until = until + .24; j.seed = seed;
     } else { this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until: until + .24, seed }; this.jetBirth.fill(-Infinity); this.jetNext = this.time; }
-    const interval = this.quality === 'high' ? .01 : 1 / 75;
+    const interval = this.quality === 'high' ? .004 : .128 / JET_FLAMES_LOW;
     // Bounded catch-up, with fixed slots; each puff retains its own nozzle pose.
-    for (let emitted = 0; emitted < 4 && this.jetNext <= this.time; emitted++, this.jetNext += interval) {
+    for (let emitted = 0; emitted < 16 && this.jetNext <= this.time; emitted++, this.jetNext += interval) {
       const slot = this.jetCursor++ % (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW);
       this.jetBirth[slot] = this.jetNext; this.jetX[slot] = x; this.jetY[slot] = y; this.jetZ[slot] = z;
       this.jetDX[slot] = dx; this.jetDZ[slot] = dz; this.jetRange[slot] = Math.max(0, range);
@@ -817,7 +817,7 @@ export class Blasts extends Group {
         // uniformly dimming cone. The hash is stable for each pooled card.
         const order = ((i * 17) % count) / count;
         if (order >= fade) continue;
-        const t = (now - this.jetBirth[i]) / .32;
+        const t = (now - this.jetBirth[i]) / .128;
         if (t < 0 || t >= 1) continue;
         const dx = this.jetDX[i], dz = this.jetDZ[i], reach = this.jetRange[i] * (.9 + .1 * Math.sin(this.jetBirth[i] * Math.PI * 16));
         const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
