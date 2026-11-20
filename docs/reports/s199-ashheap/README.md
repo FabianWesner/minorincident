@@ -45,3 +45,5 @@ Smoke and ember emission now uses the same body-centre position as the forming h
 On the current implementation (`0d2565b6`), the seven selected corpse/fire scene gate rows pass and remote `npm test` passes (105 passed, 1 skipped, 199.2 s), including L4 contact. The remaining open item is visual acceptance and a fresh review of the latest effects across tiers/backends.
 
 Fresh review on `0d2565b6`: HIGH/LOW WebGL2 zoom 1, HIGH WebGPU zoom 1.5 and LOW WebGPU zoom 1 all pass scene checks. The inspected settled frames show a pale angular heap, crossed tan bones and smoke on both tiers. The WebGPU sequence still reads mostly as a body fading into a heap rather than clearly breaking apart, so visual acceptance remains open.
+
+The latest iteration replaces the fire-death screen-door fade with a model-space chunk mask. Full-size HIGH WebGL2 frames show the charred body breaking into separate dark patches while the heap forms; the LOW WebGPU frame shows the same breakup. Both scene checks, typecheck, lint and seven focused combat tests pass. Complete the requested current-revision capture matrix and repeat the gate and remote suite before final acceptance.

@@ -588,7 +588,12 @@ export class CrowdView extends Group {
       const pixel = screenCoordinate.xy.floor();
       const bayer2 = (p: typeof pixel) => p.x.mod(2).mul(2).add(p.y.mod(2).mul(3)).mod(4);
       const threshold = bayer2(pixel).mul(4).add(bayer2(pixel.div(2).floor())).add(.5).div(16);
-      const livingMask = inlineAccessories ? opacity.greaterThan(threshold).and(frontFacing.or(parts.w.mod(128).lessThan(8))) : opacity.greaterThan(threshold);
+      // Fire deaths lose irregular model-space chunks as they sink. The
+      // ordinary fade keeps its stable screen-door coverage.
+      const cell = positionGeometry.mul(5).floor();
+      const crumbleThreshold = cell.x.mul(12.9898).add(cell.y.mul(78.233)).add(cell.z.mul(37.719)).sin().mul(43758.5453).fract();
+      const coverage = opacity.greaterThan(charred.select(crumbleThreshold, threshold));
+      const livingMask = inlineAccessories ? coverage.and(frontFacing.or(parts.w.mod(128).lessThan(8))) : coverage;
       material.maskNode = livingMask;
       if (baked.texture) {
         const discMask = eyeDisc.not().or(eyeRadius.lessThanEqual(1).and(healthy ? feedbackState.z.greaterThan(.01) : float(1).greaterThan(0)));
