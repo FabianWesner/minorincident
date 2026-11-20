@@ -52,3 +52,5 @@ A LOW close view confirms Fire Station 3 lettering on its entrance support. The 
 Maple Hardware already has large physical facade lettering; its authored LOW recipe retains that lettering. A trial overlay conflicted with the existing sign, so the duplicate generated board is omitted for this asset. The earlier fallback distance in the audit no longer applies to that sign.
 
 The legacy Grove Police asset is a scaled version of the L3 station; its board now follows the scaled entrance canopy. LOD0 and LOD2 centre-grid rays hit the supporting surface at local x 3.469–3.475 m, with the board at 3.492 m. A close capture was obscured by foliage, so visual readability remains unverified.
+
+Pharmacy and gym boards now use the local +X entrance headers with placement scale and rotation. LOD0 and LOD2 mesh samples at the chosen board areas hit x=3.165 m (pharmacy) and x=8.04 m (gym); boards are 0.005 m and 0.01 m ahead respectively. Close diagnostic views were blocked by foreground geometry, so appearance and game-camera readability remain unverified.
