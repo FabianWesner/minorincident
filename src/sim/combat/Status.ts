@@ -8,7 +8,7 @@ export class Status {
   readonly water: WaterZone[] = [];
   constructor(private readonly world: SimWorld) {}
   apply(target: EntitySnapshot, def: StatusDef, sourceId: number, actionId: string, attackId = 0): void {
-    if (!target.combat || target.health.current <= 0 || (target.infected?.special === 'fire-immune' && def.kind === 'burning') || (target.archetype === 'infected.hazmat' && def.kind === 'toxic')) return;
+    if (!target.combat || target.health.current <= 0 || (target.archetype === 'infected.hazmat' && def.kind === 'toxic')) return;
     if (target.infected?.pursuit && def.kind === 'stunned') {
       if (actionId === 'weapon.flashbang') {
         this.world.infected?.cancelSpecial(target.id);
@@ -51,7 +51,10 @@ export class Status {
           status.nextSpread = this.world.tick + 30;
           for (const other of this.world.entities.iterate()) {
             if (other.id === entity.id || other.faction !== 'infected' || other.health.current <= 0 || !other.combat || other.combat.statuses.some(s => s.kind === 'burning')) continue;
-            if (Math.hypot(other.transform.x - entity.transform.x, other.transform.z - entity.transform.z) <= (entity.combat?.radius ?? .35) + (other.combat.radius ?? .35) + .25) this.apply(other, status.def, status.sourceId, status.actionId, status.attackId);
+            if (Math.hypot(other.transform.x - entity.transform.x, other.transform.z - entity.transform.z) <= 1) {
+              this.apply(other, status.def, status.sourceId, status.actionId, status.attackId);
+              this.world.combat!.damage.apply({ attackId: status.attackId ?? 0, actionId: status.actionId, sourceId: status.sourceId, targetId: other.id, origin: entity.transform, direction: { x: 0, z: 0 }, base: status.def.dps / 2, multiplier: 1, type: 'status', permanent: true, fire: true, knockback: 0, stagger: 0 });
+            }
           }
         }
         if (this.world.tick >= status.expires) statuses.splice(i, 1);

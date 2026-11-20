@@ -46,7 +46,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   { ...gun('hunting-rifle', 300, 40, 1, 5, 2.4, 0), tier: 1, projectile: { speed: 110, gravity: 0, pierce: 2 }, maxTargets: 3 },
   gun('assault-rifle', 26, 28, 7.5, 30, 2, 1, 2),
   // L10 signature issue from the safe hangar: a short-range, five-ray fire cone.
-  { ...gun('flamethrower', 4.5, 8, 15, 90, 5, 25, 3), pellets: 7, stagger: .15,
+  { ...gun('flamethrower', 15, 8, 15, 90, 5, 25, 3), pellets: 7, stagger: .15,
     status: { kind: 'burning', duration: 4, maxStacks: 1, dps: 35, slow: 0 } },
   fixtures['weapon.machine-gun'],
   // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
