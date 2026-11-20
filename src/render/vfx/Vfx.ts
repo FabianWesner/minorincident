@@ -90,6 +90,7 @@ export class Vfx extends Group {
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
   private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
+  private readonly flameSourceSlot = { id: 0, until: 0, direction: { x: 0, z: 0 } };
   private readonly flameTraceDirection = { x: 0, y: 0, z: 0 };
   private flameEmberAt = 0;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
@@ -407,7 +408,10 @@ export class Vfx extends Group {
           }
         }
         // Keep the flame attached across discrete attack events; Blasts renders dense, pooled cards along this clipped ray.
-        this.flameSource = { id: event.sourceId, until: this.time + 1 / def.fireRate + .08, direction: { ...event.direction } };
+        const source = this.flameSourceSlot;
+        source.id = event.sourceId; source.until = this.time + 1 / def.fireRate + .08;
+        source.direction.x = event.direction.x; source.direction.z = event.direction.z;
+        this.flameSource = source;
         this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, event.direction.x, event.direction.z, range, this.flameSource.until, event.sourceId);
         // A few hot fragments and soot at the clipped tip add impact texture without making the jet look dotted.
         const tipX = muzzle.x + event.direction.x * range, tipZ = muzzle.z + event.direction.z * range;
