@@ -13,7 +13,6 @@ import { emptyInput } from '../../../src/input/InputFrame';
 import { ThreatObserver } from '../threat/observer';
 import { L4HoldCensus } from '../threat/l4-hold';
 import { AcceptanceObserver, type AcceptanceObservation } from './observer';
-import { extraL6PressureSeeds, L6Arrivals, type L6PressureSeed } from './l6-pressure-seeds';
 
 export type Tier = 'low' | 'high';
 export interface NativeReceipt {
@@ -25,7 +24,6 @@ export interface NativeReceipt {
   /** L3-06 army line over seeds 1–3 (complete policy only; tools/qa/threat/l3ArmyLine.ts). */
   l3Army?: ArmyLineVerdict;
   followerPaceSeeds?: FollowerPaceSeed[];
-  l6PressureSeeds?: L6PressureSeed[];
 }
 function hashFiles(paths: string[]): string {
   const hash = createHash('sha256');
@@ -34,7 +32,7 @@ function hashFiles(paths: string[]): string {
 }
 export function provenance(revision = sourceRevision()) {
   const files = execFileSync('git', ['ls-files', '-z', '--', 'src', 'layouts', 'public/assets/layouts'], { encoding: 'utf8' }).split('\0').filter(Boolean);
-  const toolFiles = ['tools/qa/accept/observer.ts', 'tools/qa/accept/probe.ts', 'tools/qa/accept/l5-formation.ts', 'tools/qa/accept/l6-pressure-seeds.ts', ...['tools/qa/threat', 'tools/sim-runner'].flatMap(dir => readdirSync(dir).filter(file => file.endsWith('.ts')).map(file => join(dir, file)))];
+  const toolFiles = ['tools/qa/accept/observer.ts', 'tools/qa/accept/probe.ts', 'tools/qa/accept/l5-formation.ts', ...['tools/qa/threat', 'tools/sim-runner'].flatMap(dir => readdirSync(dir).filter(file => file.endsWith('.ts')).map(file => join(dir, file)))];
   return { sourceHash: hashFiles(files), observerHash: hashFiles(toolFiles), revision };
 }
 /** Remote runners have a manifest index without Git history; content hashes remain the authority. */
@@ -50,7 +48,7 @@ export async function probeLevel(level: RunnerLevel, tier: Tier, policy: NativeR
   const receipt: NativeReceipt = { version: 2, level, tier, policy, seed: 1, ...identity, generatedAt: new Date().toISOString(), run: null, observation: null, threat: null, nativeStateHash: null, error: null };
   const campaign = level === 'L1' ? newCampaign('female', 1) : preset(`${level}-default` as ProgressionPreset);
   campaign.settings.quality = tier;
-  let acceptance: AcceptanceObserver | undefined, threat: ThreatObserver | undefined, hold: L4HoldCensus | undefined, l6Arrivals: L6Arrivals | undefined;
+  let acceptance: AcceptanceObserver | undefined, threat: ThreatObserver | undefined, hold: L4HoldCensus | undefined;
   const maxSeconds: Partial<Record<RunnerLevel, number>> = { L1: 360, L2: 240, L3: 90, L4: 250, L5: 240, L6: 360, L7: 240, L8: 180, L10: 1800 };
   try {
     receipt.run = await runLevel(level, 'complete', 1, policy === 'stationary' ? maxSeconds[level] : undefined, 'auto', campaign, undefined, 0, {
@@ -58,7 +56,6 @@ export async function probeLevel(level: RunnerLevel, tier: Tier, policy: NativeR
       beforeBegin: world => {
         if (level === 'L8' && process.env.L8_NATIVE_PROGRESS) world.events.on('sim.tick', () => { if (world.tick % 1800 === 0) console.log(JSON.stringify({ nativeProgress: policy, tier, tick: world.tick, at: world.entities.get(1)!.transform, hp: world.entities.get(1)!.health.current, arenas: world.missions!.l8!.state.arenas.map(a => ({ id: a.id, phase: a.phase, turned: a.ids.filter(id => !!world.entities.get(id)?.infected).length, living: a.ids.filter(id => (world.entities.get(id)?.health.current ?? 0) > 0).length })) })); });
         threat = new ThreatObserver(world, level); acceptance = new AcceptanceObserver(world);
-        if (level === 'L6' && policy === 'complete') l6Arrivals = new L6Arrivals(world);
         if (level === 'L4' && policy === 'stationary') hold = new L4HoldCensus(world);
         if (policy === 'stationary' && level !== 'L9') {
           // L1's generator patches device input through setInput rather than applyInput.
@@ -83,9 +80,6 @@ export async function probeLevel(level: RunnerLevel, tier: Tier, policy: NativeR
       },
     });
   } catch (error) { receipt.error = error instanceof Error ? error.stack ?? error.message : String(error); }
-  if (level === 'L6' && policy === 'complete' && l6Arrivals && receipt.run) {
-    receipt.l6PressureSeeds = [l6Arrivals.finish(1, receipt.run.completed, receipt.run.outcome, receipt.threat?.phases.find(phase => phase.key === 'step/retreat')), ...await extraL6PressureSeeds(tier)];
-  }
   if (level === 'L3' && policy === 'complete') {
     const army = receipt.threat?.l3Squad?.army ?? null;
     const checkpoint = receipt.threat?.phases.find(phase => phase.key === 'step/checkpoint');
