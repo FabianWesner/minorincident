@@ -138,6 +138,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - Native HIGH gate approach sampled every 30 ticks from x=2990 to x=3023. A trial widening the follow camera to 1.7 times its normal base showed both effigies, but the sign remained clipped or disappeared through the foreground cut while crossing, and the gate burst was not visible. The trial was reverted. The gate needs coordinated composition and emergence work; a wider lens alone does not pass it.
 
+- A second gate trial combined 1.7× follow framing with retaining the gantry from foreground cuts. Native HIGH tick 40620 showed both effigies, the courier, and the complete readable sign; no tower burst was visible. Typecheck, lint, and focused camera/world tests passed, but the HIGH skilled simulation did not complete in 1800 s (29 deaths, Mega objective), while LOW completed in 1157.02 s with one death. Both trial changes were reverted to preserve completion.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
