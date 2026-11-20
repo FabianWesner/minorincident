@@ -67,7 +67,7 @@ export class LevelNineBot {
     if (l9.state.phase !== 'driving') return f;
     const driving = l9.driving.state;
     if (l9.driving.hatch) {
-      f.brake = true; f.selectedLegacyWeaponKey = 5;
+      f.brake = true; f.selectedWeaponKey = 4;
       const origin = w.entities.get(1)!.transform;
       const humans = [origin, ...driving.roster.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.hidden && !e.passengerOf && e.health.current > 0 && !e.infected).map(e => e!.transform)];
       const risk = (p: { x: number; z: number }) => Math.min(...humans.map(h => Math.hypot(p.x - h.x, p.z - h.z)));
@@ -75,7 +75,7 @@ export class LevelNineBot {
       // Clear those visible hull attackers before covering the walking crew.
       const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && (e.health.current > 0 || downed(e) && risk(e.transform) >= 8) && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 40)
         .sort((a, b) => Number(b.attachedTo === car.id) - Number(a.attachedTo === car.id) || risk(a.transform) - risk(b.transform))[0];
-      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedLegacyWeaponKey = length < 8 ? 6 : 5; /* no launcher in L9 (PO 2026-11-10): MG at range, shotgun close */ f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
+      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.selectedWeaponKey = length < 8 ? 3 : 4; /* no launcher in L9 (PO 2026-11-10): MG at range, shotgun close */ f.aim = { x: dx / length, z: dz / length }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
     // A slow reverse is not a new block: counting it chained 90-tick reverses forever (r29-l9pin, --zero crept backwards 200 m).

@@ -11,9 +11,9 @@ import { regularInfectedModels } from '../data/crowdAppearance';
 import { l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks } from '../data/l4';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
-import { corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
+import { ashPosition, corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
-import { deinterleaveGeometry } from 'three/addons/utils/BufferGeometryUtils.js';
+import { deinterleaveGeometry, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, isCrowdVariant, registerCrowdModel } from './crowdModels';
 import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
@@ -29,7 +29,7 @@ import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, Float32BufferAttribute, IcosahedronGeometry, CapsuleGeometry, SphereGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, uniform, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
 import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -90,6 +90,16 @@ const preparedBatches = new Map<string, PreparedBatch>();
 const preparedBatchLimit = 48;
 /** A clone with its own userData object: per-level LOD tags must not reach the cached copy. */
 const cloneBatchGeometry = cloneCrowdGeometry;
+function ashGeometry(): BufferGeometry {
+  const geometry = new IcosahedronGeometry(.5, 0), normals = geometry.getAttribute('normal'), colors: number[] = [];
+  for (let i = 0; i < normals.count; i++) {
+    const shade = .6 + .4 * Math.max(0, normals.getY(i));
+    colors.push(shade, shade, shade);
+  }
+  geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
+  return geometry;
+}
+
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
   private readonly definitions = new Map<string, CrowdDef>();
@@ -139,6 +149,10 @@ export class CrowdView extends Group {
   private readonly staticCorpses = new StaticCorpses();
   private sharedDogCoats = false;
   private readonly dogCoatTints = [new Color(0, 0, 0), new Color(1, 0, 0)];
+  private readonly ashTint = new Color('#171713');
+  private readonly ashSwatch = new Color();
+  private readonly emberAsh = new Color('#e8833d');
+  private readonly charAsh = new Color('#302d29');
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
   private readonly corpseClips = new Map<string, BakedBatch['clip']>();
   private entityRevision = -1;
@@ -148,6 +162,10 @@ export class CrowdView extends Group {
   private readonly shadows: InstancedMesh;
   private readonly feedback = new Map<number, { mask: number; strength: number; at: number }>();
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
+  /** A metal nail beside the planted foot for each currently pinned infected. */
+  private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
+  private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(ashGeometry(), new MeshBasicNodeMaterial({ color: '#ffffff', vertexColors: true }), 2800);
+  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(mergeGeometries([new CapsuleGeometry(.055, .65, 2, 6).rotateZ(Math.PI / 2), ...[-.38, .38].flatMap(x => [-.05, .05].map(z => new SphereGeometry(.075, 6, 4).translate(x, 0, z)))])!, new MeshBasicNodeMaterial({ color: '#c0aa86' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -159,6 +177,10 @@ export class CrowdView extends Group {
     // must not force every permanent corpse page's world matrix each frame.
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.staticCorpses.matrixAutoUpdate = this.staticCorpses.matrixWorldAutoUpdate = false; }
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
+    this.nails.frustumCulled = false; this.nails.count = 0; this.add(this.nails);
+    // Allocate the colour attribute before shader compilation, including warm-up draws.
+    this.ashHeaps.setColorAt(0, this.ashSwatch.set('#77746d'));
+    for (const mesh of [this.ashHeaps, this.ashBones]) { mesh.frustumCulled = false; mesh.count = 0; this.add(mesh); }
     this.registry = sharedRegistry ?? new AssetRegistry((event) => this.logs.push(event), { materials: this.shading, textureSize: this.low ? 512 : 1024 });
     const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
     this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
@@ -271,11 +293,18 @@ export class CrowdView extends Group {
       // A nearby actor can die before its living LOD changes. Keep its settled
       // body tier in the loading barrier, including the director's runner
       // fallback when the opening camera contains no infected yet.
-      await Promise.all([...this.neededModels(view)].map(key => {
+      const needed = this.neededModels(view);
+      // The crash encounter appears immediately after Begin, before its entities
+      // exist during loading. Prepare its regular looks and crawler as well as
+      // the runner fallback so their living draws join the loading warm-up.
+      if (this.world.scenario === 'L10') for (const id of [...regularInfectedModels, 'infected.crawler']) {
+        const key = this.modelAliases.get(id); if (key) needed.add(key);
+      }
+      await Promise.all([...needed].map(key => {
         const def = this.definitions.get(key)!;
         // L7 starts in a fight. All nearby living/death tiers belong to the
         // loading draw, rather than the first pickup/shot's background queue.
-        const lods: CrowdLod[] = this.world.scenario === 'L7' ? this.plannedLods.get(key)! : [alphaLookAssets.includes(def.asset) ? 'lod0' : 'lod2'];
+        const lods: CrowdLod[] = this.world.scenario === 'L7' || this.world.scenario === 'L10' ? this.plannedLods.get(key)! : [alphaLookAssets.includes(def.asset) ? 'lod0' : 'lod2'];
         return Promise.all(lods.map(lod => this.requestBatch(def, lod)));
       }));
     }
@@ -536,8 +565,10 @@ export class CrowdView extends Group {
       // Flash 0..1 is the ordinary hit pulse; 1..2 marks an L8 arena boss hit (r26-l8hitreact): a plain additive warm-white lift, since the
       // base*(1-base) pulse above is nearly invisible on dark animal coats.
       const flashValue = feedbackState.w.mod(2), bossFlash = flashValue.sub(1).max(0);
-      const glow = emission.mul(eye).add(atlasFill).add(flashValue.lessThan(1).select(flashValue, 0).mul(base.mul(base.oneMinus().mul(1.1))).add(vec3(.6, .54, .48).mul(bossFlash)).mul(figureMask ?? 1));
-      material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      const charred = variant.x.greaterThanEqual(1024);
+      const glow = emission.mul(eye).add(atlasFill).add(flashValue.lessThan(1).select(flashValue, 0).mul(base.mul(base.oneMinus().mul(1.1))).add(vec3(.6, .54, .48).mul(bossFlash)).mul(figureMask ?? 1)).mul(charred.select(0, 1));
+      const charredBase = charred.select(vec3(.025, .023, .019), base);
+      material = this.shading?.shaded(charredBase, glow, undefined, undefined, undefined, healthy ? undefined : eye.mul(charred.select(0, 1)), figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: charredBase, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);
       // r32-alphas: Alphas carry a stronger moonlit outline than the crowd, so the bigger silhouette reads at night.
@@ -557,7 +588,12 @@ export class CrowdView extends Group {
       const pixel = screenCoordinate.xy.floor();
       const bayer2 = (p: typeof pixel) => p.x.mod(2).mul(2).add(p.y.mod(2).mul(3)).mod(4);
       const threshold = bayer2(pixel).mul(4).add(bayer2(pixel.div(2).floor())).add(.5).div(16);
-      const livingMask = inlineAccessories ? opacity.greaterThan(threshold).and(frontFacing.or(parts.w.mod(128).lessThan(8))) : opacity.greaterThan(threshold);
+      // Fire deaths lose irregular model-space chunks as they sink. The
+      // ordinary fade keeps its stable screen-door coverage.
+      const cell = positionGeometry.mul(5).floor();
+      const crumbleThreshold = cell.x.mul(12.9898).add(cell.y.mul(78.233)).add(cell.z.mul(37.719)).sin().mul(43758.5453).fract();
+      const coverage = opacity.greaterThan(charred.select(crumbleThreshold, threshold));
+      const livingMask = inlineAccessories ? coverage.and(frontFacing.or(parts.w.mod(128).lessThan(8))) : coverage;
       material.maskNode = livingMask;
       if (baked.texture) {
         const discMask = eyeDisc.not().or(eyeRadius.lessThanEqual(1).and(healthy ? feedbackState.z.greaterThan(.01) : float(1).greaterThan(0)));
@@ -706,7 +742,7 @@ export class CrowdView extends Group {
     }
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
-    this.shadows.count = 0; this.caps.count = 0; this.texturedCaps = 0;
+    this.shadows.count = 0; this.caps.count = 0; this.nails.count = 0; this.ashHeaps.count = 0; this.ashBones.count = 0; this.texturedCaps = 0;
     this.k9Vest?.begin(this.world);
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
@@ -758,8 +794,56 @@ export class CrowdView extends Group {
       if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
       if (e.hidden || e.infected?.hidden || !view && distance > this.cullDistance && !e.corpse || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
+      if (e.health.current > 0 && this.nails.count < 350 && e.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > this.world.tick)) {
+        const yaw = e.transform.yaw, x = e.transform.x + Math.sin(yaw) * .18, z = e.transform.z + Math.cos(yaw) * .18;
+        this.transform.makeRotationY(yaw); this.transform.setPosition(x, (this.world.districts?.groundHeight(x, z) ?? 0) + .16, z);
+        this.nails.setMatrixAt(this.nails.count++, this.transform);
+      }
+      const ashAge = e.ashDeath ? this.world.tick - e.ashDeath.at : -1;
+      const ashProgress = ashAge >= 0 ? Math.max(0, Math.min(1, ashAge / 90)) : 0;
+      if (e.ashDeath && ashAge > 0) {
+        const heapPieces = Math.ceil(8 * ashProgress);
+        if (this.ashHeaps.count + heapPieces > this.ashHeaps.instanceMatrix.count || this.ashBones.count + (ashProgress >= .45 ? 2 : 0) > this.ashBones.instanceMatrix.count) {
+          const grow = (old: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial>): InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> => {
+            const next = new InstancedMesh(old.geometry, old.material, old.instanceMatrix.count * 2);
+            next.frustumCulled = false; next.count = old.count;
+            for (let i = 0; i < old.count; i++) {
+              old.getMatrixAt(i, this.transform); next.setMatrixAt(i, this.transform);
+              if (old.instanceColor) { old.getColorAt(i, this.ashSwatch); next.setColorAt(i, this.ashSwatch); }
+            }
+            this.remove(old); old.dispose(); this.add(next); return next;
+          };
+          this.ashHeaps = grow(this.ashHeaps); this.ashBones = grow(this.ashBones);
+        }
+        // The death clips lie toward local -X from the feet. Put the ash at
+        // the body centre, using the same resting yaw as the corpse pose.
+        const { x, z } = ashPosition(this.world, e, ashProgress);
+        const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+        const pieces = [
+          [-.17, -.06, .55, .16, .38, .2], [.16, .04, .48, .14, .35, 1.1], [-.02, .15, .42, .13, .32, 2.2], [.04, -.15, .38, .12, .3, .7],
+          [-.31, .12, .18, .07, .15, .4], [.28, -.15, .16, .06, .13, 1.2], [.12, .24, .13, .05, .13, .8], [-.08, -.26, .15, .05, .12, 2],
+        ] as const;
+        // Eight overlapping, irregular clumps settle in over the same 1.5 s
+        // that the charred body dissolves. Both stages share the existing two instanced draws.
+        for (const [pieceIndex, [dx, dz, sx, sy, sz, turn]] of pieces.slice(0, heapPieces).entries()) {
+          const settle = Math.min(1, Math.max(0, (ashProgress - pieceIndex * .06) / .55));
+          const emerge = Math.min(1, Math.max(0, ashProgress * 8 - pieceIndex));
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 1.5 * emerge, sy * emerge, sz * 1.5 * emerge));
+          this.transform.setPosition(x + dx * (.7 + .8 * settle), ground + .045 + sy * .5 + (1 - settle) * (.55 + sy), z + dz * (.7 + .8 * settle));
+          this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
+          this.ashSwatch.set(pieceIndex === 5 ? '#514c45' : '#c5c3bb').lerp(this.emberAsh, (1 - ashProgress) * .16);
+          this.ashSwatch.lerp(this.charAsh, 1 - ashProgress);
+          // One small coal stays warm briefly after the heap settles, then cools.
+          if (pieceIndex === 2) this.ashSwatch.lerp(this.emberAsh, .65 * Math.max(0, 1 - ashAge / 210));
+          this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
+        }
+        if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.setPosition(x + offset, ground + .16 + (1 - ashProgress) * .14, z + offset * .35); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform);
+        }
+        if (ashAge >= 90) continue;
+      }
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
-      if (keepsLook(e) && e.appearance?.asset !== 'inf.common-worker') { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
+      if (!e.ashDeath && keepsLook(e) && e.appearance?.asset !== 'inf.common-worker') { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
       const availableLod = 'lod1';
       const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
       const variant = e.appearance?.asset ?? e.infected?.model ?? e.infected?.variant;
@@ -840,6 +924,7 @@ export class CrowdView extends Group {
       // visible after the sim's strike tick (shipped atlases older than the move set keep the shared clips).
       const alphaMove = !heavy && !e.infectionRise && batch.poses.clip.frames >= alphaCrowdClips.length * framesPerClip ? this.alphaMoves.sample(e, renderTick, batch.windup, motion.speed) : undefined;
       if (alphaMove) clip = alphaMove.clip;
+      if (e.health.current > 0 && e.combat.statuses.some(status => status.kind === 'pinned' && status.expires > this.world.tick) && motion.speed <= .06) clip = Math.floor(renderTick / 14) % 2 ? 'stagger-left' : 'stagger-right';
       const heavyGait = mega && !heavy && !specialAttack && b.state !== 'attack' && b.state !== 'dead';
       const megaRun = Math.max(0, Math.min(1, (motion.speed - 1.5) / 1.5));
       const megaRate = 1.05 + (megaCycleRate - 1.05) * megaRun;
@@ -851,7 +936,7 @@ export class CrowdView extends Group {
         : zebraTell ? .5 * Math.min(1, (renderTick - specialAttack!.startTick) / Math.max(1, specialAttack!.activeTick - specialAttack!.startTick)) * ((renderTick / 9 | 0) % 2 ? 1 : .6)
         : species === 'zebra' && clip === 'zebra-stampede' && !specialAttack ? .5 + (this.gait.sample(e.id, gaitDistance, 'corgi-gallop', batch.strideScale, motion.speed) % 1) / 3 : -1;
       let frame = alphaCrowdClips.indexOf(clip) * framesPerClip + (animalPhase >= 0 ? animalPhase : phase) * (framesPerClip - 1);
-      const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
+      const tint = e.ashDeath ? this.ashTint : batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
       const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
@@ -860,7 +945,7 @@ export class CrowdView extends Group {
       const clingTo = species === 'monkey' && animalPose?.airborne && !specialAttack ? this.world.entities.get(e.infected?.heardTargetId || 1) : undefined;
       if (clingTo) { const dx = clingTo.transform.x - x, dz = clingTo.transform.z - z, d = Math.hypot(dx, dz); if (d > .45) { x += dx / d * (d - .42); z += dz / d * (d - .42); } }
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
-      const fade = 0;
+      const fade = ashProgress;
       if (e.archetype === 'infected.crow') {
         for (let bird = 0; bird < 20; bird++) if ((e.infected?.birdDeadMask ?? 0) & 1 << bird) {
           const x = b.birdPositions[bird * 3], z = b.birdPositions[bird * 3 + 2]; this.transform.makeTranslation(x, this.world.districts?.groundHeight(x, z) ?? 0, z);
@@ -886,7 +971,7 @@ export class CrowdView extends Group {
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         // r32: flying flamingos and leaping animals cast a contact shadow on the ground under them (reads height top-down).
         if (animalLift > .3 && this.shadows.count < 350) { const g = this.world.districts?.groundHeight(x, z) ?? 0; this.shadowMatrix.makeTranslation(x, g + .02, z); this.shadows.setMatrixAt(this.shadows.count++, this.shadowMatrix); this.shadows.instanceMatrix.needsUpdate = true; }
-        if (e.corpse) {
+        if (e.corpse && !e.ashDeath) {
           // Start with the intact corpse source; ordinary limb severance is
           // applied below, while the Mega keeps its complete creature outline.
           const look = resolveCrowdAppearance(e), source = this.corpseGeometry.get(key) ?? batch.mesh.geometry.userData.inlineBody ?? batch.mesh.geometry;
@@ -901,6 +986,10 @@ export class CrowdView extends Group {
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, frozenSource, batch.mesh.material as MeshLambertNodeMaterial, this.corpseClips.get(key) ?? batch.poses.clip, frame, this.transform, tint, [0, 0, 0], String(e.id), hidden, !batch.animal ? look : undefined, near);
           this.k9Vest?.place(e, batch.poses, frame, [0, 1], this.transform);
           continue;
+        }
+        if (e.ashDeath) {
+          this.transform.elements[13] -= .38 * ashProgress;
+          this.transform.scale(this.silhouette.set(1 - .18 * ashProgress, 1 - .72 * ashProgress, 1 - .18 * ashProgress));
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
         const band = crowdLod(this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y), this.footBands.get(e.id)); this.footBands.set(e.id, band);
@@ -981,7 +1070,7 @@ export class CrowdView extends Group {
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry, (feedback?.mask ?? 0) | (b.legLost ? 4 : 0));
         const figure = batch.probe.figures.at(-1);
         if (__QA_HOOKS__ && batch.probe.details && figure?.id === e.id && !batch.animal && !e.civilian?.zooAnimal) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
-        batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, this.flashStrength(e, feedback) + Math.round(fade * 255) * 2);
+        batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod), !!e.ashDeath); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, this.flashStrength(e, feedback) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { if (batch.mesh.geometry.userData.crowdAtlas) this.texturedCaps++; else { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); } }
       }
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
@@ -997,7 +1086,10 @@ export class CrowdView extends Group {
         data.clearUpdateRanges(); data.addUpdateRange(0, batch.count * data.stride); data.needsUpdate = true;
       }
     }
-    this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
+    this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0; this.nails.visible = this.nails.count > 0;
+    for (const mesh of [this.ashHeaps, this.ashBones]) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
+    if (this.ashHeaps.instanceColor && this.ashHeaps.count) this.ashHeaps.instanceColor.needsUpdate = true;
+    if (this.nails.count) { this.nails.instanceMatrix.clearUpdateRanges(); this.nails.instanceMatrix.addUpdateRange(0, this.nails.count * 16); this.nails.instanceMatrix.needsUpdate = true; }
     if (this.caps.count) { this.caps.instanceMatrix.clearUpdateRanges(); this.caps.instanceMatrix.addUpdateRange(0, this.caps.count * 16); this.caps.instanceMatrix.needsUpdate = true; }
     if (this.shadows.count) { this.shadows.instanceMatrix.clearUpdateRanges(); this.shadows.instanceMatrix.addUpdateRange(0, this.shadows.count * 16); this.shadows.instanceMatrix.needsUpdate = true; }
   }
@@ -1046,7 +1138,7 @@ export class CrowdView extends Group {
     this.corpseGeometry.clear(); this.corpseClips.clear();
     const released = new Set<MeshLambertNodeMaterial>();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); const material = batch.mesh.material as MeshLambertNodeMaterial; if (!released.has(material)) { released.add(material); material.dispose(); } batch.mesh.dispose(); batch.texture.dispose(); }
-    for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
+    for (const mesh of [this.shadows, this.caps, this.nails, this.ashHeaps, this.ashBones]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
     this.batches.clear(); this.sharedSkinMaterials.clear(); this.clear(); if (!this.sharedRegistry) void this.registry.dispose();
   }
 }

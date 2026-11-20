@@ -3,6 +3,9 @@ import { PNG } from 'pngjs';
 import { look } from '../../tools/playtest/eyes';
 import { canvasFrame, canvasFrameChecks } from './canvas-frame';
 import { boot, expect, test, testUrl } from './fixtures';
+import { weaponKey } from '../../src/data/weaponKeys';
+// PO 2026-11-20 fixed weapon keys: variants sharing a key (melee 1, throwables 0) share one rack button; repeated presses cycle.
+const rackChoice = (id: string) => `.hud-weapon-choice:has([data-testid="weapon-key-${weaponKey(id)}"])`;
 
 const l10HangarWeapons = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb'];
 
@@ -247,9 +250,12 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); });
   await page.screenshot({ path: 'test-results/smoke/l10-rack/rack-high-1280x720.png' });
   for (const id of l10HangarWeapons) {
-    await page.locator(`.hud-weapon-choice[data-weapon="${id}"]`).click();
-    await page.evaluate(async () => { await window.__SS__!.step(16); });
-    const selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, side = p.weapons!.selectedSide, rack = p.weapons![side]; const id = rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; return id === 'weapon.kick' ? 'weapon.fists' : id; });
+    let selected = '';
+    for (let press = 0; press < 3 && selected !== id; press++) {
+      await page.locator(rackChoice(id)).click();
+      await page.evaluate(async () => { await window.__SS__!.step(16); });
+      selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, side = p.weapons!.selectedSide, rack = p.weapons![side]; const id = rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; return id === 'weapon.kick' ? 'weapon.fists' : id; });
+    }
     expect(selected, `rack click for ${id}`).toBe(id);
   }
   const keyboardSeen = new Set<string>();
@@ -269,10 +275,13 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   await tap(195, 400);
   await page.evaluate(async () => { await window.__SS__!.step(16); });
   for (const id of l10HangarWeapons) {
-    const box = await page.locator(`.hud-weapon-choice[data-weapon="${id}"]`).boundingBox();
-    expect(box).not.toBeNull(); await tap(box!.x + box!.width / 2, box!.y + box!.height / 2);
-    await page.evaluate(async () => { await window.__SS__!.step(16); });
-    const selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, rack = p.weapons![p.weapons!.selectedSide]; return rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; });
+    let selected = '';
+    for (let press = 0; press < 3 && selected !== id; press++) {
+      const box = await page.locator(rackChoice(id)).boundingBox();
+      expect(box).not.toBeNull(); await tap(box!.x + box!.width / 2, box!.y + box!.height / 2);
+      await page.evaluate(async () => { await window.__SS__!.step(16); });
+      selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, rack = p.weapons![p.weapons!.selectedSide]; return rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; });
+    }
     if (selected !== id) await page.screenshot({ path: 'test-results/smoke/l10-rack/touch-failure.png' });
     expect(selected, `touch rack selection for ${id}`).toBe(id);
   }
@@ -306,8 +315,10 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     return { after: { ...a.perf().nodeBuildMaterials }, slots: p.weapons!.LEFT.rack, input: a.getState().input, attacks: a.events(0).filter(e => e.type === 'combat.attack').slice(-4) };
   });
   test.info().annotations.push({ type: 'empty throwable fixture', description: JSON.stringify(l10GunBuilds) });
-  await page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]').click();
-  await page.evaluate(async () => { await window.__SS__!.step(16); });
+  for (let press = 0; press < 3 && !(await page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]').count()); press++) {
+    await page.locator(rackChoice('weapon.molotov')).click();
+    await page.evaluate(async () => { await window.__SS__!.step(16); });
+  }
   await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('data-selected', 'true');
   await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('data-empty', 'true');
   await expect(page.locator('.hud-weapon-choice[data-weapon="weapon.molotov"]')).toHaveAttribute('aria-label', /Empty/);

@@ -48,6 +48,7 @@ export class ActionView extends Group {
   ground: ((x: number, z: number) => number | null) | null = null;
   private readonly pickupRingGeometry = new RingGeometry(.58, .63, 48).rotateX(-Math.PI / 2);
   private readonly pickupRingMaterial = new MeshBasicNodeMaterial({ color: '#ffd166', transparent: true, opacity: .9, depthTest: false, depthWrite: false, toneMapped: false, fog: false, side: DoubleSide });
+  private prewarmedPickupMarker?: Mesh;
   private readonly geometry = new BufferGeometry();
   private readonly positions = new Float32Array(256 * 18);
   private readonly material = new MeshBasicNodeMaterial({ color: '#ffd166', depthWrite: false, side: DoubleSide });
@@ -119,6 +120,9 @@ export class ActionView extends Group {
   /** Loads the carried actions, pickups on the ground and any weapons the mission grants later. */
   async init(): Promise<void> {
     const loadout = this.world.combat?.runner.loadout, needed = new Set(['weapon.fists', 'weapon.kick', 'weapon.bat']);
+    // The crash pickup is created on the first mission tick, after init scans
+    // resident entities. Load its model before the loading draw.
+    if (this.world.scenario === 'L10') needed.add('weapon.machete');
     if (loadout) for (const side of sides) for (const slot of loadout.state[side].rack) needed.add(slot.id);
     for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) needed.add(entity.pickup.actionId);
     // perf-w6: the L4 quartermaster issues the machine gun on the alarm tick (no pickup entity). Loading it on first
@@ -138,7 +142,7 @@ export class ActionView extends Group {
    * at `at`, so their courier-fill materials compile behind the loading card instead of on the first equip. */
   prewarmHeld(at: Vector3): () => void {
     const group = new Group(); group.name = 'held-weapon-prewarm'; group.position.copy(at);
-    for (const asset of this.assets.values()) {
+    for (const [assetId, asset] of this.assets) {
       const clone = asset.model.clone(true);
       clone.traverse(node => { if (node instanceof Mesh) {
         node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material;
@@ -147,6 +151,14 @@ export class ActionView extends Group {
       // The torch's emissive lens and glow compile here too (drawn at `at` behind the opaque loading card).
       const torch = clone.getObjectByName('rifle-torch'); if (torch) torch.visible = true;
       group.add(clone);
+      // L10's first pickup appears with the opening encounter. Its ground
+      // model uses the ordinary swatches, not the held courier materials.
+      if (this.world.scenario === 'L10' && assetId === action('weapon.machete').viewAssetId) group.add(asset.model.clone(true));
+    }
+    if (this.world.scenario === 'L10') {
+      this.prewarmedPickupMarker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
+      this.prewarmedPickupMarker.renderOrder = 94;
+      group.add(this.prewarmedPickupMarker);
     }
     if (!group.children.length) return () => {};
     this.add(group); group.updateMatrixWorld(true);
@@ -446,7 +458,8 @@ export class ActionView extends Group {
         // Q-302 (PO 10-31 "All the weapons that can be picked up by peds should not look like checkpoints"): the L5 street
         // firearms that only survivors take lie on the street without the yellow ring.
         if (!entity.pickup.survivorOnly) {
-          const marker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
+          const marker = this.prewarmedPickupMarker ?? new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
+          this.prewarmedPickupMarker = undefined;
           marker.renderOrder = 94; marker.position.y = .018;
           if (entity.pickup.reachM) marker.scale.setScalar(2.4);
           if (entity.pickup.surfaceY !== undefined && entity.pickup.surfaceY > support + .05) marker.scale.setScalar(.5);

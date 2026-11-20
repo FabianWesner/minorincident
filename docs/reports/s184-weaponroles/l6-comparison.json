@@ -1,0 +1,35 @@
+{
+  "method": "L6 seed 1 early-close native threat audit. Main is 24156a87; branch no-suppression is f2ecd276 with only the army MG status application removed in an isolated worktree. The preliminary branch audit was collected before the L4 route fix.",
+  "results": {
+    "main": {
+      "skilled_flags": [],
+      "passive_flags": [],
+      "early_close_damage_taken": 35,
+      "early_close_time": 199.31666666666666
+    },
+    "branch_without_suppression": {
+      "skilled_flags": [],
+      "passive_flags": [],
+      "early_close_damage_taken": 55,
+      "early_close_time": 199.83333333333334
+    },
+    "branch_with_suppression_preliminary": {
+      "skilled_flags": [
+        "wave/l6.breach1:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passive_flags": [
+        "early-close/step/exit:SLOW_FOLLOWER:44",
+        "early-close/phase/exit:SLOW_FOLLOWER:44",
+        "early-close/wave/l6.breach1:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "early_close_damage_taken": 75,
+      "early_close_time": 211.35,
+      "early_close_first_attack_seconds": {
+        "l6.breach1": 40.81666666666667,
+        "l6.breach2": 21.483333333333334
+      }
+    }
+  }
+}

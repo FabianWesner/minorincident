@@ -1,9 +1,9 @@
-import { weaponFallbackPriority, weaponKey } from '../../data/weaponKeys';
+import { weaponFallbackPriority, weaponKey, weaponLegacyKey } from '../../data/weaponKeys';
 import { compareWeapons } from '../../data/weaponOrder';
 import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
-export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number }
+export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number; lastFuelUse?: number }
 export interface SideState { rack: ActionSlot[]; index: number; aim: Vec2; aimPoint: Vec2 | null; swapUntil: number; unarmed?: ActionSlot }
 export interface LoadoutState { corgiReady?: number; previous?: { side: Side; index: number; id: string }; selectedSide: Side; LEFT: SideState; RIGHT: SideState }
 const slot = (id: string, resolve: (id:string)=>ActionDef): ActionSlot => { const def = resolve(id); return { id, magazine: def.magazine, reserve: 'infinite', charges: def.charges, nextCharge: 0, reloadUntil: 0, readyAt: 0 }; };
@@ -17,7 +17,8 @@ export class Loadout {
   }
   /** Presentation order leaves slot storage, checkpoint indices and cooldowns intact. */
   orderedEntries(side: Side): { side: Side; index: number; id: string }[] {
-    return this.state[side].rack.flatMap((slot, index) => slot.id === 'ability.corgi-lure' ? [] : [{ side, index, id: slot.id }]).sort((a, b) => compareWeapons(a.id, b.id));
+    return this.state[side].rack.flatMap((slot, index) => slot.id === 'ability.corgi-lure' ? [] : [{ side, index, id: slot.id }]).sort((a, b) =>
+      (weaponKey(a.id) ?? 99) - (weaponKey(b.id) ?? 99) || compareWeapons(a.id, b.id));
   }
   /** Ordered carried actions for mouse selection; kick is part of unarmed, not a slot. */
   activeEntries(): { side: Side; index: number; id: string }[] {
@@ -34,10 +35,12 @@ export class Loadout {
     else if (entries.some(entry => entry.id !== 'weapon.fists' && this.definition(entry.id).category === 'melee')) {
       const fists = entries.findIndex(entry => entry.id === 'weapon.fists'); if (fists >= 0) entries.splice(fists, 1);
     }
-    return entries.sort((a, b) => compareWeapons(a.id, b.id));
+    return entries.sort((a, b) => (weaponKey(a.id) ?? 99) - (weaponKey(b.id) ?? 99)
+      || this.definition(b.id).tier - this.definition(a.id).tier || compareWeapons(a.id, b.id));
   }
-  cycleActive(direction: number, tick: number): void {
+  cycleActive(direction: number, tick: number, legacyOrder = false): void {
     const entries = this.activeEntries(), side = this.state.selectedSide, state = this.state[side];
+    if (legacyOrder) entries.sort((a, b) => compareWeapons(a.id, b.id));
     if (!entries.length) return;
     const current = entries.findIndex(e => e.side === side && e.index === state.index);
     const next = entries[(current + direction + entries.length) % entries.length];
@@ -57,8 +60,24 @@ export class Loadout {
       else side.aimPoint = null;
     }
     const legacyEntries = frame.selectedLegacyWeaponKey === undefined ? [] : (['LEFT', 'RIGHT'] as const).flatMap(name => this.state[name].rack.map((slot, index) => ({ side: name, index, id: slot.id })));
-    const keyed = frame.selectedLegacyWeaponKey === weaponKey('weapon.fists') ? { side: 'LEFT' as const, index: -1 } : frame.selectedLegacyWeaponKey !== undefined ? legacyEntries.find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
-    const choice = keyed ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
+    const key = frame.selectedWeaponKey;
+    let keyed: { side: Side; index: number; id: string } | undefined;
+    if (frame.selectedLegacyWeaponKey === weaponLegacyKey('weapon.fists')) keyed = { side: 'LEFT', index: -1, id: 'weapon.fists' };
+    else if (frame.selectedLegacyWeaponKey !== undefined) keyed = legacyEntries.find(entry => weaponLegacyKey(entry.id) === frame.selectedLegacyWeaponKey);
+    else if (key !== undefined) {
+      const matching = this.activeEntries().filter(entry => weaponKey(entry.id) === key)
+        .sort((a, b) => this.definition(b.id).tier - this.definition(a.id).tier || compareWeapons(a.id, b.id));
+      if (matching.length) {
+        const current = matching.findIndex(entry => entry.side === beforeSide && entry.index === beforeIndex);
+        keyed = matching[current >= 0 ? (current + 1) % matching.length : 0];
+      }
+    }
+    const oldPosition = frame.selectedPositionWeaponKey === undefined ? undefined : this.activeEntries().sort((a, b) => compareWeapons(a.id, b.id))[frame.selectedPositionWeaponKey - 1];
+    const sideEntries = frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side) : undefined;
+    if (frame.legacyWeaponOrder) sideEntries?.sort((a, b) => compareWeapons(a.id, b.id));
+    const activeEntries = frame.selectedActiveSlot === undefined ? undefined : this.activeEntries();
+    if (frame.legacyWeaponOrder) activeEntries?.sort((a, b) => compareWeapons(a.id, b.id));
+    const choice = keyed ?? oldPosition ?? (sideEntries && frame.selectedSlot ? sideEntries[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? activeEntries?.[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];
       if (Number.isInteger(choice.index) && (choice.index >= 0 || choice.index === -1 && choice.side === 'LEFT') && choice.index < rack.rack.length && tick >= rack.swapUntil) {
@@ -66,11 +85,13 @@ export class Loadout {
         if (rack.index !== choice.index) { rack.index = choice.index; rack.swapUntil = tick + 15; }
       }
     }
-    if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick);
+    if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick, frame.legacyWeaponOrder);
     else if (frame.selector && tick >= this.state[this.state.selectedSide].swapUntil) {
       const cycling = this.state[this.state.selectedSide];
       const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
-      if (entries.length) { cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15; }
+      if (frame.legacyWeaponOrder) { entries.sort((a, b) => compareWeapons(a.id, b.id)); }
+      const position = frame.legacyWeaponOrder ? entries.findIndex(e => e.index === cycling.index) : current;
+      if (entries.length) { cycling.index = entries[(position + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15; }
     }
     const selectedSide = this.state.selectedSide, selectedId = this.current(selectedSide).id;
     if (selectedId !== beforeId) this.state.previous = { side: beforeSide, index: beforeIndex, id: beforeId };
@@ -103,7 +124,7 @@ export class Loadout {
   /** Zero capacity means bottomless campaign ammo, not an exhausted magazine. */
   hasAmmo(slot: ActionSlot): boolean {
     const def = this.definition(slot.id);
-    return (!def.magazine || slot.magazine > 0) && (!def.charges || slot.charges > 0);
+    return (!def.magazine || slot.magazine >= 1) && (!def.charges || slot.charges > 0);
   }
   update(tick: number, switched: (side: Side, id: string) => void): void {
     for (const name of ['LEFT', 'RIGHT'] as const) {
@@ -111,6 +132,11 @@ export class Loadout {
       if (side.swapUntil && tick >= side.swapUntil) { side.swapUntil = 0; switched(name, this.current(name).id); }
       for (const slot of side.unarmed ? [...side.rack, side.unarmed] : side.rack) {
         const def = this.definition(slot.id);
+        // Fuel refills continuously whenever the stream is idle, including while holstered.
+        if (slot.id === 'weapon.flamethrower' && tick - (slot.lastFuelUse ?? -Infinity) > ticks(1 / def.fireRate)) {
+          slot.magazine = Math.min(def.magazine, slot.magazine + def.magazine / ticks(def.reloadTime));
+          slot.reloadUntil = 0;
+        }
         if (slot.reloadUntil && tick >= slot.reloadUntil) { slot.magazine = def.magazine; slot.reloadUntil = 0; }
         if (slot.nextCharge && tick >= slot.nextCharge) { slot.charges++; slot.nextCharge = slot.charges < def.charges ? tick + ticks(def.recharge) : 0; }
       }
@@ -123,7 +149,11 @@ export class Loadout {
   spend(side: Side, tick: number, def: ActionDef, infiniteCharges: boolean): void {
     const slot = this.current(side);
     slot.readyAt = tick + Math.max(ticks(def.cooldown), def.fireRate ? ticks(1 / def.fireRate) : 0, ticks(def.windup + def.active + def.recovery));
-    if (def.magazine && --slot.magazine === 0) slot.reloadUntil = tick + ticks(def.reloadTime);
+    if (def.magazine) {
+      slot.magazine = Math.max(0, slot.magazine - 1);
+      if (def.id === 'weapon.flamethrower') slot.lastFuelUse = tick;
+      else if (slot.magazine === 0) slot.reloadUntil = tick + ticks(def.reloadTime);
+    }
     if (def.charges && !infiniteCharges) {
       slot.charges--; if (!slot.nextCharge) slot.nextCharge = tick + ticks(def.recharge);
     }

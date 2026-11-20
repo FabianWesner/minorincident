@@ -61,12 +61,15 @@ describe('input log codec', () => {
     const fresh = encode([{ frame: keyed, scheme: 'keyboard' }]).chunks;
     expect(decodeLog(fresh).frames[0]).toMatchObject({ selectedWeaponKey: 3, corgiLure: true });
     const legacy = fresh.map(chunk => chunk.slice());
-    const marker = new TextEncoder().encode('"weaponKeyVersion":2');
+    const marker = new TextEncoder().encode('"weaponKeyVersion":3');
     const bytes = legacy[0];
     const offset = bytes.findIndex((_, i) => marker.every((value, j) => bytes[i + j] === value));
     expect(offset).toBeGreaterThanOrEqual(0); bytes[offset + marker.length - 1] = 49;
     const oldFrame = decodeLog(legacy).frames[0];
     expect(oldFrame.selectedLegacyWeaponKey).toBe(3); expect(oldFrame.selectedWeaponKey).toBeUndefined();
+    bytes[offset + marker.length - 1] = 50;
+    const positionalFrame = decodeLog(legacy).frames[0];
+    expect(positionalFrame.selectedPositionWeaponKey).toBe(3); expect(positionalFrame.selectedWeaponKey).toBeUndefined();
     // s178: the replay meta carries the campaign difficulty with the campaign snapshot (replays reproduce
     // it); pre-s178 logs decode without the field and replay as simple.
     const s178: Uint8Array[] = [];

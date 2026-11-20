@@ -1423,7 +1423,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
               selector: 0, interact: false, pause: false, selectedWeaponKey: key }, w.tick);
           }, shortcut);
           log({ assist: 'requested starting weapon while driving', weapon: o.weapon, level: e.level });
-        } else await page.keyboard.press(`Digit${shortcut}`);
+        } else await page.keyboard.press(`Digit${shortcut === 10 ? 0 : shortcut}`);
         await hold(300);
         const selected = await page.evaluate(() => { const w = window.__SS__!.getEntity(1)!.weapons!; return w[w.selectedSide].rack[w[w.selectedSide].index]?.id; });
         assert.equal(selected, o.weapon, 'requested carried weapon selected');

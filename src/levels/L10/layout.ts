@@ -55,8 +55,10 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     wall('l10-hangar-west', h.min.x - .2, h.min.z, h.min.x + .2, h.max.z);
     wall('l10-hangar-east', h.max.x - .2, h.min.z, h.max.x + .2, h.max.z);
     wall('l10-hangar-back', h.min.x, h.max.z - .2, h.max.x, h.max.z + .2);
-    wall('l10-hangar-door-west', h.min.x, h.min.z - .2, h.entrance.x - 1, h.min.z + .2);
-    wall('l10-hangar-door-east', h.entrance.x + 1, h.min.z - .2, h.max.x, h.min.z + .2);
+    // A narrow opening admits the courier but can pinch the corgi's long
+    // capsule when it turns through the threshold. Keep a 4 m clear bay.
+    wall('l10-hangar-door-west', h.min.x, h.min.z - .2, h.entrance.x - 2, h.min.z + .2);
+    wall('l10-hangar-door-east', h.entrance.x + 2, h.min.z - .2, h.max.x, h.min.z + .2);
     place('l10-hangar-generator', 'prop.cure-generator', 2719, 73, [1.2, 1.2, 1]);
     place('l10-hangar-tent', 'prop.cure-iso-tent', 2694, 73, [2.5, 1.7, 2]);
     place('l10-hangar-light', 'prop.emergency-light', 2707, 76, [.4, 1.5, .4]);

@@ -112,8 +112,6 @@ export class DistrictView extends Group {
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
   private readonly saved = new Map<Mesh, Material | Material[]>();
-  private readonly tags = this.parts.tags;
-  private labelTime = 0;
   /** Courier see-through, interiors, roofs and the bar line of sight (district/DistrictOcclusion). */
   readonly occlusion: DistrictOcclusion;
   constructor(
@@ -280,7 +278,7 @@ export class DistrictView extends Group {
     this.cameraPosition = [Infinity, Infinity, Infinity];
   }
   advance(seconds: number): void {
-    this.frameSeconds = seconds; this.phase.value += seconds; this.labelTime += seconds;
+    this.frameSeconds = seconds; this.phase.value += seconds;
     this.updateSpin(seconds);
   }
   private spinActive = false;
@@ -338,26 +336,34 @@ export class DistrictView extends Group {
       this.parts.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
     }
     this.parts.ambient?.focus.value.set(view.focus.x, view.focus.z);
-    for (const tag of this.tags) {
-      const position = tag.sprite.getWorldPosition(this.bounds.center);
-      if (!tag.done && tag.entered === null && Math.hypot(position.x - view.focus.x, position.z - view.focus.z) < 14) tag.entered = this.labelTime;
-      const age = tag.entered === null ? Infinity : this.labelTime - tag.entered;
-      tag.sprite.visible = age < 3; tag.sprite.material.opacity = Math.max(0, Math.min(1, 3 - age));
-      if (age >= 3 && tag.entered !== null) tag.done = true;
-    }
     const p = view.camera.position;
     const rotation = view.camera.quaternion.toArray();
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
       && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight && this.cameraGameLod === view.inspectionGameLod) {
       for (const entry of this.dirtyEntries) this.partition(entry, view);
+      this.updateSigns();
       this.dirtyEntries.clear(); return;
     }
     this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight; this.cameraGameLod = view.inspectionGameLod;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
     for (const entry of this.dressingEntries) this.partitionDressing(entry);
+    this.updateSigns();
     this.dirtyEntries.clear();
   }
+  /** Keep each atlas quad only while its supporting building has a real drawn LOD. */
+  private updateSigns(): void {
+    for (const batch of this.parts.signBatches) {
+      const flags = batch.supports.map(support => !this.overview && this.lodBatches.some(entry => entry.id === support.asset && entry.origin[0] === batch.origin[0] && entry.origin[1] === batch.origin[1] && [entry.hero, entry.near, entry.far].some(lod => lod.visible && !lod.userData.placeholder && (support.asset !== 'bld.hospital' || lod === entry.far || lod === entry.hero && entry.heroShown === 'lod2' || lod === entry.near && !entry.nearLoaded) && lod.references.some(ref => !ref.userData.occluder && !ref.userData.lensOccluder && ref.position.distanceToSquared(this.signPosition.fromArray(support.position)) < .0001))) ? '1' : '0').join('');
+      if (batch.visible === flags) continue;
+      batch.visible = flags;
+      const indices: number[] = [];
+      for (let i = 0; i < flags.length; i++) if (flags[i] === '1') indices.push(...batch.indicesBySign[i]);
+      const index = batch.geometry.getIndex()!; index.array.set(indices); index.needsUpdate = true;
+      batch.geometry.setDrawRange(0, indices.length);
+    }
+  }
+  private readonly signPosition = new Vector3();
   private partitionDressing(entry: DressingEntry): void {
     const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
     for (const ref of refs) {
@@ -752,7 +758,8 @@ export class DistrictView extends Group {
   }
   getState() {
     return {
-      labels: this.tags.map(({ sprite }) => ({ text: sprite.name, visible: sprite.visible, opacity: sprite.material.opacity, width: sprite.scale.x, height: sprite.scale.y })),
+      signs: [...this.parts.signs],
+      signVisibility: this.parts.signBatches.map(b => ({ district: b.district, ids: b.ids, visible: b.visible })),
       districts: this.world.districts.map((d) => d.id),
       terrain: this.terrainState(),
       batches: this.batches.map((b) => ({

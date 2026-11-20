@@ -58,7 +58,11 @@ c1911 = shots('1911/A_42P.wav', [0.94, 5.00])
 sw = shots('Smith & Wesson 642/V_27P.wav', [0.80, 6.21])
 fam('action.weapon.handgun', ppq + [ppq[0]], LEVEL['handgun'])
 fam('action.weapon.pistol', c1911 + sw, LEVEL['handgun'])
-fam('action.weapon.nail-gun', shots('Ruger Mark III/R_35P.wav', [0.48, 4.48], 'highpass=f=250,' + up(1.12)), LEVEL['nail'])
+# Keep the separately documented pneumatic nail-gun recording when regenerating
+# the firearm recipes; a pitched pistol shot loses the weapon's quiet identity.
+for i in range(4):
+    d['cues']['action.weapon.nail-gun' + (f'.v{i}' if i else '')] = dict(
+        source='s184-nailgun', start=0, filter='highpass=f=120,' + up(1 + i * .00625), level=-14)
 # ---- shotgun: deep boom with body (low shelf + slightly slowed), long tail; pump rack is its own cue
 sg_f = 'bass=g=7:f=110:w=0.8,' + up(0.9)
 fam('action.weapon.shotgun', shots('Model 12/K_22P.wav', [0.84, 7.44], sg_f) + shots('Nova/O_21P.wav', [0.43], sg_f) + shots('CD/H_21P.wav', [0.46], sg_f), LEVEL['shotgun'])
@@ -77,19 +81,19 @@ fam('action.ability.turret', shots('PPSh/P_30P.wav', [0.96, 4.38, 8.24, 11.42], 
 d['cues']['weapon.minigun-whir'] = dict(source=residue('ventilator.wav'), start=0, level=-24, filter='lowpass=f=2400,bass=g=4:f=120')
 # ---- rocket launcher: blast (boom slowed to half speed + shotgun blast under it); whoosh stays synthesized (self-made)
 fam('action.weapon.rocket-launcher', [(residue('boom.ogg'), 0, 'bass=g=10:f=90,lowpass=f=2600,' + up(0.55)), (residue('boom.ogg'), 0, 'bass=g=10:f=90,lowpass=f=2200,' + up(0.5)),
-    (ffl('Model 12/K_22P.wav'), 0.84 - O, 'bass=g=12:f=80,lowpass=f=2400,' + up(0.5)), (ffl('Nova/O_21P.wav'), 0.43 - O, 'bass=g=12:f=80,lowpass=f=2400,' + up(0.5))], LEVEL['rocket'])
+    (residue('boom.ogg'), 0, 'bass=g=12:f=80,lowpass=f=2400,' + up(0.48)), (residue('boom.ogg'), 0, 'bass=g=12:f=80,lowpass=f=2100,' + up(0.52))], LEVEL['rocket'])
 # ---- throwables: lobbed throw whoosh (existing CC0 bamboo swishes, slower and lower); molotov adds a glass clink
 def sw_(i, r, extra=''): return ('swish-%d' % i, 0.0, up(r) + ',lowpass=f=3200' + extra)
 fam('action.weapon.grenade', [sw_(0, 0.7), sw_(1, 0.66), sw_(2, 0.72), sw_(3, 0.68)], LEVEL['throw'])
 fam('action.weapon.pipe-bomb', [sw_(2, 0.62), sw_(3, 0.6), sw_(0, 0.64), sw_(1, 0.62)], LEVEL['throw'])
 fam('action.weapon.smoke-grenade', [sw_(1, 0.6), sw_(0, 0.62), sw_(3, 0.58), sw_(2, 0.6)], LEVEL['throw'])
-fam('action.weapon.flashbang', [sw_(3, 0.8), sw_(2, 0.78), sw_(1, 0.82), sw_(0, 0.8)], LEVEL['throw'])
+fam('action.weapon.flashbang', [('s184-throw', t, None) for t in [0, 1, 2, 3]], LEVEL['throw'])
 fam('action.weapon.molotov', [('sfx2-r75-bfh1_glass_hit_01', 0.0, 'highpass=f=1200,' + up(0.9)), sw_(0, 0.66), ('sfx2-r75-bfh1_glass_hit_02', 0.0, 'highpass=f=1200,' + up(0.85)), sw_(1, 0.64)], LEVEL['throw'])
 fam('action.weapon.firecracker-lure', shots('Ruger Mark III/R_35P.wav', [0.48, 4.48], 'highpass=f=900,' + up(1.5)), LEVEL['nail'])
 # ---- melee swings: heavier tools slower/lower, light blades faster/higher (same CC0 swish takes)
 for cue, takes, level in [('knife', [(0, 1.35), (3, 1.3), (1, 1.4), (2, 1.32)], LEVEL['melee'] - 3), ('katana', [(0, 1.5), (1, 1.45), (3, 1.55), (2, 1.5)], LEVEL['melee']),
                           ('nail-bat', [(2, 0.9), (3, 0.88), (1, 0.92), (0, 0.9)], LEVEL['melee']), ('shovel', [(3, 0.78), (2, 0.8), (1, 0.76), (0, 0.78)], LEVEL['melee']),
-                          ('police-baton', [(1, 1.1), (0, 1.08), (3, 1.12), (2, 1.1)], LEVEL['melee']), ('fire-axe', [(2, 0.62), (3, 0.6), (1, 0.64), (0, 0.62)], LEVEL['melee'] + 2)]:
+                          ('police-baton', [(1, 1.1), (0, 1.08), (3, 1.12), (2, 1.1)], LEVEL['melee']), ('fire-axe', [(3, 0.62), (3, 0.6), (3, 0.64), (3, 0.62)], LEVEL['melee'] + 2)]:
     fam(f'action.weapon.{cue}', [('swish-%d' % i, 0.03, up(r)) for i, r in takes], level)
 fam('action.ability.ground-slam', [(f'sfx2-k-impactSoft_heavy_00{i}', 0.0, 'bass=g=6:f=80,' + up(0.7)) for i in range(4)], LEVEL['thump'])
 # (The other melee weapons keep using the existing flesh.* hit takes through AudioService's fleshLike map: the L1 initial bank is at its 4 MB budget.)

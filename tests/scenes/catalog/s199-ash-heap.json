@@ -1,0 +1,19 @@
+{
+  "name": "s199-ash-heap",
+  "note": "s199: real flamethrower death presentation from char through permanent ash and bones.",
+  "seed": 22,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 40,
+  "dof": false,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-4, 3], "state": "idle" },
+    { "id": "target", "kind": "infected", "archetype": "infected.runner", "at": [0, 0], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 0, 0], "zoom": 1.5 },
+  "frames": 125,
+  "shots": [1, 18, 36, 54, 72, 90, 125],
+  "sheet": 8,
+  "script": [{ "frame": 1, "actor": "target", "do": { "corpse": true, "ash": true } }],
+  "expect": { "consoleErrors": 0 }
+}

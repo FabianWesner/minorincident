@@ -51,6 +51,8 @@ export class AudioEventMapper {
     private ambienceDuckUntil = 0;
     private readonly corgiWarnAt = new Map<string, number>();
     private attackUntil = 0;
+    private flameUntil = 0;
+    private flameSource = 0;
     private external: MusicIntensity | null = null;
     private incidentSeen = false;
     private completed = false;
@@ -65,9 +67,14 @@ export class AudioEventMapper {
     /** A new level's events are bound: forget the previous level's rate-limit clocks. */
     beginLevel(): void { this.corgiWarnAt.clear(); }
     /** Level change or teardown: the music policy starts over (a pending ambience duck still expires in `advance`). */
-    reset(): void { this.external = null; this.incidentSeen = false; this.completed = false; this.attackUntil = 0; }
+    reset(): void { if (this.flameUntil) this.host.stopLoop(`flame:${this.flameSource}`); this.flameUntil = 0; this.external = null; this.incidentSeen = false; this.completed = false; this.attackUntil = 0; }
     /** Per service update: the combat duck of the ambience bus lasts 0.5 s, then it recovers. */
     advance(): void {
+        if (this.flameUntil && this.host.context.currentTime > this.flameUntil) {
+            this.host.stopLoop(`flame:${this.flameSource}`);
+            this.host.play('weapon.flame-stop', { position: this.host.world.entities.get(this.flameSource)?.transform }, this.flameSource);
+            this.flameUntil = 0;
+        }
         if (this.ambienceDuckUntil && this.host.context.currentTime > this.ambienceDuckUntil) {
             this.ambienceDuckUntil = 0;
             this.host.graph.buses.ambience.gain.setTargetAtTime(1, this.host.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
@@ -152,13 +159,20 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'noise') {
+            if (event.actionId === 'weapon.flamethrower' && source !== undefined) {
+                if (!this.flameUntil) this.host.play('weapon.flame-ignite', { position: event.position }, source);
+                this.flameSource = source; this.flameUntil = t + .18;
+                this.host.loop(`flame:${source}`, 'weapon.flame-loop', { position: event.position }, source);
+                if (source === 1) this.host.ring(event.position, event.radius);
+                return;
+            }
             const id = audioCues[`action.${event.actionId}`] ? `action.${event.actionId}` : noiseCues[event.kind as keyof typeof noiseCues] ?? `action.${event.actionId}`;
             this.host.play(id, { position: event.position, gain: event.loudness, offscreen: audioCues[id]?.bus === 'telegraph' && this.host.offscreen(event.position) }, source);
             const zone = zoneAt(this.host.graph.map, event.position);
             // Shotgun: the pump racks the next shell 0.45 s behind the blast (PO 10-15).
             if (event.actionId === 'weapon.shotgun')
                 this.host.play('weapon.pump', { position: event.position, time: this.host.context.currentTime + 0.45 }, source);
-            if (event.kind === 'ranged')
+            if (event.kind === 'ranged' && event.actionId !== 'weapon.nail-gun')
                 // F-290: a rocket's room tail must yield to overlapping launches
                 // and blast cores within the existing low-tier voice budget.
                 this.host.play(`tail.${zone.startsWith('interior') || zone === 'tunnel' ? 'interior' : zone === 'park' || zone === 'suburb-open' ? 'open' : 'street'}`, { position: event.position, ...(event.actionId === 'weapon.rocket-launcher' ? { priority: 70 } : {}) }, source);
@@ -351,6 +365,7 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'combat.exploded') {
+            if (event.actionId === 'weapon.flashbang') this.host.play('weapon.impact.flashbang', { position }, source);
             this.host.haptic('explosion');
             if (this.host.settings.tinnitus && position && Math.hypot(position.x - this.host.graph.listener.x, position.z - this.host.graph.listener.z) < 4) {
                 this.host.play('tinnitus');
@@ -382,13 +397,18 @@ export class AudioEventMapper {
                 const weapon = event.actionId.split('.').at(-1)!;
                 const targetPosition = target?.transform ?? position;
                 const flesh = fleshLike[weapon] ?? weapon;
-                this.host.play(audioCues[`flesh.${flesh}`] ? `flesh.${flesh}` : 'flesh.fists', { position: targetPosition }, source);
+                const ownImpact = `weapon.impact.${weapon}`;
+                this.host.play(audioCues[ownImpact] ? ownImpact : audioCues[`flesh.${flesh}`] ? `flesh.${flesh}` : 'flesh.fists', { position: targetPosition }, source);
                 // Layered hit: transient (flesh) + body of the weapon + low thump, each with its own variation.
                 const body = /bat|baton/.test(weapon) ? 'wood' : /crowbar|machete|knife|katana|axe|shovel/.test(weapon) ? 'metal' : 'punch', heavy = weapon === 'kick' || weapon === 'bat' || weapon === 'fire-axe' || event.amount >= 20;
                 this.host.play(`impact.body.${body}`, { position: targetPosition, gain: heavy ? 1 : 0.8 }, source);
                 this.host.play('impact.thump', { position: targetPosition, gain: heavy ? 1 : 0.6 }, source);
                 this.host.graph.buses.ambience.gain.setTargetAtTime(0.7, this.host.context.currentTime, 0.02);
                 this.ambienceDuckUntil = this.host.context.currentTime + 0.5;
+            }
+            if (event.type === 'combat.hit' && event.amount > 0 && event.damageType !== 'melee') {
+                const cue = `weapon.impact.${event.actionId.replace(/^weapon\./, '')}`;
+                if (audioCues[cue]) this.host.play(cue, { position: target?.transform ?? position }, source);
             }
         }
         if (event.type === 'infected.attack') {

@@ -186,7 +186,8 @@ body:not(.debug-ui) [data-input-hint]{display:none!important}
 .hud-weapon{box-sizing:border-box;position:relative;width:48px;height:48px;border-radius:50%;background:conic-gradient(#ffcd79 calc(var(--progress,1) * 360deg),#4a5568 0);padding:3px;pointer-events:auto;cursor:pointer;display:grid;place-items:center}
 .hud-weapon[data-state=ready]{background:#64dccc}.hud-weapon[data-state=empty]{background:#4a5568}
 .hud-weapon-icon{width:100%;height:100%;border-radius:50%;background:#232d40;padding:5px;box-sizing:border-box;object-fit:contain}
-.hud-weapon-hint{position:absolute;top:100%;right:0;margin-top:6px;padding:2px 8px;border-radius:8px;background:#182333;border:1px solid #b7a38a;font-size:calc(12px * var(--text-scale));white-space:nowrap;pointer-events:none;text-transform:capitalize}
+.hud-weapon-hint{position:fixed;left:max(12px,env(safe-area-inset-left));top:calc(max(20px,env(safe-area-inset-top)) + 76px);right:auto;box-sizing:border-box;width:min(360px,calc(100vw - 24px));max-height:30vh;overflow:auto;margin:0;padding:4px 8px;border-radius:8px;background:#182333f2;border:1px solid #b7a38a;font-size:calc(12px * var(--text-scale));line-height:1.3;white-space:normal;pointer-events:none;text-transform:capitalize}
+@media(max-width:600px){.hud-weapon-hint{width:min(220px,55vw)}}
 .hud-weapon[hidden],.hud-weapon-hint[hidden]{display:none}
 .hud-weapon:focus-visible{outline:3px solid #ffcd79;outline-offset:2px}
 
@@ -371,6 +372,8 @@ body.debug-tools .hud-navigation{margin-top:var(--debug-row)}
 .hud-weapon-choice[data-selected=true]{border-color:#ffe0a0;background:#495040;box-shadow:0 0 0 1px #ffe0a0}
 .hud-weapon-key{position:absolute;right:0;bottom:0;min-width:13px;border-radius:3px;background:#0b111c;color:#fff3da;text-align:center;font:700 12px/14px system-ui,sans-serif}
 .hud-weapon-choice[data-empty=true]::after{content:'!';position:absolute;left:1px;top:0;color:#ffbc84;font:700 13px/14px system-ui,sans-serif}
+.hud-weapon-choice[data-hole=true]{opacity:.28;filter:grayscale(1);border-style:dashed;cursor:default}
+.hud-weapon-choice[data-hole=true] .hud-weapon-key{opacity:.9}
 .hud-weapon-rack[data-touch=true]{bottom:180px;max-width:calc(100vw - 56px)}
 .hud-pin-threat[data-kind=alpha][data-mega=false]{background:#ff9b32;width:7px;height:7px}
 .hud-pin-threat[data-kind=dog]{border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);width:7px;height:7px}
