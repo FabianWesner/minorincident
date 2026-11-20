@@ -1184,6 +1184,7 @@ export class GameView implements Lifecycle {
     if (this.flashOverlay.style.opacity !== flashOpacity) this.flashOverlay.style.opacity = flashOpacity;
     this.fixtureProps?.update();
     if (this.world.scenario === 'L10' && this.world.l10Encounters) {
+      this.districts?.updateCureEffigies(this.world.tick);
       const start = this.world.l10Encounters.state.billboardFallAt;
       this.districts?.updateCureBillboard(start === undefined ? 0 : Math.min(1, Math.max(0, (this.world.tick - start) / 60)));
       const hospital = this.world.l10Encounters.state.hospitalOpenAt;
