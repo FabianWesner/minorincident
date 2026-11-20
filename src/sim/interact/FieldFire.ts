@@ -9,7 +9,7 @@ export class FieldFire {
   readonly cells: FieldCell[];
   private readonly byId = new Map<string, FieldCell>();
   private readonly neighbors = new Map<string, FieldCell[]>();
-  constructor(placements: readonly Placement[], blocked: (a: Vec2, b: Vec2) => boolean = () => false) {
+  constructor(placements: readonly Placement[], private readonly blocked: (a: Vec2, b: Vec2) => boolean = () => false) {
     this.cells = placements.filter(p => p.assetId === 'veg.corn-block').map(p => ({ id: p.id, x: p.position[0], z: p.position[2], state: 'intact' as const, ignitedAt: 0 })).sort((a, b) => a.id.localeCompare(b.id));
     for (const cell of this.cells) this.byId.set(cell.id, cell);
     const buckets = new Map<string, FieldCell[]>(), key = (x: number, z: number) => `${Math.floor(x / 16)},${Math.floor(z / 16)}`;
@@ -17,12 +17,12 @@ export class FieldFire {
     for (const cell of this.cells) {
       const around: FieldCell[] = [];
       for (let x = -1; x <= 1; x++) for (let z = -1; z <= 1; z++) around.push(...(buckets.get(`${Math.floor(cell.x / 16) + x},${Math.floor(cell.z / 16) + z}`) ?? []));
-      this.neighbors.set(cell.id, around.filter(other => other !== cell && Math.hypot(other.x - cell.x, other.z - cell.z) <= 16 && !blocked(cell, other)));
+      this.neighbors.set(cell.id, around.filter(other => other !== cell && Math.hypot(other.x - cell.x, other.z - cell.z) <= 16 && !this.blocked(cell, other)));
     }
   }
   ignite(position: Vec2, tick: number, radius = 5): number {
     let count = 0;
-    for (const cell of this.cells) if (cell.state === 'intact' && Math.hypot(cell.x - position.x, cell.z - position.z) <= radius) {
+    for (const cell of this.cells) if (cell.state === 'intact' && Math.hypot(cell.x - position.x, cell.z - position.z) <= radius && !this.blocked(position, cell)) {
       cell.state = 'burning'; cell.ignitedAt = tick; count++;
     }
     return count;

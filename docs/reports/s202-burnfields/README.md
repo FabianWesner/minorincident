@@ -18,7 +18,7 @@ Partial implementation; the requested feature is not complete. This report recor
 - The flamethrower HUD role hint now mentions burning dry fields. Nearby field fire uses one intensity-scaled existing flamethrower loop and an ignition cue when it starts. A crackling-specific loop, repeated patch catches, and listening review remain open.
 - Capture and review HIGH/LOW L10 sequences; measure whole-field frame time.
 - Run full unit suite, `npm run qa:threat`, and remote `npm test`; verify skilled routes and resolve any failures.
-- Spread links now reject crossings of authored L10 route centerlines. Verify actual road surfaces and other barriers, direct ignition near roads, and live-save resume.
+- Spread links and direct ignition now reject crossings of authored L10 route centerlines; an isolated barrier test covers both. Verify actual road surfaces and other barriers in a loaded level, and live-save resume.
 
 ## Validation
 

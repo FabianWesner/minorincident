@@ -17,3 +17,11 @@ test('field fire spreads deterministically between crops and leaves persistent s
   restored.update(1000);
   expect(restored.cells.map(c => c.state)).toEqual(['scorched', 'scorched', 'scorched']);
 });
+
+
+test('a barrier prevents both direct ignition and spread across it', () => {
+  const field = new FieldFire([crop('a', 0), crop('b', 10)], (a, b) => (a.x < 5 && b.x > 5) || (a.x > 5 && b.x < 5));
+  expect(field.ignite({ x: 0, z: 0 }, 1, 15)).toBe(1);
+  for (let tick = 1; tick < 600; tick++) field.update(tick);
+  expect(field.cells.map(cell => cell.state)).toEqual(['scorched', 'intact']);
+});

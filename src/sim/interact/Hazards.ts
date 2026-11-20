@@ -61,7 +61,7 @@ export class Hazards {
       const side = (p: Vec2, q: Vec2, x: number, z: number) => (q.x - p.x) * (z - p.z) - (q.z - p.z) * (x - p.x);
       return roads.some(line => line.slice(1).some((end, i) => {
         const start = line[i], c = { x: start[0], z: start[1] }, d = { x: end[0], z: end[1] };
-        return side(a, b, c.x, c.z) * side(a, b, d.x, d.z) <= 0 && side(c, d, a.x, a.z) * side(c, d, b.x, b.z) <= 0;
+        return Math.max(Math.min(a.x, b.x), Math.min(c.x, d.x)) <= Math.min(Math.max(a.x, b.x), Math.max(c.x, d.x)) && Math.max(Math.min(a.z, b.z), Math.min(c.z, d.z)) <= Math.min(Math.max(a.z, b.z), Math.max(c.z, d.z)) && side(a, b, c.x, c.z) * side(a, b, d.x, d.z) <= 0 && side(c, d, a.x, a.z) * side(c, d, b.x, b.z) <= 0;
       }));
     };
     const districts = this.world.districts;
