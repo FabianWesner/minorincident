@@ -14,7 +14,16 @@ export function avoidFieldFire(from: Vec2, target: Vec2, cells: readonly FieldCe
   if (!first) return target;
   for (const sign of [-1, 1]) {
     const point = { x: first.x - uz * 8 * sign - ux * 2, z: first.z + ux * 8 * sign - uz * 2 };
-    if (clear(point)) return point;
+    const sx = point.x - from.x, sz = point.z - from.z, length2 = sx * sx + sz * sz;
+    const safe = cells.every(cell => {
+      if (cell.state !== 'burning') return true;
+      const x = cell.x - from.x, z = cell.z - from.z;
+      const t = Math.max(0, Math.min(1, (x * sx + z * sz) / length2));
+      // An actor already inside fire may move out, but may not go deeper.
+      if (Math.hypot(x, z) < 7) return x * sx + z * sz <= 0;
+      return Math.hypot(x - sx * t, z - sz * t) >= 7;
+    });
+    if (safe && clear(point)) return point;
   }
   return null;
 }
