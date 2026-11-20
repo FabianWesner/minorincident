@@ -313,13 +313,32 @@ export class DistrictView extends Group {
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
       && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight && this.cameraGameLod === view.inspectionGameLod) {
       for (const entry of this.dirtyEntries) this.partition(entry, view);
+      this.updateSigns();
       this.dirtyEntries.clear(); return;
     }
     this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight; this.cameraGameLod = view.inspectionGameLod;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
     for (const entry of this.dressingEntries) this.partitionDressing(entry);
+    this.updateSigns();
     this.dirtyEntries.clear();
+  }
+  /** Keep each atlas quad only while its supporting building has a real drawn LOD. */
+  private updateSigns(): void {
+    const drawn = new Set<string>();
+    if (!this.overview) for (const entry of this.lodBatches) for (const batch of [entry.hero, entry.near, entry.far]) {
+      if (!batch.visible || batch.userData.placeholder) continue;
+      for (const ref of batch.references) if (typeof ref.userData.placementId === 'string' && !ref.userData.occluder && !ref.userData.lensOccluder) drawn.add(ref.userData.placementId);
+    }
+    for (const batch of this.parts.signBatches) {
+      const flags = batch.ids.map(id => drawn.has(`${batch.district}/${id}`) ? '1' : '0').join('');
+      if (batch.visible === flags) continue;
+      batch.visible = flags;
+      const indices: number[] = [];
+      for (let i = 0; i < flags.length; i++) if (flags[i] === '1') { const n = i * 4; indices.push(n, n + 1, n + 2, n, n + 2, n + 3); }
+      const index = batch.geometry.getIndex()!; index.array.set(indices); index.needsUpdate = true;
+      batch.geometry.setDrawRange(0, indices.length);
+    }
   }
   private partitionDressing(entry: DressingEntry): void {
     const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
@@ -716,6 +735,7 @@ export class DistrictView extends Group {
   getState() {
     return {
       signs: [...this.parts.signs],
+      signVisibility: this.parts.signBatches.map(b => ({ district: b.district, ids: b.ids, visible: b.visible })),
       districts: this.world.districts.map((d) => d.id),
       terrain: this.terrainState(),
       batches: this.batches.map((b) => ({

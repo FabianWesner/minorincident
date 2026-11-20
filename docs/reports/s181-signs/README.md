@@ -40,3 +40,5 @@ The supermarket board now uses its local +X entrance header, rotated with the pl
 Zoo ticket and staff/lodge boards now follow the local +X gate lintel and porch fascia. Close HIGH captures show both on their supports; the first staff placement was hidden by the roof and was moved to its front edge. The long staff text is compressed to fit the shallow fascia, so game-camera readability and full clearance remain open.
 
 L3 police uses its existing entrance sign as support; a close HIGH capture with the courier nearby shows the board on the canopy. A capture with the courier far away showed the sign while the building was not rendered: sign visibility must follow building streaming/LOD before this can pass the no-floating requirement.
+
+Sign quads now follow the supporting placement’s drawn, non-placeholder LOD and are omitted when that placement is a see-through occluder. The L3 diagnostic repro no longer shows a board while the building is cut away; nearby L3, L8 and L10 views retain their signs. This uses a dynamic index buffer within the existing district mesh. Wider transition and backend coverage remains open.

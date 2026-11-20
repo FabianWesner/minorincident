@@ -2,7 +2,7 @@ import { groundDepth, groundLayers } from '../GroundLayers';
 import { texture as sampleTexture } from 'three/tsl';
 import { worldTiers } from '../../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
-import { BoxGeometry, CircleGeometry, DoubleSide, Float32BufferAttribute, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Box3, BufferGeometry, CanvasTexture, ConeGeometry, Group, Sphere, SRGBColorSpace, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, CircleGeometry, DoubleSide, DynamicDrawUsage, Float32BufferAttribute, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Box3, BufferGeometry, CanvasTexture, ConeGeometry, Group, Sphere, SRGBColorSpace, Uint16BufferAttribute, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type Material } from 'three/webgpu';
 import type { DistrictWorld } from '../../sim/world/DistrictWorld';
 import type { DistrictAssets } from '../../assets/DistrictAssets';
 import type { Materials } from '../Materials';
@@ -59,6 +59,7 @@ export class DistrictParts {
   readonly perimeterPosts: InstancedMesh[] = [];
   readonly ownedMaterials: Material[] = [];
   readonly signs: string[] = [];
+  readonly signBatches: { geometry: BufferGeometry; district: string; ids: string[]; visible: string }[] = [];
   readonly textures: CanvasTexture[] = [];
   ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
@@ -412,7 +413,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       // A label may outlive its placement in later decay tiers. Only sign buildings
       // that are actually present in this district load.
       const present = new Set(d.decay.placements.map(p => p.id));
-      buildFacadeSigns(parts, root, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), d.decay.placements, deps.materials);
+      buildFacadeSigns(parts, root, d.id, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), d.decay.placements, deps.materials);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
@@ -481,7 +482,7 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
   root.add(mesh);
 }
 /** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
-function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], placements: { id: string; position: [number, number, number]; yaw: number; scale: [number, number, number] }[], materials: Materials): void {
+function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], placements: { id: string; position: [number, number, number]; yaw: number; scale: [number, number, number] }[], materials: Materials): void {
   const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
   // The gas station already carries physical Sunset Fuel signage.
@@ -529,7 +530,8 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
   });
   const geometry = new BufferGeometry();
   geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(indices); geometry.computeVertexNormals();
+  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(new Uint16BufferAttribute(indices, 1).setUsage(DynamicDrawUsage)); geometry.computeVertexNormals();
+  parts.signBatches.push({ geometry, district, ids: rows.map(b => b.id), visible: 'uninitialized' });
   parts.ownedGeometry.push(geometry);
   const texture = new CanvasTexture(canvas); texture.colorSpace = SRGBColorSpace; texture.generateMipmaps = true; parts.textures.push(texture);
   const material = materials.shaded(sampleTexture(texture).rgb.mul(2.5)); material.side = DoubleSide; parts.ownedMaterials.push(material);
