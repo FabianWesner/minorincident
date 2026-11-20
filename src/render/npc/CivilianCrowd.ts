@@ -264,8 +264,11 @@ class CivilianBatch extends Group {
       let conversationSpeed = conversation?.speed ?? 0, conversationYaw = conversation?.yaw ?? e.transform.yaw;
       if (conversation) {
         const player = this.world.entities.get(1)!.transform;
-        const dx = e.transform.x - player.x, dz = e.transform.z - player.z, length = Math.hypot(dx, dz) || 1;
-        let goal = (speaking || joining) && length > 3 ? { x: player.x + dx / length * 3, z: player.z + dz / length * 3 } : e.transform;
+        let dx = e.transform.x - player.x, dz = e.transform.z - player.z;
+        let length = Math.hypot(dx, dz);
+        if (length < .001) { dx = Math.cos(e.transform.yaw); dz = -Math.sin(e.transform.yaw); length = 1; }
+        const distance = Math.max(2.25, Math.min(3, length));
+        let goal = speaking || joining ? { x: player.x + dx / length * distance, z: player.z + dz / length * distance } : e.transform;
         if (this.world.scenario === 'L10' && this.world.missions?.state.actors['hangar-voss'] === e.id && (speaking || joining) && length > 3) {
           // Keep the handoff props from masking her when the courier stands beside the canister.
           for (const angle of [0, .8, -.8, 1.4, -1.4]) {
