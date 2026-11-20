@@ -2,9 +2,20 @@
 
 ## Change
 
-Added six authored L10 dispersal fight beats to `curePaceEncounters`, positioned along the R6 corridor and released within 35 m of their authored station. Each beat uses the existing deterministic encounter slot and fair-admission path, preserves the existing infected definitions/stats, and participates in the existing paced-wave re-targeting. Scarecrow field has five HIGH / four LOW members; the other set pieces retain their authored high/low cohorts. Fixed district dressing uses the ordinary placement and LOD pipeline. Added six Scene Lab fixtures with one Trellis-backed infected beside the courier for capture and placement review.
+Added six authored L10 dispersal fight beats to `curePaceEncounters`, positioned along the R6 corridor and released within 35 m of their authored station. Each beat uses the existing deterministic encounter slot and fair-admission path, preserves the existing infected definitions/stats, and participates in the existing paced-wave re-targeting. Scarecrow field has five HIGH / four LOW members; the other set pieces retain their authored high/low cohorts. Fixed district dressing uses the ordinary placement and LOD pipeline. Added six Scene Lab fixtures with an infected beside the courier for capture and placement review; deployed hazmat and crawler TRELLIS lineage remains unresolved in the existing figure audit.
 
 The six scenes are arranged around the existing corridor groups at 2940, 3060, 3190, 3260, 3390 and 3520 m. This preserves the PO's distinct visual themes and leaves the existing corridor groups interleaved with them.
+
+## Diagnostic stills
+
+These are staged HIGH zoom 1 Scene Lab views and the LOW gate view, not evidence that the native key moments occurred or were accepted.
+
+- Gate: [HIGH](gate-high-diagnostic.jpg), [LOW](gate-low-diagnostic.jpg). Both figures appear; the overhead sign is cropped and the burst is not shown.
+- Billboard: [HIGH](billboard-high-diagnostic.jpg), with the fall fraction manually set to 1; no crowd is visible.
+- Field: [HIGH](field-high-diagnostic.jpg); figures are at the frame edge and no one tears free.
+- Convoy: [HIGH](convoy-high-diagnostic.jpg); a cropped truck and infected are visible, but not the three-sided wave or clear flames.
+- Underpass: [HIGH](underpass-high-diagnostic.jpg); shadow, crawler and emergency lamp are visible, but the roof is not readable.
+- Hospital: [HIGH](hospital-high-diagnostic.jpg); the canvas is lit, with no opening or silhouettes shown.
 
 ## Verification
 
