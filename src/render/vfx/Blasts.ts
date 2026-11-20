@@ -98,6 +98,10 @@ export class Blasts extends Group {
   private glowCount = 0;
   /** Latest flamethrower discharge; a short hold bridges discrete sim attacks into one visible jet. */
   private flameJet: { x: number; y: number; z: number; dx: number; dz: number; range: number; until: number; seed: number } | null = null;
+  private readonly jetBirth = new Float64Array(JET_FLAMES).fill(-Infinity);
+  private readonly jetX = new Float32Array(JET_FLAMES); private readonly jetY = new Float32Array(JET_FLAMES); private readonly jetZ = new Float32Array(JET_FLAMES);
+  private readonly jetDX = new Float32Array(JET_FLAMES); private readonly jetDZ = new Float32Array(JET_FLAMES); private readonly jetRange = new Float32Array(JET_FLAMES);
+  private jetCursor = 0; private jetNext = 0;
   private jetLight: { remove(): void } | null = null;
   private nozzleLight: { remove(): void } | null = null;
   private nozzleLightX = Infinity;
@@ -475,7 +479,15 @@ export class Blasts extends Group {
     if (this.flameJet) {
       const j = this.flameJet;
       j.x = x; j.y = y; j.z = z; j.dx = dx; j.dz = dz; j.range = Math.max(0, range); j.until = until + .24; j.seed = seed;
-    } else this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until: until + .24, seed };
+    } else { this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until: until + .24, seed }; this.jetBirth.fill(-Infinity); this.jetNext = this.time; }
+    const interval = this.quality === 'high' ? .01 : 1 / 75;
+    // Bounded catch-up, with fixed slots; each puff retains its own nozzle pose.
+    for (let emitted = 0; emitted < 4 && this.jetNext <= this.time; emitted++, this.jetNext += interval) {
+      const slot = this.jetCursor++ % (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW);
+      this.jetBirth[slot] = this.jetNext; this.jetX[slot] = x; this.jetY[slot] = y; this.jetZ[slot] = z;
+      this.jetDX[slot] = dx; this.jetDZ[slot] = dz; this.jetRange[slot] = Math.max(0, range);
+    }
+    if (this.jetNext < this.time - .1) this.jetNext = this.time;
     const lx = x + dx * range * .4, lz = z + dz * range * .4;
     if (!this.jetLight || Math.hypot(lx - this.jetLightX, lz - this.jetLightZ) > .25) {
       this.jetLight?.remove();
@@ -800,21 +812,22 @@ export class Blasts extends Group {
       const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .24);
       // Centre the 8 Hz oscillation at 90% of the clipped ray: ±11% around that
       // visible length without carrying flame through cover at the high point.
-      const reach = j.range * (.9 + .1 * Math.sin(now * Math.PI * 16));
       for (let i = 0; i < count; i++) {
         // As the source dies, retain scattered individual tongues, not a whole
         // uniformly dimming cone. The hash is stable for each pooled card.
         const order = ((i * 17) % count) / count;
         if (order >= fade) continue;
-        const t = (now * 1.2 + i / count) % 1;
+        const t = (now - this.jetBirth[i]) / .32;
+        if (t < 0 || t >= 1) continue;
+        const dx = this.jetDX[i], dz = this.jetDZ[i], reach = this.jetRange[i] * (.9 + .1 * Math.sin(this.jetBirth[i] * Math.PI * 16));
         const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
         const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .3 * t) + wave;
-        const x = j.x + j.dx * reach * t + sideX * spread;
-        const z = j.z + j.dz * reach * t + sideZ * spread;
+        const x = this.jetX[i] + dx * reach * t - dz * spread;
+        const z = this.jetZ[i] + dz * reach * t + dx * spread;
         const rise = t * t * .5 + Math.sin(now * 19 + i) * .08 * t;
         const length = Math.min(.5 + t * .65, reach * t * 2, reach * (1 - t) * 2);
-        flame(x, j.y + rise, z, j.seed + i * .713, .2 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
-        this.fl.fJet.setXYZW(flames - 1, j.dx, t * .15, j.dz, t);
+        flame(x, this.jetY[i] + rise, z, j.seed + i * .713, .2 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
+        this.fl.fJet.setXYZW(flames - 1, dx, t * .15, dz, t);
       }
       const ix = j.x + j.dx * j.range, iz = j.z + j.dz * j.range;
       // Short upright tongues turn the forward jet into a splash at its clipped end.
