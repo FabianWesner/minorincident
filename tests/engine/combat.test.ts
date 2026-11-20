@@ -238,6 +238,13 @@ async function checkDynamicCover(): Promise<void> {
   devices.rebuildBlockers(); compare();
 }
 
+test('a brief crossing of a ground flame applies burning immediately', async () => {
+  const w = await arena(), id = dummy(w, 5, 0, 200), target = w.entities.get(id)!;
+  w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3 });
+  step(w, 1);
+  expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
+});
+
 test('lethal direct fire hazard damage marks an infected for ash', async () => {
   const w = await loadLevel('L1', 1); worlds.push(w);
   const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
