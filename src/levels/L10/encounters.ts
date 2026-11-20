@@ -16,6 +16,8 @@ export interface CureEncounter {
   type?: 'lone-pursuer' | 'field-horde' | 'barn-defense' | 'alpha-ambush';
   /** Separate formations can enter as one regional cohort without moving their stations. */
   releaseWith?: string;
+  /** Authored dispersal story beat; presentation is fixed in the district and the cohort is admitted by route progress. */
+  setPiece?: 'quarantine-gate' | 'propaganda-billboard' | 'scarecrow-field' | 'burning-convoy' | 'dark-underpass' | 'field-hospital';
   /** Low-budget patrol station, after the corridor horde receives its slots. */
   atLow?: Point; regular: readonly [number, number]; dogs: number; alphas: number; alphasLow?: number; tough?: number; roles?: readonly string[]; assault?: boolean;
 }
@@ -36,6 +38,14 @@ export const cureEncounters: readonly CureEncounter[] = [
 ];
 /** Route cadence groups intentionally stay outside the vignette exclusion map: they move to the courier's lane on admission. */
 export const curePaceEncounters: readonly CureEncounter[] = [
+  // L10 PO 2026-11-19: every authored scene has an encounter attached so the courier
+  // has to fight through the beat. Route positions follow the eastbound corridor.
+  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [2940, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3060, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.sprinter', 'infected.sprinter'] },
+  { id: 'setpiece-scarecrow-field', type: 'field-horde', setPiece: 'scarecrow-field', region: 'destroyed-corridor', at: [3190, 95], regular: [5, 4], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.hazmat', 'infected.runner'] },
+  { id: 'setpiece-burning-convoy', type: 'field-horde', setPiece: 'burning-convoy', region: 'destroyed-corridor', at: [3260, 95], regular: [11, 8], dogs: 1, alphas: 0, roles: ['infected.firefighter', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-dark-underpass', type: 'field-horde', setPiece: 'dark-underpass', region: 'destroyed-corridor', at: [3390, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.crawler', 'infected.crawler', 'infected.crawler'] },
+  { id: 'setpiece-field-hospital', type: 'field-horde', setPiece: 'field-hospital', region: 'destroyed-corridor', at: [3520, 95], regular: [9, 7], dogs: 1, alphas: 0, roles: ['infected.nurse', 'infected.nurse', 'infected.runner'] },
   { id: 'corn-field-horde', type: 'field-horde', region: 'residential-fringe', at: [830, 80], regular: [14, 7], dogs: 1, alphas: 0 },
   { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [17, 12], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [7, 6], dogs: 0, alphas: 0 },

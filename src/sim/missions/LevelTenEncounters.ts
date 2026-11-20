@@ -15,7 +15,9 @@ const RETIRED_SLOT = -1;
  * release-time spot, the rest starve the shared path budget behind the farm buildings and
  * stand in `chase` until the courier passes them. Bounded waves keep every member near
  * her current position as one winnable fight that clears. */
-const pacedSetPieces = ['corn-field-horde', 'farmhouse-defense', 'shed-field-crossing', 'depot-alpha'] as const;
+const pacedSetPieces = ['corn-field-horde', 'farmhouse-defense', 'shed-field-crossing', 'depot-alpha',
+  'setpiece-quarantine-gate', 'setpiece-propaganda-billboard', 'setpiece-scarecrow-field', 'setpiece-burning-convoy',
+  'setpiece-dark-underpass', 'setpiece-field-hospital'] as const;
 /** Members per paced wave; the remainder admits as its own final small wave. */
 const pacedWaveSize = 5;
 /** A wave also opens once at most this many living members remain anywhere in the cohort. */
@@ -285,7 +287,7 @@ export class LevelTenEncounters {
       if (assault && !assaultActive && !assaultApproach) continue;
       const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
-        if (Math.abs(player.transform.x - group.at[0]) > 120) continue;
+        if (Math.abs(player.transform.x - group.at[0]) > (group.setPiece ? 35 : 120)) continue;
         released.push(group.id);
         // A field crossing meets the same once-only hunting group on its own
         // lane. No group relocates after admission; a paced wave restages on

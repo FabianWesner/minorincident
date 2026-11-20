@@ -333,6 +333,13 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(Math.min(...cureEncounterSlots(depot, 'low').map(s => s.x))).toBeGreaterThan(1560);
   expect(cureEncounterSlots(depot, 'low').filter(s => s.archetype === 'infected.alpha')).toHaveLength(1);
   expect(cureMedkits.find(k => k.id === 'industrial-service')?.at).toEqual([1517, -55]);
+  const dispersalBeats = curePaceEncounters.filter(g => g.setPiece);
+  expect(dispersalBeats.map(g => g.setPiece)).toEqual([
+    'quarantine-gate', 'propaganda-billboard', 'scarecrow-field', 'burning-convoy', 'dark-underpass', 'field-hospital',
+  ]);
+  for (const tier of ['high', 'low'] as const) for (const group of dispersalBeats) {
+    expect(cureEncounterSlots(group, tier).length, `${group.id} has a fight on ${tier}`).toBeGreaterThan(0);
+  }
   for (const tier of ['high', 'low'] as const) {
     expect(farmGroups.reduce((sum, g) => sum + cureEncounterSlots(g, tier).filter(s => s.archetype !== 'infected.dog').length, 0))
       .toBe(tier === 'high' ? 51 : 37);
@@ -350,6 +357,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   }
   expect(groundMismatches, 'rasterized L10 supports and slabs match every exact nav-cell query').toBe(0);
   const actualFarm = assembled.districts[0].layout.placements;
+  for (const beat of dispersalBeats) expect(actualFarm.some(p => p.id === `l10-setpiece-${beat.setPiece === 'quarantine-gate' ? 'gate-wire-79' : beat.setPiece === 'propaganda-billboard' ? 'billboard-frame' : beat.setPiece === 'scarecrow-field' ? 'scarecrow-0' : beat.setPiece === 'burning-convoy' ? 'convoy-truck-a' : beat.setPiece === 'dark-underpass' ? 'underpass-mouth' : 'hospital-tent-0'}`), `${beat.setPiece} has fixed district dressing`).toBe(true);
   expect(actualFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   for (const [x, z] of [[1350, 19], [1650, -38.45], [3150, 51.05], [3450, 53]]) {
     expect(actualFarm.some(p => p.id.startsWith('decor-cure-route-corn-') && Math.hypot(p.position[0] - x, p.position[2] - z) < 25), `crop edge near QA route ${x}`).toBe(true);

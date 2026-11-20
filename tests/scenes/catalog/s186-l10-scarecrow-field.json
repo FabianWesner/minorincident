@@ -1,0 +1,62 @@
+{
+  "name": "s186-l10-scarecrow-field",
+  "note": "L10 dispersal set-piece dressing: scarecrow-field; inspect at zoom 1 for approach readability, ground contact and clear combat lane.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3148,
+        48
+      ],
+      [
+        3232,
+        142
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3185,
+        95
+      ],
+      "look": {
+        "model": "female"
+      }
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        3194,
+        97
+      ],
+      "archetype": "infected.hazmat",
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1.0
+  },
+  "frames": 30,
+  "shots": [
+    29
+  ],
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
