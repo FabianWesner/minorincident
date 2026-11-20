@@ -130,12 +130,12 @@ export class LevelSevenEncounters {
     this.state.requestedGroups = [l7Encounters.firstStreetGroup];
     this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], 28, 1, true);
     // Eight ordinary rifle soldiers screen the moving column; four more hold
-    // the road junction and boarding approach. These remain normal, mortal
+    // the boarding approach. These remain normal, mortal
     // allies using the shared L3 rifle stats and can be grabbed or killed.
     for (let slot = 0; slot < 12; slot++) {
       const at = this.clearPoint(slot < 8
         ? { x: leader.x + 3 + ((slot % 4) >> 1) * 2, z: leader.z + (slot % 2 ? 4 : -4) + (slot >= 4 ? 3.5 : 0) }
-        : { x: slot < 10 ? -63 : 45, z: slot % 2 ? 51 : 42 }, .4);
+        : { x: slot < 10 ? -63 : -57, z: slot % 2 ? 51 : 42 }, .4);
       const guard = w.entities.get(outbreak.spawnPedestrian(at, { model: 'npc.national-guard', role: 'cashier' }))!;
       guard.health.current = guard.health.max = l3.soldiers.hp;
       guard.civilian!.ally = { ...allyState('soldier', at, true), gun: { ...l3.soldiers.gun }, weapon: 'rifle', engaged: true,
