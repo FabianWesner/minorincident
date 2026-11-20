@@ -59,7 +59,7 @@ export class DistrictParts {
   readonly perimeterPosts: InstancedMesh[] = [];
   readonly ownedMaterials: Material[] = [];
   readonly signs: string[] = [];
-  readonly signBatches: { geometry: BufferGeometry; district: string; ids: string[]; visible: string }[] = [];
+  readonly signBatches: { geometry: BufferGeometry; district: string; origin: [number, number]; ids: string[]; supports: { asset: string; position: [number, number, number] }[]; visible: string }[] = [];
   readonly textures: CanvasTexture[] = [];
   ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
@@ -413,7 +413,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       // A label may outlive its placement in later decay tiers. Only sign buildings
       // that are actually present in this district load.
       const present = new Set(d.decay.placements.map(p => p.id));
-      buildFacadeSigns(parts, root, d.id, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), d.decay.placements, deps.materials);
+      buildFacadeSigns(parts, root, d.id, d.origin, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), d.decay.placements, deps.materials);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
@@ -482,7 +482,7 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
   root.add(mesh);
 }
 /** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
-function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], placements: { id: string; position: [number, number, number]; yaw: number; scale: [number, number, number] }[], materials: Materials): void {
+function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, origin: [number, number], buildings: { id: string; assetId: string; label: string; aabb: { min: number[]; max: number[] } }[], placements: { id: string; position: [number, number, number]; yaw: number; scale: [number, number, number] }[], materials: Materials): void {
   const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
   // The gas station already carries physical Sunset Fuel signage.
@@ -510,15 +510,16 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, b
       // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
       const faceX = cx + 16.23, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
       positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
-    } else if (/^bld\.(joes-diner|garage-detached|supermarket|park-lodge|zoo-gate|police-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
+    } else if (/^bld\.(joes-diner|garage-detached|supermarket|park-lodge|zoo-gate|police-station|fire-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
       // These entrance headers and fascia face local +X; rotate with the lot.
       const p = placements.find(row => row.id === b.id)!;
       const garage = b.id.startsWith('bld.garage-detached:'), market = b.id.startsWith('bld.supermarket:'), lodge = b.id.startsWith('bld.park-lodge:'), zoo = b.id.startsWith('bld.zoo-gate:'), police = b.id.startsWith('bld.police-station:');
+      const fire = b.id.startsWith('bld.fire-station:');
       const security = b.id.startsWith('bld.cure-security-post:'), motor = b.id.startsWith('bld.cure-motor-shelter:'), warehouse = b.id.startsWith('bld.cure-warehouse:');
-      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : market ? 4.25 : lodge ? 3.955 : zoo ? 4.75 : police ? 4.19 : security ? 4.69 : motor ? 4.45 : warehouse ? 12.61 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : market ? 3 : lodge ? 2.64 : zoo ? 3.21 : police ? 2.96 : security ? 4.38 : motor ? 4.3 : warehouse ? 5.75 : 2.84) * p.scale[1];
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : market ? 4.25 : lodge ? 3.955 : zoo ? 4.75 : police ? 4.19 : fire ? 1.88 : security ? 4.69 : motor ? 4.45 : warehouse ? 12.61 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : market ? 3 : lodge ? 2.64 : zoo ? 3.21 : police ? 2.96 : fire ? 4.76 : security ? 4.38 : motor ? 4.3 : warehouse ? 5.75 : 2.84) * p.scale[1];
       const vertex = (side: number, vertical: number) => {
-        const localZ = (garage ? side * .7 : zoo ? side * .9 : police ? 3 + side * 1.2 : security ? -.25 + side * 1.1 : market || lodge || motor || warehouse ? side * 1.1 : -.65 + side * .55) * p.scale[2];
-        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : lodge ? .075 : zoo || police ? .17 : market || motor ? .2 : warehouse ? .1 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
+        const localZ = (garage ? side * .7 : zoo ? side * .9 : police ? 3 + side * 1.2 : fire ? -.16 + side * 2.25 : security ? -.25 + side * 1.1 : market || lodge || motor || warehouse ? side * 1.1 : -.65 + side * .55) * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : lodge ? .075 : zoo || police ? .17 : fire ? .5 : market || motor ? .2 : warehouse ? .1 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
       };
       vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
     } else if (b.id.startsWith('bld.reptile-house:')) {
@@ -531,7 +532,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, b
   const geometry = new BufferGeometry();
   geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
   geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(new Uint16BufferAttribute(indices, 1).setUsage(DynamicDrawUsage)); geometry.computeVertexNormals();
-  parts.signBatches.push({ geometry, district, ids: rows.map(b => b.id), visible: 'uninitialized' });
+  parts.signBatches.push({ geometry, district, origin, ids: rows.map(b => b.id), supports: rows.map(b => ({ asset: b.assetId, position: placements.find(p => p.id === b.id)!.position })), visible: 'uninitialized' });
   parts.ownedGeometry.push(geometry);
   const texture = new CanvasTexture(canvas); texture.colorSpace = SRGBColorSpace; texture.generateMipmaps = true; parts.textures.push(texture);
   const material = materials.shaded(sampleTexture(texture).rgb.mul(2.5)); material.side = DoubleSide; parts.ownedMaterials.push(material);

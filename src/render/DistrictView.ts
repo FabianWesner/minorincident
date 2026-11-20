@@ -325,13 +325,8 @@ export class DistrictView extends Group {
   }
   /** Keep each atlas quad only while its supporting building has a real drawn LOD. */
   private updateSigns(): void {
-    const drawn = new Set<string>();
-    if (!this.overview) for (const entry of this.lodBatches) for (const batch of [entry.hero, entry.near, entry.far]) {
-      if (!batch.visible || batch.userData.placeholder) continue;
-      for (const ref of batch.references) if (typeof ref.userData.placementId === 'string' && !ref.userData.occluder && !ref.userData.lensOccluder) drawn.add(ref.userData.placementId);
-    }
     for (const batch of this.parts.signBatches) {
-      const flags = batch.ids.map(id => drawn.has(`${batch.district}/${id}`) ? '1' : '0').join('');
+      const flags = batch.supports.map(support => !this.overview && this.lodBatches.some(entry => entry.id === support.asset && entry.origin[0] === batch.origin[0] && entry.origin[1] === batch.origin[1] && [entry.hero, entry.near, entry.far].some(lod => lod.visible && !lod.userData.placeholder && lod.references.some(ref => !ref.userData.occluder && !ref.userData.lensOccluder && ref.position.distanceToSquared(this.signPosition.fromArray(support.position)) < .0001))) ? '1' : '0').join('');
       if (batch.visible === flags) continue;
       batch.visible = flags;
       const indices: number[] = [];
@@ -340,6 +335,7 @@ export class DistrictView extends Group {
       batch.geometry.setDrawRange(0, indices.length);
     }
   }
+  private readonly signPosition = new Vector3();
   private partitionDressing(entry: DressingEntry): void {
     const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
     for (const ref of refs) {
