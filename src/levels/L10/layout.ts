@@ -109,9 +109,9 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     beat('convoy-cover-a', 'prop.sandbag-pallet', 3238, 103, [1.4, .7, .8]);
     beat('convoy-cover-b', 'prop.sandbag-pallet', 3285, 69, [1.4, .7, .8], Math.PI / 2);
-    // Concrete culvert mouth with emergency lamps and low visibility inside.
-    beat('underpass-mouth', 'kit.zoo-tunnel-mouth', 3390, 69, [4.5, 3, 3], Math.PI);
-    for (const z of [87, 103]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3390, z, [.4, 1.5, .4]);
+    // Open-ended overpass spans the measured crossing, with lights at its sides.
+    beat('underpass-mouth', 'prop.l10-underpass', 3383, 74, [6, 3.2, 7]);
+    for (const z of [67, 81]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3383, z, [.4, 1.5, .4]);
     // Field triage on the final approach: quarantine tents and a marked transport.
     for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', x, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
     beat('hospital-truck', 'veh.military-truck', 3538, 98, [3.8, 1.5, 1.5], Math.PI / 2);

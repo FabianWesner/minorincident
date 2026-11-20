@@ -9250,6 +9250,26 @@
     "sourceForward": "+X"
   },
   {
+    "id": "prop.l10-underpass",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-underpass.glb",
+    "dimensions": { "x": 12, "y": 6.35, "z": 14, "tolerance": 0.2 },
+    "forward": "+X",
+    "frontNodes": ["front"],
+    "requiredNodes": ["root"],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": { "triangles": 12000, "materials": 12, "fileKB": 1200, "drawCalls": 30 },
+    "decayVariants": [],
+    "lods": { "lod1": "public/assets/models/prop.l10-underpass.lod1.glb", "lod2": "public/assets/models/prop.l10-underpass.lod2.glb" },
+    "sourceGlb": "assets/prop.l10-underpass/model.glb",
+    "script": "assets/prop.l10-underpass/build.py",
+    "sourceForward": "+X",
+    "world": { "token": "sidewalk", "solid": false }
+  },
+  {
     "id": "prop.l10-cure-billboard",
     "category": "prop",
     "status": "integrated",
