@@ -9250,6 +9250,26 @@
     "sourceForward": "+X"
   },
   {
+    "id": "prop.l10-field-stretcher",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-field-stretcher.glb",
+    "dimensions": { "x": 2.1, "y": 1.69, "z": 1.27, "tolerance": 0.25 },
+    "forward": "+X",
+    "frontNodes": ["front"],
+    "requiredNodes": ["root"],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": { "triangles": 12000, "materials": 12, "fileKB": 1200, "drawCalls": 30 },
+    "decayVariants": [],
+    "lods": { "lod1": "public/assets/models/prop.l10-field-stretcher.lod1.glb", "lod2": "public/assets/models/prop.l10-field-stretcher.lod2.glb" },
+    "sourceGlb": "assets/prop.l10-field-stretcher/model.glb",
+    "script": "assets/prop.l10-field-stretcher/build.py",
+    "sourceForward": "+X",
+    "world": { "token": "canvasTan", "solid": false }
+  },
+  {
     "id": "prop.l10-hazmat-scarecrow",
     "category": "prop",
     "status": "integrated",

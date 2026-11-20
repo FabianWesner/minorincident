@@ -15,7 +15,7 @@ These are staged HIGH zoom 1 views and the LOW gate view. The HIGH gate view use
 - Field: [HIGH](field-high-diagnostic.jpg); figures are at the frame edge and no one tears free.
 - Convoy: [HIGH](convoy-high-diagnostic.jpg); a cropped truck and infected are visible, but not the three-sided wave or clear flames.
 - Underpass: [HIGH](underpass-high-diagnostic.jpg); shadow, crawler and emergency lamp are visible, but the roof is not readable.
-- Hospital: [HIGH](hospital-high-diagnostic.jpg); the canvas is lit, with no opening or silhouettes shown.
+- Hospital: [HIGH](hospital-high-diagnostic.jpg); the canvas is lit and a stretcher/IV stand is visible, with no opening or silhouettes shown.
 
 ## Latest LOW fight-gap sample
 
@@ -107,6 +107,8 @@ LOW skilled seed 1 completed in 1,116.0 s with two deaths after the convoy crate
 - A HIGH production-camera gate inspection teleported the courier to x=2980, then moved her east with god mode at zoom 1. At x=3002 the opened frame shows a nearby hostile telegraph, multiple infected behind the courier, one partially visible effigy and a cropped gantry sign ([HIGH still](gate-high-diagnostic.jpg)). The test does not establish which cohort supplied the infected or that they emerged from the tower; the trailing group also echoes the s185 staging failure. This is a scripted diagnostic, not a native skilled-route acceptance run.
 
 - The final full `npm run qa:threat` completed in 433.4 s with **0 fail flags** and all ten skilled routes complete, including L10; this audit uses LOW tier. The first one-worker attempt timed out at 600 s; the successful rerun used the default four workers. The crate implementation was present but uncommitted when the successful audit started and was committed as `2a353a52` during the run; no production source changed afterward. The separate HIGH skilled seed 1 farmstead stall remains unresolved.
+
+- Added two original field stretchers with IV stands via the district asset pipeline. All three LODs validate; typecheck, lint and focused world-systems pass. The updated HIGH diagnostic and opened LOW frame show a stretcher beside the lit tent. Both placement checks still fail only on the pre-existing corn/scarecrow pair. The figures behind canvas and synchronized infected emergence remain open. Asset packing's unrelated static-collision changes were restored; a final remote suite is running.
 
 ## Open
 
