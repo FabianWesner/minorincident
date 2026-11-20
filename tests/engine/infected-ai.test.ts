@@ -586,6 +586,8 @@ test('all levels recover nonlethal downs after seeded 10-20 s at full HP; explos
   w.combat!.status.apply(burned, { kind: 'burning', duration: 10, maxStacks: 1, dps: 15, slow: 0 }, 1, 'throw.molotov');
   step(w, 60 * highS + 300);
   for (const e of [blasted, downed, burned]) { expect(w.entities.get(e.id)!.health.current).toBe(0); expect(w.entities.get(e.id)!.corpse, `${e.id} is a corpse`).toBe(true); }
+  expect(burned.ashDeath, 'a burning runner that would normally recover is ash').toEqual({ at: expect.any(Number) });
+  expect(burned.infected!.recoverAt).toBe(-1);
   // A nurse may accelerate a recoverable down, never undo an explosive kill.
   {
     const w = await arena();
