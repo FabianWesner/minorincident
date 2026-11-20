@@ -92,6 +92,11 @@ async function checkFlameCluster(): Promise<void> {
   const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));
   fire(w); step(w, 180);
   expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
+  const stream = await arena(); equip(stream, ['weapon.flamethrower']);
+  const near = dummy(stream, 3, 0, 40), behind = dummy(stream, 5, 0, 40);
+  stream.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } });
+  step(stream, 45);
+  expect([health(stream, near), health(stream, behind)], 'the held stream melts both exposed bodies in about 0.6 s plus the gun raise').toEqual([0, 0]);
 }
 
 async function checkFireAshPersistence(): Promise<void> {
