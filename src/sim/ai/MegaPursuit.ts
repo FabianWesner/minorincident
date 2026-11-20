@@ -5,7 +5,7 @@ import { finale } from '../../data/l10Finale';
 import { Status } from '../combat/Status';
 import { motionResponse } from '../locomotion/MotionResponse';
 import { moveAgent } from '../locomotion/AgentMotion';
-import type { NavGrid } from './NavGrid';
+import { NavGrid } from './NavGrid';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 
@@ -74,6 +74,8 @@ export class MegaPursuit {
   private readonly path = { path: [] as number[], goal: -1, pathIndex: 0, hold: 0 };
   private readonly waypoint = { x: 0, z: 0 };
   private readonly local = { x: 0, z: 0 };
+  private coarseGrid: NavGrid | null = null;
+  private readonly coarsePath = { path: [] as number[], goal: -1, pathIndex: 0, hold: 0 };
   private readonly stops: (() => void)[] = [];
   private reservation = false;
   /** Nav baked at the Mega's own clearance (falls back to the shared crowd grid on very large grids). */
@@ -126,7 +128,7 @@ export class MegaPursuit {
   blockLink(a: string, b: string): void { this.state.blocked[key(a, b)] = -1; this.state.routeAt = -Infinity; }
   unblockLink(a: string, b: string): void { delete this.state.blocked[key(a, b)]; this.state.routeAt = -Infinity; }
 
-  /** Spawn the one Mega Alpha (idempotent: a second call returns the same entity id). */
+  /** Spawn the one Mega Alpha (idempotent). Returns 0 and retries when no clear position is available. */
   introduce(at?: { x: number; z: number }): number {
     if (this.state.id) return this.state.id;
     const ai = this.world.infected!;
@@ -140,16 +142,18 @@ export class MegaPursuit {
         if (this.resident(candidate.x, candidate.z) && this.grid.clear(candidate.x, candidate.z, this.radius) && !ai.director.inFrame(candidate, 1, true)) { spot = candidate; break; }
       }
     }
-    if (this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
     const resident = this.resident(spot.x, spot.z);
-    const place = resident ? this.clearNear(spot) ?? spot : spot;
-    const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !resident });
+    const place = resident ? this.clearNear(spot) : this.world.chunks ? this.coarseClearNear(spot) : spot;
+    if (!place) { this.state.introduceTick = this.world.tick + 60; return 0; }
+    if (this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
+    const placedResident = this.resident(place.x, place.z);
+    const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !placedResident });
     const e = this.world.entities.get(id)!, b = e.infected!;
-    b.pursuit = true; b.hidden = !resident; b.speed = this.cruiseSpeed; e.combat!.radius = this.radius;
+    b.pursuit = true; b.hidden = !placedResident; b.speed = this.cruiseSpeed; e.combat!.radius = this.radius;
     e.health.current = e.health.max = megaAlpha.hp;
     const player = this.world.entities.get(1)!.transform;
     e.transform.yaw = -Math.atan2(player.z - place.z, player.x - place.x);
-    Object.assign(this.state, { id, mode: resident ? 'detailed' : 'coarse', introducedAt: this.world.tick, x: place.x, z: place.z, hp: e.health.current, maxHp: e.health.max, routeAt: -Infinity });
+    Object.assign(this.state, { id, mode: placedResident ? 'detailed' : 'coarse', introducedAt: this.world.tick, x: place.x, z: place.z, hp: e.health.current, maxHp: e.health.max, routeAt: -Infinity });
     this.state.stuck = { level: 0, since: -1, sampleAt: this.world.tick, x: place.x, z: place.z, noPath: 0, goal: null };
     return id;
   }
@@ -235,7 +239,7 @@ export class MegaPursuit {
     const pressure = this.options.route?.pressure;
     // D-CURE progresses east along its authored R6/R7 delivery approach.
     const pressured = !!pressure && this.nodes.size > 0 && this.nearestNode(s.target).x >= this.nodes.get(pressure.from)!.x;
-    if (!this.resident(e.transform.x, e.transform.z) || (pressured && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e, pressured); return true; }
+    if (!this.resident(e.transform.x, e.transform.z) || (pressured && s.stuck.level === 0 && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e, pressured); return true; }
     b.hidden = false;
     // Coarse actors expose zero locomotion intent. Seed the detailed response
     // from their resolved travel only at the handoff, preserving that contract.
@@ -322,6 +326,9 @@ export class MegaPursuit {
     }
     const link = this.legBlocked();
     if (!link) return false;
+    // A temporary avoidance is a navigation decision, not an authored
+    // barricade. Wait for its expiry or a replan rather than breaching it.
+    if (s.blocked[link] !== -1) return true;
     s.breach = { link, until: tick + Math.round(megaAlpha.breachS * 60) };
     return true;
   }
@@ -355,15 +362,32 @@ export class MegaPursuit {
     const farSpeed = finalApproach ? (tier === 'low' ? 1.2 : 1.24) : tier === 'low' ? 1.15 : 1.11;
     let budget = this.cruiseSpeed * Status.speed(e) * (farHidden ? farSpeed : 1) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
+    if (!this.resident(t.x, t.z) && this.world.chunks) {
+      this.coarseNavigate(e, budget);
+      const moved = Math.hypot(t.x - startX, t.z - startZ);
+      if (moved > 1e-6) t.yaw = -Math.atan2(t.z - startZ, t.x - startX);
+      s.coarseM += moved; s.x = t.x; s.z = t.z;
+      t.y = .7 + (this.world.districts?.groundHeight(t.x, t.z) ?? 0);
+      const motion = e.locomotion ??= motionResponse();
+      motion.vx = motion.vz = motion.ax = motion.az = 0; motion.updatedAt = tick;
+      this.world.spatial.set(e.id, t.x, t.z);
+      return;
+    }
+    let obstructed = false;
     while (budget > 1e-6) {
       if (this.legBlocked(t)) break;
       const next = s.route.length ? this.nodes.get(s.route[0])! : s.target;
       const d = dist(t, next), stop = s.route.length ? 0 : this.radius + 1;
       if (d - stop <= budget) {
-        const k = d > 1e-9 ? Math.max(0, d - stop) / d : 0; t.x += (next.x - t.x) * k; t.z += (next.z - t.z) * k; budget -= Math.max(0, d - stop);
+        const travel = Math.max(0, d - stop), k = d > 1e-9 ? travel / d : 0;
+        if (!this.coarseLeg(e, next, travel, d)) { obstructed = true; break; }
+        t.x += (next.x - t.x) * k; t.z += (next.z - t.z) * k; budget -= travel;
         if (!s.route.length) break;
         this.pass();
-      } else { t.x += (next.x - t.x) / d * budget; t.z += (next.z - t.z) / d * budget; budget = 0; }
+      } else {
+        if (!this.coarseLeg(e, next, budget, d)) { obstructed = true; break; }
+        t.x += (next.x - t.x) / d * budget; t.z += (next.z - t.z) / d * budget; budget = 0;
+      }
     }
     const moved = Math.hypot(t.x - startX, t.z - startZ);
     if (moved > 1e-6) t.yaw = -Math.atan2(t.z - startZ, t.x - startX);
@@ -374,6 +398,64 @@ export class MegaPursuit {
     const motion = e.locomotion ??= motionResponse();
     motion.vx = motion.vz = motion.ax = motion.az = 0; motion.updatedAt = tick;
     this.world.spatial.set(e.id, t.x, t.z);
+    if (obstructed && this.resident(t.x, t.z)) {
+      // Pressure can select coarse travel even inside the resident nav grid.
+      // Let the ordinary navigator find a way around instead of retrying the
+      // same blocked straight step forever.
+      e.infected!.hidden = false; s.mode = 'recover';
+      s.stuck.level = 1; s.stuck.since = tick;
+      motion.updatedAt = -1;
+      this.steer(e, dist(t, player.transform));
+    }
+  }
+  /** Build a bounded grid using district solids even outside streamed chunks. */
+  private coarseGridAt(p: { x: number; z: number }): NavGrid {
+    let grid = this.coarseGrid;
+    if (!grid || Math.abs(p.x - grid.center.x) > 24 || Math.abs(p.z - grid.center.z) > 24) {
+      const walls: ConstructorParameters<typeof NavGrid>[1][number][] = [];
+      for (const district of this.world.districts!.districts) {
+        const solids = [...district.decay.colliders.filter(collider => !collider.walkable).map(collider => collider.aabb), ...district.blockers];
+        for (const b of solids) {
+          const x = (b.min[0] + b.max[0]) / 2 + district.origin[0], z = (b.min[2] + b.max[2]) / 2 + district.origin[1];
+          const halfX = (b.max[0] - b.min[0]) / 2, halfZ = (b.max[2] - b.min[2]) / 2;
+          if (Math.abs(x - p.x) > 42 + halfX || Math.abs(z - p.z) > 42 + halfZ) continue;
+          walls.push({ x, z, y: (b.min[1] + b.max[1]) / 2, halfX, halfZ, halfY: (b.max[1] - b.min[1]) / 2 });
+        }
+      }
+      grid = this.coarseGrid = new NavGrid({ width: 80, depth: 80 }, walls, this.radius, { x: p.x, z: p.z }, null, .5);
+      this.coarsePath.path.length = 0; this.coarsePath.goal = -1;
+    }
+    return grid;
+  }
+  /** Spawn offscreen on clear ground even if the requested point is inside an unloaded building. */
+  private coarseClearNear(p: { x: number; z: number }): { x: number; z: number } | null {
+    const grid = this.coarseGridAt(p), visible = (q: { x: number; z: number }) => this.world.infected!.director.inFrame(q, 1, true);
+    if (grid.clear(p.x, p.z, this.radius)) return p;
+    for (let d = .5; d <= 32; d += .5) for (let k = 0; k < 32; k++) {
+      const angle = k * Math.PI / 16, q = { x: p.x + Math.cos(angle) * d, z: p.z + Math.sin(angle) * d };
+      if (grid.clear(q.x, q.z, this.radius) && !visible(q)) return q;
+    }
+    return null;
+  }
+  /** A bounded grid from district colliders keeps nonresident route joins out of unloaded buildings. */
+  private coarseNavigate(e: EntitySnapshot, budget: number): void {
+    const p = e.transform, s = this.state, grid = this.coarseGridAt(p);
+    while (s.route.length && dist(p, this.nodes.get(s.route[0])!) < .02) this.pass();
+    const target = s.route.length ? this.nodes.get(s.route[0])! : s.target;
+    const dx = target.x - p.x, dz = target.z - p.z, d = Math.hypot(dx, dz), stop = s.route.length ? 0 : this.radius + 1;
+    if (d <= stop + 1e-6) return;
+    const scale = Math.min(1, 24 / Math.max(Math.abs(dx), Math.abs(dz)));
+    const goal = { x: p.x + dx * scale, z: p.z + dz * scale };
+    if (!grid.steer(p, goal, this.coarsePath, this.radius, this.waypoint, 20000)) return;
+    const wx = this.waypoint.x - p.x, wz = this.waypoint.z - p.z, length = Math.hypot(wx, wz);
+    if (length > 1e-6) { const step = Math.min(budget, length, d - stop); grid.move(p, wx / length * step, wz / length * step, this.radius); }
+  }
+  /** Coarse actors still obey building and barricade solids; only the hidden mesh/crowd work is skipped. */
+  private coarseLeg(e: EntitySnapshot, target: { x: number; z: number }, requested: number, full: number): boolean {
+    if (requested <= 1e-8 || full <= 1e-8) return true;
+    const dx = (target.x - e.transform.x) / full, dz = (target.z - e.transform.z) / full;
+    const allowed = this.world.solids.sweep(e, { x: dx, z: dz }, requested, this.radius, false, false);
+    return allowed >= requested - 1e-8;
   }
   /** Detailed steering on the shared nav grid at cruise speed. */
   private steer(e: EntitySnapshot, d: number): void {
@@ -438,10 +520,11 @@ export class MegaPursuit {
   /** Nearest nav-clear spot within `range` (rings, no line test: the body may stand inside a solid). */
   private clearNear(p: { x: number; z: number }, range = 6): { x: number; z: number } | null {
     const nav = this.grid, r = this.radius;
-    if (nav.clear(p.x, p.z, r)) return { x: p.x, z: p.z };
+    const clear = (x: number, z: number) => nav.clear(x, z, r) && this.world.solids.clear({ x, z, y: .7 + (this.world.districts?.groundHeight(x, z) ?? 0) }, r, this.state.id || undefined, false, 0);
+    if (clear(p.x, p.z)) return { x: p.x, z: p.z };
     for (let d = .5; d <= range; d += .5) for (let k = 0; k < 24; k++) {
       const a = k * Math.PI / 12, x = p.x + Math.cos(a) * d, z = p.z + Math.sin(a) * d;
-      if (nav.clear(x, z, r)) return { x, z };
+      if (clear(x, z)) return { x, z };
     }
     return null;
   }

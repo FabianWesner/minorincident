@@ -19,7 +19,15 @@ for (let i = 0; i < walkedPoints.length; i++) {
   if (gap) pursuitPoints.push([gap.x - 5, gap.z], [gap.x - 5, gap.detourZ], [gap.x + 5, gap.detourZ], [gap.x + 5, gap.z]);
   if (!gap || p[0] !== gap.x) pursuitPoints.push(p);
 }
-const pursuitNodeId = ([x, z]: Point) => `cure-route-${pursuitPoints.findIndex(p => p[0] === x && p[1] === z)}`;
+const originalPursuitPoints = pursuitPoints.slice();
+// Keep the saved node identities while moving the escape-gap legs clear of
+// nearby houses and roadside obstacles at the Mega's larger footprint.
+for (const [index, point] of Object.entries({
+  8: [904, 80], 9: [904, 118], 10: [1042, 118], 11: [1042, 80],
+  25: [2140.4, -115], 26: [2140.4, -75],
+  37: [3310, 95], 38: [3310, 135], 39: [3332.2, 135], 40: [3332.2, 95],
+})) pursuitPoints[Number(index)] = point as Point;
+const pursuitNodeId = ([x, z]: Point) => `cure-route-${originalPursuitPoints.findIndex(p => p[0] === x && p[1] === z)}`;
 // Open ground beside the winding road: enter through the existing northern
 // rubble breach, cross the clear eastern verge, then take the straight R7 apron.
 // These links retain the road graph (including saved node IDs) and its obstacles.

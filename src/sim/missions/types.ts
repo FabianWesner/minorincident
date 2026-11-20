@@ -216,8 +216,9 @@ export interface L4State {
   heliId: number; heliAngle: number; heliPhase: 'off' | 'arrive' | 'orbit' | 'withdraw' | 'gone'; heliAt: number; heliBurstAt: number; heliBurst: number; heliShots: number; heliTarget: { x: number; z: number } | null;
   hmgBursts: number; hmgLastAt: Record<number, number>;
   fuelId: number; craterId: number; burning: number[]; fires: number; glass: number[]; scorch: number; lastShot: Record<number, number>;
-  /** PO 10-23 wall breaches: when an Alpha was announced at a breach site and when the wall there fell (ticks, 0 = not yet), and its admitted follow-up count. */
-  breaches?: Partial<Record<'west' | 'north' | 'south', { announcedAt: number; openAt: number; arrivals?: number }>>;
+  /** PO 10-23 wall breaches: when an Alpha was announced at a breach site and when the wall there fell (ticks, 0 = not yet), its admitted
+   * follow-up count, and the walkable outside→inside crossing pair of the fallen site (recorded when it opens; see `breachMouth`). */
+  breaches?: Partial<Record<'west' | 'north' | 'south', { announcedAt: number; openAt: number; arrivals?: number; mouth?: { outer: { x: number; z: number }; inner: { x: number; z: number } } }>>;
   /** Kills by the player and by allies (soldiers, armed civilians) since the turn; the kill share check reads these. */
   kills: { player: number; soldiers: number; armedCivilians: number; unarmedCivilians: number; heli: number; tank: number; other: number };
 }

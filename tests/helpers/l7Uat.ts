@@ -64,7 +64,7 @@ export async function checkL7Navigation() {
     const queuedFinal = w.infected!.director.queue.filter(entry => entry.options.pack === 700);
     const residentFinal = w.infected!.active.filter(e => e.infected?.pack === 700);
     const finals = [...queuedFinal.filter(e => e.archetype === 'infected.runner').map(e => e.position), ...residentFinal.filter(e => e.archetype === 'infected.runner').map(e => e.transform)];
-    expect(finals, 'the full high-tier horde is requested on approach').toHaveLength(120);
+    expect(finals, 'the full high-tier horde is requested on approach').toHaveLength(168);
     expect(queuedFinal.filter(e => e.archetype === 'infected.alpha').length + residentFinal.filter(e => e.archetype === 'infected.alpha').length).toBe(2);
     expect(new Set(finals.map(e => Math.round(e.z))).size, 'final arrivals approach from both verges and the road').toBeGreaterThanOrEqual(3);
     const district = w.districts!;

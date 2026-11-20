@@ -63,10 +63,14 @@ export const cureMedkits = [
   { id: 'military-motor-pool', at: [2137, 110] as Point },
 ];
 
-/** L10 story pickups; the placed objects are retained in the courier's rack and never respawn after collection. */
+/** L10 story pickups; the placed objects are retained in the courier's rack and never respawn after collection.
+ * PO 2026-11-19: the unarmed crash start takes the machete at the crash site (~6 m from the start, on the
+ * river-exit path) instead of the axe, so it leads the list and the farmstead marker points back for it
+ * until it is found. */
 export const cureWeaponPickups = [
+  // Keep the original saved pickup ID so checkpoints made before the move do not spawn a second machete.
+  { id: 'barn-machete', action: 'weapon.machete', anchor: 'crash-machete' },
   { id: 'farmhouse-rifle', action: 'weapon.hunting-rifle', anchor: 'farmhouse-rifle' },
-  { id: 'barn-machete', action: 'weapon.machete', anchor: 'barn-machete' },
   { id: 'shed-molotov', action: 'weapon.molotov', anchor: 'shed-molotov' },
   { id: 'workshop-nailgun', action: 'weapon.nail-gun', anchor: 'workshop-nailgun' },
   { id: 'guard-tower-rifle', action: 'weapon.assault-rifle', anchor: 'guard-tower-rifle' },
@@ -98,7 +102,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // 63.4 s at 48 m). Staging at the cover ring's inner edge keeps the surround readable
     // while the arrivals spend their exposure closing the last metres instead of the empty
     // 20 metres outside it; director.safe still rejects any spot within 18 m of her.
-    const radius = assault ? finale.holdRadius - 16 + Math.floor(i / 3) % 4 * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
+    const radius = assault ? finale.holdRadius - 20 + Math.floor(i / 3) % 4 * 2 : group.id === 'shed-field-crossing' || group.id === 'depot-alpha' ? 8 + i % 5 * 2 : fieldHorde || stagedAmbush ? 14 + i % 5 * 3 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
     // The checkpoint-bearing patrols approach from the military road side.
     // A circle on the bearing sent bodies around both flanks and funnelled
     // a retreat into the full road groups. Staggered rows retain every slot

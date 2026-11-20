@@ -113,12 +113,14 @@ export class Telemetry implements TelemetrySink {
     if (!start || !mission) return;
     const id = uuid(), world = this.world, tier = this.game.quality.tier;
     this.attempt = { id, level: start.id, startTick: world.tick, deaths: 0, seed: world.seed };
-    this.client.push('level_start', { l: start.id, k: 0, d: { seed: world.seed, tier, attempt: id } });
+    this.client.push('level_start', { l: start.id, k: 0, d: { seed: world.seed, tier, attempt: id, difficulty: world.difficulty } });
     this.prevPhase = mission.state.phase; this.lastCause = 'unknown';
     if (this.options.mode === 'record') { this.probe?.detach(); this.probe = new RunProbe(); this.probe.attach(world); }
     try {
       this.recorder.begin(start.id, {
         seed: world.seed, tier: start.tier ?? null, campaign: start.campaign, quality: tier, qualityParam: this.game.params.get('quality'),
+        // s178: replays must reproduce the difficulty (the campaign snapshot carries it; absent = simple).
+        difficulty: world.difficulty,
         cameraZoom: this.game.view.view.getState().targetZoom, viewport: [innerWidth, innerHeight], coarse: matchMedia('(pointer: coarse)').matches, ui: this.game.ui.enabled, phase: this.prevPhase,
       }, id);
     } catch (error) { console.warn('Replay recording disabled for this attempt', error); }

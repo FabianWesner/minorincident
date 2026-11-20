@@ -398,3 +398,5 @@ A living record, updated after every lane or experiment. Short entries with evid
 - 2026-11-15 (s126 → s128): an L9 evacuation fix passed 6 native runs and a preserved stalled save, yet real-input browser QA on HIGH still had the last survivor lag 44–86 s on 2 of 3 runs (LOW passed). Native sims at the same tier did not reproduce the HIGH browser crowd. Progression fixes for crowded beats must be accepted on real-input browser runs at HIGH, not native runs alone.
 
 - 2026-11-16 (batch 113 gate): `gate89.sh` printed "gate exit 0" although `scene rc=1` (native vehicle motion FAIL) and qa:threat reported 1 fail flag. The final exit line is not a verdict: read every `rc=` line and the threat flag count before deploying.
+
+- 2026-11-20 (batch 131 gate): smoke failed 3× with "Fixture browser timeout during setup" while the browser pool reported free capacity; the 10-day-old pool daemon listed a dead browser pid. Restarting the idle daemon (kill its pid; clients start a new one) fixed it at once. When smoke times out in browser setup and /status shows no waiters, check the listed browser pids and restart the pool while it has no leases.

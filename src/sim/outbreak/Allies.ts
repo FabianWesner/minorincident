@@ -52,6 +52,11 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !a.gun);
   const travelFacing = shooter && !(world.missions?.def.l3 && a.follow) && c.state !== 'grabbed' && tick < (a.aimMoveRestUntil ?? 0) && Math.hypot(e.locomotion?.vx ?? 0, e.locomotion?.vz ?? 0) > .12;
   if (travelFacing) { a.strikeAt = 0; if (c.story?.clip === 'shoot') c.story = null; }
+  // The subway's walking formation owns a retreating guard's one movement
+  // intent, including its mouth/side-floor recovery. Pending shots and contact
+  // shoves keep their timing without repeatedly planting it behind the column.
+  const subwayRun = !!a.run && c.survivor?.mode === 'follow' && !!world.missions?.l6;
+  if (subwayRun && c.state !== 'grabbed') world.missions!.l6!.follower(e);
   // Hit flinch: any health lost since the last tick plays the hurt clip and holds fire for a quarter second.
   if (a.lastHp !== undefined && e.health.current < a.lastHp - .5 && c.state !== 'grabbed') {
     a.flinchUntil = tick + 16; a.nextAttack = Math.max(a.nextAttack, tick + 16); a.strikeAt = 0; a.step = undefined; c.story = { clip: 'hurt', start: tick };
@@ -59,11 +64,6 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   a.lastHp = e.health.current;
   if (c.story?.clip === 'hurt' && tick >= (a.flinchUntil ?? 0)) c.story = null;
   if (tick < (a.flinchUntil ?? 0)) return true;
-  // The subway's walking formation owns a retreating guard's one movement
-  // intent, including its mouth/side-floor recovery. Pending shots and contact
-  // shoves keep their timing without repeatedly planting it behind the column.
-  const subwayRun = !!a.run && c.survivor?.mode === 'follow' && !!world.missions?.l6;
-  if (subwayRun && c.state !== 'grabbed') world.missions!.l6!.follower(e);
   const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
     ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
@@ -102,7 +102,15 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const onScreen = a.role === 'officer' || allyOnScreen(world, e.transform);
   const inView = (target: EntitySnapshot) => !onScreen || playerSees(world, target.transform)
     || allyOffscreenDefenceM > 0 && a.role !== 'officer' && dist(target.transform, e.transform) <= allyOffscreenDefenceM;
-  const policeCanEngage = (target: EntitySnapshot) => !target.emerging && policeRule(target) && civilianDefence(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
+  // Shelter residents cover people caught by infected; they leave the approaching
+  // breach to the courier, while retaining the ordinary Marcus guard behavior.
+  const subwayRescue = (target: EntitySnapshot) => {
+    const subway = world.missions?.state.l6;
+    if (!subway || a.role !== 'civilian' || !subway.survivors.some(r => r.id === e.id)) return true;
+    const victim = target.infected?.l1?.biteTargetId;
+    return target.infected?.l1?.mode === 'bite' && subway.survivors.some(r => r.id === victim);
+  };
+  const policeCanEngage = (target: EntitySnapshot) => !target.emerging && subwayRescue(target) && policeRule(target) && civilianDefence(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
   // Hearing only controls civilian panic and forced work. An ordinary soldier
   // already fighting has no use for this extra line-of-sight scan.
   const audibleThreat = (a.role === 'civilian' || a.forceUntil > tick)

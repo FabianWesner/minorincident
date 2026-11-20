@@ -90,7 +90,11 @@ test('keyboard aim (Q-196): WASD/arrows follow the screen at every camera yaw; k
   c.pointerUp();
   c.key('Space', true); const space = c.sample();
   expect(space.activeAttack).toBe(true); expect(space.aimSource).toBe('assist'); expect(space.aim).toBeNull(); expect(space.move.x).toBeLessThan(0);
-  c.key('KeyQ', true); expect(c.sample().selectorActive).toBe(true); c.key('KeyQ', false);
+  c.key('KeyG', true); expect(c.sample().corgiLure).toBe(true); c.key('KeyG', false); expect(c.sample().corgiLure).toBeUndefined();
+  c.key('KeyQ', true); expect(c.sample().selector).toBe(1); c.key('KeyQ', false);
+  c.key('ShiftLeft', true); c.key('KeyQ', true); const reverse = c.sample();
+  expect(reverse.selector).toBe(-1); expect(reverse.selectorActive).toBe(true);
+  c.key('KeyQ', false); c.key('ShiftLeft', false);
   c.pointer(1200, 350); expect(c.sample().aimSource).toBe('assist');
   const recording = Recorder.parse(Recorder.serialize(c.input.recorder.stop()));
   const legacy = Recorder.parse(JSON.stringify({ ...recording, frames: [{ ...recording.frames[0], moveTarget: { x: 20, z: 20 }, attackTarget: { id: 3, side: 'LEFT' }, attackInPlace: true, pointerGround: true, pointerTarget: true }] }));
@@ -158,6 +162,12 @@ test('bindings: every action rebinds and persists without conflicts; broken or b
   const old = { ...defaultBindings, right: ['Mouse2', 'KeyK'], selector: ['KeyQ', 'KeyL'] };
   const migrated = new Bindings({ getItem: () => JSON.stringify({ version: 1, bindings: old }), setItem() {} });
   expect(migrated.action('Mouse2')).toBe('selector'); expect(migrated.action('KeyK')).toBe('right');
+  expect(migrated.action('KeyQ')).toBeNull(); expect(migrated.action('KeyL')).toBe('selector');
+  expect(migrated.rebind('selector', 'KeyQ').ok).toBe(false);
+  const custom = { ...defaultBindings, moveUp: ['KeyG'], selector: ['KeyQ'] };
+  const migratedCustom = new Bindings({ getItem: () => JSON.stringify({ version: 1, bindings: custom }), setItem() {} });
+  expect(migratedCustom.action('KeyG')).toBeNull(); expect(migratedCustom.action('KeyQ')).toBeNull();
+  expect(migratedCustom.get().moveUp.length).toBeGreaterThan(0); expect(migratedCustom.action('Mouse2')).toBe('selector');
 });
 
 test('weapon selection: one fixed order drives number keys, cycling and touch slots, and survives a rack rebuild', () => {
@@ -165,8 +175,12 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect([...Object.keys(catalog), ...Object.keys(mountedActions)].filter(id => !(weaponOrder as readonly string[]).includes(id))).toEqual([]);
   const left = ['weapon.fire-axe', 'weapon.bat', 'weapon.kick'], right = ['ability.corgi-lure', 'weapon.molotov', 'weapon.handgun'];
   const loadout = new Loadout(left, right);
-  const expected = ['weapon.fists', 'weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov', 'ability.corgi-lure'];
+  const expected = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov'];
   expect(loadout.activeEntries().map(e => e.id)).toEqual(expected);
+  expect(loadout.orderedEntries('RIGHT').map(e => e.id)).toEqual(['weapon.handgun', 'weapon.molotov']);
+  const lureOnly = new Loadout(['weapon.fire-axe'], ['ability.corgi-lure']);
+  lureOnly.input({ ...emptyInput(), selectorSide: 'RIGHT', selector: 1 }, 30);
+  expect(lureOnly.current('RIGHT').id).toBe('weapon.fists');
   for (let index = 0; index < expected.length; index++) {
     loadout.input({ ...emptyInput(), selectedActiveSlot: index }, 30 * index + 30);
     const id = loadout.current(loadout.state.selectedSide).id;
@@ -190,17 +204,39 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(c.input.selectWeaponKey(0)).toBe(false); expect(c.input.selectWeaponKey(10)).toBe(true);
   c.input.clear(); c.key('Digit0', true); c.key('Digit0', false); expect(c.sample().selectedWeaponKey).toBe(10);
   c.input.setDriving(true); expect(c.input.selectWeaponKey(3)).toBe(false); expect(c.sample().selectedWeaponKey).toBeUndefined();
+  c.key('ShiftLeft', true); c.key('Digit1', true); c.key('KeyQ', true); c.key('KeyG', true);
+  const driving = c.sample(); expect(driving.selectedSlot).toBeUndefined(); expect(driving.selectedWeaponKey).toBeUndefined(); expect(driving.selector).toBe(0); expect(driving.corgiLure).toBeUndefined();
+  for (const code of ['ShiftLeft', 'Digit1', 'KeyQ', 'KeyG']) c.key(code, false);
+  c.input.setDriving(false); c.input.setMountedGun(true); c.key('Digit1', true); c.key('KeyQ', true); c.key('KeyG', true);
+  const mounted = c.sample(); expect(mounted.selectedWeaponKey).toBeUndefined(); expect(mounted.selector).toBe(0); expect(mounted.corgiLure).toBeUndefined();
+  for (const code of ['Digit1', 'KeyQ', 'KeyG']) c.key(code, false);
+  c.input.setMountedGun(false); c.key('ShiftLeft', true); c.key('Digit1', true); expect(c.sample().selectedWeaponKey).toBe(1);
 
   const ids = Object.keys(catalog).filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.pistol');
   expect(Object.keys(weaponKeys).sort()).toEqual(ids.sort());
   expect(new Set(Object.values(weaponKeys)).size).toBe(ids.length);
   const catalogLoadout = new Loadout(ids, ['weapon.bat'], undefined, ids.length);
-  ids.forEach((id, index) => {
+  ids.filter(id => id !== 'weapon.fists').forEach((id, index) => {
     const key = weaponKey(id)!;
     expect(key).toBeGreaterThan(0);
-    catalogLoadout.input({ ...emptyInput(), selectedWeaponKey: key }, index * 30 + 30);
+    catalogLoadout.input({ ...emptyInput(), selectedLegacyWeaponKey: key }, index * 30 + 30);
     expect(catalogLoadout.current(catalogLoadout.state.selectedSide).id).toBe(id);
   });
+  const sparse = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
+  expect(sparse.activeEntries().map(e => e.id)).toEqual(['weapon.fire-axe', 'weapon.machete', 'weapon.handgun']);
+  sparse.activeEntries().forEach((entry, index) => {
+    sparse.input({ ...emptyInput(), selectedWeaponKey: index + 1 }, 30 * (index + 1));
+    expect(sparse.current(sparse.state.selectedSide).id).toBe(entry.id);
+  });
+  const recorded = { seed: 1, level: 'L10', frames: [{ ...emptyInput(), selectedWeaponKey: 3 }] };
+  const legacyRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 1 }));
+  const legacyRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
+  legacyRack.input(legacyRecording.frames[0], 30);
+  expect(legacyRack.current(legacyRack.state.selectedSide).id).toBe('weapon.fire-axe');
+  const currentRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 2 }));
+  const currentRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
+  currentRack.input(currentRecording.frames[0], 30);
+  expect(currentRack.current(currentRack.state.selectedSide).id).toBe('weapon.handgun');
   const cycle = new Loadout(ids.slice(0, 3), ids.slice(3, 6));
   const entries = cycle.activeEntries();
   const currentId = cycle.current(cycle.state.selectedSide).id;

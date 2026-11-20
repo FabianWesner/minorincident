@@ -400,9 +400,10 @@ export class Mission {
   checkpoint(id: string, anchor: { x: number; z: number } = this.world.entities.get(1)!.transform): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint({ ...this.world.entities.get(1)!.transform, ...anchor }); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
   private capture(): MissionCheckpoint {
     const campaign = this.world.progression?.campaign, weapons = this.world.entities.get(1)?.weapons;
-    const arsenal = campaign && (this.def.id === 'L7' || this.def.id === 'L10') ? structuredClone({ ownedActions: campaign.ownedActions, racks: campaign.racks }) : undefined;
-    // Retained L7 pickups update the live racks; snapshot ownership in the same transaction as the pickup.
-    if (arsenal && this.def.id === 'L7' && weapons) {
+    const arsenal = campaign && weapons ? structuredClone({ ownedActions: campaign.ownedActions, racks: campaign.racks }) : undefined;
+    // The live rack is authoritative at a checkpoint: retained pickups and scripted grants/losses
+    // must survive retry without importing weapons carried from an earlier level.
+    if (arsenal && weapons) {
       arsenal.racks = { LEFT: weapons.LEFT.rack.map(s => s.id), RIGHT: weapons.RIGHT.rack.map(s => s.id) };
       arsenal.ownedActions = [...new Set([...arsenal.ownedActions, ...arsenal.racks.LEFT, ...arsenal.racks.RIGHT])];
     }
@@ -527,7 +528,9 @@ export class Mission {
       const saved = live.weapons;
       const sequence = Math.max(checkpoint.combatSequence ?? 0, ...(entities.find(e => e.infected?.pursuit)?.infected?.megaRocketIds ?? []));
       this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id), sequence);
+      if (saved.corgiReady) saved.corgiReady += delta;
       Object.assign(this.world.combat.runner.loadout.state, saved);
+      for (const side of [saved.LEFT, saved.RIGHT]) if (side.rack[side.index]?.id === 'ability.corgi-lure') side.index = side.rack.findIndex(slot => slot.id !== 'ability.corgi-lure');
       for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.unarmed ? [...side.rack, side.unarmed] : side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] = slot[key] + delta; }
       this.world.combat.projectiles.length = 0; this.world.combat.effects.zones.length = 0;
     }
