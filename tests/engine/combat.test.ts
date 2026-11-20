@@ -139,8 +139,9 @@ async function checkWeaponControlRoles(): Promise<void> {
   expect(target.transform.x).toBe(before);
   w.entities.delete(pinned); w.spatial.delete(pinned);
   w.entities.get(1)!.transform.x = -10; w.spatial.set(1, -10, 0);
-  const suppressed = dummy(w, 11, 0, 100); w.entities.get(suppressed)!.combat!.radius = 2; equip(w, ['weapon.army-mg']); fire(w); step(w, 20);
-  expect(w.entities.get(suppressed)?.combat?.statuses.find(status => status.kind === 'slowed')?.def.slow).toBe(.2);
+  const mgTarget = dummy(w, 11, 0, 100); w.entities.get(mgTarget)!.combat!.radius = 2; equip(w, ['weapon.army-mg']); fire(w); step(w, 20);
+  expect(w.entities.get(mgTarget)!.health.current).toBeLessThan(100);
+  expect(w.entities.get(mgTarget)?.combat?.statuses.find(status => status.kind === 'slowed')).toBeUndefined();
 }
 
 async function checkPinnedVault(): Promise<void> {
