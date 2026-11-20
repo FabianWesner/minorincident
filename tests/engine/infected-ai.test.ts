@@ -252,6 +252,25 @@ async function alphaTypeContracts() {
       expect(leapWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === leaper.id && event.targetId === courier.id && event.amount === 30)).toBe(true);
       expect(courier.health.current).toBe(970);
       expect(courier.survivor!.knockdown?.until).toBeGreaterThan(leapWorld.tick);
+
+      // Even after recovery, a different move must wait three seconds from the last start.
+      leaper.infected!.specialAttack = undefined;
+      leaper.infected!.specialRecoveryUntil = 0;
+      leaper.infected!.cooldown = 0;
+      leaper.infected!.state = 'chase';
+      leaper.infected!.alphaSpecialStarted = leapWorld.tick - 179;
+      const target = { id: courier.id, x: courier.transform.x, z: courier.transform.z };
+      const area = { x: leaper.transform.x, z: leaper.transform.z, radius: 30, dx: 1, dz: 0 };
+      expect(leapWorld.infected!.startSpecial(leaper.id, 'alpha.roar', target, area)).toBe(false);
+      leaper.infected!.alphaSpecialStarted = leapWorld.tick - 180;
+      expect(leapWorld.infected!.startSpecial(leaper.id, 'alpha.roar', target, area)).toBe(true);
+
+      const rangedWorld = await arena(60, false);
+      const rangedPursuit = installMegaPursuit(rangedWorld, { introduceTick: null, resident: () => true });
+      const rangedMega = rangedWorld.entities.get(rangedPursuit.introduce({ x: 20, z: 0 }))!;
+      rangedMega.infected!.specialCooldowns = { 'alpha.roar': Infinity };
+      step(rangedWorld, 1);
+      expect(rangedMega.infected!.specialAttack?.move).toBe('alpha.pounce');
     }
   } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
 }

@@ -24,6 +24,10 @@ export class AlphaSupportMoves {
       if (distance >= (mega ? 8 : 4) && distance <= 30 && ready('alpha.living-missile') && this.ai.props.nearestLiving(e, mega ? 3 : 2) && start('alpha.living-missile')) return true;
     }
     if (distance >= (mega ? 10 : 0) && distance <= (mega ? 35 : 25) && ready('alpha.grab-throw') && this.ai.props.nearestObject(e, mega ? 3 : rage ? 6 : 2) && start('alpha.grab-throw')) return true;
+    // Pursuit owns movement outside the close-range brain, so select the
+    // long-range physical moves here as well as in that brain.
+    if (mega && distance >= 12 && distance <= 25 && tick + megaAlpha.moves['alpha.pounce'].windup >= (b.specialCooldowns?.['alpha.pounce'] ?? 0) && start('alpha.pounce')) return true;
+    if (mega && distance > 12 && distance <= 20 && tick + megaAlpha.moves['alpha.charge'].windup >= (b.specialCooldowns?.['alpha.charge'] ?? 0) && start('alpha.charge')) return true;
     // Within melee range the ordinary contact attack takes priority over scavenging.
     if (b.alphaType === 'thrower' && distance > 8) {
       const object = ready('alpha.grab-throw') ? this.ai.props.nearestObject(e, 6) : undefined;
