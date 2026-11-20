@@ -144,6 +144,56 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
       visible.mockRestore();
     } finally { w.dispose(); }
   }
+  // The follow stop band used to leave the dog just outside the hangar when
+  // the courier paused immediately across its threshold. Keep this in the
+  // existing NPC case so the native suite stays within its case budget.
+  for (const quality of ['high', 'low'] as const) {
+    const w = await loadLevel('L10', 1, quality); worlds.push(w);
+    const player = w.entities.get(1)!, dog = [...w.entities.iterate()].find(e => e.companion)!;
+    Object.assign(player.transform, { x: 2707, z: 53.2 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.spatial.set(1, 2707, 53.2);
+    Object.assign(dog.transform, { x: 2707, y: .3, z: 43 }); w.spatial.set(dog.id, 2707, 43);
+    dog.companion!.path.length = 0; dog.companion!.goal = -1; dog.companion!.pathIndex = 0; dog.companion!.following = false;
+    dog.companion!.velocity = { x: 0, z: 0 }; delete dog.locomotion; delete dog.motion;
+    w.solids.forget(dog); w.solids.admit(dog, 'test.l10-hangar', 4);
+    for (let tick = 0; tick < 4; tick++) w.update(); // Activate the streamed collision/nav chunk.
+    Object.assign(player.transform, { x: 2707, z: 53.2 });
+    Object.assign(dog.transform, { x: 2707, y: .3, z: 43 }); w.spatial.set(dog.id, 2707, 43);
+    dog.companion!.path.length = 0; dog.companion!.goal = -1; dog.companion!.pathIndex = 0; dog.companion!.following = false;
+    dog.companion!.velocity = { x: 0, z: 0 }; delete dog.locomotion; delete dog.motion;
+    w.solids.forget(dog); w.solids.admit(dog, 'test.l10-hangar', 4);
+    w.missions!.checkpoint('cure-research-entry', player.transform);
+    for (let tick = 0; tick < 900 && dog.transform.z < 53.84; tick++) w.update();
+    expect(dog.transform.z, `${quality}: corgi crosses into the hangar within 15 s of the checkpoint courier`).toBeGreaterThanOrEqual(53.84);
+    expect(Math.hypot(dog.transform.x - player.transform.x, dog.transform.z - player.transform.z), `${quality}: corgi remains with the courier`).toBeLessThan(6);
+    Object.assign(player.transform, { x: 2707, z: 43, yaw: -Math.PI / 2 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.spatial.set(1, 2707, 43);
+    Object.assign(dog.transform, { x: 2707, y: .3, z: 36 }); w.spatial.set(dog.id, 2707, 36);
+    dog.companion!.path.length = 0; dog.companion!.goal = -1; dog.companion!.pathIndex = 0; dog.companion!.following = false;
+    dog.companion!.velocity = { x: 0, z: 0 }; delete dog.locomotion; delete dog.motion;
+    w.solids.forget(dog); w.solids.admit(dog, 'test.l10-normal-approach', 4);
+    w.setInput({ move: { x: 0, z: 1 } });
+    for (let tick = 0; tick < 300; tick++) w.update();
+    w.clearInput();
+    expect(player.transform.z, `${quality}: courier walks into the hangar`).toBeGreaterThan(53);
+    expect(dog.transform.z, `${quality}: corgi follows a normal walking approach into the hangar`).toBeGreaterThan(53);
+    expect(Math.hypot(dog.transform.x - player.transform.x, dog.transform.z - player.transform.z)).toBeLessThan(6);
+    w.missions!.restore('cure-research-entry');
+    const restoredDog = w.entities.get(dog.id)!;
+    for (let tick = 0; tick < 900 && restoredDog.transform.z < 53.84; tick++) w.update();
+    expect(restoredDog.transform.z, `${quality}: corgi is inside within 15 s after restoring the hangar checkpoint`).toBeGreaterThanOrEqual(53.84);
+    expect(Math.hypot(restoredDog.transform.x - player.transform.x, restoredDog.transform.z - player.transform.z)).toBeLessThan(6);
+    Object.assign(player.transform, { x: 2707, z: 59 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.spatial.set(1, 2707, 59);
+    for (const x of [2699, 2715]) {
+      expect(w.solids.relocate(restoredDog, { x, y: .3, z: 43 }, 'test.l10-apron', 0, false)).toBe(true);
+      const c = restoredDog.companion!;
+      c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.velocity = { x: 0, z: 0 };
+      delete restoredDog.locomotion; delete restoredDog.motion;
+      for (let tick = 0; tick < 900 && restoredDog.transform.z < 53.84; tick++) w.update();
+      expect(restoredDog.transform.z, `${quality}: corgi clears the threshold from apron x=${x}`).toBeGreaterThanOrEqual(53.84);
+    }
+  }
 });
 
 test('escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission', async () => {

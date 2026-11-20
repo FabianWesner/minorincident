@@ -1,0 +1,30 @@
+{
+  "runtime_commit": "bd343737",
+  "native_route": {
+    "method": "runLevel L10 complete policy; stop after corgi footprint clears hangar or 15 seconds after courier entry",
+    "seconds_after_courier": {
+      "high": { "1": 1.4166666666666667, "2": 1.4333333333333333, "3": 1.4166666666666667 },
+      "low": { "1": 1.4333333333333333, "2": 1.4333333333333333, "3": 1.4333333333333333 }
+    }
+  },
+  "production_checkpoint_restore": {
+    "method": "capture regional cure-research-entry during native route, restore with bot instance preserved, stop on full-footprint entry",
+    "seed": 1,
+    "courier_restore_approx": [2467, -6],
+    "seconds_after_courier": { "high": 1.4333333333333333, "low": 1.45 }
+  },
+  "capture": {
+    "path": "test-results/scenes/s196-native-hangar-deep.png",
+    "sha256": "537a4c1655fd08f15ed759974be2cf7b2c02e87de5260e27b59c351cd5ba4f7e",
+    "tier": "high",
+    "zoom": 1,
+    "staged": true,
+    "courier": [2707, 66],
+    "corgi": [2707, 63]
+  },
+  "threat_audit": {
+    "flags": ["INCOMPLETE_NATIVE_POLICY:tick-budget"],
+    "baseline_reproduced": true,
+    "passive_flags": []
+  }
+}
