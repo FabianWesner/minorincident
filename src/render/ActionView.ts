@@ -142,7 +142,7 @@ export class ActionView extends Group {
    * at `at`, so their courier-fill materials compile behind the loading card instead of on the first equip. */
   prewarmHeld(at: Vector3): () => void {
     const group = new Group(); group.name = 'held-weapon-prewarm'; group.position.copy(at);
-    for (const asset of this.assets.values()) {
+    for (const [assetId, asset] of this.assets) {
       const clone = asset.model.clone(true);
       clone.traverse(node => { if (node instanceof Mesh) {
         node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material;
@@ -153,7 +153,7 @@ export class ActionView extends Group {
       group.add(clone);
       // L10's first pickup appears with the opening encounter. Its ground
       // model uses the ordinary swatches, not the held courier materials.
-      if (this.world.scenario === 'L10') group.add(asset.model.clone(true));
+      if (this.world.scenario === 'L10' && assetId === action('weapon.machete').viewAssetId) group.add(asset.model.clone(true));
     }
     if (this.world.scenario === 'L10') {
       this.prewarmedPickupMarker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
