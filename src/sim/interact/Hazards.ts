@@ -176,6 +176,14 @@ export class Hazards {
   update(): void {
     const tick = this.world.tick;
     this.fieldFire?.update(tick);
+    if (this.fieldFire && tick % 30 === 0) {
+      for (const entity of this.world.entities.iterate()) {
+        if (entity.health.current <= 0 || (entity.faction !== 'infected' && entity.kind !== 'player')) continue;
+        if (entity.faction === 'infected' && entity.combat?.statuses.some(status => status.kind === 'burning')) this.fieldFire.ignite(entity.transform, tick, 5);
+        if (this.fieldFire.cells.some(cell => cell.state === 'burning' && Math.abs(cell.x - entity.transform.x) <= 5 && Math.abs(cell.z - entity.transform.z) <= 5))
+          this.world.combat?.status.apply(entity, groundBurn, 1, 'hazard.field-fire');
+      }
+    }
     const actionZones = this.world.combat?.effects.zones;
     let fireReach = 2;
     let fires = 0; this.spreading.length = 0;
