@@ -257,6 +257,13 @@ async function checkS202Combat3(): Promise<void> {
   const w = await arena(), id = dummy(w, 5, 0, 200), target = w.entities.get(id)!;
   w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3 });
   step(w, 1);
+  expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(false);
+  const hp = target.health.current;
+  step(w, 60);
+  expect(target.health.current).toBeLessThan(hp);
+  const combatFire = w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3, playerDamageSource: true });
+  step(w, 1);
+  expect(w.entities.get(combatFire)!.playerDamageSource).toBe(true);
   expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
 }
 

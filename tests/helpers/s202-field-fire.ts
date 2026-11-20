@@ -54,7 +54,9 @@ function checkS202Field3(): void {
 const placement = (id: string, assetId: string, x: number) => ({ id, assetId, position: [x, 0, 0] }) as Placement;
 
 function checkS202Field4(): void {
-  const fire = new VegetationFire([placement('tree', 'prop.tree', 0), placement('house', 'bld.house', 0), placement('dead-tree', 'prop.tree.dead', 0), placement('bush', 'prop.garden-bush-small', 0)]);
+  const tree = { ...placement('tree', 'prop.tree', 0), visualAabb: { min: [-2, 0, -2], max: [2, 5.8, 2] } } as Placement;
+  const fire = new VegetationFire([tree, placement('house', 'bld.house', 0), placement('dead-tree', 'prop.tree.dead', 0), placement('bush', 'prop.garden-bush-small', 0)]);
+  expect(fire.objects.find(object => object.id === 'tree')?.flameHeight).toBeCloseTo(4.176);
   fire.ignite({ x: 0, z: 0 }, 10, 2);
   expect(fire.objects).toHaveLength(3);
   expect(fire.objects[0].state).toBe('burning');
