@@ -253,13 +253,14 @@ export class Hazards {
         for (const id of this.nearby(e, h?.radius ?? 1)) {
           const target = this.world.entities.get(id)!;
           if (target.faction === 'environment' || target.health.current <= 0 || (h?.kind === 'toxic' && target.archetype === 'infected.hazmat') || (h?.kind === 'fire' && target.archetype === 'infected.firefighter')) continue;
-          // Authored ambient fire already deals its 10 DPS pulse below. The 35 DPS
+          const weaponFire = !!e.playerDamageSource && (!!burns || h?.kind === 'fire');
+          // Ambient authored fire retains its legacy direct damage pulse. The 35 DPS
           // status belongs to combat-created flames and burning props; stacking it
           // onto every scenery fire made L5's background streets lethal.
-          if (fire && (target.kind === 'player' || (target.faction === 'infected' && (burns || e.playerDamageSource))))
+          if ((target.kind === 'player' && fire) || (target.faction === 'infected' && weaponFire))
             this.world.combat?.status.apply(target, groundBurn, e.id, 'hazard.fire');
           if (tick % 60 !== 0) continue;
-          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', fire, permanent: fire, knockback: 0, stagger: 0 });
+          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', fire: weaponFire, permanent: weaponFire, knockback: 0, stagger: 0 });
         }
       }
     }

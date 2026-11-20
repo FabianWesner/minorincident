@@ -271,7 +271,7 @@ async function checkS202Combat4(): Promise<void> {
   const w = await loadLevel('L1', 1); worlds.push(w);
   const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
   target.health.current = 5;
-  w.hazards!.spawn('fire', { x: 4, z: 4 }, { radius: 1, duration: 3 });
+  w.hazards!.spawn('fire', { x: 4, z: 4 }, { radius: 1, duration: 3, playerDamageSource: true });
   step(w, 60);
   expect(target.health.current).toBe(0);
   expect(target.ashDeath).toBeDefined();
