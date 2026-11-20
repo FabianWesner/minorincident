@@ -92,3 +92,7 @@ The acceptance-status tracker still presented pre-decision receipts and an axe-o
 The L9-08 native crossing fixture was run directly on both quality settings. Both L9 runs completed and initialized L10 on foot, at full health, with the corgi safe and only `weapon.fists` and `weapon.kick` in the rack. Its old assertion incorrectly expected fists alone; the fixture now requires both innate actions and no additional weapon. The corrected fixture passed at low and high quality. This scoped check is not a full acceptance receipt or a checkpoint restore test.
 
 After the L9-08 fixture correction, local `npm run typecheck` and `npm run lint` both pass.
+
+## Checkpoint rack restore (2026-11-20)
+
+Checkpoint capture now snapshots the live rack and updates campaign arsenal state for every campaign level. Restoring therefore returns the weapons actually present at that checkpoint, including gains and losses made within the level; it does not reconstruct from the level opening list or carry earlier-level racks forward. Added native restore coverage for L8 after the sanctuary takes only the rocket, L10 after the crash-site machete, and L10 after the hangar issues its ten weapons. The focused `tests/engine/save-progression.test.ts` passes (7 tests), as do `npm run typecheck` and `npm run lint`. The full threat audit and remote unit gate status documented above are unchanged.

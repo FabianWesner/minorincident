@@ -21,6 +21,7 @@ import { decodeSave, encodeSave, SaveStore, validateSave } from '../../src/sim/p
 import { debugFlagEnabled } from '../../src/ui/debugFlag';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { cureHangarWeapons, levelTenMission } from '../../src/levels/L10/mission';
+import { surrenderHeavyWeapons } from '../../src/sim/missions/L8Gate';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
@@ -172,6 +173,48 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
       }
     } finally { world.dispose(); }
   }
+});
+
+test('checkpoint restore keeps the rack reached at L8 and L10, including authored arsenal changes', async () => {
+  const ids = (world: Awaited<ReturnType<typeof loadLevel>>) => ({
+    LEFT: world.combat!.runner.loadout.state.LEFT.rack.map(slot => slot.id),
+    RIGHT: world.combat!.runner.loadout.state.RIGHT.rack.map(slot => slot.id),
+  });
+  const l8Save = preset('L8-default');
+  const l8 = await loadLevel('L8', 1, l8Save, 0, { quality: 'low' });
+  try {
+    surrenderHeavyWeapons(l8, l8.missions!);
+    l8.missions!.checkpoint('sanctuary');
+    const expected = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun'] };
+    expect(ids(l8)).toEqual(expected);
+    l8.combat!.setLoadout(['weapon.bat'], ['weapon.rocket-launcher']);
+    l8.missions!.restore('sanctuary');
+    expect(ids(l8)).toEqual(expected);
+    expect(l8.progression!.campaign!.racks).toEqual(expected);
+  } finally { l8.dispose(); }
+
+  const l10Save = preset('L10-default');
+  const l10 = await loadLevel('L10', 1, l10Save, 0, { quality: 'low' });
+  try {
+    const expectedBase = { LEFT: ['weapon.fists', 'weapon.machete'], RIGHT: ['weapon.kick'] };
+    transactArsenal(l10, ['weapon.machete'], []);
+    l10.missions!.checkpoint('cure-crash');
+    l10.combat!.setLoadout(['weapon.fire-axe'], ['weapon.rocket-launcher']);
+    l10.missions!.restore('cure-crash');
+    expect(ids(l10)).toEqual(expectedBase);
+    expect(l10.progression!.campaign!.racks).toEqual(expectedBase);
+
+    transactArsenal(l10, cureHangarWeapons, ['weapon.bat', 'weapon.army-mg', 'weapon.flashbang']);
+    l10.missions!.checkpoint('cure-research');
+    const expectedHangar = { LEFT: ['weapon.fists', 'weapon.machete'], RIGHT: ['weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb'] };
+    // The fists/kick fallback is removed when a melee weapon is granted, as in the live L10 arsenal transaction.
+    expectedHangar.LEFT = ['weapon.machete'];
+    expect(ids(l10)).toEqual(expectedHangar);
+    l10.combat!.setLoadout(['weapon.fire-axe'], ['weapon.bat']);
+    l10.missions!.restore('cure-research');
+    expect(ids(l10)).toEqual(expectedHangar);
+    expect(l10.progression!.campaign!.racks).toEqual(expectedHangar);
+  } finally { l10.dispose(); }
 });
 
 test('selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun', () => {
