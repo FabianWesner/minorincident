@@ -39,3 +39,5 @@ The HIGH zoom-1 headless playtest ran under the browser lock on port 5125, but i
 ## Acceptance report repair
 
 The report inventory now recognizes G-28 and G-29 as new, historically unqualified rows. A fresh HIGH complete acceptance run assembled successfully but returned exit 1: current G-13 / L7-09 follower pace flags include survivor 107, and L7-01 lacks a passing physical pickup/frame gate. Ten L7 rows remain incomplete. These results require follow-up and are not a passing acceptance report.
+
+A trial that repeatedly activated each staged street group within 45 m did not improve the LOW direction trace and left the HIGH native route incomplete at its tick budget. The trial was reverted. Later waves need different road-connected approach placement or staging, with their admission and contact timing verified before retaining a change.
