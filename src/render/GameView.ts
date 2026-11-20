@@ -639,7 +639,7 @@ export class GameView implements Lifecycle {
     if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
-    if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; }
+    if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials, this.quality === 'low'); this.bicycle.ground = this.drawnGround; }
     const actions = this.actions;
     if (this.crowd) this.crowd.warmBatch = batch => this.scenePrepared ? this.warmHidden(batch) : Promise.resolve();
     return Promise.all([this.accessories.init(), this.npcs?.init(this.camera), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(this.view), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
@@ -1128,7 +1128,7 @@ export class GameView implements Lifecycle {
     this.postFx?.setCellarMask(this.cellarBlend, this.cellarBounds);
     const survivor = this.world.entities.get(1)?.survivor;
     const carPose = carTransitionPose(this.world, alpha);
-    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; this.scene.add(this.bicycle); }
+    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials, this.quality === 'low'); this.bicycle.ground = this.drawnGround; this.scene.add(this.bicycle); }
     this.bicycle?.update(this.camera, alpha); // Sample one bike frame for its saddle, lean and rider.
     if (this.character && current && survivor) {
       this.courier.present(this.character, survivor, this.bicycle, this.vfx, carPose, alpha, this.camera.aspect);

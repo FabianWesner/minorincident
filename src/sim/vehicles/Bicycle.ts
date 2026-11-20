@@ -62,9 +62,9 @@ export class Bicycle {
   private navPose = '';
   constructor(private readonly world: SimWorld) {}
   /** Creates the bicycle at `pos`; the integrator/mission calls this once per level (anchor `bike-start`). */
-  spawn(pos: Vec2, heading = 0): number {
+  spawn(pos: Vec2, heading = 0, pavement = true, exactSpot = false): number {
     const state: BicycleState = { mounted: false, heading, speed: 0, pedal: 0, steer: 0, lean: 0, standTicks: 0, armed: true, lockUntil: 0 };
-    const parking = this.parkingSpot(pos.x, pos.z, heading, [0, .6, 1.2, 1.8, 2.4, 3, 4, 5, 6, 8]);
+    const parking = exactSpot ? { ...pos, heading } : this.parkingSpot(pos.x, pos.z, heading, [0, .6, 1.2, 1.8, 2.4, 3, 4, 5, 6, 8], pavement);
     if (!parking) throw new Error('No clear pavement for courier bicycle');
     const spot = parking; heading = parking.heading; state.heading = heading;
     const e = this.world.entities.create({ kind: 'bicycle', archetype: ARCHETYPE, faction: 'environment', transform: { x: spot.x, y: this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0, z: spot.z, yaw: -heading }, health: { current: 1, max: 1 }, bicycle: state });
@@ -72,7 +72,7 @@ export class Bicycle {
   }
   /** Creates the reusable L10 motorbike using the bicycle's persistent ride/contact state. */
   spawnMotorbike(pos: Vec2, heading = 0): number {
-    const id = this.spawn(pos, heading), e = this.world.entities.get(id)!;
+    const id = this.spawn(pos, heading, false, true), e = this.world.entities.get(id)!;
     e.archetype = 'veh.courier-motorbike'; e.bicycle!.motorbike = true;
     return id;
   }
@@ -377,6 +377,7 @@ export class Bicycle {
     if (!dog) return;
     dog.passengerOf = bike.id;
     this.placeCorgi(bike);
+    dog.companion!.riding = true;
     dog.companion!.state = 'follow';
     Object.assign(dog.transform, { y: player.transform.y, yaw: bike.transform.yaw });
   }
@@ -391,6 +392,7 @@ export class Bicycle {
     const dog = [...this.world.entities.iterate()].find(e => e.companion && e.passengerOf === bike.id);
     if (!dog) return;
     delete dog.passengerOf;
+    delete dog.companion!.riding;
     const h = bike.bicycle!.heading, side = 1.05;
     Object.assign(dog.transform, { x: bike.transform.x - Math.sin(h) * side, z: bike.transform.z + Math.cos(h) * side, yaw: bike.transform.yaw });
     dog.transform.y = this.world.districts?.groundBelow(dog.transform.x, dog.transform.z, bike.transform.y + .5) ?? bike.transform.y;

@@ -1,5 +1,5 @@
 import { devicePrompt } from '../ui/devicePrompt';
-import { Box3, BoxGeometry, Camera, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Camera, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, SphereGeometry, SpotLight, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -52,6 +52,12 @@ function motorbikePlaceholder(): Group {
   part(root, 'tank', new CylinderGeometry(.24, .31, .42, 12), red, .32, .81, 0).rotation.z = Math.PI / 2;
   part(root, 'seat', new BoxGeometry(.52, .1, .3), seat, -.43, 1.02, 0);
   const handle = new Group(); handle.name = 'handlebar'; handle.position.set(.72, 1.05, 0); root.add(handle); part(handle, 'bar', new BoxGeometry(.08, .06, .55), dark, 0, 0, 0);
+  const grips = new Group(); grips.name = 'grips'; grips.position.set(.72, 1.05, 0); root.add(grips);
+  const leftGrip = new Group(); leftGrip.name = 'grip_l'; leftGrip.position.z = .25; grips.add(leftGrip);
+  const rightGrip = new Group(); rightGrip.name = 'grip_r'; rightGrip.position.z = -.25; grips.add(rightGrip);
+  const rests = new Group(); rests.name = 'footrests'; rests.position.set(-.15, .28, 0); root.add(rests);
+  const footL = new Group(); footL.name = 'pedal_l'; footL.position.z = .18; rests.add(footL);
+  const footR = new Group(); footR.name = 'pedal_r'; footR.position.z = -.18; rests.add(footR);
   part(root, 'sidecarFrame', new BoxGeometry(.7, .12, .1), metal, -.32, .35, .65);
   part(root, 'sidecarTub', new BoxGeometry(.98, .42, .72), red, -.3, .58, .78);
   part(root, 'sidecarSeat', new BoxGeometry(.48, .08, .46), seat, -.28, .82, .78);
@@ -64,7 +70,7 @@ const hubAbove = (profile: Profile, fallback: number, lean: number) => {
   for (const [radial, axial] of profile) best = Math.max(best, radial * c + axial * s);
   return best;
 };
-interface Rig { rings: [Vector3[], Vector3[]]; profiles: [Profile, Profile]; halfWidths: [number, number]; root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; seat?: Object3D; kickstand?: Object3D; kick: number; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number; fallKey: string; fallLift: number }
+interface Rig { rings: [Vector3[], Vector3[]]; profiles: [Profile, Profile]; halfWidths: [number, number]; root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; wheelSide?: Object3D; exhaustPuff: Mesh | null; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; seat?: Object3D; kickstand?: Object3D; headlight: SpotLight | null; headlightCone: Mesh | null; kick: number; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number; fallKey: string; fallLift: number }
 /**
  * Courier bicycle (spec 5.10). Follows the authoritative bicycle entity; wheels roll with the travelled distance, the crank
  * turns with the pedal phase, the handlebar and front wheel steer, and the frame leans into turns like a toy. Uses the
@@ -75,7 +81,7 @@ export class BicycleView extends Group {
   private rig: Rig | null = null;
   private loading = false;
   private disposed = false;
-  constructor(private readonly world: SimWorld, materials: Materials) {
+  constructor(private readonly world: SimWorld, materials: Materials, private readonly low = false) {
     super(); this.name = 'bicycle'; this.userData.nodeBuildScope = 'vehicle';
     this.prompt.className = 'interaction-prompt'; this.prompt.dataset.testid = 'bike-prompt'; this.prompt.hidden = true; this.prompt.innerHTML = '<strong>Cargo bike</strong><span>Stand here or press E to ride</span>';
     document.querySelector('#game')?.append(this.prompt);
@@ -90,11 +96,21 @@ export class BicycleView extends Group {
   private async build(): Promise<void> {
     if (this.rig || this.loading) return; this.loading = true;
     const bike = this.world.vehicles?.bicycle.entity;
-    let model = bike?.bicycle?.motorbike ? motorbikePlaceholder() : await this.registry.loadAsset(ASSET, 'lod0');
+    let model = await this.registry.loadAsset(bike?.bicycle?.motorbike ? 'veh.courier-motorbike' : ASSET, bike?.bicycle?.motorbike && this.low ? 'lod1' : 'lod0');
+    if (bike?.bicycle?.motorbike && model.userData.placeholder) model = motorbikePlaceholder();
     // A missing or invalid GLB falls back to the registry's generic box: use the animated code placeholder instead.
-    if (model.userData.placeholder || !(model.getObjectByName('wheel_front') ?? model.getObjectByName('wheelF'))) model = bicyclePlaceholder();
+    if (!bike?.bicycle?.motorbike && (model.userData.placeholder || !(model.getObjectByName('wheel_front') ?? model.getObjectByName('wheelF')))) model = bicyclePlaceholder();
     this.loading = false; if (this.disposed) return;
     const lean = new Group(), root = new Group(); lean.add(model); root.add(lean); this.add(root);
+    const headlight = bike?.bicycle?.motorbike ? new SpotLight('#fff0c8', 0, 16, .34, .42, 1.3) : null;
+    let headlightCone: Mesh | null = null;
+    if (headlight) {
+      headlight.position.set(.68, .58, 0); headlight.target.position.set(11, -.08, 0); root.add(headlight, headlight.target);
+      const cone = new Mesh(new CylinderGeometry(0, 2.9, 10, 16, 1, true), new MeshBasicNodeMaterial({ color: '#fff0c8', transparent: true, opacity: .075, depthWrite: false, side: 2 }));
+      cone.name = 'headlight_cone'; cone.rotation.z = -Math.PI / 2; cone.position.set(1, .52, 0); cone.renderOrder = 2; root.add(cone); headlightCone = cone;
+    }
+    const exhaustPuff = bike?.bicycle?.motorbike ? new Mesh(new SphereGeometry(.16, 8, 6), new MeshBasicNodeMaterial({ color: '#aaa8a6', transparent: true, opacity: .4, depthWrite: false })) : null;
+    if (exhaustPuff) { exhaustPuff.position.set(-.8, .25, -.16); exhaustPuff.visible = false; root.add(exhaustPuff); }
     const find = (name: string) => model.getObjectByName(name);
     const wheelF = find('wheel_front') ?? find('wheelF'), wheelR = find('wheel_rear') ?? find('wheelR'); for (const w of [wheelF, wheelR]) if (w) w.rotation.order = 'YXZ';
     model.scale.setScalar(SCALE); model.traverse(n => { if (n instanceof Mesh) { n.castShadow = true; n.receiveShadow = true; } });
@@ -112,12 +128,12 @@ export class BicycleView extends Group {
     const seat = find('seat') ?? find('driverSeat'), saddle = new Vector3();
     if (seat) { seat.getWorldPosition(saddle); lean.worldToLocal(saddle); }
     const profiles: [Profile, Profile] = [tyreProfile(wheelR, SCALE), tyreProfile(wheelF, SCALE)];
-    this.rig = { rings: [tyreRing(profiles[0], SCALE), tyreRing(profiles[1], SCALE)], profiles, halfWidths: [tyreHalfWidth(profiles[0]), tyreHalfWidth(profiles[1])], seat: find('seat') ?? find('driverSeat'), kickstand: find('kickstand'), kick: 0, parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL') ?? find('pedal_l'), find('pedalR') ?? find('pedal_r')].filter((n): n is Object3D => !!n), lean, offset: -saddle.x, wheelAngle: 0, last: null, leanAngle: 0, fallKey: '', fallLift: 0 };
+    this.rig = { rings: [tyreRing(profiles[0], SCALE), tyreRing(profiles[1], SCALE)], profiles, halfWidths: [tyreHalfWidth(profiles[0]), tyreHalfWidth(profiles[1])], seat: find('seat') ?? find('driverSeat'), kickstand: find('kickstand'), headlight, headlightCone, exhaustPuff, kick: 0, parcel, top, glint, placed: 0, root, model, wheelF, wheelR, wheelSide: find('sidecar_wheel'), handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL') ?? find('pedal_l'), find('pedalR') ?? find('pedal_r')].filter((n): n is Object3D => !!n), lean, offset: -saddle.x, wheelAngle: 0, last: null, leanAngle: 0, fallKey: '', fallLift: 0 };
   }
   /** The drawn bike's root (Scene Lab presence check); null until the model is built. */
   drawnRoot(): Object3D | null { return this.rig?.root ?? null; }
   /** Rear and front wheel nodes (tyre meshes below them): Scene Lab measures the drawn tyre against the drawn ground. */
-  wheelNodes(): Object3D[] { return this.rig ? [this.rig.wheelR, this.rig.wheelF].filter((n): n is Object3D => !!n) : []; }
+  wheelNodes(): Object3D[] { return this.rig ? [this.rig.wheelR, this.rig.wheelF, this.rig.wheelSide].filter((n): n is Object3D => !!n) : []; }
   /** World position of the saddle (the `seat` node); the rider's pelvis is placed here every frame. */
   seatWorld(out: Vector3): boolean {
     const rig = this.rig; if (!rig?.seat) return false;
@@ -246,6 +262,7 @@ export class BicycleView extends Group {
       rig.last = { x: t.x, z: t.z };
       if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = -steering; }
       if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
+      if (rig.wheelSide) rig.wheelSide.rotation.z = -rig.wheelAngle / (.34 * SCALE);
       if (rig.handlebar) rig.handlebar.rotation.y = -steering;
       if (rig.crank) { rig.crank.rotation.z = -ride.pedal; for (const p of rig.pedals) p.rotation.z = ride.pedal; }
       // Toy feel: lean into the turn while riding.
@@ -272,6 +289,14 @@ export class BicycleView extends Group {
       this.parkedPose = !riding && !fallen ? { x: t.x, y: t.y, z: t.z, yaw: t.yaw, steer: ride.steer, pedal: ride.pedal, speed: ride.speed, ground: this.world.districts, sampler: this.ground } : null;
     }
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
+    const exhaust = rig.exhaustPuff;
+    if (exhaust) {
+      const phase = (this.world.tick % 36) / 36, puff = riding && Math.abs(b.speed) > .6 && phase < .5;
+      exhaust.visible = puff;
+      if (puff) { exhaust.position.x = -1 - phase * .55; const scale = .25 + phase * .9; exhaust.scale.setScalar(scale); }
+    }
+    if (rig.headlight) rig.headlight.intensity = this.world.lightPower?.night ? 8 : 0;
+    if (rig.headlightCone) rig.headlightCone.visible = !!this.world.lightPower?.night;
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;
     rig.placed = riding && carrying ? Math.min(1, rig.placed + 1 / 21) : 0;
     rig.parcel.visible = rig.placed > 0;
@@ -300,7 +325,7 @@ export class BicycleView extends Group {
   dispose(): void {
     this.prompt.remove(); this.disposed = true;
     if (this.rig) {
-      const roots = [this.rig.parcel, this.rig.glint, ...(this.rig.model.userData.placeholder ? [this.rig.model] : [])];
+      const roots = [this.rig.parcel, this.rig.glint, ...(this.rig.exhaustPuff ? [this.rig.exhaustPuff] : []), ...(this.rig.headlightCone ? [this.rig.headlightCone] : []), ...(this.rig.model.userData.placeholder ? [this.rig.model] : [])];
       const materials = new Set<MeshBasicNodeMaterial>();
       for (const root of roots) root.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) materials.add(material as MeshBasicNodeMaterial); } });
       for (const material of materials) material.dispose();
