@@ -73,18 +73,12 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     const wait = threat?.followerWait;
     add('G-13', 'stationary far-follower time upper bound', wait ?? null, 'actual waiting ≤10%; a bound above 10% is inconclusive', wait?.upperBoundPercent != null && wait.upperBoundPercent <= 10 ? true : undefined);
   }
-  // PO 2026-11-19 s190: every level has an exact authored opening arsenal; L8 is observed after the gate takes only the rocket.
-  const startSets: Record<number,string[]> = {
-    1:[], 2:['weapon.bat'], 3:['weapon.bat','weapon.fire-axe'],
-    4:['weapon.fire-axe','weapon.handgun'], 5:['weapon.fire-axe','weapon.handgun','weapon.army-mg'],
-    6:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun'],
-    7:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.assault-rifle'],
-    8:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun'],
-    9:['weapon.fire-axe','weapon.handgun','weapon.assault-rifle'], 10:[],
-  };
+  const allowed = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'];
   const offered = [...new Set([...(initial.racks?.LEFT ?? []), ...(initial.racks?.RIGHT ?? [])])].filter(id => id.startsWith('weapon.') && !['weapon.fists', 'weapon.kick'].includes(id));
-  const n = Number(receipt.level.slice(1)), expected = startSets[n] ?? [];
-  add('G-16', 'weapons offered in the ordinary initial racks', offered, `PO 2026-11-19 s190 exact set: ${JSON.stringify(expected)}`, offered.length===expected.length&&expected.every(id=>offered.includes(id)));
+  // PO 2026-11-19 (level-acceptance L9-08): the L9 crossing loses the whole arsenal including
+  // the axe; L10 starts unarmed and the crash-site machete is a retained pickup, not a rack weapon.
+  const n = Number(receipt.level.slice(1)), maximum = n === 10 ? [] : allowed.slice(0, n <= 5 ? n : n < 7 ? 5 : 6);
+  add('G-16', 'weapons offered in the ordinary initial racks', offered, n === 10 ? 'none (fists only; the crash-site machete is a pickup)' : `subset of ${JSON.stringify(n === 1 ? [] : maximum)}`, n === 10 ? offered.length === 0 : offered.every(id => (n === 1 ? [] : maximum).includes(id)));
   add('G-19', 'corgi health and real infected attack targets', observation.corgi, 'health fraction=1; zero target windups and damaging hits', observation.corgi.samples ? observation.corgi.minimumHealthFraction === 1 && observation.corgi.targeted === 0 && observation.corgi.hit === 0 : undefined);
   const runOut = observation.runOut;
   add('G-20', 'engaged run-out duration and invulnerability', runOut, '300 ticks ±1; invulnerability through deadline', runOut ? Math.abs(runOut.until - runOut.tick - 300) <= 1 && runOut.minimumInvulnerableUntil >= runOut.until : undefined);
@@ -333,8 +327,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
 
       const launcher = initial.census.find(entity => entity.pickup && 'actionId' in entity.pickup && entity.pickup.actionId === 'weapon.rocket-launcher'), exit = initial.checkpoints.find(checkpoint => checkpoint.id === 'night-exit');
       number('L7-01', 'native launcher horizontal distance from night-exit checkpoint', launcher && exit ? Math.hypot(launcher.x - exit.position[0], launcher.z - exit.position[2]) : null, 0, 5);
-      // PO 2026-11-19 s190: L7 opens with axe/handgun/MG/rifle; its rocket pickup makes five selectable weapons.
-      number('L7-02', 'selectable story weapons after native launcher pickup (PO 2026-11-19 s190 authored L7 start)', [...new Set([...(final.racks?.LEFT ?? []), ...(final.racks?.RIGHT ?? [])])].filter(id => ['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.assault-rifle','weapon.rocket-launcher'].includes(id)).length, 5, 5);
+      number('L7-02', 'selectable story weapons after native launcher pickup', [...new Set([...(final.racks?.LEFT ?? []), ...(final.racks?.RIGHT ?? [])])].filter(id => allowed.includes(id)).length, 6, 6);
       if (competent) {
         const proofPath = 'docs/reports/fix51-verify/receipts/L7-arrival.json';
         const producerPath = 'docs/reports/fix51-r10c/L7-carried-save-provenance.json';

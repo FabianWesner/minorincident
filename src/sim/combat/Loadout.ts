@@ -29,7 +29,7 @@ export class Loadout {
       seen.add(id); return [{ side, index, id }];
     }));
     // Innate fists have no carried rack slot. The sentinel preserves campaign
-    // arsenal/checkpoint invariants at the unarmed L10 crash start.
+    // arsenal/checkpoint invariants even at the axe-only L10 crash start.
     if (!seen.has('weapon.fists') && !entries.some(entry => this.definition(entry.id).category === 'melee')) entries.push({ side: 'LEFT', index: -1, id: 'weapon.fists' });
     else if (entries.some(entry => entry.id !== 'weapon.fists' && this.definition(entry.id).category === 'melee')) {
       const fists = entries.findIndex(entry => entry.id === 'weapon.fists'); if (fists >= 0) entries.splice(fists, 1);

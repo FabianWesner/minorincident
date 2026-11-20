@@ -1,6 +1,5 @@
 import { isSanctuaryHeavy } from '../../data/l8Gate';
 import { transactArsenal } from '../progression/arsenal';
-import { restoreSelectedAction } from '../progression/selection';
 import type { SimWorld } from '../world/SimWorld';
 import type { Mission } from './Mission';
 
@@ -17,11 +16,7 @@ export function surrenderHeavyWeapons(w: SimWorld, mission: Mission): string[] {
     .filter(isSanctuaryHeavy);
   mission.radio('L8.gate-soldier');
   if (!carried.length) return [];
-  if (w.progression?.campaign) {
-    const save = w.progression.campaign;
-    transactArsenal(w, [], carried);
-    save.selectedAction = restoreSelectedAction(w.combat!.runner.loadout, save);
-  }
+  if (w.progression?.campaign) transactArsenal(w, [], carried);
   else if (w.combat && loadout) {
     const keep = (side: 'LEFT' | 'RIGHT') => loadout[side].rack.map(s => s.id).filter(id => !isSanctuaryHeavy(id));
     const left = keep('LEFT'), right = keep('RIGHT');
