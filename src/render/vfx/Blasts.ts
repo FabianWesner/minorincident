@@ -744,6 +744,21 @@ export class Blasts extends Group {
       // High: two buoyant embers per tick spread over the fire, drifting with the wind; low keeps one at 2 Hz.
       if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.embers(now, c, e.hazard?.radius ?? .8, low);
     }
+    // Field fronts share the bounded flame, smoke and ember pools. Limit sources
+    // to nearby visible cells so a large fire cannot allocate unbounded lights.
+    let fieldSources = 0;
+    for (const [index, cell] of (this.world.hazards?.fieldFire?.cells ?? []).entries()) {
+      if (cell.state !== 'burning' || !this.sourceVisible(cell.x, cell.z, 12) || fieldSources >= 24) continue;
+      fieldSources++;
+      const key = -3_000_000 - index; seen.add(key);
+      let c = this.fireColumns.get(key);
+      if (!c) {
+        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: low ? 1.5 : 3, size: 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
+        c.light = this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
+        this.fireColumns.set(key, c);
+      }
+      if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, 3, low);
+    }
     // L9 night accents: authored render-only fires (farm brush fires, burning wrecks, the city edge) share the flame/smoke/ember path.
     const accents = nightAccents(this.world.districts).fires;
     for (let i = 0; i < accents.length; i++) {
