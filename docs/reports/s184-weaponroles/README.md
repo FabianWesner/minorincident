@@ -13,3 +13,7 @@ The latest sheet also removes the red blood pool previously emitted by fire dama
 ## Audio source investigation
 
 The sprite now includes CC0 recordings for flame ignition, a [blowtorch-based flamethrower](https://freesound.org/people/SamsterBirdies/sounds/490166/) loop and tail, plus a pneumatic nail-gun shot; provenance and hashes are in `assets/audio/imports.json`. Weapon-specific reload and impact cues are wired and listed in the design table. The builder can use hash-verified cached source files when an upstream archive is unavailable. The flame loop and stop still need listening review against the requested roaring hiss and sputter, and the shared explosion and layered melee sounds need an audible distinctness audit.
+
+## Preliminary L6 threat comparison
+
+The preliminary branch audit reported four L6 early-close flags: two slow-follower observations and two breach waves without an attack within 20 seconds. The same L6 audit on current main and on an isolated branch copy with only MG suppression removed had no L6 flags. The early-close courier still lost 75 HP with suppression, so these flags do not establish that the entire level is harmless. The prescribed suppression remains enabled and infected stats are unchanged. [Comparison](l6-comparison.json). A fresh full-source audit is still running.
