@@ -193,6 +193,32 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
       for (let tick = 0; tick < 900 && restoredDog.transform.z < 53.84; tick++) w.update();
       expect(restoredDog.transform.z, `${quality}: corgi clears the threshold from apron x=${x}`).toBeGreaterThanOrEqual(53.84);
     }
+    // A research-road cohort can be carried just behind the courier when she
+    // exits the hangar. It must reacquire her even after she has passed it.
+    Object.assign(player.transform, { x: 2743.89, z: 20.87 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.spatial.set(1, 2743.89, 20.87);
+    w.chunks!.update();
+    const ai = w.infected!;
+    let spawnAt: { x: number; z: number } | undefined;
+    for (let radius = 0; radius < 40 && !spawnAt; radius += 2) for (let dx = -radius; dx <= radius && !spawnAt; dx += 2) for (let dz = -radius; dz <= radius; dz += 2) {
+      const x = 2715 + dx, z = 50 + dz;
+      if (ai.nav.clear(x, z, .4)) { spawnAt = { x, z }; break; }
+    }
+    expect(spawnAt, `${quality}: clear nav ground beside the hangar`).toBeDefined();
+    const group = [
+      ['infected.sprinter', 2715.4, 50.6], ['infected.firefighter', 2717.1, 51.1], ['infected.armored', 2716.4, 49.6],
+    ] as const;
+    const ids = group.map(([archetype, x, z]) => {
+      const id = ai.spawn(archetype, spawnAt!, { state: 'idle', cureRegion: 'research-campus' });
+      const infected = w.entities.get(id)!; Object.assign(infected.transform, { x, z }); w.spatial.set(id, x, z);
+      return id;
+    });
+    for (let tick = 0; tick < 20 * 60; tick++) w.update();
+    const remaining = ids.map(id => {
+      const infected = w.entities.get(id)!;
+      return Math.hypot(infected.transform.x - player.transform.x, infected.transform.z - player.transform.z);
+    });
+    expect(Math.min(...remaining), `${quality}: hangar group closes from about 40 m; remaining=${remaining.map(d => d.toFixed(1)).join(',')}`).toBeLessThan(5);
   }
 });
 
