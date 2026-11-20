@@ -11,7 +11,7 @@ import { regularInfectedModels } from '../data/crowdAppearance';
 import { l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks } from '../data/l4';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
-import { corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
+import { ashPosition, corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 import { deinterleaveGeometry, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
@@ -812,9 +812,7 @@ export class CrowdView extends Group {
         }
         // The death clips lie toward local -X from the feet. Put the ash at
         // the body centre, using the same resting yaw as the corpse pose.
-        const resting = e.infected ? this.corpsePosition(e, e.infected.deadAt) : e.transform;
-        const reach = (e.archetype === 'infected.alpha' || e.archetype === 'infected.mega-alpha' ? .9 : .6) * Math.min(1, ashProgress * 2);
-        const x = resting.x - Math.cos(resting.yaw) * reach, z = resting.z + Math.sin(resting.yaw) * reach;
+        const { x, z } = ashPosition(this.world, e, ashProgress);
         const ground = this.world.districts?.groundHeight(x, z) ?? 0;
         const pieces = [
           [-.17, -.06, .55, .16, .38, .2], [.16, .04, .48, .14, .35, 1.1], [-.02, .15, .42, .13, .32, 2.2], [.04, -.15, .38, .12, .3, .7],
