@@ -112,3 +112,7 @@ The D-SHOP placement reuses the diner asset for a separately labeled Food Court 
 The first full remote unit run on commit `30362caf` reached the 240-second budget (241.3 s, exit 124); no failures were reported in completed files. An unchanged retry was started.
 
 The unchanged retry on the Food Court revision also reached the 240-second budget (240.5 s, exit 124); completed files reported no failures. The most recent complete suite pass was on the preceding diner-sign revision (`5fa7b2e4`), before the Food Court placement was restored.
+
+A further unchanged remote unit retry on the Food Court revision reached the 240-second budget (240.6 s, exit 124); completed files reported no failures. The final revision still needs a complete suite pass.
+
+A subsequent check of generated foliage card triangles found intersections with the current Creekside Lodge board in D-PARK and the Grove Market and Grove Pharmacy boards in D-SHOP. The earlier neighboring-tree audit checked authored static tree meshes, not these generated cards. Trial relocations on the camera-facing walls cleared the sampled static geometry, but the lodge trial was too small to read and was reverted. These three boards need readable entrance placements checked against both the authored geometry and generated foliage, followed by a broader foliage check for the remaining districts. This remains open at the time limit.
