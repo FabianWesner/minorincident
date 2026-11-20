@@ -13,6 +13,7 @@ Folded the regression into the existing `tests/engine/npcs.test.ts` case. HIGH a
 ## Validation
 
 - `npx vitest run tests/engine/npcs.test.ts --project default --configLoader runner` — PASS (3 tests; includes HIGH/LOW checkpoint restore and walking approaches; rerun after adding the restore assertion).
+- Additional native approach probe: on both HIGH and LOW, with the courier at (2707, 59), the corgi started at z=43 and x=2699, 2703, 2707, 2711, and 2715. All ten starts cleared z=53.84 in 3.08–5.55 s using normal follower updates. This is a bounded probe, not proof for every possible position.
 - `npm run typecheck` — PASS.
 - `npm run lint` — PASS.
 - `npm run qa:threat -- --levels L10` — FAIL: passive audit reported zero threat flags, but the skilled native route hit the 1,800 s tick budget at “Kill the Mega Alpha”, leaving `INCOMPLETE_NATIVE_POLICY:tick-budget` (1 acceptance flag). An unchanged retry produced the same flag and zero passive flags (144.8 s); the full-footprint version likewise returned the same flag and zero passive flags (136.3 s). A baseline comparison restored both changed runtime files to `78f69ba6` for the same audit and restored HEAD afterward: it also produced the same flag at “Kill the Mega Alpha”, zero passive flags, and 29 deaths (79.3 s). The changed run had 22 deaths. This establishes that the gate failure exists without the hangar changes; it does not satisfy the zero-flags gate.
