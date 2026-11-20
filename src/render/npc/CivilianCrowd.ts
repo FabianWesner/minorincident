@@ -239,6 +239,10 @@ class CivilianBatch extends Group {
       const gateGuard = !!c && c.state === 'calm' && zooGateGuard(this.world, e.id);
       const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard);
       let conversation = this.conversationPositions.get(e.id);
+      // Combat, flight, injury or a hidden actor must follow the authoritative body immediately.
+      if (conversation && (!c || c.state !== 'calm' || e.hidden || e.health.current <= 0)) {
+        this.conversationPositions.delete(e.id); conversation = undefined;
+      }
       if ((speaking || joining) && !conversation) {
         let start = e.transform;
         if (gateGuard && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) {

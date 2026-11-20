@@ -21,9 +21,16 @@ try {
     return { id: survivor.id, subtitle: m.state.subtitle?.id, ring: { x: ring.x, z: ring.z } };
   });
   if (setup.subtitle !== 'L5.found.rosa') throw new Error(`Unexpected line ${setup.subtitle}`);
-  const frames: { frame: number; jpeg: Buffer }[] = [];
-  for (let i = 0; i < 4; i++) { await session.page.evaluate(() => window.__SS__!.step(60)); frames.push({ frame: i, jpeg: await session.snapshot() }); }
+  const frames: { frame: number; jpeg: Buffer }[] = [], actors: unknown[] = [];
+  for (let i = 0; i < 4; i++) {
+    await session.page.evaluate(() => window.__SS__!.step(60)); frames.push({ frame: i, jpeg: await session.snapshot() });
+    actors.push(await session.page.evaluate(id => {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const actor = game.world.entities.get(id), drawn = game.view.labProbes().npcs?.snapshot().civilians.figures.filter(figure => figure.id === id);
+      return { tick: game.world.tick, state: actor?.civilian?.state, hidden: actor?.hidden, at: actor?.transform, drawn };
+    }, setup.id));
+  }
   await session.makeSheet(frames, `${out}/sheet.jpg`, 420, 240);
-  writeFileSync(`${out}/receipt.json`, JSON.stringify({ setup, errors: session.errors }, null, 2));
+  writeFileSync(`${out}/receipt.json`, JSON.stringify({ setup, actors, errors: session.errors }, null, 2));
   if (session.errors.length) process.exitCode = 1;
 } finally { await session.close(); stopServer(); }
