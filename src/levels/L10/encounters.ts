@@ -118,12 +118,15 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // a retreat into the full road groups. Staggered rows retain every slot
     // while leaving the northern verge open for an eastbound escape.
     const militaryPatrol = group.id.startsWith('military-zone-direct-');
+    // The quarantine cohort gathers behind the tower base, rather than being
+    // scattered over the road. The ordinary safe admission still prevents pop-in.
+    const gateTower = group.setPiece === 'quarantine-gate';
     // Moving the industrial Alpha into the first cohort must retain its old
     // once-only slot, so a carried save cannot admit it a second time.
     const slotOwner = group.id === 'depot-workers' && archetype === 'infected.alpha' ? 'depot-alpha' : group.id;
     return { key: `${slotOwner}:${archetype}:${index}`, archetype,
-      x: at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
-      z: at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
+      x: gateTower ? 2995 + (i % 3 - 1) * 2 : at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
+      z: gateTower ? 110 + Math.floor(i / 3) * 2 : at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
   });
 }
 
