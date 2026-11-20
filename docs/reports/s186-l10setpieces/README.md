@@ -116,6 +116,8 @@ At HIGH, the gate fixture passes. Billboard, field, convoy, underpass and hospit
 
 - Re-ran `npm run verify -- E32` after the convoy crates: typecheck and lint passed; its local unit suite again failed only the L4 LOW perimeter-routing assertion (105 passed, one failed; 101.8 s). The later stretcher change is render-only and its own typecheck, lint and focused world-systems checks passed.
 
+- Final current-source `npm run qa:threat`: **PASS**, 246.3 s / 600 s, zero fail flags, all ten LOW skilled routes complete. The final current-source remote full unit suite also passed (105 passed, one skipped, 217.0 s). The last local E32 verification failed its unit stage on the L4 perimeter-routing assertion described above; the remote L4 test passed.
+
 ## Open
 
 This is not a completion report. The seven linked views are staged diagnostics, not accepted native key-moment captures. The LOW nearby-fight sample meets the 20-second bound within each visit, but does not establish continuous travel gaps, HIGH behavior, or attacks by each scene’s own cohort. The gate copy is cropped and its burst is unproven; the billboard lacks its official portrait, shooting trigger and in-view crowd reveal; the field figures do not tear free; the convoy crate-and-refill interaction needs native visual review; the underpass roof, torch contrast and silence are unproven; and the hospital lacks moving silhouettes and synchronized emergence. The road has a siren, orange motes and blended fog, but the visual result is still dark blue. Existing hazmat and crawler TRELLIS lineage remains unresolved. No zombies were stat-tuned and no corpses are removed.
