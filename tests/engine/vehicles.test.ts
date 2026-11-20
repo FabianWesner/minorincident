@@ -923,8 +923,13 @@ async function motorbikeRide(): Promise<void> {
     world.setInput({ right: { down: true, held: true, up: false }, selectedWeaponKey: 2 }); world.update();
     expect(world.events.events().filter(e => e.type === 'combat.attack')).toHaveLength(beforeOtherWeapon);
     expect(player.weapons!.selectedSide).toBe('LEFT');
-    let peakSpeed = 0;
-    for (let i = 0; i < 180; i++) { world.setInput({ move: { x: 0, z: 1 } }); world.update(); peakSpeed = Math.max(peakSpeed, bike.entity!.bicycle!.speed); }
+    let peakSpeed = 0, travel = 0, previous = { x: player.transform.x, z: player.transform.z };
+    for (let i = 0; i < 1200; i++) {
+      world.setInput({ drive: { throttle: 1, steer: .65 } }); world.update();
+      const p = player.transform; travel += Math.hypot(p.x - previous.x, p.z - previous.z); previous = { x: p.x, z: p.z };
+      peakSpeed = Math.max(peakSpeed, bike.entity!.bicycle!.speed);
+    }
+    expect(travel).toBeGreaterThan(100);
     expect(peakSpeed).toBeGreaterThan(8);
     expect(peakSpeed).toBeLessThanOrEqual(9.5);
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });

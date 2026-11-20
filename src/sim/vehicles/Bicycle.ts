@@ -87,7 +87,10 @@ export class Bicycle {
     return !!bike?.bicycle && !!player && player.health.current > 0 && (bike.bicycle.mounted || this.world.tick >= bike.bicycle.lockUntil && Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z) <= MOUNT_RANGE && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform));
   }
   /** Controller speed scale (7.5 m/s over the 4.5 m/s run); 1 on foot. */
-  get speedScale(): number { return this.riding ? speedMs / survivor.speed : 1; }
+  get speedScale(): number {
+    const bike = this.entity?.bicycle;
+    return this.riding ? speedMs * (bike?.motorbike ? 1.25 : 1) / survivor.speed : 1;
+  }
   addNoBikeZone(zone: NoBikeZone): void { this.noBikeZones.push(zone); }
   inNoBikeZone(p: Vec2): boolean { return this.noBikeZones.some(z => inPolygon(p, z.polygon)); }
   /** Inside a zone or within `margin` metres of its edge (a fence on the border stops the rider just outside it). */
@@ -198,7 +201,8 @@ export class Bicycle {
       target = maxSpeed * want * Math.max(.3, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
     }
     b.steer += (steerTarget - b.steer) * Math.min(1, bicycleHandling.steeringResponse * FIXED_DT);
-    const radius = bicycleHandling.slowTurnRadius + (bicycleHandling.fastTurnRadius - bicycleHandling.slowTurnRadius) * r;
+    const turnScale = b.motorbike ? 1.08 : 1;
+    const radius = (bicycleHandling.slowTurnRadius + (bicycleHandling.fastTurnRadius - bicycleHandling.slowTurnRadius) * r) * turnScale;
     // At an obstacle, the rider can still walk the front wheel round to pull away.
     // Using only achieved speed here locks the heading forever when the capsule is stopped.
     const steeringSpeed = want > 0 ? Math.sign(b.speed || target) * Math.max(Math.abs(b.speed), .8) : b.speed;
