@@ -31,3 +31,5 @@ The next iteration offsets the heap toward the centre of the fallen pose using i
 A HIGH WebGL2 trial of taller, smaller, alternately shaded clumps passed scene checks but obscured the bones, including after raising them. The trial was discarded. A different geometry or shading approach is needed to make ash texture readable without losing the bones.
 
 An Alpha HIGH WebGL2 trial using the opposite offset implied by the prone layout did not align the visual pose: the body was left of the heap. The trial was discarded. The existing offset was reviewed only on the runner; verify or derive placement from the drawn Alpha pose before accepting it.
+
+The committed offset was then captured on the Alpha: it overlaps the falling body, and increasing its reach from .6 to .9 m puts the heap nearer the centre of that larger silhouette in this fixture. Scene checks, typecheck, lint and seven focused combat tests pass. This does not prove every Alpha look or obstructed placement; visual acceptance and current-revision backend/tier and remote checks remain open.

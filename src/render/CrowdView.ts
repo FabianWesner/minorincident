@@ -803,7 +803,7 @@ export class CrowdView extends Group {
         // The death clips lie toward local -X from the feet. Put the ash at
         // the body centre, using the same resting yaw as the corpse pose.
         const resting = e.infected ? this.corpsePosition(e, e.infected.deadAt) : e.transform;
-        const reach = .6 * Math.min(1, ashProgress * 2);
+        const reach = (e.archetype === 'infected.alpha' || e.archetype === 'infected.mega-alpha' ? .9 : .6) * Math.min(1, ashProgress * 2);
         const x = resting.x - Math.cos(resting.yaw) * reach, z = resting.z + Math.sin(resting.yaw) * reach;
         const ground = this.world.districts?.groundHeight(x, z) ?? 0;
         const pieces = [
