@@ -43,3 +43,5 @@ Glow-revision validation: typecheck and lint passed; remote `npm test` initially
 Glow-revision scene gate: all 91 listed rows passed in one filtered run (HIGH/LOW, WebGL2/WebGPU, one browser per batch), with zero known or unrun rows; see `test-results/s180-glow-all-rows/summary.md`. The filter covered the complete gate list but did not invoke the additional vehicle-motion suites associated with an unfiltered gate command.
 
 A separate HIGH WebGPU D-CURE capture of the glow revision was inspected at zoom 1.5: the road pool and small light point at the held rifle are present, consistent with the WebGL2 frame; no browser errors were reported. This is a headless backend check, not a manual native-device WebGPU performance review.
+
+LOW WebGPU D-CURE capture was also inspected at zoom 1: the light point is visible on the rifle and the pool lies ahead on the road; no browser errors were reported. As with the HIGH capture, this is a headless Scene Lab check.
