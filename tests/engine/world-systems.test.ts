@@ -334,6 +334,16 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureEncounterSlots(depot, 'low').filter(s => s.archetype === 'infected.alpha')).toHaveLength(1);
   expect(cureMedkits.find(k => k.id === 'industrial-service')?.at).toEqual([1517, -55]);
   const dispersalBeats = curePaceEncounters.filter(g => g.setPiece);
+  // A checkpoint captured during the billboard fall must preserve its phase
+  // when the simulation clock has advanced before restore.
+  const { LevelTenEncounters } = await import('../../src/sim/missions/LevelTenEncounters');
+  const clockWorld = { tick: 1000, events: { on: () => {} }, infected: null } as unknown as import('../../src/sim/world/SimWorld').SimWorld;
+  const encounterClock = new LevelTenEncounters(clockWorld);
+  encounterClock.state.billboardFallAt = 970;
+  const encounterSnapshot = encounterClock.snapshot();
+  clockWorld.tick = 1600;
+  encounterClock.restore(encounterSnapshot);
+  expect(encounterClock.state.billboardFallAt).toBe(1570);
   expect(dispersalBeats.map(g => g.setPiece)).toEqual([
     'quarantine-gate', 'propaganda-billboard', 'scarecrow-field', 'burning-convoy', 'dark-underpass', 'field-hospital',
   ]);

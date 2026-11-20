@@ -112,6 +112,7 @@ export class LevelTenEncounters {
     if (this.world.infected) this.world.infected.director.reserved += (this.state.finaleEntrySlot ? 1 : 0) - heldEntrySlot;
     const delta = this.world.tick - (this.state.pressureTick ?? this.world.tick);
     if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
+    if (this.state.billboardFallAt !== undefined) this.state.billboardFallAt += delta;
     if (this.state.finaleEntryNext !== undefined) this.state.finaleEntryNext += delta;
     for (const walker of this.state.finaleEntry?.walking ?? []) {
       walker.until += delta;
