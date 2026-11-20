@@ -118,10 +118,12 @@ At HIGH, the gate fixture passes. Billboard, field, convoy, underpass and hospit
 
 - Final current-source `npm run qa:threat`: **PASS**, 246.3 s / 600 s, zero fail flags, all ten LOW skilled routes complete. The final current-source remote full unit suite also passed (105 passed, one skipped, 217.0 s). The last local E32 verification failed its unit stage on the L4 perimeter-routing assertion described above; the remote L4 test passed.
 
+- Repeated the LOW visit-gap simulation after adding the stretchers. The run completed in 1,116.0 s with two deaths and produced a byte-identical receipt to [the recorded per-scene gaps](low-final-visits.json). This confirms that this seeded simulation's result did not change with the final dressing, while the other seed, tier, travel-gap and cohort-specific limitations still apply.
+
 ## Open
 
 This is not a completion report. The seven linked views are staged diagnostics, not accepted native key-moment captures. The LOW nearby-fight sample meets the 20-second bound within each visit, but does not establish continuous travel gaps, HIGH behavior, or attacks by each scene’s own cohort. The gate copy is cropped and its burst is unproven; the billboard lacks its official portrait, shooting trigger and in-view crowd reveal; the field figures do not tear free; the convoy crate-and-refill interaction needs native visual review; the underpass roof, torch contrast and silence are unproven; and the hospital lacks moving silhouettes and synchronized emergence. The road has a siren, orange motes and blended fog, but the visual result is still dark blue. Existing hazmat and crawler TRELLIS lineage remains unresolved. No zombies were stat-tuned and no corpses are removed.
 
-## Commit status
+## Time-box disposition
 
-Partial increments are committed with explicit paths. The acceptance work above remains open.
+The time box ended with partial implementation. All changes and this report are committed with explicit paths; the acceptance work above remains open. No deployment, push or main-branch update was performed.
