@@ -518,9 +518,18 @@ export class LevelTwoRescue {
       // available through the rescue fight before it can be recycled for
       // later street capacity. The first-ten opening grace below is not
       // sufficient: later staggered arrivals can still be offscreen after
-      // that grace expires.
-      if (marketAmbushers.has(id) && ((e.transform.x < -64 || e.transform.x > -36 || e.transform.z < -52 || e.transform.z > -24)
-        || Math.hypot(p.x - e.transform.x, p.z - e.transform.z) <= 60)) continue;
+      // that grace expires. The fight's own streets box preserves them
+      // through the doors window; once that window has played out, only the
+      // 60 m rule does. Past it (the courier has broken away; the fight is
+      // offscreen behind her — the same offscreen contract as the street
+      // retirement below), the unengaged leftovers would mill behind an
+      // abandoned fight holding their slots through the whole escape; they
+      // free them for the prepared street formations instead (L2-11's slot
+      // recycling lever). While the courier stands at the doors the 60 m
+      // rule still preserves the whole fight.
+      const doorsWindowDone = world.tick - this.s.doorsOpenAt >= ticks(l2.rescue.radioAfterS);
+      if (marketAmbushers.has(id) && (Math.hypot(p.x - e.transform.x, p.z - e.transform.z) <= 60 || !doorsWindowDone
+        && (e.transform.x < -64 || e.transform.x > -36 || e.transform.z < -52 || e.transform.z > -24))) continue;
       // Street preparation may begin during the collapse, but its quota must
       // not retire its opening attackers before their first approach completes.
       if (!this.s.radioAt && world.tick - this.s.doorsOpenAt < ticks(4) && collapseAttackers.has(id)) continue;
@@ -599,7 +608,17 @@ export class LevelTwoRescue {
         // the shared cap, rather than announce the next encounter half-filled.
         const escapeReady = living.filter(e => Math.hypot(e.transform.x - forecourt.x, e.transform.z - forecourt.z) >= 40).length >= 25
           && living.filter(e => e.infected?.l1?.mode === 'chase' && e.infected.l1.targetId === 1).length <= living.length * .2;
-        if (radioDue || away && escapeReady) {
+        // The bridge census reads the street population at this call. The doors
+        // fight holds the shared living cap, so the street formations admit one
+        // member per recycled slot and the call waits for that authored admission
+        // to finish — groups first, then the walk's singles at their corners —
+        // rather than read the streets half-formed (the L2-11 low-tier street
+        // admission window; no count, cap or formation changes). A stalled doors
+        // clear-down cannot stall the story: past the backstop the call goes out
+        // with whatever stands.
+        const streetPending = s.pending.some(q => q.id === 0 && (q.door.startsWith('l2-street-edge-') || q.door.startsWith('l2-route-edge-')));
+        const backstop = tick - s.doorsOpenAt >= ticks(l2.rescue.radioAfterS + 45);
+        if ((radioDue || away && escapeReady) && (!streetPending || backstop)) {
           s.radioAt = tick; s.phase = 'escape';
           // The collapse window has ended. Free only safely distant actors so
           // prepared street groups can complete the bridge census at radio.
