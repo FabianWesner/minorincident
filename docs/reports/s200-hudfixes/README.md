@@ -1,26 +1,19 @@
 # s200 — HUD fixes
 
-## Changes
+The hint is anchored below the health and companion panels, wraps within the viewport, and on narrow screens sits below the navigation panel. The pipe bomb has a dedicated flat SVG, using the molotov's dark tile, gold stroke and olive fill. No external artwork was used.
 
-- The active weapon hint now sits below the health panel, uses a viewport-safe width, and wraps long pickup text. Its top position follows the lower edge of the health and companion panels after layout; a provisional phone capture showed the companion obscuring the earlier placement.
-- Pipe bombs resolve to the dedicated `icon.pipe-bomb` asset. The flat SVG uses the same dark tile, gold outline, and olive fill palette as the molotov while showing a capped pipe body and fuse.
+## Visual review
+
+[Hint captures](hint-captures.jpg) show 1280×720, 1600×900, 1920×1080 and 390×844 (in that order). I inspected the originals: the hunting-rifle role is fully visible on one line at each desktop size; on the phone it wraps to two lines below the tracker, clear of the health panel, weather and rack. These captures show the weapon-selection hint, which uses the same element and styling as the pickup hint; they do not show the pickup's trailing key.
+
+[Rack captures](rack-captures.jpg) show molotov above pipe bomb at 1280×720. The bottle is vertical and the pipe bomb horizontal with end caps and fuse. Both share slot 0, so the rack shows one representative at a time; the two captures use separate loadouts.
 
 ## Validation
 
-- `npm run typecheck` — passed.
-- `npm run lint` — passed.
-- Focused asset contract test (`tests/shared/asset-contract.test.ts`, asset-validator case) — passed.
-- `npm run build:qa` — passed.
-- Browser smoke retried after permissions changed. Four provisional viewport captures were generated, but the injected text can be overwritten by the game update, so they do not establish the long-hint requirement. The run failed when it expected both throwables simultaneously in the rack: they share key 0 and the rack displays one representative. The experimental assertion was removed. Visual capture and rack verification remain open.
-- `sh tools/remote/run.sh "$PWD" -- npm test` — passed: 27 files, 105 tests passed, 1 skipped, 191.9 s.
+- `npm run typecheck` and `npm run lint` — passed after the final placement change.
+- Focused headless gameplay capture run — passed for four viewports and both throwable loadouts. The temporary capture fixture selected the hunting rifle and verified the role text; it was removed afterwards.
+- Focused asset contract — passed; weapon icons have distinct registered IDs.
+- Remote `sh tools/remote/run.sh "$PWD" -- npm test` — passed, 27 files, 105 tests passed and one skipped, 196.2 s.
+- QA build — passed.
 
-## Open
-
-Run the browser smoke and visually inspect its four hint captures plus the molotov/pipe-bomb rack capture when the browser pool can start. The capture Done item remains unverified. A subsequent attempt to trigger a pickup through the VFX test hook failed because that hook does not dispatch pickup events to the HUD.
-
-
-A further headless smoke run reached L10 but timed out waiting for a separate pipe-bomb tile: fixed slot 0 displays a single throwable representative. A phone capture showed the pipe-bomb hint below the companion and clear of the rack and health, although it overlaps the weather label. Attempts to inject a long hint were overwritten by the running HUD, so the four long-hint captures still need a reliable fixture and review.
-
-The phone hint width is now capped at 55vw (220px maximum) to leave the weather label room. QA build and lint passed. A follow-up long-hint capture attempt selected the fire axe instead of the gun; the retry timed out acquiring a browser. The revised mobile layout has not yet been visually verified.
-
-A further capture retry timed out during browser pool setup. The legacy lock alternative waited for admission and was stopped without launching a browser. No additional visual evidence was produced.
+The real pickup message with its trailing key was not captured; attempts to trigger a pickup via the test fixture did not surface it. The existing full smoke test also expects both shared-slot throwables as separate simultaneous tiles and times out on that expectation. Those are open verification gaps.

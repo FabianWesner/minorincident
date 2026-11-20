@@ -509,7 +509,7 @@ export class Hud {
       const hintVisible = pickup !== null || emptyCue !== null || world.tick <= this.weaponHintUntil;
       setHidden(this.weapon.hint, !hintVisible);
       if (hintVisible) {
-        const panels = this.root.querySelectorAll<HTMLElement>('.hud-vitals,.hud-companion');
+        const panels = this.root.querySelectorAll<HTMLElement>(window.innerWidth <= 600 ? '.hud-vitals,.hud-companion,.hud-navigation' : '.hud-vitals,.hud-companion');
         const bottom = Math.max(...Array.from(panels, panel => panel.getBoundingClientRect().bottom));
         if (Number.isFinite(bottom)) this.weapon.hint.style.top = `${Math.ceil(bottom + 6)}px`;
       }
