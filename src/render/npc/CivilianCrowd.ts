@@ -61,6 +61,7 @@ const preparedCrowds = new Map<string, PreparedCivilian>();
 const preparedCrowdLimit = coreCivilianModels.length * 2;
 const noFigures: readonly EntitySnapshot[] = [];
 type Clip = typeof civilianClips[number];
+type ConversationPosition = { x: number; z: number; tick: number; distance: number; speed: number; yaw: number };
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
 export function crowdModelOf(e: EntitySnapshot): string | null {
@@ -95,7 +96,6 @@ const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
-  private readonly conversationPositions = new Map<number, { x: number; z: number; tick: number; distance: number; speed: number; yaw: number }>();
   private readonly corpses = new StaticCorpses();
   private readonly probe = new CrowdFigureProbe();
   private locomotion!: CrowdLocomotion;
@@ -135,7 +135,7 @@ class CivilianBatch extends Group {
   source = 'glb';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
-  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry) { super(); this.registry = sharedRegistry;
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry, private readonly conversationPositions = new Map<number, ConversationPosition>()) { super(); this.registry = sharedRegistry;
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.corpses.matrixAutoUpdate = this.corpses.matrixWorldAutoUpdate = false; }
     // L7 has a strict infected pool plus at most 35 incoming survivors. Size
     // every model's mutable pose rows for that population instead of 350.
@@ -567,6 +567,7 @@ export class CivilianCrowd extends Group {
   private readonly moves = new InfectedMoves();
   /** Shared across the near/far batches so a figure crossing the band keeps its displayed turn. */
   private readonly presentation = new MotionPresentation(crowdTurnRate);
+  private readonly conversationPositions = new Map<number, ConversationPosition>();
   private readonly figures = new Map<string, EntitySnapshot[]>();
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 4 : 48; }
@@ -613,7 +614,7 @@ export class CivilianCrowd extends Group {
     }))];
   }
   private readonly shading?: Materials;
-  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories, this.registry); }
+  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories, this.registry, this.conversationPositions); }
   /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
    * figures that fill the screen (the CrowdView infected hero rule: > 196 px tall, 164 px to leave, at most 4, nearest
    * to the camera) draw the full LOD0 model. Its batch per model is loaded on first use (desktop tier only). */
@@ -737,6 +738,7 @@ export class CivilianCrowd extends Group {
     // L4 people retain their model through infection. EntityStore revisions
     // cover births, replacement and checkpoint restore; live poses still update.
     const membershipChanged = this.world.scenario !== 'L4' || this.figureRevision !== this.world.entities.revision;
+    for (const [id, position] of this.conversationPositions) if (!this.world.entities.get(id) || position.tick > this.world.tick) this.conversationPositions.delete(id);
     const player = this.world.entities.get(1)?.transform;
     const streamMoved = this.staged && this.streaming && player && Math.hypot(player.x - this.streamX, player.z - this.streamZ) >= 4;
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); if (membershipChanged || streamMoved) this.discover(); this.selectHeroes(lodCamera); if (this.staged && camera) this.stageInitial(); this.props.begin();
