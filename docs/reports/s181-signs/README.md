@@ -90,3 +90,5 @@ The earlier gym and hospital audit entries used layout scales and were invalid: 
 The first remote unit run after the rendered-transform correction reached the 240-second suite budget (241.2 s, exit 124). It reported a save-progression test failure after 36.3 s before the suite was terminated, without printing its detailed failure; the unchanged suite had passed before the correction. An unchanged retry is required.
 
 The unchanged retry after the transform correction also timed out at 241.1 s; the previously reported save-progression test passed on that attempt, and no failure was reported among completed files. A further unchanged retry was started.
+
+At the three-hour time box, the further unchanged retry was cancelled while still queued: both remote slots were occupied and local fallback lacked available memory. No test was running when it was cancelled. The corrected-source suite therefore has no complete pass; its two attempts timed out as described above. Remaining review: the hospital LOW overlay's rendered appearance and gameplay readability, and comprehensive sign clearance beyond the sampled supporting meshes and static neighboring-tree checks.
