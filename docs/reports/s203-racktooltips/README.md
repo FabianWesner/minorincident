@@ -11,11 +11,11 @@
 
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
-- Focused unit suite, `node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/combat.test.ts` — passed (8 tests), including canonical-name and Corgi behavior coverage.
+- Focused unit suite, `node node_modules/vitest/vitest.mjs run --project default --configLoader runner tests/engine/combat.test.ts` — passed (7 tests), including canonical-name and Corgi behavior coverage.
 - `npm run test:smoke` — blocked before browser startup: the browser-pool daemon could not bind `127.0.0.1:4329` (`listen EPERM`). No screenshots were produced or visually inspected in this run.
-- `sh tools/remote/run.sh "$PWD" -- npm test` — unavailable: the remote runner reports no healthy machine (none running/provisioned), and the command is not eligible for the local Mac slot.
+- Remote `npm test` timed out at 245 seconds without a reported failure. The prescribed fallback passed: local `npm test` (27 files, 106 tests) and remote `tests/engine/l4-contact.test.ts` (1 test).
 
 ## Open
 
 - Re-run smoke through the browser pool and inspect the six requested tooltip captures at both viewport sizes. Confirm appearance, placement, and the ~150 ms show time in a working browser run.
-- Run the remote `npm test` suite when a healthy runner is available.
+- Smoke retry reached browser execution after consolidating the focused assertions to meet the 150-case budget, but was interrupted because the script hard-codes two workers and this job permits one browser. Run with one worker and inspect captures.
