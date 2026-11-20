@@ -1183,6 +1183,10 @@ export class GameView implements Lifecycle {
     const flashOpacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0) * (1 - this.cellarBlend));
     if (this.flashOverlay.style.opacity !== flashOpacity) this.flashOverlay.style.opacity = flashOpacity;
     this.fixtureProps?.update();
+    if (this.world.scenario === 'L10' && this.world.l10Encounters) {
+      const start = this.world.l10Encounters.state.billboardFallAt;
+      this.districts?.updateCureBillboard(start === undefined ? 0 : Math.min(1, Math.max(0, (this.world.tick - start) / 60)));
+    }
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);
     if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }

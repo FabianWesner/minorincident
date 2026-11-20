@@ -227,6 +227,16 @@ export class DistrictView extends Group {
         for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
       }
   }
+  /** Tilt the authored L10 billboard around its feet as the encounter opens. */
+  updateCureBillboard(fall: number): void {
+    for (const entry of this.lodBatches) if (entry.id === 'prop.l10-cure-billboard') for (const ref of entry.refs) {
+      if (ref.userData.placementId !== 'D-CURE/l10-setpiece-billboard-frame' || ref.userData.cureBillboardFall === fall) continue;
+      ref.userData.cureBillboardFall = fall;
+      ref.rotation.z = -Math.PI / 2 * fall;
+      ref.updateMatrix();
+      this.dirtyEntries.add(entry);
+    }
+  }
   /** L5 raises the authored half-open leaf to 1.9 m clearance, then lowers its bar onto the platform. */
   updateMetroShutter(closed: number): void {
     closed = Math.max(0, Math.min(1, closed));

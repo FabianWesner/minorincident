@@ -35,6 +35,8 @@ export interface CureEncounterState {
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
   /** Paced set pieces: the wave currently admitting, and the next re-target pass. */
   pacedWave?: Record<string, number>; pacedPress?: number;
+  /** Tick at which the billboard fell; checkpointed with the encounter ledger. */
+  billboardFallAt?: number;
   /** Once-only halfway breach cue, retained with the encounter snapshot. */
   assaultBreach?: boolean;
   assaultAnnouncedWave?: number;
@@ -287,8 +289,10 @@ export class LevelTenEncounters {
       if (assault && !assaultActive && !assaultApproach) continue;
       const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
-        if (group.setPiece ? Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]) > 35 : Math.abs(player.transform.x - group.at[0]) > 120) continue;
+        const releaseRadius = group.setPiece === 'propaganda-billboard' ? 25 : 35;
+        if (group.setPiece ? Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]) > releaseRadius : Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
+        if (group.setPiece === 'propaganda-billboard') this.state.billboardFallAt = w.tick;
         // A field crossing meets the same once-only hunting group on its own
         // lane. No group relocates after admission; a paced wave restages on
         // the courier's current lane at its own gate below.
