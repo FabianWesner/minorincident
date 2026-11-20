@@ -273,12 +273,15 @@ async function alphaTypeContracts() {
       expect(rangedMega.infected!.specialAttack?.move).toBe('alpha.pounce');
 
       const rubbleWorld = await arena(61, false);
+      for (let i = 0; i < 4; i++) rubbleWorld.hazards!.debris.spawn(i, { x: 50, z: 50 }, rubbleWorld.tick);
+      expect(rubbleWorld.hazards!.debris.pieces).toHaveLength(32);
       const rubblePursuit = installMegaPursuit(rubbleWorld, { introduceTick: null, resident: () => true });
       const rubbleMega = rubbleWorld.entities.get(rubblePursuit.introduce({ x: 20, z: 0 }))!;
       rubbleMega.infected!.specialCooldowns = { 'alpha.roar': Infinity };
       step(rubbleWorld, 1);
       expect(rubbleMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
       const chunk = rubbleWorld.hazards!.debris.pieces.find(piece => piece.material === 'concrete');
+      expect(rubbleWorld.hazards!.debris.pieces).toHaveLength(33);
       expect(chunk?.body.collider(0).collisionGroups()).toBe(0x00010001);
       step(rubbleWorld, 120);
       expect(rubbleWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === rubbleMega.id)).toBe(true);
