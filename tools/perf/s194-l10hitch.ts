@@ -75,5 +75,9 @@ try {
   const worst = [...result.hitches].sort((a,b)=>b.dt-a.dt)[0];
   console.log(JSON.stringify({ backend: result.backend, tier: result.tier, samples: result.frames.length, max: result.max, p99: result.p99, worst, hitches: result.hitches.length, errors: result.errors }, null, 2));
   assert.equal(result.backend, backend === 'webgpu' ? 'webgpu' : 'webgl');
+  assert.equal(result.tier, tier);
+  assert.equal(result.checkpoint, 'cure-crash');
+  assert.ok(result.frames.some(f => f.alive === 0), 'trace must include the period before the first infected');
+  assert.ok(result.frames.some(f => f.alive > 0), 'trace must include the first infected');
   assert.deepEqual(result.errors, []);
 } finally { await session.close(); stopServer(); }

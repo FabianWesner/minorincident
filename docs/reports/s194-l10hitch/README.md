@@ -4,7 +4,7 @@
 
 ## Reproduction and trace
 
-`tools/perf/s194-l10hitch.ts` is a headless checkpoint trace harness. It loads L10 from `cure-crash`, starts the mission, replays the existing seed-1 L10 input recording, records player position and shader build count and request-animation-frame intervals through tick 600, and samples the existing CPU categories (simulation, AI, crowd, view, render, audio, and others) along with infected counts. Run it during a quiet reservation:
+`tools/perf/s194-l10hitch.ts` is a headless checkpoint trace harness. It loads L10 from `cure-crash`, starts the mission, replays the existing seed-1 L10 input recording, records player position and shader build count and request-animation-frame intervals through tick 600, and samples the existing CPU categories (simulation, AI, crowd, view, render, audio, and others) along with infected counts. It checks backend, quality, checkpoint, and that samples cover both zero and nonzero infected counts. Run it during a quiet reservation:
 
 ```sh
 E2E_UNITS=1 SCENE_PORT=5144 sh tools/perf/quiet-run.sh npx tsx tools/perf/s194-l10hitch.ts webgpu high before
