@@ -105,7 +105,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     beat('underpass-mouth', 'kit.zoo-tunnel-mouth', 3390, 69, [4.5, 3, 3], Math.PI);
     for (const z of [87, 103]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3390, z, [.4, 1.5, .4]);
     // Field triage on the final approach: quarantine tents and a marked transport.
-    for (let i = 0; i < 3; i++) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', 3508 + i * 13, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
+    for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', x, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
     beat('hospital-truck', 'veh.military-truck', 3530, 126, [3.8, 1.5, 1.5], Math.PI / 2);
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
