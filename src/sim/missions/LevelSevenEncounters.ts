@@ -73,12 +73,13 @@ export class LevelSevenEncounters {
     if (this.prepared) return;
     this.prepared = true;
     const w = this.world, ai = w.infected!, director = ai.director;
-    director.levelCap = l7Encounters.concurrentCap[director.tier]; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
+    // The shared director halves levelCap for LOW, yielding the authored 100.
+    director.levelCap = l7Encounters.concurrentCap.high; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
     w.npcs!.setAmbient(0);
     const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier });
     w.npcs!.civilians.outbreak = outbreak;
     // Outbreak initialization can configure the shared director; the level owns its cap.
-    director.levelCap = l7Encounters.concurrentCap[director.tier]; director.strict = true;
+    director.levelCap = l7Encounters.concurrentCap.high; director.strict = true;
     const roster = carried ?? this.carried ?? w.progression?.campaign?.results?.L6?.escapedSurvivors;
     // Quality thins infected, never the community that escaped L6. Standalone
     // entries have the same 24-person shelter group on every quality/path.
@@ -623,7 +624,7 @@ export class LevelSevenEncounters {
     this.seen.clear(); for (const arrival of this.state.arrivals) this.seen.add(`${arrival.group}:${arrival.id}`);
     const director = this.world.infected!.director;
     director.queue.splice(0, director.queue.length, ...structuredClone(record.queue));
-    director.levelCap = l7Encounters.concurrentCap[director.tier]; director.strict = true; director.ambientTarget = 0;
+    director.levelCap = l7Encounters.concurrentCap.high; director.strict = true; director.ambientTarget = 0;
     this.reserveSlots();
   }
 }
