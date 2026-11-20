@@ -152,7 +152,7 @@ export class CrowdView extends Group {
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
   private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new IcosahedronGeometry(.5, 1).scale(1, .19, .65), new MeshBasicNodeMaterial({ color: '#292824' }), 350);
-  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new CapsuleGeometry(.025, .28, 2, 5).rotateZ(Math.PI / 2), new MeshBasicNodeMaterial({ color: '#b6aa8e' }), 700);
+  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new CapsuleGeometry(.045, .36, 2, 5).rotateZ(Math.PI / 2), new MeshBasicNodeMaterial({ color: '#c9bc9c' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -543,8 +543,10 @@ export class CrowdView extends Group {
       // Flash 0..1 is the ordinary hit pulse; 1..2 marks an L8 arena boss hit (r26-l8hitreact): a plain additive warm-white lift, since the
       // base*(1-base) pulse above is nearly invisible on dark animal coats.
       const flashValue = feedbackState.w.mod(2), bossFlash = flashValue.sub(1).max(0);
-      const glow = emission.mul(eye).add(atlasFill).add(flashValue.lessThan(1).select(flashValue, 0).mul(base.mul(base.oneMinus().mul(1.1))).add(vec3(.6, .54, .48).mul(bossFlash)).mul(figureMask ?? 1));
-      material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : eye, figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      const charred = variant.x.greaterThanEqual(1024);
+      const glow = emission.mul(eye).add(atlasFill).add(flashValue.lessThan(1).select(flashValue, 0).mul(base.mul(base.oneMinus().mul(1.1))).add(vec3(.6, .54, .48).mul(bossFlash)).mul(figureMask ?? 1)).mul(charred.select(0, 1));
+      const charredBase = charred.select(vec3(.025, .023, .019), base);
+      material = this.shading?.shaded(charredBase, glow, undefined, undefined, undefined, healthy ? undefined : eye.mul(charred.select(0, 1)), figureMask, shadowReceiver, healthy ? undefined : float(1)) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: charredBase, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       livingStencil(material);
       // r32-alphas: Alphas carry a stronger moonlit outline than the crowd, so the bigger silhouette reads at night.
@@ -782,7 +784,7 @@ export class CrowdView extends Group {
         }
         const x = e.transform.x, z = e.transform.z, ground = this.world.districts?.groundHeight(x, z) ?? 0;
         this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(x, ground + .06, z); this.ashHeaps.setMatrixAt(this.ashHeaps.count++, this.transform);
-        for (const offset of [-.12, .12]) { this.transform.makeRotationY(e.transform.yaw + offset * 4); this.transform.setPosition(x + offset, ground + .13, z); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform); }
+        for (const offset of [-.14, .14]) { this.transform.makeRotationY(e.transform.yaw + offset * 4); this.transform.setPosition(x + offset, ground + .17, z); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform); }
         continue;
       }
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
@@ -1013,7 +1015,7 @@ export class CrowdView extends Group {
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry, (feedback?.mask ?? 0) | (b.legLost ? 4 : 0));
         const figure = batch.probe.figures.at(-1);
         if (__QA_HOOKS__ && batch.probe.details && figure?.id === e.id && !batch.animal && !e.civilian?.zooAnimal) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
-        batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, this.flashStrength(e, feedback) + Math.round(fade * 255) * 2);
+        batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod), !!e.ashDeath); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, this.flashStrength(e, feedback) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { if (batch.mesh.geometry.userData.crowdAtlas) this.texturedCaps++; else { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); } }
       }
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }

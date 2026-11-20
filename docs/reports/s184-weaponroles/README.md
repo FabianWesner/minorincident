@@ -6,6 +6,8 @@ Visual review: the initial capture showed the full-colour corpse still drawn ove
 
 Second capture: the heap is now rounded rather than rectangular, and the duplicate body remains absent. HIGH and LOW still show a smooth dark oval with barely visible bones at zoom 1.5; the crumble is not clearly readable. Visual acceptance remains open. Both reruns report zero console errors.
 
+Latest capture: the linked sheet crops the original 1280×720 frames around the target without changing the 1.5 camera zoom; the final panel is LOW. The body now turns dark across its whole surface and two pale bones are visible on both tiers. The body visibly shrinks, but it does not yet break into convincing fragments and the heap still reads as a smooth dark oval. Visual acceptance remains open. Both runs reported zero console errors.
+
 ## Audio source investigation
 
 The sprite now includes CC0 recordings for flame ignition and a sustained fire loop, plus a pneumatic nail-gun shot; provenance and hashes are in `assets/audio/imports.json`. The builder can use hash-verified cached source files when an upstream archive is unavailable. The flame loop and stop still need listening review against the requested roaring hiss and sputter, and the per-weapon reload and impact audit is unfinished.
