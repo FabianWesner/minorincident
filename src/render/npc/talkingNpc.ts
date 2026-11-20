@@ -24,6 +24,14 @@ function zooSoldier(world: SimWorld, line: string, until: number): number {
   return id;
 }
 
+/** The gate guard is staged while the opening briefing is visible. */
+export function zooGateGuard(world: SimWorld, id: number): boolean {
+  const state = world.missions?.state;
+  if (world.scenario !== 'L8' || !state) return false;
+  if (state.phase === 'briefing') return zooSoldier(world, 'L8.gate-soldier', 0) === id;
+  return state.subtitle?.id === 'L8.gate-soldier' && zooSoldier(world, state.subtitle.id, state.subtitle.until) === id;
+}
+
 /** Actor-anchored speech bubbles in L1, L2 and L6 carry their speaker ID. */
 export function bubbleSpeaker(world: SimWorld, id: number): boolean {
   const state = world.missions?.state;

@@ -1,6 +1,6 @@
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
-import { bubbleSpeaker, hangarCastMember, joiningHangarConversation, speakingNpc, talkClip } from './talkingNpc';
+import { bubbleSpeaker, hangarCastMember, joiningHangarConversation, speakingNpc, talkClip, zooGateGuard } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
 import { cureHangar } from '../../data/l10Story';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
@@ -236,10 +236,18 @@ class CivilianBatch extends Group {
       if (model !== this.model) continue;
       const closingPose = l10ClosingPose(this.world, e);
       const speaking = !!c && speakingNpc(this.world, e.id) && c.state === 'calm';
-      const joining = !!c && c.state === 'calm' && joiningHangarConversation(this.world, e.id);
+      const gateGuard = !!c && c.state === 'calm' && zooGateGuard(this.world, e.id);
+      const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard);
       let conversation = this.conversationPositions.get(e.id);
       if ((speaking || joining) && !conversation) {
-        conversation = { x: e.transform.x, z: e.transform.z, tick: this.world.tick, distance: 0, speed: 0, yaw: e.transform.yaw };
+        let start = e.transform;
+        if (gateGuard && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) {
+          const player = this.world.entities.get(1)!.transform, dx = e.transform.x - player.x, dz = e.transform.z - player.z;
+          const length = Math.hypot(dx, dz) || 1;
+          const candidate = { ...e.transform, x: player.x + dx / length * 3, z: player.z + dz / length * 3 };
+          if (this.world.infected?.nav.clear(candidate.x, candidate.z, .35) !== false) start = candidate;
+        }
+        conversation = { x: start.x, z: start.z, tick: this.world.tick, distance: 0, speed: 0, yaw: e.transform.yaw };
         this.conversationPositions.set(e.id, conversation);
       }
       let conversationSpeed = conversation?.speed ?? 0, conversationYaw = conversation?.yaw ?? e.transform.yaw;
@@ -748,6 +756,7 @@ export class CivilianCrowd extends Group {
       // authored cast before the loading draw so streamed actors cannot first
       // create their frozen corpse material after play begins.
       if (this.world.scenario === 'L3') for (const model of l3CivilianModels) this.loadTier(model, 'lod2');
+      if (this.world.scenario === 'L8') this.loadModel('npc.national-guard');
       // L7 opens in combat, with the launcher only a few steps away. Its
       // nearby escort/infected tiers (including frozen corpse pages) cannot
       // use the peaceful after-Begin queue: their graph builds overlap the

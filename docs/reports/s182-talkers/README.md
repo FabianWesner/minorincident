@@ -10,9 +10,9 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [Hangar entry HIGH](hangar-entry.jpg) advances prior objectives and places the courier outside, then uses movement input through the entrance. Voss enters from the left and walks toward the courier during her visible first subtitle; she is still several metres away during the sampled line. The earlier campaign route is not exercised.
 
-[L8 gate HIGH](l8-gate.jpg) exposes an unresolved failure: the nearest recorded guard starts about 27 m from the courier, and no soldier is visibly identifiable beside her before the short gate line ends. The current approach does not satisfy this scene. The fixture starts the normal L8 briefing and uses the default progression.
+[L8 gate HIGH](l8-gate.jpg) starts the normal briefing with default progression. The nearest recorded guard begins about 27 m away in simulation; the existing guard is staged in presentation during the opening briefing, and the sheet shows a guard near the courier during the subtitle. Other camera positions and later fallback soldier lines remain unverified.
 
-An experimental off-screen staging of that guard still left him entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions to help investigate a solution without changing the simulation.
+An earlier experimental walk from off-screen left the guard entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions without changing the simulation.
 
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
