@@ -144,6 +144,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - HIGH seed 1 gate ledger: the first five slots admitted by tick 40260, with the courier at (2979.82, 7.68) and members around (3012–3016, 31–33). At tick 40620, near the gantry, four runners were in `attracted` state and several had moved behind the courier; by tick 40860 most of the eight were dead. A trial delaying gate release from 35 m to 20 m admitted all slots, but HIGH failed to complete within 1800 s (44 deaths, Mega objective); LOW completed in 1051.48 s with one death. The trial was reverted.
 
+- Trialled refreshing the gate cohort pressure target every 30 ticks instead of every 300. HIGH and LOW skilled seed 1 completed (1107.63 s / three deaths and 1202.55 s / five deaths), but neither cohort produced an attack telegraph and opened native HIGH frames still showed no visible burst. The trial was reverted. Typecheck, lint and focused world systems passed during the trial.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
