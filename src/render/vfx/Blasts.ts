@@ -777,10 +777,12 @@ export class Blasts extends Group {
     if (!this.host.camera) return true;
     this.sourcePoint.set(x, (this.world.districts?.groundHeight(x, z) ?? 0) + 9, z);
     // Plane distances avoid allocating bounds for each of the 22 persistent fires.
-    for (const plane of this.frustum.planes) if (plane.distanceToPoint(this.sourcePoint) < -radius) return false;
+    for (let i = 0; i < this.frustum.planes.length; i++) if (this.frustum.planes[i].distanceToPoint(this.sourcePoint) < -radius) return false;
     return true;
   }
-  private frameFlames = 0; private frameGlows = 0; private frameReserved = 0;
+  private frameFlames = 0; private frameGlows = 0; private frameReserved = 0; private frameShadows = 0;
+  private frameSun: { x: number; y: number; z: number } = this.sunNode.value; private frameHorizontal = 0;
+  private readonly writeFireShadow = (c: Column): void => { this.frameShadows = this.writeColumnShadow(c, this.frameSun, this.frameHorizontal, this.frameShadows); };
   private writeFlame(x: number, y: number, z: number, seed: number, width: number, height: number, intensity: number, jet = false): void {
     const slot = this.frameFlames;
     if (slot >= (jet ? FLAMES : FLAMES - this.frameReserved)) return;
@@ -801,28 +803,29 @@ export class Blasts extends Group {
     this.columnShadows.setMatrixAt(slot, this.partMatrix.compose(this.pos, this.quat, this.scl));
     return slot + 1;
   }
+  private readonly writeFireColumn = (c: Column, id: number): void => {
+    const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) return;
+    if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) return;
+    const big = c.ambient ? c.ambient.car : !!e!.vehicle, radius = c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
+    // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
+    const grow = c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
+    const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
+    for (let i = 0; i < n; i++) {
+      const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
+      this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+    }
+    this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life));
+  };
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
     this.frameFlames = this.frameGlows = 0;
     this.frameReserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW) + 3 : 0;
     const sun = this.host.sunDirection?.() ?? this.sunNode.value, horizontal = Math.hypot(sun.x, sun.z);
-    let shadows = 0;
-    for (const c of this.columns) shadows = this.writeColumnShadow(c, sun, horizontal, shadows);
-    for (const c of this.fireColumns.values()) shadows = this.writeColumnShadow(c, sun, horizontal, shadows);
-    this.columnShadows.count = shadows; this.columnShadows.instanceMatrix.needsUpdate = true;
-    for (const [id, c] of this.fireColumns) {
-      const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) continue;
-      if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) continue;
-      const big = c.ambient ? c.ambient.car : !!e!.vehicle, radius = c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
-      // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
-      const grow = c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
-      const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
-      for (let i = 0; i < n; i++) {
-        const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-        this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
-      }
-      this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + sid)) * (.3 + .7 * life));
-    }
+    this.frameShadows = 0; this.frameSun = sun; this.frameHorizontal = horizontal;
+    for (let i = 0; i < this.columns.length; i++) this.frameShadows = this.writeColumnShadow(this.columns[i], sun, horizontal, this.frameShadows);
+    this.fireColumns.forEach(this.writeFireShadow);
+    this.columnShadows.count = this.frameShadows; this.columnShadows.instanceMatrix.needsUpdate = true;
+    this.fireColumns.forEach(this.writeFireColumn);
     if (this.flameJet && now >= this.flameJet.until) this.clearFlameJet();
     if (this.flameJet) {
       const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW;
