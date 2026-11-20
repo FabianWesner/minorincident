@@ -6,7 +6,7 @@ import { defaultBindings, type Action } from '../../src/data/bindings';
 import { catalog, mountedActions } from '../../src/data/actions/catalog';
 import { weaponOrder } from '../../src/data/weaponOrder';
 import { weaponKey, weaponKeys } from '../../src/data/weaponKeys';
-import { levelWeaponSets, weaponKeyOrder } from '../../src/data/weaponSlots';
+import { levelWeaponSets, weaponKeyOrder, weaponRackSlots } from '../../src/data/weaponSlots';
 import { Bindings, bindingStorageKey } from '../../src/input/Bindings';
 import { Buttons } from '../../src/input/Buttons';
 import { ClickPick } from '../../src/input/ClickPick';
@@ -259,6 +259,12 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
     const keys = [...new Set(weapons.map(weaponKey).filter((key): key is number => key !== undefined))];
     expect(keys).toEqual([...keys].sort((a, b) => a - b));
     expect(keys.every(key => weaponKeyOrder.includes(key as typeof weaponKeyOrder[number]))).toBe(true);
+  }
+  for (const level of Object.keys(levelWeaponSets).map(Number) as (keyof typeof levelWeaponSets)[]) {
+    const slots = weaponRackSlots(level, []);
+    expect(slots.map(slot => slot.key)).toEqual([...slots.map(slot => slot.key)].sort((a, b) => a - b));
+    expect(slots.every(slot => !slot.owned)).toBe(true);
+    expect(weaponRackSlots(level, levelWeaponSets[level]).every(slot => slot.owned)).toBe(true);
   }
 });
 

@@ -16,7 +16,7 @@ import type { Game } from '../Game';
 import { action } from '../data/actions/catalog';
 import { weaponRoles } from '../data/weaponRoles';
 import { weaponKey } from '../data/weaponKeys';
-import { levelWeaponSets, weaponForKey } from '../data/weaponSlots';
+import { weaponRackSlots } from '../data/weaponSlots';
 import { actionIconUrl } from '../assets/icons';
 import { button, node, text as domText, setHidden, attribute, style } from './dom';
 import { Onboarding } from './Onboarding';
@@ -24,6 +24,7 @@ import type { GameEvent } from '../sim/world/types';
 import type { Mission } from '../sim/missions/Mission';
 import { markerAnchor } from '../sim/missions/markerAnchor';
 import type { ObjectiveDef } from '../sim/missions/types';
+import type { Level } from '../sim/progression/Campaign';
 const text: typeof domText = (element, value) => domText(element, devicePrompt(value, document.body.classList.contains('touch-ui')));
 const sides = ['LEFT', 'RIGHT'] as const;
 const clamp = (x: number): number => Math.max(0, Math.min(1, x));
@@ -445,10 +446,9 @@ export class Hud {
       .map(key => entries.filter(entry => weaponKey(entry.id) === key)
         .sort((a, b) => action(b.id).tier - action(a.id).tier || a.id.localeCompare(b.id))[0]);
     const levelNumber = Number(mission?.def.id.replace(/^L/, ''));
-    const levelWeapons = Number.isInteger(levelNumber) && levelNumber >= 1 && levelNumber <= 10 ? levelWeaponSets[levelNumber as keyof typeof levelWeaponSets] : [];
-    const availableKeys = [...new Set(levelWeapons.map(weaponKey).filter((key): key is number => key !== undefined))];
-    const ownedKeys = new Set(entries.map(entry => weaponKey(entry.id)));
-    const holes = availableKeys.filter(key => !ownedKeys.has(key)).map(key => ({ key, id: `slot-hole-${key}`, weapon: weaponForKey[key][0] }));
+    const rackSlots = Number.isInteger(levelNumber) && levelNumber >= 1 && levelNumber <= 10
+      ? weaponRackSlots(levelNumber as Level, entries.map(entry => entry.id)) : [];
+    const holes = rackSlots.filter(slot => !slot.owned).map(slot => ({ key: slot.key, id: `slot-hole-${slot.key}`, weapon: slot.weapon }));
     const hasLure = !!world.progression?.campaign?.ownedActions.includes('ability.corgi-lure') || !!player.weapons && sides.some(side => player.weapons![side].rack.some(slot => slot.id === 'ability.corgi-lure'));
     const signature = entries.map(entry => entry.id).join(',') + `|${holes.map(hole => hole.key).join(',')}` + (hasLure ? ',corgi-lure' : '');
     if (signature !== this.weaponRackSignature) {

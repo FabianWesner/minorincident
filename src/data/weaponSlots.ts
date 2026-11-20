@@ -1,5 +1,6 @@
 import type { Level } from '../sim/progression/Campaign';
 import { levelStartWeapons } from './levelStartWeapons';
+import { weaponKey } from './weaponKeys';
 
 /** Fixed campaign weapon positions. Sets include the level's starts and authored weapon pickups. */
 export const weaponKeyOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
@@ -17,3 +18,14 @@ export const levelWeaponSets: Readonly<Record<Level, readonly string[]>> = {
   4: union(4, ['weapon.army-mg']), 5: union(5, ['weapon.shotgun']), 6: union(6, []),
   7: union(7, ['weapon.rocket-launcher']), 8: union(8, []), 9: union(9, []), 10: union(10, l10),
 };
+
+export interface WeaponRackSlot { key: number; weapon: string; owned: boolean }
+/** Displayable slots for a campaign level; missing acquisitions remain explicit holes. */
+export function weaponRackSlots(level: Level, owned: readonly string[]): WeaponRackSlot[] {
+  const present = new Set(owned);
+  return [...new Set(levelWeaponSets[level].map(weaponKey).filter((key): key is number => key !== undefined))]
+    .sort((a, b) => a - b).map(key => {
+      const candidates = weaponForKey[key], acquired = candidates.find(id => present.has(id));
+      return { key, weapon: acquired ?? levelWeaponSets[level].find(id => candidates.includes(id))!, owned: acquired !== undefined };
+    });
+}
