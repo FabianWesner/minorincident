@@ -8,9 +8,10 @@ PO commit retained: `fff25710` (`dogTuning.runFactor = 1.65`, exactly 1.5× the 
 
 The 1.65 run-factor change is retained. On the original L10 encounter counts, the skilled low-tier route reproduced the reported failure: 29 deaths and a tick-budget stop at `farmstead`. Event capture put the first death at (1189.3, -9.0), with repeated 10 HP hits from sprinters in the shed-field crossing. The next checkpoint deaths clustered around (1217.3, 3.0), where Alpha entity 116 landed 25 HP hits. Entity 116 is the pursuing Mega Alpha; the original capture did not establish that it belonged to the farmhouse encounter. No dog was alive at those death frames, and the captured attack events at the deaths were from sprinters/Alpha, not dogs.
 
-Two focused changes address the route while keeping all infected stats and QA thresholds unchanged:
+The following changes address the route and the full threat gate while keeping all infected stats and QA thresholds unchanged:
 
 - `LevelTenBot` now prioritizes an in-view dog during its committed pounce windup. Within 12 m, it selects the carried shotgun and keeps aiming/firing at that dog, giving the visible telegraph a practical counter.
+- L8 arena formations now clamp the formation origin with space for its rows before clamping individual targets. This reduces overlapping target positions at enclosure boundaries.
 - The L10 shed-field crossing is reduced from 17/12 regular infected (high/low) to 12/7. The crowded crossing plus the earlier farmhouse group overwhelmed the route before it could leave the farms. The corresponding world-systems census assertion is updated from 51/37 to 46/32 non-dog farm members.
 
 A runtime-only comparison changed the in-memory dog definition back to the pre-PO 1.1 speed (no source file change); under the revised policy and encounter, L10 completed with 2 deaths. At the requested 1.65 speed, the focused L10 audit completed through credits with 4 deaths. The PO speed remains the sole dog-stat change.
@@ -18,7 +19,7 @@ A runtime-only comparison changed the in-memory dog definition back to the pre-P
 ## Validation
 
 - `npm run qa:threat -- --levels L10`: skilled route completed through credits; the command reports only `PARTIAL_LEVEL_SELECTION` because this is a diagnostic slice. Passive L10 had no flags.
-- Full `npm run qa:threat`: all ten skilled routes completed. One unrelated existing gate flag remains: `L8/phase/breached:SLOW_FOLLOWER:363`. Re-running L8 alone reproduced it: follower 363 had a 4.07 m/s median across 366 walking samples versus the 4.42 m/s group median. Its passive route itself has no flags. A separate 30-tick route probe identifies 363 as uninjured `zoo-carried-8`, formation slot 8. Its median resolved speeds during moving-courier samples were 2.67 m/s on the flamingo leg and 2.60 m/s on zebra, versus 4.55–4.72 m/s on the other arena legs. This broader probe does not reproduce the gate’s exact sample filters; A temporary diagnostic swap of formation slots 7 and 8 removed the flag: followers 362 and 363 measured 4.55 and 4.50 m/s against a 4.51 m/s median. The source was restored; this points to a formation interaction but does not establish a general repair.
+- Full `npm run qa:threat`: passed with zero flags and all ten skilled routes complete after the L8 formation adjustment. Before the adjustment, L8 follower 363 measured 4.07 m/s against a 4.42 m/s group median; a diagnostic slot swap implicated formation placement.
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
 - `npm test`: passed, 27 files / 106 tests, within the 240-second budget. The remote full suite reached its 240-second budget without a reported test failure. The specified fallback passed: local full suite and remote `tests/engine/l4-contact.test.ts` (1 test).
@@ -26,4 +27,4 @@ A runtime-only comparison changed the in-memory dog definition back to the pre-P
 
 ## Open
 
-The L10 route and local suite are green, but the requested completion gate is not fully met: the all-level threat audit has the L8 follower flag above, the remote full suite timed out (the specified fallback passed), and dense Scene Lab motion review remains open. These are recorded without changing thresholds or dog stats.
+The full threat audit and local suite are green. The remote full suite timed out before the L8 formation adjustment (the specified fallback passed on the earlier revision); it must be repeated for the current revision. Scene Lab foot-slip, turning, and pounce-arc review remains open. These are recorded without changing thresholds or dog stats.
