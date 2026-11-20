@@ -19,6 +19,7 @@ try {
   for (let i = 0; i < 5; i++) {
     await session.page.evaluate(() => window.__SS__!.step(60));
     frames.push({ frame: i, jpeg: await session.snapshot() });
+    writeFileSync(`${out}/frame-${i}.jpg`, frames[i].jpeg);
   }
   await session.makeSheet(frames, `${out}/sheet.jpg`, 420, 240);
   writeFileSync(`${out}/receipt.json`, JSON.stringify({ setup, errors: session.errors }, null, 2));

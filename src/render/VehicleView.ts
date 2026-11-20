@@ -527,11 +527,15 @@ export class VehicleView extends Group {
       const l2Ride = this.world.missions?.state.l2;
       const carryingL2Crew = l2Ride?.truckId === id && l2Ride.seated && ['ride', 'arrived'].includes(l2Ride.phase);
       const reveal = this.reveal.get(id)!, full = this.silhouette?.id === id && this.silhouette.mode === 'full';
+      const speakingPassenger = this.world.scenario === 'L9' && record.model.userData.assetId === 'veh.military-apc'
+        && [...this.occupants.values()].some(occupant => occupant.parent === record.model && occupant.visible && speakingNpc(this.world, occupant.actorId));
       // vqa-1 P2: the seated crew reads through a clean roof-off cutaway over their seats, not a dithered screen disc.
       // On foot only her own chest or head behind a vehicle counts (not a padded subject corner beside the cab).
-      if (carryingL2Crew && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
+      if ((carryingL2Crew || speakingPassenger) && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
       else reveal.on.value = +(enabled && !onFoot && !full);
       if (record.crewRoof) { const open = reveal.on.value === 2; record.crewRoof.trim.visible = open; for (const node of record.crewRoof.hide) node.visible = !open; }
+      const transportRoof = record.model.getObjectByName('transportRoof');
+      if (transportRoof && record.model.userData.assetId === 'veh.military-apc') transportRoof.visible = !speakingPassenger;
       if (hidesHer && vehicle) this.courierOccluded = true;
       if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
     }

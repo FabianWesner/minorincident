@@ -14,7 +14,7 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [L5 Rosa HIGH](l5-rosa.jpg) injects the search phase and survivor discovery at the pharmacy. The subtitle appears, but infected crowd the rescue point and Rosa cannot be distinguished confidently in the sheet. A render probe confirms her actor is drawn while in the `flee` state, using locomotion clips during the line. An existing gesture is now layered on unarmed moving speakers; the crowded recapture is still not a gesture pass, and ordinary rescue play needs review.
 
-[L9 opening HIGH](l9-opening.jpg) shows the APC and Sam's opening subtitle, but the passenger is hidden inside the vehicle. Existing seated passenger copies now have an upper-body gesture layer; the line still fails the in-frame requirement and needs a vehicle-specific presentation or camera treatment.
+[L9 opening HIGH](l9-opening.jpg) shows the APC's existing seated-crew cutaway during Sam's opening subtitle. Several passengers are visible, but Sam cannot be identified confidently and his gaze and gesture are not readable; the in-frame speaker requirement remains unverified. The roof is restored after the line.
 
 An earlier experimental walk from off-screen left the guard entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions without changing the simulation.
 
@@ -25,7 +25,7 @@ An earlier experimental walk from off-screen left the guard entering at the edge
 | L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
 | L8 | Nadia on tour and route lines; Hale on greeting and breach; nearest living guard for generic soldier lines | Existing keeper, major and guard actors; shared relaxed walk, idle and gestures. Visual check pending, including when no guard is nearby. |
-| L9 | Sam/Reyes, Mia, Dale and Okafor on identified lines | On-foot actors use shared presentation; seated copies use an existing upper-body gesture. The opening capture shows the vehicle obscures the speaker, so framing remains unresolved. |
+| L9 | Sam/Reyes, Mia, Dale and Okafor on identified lines | On-foot actors use shared presentation; seated copies use an existing upper-body gesture and the APC cutaway. Individual speaker readability remains unresolved. |
 | L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
 | L10 epilogue | Rosa | Existing survivor montage actor beside the existing courier; glance and gesture. Controlled HIGH capture reviewed; full campaign transition remains open. |
 
