@@ -330,9 +330,9 @@ export class LevelSevenEncounters {
     const finals = s.finalReady ? [] : s.arrivals.filter(a => a.group === l7Encounters.finalGroup);
     s.finalReady ||= finals.filter(a => !a.alpha).length >= (ai.director.tier === 'low' ? 60 : 120) && finals.filter(a => a.alpha).length >= 2;
     const p = w.entities.get(1)!.transform;
-    // LOW's opening residents can otherwise occupy almost a third of the
-    // director budget after the column has left them far behind.
-    if (ai.director.tier === 'low' && p.x < 125 && w.tick % 10 === 0 && ai.director.queue.length) {
+    // Opening residents can otherwise occupy director slots after the column
+    // has left them far behind, delaying the later authored approaches.
+    if (p.x < (ai.director.tier === 'low' ? 125 : 80) && w.tick % 10 === 0 && ai.director.queue.length) {
       for (const e of ai.active) if (e.infected!.pack === l7Encounters.firstStreetGroup && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && (e.infected!.recoverAt ?? -1) < 0 && e.infected!.l1?.mode !== 'bite' && e.transform.x > p.x + 80 && ai.director.offscreen(e.transform, e.transform.y - .7)) ai.release(e);
     }
     // Give the armed escort wider lanes while the civilian column turns
