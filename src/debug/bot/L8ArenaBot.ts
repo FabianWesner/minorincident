@@ -21,7 +21,8 @@ export class L8ArenaBot {
       const inside = inRect(p.transform, stage.zone);
       const marker = w.missions!.state.marker;
       const approach = marker === 'l8-route' ? w.missions!.def.anchors[marker] : def.entry;
-      f.move = this.walker.step(w, inside ? def.centre : approach, inside ? 5 : .75, `arena-${id}-${inside}`) ?? f.move;
+      // Fallen zoo animals remain solid; plan a route around them when leaving a previous arena.
+      f.move = this.walker.step(w, inside ? def.centre : approach, inside ? 5 : .75, `arena-${id}-${inside}`, true) ?? f.move;
       if (intruder) { const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.shotgun') ?? w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg'); if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, intruder, gun.side, p.transform, false); } }
       return f;
     }

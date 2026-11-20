@@ -74,7 +74,6 @@ export class LevelSixSubway {
     // Outbreak construction restores L1's cap, so apply L6's quality-scaled
     // pressure after creating/reusing it.
     w.infected!.director.levelCap=w.infected!.director.tier==='low'?l6.infected.low*2:l6.infected.high;w.infected!.director.strict=true;
-    const weapons=w.entities.get(1)!.weapons;if(weapons?.RIGHT.rack.some(s=>s.id==='weapon.army-mg')){weapons.selectedSide='RIGHT';weapons.RIGHT.index=weapons.RIGHT.rack.findIndex(s=>s.id==='weapon.army-mg');}
     const keys=w.progression?.campaign?.survivors??[];
     const carried=w.progression?.campaign?.stationOccupants;
     const count=carried?.length ?? (w.infected!.director.tier==='low'?l6.shelter.low:l6.shelter.high);

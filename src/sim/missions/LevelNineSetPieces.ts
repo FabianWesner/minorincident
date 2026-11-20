@@ -5,6 +5,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ObstacleKind } from '../vehicles/Obstacles';
 import { pursueCrossingVehicle } from './LevelNineEncounters';
+import { resetResponse } from '../locomotion/MotionResponse';
 
 /**
  * r32-l9fun (PO 2026-11-10 "some real fight action not just dumb zombies"): authored L9 set pieces on top of the
@@ -157,7 +158,7 @@ export class LevelNineSetPieces {
   private at(id: number) { const t = this.w.entities.get(id)!.transform; return { x: t.x, z: t.z }; }
   private hold(id: number, post: { x: number; z: number }): void { const b = this.w.entities.get(id)?.infected; if (b) { b.scripted = { ...post }; b.state = 'chase'; } }
   private freeze(e: EntitySnapshot, on: boolean): void {
-    if (on) { e.infected!.thrownBy = e.id; delete e.infected!.scripted; }
+    if (on) { e.infected!.thrownBy = e.id; delete e.infected!.scripted; if (e.locomotion) resetResponse(e.locomotion); }
     else { delete e.infected!.thrownBy; delete e.infected!.specialAttack; }
   }
   private pose(e: EntitySnapshot, move: 'alpha.pounce' | 'alpha.grab-throw', stage: 'telegraph' | 'active', start: number, active: number, target: { x: number; z: number }): void {
