@@ -48,6 +48,7 @@ export class ActionView extends Group {
   ground: ((x: number, z: number) => number | null) | null = null;
   private readonly pickupRingGeometry = new RingGeometry(.58, .63, 48).rotateX(-Math.PI / 2);
   private readonly pickupRingMaterial = new MeshBasicNodeMaterial({ color: '#ffd166', transparent: true, opacity: .9, depthTest: false, depthWrite: false, toneMapped: false, fog: false, side: DoubleSide });
+  private prewarmedPickupMarker?: Mesh;
   private readonly geometry = new BufferGeometry();
   private readonly positions = new Float32Array(256 * 18);
   private readonly material = new MeshBasicNodeMaterial({ color: '#ffd166', depthWrite: false, side: DoubleSide });
@@ -154,7 +155,11 @@ export class ActionView extends Group {
       // model uses the ordinary swatches, not the held courier materials.
       if (this.world.scenario === 'L10') group.add(asset.model.clone(true));
     }
-    if (this.world.scenario === 'L10') group.add(new Mesh(this.pickupRingGeometry, this.pickupRingMaterial));
+    if (this.world.scenario === 'L10') {
+      this.prewarmedPickupMarker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
+      this.prewarmedPickupMarker.renderOrder = 94;
+      group.add(this.prewarmedPickupMarker);
+    }
     if (!group.children.length) return () => {};
     this.add(group); group.updateMatrixWorld(true);
     return () => group.removeFromParent();
@@ -453,7 +458,8 @@ export class ActionView extends Group {
         // Q-302 (PO 10-31 "All the weapons that can be picked up by peds should not look like checkpoints"): the L5 street
         // firearms that only survivors take lie on the street without the yellow ring.
         if (!entity.pickup.survivorOnly) {
-          const marker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
+          const marker = this.prewarmedPickupMarker ?? new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
+          this.prewarmedPickupMarker = undefined;
           marker.renderOrder = 94; marker.position.y = .018;
           if (entity.pickup.reachM) marker.scale.setScalar(2.4);
           if (entity.pickup.surfaceY !== undefined && entity.pickup.surfaceY > support + .05) marker.scale.setScalar(.5);
