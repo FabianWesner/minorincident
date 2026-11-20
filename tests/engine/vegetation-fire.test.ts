@@ -12,3 +12,10 @@ test('vegetation burns for ten seconds, chars, and excludes buildings', () => {
   fire.update(609); expect(fire.objects[0].state).toBe('burning');
   fire.update(610); expect(fire.objects[0].state).toBe('charred');
 });
+
+
+test('concurrent vegetation fires are capped', () => {
+  const fire = new VegetationFire(Array.from({ length: 40 }, (_, i) => placement(`tree-${i}`, 'prop.tree', i)));
+  fire.ignite({ x: 0, z: 0 }, 0, 100);
+  expect(fire.objects.filter(o => o.state === 'burning')).toHaveLength(32);
+});
