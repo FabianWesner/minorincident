@@ -58,7 +58,11 @@ c1911 = shots('1911/A_42P.wav', [0.94, 5.00])
 sw = shots('Smith & Wesson 642/V_27P.wav', [0.80, 6.21])
 fam('action.weapon.handgun', ppq + [ppq[0]], LEVEL['handgun'])
 fam('action.weapon.pistol', c1911 + sw, LEVEL['handgun'])
-fam('action.weapon.nail-gun', shots('Ruger Mark III/R_35P.wav', [0.48, 4.48], 'highpass=f=250,' + up(1.12)), LEVEL['nail'])
+# Keep the separately documented pneumatic nail-gun recording when regenerating
+# the firearm recipes; a pitched pistol shot loses the weapon's quiet identity.
+for i in range(4):
+    d['cues']['action.weapon.nail-gun' + (f'.v{i}' if i else '')] = dict(
+        source='s184-nailgun', start=0, filter='highpass=f=120,' + up(1 + i * .00625), level=-14)
 # ---- shotgun: deep boom with body (low shelf + slightly slowed), long tail; pump rack is its own cue
 sg_f = 'bass=g=7:f=110:w=0.8,' + up(0.9)
 fam('action.weapon.shotgun', shots('Model 12/K_22P.wav', [0.84, 7.44], sg_f) + shots('Nova/O_21P.wav', [0.43], sg_f) + shots('CD/H_21P.wav', [0.46], sg_f), LEVEL['shotgun'])
