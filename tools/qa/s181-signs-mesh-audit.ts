@@ -16,15 +16,16 @@ try {
   rows = await session.page.evaluate(async levelId => {
     const a = window.__SS__!; await a.loadLevel(levelId, { seed: 1 }); a.pause(); await a.screenshotReady();
     const game = (window as unknown as { __SCENE__: { game: Game } }).__SCENE__.game;
-    const districts = (game.view as unknown as { districts: { parts: { signBatches: { district: string; ids: string[]; supports: { asset: string }[]; geometry: { attributes: { position: { getX(i: number): number; getY(i: number): number; getZ(i: number): number } } } }[] } } }).districts;
+    const districts = (game.view as unknown as { districts: { parts: { lodBatches: { id: string; origin: number[]; refs: { position: { distanceToSquared(v: unknown): number; clone(): { fromArray(a: number[]): unknown } }; scale: { toArray(): [number, number, number] }; rotation: { y: number } }[] }[]; signBatches: { origin: number[]; district: string; ids: string[]; supports: { asset: string }[]; geometry: { attributes: { position: { getX(i: number): number; getY(i: number): number; getZ(i: number): number } } } }[] } } }).districts;
     return districts.parts.signBatches.flatMap(batch => batch.ids.map((id, i) => {
       const d = game.world.districts!.districts.find(district => district.id === batch.district)!;
       const p = d.layout.placements.find(placement => placement.id === id)!;
+      const ref = districts.parts.lodBatches.filter(entry => entry.id === p.assetId && entry.origin[0] === batch.origin[0] && entry.origin[1] === batch.origin[1]).flatMap(entry => entry.refs).find(candidate => candidate.position.distanceToSquared(candidate.position.clone().fromArray(p.position)) < .0001);
       const attr = batch.geometry.attributes.position;
       const vertices = Array.from({ length: 4 }, (_, v) => [attr.getX(i * 4 + v), attr.getY(i * 4 + v), attr.getZ(i * 4 + v)]);
       const min = [0,1,2].map(axis => Math.min(...vertices.map(vertex => vertex[axis])) - .01), max = [0,1,2].map(axis => Math.max(...vertices.map(vertex => vertex[axis])) + .01);
       const neighbors = d.layout.placements.filter(other => other.id !== id && other.visualAabb && [0,1,2].every(axis => other.visualAabb.min[axis] <= max[axis] && other.visualAabb.max[axis] >= min[axis])).map(({ id: otherId, assetId, position, yaw, scale }) => ({ id: otherId, assetId, position, yaw, scale }));
-      return { district: batch.district, id, asset: batch.supports[i].asset, vertices, position: p.position, yaw: p.yaw, scale: p.scale, neighbors };
+      return { district: batch.district, id, asset: batch.supports[i].asset, vertices, position: p.position, yaw: ref?.rotation.y ?? p.yaw, scale: ref?.scale.toArray() ?? p.scale, neighbors };
     }));
   }, level);
 } finally { await session.close(); stopServer(); }

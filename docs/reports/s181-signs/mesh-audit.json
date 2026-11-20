@@ -1,5 +1,5 @@
 {
-  "description": "35 interior ray samples per sign face against each supporting asset LOD; brackets and other objects are not sampled",
+  "description": "35 interior ray samples per sign face against each supporting asset LOD, using live instance transforms; brackets and other objects are not sampled",
   "rows": [
     {
       "district": "D-GROVE",
@@ -331,11 +331,11 @@
       "asset": "bld.hospital",
       "lod": "lod0",
       "ahead": 10,
-      "maxAhead": 0.067,
-      "supported": 25,
-      "unsupported": 0,
-      "minOffset": -0.033,
-      "maxOffset": 0.067
+      "maxAhead": 0.19,
+      "supported": 0,
+      "unsupported": 25,
+      "minOffset": -0.095,
+      "maxOffset": 0.19
     },
     {
       "district": "D-CIVIC",
@@ -343,11 +343,11 @@
       "asset": "bld.hospital",
       "lod": "lod1",
       "ahead": 10,
-      "maxAhead": 0.047,
+      "maxAhead": 0.135,
       "supported": 25,
       "unsupported": 0,
-      "minOffset": -0.003,
-      "maxOffset": 0.047
+      "minOffset": -0.01,
+      "maxOffset": 0.135
     },
     {
       "district": "D-CIVIC",
@@ -358,8 +358,8 @@
       "maxAhead": 0,
       "supported": 35,
       "unsupported": 0,
-      "minOffset": -0.003,
-      "maxOffset": -0.003
+      "minOffset": -0.01,
+      "maxOffset": -0.01
     },
     {
       "district": "D-MAIN",
@@ -694,8 +694,8 @@
       "maxAhead": 0,
       "supported": 35,
       "unsupported": 0,
-      "minOffset": -0.006,
-      "maxOffset": -0.006
+      "minOffset": -0.01,
+      "maxOffset": -0.01
     },
     {
       "district": "D-SCHOOL",
@@ -706,8 +706,8 @@
       "maxAhead": 0,
       "supported": 35,
       "unsupported": 0,
-      "minOffset": -0.006,
-      "maxOffset": -0.006
+      "minOffset": -0.01,
+      "maxOffset": -0.01
     },
     {
       "district": "D-SCHOOL",
@@ -718,8 +718,8 @@
       "maxAhead": 0,
       "supported": 35,
       "unsupported": 0,
-      "minOffset": -0.006,
-      "maxOffset": -0.006
+      "minOffset": -0.01,
+      "maxOffset": -0.01
     },
     {
       "district": "D-SHOP",
