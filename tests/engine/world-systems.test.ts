@@ -349,7 +349,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureMedkits.find(k => k.id === 'industrial-service')?.at).toEqual([1517, -55]);
   for (const tier of ['high', 'low'] as const) {
     expect(farmGroups.reduce((sum, g) => sum + cureEncounterSlots(g, tier).filter(s => s.archetype !== 'infected.dog').length, 0))
-      .toBe(tier === 'high' ? 51 : 37);
+      .toBe(tier === 'high' ? 46 : 32);
   }
   const { placementColliders } = await import('../../src/levels/districts/staticCollision');
   type P = [number, number];

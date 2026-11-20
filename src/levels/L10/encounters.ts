@@ -37,7 +37,7 @@ export const cureEncounters: readonly CureEncounter[] = [
 /** Route cadence groups intentionally stay outside the vignette exclusion map: they move to the courier's lane on admission. */
 export const curePaceEncounters: readonly CureEncounter[] = [
   { id: 'corn-field-horde', type: 'field-horde', region: 'residential-fringe', at: [830, 80], regular: [14, 7], dogs: 1, alphas: 0 },
-  { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [17, 12], dogs: 0, alphas: 0 },
+  { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [12, 7], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [7, 6], dogs: 0, alphas: 0 },
   // Keep the armored slot south of the warehouse footprint (ends at z=94).
   { id: 'farm-road-pair-4', region: 'industrial-area', at: [1400, 106], regular: [5, 4], dogs: 0, alphas: 0 },
