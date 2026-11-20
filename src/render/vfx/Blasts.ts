@@ -101,7 +101,7 @@ export class Blasts extends Group {
   private readonly jetBirth = new Float64Array(JET_FLAMES).fill(-Infinity);
   private readonly jetX = new Float32Array(JET_FLAMES); private readonly jetY = new Float32Array(JET_FLAMES); private readonly jetZ = new Float32Array(JET_FLAMES);
   private readonly jetDX = new Float32Array(JET_FLAMES); private readonly jetDZ = new Float32Array(JET_FLAMES); private readonly jetRange = new Float32Array(JET_FLAMES);
-  private jetCursor = 0; private jetNext = 0;
+  private jetCursor = 0; private jetNext = 0; private jetStopped = false;
   private jetLight: { remove(): void } | null = null;
   private nozzleLight: { remove(): void } | null = null;
   private nozzleLightX = Infinity;
@@ -349,7 +349,10 @@ export class Blasts extends Group {
   }
   get flash(): number { return this.flashAt < 0 ? 0 : this.flashPeak * Math.max(0, 1 - (this.time - this.flashAt) / .16); }
   set(patch: { quality?: 'high' | 'low'; flashReduction?: boolean; slowMotion?: boolean }): void {
-    if (patch.quality) { this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; this.fireballs.count = patch.quality === 'low' ? FIREBALLS_LOW : FIREBALLS; }
+    if (patch.quality) {
+      if (patch.quality !== this.quality) { this.jetBirth.fill(-Infinity); this.jetCursor = 0; this.jetNext = this.time; }
+      this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; this.fireballs.count = patch.quality === 'low' ? FIREBALLS_LOW : FIREBALLS;
+    }
     if (patch.flashReduction !== undefined) { this.flashReduction = patch.flashReduction; this.heat.value = patch.flashReduction ? .6 : 1; }
     if (patch.slowMotion !== undefined) { this.slowMotion = patch.slowMotion; if (!this.slowMotion) this.bullet = { scale: 1, remaining: 0, progress: 0 }; }
   }
@@ -480,6 +483,7 @@ export class Blasts extends Group {
       const j = this.flameJet;
       j.x = x; j.y = y; j.z = z; j.dx = dx; j.dz = dz; j.range = Math.max(0, range); j.until = until + .24; j.seed = seed;
     } else { this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until: until + .24, seed }; this.jetBirth.fill(-Infinity); this.jetNext = this.time; }
+    if (this.jetStopped) { this.jetNext = this.time; this.jetStopped = false; }
     const interval = this.quality === 'high' ? .004 : .128 / JET_FLAMES_LOW;
     // Bounded catch-up, with fixed slots; each puff retains its own nozzle pose.
     for (let emitted = 0; emitted < 16 && this.jetNext <= this.time; emitted++, this.jetNext += interval) {
@@ -501,7 +505,7 @@ export class Blasts extends Group {
     }
   }
   /** Let the last cards burn out after the source stops refreshing. */
-  stopFlameJet(): void { if (this.flameJet) this.flameJet.until = this.time + .24; }
+  stopFlameJet(): void { if (this.flameJet) { this.flameJet.until = this.time + .24; this.jetStopped = true; } }
   clearFlameJet(): void { this.flameJet = null; this.jetLight?.remove(); this.jetLight = null; this.nozzleLight?.remove(); this.nozzleLight = null; }
   /** Rewrite the shared cards after the drawn nozzle has moved in the current render. */
   refreshFlameJet(): void { this.writeFlamesAndGlows(this.time); }
