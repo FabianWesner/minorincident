@@ -93,8 +93,8 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       return p;
     };
     // Gate warning: wire, sandbag approach, empty tower and an abandoned bus.
-    beat('gate-gantry', 'prop.l10-quarantine-gantry', 2990, 95, [.4, 3.5, 6.4]);
-    for (const z of [92.5, 97.5]) beat(`gate-effigy-${z}`, 'prop.l10-warning-effigy', 2990, z, [.66, 2.65, .55]);
+    beat('gate-gantry', 'prop.l10-quarantine-gantry', 2990, 95, [.4, 2.45, 4.48], 0, [1, .7, .7]);
+    for (const z of [93.25, 96.75]) beat(`gate-effigy-${z}`, 'prop.l10-warning-effigy', 2990, z, [.46, 1.86, .39], 0, [.7, .7, .7]);
     for (const z of [86, 104]) beat(`gate-wire-${z}`, 'prop.cure-mil-fence', 2994, z, [3.3, 1.4, .22], Math.PI / 2);
     beat('gate-sandbags', 'prop.sandbag-pallet', 2982, 99, [1.4, .7, .8]);
     beat('gate-tower', 'kit.guard-tower', 2995, 107, [1.6, 2.5, 1.5]);

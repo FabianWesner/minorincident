@@ -1233,7 +1233,7 @@ export class GameView implements Lifecycle {
       // courier herself is visible. Reveal that nearby objective through the
       // existing occluder cut; the camera and the frozen encounter stay put.
       // The service vestibule is already open; preserve its frame during emergence.
-      if (this.districts && this.world.scenario === 'L10') this.districts.occlusion.keepWhole = 'kit.zoo-tunnel-mouth';
+      if (this.districts && this.world.scenario === 'L10') this.districts.occlusion.keepWhole = current.x >= 2990 && current.x <= 3025 ? 'prop.l10-quarantine-gantry' : 'kit.zoo-tunnel-mouth';
       if (this.world.scenario === 'L5') {
         const mission = this.world.missions, step = mission?.def.steps.find(item => item.id === 'metro' && mission.state.steps[item.id]?.status === 'active');
         const anchor = step && mission?.def.anchors[step.anchor], l5 = mission?.state.l5;
