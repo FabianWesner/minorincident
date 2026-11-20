@@ -97,7 +97,7 @@ Things move in the rows.
 a quarantine that went wrong. Stronger infected; packs of turned dogs.
 - Objective: *Get through the restricted zone.*
 - Sign: AUTHORIZED PERSONNEL ONLY — BIOHAZARD LEVEL 4.
-- Found: assault rifle with a flashlight (guard tower), flashbangs (checkpoint locker).
+- Found: assault rifle with a flashlight (guard tower), ammo (checkpoint locker).
 - Sam (radio, breaking up): "…the hangar… they're still there… lights on…" (static)
 
 **Chapter 3 · The hangar (the safe space).** A sealed research hangar, still holding. Generators hum, emergency light,

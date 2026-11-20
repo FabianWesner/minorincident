@@ -15,7 +15,7 @@ Ordinary infected remain at 40 HP. These jobs are the selection hint; special da
 | Assault rifle | Accurate all-rounder with a torch | 26 | 28 m | 7.5 shots/s; 30 rounds; 2 s reload | unchanged |
 | Flamethrower | Melt crowds up close | 4.5 per stream tick; 35 DPS burn | 8 m; 25° cone | 15 ticks/s; 6 s fuel; 5 s refill | burn lasts 4 s and spreads to touching infected; fire kills char bodies to permanent ash heaps over 1.5 s |
 | Rocket launcher | Blow apart groups and heavies | 180 | 35 m; 6 m blast | 1.2 rockets/s; unlimited | infected in blast knocked down; existing boss and L7 follower exceptions remain open against the requested universal knockdown |
-| Flashbang | Stun a crowd and break grabs | 0 | 7 m radius | 2 charges; 12 s recharge | 3 s stun; frees grabbed courier/follower |
+| Pipe bomb | Heavy delayed blast; key 0 swaps with Molotov | 0 | 6 m radius | 5 s between throws | 270 centre damage; knockdown in blast |
 
 ## Sound cues
 
@@ -32,6 +32,6 @@ Ordinary infected remain at 40 HP. These jobs are the selection hint; special da
 | Assault rifle | `action.weapon.assault-rifle` | `weapon.reload.assault-rifle` | `weapon.impact.assault-rifle` |
 | Flamethrower | `weapon.flame-ignite`, `weapon.flame-loop`, `weapon.flame-stop` | automatic | `weapon.impact.flamethrower` |
 | Rocket launcher | `action.weapon.rocket-launcher`, `weapon.rocket-whoosh` | unlimited | explosion beats |
-| Flashbang | `action.weapon.flashbang` | automatic recharge | `weapon.impact.flashbang` |
+| Pipe bomb | `action.weapon.pipe-bomb` | 5 s throw cooldown | delayed 2 s blast |
 
 Recorded source and license details are in `assets/audio/imports.json`. Flame loop/stop need listening review for the requested roar and sputter; the layered melee takes need an audible distinctness audit.

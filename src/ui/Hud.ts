@@ -69,7 +69,7 @@ export class Hud {
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
-  private pickupRole: { id: string; until: number } | null = null;
+  private pickupRole: { id: string; until: number; replaced?: string | null } | null = null;
   private emptyWeapon: { id: string; until: number; tooClose?: boolean } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
@@ -228,7 +228,7 @@ export class Hud {
   }
   private readonly event = (event: GameEvent): void => {
     if (event.type === 'pickup.collected' && 'actionId' in event && weaponKey(event.actionId) !== undefined) {
-      this.pickupRole = { id: event.actionId, until: event.tick + 240 };
+      this.pickupRole = { id: event.actionId, until: event.tick + 240, replaced: event.replaced };
     }
     if (event.type === 'combat.hit' && (event.blocked || event.shieldGlance) && event.sourceId === 1) {
       const p = this.game.view.project(event.position.x, event.position.y + 1.2, event.position.z);
@@ -506,7 +506,8 @@ export class Hud {
         : null;
       const pickup = this.pickupRole && world.tick <= this.pickupRole.until ? this.pickupRole.id : null;
       const pickupKey = pickup ? weaponKey(pickup) : undefined;
-      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup] ?? 'Weapon'} · ${pickupKey === 10 ? '0' : pickupKey}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`);
+      const replaced = this.pickupRole?.replaced && world.tick <= this.pickupRole.until ? this.pickupRole.replaced : null;
+      text(this.weapon.hint, pickup ? replaced ? `${label(pickup)} replaces ${label(replaced)} · 0` : `${label(pickup)} · ${weaponRoles[pickup] ?? 'Weapon'} · ${pickupKey === 10 ? '0' : pickupKey}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`);
       const hintVisible = pickup !== null || emptyCue !== null || world.tick <= this.weaponHintUntil;
       setHidden(this.weapon.hint, !hintVisible);
       if (hintVisible) {

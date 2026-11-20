@@ -281,13 +281,15 @@ test('bare hands are innate and hidden while carrying melee; the L8 sanctuary ga
 });
 
 test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely', () => {
-  const oldWeapons = { ...newCampaign(), version: 1, racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'] },
-    ownedActions: ['weapon.fists', 'weapon.kick', 'weapon.fire-axe', 'weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'], selectedAction: 'weapon.nail-gun' };
+  const oldWeapons = { ...newCampaign(), version: 1, racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.nail-gun', 'weapon.army-mg', 'weapon.flashbang'] },
+    ownedActions: ['weapon.fists', 'weapon.kick', 'weapon.fire-axe', 'weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg', 'weapon.flashbang'], selectedAction: 'weapon.flashbang' };
   const migratedWeapons = decodeSave(JSON.stringify(oldWeapons));
   expect(migratedWeapons.status).toBe('ok');
   if (migratedWeapons.status === 'ok') {
     const loadout = new Loadout(migratedWeapons.save.racks.LEFT, migratedWeapons.save.racks.RIGHT);
-    expect(restoreSelectedAction(loadout, migratedWeapons.save)).toBe('weapon.nail-gun');
+    expect(restoreSelectedAction(loadout, migratedWeapons.save)).toBe('weapon.molotov');
+    expect(migratedWeapons.save.ownedActions).not.toContain('weapon.flashbang');
+    expect(migratedWeapons.save.racks.RIGHT).toContain('weapon.molotov');
     expect(weaponKey('weapon.nail-gun')).toBe(7);
     expect(weaponKey('weapon.army-mg')).toBe(4);
   }

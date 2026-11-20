@@ -59,7 +59,7 @@ const fromAction = (id: string, action: string, cls: BlastClass, impulse: number
 export const explosionDefs: Readonly<Record<string, ExplosionDef>> = Object.fromEntries([
   fromAction('explosion.grenade', 'weapon.grenade', 'small', 6),
   // Throwables leave scorch and smoke only: aftermath fires would change the E05/E06 TTK bands.
-  fromAction('explosion.pipe-bomb', 'weapon.pipe-bomb', 'small', 7),
+  fromAction('explosion.pipe-bomb', 'weapon.pipe-bomb', 'medium', 8),
   fromAction('explosion.rocket', 'weapon.rocket-launcher', 'medium', 8, { stagger: .8 }),
   fromAction('explosion.molotov', 'weapon.molotov', 'incendiary', 0, { knockback: 0, stagger: 0, falloffRadiusScale: 4 / 3 }),
   def('explosion.toxic', 'toxic', 6, 0, 1, 0, { knockback: 0, stagger: 0, gas: { kind: 'toxic', seconds: 12 } }),
