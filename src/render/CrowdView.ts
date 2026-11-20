@@ -827,10 +827,10 @@ export class CrowdView extends Group {
         for (const [pieceIndex, [dx, dz, sx, sy, sz, turn]] of pieces.slice(0, heapPieces).entries()) {
           const settle = Math.min(1, Math.max(0, (ashProgress - pieceIndex * .06) / .55));
           const emerge = Math.min(1, Math.max(0, ashProgress * 8 - pieceIndex));
-          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 1.7 * emerge, sy * emerge, sz * 1.5 * .65 * emerge));
-          this.transform.setPosition(x + dx * (.7 + .8 * settle), ground + .045 + sy * .5 + (1 - settle) * (.55 + sy), z + dz * (.5 + .5 * settle));
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 2.5 * emerge, sy * emerge, sz * 1.8 * emerge));
+          this.transform.setPosition(x + dx * (.7 + .8 * settle), ground + sy * .4 + (1 - settle) * (.55 + sy), z + dz * (.5 + .5 * settle));
           this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
-          this.ashSwatch.set(pieceIndex === 5 || pieceIndex === 7 ? '#201f1c' : pieceIndex >= 4 ? '#383631' : '#56544e').lerp(this.charAsh, 1 - ashProgress);
+          this.ashSwatch.set(pieceIndex === 5 || pieceIndex === 7 ? '#201f1c' : pieceIndex >= 4 ? '#494741' : '#74716b').lerp(this.charAsh, 1 - ashProgress);
           this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
         }
         if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {
