@@ -13,7 +13,7 @@ import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppe
 import type { CrowdAccessories } from './characters/CrowdAccessories';
 import { corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
-import { deinterleaveGeometry } from 'three/addons/utils/BufferGeometryUtils.js';
+import { deinterleaveGeometry, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, isCrowdVariant, registerCrowdModel } from './crowdModels';
 import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
@@ -29,7 +29,7 @@ import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, IcosahedronGeometry, CapsuleGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, IcosahedronGeometry, CapsuleGeometry, SphereGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, uniform, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
 import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -140,6 +140,8 @@ export class CrowdView extends Group {
   private sharedDogCoats = false;
   private readonly dogCoatTints = [new Color(0, 0, 0), new Color(1, 0, 0)];
   private readonly ashTint = new Color('#171713');
+  private readonly ashSwatch = new Color();
+  private readonly emberAsh = new Color('#e8833d');
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
   private readonly corpseClips = new Map<string, BakedBatch['clip']>();
   private entityRevision = -1;
@@ -151,8 +153,8 @@ export class CrowdView extends Group {
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
-  private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new IcosahedronGeometry(.5, 1).scale(1, .19, .65), new MeshBasicNodeMaterial({ color: '#292824' }), 350);
-  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new CapsuleGeometry(.045, .36, 2, 5).rotateZ(Math.PI / 2), new MeshBasicNodeMaterial({ color: '#c9bc9c' }), 700);
+  private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new IcosahedronGeometry(.5, 0), new MeshBasicNodeMaterial({ color: '#ffffff' }), 2800);
+  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(mergeGeometries([new CapsuleGeometry(.04, .46, 2, 6).rotateZ(Math.PI / 2), ...[-.27, .27].flatMap(x => [-.045, .045].map(z => new SphereGeometry(.065, 6, 4).translate(x, 0, z)))])!, new MeshBasicNodeMaterial({ color: '#ddd4bd' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -779,20 +781,41 @@ export class CrowdView extends Group {
         this.transform.makeRotationY(yaw); this.transform.setPosition(x, (this.world.districts?.groundHeight(x, z) ?? 0) + .16, z);
         this.nails.setMatrixAt(this.nails.count++, this.transform);
       }
-      if (e.ashDeath && this.world.tick - e.ashDeath.at >= 90) {
-        if (this.ashHeaps.count >= this.ashHeaps.instanceMatrix.count) {
+      const ashAge = e.ashDeath ? this.world.tick - e.ashDeath.at : -1;
+      const ashProgress = ashAge >= 0 ? Math.max(0, Math.min(1, ashAge / 90)) : 0;
+      if (e.ashDeath && ashAge > 0) {
+        const heapPieces = Math.ceil(8 * ashProgress);
+        if (this.ashHeaps.count + heapPieces > this.ashHeaps.instanceMatrix.count || this.ashBones.count + (ashProgress >= .45 ? 2 : 0) > this.ashBones.instanceMatrix.count) {
           const grow = (old: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial>): InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> => {
             const next = new InstancedMesh(old.geometry, old.material, old.instanceMatrix.count * 2);
             next.frustumCulled = false; next.count = old.count;
-            for (let i = 0; i < old.count; i++) { old.getMatrixAt(i, this.transform); next.setMatrixAt(i, this.transform); }
+            for (let i = 0; i < old.count; i++) {
+              old.getMatrixAt(i, this.transform); next.setMatrixAt(i, this.transform);
+              if (old.instanceColor) { old.getColorAt(i, this.ashSwatch); next.setColorAt(i, this.ashSwatch); }
+            }
             this.remove(old); old.dispose(); this.add(next); return next;
           };
           this.ashHeaps = grow(this.ashHeaps); this.ashBones = grow(this.ashBones);
         }
         const x = e.transform.x, z = e.transform.z, ground = this.world.districts?.groundHeight(x, z) ?? 0;
-        this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(x, ground + .06, z); this.ashHeaps.setMatrixAt(this.ashHeaps.count++, this.transform);
-        for (const offset of [-.14, .14]) { this.transform.makeRotationY(e.transform.yaw + offset * 4); this.transform.setPosition(x + offset, ground + .17, z); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform); }
-        continue;
+        const pieces = [
+          [-.17, -.06, .55, .16, .38, .2], [.16, .04, .48, .14, .35, 1.1], [-.02, .15, .42, .13, .32, 2.2], [.04, -.15, .38, .12, .3, .7],
+          [-.31, .12, .18, .07, .15, .4], [.28, -.15, .16, .06, .13, 1.2], [.12, .24, .13, .05, .13, .8], [-.08, -.26, .15, .05, .12, 2],
+        ] as const;
+        // Eight overlapping, irregular clumps settle in over the same 1.5 s
+        // that the charred body dissolves. Both stages share the existing two instanced draws.
+        for (const [pieceIndex, [dx, dz, sx, sy, sz, turn]] of pieces.slice(0, heapPieces).entries()) {
+          const settle = ashProgress;
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx, sy, sz));
+          this.transform.setPosition(x + dx, ground + .045 + sy * .5 + (1 - settle) * (.22 + sy), z + dz);
+          this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
+          this.ashSwatch.set(pieceIndex < 2 ? '#514d45' : '#c7c4bb').lerp(this.emberAsh, (1 - ashProgress) * .16);
+          this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
+        }
+        if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.setPosition(x + offset, ground + .16 + (1 - ashProgress) * .14, z + offset * .35); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform);
+        }
+        if (ashAge >= 90) continue;
       }
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (!e.ashDeath && keepsLook(e) && e.appearance?.asset !== 'inf.common-worker') { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
@@ -897,7 +920,7 @@ export class CrowdView extends Group {
       const clingTo = species === 'monkey' && animalPose?.airborne && !specialAttack ? this.world.entities.get(e.infected?.heardTargetId || 1) : undefined;
       if (clingTo) { const dx = clingTo.transform.x - x, dz = clingTo.transform.z - z, d = Math.hypot(dx, dz); if (d > .45) { x += dx / d * (d - .42); z += dz / d * (d - .42); } }
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
-      const fade = 0;
+      const fade = ashProgress;
       if (e.archetype === 'infected.crow') {
         for (let bird = 0; bird < 20; bird++) if ((e.infected?.birdDeadMask ?? 0) & 1 << bird) {
           const x = b.birdPositions[bird * 3], z = b.birdPositions[bird * 3 + 2]; this.transform.makeTranslation(x, this.world.districts?.groundHeight(x, z) ?? 0, z);
@@ -940,8 +963,8 @@ export class CrowdView extends Group {
           continue;
         }
         if (e.ashDeath) {
-          const crumble = Math.max(0, Math.min(1, (this.world.tick - e.ashDeath.at) / 90));
-          this.transform.scale(this.silhouette.set(1 - .35 * crumble, 1 - .85 * crumble, 1 - .35 * crumble));
+          this.transform.elements[13] -= .38 * ashProgress;
+          this.transform.scale(this.silhouette.set(1 - .18 * ashProgress, 1 - .72 * ashProgress, 1 - .18 * ashProgress));
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
         const band = crowdLod(this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y), this.footBands.get(e.id)); this.footBands.set(e.id, band);
@@ -1040,6 +1063,7 @@ export class CrowdView extends Group {
     }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0; this.nails.visible = this.nails.count > 0;
     for (const mesh of [this.ashHeaps, this.ashBones]) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
+    if (this.ashHeaps.instanceColor && this.ashHeaps.count) this.ashHeaps.instanceColor.needsUpdate = true;
     if (this.nails.count) { this.nails.instanceMatrix.clearUpdateRanges(); this.nails.instanceMatrix.addUpdateRange(0, this.nails.count * 16); this.nails.instanceMatrix.needsUpdate = true; }
     if (this.caps.count) { this.caps.instanceMatrix.clearUpdateRanges(); this.caps.instanceMatrix.addUpdateRange(0, this.caps.count * 16); this.caps.instanceMatrix.needsUpdate = true; }
     if (this.shadows.count) { this.shadows.instanceMatrix.clearUpdateRanges(); this.shadows.instanceMatrix.addUpdateRange(0, this.shadows.count * 16); this.shadows.instanceMatrix.needsUpdate = true; }
