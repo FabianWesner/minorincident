@@ -1184,6 +1184,7 @@ export class GameView implements Lifecycle {
     if (this.flashOverlay.style.opacity !== flashOpacity) this.flashOverlay.style.opacity = flashOpacity;
     this.fixtureProps?.update();
     if (this.world.hazards?.fieldFire) this.districts?.syncFieldFire(this.world.hazards.fieldFire.cells);
+    if (this.world.hazards?.vegetationFire) this.districts?.syncVegetationFire(this.world.hazards.vegetationFire.objects);
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);
     if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }

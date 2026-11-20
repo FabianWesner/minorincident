@@ -340,6 +340,20 @@ export class DistrictView extends Group {
       if (changed) { for (const batch of [entry.hero, entry.near, entry.far]) if (batch.references.length) batch.update(); this.dirtyEntries.add(entry); }
     }
   }
+  syncVegetationFire(objects: readonly import('../sim/interact/VegetationFire').BurningObject[]): void {
+    const states = new Map(objects.map(o => [o.id, o.state]));
+    for (const entry of this.lodBatches) {
+      let changed = false;
+      for (const ref of entry.refs) {
+        const state = states.get(ref.userData.placementId as string);
+        if (!state || ref.userData.vegetationFireState === state) continue;
+        ref.userData.vegetationFireState = state;
+        ref.userData.tint = state === 'charred' ? '#27231f' : state === 'burning' ? '#a36035' : '#ffffff';
+        changed = true;
+      }
+      if (changed) for (const batch of [entry.hero, entry.near, entry.far]) if (batch.references.length) batch.update();
+    }
+  }
   /** Keep each atlas quad only while its supporting building has a real drawn LOD. */
   private updateSigns(): void {
     for (const batch of this.parts.signBatches) {

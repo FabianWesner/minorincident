@@ -759,6 +759,17 @@ export class Blasts extends Group {
       }
       if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, 3, low);
     }
+    for (const [index, object] of (this.world.hazards?.vegetationFire?.objects ?? []).entries()) {
+      if (object.state !== 'burning' || !this.sourceVisible(object.x, object.z, 12)) continue;
+      const key = -4_000_000 - index; seen.add(key);
+      let c = this.fireColumns.get(key);
+      if (!c) {
+        c = { born: now, x: object.x, z: object.z, ground: this.world.districts?.groundHeight(object.x, object.z) ?? 0, until: Infinity, rate: low ? 1.5 : 3, size: 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
+        c.light = this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
+        this.fireColumns.set(key, c);
+      }
+      if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, 2, low);
+    }
     // L9 night accents: authored render-only fires (farm brush fires, burning wrecks, the city edge) share the flame/smoke/ember path.
     const accents = nightAccents(this.world.districts).fires;
     for (let i = 0; i < accents.length; i++) {
