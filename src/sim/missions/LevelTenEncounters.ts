@@ -287,7 +287,7 @@ export class LevelTenEncounters {
       if (assault && !assaultActive && !assaultApproach) continue;
       const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
-        if (Math.abs(player.transform.x - group.at[0]) > (group.setPiece ? 35 : 120)) continue;
+        if (group.setPiece ? Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]) > 35 : Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
         // A field crossing meets the same once-only hunting group on its own
         // lane. No group relocates after admission; a paced wave restages on
@@ -363,9 +363,10 @@ export class LevelTenEncounters {
         // full dump proved); holding its second wave for the far end of the
         // band lets it spawn behind her and wander instead of fighting, which
         // on seed 3 left the last fight two members short at the cap.
-        const share = (group.id === 'depot-alpha' ? 120 : 240) / Math.ceil(slots.length / pacedWaveSize);
-        const reached = index === 0 || player.transform.x - (group.at[0] - 120) >= index * share;
-        const outpaced = player.transform.x - group.at[0] > 120;
+        const band = group.setPiece ? 35 : 120;
+        const share = (group.id === 'depot-alpha' ? 120 : band * 2) / Math.ceil(slots.length / pacedWaveSize);
+        const reached = index === 0 || player.transform.x - (group.at[0] - band) >= index * share;
+        const outpaced = player.transform.x - group.at[0] > band;
         if (!slice.length || !outpaced && !(reached || living <= pacedWaveLiving)) admission = [];
         else if (slice.every(admitted)) {
           pacedWaves[group.id] = index + 1;
