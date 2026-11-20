@@ -268,9 +268,21 @@ async function alphaTypeContracts() {
       const rangedWorld = await arena(60, false);
       const rangedPursuit = installMegaPursuit(rangedWorld, { introduceTick: null, resident: () => true });
       const rangedMega = rangedWorld.entities.get(rangedPursuit.introduce({ x: 20, z: 0 }))!;
-      rangedMega.infected!.specialCooldowns = { 'alpha.roar': Infinity };
+      rangedMega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.grab-throw': Infinity };
       step(rangedWorld, 1);
       expect(rangedMega.infected!.specialAttack?.move).toBe('alpha.pounce');
+
+      const rubbleWorld = await arena(61, false);
+      const rubblePursuit = installMegaPursuit(rubbleWorld, { introduceTick: null, resident: () => true });
+      const rubbleMega = rubbleWorld.entities.get(rubblePursuit.introduce({ x: 20, z: 0 }))!;
+      rubbleMega.infected!.specialCooldowns = { 'alpha.roar': Infinity };
+      step(rubbleWorld, 1);
+      expect(rubbleMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
+      const chunk = rubbleWorld.hazards!.debris.pieces.find(piece => piece.material === 'concrete');
+      expect(chunk?.body.collider(0).collisionGroups()).toBe(0x00010001);
+      step(rubbleWorld, 120);
+      expect(rubbleWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === rubbleMega.id)).toBe(true);
+      expect(chunk!.body.isEnabled()).toBe(true);
     }
   } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
 }

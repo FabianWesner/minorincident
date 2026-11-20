@@ -23,7 +23,7 @@ export class AlphaSupportMoves {
       if (distance <= 8 && ready('alpha.barrage') && this.ai.props.nearestLight(e, 2) && start('alpha.barrage')) return true;
       if (distance >= (mega ? 8 : 4) && distance <= 30 && ready('alpha.living-missile') && this.ai.props.nearestLiving(e, mega ? 3 : 2) && start('alpha.living-missile')) return true;
     }
-    if (distance >= (mega ? 10 : 0) && distance <= (mega ? 35 : 25) && ready('alpha.grab-throw') && this.ai.props.nearestObject(e, mega ? 3 : rage ? 6 : 2) && start('alpha.grab-throw')) return true;
+    if (distance >= (mega ? 10 : 0) && distance <= (mega ? 35 : 25) && ready('alpha.grab-throw') && (mega && !!this.ai.world.hazards || this.ai.props.nearestObject(e, mega ? 3 : rage ? 6 : 2)) && start('alpha.grab-throw')) return true;
     // Pursuit owns movement outside the close-range brain, so select the
     // long-range physical moves here as well as in that brain.
     if (mega && distance >= 12 && distance <= 25 && tick + megaAlpha.moves['alpha.pounce'].windup >= (b.specialCooldowns?.['alpha.pounce'] ?? 0) && start('alpha.pounce')) return true;

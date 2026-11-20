@@ -6,7 +6,20 @@ interface Piece { body: RAPIER.RigidBody; until: number; sourceId: number; half?
 /** At most 32 reusable physics pieces (below the 60-body low-tier budget); eight per break. */
 export class DebrisPool {
   readonly pieces: Piece[] = [];
+  private rubbleSource = -1_000_000;
   constructor(private readonly physics: Physics) {}
+  /** A briefly blocking chunk ripped from the ground by the Mega. */
+  spawnRubble(pos: Vec2, y: number, tick: number): number | undefined {
+    const source = this.rubbleSource--;
+    if (!this.spawn(source, pos, tick, { y, material: 'concrete', count: 1, half: [.55, .2, .4] })) return undefined;
+    const index = this.pieces.findIndex(piece => piece.sourceId === source);
+    const piece = this.pieces[index];
+    piece.body.collider(0).setCollisionGroups(0x00010001);
+    piece.body.setTranslation({ x: pos.x, y, z: pos.z }, true);
+    piece.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+    piece.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    return index;
+  }
   spawn(sourceId: number, pos: Vec2, tick: number, options: { y?: number; material?: import('../data/destruction').DestructionMaterial; count?: number; half?: [number, number, number] } = {}): number {
     let count = 0;
     for (let i = 0; i < Math.min(8, options.count ?? 8); i++) {
@@ -20,6 +33,7 @@ export class DebrisPool {
       if (!piece) break;
       piece.half = options.half ?? [.12, .1, .22];
       piece.body.collider(0).setShape(new RAPIER.Cuboid(...piece.half));
+      piece.body.collider(0).setCollisionGroups(0x00020002);
       piece.until = tick + 480; piece.sourceId = sourceId; piece.material = options.material; piece.body.setEnabled(true);
       piece.body.setTranslation({ x: pos.x + (i % 4 - 1.5) * .15, y: (options.y ?? .6) + Math.floor(i / 4) * .2, z: pos.z }, true);
       piece.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);
