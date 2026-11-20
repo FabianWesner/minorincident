@@ -146,6 +146,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - Trialled refreshing the gate cohort pressure target every 30 ticks instead of every 300. HIGH and LOW skilled seed 1 completed (1107.63 s / three deaths and 1202.55 s / five deaths), but neither cohort produced an attack telegraph and opened native HIGH frames still showed no visible burst. The trial was reverted. Typecheck, lint and focused world systems passed during the trial.
 
+- Trialled synchronizing hospital cohort release with the 18 m tent-opening trigger. HIGH and LOW seed 1 simulations completed (1091.33 s / four deaths, 1087.02 s / one death), admitting all 10 and 8 hospital slots respectively. Native HIGH opening began at tick 47430 with the courier at (3496.58, 38.11); frames at the opening and 30 and 60 ticks later showed road and then a stretcher, with the tent opening outside the camera. The timing trial was reverted because it does not establish the requested visible burst.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
