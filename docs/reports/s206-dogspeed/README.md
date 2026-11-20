@@ -22,7 +22,7 @@ A runtime-only comparison changed the in-memory dog definition back to the pre-P
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
 - `npm test`: passed, 27 files / 106 tests, within the 240-second budget. The remote full suite reached its 240-second budget without a reported test failure. The specified fallback passed: local full suite and remote `tests/engine/l4-contact.test.ts` (1 test).
-- Scene Lab `inf-dog-pack` and `inf-dog-pounce` passed their automated checks at high tier on WebGL. The pack uses game zoom 1; the pounce fixture uses a close camera. Reviewed sparse contact sheets show approach and telegraphs, but do not establish foot sliding, turning radius, or pounce arc; dense motion review remains open.
+- Scene Lab `inf-dog-pack` and `inf-dog-pounce` passed their automated checks at high tier on WebGL. The pack uses game zoom 1; the pounce fixture uses a close camera. Reviewed additional six-frame interval sheets for frames 0–144: the dogs approach and the telegraph rings appear, but the pack is too small in frame to judge paw contact and turning, and the close pounce fixture starts with the dog off-screen. Foot sliding, turning radius, and pounce arc remain unverified.
 
 ## Open
 
