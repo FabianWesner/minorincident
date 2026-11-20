@@ -26,10 +26,9 @@ export function hangarCastMember(world: SimWorld, id: number): boolean {
 /** Stable per-actor conversational beat: gestures alternate with a breathing/weight-shift idle. */
 export function talkClip(id: number, tick: number): string {
   const hash = Math.imul(id, 2654435761) >>> 0;
-  const cycle = Math.floor(tick / 60 + hash % 180 / 60);
   const duration = 1.5 + (Math.imul(hash, 2246822519) >>> 0) / 4294967296 * 1.5;
   const beat = Math.floor((tick / 60 + hash % 1000 / 1000 * duration) / duration);
-  const variant = Math.imul(hash ^ beat, 3266489917) >>> 0;
-  if (variant % 5 === 0) return 'idle';
-  return (['npc-gesture', 'npc-glance', 'npc-look-around', 'npc-wave-in', 'npc-plead'] as const)[variant % 5 - 1] ?? (cycle % 2 ? 'npc-gesture' : 'npc-glance');
+  if (beat % 2 === 0) return 'idle';
+  const variant = Math.imul(hash ^ Math.floor(beat / 2), 3266489917) >>> 0;
+  return (['npc-gesture', 'npc-glance', 'npc-look-around', 'npc-wave-in', 'npc-plead'] as const)[variant % 5];
 }
