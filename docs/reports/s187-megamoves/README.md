@@ -1,6 +1,6 @@
 # s187-megamoves: Mega signature moves
 
-**Status: incomplete.** The latest full threat audit fails one L10 hold flag and the skilled route does not complete. Coarse pursuit can stall, the service approach needs visible-arrival review, and the moving DPS ceiling is unverified. The implementation and evidence are committed for handoff.
+**Time-box handoff: incomplete.** The latest full threat audit fails one L10 hold flag and the skilled route does not complete. Coarse pursuit can stall, the service approach needs visible-arrival review, and the moving DPS ceiling is unverified. The implementation and evidence are committed for handoff; they are not ready for acceptance.
 
 ## Implementation
 
@@ -15,6 +15,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
+- Final typecheck and lint after the audio mapper test: passed.
 - Focused infected AI and save-progression tests: passed after selecting an existing throw cue.
 - Remote `npm test`: reached the 240 s budget without a reported test failure. The specified fallback passed: local `npm test` (27 files, 106 tests, 183.9 s) and remote `tests/engine/l4-contact.test.ts` (1 test).
 - Latest remote `sh tools/remote/run.sh "$PWD" -- npm test` on `3f2ac658`: passed in 215.3 s (27 files, 105 passed, 1 skipped).
