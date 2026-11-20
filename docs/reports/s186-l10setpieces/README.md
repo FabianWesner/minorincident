@@ -77,6 +77,8 @@ These are staged HIGH zoom 1 Scene Lab views and the LOW gate view, not evidence
 
 - Added warm work lamps at all three field tents using the existing night-accent/light-field pipeline. Opened HIGH and LOW frames show illuminated canvas and an approaching infected; the [HIGH diagnostic still](hospital-high-diagnostic.jpg) still crops the tent roof and is not a native opening frame. Both scene checks report the existing corn/scarecrow overlap. Typecheck, lint and focused world-systems pass; the moving silhouettes and synchronized burst remain open.
 
+- Tinted the existing deterministic L10 dust particles toward the existing L5 ember colour while the corridor fog is active, restoring the night colour beyond the stretch and during the cure dawn. A LOW production-camera frame shows sparse orange motes over the still-dark blue ground; it does not establish the requested overall amber haze. Typecheck and lint pass. The latest successful remote full suite below predates only this render-only tint.
+
 ## Open
 
 This is not a completion report. The brief still requires scene captures (HIGH zoom 1 for each beat and LOW gate), visual review, a successful required remote unit suite, and final cadence evidence showing nearby fights no more than 20 seconds apart at each beat. The authored static props also do not yet deliver the requested readable quarantine/billboard copy, swaying warning effigies, an in-view billboard collapse with crowd reveal, a synchronized hospital burst, or route-specific amber dust and embers. No zombies were stat-tuned and no corpses are removed.

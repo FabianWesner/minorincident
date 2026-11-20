@@ -278,6 +278,7 @@ export class Lighting {
   /** Blend the existing golden preset into the L10 road fog without changing its night key. */
   cureRoadDust(amount: number): void {
     const t = Math.max(0, Math.min(1, amount)), dust = timeOfDay.golden;
+    this.look.nodes.dust.value.set(this.look.values.dust).lerp(this.dawnColor.set(timeOfDay.L5.look!.dust!), t);
     this.fogColor.value.lerp(this.dawnColor.set(dust.fog), t * .7);
     this.fogColorA.value.lerp(this.dawnColor.set(dust.sky), t * .25);
     this.fogNear.value += (dust.fogNear - this.fogNear.value) * t;
