@@ -25,11 +25,11 @@ for (const tier of ['high', 'low'] as const) {
       camera.zoom(Math.log(1.5 / camera.getState().targetZoom), true); camera.update(player, 0);
     });
 
-    const captureTalk = async (id: string, speaker: 'voss' | 'sam', line: number, count = 6) => {
+    const captureTalk = async (id: string, speaker: 'voss' | 'sam' | 'ruiz', line: number, count = 6) => {
       await session.page.evaluate(async ({ speaker, line }) => {
         const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game, mission = game.world.missions!;
-        if (speaker === 'sam' || speaker === 'voss') {
-          mission.state.counters['hangar-line'] = speaker === 'sam' ? 6 : 0; mission.state.counters['hangar-line-ticks'] = 0;
+        {
+          mission.state.counters['hangar-line'] = speaker === 'sam' ? 6 : speaker === 'ruiz' ? 4 : 0; mission.state.counters['hangar-line-ticks'] = 0;
           mission.state.subtitle = null;
           for (let i = 0; i < 10; i++) { await api.step(60); await api.screenshotReady(); }
         }
@@ -37,7 +37,7 @@ for (const tier of ['high', 'low'] as const) {
         mission.state.subtitle = null;
         await api.step(1);
         const subtitle = mission.state.subtitle as { id: string } | null;
-        if (!subtitle || !subtitle.id.startsWith(speaker === 'voss' ? 'L10.voss-' : 'L10.sam-')) throw new Error(`unexpected subtitle ${subtitle?.id}`);
+        if (!subtitle || !subtitle.id.startsWith(speaker === 'voss' ? 'L10.voss-' : speaker === 'sam' ? 'L10.sam-' : 'L10.ruiz')) throw new Error(`unexpected subtitle ${subtitle?.id}`);
         const actorId = mission.state.actors[`hangar-${speaker}`];
         if (!actorId) throw new Error(`missing hangar speaker ${speaker}`);
         api.camera.follow();
@@ -56,6 +56,7 @@ for (const tier of ['high', 'low'] as const) {
     };
 
     await captureTalk('voss-talking', 'voss', 4, tier === 'high' ? 6 : 1);
+    if (tier === 'high') await captureTalk('ruiz-talking', 'ruiz', 5, 4);
     await captureTalk('sam-delivery', 'sam', 9, 4);
   } finally { await session.close(); stopServer(); }
 }

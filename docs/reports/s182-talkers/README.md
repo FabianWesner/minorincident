@@ -4,6 +4,8 @@ The controlled WebGL2 fixture uses HIGH and LOW, zoom 1.5, and steps the convers
 
 The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-talkers-capture.ts`, shows Voss with an arm raised beside the console. Her figure overlaps the console and her gaze direction cannot be judged reliably at this scale; the eastward indication remains unverified.
 
+[Ruiz HIGH](ruiz-talking-high.jpg) shows him to the courier's right during his subtitle after a controlled lead-in. The contact sheet is too small to verify his gaze and gesture quality.
+
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
 | L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory; shared relaxed walk, idle and gestures. Visual check pending. |

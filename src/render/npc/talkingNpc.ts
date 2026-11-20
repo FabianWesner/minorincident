@@ -48,6 +48,7 @@ export function joiningHangarConversation(world: SimWorld, id: number): boolean 
   if (state.steps.research?.status !== 'active') return false;
   const line = state.counters['hangar-line'];
   return state.actors['hangar-voss'] === id && line >= 0 && line <= 8
+    || state.actors['hangar-ruiz'] === id && line >= 4 && line <= 5
     || state.actors['hangar-sam'] === id && line >= 6 && line <= 9;
 }
 
