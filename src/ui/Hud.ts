@@ -442,12 +442,13 @@ export class Hud {
       this.game.input.touch.setWeapon(touchSide, actionIconUrl(def.iconId), `${name}, ${stats}`, progress, selected, slot.magazine, slot.charges);
     }
     const entries = player.weapons ? world.combat?.runner.loadout.activeEntries() ?? [] : [];
-    const displayEntries = [...new Set(entries.map(entry => weaponKey(entry.id)).filter((key): key is number => key !== undefined))]
-      .map(key => entries.filter(entry => weaponKey(entry.id) === key)
-        .sort((a, b) => action(b.id).tier - action(a.id).tier || a.id.localeCompare(b.id))[0]);
     const levelNumber = Number(mission?.def.id.replace(/^L/, ''));
     const rackSlots = Number.isInteger(levelNumber) && levelNumber >= 1 && levelNumber <= 10
       ? weaponRackSlots(levelNumber as Level, entries.map(entry => entry.id)) : [];
+    const levelKeys = new Set(rackSlots.map(slot => slot.key));
+    const displayEntries = [...new Set(entries.map(entry => weaponKey(entry.id)).filter((key): key is number => key !== undefined && (!rackSlots.length || levelKeys.has(key))))]
+      .map(key => entries.filter(entry => weaponKey(entry.id) === key)
+        .sort((a, b) => action(b.id).tier - action(a.id).tier || a.id.localeCompare(b.id))[0]);
     const holes = rackSlots.filter(slot => !slot.owned).map(slot => ({ key: slot.key, id: `slot-hole-${slot.key}`, weapon: slot.weapon }));
     const hasLure = !!world.progression?.campaign?.ownedActions.includes('ability.corgi-lure') || !!player.weapons && sides.some(side => player.weapons![side].rack.some(slot => slot.id === 'ability.corgi-lure'));
     const signature = entries.map(entry => entry.id).join(',') + `|${holes.map(hole => hole.key).join(',')}` + (hasLure ? ',corgi-lure' : '');
