@@ -69,7 +69,6 @@ export class Hud {
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
-  private readonly seenWeaponRoles = new Set<string>();
   private pickupRole: { id: string; until: number } | null = null;
   private emptyWeapon: { id: string; until: number; tooClose?: boolean } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
@@ -228,8 +227,8 @@ export class Hud {
     for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout', 'pickup.collected'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
-    if (event.type === 'pickup.collected' && 'actionId' in event && weaponRoles[event.actionId] && !this.seenWeaponRoles.has(event.actionId)) {
-      this.seenWeaponRoles.add(event.actionId); this.pickupRole = { id: event.actionId, until: event.tick + 240 };
+    if (event.type === 'pickup.collected' && 'actionId' in event && weaponKey(event.actionId) !== undefined) {
+      this.pickupRole = { id: event.actionId, until: event.tick + 240 };
     }
     if (event.type === 'combat.hit' && (event.blocked || event.shieldGlance) && event.sourceId === 1) {
       const p = this.game.view.project(event.position.x, event.position.y + 1.2, event.position.z);
