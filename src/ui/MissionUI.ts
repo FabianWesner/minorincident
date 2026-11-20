@@ -13,6 +13,20 @@ import { attribute, setHidden, style } from './dom';
 import { nextLevelAfter } from '../sim/progression/Campaign';
 import { checkpointName } from '../data/checkpointNames';
 
+/** Identify in-person speakers when the authored line omits their name. */
+function captionText(world: SimWorld, id: string, text: string): string {
+  if (id === 'L2.captain') return `Captain: ${text}`;
+  if (id === 'L3.sergeant' || id === 'L3.handgun') return `Sergeant: ${text}`;
+  if (['L2.call', 'L2.dispatch', 'L2.radio', 'L3.dispatch', 'L3.alone', 'L8.broadcast'].includes(id)) return `Radio: ${text}`;
+  if (world.scenario !== 'L9') return text;
+  const driving = world.missions?.l9?.driving.state;
+  const samName = world.entities.get(driving?.samId ?? 0)?.civilian?.survivor?.key === 'reyes' ? 'Private Reyes' : 'Sam';
+  if (id === 'L9.mega-drive') return text.replace(/^Sam:/, `${samName}:`);
+  const name = ['L9.briefing', 'L9.stall.sam', 'L9.sam-stays'].includes(id) ? samName
+    : id === 'L9.clingers' ? 'Mia' : ['L9.bus.dale', 'L9.bus.dale-beat'].includes(id) ? 'Dale' : id === 'L9.okafor' ? 'Mr. Okafor' : undefined;
+  return name ? `${name}: ${text}` : text;
+}
+
 /** Mission-only UI; progression choices and the full combat HUD remain E13/E14 consumers. */
 export class MissionUI {
   readonly root = document.createElement('div');
@@ -85,7 +99,7 @@ export class MissionUI {
     // L4's short tactical cuts keep the full battlefield visible (Q-282).
     this.root.classList.toggle('is-full-frame',!!cinematic&&mission.def.l4===true);
     setHidden(this.subtitle,!cinematic&&(!state.subtitle||!playing));
-    this.text(this.subtitle,cinematic?.caption??state.subtitle?.text??'');
+    this.text(this.subtitle,cinematic?.caption??(state.subtitle ? captionText(this.world, state.subtitle.id, state.subtitle.text) : ''));
     attribute(this.subtitle,'data-line-id',state.subtitle?.id??'');
     setHidden(this.panel,playing||!!cinematic||!!mission.def.l9&&state.phase==='progression');
     if (this.panel.hidden && this.panel.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();

@@ -1,0 +1,51 @@
+# Speaking NPCs — work in progress
+
+The controlled WebGL2 fixture uses HIGH and LOW, zoom 1.5, and steps the conversation before sampling. [Conversation sheet](conversations.jpg): top six frames are Voss over 6 seconds on HIGH; middle four are Sam over 3.6 seconds on HIGH; bottom is Voss on LOW. Subtitles are visible. The HIGH Sam sequence shows him near the courier. Voss is near the courier in the HIGH sequence; the figures are too small to judge the quality of her gaze and hand movement confidently. These fixtures do not establish natural-play framing or obstacle avoidance.
+
+The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-talkers-capture.ts`, shows Voss clear of the canister, turned toward the courier with an arm raised. Her precise gaze direction and the eastward indication remain difficult to judge at this scale.
+
+[Ruiz HIGH](ruiz-talking-high.jpg) shows him to the courier's right during his subtitle after a controlled lead-in. A second [hangar motion sheet](hangar-motion.jpg) and joint probe sampled every half second show Ruiz moving his left hand more than 10 cm during `npc-plead`, and both guards taking short walks. The researcher cycles `npc-glance`; these small figures do not establish the quality of her subtle motion or Ruiz's gaze by eye.
+
+[Rosa epilogue HIGH](rosa-epilogue.jpg) uses an injected healthy Rosa roster entry and release time. Rosa and the existing courier appear together beside the truck, with Rosa gesturing and her subtitle visible. This fixture does not verify the full campaign transition.
+
+[Hangar entry HIGH](hangar-entry.jpg) advances prior objectives and places the courier outside, then uses movement input through the entrance. Voss enters from the left and walks toward the courier during her visible first subtitle; she is still several metres away during the sampled line. The earlier campaign route is not exercised.
+
+[L8 Hale HIGH](l8-hale.jpg) injects the authored injury and key-handoff state near the gate. The probe sees `npc-give` while Hale is alive, followed by `death-back` when the script kills him; the subtitle remains visible after his fall. The sheet is too small to judge the handoff clearly and does not exercise the elephant encounter.
+
+[L8 gate HIGH](l8-gate.jpg) starts the normal briefing with default progression. The nearest recorded guard begins about 27 m away in simulation; the existing guard is staged in presentation during the opening briefing, and the sheet shows a guard near the courier during the subtitle. Other camera positions and later fallback soldier lines remain unverified.
+
+[L5 Rosa HIGH](l5-rosa.jpg) injects the search phase and survivor discovery at the pharmacy. The subtitle appears, but infected crowd the rescue point and Rosa cannot be distinguished confidently in the sheet. A render probe confirms her actor is drawn while in the `flee` state, using locomotion clips during the line. An existing gesture is now layered on unarmed moving speakers; the crowded recapture is still not a gesture pass, and ordinary rescue play needs review.
+
+[L9 opening HIGH](l9-opening.jpg) shows the APC's existing seated-crew cutaway during Sam's opening subtitle, now labelled with his name (or Reyes for the fallback). Several passengers are visible, but Sam cannot be identified confidently and his gaze and gesture are not readable at gameplay scale. A fresh five-frame probe confirms his rendered head remains in frame and his right hand moves over 2 cm while speaking; player-facing speaker readability remains unresolved. The roof is restored after the line.
+
+[L3 sergeant HIGH](l3-sergeant.jpg) follows the normal station opening. His simulated post is about 20 m away, so when off-screen his existing model is staged near the courier during the preceding narration and returns to his post after the line. The probe sees him drawn throughout in glance, idle and look-around clips. The caption identifies him; fine gaze and gesture quality remain difficult to judge at this scale.
+
+[L2 captain HIGH](l2-captain.jpg) follows the normal station start until the captain line. The nearest living station firefighter is selected because the script specifies no individual captain; the probe sees that actor drawn in idle, glance and wave clips. The figures are small, so the image does not establish player-facing speaker identification or gaze.
+
+[L6 medic HIGH](l6-medic.jpg) invokes the authored treatment bubble in a controlled shelter fixture. The probe reports the medic drawn in `npc-cower`; the bubble is visible and existing upper-body gesture is layered. The small, crowded figures make the hand motion hard to judge, so this is a partial check rather than a visual pass.
+
+The full-resolution L6 frame and projected actor probe locate the medic bent over a cot. The hand area is dark and partly occluded, so clean arm motion and her gaze toward the courier remain unverified.
+
+An earlier experimental walk from off-screen left the guard entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions without changing the simulation.
+
+| Level | In-person speaker currently mapped | Position and clips |
+| --- | --- | --- |
+| L1 | Depot clerk, Annex technician, fire-station firefighter | Their authored handoff or bay positions; active bubbles carry actor IDs. Idle speakers use shared gestures; walking, giving and firefighting retain their story actions. Visual check pending. |
+| L2 | Station captain; firefighters 1, 2 and 5; trapped civilians 1 and 6 | Captain uses the nearest living station firefighter selected at line start. Market bubbles carry the authored actor IDs; their prying and banging actions remain. Captain's normal-start capture is partial; market bubbles and checkpoint shouts remain unverified. |
+| L6 | Treating medic (Rosa or treatment survivor), injured patient, first survivor on retreat | Their shelter/tunnel positions and bubble actor IDs; seated/treatment activities keep their lower-body pose with an upper-body gesture. The medic capture is partial; other bubbles need review. |
+| L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory, staged near the courier during opening narration when his post is off-screen; shared relaxed walk, idle and gestures. Normal-start opening captured; handgun pickup remains unverified. |
+| L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
+| L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
+| L7 | No in-person speaker identified in the authored subtitle catalog | Opening text is narration; systemic barks have not been inventoried. |
+| L8 | Nadia on tour and route lines; Hale on greeting, breach and the dying key handoff; nearest living guard for generic soldier lines | Existing keeper, major and guard actors; shared relaxed walk, idle and gestures. The controlled dying-handoff capture is partial; other visual checks remain pending, including when no guard is nearby. |
+| L9 | Sam/Reyes, Mia, Dale and Okafor on identified lines | On-foot actors use shared presentation; seated copies use seeded shared idle and upper-body conversation clips and the APC cutaway. Individual speaker readability remains unresolved. |
+| L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
+| L10 epilogue | Rosa | Existing survivor montage actor beside the existing courier; glance and gesture. Controlled HIGH capture reviewed; full campaign transition remains open. |
+
+L10 radio lines retain their authored labels; L2 dispatch/call/fallback, L3 dispatch and L8 broadcast captions now say Radio. Other in-person lines remain to be mapped, including L2 rescue/checkpoint shouts and L3 attack, fallback and army shouts; L9 restart and gate announcements also need attribution. This table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips and short clear walks; their activity needs closer visual review. No new animation clips or rigs were added.
+
+Latest typecheck and lint passed. The full remote `sh tools/remote/run.sh "$PWD" -- npm test` passed at revision `98e135f1`: 27 files, 105 tests passed and one skipped, in 209.5 s against the 240-second budget. A prior complete run passed in 232.3 s. After later render and subtitle changes, two full runs exceeded the budget (241.2 s and 240.8 s); the save-progression case exceeded its own limit on the first and passed on the unchanged retry. A further unchanged retry also timed out at 241.2 s; its save-progression case passed. The latest revision therefore lacks a completed full-suite result at the timebox. `qa:threat` byte identity and the full visual coverage have not been verified. The objective is incomplete.
+
+An L10-only remote threat diagnostic completed the skilled route, reached the passive hold budget, and reported zero L10 skilled or passive flags (native state hash `2c15e7eb`). Its overall result correctly flags partial level selection, so it is not a full gate or a byte comparison. There are no branch changes under `src/sim`, `src/data`, `src/levels`, `tools/qa/threat`, or `tools/sim-runner` relative to the merge base.
+
+An independent remote L10 diagnostic on merge base `23a6e9a5` produced byte-identical JSON for the native state hash (`2c15e7eb`), skilled and passive runs, observations, flags, and kiting receipt. Wall times and provenance differ. Both diagnostics flag partial level selection, so this verifies L10's measured fields only, not the full campaign audit.

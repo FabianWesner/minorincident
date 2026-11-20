@@ -13,6 +13,8 @@ import type { AnimalPose } from './AnimalMoves';
 
 /** Presentation-only pose layers on top of the baked clip (zombie move set, hunch). Body space: +x forward, +z lateral. */
 export interface CrowdLayers {
+  /** Small local head turn used to keep an in-person speaker's gaze on the courier while the body turns. */
+  headYaw?: number;
   /** Forward hunch about the hips (rad) and side roll (rad). */
   lean?: number; roll?: number;
   /** Fit a locomotion hunch to this hip-to-head angle (rad), before planting the feet. */
@@ -271,6 +273,7 @@ export class CrowdLocomotion {
       torso.quaternion.premultiply(this.rotation.setFromAxisAngle(X, swing * .16 * lurch)).premultiply(this.rotation.setFromAxisAngle(Z, -(.1 + .1 * push) * lurch));
       head?.quaternion.premultiply(this.rotation.setFromAxisAngle(X, -swing * .1 * lurch));
     }
+    if (layers.headYaw) head?.quaternion.premultiply(this.rotation.setFromAxisAngle(Y, layers.headYaw));
     if (layers.heavyGait) {
       const weight = layers.heavyGait, swing = Math.sin(phase * Math.PI * 2);
       for (const [arm, forearm, side] of [[this.rig.armL, this.rig.foreArmL, 1], [this.rig.armR, this.rig.foreArmR, -1]] as const) {

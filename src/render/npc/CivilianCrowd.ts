@@ -1,6 +1,8 @@
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
+import { bubbleSpeaker, hangarCastMember, joiningArmoryBriefing, joiningHangarConversation, speakingNpc, talkClip, zooGateGuard } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
+import { cureHangar } from '../../data/l10Story';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
@@ -60,6 +62,7 @@ const preparedCrowds = new Map<string, PreparedCivilian>();
 const preparedCrowdLimit = coreCivilianModels.length * 2;
 const noFigures: readonly EntitySnapshot[] = [];
 type Clip = typeof civilianClips[number];
+type ConversationPosition = { x: number; z: number; tick: number; distance: number; speed: number; yaw: number };
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
 export function crowdModelOf(e: EntitySnapshot): string | null {
@@ -133,7 +136,7 @@ class CivilianBatch extends Group {
   source = 'glb';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
-  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry) { super(); this.registry = sharedRegistry;
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories, private readonly sharedRegistry?: AssetRegistry, private readonly conversationPositions = new Map<number, ConversationPosition>()) { super(); this.registry = sharedRegistry;
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.corpses.matrixAutoUpdate = this.corpses.matrixWorldAutoUpdate = false; }
     // L7 has a strict infected pool plus at most 35 incoming survivors. Size
     // every model's mutable pose rows for that population instead of 350.
@@ -231,7 +234,83 @@ class CivilianBatch extends Group {
       const c = e.civilian;
       const model = crowdModelOf(e);
       if (model !== this.model) continue;
-      const closingPose = l10ClosingPose(this.world, e), drawTransform = closingPose ?? e.transform;
+      const closingPose = l10ClosingPose(this.world, e);
+      const lineSpeaker = !!c && speakingNpc(this.world, e.id);
+      const bubbleLine = !!c && bubbleSpeaker(this.world, e.id);
+      // Hale gives the keys while injured; keep that authored pose and location.
+      const haleGiving = lineSpeaker && this.world.missions?.state.subtitle?.id === 'L8.hale-dying' && c?.story?.clip === 'npc-give' && e.health.current > 0;
+      const speaking = lineSpeaker && !haleGiving && c?.state === 'calm';
+      const gateGuard = !!c && c.state === 'calm' && zooGateGuard(this.world, e.id);
+      const armoryBriefing = !!c && c.state === 'calm' && joiningArmoryBriefing(this.world, e.id);
+      const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard || armoryBriefing);
+      let conversation = this.conversationPositions.get(e.id);
+      // Combat, flight, injury or a hidden actor must follow the authoritative body immediately.
+      if (conversation && (!c || c.state !== 'calm' || e.hidden || e.health.current <= 0)) {
+        this.conversationPositions.delete(e.id); conversation = undefined;
+      }
+      if ((speaking || joining) && !conversation) {
+        let start = e.transform;
+        if ((gateGuard || armoryBriefing) && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) {
+          const player = this.world.entities.get(1)!.transform, dx = e.transform.x - player.x, dz = e.transform.z - player.z;
+          const length = Math.hypot(dx, dz) || 1;
+          for (const angle of [0, .6, -.6, 1.2, -1.2, 1.8, -1.8, Math.PI]) {
+            const cos = Math.cos(angle), sin = Math.sin(angle);
+            const candidate = { ...e.transform, x: player.x + (dx * cos - dz * sin) / length * 3, z: player.z + (dx * sin + dz * cos) / length * 3 };
+            if (this.world.infected?.nav.clear(candidate.x, candidate.z, .35) === false) continue;
+            start = candidate; break;
+          }
+        }
+        conversation = { x: start.x, z: start.z, tick: this.world.tick, distance: 0, speed: 0, yaw: e.transform.yaw };
+        this.conversationPositions.set(e.id, conversation);
+      }
+      let conversationSpeed = conversation?.speed ?? 0, conversationYaw = conversation?.yaw ?? e.transform.yaw;
+      if (conversation) {
+        const player = this.world.entities.get(1)!.transform;
+        let dx = e.transform.x - player.x, dz = e.transform.z - player.z;
+        let length = Math.hypot(dx, dz);
+        if (length < .001) { dx = Math.cos(e.transform.yaw); dz = -Math.sin(e.transform.yaw); length = 1; }
+        const distance = Math.max(2.25, Math.min(3, length));
+        let goal = speaking || joining ? { x: player.x + dx / length * distance, z: player.z + dz / length * distance } : e.transform;
+        if (this.world.scenario === 'L10' && this.world.missions?.state.actors['hangar-voss'] === e.id && (speaking || joining) && length > 3) {
+          // Keep the handoff props from masking her when the courier stands beside the canister.
+          for (const angle of [0, .8, -.8, 1.4, -1.4]) {
+            const cos = Math.cos(angle), sin = Math.sin(angle);
+            const candidate = { x: player.x + (dx * cos - dz * sin) / length * 3, z: player.z + (dx * sin + dz * cos) / length * 3 };
+            if ([cureHangar.canister, cureHangar.terminal].some(prop => Math.hypot(candidate.x - prop.x, candidate.z - prop.z) < 2.2)) continue;
+            if (this.world.infected?.nav.clear(candidate.x, candidate.z, .35) === false) continue;
+            goal = candidate; break;
+          }
+        }
+        const gx = goal.x - conversation.x, gz = goal.z - conversation.z, remaining = Math.hypot(gx, gz);
+        const dt = Math.max(0, Math.min(1, (this.world.tick - conversation.tick) / 60));
+        const step = Math.min(remaining, dt * 1.5);
+        if (dt > 0) conversationSpeed = 0;
+        if (remaining > .001 && step > 0) {
+          const nav = this.world.infected?.nav;
+          const origin = { x: conversation.x, z: conversation.z };
+          // Steer around nearby solids without touching the simulation's path search state.
+          for (const angle of [0, .55, -.55, 1.1, -1.1, 1.57, -1.57]) {
+            const cos = Math.cos(angle), sin = Math.sin(angle);
+            const sx = (gx * cos - gz * sin) / remaining * step, sz = (gx * sin + gz * cos) / remaining * step;
+            if (nav && !nav.visible(origin, { x: origin.x + sx, z: origin.z + sz }, .35)) continue;
+            conversation.x += sx; conversation.z += sz; conversation.distance += step;
+            conversationYaw = -Math.atan2(sz, sx); conversationSpeed = 1.5; break;
+          }
+        }
+        conversation.tick = this.world.tick; conversation.speed = conversationSpeed; conversation.yaw = conversationYaw;
+        if (!speaking && !joining && remaining < .02) { this.conversationPositions.delete(e.id); conversation = undefined; }
+      }
+      // The researcher and guards occasionally take a short, clear step to a nearby work spot and back.
+      const actors = this.world.missions?.state.actors;
+      const working = !conversation && c?.state === 'calm' && this.world.scenario === 'L10' && !!actors
+        && [actors['hangar-researcher'], actors['hangar-guard-west'], actors['hangar-guard-east']].includes(e.id);
+      const cycle = ((this.world.tick / 60 + idleOffset(e.id) * 4) % 18 + 18) % 18;
+      const excursion = cycle < 2 ? cycle * .5 : cycle < 8 ? 1 : cycle < 10 ? (10 - cycle) * .5 : 0;
+      const direction = e.id % 2 ? 1 : -1;
+      const workPoint = { x: e.transform.x + direction * excursion, z: e.transform.z };
+      const workClear = !!working && (this.world.infected?.nav.visible(e.transform, { x: e.transform.x + direction, z: e.transform.z }, .35) ?? true);
+      const workSpeed = workClear && (cycle < 2 || cycle >= 8 && cycle < 10) ? .5 : 0;
+      const drawTransform = closingPose ?? (conversation ? { ...e.transform, x: conversation.x, z: conversation.z } : workClear ? { ...e.transform, ...workPoint, yaw: workSpeed ? (cycle < 2 ? direction > 0 ? 0 : Math.PI : direction > 0 ? Math.PI : 0) : e.transform.yaw } : e.transform);
       // Permanently dead civilians use the same ground-body layer as settled infected. Keep their final fall pose,
       // appearance and position; leaving them in the living batch lets them cover a passer-by's legs.
       if (c?.state === 'finished' && !e.infected && e.health.current <= 0 && this.world.tick - c.entered >= 120) {
@@ -255,10 +334,10 @@ class CivilianBatch extends Group {
       if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, this.world.scenario !== 'L4' && (e.health?.current ?? 1) <= 0 ? pixels * .55 : pixels, this.model)) !== this.lod) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha, low)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
-      const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
+      const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil && !haleGiving;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
-      const speed = closingPose || e.motion && !e.motion.moving ? 0 : motion.speed;
+      const speed = conversation ? conversationSpeed : workSpeed || (closingPose || e.motion && !e.motion.moving ? 0 : motion.speed);
       const activity = c.schedule?.[c.scheduleStep ?? 0];
       // A sitter that is not at its seat (moved off by a fight/flight) never keeps the sitting pose or the seat lift.
       // Physics keeps the civilian at the clear approach point; the seated
@@ -275,16 +354,28 @@ class CivilianBatch extends Group {
       const walkClip: Clip = activity?.prop === 'cane' ? 'npc-cane' : activity?.prop ? 'npc-carry' : e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed';
       // E19 story beats override the routine (render-only, set by the mission script).
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
-      let clip: Clip = storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
+      // A bubble already points at the simulation actor. Keep scripted physical
+      // actions such as prying and banging, and animate only an idle speaker.
+      const bubbleTalking = (!storyClip || storyClip === 'idle') && bubbleLine;
+      const talking = !down && !rising && c.state === 'calm' && (speaking || bubbleTalking);
+      const lineTick = this.world.missions?.state.counters['hangar-line-ticks'] ?? 0;
+      const indicatingEast = talking && this.world.missions?.state.subtitle?.id === 'L10.voss-delivery' && lineTick >= 300 && lineTick < 480;
+      const conversationClip = talking ? indicatingEast ? 'npc-gesture' : talkClip(e.id, this.world.tick) as Clip : null;
+      let clip: Clip = conversationClip ?? (storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle');
+      if ((conversation || workClear) && speed > .06) clip = 'npc-walk-relaxed';
       // Waiting civilians in the war/aftermath keep their hands close, with individual gestures.
-      if (!storyClip && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && ['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '')) clip = waitingIdle(e.id, e.appearance?.handProp, c.state === 'hide' || c.state === 'flee');
+      if ((!storyClip || hangarCastMember(this.world, e.id)) && !talking && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && (['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '') || hangarCastMember(this.world, e.id))) clip = waitingIdle(e.id, e.appearance?.handProp, c.state === 'hide' || c.state === 'flee');
+      if (hangarCastMember(this.world, e.id) && !talking && !down && !rising && c.state === 'calm' && c.ally && speed <= .06) clip = waitingIdle(e.id, 'rifle');
       if (e.passengerOf === undefined && !(performing && activity?.seat) && speed > .06 && !strides[clip] && !down && !rising && c.state !== 'grabbed' && c.state !== 'bitten') clip = speed > 2.5 ? civFlee : walkClip;
       if (closingPose) clip = 'idle';
-      const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
+      const duration = authoredClips.get(clip)!.duration, gaitDistance = conversation ? conversation.distance : workClear ? Math.floor((this.world.tick / 60 + idleOffset(e.id) * 4) / 18) * 2 + (cycle < 2 ? excursion : cycle < 8 ? 1 : cycle < 10 ? 2 - excursion : 2) : Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
-      const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
+      const storyElapsed = !talking && storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : loopingStory.has(clip) ? (storyElapsed + idleOffset(e.id) / duration) % 1 : Math.min(.999, storyElapsed);
-      const presented = this.presentation.sample(e.id, drawTransform, this.world.tick, alpha, c.ally?.targetId ? 14 : crowdTurnRate);
+      const facingPlayer = this.world.entities.get(1)!.transform;
+      const targetYaw = -Math.atan2(facingPlayer.z - drawTransform.z, facingPlayer.x - drawTransform.x);
+      const facingCourier = conversationSpeed > .06 ? { ...drawTransform, yaw: conversationYaw } : talking ? { ...drawTransform, yaw: targetYaw } : drawTransform;
+      const presented = this.presentation.sample(e.id, facingCourier, this.world.tick, alpha, talking || conversation ? Math.PI : c.ally?.targetId ? 14 : crowdTurnRate);
       // Convulsions while on the ground: a seeded body shudder that grows with the infection.
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
       if ((performing || noticingSeated) && activity?.seat) {
@@ -318,12 +409,37 @@ class CivilianBatch extends Group {
         pose.speed = speed;
         pose.time = renderTick / 60;
         pose.near = !this.distant;
-        pose.layers = undefined;
+        const directionBlend = indicatingEast ? Math.min(1, (lineTick - 300) / 30, (480 - lineTick) / 30) : 0;
+        const gazeYaw = targetYaw + Math.atan2(Math.sin(-targetYaw), Math.cos(-targetYaw)) * directionBlend;
+        const headTurn = Math.atan2(Math.sin(gazeYaw - presented.yaw), Math.cos(gazeYaw - presented.yaw));
+        pose.layers = (talking || bubbleLine || haleGiving) && Math.abs(headTurn) > .01 ? { headYaw: Math.max(-.5, Math.min(.5, headTurn * .7)) } : undefined;
         pose.style = undefined;
         pose.procedural = !baked;
         pose.cadence = undefined;
         pose.holdDistanceM = undefined;
         frame = this.locomotion.present(e.id, this.poses, pose); }
+      const seatedBubble = bubbleLine && !!storyClip && ['npc-cower', 'npc-sit', 'npc-look-around', 'npc-gesture', 'npc-give'].includes(storyClip);
+      if ((lineSpeaker && speed > .06 || seatedBubble) && !down && !rising && !holding && c.state !== 'grabbed' && c.state !== 'bitten') {
+        // Retain the legs and authored activity while applying an existing gesture relative to the current torso.
+        const gestureTime = renderTick / 60 + idleOffset(e.id), weight = Math.sin(Math.PI * (gestureTime % 3) / 3) ** 2;
+        const gestureDuration = authoredClips.get('npc-gesture')!.duration;
+        const gestureFrame = civilianClips.indexOf('npc-gesture') * framesPerClip + (gestureTime % gestureDuration) / gestureDuration * (framesPerClip - 1);
+        const torso = this.bakedClip.parts.indexOf('torso');
+        if (torso >= 0 && weight > .01) {
+          frame = this.poses.correct(e.id, frame, ...blend, pose => {
+            const currentTorso = new Matrix4().fromArray(pose, torso * 16);
+            const gestureTorso = this.poses.part(gestureFrame, gestureFrame, 1, torso, new Matrix4()).invert();
+            for (const name of ['armL', 'foreArmL', 'handL', 'armR', 'foreArmR', 'handR']) {
+              const part = this.bakedClip.parts.indexOf(name); if (part < 0) continue;
+              const current = new Matrix4().fromArray(pose, part * 16), target = this.poses.part(gestureFrame, gestureFrame, 1, part, new Matrix4()).premultiply(gestureTorso).premultiply(currentTorso);
+              const p = new Vector3(), q = new Quaternion(), s = new Vector3(), tp = new Vector3(), tq = new Quaternion(), ts = new Vector3();
+              current.decompose(p, q, s); target.decompose(tp, tq, ts);
+              current.compose(p.lerp(tp, weight), q.slerp(tq, weight), s.lerp(ts, weight)).toArray(pose, part * 16);
+            }
+          });
+          blend[0] = frame; blend[1] = 1;
+        }
+      }
       if (holding && !weaponProps.has(handProp!)) {
         // A drinker raises the mug to the mouth every ~8 s. An idle phone stays
         // at the natural wrist pose; a chest hold pulled the forearm/torso seam into a skin fan.
@@ -525,6 +641,7 @@ export class CivilianCrowd extends Group {
   private readonly moves = new InfectedMoves();
   /** Shared across the near/far batches so a figure crossing the band keeps its displayed turn. */
   private readonly presentation = new MotionPresentation(crowdTurnRate);
+  private readonly conversationPositions = new Map<number, ConversationPosition>();
   private readonly figures = new Map<string, EntitySnapshot[]>();
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 4 : 48; }
@@ -571,7 +688,7 @@ export class CivilianCrowd extends Group {
     }))];
   }
   private readonly shading?: Materials;
-  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories, this.registry); }
+  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories, this.registry, this.conversationPositions); }
   /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
    * figures that fill the screen (the CrowdView infected hero rule: > 196 px tall, 164 px to leave, at most 4, nearest
    * to the camera) draw the full LOD0 model. Its batch per model is loaded on first use (desktop tier only). */
@@ -677,6 +794,7 @@ export class CivilianCrowd extends Group {
       // authored cast before the loading draw so streamed actors cannot first
       // create their frozen corpse material after play begins.
       if (this.world.scenario === 'L3') for (const model of l3CivilianModels) this.loadTier(model, 'lod2');
+      if (this.world.scenario === 'L8') this.loadModel('npc.national-guard');
       // L7 opens in combat, with the launcher only a few steps away. Its
       // nearby escort/infected tiers (including frozen corpse pages) cannot
       // use the peaceful after-Begin queue: their graph builds overlap the
@@ -695,6 +813,7 @@ export class CivilianCrowd extends Group {
     // L4 people retain their model through infection. EntityStore revisions
     // cover births, replacement and checkpoint restore; live poses still update.
     const membershipChanged = this.world.scenario !== 'L4' || this.figureRevision !== this.world.entities.revision;
+    for (const [id, position] of this.conversationPositions) if (!this.world.entities.get(id) || position.tick > this.world.tick) this.conversationPositions.delete(id);
     const player = this.world.entities.get(1)?.transform;
     const streamMoved = this.staged && this.streaming && player && Math.hypot(player.x - this.streamX, player.z - this.streamZ) >= 4;
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); if (membershipChanged || streamMoved) this.discover(); this.selectHeroes(lodCamera); if (this.staged && camera) this.stageInitial(); this.props.begin();

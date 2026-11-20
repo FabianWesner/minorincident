@@ -1,4 +1,4 @@
-import { BufferAttribute, Group, Matrix4, Mesh, MeshLambertNodeMaterial, Quaternion, Vector3, type Object3D } from 'three/webgpu';
+import { AnimationMixer, BufferAttribute, Group, Matrix4, Mesh, MeshLambertNodeMaterial, Quaternion, Vector3, type AnimationAction, type Object3D } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { batchRigidParts } from './batchRigidParts';
@@ -7,11 +7,13 @@ import { alignSkeleton } from './skin';
 import { disposeCharacter, loadTierGear, type CharacterRig } from './rig';
 import { characterNodes } from '../../data/survivor';
 import type { Materials } from '../Materials';
-import { sampleClip } from './clips';
+import { retargetClip, sampleClip } from './clips';
 import { LimbIK } from './LimbIK';
 import type { AssetRegistry } from '../../assets/registry';
 import { prepareCivilianRig } from '../npc/prepareCivilianGeometry';
 import { useCourierDepth } from './courierDepth';
+import { talkClip } from '../npc/talkingNpc';
+import { idleOffset } from '../npc/waitingIdle';
 
 /** A seated render copy; its hidden simulation actor continues to own boarding and exits. */
 export class VehicleOccupant extends Group {
@@ -33,6 +35,10 @@ export class VehicleOccupant extends Group {
   readonly handGapM = [0, 0];
   private readonly hand = new Vector3();
   private readonly hipOffset = new Vector3();
+  private speechMixer?: AnimationMixer;
+  private speechAction?: AnimationAction;
+  private speechClip?: string;
+  private readonly speechActions = new Map<string, AnimationAction>();
   private constructor(readonly actorId: number, readonly asset: string, readonly model: Object3D, private readonly ownsModel = false, private readonly tierGear?: Awaited<ReturnType<typeof loadTierGear>>) {
     super(); this.add(model);
     sampleClip(model, 'npc-sit', 0); this.bones = courierBones(model);
@@ -106,7 +112,32 @@ export class VehicleOccupant extends Group {
     return new VehicleOccupant(actorId, asset, model, true);
   }
   private releases: (() => void)[] = [];
-  dispose(): void { if (this.ownsModel) disposeCharacter(this.model as Group); for (const release of this.releases.splice(0)) release(); this.removeFromParent(); }
+  dispose(): void { this.speechMixer?.stopAllAction(); this.speechMixer?.uncacheRoot(this.model); if (this.ownsModel) disposeCharacter(this.model as Group); for (const release of this.releases.splice(0)) release(); this.removeFromParent(); }
+  /** Existing upper-body gesture on a seated passenger; legs stay in their seat pose. */
+  speak(seconds?: number, toward?: Object3D): void {
+    if (seconds === undefined) { if (this.speechAction?.isRunning()) this.speechAction.stop(); return; }
+    this.speechMixer ??= new AnimationMixer(this.model);
+    const name = talkClip(this.actorId, seconds * 60);
+    if (this.speechClip !== name) {
+      this.speechAction?.stop();
+      let action = this.speechActions.get(name);
+      if (!action) {
+        const clip = retargetClip(this.model, name);
+        clip.tracks = clip.tracks.filter(track => /^(head|arm[LR]|foreArm[LR]|hand[LR])\./.test(track.name));
+        action = this.speechMixer.clipAction(clip); this.speechActions.set(name, action);
+      }
+      this.speechAction = action.reset().play(); this.speechClip = name;
+    }
+    if (!this.speechAction!.isRunning()) this.speechAction!.reset().play();
+    this.speechMixer.setTime(seconds + idleOffset(this.actorId));
+    if (toward && this.rig.head) {
+      this.updateWorldMatrix(true, true); toward.updateWorldMatrix(true, false);
+      this.point.setFromMatrixPosition(toward.matrixWorld); this.worldToLocal(this.point);
+      this.hand.setFromMatrixPosition(this.rig.head.matrixWorld); this.worldToLocal(this.hand);
+      const yaw = -Math.atan2(this.point.z - this.hand.z, this.point.x - this.hand.x);
+      this.rig.head.rotateY(Math.max(-.5, Math.min(.5, yaw)));
+    }
+  }
   /** Hip at the seat node, both shoes forward in the footwell; drivers grip the authored wheel. */
   pose(seat: Object3D, wheel?: Vector3, fit = 1, driverLean = -.5, driverSlide = .2, gearTier = 0): void {
     if (this.tierGear) {
@@ -127,6 +158,9 @@ export class VehicleOccupant extends Group {
     this.torso.rotateZ(wheel ? driverLean : -.25);
     this.updateWorldMatrix(true, true);
     for (let i = 0; i < 2; i++) {
+      // Repeated renders can sample the same speech time. The mixer then keeps
+      // its cached value, so don't overwrite the speaking arms with seated IK.
+      if (!wheel && this.speechAction?.isRunning()) continue;
       if (wheel) { this.point.copy(wheel).add(new Vector3(-.04, .025, i === 0 ? -.12 : .12)); this.point.applyMatrix4(this.parent!.matrixWorld); }
       else this.point.set(.2, .1, i === 0 ? -.11 : .11).applyMatrix4(this.matrixWorld);
       this.pole.set(.15, -.8, i === 0 ? -.3 : .3).transformDirection(this.parent!.matrixWorld);

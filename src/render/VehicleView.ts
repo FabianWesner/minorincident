@@ -1,6 +1,7 @@
 import { ApcDamage } from './apcDamage';
 import { carDoorWeight, carTransitionTicks } from './characters/carTransition';
 import { VehicleOccupant } from './characters/VehicleOccupant';
+import { speakingNpc } from './npc/talkingNpc';
 import { tyreSurface, updateTyreMatrices } from './TyreContact';
 import { modelLod } from './lodPolicy';
 import { SubjectOcclusion } from './SubjectOcclusion';
@@ -410,6 +411,8 @@ export class VehicleView extends Group {
       // The female rig has shorter arms; lean into the pickup's high steering column.
       // The APC's authored seat already fits its narrow cab. The generic 20 cm car-seat slide put her shoes in the firewall.
       occupant.pose(seat, target, fit, car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? -.65 : -.5, car.physics.def.id === 'vehicle.military-apc' ? 0 : .2, entity.survivor?.gearTier ?? 0);
+      occupant.speak(!w.driver && speakingNpc(this.world, w.actorId) ? this.world.tick / 60 : undefined,
+        this.world.scenario === 'L9' ? record.model.getObjectByName('driverSeat') : undefined);
     }
   }
   /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors.
@@ -525,11 +528,15 @@ export class VehicleView extends Group {
       const l2Ride = this.world.missions?.state.l2;
       const carryingL2Crew = l2Ride?.truckId === id && l2Ride.seated && ['ride', 'arrived'].includes(l2Ride.phase);
       const reveal = this.reveal.get(id)!, full = this.silhouette?.id === id && this.silhouette.mode === 'full';
+      const speakingPassenger = this.world.scenario === 'L9' && record.model.userData.assetId === 'veh.military-apc'
+        && [...this.occupants.values()].some(occupant => occupant.parent === record.model && occupant.visible && speakingNpc(this.world, occupant.actorId));
       // vqa-1 P2: the seated crew reads through a clean roof-off cutaway over their seats, not a dithered screen disc.
       // On foot only her own chest or head behind a vehicle counts (not a padded subject corner beside the cab).
-      if (carryingL2Crew && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
+      if ((carryingL2Crew || speakingPassenger) && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
       else reveal.on.value = +(enabled && !onFoot && !full);
       if (record.crewRoof) { const open = reveal.on.value === 2; record.crewRoof.trim.visible = open; for (const node of record.crewRoof.hide) node.visible = !open; }
+      const transportRoof = record.model.getObjectByName('transportRoof');
+      if (transportRoof && record.model.userData.assetId === 'veh.military-apc') transportRoof.visible = !speakingPassenger;
       if (hidesHer && vehicle) this.courierOccluded = true;
       if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
     }
