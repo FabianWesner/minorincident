@@ -13,6 +13,7 @@ Folded the regression into the existing `tests/engine/npcs.test.ts` case. HIGH a
 ## Validation
 
 - `npx vitest run tests/engine/npcs.test.ts --project default --configLoader runner` — PASS (3 tests; includes HIGH/LOW checkpoint restore and walking approaches; rerun after adding the restore assertion).
+- Uninterrupted native `runLevel` complete-policy route, seed 1, observed from level start: HIGH courier first entered at tick 41627 and corgi cleared the boundary at tick 41712 (1.42 s later); LOW entered at tick 37016 and corgi cleared at tick 37102 (1.43 s later). Both corgis approached from approximately (2702.8, 52.0); the observer stopped each run immediately after clearance.
 - Additional native approach probe: on both HIGH and LOW, with the courier at (2707, 59), the corgi started at z=43 and x=2699, 2703, 2707, 2711, and 2715. All ten starts cleared z=53.84 in 3.08–5.55 s using normal follower updates. This is a bounded probe, not proof for every possible position.
 - `npm run typecheck` — PASS.
 - `npm run lint` — PASS.
