@@ -8,6 +8,7 @@
 - The native pickup regression collects the nail gun, selects it on 7, collects the army MG, then selects the MG on 4. The nail gun remains available on 7.
 - `5fbb8e3d` updates the L9 bot to use fixed keys 3 and 4 and fixes the playtest driver's key-0 spelling. The existing input test now checks repeated key 1 and 0 cycling.
 - `6aec445a` checks the explicit key list for every level and verifies that acquiring each listed key fills its hole without changing the other positions. Focused input, typecheck and lint passed.
+- `c0b2809e` versions new fixed-key recordings and decodes older position-based recordings using their historical ordering. Focused input, codec and combat tests (14), typecheck and lint passed.
 - `8ff43012` keeps the rack visible when a level has holes but the player carries no weapons. Typecheck, lint and the focused input test passed after this change.
 - `895d2cb7` filters carried weapons by the predefined level keys when drawing a campaign rack, including when an older save contains an out-of-set weapon. Typecheck, lint and the focused input test passed.
 
@@ -39,4 +40,4 @@ The harness enables the UI and asserts each spawned, retained pickup was collect
 - `ee511111` Update s195 verification report
 - `5574a8ee` Complete per-level weapon slot sets
 
-The remote test gate remains incomplete. The test-budget count was kept at 150 by folding the v1 save assertion into the existing save-decoding test. A separate compatibility limitation remains: pre-s195 version 2 input recordings encoded position-based number selections, but the version 2 marker was not changed when the fixed-key semantics were introduced. Such recordings may select a different weapon on replay; campaign save migration uses weapon IDs and is covered separately.
+The remote test gate remains incomplete. The test-budget count was kept at 150 by folding the v1 save assertion into the existing save-decoding test.
