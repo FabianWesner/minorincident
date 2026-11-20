@@ -21,9 +21,9 @@ A runtime-only comparison changed the in-memory dog definition back to the pre-P
 - Full `npm run qa:threat`: all ten skilled routes completed. One unrelated existing gate flag remains: `L8/phase/breached:SLOW_FOLLOWER:363`. Re-running L8 alone reproduced it; its passive route itself has no flags.
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
-- `npm test`: passed, 27 files / 106 tests, within the 240-second budget. The remote request `sh tools/remote/run.sh "$PWD" -- npm test` could not start: no healthy remote runner was provisioned. The local full suite was run after that failure.
-- Scene Lab dog rows (`inf-dog-pack` and `inf-dog-pounce`, high tier, zoom 1) remain unreviewed. `npm run scene` could not start the browser pool: local daemon bind failed with `listen EPERM` on 127.0.0.1:4329. Retrying through the legacy `tools/e2e-lock.sh` path also failed because the GPU guard cannot run `ps` in this sandbox. No visual claim is made about gait playback, turn radius, or pounce arc.
+- `npm test`: passed, 27 files / 106 tests, within the 240-second budget. The remote full suite reached its 240-second budget without a reported test failure. The specified fallback passed: local full suite and remote `tests/engine/l4-contact.test.ts` (1 test).
+- Scene Lab `inf-dog-pack` and `inf-dog-pounce` passed their automated checks at high tier on WebGL. The pack uses game zoom 1; the pounce fixture uses a close camera. Reviewed sparse contact sheets show approach and telegraphs, but do not establish foot sliding, turning radius, or pounce arc; dense motion review remains open.
 
 ## Open
 
-The L10 route and local suite are green, but the requested completion gate is not fully met: the all-level threat audit has the L8 follower flag above, the remote test runner was unavailable, and Scene Lab visual review was blocked by browser-pool startup. These are recorded without changing thresholds or dog stats.
+The L10 route and local suite are green, but the requested completion gate is not fully met: the all-level threat audit has the L8 follower flag above, the remote full suite timed out (the specified fallback passed), and dense Scene Lab motion review remains open. These are recorded without changing thresholds or dog stats.
