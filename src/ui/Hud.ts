@@ -16,6 +16,7 @@ import type { Game } from '../Game';
 import { action } from '../data/actions/catalog';
 import { weaponRoles } from '../data/weaponRoles';
 import { weaponKey } from '../data/weaponKeys';
+import { levelWeaponSets, weaponForKey } from '../data/weaponSlots';
 import { actionIconUrl } from '../assets/icons';
 import { button, node, text as domText, setHidden, attribute, style } from './dom';
 import { Onboarding } from './Onboarding';
@@ -440,23 +441,35 @@ export class Hud {
       this.game.input.touch.setWeapon(touchSide, actionIconUrl(def.iconId), `${name}, ${stats}`, progress, selected, slot.magazine, slot.charges);
     }
     const entries = player.weapons ? world.combat?.runner.loadout.activeEntries() ?? [] : [];
+    const displayEntries = [...new Set(entries.map(entry => weaponKey(entry.id)).filter((key): key is number => key !== undefined))]
+      .map(key => entries.filter(entry => weaponKey(entry.id) === key)
+        .sort((a, b) => action(b.id).tier - action(a.id).tier || a.id.localeCompare(b.id))[0]);
+    const levelNumber = Number(mission?.def.id.replace(/^L/, ''));
+    const levelWeapons = Number.isInteger(levelNumber) && levelNumber >= 1 && levelNumber <= 10 ? levelWeaponSets[levelNumber as keyof typeof levelWeaponSets] : [];
+    const availableKeys = [...new Set(levelWeapons.map(weaponKey).filter((key): key is number => key !== undefined))];
+    const ownedKeys = new Set(entries.map(entry => weaponKey(entry.id)));
+    const holes = availableKeys.filter(key => !ownedKeys.has(key)).map(key => ({ key, id: `slot-hole-${key}`, weapon: weaponForKey[key][0] }));
     const hasLure = !!world.progression?.campaign?.ownedActions.includes('ability.corgi-lure') || !!player.weapons && sides.some(side => player.weapons![side].rack.some(slot => slot.id === 'ability.corgi-lure'));
-    const signature = entries.map(entry => entry.id).join(',') + (hasLure ? ',corgi-lure' : '');
+    const signature = entries.map(entry => entry.id).join(',') + `|${holes.map(hole => hole.key).join(',')}` + (hasLure ? ',corgi-lure' : '');
     if (signature !== this.weaponRackSignature) {
       this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
-      for (const entry of entries) {
-        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
-        item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
-        icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
+    const tiles = [...displayEntries.map(entry => ({ id: entry.id, key: weaponKey(entry.id), weapon: entry.id, hole: false })), ...holes.map(hole => ({ ...hole, hole: true }))]
+        .sort((a, b) => (a.key ?? 99) - (b.key ?? 99));
+      for (const tile of tiles) {
+        const { id, key, weapon, hole } = tile;
+        const item = node('button', `weapon-rack-${id}`), icon = document.createElement('img');
+        item.className = 'hud-weapon-choice'; item.dataset.weapon = weapon; item.dataset.hole = String(hole); item.dataset.empty = String(hole);
+        if (hole) item.disabled = true;
+        icon.src = actionIconUrl(action(weapon).iconId); icon.alt = '';
         const shortcut = key !== undefined && key <= 9 ? String(key) : key === 10 ? '0' : '';
-        item.title = `${label(entry.id)}${weaponRoles[entry.id] ? ` · ${weaponRoles[entry.id]}` : ''}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
+        item.title = `${hole ? 'Not found' : label(weapon)}${weaponRoles[weapon] ? ` · ${weaponRoles[weapon]}` : ''}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
         item.type = 'button'; item.tabIndex = -1;
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
-        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (key !== undefined) this.game.input.selectWeaponKey(key); });
+        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (!hole && key !== undefined) this.game.input.selectWeaponKey(key); });
         item.append(icon);
         if (shortcut) { const badge = node('span', `weapon-key-${key}`, shortcut); badge.className = 'hud-weapon-key'; item.append(badge); }
-        this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
+        this.weaponRackItems.set(id, item); this.weaponRack.append(item);
       }
       if (hasLure) {
         this.corgiLure.className = 'hud-weapon-choice'; this.corgiLure.title = 'Corgi lure · G'; this.corgiLure.setAttribute('aria-label', this.corgiLure.title);
@@ -466,6 +479,7 @@ export class Hud {
     }
     const selectedId = shown?.id === 'weapon.kick' ? 'weapon.fists' : shown?.id;
     for (const [id, item] of this.weaponRackItems) {
+      if (id.startsWith('slot-hole-')) { attribute(item, 'data-selected', 'false'); continue; }
       attribute(item, 'data-selected', String(id === selectedId && !gun?.mounted));
       const entry = entries.find(entry => entry.id === id)!;
       const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
@@ -490,7 +504,8 @@ export class Hud {
         ? this.emptyWeapon.tooClose ? 'Too close!' : `${label(this.emptyWeapon.id)} · Empty`
         : null;
       const pickup = this.pickupRole && world.tick <= this.pickupRole.until ? this.pickupRole.id : null;
-      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup]}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`); setHidden(this.weapon.hint, !pickup && !emptyCue && world.tick > this.weaponHintUntil);
+      const pickupKey = pickup ? weaponKey(pickup) : undefined;
+      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup] ?? 'Weapon'} · ${pickupKey === 10 ? '0' : pickupKey}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`); setHidden(this.weapon.hint, !pickup && !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot or Q / Shift+Q to cycle'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));

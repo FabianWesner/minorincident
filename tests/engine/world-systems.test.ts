@@ -12,6 +12,7 @@ import { loadL3 } from '../../tools/sim-runner/l3Bots';
 import { rotate } from '../../src/sim/destruction/Destruction';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { verifyDestructionRollout } from './destruction-rollout.fixture';
+import { weaponKey } from '../../src/data/weaponKeys';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
@@ -85,6 +86,19 @@ test('pickups: exact one-time effects with caps, rack join/replacement, dead pla
   r.pickups!.spawn('weapon', { x: 0, z: 0 }, 'weapon.katana'); step(r, 1);
   expect(rack.current('LEFT').id).toBe('weapon.katana');
   expect(r.query({ kind: 'pickup' })[0].pickup).toEqual({ actionId: 'weapon.knife', armed: false, dropped: true });
+
+  const fixed = await world(); fixed.combat!.setLoadout(['weapon.fire-axe'], ['weapon.handgun']);
+  fixed.pickups!.spawn('weapon', { x: 0, z: 0 }, 'weapon.nail-gun'); step(fixed, 2);
+  fixed.setInput({ selectedWeaponKey: 7 }); step(fixed, 1); fixed.clearInput();
+  expect(fixed.combat!.runner.loadout.current(fixed.combat!.runner.loadout.state.selectedSide).id).toBe('weapon.nail-gun');
+  fixed.pickups!.spawn('weapon', { x: 0, z: 0 }, 'weapon.army-mg'); step(fixed, 2);
+  expect([...fixed.combat!.runner.loadout.state.LEFT.rack, ...fixed.combat!.runner.loadout.state.RIGHT.rack].map(slot => slot.id)).toContain('weapon.army-mg');
+  step(fixed, 15);
+  fixed.setInput({ selectedWeaponKey: 4 }); step(fixed, 1); fixed.clearInput();
+  const fixedLoadout = fixed.combat!.runner.loadout;
+  expect(fixedLoadout.current(fixedLoadout.state.selectedSide).id).toBe('weapon.army-mg');
+  expect(weaponKey('weapon.nail-gun')).toBe(7);
+  expect(weaponKey('weapon.army-mg')).toBe(4);
 
   // L6's headlamp must collect while crossing its radius, with E released.
   const h = await world(); move(h, -4);
