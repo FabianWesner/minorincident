@@ -38,3 +38,5 @@ A separate current physical launcher probe used real input and native L5→L6 ca
 - The screenshot shows pressure from several sides but does not visually prove all three timed directions. The direction trace is one native seed and does not establish every possible play style.
 
 Epic correction: the earlier edit inadvertently described the entire newly authored final horde (168/84) as the initial admitted minimum. The pre-existing L7-08 minimum is 120/60, and the director queues the excess. Epic 29 §5.3 and the corridor receipt now distinguish the authored group size from that unchanged initial minimum; the L7-08 target itself was not relaxed.
+
+The live admission probe was repeated with zoom 0.5 requested on both tiers. HIGH observed 536 queued admissions and LOW 256; every admission was offscreen with the camera frustum active, with no occlusion-only cases, and both runs reached the result screen. Logs: `visibility-high-z0.5.json` and `visibility-low-z0.5.json`. This is seed-1 coverage at the requested zoom, not proof for every camera movement.

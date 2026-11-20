@@ -6,7 +6,8 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { launchBrowser } from '../browser-pool/client.ts';
 import { provenance } from './accept/probe.ts';
 import { browserHash } from './accept/browser.ts';
-const tier = process.argv[2];
+const tier = process.argv[2], zoom = Number(process.argv[3] ?? 1);
+if (![.5, 1, 1.5].includes(zoom)) throw new Error('Supply zoom .5, 1 or 1.5');
 if (!['low', 'high'].includes(tier)) throw new Error('Supply low or high');
 const port = Number(process.env.E2E_PORT ?? 5125);
 if (port === 3300) throw new Error('Port 3300 is reserved');
@@ -20,7 +21,7 @@ try {
   await page.addInitScript('window.__name=f=>f');
   await page.goto(`http://127.0.0.1:${port}/?test=1&ui=1&scenelab=1&renderer=webgl&quality=${tier}&controls=wasd&audio=muted&dpr=1&preload=0`);
   await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__);
-  const setup = await page.evaluate(async tier => {
+  const setup = await page.evaluate(async ({ tier, zoom }) => {
     const a = window.__SS__, g = window.__SCENE__.game; await a.ready; a.pause(); await a.loadLevel('L7', { seed: 1 }); a.pause();
     a.settings.set({ quality: tier, cameraShake: false, cheapDof: false });
     const w = g.world, ai = w.infected, original = ai.spawn.bind(ai); window.__l7Visibility = [];
@@ -31,8 +32,8 @@ try {
       }
       return original(id, pos, options, conversion);
     };
-    a.missions.begin(); a.camera.zoom(1); a.bot.start('complete'); a.resume(); return { backend: a.perf().backend };
-  }, tier);
+    a.missions.begin(); a.camera.zoom(zoom); a.bot.start('complete'); a.resume(); return { backend: a.perf().backend };
+  }, { tier, zoom });
   for (let i = 0; i < 180; i++) {
     await delay(1000);
     const status = await page.evaluate(() => { const w = window.__SCENE__.game.world; return { tick: w.tick, phase: w.missions.state.phase, count: window.__l7Visibility.length }; });
@@ -40,8 +41,8 @@ try {
     if (status.phase === 'result') break;
   }
   const data = await page.evaluate(() => ({ events: window.__l7Visibility, tick: window.__SCENE__.game.world.tick, phase: window.__SCENE__.game.world.missions.state.phase }));
-  const summary = { ...provenance(), browserHash: browserHash(), tier, seed: 1, zoom: 1, setup, ...data };
-  writeFileSync(`docs/reports/s192-l7harder/visibility-${tier}.json`, JSON.stringify(summary, null, 2) + '\n');
+  const summary = { ...provenance(), browserHash: browserHash(), tier, seed: 1, zoom, setup, ...data };
+  writeFileSync(`docs/reports/s192-l7harder/visibility-${tier}-z${zoom}.json`, JSON.stringify(summary, null, 2) + '\n');
   console.log(JSON.stringify({ tier, phase: data.phase, count: data.events.length, noFrustum: data.events.filter(x => !x.frustum).length, visible: data.events.filter(x => !x.offscreen && !x.occluded).length }));
   await context.close();
 } finally { await browser?.close(); server.kill(); }
