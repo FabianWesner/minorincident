@@ -69,7 +69,8 @@ export class Loadout {
         keyed = matching[current >= 0 ? (current + 1) % matching.length : 0];
       }
     }
-    const choice = keyed ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
+    const oldPosition = frame.selectedPositionWeaponKey === undefined ? undefined : this.activeEntries().sort((a, b) => compareWeapons(a.id, b.id))[frame.selectedPositionWeaponKey - 1];
+    const choice = keyed ?? oldPosition ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];
       if (Number.isInteger(choice.index) && (choice.index >= 0 || choice.index === -1 && choice.side === 'LEFT') && choice.index < rack.rack.length && tick >= rack.swapUntil) {

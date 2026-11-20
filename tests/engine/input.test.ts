@@ -242,7 +242,11 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   const currentRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 2 }));
   const currentRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
   currentRack.input(currentRecording.frames[0], 30);
-  expect(currentRack.current(currentRack.state.selectedSide).id).toBe('weapon.fire-axe'); // fixed key 3 is a hole in this rack
+  expect(currentRack.current(currentRack.state.selectedSide).id).toBe('weapon.handgun'); // historical rack position 3
+  const fixedRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 3 }));
+  const fixedRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
+  fixedRack.input(fixedRecording.frames[0], 30);
+  expect(fixedRack.current(fixedRack.state.selectedSide).id).toBe('weapon.fire-axe'); // fixed key 3 is a hole
   const pickups = new Loadout(['weapon.fire-axe', 'weapon.nail-gun', 'weapon.army-mg'], ['weapon.handgun']);
   pickups.input({ ...emptyInput(), selectedWeaponKey: 7 }, 30);
   expect(pickups.current(pickups.state.selectedSide).id).toBe('weapon.nail-gun');

@@ -1,6 +1,6 @@
 import type { InputFrame } from './InputFrame';
 export interface Recording {
-  version: 1 | 2;
+  version: 1 | 2 | 3;
   seed: number;
   level: string;
   checkpoint?: string;
@@ -11,7 +11,7 @@ export class Recorder {
   private recording: Recording | null = null;
   private playback: Recording | null = null;
   private cursor = 0;
-  start(meta: Omit<Recording, 'version' | 'frames'>): void { this.reset(); this.recording = { version: 2, ...meta, frames: [] }; }
+  start(meta: Omit<Recording, 'version' | 'frames'>): void { this.reset(); this.recording = { version: 3, ...meta, frames: [] }; }
   capture(frame: InputFrame): void {
     if (!this.recording) return;
     const recorded = structuredClone(frame);
@@ -34,14 +34,15 @@ export class Recorder {
     const data: Recording = JSON.parse(text);
     const vector = (v: { x: number; z: number }): boolean => Boolean(v) && Number.isFinite(v.x) && Number.isFinite(v.z);
     const button = (b: InputFrame['left']): boolean => Boolean(b) && typeof b.down === 'boolean' && typeof b.held === 'boolean' && typeof b.up === 'boolean';
-    if (!data || ![1, 2].includes(data.version) || !Number.isSafeInteger(data.seed) || typeof data.level !== 'string' || (data.checkpoint !== undefined && typeof data.checkpoint !== 'string') || !Array.isArray(data.frames) || data.frames.some((f) =>
+    if (!data || ![1, 2, 3].includes(data.version) || !Number.isSafeInteger(data.seed) || typeof data.level !== 'string' || (data.checkpoint !== undefined && typeof data.checkpoint !== 'string') || !Array.isArray(data.frames) || data.frames.some((f) =>
       !f || !vector(f.move) || (f.aim !== null && !vector(f.aim)) || (f.aimPoint != null && !vector(f.aimPoint)) || (f.moveTarget != null && !vector(f.moveTarget)) || (f.attackTarget != null && (!Number.isSafeInteger(f.attackTarget.id) || f.attackTarget.id < 1 || !['LEFT', 'RIGHT'].includes(f.attackTarget.side))) || (f.selectorSide != null && !['LEFT', 'RIGHT'].includes(f.selectorSide)) || (f.cancelMove !== undefined && typeof f.cancelMove !== 'boolean') || (f.pointerGround !== undefined && typeof f.pointerGround !== 'boolean') || ![null, 'pointer', 'keyboard', 'touch', 'assist'].includes(f.aimSource) || !button(f.left) || !button(f.right) || ![-1, 0, 1].includes(f.selector) || typeof f.interact !== 'boolean' || typeof f.pause !== 'boolean'
     )) throw new Error('Invalid .ssrec recording');
     for (const frame of data.frames) {
       Recorder.removeLegacyCommands(frame);
       if (data.version === 1 && frame.selectedWeaponKey !== undefined) { frame.selectedLegacyWeaponKey = frame.selectedWeaponKey; delete frame.selectedWeaponKey; }
+      if (data.version === 2 && frame.selectedWeaponKey !== undefined) { frame.selectedPositionWeaponKey = frame.selectedWeaponKey; delete frame.selectedWeaponKey; }
     }
-    data.version = 2;
+    data.version = 3;
     return data;
   }
 }

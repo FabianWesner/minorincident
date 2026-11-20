@@ -28,8 +28,10 @@ export interface InputFrame {
   pointerGround?: boolean;
   /** Ignored legacy field retained for decoding historical recordings. */
   pointerTarget?: boolean;
-  /** One-based position in the visible carried rack. */
+  /** Fixed shortcut: 1–9, with 10 representing key 0. */
   selectedWeaponKey?: number;
+  /** Historical one-based carried rack position from version 2 recordings. */
+  selectedPositionWeaponKey?: number;
   /** Activate the corgi lure independently of the weapon rack. */
   corgiLure?: boolean;
   /** Historical catalog shortcut decoded from recordings made before rack positions. */
