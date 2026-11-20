@@ -288,7 +288,8 @@ class CivilianBatch extends Group {
       const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : loopingStory.has(clip) ? (storyElapsed + idleOffset(e.id) / duration) % 1 : Math.min(.999, storyElapsed);
       const facingPlayer = this.world.entities.get(1)!.transform;
-      const facingCourier = talking ? { ...drawTransform, yaw: -Math.atan2(facingPlayer.z - drawTransform.z, facingPlayer.x - drawTransform.x) } : drawTransform;
+      const targetYaw = -Math.atan2(facingPlayer.z - drawTransform.z, facingPlayer.x - drawTransform.x);
+      const facingCourier = talking ? { ...drawTransform, yaw: targetYaw } : drawTransform;
       const presented = this.presentation.sample(e.id, facingCourier, this.world.tick, alpha, talking ? Math.PI : c.ally?.targetId ? 14 : crowdTurnRate);
       // Convulsions while on the ground: a seeded body shudder that grows with the infection.
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
@@ -321,7 +322,8 @@ class CivilianBatch extends Group {
         pose.speed = speed;
         pose.time = renderTick / 60;
         pose.near = !this.distant;
-        pose.layers = undefined;
+        const headTurn = Math.atan2(Math.sin(targetYaw - presented.yaw), Math.cos(targetYaw - presented.yaw));
+        pose.layers = talking && Math.abs(headTurn) > .01 ? { headYaw: Math.max(-.5, Math.min(.5, headTurn * .7)) } : undefined;
         pose.style = undefined;
         pose.procedural = !baked;
         pose.cadence = undefined;
