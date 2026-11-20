@@ -19,6 +19,7 @@ export function speakingNpc(world: SimWorld, id: number): boolean {
     const zoo = mission.l8?.state;
     if (['L8.nadia-path', 'L8.nadia-lion', 'L8.nadia-elephant'].includes(subtitle.id)) return zoo?.keeperId === id;
     if (subtitle.id === 'L8.hale-greeting' || subtitle.id === 'L8.hale-breach') return zoo?.haleId === id;
+    if (subtitle.id.startsWith('L8.route-') && !subtitle.id.endsWith('.soldier')) return zoo?.keeperId === id;
   }
   if (world.scenario !== 'L10') return false;
   const speaker = subtitle && subtitle.until > world.tick ? inPersonSpeaker[subtitle.id] : undefined;
