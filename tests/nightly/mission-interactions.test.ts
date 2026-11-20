@@ -16,7 +16,7 @@ import { l10MegaFightCheck } from '../helpers/l10MegaFight';
 import { checkL8Story } from '../helpers/l8Story';
 import { checkL8Route } from '../helpers/l8Route';
 import { checkL8RouteMarkers, checkL9BridgeMarker, checkL9ApcPocket, checkL9EvacFailForward } from '../helpers/r39Markers';
-import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
+import { doorExit, emergeResident, emergeSpeedMs, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../src/sim/outbreak/HouseEmergence';
 import { validateSave } from '../../src/sim/progression/Save';
 import { corpseDetour } from '../../src/sim/missions/missionHelpers';
 
@@ -36,6 +36,18 @@ test('interactions: ring, input and view predicates agree for every interact ste
         }
       }
       if (level === 'L1') {
+        // A walker on an authored house route turns toward the courier at the
+        // common 9 m notice range, even outside the L10 finale route.
+        const district = levelWorld.districts!.districts[0], door = layoutHouseDoors(district.layout, district.origin)[0]!;
+        const exit = doorExit(levelWorld, door, player.transform)!;
+        const house: HouseEmergence = { ...door, ...exit, route: [[exit.ox + 20, exit.oz]], finishRoute: true, next: 0, ids: [], walking: [], speedMs: 5 };
+        const scripted = emergeResident(levelWorld, house, levelWorld.tick);
+        for (let tick = 0; tick < 30; tick++) levelWorld.update();
+        house.walking![0]!.leg = 0;
+        const walker = levelWorld.entities.get(scripted)!;
+        Object.assign(player.transform, { x: walker.transform.x + 8.5, z: walker.transform.z });
+        levelWorld.spatial.set(player.id, player.transform.x, player.transform.z);
+        expect(walkResidents(levelWorld, house, levelWorld.tick), 'L1 house walker hands over inside the 9 m courier notice').toContain(scripted);
         mission.begin();
         missionControls(levelWorld).teleport(1, mission.def.anchors['parcel-counter']);
         mission.completeObjective('pickup');
@@ -141,6 +153,16 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(released, 'a resident pinned on the service route is handed to the AI').toContain(stuck);
         expect(levelWorld.entities.get(stuck)!.emerging).toBeUndefined();
         expect(levelWorld.entities.get(stuck)!.transform.z, 'it stopped at the panel, not past it').toBeLessThan(-26);
+        // The same threshold applies to an L8 tunnel outlet while it is still
+        // following its authored service route.
+        const noticeRoute: HouseEmergence = { ...source, ids: [] as number[], walking: [], route: [[source.ox + 20, source.oz]], finishRoute: true };
+        const noticed = emergeResident(levelWorld, noticeRoute, levelWorld.tick);
+        for (let tick = 0; tick < 30; tick++) levelWorld.update();
+        noticeRoute.walking![0]!.leg = 0;
+        const noticedWalker = levelWorld.entities.get(noticed)!;
+        Object.assign(player.transform, { x: noticedWalker.transform.x + 8.5, z: noticedWalker.transform.z });
+        levelWorld.spatial.set(player.id, player.transform.x, player.transform.z);
+        expect(walkResidents(levelWorld, noticeRoute, levelWorld.tick), 'L8 tunnel walker hands over inside the 9 m courier notice').toContain(noticed);
         // r27-l8board: the corgi pressed into a fallen elephant's footprint (queue head, seed 1) got no corpse detour,
         // and a boarding member that cannot move for 1.5 s is moved along its route instead of idling for 30 s.
         // Boarding happens after the elephant pen exit opens.

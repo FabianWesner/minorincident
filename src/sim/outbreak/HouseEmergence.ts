@@ -6,7 +6,7 @@ import type { PedestrianOptions } from './Outbreak';
 import { actorRadius } from '../world/SolidRegistry';
 import type { EntitySnapshot } from '../world/types';
 /** Courier distance at which a scripted walker stops its route and reacts (PO 2026-11-20). */
-const SCRIPTED_WALKER_NOTICE_M = 9;
+export const SCRIPTED_WALKER_NOTICE_M = 9;
 
 /**
  * Residents coming out of a house's front door (L1 beat 9, PO rule 2026-10-07: "10 ... come out of the house ... No
@@ -41,8 +41,6 @@ export interface HouseEmergence extends HouseDoor {
   strictRoute?: boolean;
   /** Long service approaches hand off only after the last authored leg. */
   finishRoute?: boolean;
-  /** PO 2026-11-20: the walker leaves its route when the courier comes within SCRIPTED_WALKER_NOTICE_M or it is hurt (L10 stair horde). */
-  reactsToCourier?: boolean;
   /** Tick of the next resident; `ids` the residents out (or on their way out) so far. */
   next: number; ids: number[];
   /** Walk-out pace (m/s), default `emergeSpeedMs` (a stumble); the lab staff burst out running. */
@@ -184,8 +182,8 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     const p = e.transform, before = house.strictRoute ? { ...e.transform } : undefined, beforeLeg = w.leg;
     const route = w.route ?? house.route;
     // PO 2026-11-20 (L10 stair horde): "while they walk they don't react on my presence ... So I can just walk by".
-    // An opted-in scripted walker already outside its door hands over to the AI once the courier comes close or it is hurt.
-    if (house.reactsToCourier && w.leg >= 0 && w.leg < route.length && !house.strictRoute && !e.pendingAdmission) {
+    // A scripted walker already outside its door hands over to the AI once the courier comes close or it is hurt.
+    if (w.leg >= 0 && !house.strictRoute && !e.pendingAdmission) {
       const courier = world.entities.get(1)?.transform;
       if (courier && Math.hypot(courier.x - p.x, courier.z - p.z) <= SCRIPTED_WALKER_NOTICE_M || e.health.current < e.health.max) w.leg = route.length;
     }
