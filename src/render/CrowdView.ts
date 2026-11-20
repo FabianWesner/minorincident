@@ -149,6 +149,8 @@ export class CrowdView extends Group {
   private readonly shadows: InstancedMesh;
   private readonly feedback = new Map<number, { mask: number; strength: number; at: number }>();
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
+  /** A metal nail beside the planted foot for each currently pinned infected. */
+  private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -160,6 +162,7 @@ export class CrowdView extends Group {
     // must not force every permanent corpse page's world matrix each frame.
     if (world.scenario === 'L4') { this.matrixAutoUpdate = this.matrixWorldAutoUpdate = false; this.staticCorpses.matrixAutoUpdate = this.staticCorpses.matrixWorldAutoUpdate = false; }
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
+    this.nails.frustumCulled = false; this.nails.count = 0; this.add(this.nails);
     this.registry = sharedRegistry ?? new AssetRegistry((event) => this.logs.push(event), { materials: this.shading, textureSize: this.low ? 512 : 1024 });
     const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
     this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
@@ -707,7 +710,7 @@ export class CrowdView extends Group {
     }
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
-    this.shadows.count = 0; this.caps.count = 0; this.texturedCaps = 0;
+    this.shadows.count = 0; this.caps.count = 0; this.nails.count = 0; this.texturedCaps = 0;
     this.k9Vest?.begin(this.world);
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
@@ -759,6 +762,11 @@ export class CrowdView extends Group {
       if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
       if (e.hidden || e.infected?.hidden || !view && distance > this.cullDistance && !e.corpse || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
+      if (e.health.current > 0 && this.nails.count < 350 && e.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > this.world.tick)) {
+        const yaw = e.transform.yaw, x = e.transform.x + Math.sin(yaw) * .18, z = e.transform.z + Math.cos(yaw) * .18;
+        this.transform.makeRotationY(yaw); this.transform.setPosition(x, (this.world.districts?.groundHeight(x, z) ?? 0) + .16, z);
+        this.nails.setMatrixAt(this.nails.count++, this.transform);
+      }
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e) && e.appearance?.asset !== 'inf.common-worker') { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
       const availableLod = 'lod1';
@@ -1004,7 +1012,8 @@ export class CrowdView extends Group {
         data.clearUpdateRanges(); data.addUpdateRange(0, batch.count * data.stride); data.needsUpdate = true;
       }
     }
-    this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
+    this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0; this.nails.visible = this.nails.count > 0;
+    if (this.nails.count) { this.nails.instanceMatrix.clearUpdateRanges(); this.nails.instanceMatrix.addUpdateRange(0, this.nails.count * 16); this.nails.instanceMatrix.needsUpdate = true; }
     if (this.caps.count) { this.caps.instanceMatrix.clearUpdateRanges(); this.caps.instanceMatrix.addUpdateRange(0, this.caps.count * 16); this.caps.instanceMatrix.needsUpdate = true; }
     if (this.shadows.count) { this.shadows.instanceMatrix.clearUpdateRanges(); this.shadows.instanceMatrix.addUpdateRange(0, this.shadows.count * 16); this.shadows.instanceMatrix.needsUpdate = true; }
   }
@@ -1053,7 +1062,7 @@ export class CrowdView extends Group {
     this.corpseGeometry.clear(); this.corpseClips.clear();
     const released = new Set<MeshLambertNodeMaterial>();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); const material = batch.mesh.material as MeshLambertNodeMaterial; if (!released.has(material)) { released.add(material); material.dispose(); } batch.mesh.dispose(); batch.texture.dispose(); }
-    for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
+    for (const mesh of [this.shadows, this.caps, this.nails]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
     this.batches.clear(); this.sharedSkinMaterials.clear(); this.clear(); if (!this.sharedRegistry) void this.registry.dispose();
   }
 }
