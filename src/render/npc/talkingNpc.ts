@@ -34,12 +34,13 @@ export function hangarCastMember(world: SimWorld, id: number): boolean {
   return !!actors && ['voss', 'ruiz', 'researcher', 'sam', 'guard-west', 'guard-east'].some(key => actors[`hangar-${key}`] === id);
 }
 
-/** Sam joins the handoff during the preceding exchange and stays through Voss's reply. */
+/** Keep the hangar speakers in the exchange across adjacent lines. */
 export function joiningHangarConversation(world: SimWorld, id: number): boolean {
   const state = world.missions?.state;
-  if (world.scenario !== 'L10' || !state || state.actors['hangar-sam'] !== id || state.steps.research?.status !== 'active') return false;
+  if (world.scenario !== 'L10' || !state || state.steps.research?.status !== 'active') return false;
   const line = state.counters['hangar-line'];
-  return line >= 6 && line <= 9;
+  return state.actors['hangar-voss'] === id && line >= 0 && line <= 8
+    || state.actors['hangar-sam'] === id && line >= 6 && line <= 9;
 }
 
 /** Stable per-actor conversational beat: gestures alternate with a breathing/weight-shift idle. */

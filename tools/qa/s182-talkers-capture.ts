@@ -27,8 +27,8 @@ for (const tier of ['high', 'low'] as const) {
     const captureTalk = async (id: string, speaker: 'voss' | 'sam', line: number, count = 6) => {
       await session.page.evaluate(async ({ speaker, line }) => {
         const api = window.__SS__!, game = (window.__SCENE__ as unknown as { game: Game }).game, mission = game.world.missions!;
-        if (speaker === 'sam') {
-          mission.state.counters['hangar-line'] = 6; mission.state.counters['hangar-line-ticks'] = 0;
+        if (speaker === 'sam' || speaker === 'voss') {
+          mission.state.counters['hangar-line'] = speaker === 'sam' ? 6 : 0; mission.state.counters['hangar-line-ticks'] = 0;
           mission.state.subtitle = null;
           for (let i = 0; i < 10; i++) { await api.step(60); await api.screenshotReady(); }
         }
