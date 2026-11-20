@@ -107,3 +107,5 @@ A general trial projecting every other crowded collision retry left two local L4
 A target-distance trial retained the old contact hold within 6 m of the current target and used full projection farther away. Local L4 passed and focused L10 cleared, but focused L8 had both zero kiting hits and follower wait over 10%. It also retained the hold for close crowd stalls, so the trial was discarded.
 
 A collision trial preserved the clear portion of a rejected infected stride before projecting the remainder. Local L4 passed, but focused L8 and L10 retained the same kiting and stuck-chaser flags; it was discarded.
+
+Focused L10 tracing identified flagged actor 115 as the Mega Alpha at the console: it repeatedly telegraphed ground slam and charge near the elevated courier; at tick 68100 its active charge was blocked by actor 99. The observer flags the 30-second stationary chase interval despite these special attempts because no attack landed on the courier. Temporary tracing was removed.
