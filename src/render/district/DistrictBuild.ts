@@ -508,7 +508,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
     const v0 = 1 - (py + cellH - 1) / canvas.height, v1 = 1 - (py + 1) / canvas.height;
     if (b.id.startsWith('bld.cure-lab-main:')) {
       // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
-      const faceX = cx + 16.23, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
+      const faceX = cx + 16.205, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
       positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
     } else if (/^bld\.(joes-diner|garage-detached|supermarket|pharmacy|gym|hospital|mainstreet-brick|park-lodge|zoo-gate|police|police-station|fire-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
       // These entrance headers and fascia face local +X; rotate with the lot.
