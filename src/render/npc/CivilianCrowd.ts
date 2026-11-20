@@ -265,7 +265,17 @@ class CivilianBatch extends Group {
         conversation.tick = this.world.tick; conversation.speed = conversationSpeed; conversation.yaw = conversationYaw;
         if (!speaking && !joining && remaining < .02) { this.conversationPositions.delete(e.id); conversation = undefined; }
       }
-      const drawTransform = closingPose ?? (conversation ? { ...e.transform, x: conversation.x, z: conversation.z } : e.transform);
+      // The researcher and guards occasionally take a short, clear step to a nearby work spot and back.
+      const actors = this.world.missions?.state.actors;
+      const working = !conversation && c?.state === 'calm' && this.world.scenario === 'L10' && !!actors
+        && [actors['hangar-researcher'], actors['hangar-guard-west'], actors['hangar-guard-east']].includes(e.id);
+      const cycle = ((this.world.tick / 60 + idleOffset(e.id) * 4) % 18 + 18) % 18;
+      const excursion = cycle < 2 ? cycle * .5 : cycle < 8 ? 1 : cycle < 10 ? (10 - cycle) * .5 : 0;
+      const direction = e.id % 2 ? 1 : -1;
+      const workPoint = { x: e.transform.x + direction * excursion, z: e.transform.z };
+      const workClear = !!working && (this.world.infected?.nav.visible(e.transform, { x: e.transform.x + direction, z: e.transform.z }, .35) ?? true);
+      const workSpeed = workClear && (cycle < 2 || cycle >= 8 && cycle < 10) ? .5 : 0;
+      const drawTransform = closingPose ?? (conversation ? { ...e.transform, x: conversation.x, z: conversation.z } : workClear ? { ...e.transform, ...workPoint, yaw: workSpeed ? (cycle < 2 ? direction > 0 ? 0 : Math.PI : direction > 0 ? Math.PI : 0) : e.transform.yaw } : e.transform);
       // Permanently dead civilians use the same ground-body layer as settled infected. Keep their final fall pose,
       // appearance and position; leaving them in the living batch lets them cover a passer-by's legs.
       if (c?.state === 'finished' && !e.infected && e.health.current <= 0 && this.world.tick - c.entered >= 120) {
@@ -292,7 +302,7 @@ class CivilianBatch extends Group {
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
-      const speed = conversation ? conversationSpeed : closingPose || e.motion && !e.motion.moving ? 0 : motion.speed;
+      const speed = conversation ? conversationSpeed : workSpeed || (closingPose || e.motion && !e.motion.moving ? 0 : motion.speed);
       const activity = c.schedule?.[c.scheduleStep ?? 0];
       // A sitter that is not at its seat (moved off by a fight/flight) never keeps the sitting pose or the seat lift.
       // Physics keeps the civilian at the clear approach point; the seated
@@ -312,13 +322,13 @@ class CivilianBatch extends Group {
       const talking = !down && !rising && c.state === 'calm' && speaking;
       const conversationClip = talking ? talkClip(e.id, this.world.tick) as Clip : null;
       let clip: Clip = conversationClip ?? (storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle');
-      if (conversation && speed > .06) clip = 'npc-walk-relaxed';
+      if ((conversation || workClear) && speed > .06) clip = 'npc-walk-relaxed';
       // Waiting civilians in the war/aftermath keep their hands close, with individual gestures.
       if ((!storyClip || hangarCastMember(this.world, e.id)) && !talking && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && (['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '') || hangarCastMember(this.world, e.id))) clip = waitingIdle(e.id, e.appearance?.handProp, c.state === 'hide' || c.state === 'flee');
       if (hangarCastMember(this.world, e.id) && !talking && !down && !rising && c.state === 'calm' && c.ally && speed <= .06) clip = waitingIdle(e.id, 'rifle');
       if (e.passengerOf === undefined && !(performing && activity?.seat) && speed > .06 && !strides[clip] && !down && !rising && c.state !== 'grabbed' && c.state !== 'bitten') clip = speed > 2.5 ? civFlee : walkClip;
       if (closingPose) clip = 'idle';
-      const duration = authoredClips.get(clip)!.duration, gaitDistance = conversation ? conversation.distance : Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
+      const duration = authoredClips.get(clip)!.duration, gaitDistance = conversation ? conversation.distance : workClear ? Math.floor((this.world.tick / 60 + idleOffset(e.id) * 4) / 18) * 2 + (cycle < 2 ? excursion : cycle < 8 ? 1 : cycle < 10 ? 2 - excursion : 2) : Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
       const storyElapsed = !talking && storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : loopingStory.has(clip) ? (storyElapsed + idleOffset(e.id) / duration) % 1 : Math.min(.999, storyElapsed);
