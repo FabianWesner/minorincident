@@ -1,6 +1,6 @@
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
-import { bubbleSpeaker, hangarCastMember, joiningHangarConversation, speakingNpc, talkClip, zooGateGuard } from './talkingNpc';
+import { bubbleSpeaker, hangarCastMember, joiningArmoryBriefing, joiningHangarConversation, speakingNpc, talkClip, zooGateGuard } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
 import { cureHangar } from '../../data/l10Story';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
@@ -239,7 +239,8 @@ class CivilianBatch extends Group {
       const bubbleLine = !!c && bubbleSpeaker(this.world, e.id);
       const speaking = lineSpeaker && c?.state === 'calm';
       const gateGuard = !!c && c.state === 'calm' && zooGateGuard(this.world, e.id);
-      const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard);
+      const armoryBriefing = !!c && c.state === 'calm' && joiningArmoryBriefing(this.world, e.id);
+      const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard || armoryBriefing);
       let conversation = this.conversationPositions.get(e.id);
       // Combat, flight, injury or a hidden actor must follow the authoritative body immediately.
       if (conversation && (!c || c.state !== 'calm' || e.hidden || e.health.current <= 0)) {
@@ -247,11 +248,15 @@ class CivilianBatch extends Group {
       }
       if ((speaking || joining) && !conversation) {
         let start = e.transform;
-        if (gateGuard && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) {
+        if ((gateGuard || armoryBriefing) && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) {
           const player = this.world.entities.get(1)!.transform, dx = e.transform.x - player.x, dz = e.transform.z - player.z;
           const length = Math.hypot(dx, dz) || 1;
-          const candidate = { ...e.transform, x: player.x + dx / length * 3, z: player.z + dz / length * 3 };
-          if (this.world.infected?.nav.clear(candidate.x, candidate.z, .35) !== false) start = candidate;
+          for (const angle of [0, .6, -.6, 1.2, -1.2, 1.8, -1.8, Math.PI]) {
+            const cos = Math.cos(angle), sin = Math.sin(angle);
+            const candidate = { ...e.transform, x: player.x + (dx * cos - dz * sin) / length * 3, z: player.z + (dx * sin + dz * cos) / length * 3 };
+            if (this.world.infected?.nav.clear(candidate.x, candidate.z, .35) === false) continue;
+            start = candidate; break;
+          }
         }
         conversation = { x: start.x, z: start.z, tick: this.world.tick, distance: 0, speed: 0, yaw: e.transform.yaw };
         this.conversationPositions.set(e.id, conversation);

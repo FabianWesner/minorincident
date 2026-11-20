@@ -109,6 +109,12 @@ export function joiningHangarConversation(world: SimWorld, id: number): boolean 
     || state.actors['hangar-sam'] === id && line >= 6 && line <= 9;
 }
 
+/** The station sergeant can approach during the narrated opening before his line. */
+export function joiningArmoryBriefing(world: SimWorld, id: number): boolean {
+  const state = world.missions?.state;
+  return world.scenario === 'L3' && state?.l3?.phase === 'yard' && state.subtitle?.id === 'L3.briefing' && state.l3.squadIds[0] === id;
+}
+
 /** Stable per-actor conversational beat: gestures alternate with a breathing/weight-shift idle. */
 export function talkClip(id: number, tick: number): string {
   const hash = Math.imul(id, 2654435761) >>> 0;
