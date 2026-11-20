@@ -33,5 +33,6 @@ Partial implementation; the requested feature is not complete. This report recor
 | `npm run lint` | Pass |
 | `npm run typecheck` | Pass |
 | Remote `sh tools/remote/run.sh "$PWD" -- npm test` | First failed budget at 163/150 and 48/45; lane assertions were consolidated without removal. Rerun collected 150/150 and 45/45, then timed out at 245.7 s without reported test failures. |
+| Threat QA L10 batch | Remote `npm run qa:threat -- --levels=L10` completed skilled route, passive window and kiting probe; 0 L10 passive flags. Exit 1 carries the expected `PARTIAL_LEVEL_SELECTION` flag; other levels and full gate remain unrun. Receipt: `test-results/s202-threat-l10/README.md`. |
 | Timeout fallback | Local `npm test` passed: 27 files, 106 tests, 166.3 s. Separate remote `tests/engine/l4-contact.test.ts` passed in 166.21 s. Remote full suite is not green. |
 | Commit | Explicit paths staged after filesystem access was restored. |
