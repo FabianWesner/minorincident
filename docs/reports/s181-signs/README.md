@@ -96,3 +96,5 @@ At the three-hour time box, the further unchanged retry was cancelled while stil
 A LOW inspection-camera view selected the actual LOD2 model and showed the Grove Hospital board on its name panel, with readable lettering (`hospital-sheet.jpg`). This establishes its rendered appearance at that inspection pose; sampled follow-camera poses still did not put the overlay in frame.
 
 All six requested captures were regenerated and inspected after the rendered-transform fix. The laboratory board is readable at HIGH and LOW at both zooms and spans the thin canopy edge; the Primate House board is readable at both HIGH zooms with its dark side brackets visible. `capture-sheet.jpg` reflects this capture set.
+
+On continuation, the unchanged corrected-source remote suite was retried. It again reached the 240-second budget (240.9 s, exit 124); the previously reported save-progression test passed and no failure was reported in the completed files. A complete corrected-source unit pass remains outstanding.
