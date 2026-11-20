@@ -508,13 +508,14 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
       // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
       const faceX = cx + 16.23, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
       positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
-    } else if (b.id.startsWith('bld.joes-diner:')) {
-      // The facade header is local +X, above the front glazing; rotate with the lot.
+    } else if (b.id.startsWith('bld.joes-diner:') || b.id.startsWith('bld.garage-detached:')) {
+      // Diner header and workshop gable face local +X; rotate with the lot.
       const p = placements.find(row => row.id === b.id)!;
-      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = 2.785 * p.scale[0], y = p.position[1] + 2.84 * p.scale[1];
+      const garage = b.id.startsWith('bld.garage-detached:');
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : 2.84) * p.scale[1];
       const vertex = (side: number, vertical: number) => {
-        const localZ = (-.65 + side * .55) * p.scale[2];
-        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * .12 * p.scale[1], p.position[2] - s * faceX + c * localZ);
+        const localZ = (garage ? side * .7 : -.65 + side * .55) * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
       };
       vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
     } else if (b.id.startsWith('bld.reptile-house:')) {
