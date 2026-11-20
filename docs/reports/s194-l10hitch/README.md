@@ -4,13 +4,13 @@
 
 ## Reproduction and trace
 
-`tools/perf/s194-l10hitch.ts` is a headless checkpoint trace harness. It loads L10 from `cure-crash`, starts the mission, records request-animation-frame intervals through tick 600, and samples the existing CPU categories (simulation, AI, crowd, view, render, audio, and others) along with infected counts. Run it during a quiet reservation:
+`tools/perf/s194-l10hitch.ts` is a headless checkpoint trace harness. It loads L10 from `cure-crash`, starts the mission, replays the existing seed-1 L10 input recording, records player position and shader build count and request-animation-frame intervals through tick 600, and samples the existing CPU categories (simulation, AI, crowd, view, render, audio, and others) along with infected counts. Run it during a quiet reservation:
 
 ```sh
 E2E_UNITS=1 SCENE_PORT=5144 sh tools/perf/quiet-run.sh npx tsx tools/perf/s194-l10hitch.ts webgpu high before
 ```
 
-The requested high WebGPU reproduction has **not run**. The harness remains unvalidated in a browser and does not yet replay the reported player movement, so matching the reported location and first spawn must be confirmed before using its results. This host was above the quiet-run load threshold (load 3.36 at admission) and the quiet-run process scan failed with `spawn EPERM`; the browser pool also failed to bind `127.0.0.1:4329` with `listen EPERM`. A subsequent locked diagnostic attempt at load 5.32 stopped before browser launch because uncapped timing requires quiet-run. Therefore no worst-frame or p99 numbers, and no attribution to pipeline compilation, uploads, buffer growth, audio, navigation, or AI, are available. Record the actual baseline and candidate numbers here once a quiet run is available. Per the brief, do not treat a loaded-host result as passing evidence.
+The requested high WebGPU reproduction has **not run**. The harness remains unvalidated in a browser so matching the reported location and first spawn must be confirmed before using its results. This host was above the quiet-run load threshold (load 3.36 at admission) and the quiet-run process scan failed with `spawn EPERM`; the browser pool also failed to bind `127.0.0.1:4329` with `listen EPERM`. A subsequent locked diagnostic attempt at load 5.32 stopped before browser launch because uncapped timing requires quiet-run. Therefore no worst-frame or p99 numbers, and no attribution to pipeline compilation, uploads, buffer growth, audio, navigation, or AI, are available. Record the actual baseline and candidate numbers here once a quiet run is available. Per the brief, do not treat a loaded-host result as passing evidence.
 
 ## Code review findings
 

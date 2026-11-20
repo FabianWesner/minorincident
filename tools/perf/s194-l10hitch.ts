@@ -2,37 +2,53 @@
  * Run with: E2E_UNITS=1 SCENE_PORT=5144 sh tools/e2e-lock.sh npx tsx tools/perf/s194-l10hitch.ts webgpu high before
  */
 import assert from 'node:assert/strict';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { SceneSession, stopServer } from '../scenelab/session';
 import type { Game } from '../../src/Game';
+import type { InputFrame } from '../../src/input/InputFrame';
 
 const backend = (process.argv[2] ?? 'webgpu') as 'webgpu' | 'webgl2';
 const tier = (process.argv[3] ?? 'high') as 'high' | 'low';
 const label = process.argv[4] ?? 'before';
+const replay = JSON.parse(gunzipSync(readFileSync('tests/fixtures/perf/l10-real-input.json.gz')).toString()) as { inputs: { tick: number; frame: InputFrame }[] };
+const frames: InputFrame[] = []; let cursor = 0;
+for (let tick = 0; tick < 600; tick++) {
+  while (cursor + 1 < replay.inputs.length && replay.inputs[cursor + 1].tick <= tick) cursor++;
+  frames.push(structuredClone(replay.inputs[cursor].frame));
+}
 const out = `test-results/s194-l10hitch/${label}-${backend}-${tier}`;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend, tier, seed: 1, nativeFrameTiming: true, viewport: { width: 1600, height: 900 }, query: { loadProfile: '2' } });
 try {
   await session.open();
   await session.page.evaluate('globalThis.__name = fn => fn');
-  await session.page.evaluate(async () => {
+  await session.page.evaluate(async frames => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
     a.pause(); a.cheats.god(true); a.camera.follow(); a.debug.cpuProfile();
     if (g.world.missions?.state.phase === 'briefing') g.world.missions.begin();
-    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
+    let cursor = 0;
+    const feed: NonNullable<Game['input']['feed']> = { scheme: 'mouse-only', next: () => {
+      const frame = frames[cursor++];
+      feed.scheme = frame?.drive ? frame.aimSource === 'pointer' ? 'mouse-keyboard' : 'keyboard' : 'mouse-only';
+      return frame ?? null;
+    } };
+    g.input.feed = feed;
+    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; x: number; z: number; builds: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
     trace.hitchTrace = { frames: [], running: true };
     let last = performance.now();
     const sample = (now: number) => {
       const infected = g.world.infected?.active ?? [];
-      trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, infected: infected.length,
+      const p = g.world.entities.get(1)!.transform;
+      trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, infected: infected.length,
         alive: infected.filter(e => e.health.current > 0).length, sim: a.perf().simMs, update: a.perf().updateCpuMs,
         render: a.perf().renderCpuMs, categories: a.debug.cpuProfile() });
       last = now;
       if (trace.hitchTrace.running) requestAnimationFrame(sample);
     };
     requestAnimationFrame(sample); a.resume();
-  });
+  }, frames);
   await session.page.waitForFunction(() => window.__SS__!.tick() >= 600, null, { timeout: 120_000, polling: 20 });
   const result = await session.page.evaluate(() => {
     const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
