@@ -13,7 +13,7 @@ Partial implementation; the requested feature is not complete. This report recor
 
 ## Additional PO requirements (2026-11-20)
 
-- Pointer aim now controls the stream range (2–8 m); non-pointer input retains full reach. The stream deposits five-second fire patches along its clipped path. A focused simulation test covers short pointer damage and patch placement plus full touch reach. Long pointer range and visual captures still need verification.
+- Pointer aim now controls the stream range (2–8 m); non-pointer input retains full reach. The stream deposits five-second fire patches along its clipped path. A focused simulation test covers short pointer damage and patch placement plus full touch reach. A focused check verifies pointer aim does not snap toward a nearby infected. The renderer now subtracts the nozzle offset from actor-measured reach. The resulting visual alignment needs a fresh capture.
 - Initial bounded ignition state for authored trees, bushes, hedges and wooden fences burns for ten seconds and records char. Pooled fire effects, instance tinting and checkpoint state are connected but unreviewed; vegetation state is exposed in the hazard debug snapshot for capture verification; A loaded L10 test verifies that a ground fire patch ignites an authored vegetation object and a checkpoint restores its char; a unit test verifies the cap. Vegetation ignition respects L10 route centerlines, with an isolated barrier test. Authored L10 crown instances now disappear after charring; tree flame sources now use the authored placement height. Verify both visually, including canopy flame placement. The L10 dead-tree and small-bush variants are included after a capture probe exposed their omission. Actual road surface coverage, wider prop coverage and requested captures remain open.
 
 ## Open
@@ -29,7 +29,7 @@ Partial implementation; the requested feature is not complete. This report recor
 
 A fresh HIGH WebGL2 zoom-1 sequence after reducing flame overlap and glow is at `/private/tmp/s202-connected-high-{ignite,spread,stubble}.png`. I inspected all three: the first shows bright ground flames among standing corn, the second shows pale flame clusters and widespread orange illumination, and the third shows dark flattened crop. The simulation recorded 36 scorched cells and one burning at tick 1086. The flames still read as soft glowing patches rather than a convincing wild fire front; smoke and ash heaps are not evident. This is not a visual pass and is not the requested WebGPU performance measurement.
 
-A HIGH WebGL2 tree probe at `/private/tmp/s202-tree-burning.png` recorded object `D-CURE/prop.tree:1` in `burning` state, but the image shows bright flames and a large dark shape without a recognizable burning tree. It is not acceptable proof of canopy flames or the later charred appearance. Short and long cursor-length captures also remain outstanding.
+A HIGH WebGL2 tree probe at `/private/tmp/s202-tree-burning.png` recorded object `D-CURE/prop.tree:1` in `burning` state, but the image shows bright flames and a large dark shape without a recognizable burning tree. It is not acceptable proof of canopy flames or the later charred appearance. Before that alignment fix, HIGH zoom-1 captures at `/private/tmp/s202-aim-{short,long}.png` showed a noticeably longer line of ground flames for the 8 m aim than the 2 m aim. I inspected both: the jet itself is obscured by bright fire patches, so they do not verify the stream endpoint; recapture after the fix remains open.
 
 ## Validation
 

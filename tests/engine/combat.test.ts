@@ -276,6 +276,12 @@ async function checkS202Combat5(): Promise<void> {
   const distant = dummy(long, 6, 0, 200);
   long.setInput({ aim: { x: 1, z: 0 }, aimSource: 'touch', left: { down: true, held: true, up: false } });
   step(long, 30); expect(health(long, distant)).toBeLessThan(200);
+  const pointed = await arena(); equip(pointed, ['weapon.flamethrower']);
+  dummy(pointed, 5, .8, 200);
+  pointed.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: 6, z: 0 }, aimSource: 'pointer', left: { down: true, held: true, up: false } });
+  step(pointed, 30);
+  const shot = attacks(pointed).find(event => event.type === 'combat.attack' && event.actionId === 'weapon.flamethrower');
+  expect(shot?.direction.z).toBeCloseTo(0);
 }
 
 /** Fuel is a real, cover-clipped hazard that persists after trigger release. */

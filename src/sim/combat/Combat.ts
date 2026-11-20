@@ -122,7 +122,7 @@ export class Combat {
   private readonly started = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
-      if (!attack.autoAim && !(attack.def.id === 'weapon.rocket-launcher' && attack.aimPoint)) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range, attack.target === undefined ? attack.def.projectile?.speed : undefined);
+      if (!attack.autoAim && !(['weapon.rocket-launcher', 'weapon.flamethrower'].includes(attack.def.id) && attack.aimPoint)) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range, attack.target === undefined ? attack.def.projectile?.speed : undefined);
       if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
         const angle = deterministicAtan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
         attack.aim.x = deterministicCos(angle); attack.aim.z = deterministicSin(angle);

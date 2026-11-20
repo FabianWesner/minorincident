@@ -826,7 +826,10 @@ export class Vfx extends Group {
   }
   private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
     const maxRange = actions['weapon.flamethrower'].range, input = this.world.inputFrame, player = this.world.entities.get(1);
-    const range = input.aimSource === 'pointer' && input.aimPoint && player ? Math.max(2, Math.min(maxRange, Math.hypot(input.aimPoint.x - player.transform.x, input.aimPoint.z - player.transform.z))) : maxRange;
+    const reach = input.aimSource === 'pointer' && input.aimPoint && player ? Math.max(2, Math.min(maxRange, Math.hypot(input.aimPoint.x - player.transform.x, input.aimPoint.z - player.transform.z))) : maxRange;
+    // Simulation measures reach from the actor; the drawn jet starts at the nozzle.
+    const muzzleOffset = player ? (origin.x - player.transform.x) * direction.x + (origin.z - player.transform.z) * direction.z : 0;
+    const range = Math.max(0, reach - muzzleOffset);
     this.flameTraceDirection.x = direction.x; this.flameTraceDirection.z = direction.z;
     return Math.min(this.world.combat?.query.clearDistance(origin, direction, range) ?? range,
       this.world.destruction?.trace(origin, this.flameTraceDirection, range)?.distance ?? range);
