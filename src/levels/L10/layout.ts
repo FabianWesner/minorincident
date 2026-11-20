@@ -82,6 +82,10 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // ordinary district placement/LOD pipeline so both tiers load them before
     // they enter view; encounter cohorts are authored separately in encounters.ts.
     const beat = (id: string, asset: string, x: number, z: number, half: [number, number, number], yaw = 0, scale: [number, number, number] = [1, 1, 1]) => {
+      // Move each landmark with its encounter onto the measured objective
+      // crossing. The old R6 road is 60–80 m away from the skilled route.
+      const offset = id.startsWith('gate-') ? [20, -79] : id.startsWith('billboard-') ? [16, -62] : id.startsWith('hospital-') ? [-18, -58] : [0, 0];
+      x += offset[0]; z += offset[1];
       const p = place(`l10-setpiece-${id}`, asset, x, z, half, yaw, scale, true);
       p.fixed = true;
       return p;
@@ -89,7 +93,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Gate warning: wire, sandbag approach, empty tower and an abandoned bus.
     beat('gate-gantry', 'prop.l10-quarantine-gantry', 2990, 95, [.4, 3.5, 6.4]);
     for (const z of [86, 104]) beat(`gate-wire-${z}`, 'prop.cure-mil-fence', 2994, z, [3.3, 1.4, .22], Math.PI / 2);
-    beat('gate-sandbags', 'prop.sandbag-pallet', 2982, 103, [1.4, .7, .8]);
+    beat('gate-sandbags', 'prop.sandbag-pallet', 2982, 99, [1.4, .7, .8]);
     beat('gate-tower', 'kit.guard-tower', 2995, 107, [1.6, 2.5, 1.5]);
     beat('gate-bus', 'veh.evac-bus', 2950, 126, [5, 1.6, 1.5], Math.PI / 2);
     // A broken public information board and a dangerous lane that opens behind it.
@@ -107,7 +111,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const z of [87, 103]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3390, z, [.4, 1.5, .4]);
     // Field triage on the final approach: quarantine tents and a marked transport.
     for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', x, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
-    beat('hospital-truck', 'veh.military-truck', 3530, 126, [3.8, 1.5, 1.5], Math.PI / 2);
+    beat('hospital-truck', 'veh.military-truck', 3538, 98, [3.8, 1.5, 1.5], Math.PI / 2);
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
       const low = gap.z - 35, high = gap.z + 35;
