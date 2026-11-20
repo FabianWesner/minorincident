@@ -1673,6 +1673,10 @@ export class InfectedSystem {
         target = { id: target.id, x: target.x + velocity.x * timing.windup / 60, z: target.z + velocity.z * timing.windup / 60 };
       }
     }
+    if (rageSupport && (move === 'alpha.grab-throw' || move === 'alpha.living-missile')) {
+      const dx = target.x - e.transform.x, dz = target.z - e.transform.z, length = Math.hypot(dx, dz) || 1;
+      area = { ...area, dx: dx / length, dz: dz / length };
+    }
     let members: EntitySnapshot[] | undefined;
     if (!follower && (move === 'zebra.stampede' || move === 'flamingo.dive')) {
       const limit = move === 'zebra.stampede' ? 4 : 8;

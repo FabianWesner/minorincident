@@ -307,6 +307,17 @@ async function alphaTypeContracts() {
       expect(dodger.transform.z).toBeGreaterThan(3.5);
       step(dodgeWorld, 160);
       expect(dodger.health.current).toBe(1000);
+
+      const aimWorld = await arena(64, false), movingCourier = aimWorld.entities.get(1)!;
+      const aimPursuit = installMegaPursuit(aimWorld, { introduceTick: null, resident: () => true });
+      const aimingMega = aimWorld.entities.get(aimPursuit.introduce({ x: 20, z: 0 }))!;
+      movingCourier.survivor!.velocity = { x: 0, z: 3 };
+      expect(aimWorld.infected!.startSpecial(aimingMega.id, 'alpha.grab-throw', { id: movingCourier.id, x: 0, z: 0 }, { x: 20, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
+      const aim = aimingMega.infected!.specialAttack!;
+      expect(aim.target.z).toBeCloseTo(3);
+      const aimLength = Math.hypot(aim.target.x - 20, aim.target.z);
+      expect(aim.area.dx).toBeCloseTo((aim.target.x - 20) / aimLength);
+      expect(aim.area.dz).toBeCloseTo(aim.target.z / aimLength);
     }
   } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
 }
