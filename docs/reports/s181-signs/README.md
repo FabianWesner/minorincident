@@ -78,3 +78,5 @@ Additional LOW L8 follow-camera captures at zoom 1 and 1.5 were inspected: the P
 The eight tree candidates were tested against static authored LOD0 triangles. The gym and mall initially had three and four triangle intersections respectively; moving the gym board down and the mall board up cleared those sampled intersections. The other six had none. `neighbor-audit.json` records the final static check; wind deformation, other tree LODs and bracket geometry are not covered. All 35 surface samples for both adjusted boards hit their supporting facade within 8 cm in all three building LODs. A close HIGH mall view shows readable text between windows; the gym diagnostic view remains obscured by the tree.
 
 The full remote unit suite passed on a later retry: 27 files, 105 tests passed, one skipped, 223.0 s against the 240 s budget. This run overlapped subsequent sign-placement edits, so it is not a final-source validation.
+
+A LOW L8 follow-camera near → away → return probe reported zoo visibility `010 → 000 → 010` and index counts `54 → 0 → 54`: the Primate House face and its brackets disappear and return together with their building.
