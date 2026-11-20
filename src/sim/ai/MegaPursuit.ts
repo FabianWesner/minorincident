@@ -349,7 +349,6 @@ export class MegaPursuit {
     if (!e.infected!.hidden) this.world.solids.forget(e);
     e.infected!.hidden = true;
     s.mode = 'coarse'; e.combat!.attacking = false; e.infected!.state = 'chase';
-    s.stuck.sampleAt = tick; s.stuck.x = e.transform.x; s.stuck.z = e.transform.z; s.stuck.noPath = 0;
     if (s.breach || this.legBlocked()) { if (this.breachStep()) s.mode = 'breach'; return; }
     if (Status.stunned(e, tick)) return;
     // Hidden coarse pursuit closes the gap while the boss is far from the
@@ -370,6 +369,7 @@ export class MegaPursuit {
     if (!this.resident(t.x, t.z) && this.world.chunks) {
       this.coarseNavigate(e, budget);
       const moved = Math.hypot(t.x - startX, t.z - startZ);
+      this.monitorCoarse(e);
       if (moved > 1e-6) t.yaw = -Math.atan2(t.z - startZ, t.x - startX);
       s.coarseM += moved; s.x = t.x; s.z = t.z;
       t.y = .7 + (this.world.districts?.groundHeight(t.x, t.z) ?? 0);
@@ -412,6 +412,15 @@ export class MegaPursuit {
       motion.updatedAt = -1;
       this.steer(e, dist(t, player.transform));
     }
+  }
+  /** Coarse navigation has no detailed steering tick, so it must monitor its own resolved travel. */
+  private monitorCoarse(e: EntitySnapshot): void {
+    const s = this.state.stuck, tick = this.world.tick, t = e.transform;
+    const window = Math.round(megaAlpha.stuck.windowS * 60);
+    if (tick - s.sampleAt < window) return;
+    if (Math.hypot(t.x - s.x, t.z - s.z) < megaAlpha.stuck.progressM) this.escalate(e);
+    else if (s.level && tick - s.since >= megaAlpha.stuck.clearS * 60) { s.level = 0; s.goal = null; }
+    s.sampleAt = tick; s.x = t.x; s.z = t.z;
   }
   /** Build a bounded grid using district solids even outside streamed chunks. */
   private coarseGridAt(p: { x: number; z: number }): NavGrid {
@@ -502,6 +511,7 @@ export class MegaPursuit {
     const st = this.state, s = st.stuck, t = e.transform, nav = this.grid;
     s.level = s.level >= 3 ? 1 : s.level + 1; s.since = this.world.tick; s.goal = null;
     this.path.path.length = 0; this.path.goal = -1;
+    this.coarsePath.path.length = 0; this.coarsePath.goal = -1;
     if (s.level === 1) {
       // Walk out of a pocket narrower than the baked clearance (fence gap, porch alley), else simply re-plan.
       const cell = nav.escapeCell(t, this.radius, 6, false, 1.5);

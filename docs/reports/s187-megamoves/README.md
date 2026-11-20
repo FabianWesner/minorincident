@@ -1,6 +1,20 @@
 # s187-megamoves: Mega signature moves
 
-**Time-box handoff: incomplete.** The latest full threat audit fails one L10 hold flag and the skilled route does not complete. Coarse pursuit can stall, the service approach needs visible-arrival review, and the moving DPS ceiling is unverified. The implementation and evidence are committed for handoff; they are not ready for acceptance.
+## s187b follow-up — coarse pursuit stall
+
+The merged-source L10 skilled route now completes in an isolated native audit after fixing coarse Mega pursuit recovery. The former route left the Mega parked at x≈1882 from the restricted-zone stage onward; the coarse navigation branch reset its stuck sample every tick and did not run the detailed progress monitor. Coarse pursuit now measures resolved travel over the configured stuck window and uses the existing recovery escalation, including authored-link avoidance, while retaining collision checks.
+
+- `npm run typecheck`: passed.
+- `npm run lint`: passed after removing an unused helper parameter.
+- `npx vitest run tests/engine/infected-ai.test.ts --configLoader runner`: passed (1 file, 5 tests).
+- `node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --out test-results/s187b-l10`: skilled route **complete**, 1,020.27 simulated seconds, 0 deaths. L10 skilled flags: 0. Hold: 6 attack windups in 65.15 seconds, first attack at 11.33 seconds. Passive flags: 0. The command's one global `PARTIAL_LEVEL_SELECTION` flag is expected for this diagnostic subset; it is not the full threat gate.
+- The prior full `npm run qa:threat` attempt on the merged source hit its 600-second budget / browser reservation cap before producing a complete audit. It did show the L10 skilled route itself completed in 140.4 wall seconds, but the pre-fix route receipt had 0 hold windups and timed out.
+- `npm test` remote attempt could not start (no healthy Hetzner runner); the prescribed local fallback passed (27 files, 106 passed, 1 skipped, 236.5 seconds). The additional remote `tests/engine/l4-contact.test.ts` attempt was likewise unavailable.
+- `npm run qa:threat:sharded` could not start either shard: no healthy Hetzner runner, and the Mac fallback only accepts plain Vitest/test commands. No full audit receipt was produced after the fix.
+- HIGH native L10 pacing, seed 1, complete profile: route completed in 1,149.07 simulated seconds. While the courier actually moved for 891.78 seconds, Mega-sourced hits dealt 98.28 damage over 4 hits, **0.1102 damage/second**. Combat events identify the source action as `infected.alpha`, so this aggregate cannot separate special-move hits from ordinary Mega contact attacks. Evidence: `test-results/s187b-moving-dps.json`.
+- Still open: full `qa:threat` with all routes, moving courier DPS from Mega moves, and an explicit-path commit. The commit attempt was rejected because `.git/worktrees/s187-megamoves/index.lock` is outside this task's writable filesystem scope.
+
+**Acceptance remains incomplete.** The earlier full threat audit failed the L10 hold and skilled-route completion; the s187b isolated L10 follow-up now passes both, but a full all-level threat audit has not completed. The service approach still needs visible-arrival review, and the moving DPS ceiling is unverified. The original implementation and evidence are committed for handoff; the s187b fix and report update are not committed because the shared Git index is outside this task's writable filesystem scope.
 
 ## Implementation
 
