@@ -9,6 +9,6 @@ The capture names reserved for the requested review set are:
 - `L8-primate-house-high-z1.jpg`
 - `L8-primate-house-high-z1.5.jpg`
 
-Captures are pending. A first HIGH laboratory capture was inspected: the board crosses a side window, so placement fails review. The laboratory entrance is on the +X face; the current +Z placement needs correction before final captures.
+Captures are pending. A first HIGH laboratory capture was inspected: the board crosses a side window, so placement fails review. A second capture shows the board at the +X entrance canopy, but its mounting needs review. The L8 capture showed a board across a side window; the code now targets the existing entrance board and needs a fresh capture.
 
-The runtime mesh uses one texture atlas and one mesh per district. Candidate signs are positioned just beyond the authored building AABB's north (+Z) facade; the scene gate and visual placement review still need to confirm facade fit and clearance.
+The runtime mesh uses one texture atlas and one mesh per district. Other candidate signs are positioned just beyond the authored building AABB north (+Z) facade; the scene gate and visual placement review still need to confirm facade fit and clearance.

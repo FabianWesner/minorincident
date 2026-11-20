@@ -408,7 +408,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       }
       const grassLayout=d.id==='D-CURE'?{...d.layout,surfaces:[...d.layout.surfaces,...cureEvacuationLane(d.decay.placements)]}:d.layout;
       for (const grass of Grass.tiles(grassLayout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
-      buildFacadeSigns(parts, root, d.layout.buildings, d.origin);
+      buildFacadeSigns(parts, root, d.layout.buildings);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
@@ -477,7 +477,7 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
   root.add(mesh);
 }
 /** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
-function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], origin: [number, number]): void {
+function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[]): void {
   const generic = /^(house|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
   for (const building of buildings) if (!generic.test(building.label.trim()) && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
@@ -496,11 +496,19 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
     parts.signs.push(title);
     const min = b.aabb.min, max = b.aabb.max;
     const width = Math.max(.95, Math.min(2.35, (max[0] - min[0]) * .46));
-    const height = .58, cx = (min[0] + max[0]) / 2 + origin[0], z = max[2] + origin[1] + .045;
+    const height = .58, cx = (min[0] + max[0]) / 2, z = max[2] + .045;
     const cy = Math.max(1.65, Math.min(3.1, min[1] + (max[1] - min[1]) * .55));
     const base = positions.length / 3, u0 = (px + 1) / canvas.width, u1 = (px + cellW - 1) / canvas.width;
     const v0 = 1 - (py + cellH - 1) / canvas.height, v1 = 1 - (py + 1) / canvas.height;
-    positions.push(cx-width/2,cy-height/2,z, cx+width/2,cy-height/2,z, cx+width/2,cy+height/2,z, cx-width/2,cy+height/2,z);
+    if (b.id.startsWith('bld.cure-lab-main:')) {
+      // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
+      const faceX = cx + 16.23, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
+      positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
+    } else if (b.id.startsWith('bld.reptile-house:')) {
+      // Replace the lettering on the authored entrance board, on the +X face.
+      const faceX = cx + 4.96, cz = (min[2] + max[2]) / 2, y = min[1] + 3;
+      positions.push(faceX,y-.19,cz+.85, faceX,y-.19,cz-.85, faceX,y+.19,cz-.85, faceX,y+.19,cz+.85);
+    } else positions.push(cx-width/2,cy-height/2,z, cx+width/2,cy-height/2,z, cx+width/2,cy+height/2,z, cx-width/2,cy+height/2,z);
     uvs.push(u0,v0,u1,v0,u1,v1,u0,v1); indices.push(base,base+1,base+2,base,base+2,base+3);
   });
   const geometry = new BufferGeometry();
