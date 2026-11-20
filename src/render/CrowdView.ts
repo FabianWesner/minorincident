@@ -13,7 +13,7 @@ import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppe
 import type { CrowdAccessories } from './characters/CrowdAccessories';
 import { ashPosition, corpseLayout, corpsePose, corpsePoses } from './characters/CorpseLayout';
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
-import { deinterleaveGeometry, mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { deinterleaveGeometry } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, isCrowdVariant, registerCrowdModel } from './crowdModels';
 import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
@@ -29,7 +29,7 @@ import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, Float32BufferAttribute, IcosahedronGeometry, CapsuleGeometry, SphereGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, Float32BufferAttribute, IcosahedronGeometry, CapsuleGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, uniform, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
 import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -164,7 +164,7 @@ export class CrowdView extends Group {
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
   private ashHeaps: InstancedMesh<BufferGeometry, MeshLambertNodeMaterial> = new InstancedMesh(ashGeometry(), new MeshLambertNodeMaterial({ color: '#ffffff', vertexColors: true }), 2800);
-  private ashBones: InstancedMesh<BufferGeometry, MeshLambertNodeMaterial> = new InstancedMesh(mergeGeometries([new CapsuleGeometry(.035, .24, 2, 6).rotateZ(Math.PI / 2), ...[-.14, .14].flatMap(x => [-.025, .025].map(z => new SphereGeometry(.045, 6, 4).translate(x, 0, z)))])!, new MeshLambertNodeMaterial({ color: '#423a32' }), 700);
+  private ashBones: InstancedMesh<BufferGeometry, MeshLambertNodeMaterial> = new InstancedMesh(new CapsuleGeometry(.025, .24, 2, 6).rotateZ(Math.PI / 2), new MeshLambertNodeMaterial({ color: '#423a32' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -833,8 +833,8 @@ export class CrowdView extends Group {
           this.ashSwatch.set(pieceIndex === 5 || pieceIndex === 7 ? '#201f1c' : pieceIndex >= 4 ? '#494741' : '#a09c94').lerp(this.charAsh, 1 - ashProgress);
           this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
         }
-        if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {
-          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(.38, .38, .38)); this.transform.setPosition(x + offset, ground + .055 + (1 - ashProgress) * .06, z + offset * .35); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform);
+        if (ashProgress >= .45) for (const [offset, turn] of [[-.14, -.3], [.14, .8]] as const) {
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.setPosition(x + offset, ground + .055 + (1 - ashProgress) * .06, z + offset * .35); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform);
         }
         if (ashAge >= 90) continue;
       }
