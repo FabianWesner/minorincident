@@ -275,6 +275,18 @@ export class Lighting {
     this.gloom = next; this.applyLook();
   }
   private readonly dawnColor = new Color();
+  /** Blend the existing golden preset into the L10 road fog without changing its night key. */
+  cureRoadDust(amount: number): void {
+    const t = Math.max(0, Math.min(1, amount)), dust = timeOfDay.golden;
+    this.fogColor.value.lerp(this.dawnColor.set(dust.fog), t * .7);
+    this.fogColorA.value.lerp(this.dawnColor.set(dust.sky), t * .25);
+    this.fogNear.value += (dust.fogNear - this.fogNear.value) * t;
+    this.fogFar.value += (dust.fogFar - this.fogFar.value) * t;
+    if (this.scene.fog instanceof Fog) {
+      this.scene.fog.color.copy(this.fogColor.value);
+      this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value;
+    }
+  }
   /** Release-relative dawn: uniform/light changes only, retaining the warmed L10 shader and shadow graphs. */
   cureDawn(amount: number): void {
     const t = Math.max(0, Math.min(1, amount)), p = timeOfDay[this.preset], dawn = timeOfDay.golden;

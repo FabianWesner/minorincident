@@ -1200,6 +1200,10 @@ export class GameView implements Lifecycle {
     // Weather restores the authored night key each frame. The released cure's
     // dawn must be the final lighting write, including paused cinematic redraws.
     const cureFront = this.world.missions?.state.cureFront;
+    if (this.world.scenario === 'L10' && this.weather && current && !cureFront) {
+      const dust = Math.max(0, Math.min(1, (current.x - 2880) / 120, (3650 - current.x) / 120));
+      this.lighting?.cureRoadDust(dust);
+    }
     if (cureFront) this.lighting?.cureDawn(cureFront.elapsed / (8 * 60));
     const drivenCar = this.world.vehicles?.cars.get(this.world.vehicles.active ?? -1);
     this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel() ?? survivor?.velocity);
