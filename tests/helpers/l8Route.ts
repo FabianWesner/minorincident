@@ -33,6 +33,9 @@ export async function checkL8Route(): Promise<void> {
     const closedKeys = (): string[] => l8Route.flatMap(s => [`${s.id}.entry`, `${s.id}.exit`]).filter(k => !k.startsWith('elephant') && l8GateClosed(k, { arenas: zoo.state.arenas, sealed: true }));
     expect(closedKeys()).toContain('lion.entry');
     l8ConnectorGates.forEach((_, i) => expect(l8GateClosed(`connector.${i}`, { arenas: zoo.state.arenas, sealed: true })).toBe(true));
+    const gateProof = [{ id: 'zebra' as const, phase: 3 }, { id: 'gorilla' as const, phase: 1, armed: true }];
+    expect(l8GateClosed('zebra.exit', { arenas: gateProof, sealed: true, followers: [{ x: 60, z: 32 }] }), 'the cleared zebra exit stays open while a living follower is still inside that enclosure').toBe(false);
+    expect(l8GateClosed('zebra.exit', { arenas: gateProof, sealed: true, followers: [{ x: 60, z: -32 }] }), 'the cleared exit closes once the group has moved on').toBe(true);
     for (const [index, stage] of l8Route.entries()) {
       if (!stage.entry) break;
       const arena = zoo.state.arenas[index], before = zoo.state.arenas.slice(0, index);
