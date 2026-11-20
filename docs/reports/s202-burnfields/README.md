@@ -13,7 +13,7 @@ Partial implementation; the requested feature is not complete. This report recor
 
 ## Open
 
-- Render flames, embers, smoke, orange surroundings, and stubble; connect crop instance visibility to fire state.
+- Crop instances have an unreviewed collapse and tint hook for burning and scorched states. Capture and verify it; render flames, embers, smoke, and orange surroundings.
 - Add flammable tall grass and hay/straw coverage across levels and companion pathing. Verify burning field-cell actor interactions in a loaded level. Verify all fire sources, courier damage and ash deaths end to end; hazard fires currently retain their existing direct damage as well as the status.
 - Fire crackle and patch-catch sound; pickup caption if needed.
 - Capture and review HIGH/LOW L10 sequences; measure whole-field frame time.
