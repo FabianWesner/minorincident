@@ -1,6 +1,6 @@
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
-import { hangarCastMember, speakingNpc, talkClip } from './talkingNpc';
+import { hangarCastMember, joiningHangarConversation, speakingNpc, talkClip } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
@@ -235,8 +235,9 @@ class CivilianBatch extends Group {
       if (model !== this.model) continue;
       const closingPose = l10ClosingPose(this.world, e);
       const speaking = !!c && speakingNpc(this.world, e.id) && c.state === 'calm';
+      const joining = !!c && c.state === 'calm' && joiningHangarConversation(this.world, e.id);
       let conversation = this.conversationPositions.get(e.id);
-      if (speaking && !conversation) {
+      if ((speaking || joining) && !conversation) {
         conversation = { x: e.transform.x, z: e.transform.z, tick: this.world.tick, distance: 0 };
         this.conversationPositions.set(e.id, conversation);
       }
@@ -244,7 +245,7 @@ class CivilianBatch extends Group {
       if (conversation) {
         const player = this.world.entities.get(1)!.transform;
         const dx = e.transform.x - player.x, dz = e.transform.z - player.z, length = Math.hypot(dx, dz) || 1;
-        const goal = speaking && length > 3 ? { x: player.x + dx / length * 3, z: player.z + dz / length * 3 } : e.transform;
+        const goal = (speaking || joining) && length > 3 ? { x: player.x + dx / length * 3, z: player.z + dz / length * 3 } : e.transform;
         const gx = goal.x - conversation.x, gz = goal.z - conversation.z, remaining = Math.hypot(gx, gz);
         if (remaining > .001) conversationYaw = -Math.atan2(gz, gx);
         const dt = Math.max(0, Math.min(1, (this.world.tick - conversation.tick) / 60));
@@ -262,7 +263,7 @@ class CivilianBatch extends Group {
           }
         }
         conversation.tick = this.world.tick;
-        if (!speaking && remaining < .02) { this.conversationPositions.delete(e.id); conversation = undefined; }
+        if (!speaking && !joining && remaining < .02) { this.conversationPositions.delete(e.id); conversation = undefined; }
       }
       const drawTransform = closingPose ?? (conversation ? { ...e.transform, x: conversation.x, z: conversation.z } : e.transform);
       // Permanently dead civilians use the same ground-body layer as settled infected. Keep their final fall pose,
