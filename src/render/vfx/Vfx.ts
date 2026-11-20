@@ -398,7 +398,13 @@ export class Vfx extends Group {
         const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
         const range = this.flameRange(muzzle, event.direction);
         if (!this.flameSource || this.time >= this.flameSource.until) {
-          this.particles.spawn(this.time, .18, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .55, particleShape.flash, 0xffd16a);
+          this.particles.spawn(this.time, .18, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .9, particleShape.flash, 0xffd16a);
+          for (let i = 0; i < (this.quality === 'high' ? 6 : 3); i++) {
+            const side = (this.rng.next() - .5) * 2, speed = 2 + this.rng.next() * 2;
+            this.particles.spawn(this.time, .18 + this.rng.next() * .12, muzzle.x, muzzle.y, muzzle.z,
+              event.direction.x * speed - event.direction.z * side, .5 + this.rng.next(), event.direction.z * speed + event.direction.x * side,
+              .08, particleShape.spark, i % 2 ? 0xff8a2c : 0xffe27a, 3, .3);
+          }
         }
         // Keep the flame attached across discrete attack events; Blasts renders dense, pooled cards along this clipped ray.
         this.flameSource = { id: event.sourceId, until: this.time + 1 / def.fireRate + .08, direction: { ...event.direction } };
