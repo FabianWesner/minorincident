@@ -214,7 +214,7 @@ export class LevelSevenEncounters {
         const spread = (rank - 6) * 1.4;
         if (lane === 0) p = { x: centre.x - 15, z: centre.z + spread };
         else if (lane === 1) p = { x: centre.x + 15, z: centre.z + spread };
-        else p = { x: centre.x + spread, z: centre.z + (lane === 2 ? -15 : 15) };
+        else p = { x: centre.x + spread, z: centre.z + (lane === 2 ? -1 : 1) * (group === l7Encounters.firstStreetGroup + 3 && this.world.infected!.director.tier === 'low' ? 8 : 15) };
       } else {
         const row = Math.floor(i / 10);
         // High and low tiers both enter through the road and its two verges.
@@ -269,7 +269,7 @@ export class LevelSevenEncounters {
     const requested = this.state.requestedGroups ??= [l7Encounters.firstStreetGroup];
     // LOW has fewer concurrent slots: queue the middle street early enough
     // for its approach ranks to enter before the column reaches it.
-    for (const [i, threshold] of [225, low ? 195 : 165, low ? 95 : 140].entries()) {
+    for (const [i, threshold] of [225, low ? 195 : 165, 140].entries()) {
       const group = l7Encounters.firstStreetGroup + i + 1;
       if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
@@ -296,7 +296,7 @@ export class LevelSevenEncounters {
     // Stage the long corridor horde while the courier is still on the final
     // junction so its complete authored cohort clears the offscreen admission
     // gate before the group reaches the boarding lane.
-    if (p.x <= 140 && !requested.includes(l7Encounters.finalGroup)) {
+    if (p.x <= (low ? 95 : 140) && !requested.includes(l7Encounters.finalGroup)) {
       requested.push(l7Encounters.finalGroup);
       this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 84 : 168, 2);
     }
@@ -329,6 +329,11 @@ export class LevelSevenEncounters {
     const finals = s.finalReady ? [] : s.arrivals.filter(a => a.group === l7Encounters.finalGroup);
     s.finalReady ||= finals.filter(a => !a.alpha).length >= (ai.director.tier === 'low' ? 60 : 120) && finals.filter(a => a.alpha).length >= 2;
     const p = w.entities.get(1)!.transform;
+    // LOW's opening residents can otherwise occupy almost a third of the
+    // director budget after the column has left them far behind.
+    if (ai.director.tier === 'low' && p.x < 125 && w.tick % 10 === 0 && ai.director.queue.length) {
+      for (const e of ai.active) if (e.infected!.pack === l7Encounters.firstStreetGroup && e.health.current > 0 && !e.corpse && !e.hidden && !e.pendingAdmission && (e.infected!.recoverAt ?? -1) < 0 && e.infected!.l1?.mode !== 'bite' && e.transform.x > p.x + 80 && ai.director.offscreen(e.transform, e.transform.y - .7)) ai.release(e);
+    }
     // Give the armed escort wider lanes while the civilian column turns
     // toward the bus, reducing competition for the same narrow route.
     if (w.missions?.state.steps.departure?.status === 'active') {
