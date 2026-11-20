@@ -511,10 +511,10 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
     } else if (b.id.startsWith('bld.joes-diner:')) {
       // The facade header is local +X, above the front glazing; rotate with the lot.
       const p = placements.find(row => row.id === b.id)!;
-      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = 2.735 * p.scale[0], y = p.position[1] + 2.9 * p.scale[1];
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = 2.785 * p.scale[0], y = p.position[1] + 2.84 * p.scale[1];
       const vertex = (side: number, vertical: number) => {
-        const localZ = side * 1.1 * p.scale[2];
-        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * .19 * p.scale[1], p.position[2] - s * faceX + c * localZ);
+        const localZ = (-.65 + side * .55) * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * .12 * p.scale[1], p.position[2] - s * faceX + c * localZ);
       };
       vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
     } else if (b.id.startsWith('bld.reptile-house:')) {
