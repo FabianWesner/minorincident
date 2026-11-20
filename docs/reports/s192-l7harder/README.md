@@ -53,3 +53,5 @@ Guard catch-up speed 7.2 m/s cleared the LOW follower-pace flag but caused the r
 A departure-only guard catch-up increase to 7.2 m/s was also tested. The full threat audit returned two follower pace flags (105 and 106), so the trial was reverted.
 
 Widening the armed escorts’ formation slots during departure clears the follower pace issue without changing opening pressure. The full `npm run qa:threat` audit then completed with **0 flags**, including all LOW follower seeds; typecheck and lint pass. The per-street proximity trace is not a visual capture or proof of attack windup directions, and those checks remain open.
+
+A headless HIGH WebGL2 capture at zoom 1 was taken at tick 2040, near the second street anchor, using the native completion bot under the browser lock. I inspected [the frame](junction-high-z1.jpg): it shows the courier, escort and a dense battle with many bodies, but separate directions of live arrivals are not legible in the still. It does not establish the requested multi-side visual proof.
