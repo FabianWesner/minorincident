@@ -236,6 +236,7 @@ class CivilianBatch extends Group {
       if (model !== this.model) continue;
       const closingPose = l10ClosingPose(this.world, e);
       const lineSpeaker = !!c && speakingNpc(this.world, e.id);
+      const bubbleLine = !!c && bubbleSpeaker(this.world, e.id);
       const speaking = lineSpeaker && c?.state === 'calm';
       const gateGuard = !!c && c.state === 'calm' && zooGateGuard(this.world, e.id);
       const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard);
@@ -345,7 +346,7 @@ class CivilianBatch extends Group {
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
       // A bubble already points at the simulation actor. Keep scripted physical
       // actions such as prying and banging, and animate only an idle speaker.
-      const bubbleTalking = !storyClip || storyClip === 'idle' ? bubbleSpeaker(this.world, e.id) : false;
+      const bubbleTalking = (!storyClip || storyClip === 'idle') && bubbleLine;
       const talking = !down && !rising && c.state === 'calm' && (speaking || bubbleTalking);
       const lineTick = this.world.missions?.state.counters['hangar-line-ticks'] ?? 0;
       const indicatingEast = talking && this.world.missions?.state.subtitle?.id === 'L10.voss-delivery' && lineTick >= 300 && lineTick < 480;
@@ -401,14 +402,15 @@ class CivilianBatch extends Group {
         const directionBlend = indicatingEast ? Math.min(1, (lineTick - 300) / 30, (480 - lineTick) / 30) : 0;
         const gazeYaw = targetYaw + Math.atan2(Math.sin(-targetYaw), Math.cos(-targetYaw)) * directionBlend;
         const headTurn = Math.atan2(Math.sin(gazeYaw - presented.yaw), Math.cos(gazeYaw - presented.yaw));
-        pose.layers = talking && Math.abs(headTurn) > .01 ? { headYaw: Math.max(-.5, Math.min(.5, headTurn * .7)) } : undefined;
+        pose.layers = (talking || bubbleLine) && Math.abs(headTurn) > .01 ? { headYaw: Math.max(-.5, Math.min(.5, headTurn * .7)) } : undefined;
         pose.style = undefined;
         pose.procedural = !baked;
         pose.cadence = undefined;
         pose.holdDistanceM = undefined;
         frame = this.locomotion.present(e.id, this.poses, pose); }
-      if (lineSpeaker && speed > .06 && !down && !rising && !holding && c.state !== 'grabbed' && c.state !== 'bitten') {
-        // Retain the walking legs while applying an existing gesture relative to the current torso.
+      const seatedBubble = bubbleLine && !!storyClip && ['npc-cower', 'npc-sit', 'npc-look-around', 'npc-gesture', 'npc-give'].includes(storyClip);
+      if ((lineSpeaker && speed > .06 || seatedBubble) && !down && !rising && !holding && c.state !== 'grabbed' && c.state !== 'bitten') {
+        // Retain the legs and authored activity while applying an existing gesture relative to the current torso.
         const gestureTime = renderTick / 60 + idleOffset(e.id), weight = Math.sin(Math.PI * (gestureTime % 3) / 3) ** 2;
         const gestureDuration = authoredClips.get('npc-gesture')!.duration;
         const gestureFrame = civilianClips.indexOf('npc-gesture') * framesPerClip + (gestureTime % gestureDuration) / gestureDuration * (framesPerClip - 1);

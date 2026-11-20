@@ -16,11 +16,13 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [L9 opening HIGH](l9-opening.jpg) shows the APC's existing seated-crew cutaway during Sam's opening subtitle, now labelled with his name (or Reyes for the fallback). Several passengers are visible, but Sam cannot be identified confidently and his gaze and gesture are not readable; the in-frame speaker requirement remains unverified. The roof is restored after the line.
 
+[L6 medic HIGH](l6-medic.jpg) invokes the authored treatment bubble in a controlled shelter fixture. The probe reports the medic drawn in `npc-cower`; the bubble is visible and existing upper-body gesture is layered. The small, crowded figures make the hand motion hard to judge, so this is a partial check rather than a visual pass.
+
 An earlier experimental walk from off-screen left the guard entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions without changing the simulation.
 
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
-| L1, L2, L6 | Actor identified by an active story bubble | Idle speakers use shared gestures; authored physical actions remain in place. Bubble speaker framing and those action clips need visual review. |
+| L1, L2, L6 | Actor identified by an active story bubble | Idle speakers use shared gestures; selected seated/treatment activities retain their lower-body pose with an upper-body gesture. The L6 medic capture is partial; bubble framing and action clips need further review. |
 | L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory; shared relaxed walk, idle and gestures. Visual check pending. |
 | L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
