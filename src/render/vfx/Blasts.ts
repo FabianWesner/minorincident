@@ -785,14 +785,16 @@ export class Blasts extends Group {
     if (this.flameJet) {
       const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2;
       const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .12);
+      const reach = j.range * (1 + .12 * Math.sin(now * Math.PI * 16));
       for (let i = 0; i < count; i++) {
-        const t = (i + .5) / count, wave = Math.sin(now * 17 + i * 2.13 + j.seed) * .045 * t;
-        const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .16 * t) + wave;
-        const x = j.x + j.dx * j.range * t + sideX * spread;
-        const z = j.z + j.dz * j.range * t + sideZ * spread;
-        const rise = t * t * .45 + Math.sin(now * 13 + i) * .025 * t;
-        const length = Math.min(.9 + t * .8, j.range * t * 2, j.range * (1 - t) * 2);
-        flame(x, j.y + rise, z, j.seed + i * .713, .22 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
+        const t = (now * (1.15 + (i % 5) * .035) + i / count) % 1;
+        const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
+        const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .3 * t) + wave;
+        const x = j.x + j.dx * reach * t + sideX * spread;
+        const z = j.z + j.dz * reach * t + sideZ * spread;
+        const rise = t * t * .5 + Math.sin(now * 19 + i) * .08 * t;
+        const length = Math.min(.5 + t * .65, reach * t * 2, reach * (1 - t) * 2);
+        flame(x, j.y + rise, z, j.seed + i * .713, .2 + .65 * t, length, fade * (this.quality === 'high' ? .42 : .72), true);
         this.fl.fJet.setXYZW(flames - 1, j.dx, t * .15, j.dz, t);
       }
       const ix = j.x + j.dx * j.range, iz = j.z + j.dz * j.range;
