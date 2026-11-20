@@ -16,6 +16,8 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [L9 opening HIGH](l9-opening.jpg) shows the APC's existing seated-crew cutaway during Sam's opening subtitle, now labelled with his name (or Reyes for the fallback). Several passengers are visible, but Sam cannot be identified confidently and his gaze and gesture are not readable at gameplay scale. A fresh five-frame probe confirms his rendered head remains in frame and his right hand moves over 2 cm while speaking; player-facing speaker readability remains unresolved. The roof is restored after the line.
 
+[L2 captain HIGH](l2-captain.jpg) follows the normal station start until the captain line. The nearest living station firefighter is selected because the script specifies no individual captain; the probe sees that actor drawn in idle, glance and wave clips. The figures are small, so the image does not establish player-facing speaker identification or gaze.
+
 [L6 medic HIGH](l6-medic.jpg) invokes the authored treatment bubble in a controlled shelter fixture. The probe reports the medic drawn in `npc-cower`; the bubble is visible and existing upper-body gesture is layered. The small, crowded figures make the hand motion hard to judge, so this is a partial check rather than a visual pass.
 
 The full-resolution L6 frame and projected actor probe locate the medic bent over a cot. The hand area is dark and partly occluded, so clean arm motion and her gaze toward the courier remain unverified.
@@ -24,7 +26,7 @@ An earlier experimental walk from off-screen left the guard entering at the edge
 
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
-| L1, L2, L6 | Actor identified by an active story bubble | Idle speakers use shared gestures; selected seated/treatment activities retain their lower-body pose with an upper-body gesture. The L6 medic capture is partial; bubble framing and action clips need further review. |
+| L1, L2, L6 | Actor identified by an active story bubble; L2 station captain | Idle speakers use shared gestures; selected seated/treatment activities retain their lower-body pose with an upper-body gesture. The L2 captain is the nearest living station firefighter, selected when the line starts. The L6 medic capture is partial; bubble framing and action clips need further review. |
 | L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory; shared relaxed walk, idle and gestures. Visual check pending. |
 | L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |

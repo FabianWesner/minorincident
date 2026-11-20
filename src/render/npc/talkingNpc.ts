@@ -8,6 +8,23 @@ const inPersonSpeaker: Record<string, 'voss' | 'ruiz' | 'sam'> = {
   'L10.sam-delivery': 'sam', 'L10.sam-delivery.reyes': 'sam',
 };
 const soldierSpeakers = new WeakMap<SimWorld, { line: string; until: number; at: number; id: number }>();
+const stationSpeakers = new WeakMap<SimWorld, { until: number; at: number; id: number }>();
+
+/** The station script does not assign the captain line to a particular firefighter. */
+function stationCaptain(world: SimWorld, until: number): number {
+  const previous = stationSpeakers.get(world);
+  if (previous?.until === until && world.tick >= previous.at) return previous.id;
+  const player = world.entities.get(1)?.transform;
+  const crew = world.missions?.state.l2?.crewIds ?? [];
+  const candidates = player ? crew.flatMap(id => {
+    const actor = world.entities.get(id);
+    return actor?.civilian && !actor.hidden && actor.health.current > 0 && !actor.infection && !actor.infected
+      ? [{ id, distance: Math.hypot(actor.transform.x - player.x, actor.transform.z - player.z) }] : [];
+  }).sort((a, b) => a.distance - b.distance || a.id - b.id) : [];
+  const id = candidates[0]?.id ?? 0;
+  stationSpeakers.set(world, { until, at: world.tick, id });
+  return id;
+}
 
 /** Choose one living guard for a generic soldier line and retain that identity for its duration. */
 function zooSoldier(world: SimWorld, line: string, until: number): number {
@@ -43,6 +60,7 @@ export function bubbleSpeaker(world: SimWorld, id: number): boolean {
 export function speakingNpc(world: SimWorld, id: number): boolean {
   const mission = world.missions, subtitle = mission?.state.subtitle;
   if (!subtitle || subtitle.until <= world.tick || !mission) return false;
+  if (world.scenario === 'L2' && subtitle.id === 'L2.captain') return stationCaptain(world, subtitle.until) === id;
   // The sergeant is the first squad officer, spawned at the armory briefing post.
   if (world.scenario === 'L3' && (subtitle.id === 'L3.sergeant' || subtitle.id === 'L3.handgun')) return mission.state.l3?.squadIds[0] === id;
   if (world.scenario === 'L4' && subtitle.id === 'L4.gun') return mission.state.l4?.qmId === id;

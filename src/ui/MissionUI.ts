@@ -13,8 +13,9 @@ import { attribute, setHidden, style } from './dom';
 import { nextLevelAfter } from '../sim/progression/Campaign';
 import { checkpointName } from '../data/checkpointNames';
 
-/** L9 subtitles identify passengers even when the authored line omits their name. */
+/** Identify in-person speakers when the authored line omits their name. */
 function captionText(world: SimWorld, id: string, text: string): string {
+  if (id === 'L2.captain') return `Captain: ${text}`;
   if (world.scenario !== 'L9') return text;
   const driving = world.missions?.l9?.driving.state;
   const samName = world.entities.get(driving?.samId ?? 0)?.civilian?.survivor?.key === 'reyes' ? 'Private Reyes' : 'Sam';
