@@ -488,6 +488,12 @@ export class Blasts extends Group {
     // Bounded catch-up, with fixed slots; each puff retains its own nozzle pose.
     for (let emitted = 0; emitted < 16 && this.jetNext <= this.time; emitted++, this.jetNext += interval) {
       const slot = this.jetCursor++ % (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW);
+      // Recycle a small fraction into the shared smoke pool as their hot cards expire.
+      if (slot % 8 === 0 && this.time - this.jetBirth[slot] >= .128 && Number.isFinite(this.jetBirth[slot])) {
+        const dx = this.jetDX[slot], dz = this.jetDZ[slot], distance = this.jetRange[slot] * .85;
+        this.host.particles.spawn(this.time, .65, this.jetX[slot] + dx * distance, this.jetY[slot] + .45, this.jetZ[slot] + dz * distance,
+          dx * .25, .65, dz * .25, .32, particleShape.smoke, 0x49312a, -.3);
+      }
       this.jetBirth[slot] = this.jetNext; this.jetX[slot] = x; this.jetY[slot] = y; this.jetZ[slot] = z;
       this.jetDX[slot] = dx; this.jetDZ[slot] = dz; this.jetRange[slot] = Math.max(0, range);
     }
