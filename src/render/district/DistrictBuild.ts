@@ -506,7 +506,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
       positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
     } else if (b.id.startsWith('bld.reptile-house:')) {
       // Replace the lettering on the authored entrance board, on the +X face.
-      const faceX = cx + 4.96, cz = (min[2] + max[2]) / 2, y = min[1] + 3;
+      const faceX = cx + 5.08, cz = (min[2] + max[2]) / 2, y = min[1] + 3;
       positions.push(faceX,y-.19,cz+.85, faceX,y-.19,cz-.85, faceX,y+.19,cz-.85, faceX,y+.19,cz+.85);
     } else positions.push(cx-width/2,cy-height/2,z, cx+width/2,cy-height/2,z, cx+width/2,cy+height/2,z, cx-width/2,cy+height/2,z);
     uvs.push(u0,v0,u1,v0,u1,v1,u0,v1); indices.push(base,base+1,base+2,base,base+2,base+3);
