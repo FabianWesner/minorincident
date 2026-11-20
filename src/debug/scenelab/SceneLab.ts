@@ -31,6 +31,7 @@ import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { SimPhase } from '../../core/EventBus';
 import { l2TruckPath } from '../../data/l2';
 import { levelTwoLayouts } from '../../levels/L2/layout';
+import { levelTenLayouts } from '../../levels/L10/layout';
 import { L2TruckDrive, truckPoseAt, truckBodyOverlap, truckWallOverlap, type TruckRideState } from '../../sim/vehicles/L2TruckDrive';
 import { installL1Outbreak } from '../../sim/outbreak/install';
 import { doorExit, emergeResident, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../sim/outbreak/HouseEmergence';
@@ -177,6 +178,7 @@ export class SceneLab {
       source = await response.json() as DistrictLayout;
       // The L3 corridor is played through its layout copy (W2/W3 dressing, wrecks, glass, the army dressing): crop that.
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
+      if (spec.layout.level === 'L10' && spec.layout.district === 'D-CURE') [source] = levelTenLayouts([source]);
       if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
       // Fairhaven likewise (E22): the army reception, sandbag line, nests, parked cars and the L4 anchors.
       // ... and its devastated twin hours later (E23, `level: "L5"`): W5 shells, wrecks, craters, glass, the power out.

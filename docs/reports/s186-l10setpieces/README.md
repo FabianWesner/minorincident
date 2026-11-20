@@ -17,6 +17,7 @@ The six scenes are arranged around the existing corridor groups at 2940, 3060, 3
 - Catalog enumeration through `node --import tsx/esm tools/scenelab/catalog.ts --list --filter 's186-l10-*'`: **PASS**, all six scene fixtures load. The `tsx` executable form itself cannot open its IPC socket in this sandbox.
 - Headless Scene Lab capture attempt: **BLOCKED** before browser launch. Browser-pool startup failed because its listener could not bind `127.0.0.1:4329` (`listen EPERM`). No image captures were produced.
 - Retried with unrestricted socket access: HIGH WebGL2 catalog completed, **2/6 passed**. Convoy, underpass and scarecrow fixtures reported clipping; billboard rejected the retired rigid sprinter. The gate sheet was opened: it shows a tiny courier against a dark empty background, without the authored gate. These fixtures do not demonstrate production composition or the requested key moments and their sheets are not acceptance captures. Fix the fixture's production L10 composition before interpreting placement results.
+- Added explicit L10 runtime-layout composition to Scene Lab and selected it in the six fixtures; replaced the retired rigid sprinter in the billboard fixture. Typecheck and lint pass. A HIGH WebGL2 rerun still reports **2/6 pass**: convoy, underpass, hospital and scarecrow clipping fail. The gate sheet was opened and still shows only a tiny courier on a dark background. The capture setup remains invalid for visual acceptance and needs further diagnosis.
 
 ## Open
 

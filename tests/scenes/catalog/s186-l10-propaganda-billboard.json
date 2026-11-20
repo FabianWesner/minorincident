@@ -16,7 +16,8 @@
         3102,
         142
       ]
-    ]
+    ],
+    "level": "L10"
   },
   "actors": [
     {
@@ -37,13 +38,16 @@
         3064,
         97
       ],
-      "archetype": "infected.sprinter",
+      "archetype": "infected.runner",
       "state": "chase"
     }
   ],
   "camera": {
     "mode": "game",
-    "target": "courier",
+    "target": [
+      3055,
+      95
+    ],
     "zoom": 1.0
   },
   "frames": 30,
