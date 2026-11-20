@@ -220,8 +220,7 @@ export class LevelTenEncounters {
           w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'cure-assault-breach' });
           w.events.emit({ type: 'vfx.effect', tick: w.tick, kind: 'smoke', position: { x: entry.x, y: 0, z: entry.z }, radius: 5 });
         }
-        // The service breach admits a fighter on the courier's hold side every
-        // half-second, so the elevated platform can't make its arrivals inert.
+        // The service breach admits one fighter every 1.5 s out of the courier's sight (see below).
         // Admission
         // uses the same reserved director slot and population cap as other arrivals.
         if (w.tick >= (this.state.finaleEntryNext ?? 0)) {
@@ -233,10 +232,20 @@ export class LevelTenEncounters {
             const archetype = heavyBreach ? 'infected.butcher'
               : entry.ids.length % 2 === 1 ? 'infected.sprinter'
                 : entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner';
-            const offsets = [[-3, 0], [3, 0], [0, -3], [0, 3], [-2, -2], [2, 2]] as const;
-            const [dx, dz] = offsets[entry.ids.length % offsets.length];
-            const x = courier.transform.x + dx, z = courier.transform.z + dz;
-            const support = w.districts?.supportBelow(x, z, courier.transform.y - .7 + .05) ?? w.districts?.groundHeight(x, z) ?? 0;
+            // PO 2026-11-20 ("Zombies popping out of nowhere and directly attack me ... Aweful"): s189 admitted these
+            // 3 m from the courier in plain view. Arrivals now enter out of sight (director.safe: >= 18 m, offscreen or
+            // occluded, nav-clear) — the service tunnel mouth first, else a ring 22–30 m around her — and run in.
+            const ring = [0, 1, 2, 3, 4, 5, 6, 7].map(k => {
+              const angle = ((entry.ids.length * 3 + k) % 8) * Math.PI / 4, distance = 22 + (k % 3) * 4;
+              return { x: courier.transform.x + Math.cos(angle) * distance, z: courier.transform.z + Math.sin(angle) * distance };
+            });
+            const candidates = [{ x: entry.sx, z: entry.sz }, ...ring];
+            const spot = candidates.map(c => cureEncounterSpot(ai.nav, { ...c, archetype },
+              (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 9)).find(Boolean);
+            if (!spot) { ai.director.reserved++; this.state.finaleEntrySlot = true; this.state.finaleEntryNext = w.tick + 30; }
+            else {
+            const { x, z } = spot;
+            const support = w.districts?.groundHeight(x, z) ?? 0;
             const id = ai.spawn(archetype, { x, y: support + .7, z }, { state: 'chase', cureRegion: 'dispersal-complex' });
             const actor = w.entities.get(id)!;
             actor.transform.y = support + .7;
@@ -244,8 +253,9 @@ export class LevelTenEncounters {
             if (actor.infected?.l1) { actor.infected.l1.mode = 'chase'; actor.infected.l1.targetId = 1; actor.infected.heardTargetId = 1; }
             actor.infected!.state = 'chase';
             entry.ids.push(id);
-            this.state.finaleEntryNext = w.tick + 30;
+            this.state.finaleEntryNext = w.tick + 90;
             this.state.spawned[`dispersal-assault:service:${entry.ids.length}:${this.state.assaultWave ?? 0}`] = id;
+            }
           }
         }
       }
