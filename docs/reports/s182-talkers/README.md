@@ -12,6 +12,8 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [L8 gate HIGH](l8-gate.jpg) exposes an unresolved failure: the nearest recorded guard starts about 27 m from the courier, and no soldier is visibly identifiable beside her before the short gate line ends. The current approach does not satisfy this scene. The fixture starts the normal L8 briefing and uses the default progression.
 
+An experimental off-screen staging of that guard still left him entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions to help investigate a solution without changing the simulation.
+
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
 | L1, L2, L6 | Actor identified by an active story bubble | Idle speakers use shared gestures; authored physical actions remain in place. Bubble speaker framing and those action clips need visual review. |

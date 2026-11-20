@@ -17,12 +17,22 @@ try {
     }) };
   });
   if (cast.subtitle !== 'L8.gate-soldier') throw new Error(`Unexpected line ${cast.subtitle}`);
-  const frames: { frame: number; jpeg: Buffer }[] = [];
+  const frames: { frame: number; jpeg: Buffer }[] = [], positions: unknown[] = [];
   for (let i = 0; i < 5; i++) {
     await session.page.evaluate(() => window.__SS__!.step(60));
     frames.push({ frame: i, jpeg: await session.snapshot() });
+    positions.push(await session.page.evaluate(() => {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const npcs = game.view.labProbes().npcs as unknown as { civilians: { conversationPositions: Map<number, unknown> } };
+      return [...npcs.civilians.conversationPositions.entries()];
+    }));
   }
+  const presented = await session.page.evaluate(() => {
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    const npcs = game.view.labProbes().npcs as unknown as { civilians: { conversationPositions: Map<number, unknown> } };
+    return [...npcs.civilians.conversationPositions.entries()];
+  });
   await session.makeSheet(frames, `${out}/sheet.jpg`, 420, 240);
-  writeFileSync(`${out}/receipt.json`, JSON.stringify({ cast, errors: session.errors }, null, 2));
+  writeFileSync(`${out}/receipt.json`, JSON.stringify({ cast, positions, presented, errors: session.errors }, null, 2));
   if (session.errors.length) process.exitCode = 1;
 } finally { await session.close(); stopServer(); }
