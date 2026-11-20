@@ -17,6 +17,19 @@ These are staged HIGH zoom 1 Scene Lab views and the LOW gate view, not evidence
 - Underpass: [HIGH](underpass-high-diagnostic.jpg); shadow, crawler and emergency lamp are visible, but the roof is not readable.
 - Hospital: [HIGH](hospital-high-diagnostic.jpg); the canvas is lit, with no opening or silhouettes shown.
 
+## Latest LOW fight-gap sample
+
+LOW skilled seed 1 completed in 1,154.6 s with two deaths. During each continuous visit within 35 m of a station, this measures the longest gap between courier/infected hits or hostile attack telegraphs targeting the courier, with the other participant within 30 m; visit boundaries count. Other cohorts can supply these events. This does not establish that each scene's own enemies engage, cover travel between visits, or establish HIGH behavior. [Receipt](low-final-visits.json).
+
+| Set piece | Longest nearby fight gap |
+| --- | ---: |
+| Quarantine gate | 2.22 s |
+| Propaganda billboard | 2.53 s |
+| Scarecrow field | 3.78 s |
+| Burning convoy | 3.15 s |
+| Dark underpass | 2.82 s |
+| Field hospital | 7.17 s |
+
 ## Verification
 
 - `npm run typecheck`: **PASS**.
@@ -78,6 +91,8 @@ These are staged HIGH zoom 1 Scene Lab views and the LOW gate view, not evidence
 - Added warm work lamps at all three field tents using the existing night-accent/light-field pipeline. Opened HIGH and LOW frames show illuminated canvas and an approaching infected; the [HIGH diagnostic still](hospital-high-diagnostic.jpg) still crops the tent roof and is not a native opening frame. Both scene checks report the existing corn/scarecrow overlap. Typecheck, lint and focused world-systems pass; the moving silhouettes and synchronized burst remain open.
 
 - Tinted the existing deterministic L10 dust particles toward the existing L5 ember colour while the corridor fog is active, restoring the night colour beyond the stretch and during the cure dawn. A LOW production-camera frame shows sparse orange motes over the still-dark blue ground; it does not establish the requested overall amber haze. Typecheck and lint pass. The latest successful remote full suite below predates only this render-only tint.
+
+- The required remote full `npm test` passed on source `18016ef0`: 27 files, 105 passed and one skipped, 190.5 s / 240 s. It includes the field relocation, convoy hazards, siren and fog; the later particle tint is render-only. The earlier local L4 failure and remote timeout remain recorded above.
 
 ## Open
 
