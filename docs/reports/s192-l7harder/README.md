@@ -36,3 +36,5 @@ A separate current physical launcher probe used real input and native L5→L6 ca
 - Finish the incomplete acceptance evidence, including the offscreen/LOS and separate visual reviews. The acceptance commands did not fully pass.
 - Recheck the peak-horde performance budget under a suitable quiet measurement and report real-device timing. The current native proxy exceeds the stated sim budget.
 - The screenshot shows pressure from several sides but does not visually prove all three timed directions. The direction trace is one native seed and does not establish every possible play style.
+
+Epic correction: the earlier edit inadvertently described the entire newly authored final horde (168/84) as the initial admitted minimum. The pre-existing L7-08 minimum is 120/60, and the director queues the excess. Epic 29 §5.3 and the corridor receipt now distinguish the authored group size from that unchanged initial minimum; the L7-08 target itself was not relaxed.
