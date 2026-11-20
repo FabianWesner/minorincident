@@ -1,6 +1,6 @@
 # S181 facade signs
 
-The capture names reserved for the requested review set are:
+The requested review captures are available locally under these names (the tracked contact sheet is `capture-sheet.jpg`):
 
 - `L10-research-laboratory-high-z1.jpg`
 - `L10-research-laboratory-high-z1.5.jpg`
@@ -9,9 +9,9 @@ The capture names reserved for the requested review set are:
 - `L8-primate-house-high-z1.jpg`
 - `L8-primate-house-high-z1.5.jpg`
 
-Captures are pending. A first HIGH laboratory capture was inspected: the board crosses a side window, so placement fails review. A second capture shows the board at the +X entrance canopy, but its mounting needs review. The L8 capture showed a board across a side window; the code now targets the existing entrance board and needs a fresh capture.
+Earlier placement trials crossed side windows; the later follow-camera captures below show the revised entrance placements. The laboratory board still extends beyond the thin canopy fascia, and its mounting remains open for review.
 
-The runtime mesh uses one texture atlas and one mesh per district. Other candidate signs are positioned just beyond the authored building AABB north (+Z) facade; the scene gate and visual placement review still need to confirm facade fit and clearance.
+The runtime mesh uses one texture atlas and one mesh per district. Facade-specific placements have replaced the initial AABB fallback for the observed named building types; comprehensive scene clearance and visual review remain open.
 
 The L8 entrance board was inspected at a close cinematic pose after moving it in front of the raised emblems: its text is readable. This does not verify game-camera zoom. The remote unit suite timed out twice unchanged at 241.4 s and 241.1 s (240 s budget), with no reported test failure before termination. Typecheck and lint pass.
 
@@ -60,3 +60,5 @@ The elementary-school asset already has a physical Sunset Grove Elementary inscr
 The power-substation asset already carries a physical Sunset Grove Power sign, so its duplicate fallback board is omitted; LOW readability remains unverified. The hospital overlay is limited to the LOD2 model, whose name panel has no lettering. Nine LOD2 samples across the intended panel hit x=3.825 m; the board is at x=3.835 m before placement scaling. The diagnostic camera was obstructed and did not establish rendered appearance or transition correctness.
 
 The LOW hospital follow-camera transition probe selected LOD1 → LOD2 → culled → LOD1 and reported overlay visibility 0 → 1 → 0 → 0, matching the intended name-panel replacement. This is a state probe; the obstructed visual view still does not establish readability.
+
+The Maple Mini Mall board now sits between the second-floor windows. A close HIGH capture shows its frame clear of the nearby raised trim, with foliage obscuring part of the surrounding facade. Sparse LOD0 and LOD2 ray samples found wall behind the chosen area; full clearance and game-camera readability remain unverified.
