@@ -94,6 +94,8 @@ LOW skilled seed 1 completed in 1,154.6 s with two deaths. During each continuou
 
 - The required remote full `npm test` passed on source `18016ef0`: 27 files, 105 passed and one skipped, 190.5 s / 240 s. It includes the field relocation, convoy hazards, siren and fog; the later particle tint is render-only. The earlier local L4 failure and remote timeout remain recorded above.
 
+- Repeated the required remote full unit suite on source `61aad80a` (including the particle tint): **PASS**, 27 files, 105 passed and one skipped, 182.9 s / 240 s. `npm run verify -- E32` passed typecheck and lint but failed its local `npm test`: the same L4 LOW perimeter-routing assertion failed, with 105 tests passing. The distinct remote L4 test and both latest remote full suites passed.
+
 ## Open
 
 This is not a completion report. The brief still requires scene captures (HIGH zoom 1 for each beat and LOW gate), visual review, a successful required remote unit suite, and final cadence evidence showing nearby fights no more than 20 seconds apart at each beat. The authored static props also do not yet deliver the requested readable quarantine/billboard copy, swaying warning effigies, an in-view billboard collapse with crowd reveal, a synchronized hospital burst, or route-specific amber dust and embers. No zombies were stat-tuned and no corpses are removed.
