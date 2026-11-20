@@ -110,7 +110,7 @@ export class VehicleOccupant extends Group {
   private releases: (() => void)[] = [];
   dispose(): void { this.speechMixer?.stopAllAction(); this.speechMixer?.uncacheRoot(this.model); if (this.ownsModel) disposeCharacter(this.model as Group); for (const release of this.releases.splice(0)) release(); this.removeFromParent(); }
   /** Existing upper-body gesture on a seated passenger; legs stay in their seat pose. */
-  speak(seconds?: number): void {
+  speak(seconds?: number, toward?: Object3D): void {
     if (seconds === undefined) { if (this.speechAction?.isRunning()) this.speechAction.stop(); return; }
     if (!this.speechMixer) {
       const clip = retargetClip(this.model, 'npc-gesture');
@@ -119,6 +119,13 @@ export class VehicleOccupant extends Group {
     }
     if (!this.speechAction!.isRunning()) this.speechAction!.reset().play();
     this.speechMixer.setTime(seconds);
+    if (toward && this.rig.head) {
+      this.updateWorldMatrix(true, true); toward.updateWorldMatrix(true, false);
+      this.point.setFromMatrixPosition(toward.matrixWorld); this.worldToLocal(this.point);
+      this.hand.setFromMatrixPosition(this.rig.head.matrixWorld); this.worldToLocal(this.hand);
+      const yaw = -Math.atan2(this.point.z - this.hand.z, this.point.x - this.hand.x);
+      this.rig.head.rotateY(Math.max(-.5, Math.min(.5, yaw)));
+    }
   }
   /** Hip at the seat node, both shoes forward in the footwell; drivers grip the authored wheel. */
   pose(seat: Object3D, wheel?: Vector3, fit = 1, driverLean = -.5, driverSlide = .2, gearTier = 0): void {
@@ -140,6 +147,9 @@ export class VehicleOccupant extends Group {
     this.torso.rotateZ(wheel ? driverLean : -.25);
     this.updateWorldMatrix(true, true);
     for (let i = 0; i < 2; i++) {
+      // Repeated renders can sample the same speech time. The mixer then keeps
+      // its cached value, so don't overwrite the speaking arms with seated IK.
+      if (!wheel && this.speechAction?.isRunning()) continue;
       if (wheel) { this.point.copy(wheel).add(new Vector3(-.04, .025, i === 0 ? -.12 : .12)); this.point.applyMatrix4(this.parent!.matrixWorld); }
       else this.point.set(.2, .1, i === 0 ? -.11 : .11).applyMatrix4(this.matrixWorld);
       this.pole.set(.15, -.8, i === 0 ? -.3 : .3).transformDirection(this.parent!.matrixWorld);
