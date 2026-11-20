@@ -667,7 +667,7 @@ export class SolidRegistry {
       const old = this.committedPoses[e.id]; if (!old !== admission) continue;
       const radius = this.bodyRadii[e.id], p = e.transform, proposed = this.proposalPoints[e.id]!;
       const proof = this.contactProofs[e.id];
-      const mayHold = !!(e.infected && !e.infected.specialAttack && proof && (this.world.tick + e.id) % 10 !== 0 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e));
+      const mayHold = !!(e.infected && !e.infected.scripted && !e.infected.specialAttack && proof && (this.world.tick + e.id) % 10 !== 0 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e));
       if (mayHold && proof!.crowded && proof!.crowdUntil > this.world.tick) {
         const blocker = this.live[this.bodyRejections[e.id] ?? 0];
         // Reuse the actual failed contact only while it still blocks this proposal

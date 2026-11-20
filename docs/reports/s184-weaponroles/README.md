@@ -123,3 +123,5 @@ A new candidate restores the original collision transaction and routes scripted 
 Full `npm run qa:threat` on the waypoint candidate completed in 246.8 s with four L4 flags: stuck chaser in hold and war, L4-06 first breach, and L4-06 sustained horde. L8 and L10 had no flags. The candidate is not accepted; retain the actual waypoint distinction but address route-budget starvation before final verification.
 
 A shared-flow trial allowed a scripted courier approach to use the courier flow only when its waypoint was within 2 m of the courier. Focused L4 threat had no scenario flags, but remote L4 contact still stalled actor 336 near the west mouth (ticks 5531–5832). The trial was discarded.
+
+Actor 336 trace under shared-goal routing showed correct inner waypoint steering but repeated rejection against living actors 344 and 348. Combining shared flow only for nearby courier waypoints with collision projection for scripted infected passed remote L4 (149.4 s test, 154.4 s total). This is a candidate: non-scripted pursuit retains the old crowd hold and needs assessment against the requested general routing behavior; full suite and threat audit remain open.

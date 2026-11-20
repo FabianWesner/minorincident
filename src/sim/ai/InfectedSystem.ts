@@ -2140,7 +2140,9 @@ export class InfectedSystem {
     // that waypoint rather than reading the courier's shared flow field.
     const courierApproach = b.breachApproach === 'inside' && b.pressureTarget?.id === 1 && b.pressureTarget.until > this.world.tick;
     // The shared flow field is only built on the admission grid; a wide body on `wideNav` would read an empty field and stand still, so it searches.
-    const useFlow = nav !== this.wideNav && !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
+    const courier = this.world.entities.get(1)!.transform;
+    const sharedGoal = !b.scripted || courierApproach && Math.hypot(target.x - courier.x, target.z - courier.z) < 2;
+    const useFlow = nav !== this.wideNav && !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && sharedGoal && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
       // The nearest cell can lie across a thin doorway wall. Start on a
