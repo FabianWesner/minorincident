@@ -280,19 +280,17 @@ test('bare hands are innate and hidden while carrying melee; the L8 sanctuary ga
   } finally { world.dispose?.(); }
 });
 
-test('v1 save restores the carried nail gun to fixed key 7 after army MG is present at key 4', () => {
-  const legacy = { ...newCampaign(), version: 1, racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'] },
-    ownedActions: ['weapon.fists', 'weapon.kick', 'weapon.fire-axe', 'weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'], selectedAction: 'weapon.nail-gun' };
-  const decoded = decodeSave(JSON.stringify(legacy));
-  expect(decoded.status).toBe('ok');
-  if (decoded.status !== 'ok') return;
-  const loadout = new Loadout(decoded.save.racks.LEFT, decoded.save.racks.RIGHT);
-  expect(restoreSelectedAction(loadout, decoded.save)).toBe('weapon.nail-gun');
-  expect(weaponKey('weapon.nail-gun')).toBe(7);
-  expect(weaponKey('weapon.army-mg')).toBe(4);
-});
-
 test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and storage errors fail safely', () => {
+  const oldWeapons = { ...newCampaign(), version: 1, racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'] },
+    ownedActions: ['weapon.fists', 'weapon.kick', 'weapon.fire-axe', 'weapon.handgun', 'weapon.nail-gun', 'weapon.army-mg'], selectedAction: 'weapon.nail-gun' };
+  const migratedWeapons = decodeSave(JSON.stringify(oldWeapons));
+  expect(migratedWeapons.status).toBe('ok');
+  if (migratedWeapons.status === 'ok') {
+    const loadout = new Loadout(migratedWeapons.save.racks.LEFT, migratedWeapons.save.racks.RIGHT);
+    expect(restoreSelectedAction(loadout, migratedWeapons.save)).toBe('weapon.nail-gun');
+    expect(weaponKey('weapon.nail-gun')).toBe(7);
+    expect(weaponKey('weapon.army-mg')).toBe(4);
+  }
   for (const level of [2, 3, 4, 5, 6, 7, 8, 10] as const) {
     const save = preset(`L${level}-default`);
     if (level === 6) {
