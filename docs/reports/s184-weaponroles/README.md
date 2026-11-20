@@ -121,3 +121,5 @@ A trial retaining the original collision hold while reducing extra infected spac
 A new candidate restores the original collision transaction and routes scripted walkers to their actual waypoint instead of the courier flow field. This passed the remote focused L4 replay (187.7 s test, 192.8 s total), local L4, typecheck and lint. Full remote suite and full threat audit remain required on this candidate.
 
 Full `npm run qa:threat` on the waypoint candidate completed in 246.8 s with four L4 flags: stuck chaser in hold and war, L4-06 first breach, and L4-06 sustained horde. L8 and L10 had no flags. The candidate is not accepted; retain the actual waypoint distinction but address route-budget starvation before final verification.
+
+A shared-flow trial allowed a scripted courier approach to use the courier flow only when its waypoint was within 2 m of the courier. Focused L4 threat had no scenario flags, but remote L4 contact still stalled actor 336 near the west mouth (ticks 5531–5832). The trial was discarded.
