@@ -10,6 +10,8 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [Hangar entry HIGH](hangar-entry.jpg) advances prior objectives and places the courier outside, then uses movement input through the entrance. Voss enters from the left and walks toward the courier during her visible first subtitle; she is still several metres away during the sampled line. The earlier campaign route is not exercised.
 
+[L8 gate HIGH](l8-gate.jpg) exposes an unresolved failure: the nearest recorded guard starts about 27 m from the courier, and no soldier is visibly identifiable beside her before the short gate line ends. The current approach does not satisfy this scene. The fixture starts the normal L8 briefing and uses the default progression.
+
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
 | L1, L2, L6 | Actor identified by an active story bubble | Idle speakers use shared gestures; authored physical actions remain in place. Bubble speaker framing and those action clips need visual review. |
