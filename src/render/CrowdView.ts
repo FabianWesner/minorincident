@@ -151,8 +151,8 @@ export class CrowdView extends Group {
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
-  private readonly ashHeaps = new InstancedMesh(new BoxGeometry(.8, .12, .55), new MeshBasicNodeMaterial({ color: '#292824' }), 350);
-  private readonly ashBones = new InstancedMesh(new BoxGeometry(.38, .035, .045), new MeshBasicNodeMaterial({ color: '#b6aa8e' }), 700);
+  private ashHeaps = new InstancedMesh(new BoxGeometry(.8, .12, .55), new MeshBasicNodeMaterial({ color: '#292824' }), 350);
+  private ashBones = new InstancedMesh(new BoxGeometry(.38, .035, .045), new MeshBasicNodeMaterial({ color: '#b6aa8e' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -770,7 +770,16 @@ export class CrowdView extends Group {
         this.transform.makeRotationY(yaw); this.transform.setPosition(x, (this.world.districts?.groundHeight(x, z) ?? 0) + .16, z);
         this.nails.setMatrixAt(this.nails.count++, this.transform);
       }
-      if (e.ashDeath && this.world.tick - e.ashDeath.at >= 90 && this.ashHeaps.count < 350) {
+      if (e.ashDeath && this.world.tick - e.ashDeath.at >= 90) {
+        if (this.ashHeaps.count >= this.ashHeaps.instanceMatrix.count) {
+          const grow = (old: InstancedMesh<BoxGeometry, MeshBasicNodeMaterial>): InstancedMesh<BoxGeometry, MeshBasicNodeMaterial> => {
+            const next = new InstancedMesh(old.geometry, old.material, old.instanceMatrix.count * 2);
+            next.frustumCulled = false; next.count = old.count;
+            for (let i = 0; i < old.count; i++) { old.getMatrixAt(i, this.transform); next.setMatrixAt(i, this.transform); }
+            this.remove(old); old.dispose(); this.add(next); return next;
+          };
+          this.ashHeaps = grow(this.ashHeaps); this.ashBones = grow(this.ashBones);
+        }
         const x = e.transform.x, z = e.transform.z, ground = this.world.districts?.groundHeight(x, z) ?? 0;
         this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(x, ground + .06, z); this.ashHeaps.setMatrixAt(this.ashHeaps.count++, this.transform);
         for (const offset of [-.12, .12]) { this.transform.makeRotationY(e.transform.yaw + offset * 4); this.transform.setPosition(x + offset, ground + .13, z); this.ashBones.setMatrixAt(this.ashBones.count++, this.transform); }
