@@ -10,10 +10,10 @@ Fire deaths now dissolve over the existing 90-tick (1.5 s) charred-body interval
 - `npm run lint` — PASS.
 - `npx vitest run --project default tests/engine/combat.test.ts` — PASS (7 tests).
 - `npm test` locally — PASS (106 tests, 27 files; 150-case budget manifest, which includes non-default projects and browser cases not run by this command).
-- `sh tools/remote/run.sh "$PWD" -- npm test` — NOT RUN: no healthy remote runner; command exited 69 before tests started.
-- `npm run scene:gate -- --filter 'corpse-look-close,corpse-look-alpha,s69-brute-under-fire,s69-butcher-under-fire'` — NOT RUN: tsx could not bind its local IPC socket (`EPERM`).
+- `sh tools/remote/run.sh "$PWD" -- npm test` — PASS on retry: 105 passed, 1 skipped, 192.8 s.
+- `scene:gate` filtered to the seven corpse, under-fire and firefighter rows — PASS 7/7, with the gate list's HIGH/LOW WebGL2 and WebGPU selections.
 - Scene Lab capture (`s199-ash-heap`, WebGL2 HIGH, zoom 1.5) — PASS for console and clipping gates after access was restored. Visual review **fails**: the dark figure falls, then becomes a very small bright white patch; the bones and crumbling are not discernible at this scale. The 16-frame sheet is in `test-results/s199-ash-heap/high-z15/sheet.jpg`.
 
 ## Open acceptance
 
-The latest HIGH zoom 1.5 capture shows two tan crossed bones over a lighter irregular pile with dark patches. It is more legible, but the bone-dominated shape still needs visual refinement and the crumble sequence remains unaccepted. Settled HIGH zoom 1, LOW zoom 1, and WebGPU appearance remain unreviewed. Repeat the requested captures and inspect them; run the focused corpse/fire scene gate rows and remote unit suite. Typecheck, lint, and the seven focused combat tests passed again after this revision.
+The latest HIGH zoom 1.5 capture shows two tan crossed bones over a lighter irregular pile with dark patches. It is more legible, but the bone-dominated shape still needs visual refinement and the crumble sequence remains unaccepted. Settled HIGH zoom 1, LOW zoom 1, and WebGPU appearance remain unreviewed. Repeat the requested captures and inspect them. Typecheck, lint, and the seven focused combat tests passed again after this revision.
