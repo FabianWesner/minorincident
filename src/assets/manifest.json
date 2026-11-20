@@ -9250,6 +9250,26 @@
     "sourceForward": "+X"
   },
   {
+    "id": "prop.l10-hazmat-scarecrow",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-hazmat-scarecrow.glb",
+    "dimensions": { "x": 1.31, "y": 2.5, "z": 1.09, "tolerance": 0.25 },
+    "forward": "+X",
+    "frontNodes": ["front"],
+    "requiredNodes": ["root"],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": { "triangles": 9000, "materials": 12, "fileKB": 1200, "drawCalls": 30 },
+    "decayVariants": [],
+    "lods": { "lod1": "public/assets/models/prop.l10-hazmat-scarecrow.lod1.glb", "lod2": "public/assets/models/prop.l10-hazmat-scarecrow.lod2.glb" },
+    "sourceGlb": "assets/prop.l10-hazmat-scarecrow/model.glb",
+    "script": "assets/prop.l10-hazmat-scarecrow/build.py",
+    "sourceForward": "+X",
+    "world": { "token": "schoolBusYellow", "solid": false }
+  },
+  {
     "id": "prop.l10-warning-effigy",
     "category": "prop",
     "status": "integrated",

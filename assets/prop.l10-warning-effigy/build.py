@@ -8,7 +8,7 @@ from mathutils import Vector
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE.parents[1]/'tools/blender'))
 from sslib import palette
-p=argparse.ArgumentParser();p.add_argument('--source',default='/private/tmp/s186-trellis-hazmat.glb');p.add_argument('--glb',default=str(HERE/'model.glb'));a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+p=argparse.ArgumentParser();p.add_argument('--field',action='store_true');p.add_argument('--source',default='/private/tmp/s186-trellis-hazmat.glb');p.add_argument('--glb',default=str(HERE/'model.glb'));a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=a.source)
 figure=next(o for o in bpy.data.objects if o.type=='MESH')
@@ -42,8 +42,11 @@ for poly in figure.data.polygons:
 figure.parent=None;figure.matrix_world.identity();figure.name='effigy-mesh'
 for o in list(bpy.data.objects):
  if o != figure: bpy.data.objects.remove(o,do_unlink=True)
-root=bpy.data.objects.new('root',None);bpy.context.collection.objects.link(root);root['asset_id']='prop.l10-warning-effigy'
-swing=bpy.data.objects.new('swing',None);bpy.context.collection.objects.link(swing);swing.parent=root;swing.location=(0,0,5.16);figure.parent=swing
-bpy.ops.mesh.primitive_cylinder_add(vertices=6,radius=.025,depth=.78,location=(0,0,-.39));rope=bpy.context.object;rope.name='rope';rope.data.materials.append(palette.mat('woodWarm'));rope.parent=swing
+root=bpy.data.objects.new('root',None);bpy.context.collection.objects.link(root);root['asset_id']='prop.l10-hazmat-scarecrow' if a.field else 'prop.l10-warning-effigy'
+swing=bpy.data.objects.new('swing',None);bpy.context.collection.objects.link(swing);swing.parent=root;swing.location=(0,0,2.55 if a.field else 5.16);figure.parent=swing
+if a.field:
+ bpy.ops.mesh.primitive_cube_add(size=1,location=(-.3,0,1.25));pole=bpy.context.object;pole.name='stake';pole.dimensions=(.10,.10,2.5);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);pole.data.materials.append(palette.mat('woodWarm'));pole.parent=root
+else:
+ bpy.ops.mesh.primitive_cylinder_add(vertices=6,radius=.025,depth=.78,location=(0,0,-.39));rope=bpy.context.object;rope.name='rope';rope.data.materials.append(palette.mat('woodWarm'));rope.parent=swing
 front=bpy.data.objects.new('front',None);bpy.context.collection.objects.link(front);front.parent=root;front.location=(1,0,0)
 bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)

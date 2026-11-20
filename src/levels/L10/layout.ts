@@ -100,8 +100,8 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // An abandoned public information board beside the objective crossing.
     beat('billboard-frame', 'prop.l10-cure-billboard', 3066, 92, [.4, 2.9, 3.8]);
     beat('billboard-wreck', 'prop.l10-abandoned-sedan-blue', 3072, 124, [2.5, .8, 1.1], Math.PI / 2);
-    // A planted line of scarecrows masks the handful of live hazmat runners.
-    for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.farm-scarecrow', 3170 + i * 7, 84 + (i % 2) * 2, [.5, 1.3, .5], i % 2 ? .16 : -.12);
+    // The hazmat effigies use the retained TRELLIS source; the nearby cohort is separately admitted.
+    for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.l10-hazmat-scarecrow', 3170 + i * 7, 56 + (i % 2) * 2, [.7, 1.3, .6], i % 2 ? .16 : -.12);
     // Wrecked military vehicles and sandbag islands create a broad fight lane.
     for (const [id, x, z, yaw] of [['a', 3240, 60, -.35], ['b', 3280, 125, Math.PI + .28]] as const) {
       const truck = beat(`convoy-truck-${id}`, 'veh.military-truck', x, z, [3.8, 1.5, 1.5], yaw);
