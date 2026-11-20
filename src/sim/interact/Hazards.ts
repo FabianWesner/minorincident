@@ -190,7 +190,7 @@ export class Hazards {
     const step = radius * 1.4 * (weather?.modifiers.fireSpread ?? 1);
     return this.spawn('fire', { x: position.x + Math.cos(angle) * step, z: position.z + Math.sin(angle) * step }, { radius: radius * .85, duration, spread: generations, playerDamageSource });
   }
-  snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor, fieldFire: this.fieldFire?.snapshot() ?? null }; }
+  snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor, fieldFire: this.fieldFire?.snapshot() ?? null, vegetationFire: this.vegetationFire?.snapshot() ?? null }; }
   update(): void {
     const tick = this.world.tick;
     this.fieldFire?.update(tick);
