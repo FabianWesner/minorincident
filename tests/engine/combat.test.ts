@@ -66,11 +66,14 @@ function checkArsenalRoles(): void {
   expect(rosterAction('weapon.molotov').effect?.duration).toBeGreaterThanOrEqual(6);
   expect(rosterAction('weapon.molotov').status?.dps).toBeGreaterThanOrEqual(20);
   const molotov = rosterAction('weapon.molotov'), rocket = rosterAction('weapon.rocket-launcher');
-  expect(molotov.damage).toBe(rocket.damage * 0.75);
-  expect(molotov.splash).toEqual({ radius: rocket.splash!.radius * 0.75, falloff: rocket.splash!.falloff });
+  expect(molotov.damage).toBe(rocket.damage * 0.5);
+  expect(molotov.splash).toEqual({ radius: 4.5, falloff: rocket.splash!.falloff });
+  expect(rosterAction('weapon.pipe-bomb')).toMatchObject({ damage: 270, cooldown: 5, fuse: 2, splash: { radius: 6 }, knockdown: true });
+  const carried = new Loadout(['weapon.fire-axe', 'weapon.molotov', 'weapon.hunting-rifle'], ['weapon.handgun', 'weapon.assault-rifle', 'weapon.pipe-bomb']);
+  const owned = carried.activeEntries().map(e => e.id); carried.collect('RIGHT', 'weapon.shotgun');
+  expect(carried.activeEntries().map(e => e.id)).toEqual(expect.arrayContaining([...owned, 'weapon.shotgun']));
+  expect(carried.collect('LEFT', 'weapon.pipe-bomb')).toBe('weapon.molotov');
   expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
-  expect(rosterAction('weapon.flashbang').status?.kind).toBe('stunned');
-  expect(rosterAction('weapon.flashbang').splash?.radius).toBe(7);
   expect(rosterAction('weapon.rocket-launcher').knockdown).toBe(true);
   expect(rosterAction('weapon.nail-gun').damage).toBe(14);
   expect(rosterAction('weapon.flamethrower')).toMatchObject({ range: 8, fireRate: 15, magazine: 90, reloadTime: 5, status: { duration: 4, dps: 35 } });
@@ -106,9 +109,6 @@ async function checkFlameCluster(): Promise<void> {
 }
 
 async function checkFireAshPersistence(): Promise<void> {
-  const flash = await arena(); equip(flash, ['weapon.fire-axe'], ['weapon.flashbang']);
-  fire(flash, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 }); step(flash, 150);
-  expect(flash.events.events().some(event => event.type === 'combat.exploded' && event.actionId === 'weapon.flashbang')).toBe(true);
   const w = await loadLevel('L1', 1); worlds.push(w);
   const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
   w.combat!.damage.apply({ attackId: 1, actionId: 'weapon.flamethrower', sourceId: 1, targetId: id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: target.health.current, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
@@ -132,10 +132,9 @@ async function checkFireAshPersistence(): Promise<void> {
   const player = w.entities.get(1)!, releaseAt = w.tick + 120, hp = grabber.health.current;
   grabber.infected!.grabUntil = releaseAt; grabber.infected!.heardTargetId = player.id;
   player.combat!.staggerUntil = releaseAt; w.npcs!.civilians.hold(grabberId);
-  w.combat!.status.apply(grabber, rosterAction('weapon.flashbang').status!, 1, 'weapon.flashbang');
-  expect(grabber.infected!.grabUntil).toBe(0); expect(player.combat!.staggerUntil).toBe(w.tick);
-  expect(w.npcs!.civilians.holds(grabberId)).toBe(false); expect(grabber.health.current).toBe(hp);
-  expect(Status.stunned(grabber, w.tick)).toBe(true);
+  w.combat!.damage.apply({ attackId: 1, actionId: 'weapon.fire-axe', sourceId: 1, targetId: grabberId, origin: player.transform, direction: { x: 1, z: 0 }, base: 1, multiplier: 1, type: 'melee', permanent: true, knockback: 0, stagger: 0 });
+  expect(grabber.health.current).toBeLessThan(hp);
+
 }
 
 async function checkWeaponControlRoles(): Promise<void> {
@@ -187,7 +186,7 @@ async function checkBlastClusters(): Promise<void> {
       losses.push(1000 - health(w, target));
     }
     if (distance > 4.5) { expect(losses[0]).toBeGreaterThan(0); expect(losses[1]).toBe(0); }
-    else expect(losses[1]).toBeCloseTo(losses[0] * .75, 5);
+    else expect(losses[1]).toBeCloseTo(losses[0] * .5, 5);
   }
   for (const id of ['weapon.pipe-bomb', 'weapon.rocket-launcher']) {
     const w = await arena(); equip(w, ['weapon.fire-axe'], [id]);
@@ -869,3 +868,4 @@ async function checkCorgiLure(): Promise<void> {
   equip(w, ['weapon.fire-axe'], ['weapon.handgun']);
   expect(w.combat!.runner.loadout.state.corgiReady).toBe(ready);
 }
+

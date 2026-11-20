@@ -344,7 +344,7 @@ export async function edgeFixtures(level: RunnerLevel, tier: Tier, add: Add, obs
     const route = await runLevel('L10', 'complete', 1, undefined, 'auto', routeSave, undefined, 0, {
       quality: tier,
       beforeBegin: routeWorld => {
-        storyOnly = routeWorld.missions!.def.steps.every(step => !/\b(machete|rifle|molotov|nail.?gun|flashbang|weapon)\b/i.test(step.text));
+        storyOnly = routeWorld.missions!.def.steps.every(step => !/\b(machete|rifle|molotov|nail.?gun|weapon)\b/i.test(step.text));
         const update = routeWorld.update.bind(routeWorld);
         routeWorld.update = () => {
           const player = routeWorld.entities.get(1)!;

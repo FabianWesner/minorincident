@@ -63,7 +63,7 @@ pillars. The console sits at one side; the cure charges while the courier keeps 
   charge into machinery (stun 2 s, exposed weak spot glowing on its back).
 - **Phase 2 · Rage (70–35 %):** throws wrecks, containers and corpses (Thrower set, heavier, longer range); climbs onto
   structures; roar calls a wave. Counter: fuel tanks (shoot when it is next to one), the flamethrower burns off its armour
-  plates (exposes red weak spots), flashbangs stun it briefly.
+  plates (exposes red weak spots).
 - **Phase 3 · Last stand (35–0 %):** goes for the console directly; the electrified gate can be switched on once (lure it
   through: big damage + 3 s stun). Any loadout can finish it: weak spots take full damage from every weapon.
 - **Fail:** the courier downed → restart at phase start; the console charge is kept.

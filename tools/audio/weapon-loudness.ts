@@ -18,7 +18,7 @@ export const weaponClasses: Record<string, WeaponClass> = {
     'weapon.handgun': 'handgun', 'weapon.pistol': 'handgun', 'weapon.nail-gun': 'smg', 'weapon.smg': 'smg', 'ability.turret': 'smg',
     'weapon.assault-rifle': 'rifle', 'weapon.hunting-rifle': 'rifle', 'weapon.machine-gun': 'machine-gun', 'weapon.army-mg': 'machine-gun',
     'weapon.shotgun': 'shotgun', 'weapon.rocket-launcher': 'rocket', 'weapon.rotary-minigun': 'machine-gun',
-    'weapon.grenade': 'throw', 'weapon.molotov': 'throw', 'weapon.pipe-bomb': 'throw', 'weapon.smoke-grenade': 'throw', 'weapon.flashbang': 'throw', 'weapon.firecracker-lure': 'smg',
+    'weapon.grenade': 'throw', 'weapon.molotov': 'throw', 'weapon.pipe-bomb': 'throw', 'weapon.smoke-grenade': 'throw', 'weapon.firecracker-lure': 'smg',
 };
 export interface CueLoudness { id: string; cls: WeaponClass; lufs: number; truePeak: number; played: number; crest: number; clip: number }
 /** Crest factor (peak over RMS of the cue's audible part, dB) and clipping density (share of audible samples within 1 dB of the slice peak): heavy saturation shows as a low crest and a high density. */

@@ -42,10 +42,6 @@ for (const quality of ['low','high'] as const) {
     advance(121);
     const opened=hit('weapon.army-mg',100);
     check('two seconds of flame burn off plates and restore full weapon damage',!!boss.infected!.megaArmourBroken&&opened===100,{burn:boss.infected!.megaBurnTicks,opened});
-    const beforeFlash=boss.health.current;boss.infected!.megaStaggerReady=w.tick+120;
-    w.combat!.status.apply(boss,{kind:'stunned',duration:3,maxStacks:1,dps:0,slow:0},1,'weapon.flashbang',++sequence);
-    const afterFlash=boss.health.current,flashUntil=boss.combat!.staggerUntil;boss.infected!.megaStaggerReady=w.tick;hit('weapon.army-mg',10);
-    check('flashbang interrupts for one second despite gun stagger cooldown, without HP damage or a later bullet shortening it',afterFlash===beforeFlash&&flashUntil>=w.tick+60&&boss.combat!.staggerUntil>=flashUntil,{beforeFlash,afterFlash,flashUntil,tick:w.tick,afterBullet:boss.combat!.staggerUntil});
     reset();place(boss,3985,-27);place(player,3990,-25);advance(1);reset();
     const corpseId=ai.spawn('infected.runner',{x:3982.5,z:-27});hit('weapon.rocket-launcher',1000,corpseId,'explosive');advance(180);reset();place(boss,3985,-27);place(player,3990,-25);
     const throwStarted=ai.startSpecial(boss.id,'alpha.grab-throw',{id:1,x:3990,z:-25},{x:3985,z:-27,radius:1,dx:1,dz:0});

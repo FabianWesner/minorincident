@@ -26,13 +26,14 @@ function dropLegacyL3Weapons(raw:unknown):unknown {
   if(!record(raw)||!Array.isArray(raw.ownedActions))return raw;
   // The hunting rifle is a legitimate farm discovery in L10 (PO 2026-11-08).
   const retired=(id:unknown)=>legacyL3.has(String(id))&&!(id==='weapon.hunting-rifle'&&Number(raw.unlockedLevel)>=10);
-  const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>retired(id)?'weapon.handgun':id))]:ids;
+  const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>id==='weapon.flashbang'?'weapon.molotov':retired(id)?'weapon.handgun':id))]:ids;
   const owned=swap(raw.ownedActions) as string[],out:Record<string,unknown>={...raw,ownedActions:owned};
-  if(typeof raw.selectedAction==='string'&&retired(raw.selectedAction))out.selectedAction='weapon.handgun';
+  if(raw.selectedAction==='weapon.flashbang')out.selectedAction='weapon.molotov'; else if(typeof raw.selectedAction==='string'&&retired(raw.selectedAction))out.selectedAction='weapon.handgun';
   if(record(raw.racks))out.racks={...raw.racks,LEFT:swap(raw.racks.LEFT),RIGHT:swap(raw.racks.RIGHT)};
   if(record(raw.pending)){const pending={...raw.pending};delete pending.weaponChosen;out.pending=pending;}
   return out;
 }
+const swapFlashbang = (ids: unknown): unknown => Array.isArray(ids) ? [...new Set(ids.map(id => id === 'weapon.flashbang' ? 'weapon.molotov' : id))] : ids;
 /** The transport handover is an exact live roster, not a set of visual seat placeholders. */
 function validTransport(raw: unknown): boolean {
   if (!record(raw) || !Number.isSafeInteger(raw.tick) || Number(raw.tick) < 0 || typeof raw.infiniteCharges !== 'boolean' || !record(raw.vehicle) || !Array.isArray(raw.occupants)) return false;
@@ -80,7 +81,38 @@ export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
   if(record(raw)&&raw.version===1)raw={...raw,version:2};
   raw = dropLegacyL3Weapons(raw);
-  if (record(raw) && raw.cureResume !== undefined) raw = { ...raw, cureResume: migrateCureResume(raw.cureResume) };
+  if (record(raw) && raw.cureResume !== undefined) {
+    let resume = raw.cureResume;
+    if (record(resume)) {
+      resume = { ...resume };
+      for (const key of ['current', 'checkpoint']) {
+        const checkpoint = (resume as Record<string, unknown>)[key];
+        if (record(checkpoint) && record(checkpoint.arsenal)) {
+          const arsenal = checkpoint.arsenal;
+          const entities = Array.isArray(checkpoint.entities) ? checkpoint.entities.map(entity => {
+            if (!record(entity) || !record(entity.weapons)) return entity;
+            const weapons = { ...entity.weapons };
+            for (const side of ['LEFT', 'RIGHT']) {
+              const state = weapons[side];
+              if (record(state) && Array.isArray(state.rack)) {
+                let hasMolotov = state.rack.some(slot => record(slot) && slot.id === 'weapon.molotov');
+                state.rack = state.rack.flatMap(slot => {
+                  if (!record(slot) || slot.id !== 'weapon.flashbang') return [slot];
+                  if (hasMolotov) return [];
+                  hasMolotov = true; return [{ ...slot, id: 'weapon.molotov' }];
+                });
+              }
+            }
+            return { ...entity, weapons };
+          }) : checkpoint.entities;
+          (resume as Record<string, unknown>)[key] = { ...checkpoint, entities, arsenal: { ...arsenal,
+            ownedActions: swapFlashbang(arsenal.ownedActions),
+            racks: record(arsenal.racks) ? { ...arsenal.racks, LEFT: swapFlashbang(arsenal.racks.LEFT), RIGHT: swapFlashbang(arsenal.racks.RIGHT) } : arsenal.racks } };
+        }
+      }
+    }
+    raw = { ...raw, cureResume: migrateCureResume(resume) };
+  }
   // Retired pre-finale breakdown saves retain their position, roster and zero durability.
   if (record(raw) && raw.unlockedLevel === 9 && record(raw.l9Crash) && record(raw.l9Crash.state) && raw.l9Crash.state.phase === 'driving' && record(raw.l9Crash.vehicle) && record(raw.l9Crash.vehicle.health) && raw.l9Crash.vehicle.health.current === 0 && record(raw.l9Crash.vehicle.vehicle)) {
     const copy = structuredClone(raw.l9Crash);

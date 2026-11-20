@@ -17,7 +17,7 @@ export class LevelTenBot {
   private readonly route = [
     ...cure.regions[0].route.slice(0, 1), cure.anchors['crash-machete'], ...cure.regions[0].route.slice(1, 4), cure.anchors['farmhouse-rifle'],
     [1042, 80], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
-    cure.anchors['guard-tower-rifle'], cure.anchors['checkpoint-flashbang'], cure.anchors['r4-r5-seam'],
+    cure.anchors['guard-tower-rifle'], cure.anchors['r4-r5-seam'],
     cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
     [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
   ];
