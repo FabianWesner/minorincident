@@ -238,6 +238,16 @@ async function checkDynamicCover(): Promise<void> {
   devices.rebuildBlockers(); compare();
 }
 
+test('lethal direct fire hazard damage marks an infected for ash', async () => {
+  const w = await loadLevel('L1', 1); worlds.push(w);
+  const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
+  target.health.current = 5;
+  w.hazards!.spawn('fire', { x: 4, z: 4 }, { radius: 1, duration: 3 });
+  step(w, 60);
+  expect(target.health.current).toBe(0);
+  expect(target.ashDeath).toBeDefined();
+});
+
 test('flamethrower pointer range limits damage and leaves ground patches', async () => {
   const short = await arena(); equip(short, ['weapon.flamethrower']);
   const near = dummy(short, 1.5, 0, 200), far = dummy(short, 6, 0, 200);

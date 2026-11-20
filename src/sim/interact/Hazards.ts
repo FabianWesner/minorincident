@@ -241,7 +241,7 @@ export class Hazards {
           const target = this.world.entities.get(id)!;
           if (target.faction === 'environment' || target.health.current <= 0 || (h?.kind === 'toxic' && target.archetype === 'infected.hazmat') || (h?.kind === 'fire' && target.archetype === 'infected.firefighter')) continue;
           if ((burns || h?.kind === 'fire') && (target.faction === 'infected' || target.kind === 'player')) this.world.combat?.status.apply(target, groundBurn, e.id, 'hazard.fire');
-          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', knockback: 0, stagger: 0 });
+          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', fire: !!burns || h?.kind === 'fire', permanent: !!burns || h?.kind === 'fire', knockback: 0, stagger: 0 });
         }
       }
     }
