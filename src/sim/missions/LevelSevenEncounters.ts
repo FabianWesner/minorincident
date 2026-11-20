@@ -206,6 +206,14 @@ export class LevelSevenEncounters {
         else if (direction === 1) p = { x: centre.x + 19, z: centre.z + (rank - 3) * 1.3 };
         else if (direction === 2) p = { x: centre.x + 14 + (rank - 3) * 1.2, z: centre.z - 6.5 };
         else p = { x: centre.x + 14 + (rank - 3) * 1.2, z: centre.z + 6.5 };
+      } else if (group > l7Encounters.firstStreetGroup && group < l7Encounters.firstStreetGroup + 4) {
+        // Stage separate approaches around the junction before the column
+        // arrives. The director still admits each point only out of view.
+        const lane = i % 4, rank = Math.floor(i / 4);
+        const spread = (rank - 6) * 1.4;
+        if (lane === 0) p = { x: centre.x - 15, z: centre.z + spread };
+        else if (lane === 1) p = { x: centre.x + 15, z: centre.z + spread };
+        else p = { x: centre.x + spread, z: centre.z + (lane === 2 ? -15 : 15) };
       } else {
         const row = Math.floor(i / 10);
         // High and low tiers both enter through the road and its two verges.
