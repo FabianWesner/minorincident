@@ -43,3 +43,5 @@ This report records available evidence; it does not claim blocked remote gates o
 ## Remote retry
 
 The runner became available on November 20. Remote LOW and HIGH `qa:accept -- --level L2 --tier <tier> --skip-browser` each completed their native routes, 27 fixture clauses and four checkpoints with identical control and no errors; each aggregate reported zero fresh failing rows and 16 incomplete rows (exit 2). The commitless runner checkout emitted Git provenance errors. These runs did not retain the remote reports, so they do not independently establish per-row reach values or a fresh-main comparison. Remote unit and full threat gates remain open.
+
+Remote unchanged `sh tools/remote/run.sh "$PWD" -- npm test` subsequently passed on committed source `f8323463`: 27 files, 105 tests passed and one skipped, 228.8 s within the 240 s budget. This includes a passing `tests/engine/l4-contact.test.ts` on the remote runner. The earlier local L4 failure remains recorded above.
