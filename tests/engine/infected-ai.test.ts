@@ -321,6 +321,16 @@ async function alphaTypeContracts() {
       const aimLength = Math.hypot(aim.target.x - 20, aim.target.z);
       expect(aim.area.dx).toBeCloseTo((aim.target.x - 20) / aimLength);
       expect(aim.area.dz).toBeCloseTo(aim.target.z / aimLength);
+
+      const wallWorld = await arena(65, false);
+      const wallPursuit = installMegaPursuit(wallWorld, { introduceTick: null, resident: () => true });
+      const chargingMega = wallWorld.entities.get(wallPursuit.introduce({ x: 20, z: 0 }))!;
+      expect(wallWorld.infected!.startSpecial(chargingMega.id, 'alpha.charge', { id: 1, x: 0, z: 0 }, { x: 20, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
+      const wall = { x: 10, z: 0, y: 1, halfX: .3, halfZ: 5, halfY: 1 };
+      wallWorld.solids.setBarrier('mega-charge-test', wall);
+      for (let i = 0; i < 120 && !chargingMega.infected!.specialAttack?.obstructionUntil; i++) step(wallWorld, 1);
+      expect((chargingMega.infected!.specialAttack?.obstructionUntil ?? 0) - wallWorld.tick).toBe(120);
+      expect(chargingMega.combat!.staggerUntil - wallWorld.tick).toBe(120);
     }
   } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
 }
