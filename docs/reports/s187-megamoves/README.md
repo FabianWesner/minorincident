@@ -2,6 +2,8 @@
 
 ## s187b follow-up — coarse pursuit stall
 
+Full merged-source threat audit on `04d63139`: **0 flags**, all ten skilled routes complete, including L10. `npm run qa:threat:sharded` completed both remote shards and merged their receipts (392.0 s maximum shard time). Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 27 files, 105 passed, 1 skipped, 195.7 s.
+
 The merged-source L10 skilled route now completes in an isolated native audit after fixing coarse Mega pursuit recovery. The former route left the Mega parked at x≈1882 from the restricted-zone stage onward; the coarse navigation branch reset its stuck sample every tick and did not run the detailed progress monitor. Coarse pursuit now measures resolved travel over the configured stuck window and uses the existing recovery escalation, including authored-link avoidance, while retaining collision checks.
 
 - `npm run typecheck`: passed.
@@ -12,9 +14,9 @@ The merged-source L10 skilled route now completes in an isolated native audit af
 - `npm test` remote attempt could not start (no healthy Hetzner runner); the prescribed local fallback passed (27 files, 106 passed, 1 skipped, 236.5 seconds). The additional remote `tests/engine/l4-contact.test.ts` attempt was likewise unavailable.
 - `npm run qa:threat:sharded` could not start either shard: no healthy Hetzner runner, and the Mac fallback only accepts plain Vitest/test commands. No full audit receipt was produced after the fix.
 - HIGH native L10 pacing, seed 1, complete profile: route completed in 1,149.07 simulated seconds. While the courier actually moved for 891.78 seconds, Mega-sourced hits dealt 98.28 damage over 4 hits, **0.1102 damage/second**. Combat events identify the source action as `infected.alpha`, so this aggregate cannot separate special-move hits from ordinary Mega contact attacks. Evidence: `test-results/s187b-moving-dps.json`.
-- Still open: full `qa:threat` with all routes, moving courier DPS from Mega moves, and an explicit-path commit. The commit attempt was rejected because `.git/worktrees/s187-megamoves/index.lock` is outside this task's writable filesystem scope.
+- Earlier sandbox restrictions prevented committing; the fix was subsequently committed as `04d63139`. The special-move-only share of moving DPS remains unmeasured.
 
-**Acceptance remains incomplete.** The earlier full threat audit failed the L10 hold and skilled-route completion; the s187b isolated L10 follow-up now passes both, but a full all-level threat audit has not completed. The service approach still needs visible-arrival review, and the moving DPS ceiling is unverified. The original implementation and evidence are committed for handoff; the s187b fix and report update are not committed because the shared Git index is outside this task's writable filesystem scope.
+**Threat audit acceptance passes.** The service approach still needs visible-arrival review, and the measured Mega-sourced moving DPS includes ordinary contact as well as special moves.
 
 ## Implementation
 
