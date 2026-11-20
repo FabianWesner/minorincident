@@ -108,6 +108,14 @@ async function checkFireAshPersistence(): Promise<void> {
   const other = w.infected!.spawn('infected.runner', { x: 6, z: 4 }), body = w.entities.get(other)!;
   w.combat!.damage.apply({ attackId: 2, actionId: 'weapon.handgun', sourceId: 1, targetId: other, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: body.health.current, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
   expect(body.ashDeath).toBeUndefined();
+  const grabberId = w.infected!.spawn('infected.lion', { x: 8, z: 4 }), grabber = w.entities.get(grabberId)!;
+  const player = w.entities.get(1)!, releaseAt = w.tick + 120, hp = grabber.health.current;
+  grabber.infected!.grabUntil = releaseAt; grabber.infected!.heardTargetId = player.id;
+  player.combat!.staggerUntil = releaseAt; w.npcs!.civilians.hold(grabberId);
+  w.combat!.status.apply(grabber, rosterAction('weapon.flashbang').status!, 1, 'weapon.flashbang');
+  expect(grabber.infected!.grabUntil).toBe(0); expect(player.combat!.staggerUntil).toBe(w.tick);
+  expect(w.npcs!.civilians.holds(grabberId)).toBe(false); expect(grabber.health.current).toBe(hp);
+  expect(Status.stunned(grabber, w.tick)).toBe(true);
 }
 
 async function checkWeaponControlRoles(): Promise<void> {
