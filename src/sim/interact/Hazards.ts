@@ -8,6 +8,7 @@ import type { DamageEvent } from '../combat/Damage';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Vec2 } from '../../input/InputFrame';
+import { FieldFire } from './FieldFire';
 export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'tear-gas', 'extinguisher', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
@@ -23,6 +24,7 @@ export interface HazardOptions { hp?: number; radius?: number; burnTime?: number
 /** E11 hazard triggers/damage; E27 consumes arming/blast events for richer effects. */
 export class Hazards {
   readonly debris: DebrisPool;
+  readonly fieldFire: FieldFire | null;
   private fallbackDamage: Damage | null = null;
   /** r39-l10nan: campaign levels replace world.combat after the hazards exist (npc install). A cached Damage kept the old
    * instance, so the god cheat (set on the live one) did not cover fire/toxic zones and the courier lost HP in god mode. */
@@ -34,6 +36,7 @@ export class Hazards {
   private readonly spreading: EntitySnapshot[] = [];
   constructor(private readonly world: SimWorld) {
     this.debris = new DebrisPool(world.physics);
+    this.fieldFire = world.districts?.composition.id === 'L10' ? new FieldFire(world.districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] })))) : null;
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit' || e.amount <= 0) return;
       const entity = world.entities.get(e.targetId); if (!entity) return;
@@ -68,6 +71,7 @@ export class Hazards {
   }
   /** Deposit fuel at a clipped weapon impact, sharing the existing fire cap, damage and expiry path. */
   ignitePatch(position: Vec2, radius: number, duration: number): number | null {
+    this.fieldFire?.ignite(position, this.world.tick, Math.max(4, radius * 2));
     const until = this.world.tick + Math.ceil(duration * 60 * (this.world.weather?.modifiers.fireDuration ?? 1));
     let fires = 0, reusable: EntitySnapshot | undefined;
     for (const e of this.world.entities.iterate()) {
@@ -158,6 +162,7 @@ export class Hazards {
   }
   /** Shared spread path for persistent weapon zones and aftermath fires. */
   spreadFire(position: Vec2, radius: number, duration: number, generations: number, sourceId: number, playerDamageSource = false): number | null {
+    this.fieldFire?.ignite(position, this.world.tick, Math.max(4, radius * 2));
     let count = 0;
     for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil) count++;
     if (count >= Explosions.maxFires) return null;
@@ -166,9 +171,10 @@ export class Hazards {
     const step = radius * 1.4 * (weather?.modifiers.fireSpread ?? 1);
     return this.spawn('fire', { x: position.x + Math.cos(angle) * step, z: position.z + Math.sin(angle) * step }, { radius: radius * .85, duration, spread: generations, playerDamageSource });
   }
-  snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor }; }
+  snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor, fieldFire: this.fieldFire?.snapshot() ?? null }; }
   update(): void {
     const tick = this.world.tick;
+    this.fieldFire?.update(tick);
     const actionZones = this.world.combat?.effects.zones;
     let fireReach = 2;
     let fires = 0; this.spreading.length = 0;
