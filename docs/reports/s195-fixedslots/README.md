@@ -12,6 +12,7 @@
 - `e39b2f9b` restores the original version 1 recording behavior for selecting innate fists even when another melee weapon is carried. Input and codec tests, typecheck and lint passed.
 - `05dcec15` orders side-specific touch selection by fixed key and applies L8's swap lock to historical replay selections too. Input and combat tests (12), typecheck and lint passed.
 - `99995b82` highlights the shared rack key when any of its owned variants is selected, while retaining the best owned icon. Input tests, typecheck and lint passed.
+- `0d7c900a` shows the fixed-key pickup hint for every keyed weapon, including machete and throwables without role text, and for repeat pickups. Input tests, typecheck and lint passed.
 - `8ff43012` keeps the rack visible when a level has holes but the player carries no weapons. Typecheck, lint and the focused input test passed after this change.
 - `895d2cb7` filters carried weapons by the predefined level keys when drawing a campaign rack, including when an older save contains an out-of-set weapon. Typecheck, lint and the focused input test passed.
 
