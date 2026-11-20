@@ -1654,6 +1654,7 @@ export class InfectedSystem {
   startSpecial(sourceId: number, move: InfectedSpecialMove, target: { id: number; x: number; z: number }, area: { x: number; z: number; radius: number; dx: number; dz: number }, follower = false): boolean {
     const e = this.world.entities.get(sourceId), b = e?.infected, timing = e?.infected?.pursuit && move in megaAlpha.moves ? megaAlpha.moves[move as keyof typeof megaAlpha.moves] : infectedSpecialMoves[move], tick = this.world.tick;
     if (!e || !b || e.archetype !== infectedSpecialMoves[move].archetype || e.health.current <= 0 || b.specialAttack || b.state === 'attack' || tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0) || tick + timing.windup < (b.specialCooldowns?.[move] ?? 0) || Status.stunned(e, tick)) return false;
+    if (b.pursuit && tick < (b.alphaSpecialStarted ?? -Infinity) + 180) return false;
     if (e.archetype === 'infected.alpha' && !b.pursuit && b.alphaType && !alphaTypes[b.alphaType].moves.includes(move)) return false;
     if (![target.x, target.z, area.x, area.z, area.radius, area.dx, area.dz].every(Number.isFinite) || area.radius < 0) return false;
     const megaCloseGrab = !!b.pursuit && move === 'alpha.grab-throw' && Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= 2.5;
