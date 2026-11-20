@@ -82,7 +82,7 @@ export class AnimalMoves {
         p.jaw = .75 * strike; p.airborne = phase > .56 && phase < .86;
         // Give the authored spring a world-space arc; its in-place paw sweep
         // otherwise crosses the floor while the contact solver is released.
-        this.lift = .35 * Math.sin(Math.PI * clamp01((phase - .5) / .4));
+        this.lift = .12 * Math.sin(Math.PI * clamp01((phase - .5) / .4));
         return p;
       }
       if (speed > .06) { p.pitch = Math.sin(gaitPhase * Math.PI * 2) * .08; p.head = -.06; }

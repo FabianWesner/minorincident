@@ -751,15 +751,9 @@ export class LevelEightZoo {
       // during the charge. Keep the group on a clear perpendicular flank so it
       // stays with the escort and out of the charge line.
       const hold = w.infected!.nav.clear(flank.x, flank.z, .4) ? flank : other;
+      Object.assign(goal, formationSlot(hold, heading, slot));
       // r33-l8route: the group holds INSIDE the enclosure with the courier (a hold point behind a fence would leave it outside the closing gate).
       const zone = l8Route.find(r => r.id === arena.id)!.zone;
-      if (arena.id !== 'elephant') {
-        // Clamp the formation origin with room for its rows, so boundary
-        // clamping does not stack several followers on the same target.
-        hold.x = Math.min(zone.x1 - 8, Math.max(zone.x0 + 8, hold.x));
-        hold.z = Math.min(zone.z1 - 8, Math.max(zone.z0 + 8, hold.z));
-      }
-      Object.assign(goal, formationSlot(hold, heading, slot));
       if (!boarding && arena.id !== 'elephant') { goal.x = Math.min(zone.x1 - 1.5, Math.max(zone.x0 + 1.5, goal.x)); goal.z = Math.min(zone.z1 - 1.5, Math.max(zone.z0 + 1.5, goal.z)); }
     }
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;

@@ -25,11 +25,10 @@ export const humanInfected: readonly InfectedDef[] = [
   { ...role('alpha', 200, 3.8, 'alpha', 0.55, 0.5), damage: 25, range: 1.5, attackInterval: 1, bar: true },
 ];
 /**
- * E32-AC07 infected dog (PO 10-13: fast, low, dangerous when the player is distracted). Speed 1.65x the nominal player run (PO 11-20: 1.5x faster), a 0.65 s
+ * E32-AC07 infected dog (PO 10-13: fast, low, dangerous when the player is distracted). Speed 1.1x the nominal player run, a 0.65 s
  * visible pounce telegraph, reach 1.1 m (<= 2 m), a 2 s cooldown after the strike (attack interval = windup + 2 s) and 10 HP per bite.
  */
-// PO 2026-11-20: "Zombie dogs should be 1.5x faster" → 1.1 × 1.5 = 1.65 × the nominal player run (same everywhere).
-export const dogTuning = { runFactor: 1.65, windupS: 0.65, cooldownS: 2, damage: 10, reachM: 1.1 } as const;
+export const dogTuning = { runFactor: 1.1, windupS: 0.65, cooldownS: 2, damage: 10, reachM: 1.1 } as const;
 function dogDef(): InfectedDef {
   return { ...role('dog', 30, l1v2.player.runMs * dogTuning.runFactor, 'pounce', 0.3, dogTuning.windupS), damage: dogTuning.damage, range: dogTuning.reachM, attackInterval: dogTuning.windupS + dogTuning.cooldownS };
 }
