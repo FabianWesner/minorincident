@@ -110,3 +110,5 @@ The full remote unit suite passed on commit `5fa7b2e4`: 27 files, 105 tests pass
 The D-SHOP placement reuses the diner asset for a separately labeled Food Court complex, so it retains one Food Court board. It covers the existing front artwork on the lot’s post-mounted frame; the Joe’s Diner and roadside-diner placements keep their existing named sign without an added board. All 35 support samples and the support-triangle plane check pass for the Food Court in each LOD, and no other placement bounds overlap its board. HIGH and LOW follow-camera views at zoom 1 and 1.5 show readable lettering (`food-court-sheet.jpg`). The last full unit-suite pass predates this change.
 
 The first full remote unit run on commit `30362caf` reached the 240-second budget (241.3 s, exit 124); no failures were reported in completed files. An unchanged retry was started.
+
+The unchanged retry on the Food Court revision also reached the 240-second budget (240.5 s, exit 124); completed files reported no failures. The most recent complete suite pass was on the preceding diner-sign revision (`5fa7b2e4`), before the Food Court placement was restored.
