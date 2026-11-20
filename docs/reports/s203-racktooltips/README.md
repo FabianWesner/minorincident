@@ -32,3 +32,9 @@
 - Focused gameplay smoke passed in 1.8 minutes with the corrected hole fixture. Inspected handgun, hole and Corgi captures at 1280×720 and 390×844: they sit above the rack and remain on screen. The phone Corgi capture showed a navigation arrow over the text; the HUD stacking order has since been raised while a tooltip is visible and needs a fresh visual check.
 - Fixed the missing separator before the Corgi recharge state and removed duplicate hole wording. Typecheck, lint and focused combat suite pass.
 - An attempted L4 key 4 capture timed out because the rack was hidden after the fixture's level change; that attempted fixture was removed. Key 4 captures remain open. Full `npm run test:smoke` remains open: its one-worker run exceeded the 240-second budget.
+
+## Follow-up (20:31 CET)
+
+- Re-ran `E2E_PORT=5171 SCENE_PORT=5172 SMOKE_WORKERS=1 npm run test:smoke`. Both GPU limit checks, the gameplay/L10 rack case, and WebGL pedestrian case passed; the run reached the 240-second budget and exited 124 before completing the remaining cases and public smoke. This is not a full smoke pass.
+- Inspected the refreshed 390×844 Corgi capture after the stacking change: the tooltip is above the navigation arrow, its role, G key and Ready state are readable, and it sits above the rack within the viewport.
+- A direct L4 scene fixture confirmed Army MG in the loadout, but the HUD became hidden between frames and the key 4 hover timed out. Temporary capture code was removed. Key 4 captures and a full smoke pass remain open.
