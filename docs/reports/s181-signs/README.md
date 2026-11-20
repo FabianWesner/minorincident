@@ -22,3 +22,5 @@ The nightly placement-vs-solids check examines authored prop placements in L1–
 A HIGH L8 follow-camera trial with `MeshLambertNodeMaterial` produced very dark, unreadable lettering at zoom 1.5. The readable basic material remains in place; achieving a lit, emissive-free board with adequate night contrast remains open.
 
 The sign now uses the project shaded material with a brighter painted albedo and no emissive input. Fresh game-camera captures show readable lettering at L8 HIGH and L10 HIGH/LOW at both zooms; the L8 night board is dimmer than the prior basic material. Placement and mounting review remains open.
+
+The LOD0 ray audit in `surface-audit.json` shows that the AABB fallback is not a mounting proof: Joe’s Diner is 3.697 m from the first hit, Grove Market 7.807 m (an interior fixture), and Sunset Fuel and Motor Pool have no hit within 20 m. The ray samples only the board centre and may hit trim or windows; it cannot prove a valid mounting even for short distances. Replace the fallback with reviewed entrance placements and check their full extent and clearance.
