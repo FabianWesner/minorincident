@@ -6,6 +6,8 @@ export interface FieldCell { id: string; x: number; z: number; state: FieldCellS
 
 /** Deterministic, checkpointable fire state for authored flammable ground. */
 export class FieldFire {
+  static readonly maxBurning = 128;
+  private burningCount = 0;
   readonly cells: FieldCell[];
   private readonly byId = new Map<string, FieldCell>();
   private readonly neighbors = new Map<string, FieldCell[]>();
@@ -25,22 +27,22 @@ export class FieldFire {
     let count = 0;
     for (let x = Math.floor((position.x - radius) / 16); x <= Math.floor((position.x + radius) / 16); x++)
       for (let z = Math.floor((position.z - radius) / 16); z <= Math.floor((position.z + radius) / 16); z++)
-        for (const cell of this.buckets.get(`${x},${z}`) ?? []) if (cell.state === 'intact' && Math.hypot(cell.x - position.x, cell.z - position.z) <= radius && !this.blocked(position, cell)) {
-          cell.state = 'burning'; cell.ignitedAt = tick; count++;
+        for (const cell of this.buckets.get(`${x},${z}`) ?? []) if (this.burningCount < FieldFire.maxBurning && cell.state === 'intact' && Math.hypot(cell.x - position.x, cell.z - position.z) <= radius && !this.blocked(position, cell)) {
+          cell.state = 'burning'; cell.ignitedAt = tick; count++; this.burningCount++;
         }
     return count;
   }
   update(tick: number): void {
     const ignite: FieldCell[] = [];
     for (const cell of this.cells) {
-      if (cell.state === 'burning' && tick - cell.ignitedAt >= 420) cell.state = 'scorched';
+      if (cell.state === 'burning' && tick - cell.ignitedAt >= 420) { cell.state = 'scorched'; this.burningCount--; }
       if (cell.state !== 'intact') continue;
       for (const source of this.neighbors.get(cell.id) ?? []) if (source.state === 'burning') {
         const distance = Math.hypot(cell.x - source.x, cell.z - source.z);
         if (distance <= 9 + Math.max(0, (tick - source.ignitedAt) / 60)) { ignite.push(cell); break; }
       }
     }
-    for (const cell of ignite) { cell.state = 'burning'; cell.ignitedAt = tick; }
+    for (const cell of ignite) { if (this.burningCount >= FieldFire.maxBurning) break; cell.state = 'burning'; cell.ignitedAt = tick; this.burningCount++; }
   }
   snapshot(): FieldCell[] { return this.cells.map(c => ({ ...c })); }
   restore(saved: readonly FieldCell[]): void {
@@ -48,5 +50,6 @@ export class FieldFire {
       const cell = this.byId.get(state.id);
       if (cell && ['intact', 'burning', 'scorched'].includes(state.state) && Number.isFinite(state.ignitedAt)) Object.assign(cell, state);
     }
+    this.burningCount = this.cells.filter(cell => cell.state === 'burning').length;
   }
 }

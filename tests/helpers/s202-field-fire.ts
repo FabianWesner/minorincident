@@ -18,6 +18,13 @@ function checkS202Field0(): void {
   restored.restore(saved);
   restored.update(1000);
   expect(restored.cells.map(c => c.state)).toEqual(['scorched', 'scorched', 'scorched']);
+  const bounded = new FieldFire(Array.from({ length: 140 }, (_, i) => crop(`cap-${i}`, i)));
+  expect(bounded.ignite({ x: 70, z: 0 }, 1, 100)).toBe(FieldFire.maxBurning);
+  const resumed = new FieldFire(Array.from({ length: 140 }, (_, i) => crop(`cap-${i}`, i)));
+  resumed.restore(bounded.snapshot());
+  expect(resumed.ignite({ x: 70, z: 0 }, 1, 100)).toBe(0);
+  resumed.update(421);
+  expect(resumed.ignite({ x: 70, z: 0 }, 422, 100)).toBeGreaterThan(0);
 }
 
 

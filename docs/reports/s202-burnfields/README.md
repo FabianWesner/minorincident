@@ -6,9 +6,9 @@ Partial implementation; the requested feature is not complete. This report recor
 
 ## Completed
 
-- Added an initial deterministic L10 corn-cell state with a seven-second burn interval and snapshot/restore methods. Mission checkpoints capture and restore this state, retaining scorched cells on retry. Spread now reaches neighbouring crop blocks at 10 m spacing; the approximation still needs validation against real field footprints and road boundaries.
+- Added an initial deterministic L10 corn-cell state with a seven-second burn interval and snapshot/restore methods. Mission checkpoints capture and restore this state, retaining scorched cells on retry. Spread now reaches neighbouring crop blocks at 10 m spacing, with at most 128 concurrently burning cells for newly simulated fires; the approximation still needs validation against real field footprints and road boundaries.
 - The clipped flamethrower stream, molotov impact and newly spawned fire hazards ignite nearby authored corn cells and vegetation; a loaded-level test confirms a fired stream ignites an authored crop block. Crop cells are sourced only from `veg.corn-block` placements, so roads and other surfaces are excluded.
-- Added an isolated unit test for deterministic spread, exclusion of a non-crop placement, and restoring a saved state. It does not exercise real road geometry. A loaded L10 checkpoint test verifies restoration of a scorched cell.
+- Added an isolated unit test for deterministic spread, exclusion of a non-crop placement, and restoring a saved state. It does not exercise real road geometry. A loaded L10 checkpoint test verifies restoration of a scorched cell. A focused test verifies the active-cell cap and its checkpoint count; saves already containing more than the cap are retained and decay normally.
 - Molotov pools, burning field cells, active fire hazards, and burning destructible props apply a 35 DPS, four-second burning status to infected and the courier. Focused tests check an infected entering a landed molotov pool, upgrading a weaker burn to 35 DPS on the first tick inside a molotov pool, taking damage after leaving, and catching fire immediately during a brief ground-flame crossing. Focused tests, lint, and TypeScript checks pass.
 
 ## Additional PO requirements (2026-11-20)
