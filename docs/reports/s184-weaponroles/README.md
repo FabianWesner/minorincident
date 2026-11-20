@@ -115,3 +115,5 @@ L8 kiting trace on the broad projection candidate: by tick 10500 the courier was
 L8 comparison with the original hold also lost nearly all nearby threats during kiting (491 frames without threats) but passed on one landed hit; the broad projection run had 591 such frames and zero hits. A pursuit-brain tangent steering trial cleared focused L10 but left L8 at zero hits; it was discarded.
 
 A trial retained the old hold until an infected had a sustained rejected movement proposal and little displacement, then retried projection each tick. Local L4 still stopped actors 297, 305 and 298, so it was discarded. The broad projection candidate remains committed but has not met the threat gate.
+
+A trial retaining the original collision hold while reducing extra infected spacing unless both actors are in combat crowd state shifted the local L4 failure to actor 255 near the south perimeter; it was discarded. No accepted alternative to the broad projection candidate has passed the required gates.
