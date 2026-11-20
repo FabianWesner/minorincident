@@ -21,3 +21,5 @@ The merged L1–L10 threat audit reported four L6 early-close flags: two slow-fo
 Rocket knockdown is not yet universal: existing arena-boss and Mega handling suppresses it, and the L7 escort rule exempts following civilians. These exceptions need implementation and validation against the requested blast behavior.
 
 Remote `npm test` passed with 105 tests passing and one skipped after the gameplay and TTK changes. The subsequent contact-spread assertion passed in the focused combat test. Typecheck and lint passed; both HIGH and LOW capture runs had zero console errors.
+
+Main advanced after the last merge: `7b5e1b5e` adds the assault-rifle torch and `ef72dad9` adds fixed start racks. These commits are not yet merged into this branch; integration and fresh verification remain. The separate `s191c-l6balance` lane also reports unresolved L6 pressure failures and has not supplied a passing L6 fix.
