@@ -62,7 +62,7 @@ try {
   }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1' });
   await session.page.waitForFunction(() => window.__SS__!.tick() >= 600, null, { timeout: 120_000, polling: 20 });
   const result = await session.page.evaluate(() => {
-    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
+    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; builtMaterials: Record<string, number>; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
     trace.hitchTrace.running = false; window.__SS__!.pause();
     const frames = trace.hitchTrace.frames;
     const sorted = frames.map(f => f.dt).sort((a,b)=>a-b);
@@ -79,5 +79,9 @@ try {
   assert.equal(result.checkpoint, 'cure-crash');
   assert.ok(result.frames.some(f => f.alive === 0), 'trace must include the period before the first infected');
   assert.ok(result.frames.some(f => f.alive > 0), 'trace must include the first infected');
+  if (process.env.S194_ASSERT_WARM === '1') {
+    const first = result.frames.findIndex(f => f.alive > 0);
+    assert.deepEqual(result.frames[first].builtMaterials, {}, 'first infected frame must not build materials');
+  }
   assert.deepEqual(result.errors, []);
 } finally { await session.close(); stopServer(); }
