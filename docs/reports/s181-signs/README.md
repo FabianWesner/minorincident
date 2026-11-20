@@ -80,3 +80,5 @@ The eight tree candidates were tested against static authored LOD0 triangles. Th
 The full remote unit suite passed on a later retry: 27 files, 105 tests passed, one skipped, 223.0 s against the 240 s budget. This run overlapped subsequent sign-placement edits, so it is not a final-source validation.
 
 A LOW L8 follow-camera near → away → return probe reported zoo visibility `010 → 000 → 010` and index counts `54 → 0 → 54`: the Primate House face and its brackets disappear and return together with their building.
+
+A HIGH gym follow-camera probe did not establish readability: close to the entrance, the existing cutaway hides the building and its sign; a farther tested pose put the sign outside the frame. A useful unobstructed gameplay approach still needs review.
