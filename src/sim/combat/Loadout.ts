@@ -34,7 +34,8 @@ export class Loadout {
     else if (entries.some(entry => entry.id !== 'weapon.fists' && this.definition(entry.id).category === 'melee')) {
       const fists = entries.findIndex(entry => entry.id === 'weapon.fists'); if (fists >= 0) entries.splice(fists, 1);
     }
-    return entries.sort((a, b) => compareWeapons(a.id, b.id));
+    return entries.sort((a, b) => (weaponKey(a.id) ?? 99) - (weaponKey(b.id) ?? 99)
+      || this.definition(b.id).tier - this.definition(a.id).tier || compareWeapons(a.id, b.id));
   }
   cycleActive(direction: number, tick: number): void {
     const entries = this.activeEntries(), side = this.state.selectedSide, state = this.state[side];

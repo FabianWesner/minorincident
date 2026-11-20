@@ -176,7 +176,7 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect([...Object.keys(catalog), ...Object.keys(mountedActions)].filter(id => !(weaponOrder as readonly string[]).includes(id))).toEqual([]);
   const left = ['weapon.fire-axe', 'weapon.bat', 'weapon.kick'], right = ['ability.corgi-lure', 'weapon.molotov', 'weapon.handgun'];
   const loadout = new Loadout(left, right);
-  const expected = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.molotov'];
+  const expected = ['weapon.fire-axe', 'weapon.bat', 'weapon.handgun', 'weapon.molotov'];
   expect(loadout.activeEntries().map(e => e.id)).toEqual(expected);
   expect(loadout.orderedEntries('RIGHT').map(e => e.id)).toEqual(['weapon.handgun', 'weapon.molotov']);
   const lureOnly = new Loadout(['weapon.fire-axe'], ['ability.corgi-lure']);
