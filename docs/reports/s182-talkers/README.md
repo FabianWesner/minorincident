@@ -14,7 +14,7 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [L5 Rosa HIGH](l5-rosa.jpg) injects the search phase and survivor discovery at the pharmacy. The subtitle appears, but infected crowd the rescue point and Rosa cannot be distinguished confidently in the sheet. A render probe confirms her actor is drawn while in the `flee` state, using locomotion clips during the line. An existing gesture is now layered on unarmed moving speakers; the crowded recapture is still not a gesture pass, and ordinary rescue play needs review.
 
-[L9 opening HIGH](l9-opening.jpg) shows the APC's existing seated-crew cutaway during Sam's opening subtitle. Several passengers are visible, but Sam cannot be identified confidently and his gaze and gesture are not readable; the in-frame speaker requirement remains unverified. The roof is restored after the line.
+[L9 opening HIGH](l9-opening.jpg) shows the APC's existing seated-crew cutaway during Sam's opening subtitle, now labelled with his name (or Reyes for the fallback). Several passengers are visible, but Sam cannot be identified confidently and his gaze and gesture are not readable; the in-frame speaker requirement remains unverified. The roof is restored after the line.
 
 An earlier experimental walk from off-screen left the guard entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions without changing the simulation.
 
