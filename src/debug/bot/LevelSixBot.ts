@@ -10,7 +10,6 @@ export class LevelSixBot {
   finished=false;
   private readonly walker=new Walker();
   private shotgunTarget=0;
-  private preparedWeapon=false;
   constructor(private readonly w:SimWorld,readonly profile:L6Profile='complete'){}
   sample():InputFrame {
     const w=this.w,m=w.missions!,s=m.state.l6,f=emptyInput(),p=w.entities.get(1)!.transform;
@@ -18,13 +17,6 @@ export class LevelSixBot {
     if(m.state.phase==='briefing')m.begin();if(m.state.phase==='cinematic'){f.interact=true;return f;}
     if(m.state.phase==='retry'){m.restore();this.walker.reset();this.shotgunTarget=0;return f;}
     if(this.profile==='idle'||w.entities.get(1)!.health.current<=0)return f;
-    // The campaign opens with the handgun; a skilled defender may equip the
-    // authored MG before the shelter breach using ordinary selection input.
-    if(!this.preparedWeapon && (this.profile==='complete'||this.profile==='early-close')) {
-      const index=w.entities.get(1)!.weapons?.RIGHT.rack.findIndex(slot=>slot.id==='weapon.army-mg')??-1;
-      if(index>=0)f.selectedSlot={side:'RIGHT',index};
-      this.preparedWeapon=true;
-    }
     const typical=this.profile==='typical';
     const go=(target:{x:number;z:number},stop:number,key:string)=>{const dir=this.walker.step(w,target,stop,key);if(dir)f.move=dir;return !dir;};
     const friends=s.survivors.filter(r=>r.status==='following');
