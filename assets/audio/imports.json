@@ -3509,6 +3509,19 @@
       "downloadSha256": "b13ba6107efe58b36c3d8f73824c776329dfe7f35f8f2a528694b7a96d03c55b",
       "member": "flashbang.mp3",
       "sha256": "b13ba6107efe58b36c3d8f73824c776329dfe7f35f8f2a528694b7a96d03c55b"
+    },
+    "s184-throw": {
+      "title": "throw swish x12 (HQ preview)",
+      "author": "hz37",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://freesound.org/people/hz37/sounds/463763/",
+      "pack": "s184-throw",
+      "downloadUrl": "https://cdn.freesound.org/previews/463/463763_123355-hq.mp3",
+      "downloadFile": "throw.mp3",
+      "downloadSha256": "91739c88b730187dcaba393ed4c75591900cfa32ac7d453a4b9667848dbcec03",
+      "member": "throw.mp3",
+      "sha256": "91739c88b730187dcaba393ed4c75591900cfa32ac7d453a4b9667848dbcec03"
     }
   },
   "cues": {
@@ -6059,15 +6072,15 @@
       "level": -8
     },
     "action.weapon.rocket-launcher.v2": {
-      "source": "fw-Model_12-K_22P",
-      "start": 0.82,
-      "filter": "bass=g=12:f=80,lowpass=f=2400,asetrate=24000,aresample=48000,volume=7dB,asoftclip=type=tanh",
+      "source": "residue-boom.ogg",
+      "start": 0,
+      "filter": "bass=g=12:f=80,lowpass=f=2400,asetrate=23040,aresample=48000,volume=7dB,asoftclip=type=tanh",
       "level": -8
     },
     "action.weapon.rocket-launcher.v3": {
-      "source": "fw-Nova-O_21P",
-      "start": 0.41,
-      "filter": "bass=g=12:f=80,lowpass=f=2400,asetrate=24000,aresample=48000,volume=7dB,asoftclip=type=tanh",
+      "source": "residue-boom.ogg",
+      "start": 0,
+      "filter": "bass=g=12:f=80,lowpass=f=2100,asetrate=24960,aresample=48000,volume=7dB,asoftclip=type=tanh",
       "level": -8
     },
     "action.weapon.grenade": {
@@ -6143,27 +6156,23 @@
       "level": -21
     },
     "action.weapon.flashbang": {
-      "source": "swish-3",
+      "source": "s184-throw",
       "start": 0,
-      "filter": "asetrate=38400,aresample=48000,lowpass=f=3200",
       "level": -21
     },
     "action.weapon.flashbang.v1": {
-      "source": "swish-2",
-      "start": 0,
-      "filter": "asetrate=37440,aresample=48000,lowpass=f=3200",
+      "source": "s184-throw",
+      "start": 1,
       "level": -21
     },
     "action.weapon.flashbang.v2": {
-      "source": "swish-1",
-      "start": 0,
-      "filter": "asetrate=39360,aresample=48000,lowpass=f=3200",
+      "source": "s184-throw",
+      "start": 2,
       "level": -21
     },
     "action.weapon.flashbang.v3": {
-      "source": "swish-0",
-      "start": 0,
-      "filter": "asetrate=38400,aresample=48000,lowpass=f=3200",
+      "source": "s184-throw",
+      "start": 3,
       "level": -21
     },
     "action.weapon.molotov": {
@@ -6486,7 +6495,7 @@
       "level": -20
     },
     "weapon.impact.fire-axe": {
-      "source": "sfx2-k-impactMetal_heavy_000",
+      "source": "sfx2-rwm-metal_hit_03",
       "start": 0,
       "level": -18
     },

@@ -81,13 +81,13 @@ fam('action.ability.turret', shots('PPSh/P_30P.wav', [0.96, 4.38, 8.24, 11.42], 
 d['cues']['weapon.minigun-whir'] = dict(source=residue('ventilator.wav'), start=0, level=-24, filter='lowpass=f=2400,bass=g=4:f=120')
 # ---- rocket launcher: blast (boom slowed to half speed + shotgun blast under it); whoosh stays synthesized (self-made)
 fam('action.weapon.rocket-launcher', [(residue('boom.ogg'), 0, 'bass=g=10:f=90,lowpass=f=2600,' + up(0.55)), (residue('boom.ogg'), 0, 'bass=g=10:f=90,lowpass=f=2200,' + up(0.5)),
-    (ffl('Model 12/K_22P.wav'), 0.84 - O, 'bass=g=12:f=80,lowpass=f=2400,' + up(0.5)), (ffl('Nova/O_21P.wav'), 0.43 - O, 'bass=g=12:f=80,lowpass=f=2400,' + up(0.5))], LEVEL['rocket'])
+    (residue('boom.ogg'), 0, 'bass=g=12:f=80,lowpass=f=2400,' + up(0.48)), (residue('boom.ogg'), 0, 'bass=g=12:f=80,lowpass=f=2100,' + up(0.52))], LEVEL['rocket'])
 # ---- throwables: lobbed throw whoosh (existing CC0 bamboo swishes, slower and lower); molotov adds a glass clink
 def sw_(i, r, extra=''): return ('swish-%d' % i, 0.0, up(r) + ',lowpass=f=3200' + extra)
 fam('action.weapon.grenade', [sw_(0, 0.7), sw_(1, 0.66), sw_(2, 0.72), sw_(3, 0.68)], LEVEL['throw'])
 fam('action.weapon.pipe-bomb', [sw_(2, 0.62), sw_(3, 0.6), sw_(0, 0.64), sw_(1, 0.62)], LEVEL['throw'])
 fam('action.weapon.smoke-grenade', [sw_(1, 0.6), sw_(0, 0.62), sw_(3, 0.58), sw_(2, 0.6)], LEVEL['throw'])
-fam('action.weapon.flashbang', [sw_(3, 0.8), sw_(2, 0.78), sw_(1, 0.82), sw_(0, 0.8)], LEVEL['throw'])
+fam('action.weapon.flashbang', [('s184-throw', t, None) for t in [0, 1, 2, 3]], LEVEL['throw'])
 fam('action.weapon.molotov', [('sfx2-r75-bfh1_glass_hit_01', 0.0, 'highpass=f=1200,' + up(0.9)), sw_(0, 0.66), ('sfx2-r75-bfh1_glass_hit_02', 0.0, 'highpass=f=1200,' + up(0.85)), sw_(1, 0.64)], LEVEL['throw'])
 fam('action.weapon.firecracker-lure', shots('Ruger Mark III/R_35P.wav', [0.48, 4.48], 'highpass=f=900,' + up(1.5)), LEVEL['nail'])
 # ---- melee swings: heavier tools slower/lower, light blades faster/higher (same CC0 swish takes)
