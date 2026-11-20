@@ -1660,10 +1660,10 @@ export class InfectedSystem {
     const megaCloseGrab = !!b.pursuit && move === 'alpha.grab-throw' && Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= 2.5;
     const rageSupport = !!b.pursuit && !megaCloseGrab && ['alpha.grab-throw','alpha.barrage','alpha.living-missile','alpha.roar'].includes(move);
     const extendedMove = !!b.pursuit && (move === 'alpha.charge' || move === 'alpha.pounce');
-    const specialRange = rageSupport ? 35 : extendedMove ? megaAlpha.moves[move as 'alpha.charge' | 'alpha.pounce'].range : megaAlpha.closeM;
+    const specialRange = b.pursuit && move === 'alpha.roar' ? Infinity : rageSupport ? 35 : extendedMove ? megaAlpha.moves[move as 'alpha.charge' | 'alpha.pounce'].range : megaAlpha.closeM;
     if (b.pursuit && (!(move in megaAlpha.moves) || Math.hypot(target.x - e.transform.x, target.z - e.transform.z) > specialRange || !(rageSupport || extendedMove ? this.infectedNav.clear(e.transform.x,e.transform.z,e.combat!.radius) : this.megaSpecialClear(e)))) return false;
     if (e.archetype === 'infected.alpha') {
-      if (!this.director.inPlayerView(e.transform, 32)) return false;
+      if (!(b.pursuit && move === 'alpha.roar') && !this.director.inPlayerView(e.transform, 32)) return false;
       let starts = 0;
       for (const other of this.world.entities.iterate()) if ((other.infected?.alphaSpecialStarted ?? -Infinity) > tick - 60 && ++starts >= 2) return false;
     }

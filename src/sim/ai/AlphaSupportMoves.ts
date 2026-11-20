@@ -15,10 +15,10 @@ export class AlphaSupportMoves {
     if (e.archetype !== 'infected.alpha' || b.pursuit && !mega || b.specialAttack || tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0)) return false;
     const moves: readonly InfectedSpecialMove[] = mega ? ['alpha.grab-throw', 'alpha.living-missile', 'alpha.roar', ...(rage ? ['alpha.barrage' as const] : [])] : b.alphaType ? alphaTypes[b.alphaType].moves : ['alpha.grab-throw', 'alpha.roar'];
     const p = e.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
-    if (distance > (mega ? 35 : 25) || !(mega || b.alphaType === 'thrower' ? this.ai.hearing.lineOfSight(e.transform, t) : this.ai.hearing.sees(e, t))) return false;
     const ready = (move: typeof moves[number]) => moves.includes(move) && tick + (mega ? megaAlpha.moves[move as keyof typeof megaAlpha.moves]?.windup ?? infectedSpecialMoves[move].windup : infectedSpecialMoves[move].windup) >= (b.specialCooldowns?.[move] ?? 0);
     const start = (move: typeof moves[number], radius = 1) => this.ai.startSpecial(e.id, move, { id: target.id, x: t.x, z: t.z }, { x: p.x, z: p.z, radius, dx: dx / (distance || 1), dz: dz / (distance || 1) });
-    if (mega && distance <= 35 && ready('alpha.roar') && start('alpha.roar', 30)) return true;
+    if (mega && ready('alpha.roar') && start('alpha.roar', 30)) return true;
+    if (distance > (mega ? 35 : 25) || !(mega || b.alphaType === 'thrower' ? this.ai.hearing.lineOfSight(e.transform, t) : this.ai.hearing.sees(e, t))) return false;
     if (b.alphaType === 'thrower' || mega) {
       if (distance <= 8 && ready('alpha.barrage') && this.ai.props.nearestLight(e, 2) && start('alpha.barrage')) return true;
       if (distance >= (mega ? 8 : 4) && distance <= 30 && ready('alpha.living-missile') && this.ai.props.nearestLiving(e, mega ? 3 : 2) && start('alpha.living-missile')) return true;

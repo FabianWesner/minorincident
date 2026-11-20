@@ -272,6 +272,14 @@ async function alphaTypeContracts() {
       step(rangedWorld, 1);
       expect(rangedMega.infected!.specialAttack?.move).toBe('alpha.pounce');
 
+      const roarWorld = await arena(63, false);
+      const roarPursuit = installMegaPursuit(roarWorld, { introduceTick: null, resident: () => true });
+      const roaringMega = roarWorld.entities.get(roarPursuit.introduce({ x: 20, z: 0 }))!;
+      roarWorld.infected!.hearing.lineOfSight = () => false;
+      roarWorld.infected!.director.inPlayerView = () => false;
+      expect(roarWorld.infected!.alphaSupport.tryStart(roaringMega, roarWorld.entities.get(1)!)).toBe(true);
+      expect(roaringMega.infected!.specialAttack?.move).toBe('alpha.roar');
+
       const rubbleWorld = await arena(61, false);
       for (let i = 0; i < 4; i++) rubbleWorld.hazards!.debris.spawn(i, { x: 50, z: 50 }, rubbleWorld.tick);
       expect(rubbleWorld.hazards!.debris.pieces).toHaveLength(32);
