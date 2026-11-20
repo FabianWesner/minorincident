@@ -615,6 +615,10 @@ export class SceneLab {
       return;
     }
     if ('corpse' in a && e.infected) {
+      if (a.ash) {
+        world.combat!.damage.apply({ attackId: 0, actionId: 'weapon.flamethrower', sourceId: 1, targetId: e.id, origin: world.entities.get(1)!.transform, direction: { x: 1, z: 0 }, base: e.health.current * 100, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
+        return;
+      }
       e.health.current = 0; e.infected.state = 'dead'; e.infected.deadAt = world.tick - (a.ageTicks ?? 120); e.infected.recoverAt = -1; return;
     }
     // r2-corpse: a killed civilian (Damage.ts: finished + health 0) settles into the permanent-corpse layer after 120 ticks.

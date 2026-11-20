@@ -93,8 +93,16 @@ for (const def of [...Object.values(catalog), ...Object.values(mountedActions), 
 for (const env of ['street', 'interior', 'open'])
     cue(`tail.${env}`, 'weapons', 'noise', env === 'interior' ? 0.65 : 0.25, 500, { gain: env === 'interior' ? 0.5 : 0.35, rateSpread: 0.02 });
 cue('weapon.rocket-whoosh', 'weapons', 'noise', 1, 600, { gain: 0.16, loop: true, antiSpam: 0 });
+cue('weapon.flame-ignite', 'weapons', 'noise', .6, 300, { gain: .8, antiSpam: 0, rateSpread: 0 });
+cue('weapon.flame-loop', 'weapons', 'noise', 2, 300, { gain: .8, loop: true, antiSpam: 0, rateSpread: 0 });
+cue('weapon.flame-stop', 'weapons', 'noise', .4, 300, { gain: .6, antiSpam: 0, rateSpread: 0 });
 cue('weapon.reload', 'weapons', 'step', 1, 800, { gain: 0.5 });
 cue('weapon.reload-rifle', 'weapons', 'step', 1, 800, { gain: 0.5 });
+for (const weapon of ['shotgun', 'hunting-rifle', 'nail-gun', 'assault-rifle'])
+    cue(`weapon.reload.${weapon}`, 'weapons', 'step', 1, 800, { gain: .5 });
+for (const weapon of ['fire-axe', 'handgun', 'army-mg', 'shotgun', 'hunting-rifle', 'nail-gun', 'assault-rifle', 'flamethrower'])
+    cue(`weapon.impact.${weapon}`, 'impacts', 'step', .35, 150, { category: 'weapons', gain: .45, antiSpam: .12, rateSpread: 0 });
+cue('weapon.impact.flashbang', 'impacts', 'shot', 1, 500, { category: 'weapons', gain: .65, antiSpam: 0, rateSpread: 0 });
 cue('weapon.dry', 'weapons', 'step', 0.2, 1000, { gain: 0.5 });
 /** Shotgun pump/rack after each shell, 0.45 s behind the shot. */
 cue('weapon.pump', 'weapons', 'step', 0.47, 700, { gain: 0.6, antiSpam: 0.2 });

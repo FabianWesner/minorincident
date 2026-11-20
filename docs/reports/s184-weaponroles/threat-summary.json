@@ -1,0 +1,84 @@
+{
+  "method": "Full L1\u2013L10 native threat stages collected per level with four workers, merged by threat-audit. Gameplay source matched 65aafb2b; subsequent source edit only updated TTK table bounds.",
+  "flags": [
+    "L6/early-close/step/exit:SLOW_FOLLOWER:44",
+    "L6/early-close/phase/exit:SLOW_FOLLOWER:44",
+    "L6/early-close/wave/l6.breach1:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+    "L6/early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+  ],
+  "levels": [
+    {
+      "level": "L1",
+      "skilled_outcome": "complete",
+      "skilled_flags": [],
+      "passive_flags": []
+    },
+    {
+      "level": "L2",
+      "skilled_outcome": "complete",
+      "skilled_flags": [],
+      "passive_flags": []
+    },
+    {
+      "level": "L3",
+      "skilled_outcome": "complete",
+      "skilled_flags": [],
+      "passive_flags": []
+    },
+    {
+      "level": "L4",
+      "skilled_outcome": "complete",
+      "skilled_flags": [],
+      "passive_flags": []
+    },
+    {
+      "level": "L5",
+      "skilled_outcome": "complete",
+      "skilled_flags": [],
+      "passive_flags": []
+    },
+    {
+      "level": "L6",
+      "skilled_outcome": "complete",
+      "skilled_flags": [
+        "wave/l6.breach1:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passive_flags": [
+        "early-close/step/exit:SLOW_FOLLOWER:44",
+        "early-close/phase/exit:SLOW_FOLLOWER:44",
+        "early-close/wave/l6.breach1:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "early-close/wave/l6.breach2:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ]
+    },
+    {
+      "level": "L7",
+      "skilled_outcome": "complete",
+      "skilled_flags": [],
+      "passive_flags": []
+    },
+    {
+      "level": "L8",
+      "skilled_outcome": "complete",
+      "skilled_flags": [
+        "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS",
+        "wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passive_flags": []
+    },
+    {
+      "level": "L9",
+      "skilled_outcome": "complete",
+      "skilled_flags": [],
+      "passive_flags": []
+    },
+    {
+      "level": "L10",
+      "skilled_outcome": "tick-budget",
+      "skilled_flags": [
+        "INCOMPLETE_NATIVE_POLICY:tick-budget"
+      ],
+      "passive_flags": []
+    }
+  ]
+}

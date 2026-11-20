@@ -25,6 +25,8 @@ export interface DamageEvent {
   sweep?: boolean;
   /** A lethal hit kills an infected for good (a burning DoT); explosive hits always do (PO "Infected recover"). */
   permanent?: boolean;
+  /** Fire damage leaves ash; permanence alone also applies to bosses and explosives. */
+  fire?: boolean;
 }
 /** A knocked-down infected that will get up again (PO "Infected recover"): 0 HP, yet not a corpse. */
 export function downed(e: EntitySnapshot): boolean { return e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0; }
@@ -127,6 +129,7 @@ export class Damage {
     const hardHit = friendlySource(this.world, source) && (target.id === 1 || fireTarget(target));
     if (target.environmentObject) return 0; // placement parts own this prop's durability
     if (target.infected?.arenaBoss) hit = { ...hit, permanent: true, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
+    else if (hit.actionId === 'weapon.rocket-launcher' && target.faction === 'infected') hit = { ...hit, knockdownTicks: Math.max(hit.knockdownTicks ?? 0, 90) };
     if (hit.type === 'melee' && !combatHeightReachable(source, target)) return 0;
     // L7's power weapon opens a route for the column. Civilian splash already
     // deals no HP damage, but its generic reaction knocked the living followers
@@ -165,6 +168,7 @@ export class Damage {
       // Explosives and lethal fire finish a downed infected in every level.
       if (downed(target) && this.amount(hit, target) > 0) {
         if (!lethal(hit)) { this.world.infected!.down(target, false); return 0; }
+        if (hit.fire || hit.actionId === 'weapon.flamethrower') target.ashDeath = { at: this.world.tick };
         this.world.infected!.down(target, true);
         this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount: 0, damageType: hit.type });
       }
@@ -252,7 +256,7 @@ export class Damage {
     this.world.events.emit({ ...event, type: 'combat.hit', ...(shieldBlocked ? { blocked: true } : {}), ...(shieldGlance ? { shieldGlance: true } : {}), ...(shieldBreak ? { shieldBreak: true } : {}) });
     if (amount > 0 || megaReact) {
       if (hit.knockdownTicks && target.survivor) target.survivor.knockdown = { started: this.world.tick, until: Math.max(target.survivor.knockdown?.until ?? 0, this.world.tick + hit.knockdownTicks) };
-      if (hit.knockdownTicks && target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + hit.knockdownTicks);
+      if ((hit.knockdownTicks || hit.knockdown) && target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + (hit.knockdownTicks ?? 90));
       if (hit.knockdownTicks && target.escort) target.escort.knockedUntil = Math.max(target.escort.knockedUntil ?? 0, this.world.tick + hit.knockdownTicks);
       if ((alphaSoldierHit || hit.knockdownTicks) && target.civilian) {
         const until = this.world.tick + (hit.knockdownTicks ?? 72), c = target.civilian!;
@@ -308,6 +312,8 @@ export class Damage {
     if (wasAlive && target.health.current === 0) {
       if (target.infected) target.infected.knockdowns = (target.infected.knockdowns ?? 0) + 1;
       // Default hits down infected; explosions and explicit permanent counters leave a corpse.
+      const fireDeath = lethal(hit) && (hit.fire || hit.actionId === 'weapon.flamethrower');
+      if (fireDeath && target.infected) target.ashDeath = { at: this.world.tick };
       const up = target.infected && this.world.infected ? this.world.infected.down(target, lethal(hit)) : -1;
       this.world.events.emit({ ...event, type: 'combat.kill', ...(up >= 0 ? { downed: up } : {}) } satisfies GameEvent);
     }

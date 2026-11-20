@@ -3444,6 +3444,84 @@
       "downloadSha256": "cc1ab5a99a0a365105c7c5dd783f4b0b1fe90938114d3ceec53856bfe005f7d6",
       "member": "Prepared SFX Library/Model 12/K_17P.wav",
       "sha256": "df18e60e5742bc18373ff46e5c471ef71849b138120d165f26104b249679ace0"
+    },
+    "s184-ignition": {
+      "title": "Flare ignition",
+      "author": "qubodup",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://opengameart.org/content/flare-ignition",
+      "pack": "s184-fire",
+      "downloadUrl": "https://opengameart.org/sites/default/files/ignition.flac",
+      "downloadFile": "ignition.flac",
+      "downloadSha256": "bd8281bcee65bc705755fd36bdf40d04fadddd474f52fd481233523e178b4ea1",
+      "member": "ignition.flac",
+      "sha256": "bd8281bcee65bc705755fd36bdf40d04fadddd474f52fd481233523e178b4ea1"
+    },
+    "s184-fire": {
+      "title": "Fire Crackling",
+      "author": "AntumDeluge",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://opengameart.org/content/fire-crackling/",
+      "pack": "s184-fire",
+      "downloadUrl": "https://opengameart.org/sites/default/files/fire-1.ogg",
+      "downloadFile": "fire-1.ogg",
+      "downloadSha256": "f922929805bc6afdf0a35727fa3998033db544c1b6f62ed3aeab94341ed6ddeb",
+      "member": "fire-1.ogg",
+      "sha256": "f922929805bc6afdf0a35727fa3998033db544c1b6f62ed3aeab94341ed6ddeb"
+    },
+    "s184-nailgun": {
+      "title": "Nail Gun Shoot and Wind Down (HQ preview)",
+      "author": "NinjaSharkStudios",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://freesound.org/people/NinjaSharkStudios/sounds/712890/",
+      "pack": "s184-nailgun",
+      "downloadUrl": "https://cdn.freesound.org/previews/712/712890_4067-hq.mp3",
+      "downloadFile": "712890_4067-hq.mp3",
+      "downloadSha256": "5821f83e9879f7bcb6d93c2db7042a663f2ff9add79efa0b785b07c6d4f856b6",
+      "member": "712890_4067-hq.mp3",
+      "sha256": "5821f83e9879f7bcb6d93c2db7042a663f2ff9add79efa0b785b07c6d4f856b6"
+    },
+    "s184-flamethrower": {
+      "title": "Flamethrower (HQ preview)",
+      "author": "SamsterBirdies",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://freesound.org/people/SamsterBirdies/sounds/490166/",
+      "pack": "s184-flamethrower",
+      "downloadUrl": "https://cdn.freesound.org/previews/490/490166_5487341-hq.mp3",
+      "downloadFile": "flamethrower.mp3",
+      "downloadSha256": "989b81015c7ab9759c106df548a0db18666b72bc12d37d90fabb0fb0a004959b",
+      "member": "flamethrower.mp3",
+      "sha256": "989b81015c7ab9759c106df548a0db18666b72bc12d37d90fabb0fb0a004959b"
+    },
+    "s184-flashbang": {
+      "title": "CTS 7290 flashbang (HQ preview)",
+      "author": "areniporgen",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://freesound.org/people/areniporgen/sounds/693421/",
+      "pack": "s184-flashbang",
+      "downloadUrl": "https://cdn.freesound.org/previews/693/693421_15072041-hq.mp3",
+      "downloadFile": "flashbang.mp3",
+      "downloadSha256": "b13ba6107efe58b36c3d8f73824c776329dfe7f35f8f2a528694b7a96d03c55b",
+      "member": "flashbang.mp3",
+      "sha256": "b13ba6107efe58b36c3d8f73824c776329dfe7f35f8f2a528694b7a96d03c55b"
+    },
+    "s184-throw": {
+      "title": "throw swish x12 (HQ preview)",
+      "author": "hz37",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://freesound.org/people/hz37/sounds/463763/",
+      "pack": "s184-throw",
+      "downloadUrl": "https://cdn.freesound.org/previews/463/463763_123355-hq.mp3",
+      "downloadFile": "throw.mp3",
+      "downloadSha256": "91739c88b730187dcaba393ed4c75591900cfa32ac7d453a4b9667848dbcec03",
+      "member": "throw.mp3",
+      "sha256": "91739c88b730187dcaba393ed4c75591900cfa32ac7d453a4b9667848dbcec03"
     }
   },
   "cues": {
@@ -5713,28 +5791,28 @@
       "level": -8
     },
     "action.weapon.nail-gun": {
-      "source": "fw-Ruger_Mark_III-R_35P",
-      "start": 0.46,
-      "filter": "highpass=f=250,asetrate=53760,aresample=48000,volume=12dB,asoftclip=type=tanh",
-      "level": -8
+      "source": "s184-nailgun",
+      "start": 0,
+      "filter": "highpass=f=120,asetrate=48000,aresample=48000",
+      "level": -14
     },
     "action.weapon.nail-gun.v1": {
-      "source": "fw-Ruger_Mark_III-R_35P",
-      "start": 4.46,
-      "filter": "highpass=f=250,asetrate=53760,aresample=48000,volume=12dB,asoftclip=type=tanh",
-      "level": -8
+      "source": "s184-nailgun",
+      "start": 0,
+      "filter": "highpass=f=120,asetrate=48300,aresample=48000",
+      "level": -14
     },
     "action.weapon.nail-gun.v2": {
-      "source": "fw-Ruger_Mark_III-R_35P",
-      "start": 0.46,
-      "filter": "highpass=f=250,asetrate=53760,aresample=48000,volume=12dB,asoftclip=type=tanh",
-      "level": -8
+      "source": "s184-nailgun",
+      "start": 0,
+      "filter": "highpass=f=120,asetrate=48600,aresample=48000",
+      "level": -14
     },
     "action.weapon.nail-gun.v3": {
-      "source": "fw-Ruger_Mark_III-R_35P",
-      "start": 4.46,
-      "filter": "highpass=f=250,asetrate=53760,aresample=48000,volume=12dB,asoftclip=type=tanh",
-      "level": -8
+      "source": "s184-nailgun",
+      "start": 0,
+      "filter": "highpass=f=120,asetrate=48900,aresample=48000",
+      "level": -14
     },
     "action.weapon.shotgun": {
       "source": "fw-Model_12-K_22P",
@@ -5994,15 +6072,15 @@
       "level": -8
     },
     "action.weapon.rocket-launcher.v2": {
-      "source": "fw-Model_12-K_22P",
-      "start": 0.82,
-      "filter": "bass=g=12:f=80,lowpass=f=2400,asetrate=24000,aresample=48000,volume=7dB,asoftclip=type=tanh",
+      "source": "residue-boom.ogg",
+      "start": 0,
+      "filter": "bass=g=12:f=80,lowpass=f=2400,asetrate=23040,aresample=48000,volume=7dB,asoftclip=type=tanh",
       "level": -8
     },
     "action.weapon.rocket-launcher.v3": {
-      "source": "fw-Nova-O_21P",
-      "start": 0.41,
-      "filter": "bass=g=12:f=80,lowpass=f=2400,asetrate=24000,aresample=48000,volume=7dB,asoftclip=type=tanh",
+      "source": "residue-boom.ogg",
+      "start": 0,
+      "filter": "bass=g=12:f=80,lowpass=f=2100,asetrate=24960,aresample=48000,volume=7dB,asoftclip=type=tanh",
       "level": -8
     },
     "action.weapon.grenade": {
@@ -6078,27 +6156,23 @@
       "level": -21
     },
     "action.weapon.flashbang": {
-      "source": "swish-3",
+      "source": "s184-throw",
       "start": 0,
-      "filter": "asetrate=38400,aresample=48000,lowpass=f=3200",
       "level": -21
     },
     "action.weapon.flashbang.v1": {
-      "source": "swish-2",
-      "start": 0,
-      "filter": "asetrate=37440,aresample=48000,lowpass=f=3200",
+      "source": "s184-throw",
+      "start": 1,
       "level": -21
     },
     "action.weapon.flashbang.v2": {
-      "source": "swish-1",
-      "start": 0,
-      "filter": "asetrate=39360,aresample=48000,lowpass=f=3200",
+      "source": "s184-throw",
+      "start": 2,
       "level": -21
     },
     "action.weapon.flashbang.v3": {
-      "source": "swish-0",
-      "start": 0,
-      "filter": "asetrate=38400,aresample=48000,lowpass=f=3200",
+      "source": "s184-throw",
+      "start": 3,
       "level": -21
     },
     "action.weapon.molotov": {
@@ -6270,7 +6344,7 @@
       "level": -19
     },
     "action.weapon.fire-axe": {
-      "source": "swish-2",
+      "source": "swish-3",
       "start": 0.03,
       "filter": "asetrate=29760,aresample=48000",
       "level": -17
@@ -6282,13 +6356,13 @@
       "level": -17
     },
     "action.weapon.fire-axe.v2": {
-      "source": "swish-1",
+      "source": "swish-3",
       "start": 0.03,
       "filter": "asetrate=30720,aresample=48000",
       "level": -17
     },
     "action.weapon.fire-axe.v3": {
-      "source": "swish-0",
+      "source": "swish-3",
       "start": 0.03,
       "filter": "asetrate=29760,aresample=48000",
       "level": -17
@@ -6349,6 +6423,86 @@
       "start": 1.05,
       "filter": "lowpass=f=2200",
       "level": -34
+    },
+    "weapon.flame-ignite": {
+      "source": "s184-ignition",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.flame-loop": {
+      "source": "s184-flamethrower",
+      "start": 3,
+      "level": -20
+    },
+    "weapon.flame-stop": {
+      "source": "s184-flamethrower",
+      "start": 12.1,
+      "level": -22
+    },
+    "weapon.reload.shotgun": {
+      "source": "wp-shotguncock",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.reload.hunting-rifle": {
+      "source": "wp-gunreload1",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.reload.nail-gun": {
+      "source": "sfx2-rwm-metal_open_01",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.reload.assault-rifle": {
+      "source": "wp-assaultriflereload1",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.impact.handgun": {
+      "source": "sfx2-k-impactSoft_medium_000",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.army-mg": {
+      "source": "sfx2-k-impactSoft_medium_001",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.shotgun": {
+      "source": "sfx2-k-impactSoft_heavy_000",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.hunting-rifle": {
+      "source": "sfx2-k-impactSoft_heavy_001",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.nail-gun": {
+      "source": "sfx2-k-impactSoft_medium_002",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.assault-rifle": {
+      "source": "sfx2-k-impactSoft_medium_003",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.flamethrower": {
+      "source": "sfx2-k-impactSoft_heavy_002",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.fire-axe": {
+      "source": "sfx2-rwm-metal_hit_03",
+      "start": 0,
+      "level": -18
+    },
+    "weapon.impact.flashbang": {
+      "source": "s184-flashbang",
+      "start": 0,
+      "level": -12
     }
   },
   "streams": {
