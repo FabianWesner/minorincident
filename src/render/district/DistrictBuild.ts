@@ -485,8 +485,8 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
 function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, origin: [number, number], buildings: { id: string; assetId: string; label: string; aabb: { min: number[]; max: number[] } }[], placements: { id: string; position: [number, number, number]; yaw: number; scale: [number, number, number] }[], materials: Materials): void {
   const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
-  // These assets already carry physical Sunset Fuel and Maple Hardware signs.
-  for (const building of buildings) if (!/^bld\.(gas-station|maple-hardware):/.test(building.id) && (!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
+  // These assets already carry named physical signs in their authored LODs.
+  for (const building of buildings) if (!/^bld\.(gas-station|maple-hardware|school):/.test(building.id) && (!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
   const rows = [...chosen.values()]; if (!rows.length) return;
   const cellW = 512, cellH = 128, columns = 4, canvas = document.createElement('canvas');
   canvas.width = cellW * columns; canvas.height = cellH * Math.ceil(rows.length / columns);

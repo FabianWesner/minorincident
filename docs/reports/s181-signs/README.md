@@ -54,3 +54,5 @@ Maple Hardware already has large physical facade lettering; its authored LOW rec
 The legacy Grove Police asset is a scaled version of the L3 station; its board now follows the scaled entrance canopy. LOD0 and LOD2 centre-grid rays hit the supporting surface at local x 3.469–3.475 m, with the board at 3.492 m. A close capture was obscured by foliage, so visual readability remains unverified.
 
 Pharmacy and gym boards now use the local +X entrance headers with placement scale and rotation. LOD0 and LOD2 mesh samples at the chosen board areas hit x=3.165 m (pharmacy) and x=8.04 m (gym); boards are 0.005 m and 0.01 m ahead respectively. Close diagnostic views were blocked by foreground geometry, so appearance and game-camera readability remain unverified.
+
+The elementary-school asset already has a physical Sunset Grove Elementary inscription on its entrance pediment. Its native LOW recipe does not omit the lettering, so the extra AABB-positioned board is omitted. The hospital LOW recipe does omit its name lettering; its fallback remains unresolved.
