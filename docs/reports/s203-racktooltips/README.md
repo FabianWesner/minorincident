@@ -43,3 +43,8 @@
 
 - Captured and inspected key 4 at 1280×720 and 390×844 in L4 with Army MG equipped. Both show a legible bold “Army MG”, its role and key 4 above the rack, fully within the viewport. The scene fixture cleared L4's intro story lock and cinematic state before displaying the HUD; it does not verify the natural intro transition. Images are in `test-results/s203/`.
 - Together with the earlier inspected hole and Corgi captures, the requested views have been visually reviewed. The complete `npm run test:smoke` gate remains open because the one-worker run exceeded 240 seconds after four passing cases; the focused gameplay and L10 rack case passed separately.
+
+## Follow-up (20:45 CET)
+
+- Ran the two QA smoke cases not reached before the single-worker aggregate timeout separately: WebGPU pedestrians and unflagged WebGPU menu-to-L1 both passed (2 tests, 33.7 seconds).
+- Built the public artifact and ran `@public-smoke` separately with one worker: passed (1 test, 15.7 seconds). All individual smoke cases have now passed across separate runs, but the required aggregate `npm run test:smoke` command has not passed its 240-second wall-time gate. The full remote unit command also exceeded 240 seconds; the prescribed local full-suite plus remote L4 fallback passed, as recorded above.
