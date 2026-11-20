@@ -6,6 +6,7 @@ import { defaultBindings, type Action } from '../../src/data/bindings';
 import { catalog, mountedActions } from '../../src/data/actions/catalog';
 import { weaponOrder } from '../../src/data/weaponOrder';
 import { weaponKey, weaponKeys } from '../../src/data/weaponKeys';
+import { levelWeaponSets, weaponKeyOrder } from '../../src/data/weaponSlots';
 import { Bindings, bindingStorageKey } from '../../src/input/Bindings';
 import { Buttons } from '../../src/input/Buttons';
 import { ClickPick } from '../../src/input/ClickPick';
@@ -213,21 +214,17 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   c.input.setMountedGun(false); c.key('ShiftLeft', true); c.key('Digit1', true); expect(c.sample().selectedWeaponKey).toBe(1);
 
   const ids = Object.keys(catalog).filter(id => id.startsWith('weapon.') && id !== 'weapon.kick' && id !== 'weapon.pistol');
-  expect(Object.keys(weaponKeys).sort()).toEqual(ids.sort());
-  expect(new Set(Object.values(weaponKeys)).size).toBe(ids.length);
-  const catalogLoadout = new Loadout(ids, ['weapon.bat'], undefined, ids.length);
-  ids.filter(id => id !== 'weapon.fists').forEach((id, index) => {
-    const key = weaponKey(id)!;
-    expect(key).toBeGreaterThan(0);
-    catalogLoadout.input({ ...emptyInput(), selectedLegacyWeaponKey: key }, index * 30 + 30);
-    expect(catalogLoadout.current(catalogLoadout.state.selectedSide).id).toBe(id);
-  });
+  expect(Object.keys(weaponKeys)).toContain('weapon.nail-gun');
+  expect(weaponKey('weapon.nail-gun')).toBe(7);
+  expect(weaponKey('weapon.army-mg')).toBe(4);
+  expect(weaponKey('weapon.bat')).toBe(1);
+  expect(weaponKey('weapon.molotov')).toBe(10);
+  expect(weaponKey('weapon.pipe-bomb')).toBe(10);
+  expect(new Set(ids.map(id => weaponKey(id)).filter(key => key !== undefined)).size).toBeLessThan(ids.length);
   const sparse = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
   expect(sparse.activeEntries().map(e => e.id)).toEqual(['weapon.fire-axe', 'weapon.machete', 'weapon.handgun']);
-  sparse.activeEntries().forEach((entry, index) => {
-    sparse.input({ ...emptyInput(), selectedWeaponKey: index + 1 }, 30 * (index + 1));
-    expect(sparse.current(sparse.state.selectedSide).id).toBe(entry.id);
-  });
+  sparse.input({ ...emptyInput(), selectedWeaponKey: 2 }, 30);
+  expect(sparse.current(sparse.state.selectedSide).id).toBe('weapon.handgun');
   const recorded = { seed: 1, level: 'L10', frames: [{ ...emptyInput(), selectedWeaponKey: 3 }] };
   const legacyRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 1 }));
   const legacyRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
@@ -236,7 +233,14 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   const currentRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 2 }));
   const currentRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
   currentRack.input(currentRecording.frames[0], 30);
-  expect(currentRack.current(currentRack.state.selectedSide).id).toBe('weapon.handgun');
+  expect(currentRack.current(currentRack.state.selectedSide).id).toBe('weapon.fire-axe'); // fixed key 3 is a hole in this rack
+  const pickups = new Loadout(['weapon.fire-axe', 'weapon.nail-gun', 'weapon.army-mg'], ['weapon.handgun']);
+  pickups.input({ ...emptyInput(), selectedWeaponKey: 7 }, 30);
+  expect(pickups.current(pickups.state.selectedSide).id).toBe('weapon.nail-gun');
+  pickups.input({ ...emptyInput(), selectedWeaponKey: 4 }, 60);
+  expect(pickups.current(pickups.state.selectedSide).id).toBe('weapon.army-mg');
+  expect(weaponKey(pickups.current(pickups.state.selectedSide).id)).toBe(4);
+  expect(weaponKey('weapon.nail-gun')).toBe(7);
   const cycle = new Loadout(ids.slice(0, 3), ids.slice(3, 6));
   const entries = cycle.activeEntries();
   const currentId = cycle.current(cycle.state.selectedSide).id;
@@ -251,6 +255,11 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   }
   expect(weaponKey('weapon.kick')).toBe(weaponKey('weapon.fists'));
   expect(weaponKey('weapon.pistol')).toBe(weaponKey('weapon.handgun'));
+  for (const weapons of Object.values(levelWeaponSets)) {
+    const keys = [...new Set(weapons.map(weaponKey).filter((key): key is number => key !== undefined))];
+    expect(keys).toEqual([...keys].sort((a, b) => a - b));
+    expect(keys.every(key => weaponKeyOrder.includes(key as typeof weaponKeyOrder[number]))).toBe(true);
+  }
 });
 
 test('click pick: head-to-feet body capsule picks the infected; downed stay pickable; corpses, hidden and civilians never', () => {

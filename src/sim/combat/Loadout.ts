@@ -1,4 +1,4 @@
-import { weaponFallbackPriority, weaponKey } from '../../data/weaponKeys';
+import { weaponFallbackPriority, weaponKey, weaponLegacyKey } from '../../data/weaponKeys';
 import { compareWeapons } from '../../data/weaponOrder';
 import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
@@ -56,8 +56,18 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    const legacyEntries = frame.selectedLegacyWeaponKey === undefined ? [] : (['LEFT', 'RIGHT'] as const).flatMap(name => this.state[name].rack.map((slot, index) => ({ side: name, index, id: slot.id })));
-    const keyed = frame.selectedLegacyWeaponKey === weaponKey('weapon.fists') ? { side: 'LEFT' as const, index: -1 } : frame.selectedLegacyWeaponKey !== undefined ? legacyEntries.find(entry => weaponKey(entry.id) === frame.selectedLegacyWeaponKey) : frame.selectedWeaponKey === undefined ? undefined : this.activeEntries()[frame.selectedWeaponKey - 1];
+    const legacyEntries = frame.selectedLegacyWeaponKey === undefined ? [] : this.activeEntries();
+    const key = frame.selectedWeaponKey;
+    let keyed: { side: Side; index: number; id: string } | undefined;
+    if (frame.selectedLegacyWeaponKey !== undefined) keyed = legacyEntries.find(entry => weaponLegacyKey(entry.id) === frame.selectedLegacyWeaponKey);
+    else if (key !== undefined) {
+      const matching = this.activeEntries().filter(entry => weaponKey(entry.id) === key)
+        .sort((a, b) => this.definition(b.id).tier - this.definition(a.id).tier || compareWeapons(a.id, b.id));
+      if (matching.length) {
+        const current = matching.findIndex(entry => entry.side === beforeSide && entry.index === beforeIndex);
+        keyed = matching[current >= 0 ? (current + 1) % matching.length : 0];
+      }
+    }
     const choice = keyed ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];
