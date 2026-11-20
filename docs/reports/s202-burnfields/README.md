@@ -37,7 +37,7 @@ A HIGH WebGL2 tree probe at `/private/tmp/s202-tree-burning.png` recorded object
 
 | Check | Result |
 | --- | --- |
-| `npx vitest run tests/engine/combat.test.ts` (including `tests/helpers/s202-field-fire.ts`) | Pass |
+| `npx vitest run tests/engine/combat.test.ts tests/engine/save-progression.test.ts --maxWorkers=4` (including `tests/helpers/s202-field-fire.ts`) | Pass: 2 files, 13 tests on current code, including the loaded L10 checkpoint restoration. |
 | `npm run lint` | Pass |
 | `npm run typecheck` | Pass |
 | Remote `sh tools/remote/run.sh "$PWD" -- npm test` | First failed budget at 163/150 and 48/45; lane assertions were consolidated without removal. Rerun collected 150/150 and 45/45, then timed out at 245.7 s without reported test failures. |
