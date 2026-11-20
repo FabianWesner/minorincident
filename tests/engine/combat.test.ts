@@ -88,6 +88,17 @@ async function checkMolotovCluster(): Promise<void> {
   expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
 }
 
+test('L10 flamethrower stream ignites an authored crop block', async () => {
+  const w = await loadLevel('L10', 1, 'low'); worlds.push(w);
+  const cell = w.hazards!.fieldFire!.cells.find(c => c.x > 600 && c.x < 1100)!;
+  expect(cell).toBeDefined();
+  missionControls(w).teleport('player', { x: cell.x, z: cell.z });
+  w.chunks!.update([cell.x, cell.z]);
+  equip(w, ['weapon.flamethrower']);
+  fire(w); step(w, 30);
+  expect(cell.state).toBe('burning');
+});
+
 test('infected entering a landed molotov pool catches fire and takes burn damage', async () => {
   const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
   fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
