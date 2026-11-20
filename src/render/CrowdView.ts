@@ -142,6 +142,7 @@ export class CrowdView extends Group {
   private readonly ashTint = new Color('#171713');
   private readonly ashSwatch = new Color();
   private readonly emberAsh = new Color('#e8833d');
+  private readonly charAsh = new Color('#302d29');
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
   private readonly corpseClips = new Map<string, BakedBatch['clip']>();
   private entityRevision = -1;
@@ -807,11 +808,12 @@ export class CrowdView extends Group {
         // Eight overlapping, irregular clumps settle in over the same 1.5 s
         // that the charred body dissolves. Both stages share the existing two instanced draws.
         for (const [pieceIndex, [dx, dz, sx, sy, sz, turn]] of pieces.slice(0, heapPieces).entries()) {
-          const settle = ashProgress;
-          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 1.5, sy, sz * 1.5));
+          const settle = ashProgress, emerge = Math.min(1, Math.max(0, ashProgress * 8 - pieceIndex));
+          this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 1.5 * emerge, sy * emerge, sz * 1.5 * emerge));
           this.transform.setPosition(x + dx * 1.5, ground + .045 + sy * .5 + (1 - settle) * (.22 + sy), z + dz * 1.5);
           this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
           this.ashSwatch.set(pieceIndex === 5 ? '#514c45' : '#c5c3bb').lerp(this.emberAsh, (1 - ashProgress) * .16);
+          this.ashSwatch.lerp(this.charAsh, 1 - ashProgress);
           this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
         }
         if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {
