@@ -64,3 +64,5 @@ Shared writer allocation cleanup: replaced its per-refresh flame/glow closures a
 Writer-refactor capture refresh (`6add1abc`): inspected the HIGH sequence and LOW frame after the allocation cleanup. The stream still builds from the nozzle and changes shape, with the previously noted initial gap; LOW reaches the infected. Frame 52 remains HIGH 62 draws / 27 shared particles / 38 flame cards and LOW 56 / 11 / 30, versus baseline 62 / 15 / 35 and 56 / 5 / 19. No captured console errors; timing pending.
 
 Remote suite on writer-refactor source `6add1abc`: three unchanged `sh tools/remote/run.sh "$PWD" -- npm test` attempts hit the 240 s budget (241.1, 240.8 and 241.3 s; exit 124). Completed cases, including render contracts and combat, reported no failures, but the suite did not finish and is not a pass. The last full pass remains on `6a30d39e`; rerun unchanged when runner capacity permits. No tests were trimmed.
+
+Remote suite retry on writer-refactor source `6add1abc` passed unchanged: 27 files, 105 tests passed and one skipped, 181.3 s against the 240 s budget; collector 150/150, exit 0. The three earlier timeouts remain documented above.
