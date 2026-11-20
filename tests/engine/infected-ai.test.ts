@@ -244,6 +244,7 @@ async function alphaTypeContracts() {
       expect(debrisWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === debrisMega.id)).toBe(true);
       expect(debrisWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === debrisMega.id && event.targetId === debrisPlayer.id && event.special === 'alpha.grab-throw' && event.amount === 25)).toBe(true);
       expect(debrisPlayer.survivor!.knockdown?.until).toBeGreaterThan(debrisWorld.tick);
+      expect(debrisWorld.events.events().filter(event => event.type === 'mega.move-impact' && event.sourceId === debrisMega.id)).toHaveLength(1);
 
       const leapWorld = await arena(58, false), courier = leapWorld.entities.get(1)!;
       courier.health.current = courier.health.max = 1000;
@@ -255,6 +256,7 @@ async function alphaTypeContracts() {
       expect(leapWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === leaper.id && event.targetId === courier.id && event.amount === 30)).toBe(true);
       expect(courier.health.current).toBe(970);
       expect(courier.survivor!.knockdown?.until).toBeGreaterThan(leapWorld.tick);
+      expect(leapWorld.events.events().filter(event => event.type === 'mega.move-impact' && event.sourceId === leaper.id)).toHaveLength(1);
 
       // Even after recovery, a different move must wait three seconds from the last start.
       leaper.infected!.specialAttack = undefined;

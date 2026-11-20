@@ -257,7 +257,7 @@ cue('l1.interior.hush', 'ambience', 'bed', 2, 70, { ...arc, loop: true, gain: 0.
 cue('l1.outro.sting', 'music', 'music', 2.5, 196, { ...arc, gain: 0.5, antiSpam: 0, rateSpread: 0 });
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
-    'mega.cue': 'telegraph.brute', // AudioService applies the processed recipe by cue kind.
+    'mega.cue': 'telegraph.brute', 'mega.move-impact': 'telegraph.gorilla', // AudioService applies the processed recipe by cue kind.
     'power.on': 'lamp.power-on', 'power.off': 'lamp.power-off', 'light.broken': 'lamp.break',
     'weather.gust': 'weather.gust', 'weather.lightning': 'weather.thunder', 'weather.thunder': 'weather.thunder',
     'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',

@@ -166,7 +166,7 @@ export class PropThrows {
     const p = body ? body.translation() : { x: f.x + f.dx * next, z: f.z + f.dz * next };
     f.lastX = p.x; f.lastZ = p.z;
     // Full solid cover wins over a human behind it, including thin dynamic LOS blockers.
-    if (!this.world.infected!.hearing.lineOfSight(old, p)) { this.positionSpecial(a, true); return true; }
+    if (!this.world.infected!.hearing.lineOfSight(old, p)) { this.impact(source, p); this.positionSpecial(a, true); return true; }
     f.distance = next; this.positionSpecial(a, false);
     let victim: EntitySnapshot | undefined, along = Infinity;
     const hitRadius = Math.max(1, f.radius ?? 1);
@@ -185,10 +185,13 @@ export class PropThrows {
     if (victim && this.world.infected!.specialHit(source.id, victim.id)) {
       const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: victim.id, attackId: a.attackId, actionId: `infected.${a.move}`, origin: old, direction: { x: f.dx, z: f.dz }, base: source.infected?.pursuit ? f.living ? megaAlpha.moves['alpha.living-missile'].damage : 25 : 30, multiplier: 1, type: 'projectile', knockback: 0, stagger: .8, knockdownTicks: 48 });
       this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: source.id, targetId: victim.id, attackId: a.attackId, special: a.move, amount });
-      this.positionSpecial(a, true); return true;
+      this.impact(source, p); this.positionSpecial(a, true); return true;
     }
-    if (next >= f.range || f.living && (this.world.entities.get(f.objectId)?.health.current ?? 0) <= 0) { this.positionSpecial(a, true); return true; }
+    if (next >= f.range || f.living && (this.world.entities.get(f.objectId)?.health.current ?? 0) <= 0) { this.impact(source, p); this.positionSpecial(a, true); return true; }
     return false;
+  }
+  private impact(source: EntitySnapshot, p: { x: number; z: number }): void {
+    if (source.infected?.pursuit) this.world.events.emit({ type: 'mega.move-impact', tick: this.world.tick, sourceId: source.id, position: { x: p.x, z: p.z } });
   }
   private positionSpecial(a: InfectedSpecialAttack, settled: boolean): void {
     if (a.projectile?.fromY !== undefined) { this.positionArenaSpecial(a, settled); return; }

@@ -96,6 +96,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | import('../../data/audioEvents').AudioSystemEvent
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
   | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
+  | { tick: number; type: 'mega.move-impact'; sourceId: number; position: { x: number; z: number; y?: number } }
   | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number; move?: import('../../data/infected').InfectedSpecialMove; startTick?: number; activeTick?: number; cooldownExpiry?: number; target?: import('../ai/types').InfectedSpecialAttack['target']; area?: import('../ai/types').InfectedSpecialAttack['area'] }
   | { tick: number; type: 'infected.roar-buff'; sourceId: number; targetId: number; attackId: number; stage: 'active' | 'expiry'; until: number }
   | { tick: number; type: 'infected.special'; sourceId: number; move: import('../../data/infected').InfectedSpecialMove; attackId: number; stage: 'active' | 'recovery' | 'expiry' | 'cancelled' }
