@@ -41,3 +41,5 @@ Glow revision: the camera-facing sprite diameter changed from 0.16 to 0.24 model
 Glow-revision validation: typecheck and lint passed; remote `npm test` initially timed out at 246.0 s, and the unchanged rerun passed 105 tests with one skipped in 222.6 s. The focused courier/L10 gate selection passed 10/10 on WebGL2 and WebGPU. The broader 91-row result predates the sprite-size change.
 
 Glow-revision scene gate: all 91 listed rows passed in one filtered run (HIGH/LOW, WebGL2/WebGPU, one browser per batch), with zero known or unrun rows; see `test-results/s180-glow-all-rows/summary.md`. The filter covered the complete gate list but did not invoke the additional vehicle-motion suites associated with an unfiltered gate command.
+
+A separate HIGH WebGPU D-CURE capture of the glow revision was inspected at zoom 1.5: the road pool and small light point at the held rifle are present, consistent with the WebGL2 frame; no browser errors were reported. This is a headless backend check, not a manual native-device WebGPU performance review.
