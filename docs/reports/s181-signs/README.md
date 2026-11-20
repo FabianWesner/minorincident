@@ -20,3 +20,5 @@ Follow-camera captures at HIGH and LOW were inspected on 2026-11-20: the laborat
 The nightly placement-vs-solids check examines authored prop placements in L1–L9, and the decoration-surface check examines ground cover; neither sees these runtime sign meshes. Passing them alone cannot establish sign clearance or mounting. Generic residential house labels and the private cellar are now omitted; the named zoo houses remain eligible. Other candidate boards still require facade-specific placement and inspection.
 
 A HIGH L8 follow-camera trial with `MeshLambertNodeMaterial` produced very dark, unreadable lettering at zoom 1.5. The readable basic material remains in place; achieving a lit, emissive-free board with adequate night contrast remains open.
+
+The sign now uses the project shaded material with a brighter painted albedo and no emissive input. Fresh game-camera captures show readable lettering at L8 HIGH and L10 HIGH/LOW at both zooms; the L8 night board is dimmer than the prior basic material. Placement and mounting review remains open.

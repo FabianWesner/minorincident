@@ -1,4 +1,5 @@
 import { groundDepth, groundLayers } from '../GroundLayers';
+import { texture as sampleTexture } from 'three/tsl';
 import { worldTiers } from '../../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
 import { BoxGeometry, CircleGeometry, DoubleSide, Float32BufferAttribute, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Box3, BufferGeometry, CanvasTexture, ConeGeometry, Group, Sphere, SRGBColorSpace, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type Material } from 'three/webgpu';
@@ -408,7 +409,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       }
       const grassLayout=d.id==='D-CURE'?{...d.layout,surfaces:[...d.layout.surfaces,...cureEvacuationLane(d.decay.placements)]}:d.layout;
       for (const grass of Grass.tiles(grassLayout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
-      buildFacadeSigns(parts, root, d.layout.buildings);
+      buildFacadeSigns(parts, root, d.layout.buildings, deps.materials);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
@@ -477,7 +478,7 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
   root.add(mesh);
 }
 /** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
-function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[]): void {
+function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], materials: Materials): void {
   const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
   for (const building of buildings) if ((!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
@@ -516,7 +517,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
   geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(indices); geometry.computeVertexNormals();
   parts.ownedGeometry.push(geometry);
   const texture = new CanvasTexture(canvas); texture.colorSpace = SRGBColorSpace; texture.generateMipmaps = true; parts.textures.push(texture);
-  const material = new MeshBasicNodeMaterial({ map: texture, side: DoubleSide }); parts.ownedMaterials.push(material);
+  const material = materials.shaded(sampleTexture(texture).rgb.mul(2.5)); material.side = DoubleSide; parts.ownedMaterials.push(material);
   const mesh = new Mesh(geometry, material); mesh.name = 'facility-signs'; mesh.frustumCulled = true; root.add(mesh);
 }
 /** Baked layout transforms are immutable after attachment. Visibility and
