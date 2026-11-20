@@ -31,6 +31,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - Pursuit roar can start without line of sight or an on-screen Mega, preserving roars between sightings. A focused AI check forces both visibility gates false and confirms roar selection; typecheck and lint pass. L10 balance must be remeasured after this change.
 - After the roar change, isolated LOW L10 still hit the skilled tick budget at the Mega objective, with 6 deaths and 1,317.75 total damage taken. The partial audit is diagnostic, not a complete gate.
 - Ranged throw markers now use the predicted target direction used by the projectile. A focused moving-target check verifies the direction; typecheck, lint and that AI test pass.
+- The 6-death LOW timeout left the Mega near x=1882 in hidden coarse pursuit while the courier reached x=4018. Its route began at an old node near x=807. Resetting the route on restore had no effect; an experimental distant-leg rejoin moved it about 93 m but still timed out and introduced a passive stuck-chaser flag. Both experiments were reverted. The coarse pursuit stall remains open.
 - Headless WebGL2 Scene Lab under `tools/e2e-lock.sh`: all nine original HIGH scenarios and the zombie throw, leap, roar and debris throw HIGH/LOW scenarios passed their configured gates. [Contact sheet](moves-contact-sheet.jpg) contains their six-frame HIGH and LOW strips; visual review remains for the orchestrator. The debris scenario records active and recovery stages; these isolated scripted scenes do not establish hit, dodge or DPS criteria.
 
 ## Open acceptance items
