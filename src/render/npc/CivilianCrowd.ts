@@ -320,7 +320,9 @@ class CivilianBatch extends Group {
       // E19 story beats override the routine (render-only, set by the mission script).
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
       const talking = !down && !rising && c.state === 'calm' && speaking;
-      const conversationClip = talking ? talkClip(e.id, this.world.tick) as Clip : null;
+      const lineTick = this.world.missions?.state.counters['hangar-line-ticks'] ?? 0;
+      const indicatingEast = talking && this.world.missions?.state.subtitle?.id === 'L10.voss-delivery' && lineTick >= 300 && lineTick < 480;
+      const conversationClip = talking ? indicatingEast ? 'npc-gesture' : talkClip(e.id, this.world.tick) as Clip : null;
       let clip: Clip = conversationClip ?? (storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle');
       if ((conversation || workClear) && speed > .06) clip = 'npc-walk-relaxed';
       // Waiting civilians in the war/aftermath keep their hands close, with individual gestures.
@@ -369,7 +371,9 @@ class CivilianBatch extends Group {
         pose.speed = speed;
         pose.time = renderTick / 60;
         pose.near = !this.distant;
-        const headTurn = Math.atan2(Math.sin(targetYaw - presented.yaw), Math.cos(targetYaw - presented.yaw));
+        const directionBlend = indicatingEast ? Math.min(1, (lineTick - 300) / 30, (480 - lineTick) / 30) : 0;
+        const gazeYaw = targetYaw + Math.atan2(Math.sin(-targetYaw), Math.cos(-targetYaw)) * directionBlend;
+        const headTurn = Math.atan2(Math.sin(gazeYaw - presented.yaw), Math.cos(gazeYaw - presented.yaw));
         pose.layers = talking && Math.abs(headTurn) > .01 ? { headYaw: Math.max(-.5, Math.min(.5, headTurn * .7)) } : undefined;
         pose.style = undefined;
         pose.procedural = !baked;
