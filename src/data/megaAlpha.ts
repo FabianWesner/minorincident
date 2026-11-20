@@ -31,9 +31,12 @@ export const megaAlpha = {
   /** Conservative animated arm envelope (body 0.55 + oversized arm and fist reach; was 3.4 for the 2x body); specials never begin or travel inside solid cover. */
   specialClearance: 2,
   moves: {
-    'alpha.charge': { windup: 48, cooldown: 360, damage: 25, radius: 1, range: 10, speed: survivor.speed * 1.6, activeTicks: 60 },
+    'alpha.charge': { windup: 60, cooldown: 360, damage: 25, radius: 1, range: 20, speed: 20, activeTicks: 60 },
     'alpha.ground-slam': { windup: 60, cooldown: 480, damage: 35, radius: 3 },
-    'alpha.grab-throw': { windup: 48, cooldown: 600, damage: 30, radius: 1.5, holdTicks: 60 },
+    'alpha.grab-throw': { windup: 60, cooldown: 540, damage: 30, radius: 1.5, holdTicks: 60 },
+    'alpha.living-missile': { windup: 60, cooldown: 540, damage: 20, radius: 1.5 },
+    'alpha.roar': { windup: 60, cooldown: 1200, damage: 0, radius: 30 },
+    'alpha.pounce': { windup: 54, cooldown: 720, damage: 30, radius: 4, range: 25 },
   },
   /** Body, hit and nav footprint for the 2026-11-08 terrain-escape stalker. Its own nav grid is baked at this clearance, so it plans only routes its
    * legs and shoulders fit through; on a grid larger than `ownGridMaxCells` it shares the 0.65 m crowd grid instead. */

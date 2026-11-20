@@ -176,7 +176,8 @@ export class Damage {
       }
       return 0;
     }
-    if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction && !hardHit) return 0;
+    const megaThrownFall = hit.actionId === 'infected.throw-fall' && !!source.infected?.pursuit && !!target.infected;
+    if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction && !hardHit && !megaThrownFall) return 0;
     // s178: in Simple, friendly-capable bullets never damage the courier. No path produces such a hit today
     // (allies only ever aim at infected and hold fire through humans, HitQuery.alliedShotClear); the guard
     // makes the no-friendly-fire rule explicit at the damage seam. Hard removes it.

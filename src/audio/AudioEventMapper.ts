@@ -140,7 +140,7 @@ export class AudioEventMapper {
         }
         if (event.type === 'telegraph') {
             if (isMega(entity) && 'special' in event) {
-                const cue = event.special === 'alpha.charge' ? 'mega.charge' : event.special === 'alpha.ground-slam' ? 'mega.slam' : event.special === 'alpha.grab-throw' ? 'mega.grab' : 'mega.roar';
+                const cue = event.special === 'alpha.charge' ? 'mega.charge' : event.special === 'alpha.ground-slam' ? 'mega.slam' : event.special === 'alpha.grab-throw' ? 'mega.grab' : event.special === 'alpha.living-missile' ? 'mega.zombie-throw' : event.special === 'alpha.pounce' ? 'mega.leap' : 'mega.roar';
                 this.host.play(cue, { gain: 1, rate: megaCueRates[cue], priority: 150, dry: true }, source);
                 return;
             }

@@ -1,5 +1,6 @@
 import type { RigidBody } from '@dimforge/rapier3d-compat';
 import type { SimWorld } from '../world/SimWorld';
+import { megaAlpha } from '../../data/megaAlpha';
 import { storyProtected } from '../npc/storyProtection';
 import type { InfectedSpecialAttack } from './types';
 import type { EntitySnapshot } from '../world/types';
@@ -126,9 +127,10 @@ export class PropThrows {
     if (object.living && (!entity || entity.health.current <= 0)) { this.settleSpecial(a); return false; }
     const dx = a.target.x - source.transform.x, dz = a.target.z - source.transform.z, distance = Math.hypot(dx, dz);
     if (distance < .01) return false;
-    const range = object.living ? Math.max(.1, Math.min(25, distance - 1.8)) : Math.min(25, distance);
+    const rangeCap = source.infected?.pursuit ? 35 : 25;
+    const range = object.living ? Math.max(.1, Math.min(rangeCap, distance - 1.8)) : Math.min(rangeCap, distance);
     const body = !object.corpse && !object.living ? this.body(object.objectId) : undefined;
-    a.projectile = { ...object, physics: !!body, radius: this.world.props?.items.find(p => p.entityId === object.objectId)?.radius ?? this.props.find(p => p.id === object.objectId)?.radius ?? 1, y: source.transform.y + 1.8, ...(body ? { damping: body.linearDamping() } : {}), started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range };
+    a.projectile = { ...object, sourceId: source.id, physics: !!body, radius: source.infected?.pursuit ? Math.max(2, this.world.props?.items.find(p => p.entityId === object.objectId)?.radius ?? this.props.find(p => p.id === object.objectId)?.radius ?? 1) : this.world.props?.items.find(p => p.entityId === object.objectId)?.radius ?? this.props.find(p => p.id === object.objectId)?.radius ?? 1, y: source.transform.y + 1.8, ...(body ? { damping: body.linearDamping() } : {}), started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range };
     if (body) {
       body.setLinearDamping(0);
       const time = Math.max(.25, range / 12), y = source.transform.y + 1.8;
@@ -171,7 +173,7 @@ export class PropThrows {
       if (t < along || t === along && e.id < (victim?.id ?? Infinity)) { victim = e; along = t; }
     }
     if (victim && this.world.infected!.specialHit(source.id, victim.id)) {
-      const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: victim.id, attackId: a.attackId, actionId: `infected.${a.move}`, origin: old, direction: { x: f.dx, z: f.dz }, base: 30, multiplier: 1, type: 'projectile', knockback: 0, stagger: .8, knockdownTicks: 48 });
+      const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: victim.id, attackId: a.attackId, actionId: `infected.${a.move}`, origin: old, direction: { x: f.dx, z: f.dz }, base: source.infected?.pursuit ? f.living ? megaAlpha.moves['alpha.living-missile'].damage : 25 : 30, multiplier: 1, type: 'projectile', knockback: 0, stagger: .8, knockdownTicks: 48 });
       this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: source.id, targetId: victim.id, attackId: a.attackId, special: a.move, amount });
       this.positionSpecial(a, true); return true;
     }
@@ -193,6 +195,7 @@ export class PropThrows {
       if (prop) { prop.pose.p = [x, floor + height, z]; prop.awake = true; }
       if (e) Object.assign(e.transform, { x, y: floor + .7 + height, z });
       if (f.living && settled && e?.infected) {
+        if (this.world.entities.get(f.sourceId ?? -1)?.infected?.pursuit) this.world.combat!.damage.apply({ sourceId: f.sourceId!, targetId: e.id, attackId: a.attackId, actionId: 'infected.throw-fall', origin: { x, z }, direction: { x: f.dx, z: f.dz }, base: 15, multiplier: 1, type: 'projectile', knockback: 0, stagger: .3 });
         delete e.attachedTo; e.transform.y = floor + .7;
         if (e.health.current > 0) {
           e.infected.state = 'chase'; e.infected.heardTargetId = a.target.id; e.infected.targetId = 0; e.infected.path.length = 0;
