@@ -93,6 +93,9 @@ for (const def of [...Object.values(catalog), ...Object.values(mountedActions), 
 for (const env of ['street', 'interior', 'open'])
     cue(`tail.${env}`, 'weapons', 'noise', env === 'interior' ? 0.65 : 0.25, 500, { gain: env === 'interior' ? 0.5 : 0.35, rateSpread: 0.02 });
 cue('weapon.rocket-whoosh', 'weapons', 'noise', 1, 600, { gain: 0.16, loop: true, antiSpam: 0 });
+cue('weapon.flame-ignite', 'weapons', 'noise', .6, 300, { gain: .8, antiSpam: 0, rateSpread: 0 });
+cue('weapon.flame-loop', 'weapons', 'noise', 2, 300, { gain: .8, loop: true, antiSpam: 0, rateSpread: 0 });
+cue('weapon.flame-stop', 'weapons', 'noise', .4, 300, { gain: .6, antiSpam: 0, rateSpread: 0 });
 cue('weapon.reload', 'weapons', 'step', 1, 800, { gain: 0.5 });
 cue('weapon.reload-rifle', 'weapons', 'step', 1, 800, { gain: 0.5 });
 cue('weapon.dry', 'weapons', 'step', 0.2, 1000, { gain: 0.5 });

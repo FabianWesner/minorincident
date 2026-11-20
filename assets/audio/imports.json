@@ -3444,6 +3444,32 @@
       "downloadSha256": "cc1ab5a99a0a365105c7c5dd783f4b0b1fe90938114d3ceec53856bfe005f7d6",
       "member": "Prepared SFX Library/Model 12/K_17P.wav",
       "sha256": "df18e60e5742bc18373ff46e5c471ef71849b138120d165f26104b249679ace0"
+    },
+    "s184-ignition": {
+      "title": "Flare ignition",
+      "author": "qubodup",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://opengameart.org/content/flare-ignition",
+      "pack": "s184-fire",
+      "downloadUrl": "https://opengameart.org/sites/default/files/ignition.flac",
+      "downloadFile": "ignition.flac",
+      "downloadSha256": "bd8281bcee65bc705755fd36bdf40d04fadddd474f52fd481233523e178b4ea1",
+      "member": "ignition.flac",
+      "sha256": "bd8281bcee65bc705755fd36bdf40d04fadddd474f52fd481233523e178b4ea1"
+    },
+    "s184-fire": {
+      "title": "Fire Crackling",
+      "author": "AntumDeluge",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://opengameart.org/content/fire-crackling/",
+      "pack": "s184-fire",
+      "downloadUrl": "https://opengameart.org/sites/default/files/fire-1.ogg",
+      "downloadFile": "fire-1.ogg",
+      "downloadSha256": "f922929805bc6afdf0a35727fa3998033db544c1b6f62ed3aeab94341ed6ddeb",
+      "member": "fire-1.ogg",
+      "sha256": "f922929805bc6afdf0a35727fa3998033db544c1b6f62ed3aeab94341ed6ddeb"
     }
   },
   "cues": {
@@ -6349,6 +6375,21 @@
       "start": 1.05,
       "filter": "lowpass=f=2200",
       "level": -34
+    },
+    "weapon.flame-ignite": {
+      "source": "s184-ignition",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.flame-loop": {
+      "source": "s184-fire",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.flame-stop": {
+      "source": "s184-ignition",
+      "start": 0.6,
+      "level": -22
     }
   },
   "streams": {

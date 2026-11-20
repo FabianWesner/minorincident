@@ -51,6 +51,8 @@ export class AudioEventMapper {
     private ambienceDuckUntil = 0;
     private readonly corgiWarnAt = new Map<string, number>();
     private attackUntil = 0;
+    private flameUntil = 0;
+    private flameSource = 0;
     private external: MusicIntensity | null = null;
     private incidentSeen = false;
     private completed = false;
@@ -65,9 +67,14 @@ export class AudioEventMapper {
     /** A new level's events are bound: forget the previous level's rate-limit clocks. */
     beginLevel(): void { this.corgiWarnAt.clear(); }
     /** Level change or teardown: the music policy starts over (a pending ambience duck still expires in `advance`). */
-    reset(): void { this.external = null; this.incidentSeen = false; this.completed = false; this.attackUntil = 0; }
+    reset(): void { if (this.flameUntil) this.host.stopLoop(`flame:${this.flameSource}`); this.flameUntil = 0; this.external = null; this.incidentSeen = false; this.completed = false; this.attackUntil = 0; }
     /** Per service update: the combat duck of the ambience bus lasts 0.5 s, then it recovers. */
     advance(): void {
+        if (this.flameUntil && this.host.context.currentTime > this.flameUntil) {
+            this.host.stopLoop(`flame:${this.flameSource}`);
+            this.host.play('weapon.flame-stop', { position: this.host.world.entities.get(this.flameSource)?.transform }, this.flameSource);
+            this.flameUntil = 0;
+        }
         if (this.ambienceDuckUntil && this.host.context.currentTime > this.ambienceDuckUntil) {
             this.ambienceDuckUntil = 0;
             this.host.graph.buses.ambience.gain.setTargetAtTime(1, this.host.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
@@ -152,6 +159,13 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'noise') {
+            if (event.actionId === 'weapon.flamethrower' && source !== undefined) {
+                if (!this.flameUntil) this.host.play('weapon.flame-ignite', { position: event.position }, source);
+                this.flameSource = source; this.flameUntil = t + .18;
+                this.host.loop(`flame:${source}`, 'weapon.flame-loop', { position: event.position }, source);
+                if (source === 1) this.host.ring(event.position, event.radius);
+                return;
+            }
             const id = audioCues[`action.${event.actionId}`] ? `action.${event.actionId}` : noiseCues[event.kind as keyof typeof noiseCues] ?? `action.${event.actionId}`;
             this.host.play(id, { position: event.position, gain: event.loudness, offscreen: audioCues[id]?.bus === 'telegraph' && this.host.offscreen(event.position) }, source);
             const zone = zoneAt(this.host.graph.map, event.position);
