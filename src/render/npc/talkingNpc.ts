@@ -7,10 +7,20 @@ const inPersonSpeaker: Record<string, 'voss' | 'ruiz' | 'sam'> = {
   'L10.sam-delivery': 'sam', 'L10.sam-delivery.reyes': 'sam',
 };
 
-/** L10 hangar subtitles name their in-person actor in the authored dialogue ID. Radio lines stay radio. */
-export function hangarTalker(world: SimWorld, id: number): boolean {
+/** Resolve authored in-person lines to their existing actor; radio and narration have no actor. */
+export function speakingNpc(world: SimWorld, id: number): boolean {
+  const mission = world.missions, subtitle = mission?.state.subtitle;
+  if (!subtitle || subtitle.until <= world.tick || !mission) return false;
+  if (world.scenario === 'L5' && subtitle.id.startsWith('L5.found.')) {
+    const key = subtitle.id.slice('L5.found.'.length);
+    return mission.state.l5?.survivors.some(row => row.key === key && row.id === id) ?? false;
+  }
+  if (world.scenario === 'L8') {
+    const zoo = mission.l8?.state;
+    if (['L8.nadia-path', 'L8.nadia-lion', 'L8.nadia-elephant'].includes(subtitle.id)) return zoo?.keeperId === id;
+    if (subtitle.id === 'L8.hale-greeting' || subtitle.id === 'L8.hale-breach') return zoo?.haleId === id;
+  }
   if (world.scenario !== 'L10') return false;
-  const subtitle = world.missions?.state.subtitle;
   const speaker = subtitle && subtitle.until > world.tick ? inPersonSpeaker[subtitle.id] : undefined;
   if (!speaker) return false;
   const entityId = world.missions!.state.actors[`hangar-${speaker}`];

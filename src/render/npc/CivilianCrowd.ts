@@ -1,6 +1,6 @@
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
-import { hangarCastMember, hangarTalker, talkClip } from './talkingNpc';
+import { hangarCastMember, speakingNpc, talkClip } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
@@ -234,7 +234,7 @@ class CivilianBatch extends Group {
       const model = crowdModelOf(e);
       if (model !== this.model) continue;
       const closingPose = l10ClosingPose(this.world, e);
-      const speaking = !!c && hangarTalker(this.world, e.id) && c.state === 'calm';
+      const speaking = !!c && speakingNpc(this.world, e.id) && c.state === 'calm';
       let conversation = this.conversationPositions.get(e.id);
       if (speaking && !conversation) {
         conversation = { x: e.transform.x, z: e.transform.z, tick: this.world.tick, distance: 0 };
@@ -308,7 +308,7 @@ class CivilianBatch extends Group {
       const walkClip: Clip = activity?.prop === 'cane' ? 'npc-cane' : activity?.prop ? 'npc-carry' : e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed';
       // E19 story beats override the routine (render-only, set by the mission script).
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
-      const talking = !down && !rising && c.state === 'calm' && hangarTalker(this.world, e.id);
+      const talking = !down && !rising && c.state === 'calm' && speaking;
       const conversationClip = talking ? talkClip(e.id, this.world.tick) as Clip : null;
       let clip: Clip = conversationClip ?? (storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle');
       if (conversation && speed > .06) clip = 'npc-walk-relaxed';
