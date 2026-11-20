@@ -1,14 +1,23 @@
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { resolve } from 'node:path';
+import { createServer } from 'vite';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
-import { SceneSession, origin, stopServer } from './session';
+import { SceneSession, origin, port, stopServer } from './session';
 
 const spec = JSON.parse(readFileSync('specs/scenes/catalog/s183-flame-fight.json', 'utf8')) as SceneSpec;
 const backend = process.env.SCENE_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 const session = new SceneSession({ backend, viewport: { width: 1280, height: 720 } });
-const out = `test-results/s183-flame${backend === 'webgpu' ? '-webgpu' : ''}`;
+const baseline = process.env.SCENE_BASELINE === '1';
+const out = `test-results/s183-flame${baseline ? '-baseline' : backend === 'webgpu' ? '-webgpu' : ''}`;
+const originals = new Map(baseline ? ['src/render/vfx/Vfx.ts', 'src/render/vfx/Blasts.ts'].map(path => [resolve(path), execFileSync('git', ['show', `3d9e12b1:${path}`], { encoding: 'utf8' })]) : []);
+const server = baseline ? await createServer({ configFile: resolve('vite.config.ts'), cacheDir: '/private/tmp/s183-baseline-vite',
+  plugins: [{ name: 's183-baseline', enforce: 'pre', load(id) { return originals.get(id.split('?')[0]); } }],
+  server: { host: '127.0.0.1', port, strictPort: true } }) : null;
 mkdirSync(out, { recursive: true });
 const rows: unknown[] = [];
 try {
+  await server?.listen();
   await session.open();
   for (const tier of ['high', 'low'] as const) {
     session.options.tier = tier;
@@ -28,4 +37,4 @@ try {
   }
   writeFileSync(`${out}/evidence.json`, JSON.stringify({ rows, errors: session.errors }, null, 2));
   if (session.errors.length) throw new Error(session.errors.join('\n'));
-} finally { await session.close(); stopServer(); }
+} finally { await session.close(); stopServer(); await server?.close(); }
