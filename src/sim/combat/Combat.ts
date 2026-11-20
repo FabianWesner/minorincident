@@ -249,6 +249,8 @@ export class Combat {
       }
       const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
       const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
+      // Heat touches ground along the clipped stream, not just its endpoint.
+      for (let along = 0; along < distance; along += 1) this.world.hazards?.fieldFire?.ignite({ x: origin.x + attack.aim.x * along, z: origin.z + attack.aim.z * along }, this.world.tick, 5);
       this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
     } else if ((def.pellets ?? 1) > 1) {
       this.pelletHits.clear();
