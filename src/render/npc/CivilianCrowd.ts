@@ -2,6 +2,7 @@ import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '..
 import { waitingIdle, idleOffset } from './waitingIdle';
 import { hangarCastMember, joiningHangarConversation, speakingNpc, talkClip } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
+import { cureHangar } from '../../data/l10Story';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
@@ -245,7 +246,17 @@ class CivilianBatch extends Group {
       if (conversation) {
         const player = this.world.entities.get(1)!.transform;
         const dx = e.transform.x - player.x, dz = e.transform.z - player.z, length = Math.hypot(dx, dz) || 1;
-        const goal = (speaking || joining) && length > 3 ? { x: player.x + dx / length * 3, z: player.z + dz / length * 3 } : e.transform;
+        let goal = (speaking || joining) && length > 3 ? { x: player.x + dx / length * 3, z: player.z + dz / length * 3 } : e.transform;
+        if (this.world.scenario === 'L10' && this.world.missions?.state.actors['hangar-voss'] === e.id && (speaking || joining) && length > 3) {
+          // Keep the handoff props from masking her when the courier stands beside the canister.
+          for (const angle of [0, .8, -.8, 1.4, -1.4]) {
+            const cos = Math.cos(angle), sin = Math.sin(angle);
+            const candidate = { x: player.x + (dx * cos - dz * sin) / length * 3, z: player.z + (dx * sin + dz * cos) / length * 3 };
+            if ([cureHangar.canister, cureHangar.terminal].some(prop => Math.hypot(candidate.x - prop.x, candidate.z - prop.z) < 2.2)) continue;
+            if (this.world.infected?.nav.clear(candidate.x, candidate.z, .35) === false) continue;
+            goal = candidate; break;
+          }
+        }
         const gx = goal.x - conversation.x, gz = goal.z - conversation.z, remaining = Math.hypot(gx, gz);
         const dt = Math.max(0, Math.min(1, (this.world.tick - conversation.tick) / 60));
         const step = Math.min(remaining, dt * 1.5);
