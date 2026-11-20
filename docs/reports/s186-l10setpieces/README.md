@@ -170,6 +170,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - Underpass foreground-cut diagnosis: at native HIGH tick 45720 the normal cut selected no occluder. Forcing the underpass into either the full lens cut or the bounded courier cut made the courier visible, but removed the structure from the frame, leaving no readable dark underpass. Both trials were reverted; the composition requires a geometry or placement solution rather than this cut override.
 
+- Final remote full `npm test` on the committed production source passed: 27 files, 105 passed and one skipped, 187.8 s / 240 s. The latest full threat audit on the same production source passed with zero fail flags and L10 skilled complete; subsequent commits contain report and diagnostic images only.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
