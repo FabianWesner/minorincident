@@ -764,7 +764,7 @@ export class Blasts extends Group {
       const key = -4_000_000 - index; seen.add(key);
       let c = this.fireColumns.get(key);
       if (!c) {
-        c = { born: now, x: object.x, z: object.z, ground: this.world.districts?.groundHeight(object.x, object.z) ?? 0, until: Infinity, rate: low ? 1.5 : 3, size: 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
+        c = { born: now, x: object.x, z: object.z, ground: (this.world.districts?.groundHeight(object.x, object.z) ?? 0) + object.flameHeight, until: Infinity, rate: low ? 1.5 : 3, size: 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
         c.light = this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
         this.fireColumns.set(key, c);
       }
