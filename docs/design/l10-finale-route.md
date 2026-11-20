@@ -29,7 +29,7 @@ The courier carries the cure; the Mega hunts it. Each beat either (a) shows what
 
 PO, verbatim: "Why not using a bike. A motorbike with same physics like the bike in L1. This could be a nice gameplay element for L10. Ideally I could still shoot when riding it; but only with the gun."
 
-- Found at beat 1 (evac road, by the buses), keys in it. Same handling model as the L1 bicycle, tuned faster (top speed ~2.5× running), engine sound, headlight.
+- Found at beat 1 (evac road, by the buses), keys in it. Same handling model as the L1 bicycle, a bit quicker than the L1 bicycle (top speed ~1.25× the bike; PO), engine sound, headlight.
 - While riding: only the handgun, one-handed, aimed with the mouse (forward ~200° arc); no melee, no other weapons; other weapons return on dismount.
 - The corgi rides in a sidecar.
 - Rhythm: ride → roadblock (gate barricade, convoy wreck line, underpass rubble, hospital fence) → dismount, fight, find the way → remount (the bike can be pushed/ridden through a gap the player opens, or a second bike waits beyond). The final approach (beat 9) is ridden at full speed under the searchlight, ending at the complex gate.
