@@ -833,15 +833,15 @@ export class Blasts extends Group {
     const e = c.ambient ? undefined : this.world.entities.get(id), field = id <= -3_000_000 && id > -5_000_000;
     if (!e && !c.ambient && !field) return;
     if (!this.sourceVisible(c.x, c.z, (field ? 3 : c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) return;
-    const big = c.ambient ? c.ambient.car : !!e?.vehicle, radius = field ? 3 : c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
+    const big = c.ambient ? c.ambient.car : !!e?.vehicle, radius = field ? 3 : c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = field ? 6 : big ? 6 : Math.max(3, Math.round(radius * 3));
     // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
     const grow = field ? 2 : c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
     const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
     for (let i = 0; i < n; i++) {
       const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-      this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+      this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), field ? .65 : .8 + .4 * life);
     }
-    this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life));
+    this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life) * (field ? .55 : 1));
   };
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
