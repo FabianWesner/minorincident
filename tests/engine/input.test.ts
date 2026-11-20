@@ -251,6 +251,11 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   const fixedRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
   fixedRack.input(fixedRecording.frames[0], 30);
   expect(fixedRack.current(fixedRack.state.selectedSide).id).toBe('weapon.fire-axe'); // fixed key 3 is a hole
+  const legacyCycle = new Loadout(['weapon.fire-axe'], ['weapon.army-mg', 'weapon.shotgun']);
+  legacyCycle.input({ ...emptyInput(), selectedPositionWeaponKey: 2, legacyWeaponOrder: true }, 30);
+  expect(legacyCycle.current(legacyCycle.state.selectedSide).id).toBe('weapon.army-mg');
+  legacyCycle.input({ ...emptyInput(), selector: 1, selectorActive: true, legacyWeaponOrder: true }, 60);
+  expect(legacyCycle.current(legacyCycle.state.selectedSide).id).toBe('weapon.shotgun');
   const pickups = new Loadout(['weapon.fire-axe', 'weapon.nail-gun', 'weapon.army-mg'], ['weapon.handgun']);
   pickups.input({ ...emptyInput(), selectedWeaponKey: 7 }, 30);
   expect(pickups.current(pickups.state.selectedSide).id).toBe('weapon.nail-gun');

@@ -38,8 +38,9 @@ export class Loadout {
     return entries.sort((a, b) => (weaponKey(a.id) ?? 99) - (weaponKey(b.id) ?? 99)
       || this.definition(b.id).tier - this.definition(a.id).tier || compareWeapons(a.id, b.id));
   }
-  cycleActive(direction: number, tick: number): void {
+  cycleActive(direction: number, tick: number, legacyOrder = false): void {
     const entries = this.activeEntries(), side = this.state.selectedSide, state = this.state[side];
+    if (legacyOrder) entries.sort((a, b) => compareWeapons(a.id, b.id));
     if (!entries.length) return;
     const current = entries.findIndex(e => e.side === side && e.index === state.index);
     const next = entries[(current + direction + entries.length) % entries.length];
@@ -72,7 +73,11 @@ export class Loadout {
       }
     }
     const oldPosition = frame.selectedPositionWeaponKey === undefined ? undefined : this.activeEntries().sort((a, b) => compareWeapons(a.id, b.id))[frame.selectedPositionWeaponKey - 1];
-    const choice = keyed ?? oldPosition ?? (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
+    const sideEntries = frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side) : undefined;
+    if (frame.legacyWeaponOrder) sideEntries?.sort((a, b) => compareWeapons(a.id, b.id));
+    const activeEntries = frame.selectedActiveSlot === undefined ? undefined : this.activeEntries();
+    if (frame.legacyWeaponOrder) activeEntries?.sort((a, b) => compareWeapons(a.id, b.id));
+    const choice = keyed ?? oldPosition ?? (sideEntries && frame.selectedSlot ? sideEntries[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? activeEntries?.[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];
       if (Number.isInteger(choice.index) && (choice.index >= 0 || choice.index === -1 && choice.side === 'LEFT') && choice.index < rack.rack.length && tick >= rack.swapUntil) {
@@ -80,11 +85,13 @@ export class Loadout {
         if (rack.index !== choice.index) { rack.index = choice.index; rack.swapUntil = tick + 15; }
       }
     }
-    if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick);
+    if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick, frame.legacyWeaponOrder);
     else if (frame.selector && tick >= this.state[this.state.selectedSide].swapUntil) {
       const cycling = this.state[this.state.selectedSide];
       const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
-      if (entries.length) { cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15; }
+      if (frame.legacyWeaponOrder) { entries.sort((a, b) => compareWeapons(a.id, b.id)); }
+      const position = frame.legacyWeaponOrder ? entries.findIndex(e => e.index === cycling.index) : current;
+      if (entries.length) { cycling.index = entries[(position + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15; }
     }
     const selectedSide = this.state.selectedSide, selectedId = this.current(selectedSide).id;
     if (selectedId !== beforeId) this.state.previous = { side: beforeSide, index: beforeIndex, id: beforeId };

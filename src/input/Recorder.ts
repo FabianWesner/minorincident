@@ -39,6 +39,7 @@ export class Recorder {
     )) throw new Error('Invalid .ssrec recording');
     for (const frame of data.frames) {
       Recorder.removeLegacyCommands(frame);
+      if (data.version < 3) frame.legacyWeaponOrder = true;
       if (data.version === 1 && frame.selectedWeaponKey !== undefined) { frame.selectedLegacyWeaponKey = frame.selectedWeaponKey; delete frame.selectedWeaponKey; }
       if (data.version === 2 && frame.selectedWeaponKey !== undefined) { frame.selectedPositionWeaponKey = frame.selectedWeaponKey; delete frame.selectedWeaponKey; }
     }

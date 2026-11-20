@@ -171,6 +171,7 @@ export function decodeLog(chunks: Uint8Array[]): DecodedLog {
         const mask = r.view.getUint32(r.pos, true); r.pos += 4;
         for (let i = 0; i < SLOTS; i++) if (mask & 1 << i) cur[i] = i < FLOAT_SLOTS ? r.f64() : r.optional();
         last = frameFrom(cur);
+        if (meta?.weaponKeyVersion !== 3) last.legacyWeaponOrder = true;
         if (last.selectedWeaponKey !== undefined && meta?.weaponKeyVersion !== 3) {
           if (meta?.weaponKeyVersion === 2) last.selectedPositionWeaponKey = last.selectedWeaponKey;
           else last.selectedLegacyWeaponKey = last.selectedWeaponKey;

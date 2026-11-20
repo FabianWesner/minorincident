@@ -32,6 +32,8 @@ export interface InputFrame {
   selectedWeaponKey?: number;
   /** Historical one-based carried rack position from version 2 recordings. */
   selectedPositionWeaponKey?: number;
+  /** Preserve pre-fixed-slot ordering for replayed wheel and side selections. */
+  legacyWeaponOrder?: boolean;
   /** Activate the corgi lure independently of the weapon rack. */
   corgiLure?: boolean;
   /** Historical catalog shortcut decoded from recordings made before rack positions. */
