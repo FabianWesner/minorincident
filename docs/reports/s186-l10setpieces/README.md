@@ -8,9 +8,9 @@ The six scenes are arranged around the existing corridor groups at 2940, 3060, 3
 
 ## Diagnostic stills
 
-These are staged HIGH zoom 1 Scene Lab views and the LOW gate view, not evidence that the native key moments occurred or were accepted.
+These are staged HIGH zoom 1 views and the LOW gate view. The HIGH gate view uses the production camera after a teleport and scripted movement; the others use Scene Lab. None establishes that the native key moments occurred or were accepted.
 
-- Gate: [HIGH](gate-high-diagnostic.jpg), [LOW](gate-low-diagnostic.jpg). Both figures appear; the overhead sign is cropped and the burst is not shown.
+- Gate: [HIGH](gate-high-diagnostic.jpg), [LOW](gate-low-diagnostic.jpg). The HIGH frame shows nearby infected, part of the sign and one figure; the LOW Scene Lab frame shows both figures. The sign is cropped and the burst is not shown.
 - Billboard: [HIGH](billboard-high-diagnostic.jpg), with the fall fraction manually set to 1; no crowd is visible.
 - Field: [HIGH](field-high-diagnostic.jpg); figures are at the frame edge and no one tears free.
 - Convoy: [HIGH](convoy-high-diagnostic.jpg); a cropped truck and infected are visible, but not the three-sided wave or clear flames.
@@ -103,6 +103,8 @@ LOW skilled seed 1 completed in 1,116.0 s with two deaths after the convoy crate
 - After the convoy crate change, the required remote full unit suite passed again: 27 files, 105 passed and one skipped, 187.4 s / 240 s. The final LOW visit-gap receipt above is also refreshed after the crate change. The unmodified local E32 check still reports the separate L4 routing failure recorded above.
 
 - A separate post-crate LOW skilled seed 1 run also completed in 1,116.0 s with two deaths, matching the independent visit-gap run. All six cohorts admitted their full LOW slots and the courier hit members of each. Only the convoy and underpass cohorts produced captured attack telegraphs (first at 8.0 s and 4.88 s after release); the hospital cohort dealt 10 damage without a captured telegraph, and gate, billboard and field produced no recorded telegraph or damage. [Cohort receipt](low-final-cohorts.json). This is evidence of courier engagement, not proof of six distinct visible surprises or attacks.
+
+- A HIGH production-camera gate inspection teleported the courier to x=2980, then moved her east with god mode at zoom 1. At x=3002 the opened frame shows a nearby hostile telegraph, multiple infected behind the courier, one partially visible effigy and a cropped gantry sign ([HIGH still](gate-high-diagnostic.jpg)). The test does not establish which cohort supplied the infected or that they emerged from the tower; the trailing group also echoes the s185 staging failure. This is a scripted diagnostic, not a native skilled-route acceptance run.
 
 ## Open
 
