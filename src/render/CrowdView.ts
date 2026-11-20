@@ -811,7 +811,7 @@ export class CrowdView extends Group {
           this.transform.makeRotationY(e.transform.yaw + turn); this.transform.scale(this.silhouette.set(sx * 1.5, sy, sz * 1.5));
           this.transform.setPosition(x + dx * 1.5, ground + .045 + sy * .5 + (1 - settle) * (.22 + sy), z + dz * 1.5);
           this.ashHeaps.setMatrixAt(this.ashHeaps.count, this.transform);
-          this.ashSwatch.set(pieceIndex < 2 ? '#38342f' : '#77746d').lerp(this.emberAsh, (1 - ashProgress) * .16);
+          this.ashSwatch.set(pieceIndex < 2 ? '#514c45' : '#bbb9b0').lerp(this.emberAsh, (1 - ashProgress) * .16);
           this.ashHeaps.setColorAt(this.ashHeaps.count++, this.ashSwatch);
         }
         if (ashProgress >= .45) for (const [offset, turn] of [[-.09, -.72], [.09, .72]] as const) {
