@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { decodeSave } from '../../src/sim/progression/Save';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -10,8 +10,36 @@ import { l10Framing, l10RoadFraming, l10RoadWeight } from '../../src/levels/L10/
 import { cure } from '../../src/levels/L10/district';
 import { View } from '../../src/render/View';
 import { l2RescueView, l2RescueZoom } from '../../src/data/l2';
+import { preset } from '../../src/sim/progression/Campaign';
 
 describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
+  async function megaRevealRestoresOnce(): Promise<void> {
+    const world = await loadLevel('L10', 1, preset('L10-default'), 0, { quality: 'high' }), mission = world.missions!, player = world.entities.get(1)!;
+    const id = world.megaPursuit!.introduce({ x: player.transform.x + 8, z: player.transform.z });
+    expect(id).toBeGreaterThan(0);
+    const mega = world.entities.get(id)!;
+    Object.assign(mega.transform, { x: player.transform.x + 8, z: player.transform.z });
+    vi.spyOn(world.infected!.director, 'inFrame').mockReturnValue(true);
+    let roars = 0;
+    world.events.on('mega.cue', event => { if (event.type === 'mega.cue' && event.kind === 'roar') roars++; });
+
+    mission.l10!.story.update();
+    expect(mission.state.states['mega-reveal-seen']).toBe(true);
+    expect(mission.state.states['mega-reveal-active']).toBe(true);
+    expect(mission.state.counters['mega-reveal-ticks']).toBe(1);
+    expect(roars).toBe(1);
+    mission.state.counters['mega-reveal-ticks'] = 300;
+    mission.l10!.story.update();
+    expect(mission.state.states['mega-reveal-active']).toBe(false);
+    mission.checkpoint('cure-residential');
+    mission.restore('cure-residential');
+    mission.l10!.story.update();
+    expect(mission.state.states['mega-reveal-seen']).toBe(true);
+    expect(mission.state.states['mega-reveal-active']).toBe(false);
+    expect(roars).toBe(1);
+    world.dispose();
+  }
+
   it('is wide on the R1–R5 road, normal in the corridor, complex, finale and at close interactions', () => {
     expect(l10RoadWeight(640, 8, false)).toBe(1);
     expect(l10RoadWeight(2150, -75, false)).toBe(1);
@@ -99,6 +127,7 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
     // r31-epilogue (r30-finale-qa: "When the fight ended away from the console, she stands alone with the corgi for 8 s.
     // Cured people only appear when infected are nearby."): the release beat always has a cured crowd around her, clear of
     // bodies; Voss's "Release it. Now." ends with the release; the closing group never stands in the Mega's body.
+    await megaRevealRestoresOnce();
     await releaseStaging();
   }, 120_000);
 });

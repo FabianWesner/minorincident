@@ -2,7 +2,7 @@ import type { MissionState } from '../sim/missions/types';
 
 /** Story floors: 0 = ambient, 0.25 = tension, 0.5 = dramatic rock. Save/load reads the current beat. */
 export const musicBeats: Record<string, Readonly<Record<string, number>>> = {
-    L10: { walk: 0, hunter: .25, chase: .5, finale: .5, released: 0 },
+    L10: { walk: 0, hunter: .5, chase: .5, finale: .5, released: 0 },
     L8: { sanctuary: 0, breach: .25 },
     L1: { morning: 0, handover: 0, calm: 0, accident: 0.25, spread: 0.25, safe: 0 },
     L2: { calm: 0, alarm: 0.25, ride: 0.25, arrived: 0.25, doors: 0.25, collapse: 0.5, escape: 0.5, checkpoint: 0, done: 0 },
@@ -17,7 +17,7 @@ export function storyMusic(level: string, mission?: MissionState): { beat: strin
     if (!mission || mission.id !== level || mission.phase !== 'playing') return { beat: 'safe', minimum: 0 };
     const beats = musicBeats[level];
     if (level === 'L10') {
-        const beat = mission.states['cure-released'] ? 'released' : mission.states['charge-active'] && !mission.states['mega-dead'] ? 'finale' : mission.steps['research-exit']?.status === 'active' ? 'chase' : 'walk';
+        const beat = mission.states['cure-released'] ? 'released' : mission.states['charge-active'] && !mission.states['mega-dead'] ? 'finale' : mission.steps['research-exit']?.status === 'active' ? 'chase' : mission.states['mega-reveal-seen'] ? 'hunter' : 'walk';
         return { beat, minimum: beats[beat] };
     }
     if (level === 'L8') { const beat = mission.states.breached ? 'breach' : 'sanctuary'; return { beat, minimum: beats[beat] }; }
