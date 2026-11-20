@@ -39,11 +39,12 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - A second LOW native trace sampled service actors in the camera every 30 ticks: 47 of 397 tracked entity IDs were observed on screen after admission. IDs can be reused, the sample is intermittent, and this is not a visual or line-of-sight receipt. The remaining arrivals are unproven; the service approach needs further work and review.
 - Full `npm run qa:threat` after the safe admission change: **failed**, 1 flag (`L10/step/hold:SKILLED_ZERO_ATTACK_WINDUPS`); L10 skilled hit its tick budget with 4 deaths and the Mega about 2,117 m away. Other skilled routes completed. The service entrance needs an effective visible approach, and the coarse Mega pursuit stall still blocks completion.
 - Mega ranged throws now use separate rip and launch-whoosh cues; close grab retains its own cue. Typecheck, lint and focused save-progression test passed. Audible review and landing-impact cue verification remain open.
+- Focused AI simulation confirms a 20 m debris impact deals 25 damage and knocks down, and a living-missile impact deals 20 damage and knocks down. The debris fixture must run through the full flight; the earlier shorter run established launch only.
 - Headless WebGL2 Scene Lab under `tools/e2e-lock.sh`: all nine original HIGH scenarios and the zombie throw, leap, roar and debris throw HIGH/LOW scenarios passed their configured gates. [Contact sheet](moves-contact-sheet.jpg) contains their six-frame HIGH and LOW strips; visual review remains for the orchestrator. The debris scenario records active and recovery stages; these isolated scripted scenes do not establish hit, dodge or DPS criteria.
 
 ## Open acceptance items
 
 - Review ground rubble appearance and landing in browser QA.
-- Measure debris-hit damage and the L10 HIGH walking death count before and after; the requested ~25% DPS ceiling is not measured.
+- Measure the requested ~25% moving DPS ceiling; the HIGH walking death comparison above did not complete the route.
 - Confirm scripted sidestep dodges, damage/knockdown outcomes, and all move telegraphs in browser QA.
 - Complete L10 skilled and passive threat audit routes.

@@ -228,6 +228,7 @@ async function alphaTypeContracts() {
       expect(thrown.infected!.thrownBy).toBeUndefined();
       expect(thrown.health.current).toBeLessThan(thrown.health.max);
       expect(thrownWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === mega.id && event.targetId === player.id && event.special === 'alpha.living-missile' && event.amount === 20)).toBe(true);
+      expect(player.survivor!.knockdown?.until).toBeGreaterThan(thrownWorld.tick);
 
       const debrisWorld = await arena(59, false), debrisPlayer = debrisWorld.entities.get(1)!;
       debrisPlayer.health.current = debrisPlayer.health.max = 1000;
@@ -239,8 +240,10 @@ async function alphaTypeContracts() {
       step(debrisWorld, 1);
       expect(debrisMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
       expect(debrisWorld.events.events().some(event => event.type === 'telegraph' && event.sourceId === debrisMega.id && event.special === 'alpha.grab-throw' && event.duration >= .8)).toBe(true);
-      for (let i = 0; i < 150; i++) { debrisWorld.props.prePhysics(); step(debrisWorld, 1); debrisWorld.props.postPhysics(); }
+      for (let i = 0; i < 190; i++) { debrisWorld.props.prePhysics(); step(debrisWorld, 1); debrisWorld.props.postPhysics(); }
       expect(debrisWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === debrisMega.id)).toBe(true);
+      expect(debrisWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === debrisMega.id && event.targetId === debrisPlayer.id && event.special === 'alpha.grab-throw' && event.amount === 25)).toBe(true);
+      expect(debrisPlayer.survivor!.knockdown?.until).toBeGreaterThan(debrisWorld.tick);
 
       const leapWorld = await arena(58, false), courier = leapWorld.entities.get(1)!;
       courier.health.current = courier.health.max = 1000;
