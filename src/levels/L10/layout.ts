@@ -30,6 +30,11 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       const p: Placement = { id, assetId, position: [x, 0, z], yaw, scale, decor, minTier: 0, maxTier: 6, allowRoad: false, lightGroup: 'research', visualAabb: { min: [x - half[0], 0, z - half[2]], max: [x + half[0], half[1] * 2, z + half[2]] } };
       layout.placements.push(p); return p;
     };
+    // A courier bike was abandoned in the first evacuation pinch. Its solid
+    // wheels and frame make the player step around the roadblock without
+    // sealing the road lane.
+    const evacBike = place('l10-evac-courier-bike', 'veh.courier-bike', 2868, -2, [1.45, .65, .36], Math.PI / 2, [.72, .72, .72], true);
+    evacBike.decorSolid = true; evacBike.fixed = true;
     const service = finale.serviceEntry.at, console = cure.anchors['cure-console'];
     layout.lightGroups.push({ id: 'l10-service', offAt: 6 });
     const serviceDoor = place('kit.zoo-tunnel-mouth:l10-service', 'kit.zoo-tunnel-mouth', console[0] + service[0], console[1] + service[1], [4.5, 3, 3], Math.PI);
