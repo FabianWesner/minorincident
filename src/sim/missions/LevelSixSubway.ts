@@ -78,6 +78,7 @@ export class LevelSixSubway {
     const carried=w.progression?.campaign?.stationOccupants;
     const count=carried?.length ?? (w.infected!.director.tier==='low'?l6.shelter.low:l6.shelter.high);
     const all=[...Array.from({length:count},(_,i)=>`shelter-${i}`),...keys];
+    const residents=all.map((key,i)=>carried?.[i] ?? w.progression?.campaign?.rescuedSurvivors?.find(e=>e.civilian?.survivor?.key===key));
     all.forEach((key,i)=>{
       const injured=key!=='rosa'&&i>0&&i%5===0, routine=key==='rosa'?'treat':i===3&&keys.includes('rosa')?'talk':i===0?'guard':(['sit','talk','treat','rest','share'] as const)[(i-1)%5];
       const pair = routine==='treat' ? Math.min(all.length-1, i+2) : i;
@@ -85,7 +86,7 @@ export class LevelSixSubway {
       const at=this.snap(key==='rosa'?{x:16.9,z:5.6}:routine==='treat'?{x:base.x-1.1,z:base.z}:base);
       const previous=l5Survivors.find(s=>s.key===key);
       const model=i===0?'npc.marcus.aftermath':previous?.model??(injured?'npc.shelter-survivor.bandaged':routine==='rest'?'npc.shelter-survivor.lying':routine==='sit'?'npc.shelter-survivor.sitting':i%2?'npc.civilian-man-b.aftermath':'npc.civilian-woman-b.aftermath');
-      const resident = carried?.[i] ?? w.progression?.campaign?.rescuedSurvivors?.find(e=>e.civilian?.survivor?.key===key);
+      const resident = residents[i];
       let e: EntitySnapshot;
       if (resident) {
         e=structuredClone(resident);
@@ -297,7 +298,16 @@ export class LevelSixSubway {
   private abandon():void {
     if(this.s.abandonAt)return;
     const s=this.s;s.abandonAt=this.w.tick;s.phase='retreat';
-    for(const r of this.living()){r.status='following';const e=this.w.entities.get(r.id)!,c=e.civilian!;leaveSeat(e);c.story=null;delete c.floorY;}
+    const residents=s.survivors.map(r=>this.w.entities.get(r.id)!);
+    const existing=residents.slice(1).filter(e=>!!e.civilian?.ally?.gun).length;
+    const hasShotgun=residents.slice(1).some(e=>e.civilian?.ally?.weapon==='shotgun'&&!!e.civilian.ally.gun);
+    let needed=Math.max(hasShotgun?0:1,Math.ceil(residents.length/2)-1-existing), shotgun=!hasShotgun;
+    for(const e of residents.slice(1).sort((a,b)=>(a.civilian?.survivor?.slot??0)%3-(b.civilian?.survivor?.slot??0)%3)) if(needed>0&&e.civilian&&!e.civilian.ally?.gun&&e.health.current>0) {
+      const a=allyState('civilian',null,false);
+      a.gun=shotgun?{damage:30,shotS:2,rangeM:3,nearM:2,hitNear:.65,hitFar:.3}:{damage:10,shotS:1.5,rangeM:3,nearM:2,hitNear:.4,hitFar:.2};
+      a.weapon=shotgun?'shotgun':'pistol';e.civilian!.ally=a;shotgun=false;needed--;
+    }
+    for(const r of this.living())this.startWalking(r);
     this.mission.setState('abandoned',true);this.w.events.emit({type:'l6.abandon',tick:this.w.tick});
     this.say(s.survivors[0].id,'Into the tunnel! Everybody, move!');this.mission.requestCheckpoint('abandon');
   }
@@ -306,6 +316,7 @@ export class LevelSixSubway {
     r.status='following';
     e.hidden=false; e.civilian.survivor!.mode='follow';
     leaveSeat(e); e.civilian.story=null; delete e.civilian.floorY;
+    if(e.civilian.ally){e.civilian.ally.post=null;e.civilian.ally.hold=false;e.civilian.ally.run={x:276,z:15};}
   }
   private living() {return this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following');}
   /** A service gate can be closed once every living survivor is more than 2 m past its line (E24 §5: nobody trapped). */

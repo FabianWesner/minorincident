@@ -173,9 +173,9 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
       }
     } finally { world.dispose(); }
   }
-});
 
-test('checkpoint restore keeps the rack reached at L8 and L10, including authored arsenal changes', async () => {
+  // Checkpoint restore keeps the rack reached at L8 and L10, including authored arsenal changes.
+  {
   const ids = (world: Awaited<ReturnType<typeof loadLevel>>) => ({
     LEFT: world.combat!.runner.loadout.state.LEFT.rack.map(slot => slot.id),
     RIGHT: world.combat!.runner.loadout.state.RIGHT.rack.map(slot => slot.id),
@@ -215,6 +215,7 @@ test('checkpoint restore keeps the rack reached at L8 and L10, including authore
     expect(ids(l10)).toEqual(expectedHangar);
     expect(l10.progression!.campaign!.racks).toEqual(expectedHangar);
   } finally { l10.dispose(); }
+  }
 });
 
 test('selection fallback: lost or empty weapons fall back to the best usable owned weapon, never an empty finite gun', () => {
