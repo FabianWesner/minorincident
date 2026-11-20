@@ -111,6 +111,12 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     beat('convoy-cover-b', 'prop.sandbag-pallet', 3285, 69, [1.4, .7, .8], Math.PI / 2);
     // Open-ended overpass spans the measured crossing, with lights at its sides.
     beat('underpass-mouth', 'prop.l10-underpass', 3383, 74, [6, 3.2, 7]);
+    // Four independent pier footprints leave the full centre passage open to
+    // navigation and physics; the overhead deck is not a ground-level wall.
+    for (const x of [3378.2, 3387.8]) for (const z of [67.3, 80.7]) {
+      layout.colliders.push({ id: `l10-underpass-pier-${x}-${z}`, minTier: 0, maxTier: 6,
+        aabb: { min: [x - .5, 0, z - .4], max: [x + .5, 4.9, z + .4] } });
+    }
     for (const z of [67, 81]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3383, z, [.4, 1.5, .4]);
     // Field triage on the final approach: quarantine tents and a marked transport.
     for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', x, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
