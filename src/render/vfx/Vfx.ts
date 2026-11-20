@@ -90,6 +90,7 @@ export class Vfx extends Group {
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
   private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
+  private flameEmberAt = 0;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
   private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number; color?: number }>();
@@ -395,6 +396,9 @@ export class Vfx extends Group {
         if (!this.enabled) return;
         const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
         const range = this.flameRange(muzzle, event.direction);
+        if (!this.flameSource || this.time >= this.flameSource.until) {
+          this.particles.spawn(this.time, .18, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .55, particleShape.flash, 0xffd16a);
+        }
         // Keep the flame attached across discrete attack events; Blasts renders dense, pooled cards along this clipped ray.
         this.flameSource = { id: event.sourceId, until: this.time + 1 / def.fireRate + .08, direction: { ...event.direction } };
         this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, event.direction.x, event.direction.z, range, this.flameSource.until, event.sourceId);
@@ -780,6 +784,17 @@ export class Vfx extends Group {
     const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };
     const range = this.flameRange(muzzle, direction);
     this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, direction.x, direction.z, range, jet.until, jet.id);
+    if (this.time >= this.flameEmberAt) {
+      this.flameEmberAt = this.time + (this.quality === 'high' ? .045 : .09);
+      const distance = range * (.35 + this.rng.next() * .5);
+      const x = muzzle.x + direction.x * distance, z = muzzle.z + direction.z * distance;
+      const side = (this.rng.next() - .5) * 1.2;
+      this.particles.spawn(this.time, .35 + this.rng.next() * .2, x, muzzle.y + .2, z,
+        direction.x * 2 - direction.z * side, 1.2 + this.rng.next(), direction.z * 2 + direction.x * side,
+        .055, particleShape.spark, 0xffa438, 5, .24);
+      this.particles.spawn(this.time, .7, x, muzzle.y + .3, z, direction.x * .3, .7, direction.z * .3,
+        .3, particleShape.smoke, 0x4a3028, -.3);
+    }
   }
   private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
     const range = actions['weapon.flamethrower'].range;
