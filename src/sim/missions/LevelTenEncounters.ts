@@ -206,32 +206,31 @@ export class LevelTenEncounters {
           w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'cure-assault-breach' });
           w.events.emit({ type: 'vfx.effect', tick: w.tick, kind: 'smoke', position: { x: entry.x, y: 0, z: entry.z }, radius: 5 });
         }
-        // The service breach admits a fighter on the courier's hold side every
-        // half-second, so the elevated platform can't make its arrivals inert.
-        // Admission
-        // uses the same reserved director slot and population cap as other arrivals.
+        // Admit the service cohort out of view and let it approach the courier.
         if (w.tick >= (this.state.finaleEntryNext ?? 0)) {
           if (!this.state.finaleEntrySlot) { ai.director.reserved++; this.state.finaleEntrySlot = true; }
           else if (ai.director.count + ai.director.pendingTurns < ai.director.cap - Math.max(0, ai.director.reserved - 1) && ai.pool.length) {
-            ai.director.reserved--; this.state.finaleEntrySlot = false;
             const livingButchers = ai.active.filter(e => e.archetype === 'infected.butcher' && e.health.current > 0).length;
             const heavyBreach = this.state.assaultBreach && livingButchers === 0;
             const archetype = heavyBreach ? 'infected.butcher'
               : entry.ids.length % 2 === 1 ? 'infected.sprinter'
                 : entry.ids.length % 3 === 2 ? 'infected.firefighter' : 'infected.runner';
-            const offsets = [[-3, 0], [3, 0], [0, -3], [0, 3], [-2, -2], [2, 2]] as const;
-            const [dx, dz] = offsets[entry.ids.length % offsets.length];
-            const x = courier.transform.x + dx, z = courier.transform.z + dz;
-            const support = w.districts?.supportBelow(x, z, courier.transform.y - .7 + .05) ?? w.districts?.groundHeight(x, z) ?? 0;
-            const id = ai.spawn(archetype, { x, y: support + .7, z }, { state: 'chase', cureRegion: 'dispersal-complex' });
-            const actor = w.entities.get(id)!;
-            actor.transform.y = support + .7;
-            ai.pursueTarget(id, 1);
-            if (actor.infected?.l1) { actor.infected.l1.mode = 'chase'; actor.infected.l1.targetId = 1; actor.infected.heardTargetId = 1; }
-            actor.infected!.state = 'chase';
-            entry.ids.push(id);
-            this.state.finaleEntryNext = w.tick + 30;
-            this.state.spawned[`dispersal-assault:service:${entry.ids.length}:${this.state.assaultWave ?? 0}`] = id;
+            const point = cureEncounterSpot(ai.nav, { x: entry.sx, z: entry.sz, archetype },
+              (x, z) => chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 33);
+            if (point) {
+              ai.director.reserved--; this.state.finaleEntrySlot = false;
+              const { x, z } = point;
+              const support = w.districts?.supportBelow(x, z, courier.transform.y - .7 + .05) ?? w.districts?.groundHeight(x, z) ?? 0;
+              const id = ai.spawn(archetype, { x, y: support + .7, z }, { state: 'chase', cureRegion: 'dispersal-complex' });
+              const actor = w.entities.get(id)!;
+              actor.transform.y = support + .7;
+              ai.pursueTarget(id, 1);
+              if (actor.infected?.l1) { actor.infected.l1.mode = 'chase'; actor.infected.l1.targetId = 1; actor.infected.heardTargetId = 1; }
+              actor.infected!.state = 'chase';
+              entry.ids.push(id);
+              this.state.finaleEntryNext = w.tick + 30;
+              this.state.spawned[`dispersal-assault:service:${entry.ids.length}:${this.state.assaultWave ?? 0}`] = id;
+            }
           }
         }
       }
