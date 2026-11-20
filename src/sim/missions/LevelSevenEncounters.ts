@@ -198,9 +198,10 @@ export class LevelSevenEncounters {
         // fix69-r (L7-05/G-13): a 25 m column along the road reached from the launcher into the forming party, so a group
         // following a courier who walks on was dragged through the whole pack. A close cluster (4 low / 5 high) waits on
         // both kerbs just west of the pickup, clear of the party's middle lane, for the first contact; the rest stands on
-        // both verges ahead of the courier, ranks stepping back west. Arming sends only the verge ranks at her.
+        // both verges ahead of the courier, ranks stepping back west. Two stand farther east to press a retreating courier;
+        // they retain at least 3 m body clearance from the arriving party. Arming sends only the verge ranks at her.
         const close = 4, j = i - close;
-        p = j < 0 ? { x: centre.x + 14 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
+        p = j < 0 ? { x: centre.x + (i < 2 ? 24 : 14) - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
           : { x: centre.x - Math.floor(j / 6) * 9, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 6 >> 1) * 1.8) };
       } else {
         const row = Math.floor(i / 10);

@@ -41,7 +41,8 @@ export class LevelSevenBot {
       const nearest = distance(enemies[0].transform, p.transform);
       if (nearest < 6) this.closeCombat = true;
       else if (nearest > 9) this.closeCombat = false;
-      const backup = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.shotgun');
+      // The authored L7 start carries the MG, not the L6 shotgun.
+      const backup = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.army-mg');
       const axe = p.weapons!.LEFT.rack.findIndex(s => s.id === 'weapon.fire-axe');
       // Use the carried crowd counter when surrounded. All attacks still use
       // ordinary input, weapon timing, cover and live collision.

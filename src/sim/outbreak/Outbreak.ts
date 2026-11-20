@@ -236,6 +236,9 @@ export class Outbreak {
       // otherwise holds armed walkers back or scatters unarmed evacuees before
       // updateSurvivor can give them the group's route.
       const subwayPhase = world.missions?.state.l6?.phase;
+      if (c.survivor && c.ally && c.ally.run && (subwayPhase === 'retreat' || subwayPhase === 'exit') && world.missions?.state.l6?.survivors.some(r => r.id === e.id && r.status === 'following')) {
+        updateAlly(world, e, (a, b, id) => this.sees(a, b, id)); continue;
+      }
       if (c.survivor && (world.missions?.state.l5?.metroAt || subwayPhase === 'retreat' || subwayPhase === 'exit' || world.missions?.l8?.state.breachedAt) && updateSurvivor(world, e)) continue;
       if ((!c.ally || c.survivor) && defendHuman(world, e)) continue;
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
