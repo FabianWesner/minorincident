@@ -3483,6 +3483,19 @@
       "downloadSha256": "5821f83e9879f7bcb6d93c2db7042a663f2ff9add79efa0b785b07c6d4f856b6",
       "member": "712890_4067-hq.mp3",
       "sha256": "5821f83e9879f7bcb6d93c2db7042a663f2ff9add79efa0b785b07c6d4f856b6"
+    },
+    "s184-flamethrower": {
+      "title": "Flamethrower (HQ preview)",
+      "author": "SamsterBirdies",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "url": "https://freesound.org/people/SamsterBirdies/sounds/490166/",
+      "pack": "s184-flamethrower",
+      "downloadUrl": "https://cdn.freesound.org/previews/490/490166_5487341-hq.mp3",
+      "downloadFile": "flamethrower.mp3",
+      "downloadSha256": "989b81015c7ab9759c106df548a0db18666b72bc12d37d90fabb0fb0a004959b",
+      "member": "flamethrower.mp3",
+      "sha256": "989b81015c7ab9759c106df548a0db18666b72bc12d37d90fabb0fb0a004959b"
     }
   },
   "cues": {
@@ -6395,13 +6408,13 @@
       "level": -17
     },
     "weapon.flame-loop": {
-      "source": "s184-fire",
-      "start": 0,
+      "source": "s184-flamethrower",
+      "start": 3,
       "level": -20
     },
     "weapon.flame-stop": {
-      "source": "s184-ignition",
-      "start": 0.6,
+      "source": "s184-flamethrower",
+      "start": 12.1,
       "level": -22
     },
     "weapon.reload.shotgun": {

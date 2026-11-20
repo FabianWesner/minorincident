@@ -12,4 +12,4 @@ The latest sheet also removes the red blood pool previously emitted by fire dama
 
 ## Audio source investigation
 
-The sprite now includes CC0 recordings for flame ignition and a sustained fire loop, plus a pneumatic nail-gun shot; provenance and hashes are in `assets/audio/imports.json`. The builder can use hash-verified cached source files when an upstream archive is unavailable. The flame loop and stop still need listening review against the requested roaring hiss and sputter, and the per-weapon reload and impact audit is unfinished.
+The sprite now includes CC0 recordings for flame ignition, a [blowtorch-based flamethrower](https://freesound.org/people/SamsterBirdies/sounds/490166/) loop and tail, plus a pneumatic nail-gun shot; provenance and hashes are in `assets/audio/imports.json`. Weapon-specific reload and impact cues are wired and listed in the design table. The builder can use hash-verified cached source files when an upstream archive is unavailable. The flame loop and stop still need listening review against the requested roaring hiss and sputter, and the shared explosion and layered melee sounds need an audible distinctness audit.
