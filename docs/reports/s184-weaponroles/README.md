@@ -17,3 +17,5 @@ The sprite now includes CC0 recordings for flame ignition, a [blowtorch-based fl
 ## Preliminary L6 threat comparison
 
 The preliminary branch audit reported four L6 early-close flags: two slow-follower observations and two breach waves without an attack within 20 seconds. The same L6 audit on current main and on an isolated branch copy with only MG suppression removed had no L6 flags. The early-close courier still lost 75 HP with suppression, so these flags do not establish that the entire level is harmless. The prescribed suppression remains enabled and infected stats are unchanged. [Comparison](l6-comparison.json). A fresh full-source audit is still running.
+
+Rocket knockdown is not yet universal: existing arena-boss and Mega handling suppresses it, and the L7 escort rule exempts following civilians. These exceptions need implementation and validation against the requested blast behavior.
