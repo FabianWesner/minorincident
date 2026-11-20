@@ -50,3 +50,5 @@ The fire-station mismatch was a baked marker ID mismatch (`853` in layout versus
 A LOW close view confirms Fire Station 3 lettering on its entrance support. The LOW follow-camera near → away → return probe (`tools/qa/s181-signs-transition.ts`) reported visibility 1 → 0 → 1; this does not cover every camera or LOD transition.
 
 Maple Hardware already has large physical facade lettering; its authored LOW recipe retains that lettering. A trial overlay conflicted with the existing sign, so the duplicate generated board is omitted for this asset. The earlier fallback distance in the audit no longer applies to that sign.
+
+The legacy Grove Police asset is a scaled version of the L3 station; its board now follows the scaled entrance canopy. LOD0 and LOD2 centre-grid rays hit the supporting surface at local x 3.469–3.475 m, with the board at 3.492 m. A close capture was obscured by foliage, so visual readability remains unverified.
