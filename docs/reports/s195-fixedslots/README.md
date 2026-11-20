@@ -8,6 +8,7 @@
 - The native pickup regression collects the nail gun, selects it on 7, collects the army MG, then selects the MG on 4. The nail gun remains available on 7.
 - Bot weapon selection required no changes: the threat audit still reports zero fail flags.
 - `8ff43012` keeps the rack visible when a level has holes but the player carries no weapons. Typecheck, lint and the focused input test passed after this change.
+- `895d2cb7` filters carried weapons by the predefined level keys when drawing a campaign rack, including when an older save contains an out-of-set weapon. Typecheck, lint and the focused input test passed.
 
 ## Verification
 
