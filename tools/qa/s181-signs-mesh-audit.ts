@@ -10,7 +10,7 @@ import { SceneSession, stopServer } from '../scenelab/session';
 
 const level = process.argv[2] ?? 'L10';
 const session = new SceneSession({ tier: 'high', backend: 'webgl2' });
-let rows: { district: string; id: string; asset: string; vertices: number[][]; position: [number, number, number]; yaw: number; scale: [number, number, number] }[];
+let rows: { district: string; id: string; asset: string; vertices: number[][]; position: [number, number, number]; yaw: number; scale: [number, number, number]; neighbors: { id: string; assetId: string }[] }[];
 try {
   await session.open();
   rows = await session.page.evaluate(async levelId => {
@@ -21,11 +21,15 @@ try {
       const d = game.world.districts!.districts.find(district => district.id === batch.district)!;
       const p = d.layout.placements.find(placement => placement.id === id)!;
       const attr = batch.geometry.attributes.position;
-      return { district: batch.district, id, asset: batch.supports[i].asset, vertices: Array.from({ length: 4 }, (_, v) => [attr.getX(i * 4 + v), attr.getY(i * 4 + v), attr.getZ(i * 4 + v)]), position: p.position, yaw: p.yaw, scale: p.scale };
+      const vertices = Array.from({ length: 4 }, (_, v) => [attr.getX(i * 4 + v), attr.getY(i * 4 + v), attr.getZ(i * 4 + v)]);
+      const min = [0,1,2].map(axis => Math.min(...vertices.map(vertex => vertex[axis])) - .01), max = [0,1,2].map(axis => Math.max(...vertices.map(vertex => vertex[axis])) + .01);
+      const neighbors = d.layout.placements.filter(other => other.id !== id && other.visualAabb && [0,1,2].every(axis => other.visualAabb.min[axis] <= max[axis] && other.visualAabb.max[axis] >= min[axis])).map(({ id: otherId, assetId }) => ({ id: otherId, assetId }));
+      return { district: batch.district, id, asset: batch.supports[i].asset, vertices, position: p.position, yaw: p.yaw, scale: p.scale, neighbors };
     }));
   }, level);
 } finally { await session.close(); stopServer(); }
 for (const row of rows) {
+  if (row.neighbors.length) console.error(JSON.stringify({ district: row.district, id: row.id, neighbors: row.neighbors }));
   const def = manifest.find(asset => asset.id === row.asset)!;
   for (const [lod, path] of [['lod0', def.glb], ['lod1', def.lods?.lod1], ['lod2', def.lods?.lod2]] as const) {
     if (!path) continue;
