@@ -12,6 +12,8 @@ import { LimbIK } from './LimbIK';
 import type { AssetRegistry } from '../../assets/registry';
 import { prepareCivilianRig } from '../npc/prepareCivilianGeometry';
 import { useCourierDepth } from './courierDepth';
+import { talkClip } from '../npc/talkingNpc';
+import { idleOffset } from '../npc/waitingIdle';
 
 /** A seated render copy; its hidden simulation actor continues to own boarding and exits. */
 export class VehicleOccupant extends Group {
@@ -35,6 +37,8 @@ export class VehicleOccupant extends Group {
   private readonly hipOffset = new Vector3();
   private speechMixer?: AnimationMixer;
   private speechAction?: AnimationAction;
+  private speechClip?: string;
+  private readonly speechActions = new Map<string, AnimationAction>();
   private constructor(readonly actorId: number, readonly asset: string, readonly model: Object3D, private readonly ownsModel = false, private readonly tierGear?: Awaited<ReturnType<typeof loadTierGear>>) {
     super(); this.add(model);
     sampleClip(model, 'npc-sit', 0); this.bones = courierBones(model);
@@ -112,13 +116,20 @@ export class VehicleOccupant extends Group {
   /** Existing upper-body gesture on a seated passenger; legs stay in their seat pose. */
   speak(seconds?: number, toward?: Object3D): void {
     if (seconds === undefined) { if (this.speechAction?.isRunning()) this.speechAction.stop(); return; }
-    if (!this.speechMixer) {
-      const clip = retargetClip(this.model, 'npc-gesture');
-      clip.tracks = clip.tracks.filter(track => /^(head|arm[LR]|foreArm[LR]|hand[LR])\./.test(track.name));
-      this.speechMixer = new AnimationMixer(this.model); this.speechAction = this.speechMixer.clipAction(clip); this.speechAction.play();
+    this.speechMixer ??= new AnimationMixer(this.model);
+    const name = talkClip(this.actorId, seconds * 60);
+    if (this.speechClip !== name) {
+      this.speechAction?.stop();
+      let action = this.speechActions.get(name);
+      if (!action) {
+        const clip = retargetClip(this.model, name);
+        clip.tracks = clip.tracks.filter(track => /^(head|arm[LR]|foreArm[LR]|hand[LR])\./.test(track.name));
+        action = this.speechMixer.clipAction(clip); this.speechActions.set(name, action);
+      }
+      this.speechAction = action.reset().play(); this.speechClip = name;
     }
     if (!this.speechAction!.isRunning()) this.speechAction!.reset().play();
-    this.speechMixer.setTime(seconds);
+    this.speechMixer.setTime(seconds + idleOffset(this.actorId));
     if (toward && this.rig.head) {
       this.updateWorldMatrix(true, true); toward.updateWorldMatrix(true, false);
       this.point.setFromMatrixPosition(toward.matrixWorld); this.worldToLocal(this.point);

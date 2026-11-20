@@ -33,7 +33,7 @@ An earlier experimental walk from off-screen left the guard entering at the edge
 | L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
 | L8 | Nadia on tour and route lines; Hale on greeting and breach; nearest living guard for generic soldier lines | Existing keeper, major and guard actors; shared relaxed walk, idle and gestures. Visual check pending, including when no guard is nearby. |
-| L9 | Sam/Reyes, Mia, Dale and Okafor on identified lines | On-foot actors use shared presentation; seated copies use an existing upper-body gesture and the APC cutaway. Individual speaker readability remains unresolved. |
+| L9 | Sam/Reyes, Mia, Dale and Okafor on identified lines | On-foot actors use shared presentation; seated copies use seeded shared idle and upper-body conversation clips and the APC cutaway. Individual speaker readability remains unresolved. |
 | L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
 | L10 epilogue | Rosa | Existing survivor montage actor beside the existing courier; glance and gesture. Controlled HIGH capture reviewed; full campaign transition remains open. |
 
