@@ -172,7 +172,7 @@ export class AudioEventMapper {
             // Shotgun: the pump racks the next shell 0.45 s behind the blast (PO 10-15).
             if (event.actionId === 'weapon.shotgun')
                 this.host.play('weapon.pump', { position: event.position, time: this.host.context.currentTime + 0.45 }, source);
-            if (event.kind === 'ranged')
+            if (event.kind === 'ranged' && event.actionId !== 'weapon.nail-gun')
                 // F-290: a rocket's room tail must yield to overlapping launches
                 // and blast cores within the existing low-tier voice budget.
                 this.host.play(`tail.${zone.startsWith('interior') || zone === 'tunnel' ? 'interior' : zone === 'park' || zone === 'suburb-open' ? 'open' : 'street'}`, { position: event.position, ...(event.actionId === 'weapon.rocket-launcher' ? { priority: 70 } : {}) }, source);
