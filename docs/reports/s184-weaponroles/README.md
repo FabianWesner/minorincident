@@ -117,3 +117,5 @@ L8 comparison with the original hold also lost nearly all nearby threats during 
 A trial retained the old hold until an infected had a sustained rejected movement proposal and little displacement, then retried projection each tick. Local L4 still stopped actors 297, 305 and 298, so it was discarded. The broad projection candidate remains committed but has not met the threat gate.
 
 A trial retaining the original collision hold while reducing extra infected spacing unless both actors are in combat crowd state shifted the local L4 failure to actor 255 near the south perimeter; it was discarded. No accepted alternative to the broad projection candidate has passed the required gates.
+
+A new candidate restores the original collision transaction and routes scripted walkers to their actual waypoint instead of the courier flow field. This passed the remote focused L4 replay (187.7 s test, 192.8 s total), local L4, typecheck and lint. Full remote suite and full threat audit remain required on this candidate.
