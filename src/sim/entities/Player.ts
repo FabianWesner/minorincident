@@ -14,7 +14,8 @@ export class Player {
   private lastDamage = -Infinity;
   private action: ActionState | null = null;
   private actionUntil = 0;
-  constructor(readonly entity: EntitySnapshot, private readonly physics: Physics, private readonly events: EventBus<GameEvent>) {
+  /** s178 Hard: the campaign difficulty getter ('simple' default keeps auto-healing byte-identical). */
+  constructor(readonly entity: EntitySnapshot, private readonly physics: Physics, private readonly events: EventBus<GameEvent>, private readonly hardMode: () => boolean = () => false) {
     this.locomotion = new KinematicController(physics);
     entity.locomotion = this.locomotion.response;
     entity.survivor = { variant: 'female', gearTier: 0, animation: 'idle', animationTick: 0, velocity: this.locomotion.velocity, grounded: false, invulnerableUntil: 0, checkpoint: { ...entity.transform }, diedAt: null };
@@ -35,7 +36,9 @@ export class Player {
       this.lastDamage = -Infinity; this.action = null; this.locomotion.reset();
       this.events.emit({ type: 'player.respawned', tick, id: this.entity.id });
     }
-    if (state.diedAt === null && tick - this.lastDamage >= survivor.regenDelayTicks) health.current = Math.min(health.max, health.current + survivor.regenPerSecond * FIXED_DT);
+    // s178 Hard: auto-healing is off (PO 2026-11-19). Medkits, checkpoint restores and scripted heals
+    // (restoreVitals, pickups) never pass through here and still heal.
+    if (state.diedAt === null && !this.hardMode() && tick - this.lastDamage >= survivor.regenDelayTicks) health.current = Math.min(health.max, health.current + survivor.regenPerSecond * FIXED_DT);
     if (input.interact && state.diedAt === null) this.act('interact', tick);
     // E19 §5.5: running is the default; holding Walk caps the intent at walk speed (not on the bicycle).
     const walking = (input as InputFrame & { walk?: boolean }).walk && (this.entity as { riding?: number }).riding === undefined;

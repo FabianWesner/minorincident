@@ -4,7 +4,7 @@ import { look } from '../../tools/playtest/eyes';
 import { canvasFrame, canvasFrameChecks } from './canvas-frame';
 import { boot, expect, test, testUrl } from './fixtures';
 
-const l10HangarWeapons = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher', 'weapon.pipe-bomb', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.machete', 'weapon.molotov', 'weapon.assault-rifle', 'weapon.flashbang', 'weapon.flamethrower'];
+const l10HangarWeapons = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb'];
 
 // Minimal browser smoke (docs/qa/test-strategy.md): boot, L1 start with its figures actually drawn on both backends, no
 // console/pipeline errors (the fixtures' error guard fails every test on console errors and failed requests). Next to it:
@@ -235,13 +235,13 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   expect(l10.warmedPages, 'L10 corpse pages were prepared during loading').toBeGreaterThan(0);
   expect(l10.disabledPages, 'disabling VFX retains warmed corpse pages').toBe(l10.warmedPages);
   expect(l10.restoredPages, 'enabling VFX retains warmed corpse pages').toBe(l10.warmedPages);
-  expect(l10.pickups, 'L10 checkpoint weapons were collected').toEqual(expect.arrayContaining(['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher', 'weapon.flamethrower']));
+  expect(l10.pickups, 'L10 checkpoint weapons were collected').toEqual(expect.arrayContaining(['weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.rocket-launcher', 'weapon.flamethrower']));
   const rackIds = await page.evaluate(() => {
     const p = window.__SS__!.getState().player!;
     return [...new Set([...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(slot => slot.id))];
   });
   expect(rackIds).toEqual(expect.arrayContaining(l10HangarWeapons));
-  expect(await page.locator('.hud-weapon-rack .hud-weapon-choice').count()).toBeGreaterThanOrEqual(14);
+  expect(await page.locator('.hud-weapon-rack .hud-weapon-choice').count()).toBeGreaterThanOrEqual(10);
   mkdirSync('test-results/smoke/l10-rack', { recursive: true });
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); });

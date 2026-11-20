@@ -17,8 +17,13 @@ export class Bindings {
         }
         if (saved.version === 1 && this.valid(saved.bindings)) {
           this.map = saved.bindings;
-          for (const name of Object.keys(this.map) as Action[]) this.map[name] = this.map[name].filter(code => code !== 'Mouse2');
+          for (const name of Object.keys(this.map) as Action[]) this.map[name] = this.map[name].filter(code => code !== 'Mouse2' && code !== 'KeyQ' && code !== 'KeyG');
           this.map.selector.unshift('Mouse2');
+          const used = new Set(Object.values(this.map).flat());
+          for (const name of Object.keys(this.map) as Action[]) if (!this.map[name].length) {
+            const replacement = [...defaultBindings[name], ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => `Key${letter}`)].find(code => !used.has(code) && code !== 'KeyQ' && code !== 'KeyG');
+            if (replacement) { this.map[name].push(replacement); used.add(replacement); }
+          }
         }
       }
     } catch { /* Storage unavailable or corrupt: keep defaults. */ }
@@ -42,7 +47,7 @@ export class Bindings {
   /** Replaces this action's keyboard alternatives, retaining its fixed mouse mirror. */
   rebind(action: Action, code: string): { ok: boolean; message: string } {
     if (!Object.hasOwn(defaultBindings, action) || !validCode(code) || code.startsWith('Mouse')) return { ok: false, message: 'Choose a valid keyboard code.' };
-    if (/^(Digit[0-9]|ShiftLeft|ShiftRight)$/.test(code)) return { ok: false, message: `${code} is reserved for rack selection.` };
+    if (/^(Digit[0-9]|ShiftLeft|ShiftRight|KeyQ|KeyG)$/.test(code)) return { ok: false, message: `${code} is reserved for rack selection.` };
     const conflict = this.action(code);
     if (conflict && conflict !== action) return { ok: false, message: `${code} is already bound to ${conflict}.` };
     const next = structuredClone(this.map);

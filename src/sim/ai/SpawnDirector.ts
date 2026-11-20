@@ -50,11 +50,34 @@ export class SpawnDirector {
   /** Strict levels reserve a downed actor's slot until it rises; ordinary
    * admission cannot crowd a recoverable body out of its scheduled get-up. */
   get count(): number {
-    const downed = this.strict;
+    const downed = this.strict && !this.downedExcluded;
     let count = 0; for (const e of this.ai.active) if (e.health.current > 0 || (downed && (e.infected?.recoverAt ?? -1) >= 0)) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
   }
   /** L1 streets / E21: a downed infected that will get up keeps its slot, so recoveries cannot push the level past its cap. */
   strict = false;
+  /**
+   * L4-04 amendment (2026-11-02): the low tier excludes downed/recoverable bodies from its living cap (to retain
+   * ≥60 living at first breach). Get-ups stay bounded by admission — `recoveryRoom()` — so a rising body never
+   * pushes living infected or characters past the tier caps. The high tier keeps strict reserved slots (false).
+   */
+  downedExcluded = false;
+  /** A rising body under `downedExcluded` is an admission: it needs a free living slot (count + pending turns below
+   * the cap; `clampReserved` keeps reservations consistent once it rises) and the character headroom of L4-04's caps. */
+  recoveryRoom(): boolean {
+    if (this.count + this.pendingTurns >= this.cap) return false;
+    // Leave one low-tier character slot uncommitted so another same-tick
+    // admission cannot overlap a rising body at the ceiling.
+    const cap = l4.war.caps.characters[this.tier === 'low' ? 'low' : 'high'] - (this.downedExcluded ? 1 : 0);
+    let characters = 0;
+    for (const e of this.ai.world.entities.iterate())
+      if (e.health.current > 0 && !e.corpse && (e.id === 1 || e.infected || e.companion || e.civilian && !e.civilian.pet && !e.civilian.zooAnimal) && ++characters >= cap) return false;
+    return true;
+  }
+  /** Low-tier reservations are elastic: after a get-up adds a living body, keep count + reserved + pending turns
+   * within the cap until the next authored `reserveSlots` recomputes the outstanding cohorts. */
+  clampReserved(): void {
+    this.reserved = Math.min(this.reserved, Math.max(0, this.cap - this.count - this.pendingTurns));
+  }
   /** Plain geometric camera-volume input. The sim never imports or reads a renderer/camera object. */
   setFrustum(matrix: readonly number[], position?: { x: number; y: number; z: number }): void {
     if (matrix.length !== 16 || !matrix.every(Number.isFinite)) throw new RangeError('Invalid spawn frustum');

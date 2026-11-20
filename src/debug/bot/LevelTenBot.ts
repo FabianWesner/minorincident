@@ -12,9 +12,11 @@ export class LevelTenBot {
   private readonly walker = new Walker();
   // Ordinary exploration inputs: visit the six placed finds and the escape gaps,
   // taking the field crossings instead of every ninety-degree road bend.
+  // PO 2026-11-19: the machete is the crash-site find on the river-exit leg, so
+  // it is the first detour after the start; the barn stop is gone with the barn pickup.
   private readonly route = [
-    ...cure.regions[0].route.slice(0, 4), cure.anchors['farmhouse-rifle'],
-    cure.anchors['barn-machete'], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
+    ...cure.regions[0].route.slice(0, 1), cure.anchors['crash-machete'], ...cure.regions[0].route.slice(1, 4), cure.anchors['farmhouse-rifle'],
+    cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
     cure.anchors['guard-tower-rifle'], cure.anchors['checkpoint-flashbang'], cure.anchors['r4-r5-seam'],
     cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
     [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
@@ -26,7 +28,7 @@ export class LevelTenBot {
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') {
     this.startTick = w.tick;
-    if (profile === 'optional-toy') this.route.splice(this.route.indexOf(cure.anchors['barn-machete']) + 1, 0, [cureCorgiToy.x, cureCorgiToy.z]);
+    if (profile === 'optional-toy') this.route.splice(this.route.indexOf(cure.anchors['shed-molotov']), 0, [cureCorgiToy.x, cureCorgiToy.z]);
   }
   sample(): InputFrame {
     const w = this.w, mission = w.missions!, player = w.entities.get(1)!, f = emptyInput();

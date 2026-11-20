@@ -41,9 +41,11 @@ export function installCharacterSeparation(world: SimWorld): void {
   } };
   const settled = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   const courierShifts = new Map<number, number>();
+  const megaShifts = new Map<number, number>();
   const ground = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
+    megaShifts.clear();
     narrowQueue = !!world.missions?.state.l5?.metroAt;
     courierShifts.clear();
     // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
@@ -136,6 +138,13 @@ export function installCharacterSeparation(world: SimWorld): void {
       // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
       let shift = overlap * scale;
+      if (e.infected?.pursuit) {
+        // A dense horde can otherwise sum several full spacing corrections
+        // into a visible metre-long jump. Resolve the overlap over more ticks.
+        const used = megaShifts.get(e.id) ?? 0;
+        shift = Math.min(shift, Math.max(0, .2 - used));
+        megaShifts.set(e.id, used + shift);
+      }
       if (neighbor.courier && courierFollower(e)) {
         // Soft contact may leave the courier inside a confined column for a
         // few ticks. Ease its members aside instead of snapping a full overlap.
