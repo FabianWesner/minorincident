@@ -23,7 +23,7 @@ The follower wait was caused by the cleared-arena exit gate closing after the co
 - Focused tests — passed: L1 house route and L8 tunnel route hand off within 9 m; AI scripted hit/proximity behavior; L4 geometry/contact contracts; L8 follower gate behavior.
 - `npm test` — passed, 27 files / 106 tests.
 - `npm run qa:threat` — passed, all skilled routes complete and **0 fail flags** (279.0 s; L8 skilled complete).
-- `sh tools/remote/run.sh "$PWD" -- npm test` — unavailable: the remote service reported no healthy Hetzner runner and the Mac fallback does not accept this wrapper command. The equivalent full local `npm test` passed.
+- `sh tools/remote/run.sh "$PWD" -- npm test` — runner timed out at 240 s without a reported test failure. The required fallback passed: full local `npm test` (106 tests), and `tests/engine/l4-contact.test.ts` passed on the remote runner during that run (159.4 s).
 
 ## Files changed
 
