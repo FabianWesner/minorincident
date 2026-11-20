@@ -82,3 +82,5 @@ The full remote unit suite passed on a later retry: 27 files, 105 tests passed, 
 A LOW L8 follow-camera near → away → return probe reported zoo visibility `010 → 000 → 010` and index counts `54 → 0 → 54`: the Primate House face and its brackets disappear and return together with their building.
 
 A HIGH gym follow-camera probe did not establish readability: close to the entrance, the existing cutaway hides the building and its sign; a farther tested pose put the sign outside the frame. A useful unobstructed gameplay approach still needs review.
+
+After the gym and mall adjustment was committed, the unchanged remote unit suite passed again: 27 files, 105 passed, one skipped, 235.0 s. Additional trial positions at either end of the gym facade did not produce a readable follow-camera view and were reverted. The gym readability limitation remains open.
