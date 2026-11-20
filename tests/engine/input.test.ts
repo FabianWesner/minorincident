@@ -225,6 +225,15 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(sparse.activeEntries().map(e => e.id)).toEqual(['weapon.fire-axe', 'weapon.machete', 'weapon.handgun']);
   sparse.input({ ...emptyInput(), selectedWeaponKey: 2 }, 30);
   expect(sparse.current(sparse.state.selectedSide).id).toBe('weapon.handgun');
+  sparse.input({ ...emptyInput(), selectedWeaponKey: 1 }, 60);
+  expect(sparse.current(sparse.state.selectedSide).id).toBe('weapon.fire-axe');
+  sparse.input({ ...emptyInput(), selectedWeaponKey: 1 }, 90);
+  expect(sparse.current(sparse.state.selectedSide).id).toBe('weapon.machete');
+  const thrown = new Loadout(['weapon.fire-axe'], ['weapon.molotov', 'weapon.pipe-bomb']);
+  thrown.input({ ...emptyInput(), selectedWeaponKey: 10 }, 30);
+  const firstThrown = thrown.current(thrown.state.selectedSide).id;
+  thrown.input({ ...emptyInput(), selectedWeaponKey: 10 }, 60);
+  expect(new Set([firstThrown, thrown.current(thrown.state.selectedSide).id])).toEqual(new Set(['weapon.molotov', 'weapon.pipe-bomb']));
   const recorded = { seed: 1, level: 'L10', frames: [{ ...emptyInput(), selectedWeaponKey: 3 }] };
   const legacyRecording = Recorder.parse(JSON.stringify({ ...recorded, version: 1 }));
   const legacyRack = new Loadout(['weapon.fire-axe', 'weapon.machete'], ['weapon.handgun']);
