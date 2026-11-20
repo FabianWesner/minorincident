@@ -15,7 +15,7 @@ Partial implementation; the requested feature is not complete. This report recor
 
 - Crop instances use district-prefixed IDs matching field cells and have an unreviewed collapse and tint hook for burning and scorched states. The existing pooled flame, smoke, ember and light renderer now receives up to 24 visible burning cells. Capture, review and measure the resulting appearance and performance.
 - Add flammable tall grass and hay/straw coverage across levels and companion pathing. Verify burning field-cell actor interactions in a loaded level. Verify all fire sources, courier damage and ash deaths end to end; hazard fires currently retain their existing direct damage as well as the status.
-- Fire crackle and patch-catch sound; pickup caption if needed.
+- The flamethrower HUD role hint now mentions burning dry fields. Fire crackle and patch-catch sound remain open.
 - Capture and review HIGH/LOW L10 sequences; measure whole-field frame time.
 - Run full unit suite, `npm run qa:threat`, and remote `npm test`; verify skilled routes and resolve any failures.
 - Spread links now reject crossings of authored L10 route centerlines. Verify actual road surfaces and other barriers, direct ignition near roads, and live-save resume.
