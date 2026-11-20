@@ -41,3 +41,5 @@ Current geometry review: HIGH and LOW zoom 1 WebGL2, HIGH zoom 1.5 and LOW zoom 
 The next iteration staggers fragment descent and outward spread. The HIGH WebGL2 sequence shows a gradual dark-to-pale collapse with movement around the body, but individual fragments are still hard to distinguish at sheet scale; visual acceptance remains open. Scene checks, typecheck, lint and seven focused combat tests pass. Other tier/backend captures, gates and the remote suite predate this change.
 
 Smoke and ember emission now uses the same body-centre position as the forming heap. In the inspected HIGH WebGL2 frame, small red embers and smoke rise over the heap rather than at the actor root. Scene checks, typecheck, lint and seven focused combat tests pass. Broader visual acceptance and current-revision tier/backend, gate and remote verification remain open.
+
+On the current implementation (`0d2565b6`), the seven selected corpse/fire scene gate rows pass and remote `npm test` passes (105 passed, 1 skipped, 199.2 s), including L4 contact. The remaining open item is visual acceptance and a fresh review of the latest effects across tiers/backends.
