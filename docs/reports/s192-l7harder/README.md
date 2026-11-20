@@ -11,7 +11,7 @@ PO 2026-11-19: “L7 is too easy, add more Zombies and let them attack from mult
 
 ## Performance
 
-The cap increase was not enabled. On the final gameplay revision, a local native proxy timed `world.update` with the ordinary skilled route, without rendering:
+The cap increase was not enabled. On the final gameplay revision, a local native proxy (`node --import tsx/esm tools/qa/l7-native-perf.ts`) timed `world.update` with the ordinary skilled route, without rendering:
 
 | Tier / cap | Peak infected | p50 | p95 | p99 | Ticks |
 |---|---:|---:|---:|---:|---:|
