@@ -100,3 +100,5 @@ All six requested captures were regenerated and inspected after the rendered-tra
 On continuation, the unchanged corrected-source remote suite was retried. It again reached the 240-second budget (240.9 s, exit 124); the previously reported save-progression test passed and no failure was reported in the completed files. A complete corrected-source unit pass remains outstanding.
 
 The LOW hospital name board now covers the otherwise unlettered top row of the existing entrance directory, rather than the high facade panel. The LOD2 support audit finds all 35 samples within 1 cm of that row and no other placement bounds overlap; the overlay remains hidden on LOD0/1, where the building retains its name. LOW follow-camera captures at zoom 1 and 1.5 show readable text on the post-mounted directory (`hospital-sheet.jpg`), and the near → far → culled → return transition remains 0 → 1 → 0 → 0.
+
+The full remote unit suite passed on commit `2645de28`: 27 files, 105 tests passed, one skipped, in 202.1 s (`sh tools/remote/run.sh "$PWD" -- npm test`). Typecheck and lint also passed after the hospital-directory change.
