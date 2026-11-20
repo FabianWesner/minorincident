@@ -10,10 +10,16 @@ try {
   const data = await session.page.evaluate(async level => {
     const api = window.__SS__!; await api.loadLevel(level, { seed: 1 }); api.pause(); await api.screenshotReady();
     const game = (window as unknown as { __SCENE__: { game: Game } }).__SCENE__.game;
-    const districtView = (game.view as unknown as { districts: { parts: { signBatches: { district: string; origin: number[]; ids: string[]; geometry: { attributes: { position: { getX(i: number): number; getY(i: number): number; getZ(i: number): number } } } }[] }; foliage: { geometry: { attributes: { position: { array: ArrayLike<number> } }; index: { array: ArrayLike<number> } }; batches: { references: { matrix: { elements: number[] } }[] }[] } } }).districts;
-    const signs = districtView.parts.signBatches.flatMap((batch) => batch.ids.map((id: string, i: number) => {
+    const districtView = (game.view as unknown as { districts: { parts: { signBatches: { district: string; origin: number[]; ids: string[]; indicesBySign: number[][]; geometry: { attributes: { position: { getX(i: number): number; getY(i: number): number; getZ(i: number): number } } } }[] }; foliage: { geometry: { attributes: { position: { array: ArrayLike<number> } }; index: { array: ArrayLike<number> } }; batches: { references: { matrix: { elements: number[] } }[] }[] } } }).districts;
+    const signs = districtView.parts.signBatches.flatMap(batch => batch.ids.flatMap((id, i) => {
       const p = batch.geometry.attributes.position;
-      return { district: batch.district, id, vertices: Array.from({ length: 4 }, (_, j) => [p.getX(i * 4 + j) + batch.origin[0], p.getY(i * 4 + j), p.getZ(i * 4 + j) + batch.origin[1]]) };
+      const groups = [Array.from({ length: 4 }, (_, j) => i * 4 + j)];
+      for (let j = 6; j < batch.indicesBySign[i].length; j += 6) {
+        const indices = batch.indicesBySign[i].slice(j, j + 6);
+        groups.push([indices[0], indices[1], indices[2], indices[5]]);
+      }
+      const result = groups.map((vertices, part) => ({ district: batch.district, id, part: part ? `support-${part - 1}` : 'board', vertices: vertices.map(j => [p.getX(j) + batch.origin[0], p.getY(j), p.getZ(j) + batch.origin[1]]) }));
+      return result;
     }));
     const foliage = districtView.foliage;
     return { signs, positions: Array.from(foliage.geometry.attributes.position.array) as number[], indices: Array.from(foliage.geometry.index.array) as number[], matrices: foliage.batches.flatMap((batch) => batch.references.map((ref) => ref.matrix.elements as number[])) };
