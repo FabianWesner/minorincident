@@ -86,3 +86,5 @@ Remote suite on coherent-flicker source `1cc54812`: `sh tools/remote/run.sh "$PW
 - **Capture/perf/checks:** The linked sheet contains six HIGH frames at 0.1 s intervals and one LOW frame at zoom 1.5, against three infected. The latest matched frame counts are 62 → 62 draws and 15 → 27 shared particles HIGH; 56 → 56 draws and 5 → 11 particles LOW. Timing is pending as requested. Typecheck, lint and the full remote unit suite passed on the latest render source. Orchestrator review of the sheet remains external.
 
 The remaining evidence gaps above prevent a complete claim. In particular, obtain close views of ignition, ember/smoke and courier lighting, check current WebGPU, and establish the allocation behavior before acceptance.
+
+Current coherent-flicker WebGPU check (`1cc54812`): the headless HIGH/LOW fight run reported `webgpu`, one attack at frame 52 and no captured console errors. I inspected both frame-52 images: the irregular orange stream reaches the infected, with endpoint fire. Frame 52 reports 62 draws / 38 flame cards HIGH and 56 / 30 LOW. This closes the current-source headless backend check; interactive manual review remains separate.
