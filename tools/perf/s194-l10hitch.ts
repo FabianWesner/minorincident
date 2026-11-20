@@ -35,7 +35,7 @@ try {
       return frame ?? null;
     } };
     g.input.feed = feed;
-    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; x: number; z: number; builds: number; builtMaterials: Record<string, number>; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
+    const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; x: number; z: number; builds: number; builtMaterials: Record<string, number>; buildObjects: Record<string, string>; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
     trace.hitchTrace = { frames: [], running: true };
     let previousMaterials = { ...g.view.renderer.nodeBuildMaterials };
     let last = performance.now();
@@ -44,8 +44,14 @@ try {
       const p = g.world.entities.get(1)!.transform;
       const materials = { ...g.view.renderer.nodeBuildMaterials };
       const builtMaterials = Object.fromEntries(Object.entries(materials).filter(([name, count]) => count > (previousMaterials[name] ?? 0)).map(([name, count]) => [name, count - (previousMaterials[name] ?? 0)]));
+      const ids = new Set(Object.keys(builtMaterials).map(name => Number(/:o(\d+)$/.exec(name)?.[1])));
+      const buildObjects: Record<string, string> = {};
+      if (ids.size) g.view.scene.traverse(object => { if (ids.has(object.id)) {
+        const path: string[] = []; for (let node: typeof object | null = object; node; node = node.parent) path.unshift(node.name || node.type);
+        buildObjects[object.id] = path.join('/');
+      } });
       previousMaterials = materials;
-      trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, builtMaterials, infected: infected.length,
+      trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, builtMaterials, buildObjects, infected: infected.length,
         alive: infected.filter(e => e.health.current > 0).length, sim: a.perf().simMs, update: a.perf().updateCpuMs,
         render: a.perf().renderCpuMs, categories: a.debug.cpuProfile() });
       last = now;
