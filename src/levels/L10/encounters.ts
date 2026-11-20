@@ -64,6 +64,9 @@ export const curePaceEncounters: readonly CureEncounter[] = [
   { id: 'complex-approach-pair-1', region: 'dispersal-complex', at: [3650, 25], regular: [3, 3], dogs: 0, alphas: 0 },
   { id: 'complex-approach-pair-2', region: 'dispersal-complex', at: [3740, -41], regular: [3, 3], dogs: 0, alphas: 0 },
 ];
+// Destructible fuel drums flank the convoy; damage and blast behavior use the shared hazard catalog.
+export const cureConvoyBarrels: readonly Point[] = [[3248, 68], [3264, 70], [3275, 87]];
+
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },
   { id: 'field-approach', at: [807, 80] as Point },

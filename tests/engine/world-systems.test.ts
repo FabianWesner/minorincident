@@ -324,7 +324,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const { cureCrossingLines, cureCrossingStories, crossingScenesBlock } = await import('../../src/levels/L10/crossingStories');
   const { cureRoadsideBelt } = await import('../../src/levels/L10/roadsideBelt');
   const { cure } = await import('../../src/levels/L10/district');
-  const { cureEncounters, curePaceEncounters, cureEncounterSlots, cureMedkits } = await import('../../src/levels/L10/encounters');
+  const { cureEncounters, curePaceEncounters, cureEncounterSlots, cureMedkits, cureConvoyBarrels } = await import('../../src/levels/L10/encounters');
   const farmGroups = [...cureEncounters, ...curePaceEncounters].filter(g => g.region === 'crash-outskirts' || g.region === 'residential-fringe');
   const farmTypes = [...new Set(farmGroups.map(g => g.type).filter(Boolean))].sort();
   expect(farmTypes).toEqual(['barn-defense', 'field-horde', 'lone-pursuer'].sort());
@@ -370,6 +370,10 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(groundMismatches, 'rasterized L10 supports and slabs match every exact nav-cell query').toBe(0);
   const actualFarm = assembled.districts[0].layout.placements;
   for (const beat of dispersalBeats) expect(actualFarm.some(p => p.id === `l10-setpiece-${beat.setPiece === 'quarantine-gate' ? 'gate-gantry' : beat.setPiece === 'propaganda-billboard' ? 'billboard-frame' : beat.setPiece === 'scarecrow-field' ? 'scarecrow-0' : beat.setPiece === 'burning-convoy' ? 'convoy-truck-a' : beat.setPiece === 'dark-underpass' ? 'underpass-mouth' : 'hospital-tent-0'}`), `${beat.setPiece} has fixed district dressing`).toBe(true);
+  for (const [x, z] of cureConvoyBarrels) for (const [dx, dz] of [[0, 0], [.6, 0], [-.6, 0], [0, .6], [0, -.6]]) {
+    const column = Math.floor((x + dx - nav.min[0]) / nav.cellSize), row = Math.floor((z + dz - nav.min[1]) / nav.cellSize);
+    expect(nav.cells[row * nav.width + column], `convoy barrel at ${x},${z} has clear ground`).toBe(1);
+  }
   expect(actualFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   for (const [x, z] of [[1350, 19], [1650, -38.45], [3150, 51.05], [3450, 53]]) {
     expect(actualFarm.some(p => p.id.startsWith('decor-cure-route-corn-') && Math.hypot(p.position[0] - x, p.position[2] - z) < 25), `crop edge near QA route ${x}`).toBe(true);
