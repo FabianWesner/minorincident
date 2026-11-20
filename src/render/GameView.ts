@@ -1186,6 +1186,8 @@ export class GameView implements Lifecycle {
     if (this.world.scenario === 'L10' && this.world.l10Encounters) {
       const start = this.world.l10Encounters.state.billboardFallAt;
       this.districts?.updateCureBillboard(start === undefined ? 0 : Math.min(1, Math.max(0, (this.world.tick - start) / 60)));
+      const hospital = this.world.l10Encounters.state.hospitalOpenAt;
+      this.districts?.updateCureHospital(hospital === undefined ? 0 : Math.min(1, Math.max(0, (this.world.tick - hospital) / 30)));
     }
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     if (this.world.destruction) this.districts?.syncDestruction(this.world.destruction);

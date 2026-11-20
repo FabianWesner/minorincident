@@ -237,6 +237,17 @@ export class DistrictView extends Group {
       this.dirtyEntries.add(entry);
     }
   }
+  /** Open each tent entrance at the hospital encounter, including streamed LODs. */
+  updateCureHospital(open: number): void {
+    for (const entry of this.lodBatches) if (entry.id === 'prop.l10-field-tent') for (const ref of entry.refs) {
+      if (ref.userData.cureHospitalOpen === open) continue;
+      ref.userData.cureHospitalOpen = open;
+      for (const group of [entry.hero, entry.near, entry.far]) {
+        group.pose('flapL', -Math.PI / 2 * open, ref);
+        group.pose('flapR', Math.PI / 2 * open, ref);
+      }
+    }
+  }
   /** L5 raises the authored half-open leaf to 1.9 m clearance, then lowers its bar onto the platform. */
   updateMetroShutter(closed: number): void {
     closed = Math.max(0, Math.min(1, closed));

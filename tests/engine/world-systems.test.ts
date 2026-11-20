@@ -340,10 +340,12 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const clockWorld = { tick: 1000, events: { on: () => {} }, infected: null } as unknown as import('../../src/sim/world/SimWorld').SimWorld;
   const encounterClock = new LevelTenEncounters(clockWorld);
   encounterClock.state.billboardFallAt = 970;
+  encounterClock.state.hospitalOpenAt = 985;
   const encounterSnapshot = encounterClock.snapshot();
   clockWorld.tick = 1600;
   encounterClock.restore(encounterSnapshot);
   expect(encounterClock.state.billboardFallAt).toBe(1570);
+  expect(encounterClock.state.hospitalOpenAt).toBe(1585);
   expect(dispersalBeats.map(g => g.setPiece)).toEqual([
     'quarantine-gate', 'propaganda-billboard', 'scarecrow-field', 'burning-convoy', 'dark-underpass', 'field-hospital',
   ]);

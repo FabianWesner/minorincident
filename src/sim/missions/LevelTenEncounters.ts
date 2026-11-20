@@ -37,6 +37,8 @@ export interface CureEncounterState {
   pacedWave?: Record<string, number>; pacedPress?: number;
   /** Tick at which the billboard fell; checkpointed with the encounter ledger. */
   billboardFallAt?: number;
+  /** The hospital flaps open when the courier reaches the triage tents. */
+  hospitalOpenAt?: number;
   /** Once-only halfway breach cue, retained with the encounter snapshot. */
   assaultBreach?: boolean;
   assaultAnnouncedWave?: number;
@@ -113,6 +115,7 @@ export class LevelTenEncounters {
     const delta = this.world.tick - (this.state.pressureTick ?? this.world.tick);
     if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
     if (this.state.billboardFallAt !== undefined) this.state.billboardFallAt += delta;
+    if (this.state.hospitalOpenAt !== undefined) this.state.hospitalOpenAt += delta;
     if (this.state.finaleEntryNext !== undefined) this.state.finaleEntryNext += delta;
     for (const walker of this.state.finaleEntry?.walking ?? []) {
       walker.until += delta;
@@ -303,6 +306,8 @@ export class LevelTenEncounters {
       // offset from the encounter station.
       if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
           Math.hypot(player.transform.x - 3082, player.transform.z - 30) <= 10) this.state.billboardFallAt = w.tick;
+      if (group.setPiece === 'field-hospital' && released.includes(group.id) && this.state.hospitalOpenAt === undefined &&
+          Math.hypot(player.transform.x - 3508, player.transform.z - 25) <= 18) this.state.hospitalOpenAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
       // charge clock starts, hand off to the next cohort only when that wave
       // is empty; once charging, timed windows continue independently of it.

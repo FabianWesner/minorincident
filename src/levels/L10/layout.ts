@@ -124,7 +124,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       lamp.decorLights = true;
     }
     // Field triage on the final approach: quarantine tents and a marked transport.
-    for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', x, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
+    for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.l10-field-tent', x, 83, [2.2, 1.6, 3.4], i % 2 ? Math.PI : 0);
     beat('hospital-truck', 'veh.ambulance', 3538, 98, [1.5, 1.7, 3.4], Math.PI / 2);
     beat('hospital-supplies', 'prop.medical-cooler', 3526, 91, [.5, .5, .5]);
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
