@@ -73,3 +73,5 @@ The 20–26 m suppression rule passed focused L4, L6 and L7 checks and the full 
 ## s184d weapon-role restoration
 
 Restored the weapon-role merge on top of main `94ec745d`. The unchanged L4 contact test passes with the shipped 20–26 m MG suppression rule; the previously failing 1.5 m trial recorded above was an unaccepted experiment, not the restored rule. Typecheck, lint, and full `npm run qa:threat` pass (0 fail flags). The unchanged local `npm test` suite passes (106 tests). The required remote run could not start because no healthy remote runner is provisioned. No weapon or infected stats were changed for this restoration.
+
+Remote focused L4 verification reproduced the reported actor 373 routing failure (ticks 17127–17428). The local pass does not establish a fix; the cause and remote full suite remain open.
