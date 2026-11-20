@@ -204,11 +204,10 @@ export class Companion {
         // Follow the survivor's position with a distance band. Never flip a
         // trailing offset to a world-axis offset when velocity falls to zero.
         const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
-        // The hangar doorway is only 2 m wide. The normal follow band can
-        // stop the full corgi just outside its threshold when the courier
-        // pauses immediately after crossing it. Keep walking until both are
-        // on the same side of the hangar boundary.
-        const enteringHangar = this.world.scenario === 'L10' && insideCureHangar(player.transform) && !insideCureHangar(e.transform);
+        // The normal follow band can stop the corgi across the hangar
+        // threshold when the courier pauses just inside. Continue until the
+        // dog's full elongated footprint clears the boundary.
+        const enteringHangar = this.world.scenario === 'L10' && insideCureHangar(player.transform) && !insideCureHangar(e.transform, actorRadius(e) + .4);
         const velocity = player.survivor?.velocity, playerSpeed = Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0);
         // Park beside an L5 escort, including at stops. Following the courier's
         // centre leaves the dog in the survivors' lane at the next start.

@@ -163,8 +163,8 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     dog.companion!.velocity = { x: 0, z: 0 }; delete dog.locomotion; delete dog.motion;
     w.solids.forget(dog); w.solids.admit(dog, 'test.l10-hangar', 4);
     w.missions!.checkpoint('cure-research-entry', player.transform);
-    for (let tick = 0; tick < 900 && dog.transform.z < 53; tick++) w.update();
-    expect(dog.transform.z, `${quality}: corgi crosses into the hangar within 15 s of the checkpoint courier`).toBeGreaterThanOrEqual(53);
+    for (let tick = 0; tick < 900 && dog.transform.z < 53.84; tick++) w.update();
+    expect(dog.transform.z, `${quality}: corgi crosses into the hangar within 15 s of the checkpoint courier`).toBeGreaterThanOrEqual(53.84);
     expect(Math.hypot(dog.transform.x - player.transform.x, dog.transform.z - player.transform.z), `${quality}: corgi remains with the courier`).toBeLessThan(6);
     Object.assign(player.transform, { x: 2707, z: 43, yaw: -Math.PI / 2 });
     w.physics.playerBody!.setTranslation(player.transform, true); w.spatial.set(1, 2707, 43);
@@ -180,8 +180,8 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     expect(Math.hypot(dog.transform.x - player.transform.x, dog.transform.z - player.transform.z)).toBeLessThan(6);
     w.missions!.restore('cure-research-entry');
     const restoredDog = w.entities.get(dog.id)!;
-    for (let tick = 0; tick < 900 && restoredDog.transform.z < 53; tick++) w.update();
-    expect(restoredDog.transform.z, `${quality}: corgi is inside within 15 s after restoring the hangar checkpoint`).toBeGreaterThanOrEqual(53);
+    for (let tick = 0; tick < 900 && restoredDog.transform.z < 53.84; tick++) w.update();
+    expect(restoredDog.transform.z, `${quality}: corgi is inside within 15 s after restoring the hangar checkpoint`).toBeGreaterThanOrEqual(53.84);
     expect(Math.hypot(restoredDog.transform.x - player.transform.x, restoredDog.transform.z - player.transform.z)).toBeLessThan(6);
   }
 });
