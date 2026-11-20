@@ -33,3 +33,5 @@ A HIGH WebGL2 trial of taller, smaller, alternately shaded clumps passed scene c
 An Alpha HIGH WebGL2 trial using the opposite offset implied by the prone layout did not align the visual pose: the body was left of the heap. The trial was discarded. The existing offset was reviewed only on the runner; verify or derive placement from the drawn Alpha pose before accepting it.
 
 The committed offset was then captured on the Alpha: it overlaps the falling body, and increasing its reach from .6 to .9 m puts the heap nearer the centre of that larger silhouette in this fixture. Scene checks, typecheck, lint and seven focused combat tests pass. This does not prove every Alpha look or obstructed placement; visual acceptance and current-revision backend/tier and remote checks remain open.
+
+Face shading was added to the existing instanced ash geometry. The HIGH WebGL2 settled frame shows slight tonal variation around the visible bones and smoke above the heap, but the heap remains small at zoom 1.5 and the full visual brief is not accepted. Scene checks, typecheck, lint, and seven focused combat tests pass; current-revision matrix and remote checks remain open.

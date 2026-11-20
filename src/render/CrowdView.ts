@@ -29,7 +29,7 @@ import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, IcosahedronGeometry, CapsuleGeometry, SphereGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, Float32BufferAttribute, IcosahedronGeometry, CapsuleGeometry, SphereGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, uniform, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
 import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -90,6 +90,16 @@ const preparedBatches = new Map<string, PreparedBatch>();
 const preparedBatchLimit = 48;
 /** A clone with its own userData object: per-level LOD tags must not reach the cached copy. */
 const cloneBatchGeometry = cloneCrowdGeometry;
+function ashGeometry(): BufferGeometry {
+  const geometry = new IcosahedronGeometry(.5, 0), normals = geometry.getAttribute('normal'), colors: number[] = [];
+  for (let i = 0; i < normals.count; i++) {
+    const shade = .6 + .4 * Math.max(0, normals.getY(i));
+    colors.push(shade, shade, shade);
+  }
+  geometry.setAttribute('color', new Float32BufferAttribute(colors, 3));
+  return geometry;
+}
+
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
   private readonly definitions = new Map<string, CrowdDef>();
@@ -154,7 +164,7 @@ export class CrowdView extends Group {
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
-  private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new IcosahedronGeometry(.5, 0), new MeshBasicNodeMaterial({ color: '#ffffff' }), 2800);
+  private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(ashGeometry(), new MeshBasicNodeMaterial({ color: '#ffffff', vertexColors: true }), 2800);
   private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(mergeGeometries([new CapsuleGeometry(.055, .65, 2, 6).rotateZ(Math.PI / 2), ...[-.38, .38].flatMap(x => [-.05, .05].map(z => new SphereGeometry(.075, 6, 4).translate(x, 0, z)))])!, new MeshBasicNodeMaterial({ color: '#c0aa86' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
