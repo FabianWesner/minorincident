@@ -6,6 +6,8 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [Ruiz HIGH](ruiz-talking-high.jpg) shows him to the courier's right during his subtitle after a controlled lead-in. The contact sheet is too small to verify his gaze and gesture quality.
 
+[Rosa epilogue HIGH](rosa-epilogue.jpg) uses an injected healthy Rosa roster entry and release time. Rosa and the existing courier appear together beside the truck, with Rosa gesturing and her subtitle visible. This fixture does not verify the full campaign transition.
+
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
 | L1, L2, L6 | Actor identified by an active story bubble | Idle speakers use shared gestures; authored physical actions remain in place. Bubble speaker framing and those action clips need visual review. |
@@ -14,7 +16,7 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
 | L8 | Nadia on tour and route lines; Hale on greeting and breach | Existing keeper and major actors; shared relaxed walk, idle and gestures. Visual check pending. |
 | L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
-| L10 epilogue | Rosa | Existing survivor montage actor; glance and gesture. Framing and courier presence remain open. |
+| L10 epilogue | Rosa | Existing survivor montage actor beside the existing courier; glance and gesture. Controlled HIGH capture reviewed; full campaign transition remains open. |
 
 Radio lines retain their existing radio labels. L8's generic soldier fallback and other levels' in-person lines remain to be mapped; this table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips; nearby prop walks remain open. No new animation clips or rigs were added.
 
