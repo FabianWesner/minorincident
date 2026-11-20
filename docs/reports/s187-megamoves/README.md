@@ -16,6 +16,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 - Focused infected AI and save-progression tests: passed after selecting an existing throw cue.
 - Remote `npm test`: reached the 240 s budget without a reported test failure. The specified fallback passed: local `npm test` (27 files, 106 tests, 183.9 s) and remote `tests/engine/l4-contact.test.ts` (1 test).
 - `npm run qa:threat`: completed with 0 fail flags. L10 skilled and passive routes both hit the audit tick budget; the required L10 acceptance rows therefore remain unverified.
+- An isolated `node --import tsx/esm tools/qa/threat-audit.ts --levels L10` reproduced the skilled tick-budget outcome at 1,800 simulated seconds. The passive hold window was measured (468.86 attacks/minute, L10-11 PASS); its tick-budget is the documented observation cap. The partial run's only fail flag was `PARTIAL_LEVEL_SELECTION`, so it is diagnostic and does not replace the full gate.
 - Headless WebGL2 Scene Lab under `tools/e2e-lock.sh`: all nine original HIGH scenarios and the zombie throw, leap, roar and debris throw HIGH/LOW scenarios passed their configured gates. [Contact sheet](moves-contact-sheet.jpg) contains their six-frame HIGH and LOW strips; visual review remains for the orchestrator. The debris scenario records active and recovery stages; these isolated scripted scenes do not establish hit, dodge or DPS criteria.
 
 ## Open acceptance items
