@@ -201,9 +201,14 @@ async function checkCheckpointRacks() {
   try {
     const expectedBase = { LEFT: ['weapon.fists', 'weapon.machete'], RIGHT: ['weapon.kick'] };
     transactArsenal(l10, ['weapon.machete'], []);
+    const field = l10.hazards!.fieldFire!, cell = field.cells[0];
+    expect(cell).toBeDefined();
+    field.ignite(cell, l10.tick); field.update(l10.tick + 420);
     l10.missions!.checkpoint('cure-crash');
+    cell.state = 'intact';
     l10.combat!.setLoadout(['weapon.fire-axe'], ['weapon.rocket-launcher']);
     l10.missions!.restore('cure-crash');
+    expect(cell.state).toBe('scorched');
     expect(ids(l10)).toEqual(expectedBase);
     expect(l10.progression!.campaign!.racks).toEqual(expectedBase);
 

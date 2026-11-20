@@ -25,7 +25,7 @@ export interface HazardOptions { hp?: number; radius?: number; burnTime?: number
 /** E11 hazard triggers/damage; E27 consumes arming/blast events for richer effects. */
 export class Hazards {
   readonly debris: DebrisPool;
-  readonly fieldFire: FieldFire | null;
+  fieldFire: FieldFire | null = null;
   private fallbackDamage: Damage | null = null;
   /** r39-l10nan: campaign levels replace world.combat after the hazards exist (npc install). A cached Damage kept the old
    * instance, so the god cheat (set on the live one) did not cover fire/toxic zones and the courier lost HP in god mode. */
@@ -37,7 +37,7 @@ export class Hazards {
   private readonly spreading: EntitySnapshot[] = [];
   constructor(private readonly world: SimWorld) {
     this.debris = new DebrisPool(world.physics);
-    this.fieldFire = world.districts?.composition.id === 'L10' ? new FieldFire(world.districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] })))) : null;
+
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit' || e.amount <= 0) return;
       const entity = world.entities.get(e.targetId); if (!entity) return;
@@ -52,6 +52,10 @@ export class Hazards {
       }
       if (entity.health.current <= 0) this.destroy(entity);
     });
+  }
+  installFieldFire(): void {
+    const districts = this.world.districts;
+    this.fieldFire = districts?.composition.id === 'L10' ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] })))) : null;
   }
   spawn(kind: HazardKind | DestructibleKind, pos: Vec2, opts: HazardOptions = {}): number {
     if (![...hazardKinds, ...destructibleKinds].includes(kind) || ![pos.x, pos.z, opts.hp ?? 1, opts.radius ?? 1, opts.burnTime ?? 1, opts.halfX ?? .5, opts.halfZ ?? .15, opts.duration ?? 1].every(Number.isFinite)
