@@ -261,7 +261,6 @@ export class LevelTenEncounters {
     }
     // Authored groups retain ordinary attacks, but never lapse into an idle line ahead of an approaching courier.
     for (const e of ai.active) if (e.health.current > 0 && e.infected?.cureRegion && !e.infected.pursuit &&
-      e.transform.x >= player.transform.x - ai.hearing.rangeM &&
       ['idle', 'wander'].includes(e.infected.state) && (e.infected.pressureTarget?.until ?? 0) <= w.tick &&
       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);
     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};
