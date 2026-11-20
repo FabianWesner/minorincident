@@ -2,9 +2,9 @@
 
 ## Change
 
-Added six authored L10 dispersal fight beats to `curePaceEncounters`, positioned along the R6 corridor and released within 35 m of their authored station. Each beat uses the existing deterministic encounter slot and fair-admission path, preserves the existing infected definitions/stats, and participates in the existing paced-wave re-targeting. Scarecrow field has five HIGH / four LOW members; the other set pieces retain their authored high/low cohorts. Fixed district dressing uses the ordinary placement and LOD pipeline. Added six Scene Lab fixtures with an infected beside the courier for capture and placement review; deployed hazmat and crawler TRELLIS lineage remains unresolved in the existing figure audit.
+Added six authored L10 dispersal fight beats to `curePaceEncounters`, positioned along the dispersal route and released within 35 m of their authored station, except the billboard cohort, which releases at 25 m. Each beat uses the existing deterministic encounter slot and fair-admission path, preserves the existing infected definitions/stats, and participates in the existing paced-wave re-targeting. Scarecrow field has five HIGH / four LOW members; the other set pieces retain their authored high/low cohorts. Fixed district dressing uses the ordinary placement and LOD pipeline. Added six Scene Lab fixtures with an infected beside the courier for capture and placement review; deployed hazmat and crawler TRELLIS lineage remains unresolved in the existing figure audit.
 
-The six scenes are arranged around the existing corridor groups at 2940, 3060, 3190, 3260, 3390 and 3520 m. This preserves the PO's distinct visual themes and leaves the existing corridor groups interleaved with them.
+The authored encounter stations are gate (3010, 16), billboard (3076, 33), field (3190, 64), convoy (3260, 95), underpass (3390, 95), and hospital (3502, 37). Existing corridor groups remain interleaved with them.
 
 ## Diagnostic stills
 
@@ -29,6 +29,10 @@ LOW skilled seed 1 completed in 1,116.0 s with two deaths after the convoy crate
 | Burning convoy | 2.83 s |
 | Dark underpass | 2.82 s |
 | Field hospital | 7.73 s |
+
+## Scene placement checks
+
+At HIGH, the gate fixture passes. Billboard, field, convoy, underpass and hospital fail their zero-clipping gates on existing corn/scarecrow or corn/lamp pairs; the reported counts are 2, 3, 2, 2 and 1 respectively. The LOW gate passes. The later LOW field and hospital checks report the same pre-existing overlaps as HIGH. These checks do not establish the appearance or timing of the scripted moments.
 
 ## Verification
 
