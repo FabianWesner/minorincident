@@ -15,4 +15,4 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 Radio lines retain their existing radio labels. L8's generic soldier fallback and other levels' in-person lines remain to be mapped; this table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips; nearby prop walks remain open. No new animation clips or rigs were added.
 
-Latest typecheck and lint passed. The remote unit suite exceeded its 240-second budget in the previous attempt; the unchanged retry remained queued and was cancelled. `qa:threat` byte identity and the full visual coverage have not been verified. The objective is incomplete.
+Latest typecheck and lint passed. The remote unit suite and its unchanged retry both exceeded the 240-second budget (241.3 s and 240.3 s, exit 124). The first run's save-progression case exceeded its 30-second case limit; it passed in 27.4 s on retry. Neither full run completed. `qa:threat` byte identity and the full visual coverage have not been verified. The objective is incomplete.
