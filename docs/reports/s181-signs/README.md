@@ -38,3 +38,5 @@ The gas-station asset already has a physical Sunset Fuel facade sign. A close L9
 The supermarket board now uses its local +X entrance header, rotated with the placement. A close HIGH L9 view shows the Roadside Shop sign above the middle doorway; LOD0–2 ray samples at the board area hit the header at x=4.24 m, with the board at x=4.25 m. Game-camera readability and full clearance remain to be checked.
 
 Zoo ticket and staff/lodge boards now follow the local +X gate lintel and porch fascia. Close HIGH captures show both on their supports; the first staff placement was hidden by the roof and was moved to its front edge. The long staff text is compressed to fit the shallow fascia, so game-camera readability and full clearance remain open.
+
+L3 police uses its existing entrance sign as support; a close HIGH capture with the courier nearby shows the board on the canopy. A capture with the courier far away showed the sign while the building was not rendered: sign visibility must follow building streaming/LOD before this can pass the no-floating requirement.
