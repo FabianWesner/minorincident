@@ -356,7 +356,8 @@ export class Vfx extends Group {
       return;
     }
     if (!(event.type === 'combat.hit' && event.amount > 0)) return;
-    this.blood(event, false);
+    const fire = event.actionId === 'weapon.flamethrower' || actions[event.actionId]?.effect?.kind === 'fire';
+    if (!fire) this.blood(event, false);
     if (event.damageType === 'melee' && event.sourceId === 1) this.targets.shake(this.flashReduction ? .012 : event.actionId === 'weapon.kick' || event.amount >= 30 ? .055 : .028);
     this.pulse(event.targetId);
   };
@@ -364,7 +365,10 @@ export class Vfx extends Group {
     if (!(event.type === 'combat.kill')) return;
     // A knocked-down infected (PO "Infected recover") bleeds like a hard hit, without the kill pool or lost limbs: it gets up again.
     const down = event.downed !== undefined;
-    this.kills++; this.blood(event, !down);
+    const fire = !!this.world.entities.get(event.targetId)?.ashDeath;
+    this.kills++;
+    if (fire) this.burst(event.position.x, event.position.y, event.position.z, 0x57534b, 14, .08, .8, .5, particleShape.smoke, 1.2, .7);
+    else this.blood(event, !down);
     const def = actions[event.actionId], melee = def?.category === 'melee';
     if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
     const explosive = Boolean(def?.splash) && def?.effect?.kind !== 'fire' || event.actionId.includes('explos') || event.actionId.includes('rocket');

@@ -431,7 +431,7 @@ export class InfectedSystem {
       if (this.hangarBoundary(e, courier)) continue;
       if (this.pursuitOrVault(e, b)) continue;
       if (this.farCrowdSlot(e, b, courier)) continue;
-      if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if (!b.specialAttack && !e.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > this.world.tick) && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       this.noticeDuringApproach(e, courier);
       if (this.followScript(e, b)) continue;
       if (this.perceiveTargets(e, b)) continue;
@@ -854,7 +854,7 @@ export class InfectedSystem {
     }
     return 1;
   }
-  private releasePin(source: EntitySnapshot): void {
+  releasePin(source: EntitySnapshot): void {
     const b = source.infected!, target = this.world.entities.get(b.heardTargetId || 1), until = b.grabUntil;
     b.grabUntil = 0;
     if ((source.archetype !== 'infected.lion' && b.alphaType !== 'leaper') || until <= this.world.tick || !target) return;
@@ -2136,12 +2136,13 @@ export class InfectedSystem {
       else if (this.world.tick - mark.at >= 240 && gap > e.combat!.radius + 1.5) { b.wideFallbackUntil = this.world.tick + 600; b.wideStuck = { d: gap, at: this.world.tick }; b.path.length = 0; b.goal = -1; }
     }
     // Only a courier chase can share its flow field; soldier and investigation goals need their own route.
-    // Courier-assigned L4 breach walkers have the same destination as the
-    // shared flow. Making each compete for an individual A* search can leave
-    // the new cohort waiting behind the rest of the horde for its whole cue.
+    // A scripted waypoint can differ from the courier's position. Route to
+    // that waypoint rather than reading the courier's shared flow field.
     const courierApproach = b.breachApproach === 'inside' && b.pressureTarget?.id === 1 && b.pressureTarget.until > this.world.tick;
     // The shared flow field is only built on the admission grid; a wide body on `wideNav` would read an empty field and stand still, so it searches.
-    const useFlow = nav !== this.wideNav && !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
+    const courier = this.world.entities.get(1)!.transform;
+    const sharedGoal = !b.scripted || courierApproach && Math.hypot(target.x - courier.x, target.z - courier.z) < 2;
+    const useFlow = nav !== this.wideNav && !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && sharedGoal && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
       // The nearest cell can lie across a thin doorway wall. Start on a
