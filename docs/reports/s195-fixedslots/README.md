@@ -18,7 +18,7 @@
 - Focused: `tests/engine/input.test.ts`, `tests/engine/combat.test.ts`, `tests/engine/world-systems.test.ts`, `tests/engine/save-progression.test.ts` — 24 passed.
 - `npm run typecheck` — passed.
 - `npm run lint` — passed.
-- `npm test` — passed locally: 106 tests in 27 files; test-budget reported 150/150 planned cases and 117.0 s / 240 s.
+- `npm test` — passed locally after the replay fixes: 106 tests in 27 files; test-budget reported 150/150 planned cases and 107.1 s / 240 s.
 - `npm run qa:threat` — passed after the bot change: 0 fail flags in 424.6 s.
 - Remote `sh tools/remote/run.sh "$PWD" -- npm test`: three attempts timed out around 240 s. The unchanged rerun completed in 227.6 s with 104 passed, one skipped and one failure in `tests/engine/l4-contact.test.ts`: the LOW perimeter routing assertion at line 780. The remote gate remains open; investigate that failure before treating the suite as green.
 - Follow-up: `npx vitest run tests/engine/l4-contact.test.ts --project default --configLoader runner` passed locally (63.43 s). Two subsequent unchanged remote suite attempts both timed out at 241.1 s and 240.8 s, so neither reproduced nor cleared the remote routing failure.
