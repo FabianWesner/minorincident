@@ -20,8 +20,8 @@ export const cureAnchorNames = [...cureCheckpoints, ...cureWeaponPickups.map(p =
 
 /** Finale controllers own these booleans. Charge-ready means 3,600 eligible ticks; credits-finished follows the playable epilogue. */
 /** Elapsed eligible simulation ticks (durations, not absolute timestamps), available to S7/S9. */
-export const cureCounters = ['charge-ticks', 'epilogue-ticks', 'story-region', 'pace-checkpoint', 'pace-mm', 'hangar-line', 'hangar-line-ticks'];
-export const cureStates = ['charge-active', 'console-held', 'terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished', 'story-initialized', 'sam-alive', 'gap-hint', 'hangar-radio', 'hangar-cast', 'hangar-dialogue-done', 'arena-equipped', 'gate-spent', 'delivery-notified', 'epilogue-rosa', 'epilogue-sam', ...cureWeaponPickups.map(p => `found-${p.id}`)];
+export const cureCounters = ['charge-ticks', 'epilogue-ticks', 'story-region', 'pace-checkpoint', 'pace-mm', 'hangar-line', 'hangar-line-ticks', 'mega-reveal-ticks'];
+export const cureStates = ['charge-active', 'console-held', 'terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished', 'story-initialized', 'sam-alive', 'gap-hint', 'hangar-radio', 'hangar-cast', 'hangar-dialogue-done', 'mega-reveal-seen', 'mega-reveal-active', 'arena-equipped', 'gate-spent', 'delivery-notified', 'epilogue-rosa', 'epilogue-sam', ...cureWeaponPickups.map(p => `found-${p.id}`)];
 /** The hangar issues one weapon for each combat role. */
 export const cureHangarWeapons = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb'];
 /** Optional anchors let region lanes land independently. Missing anchors cannot complete spatial objectives. */

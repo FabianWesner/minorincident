@@ -12,6 +12,8 @@ export interface MusicIntensity {
     vehicleSpeed?: number;
     incident?: boolean;
     complete?: boolean;
+    /** Per-level encounter release hold in seconds (defaults to the established seven-second hold). */
+    dangerHoldS?: number;
 }
 export interface MusicTransition {
     time: number;
@@ -38,7 +40,7 @@ export class MusicDirector {
     update(time: number, input: MusicIntensity): void {
         if (input.danger !== undefined || input.minimum !== undefined) {
             if (input.danger) this.lastThreat = time;
-            const active = !input.complete && time - this.lastThreat < 7;
+            const active = !input.complete && time - this.lastThreat < (input.dangerHoldS ?? 7);
             // Escalation: every engaged infected beyond the second adds 0.05, so a dense fight (7+) reaches the peak layers
             // regardless of the story floor, and the peak releases only PEAK_HOLD_S after the crowd thinned out.
             const engaged = input.danger ? 0.5 + Math.max(0, input.alerted - 2) * 0.05 : 0;
