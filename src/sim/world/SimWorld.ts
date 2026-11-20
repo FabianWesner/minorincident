@@ -419,6 +419,15 @@ export class SimWorld implements Lifecycle {
     if (this.missions?.state.phase === 'cinematic') { this.missions.advanceCinematic(this.input); return; }
     if (this.missions && this.missions.state.phase !== 'playing') return;
     this.events.emit({ type: 'sim.tick', tick: ++this.tick });
+    // Retained ash is fixed even if a later movement system writes to its body.
+    for (const e of this.entities.iterate()) if (e.ashDeath) {
+      const a = e.ashDeath, t = e.transform;
+      a.x ??= t.x; a.y ??= t.y; a.z ??= t.z; a.yaw ??= t.yaw;
+      if (t.x !== a.x || t.y !== a.y || t.z !== a.z || t.yaw !== a.yaw) {
+        t.x = a.x; t.y = a.y; t.z = a.z; t.yaw = a.yaw; this.spatial.set(e.id, t.x, t.z);
+      }
+      delete e.knockbackSlide; delete e.corpseBlast; delete e.corpseThrown;
+    }
   }
   getEntity(id: number): EntitySnapshot | null { return structuredClone(this.entities.get(id) ?? null); }
   query(filter: EntityFilter): EntitySnapshot[] {
@@ -441,6 +450,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E05 impulse is the authored displacement in metres, swept against full cover. */
   knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number, ticks = 1): void {
+    if (entity.ashDeath) return;
     if (entity.combat?.statuses.some(status => status.kind === 'pinned' && status.expires > this.tick)) return;
     if (ticks > 1) {
       entity.knockbackSlide = { x: direction.x * impulse, z: direction.z * impulse, ticks };

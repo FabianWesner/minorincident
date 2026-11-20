@@ -15,6 +15,7 @@ import { l8BossArenas, l8Route, inRect } from '../data/l8Bosses';
 import type { Game } from '../Game';
 import { action } from '../data/actions/catalog';
 import { weaponRoles } from '../data/weaponRoles';
+import { weaponName } from '../data/weaponNames';
 import { weaponKey } from '../data/weaponKeys';
 import { weaponRackSlots } from '../data/weaponSlots';
 import { actionIconUrl } from '../assets/icons';
@@ -65,11 +66,13 @@ export class Hud {
   private readonly weapon = this.weaponIcon();
   private weaponActionId = '';
   private readonly weaponRack = node('div', 'weapon-rack');
-  private readonly corgiLure = button('corgi-lure', 'Corgi lure · G', () => this.game.input.corgiLureOnce());
+  private readonly rackTooltip = node('div', 'weapon-rack-tooltip');
+  private rackTooltipTimer = 0;
+  private readonly corgiLure = button('corgi-lure', 'Corgi lure · G', () => { if (this.corgiLure.getAttribute('aria-disabled') !== 'true') this.game.input.corgiLureOnce(); });
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
-  private pickupRole: { id: string; until: number } | null = null;
+  private pickupRole: { id: string; until: number; replaced?: string | null } | null = null;
   private emptyWeapon: { id: string; until: number; tooClose?: boolean } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
@@ -128,7 +131,9 @@ export class Hud {
     const bars = node('div', 'vital-bars'); bars.className = 'hud-bars'; bars.append(this.health.root);
     this.corgiBadge.className = 'hud-corgi-badge';
     this.weaponRack.className = 'hud-weapon-rack hud-panel'; this.weaponRack.setAttribute('aria-label', 'Carried weapons and number keys');
-    this.corgiLure.tabIndex = -1; this.corgiLure.addEventListener('mousedown', event => event.preventDefault());
+    this.rackTooltip.className = 'weapon-rack-tooltip'; this.rackTooltip.hidden = true; this.rackTooltip.setAttribute('role', 'tooltip');
+    this.bindRackTooltip(this.corgiLure);
+    this.corgiLure.addEventListener('mousedown', event => event.preventDefault());
     vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
@@ -177,7 +182,7 @@ export class Hud {
     const navigation = node('div', 'radar-navigation'); navigation.className = 'hud-navigation';
     this.weatherIcon.className = 'hud-weather';
     navigation.append(this.map, this.weatherIcon, this.tracker);
-    this.root.append(this.weaponRack, this.finaleAction, stick, this.vignette, vitals, companion, navigation, this.damage, this.shieldBlock, this.bark, this.bossBar, this.interaction, this.onboarding.element, this.detail);
+    this.root.append(this.weaponRack, this.rackTooltip, this.finaleAction, stick, this.vignette, vitals, companion, navigation, this.damage, this.shieldBlock, this.bark, this.bossBar, this.interaction, this.onboarding.element, this.detail);
     this.cuePanels = [vitals, companion, this.survivorVitals, this.map, this.weatherIcon, this.tracker, this.weaponRack, this.onboarding.element];
   }
   private bar(name: string) {
@@ -228,7 +233,7 @@ export class Hud {
   }
   private readonly event = (event: GameEvent): void => {
     if (event.type === 'pickup.collected' && 'actionId' in event && weaponKey(event.actionId) !== undefined) {
-      this.pickupRole = { id: event.actionId, until: event.tick + 240 };
+      this.pickupRole = { id: event.actionId, until: event.tick + 240, replaced: event.replaced };
     }
     if (event.type === 'combat.hit' && (event.blocked || event.shieldGlance) && event.sourceId === 1) {
       const p = this.game.view.project(event.position.x, event.position.y + 1.2, event.position.z);
@@ -421,7 +426,7 @@ export class Hud {
       }
     }
     this.updateSurvivors(mission, px, pz);
-    const label = (id: string) => ['weapon.fists', 'weapon.kick'].includes(id) ? 'unarmed' : id === 'weapon.handgun' ? 'Handgun' : id === 'weapon.army-mg' ? 'Machine gun' : id.split('.')[1].replaceAll('-', ' ');
+    const label = weaponName;
     let shown: { id: string; name: string; stats: string; progress: number; ammo: number; charges: number; state: string } | null = null;
     for (const side of sides) {
       const state = player.weapons?.[side], touchSide = side === 'LEFT' ? 'left' : 'right';
@@ -460,11 +465,13 @@ export class Hud {
         const { id, key, weapon, hole } = tile;
         const item = node('button', `weapon-rack-${id}`), icon = document.createElement('img');
         item.className = 'hud-weapon-choice'; item.dataset.weapon = weapon; item.dataset.hole = String(hole); item.dataset.empty = String(hole);
-        if (hole) item.disabled = true;
+        if (hole) item.setAttribute('aria-disabled', 'true');
         icon.src = actionIconUrl(action(weapon).iconId); icon.alt = '';
         const shortcut = key !== undefined && key <= 9 ? String(key) : key === 10 ? '0' : '';
         item.title = `${hole ? 'Not found' : label(weapon)}${weaponRoles[weapon] ? ` · ${weaponRoles[weapon]}` : ''}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
-        item.type = 'button'; item.tabIndex = -1;
+        item.dataset.tipKey = shortcut;
+        this.bindRackTooltip(item);
+        item.type = 'button';
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
         item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (!hole && key !== undefined) this.game.input.selectWeaponKey(key); });
@@ -488,8 +495,17 @@ export class Hud {
       const key = weaponKey(id), shortcut = key !== undefined && key <= 9 ? String(key) : key === 10 ? '0' : '';
       item.title = `${label(id)}${weaponRoles[id] ? ` · ${weaponRoles[id]}` : ''}${empty ? ' · Empty' : ''}${shortcut ? ` · ${shortcut}` : ''}`;
       item.setAttribute('aria-label', item.title);
+      const variants = entries.filter(candidate => weaponKey(candidate.id) === key);
+      const selectedVariant = variants.find(candidate => candidate.id === selectedId);
+      const switchHint = variants.length > 1 ? ` · Selected: ${weaponName(selectedVariant?.id ?? id)} · press ${shortcut} again to switch` : '';
+      item.dataset.tipName = weaponName(id); item.dataset.tipRole = weaponRoles[id] ?? 'Weapon'; item.dataset.tipKey = shortcut;
+      item.dataset.tipExtra = `${empty ? 'Empty · ' : ''}${switchHint}`;
     }
-    this.corgiLure.disabled = (player.weapons?.corgiReady ?? 0) > world.tick;
+    const corgiRecharging = (player.weapons?.corgiReady ?? 0) > world.tick;
+    attribute(this.corgiLure, 'aria-disabled', String(corgiRecharging));
+    const corgiCooldown = Math.max(0, ((player.weapons?.corgiReady ?? 0) - world.tick) / 60);
+    this.corgiLure.dataset.tipName = 'Corgi Lure'; this.corgiLure.dataset.tipRole = 'Draws infected within 15 m to the corgi for 5 seconds';
+    this.corgiLure.dataset.tipKey = 'G'; this.corgiLure.dataset.tipExtra = corgiCooldown > 0 ? ` · Recharging · ${corgiCooldown.toFixed(1)}s` : ' · Ready';
     setHidden(this.weaponRack, !entries.length && !holes.length && !hasLure);
     attribute(this.weaponRack, 'data-touch', String(this.game.input.scheme === 'touch'));
     // Manned minigun: the weapon icon shows the gun she holds, not the weapon she carries (rack and touch slots are untouched).
@@ -506,7 +522,8 @@ export class Hud {
         : null;
       const pickup = this.pickupRole && world.tick <= this.pickupRole.until ? this.pickupRole.id : null;
       const pickupKey = pickup ? weaponKey(pickup) : undefined;
-      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup] ?? 'Weapon'} · ${pickupKey === 10 ? '0' : pickupKey}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`);
+      const replaced = this.pickupRole?.replaced && world.tick <= this.pickupRole.until ? this.pickupRole.replaced : null;
+      text(this.weapon.hint, pickup ? replaced ? `${label(pickup)} replaces ${label(replaced)} · 0` : `${label(pickup)} · ${weaponRoles[pickup] ?? 'Weapon'} · ${pickupKey === 10 ? '0' : pickupKey}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`);
       const hintVisible = pickup !== null || emptyCue !== null || world.tick <= this.weaponHintUntil;
       setHidden(this.weapon.hint, !hintVisible);
       if (hintVisible) {
@@ -528,6 +545,36 @@ export class Hud {
     setHidden(this.civilianBark, world.tick > this.civilianBarkUntil);
     if (!preparing) { this.updateStory(); this.onboarding.update(this.game.input.scheme, visible); }
   }
+  private bindRackTooltip(source: HTMLElement): void {
+    let longPressed = false;
+    source.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') this.showRackTooltip(source); });
+    source.addEventListener('pointerleave', () => this.hideRackTooltip());
+    source.addEventListener('focus', () => this.showRackTooltip(source));
+    source.addEventListener('blur', () => this.hideRackTooltip());
+    source.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'touch') { longPressed = false; window.clearTimeout(this.rackTooltipTimer); this.rackTooltipTimer = window.setTimeout(() => { longPressed = true; this.showRackTooltip(source); }, 150); }
+    });
+    source.addEventListener('pointerup', event => {
+      if (event.pointerType === 'touch') { window.clearTimeout(this.rackTooltipTimer); if (!this.rackTooltip.hidden) window.setTimeout(() => this.hideRackTooltip(), 1800); }
+    });
+    source.addEventListener('pointercancel', () => { window.clearTimeout(this.rackTooltipTimer); this.hideRackTooltip(); });
+    source.addEventListener('click', event => { if (longPressed) { event.preventDefault(); event.stopImmediatePropagation(); longPressed = false; } }, true);
+  }
+  private showRackTooltip(source: HTMLElement): void {
+    const name = source.dataset.tipName ?? (source.dataset.hole === 'true' ? 'Not found yet' : 'Corgi Lure');
+    const role = source.dataset.tipRole ?? '';
+    const key = source.dataset.tipKey ?? '';
+    const extra = source.dataset.tipExtra ?? '';
+    this.rackTooltip.replaceChildren();
+    const title = document.createElement('strong'); title.textContent = name;
+    const body = document.createElement('span'); body.textContent = source.dataset.hole === 'true' ? `Key ${key}` : `${role}${key ? ` · ${key}` : ''}${extra}`;
+    this.rackTooltip.append(title, body); this.rackTooltip.hidden = false;
+    const rack = this.weaponRack.getBoundingClientRect(), target = source.getBoundingClientRect();
+    const box = this.rackTooltip.getBoundingClientRect();
+    this.rackTooltip.style.left = `${Math.max(8, Math.min(innerWidth - box.width - 8, target.left + target.width / 2 - box.width / 2))}px`;
+    this.rackTooltip.style.top = `${Math.max(8, rack.top - box.height - 8)}px`;
+  }
+  private hideRackTooltip(): void { window.clearTimeout(this.rackTooltipTimer); this.rackTooltip.hidden = true; }
   /** r31-megafight: the Mega's own bar once it can be hurt (cure installed) and while it lives. */
   private updateBossBar(world: SimWorld): void {
     const mega = world.scenario === 'L10' && world.missions?.state.states['cure-installed'] && !world.missions.state.states['cure-released'] ? world.megaPursuit?.entity() : null;

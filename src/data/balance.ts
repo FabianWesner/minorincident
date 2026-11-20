@@ -209,7 +209,7 @@ export const ttkBands: Record<string, Record<CombatArchetype, readonly [number, 
 
 /** E06 no-upgrade rear-exposure balance windows, calibrated on the fixed arena protocol.
  * Literal design data: 20% timing tolerance plus 0.25s for short fights; never computed from runtime defs.
- * Utilities/flashbang do not kill and are verified by their role effects (E06-AC02). */
+ * Utilities do not kill and are verified by their role effects (E06-AC02). */
 Object.assign(ttkBands, {
   'weapon.fists': {
     runner: [1.24, 2.49],
