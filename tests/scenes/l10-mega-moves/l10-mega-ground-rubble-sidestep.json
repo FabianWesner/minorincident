@@ -1,0 +1,71 @@
+{
+  "name": "l10-mega-ground-rubble-sidestep",
+  "note": "Courier runs perpendicular from the start of the Mega telegraph.",
+  "seed": 190,
+  "ground": "asphalt",
+  "size": 90,
+  "time": "L4",
+  "dof": false,
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -30,
+      0
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -15,
+      2.5,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "special": "alpha.grab-throw",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            0,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "frames": 240,
+  "sheet": 40,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0,
+    "specialActiveMin": 1,
+    "specialActiveMove": "alpha.grab-throw",
+    "courierHpMin": 100
+  }
+}

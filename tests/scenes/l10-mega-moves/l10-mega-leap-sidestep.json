@@ -1,0 +1,71 @@
+{
+  "name": "l10-mega-leap-sidestep",
+  "note": "Courier runs perpendicular from the start of the Mega telegraph.",
+  "seed": 188,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -15,
+      0
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -6,
+      2.5,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "special": "alpha.pounce",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            0,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "frames": 240,
+  "sheet": 24,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0,
+    "courierHpMin": 100,
+    "specialActiveMin": 1,
+    "specialActiveMove": "alpha.pounce"
+  }
+}
