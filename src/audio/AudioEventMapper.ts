@@ -396,13 +396,18 @@ export class AudioEventMapper {
                 const weapon = event.actionId.split('.').at(-1)!;
                 const targetPosition = target?.transform ?? position;
                 const flesh = fleshLike[weapon] ?? weapon;
-                this.host.play(audioCues[`flesh.${flesh}`] ? `flesh.${flesh}` : 'flesh.fists', { position: targetPosition }, source);
+                const ownImpact = `weapon.impact.${weapon}`;
+                this.host.play(audioCues[ownImpact] ? ownImpact : audioCues[`flesh.${flesh}`] ? `flesh.${flesh}` : 'flesh.fists', { position: targetPosition }, source);
                 // Layered hit: transient (flesh) + body of the weapon + low thump, each with its own variation.
                 const body = /bat|baton/.test(weapon) ? 'wood' : /crowbar|machete|knife|katana|axe|shovel/.test(weapon) ? 'metal' : 'punch', heavy = weapon === 'kick' || weapon === 'bat' || weapon === 'fire-axe' || event.amount >= 20;
                 this.host.play(`impact.body.${body}`, { position: targetPosition, gain: heavy ? 1 : 0.8 }, source);
                 this.host.play('impact.thump', { position: targetPosition, gain: heavy ? 1 : 0.6 }, source);
                 this.host.graph.buses.ambience.gain.setTargetAtTime(0.7, this.host.context.currentTime, 0.02);
                 this.ambienceDuckUntil = this.host.context.currentTime + 0.5;
+            }
+            if (event.type === 'combat.hit' && event.amount > 0 && event.damageType !== 'melee') {
+                const cue = `weapon.impact.${event.actionId.replace(/^weapon\./, '')}`;
+                if (audioCues[cue]) this.host.play(cue, { position: target?.transform ?? position }, source);
             }
         }
         if (event.type === 'infected.attack') {

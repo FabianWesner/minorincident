@@ -17,6 +17,21 @@ Ordinary infected remain at 40 HP. These jobs are the selection hint; special da
 | Rocket launcher | Blow apart groups and heavies | 180 | 35 m; 6 m blast | 1.2 rockets/s; unlimited | everything in blast knocked down |
 | Flashbang | Stun a crowd; break grabs | 0 | 7 m radius | 2 charges; 12 s recharge | 3 s stun; frees grabbed courier/follower |
 
-## Sound work remaining
+## Sound cues
 
-The weapon-specific reload and impact takes, pneumatic nail-gun fire, and flamethrower loop, ignition and sputter remain to be implemented and verified.
+| Weapon | Attack | Reload / refill | Impact |
+| --- | --- | --- | --- |
+| Fists / kick | `action.weapon.fists` / `action.weapon.kick` | — | `flesh.fists` / `flesh.kick`, layered body and thump |
+| Bat | `action.weapon.bat` | — | `flesh.bat`, wood body and thump |
+| Fire axe | `action.weapon.fire-axe` | — | `weapon.impact.fire-axe`, metal body and thump |
+| Handgun | `action.weapon.handgun` | unlimited | `weapon.impact.handgun` |
+| Army MG | `action.weapon.army-mg` | unlimited | `weapon.impact.army-mg` |
+| Shotgun | `action.weapon.shotgun`, `weapon.pump` | `weapon.reload.shotgun` | `weapon.impact.shotgun` |
+| Hunting rifle | `action.weapon.hunting-rifle` and environment tail | `weapon.reload.hunting-rifle` | `weapon.impact.hunting-rifle` |
+| Nail gun | `action.weapon.nail-gun` | `weapon.reload.nail-gun` | `weapon.impact.nail-gun` |
+| Assault rifle | `action.weapon.assault-rifle` | `weapon.reload.assault-rifle` | `weapon.impact.assault-rifle` |
+| Flamethrower | `weapon.flame-ignite`, `weapon.flame-loop`, `weapon.flame-stop` | automatic | `weapon.impact.flamethrower` |
+| Rocket launcher | `action.weapon.rocket-launcher`, `weapon.rocket-whoosh` | unlimited | explosion beats |
+| Flashbang | `action.weapon.flashbang` | automatic recharge | explosion beats |
+
+Recorded source and license details are in `assets/audio/imports.json`. Flame loop/stop need listening review for the requested roar and sputter; the remaining shared explosion and layered melee takes need an audible distinctness audit.

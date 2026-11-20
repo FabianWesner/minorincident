@@ -6309,7 +6309,7 @@
       "level": -19
     },
     "action.weapon.fire-axe": {
-      "source": "swish-2",
+      "source": "swish-3",
       "start": 0.03,
       "filter": "asetrate=29760,aresample=48000",
       "level": -17
@@ -6321,13 +6321,13 @@
       "level": -17
     },
     "action.weapon.fire-axe.v2": {
-      "source": "swish-1",
+      "source": "swish-3",
       "start": 0.03,
       "filter": "asetrate=30720,aresample=48000",
       "level": -17
     },
     "action.weapon.fire-axe.v3": {
-      "source": "swish-0",
+      "source": "swish-3",
       "start": 0.03,
       "filter": "asetrate=29760,aresample=48000",
       "level": -17
@@ -6403,6 +6403,66 @@
       "source": "s184-ignition",
       "start": 0.6,
       "level": -22
+    },
+    "weapon.reload.shotgun": {
+      "source": "wp-shotguncock",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.reload.hunting-rifle": {
+      "source": "wp-gunreload1",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.reload.nail-gun": {
+      "source": "sfx2-rwm-metal_open_01",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.reload.assault-rifle": {
+      "source": "wp-assaultriflereload1",
+      "start": 0,
+      "level": -17
+    },
+    "weapon.impact.handgun": {
+      "source": "sfx2-k-impactSoft_medium_000",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.army-mg": {
+      "source": "sfx2-k-impactSoft_medium_001",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.shotgun": {
+      "source": "sfx2-k-impactSoft_heavy_000",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.hunting-rifle": {
+      "source": "sfx2-k-impactSoft_heavy_001",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.nail-gun": {
+      "source": "sfx2-k-impactSoft_medium_002",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.assault-rifle": {
+      "source": "sfx2-k-impactSoft_medium_003",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.flamethrower": {
+      "source": "sfx2-k-impactSoft_heavy_002",
+      "start": 0,
+      "level": -20
+    },
+    "weapon.impact.fire-axe": {
+      "source": "sfx2-k-impactMetal_heavy_000",
+      "start": 0,
+      "level": -18
     }
   },
   "streams": {

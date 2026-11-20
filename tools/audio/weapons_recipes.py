@@ -93,7 +93,7 @@ fam('action.weapon.firecracker-lure', shots('Ruger Mark III/R_35P.wav', [0.48, 4
 # ---- melee swings: heavier tools slower/lower, light blades faster/higher (same CC0 swish takes)
 for cue, takes, level in [('knife', [(0, 1.35), (3, 1.3), (1, 1.4), (2, 1.32)], LEVEL['melee'] - 3), ('katana', [(0, 1.5), (1, 1.45), (3, 1.55), (2, 1.5)], LEVEL['melee']),
                           ('nail-bat', [(2, 0.9), (3, 0.88), (1, 0.92), (0, 0.9)], LEVEL['melee']), ('shovel', [(3, 0.78), (2, 0.8), (1, 0.76), (0, 0.78)], LEVEL['melee']),
-                          ('police-baton', [(1, 1.1), (0, 1.08), (3, 1.12), (2, 1.1)], LEVEL['melee']), ('fire-axe', [(2, 0.62), (3, 0.6), (1, 0.64), (0, 0.62)], LEVEL['melee'] + 2)]:
+                          ('police-baton', [(1, 1.1), (0, 1.08), (3, 1.12), (2, 1.1)], LEVEL['melee']), ('fire-axe', [(3, 0.62), (3, 0.6), (3, 0.64), (3, 0.62)], LEVEL['melee'] + 2)]:
     fam(f'action.weapon.{cue}', [('swish-%d' % i, 0.03, up(r)) for i, r in takes], level)
 fam('action.ability.ground-slam', [(f'sfx2-k-impactSoft_heavy_00{i}', 0.0, 'bass=g=6:f=80,' + up(0.7)) for i in range(4)], LEVEL['thump'])
 # (The other melee weapons keep using the existing flesh.* hit takes through AudioService's fleshLike map: the L1 initial bank is at its 4 MB budget.)
