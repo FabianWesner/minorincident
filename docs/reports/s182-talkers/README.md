@@ -12,7 +12,7 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [L8 gate HIGH](l8-gate.jpg) starts the normal briefing with default progression. The nearest recorded guard begins about 27 m away in simulation; the existing guard is staged in presentation during the opening briefing, and the sheet shows a guard near the courier during the subtitle. Other camera positions and later fallback soldier lines remain unverified.
 
-[L5 Rosa HIGH](l5-rosa.jpg) injects the search phase and survivor discovery at the pharmacy. The subtitle appears, but infected crowd the rescue point and Rosa cannot be distinguished confidently in the sheet. A subsequent render probe confirms her actor is drawn while in the `flee` state, using locomotion clips during the line. It is not a gesture pass; ordinary rescue play still needs review.
+[L5 Rosa HIGH](l5-rosa.jpg) injects the search phase and survivor discovery at the pharmacy. The subtitle appears, but infected crowd the rescue point and Rosa cannot be distinguished confidently in the sheet. A render probe confirms her actor is drawn while in the `flee` state, using locomotion clips during the line. An existing gesture is now layered on unarmed moving speakers; the crowded recapture is still not a gesture pass, and ordinary rescue play needs review.
 
 An earlier experimental walk from off-screen left the guard entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions without changing the simulation.
 

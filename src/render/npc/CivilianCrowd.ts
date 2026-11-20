@@ -235,7 +235,8 @@ class CivilianBatch extends Group {
       const model = crowdModelOf(e);
       if (model !== this.model) continue;
       const closingPose = l10ClosingPose(this.world, e);
-      const speaking = !!c && speakingNpc(this.world, e.id) && c.state === 'calm';
+      const lineSpeaker = !!c && speakingNpc(this.world, e.id);
+      const speaking = lineSpeaker && c?.state === 'calm';
       const gateGuard = !!c && c.state === 'calm' && zooGateGuard(this.world, e.id);
       const joining = !!c && c.state === 'calm' && (joiningHangarConversation(this.world, e.id) || gateGuard);
       let conversation = this.conversationPositions.get(e.id);
@@ -406,6 +407,27 @@ class CivilianBatch extends Group {
         pose.cadence = undefined;
         pose.holdDistanceM = undefined;
         frame = this.locomotion.present(e.id, this.poses, pose); }
+      if (lineSpeaker && speed > .06 && !down && !rising && !holding && c.state !== 'grabbed' && c.state !== 'bitten') {
+        // Retain the walking legs while applying an existing gesture relative to the current torso.
+        const gestureTime = renderTick / 60 + idleOffset(e.id), weight = Math.sin(Math.PI * (gestureTime % 3) / 3) ** 2;
+        const gestureDuration = authoredClips.get('npc-gesture')!.duration;
+        const gestureFrame = civilianClips.indexOf('npc-gesture') * framesPerClip + (gestureTime % gestureDuration) / gestureDuration * (framesPerClip - 1);
+        const torso = this.bakedClip.parts.indexOf('torso');
+        if (torso >= 0 && weight > .01) {
+          frame = this.poses.correct(e.id, frame, ...blend, pose => {
+            const currentTorso = new Matrix4().fromArray(pose, torso * 16);
+            const gestureTorso = this.poses.part(gestureFrame, gestureFrame, 1, torso, new Matrix4()).invert();
+            for (const name of ['armL', 'foreArmL', 'handL', 'armR', 'foreArmR', 'handR']) {
+              const part = this.bakedClip.parts.indexOf(name); if (part < 0) continue;
+              const current = new Matrix4().fromArray(pose, part * 16), target = this.poses.part(gestureFrame, gestureFrame, 1, part, new Matrix4()).premultiply(gestureTorso).premultiply(currentTorso);
+              const p = new Vector3(), q = new Quaternion(), s = new Vector3(), tp = new Vector3(), tq = new Quaternion(), ts = new Vector3();
+              current.decompose(p, q, s); target.decompose(tp, tq, ts);
+              current.compose(p.lerp(tp, weight), q.slerp(tq, weight), s.lerp(ts, weight)).toArray(pose, part * 16);
+            }
+          });
+          blend[0] = frame; blend[1] = 1;
+        }
+      }
       if (holding && !weaponProps.has(handProp!)) {
         // A drinker raises the mug to the mouth every ~8 s. An idle phone stays
         // at the natural wrist pose; a chest hold pulled the forearm/torso seam into a skin fan.

@@ -24,6 +24,7 @@ try {
   const frames: { frame: number; jpeg: Buffer }[] = [], actors: unknown[] = [];
   for (let i = 0; i < 4; i++) {
     await session.page.evaluate(() => window.__SS__!.step(60)); frames.push({ frame: i, jpeg: await session.snapshot() });
+    writeFileSync(`${out}/frame-${i}.jpg`, frames[i].jpeg);
     actors.push(await session.page.evaluate(id => {
       const game = (window.__SCENE__ as unknown as { game: Game }).game;
       const actor = game.world.entities.get(id), drawn = game.view.labProbes().npcs?.snapshot().civilians.figures.filter(figure => figure.id === id);
