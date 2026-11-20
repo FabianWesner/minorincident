@@ -329,6 +329,14 @@ export class LevelSevenEncounters {
     const finals = s.finalReady ? [] : s.arrivals.filter(a => a.group === l7Encounters.finalGroup);
     s.finalReady ||= finals.filter(a => !a.alpha).length >= (ai.director.tier === 'low' ? 60 : 120) && finals.filter(a => a.alpha).length >= 2;
     const p = w.entities.get(1)!.transform;
+    // Give the armed escort wider lanes while the civilian column turns
+    // toward the bus, reducing competition for the same narrow route.
+    if (w.missions?.state.steps.departure?.status === 'active') {
+      for (const e of w.entities.values()) {
+        const follow = e.civilian?.ally?.follow;
+        if (follow && follow.slot < 8) follow.slot += 12;
+      }
+    }
     // PO 2026-11-08: the corridor horde attacks in separated ranks over the
     // whole fight ("arrivals separated so one rocket cannot clear all
     // approaches"), not one pressed wave that leaves the rear ranks standing.

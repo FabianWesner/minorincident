@@ -51,3 +51,5 @@ The LOW director cap was inadvertently halved twice: assigning 100 as `levelCap`
 Guard catch-up speed 7.2 m/s cleared the LOW follower-pace flag but caused the retreat kiting sample to fall to zero landed hits. Expanding the opening advance party from 16 to 20 with that speed still had zero landed hits and introduced two follower-pace flags. Both trials were reverted; the retained version has one follower-pace flag and needs a formation fix that preserves threat pressure.
 
 A departure-only guard catch-up increase to 7.2 m/s was also tested. The full threat audit returned two follower pace flags (105 and 106), so the trial was reverted.
+
+Widening the armed escorts’ formation slots during departure clears the follower pace issue without changing opening pressure. The full `npm run qa:threat` audit then completed with **0 flags**, including all LOW follower seeds; typecheck and lint pass. The per-street proximity trace is not a visual capture or proof of attack windup directions, and those checks remain open.
