@@ -60,9 +60,11 @@ The six scenes are arranged around the existing corridor groups at 2940, 3060, 3
 
 - Added three convoy fuel hazards through the existing shared barrel blast and chain-reaction system, with their IDs retained in the encounter snapshot. Their sampled navigation cells are clear. LOW skilled seed 1 completed in 1,154.6 s with two deaths; all three spawned 150–181 m ahead of the courier and survived unexploded. Typecheck, lint and focused world-systems pass. The existing renderer depicts barrel hazards as propane tanks; this run does not demonstrate a player-triggered detonation, the requested popping ammo crates or a rocket/molotov reward. Current full threat and remote suite predate this gameplay change.
 
+- Added an intermittent, low-pass recorded siren one-shot on the L10 dispersal road, excluding the underpass. A headless LOW production-audio probe logged the cue in the corridor, no siren during 3,000 ticks at the underpass, and no audio registry errors. Typecheck and lint pass. This verifies scheduling, not an audible mix review; shuffling-only underpass ambience and the other requested atmosphere remain open.
+
 ## Open
 
-This is not a completion report. The brief still requires scene captures (HIGH zoom 1 for each beat and LOW gate), visual review, a successful required remote unit suite, and final cadence evidence showing nearby fights no more than 20 seconds apart at each beat. The authored static props also do not yet deliver the requested readable quarantine/billboard copy, swaying warning effigies, an in-view billboard collapse with crowd reveal, a synchronized hospital burst, or route-specific amber dust, embers and siren. No zombies were stat-tuned and no corpses are removed.
+This is not a completion report. The brief still requires scene captures (HIGH zoom 1 for each beat and LOW gate), visual review, a successful required remote unit suite, and final cadence evidence showing nearby fights no more than 20 seconds apart at each beat. The authored static props also do not yet deliver the requested readable quarantine/billboard copy, swaying warning effigies, an in-view billboard collapse with crowd reveal, a synchronized hospital burst, or route-specific amber dust and embers. No zombies were stat-tuned and no corpses are removed.
 
 ## Commit status
 
