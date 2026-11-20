@@ -39,7 +39,8 @@ export class AlphaSupportMoves {
     const a = e.infected!.specialAttack!;
     if (a.stage !== 'active') return;
     if (a.move === 'alpha.roar' || a.move === 'gorilla.roar') {
-      if (e.infected!.pursuit) this.ai.world.l10Encounters?.callWave();
+      // The encounter wave belongs to the existing rage phase, not every pursuit roar.
+      if (e.infected!.pursuit && e.infected!.megaPhase === 2) this.ai.world.l10Encounters?.callWave();
       const mega = !!e.infected!.pursuit, screamer = e.infected!.alphaType === 'screamer', radius = mega ? 30 : a.move === 'gorilla.roar' ? 20 : 18;
       if (screamer) {
         for (const human of this.ai.hearing.humans.within(a.area, 8)) {
