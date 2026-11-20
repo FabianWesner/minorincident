@@ -48,3 +48,8 @@
 
 - Ran the two QA smoke cases not reached before the single-worker aggregate timeout separately: WebGPU pedestrians and unflagged WebGPU menu-to-L1 both passed (2 tests, 33.7 seconds).
 - Built the public artifact and ran `@public-smoke` separately with one worker: passed (1 test, 15.7 seconds). All individual smoke cases have now passed across separate runs, but the required aggregate `npm run test:smoke` command has not passed its 240-second wall-time gate. The full remote unit command also exceeded 240 seconds; the prescribed local full-suite plus remote L4 fallback passed, as recorded above.
+
+## Time-box ending (20:50 CET)
+
+- A further single-worker aggregate `npm run test:smoke` attempt again passed the two GPU limit cases, gameplay/L10 rack case and WebGL pedestrian case before the 240-second reservation expired (exit 124; 245.7 seconds). The aggregate smoke gate remains open; the other cases and public smoke passed separately as recorded above.
+- The one-hour limit stated in the brief has elapsed. The requested changes and report are committed; the aggregate smoke time budget remains the outstanding gate. The remote full suite timed out without a test failure and its specified local-full-suite plus remote-L4 fallback passed.
