@@ -29,3 +29,5 @@ Full-size frames reveal a concrete transition defect: the falling body extends t
 The next iteration offsets the heap toward the centre of the fallen pose using its resting yaw. In the HIGH WebGL2 frame it overlaps the body rather than forming alongside it. The fragments still look broad and flat; visual acceptance remains open. Scene checks, typecheck, lint and seven focused combat tests pass. Other poses, tiers, backends and the remote suite need current-revision verification.
 
 A HIGH WebGL2 trial of taller, smaller, alternately shaded clumps passed scene checks but obscured the bones, including after raising them. The trial was discarded. A different geometry or shading approach is needed to make ash texture readable without losing the bones.
+
+An Alpha HIGH WebGL2 trial using the opposite offset implied by the prone layout did not align the visual pose: the body was left of the heap. The trial was discarded. The existing offset was reviewed only on the runner; verify or derive placement from the drawn Alpha pose before accepting it.
