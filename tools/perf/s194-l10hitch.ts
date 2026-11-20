@@ -48,7 +48,8 @@ try {
       const buildObjects: Record<string, string> = {};
       if (ids.size) g.view.scene.traverse(object => { if (ids.has(object.id)) {
         const path: string[] = []; for (let node: typeof object | null = object; node; node = node.parent) path.unshift(node.name || node.type);
-        buildObjects[object.id] = path.join('/');
+        const geometry = Reflect.get(object, 'geometry') as { type?: string } | undefined;
+        buildObjects[object.id] = `${path.join('/')} geometry=${geometry?.type ?? 'none'}`;
       } });
       previousMaterials = materials;
       trace.hitchTrace.frames.push({ at: now, dt: now - last, tick: g.world.tick, x: p.x, z: p.z, builds: g.view.renderer.nodeBuilds, builtMaterials, buildObjects, infected: infected.length,
