@@ -99,6 +99,9 @@ export class Blasts extends Group {
   /** Latest flamethrower discharge; a short hold bridges discrete sim attacks into one visible jet. */
   private flameJet: { x: number; y: number; z: number; dx: number; dz: number; range: number; until: number; seed: number } | null = null;
   private jetLight: { remove(): void } | null = null;
+  private nozzleLight: { remove(): void } | null = null;
+  private nozzleLightX = Infinity;
+  private nozzleLightZ = Infinity;
   private jetLightX = Infinity;
   private jetLightZ = Infinity;
   quality: 'high' | 'low' = 'high';
@@ -479,10 +482,15 @@ export class Blasts extends Group {
       this.jetLight = this.host.light?.(lx, lz, '#ffad42', this.flashReduction ? 1 : 3, 5, Infinity, true) ?? null;
       this.jetLightX = lx; this.jetLightZ = lz;
     }
+    if (!this.nozzleLight || Math.hypot(x - this.nozzleLightX, z - this.nozzleLightZ) > .25) {
+      this.nozzleLight?.remove();
+      this.nozzleLight = this.host.light?.(x, z, '#ffb44e', this.flashReduction ? .7 : 2, 2.8, Infinity, true) ?? null;
+      this.nozzleLightX = x; this.nozzleLightZ = z;
+    }
   }
   /** Let the last cards burn out after the source stops refreshing. */
   stopFlameJet(): void { if (this.flameJet) this.flameJet.until = this.time + .24; }
-  clearFlameJet(): void { this.flameJet = null; this.jetLight?.remove(); this.jetLight = null; }
+  clearFlameJet(): void { this.flameJet = null; this.jetLight?.remove(); this.jetLight = null; this.nozzleLight?.remove(); this.nozzleLight = null; }
   /** Rewrite the shared cards after the drawn nozzle has moved in the current render. */
   refreshFlameJet(): void { this.writeFlamesAndGlows(this.time); }
   private glow(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void {
