@@ -823,6 +823,7 @@ export class Blasts extends Group {
       const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .24);
       // Centre the 8 Hz oscillation at 90% of the clipped ray: ±11% around that
       // visible length without carrying flame through cover at the high point.
+      const reachScale = .9 + .1 * Math.sin(now * Math.PI * 16);
       for (let i = 0; i < count; i++) {
         // As the source dies, retain scattered individual tongues, not a whole
         // uniformly dimming cone. The hash is stable for each pooled card.
@@ -830,7 +831,7 @@ export class Blasts extends Group {
         if (order >= fade) continue;
         const t = (now - this.jetBirth[i]) / .128;
         if (t < 0 || t >= 1) continue;
-        const dx = this.jetDX[i], dz = this.jetDZ[i], reach = this.jetRange[i] * (.9 + .1 * Math.sin(this.jetBirth[i] * Math.PI * 16));
+        const dx = this.jetDX[i], dz = this.jetDZ[i], reach = this.jetRange[i] * reachScale;
         const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
         const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .3 * t) + wave;
         const x = this.jetX[i] + dx * reach * t - dz * spread;
