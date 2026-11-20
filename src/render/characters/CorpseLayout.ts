@@ -20,6 +20,12 @@ export function corpseLayout(world: SimWorld): CorpseLayout {
   if (!layout) { layout = new CorpseLayout(world); layouts.set(world, layout); }
   return layout;
 }
+/** Centre of the visible fallen figure while its fire-death heap forms. */
+export function ashPosition(world: SimWorld, e: EntitySnapshot, progress: number): { x: number; z: number } {
+  const resting = e.infected ? corpseLayout(world).place(e, e.infected.deadAt) : e.transform;
+  const reach = (e.archetype === 'infected.alpha' || e.archetype === 'infected.mega-alpha' ? .9 : .6) * Math.min(1, Math.max(0, progress * 2));
+  return { x: resting.x - Math.cos(resting.yaw) * reach, z: resting.z + Math.sin(resting.yaw) * reach };
+}
 const pointDistanceSquared = (x: number, z: number, ax: number, az: number, bx: number, bz: number) => {
   const dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz || 1)));
   return (x - ax - t * dx) ** 2 + (z - az - t * dz) ** 2;

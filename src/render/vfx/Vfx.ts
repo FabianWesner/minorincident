@@ -13,6 +13,7 @@ import { GibPool } from './GibPool';
 import type { VehicleFeedbackEvent } from './VehicleFeedback';
 import { HitStop } from './HitStop';
 import { Blasts } from './Blasts';
+import { ashPosition } from '../characters/CorpseLayout';
 /** Mounted guns (the L10 rotary minigun) draw the same tracer and muzzle as a carried gun. */
 const actions: Readonly<Record<string, ActionDef>> = { ...catalog, ...mountedActions };
 
@@ -94,6 +95,7 @@ export class Vfx extends Group {
   private readonly flameTraceDirection = { x: 0, y: 0, z: 0 };
   private readonly flameFallbackMuzzle = { x: 0, y: 0, z: 0 };
   private flameEmberAt = 0;
+  private readonly ashPuffAt = new Map<number, number>();
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
   private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number; color?: number }>();
@@ -836,6 +838,23 @@ export class Vfx extends Group {
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
     this.time += seconds;
+    if (this.enabled && Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4)) {
+      const liveAsh = new Set<number>();
+      for (const e of this.world.entities.iterate()) if (e.ashDeath) {
+        const age = this.world.tick - e.ashDeath.at;
+        if (age < 90) {
+          liveAsh.add(e.id);
+          if ((this.ashPuffAt.get(e.id) ?? e.ashDeath.at) <= this.world.tick) {
+            const { x, z } = ashPosition(this.world, e, age / 90);
+            const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+            this.burst(x, ground + .25, z, 0xaaa69a, 8, .3, .9, -.35, particleShape.smoke, .2, .35);
+            this.burst(x, ground + .35 + .45 * (1 - age / 90), z, 0xff7730, 6, .09, .5, .5, particleShape.spark, .35, .25);
+            this.ashPuffAt.set(e.id, this.world.tick + 15);
+          }
+        } else this.ashPuffAt.delete(e.id);
+      }
+      for (const id of this.ashPuffAt.keys()) if (!liveAsh.has(id) && !this.world.entities.get(id)?.ashDeath) this.ashPuffAt.delete(id);
+    }
     this.updateSpecialState();
     for (const landing of this.landings) if (landing.at <= this.time) {
       if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, landing.y + .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
