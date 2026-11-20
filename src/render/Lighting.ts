@@ -284,8 +284,8 @@ export class Lighting {
     this.intensity.value = night.intensity + (dust.intensity - night.intensity) * t * .35; this.sun.intensity = this.intensity.value;
     this.shadow.value.set(night.shadow).lerp(this.dawnColor.set(dust.shadow), t * .55);
     const shadow = this.shadow.value; this.shadowHue.value.copy(shadow).multiplyScalar(1 / Math.max(shadow.r, shadow.g, shadow.b, 1e-3));
-    this.look.nodes.skyAmbient.value.set(nightLook.skyAmbient!).lerp(this.dawnColor.set(warmLook.skyAmbient!), t);
-    this.look.nodes.groundAmbient.value.set(nightLook.groundAmbient!).lerp(this.dawnColor.set(warmLook.groundAmbient!), t);
+    this.skyAmbient.value.set(this.look.values.skyAmbient).lerp(this.dawnColor.set(warmLook.skyAmbient!), t);
+    this.groundAmbient.value.set(this.look.values.groundAmbient).lerp(this.dawnColor.set(warmLook.groundAmbient!), t);
     this.look.nodes.gradeShadow.value.set(nightLook.gradeShadow!).lerp(this.dawnColor.set(warmLook.gradeShadow!), t);
     this.look.nodes.gradeHighlight.value.set(nightLook.gradeHighlight!).lerp(this.dawnColor.set(warmLook.gradeHighlight!), t);
     this.look.nodes.gradeSaturation.value = nightLook.gradeSaturation! + (warmLook.gradeSaturation! - nightLook.gradeSaturation!) * t;
