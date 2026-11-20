@@ -17,8 +17,13 @@ const results = ['low', 'high'].map(tier => {
   assert(observed < floor, 'old post-observer-only count reproduces the false failure');
   assert.equal(residentIds.length + observed, floor, 'initial residents plus later births meet the unchanged floor');
   const find = (r: NativeReceipt) => evaluate(r, path).find(c => c.id === 'L7-04' && c.clause === 'actual resident and later regular admissions')!;
-  assert.equal(find(receipt).status, 'PASS');
-  const broken = structuredClone(receipt); broken.observation!.births['infected.runner']!--;
+  // The archived receipt predates the increased population; exercise the
+  // current boundary on a synthetic copy without rewriting historical data.
+  const current = structuredClone(receipt);
+  const currentFloor = tier === 'low' ? 280 : 560;
+  current.observation!.births['infected.runner'] = currentFloor - residentIds.length;
+  assert.equal(find(current).status, 'PASS');
+  const broken = structuredClone(current); broken.observation!.births['infected.runner']!--;
   assert.equal(find(broken).status, 'FAIL', 'one missing admission must remain red');
   const residentAlphas = initial.census.filter(e => e.infected && e.hp > 0 && e.archetype === 'infected.alpha').map(e => e.id);
   const laterAlphas = receipt.observation!.births['infected.alpha'];
@@ -29,7 +34,7 @@ const results = ['low', 'high'].map(tier => {
   assert.equal(alphaCheck(missingAlpha).status, 'FAIL', 'three Alphas must fail the unchanged four-to-six band');
   return { tier, path, receiptSha256: createHash('sha256').update(bytes).digest('hex'), sourceHash: receipt.sourceHash,
     completed: receipt.run!.completed, initialTick: initial.tick, residentIds, laterBirthTransactions: observed,
-    oldCount: observed, correctedCount: residentIds.length + observed, unchangedFloor: floor, missingOneDetected: true, residentAlphas, laterAlphas, unchangedAlphaBand: [4, 6], belowAlphaFloorDetected: true };
+    oldCount: observed, correctedCount: residentIds.length + observed, historicalFloor: floor, currentFloor, missingOneDetected: true, residentAlphas, laterAlphas, unchangedAlphaBand: [4, 6], belowAlphaFloorDetected: true };
 });
 atomicJson('docs/reports/fix51-r2b/l7-admissions-proof.json', { method: 'runLevel prepares L7 before beforeBegin; observer captures residents before first update and counts subsequent spawn calls', results });
 console.log('L7 resident census proof: both tiers pass; one missing admission fails.');
