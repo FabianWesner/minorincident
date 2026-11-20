@@ -136,6 +136,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - Brought the existing L3 haze toward the follow camera only within the corridor. The [native HIGH gate sample](native-high-haze.jpg), tick 40560, now reads warm dusty brown with visible motes instead of the earlier dark violet; the gantry remains cropped. This single view does not establish the mood throughout the corridor or on LOW. Typecheck, lint and focused world systems (5 tests) pass.
 
+- Native HIGH gate approach sampled every 30 ticks from x=2990 to x=3023. A trial widening the follow camera to 1.7 times its normal base showed both effigies, but the sign remained clipped or disappeared through the foreground cut while crossing, and the gate burst was not visible. The trial was reverted. The gate needs coordinated composition and emergence work; a wider lens alone does not pass it.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
