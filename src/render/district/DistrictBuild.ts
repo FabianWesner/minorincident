@@ -516,6 +516,15 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
       // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
       const faceX = cx + 16.205, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
       positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
+    } else if (b.id.startsWith('bld.supermarket:') || b.id.startsWith('bld.pharmacy:')) {
+      const p = placements.find(row => row.id === b.id)!;
+      const market = b.id.startsWith('bld.supermarket:');
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceZ = (market ? 4.563 : 3.22) * p.scale[2];
+      const vertex = (side: number, vertical: number) => {
+        const x = side * 1.1 * p.scale[0];
+        positions.push(p.position[0] + c * x + s * faceZ, p.position[1] + (3.1 + vertical * .2) * p.scale[1], p.position[2] - s * x + c * faceZ);
+      };
+      vertex(-1, -1); vertex(1, -1); vertex(1, 1); vertex(-1, 1);
     } else if (b.id.startsWith('bld.gym:')) {
       // The camera-facing entrance is on local +Z; a tree screens the +X side.
       const p = placements.find(row => row.id === b.id)!;
@@ -534,17 +543,17 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
         positions.push(p.position[0] + c * faceX + s * z, p.position[1] + (2.24 + vertical * .9) * p.scale[1], p.position[2] - s * faceX + c * z);
       };
       vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
-    } else if (/^bld\.(garage-detached|supermarket|pharmacy|hospital|mainstreet-brick|park-lodge|zoo-gate|police|police-station|fire-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
+    } else if (/^bld\.(garage-detached|hospital|mainstreet-brick|park-lodge|zoo-gate|police|police-station|fire-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
       // These entrance headers and fascia face local +X; rotate with the lot.
       // The hospital LOD2 board covers the unlettered top row of its entrance directory.
       const p = placements.find(row => row.id === b.id)!;
-      const garage = b.id.startsWith('bld.garage-detached:'), market = b.id.startsWith('bld.supermarket:'), lodge = b.id.startsWith('bld.park-lodge:'), zoo = b.id.startsWith('bld.zoo-gate:'), police = b.id.startsWith('bld.police-station:');
-      const fire = b.id.startsWith('bld.fire-station:'), legacyPolice = b.id.startsWith('bld.police:'), pharmacy = b.id.startsWith('bld.pharmacy:'), hospital = b.id.startsWith('bld.hospital:'), mall = b.id.startsWith('bld.mainstreet-brick:');
+      const garage = b.id.startsWith('bld.garage-detached:'), lodge = b.id.startsWith('bld.park-lodge:'), zoo = b.id.startsWith('bld.zoo-gate:'), police = b.id.startsWith('bld.police-station:');
+      const fire = b.id.startsWith('bld.fire-station:'), legacyPolice = b.id.startsWith('bld.police:'), hospital = b.id.startsWith('bld.hospital:'), mall = b.id.startsWith('bld.mainstreet-brick:');
       const security = b.id.startsWith('bld.cure-security-post:'), motor = b.id.startsWith('bld.cure-motor-shelter:'), warehouse = b.id.startsWith('bld.cure-warehouse:');
-      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : market ? 4.25 : pharmacy ? 3.17 : hospital ? 10.54 : mall ? 2.86 : lodge ? 3.955 : zoo ? 4.75 : police ? 4.19 : legacyPolice ? 4.19 * 10 / 12 : fire ? 1.88 : security ? 4.69 : motor ? 4.45 : warehouse ? 12.61 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : market ? 3 : pharmacy ? 2.9 : hospital ? 3.09 : mall ? 5.6 : lodge ? 2.64 : zoo ? 3.21 : police ? 2.96 : legacyPolice ? 2.96 * 5 / 6.85 : fire ? 4.76 : security ? 4.38 : motor ? 4.3 : warehouse ? 5.75 : 2.84) * p.scale[1];
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : hospital ? 10.54 : mall ? 2.86 : lodge ? 3.955 : zoo ? 4.75 : police ? 4.19 : legacyPolice ? 4.19 * 10 / 12 : fire ? 1.88 : security ? 4.69 : motor ? 4.45 : warehouse ? 12.61 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : hospital ? 3.09 : mall ? 5.6 : lodge ? 2.64 : zoo ? 3.21 : police ? 2.96 : legacyPolice ? 2.96 * 5 / 6.85 : fire ? 4.76 : security ? 4.38 : motor ? 4.3 : warehouse ? 5.75 : 2.84) * p.scale[1];
       const vertex = (side: number, vertical: number) => {
-        const localZ = (garage ? side * .7 : zoo ? side * .9 : police ? 3 + side * 1.2 : legacyPolice ? 1.5 + side * .6 : hospital ? -8 + side * 2.35 : mall ? -.025 + side * .525 : fire ? -.16 + side * 2.25 : security ? -.25 + side * 1.1 : market || pharmacy || lodge || motor || warehouse ? side * 1.1 : -.65 + side * .55) * p.scale[2];
-        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : lodge ? .075 : zoo || police ? .17 : legacyPolice ? .17 * 5 / 6.85 : hospital ? .35 : mall ? .25 : fire ? .5 : pharmacy ? .2 : market || motor ? .2 : warehouse ? .1 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
+        const localZ = (garage ? side * .7 : zoo ? side * .9 : police ? 3 + side * 1.2 : legacyPolice ? 1.5 + side * .6 : hospital ? -8 + side * 2.35 : mall ? -.025 + side * .525 : fire ? -.16 + side * 2.25 : security ? -.25 + side * 1.1 : lodge || motor || warehouse ? side * 1.1 : -.65 + side * .55) * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : lodge ? .075 : zoo || police ? .17 : legacyPolice ? .17 * 5 / 6.85 : hospital ? .35 : mall ? .25 : fire ? .5 : motor ? .2 : warehouse ? .1 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
       };
       vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
     } else if (b.id.startsWith('bld.reptile-house:')) {
