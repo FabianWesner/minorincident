@@ -14,9 +14,11 @@ The merged-source L10 skilled route now completes in an isolated native audit af
 - `npm test` remote attempt could not start (no healthy Hetzner runner); the prescribed local fallback passed (27 files, 106 passed, 1 skipped, 236.5 seconds). The additional remote `tests/engine/l4-contact.test.ts` attempt was likewise unavailable.
 - `npm run qa:threat:sharded` could not start either shard: no healthy Hetzner runner, and the Mac fallback only accepts plain Vitest/test commands. No full audit receipt was produced after the fix.
 - HIGH native L10 pacing, seed 1, complete profile: route completed in 1,149.07 simulated seconds. While the courier actually moved for 891.78 seconds, Mega-sourced hits dealt 98.28 damage over 4 hits, **0.1102 damage/second**. Combat events identify the source action as `infected.alpha`, so this aggregate cannot separate special-move hits from ordinary Mega contact attacks. Evidence: `test-results/s187b-moving-dps.json`.
-- Earlier sandbox restrictions prevented committing; the fix was subsequently committed as `04d63139`. The special-move-only share of moving DPS remains unmeasured.
+- Earlier sandbox restrictions prevented committing; the fix was subsequently committed as `04d63139`. The special-move-only measurement is recorded below.
 
-**Threat audit acceptance passes.** The service approach still needs visible-arrival review, and the measured Mega-sourced moving DPS includes ordinary contact as well as special moves.
+**Threat audit acceptance passes.** The service approach still needs visible-arrival review, and visual arrival review remains open.
+
+HIGH seed 1 complete-profile replay measured **0 special-move damage per second while moving**: 0 damage from named Mega special attack events during 891.78 seconds with more than 0.01 m displacement per tick. The route completed in 1,149.07 seconds. This is one deterministic route sample, not a worst-case ceiling; movement includes physical displacement and the result does not prove every move missed in other circumstances. The separate Mega-source aggregate was 0.1102 DPS, including ordinary attacks.
 
 ## Implementation
 
@@ -65,7 +67,7 @@ Committed in `b13a9f47`, `7c8f6676`, and `4c52b512`.
 ## Open acceptance items
 
 - Review ground rubble appearance and landing in browser QA.
-- Measure the requested ~25% moving DPS ceiling; the HIGH walking death comparison above did not complete the route.
+- The HIGH complete-profile moving special DPS sample is 0; the earlier HIGH walking comparison did not complete and the requested ceiling is not established across other routes.
 - Confirm scripted sidestep dodges, damage/knockdown outcomes, and all move telegraphs in browser QA.
 - Complete the L10 skilled route and clear all full threat audit flags; the passive hold uses a documented observation cap.
 - Verify service arrivals can be seen approaching, and repair the coarse pursuit stall without bypassing collision.
