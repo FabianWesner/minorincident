@@ -1,5 +1,6 @@
 import type { Level } from '../sim/progression/Campaign';
 import { levelStartWeapons } from './levelStartWeapons';
+import { l7DefaultArsenal, l7Rocket } from './l7';
 
 /** Fixed campaign weapon positions. Sets include the level's starts and authored weapon pickups. */
 export const weaponKeyOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
@@ -15,9 +16,10 @@ const l10 = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assau
 const union = (level: Level, pickups: readonly string[]): readonly string[] => [...new Set([...levelStartWeapons[level].LEFT, ...levelStartWeapons[level].RIGHT, ...pickups])]
   .sort((a, b) => (Object.entries(weaponForKey).find(([, ids]) => ids.includes(a))?.[0] ?? '99').localeCompare(Object.entries(weaponForKey).find(([, ids]) => ids.includes(b))?.[0] ?? '99', undefined, { numeric: true }));
 export const levelWeaponSets: Readonly<Record<Level, readonly string[]>> = {
-  1: union(1, ['weapon.fists']), 2: union(2, []), 3: union(3, ['weapon.handgun']),
-  4: union(4, ['weapon.army-mg']), 5: union(5, ['weapon.shotgun']), 6: union(6, []),
-  7: union(7, ['weapon.rocket-launcher']), 8: union(8, []), 9: union(9, []), 10: union(10, l10),
+  1: union(1, ['weapon.bat']), 2: union(2, ['weapon.fire-axe']), 3: union(3, ['weapon.handgun']),
+  4: union(4, ['weapon.army-mg']), 5: union(5, ['weapon.shotgun', 'weapon.assault-rifle']), 6: union(6, []),
+  7: union(7, [...l7DefaultArsenal.LEFT, ...l7DefaultArsenal.RIGHT, l7Rocket.action]),
+  8: union(8, []), 9: union(9, []), 10: union(10, l10),
 };
 
 export interface WeaponRackSlot { key: number; weapon: string; owned: boolean }
