@@ -1,3 +1,4 @@
+import { checkS202FieldFire } from '../helpers/s202-field-fire';
 // Combat core: one attack pipeline (loadout → runner → hit query → damage/status) serves every weapon in every level.
 import { afterEach, expect, onTestFinished, test } from 'vitest';
 import { ColliderDesc } from '@dimforge/rapier3d-compat';
@@ -88,7 +89,7 @@ async function checkMolotovCluster(): Promise<void> {
   expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
 }
 
-test('L10 flamethrower stream ignites an authored crop block', async () => {
+async function checkS202Combat0(): Promise<void> {
   const w = await loadLevel('L10', 1, 'low'); worlds.push(w);
   const cell = w.hazards!.fieldFire!.cells.find(c => c.x > 600 && c.x < 1100)!;
   expect(cell).toBeDefined();
@@ -97,9 +98,9 @@ test('L10 flamethrower stream ignites an authored crop block', async () => {
   equip(w, ['weapon.flamethrower']);
   fire(w); step(w, 30);
   expect(cell.state).toBe('burning');
-});
+}
 
-test('infected entering a landed molotov pool catches fire and takes burn damage', async () => {
+async function checkS202Combat1(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
   fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
   for (let i = 0; i < 60 && !w.combat!.effects.zones.some(z => z.kind === 'fire'); i++) step(w, 1);
@@ -112,7 +113,7 @@ test('infected entering a landed molotov pool catches fire and takes burn damage
   step(w, 60);
   step(w, 1); expect(target.combat!.statuses.find(s => s.kind === 'burning')?.def).toMatchObject({ dps: 35, duration: 4 });
   step(w, 61); expect(target.health.current).toBeLessThan(200);
-});
+}
 
 async function checkFlameCluster(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
@@ -238,21 +239,21 @@ async function checkDynamicCover(): Promise<void> {
   devices.rebuildBlockers(); compare();
 }
 
-test('courier entering a ground flame receives burning and damage on simple difficulty', async () => {
+async function checkS202Combat2(): Promise<void> {
   const w = await arena(), player = w.entities.get(1)!, hp = player.health.current;
   w.hazards!.spawn('fire', { x: player.transform.x, z: player.transform.z }, { radius: 1, duration: 3 });
   step(w, 1); expect(player.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
   step(w, 60); expect(player.health.current).toBeLessThan(hp);
-});
+}
 
-test('a brief crossing of a ground flame applies burning immediately', async () => {
+async function checkS202Combat3(): Promise<void> {
   const w = await arena(), id = dummy(w, 5, 0, 200), target = w.entities.get(id)!;
   w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3 });
   step(w, 1);
   expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
-});
+}
 
-test('lethal direct fire hazard damage marks an infected for ash', async () => {
+async function checkS202Combat4(): Promise<void> {
   const w = await loadLevel('L1', 1); worlds.push(w);
   const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
   target.health.current = 5;
@@ -260,9 +261,9 @@ test('lethal direct fire hazard damage marks an infected for ash', async () => {
   step(w, 60);
   expect(target.health.current).toBe(0);
   expect(target.ashDeath).toBeDefined();
-});
+}
 
-test('flamethrower pointer range limits damage and leaves ground patches', async () => {
+async function checkS202Combat5(): Promise<void> {
   const short = await arena(); equip(short, ['weapon.flamethrower']);
   const near = dummy(short, 1.5, 0, 200), far = dummy(short, 6, 0, 200);
   short.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: 3, z: 0 }, aimSource: 'pointer', left: { down: true, held: true, up: false } });
@@ -275,7 +276,7 @@ test('flamethrower pointer range limits damage and leaves ground patches', async
   const distant = dummy(long, 6, 0, 200);
   long.setInput({ aim: { x: 1, z: 0 }, aimSource: 'touch', left: { down: true, held: true, up: false } });
   step(long, 30); expect(health(long, distant)).toBeLessThan(200);
-});
+}
 
 /** Fuel is a real, cover-clipped hazard that persists after trigger release. */
 async function checkFlamethrowerFuel(): Promise<void> {
@@ -815,6 +816,14 @@ test('damage modifiers: shared riot shield ±35°, armor and multipliers, stun/s
 });
 
 test('every weapon category fires and hits; swept projectiles never tunnel; full cover stops melee, hitscan and projectiles', async () => {
+  checkS202FieldFire();
+  await checkS202Combat0();
+  await checkS202Combat1();
+  await checkS202Combat2();
+  await checkS202Combat3();
+  await checkS202Combat4();
+  await checkS202Combat5();
+
   await checkDynamicCover();
   await checkFlamethrowerFuel();
   await checkFuelPool();

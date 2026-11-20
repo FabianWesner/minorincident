@@ -32,5 +32,5 @@ Partial implementation; the requested feature is not complete. This report recor
 | `npx vitest run tests/engine/field-fire.test.ts` | Pass |
 | `npm run lint` | Pass |
 | `npm run typecheck` | Pass |
-| Remote `sh tools/remote/run.sh "$PWD" -- npm test` | FAIL before Vitest: test-budget reported 163/150 cases and 48/45 files. No tests were trimmed; suite results are unavailable. |
+| Remote `sh tools/remote/run.sh "$PWD" -- npm test` | FAIL before Vitest: test-budget reported 163/150 cases and 48/45 files. The lane added 13 cases and three files over the 150/45 baseline. Those checks have since been consolidated into an existing combat case without removing assertions; rerun pending. |
 | Commit | Explicit paths staged after filesystem access was restored. |
