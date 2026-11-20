@@ -90,6 +90,7 @@ export class Vfx extends Group {
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
   private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
+  private readonly flameTraceDirection = { x: 0, y: 0, z: 0 };
   private flameEmberAt = 0;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
@@ -803,8 +804,9 @@ export class Vfx extends Group {
   }
   private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
     const range = actions['weapon.flamethrower'].range;
+    this.flameTraceDirection.x = direction.x; this.flameTraceDirection.z = direction.z;
     return Math.min(this.world.combat?.query.clearDistance(origin, direction, range) ?? range,
-      this.world.destruction?.trace(origin, { ...direction, y: 0 }, range)?.distance ?? range);
+      this.world.destruction?.trace(origin, this.flameTraceDirection, range)?.distance ?? range);
   }
   /** Run after actor/action posing, so movement and turns cannot leave the stream one frame behind. */
   refreshFlameJet(): void {

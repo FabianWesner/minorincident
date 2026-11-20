@@ -21,7 +21,7 @@ type Blast = Extract<GameEvent, { type: 'explosion' }>;
 interface Column { visible?: boolean; /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
-export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
+export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void; move?(x: number, z: number): void } | null;
 export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight; field?: LightField; ambient?: Node<'float'>; sunDirection?(): { x: number; y: number; z: number } }
 
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
@@ -102,8 +102,8 @@ export class Blasts extends Group {
   private readonly jetX = new Float32Array(JET_FLAMES); private readonly jetY = new Float32Array(JET_FLAMES); private readonly jetZ = new Float32Array(JET_FLAMES);
   private readonly jetDX = new Float32Array(JET_FLAMES); private readonly jetDZ = new Float32Array(JET_FLAMES); private readonly jetRange = new Float32Array(JET_FLAMES);
   private jetCursor = 0; private jetNext = 0; private jetStopped = false;
-  private jetLight: { remove(): void } | null = null;
-  private nozzleLight: { remove(): void } | null = null;
+  private jetLight: { remove(): void; move?(x: number, z: number): void } | null = null;
+  private nozzleLight: { remove(): void; move?(x: number, z: number): void } | null = null;
   private nozzleLightX = Infinity;
   private nozzleLightZ = Infinity;
   private jetLightX = Infinity;
@@ -493,12 +493,14 @@ export class Blasts extends Group {
     }
     if (this.jetNext < this.time - .1) this.jetNext = this.time;
     const lx = x + dx * range * .4, lz = z + dz * range * .4;
-    if (!this.jetLight || Math.hypot(lx - this.jetLightX, lz - this.jetLightZ) > .25) {
+    if (this.jetLight?.move) this.jetLight.move(lx, lz);
+    else if (!this.jetLight || Math.hypot(lx - this.jetLightX, lz - this.jetLightZ) > .25) {
       this.jetLight?.remove();
       this.jetLight = this.host.light?.(lx, lz, '#ffad42', this.flashReduction ? 1 : 3, 5, Infinity, true) ?? null;
       this.jetLightX = lx; this.jetLightZ = lz;
     }
-    if (!this.nozzleLight || Math.hypot(x - this.nozzleLightX, z - this.nozzleLightZ) > .25) {
+    if (this.nozzleLight?.move) this.nozzleLight.move(x, z);
+    else if (!this.nozzleLight || Math.hypot(x - this.nozzleLightX, z - this.nozzleLightZ) > .25) {
       this.nozzleLight?.remove();
       this.nozzleLight = this.host.light?.(x, z, '#ffb44e', this.flashReduction ? .7 : 2, 2.8, Infinity, true) ?? null;
       this.nozzleLightX = x; this.nozzleLightZ = z;
