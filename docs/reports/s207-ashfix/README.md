@@ -19,3 +19,7 @@ The supplied before capture shows two bright white, broad heaps with large tan c
 ## Visual evidence
 
 Before: the supplied PO screenshot, described above. After: not captured or reviewed. No claim of visual acceptance is made.
+
+## Follow-up with restored browser access
+
+The seven selected corpse, under-fire and firefighter scene-gate rows passed 7/7 across their selected WebGL2/WebGPU and HIGH/LOW configurations. The `s199-ash-heap` HIGH WebGL2 daylight fixture at zoom 1.5 passed its console and clipping checks. I inspected its settled frame: it reads as a very dark, fragmented patch, with visible smoke; the ash texture and bone fragments are hard to distinguish at this scale. This single fixture does not establish the requested night, normal-corpse comparison or full tier/backend/zoom matrix. The earlier IPC failure above describes the first attempt; browser access subsequently worked.
