@@ -10,7 +10,16 @@
 E2E_UNITS=1 SCENE_PORT=5144 sh tools/perf/quiet-run.sh npx tsx tools/perf/s194-l10hitch.ts webgpu high before
 ```
 
-The requested high WebGPU reproduction has **not run**. The harness remains unvalidated in a browser so matching the reported location and first spawn must be confirmed before using its results. This host was above the quiet-run load threshold (load 3.36 at admission) and the quiet-run process scan failed with `spawn EPERM`; the browser pool also failed to bind `127.0.0.1:4329` with `listen EPERM`. A subsequent locked diagnostic attempt at load 5.32 stopped before browser launch because uncapped timing requires quiet-run. Therefore no worst-frame or p99 numbers, and no attribution to pipeline compilation, uploads, buffer growth, audio, navigation, or AI, are available. Record the actual baseline and candidate numbers here once a quiet run is available. Per the brief, do not treat a loaded-host result as passing evidence.
+A quiet headless run on 2026-11-20 produced these baseline numbers (1600×900, DPR 1, muted audio, seed 1):
+
+| Backend / tier | Frames | Worst | p99 | Frames over 100 ms |
+| --- | ---: | ---: | ---: | ---: |
+| WebGPU high | 1,658 | 54.7 ms | 26.8 ms | 0 |
+| WebGL2 high | 1,001 | 312.6 ms | 45.1 ms | 1 |
+
+Both runs had seven infected already alive at tick 10; the WebGPU replay was at x=581.19 at tick 489, rather than the PO's x=551.55. Thus this checkpoint trace does not establish that it reproduces the first visible spawn. The WebGL2 worst frame occurred at tick 28; its sampled categories do not account for the full interval, so its cause is unknown. The RAF sample and CPU profile are not sufficient to attribute GPU compilation or uploads. No fix or after measurement is claimed. WebGPU low admission was cancelled when load rose to 3.51 and another Vitest was running; **perf pending**. Audio was muted, so audio decode was not measured.
+
+Earlier attempts were blocked by sandbox `spawn EPERM` and browser-pool `listen EPERM`; those restrictions have since been lifted. Raw traces are in `test-results/s194-l10hitch/` locally.
 
 ## Code review findings
 
@@ -22,8 +31,8 @@ L10 already has a full warm-up behind the loading card. `CrowdView` registers th
 - `npm run lint`: passed.
 - Focused tests: not run; no cause-specific fix has been established.
 - Remote `sh tools/remote/run.sh "$PWD" -- npm test`: failed before execution (exit 69; no healthy Hetzner runner and this command was ineligible for the local fallback).
-- Before → after worst frame and p99: pending quiet-host measurement.
-- Backend/tier coverage: WebGPU high, WebGL2, and low remain unmeasured.
+- Before → after worst frame and p99: baseline above; after pending a diagnosed fix.
+- Backend/tier coverage: WebGPU high and WebGL2 high traced; low remains unmeasured.
 
 ## Remaining work
 
