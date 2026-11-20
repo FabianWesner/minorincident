@@ -47,3 +47,9 @@ The runner became available on November 20. Remote LOW and HIGH `qa:accept -- --
 Remote unchanged `sh tools/remote/run.sh "$PWD" -- npm test` subsequently passed on committed source `f8323463`: 27 files, 105 tests passed and one skipped, 228.8 s within the 240 s budget. This includes a passing `tests/engine/l4-contact.test.ts` on the remote runner. The earlier local L4 failure remains recorded above.
 
 Remote full `npm run qa:threat` on source `1f56082d` timed out at 600.8 s (exit 124 inside the budget wrapper; remote wrapper exit 1). Several stages remained queued, so no complete audit or flag count was produced. The full zero-flag gate remains open.
+
+## Fresh baseline comparison
+
+Remote split-tier `qa:accept --level L2 --tier low|high --skip-browser` was rerun against exact parent `cd8ddcd0` and candidate `01c5812d`, with reports pulled. Baseline LOW reported two failing rows and 14 incomplete; candidate LOW zero failing and 16 incomplete. Baseline HIGH reported two failing and 12 incomplete; candidate HIGH zero failing and 13 incomplete. All runs had 27 fixture clauses and four checkpoints without errors, identical control, and commitless-runner Git provenance errors. Comparing checks by tier, policy and clause yielded 63 matched LOW checks and 103 matched HIGH checks, with no missing baseline checks and no PASS → FAIL changes. Split-tier aggregate statuses do not qualify missing browser and other clauses.
+
+Current parent → candidate bounded reach: LOW complete 95.24 → 100%, stationary 88.89 → 95.83%; HIGH complete 100 → 95.65%, stationary 92.11 → 94.12%. In the combined HIGH report L2-07 is FAIL → PASS; L2-04 and L2-12 remain PASS; L2-14 is FAIL → NOT CHECKED; all remaining rows are NOT CHECKED → NOT CHECKED. L2-14's incomplete candidate status does not establish its full row passes. The zero-flag full threat gate remains open.
