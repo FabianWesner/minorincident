@@ -19,7 +19,7 @@ The cap increase was not enabled. On the final gameplay revision, a local native
 | HIGH / 240 trial | 240 | 4.59 ms | 13.06 ms | 16.93 ms | 6,146 |
 | LOW / 100 | 100 | 2.48 ms | 7.39 ms | 15.04 ms | 6,133 |
 
-Both HIGH measurements exceeded the 4 ms sim p95 target and LOW exceeded its 6 ms target on this loaded Mac. These are load-sensitive proxy measurements; **real-device peak-horde frame timing remains pending**. All three proxy routes completed with full authored admissions and 24/24 saved.
+A repeat under a lighter local load measured HIGH p95 5.69 ms at cap 200 and 5.20 ms at cap 240, and LOW p95 2.20 ms at cap 100. HIGH remains over its 4 ms target in both repeats; LOW varied from above to below its 6 ms target. These are load-sensitive proxy measurements; **real-device peak-horde frame timing remains pending**. A CPU profile of the ordinary HIGH route attributed the largest sampled costs to spatial queries, event dispatch, outbreak updates and navigation clearance; it did not isolate a safe L7-only optimization. All three proxy routes completed with full authored admissions and 24/24 saved.
 
 ## Acceptance and visual evidence
 
