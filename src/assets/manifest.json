@@ -9250,6 +9250,26 @@
     "sourceForward": "+X"
   },
   {
+    "id": "prop.l10-quarantine-gantry",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-quarantine-gantry.glb",
+    "dimensions": { "x": 0.75, "y": 7, "z": 12.75, "tolerance": 0.2 },
+    "forward": "+X",
+    "frontNodes": ["front"],
+    "requiredNodes": ["root"],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": { "triangles": 12000, "materials": 12, "fileKB": 1200, "drawCalls": 30 },
+    "decayVariants": [],
+    "lods": { "lod1": "public/assets/models/prop.l10-quarantine-gantry.lod1.glb", "lod2": "public/assets/models/prop.l10-quarantine-gantry.lod2.glb" },
+    "sourceGlb": "assets/prop.l10-quarantine-gantry/model.glb",
+    "script": "assets/prop.l10-quarantine-gantry/build.py",
+    "sourceForward": "+X",
+    "world": { "token": "olive", "solid": false }
+  },
+  {
     "id": "prop.sandbag-pallet",
     "category": "prop",
     "status": "integrated",
