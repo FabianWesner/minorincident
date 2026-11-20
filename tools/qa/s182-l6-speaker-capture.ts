@@ -20,9 +20,11 @@ try {
   const frames: { frame: number; jpeg: Buffer }[] = [], actors: unknown[] = [], bubbles: unknown[] = [];
   for (let i = 0; i < 4; i++) {
     await session.page.evaluate(() => window.__SS__!.step(60)); frames.push({ frame: i, jpeg: await session.snapshot() });
+    writeFileSync(`${out}/frame-${i}.jpg`, frames[i].jpeg);
     actors.push(await session.page.evaluate(id => {
       const game = (window.__SCENE__ as unknown as { game: Game }).game;
-      return game.view.labProbes().npcs?.snapshot().civilians.figures.filter(figure => figure.id === id);
+      const actor = game.world.entities.get(id)!;
+      return { projection: game.view.project(actor.transform.x, actor.transform.y + .5, actor.transform.z), figures: game.view.labProbes().npcs?.snapshot().civilians.figures.filter(figure => figure.id === id) };
     }, setup.id));
     bubbles.push(await session.page.evaluate(() => {
       const bubble = document.querySelector<HTMLElement>('.story-bubble');

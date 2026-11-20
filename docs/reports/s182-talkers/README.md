@@ -18,6 +18,8 @@ The full-resolution HIGH frame at six seconds, regenerated with `tools/qa/s182-t
 
 [L6 medic HIGH](l6-medic.jpg) invokes the authored treatment bubble in a controlled shelter fixture. The probe reports the medic drawn in `npc-cower`; the bubble is visible and existing upper-body gesture is layered. The small, crowded figures make the hand motion hard to judge, so this is a partial check rather than a visual pass.
 
+The full-resolution L6 frame and projected actor probe locate the medic bent over a cot. The hand area is dark and partly occluded, so clean arm motion and her gaze toward the courier remain unverified.
+
 An earlier experimental walk from off-screen left the guard entering at the edge after the subtitle; it was discarded. The gate capture fixture records presentation positions without changing the simulation.
 
 | Level | In-person speaker currently mapped | Position and clips |
