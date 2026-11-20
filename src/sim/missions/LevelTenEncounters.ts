@@ -292,12 +292,16 @@ export class LevelTenEncounters {
         const releaseRadius = group.setPiece === 'propaganda-billboard' ? 25 : 35;
         if (group.setPiece ? Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]) > releaseRadius : Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
-        if (group.setPiece === 'propaganda-billboard') this.state.billboardFallAt = w.tick;
         // A field crossing meets the same once-only hunting group on its own
         // lane. No group relocates after admission; a paced wave restages on
         // the courier's current lane at its own gate below.
         lanes[group.id] = this.lanePull(group, player, paced);
       }
+      // Let the cohort begin its safe offscreen approach first. The visible
+      // board falls only when the courier is near the actual sign, which sits
+      // offset from the encounter station.
+      if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
+          Math.hypot(player.transform.x - 3082, player.transform.z - 30) <= 10) this.state.billboardFallAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
       // charge clock starts, hand off to the next cohort only when that wave
       // is empty; once charging, timed windows continue independently of it.

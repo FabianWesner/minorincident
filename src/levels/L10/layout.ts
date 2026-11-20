@@ -97,7 +97,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     beat('gate-tower', 'kit.guard-tower', 2995, 107, [1.6, 2.5, 1.5]);
     beat('gate-bus', 'veh.evac-bus', 2950, 126, [5, 1.6, 1.5], Math.PI / 2);
     // An abandoned public information board beside the objective crossing.
-    beat('billboard-frame', 'prop.l10-cure-billboard', 3066, 87, [.4, 2.9, 3.8]);
+    beat('billboard-frame', 'prop.l10-cure-billboard', 3066, 92, [.4, 2.9, 3.8]);
     beat('billboard-wreck', 'prop.l10-abandoned-sedan-blue', 3072, 124, [2.5, .8, 1.1], Math.PI / 2);
     // A planted line of scarecrows masks the handful of live hazmat runners.
     for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.farm-scarecrow', 3170 + i * 7, 84 + (i % 2) * 2, [.5, 1.3, .5], i % 2 ? .16 : -.12);
