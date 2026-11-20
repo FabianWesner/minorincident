@@ -64,6 +64,8 @@ The six scenes are arranged around the existing corridor groups at 2940, 3060, 3
 
 - The corridor now blends the existing golden preset's fog colour and range into the L10 night preset, fading at both ends before the cure dawn. A LOW production-camera probe measured fog `#2b3c52` / near 205.7 m / far 1405.7 m before, `#c59b8d` / 55 m / 140 m in the corridor, and the night values again after. The opened corridor frame still reads mostly dark blue rather than dusty amber, so the desired mood is not visually accepted. Typecheck and lint pass; HIGH, embers and full visual review remain open.
 
+- Added warm work lamps at all three field tents using the existing night-accent/light-field pipeline. Opened HIGH and LOW frames show illuminated canvas and an approaching infected; the [HIGH diagnostic still](hospital-high-diagnostic.jpg) still crops the tent roof and is not a native opening frame. Both scene checks report the existing corn/scarecrow overlap. Typecheck, lint and focused world-systems pass; the moving silhouettes and synchronized burst remain open.
+
 ## Open
 
 This is not a completion report. The brief still requires scene captures (HIGH zoom 1 for each beat and LOW gate), visual review, a successful required remote unit suite, and final cadence evidence showing nearby fights no more than 20 seconds apart at each beat. The authored static props also do not yet deliver the requested readable quarantine/billboard copy, swaying warning effigies, an in-view billboard collapse with crowd reveal, a synchronized hospital burst, or route-specific amber dust and embers. No zombies were stat-tuned and no corpses are removed.
