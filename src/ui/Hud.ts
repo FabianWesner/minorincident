@@ -505,7 +505,13 @@ export class Hud {
         : null;
       const pickup = this.pickupRole && world.tick <= this.pickupRole.until ? this.pickupRole.id : null;
       const pickupKey = pickup ? weaponKey(pickup) : undefined;
-      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup] ?? 'Weapon'} · ${pickupKey === 10 ? '0' : pickupKey}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`); setHidden(this.weapon.hint, !pickup && !emptyCue && world.tick > this.weaponHintUntil);
+      text(this.weapon.hint, pickup ? `${label(pickup)} · ${weaponRoles[pickup] ?? 'Weapon'} · ${pickupKey === 10 ? '0' : pickupKey}` : emptyCue ?? `${shown.name} · ${weaponRoles[shown.id] ?? ''}`);
+      const hintVisible = pickup !== null || emptyCue !== null || world.tick <= this.weaponHintUntil;
+      setHidden(this.weapon.hint, !hintVisible);
+      if (hintVisible) {
+        const vitals = this.root.querySelector<HTMLElement>('.hud-vitals');
+        if (vitals) this.weapon.hint.style.top = `${Math.ceil(vitals.getBoundingClientRect().bottom + 6)}px`;
+      }
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot or Q / Shift+Q to cycle'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
       attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));
