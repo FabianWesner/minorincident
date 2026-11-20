@@ -27,7 +27,7 @@ export interface FieldLight {
   /** Window spill stays on the outward side of its source facade. */
   facadeX?: number; facadeZ?: number;
 }
-export interface TransientLight { remove(): void }
+export interface TransientLight { remove(): void; move(x: number, z: number): void }
 /** Light field strength per normalized §6 intensity unit (intensity 10 → 3 HDR at the pool centre). */
 export const fieldGain = .3;
 const tierSettings = { high: { resolution: 1024, size: 80, capacity: 512 }, low: { resolution: 512, size: 60, capacity: 256 } } as const;
@@ -188,7 +188,7 @@ export class LightField {
   addTransient(position: { x: number; z: number }, hex: string, intensity: number, radius: number, ttl: number, flicker = false): TransientLight {
     const c = linear(hex), entry = { light: { id: `transient-${this.transientId++}`, x: position.x, y: 1.2, z: position.z, r: c.r, g: c.g, b: c.b, radius, aimX: 0, aimZ: 0, stretch: 1, flicker: flicker ? 1 : 0, strobe: false, seed: this.transients.length * 7.13, on: true, hero: flicker && ttl >= .3, shadowGain: intensity * fieldGain } as FieldLight, born: this.time, ttl, intensity };
     this.transients.push(entry);
-    return { remove: () => { entry.light.on = false; const i = this.transients.indexOf(entry); if (i >= 0) this.transients.splice(i, 1); } };
+    return { move: (x, z) => { entry.light.x = x; entry.light.z = z; }, remove: () => { entry.light.on = false; const i = this.transients.indexOf(entry); if (i >= 0) this.transients.splice(i, 1); } };
   }
   get active(): boolean { return this.strength.value > 0 || this.transients.length > 0; }
   /** Mean pool radiance at the focus, matching the field's elliptical falloff and visibility rays.

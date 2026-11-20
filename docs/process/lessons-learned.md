@@ -400,3 +400,4 @@ A living record, updated after every lane or experiment. Short entries with evid
 - 2026-11-16 (batch 113 gate): `gate89.sh` printed "gate exit 0" although `scene rc=1` (native vehicle motion FAIL) and qa:threat reported 1 fail flag. The final exit line is not a verdict: read every `rc=` line and the threat flag count before deploying.
 
 - 2026-11-20 (batch 131 gate): smoke failed 3× with "Fixture browser timeout during setup" while the browser pool reported free capacity; the 10-day-old pool daemon listed a dead browser pid. Restarting the idle daemon (kill its pid; clients start a new one) fixed it at once. When smoke times out in browser setup and /status shows no waiters, check the listed browser pids and restart the pool while it has no leases.
+- 2026-11-20: tests/engine/l4-contact LOW perimeter clause fails on the Mac even at 23a6e9a5 but passes on the Hetzner runner — judge this test only from remote runs.

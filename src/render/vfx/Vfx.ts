@@ -90,6 +90,10 @@ export class Vfx extends Group {
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
   private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
+  private readonly flameSourceSlot = { id: 0, until: 0, direction: { x: 0, z: 0 } };
+  private readonly flameTraceDirection = { x: 0, y: 0, z: 0 };
+  private readonly flameFallbackMuzzle = { x: 0, y: 0, z: 0 };
+  private flameEmberAt = 0;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
   private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number; color?: number }>();
@@ -397,10 +401,22 @@ export class Vfx extends Group {
     if (def?.category === 'ranged') {
       if (event.actionId === 'weapon.flamethrower') {
         if (!this.enabled) return;
-        const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
+        const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? this.flameMuzzleFallback(event.position);
         const range = this.flameRange(muzzle, event.direction);
+        if (!this.flameSource || this.time >= this.flameSource.until) {
+          this.particles.spawn(this.time, .18, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .9, particleShape.flash, 0xffd16a);
+          for (let i = 0; i < (this.quality === 'high' ? 6 : 3); i++) {
+            const side = (this.rng.next() - .5) * 2, speed = 2 + this.rng.next() * 2;
+            this.particles.spawn(this.time, .18 + this.rng.next() * .12, muzzle.x, muzzle.y, muzzle.z,
+              event.direction.x * speed - event.direction.z * side, .5 + this.rng.next(), event.direction.z * speed + event.direction.x * side,
+              .08, particleShape.spark, i % 2 ? 0xff8a2c : 0xffe27a, 3, .3);
+          }
+        }
         // Keep the flame attached across discrete attack events; Blasts renders dense, pooled cards along this clipped ray.
-        this.flameSource = { id: event.sourceId, until: this.time + 1 / def.fireRate + .08, direction: { ...event.direction } };
+        const source = this.flameSourceSlot;
+        source.id = event.sourceId; source.until = this.time + 1 / def.fireRate + .08;
+        source.direction.x = event.direction.x; source.direction.z = event.direction.z;
+        this.flameSource = source;
         this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, event.direction.x, event.direction.z, range, this.flameSource.until, event.sourceId);
         // A few hot fragments and soot at the clipped tip add impact texture without making the jet look dotted.
         const tipX = muzzle.x + event.direction.x * range, tipZ = muzzle.z + event.direction.z * range;
@@ -777,18 +793,40 @@ export class Vfx extends Group {
     const jet = this.flameSource;
     if (!jet) return;
     const source = this.world.entities.get(jet.id), side = source?.weapons?.[source.weapons.selectedSide];
-    if (!this.enabled || this.time >= jet.until || !source || source.health.current <= 0 || side?.rack[side.index]?.id !== 'weapon.flamethrower') {
-      this.flameSource = null; this.blasts.clearFlameJet(); return;
+    const input = this.world.inputFrame;
+    const button = source?.weapons?.selectedSide === 'RIGHT' ? input.right : input.left;
+    const released = jet.id === 1 && !button.down && !button.held;
+    if (!this.enabled || released || this.time >= jet.until || !source || source.health.current <= 0 || side?.rack[side.index]?.id !== 'weapon.flamethrower') {
+      this.flameSource = null;
+      if (this.enabled) this.blasts.stopFlameJet(); else this.blasts.clearFlameJet();
+      return;
     }
     const direction = side.aim ?? jet.direction;
-    const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };
+    const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? this.flameMuzzleFallback(source.transform);
     const range = this.flameRange(muzzle, direction);
     this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, direction.x, direction.z, range, jet.until, jet.id);
+    if (this.time >= this.flameEmberAt) {
+      this.flameEmberAt = this.time + (this.quality === 'high' ? .045 : .09);
+      const distance = range * (.35 + this.rng.next() * .5);
+      const x = muzzle.x + direction.x * distance, z = muzzle.z + direction.z * distance;
+      const side = (this.rng.next() - .5) * 1.2;
+      this.particles.spawn(this.time, .35 + this.rng.next() * .2, x, muzzle.y + .2, z,
+        direction.x * 2 - direction.z * side, 1.2 + this.rng.next(), direction.z * 2 + direction.x * side,
+        .055, particleShape.spark, 0xffa438, 5, .24);
+      this.particles.spawn(this.time, .7, x, muzzle.y + .3, z, direction.x * .3, .7, direction.z * .3,
+        .3, particleShape.smoke, 0x4a3028, -.3);
+    }
+  }
+  private flameMuzzleFallback(position: { x: number; y: number; z: number }): { x: number; y: number; z: number } {
+    const muzzle = this.flameFallbackMuzzle;
+    muzzle.x = position.x; muzzle.y = position.y + .45; muzzle.z = position.z;
+    return muzzle;
   }
   private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
     const range = actions['weapon.flamethrower'].range;
+    this.flameTraceDirection.x = direction.x; this.flameTraceDirection.z = direction.z;
     return Math.min(this.world.combat?.query.clearDistance(origin, direction, range) ?? range,
-      this.world.destruction?.trace(origin, { ...direction, y: 0 }, range)?.distance ?? range);
+      this.world.destruction?.trace(origin, this.flameTraceDirection, range)?.distance ?? range);
   }
   /** Run after actor/action posing, so movement and turns cannot leave the stream one frame behind. */
   refreshFlameJet(): void {
