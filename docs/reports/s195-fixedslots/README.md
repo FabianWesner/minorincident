@@ -15,11 +15,11 @@
 - `npm run lint` — passed.
 - `npm test` — passed locally: 106 tests in 27 files; test-budget reported 150/150 planned cases and 117.0 s / 240 s.
 - `npm run qa:threat` — passed: 0 fail flags in 277.0 s. The bot weapon paths required no changes.
-- Remote `sh tools/remote/run.sh "$PWD" -- npm test` could not run: no healthy Hetzner runner is provisioned. The required remote green result remains open.
+- Remote `sh tools/remote/run.sh "$PWD" -- npm test` ran twice on the provisioned runner; both runs timed out at 241.1 s and 240.8 s under load. The required remote green result remains open.
 
 ## Visual captures
 
-The requested high-quality, zoom-1 L4/L8/L10 start and post-pickup captures are not available yet, so there are no images to describe. `tools/scenelab/s195-fixedslots.ts` contains the headless capture flow. The browser pool could not start in this environment (`listen EPERM` on its loopback service port), and `tools/e2e-lock.sh` exited before launching a browser. Retry through the browser pool, inspect the six images, then add a visual description here and one contact sheet.
+The requested high-quality, zoom-1 L4/L8/L10 start and post-pickup HUD captures remain open. A headless capture attempt reached each level, but inspection showed the rack was hidden during the opening scenes; those images do not establish the HUD appearance. Update `tools/scenelab/s195-fixedslots.ts` to expose the live HUD and verify pickup acquisition, then inspect the six images and add a contact sheet.
 
 ## Commits
 
