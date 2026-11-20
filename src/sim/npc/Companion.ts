@@ -5,6 +5,7 @@ import { combatHeightReachable } from '../combat/height';
 import { infectedDef } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { npcs } from '../../data/npcs';
+import { cureHangar, insideCureHangar } from '../../data/l10Story';
 import { angleDelta, motionLimits } from '../locomotion/MotionResponse';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -203,6 +204,11 @@ export class Companion {
         // Follow the survivor's position with a distance band. Never flip a
         // trailing offset to a world-axis offset when velocity falls to zero.
         const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
+        // The hangar doorway is only 2 m wide. The normal follow band can
+        // stop the full corgi just outside its threshold when the courier
+        // pauses immediately after crossing it. Keep walking until both are
+        // on the same side of the hangar boundary.
+        const enteringHangar = this.world.scenario === 'L10' && insideCureHangar(player.transform) && !insideCureHangar(e.transform);
         const velocity = player.survivor?.velocity, playerSpeed = Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0);
         // Park beside an L5 escort, including at stops. Following the courier's
         // centre leaves the dog in the survivors' lane at the next start.
@@ -212,8 +218,8 @@ export class Companion {
         const beside = escort ? [-1.6, 1.6].map(side => ({ x: player.transform.x - hz * side + (velocity?.x ?? 0) * .25, z: player.transform.z + hx * side + (velocity?.z ?? 0) * .25 }))
           .filter(at => ai.nav.clear(at.x, at.z, .35) && ai.nav.visible(player.transform, at, .35))
           .sort((a, b) => Math.hypot(a.x - e.transform.x, a.z - e.transform.z) - Math.hypot(b.x - e.transform.x, b.z - e.transform.z))[0] : undefined;
-        if (playerSpeed > .5 || distance > 3.2 || !ai.nav.visible(e.transform, player.transform, .35)) c.following = true;
-        if (playerSpeed <= .5 && distance < 2.05 && ai.nav.visible(e.transform, player.transform, .35)) c.following = false;
+        if (enteringHangar || playerSpeed > .5 || distance > 3.2 || !ai.nav.visible(e.transform, player.transform, .35)) c.following = true;
+        if (!enteringHangar && playerSpeed <= .5 && distance < 2.05 && ai.nav.visible(e.transform, player.transform, .35)) c.following = false;
         if (beside && Math.hypot(beside.x - e.transform.x, beside.z - e.transform.z) > .6) c.following = true;
         const riding = this.world.vehicles?.bicycle.riding === true, warning = this.safe && this.warn(e, c, player.transform);
         // A warning may hold a standing companion; a departing courier takes priority over the warning.
@@ -247,10 +253,13 @@ export class Companion {
           const lead = yielding ? (distance + 1.5) / playerSpeed : this.world.scenario === 'L3' && playerSpeed > 2 && ai.active.some(en => en.health.current > 0 && !en.hidden && Math.hypot(en.transform.x - e.transform.x, en.transform.z - e.transform.z) < 4) ? .6 : this.world.scenario === 'L6' && this.world.missions?.state.l6?.phase === 'exit' ? .65 : .25;
           if (beside) {
             this.target.x = beside.x; this.target.z = beside.z;
+          } else if (enteringHangar) {
+            this.target.x = cureHangar.entrance.x;
+            this.target.z = Math.max(player.transform.z, cureHangar.entrance.z + 6);
           } else {
             this.target.x = player.transform.x + (velocity?.x ?? 0) * lead; this.target.z = player.transform.z + (velocity?.z ?? 0) * lead;
           }
-          this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : this.target, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, Math.max(4.5, playerSpeed + Math.max(0, distance - 2) * 3)), c, riding ? 1.5 : beside || yielding ? .5 : 2);
+          this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : this.target, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, Math.max(4.5, playerSpeed + Math.max(0, distance - 2) * 3)), c, riding ? 1.5 : enteringHangar ? .1 : beside || yielding ? .5 : 2);
         }
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
       }
