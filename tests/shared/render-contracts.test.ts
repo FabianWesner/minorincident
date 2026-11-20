@@ -384,15 +384,27 @@ test('static placement batches reuse their graph and narrow barriers keep the fo
   expect(isUncutProp('prop.crowd-fence')).toBe(false);
   expect(isUncutProp('prop.privacy-fence', 1)).toBe(false);
   expect(isUncutProp('prop.bench')).toBe(true);
-  const fence = new Object3D(), distantFence = new Object3D(); fence.position.set(1, 0, 1); distantFence.position.set(30, 0, 30);
+  const fence = new Object3D(), distantFence = new Object3D(); fence.position.set(0, 0, 4); distantFence.position.set(30, 0, 30);
   const cut = { seeThrough: (enabled: boolean, ref: Object3D) => { ref.userData.occluder = enabled; } };
   const parts = { lodBatches: [{ id: 'prop.privacy-fence', refs: [fence, distantFence], origin: [0, 0], height: 1.8, foot: { cx: 0, cz: 0, hx: .135, hz: .52 }, hero: cut, near: cut, far: cut }], dressingEntries: [] };
-  const camera = new PerspectiveCamera(45, 16 / 9, .1, 100); camera.position.set(8, 8, 8); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+  const camera = new PerspectiveCamera(45, 16 / 9, .1, 100); camera.position.set(0, 2.5, 10); camera.lookAt(0, .9, 0); camera.updateMatrixWorld();
   type PolicyArgs = ConstructorParameters<typeof DistrictOcclusion>;
   const policy = new DistrictOcclusion(parts as unknown as PolicyArgs[0], {} as PolicyArgs[1], () => {}, () => {});
-  policy.update({ camera } as Parameters<DistrictOcclusion['update']>[0], true, { x: 0, y: .7, z: 0 }, new Box3(new Vector3(-2, 0, -.55), new Vector3(.55, 1.9, 2)));
+  policy.update({ camera } as Parameters<DistrictOcclusion['update']>[0], true, { x: 0, y: .7, z: 0 }, new Box3(new Vector3(-.55, 0, -.55), new Vector3(.55, 1.9, .55)));
   expect(fence.userData.occluder).toBe(true);
   expect(distantFence.userData.occluder).toBe(false);
+  // A nearby structural span behind the subject must not qualify by proximity.
+  const behind = new Object3D(); behind.position.set(0, 0, -4);
+  const behindBatch = { ...parts.lodBatches[0], refs: [behind] };
+  const behindPolicy = new DistrictOcclusion({ ...parts, lodBatches: [behindBatch] } as unknown as PolicyArgs[0], {} as PolicyArgs[1], () => {}, () => {});
+  behindPolicy.update({ camera } as Parameters<DistrictOcclusion['update']>[0], true, { x: 0, y: .7, z: 0 }, new Box3(new Vector3(-.55, 0, -.55), new Vector3(.55, 1.9, .55)));
+  expect(behind.userData.occluder).not.toBe(true);
+  // A long span passing beside and behind still does not cross any camera-to-subject ray.
+  behindBatch.foot = { cx: 0, cz: 0, hx: 20, hz: .52 };
+  behind.position.x = 0;
+  const longBehindPolicy = new DistrictOcclusion({ ...parts, lodBatches: [behindBatch] } as unknown as PolicyArgs[0], {} as PolicyArgs[1], () => {}, () => {});
+  longBehindPolicy.update({ camera } as Parameters<DistrictOcclusion['update']>[0], true, { x: 0, y: .7, z: 0 }, new Box3(new Vector3(-.55, 0, -.55), new Vector3(.55, 1.9, .55)));
+  expect(behind.userData.occluder).not.toBe(true);
   // District-batched vehicle hulls use the same on-foot veto as physical/scripted cars.
   const hull = { ...parts.lodBatches[0], id: 'veh.military-truck', refs: [fence], height: 3, half: 5, foot: { cx: 0, cz: 0, hx: 2, hz: 1 } };
   const vehiclePolicy = new DistrictOcclusion({ ...parts, lodBatches: [hull] } as unknown as PolicyArgs[0], {} as PolicyArgs[1], () => {}, () => {});
