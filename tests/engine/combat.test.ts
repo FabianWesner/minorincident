@@ -133,6 +133,23 @@ async function checkWeaponControlRoles(): Promise<void> {
   expect(w.entities.get(suppressed)?.combat?.statuses.find(status => status.kind === 'slowed')?.def.slow).toBe(.2);
 }
 
+test('a nail pin freezes a vault and resumes its remaining motion on release', async () => {
+  const w = await loadLevel('L1', 1, 'low'); worlds.push(w);
+  const climber = w.entities.get(w.infected!.spawn('infected.runner', { x: 2, z: 0 }))!;
+  climber.infected!.vault = { started: w.tick, from: { x: 2, z: 0 }, to: { x: 4, z: 0 }, height: 1 };
+  w.tick += 25; w.barricades!.vault(climber);
+  const before = { ...climber.transform }, started = climber.infected!.vault!.started;
+  w.combat!.status.apply(climber, { kind: 'pinned', duration: 2, maxStacks: 1, dps: 0, slow: 1 }, 1, 'weapon.nail-gun', 1);
+  w.barricades!.vault(climber); w.barricades!.vault(climber); // Multiple callers in one tick must not extend the pause.
+  w.tick += 120; w.barricades!.vault(climber);
+  expect(climber.infected!.vault!.started).toBe(started + 120);
+  expect(climber.transform.x).toBeCloseTo(before.x);
+  expect(climber.transform.y).toBeCloseTo(before.y);
+  w.tick += 35; w.barricades!.vault(climber);
+  expect(climber.infected!.vault).toBeUndefined();
+  expect(climber.transform.x).toBeCloseTo(4);
+});
+
 async function checkBlastClusters(): Promise<void> {
   // Compare the actual splash resolvers at equal distances inside the smaller blast.
   for (const distance of [0, 1, 3, 4.4, 4.6]) {
