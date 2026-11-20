@@ -23,7 +23,7 @@ const session = new SceneSession({ backend, tier, seed: 1, nativeFrameTiming: pr
 try {
   await session.open();
   await session.page.evaluate('globalThis.__name = fn => fn');
-  await session.page.evaluate(async frames => {
+  await session.page.evaluate(async ({ frames, diagnostic }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
     a.pause(); a.cheats.god(true); a.camera.follow(); a.debug.cpuProfile();
@@ -46,7 +46,7 @@ try {
       const builtMaterials = Object.fromEntries(Object.entries(materials).filter(([name, count]) => count > (previousMaterials[name] ?? 0)).map(([name, count]) => [name, count - (previousMaterials[name] ?? 0)]));
       const ids = new Set(Object.keys(builtMaterials).map(name => Number(/:o(\d+)$/.exec(name)?.[1])));
       const buildObjects: Record<string, string> = {};
-      if (ids.size) g.view.scene.traverse(object => { if (ids.has(object.id)) {
+      if (diagnostic && ids.size) g.view.scene.traverse(object => { if (ids.has(object.id)) {
         const path: string[] = []; for (let node: typeof object | null = object; node; node = node.parent) path.unshift(node.name || node.type);
         const geometry = Reflect.get(object, 'geometry') as { type?: string } | undefined;
         buildObjects[object.id] = `${path.join('/')} geometry=${geometry?.type ?? 'none'}`;
@@ -59,7 +59,7 @@ try {
       if (trace.hitchTrace.running) requestAnimationFrame(sample);
     };
     requestAnimationFrame(sample); a.resume();
-  }, frames);
+  }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1' });
   await session.page.waitForFunction(() => window.__SS__!.tick() >= 600, null, { timeout: 120_000, polling: 20 });
   const result = await session.page.evaluate(() => {
     const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
