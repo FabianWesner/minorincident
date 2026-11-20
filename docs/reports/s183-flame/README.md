@@ -18,3 +18,5 @@ Matched frame 52 WebGL2 comparison, same current scene and seed, with `Vfx.ts` a
 | LOW | 56 → 56 | 5 → 11 | 16 → 24 |
 
 Both runs report one attack at this frame and no captured console errors. Counts include other scene effects, and are a single paused frame rather than a peak or timing benchmark. Perf timing pending. Raw JSON is generated under `test-results/s183-flame-baseline/` and `test-results/s183-flame/`.
+
+Release probe: the fight script releases after its one-second attack. On the first run the jet vanished at frame 102 because blast expiry ran before the release handler. After extending the internal expiry to allow the handler to start its tail, the jet remains at frames 102–114 and is gone by frame 120, with no console errors. I inspected frame 108: the jet is still visibly connected to the nozzle and ground fires remain. This establishes that the tail survives and clears, but the delay from discrete attack events means the visual does not yet prove an immediate sputter on trigger release.

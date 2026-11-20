@@ -28,7 +28,7 @@ try {
     }
     await session.load(structuredClone(spec));
     let previous = 0;
-    for (const frame of tier === 'high' ? [40, 46, 52, 58, 64, 70] : [52]) {
+    for (const frame of tier === 'high' ? [40, 46, 52, 58, 64, 70, 90, 96, 102, 108, 114, 120, 126] : [52]) {
       await session.step(frame - previous); previous = frame;
       await session.screenshot(`${out}/${tier}-${frame}.png`);
       const evidence = await session.page.evaluate(() => ({ state: window.__SS__!.getState().render.vfx, perf: window.__SS__!.perf(), attacks: window.__SS__!.events(0).filter(e => e.type === 'combat.attack' && e.actionId === 'weapon.flamethrower').length }));

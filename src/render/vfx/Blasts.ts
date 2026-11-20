@@ -471,8 +471,8 @@ export class Blasts extends Group {
   flameJetAt(x: number, y: number, z: number, dx: number, dz: number, range: number, until: number, seed: number): void {
     if (this.flameJet) {
       const j = this.flameJet;
-      j.x = x; j.y = y; j.z = z; j.dx = dx; j.dz = dz; j.range = Math.max(0, range); j.until = until; j.seed = seed;
-    } else this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until, seed };
+      j.x = x; j.y = y; j.z = z; j.dx = dx; j.dz = dz; j.range = Math.max(0, range); j.until = until + .24; j.seed = seed;
+    } else this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until: until + .24, seed };
     const lx = x + dx * range * .4, lz = z + dz * range * .4;
     if (!this.jetLight || Math.hypot(lx - this.jetLightX, lz - this.jetLightZ) > .25) {
       this.jetLight?.remove();
