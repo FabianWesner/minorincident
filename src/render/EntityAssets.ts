@@ -6,6 +6,7 @@ import { Box3, Group, Mesh, Vector3, type Object3D, type BufferGeometry, type Ma
 import { AssetRegistry } from '../assets/registry';
 import { staticBatch } from '../assets/staticBatch';
 import { VehicleOccupant } from './characters/VehicleOccupant';
+import { speakingNpc } from './npc/talkingNpc';
 import manifest from '../assets/manifest.json' with { type: 'json' };
 import type { Materials } from './Materials';
 import type { View } from './View';
@@ -203,7 +204,8 @@ export class EntityAssets extends Group {
         seat.position.set(x, 1.64, z);
         if (seat.parent !== record.model) record.model.add(seat);
         if (copy.parent !== record.model) record.model.add(copy);
-        if (changed) copy.pose(seat, undefined, .85);
+        if (changed || this.world.scenario === 'L9') copy.pose(seat, undefined, .85);
+        if (this.world.scenario === 'L9') copy.speak(speakingNpc(this.world, actorId) ? this.world.tick / 60 : undefined);
         copy.visible = true;
       }
     }

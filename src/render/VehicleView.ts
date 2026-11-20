@@ -1,6 +1,7 @@
 import { ApcDamage } from './apcDamage';
 import { carDoorWeight, carTransitionTicks } from './characters/carTransition';
 import { VehicleOccupant } from './characters/VehicleOccupant';
+import { speakingNpc } from './npc/talkingNpc';
 import { tyreSurface, updateTyreMatrices } from './TyreContact';
 import { modelLod } from './lodPolicy';
 import { SubjectOcclusion } from './SubjectOcclusion';
@@ -410,6 +411,7 @@ export class VehicleView extends Group {
       // The female rig has shorter arms; lean into the pickup's high steering column.
       // The APC's authored seat already fits its narrow cab. The generic 20 cm car-seat slide put her shoes in the firewall.
       occupant.pose(seat, target, fit, car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? -.65 : -.5, car.physics.def.id === 'vehicle.military-apc' ? 0 : .2, entity.survivor?.gearTier ?? 0);
+      occupant.speak(!w.driver && speakingNpc(this.world, w.actorId) ? this.world.tick / 60 : undefined);
     }
   }
   /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors.

@@ -1,4 +1,4 @@
-import { BufferAttribute, Group, Matrix4, Mesh, MeshLambertNodeMaterial, Quaternion, Vector3, type Object3D } from 'three/webgpu';
+import { AnimationMixer, BufferAttribute, Group, Matrix4, Mesh, MeshLambertNodeMaterial, Quaternion, Vector3, type AnimationAction, type Object3D } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { batchRigidParts } from './batchRigidParts';
@@ -7,7 +7,7 @@ import { alignSkeleton } from './skin';
 import { disposeCharacter, loadTierGear, type CharacterRig } from './rig';
 import { characterNodes } from '../../data/survivor';
 import type { Materials } from '../Materials';
-import { sampleClip } from './clips';
+import { retargetClip, sampleClip } from './clips';
 import { LimbIK } from './LimbIK';
 import type { AssetRegistry } from '../../assets/registry';
 import { prepareCivilianRig } from '../npc/prepareCivilianGeometry';
@@ -33,6 +33,8 @@ export class VehicleOccupant extends Group {
   readonly handGapM = [0, 0];
   private readonly hand = new Vector3();
   private readonly hipOffset = new Vector3();
+  private speechMixer?: AnimationMixer;
+  private speechAction?: AnimationAction;
   private constructor(readonly actorId: number, readonly asset: string, readonly model: Object3D, private readonly ownsModel = false, private readonly tierGear?: Awaited<ReturnType<typeof loadTierGear>>) {
     super(); this.add(model);
     sampleClip(model, 'npc-sit', 0); this.bones = courierBones(model);
@@ -106,7 +108,18 @@ export class VehicleOccupant extends Group {
     return new VehicleOccupant(actorId, asset, model, true);
   }
   private releases: (() => void)[] = [];
-  dispose(): void { if (this.ownsModel) disposeCharacter(this.model as Group); for (const release of this.releases.splice(0)) release(); this.removeFromParent(); }
+  dispose(): void { this.speechMixer?.stopAllAction(); this.speechMixer?.uncacheRoot(this.model); if (this.ownsModel) disposeCharacter(this.model as Group); for (const release of this.releases.splice(0)) release(); this.removeFromParent(); }
+  /** Existing upper-body gesture on a seated passenger; legs stay in their seat pose. */
+  speak(seconds?: number): void {
+    if (seconds === undefined) { if (this.speechAction?.isRunning()) this.speechAction.stop(); return; }
+    if (!this.speechMixer) {
+      const clip = retargetClip(this.model, 'npc-gesture');
+      clip.tracks = clip.tracks.filter(track => /^(head|arm[LR]|foreArm[LR]|hand[LR])\./.test(track.name));
+      this.speechMixer = new AnimationMixer(this.model); this.speechAction = this.speechMixer.clipAction(clip); this.speechAction.play();
+    }
+    if (!this.speechAction!.isRunning()) this.speechAction!.reset().play();
+    this.speechMixer.setTime(seconds);
+  }
   /** Hip at the seat node, both shoes forward in the footwell; drivers grip the authored wheel. */
   pose(seat: Object3D, wheel?: Vector3, fit = 1, driverLean = -.5, driverSlide = .2, gearTier = 0): void {
     if (this.tierGear) {
