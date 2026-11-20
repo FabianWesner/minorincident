@@ -19,3 +19,10 @@ test('concurrent vegetation fires are capped', () => {
   fire.ignite({ x: 0, z: 0 }, 0, 100);
   expect(fire.objects.filter(o => o.state === 'burning')).toHaveLength(32);
 });
+
+
+test('vegetation ignition respects a road barrier', () => {
+  const fire = new VegetationFire([placement('near', 'prop.tree', 0), placement('across', 'prop.tree', 10)], (a, b) => a.x < 5 && b.x > 5);
+  fire.ignite({ x: 0, z: 0 }, 0, 20);
+  expect(fire.objects.map(o => o.state)).toEqual(['burning', 'intact']);
+});

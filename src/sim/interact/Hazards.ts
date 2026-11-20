@@ -67,7 +67,7 @@ export class Hazards {
       }));
     };
     const districts = this.world.districts;
-    this.vegetationFire = districts ? new VegetationFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] })))) : null;
+    this.vegetationFire = districts ? new VegetationFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), districts.composition.id === 'L10' ? blocked : undefined) : null;
     this.fieldFire = districts?.composition.id === 'L10' ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked) : null;
   }
   spawn(kind: HazardKind | DestructibleKind, pos: Vec2, opts: HazardOptions = {}): number {
