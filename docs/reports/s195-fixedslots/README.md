@@ -47,4 +47,4 @@ The harness enables the UI and asserts each spawned, retained pickup was collect
 - `ee511111` Update s195 verification report
 - `5574a8ee` Complete per-level weapon slot sets
 
-The remote test gate remains incomplete. The test-budget count was kept at 150 by folding the v1 save assertion into the existing save-decoding test.
+Time-box handoff: implementation, captures and local checks are committed. The remote test gate remains incomplete due to the reproducible pre-s195 L4 routing failure described above; the last remote full suite also predates the final replay-order adjustment. The test-budget count was kept at 150 by folding the v1 save assertion into the existing save-decoding test.
