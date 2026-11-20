@@ -11,6 +11,9 @@ const inPersonSpeaker: Record<string, 'voss' | 'ruiz' | 'sam'> = {
 export function speakingNpc(world: SimWorld, id: number): boolean {
   const mission = world.missions, subtitle = mission?.state.subtitle;
   if (!subtitle || subtitle.until <= world.tick || !mission) return false;
+  // The sergeant is the first squad officer, spawned at the armory briefing post.
+  if (world.scenario === 'L3' && (subtitle.id === 'L3.sergeant' || subtitle.id === 'L3.handgun')) return mission.state.l3?.squadIds[0] === id;
+  if (world.scenario === 'L4' && subtitle.id === 'L4.gun') return mission.state.l4?.qmId === id;
   if (world.scenario === 'L5' && subtitle.id.startsWith('L5.found.')) {
     const key = subtitle.id.slice('L5.found.'.length);
     return mission.state.l5?.survivors.some(row => row.key === key && row.id === id) ?? false;

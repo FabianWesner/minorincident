@@ -4,6 +4,8 @@ The controlled WebGL2 fixture uses HIGH and LOW, zoom 1.5, and steps the convers
 
 | Level | In-person speaker currently mapped | Position and clips |
 | --- | --- | --- |
+| L3 | Sergeant at the armory briefing and handgun pickup | First squad officer at the armory; shared relaxed walk, idle and gestures. Visual check pending. |
+| L4 | Quartermaster on gun handoff | Quartermaster post; shared relaxed walk, idle and gestures. Visual check pending. |
 | L5 | Dale, Rosa, Okafor, Mia, Sam on discovery | Their revealed survivor positions; shared relaxed walk, idle and gestures. Visual check pending. |
 | L8 | Nadia on tour and route lines; Hale on greeting and breach | Existing keeper and major actors; shared relaxed walk, idle and gestures. Visual check pending. |
 | L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
