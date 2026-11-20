@@ -47,7 +47,7 @@ export class PropThrows {
   nearestObject(source: EntitySnapshot, radius: number, lightOnly = false): { id: number; corpse: boolean; living: boolean } | undefined {
     if (source.infected?.arenaBoss) return this.nearestArenaObject(source, radius, lightOnly);
     this.object.id = 0; this.objectDistanceSquared = (radius + 1e-9) ** 2;
-    for (const e of this.world.entities.iterate()) if (e.corpse && e.health.current <= 0 && e.id !== source.id) this.considerObject(source, e.id, true, e.transform);
+    for (const e of this.world.entities.iterate()) if (!e.ashDeath && e.corpse && e.health.current <= 0 && e.id !== source.id) this.considerObject(source, e.id, true, e.transform);
     for (const p of this.world.props?.items ?? []) if (p.mass < 1500 && !p.fixed && !p.braced && p.body.isEnabled()) this.considerObject(source, p.entityId, false, p.body.translation(), p.radius);
     for (const p of this.props) if (p.mass < 1500 && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation(), p.radius);
     return this.object.id ? this.object : undefined;
@@ -55,7 +55,7 @@ export class PropThrows {
   private nearestArenaObject(source: EntitySnapshot, radius: number, lightOnly = false): { id: number; corpse: boolean; living: boolean } | undefined {
     const gorilla = source.infected?.arenaBoss?.arena === 'gorilla';
     this.object.id = 0; this.objectDistanceSquared = (radius + 1e-9) ** 2;
-    for (const e of this.world.entities.iterate()) if (!lightOnly && e.corpse && e.infected && e.health.current <= 0) this.considerObject(source, e.id, true, e.transform);
+    for (const e of this.world.entities.iterate()) if (!lightOnly && !e.ashDeath && e.corpse && e.infected && e.health.current <= 0) this.considerObject(source, e.id, true, e.transform);
     for (const p of this.world.props?.items ?? []) if ((lightOnly ? p.metadata.class === 'light' : gorilla ? p.metadata.mass <= 1500 : p.metadata.class === 'medium') && !p.fixed && !p.braced && p.body.isEnabled()) this.considerObject(source, p.entityId, false, p.body.translation());
     for (const p of this.props) if ((lightOnly ? p.class === 'light' : gorilla ? p.mass <= 1500 : p.class === 'medium') && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation());
     if (gorilla && !lightOnly) for (const e of this.world.infected!.active) if (e.id !== source.id && e.health.current > 0 && !e.infected!.arenaBoss && !e.infected!.pursuit && !e.infected!.thrownBy && !e.emerging && !e.hidden && !e.infected!.hidden && e.attachedTo === undefined && !e.infectionRise) this.considerObject(source, e.id, false, e.transform, 0, true);

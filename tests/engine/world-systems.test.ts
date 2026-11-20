@@ -62,7 +62,7 @@ test('doors: locked hint, key requirement, open/close updates navigation and col
   nav.unblock(101); expect(nav.hash).toBe(closedHash);
 });
 
-test('pickups: exact one-time effects with caps, rack join/replacement, dead players wait, inventory survives respawn', async () => {
+test('pickups: exact one-time effects with caps, rack join, dead players wait, inventory survives respawn', async () => {
   const w = await world(), p = w.entities.get(1)!, pickups = w.pickups!;
   w.player!.damage(80, w.tick);
   pickups.spawn('soda', { x: 0, z: 0 }); step(w, 1); expect(p.health.current).toBe(35);
@@ -103,8 +103,9 @@ test('pickups: exact one-time effects with caps, rack join/replacement, dead pla
   const r = await world(); r.combat!.setLoadout(['weapon.bat', 'weapon.knife', 'weapon.crowbar'], ['weapon.grenade']);
   const rack = r.combat!.runner.loadout; rack.state.LEFT.index = 1;
   r.pickups!.spawn('weapon', { x: 0, z: 0 }, 'weapon.katana'); step(r, 1);
-  expect(rack.current('LEFT').id).toBe('weapon.katana');
-  expect(r.query({ kind: 'pickup' })[0].pickup).toEqual({ actionId: 'weapon.knife', armed: false, dropped: true });
+  expect(rack.current('LEFT').id).toBe('weapon.knife');
+  expect(rack.state.LEFT.rack.map(slot => slot.id)).toContain('weapon.katana');
+  expect(r.query({ kind: 'pickup' })).toHaveLength(0);
 
   const fixed = await world(); fixed.combat!.setLoadout(['weapon.fire-axe'], ['weapon.handgun']);
   fixed.pickups!.spawn('weapon', { x: 0, z: 0 }, 'weapon.nail-gun'); step(fixed, 2);
@@ -387,7 +388,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   }
   for (const tier of ['high', 'low'] as const) {
     expect(farmGroups.reduce((sum, g) => sum + cureEncounterSlots(g, tier).filter(s => s.archetype !== 'infected.dog').length, 0))
-      .toBe(tier === 'high' ? 51 : 37);
+      .toBe(tier === 'high' ? 46 : 32);
   }
   const { placementColliders } = await import('../../src/levels/districts/staticCollision');
   type P = [number, number];

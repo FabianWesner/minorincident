@@ -83,7 +83,6 @@ The 95 pending entries after the 25 delivered registrations are classified below
 | `icon.pipe-bomb` | non-model UI | src/assets/icons/pipe-bomb.svg |
 | `icon.firecracker-lure` | non-model UI | src/assets/icons/firecracker-lure.svg |
 | `icon.smoke-grenade` | non-model UI | src/assets/icons/smoke-grenade.svg |
-| `icon.flashbang` | non-model UI | src/assets/icons/flashbang.svg |
 | `ability.corgi-lure` | non-model ability | simulation/UI/VFX or procedural fragments/decals; presentation completion is tracked separately |
 | `icon.corgi-lure` | non-model UI | src/assets/icons/corgi-lure.svg |
 | `icon.slam` | non-model UI | src/assets/icons/ground-slam.svg |

@@ -47,7 +47,7 @@ export const curePaceEncounters: readonly CureEncounter[] = [
   { id: 'setpiece-dark-underpass', type: 'field-horde', setPiece: 'dark-underpass', region: 'destroyed-corridor', at: [3390, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.crawler', 'infected.crawler', 'infected.crawler'] },
   { id: 'setpiece-field-hospital', type: 'field-horde', setPiece: 'field-hospital', region: 'destroyed-corridor', at: [3502, 37], regular: [9, 7], dogs: 1, alphas: 0, roles: ['infected.nurse', 'infected.nurse', 'infected.runner'] },
   { id: 'corn-field-horde', type: 'field-horde', region: 'residential-fringe', at: [830, 80], regular: [14, 7], dogs: 1, alphas: 0 },
-  { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [17, 12], dogs: 0, alphas: 0 },
+  { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [12, 7], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [7, 6], dogs: 0, alphas: 0 },
   // Keep the armored slot south of the warehouse footprint (ends at z=94).
   { id: 'farm-road-pair-4', region: 'industrial-area', at: [1400, 106], regular: [5, 4], dogs: 0, alphas: 0 },
@@ -88,7 +88,6 @@ export const cureWeaponPickups = [
   { id: 'shed-molotov', action: 'weapon.molotov', anchor: 'shed-molotov' },
   { id: 'workshop-nailgun', action: 'weapon.nail-gun', anchor: 'workshop-nailgun' },
   { id: 'guard-tower-rifle', action: 'weapon.assault-rifle', anchor: 'guard-tower-rifle' },
-  { id: 'checkpoint-flashbang', action: 'weapon.flashbang', anchor: 'checkpoint-flashbang' },
 ] as const;
 
 /** Stable slots allow a full cap/blocked cell to defer individual members without losing or duplicating a group. */

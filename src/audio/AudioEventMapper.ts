@@ -373,7 +373,6 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'combat.exploded') {
-            if (event.actionId === 'weapon.flashbang') this.host.play('weapon.impact.flashbang', { position }, source);
             this.host.haptic('explosion');
             if (this.host.settings.tinnitus && position && Math.hypot(position.x - this.host.graph.listener.x, position.z - this.host.graph.listener.z) < 4) {
                 this.host.play('tinnitus');

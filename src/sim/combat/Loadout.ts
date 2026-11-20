@@ -114,11 +114,21 @@ export class Loadout {
     this.state.selectedSide = best.side; this.state[best.side].index = best.index; this.state[best.side].swapUntil = tick + 15;
     delete this.state.previous;
   }
-  /** Adds to selected rack; retained campaign pickups expand it, other full racks replace the current slot. */
-  collect(side: Side, id: string, retain = false): string | null {
+  /** Adds an owned action to the rack; only throwable variants intentionally share key 0. */
+  collect(side: Side, id: string, _retain = false): string | null {
+    void _retain;
     const rack = this.state[side], next = slot(id,this.definition);
-    if (retain || rack.rack.length < this.capacity) { rack.rack.push(next); return null; }
-    const index = Math.max(0, rack.index), previous = rack.rack[index].id; rack.rack[index] = next; rack.index = index; return previous;
+    const existing = rack.rack.findIndex(entry => entry.id === id);
+    if (existing >= 0) {
+      const current = rack.rack[existing], def = this.definition(id);
+      current.charges = def.charges; current.magazine = def.magazine; current.nextCharge = 0; current.reloadUntil = 0;
+      return null;
+    }
+    if (this.definition(id).category === 'throwable' && ['weapon.molotov', 'weapon.pipe-bomb'].includes(id)) {
+      const throwable = rack.rack.findIndex(entry => this.definition(entry.id).category === 'throwable');
+      if (throwable >= 0 && ['weapon.molotov', 'weapon.pipe-bomb'].includes(rack.rack[throwable].id)) { const previous = rack.rack[throwable].id; rack.rack[throwable] = next; return previous; }
+    }
+    rack.rack.push(next); return null;
   }
   current(side: Side): ActionSlot { const state = this.state[side]; return state.index === -1 ? state.unarmed ??= slot('weapon.fists', this.definition) : state.rack[state.index]; }
   /** Zero capacity means bottomless campaign ammo, not an exhausted magazine. */

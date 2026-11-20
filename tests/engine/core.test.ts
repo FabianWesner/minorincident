@@ -15,8 +15,6 @@ function checkWeaponAudioEvents(): void {
     expect(play.mock.calls.some(([cue]) => cue === `weapon.impact.${weapon}`), weapon).toBe(true);
   }
   play.mockClear();
-  mapper.event({ type: 'combat.exploded', tick: 1, attackId: 2, sourceId: 1, actionId: 'weapon.flashbang', radius: 7, position: target.transform });
-  expect(play).toHaveBeenCalledWith('weapon.impact.flashbang', expect.anything(), 1);
   play.mockClear();
   mapper.event({ type: 'noise', tick: 1, sourceId: 1, actionId: 'weapon.flamethrower', kind: 'ranged', position: target.transform, radius: 1, loudness: 1 } as GameEvent);
   expect(play).toHaveBeenCalledWith('weapon.flame-ignite', expect.anything(), 1);

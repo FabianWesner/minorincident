@@ -287,7 +287,7 @@ export class InfectedSystem {
     entity.locomotion = motionResponse(); delete entity.motion;
     // A released tent resident no longer owns its old doorway. Pooled street
     // arrivals must receive normal movement and body separation again.
-    delete entity.emerging; delete entity.doorLane;
+    delete entity.ashDeath; delete entity.emerging; delete entity.doorLane;
     delete entity.infected!.scripted; delete entity.infected!.clearingStreet; delete entity.infected!.breachApproach; delete entity.infected!.l4FlankTarget;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.pipeBombReady; delete entity.infected!.staggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;

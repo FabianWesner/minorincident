@@ -15,7 +15,7 @@ export interface EntitySnapshot {
    * throws and cosmetic blast flights move its retained transform. */
   corpse?: boolean;
   /** Fire death animation start; the retained corpse settles into a permanent ash heap. */
-  ashDeath?: { at: number };
+  ashDeath?: { at: number; x?: number; y?: number; z?: number; yaw?: number };
   /** A retained death pose in flight; the crowd view follows its actual transform. */
   corpseThrown?: boolean;
   /** Cosmetic fixed-step blast flight; no collider, brain, or contact damage.
