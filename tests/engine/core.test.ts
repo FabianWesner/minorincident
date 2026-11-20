@@ -5,7 +5,7 @@ function checkWeaponAudioEvents(): void {
   const target = { id: 2, faction: 'infected', archetype: 'infected.runner', health: { current: 20 }, transform: { x: 1, y: 0, z: 0, yaw: 0 } };
   const context = { currentTime: 1 };
   const play = vi.fn(), loop = vi.fn(), stopLoop = vi.fn();
-  const host = { available: () => true, level: () => 'L1', ring: vi.fn(), context, play, loop, stopLoop,
+  const host = { available: () => true, level: () => 'L1', ring: vi.fn(), haptic: vi.fn(), settings: { tinnitus: false }, context, play, loop, stopLoop,
     alarm: { onEvent: () => false }, world: { entities: new Map([[2, target]]) },
     graph: { buses: { ambience: { gain: { setTargetAtTime: vi.fn() } } } } } as unknown as AudioEventHost;
   const mapper = new AudioEventMapper(host);
@@ -14,6 +14,9 @@ function checkWeaponAudioEvents(): void {
     mapper.event({ type: 'combat.hit', tick: 1, attackId: 1, sourceId: 1, targetId: 2, actionId: `weapon.${weapon}`, amount: 1, damageType: 'bullet', position: target.transform } as GameEvent);
     expect(play.mock.calls.some(([cue]) => cue === `weapon.impact.${weapon}`), weapon).toBe(true);
   }
+  play.mockClear();
+  mapper.event({ type: 'combat.exploded', tick: 1, attackId: 2, sourceId: 1, actionId: 'weapon.flashbang', radius: 7, position: target.transform });
+  expect(play).toHaveBeenCalledWith('weapon.impact.flashbang', expect.anything(), 1);
   play.mockClear();
   mapper.event({ type: 'noise', tick: 1, sourceId: 1, actionId: 'weapon.flamethrower', kind: 'ranged', position: target.transform, radius: 1, loudness: 1 } as GameEvent);
   expect(play).toHaveBeenCalledWith('weapon.flame-ignite', expect.anything(), 1);

@@ -32,6 +32,6 @@ Ordinary infected remain at 40 HP. These jobs are the selection hint; special da
 | Assault rifle | `action.weapon.assault-rifle` | `weapon.reload.assault-rifle` | `weapon.impact.assault-rifle` |
 | Flamethrower | `weapon.flame-ignite`, `weapon.flame-loop`, `weapon.flame-stop` | automatic | `weapon.impact.flamethrower` |
 | Rocket launcher | `action.weapon.rocket-launcher`, `weapon.rocket-whoosh` | unlimited | explosion beats |
-| Flashbang | `action.weapon.flashbang` | automatic recharge | explosion beats |
+| Flashbang | `action.weapon.flashbang` | automatic recharge | `weapon.impact.flashbang` |
 
-Recorded source and license details are in `assets/audio/imports.json`. Flame loop/stop need listening review for the requested roar and sputter; the remaining shared explosion and layered melee takes need an audible distinctness audit.
+Recorded source and license details are in `assets/audio/imports.json`. Flame loop/stop need listening review for the requested roar and sputter; the layered melee takes need an audible distinctness audit.

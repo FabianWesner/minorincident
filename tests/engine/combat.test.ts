@@ -100,6 +100,9 @@ async function checkFlameCluster(): Promise<void> {
 }
 
 async function checkFireAshPersistence(): Promise<void> {
+  const flash = await arena(); equip(flash, ['weapon.fire-axe'], ['weapon.flashbang']);
+  fire(flash, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 }); step(flash, 150);
+  expect(flash.events.events().some(event => event.type === 'combat.exploded' && event.actionId === 'weapon.flashbang')).toBe(true);
   const w = await loadLevel('L1', 1); worlds.push(w);
   const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
   w.combat!.damage.apply({ attackId: 1, actionId: 'weapon.flamethrower', sourceId: 1, targetId: id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: target.health.current, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
