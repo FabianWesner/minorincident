@@ -232,7 +232,7 @@ export class DistrictView extends Group {
     for (const entry of this.lodBatches) if (entry.id === 'prop.l10-cure-billboard') for (const ref of entry.refs) {
       if (ref.userData.placementId !== 'D-CURE/l10-setpiece-billboard-frame' || ref.userData.cureBillboardFall === fall) continue;
       ref.userData.cureBillboardFall = fall;
-      ref.rotation.z = -Math.PI / 2 * fall;
+      ref.rotation.z = Math.PI / 2 * fall;
       ref.updateMatrix();
       this.dirtyEntries.add(entry);
     }
