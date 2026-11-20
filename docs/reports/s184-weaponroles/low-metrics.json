@@ -1,15 +1,15 @@
 {
-  "spec": "/private/tmp/s184-ash.json",
+  "spec": "docs/reports/s184-weaponroles/scene.json",
   "backend": "webgl",
   "requestedBackend": "webgl2",
   "tier": "low",
   "actualTier": "low",
   "frames": 125,
   "timing": {
-    "openMs": 1591,
-    "loadMs": 4753,
-    "runMs": 3185,
-    "sceneMs": 7938
+    "openMs": 1874,
+    "loadMs": 5319,
+    "runMs": 3240,
+    "sceneMs": 8559
   },
   "checks": {
     "pass": true,
@@ -125,7 +125,7 @@
       {
         "name": "canvas.f96.varianceMin",
         "pass": true,
-        "value": 400.9918178011558,
+        "value": 400.52055027358256,
         "limit": 1
       },
       {
@@ -137,7 +137,7 @@
       {
         "name": "canvas.f101.varianceMin",
         "pass": true,
-        "value": 400.8959045433585,
+        "value": 400.4239256326364,
         "limit": 1
       },
       {
@@ -149,7 +149,7 @@
       {
         "name": "canvas.f120.varianceMin",
         "pass": true,
-        "value": 400.6842372534411,
+        "value": 400.2056386966178,
         "limit": 1
       },
       {
@@ -161,7 +161,7 @@
       {
         "name": "canvas.f125.varianceMin",
         "pass": true,
-        "value": 400.6691185926484,
+        "value": 400.19005520355495,
         "limit": 1
       },
       {
@@ -317,11 +317,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          103.22217230902778,
-          89.87161783854167,
-          102.79277452256945
+          103.22248046875,
+          89.87093315972223,
+          102.79612087673611
         ],
-        "variance": 400.9918178011558,
+        "variance": 400.52055027358256,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -332,11 +332,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          103.21942165798612,
-          89.86988606770834,
-          102.79259223090278
+          103.21974283854166,
+          89.86921440972222,
+          102.795947265625
         ],
-        "variance": 400.8959045433585,
+        "variance": 400.4239256326364,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -347,11 +347,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          103.21897786458334,
-          89.86986762152777,
-          102.79236328125
+          103.21932725694444,
+          89.86923394097222,
+          102.79578450520833
         ],
-        "variance": 400.6842372534411,
+        "variance": 400.2056386966178,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -362,11 +362,11 @@
         "width": 1280,
         "height": 720,
         "mean": [
-          103.21871419270833,
-          89.87001953125,
-          102.79312934027777
+          103.21907877604167,
+          89.86940321180556,
+          102.79655707465278
         ],
-        "variance": 400.6691185926484,
+        "variance": 400.19005520355495,
         "variedTiles": 64,
         "tiles": 64
       }
@@ -479,16 +479,16 @@
         "max": 6009
       },
       "stepMs": {
-        "p50": 2.3,
-        "p95": 2.8,
-        "max": 7.7
+        "p50": 2.2,
+        "p95": 3,
+        "max": 8.5
       },
       "lastFrame": {
         "drawCalls": 18,
-        "triangles": 13474,
+        "triangles": 13618,
         "shadowDrawCalls": 9,
         "shadowTriangles": 6009,
-        "stepMs": 2,
+        "stepMs": 1.7000000476837158,
         "categories": {
           "other": 16,
           "shadows": 9,

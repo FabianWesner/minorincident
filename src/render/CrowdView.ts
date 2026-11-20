@@ -29,7 +29,7 @@ import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, IcosahedronGeometry, CapsuleGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { varying, mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, uint, uniform, cameraViewMatrix, luminance, screenCoordinate, frontFacing, texture as sampleTexture, uv } from 'three/tsl';
 import { packCrowdParts, poseTexture } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -151,8 +151,8 @@ export class CrowdView extends Group {
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   /** A metal nail beside the planted foot for each currently pinned infected. */
   private readonly nails = new InstancedMesh(new BoxGeometry(.07, .38, .07), new MeshBasicNodeMaterial({ color: '#c4c8c5' }), 350);
-  private ashHeaps = new InstancedMesh(new BoxGeometry(.8, .12, .55), new MeshBasicNodeMaterial({ color: '#292824' }), 350);
-  private ashBones = new InstancedMesh(new BoxGeometry(.38, .035, .045), new MeshBasicNodeMaterial({ color: '#b6aa8e' }), 700);
+  private ashHeaps: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new IcosahedronGeometry(.5, 1).scale(1, .19, .65), new MeshBasicNodeMaterial({ color: '#292824' }), 350);
+  private ashBones: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> = new InstancedMesh(new CapsuleGeometry(.025, .28, 2, 5).rotateZ(Math.PI / 2), new MeshBasicNodeMaterial({ color: '#b6aa8e' }), 700);
   private goreEnabled = true;
   private texturedCaps = 0;
   private cullDistance = 60;
@@ -772,7 +772,7 @@ export class CrowdView extends Group {
       }
       if (e.ashDeath && this.world.tick - e.ashDeath.at >= 90) {
         if (this.ashHeaps.count >= this.ashHeaps.instanceMatrix.count) {
-          const grow = (old: InstancedMesh<BoxGeometry, MeshBasicNodeMaterial>): InstancedMesh<BoxGeometry, MeshBasicNodeMaterial> => {
+          const grow = (old: InstancedMesh<BufferGeometry, MeshBasicNodeMaterial>): InstancedMesh<BufferGeometry, MeshBasicNodeMaterial> => {
             const next = new InstancedMesh(old.geometry, old.material, old.instanceMatrix.count * 2);
             next.frustumCulled = false; next.count = old.count;
             for (let i = 0; i < old.count; i++) { old.getMatrixAt(i, this.transform); next.setMatrixAt(i, this.transform); }
