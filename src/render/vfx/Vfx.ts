@@ -778,7 +778,9 @@ export class Vfx extends Group {
     if (!jet) return;
     const source = this.world.entities.get(jet.id), side = source?.weapons?.[source.weapons.selectedSide];
     if (!this.enabled || this.time >= jet.until || !source || source.health.current <= 0 || side?.rack[side.index]?.id !== 'weapon.flamethrower') {
-      this.flameSource = null; this.blasts.clearFlameJet(); return;
+      this.flameSource = null;
+      if (this.enabled) this.blasts.stopFlameJet(); else this.blasts.clearFlameJet();
+      return;
     }
     const direction = side.aim ?? jet.direction;
     const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };

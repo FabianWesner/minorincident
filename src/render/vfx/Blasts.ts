@@ -469,7 +469,10 @@ export class Blasts extends Group {
   flashPool(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void { this.glow(x, z, radius, color, intensity, life, ground); }
   /** Refresh a cover-clipped, pooled flame jet from a rendered flamethrower discharge. */
   flameJetAt(x: number, y: number, z: number, dx: number, dz: number, range: number, until: number, seed: number): void {
-    this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until, seed };
+    if (this.flameJet) {
+      const j = this.flameJet;
+      j.x = x; j.y = y; j.z = z; j.dx = dx; j.dz = dz; j.range = Math.max(0, range); j.until = until; j.seed = seed;
+    } else this.flameJet = { x, y, z, dx, dz, range: Math.max(0, range), until, seed };
     const lx = x + dx * range * .4, lz = z + dz * range * .4;
     if (!this.jetLight || Math.hypot(lx - this.jetLightX, lz - this.jetLightZ) > .25) {
       this.jetLight?.remove();
@@ -477,6 +480,8 @@ export class Blasts extends Group {
       this.jetLightX = lx; this.jetLightZ = lz;
     }
   }
+  /** Let the last cards burn out after the source stops refreshing. */
+  stopFlameJet(): void { if (this.flameJet) this.flameJet.until = this.time + .24; }
   clearFlameJet(): void { this.flameJet = null; this.jetLight?.remove(); this.jetLight = null; }
   /** Rewrite the shared cards after the drawn nozzle has moved in the current render. */
   refreshFlameJet(): void { this.writeFlamesAndGlows(this.time); }
@@ -784,8 +789,8 @@ export class Blasts extends Group {
     if (this.flameJet && now >= this.flameJet.until) this.clearFlameJet();
     if (this.flameJet) {
       const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2;
-      const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .12);
-      const reach = j.range * (1 + .12 * Math.sin(now * Math.PI * 16));
+      const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .24);
+      const reach = j.range * (.94 + .06 * Math.sin(now * Math.PI * 16));
       for (let i = 0; i < count; i++) {
         const t = (now * (1.15 + (i % 5) * .035) + i / count) % 1;
         const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
