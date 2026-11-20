@@ -409,7 +409,10 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       }
       const grassLayout=d.id==='D-CURE'?{...d.layout,surfaces:[...d.layout.surfaces,...cureEvacuationLane(d.decay.placements)]}:d.layout;
       for (const grass of Grass.tiles(grassLayout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
-      buildFacadeSigns(parts, root, d.layout.buildings, deps.materials);
+      // A label may outlive its placement in later decay tiers. Only sign buildings
+      // that are actually present in this district load.
+      const present = new Set(d.decay.placements.map(p => p.id));
+      buildFacadeSigns(parts, root, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), deps.materials);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
