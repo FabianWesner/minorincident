@@ -492,7 +492,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
   const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
   // These assets already carry named physical signs in their authored LODs.
-  for (const building of buildings) if (!/^bld\.(gas-station|maple-hardware|school|substation):/.test(building.id) && (!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
+  for (const building of buildings) if (!/^bld\.(gas-station|joes-diner|maple-hardware|school|substation):/.test(building.id) && (!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
   const rows = [...chosen.values()]; if (!rows.length) return;
   const cellW = 512, cellH = 128, columns = 4, canvas = document.createElement('canvas');
   canvas.width = cellW * columns; canvas.height = cellH * Math.ceil(rows.length / columns);
@@ -525,7 +525,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
         positions.push(p.position[0] + c * x + s * faceZ, p.position[1] + (3.2 + vertical * .35) * p.scale[1], p.position[2] - s * x + c * faceZ);
       };
       vertex(-1, -1); vertex(1, -1); vertex(1, 1); vertex(-1, 1);
-    } else if (/^bld\.(joes-diner|garage-detached|supermarket|pharmacy|hospital|mainstreet-brick|park-lodge|zoo-gate|police|police-station|fire-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
+    } else if (/^bld\.(garage-detached|supermarket|pharmacy|hospital|mainstreet-brick|park-lodge|zoo-gate|police|police-station|fire-station|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
       // These entrance headers and fascia face local +X; rotate with the lot.
       // The hospital LOD2 board covers the unlettered top row of its entrance directory.
       const p = placements.find(row => row.id === b.id)!;

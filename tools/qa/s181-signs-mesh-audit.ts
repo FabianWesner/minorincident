@@ -29,16 +29,12 @@ try {
     }));
   }, level);
 } finally { await session.close(); stopServer(); }
-for (const row of rows) {
-  for (const neighbor of row.neighbors) {
-    const asset = manifest.find(a => a.id === neighbor.assetId);
-    if (!asset?.glb) { console.error(JSON.stringify({ district: row.district, id: row.id, neighbor: neighbor.id, error: 'missing GLB' })); continue; }
-    const model = (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(asset.glb)), '')).scene;
-    model.position.fromArray(neighbor.position); model.rotation.y = neighbor.yaw; model.scale.fromArray(neighbor.scale); model.updateMatrixWorld(true);
-    const [a,b,,d] = row.vertices.map(v => new Vector3().fromArray(v));
-    const u = b.clone().sub(a), v = d.clone().sub(a), normal = u.clone().cross(v).normalize();
-    const uv = (p: Vector3) => { const delta = p.clone().sub(a); return [delta.dot(u) / u.lengthSq(), delta.dot(v) / v.lengthSq()]; };
-    const crosses = (p: number[], q: number[]) => {
+
+function signIntersections(model: import('three').Object3D, verticesOfSign: number[][]): { intersections: number; points: number[][] } {
+  const [a,b,,d] = verticesOfSign.map(v => new Vector3().fromArray(v));
+  const u = b.clone().sub(a), v = d.clone().sub(a), normal = u.clone().cross(v).normalize();
+  const uv = (p: Vector3) => { const delta = p.clone().sub(a); return [delta.dot(u) / u.lengthSq(), delta.dot(v) / v.lengthSq()]; };
+  const crosses = (p: number[], q: number[]) => {
       let lo = 0, hi = 1;
       for (let axis = 0; axis < 2; axis++) {
         const step = q[axis] - p[axis];
@@ -48,8 +44,8 @@ for (const row of rows) {
       }
       return lo <= hi;
     };
-    let intersections = 0; const points: number[][] = [];
-    model.traverse(object => {
+  let intersections = 0; const points: number[][] = [];
+  model.traverse(object => {
       if (!(object instanceof Mesh)) return;
       const positions = object.geometry.getAttribute('position'), index = object.geometry.getIndex();
       const count = index?.count ?? positions.count;
@@ -65,6 +61,15 @@ for (const row of rows) {
         if (hits.length >= 2 && crosses(uv(hits[0]), uv(hits[1]))) { intersections++; points.push(uv(hits[0])); }
       }
     });
+  return { intersections, points };
+}
+for (const row of rows) {
+  for (const neighbor of row.neighbors) {
+    const asset = manifest.find(a => a.id === neighbor.assetId);
+    if (!asset?.glb) { console.error(JSON.stringify({ district: row.district, id: row.id, neighbor: neighbor.id, error: 'missing GLB' })); continue; }
+    const model = (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(readFileSync(asset.glb)), '')).scene;
+    model.position.fromArray(neighbor.position); model.rotation.y = neighbor.yaw; model.scale.fromArray(neighbor.scale); model.updateMatrixWorld(true);
+    const { intersections, points } = signIntersections(model, row.vertices);
     console.error(JSON.stringify({ district: row.district, id: row.id, neighbor: neighbor.id, asset: neighbor.assetId, lod: 'lod0', intersections, points }));
   }
   const def = manifest.find(asset => asset.id === row.asset)!;
@@ -86,6 +91,7 @@ for (const row of rows) {
       else if (offset >= -.08) supported++;
       else unsupported++;
     }
-    console.log(JSON.stringify({ district: row.district, id: row.id, asset: row.asset, lod, ahead, maxAhead: +maxAhead.toFixed(3), supported, unsupported, minOffset: offsets.length ? +Math.min(...offsets).toFixed(3) : null, maxOffset: offsets.length ? +Math.max(...offsets).toFixed(3) : null }));
+    const { intersections: crossing, points: crossingPoints } = signIntersections(model, row.vertices);
+    console.log(JSON.stringify({ district: row.district, id: row.id, asset: row.asset, lod, crossing, crossingPoints, ahead, maxAhead: +maxAhead.toFixed(3), supported, unsupported, minOffset: offsets.length ? +Math.min(...offsets).toFixed(3) : null, maxOffset: offsets.length ? +Math.max(...offsets).toFixed(3) : null }));
   }
 }
