@@ -19,16 +19,16 @@ These are staged HIGH zoom 1 Scene Lab views and the LOW gate view, not evidence
 
 ## Latest LOW fight-gap sample
 
-LOW skilled seed 1 completed in 1,154.6 s with two deaths. During each continuous visit within 35 m of a station, this measures the longest gap between courier/infected hits or hostile attack telegraphs targeting the courier, with the other participant within 30 m; visit boundaries count. Other cohorts can supply these events. This does not establish that each scene's own enemies engage, cover travel between visits, or establish HIGH behavior. [Receipt](low-final-visits.json).
+LOW skilled seed 1 completed in 1,116.0 s with two deaths after the convoy crates were added. During each continuous visit within 35 m of a station, this measures the longest gap between courier/infected hits or hostile attack telegraphs targeting the courier, with the other participant within 30 m; visit boundaries count. Other cohorts can supply these events. This does not establish that each scene's own enemies engage, cover travel between visits, or establish HIGH behavior. [Receipt](low-final-visits.json).
 
 | Set piece | Longest nearby fight gap |
 | --- | ---: |
 | Quarantine gate | 2.22 s |
 | Propaganda billboard | 2.53 s |
-| Scarecrow field | 3.78 s |
-| Burning convoy | 3.15 s |
+| Scarecrow field | 4.02 s |
+| Burning convoy | 2.83 s |
 | Dark underpass | 2.82 s |
-| Field hospital | 7.17 s |
+| Field hospital | 7.73 s |
 
 ## Verification
 
@@ -99,6 +99,8 @@ LOW skilled seed 1 completed in 1,154.6 s with two deaths. During each continuou
 - Added two breakable convoy supply crates. Each uses the shared destructible/debris system and drops one molotov-specific throwable refill when broken; its crate and drop IDs are checkpointed. The focused world-systems test confirms a real hit breaks the crate, repeated break events cannot duplicate the drop, and the refill does not replenish a grenade. The crate sites and barrel sites pass sampled navigation-cell checks. Typecheck and lint pass. LOW skilled seed 1 completed in 1,116.0 s with two deaths; both crates spawned 161–176 m ahead of the courier and remained unbroken in that run. A separate HIGH teleport inspection found both crate entities; the opened frame showed one dark crate near a fuel tank and crop geometry, without a fight or refill collection. Current full gates are in progress.
 
 - Tested five additional HIGH zoom 1 gate approach positions around the gantry. None framed the sign and both effigies together: the sign moved out of frame or figures were cropped. The gate presentation still needs design/camera work, rather than another selected diagnostic angle.
+
+- After the convoy crate change, the required remote full unit suite passed again: 27 files, 105 passed and one skipped, 187.4 s / 240 s. The final LOW visit-gap receipt above is also refreshed after the crate change. The unmodified local E32 check still reports the separate L4 routing failure recorded above.
 
 ## Open
 
