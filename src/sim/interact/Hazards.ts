@@ -85,7 +85,14 @@ export class Hazards {
       e.combat = { radius: Math.max(opts.halfX ?? .5, opts.halfZ ?? .15) + .1, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] };
       this.world.interactables!.block(e.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15, entityId: e.id });
     }
-    this.world.spatial.set(e.id, pos.x, pos.z); return e.id;
+    this.world.spatial.set(e.id, pos.x, pos.z);
+    if (kind === 'fire') this.igniteFlammables(pos, e.hazard!.radius);
+    return e.id;
+  }
+  /** Ignite nearby ground and vegetation where an existing fire touches them. */
+  igniteFlammables(position: Vec2, radius: number): void {
+    this.fieldFire?.ignite(position, this.world.tick, radius + 5);
+    this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
   }
   /** Deposit fuel at a clipped weapon impact, sharing the existing fire cap, damage and expiry path. */
   ignitePatch(position: Vec2, radius: number, duration: number): number | null {
@@ -181,7 +188,6 @@ export class Hazards {
   }
   /** Shared spread path for persistent weapon zones and aftermath fires. */
   spreadFire(position: Vec2, radius: number, duration: number, generations: number, sourceId: number, playerDamageSource = false): number | null {
-    this.fieldFire?.ignite(position, this.world.tick, Math.max(4, radius * 2));
     let count = 0;
     for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil) count++;
     if (count >= Explosions.maxFires) return null;

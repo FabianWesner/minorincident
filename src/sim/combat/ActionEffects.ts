@@ -27,7 +27,7 @@ export class ActionEffects {
     const effect = attack.def.effect; if (!effect) return;
     const zone: ActionZone = { ...effect, x: position.x, z: position.z, created: this.world.tick, expires: this.world.tick + ticks(effect.duration * (effect.kind === 'fire' ? this.world.weather?.modifiers.fireDuration ?? 1 : 1)), nextPulse: this.world.tick, attack };
     this.zones.push(zone);
-    if (effect.kind === 'fire') this.world.hazards?.fieldFire?.ignite(position, this.world.tick, effect.radius + 5);
+    if (effect.kind === 'fire') this.world.hazards?.igniteFlammables(position, effect.radius);
     this.world.events.emit({ type: 'combat.effect', tick: this.world.tick, sourceId: attack.sourceId, actionId: attack.def.id, kind: effect.kind, position: { x: zone.x, y: 0, z: zone.z }, radius: zone.radius, expires: zone.expires });
     if (effect.kind === 'lure') this.noise(position, effect.radius, attack.def.id);
   }

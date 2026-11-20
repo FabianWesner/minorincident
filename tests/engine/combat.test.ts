@@ -98,6 +98,12 @@ async function checkS202Combat0(): Promise<void> {
   equip(w, ['weapon.flamethrower']);
   fire(w); step(w, 30);
   expect(cell.state).toBe('burning');
+  const tree = w.hazards!.vegetationFire!.objects.find(o => o.state === 'intact')!;
+  w.hazards!.spawn('fire', tree, { radius: 1, duration: 3 });
+  expect(tree.state).toBe('burning');
+  const other = w.hazards!.fieldFire!.cells.find(c => c.state === 'intact')!;
+  w.hazards!.spawn('fire', other, { radius: 1, duration: 3 });
+  expect(other.state).toBe('burning');
 }
 
 async function checkS202Combat1(): Promise<void> {
