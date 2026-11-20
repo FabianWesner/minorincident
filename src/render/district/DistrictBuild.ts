@@ -412,7 +412,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
       // A label may outlive its placement in later decay tiers. Only sign buildings
       // that are actually present in this district load.
       const present = new Set(d.decay.placements.map(p => p.id));
-      buildFacadeSigns(parts, root, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), deps.materials);
+      buildFacadeSigns(parts, root, d.layout.buildings.filter(b => present.has(b.id) && !d.decay.removed.includes(b.id)), d.decay.placements, deps.materials);
       for (const spot of d.gameplay.photoSpots) {
         const p = resolvePosition(spot.target, d.layout),
           target: [number, number, number] = [
@@ -481,7 +481,7 @@ function box(parts: DistrictParts, materials: Materials, root: Group, token: Pal
   root.add(mesh);
 }
 /** One static facade sign per distinct authored facility name, packed into one atlas and one mesh. */
-function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], materials: Materials): void {
+function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: string; label: string; aabb: { min: number[]; max: number[] } }[], placements: { id: string; position: [number, number, number]; yaw: number; scale: [number, number, number] }[], materials: Materials): void {
   const generic = /^(?:.*\bhouse|residential fringe|countryside|city edge|next city|farm outbuilding|outbuilding|building|kessler's cellar)$/i;
   const chosen = new Map<string, typeof buildings[number]>();
   for (const building of buildings) if ((!generic.test(building.label.trim()) || building.label.trim().toLowerCase() === 'primate house' || building.label.trim().toLowerCase() === 'reptile house') && !chosen.has(building.label.trim().toLowerCase())) chosen.set(building.label.trim().toLowerCase(), building);
@@ -494,7 +494,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
     const x = i % columns, y = Math.floor(i / columns), px = x * cellW, py = y * cellH;
     ctx.fillStyle = '#17242b'; ctx.fillRect(px + 2, py + 2, cellW - 4, cellH - 4);
     ctx.strokeStyle = '#c4d2d2'; ctx.lineWidth = 6; ctx.strokeRect(px + 8, py + 8, cellW - 16, cellH - 16);
-    const title = b.label.trim().replace(/\b\w/g, c => c.toUpperCase());
+    const title = b.label.trim().replace(/(^|\s)\S/g, c => c.toUpperCase());
     ctx.fillStyle = '#f5f3e9'; ctx.font = '600 60px Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(title, px + cellW / 2, py + cellH / 2, cellW - 50);
     parts.signs.push(title);
@@ -508,6 +508,15 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
       // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
       const faceX = cx + 16.23, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
       positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
+    } else if (b.id.startsWith('bld.joes-diner:')) {
+      // The facade header is local +X, above the front glazing; rotate with the lot.
+      const p = placements.find(row => row.id === b.id)!;
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = 2.735 * p.scale[0], y = p.position[1] + 2.9 * p.scale[1];
+      const vertex = (side: number, vertical: number) => {
+        const localZ = side * 1.1 * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * .19 * p.scale[1], p.position[2] - s * faceX + c * localZ);
+      };
+      vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
     } else if (b.id.startsWith('bld.reptile-house:')) {
       // Replace the lettering on the authored entrance board, on the +X face.
       const faceX = cx + 5.08, cz = (min[2] + max[2]) / 2, y = min[1] + 3;
