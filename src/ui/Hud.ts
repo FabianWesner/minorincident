@@ -483,6 +483,9 @@ export class Hud {
       if (id.startsWith('slot-hole-')) { attribute(item, 'data-selected', 'false'); continue; }
       attribute(item, 'data-selected', String(selectedId !== undefined && weaponKey(id) === weaponKey(selectedId) && !gun?.mounted));
       const entry = entries.find(entry => entry.id === id)!;
+      const motorbike = !!player.riding && world.entities.get(player.riding)?.bicycle?.motorbike;
+      const dimmed = !!motorbike && id !== 'weapon.handgun';
+      attribute(item, 'data-dimmed', String(dimmed)); item.toggleAttribute('disabled', dimmed);
       const empty = entry.index >= 0 && !world.combat!.runner.loadout.hasAmmo(world.combat!.runner.loadout.state[entry.side].rack[entry.index]);
       attribute(item, 'data-empty', String(empty));
       const key = weaponKey(id), shortcut = key !== undefined && key <= 9 ? String(key) : key === 10 ? '0' : '';

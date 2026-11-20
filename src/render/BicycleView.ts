@@ -1,5 +1,5 @@
 import { devicePrompt } from '../ui/devicePrompt';
-import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Camera, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -39,6 +39,25 @@ function bicyclePlaceholder(): Group {
   part(crank, 'pedalL', new BoxGeometry(.14, .03, .08), dark, 0, .17, .12); part(crank, 'pedalR', new BoxGeometry(.14, .03, .08), dark, 0, -.17, -.12);
   return root;
 }
+/** Code-built motorbike + sidecar visual until the authored LOD asset is integrated. */
+function motorbikePlaceholder(): Group {
+  const root = new Group(); root.name = 'root'; root.userData.placeholder = true;
+  const mat = (color: string) => new MeshBasicNodeMaterial({ color });
+  const dark = mat('#252735'), red = mat('#bb4437'), metal = mat('#aab1bb'), seat = mat('#392c2b');
+  const part = (parent: Object3D, name: string, geometry: import('three').BufferGeometry, material: MeshBasicNodeMaterial, x: number, y: number, z: number) => { const m = new Mesh(geometry, material); m.name = name; m.position.set(x, y, z); parent.add(m); return m; };
+  const wheel = (name: string, x: number, z: number) => { const g = new Group(); g.name = name; g.position.set(x, .36, z); root.add(g); part(g, 'tire', new TorusGeometry(.32, .065, 8, 24), dark, 0, 0, 0); return g; };
+  wheel('wheelF', .92, 0); wheel('wheelR', -.72, 0); wheel('sidecarWheel', -.35, .82);
+  part(root, 'frame', new BoxGeometry(1.35, .12, .12), red, .02, .62, 0);
+  part(root, 'engine', new BoxGeometry(.46, .42, .38), metal, -.12, .42, 0);
+  part(root, 'tank', new CylinderGeometry(.24, .31, .42, 12), red, .32, .81, 0).rotation.z = Math.PI / 2;
+  part(root, 'seat', new BoxGeometry(.52, .1, .3), seat, -.43, 1.02, 0);
+  const handle = new Group(); handle.name = 'handlebar'; handle.position.set(.72, 1.05, 0); root.add(handle); part(handle, 'bar', new BoxGeometry(.08, .06, .55), dark, 0, 0, 0);
+  part(root, 'sidecarFrame', new BoxGeometry(.7, .12, .1), metal, -.32, .35, .65);
+  part(root, 'sidecarTub', new BoxGeometry(.98, .42, .72), red, -.3, .58, .78);
+  part(root, 'sidecarSeat', new BoxGeometry(.48, .08, .46), seat, -.28, .82, .78);
+  part(root, 'exhaust', new CylinderGeometry(.055, .055, .7, 8), metal, -.55, .4, -.26).rotation.z = Math.PI / 2;
+  return root;
+}
 /** Hub height above the lowest tyre point when the wheel plane is rolled by `lean`: the outer shoulder of a wide tyre dips below the tread. */
 const hubAbove = (profile: Profile, fallback: number, lean: number) => {
   const c = Math.cos(lean), s = Math.abs(Math.sin(lean)); let best = fallback * c;
@@ -70,7 +89,8 @@ export class BicycleView extends Group {
   async load(): Promise<void> { await this.build(); this.update(); }
   private async build(): Promise<void> {
     if (this.rig || this.loading) return; this.loading = true;
-    let model = await this.registry.loadAsset(ASSET, 'lod0');
+    const bike = this.world.vehicles?.bicycle.entity;
+    let model = bike?.bicycle?.motorbike ? motorbikePlaceholder() : await this.registry.loadAsset(ASSET, 'lod0');
     // A missing or invalid GLB falls back to the registry's generic box: use the animated code placeholder instead.
     if (model.userData.placeholder || !(model.getObjectByName('wheel_front') ?? model.getObjectByName('wheelF'))) model = bicyclePlaceholder();
     this.loading = false; if (this.disposed) return;

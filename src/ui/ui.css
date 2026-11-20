@@ -373,6 +373,7 @@ body.debug-tools .hud-navigation{margin-top:var(--debug-row)}
 .hud-weapon-key{position:absolute;right:0;bottom:0;min-width:13px;border-radius:3px;background:#0b111c;color:#fff3da;text-align:center;font:700 12px/14px system-ui,sans-serif}
 .hud-weapon-choice[data-empty=true]::after{content:'!';position:absolute;left:1px;top:0;color:#ffbc84;font:700 13px/14px system-ui,sans-serif}
 .hud-weapon-choice[data-hole=true]{opacity:.28;filter:grayscale(1);border-style:dashed;cursor:default}
+.hud-weapon-choice[data-dimmed=true]{opacity:.3;filter:grayscale(.85)}
 .hud-weapon-choice[data-hole=true] .hud-weapon-key{opacity:.9}
 .hud-weapon-rack[data-touch=true]{bottom:180px;max-width:calc(100vw - 56px)}
 .hud-pin-threat[data-kind=alpha][data-mega=false]{background:#ff9b32;width:7px;height:7px}

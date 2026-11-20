@@ -97,6 +97,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   const shoved = await vehicleShovesProps();
   expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
+  await motorbikeRide();
   await zooParkedBoarding();
   await zooCheckpointHandoff();
   await apcBoarders();
@@ -898,5 +899,20 @@ async function bikeMountIntent(): Promise<void> {
     expect(bike.riding, 'walked up and stopped').toBe(true);
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false }); world.update();
     expect(bike.riding, 'E dismounts').toBe(false);
+  } finally { world.dispose(); }
+}
+
+async function motorbikeRide(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('survivor', 1);
+  try {
+    const bike = world.vehicles!.bicycle, player = world.entities.get(1)!;
+    bike.spawnMotorbike({ x: player.transform.x + 1, z: player.transform.z }, Math.PI / 2);
+    world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
+    expect(bike.riding).toBe(true);
+    for (let i = 0; i < 180; i++) { world.setInput({ move: { x: 0, z: 1 } }); world.update(); }
+    expect(bike.entity!.bicycle!.speed).toBeGreaterThan(8);
+    expect(bike.entity!.bicycle!.speed).toBeLessThanOrEqual(9.5);
+    world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
+    expect(bike.riding).toBe(false);
   } finally { world.dispose(); }
 }
