@@ -88,6 +88,19 @@ async function checkMolotovCluster(): Promise<void> {
   expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
 }
 
+test('infected entering a landed molotov pool catches fire and takes burn damage', async () => {
+  const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
+  fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
+  for (let i = 0; i < 60 && !w.combat!.effects.zones.some(z => z.kind === 'fire'); i++) step(w, 1);
+  const zone = w.combat!.effects.zones.find(z => z.kind === 'fire');
+  expect(zone).toBeDefined();
+  const id = dummy(w, zone!.x + zone!.radius + 1, zone!.z, 200), target = w.entities.get(id)!;
+  step(w, 1); expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(false);
+  target.transform.x = zone!.x; target.transform.z = zone!.z; w.spatial.set(id, zone!.x, zone!.z);
+  step(w, 1); expect(target.combat!.statuses.find(s => s.kind === 'burning')?.def).toMatchObject({ dps: 35, duration: 4 });
+  step(w, 61); expect(target.health.current).toBeLessThan(200);
+});
+
 async function checkFlameCluster(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
   const ids = [-0.3, -0.15, 0, 0.15, 0.3].map(z => dummy(w, 2, z, infectedDef('infected.runner').hp * INFECTED_TOUGHNESS));

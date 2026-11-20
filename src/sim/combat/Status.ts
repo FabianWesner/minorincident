@@ -2,6 +2,7 @@ import { ticks, type StatusDef, type StatusKind } from '../../data/actions/schem
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 export interface StatusState { attackId?: number; kind: StatusKind; stacks: number; expires: number; nextDot: number; nextSpread?: number; def: StatusDef; sourceId: number; actionId: string }
+export const groundBurn: StatusDef = { kind: 'burning', duration: 4, maxStacks: 1, dps: 35, slow: 0 };
 export interface WaterZone { x: number; z: number; radius: number }
 /** Same-kind applications refresh duration and cap stacks; water removes burning before its DoT. */
 export class Status {

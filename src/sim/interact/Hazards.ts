@@ -9,6 +9,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Vec2 } from '../../input/InputFrame';
 import { FieldFire } from './FieldFire';
+import { groundBurn } from '../combat/Status';
 export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'tear-gas', 'extinguisher', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
@@ -217,6 +218,7 @@ export class Hazards {
         for (const id of this.nearby(e, h?.radius ?? 1)) {
           const target = this.world.entities.get(id)!;
           if (target.faction === 'environment' || target.health.current <= 0 || (h?.kind === 'toxic' && target.archetype === 'infected.hazmat') || (h?.kind === 'fire' && target.archetype === 'infected.firefighter')) continue;
+          if ((burns || h?.kind === 'fire') && (target.faction === 'infected' || target.kind === 'player')) this.world.combat?.status.apply(target, groundBurn, e.id, 'hazard.fire');
           this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', knockback: 0, stagger: 0 });
         }
       }
