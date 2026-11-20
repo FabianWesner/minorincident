@@ -509,8 +509,9 @@ export class Hud {
       const hintVisible = pickup !== null || emptyCue !== null || world.tick <= this.weaponHintUntil;
       setHidden(this.weapon.hint, !hintVisible);
       if (hintVisible) {
-        const vitals = this.root.querySelector<HTMLElement>('.hud-vitals');
-        if (vitals) this.weapon.hint.style.top = `${Math.ceil(vitals.getBoundingClientRect().bottom + 6)}px`;
+        const panels = this.root.querySelectorAll<HTMLElement>('.hud-vitals,.hud-companion');
+        const bottom = Math.max(...Array.from(panels, panel => panel.getBoundingClientRect().bottom));
+        if (Number.isFinite(bottom)) this.weapon.hint.style.top = `${Math.ceil(bottom + 6)}px`;
       }
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot or Q / Shift+Q to cycle'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);
