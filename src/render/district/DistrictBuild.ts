@@ -508,14 +508,15 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
       // Entry vestibule faces +X; its canopy fascia is clear of the glazing.
       const faceX = cx + 16.23, cz = (min[2] + max[2]) / 2, fasciaY = 3.85;
       positions.push(faceX,fasciaY-height/2,cz+width/2, faceX,fasciaY-height/2,cz-width/2, faceX,fasciaY+height/2,cz-width/2, faceX,fasciaY+height/2,cz+width/2);
-    } else if (b.id.startsWith('bld.joes-diner:') || b.id.startsWith('bld.garage-detached:')) {
-      // Diner header and workshop gable face local +X; rotate with the lot.
+    } else if (/^bld\.(joes-diner|garage-detached|cure-security-post|cure-motor-shelter|cure-warehouse):/.test(b.id)) {
+      // These entrance headers and fascia face local +X; rotate with the lot.
       const p = placements.find(row => row.id === b.id)!;
       const garage = b.id.startsWith('bld.garage-detached:');
-      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : 2.84) * p.scale[1];
+      const security = b.id.startsWith('bld.cure-security-post:'), motor = b.id.startsWith('bld.cure-motor-shelter:'), warehouse = b.id.startsWith('bld.cure-warehouse:');
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), faceX = (garage ? 1.53 : security ? 4.69 : motor ? 4.45 : warehouse ? 12.61 : 2.785) * p.scale[0], y = p.position[1] + (garage ? 3.25 : security ? 4.38 : motor ? 4.3 : warehouse ? 5.75 : 2.84) * p.scale[1];
       const vertex = (side: number, vertical: number) => {
-        const localZ = (garage ? side * .7 : -.65 + side * .55) * p.scale[2];
-        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
+        const localZ = (garage ? side * .7 : security ? -.25 + side * 1.1 : motor || warehouse ? side * 1.1 : -.65 + side * .55) * p.scale[2];
+        positions.push(p.position[0] + c * faceX + s * localZ, y + vertical * (garage ? .09 : motor ? .2 : warehouse ? .1 : .12) * p.scale[1], p.position[2] - s * faceX + c * localZ);
       };
       vertex(1, -1); vertex(-1, -1); vertex(-1, 1); vertex(1, 1);
     } else if (b.id.startsWith('bld.reptile-house:')) {
