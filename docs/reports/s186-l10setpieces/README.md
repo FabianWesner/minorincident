@@ -154,6 +154,8 @@ This is not a completion report. The seven linked views are staged diagnostics, 
 
 - On the moved-tent source, a native simulation ledger sampled the opening tick. HIGH opened at tick 47550 with the courier at (3500.27, 36.95); five admitted members were spread from x=3473 to 3519 and z=12.83 to 55.25, rather than inside the tent. LOW opened at tick 46670 at the same courier position, after seven recorded members were already dead. Both runs completed (HIGH 1091.33 s, LOW 1057.55 s). The existing separate cohort admission cannot establish a tent burst; a shared hidden entrance and release sequence remains to be implemented.
 
+- Current source `522fc01f`: full `npm run qa:threat` passed in 322.2 s with zero fail flags and L10 skilled complete (LOW). Required remote full `npm test` exceeded its 240 s budget without a reported test failure. The specified fallback passed locally (27 files, 106 tests, 114.5 s) and the L4 contact test passed remotely (141.91 s). This is the timeout fallback, not a fresh remote full-suite pass.
+
 ## Time-box disposition
 
 Fresh time-box work has improved the corridor-only lighting blend and refreshed the automated threat and unit evidence. Six native key-moment captures and visual amber acceptance remain open; HIGH and LOW seed 1 completion and the remote full unit suite now pass as recorded above. A subsequent unrestricted HIGH Scene Lab catalog run completed: gate passed numerically; the other five reported clipping. The opened gate sheet still crops the sign and reads dark blue; it is a staged fixture and does not establish the production corridor lighting or native moment. This work has not been deployed, pushed or merged to main.
