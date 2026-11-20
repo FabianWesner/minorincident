@@ -117,7 +117,12 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.colliders.push({ id: `l10-underpass-pier-${x}-${z}`, minTier: 0, maxTier: 6,
         aabb: { min: [x - .5, 0, z - .4], max: [x + .5, 4.9, z + .4] } });
     }
-    for (const z of [67, 81]) beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3383, z, [.4, 1.5, .4]);
+    layout.lightGroups.push({ id: 'l10-underpass', offAt: 6 });
+    for (const z of [67, 81]) {
+      const lamp = beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3383, z, [.4, 1.5, .4]);
+      lamp.lightGroup = 'l10-underpass';
+      lamp.decorLights = true;
+    }
     // Field triage on the final approach: quarantine tents and a marked transport.
     for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.cure-iso-tent', x, 83, [2.5, 1.7, 2], i % 2 ? Math.PI : 0);
     beat('hospital-truck', 'veh.military-truck', 3538, 98, [3.8, 1.5, 1.5], Math.PI / 2);
