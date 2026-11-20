@@ -30,7 +30,7 @@ for (const tier of ['high', 'low'] as const) {
         mission.state.counters['hangar-line'] = line; mission.state.counters['hangar-line-ticks'] = 0;
         mission.state.subtitle = null;
         await api.step(1);
-        const subtitle = mission.state.subtitle;
+        const subtitle = mission.state.subtitle as { id: string } | null;
         if (!subtitle || !subtitle.id.startsWith(speaker === 'voss' ? 'L10.voss-' : 'L10.sam-')) throw new Error(`unexpected subtitle ${subtitle?.id}`);
         const actorId = mission.state.actors[`hangar-${speaker}`];
         if (!actorId) throw new Error(`missing hangar speaker ${speaker}`);

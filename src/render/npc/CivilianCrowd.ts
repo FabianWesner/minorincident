@@ -95,6 +95,7 @@ const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
+  private readonly conversationPositions = new Map<number, { x: number; z: number; tick: number; distance: number }>();
   private readonly corpses = new StaticCorpses();
   private readonly probe = new CrowdFigureProbe();
   private locomotion!: CrowdLocomotion;
@@ -232,7 +233,27 @@ class CivilianBatch extends Group {
       const c = e.civilian;
       const model = crowdModelOf(e);
       if (model !== this.model) continue;
-      const closingPose = l10ClosingPose(this.world, e), drawTransform = closingPose ?? e.transform;
+      const closingPose = l10ClosingPose(this.world, e);
+      const speaking = !!c && hangarTalker(this.world, e.id) && c.state === 'calm';
+      let conversation = this.conversationPositions.get(e.id);
+      if (speaking && !conversation) {
+        conversation = { x: e.transform.x, z: e.transform.z, tick: this.world.tick, distance: 0 };
+        this.conversationPositions.set(e.id, conversation);
+      }
+      let conversationSpeed = 0, conversationYaw = e.transform.yaw;
+      if (conversation) {
+        const player = this.world.entities.get(1)!.transform;
+        const dx = e.transform.x - player.x, dz = e.transform.z - player.z, length = Math.hypot(dx, dz) || 1;
+        const goal = speaking && length > 3 ? { x: player.x + dx / length * 3, z: player.z + dz / length * 3 } : e.transform;
+        const gx = goal.x - conversation.x, gz = goal.z - conversation.z, remaining = Math.hypot(gx, gz);
+        if (remaining > .001) conversationYaw = -Math.atan2(gz, gx);
+        const dt = Math.max(0, Math.min(1, (this.world.tick - conversation.tick) / 60));
+        const step = Math.min(remaining, dt * 1.5);
+        if (remaining > .001) { conversation.x += gx / remaining * step; conversation.z += gz / remaining * step; conversation.distance += step; }
+        conversationSpeed = step > .001 ? 1.5 : 0; conversation.tick = this.world.tick;
+        if (!speaking && remaining < .02) { this.conversationPositions.delete(e.id); conversation = undefined; }
+      }
+      const drawTransform = closingPose ?? (conversation ? { ...e.transform, x: conversation.x, z: conversation.z } : e.transform);
       // Permanently dead civilians use the same ground-body layer as settled infected. Keep their final fall pose,
       // appearance and position; leaving them in the living batch lets them cover a passer-by's legs.
       if (c?.state === 'finished' && !e.infected && e.health.current <= 0 && this.world.tick - c.entered >= 120) {
@@ -259,7 +280,7 @@ class CivilianBatch extends Group {
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
-      const speed = closingPose || e.motion && !e.motion.moving ? 0 : motion.speed;
+      const speed = conversation ? conversationSpeed : closingPose || e.motion && !e.motion.moving ? 0 : motion.speed;
       const activity = c.schedule?.[c.scheduleStep ?? 0];
       // A sitter that is not at its seat (moved off by a fight/flight) never keeps the sitting pose or the seat lift.
       // Physics keeps the civilian at the clear approach point; the seated
@@ -279,19 +300,20 @@ class CivilianBatch extends Group {
       const talking = !down && !rising && c.state === 'calm' && hangarTalker(this.world, e.id);
       const conversationClip = talking ? talkClip(e.id, this.world.tick) as Clip : null;
       let clip: Clip = conversationClip ?? (storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle');
+      if (conversation && speed > .06) clip = 'npc-walk-relaxed';
       // Waiting civilians in the war/aftermath keep their hands close, with individual gestures.
       if ((!storyClip || hangarCastMember(this.world, e.id)) && !talking && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && (['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '') || hangarCastMember(this.world, e.id))) clip = waitingIdle(e.id, e.appearance?.handProp, c.state === 'hide' || c.state === 'flee');
       if (hangarCastMember(this.world, e.id) && !talking && !down && !rising && c.state === 'calm' && c.ally && speed <= .06) clip = waitingIdle(e.id, 'rifle');
       if (e.passengerOf === undefined && !(performing && activity?.seat) && speed > .06 && !strides[clip] && !down && !rising && c.state !== 'grabbed' && c.state !== 'bitten') clip = speed > 2.5 ? civFlee : walkClip;
       if (closingPose) clip = 'idle';
-      const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
+      const duration = authoredClips.get(clip)!.duration, gaitDistance = conversation ? conversation.distance : Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
       const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : loopingStory.has(clip) ? (storyElapsed + idleOffset(e.id) / duration) % 1 : Math.min(.999, storyElapsed);
       const facingPlayer = this.world.entities.get(1)!.transform;
       const targetYaw = -Math.atan2(facingPlayer.z - drawTransform.z, facingPlayer.x - drawTransform.x);
-      const facingCourier = talking ? { ...drawTransform, yaw: targetYaw } : drawTransform;
-      const presented = this.presentation.sample(e.id, facingCourier, this.world.tick, alpha, talking ? Math.PI : c.ally?.targetId ? 14 : crowdTurnRate);
+      const facingCourier = conversationSpeed > .06 ? { ...drawTransform, yaw: conversationYaw } : talking ? { ...drawTransform, yaw: targetYaw } : drawTransform;
+      const presented = this.presentation.sample(e.id, facingCourier, this.world.tick, alpha, talking || conversation ? Math.PI : c.ally?.targetId ? 14 : crowdTurnRate);
       // Convulsions while on the ground: a seeded body shudder that grows with the infection.
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
       if ((performing || noticingSeated) && activity?.seat) {
