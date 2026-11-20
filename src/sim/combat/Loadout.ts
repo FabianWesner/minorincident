@@ -157,7 +157,9 @@ export class Loadout {
     if (def.charges && !infiniteCharges) {
       slot.charges--; if (!slot.nextCharge) slot.nextCharge = tick + ticks(def.recharge);
     }
-    // PO 2026-11-20: a recharging throwable stays selected after the throw (its slot shows "!" until a charge is back).
-    if (!this.hasAmmo(slot) && this.state.selectedSide === side && !(def.charges && slot.nextCharge)) this.fallback(tick);
+    // PO 2026-11-20: a weapon that recovers by itself stays in hand — recharging throwables ("!" until a charge is back),
+    // flamethrower fuel (refills when idle; "it flips back to the previous weapon. Super annoying") and reloading magazines.
+    const recovers = !!(def.charges && slot.nextCharge) || def.id === 'weapon.flamethrower' || slot.reloadUntil > 0;
+    if (!this.hasAmmo(slot) && this.state.selectedSide === side && !recovers) this.fallback(tick);
   }
 }

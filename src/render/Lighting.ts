@@ -275,6 +275,34 @@ export class Lighting {
     this.gloom = next; this.applyLook();
   }
   private readonly dawnColor = new Color();
+  /** Blend the existing golden preset into the L10 road fog without changing its night key. */
+  cureRoadDust(amount: number): void {
+    const t = Math.max(0, Math.min(1, amount)), night = timeOfDay['L10-night'], dust = timeOfDay.golden, warm = timeOfDay.L3;
+    const nightLook = night.look!, warmLook = warm.look!;
+    this.look.nodes.dust.value.set(nightLook.dust!).lerp(this.dawnColor.set(timeOfDay.L5.look!.dust!), t);
+    this.color.value.set(night.sun).lerp(this.dawnColor.set(dust.sun), t * .55); this.sun.color.copy(this.color.value);
+    this.intensity.value = night.intensity + (dust.intensity - night.intensity) * t * .35; this.sun.intensity = this.intensity.value;
+    this.shadow.value.set(night.shadow).lerp(this.dawnColor.set(dust.shadow), t * .55);
+    const shadow = this.shadow.value; this.shadowHue.value.copy(shadow).multiplyScalar(1 / Math.max(shadow.r, shadow.g, shadow.b, 1e-3));
+    this.skyAmbient.value.set(this.look.values.skyAmbient).lerp(this.dawnColor.set(warmLook.skyAmbient!), t);
+    this.groundAmbient.value.set(this.look.values.groundAmbient).lerp(this.dawnColor.set(warmLook.groundAmbient!), t);
+    this.look.nodes.gradeShadow.value.set(nightLook.gradeShadow!).lerp(this.dawnColor.set(warmLook.gradeShadow!), t);
+    this.look.nodes.gradeHighlight.value.set(nightLook.gradeHighlight!).lerp(this.dawnColor.set(warmLook.gradeHighlight!), t);
+    this.look.nodes.gradeSaturation.value = nightLook.gradeSaturation! + (warmLook.gradeSaturation! - nightLook.gradeSaturation!) * t;
+    this.look.nodes.haze.value.set(nightLook.haze!).lerp(this.dawnColor.set(warmLook.haze!), t);
+    this.look.nodes.hazeAmount.value = nightLook.hazeAmount! + (warmLook.hazeAmount! - nightLook.hazeAmount!) * t;
+    // The standard haze begins beyond the 19 m follow lens, so the close
+    // corridor ground never receives the warm preset's dust colour.
+    this.hazeNear.value *= 1 - .65 * t;
+    this.fogColor.value.set(night.fog).lerp(this.dawnColor.set(dust.fog), t);
+    this.fogColorA.value.set(night.sky).lerp(this.dawnColor.set(dust.sky), t);
+    this.fogNear.value = night.fogNear + (dust.fogNear - night.fogNear) * t;
+    this.fogFar.value = night.fogFar + (dust.fogFar - night.fogFar) * t;
+    if (this.scene.fog instanceof Fog) {
+      this.scene.fog.color.copy(this.fogColor.value);
+      this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value;
+    }
+  }
   /** Release-relative dawn: uniform/light changes only, retaining the warmed L10 shader and shadow graphs. */
   cureDawn(amount: number): void {
     const t = Math.max(0, Math.min(1, amount)), p = timeOfDay[this.preset], dawn = timeOfDay.golden;

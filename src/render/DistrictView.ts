@@ -225,6 +225,34 @@ export class DistrictView extends Group {
         for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
       }
   }
+  /** Tilt the authored L10 billboard around its feet as the encounter opens. */
+  updateCureBillboard(fall: number): void {
+    for (const entry of this.lodBatches) if (entry.id === 'prop.l10-cure-billboard') for (const ref of entry.refs) {
+      if (ref.userData.placementId !== 'D-CURE/l10-setpiece-billboard-frame' || ref.userData.cureBillboardFall === fall) continue;
+      ref.userData.cureBillboardFall = fall;
+      ref.rotation.z = Math.PI / 2 * fall;
+      ref.updateMatrix();
+      this.dirtyEntries.add(entry);
+    }
+  }
+  /** The warning effigies sway gently from the gantry at a deterministic simulation phase. */
+  updateCureEffigies(tick: number): void {
+    for (const entry of this.lodBatches) if (entry.id === 'prop.l10-warning-effigy') for (const [i, ref] of entry.refs.entries()) {
+      const sway = Math.sin(tick / 90 + i * 1.7) * .08;
+      for (const group of [entry.hero, entry.near, entry.far]) group.pose('swing', sway, ref, 'z');
+    }
+  }
+  /** Open each tent entrance at the hospital encounter, including streamed LODs. */
+  updateCureHospital(open: number): void {
+    for (const entry of this.lodBatches) if (entry.id === 'prop.l10-field-tent') for (const ref of entry.refs) {
+      if (ref.userData.cureHospitalOpen === open) continue;
+      ref.userData.cureHospitalOpen = open;
+      for (const group of [entry.hero, entry.near, entry.far]) {
+        group.pose('flapL', -Math.PI / 2 * open, ref);
+        group.pose('flapR', Math.PI / 2 * open, ref);
+      }
+    }
+  }
   /** L5 raises the authored half-open leaf to 1.9 m clearance, then lowers its bar onto the platform. */
   updateMetroShutter(closed: number): void {
     closed = Math.max(0, Math.min(1, closed));

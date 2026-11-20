@@ -388,6 +388,12 @@ export class AudioEventMapper {
         }
         if (event.type === 'combat.hit' || event.type === 'combat.kill') {
             const target = this.host.world.entities.get(event.targetId);
+            if (event.type === 'combat.hit' && event.actionId === 'weapon.nail-gun' && event.amount > 0 && event.damageType !== 'melee') {
+                if (target?.infected)
+                    this.host.play('weapon.impact.nail-gun.infected', { position: target.transform }, source);
+                else if (event.cause === 'prop' || target?.faction === 'environment')
+                    this.host.play('weapon.impact.nail-gun.hard', { position: target?.transform ?? position }, source);
+            }
             if (target?.faction === 'environment' || target?.vehicle) return;
             if (event.type === 'combat.hit' && event.blocked) {
                 this.host.play('impact.body.metal', { position: target?.transform ?? position, gain: 1.1 }, target?.id);
@@ -416,7 +422,7 @@ export class AudioEventMapper {
             }
             if (event.type === 'combat.hit' && event.amount > 0 && event.damageType !== 'melee') {
                 const cue = `weapon.impact.${event.actionId.replace(/^weapon\./, '')}`;
-                if (audioCues[cue]) this.host.play(cue, { position: target?.transform ?? position }, source);
+                if ((event.actionId !== 'weapon.nail-gun' || !target?.infected) && audioCues[cue]) this.host.play(cue, { position: target?.transform ?? position }, source);
             }
         }
         if (event.type === 'infected.attack') {

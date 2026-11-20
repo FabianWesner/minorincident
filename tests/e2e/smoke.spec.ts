@@ -249,6 +249,31 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); });
   await page.screenshot({ path: 'test-results/smoke/l10-rack/rack-high-1280x720.png' });
+  const captureRackTips = async (suffix: string) => {
+    const attackCount = await page.evaluate(() => window.__SS__!.events(0).filter(event => event.type === 'combat.attack').length);
+    const targets = [
+      ['handgun', page.locator('.hud-weapon-choice[data-weapon="weapon.handgun"]')],
+      ['corgi', page.getByTestId('corgi-lure')],
+    ] as const;
+    for (const [name, target] of targets) {
+      await expect(target).toBeVisible();
+      const box = await target.boundingBox(); expect(box).not.toBeNull();
+      await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+      await expect(page.locator('.weapon-rack-tooltip')).toBeVisible();
+      await page.screenshot({ path: `test-results/smoke/l10-rack/tooltip-${name}-${suffix}.png` });
+    }
+    const loadout = await page.evaluate(() => { const p = window.__SS__!.getState().player!; return { left: p.weapons!.LEFT.rack.map(slot => slot.id), right: p.weapons!.RIGHT.rack.map(slot => slot.id) }; });
+    await page.evaluate(async () => { const a = window.__SS__!; a.setLoadout(['weapon.machete'], ['weapon.handgun']); await a.step(1); });
+    const hole = page.locator('.hud-weapon-choice[data-hole="true"]').first();
+    const holeBox = await hole.boundingBox(); expect(holeBox).not.toBeNull();
+    await page.mouse.move(holeBox!.x + holeBox!.width / 2, holeBox!.y + holeBox!.height / 2);
+    await expect(page.locator('.weapon-rack-tooltip')).toContainText('Not found yet');
+    await page.screenshot({ path: `test-results/smoke/l10-rack/tooltip-hole-${suffix}.png` });
+    await page.evaluate(async racks => { const a = window.__SS__!; a.setLoadout(racks.left, racks.right); await a.step(1); }, loadout);
+    await page.mouse.move(700, 600);
+    expect(await page.evaluate(() => window.__SS__!.events(0).filter(event => event.type === 'combat.attack').length), 'tooltip hover does not attack').toBe(attackCount);
+  };
+  await captureRackTips('1280x720');
   for (const id of l10HangarWeapons) {
     let selected = '';
     for (let press = 0; press < 3 && selected !== id; press++) {
@@ -292,6 +317,7 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   const rack = await page.locator('.hud-weapon-rack').boundingBox();
   expect(rack).not.toBeNull(); expect(rack!.x + rack!.width).toBeLessThanOrEqual(390); expect(rack!.y + rack!.height).toBeLessThanOrEqual(844);
   await page.screenshot({ path: 'test-results/smoke/l10-rack/rack-high-phone-390x844.png' });
+  await captureRackTips('390x844');
 
   await page.setViewportSize({ width: 1280, height: 720 });
   await page.evaluate(async () => {
