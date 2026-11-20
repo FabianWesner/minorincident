@@ -85,3 +85,5 @@ s198 follow-up: `git merge main` was attempted first but could not update the sh
 After sandbox access changed, main `a356dedf` merged successfully. The remote focused L4 replay ran and failed with the same actors 297 and 305 and positions as the local diagnostic. The routing fix and final gates remain open.
 
 A further local trace at tick 4200 identifies actor 281 as an unstunned butcher on the inside breach waypoint; its resolved speed was 0.26 m/s. The queue therefore includes an actor actively seeking the entrance, rather than a pinned body. Temporary tracing was removed.
+
+A trial steering around the previous living contact blocker shifted the local failure to actor 231, stopped within 0.6 m of a separate scripted waypoint near `(-34.67, 23.4)`. It was discarded; steering alone did not resolve all routing failures. The collapse director can replace a breach waypoint with a snapped soldier position, and the street-clearing controller can assign its own waypoint; identify the owner of this new stall before changing its arrival rule.
