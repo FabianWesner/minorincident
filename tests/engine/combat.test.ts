@@ -112,10 +112,21 @@ async function checkFireAshPersistence(): Promise<void> {
   const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
   w.combat!.damage.apply({ attackId: 1, actionId: 'weapon.flamethrower', sourceId: 1, targetId: id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: target.health.current, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
   step(w, 1);
-  expect(target.ashDeath).toEqual({ at: w.tick - 1 }); expect(target.infected!.recoverAt).toBe(-1); expect(target.infected!.state).toBe('dead');
+  expect(target.ashDeath).toMatchObject({ at: w.tick - 1 }); expect(target.infected!.recoverAt).toBe(-1); expect(target.infected!.state).toBe('dead');
   const other = w.infected!.spawn('infected.runner', { x: 6, z: 4 }), body = w.entities.get(other)!;
   w.combat!.damage.apply({ attackId: 2, actionId: 'weapon.handgun', sourceId: 1, targetId: other, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: body.health.current, multiplier: 1, type: 'bullet', permanent: true, knockback: 0, stagger: 0 });
   expect(body.ashDeath).toBeUndefined();
+  const fixed = { ...target.transform };
+  // Walk living infected across the heap, then apply both a shove and a rocket blast.
+  const walkerId = w.infected!.spawn('infected.runner', { x: fixed.x - 2, z: fixed.z });
+  const walker = w.entities.get(walkerId)!;
+  for (let i = 0; i < 20; i++) { w.knockback(walker, { x: 1, z: 0 }, .2); step(w, 1); }
+  expect(walker.transform.x).toBeGreaterThan(fixed.x);
+  w.knockback(target, { x: 1, z: 0 }, 3);
+  w.explosions!.blast('explosion.rocket', { x: fixed.x + 1, z: fixed.z });
+  step(w, 120);
+  expect(target.transform).toEqual(fixed);
+  expect(target.corpseBlast).toBeUndefined();
   const grabberId = w.infected!.spawn('infected.lion', { x: 8, z: 4 }), grabber = w.entities.get(grabberId)!;
   const player = w.entities.get(1)!, releaseAt = w.tick + 120, hp = grabber.health.current;
   grabber.infected!.grabUntil = releaseAt; grabber.infected!.heardTargetId = player.id;

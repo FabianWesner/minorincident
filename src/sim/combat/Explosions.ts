@@ -162,7 +162,7 @@ export class Explosions {
     // cosmetic body follows the same radial/upward impulse curve as the props.
     const query = this.world.combat?.query, candidates = query ? this.candidates(query, at, r) : [];
     if (d.impulse > 0) for (const e of this.world.entities.iterate()) {
-      if (!e.corpse || !e.infected || e.hidden || e.attachedTo !== undefined || !this.corpseClear(e, e.transform)) continue;
+      if (e.ashDeath || !e.corpse || !e.infected || e.hidden || e.attachedTo !== undefined || !this.corpseClear(e, e.transform)) continue;
       if (this.world.infected?.active.some(source => source.infected?.specialAttack?.projectile?.objectId === e.id && source.infected.specialAttack.stage === 'active')) continue;
       const dx = e.transform.x - at.x, dz = e.transform.z - at.z, distance = Math.hypot(dx, dz);
       const fade = Math.max(0, Math.min(1, (r - distance) / Math.max(1e-6, r - 1)));
@@ -183,7 +183,7 @@ export class Explosions {
     for (const e of this.world.entities.iterate()) {
       const flight = e.corpseBlast;
       if (!flight) continue;
-      if (!e.corpse || e.hidden) { delete e.corpseBlast; continue; }
+      if (e.ashDeath || !e.corpse || e.hidden) { delete e.corpseBlast; continue; }
       if (--flight.delay > 0) continue;
       e.corpseThrown = true;
       const next = { x: e.transform.x + flight.x / 60, y: e.transform.y + flight.y / 60 - 9.81 / 7200, z: e.transform.z + flight.z / 60 };

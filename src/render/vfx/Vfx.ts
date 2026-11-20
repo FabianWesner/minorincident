@@ -845,7 +845,7 @@ export class Vfx extends Group {
         if (age < 90) {
           liveAsh.add(e.id);
           if ((this.ashPuffAt.get(e.id) ?? e.ashDeath.at) <= this.world.tick) {
-            const { x, z } = ashPosition(this.world, e, age / 90);
+            const { x, z } = ashPosition(e);
             const ground = this.world.districts?.groundHeight(x, z) ?? 0;
             this.burst(x, ground + .25, z, 0xaaa69a, 8, .3, .9, -.35, particleShape.smoke, .2, .35);
             this.burst(x, ground + .35 + .45 * (1 - age / 90), z, 0xff7730, 6, .09, .5, .5, particleShape.spark, .35, .25);

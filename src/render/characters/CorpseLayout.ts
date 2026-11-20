@@ -21,10 +21,13 @@ export function corpseLayout(world: SimWorld): CorpseLayout {
   return layout;
 }
 /** Centre of the visible fallen figure while its fire-death heap forms. */
-export function ashPosition(world: SimWorld, e: EntitySnapshot, progress: number): { x: number; z: number } {
-  const resting = e.infected ? corpseLayout(world).place(e, e.infected.deadAt) : e.transform;
-  const reach = (e.archetype === 'infected.alpha' || e.archetype === 'infected.mega-alpha' ? .9 : .6) * Math.min(1, Math.max(0, progress * 2));
-  return { x: resting.x - Math.cos(resting.yaw) * reach, z: resting.z + Math.sin(resting.yaw) * reach };
+export function ashPosition(e: EntitySnapshot): { x: number; z: number } {
+  const ash = e.ashDeath;
+  // Legacy saves lack an anchor; use their retained transform without re-running
+  // corpse placement, whose neighbours and vehicle footprints can change.
+  const x = ash?.x ?? e.transform.x, z = ash?.z ?? e.transform.z, yaw = ash?.yaw ?? e.transform.yaw;
+  const reach = e.archetype === 'infected.alpha' || e.archetype === 'infected.mega-alpha' ? .9 : .6;
+  return { x: x - Math.cos(yaw) * reach, z: z + Math.sin(yaw) * reach };
 }
 const pointDistanceSquared = (x: number, z: number, ax: number, az: number, bx: number, bz: number) => {
   const dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz || 1)));

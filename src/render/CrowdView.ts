@@ -816,7 +816,7 @@ export class CrowdView extends Group {
         }
         // The death clips lie toward local -X from the feet. Put the ash at
         // the body centre, using the same resting yaw as the corpse pose.
-        const { x, z } = ashPosition(this.world, e, ashProgress);
+        const { x, z } = ashPosition(e);
         const ground = this.world.districts?.groundHeight(x, z) ?? 0;
         const pieces = [
           [-.17, -.06, .27, .055, .20, .2], [.16, .04, .25, .05, .19, 1.1], [-.02, .15, .22, .045, .18, 2.2], [.04, -.15, .20, .04, .16, .7],
