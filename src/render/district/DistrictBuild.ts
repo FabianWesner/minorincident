@@ -59,7 +59,7 @@ export class DistrictParts {
   readonly perimeterPosts: InstancedMesh[] = [];
   readonly ownedMaterials: Material[] = [];
   readonly signs: string[] = [];
-  readonly signBatches: { geometry: BufferGeometry; district: string; origin: [number, number]; ids: string[]; supports: { asset: string; position: [number, number, number] }[]; visible: string }[] = [];
+  readonly signBatches: { geometry: BufferGeometry; district: string; origin: [number, number]; ids: string[]; indicesBySign: number[][]; supports: { asset: string; position: [number, number, number] }[]; visible: string }[] = [];
   readonly textures: CanvasTexture[] = [];
   ambient?: AmbientLife;
   /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
@@ -529,10 +529,31 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, district: string, o
     } else positions.push(cx-width/2,cy-height/2,z, cx+width/2,cy-height/2,z, cx+width/2,cy+height/2,z, cx-width/2,cy+height/2,z);
     uvs.push(u0,v0,u1,v0,u1,v1,u0,v1); indices.push(base,base+1,base+2,base,base+2,base+3);
   });
+  const indicesBySign = rows.map((_, i) => indices.slice(i * 6, i * 6 + 6));
+  // The zoo board stands clear of raised original lettering; two short brackets
+  // connect it to the old entrance panel without adding a draw call.
+  rows.forEach((b, i) => {
+    if (!b.id.startsWith('bld.reptile-house:')) return;
+    const cx = (b.aabb.min[0] + b.aabb.max[0]) / 2, cz = (b.aabb.min[2] + b.aabb.max[2]) / 2;
+    const x0 = cx + 4.755, x1 = cx + 5.08, y0 = b.aabb.min[1] + 2.96, y1 = b.aabb.min[1] + 3.04;
+    const uvX = (i % columns * cellW + 24) / canvas.width, uvY = 1 - (Math.floor(i / columns) * cellH + 24) / canvas.height;
+    const face = (vertices: number[][]) => {
+      const n = positions.length / 3;
+      for (const v of vertices) { positions.push(...v); uvs.push(uvX, uvY); }
+      indicesBySign[i].push(n, n + 1, n + 2, n, n + 2, n + 3);
+    };
+    for (const z of [cz - 1.1, cz + 1.1]) {
+      const z0 = z - .04, z1 = z + .04;
+      face([[x0,y0,z0], [x1,y0,z0], [x1,y0,z1], [x0,y0,z1]]);
+      face([[x0,y1,z1], [x1,y1,z1], [x1,y1,z0], [x0,y1,z0]]);
+      face([[x0,y0,z0], [x0,y1,z0], [x1,y1,z0], [x1,y0,z0]]);
+      face([[x0,y0,z1], [x1,y0,z1], [x1,y1,z1], [x0,y1,z1]]);
+    }
+  });
   const geometry = new BufferGeometry();
   geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
-  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(new Uint16BufferAttribute(indices, 1).setUsage(DynamicDrawUsage)); geometry.computeVertexNormals();
-  parts.signBatches.push({ geometry, district, origin, ids: rows.map(b => b.id), supports: rows.map(b => ({ asset: b.assetId, position: placements.find(p => p.id === b.id)!.position })), visible: 'uninitialized' });
+  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2)); geometry.setIndex(new Uint16BufferAttribute(indicesBySign.flat(), 1).setUsage(DynamicDrawUsage)); geometry.computeVertexNormals();
+  parts.signBatches.push({ geometry, district, origin, ids: rows.map(b => b.id), indicesBySign, supports: rows.map(b => ({ asset: b.assetId, position: placements.find(p => p.id === b.id)!.position })), visible: 'uninitialized' });
   parts.ownedGeometry.push(geometry);
   const texture = new CanvasTexture(canvas); texture.colorSpace = SRGBColorSpace; texture.generateMipmaps = true; parts.textures.push(texture);
   const material = materials.shaded(sampleTexture(texture).rgb.mul(2.5)); material.side = DoubleSide; parts.ownedMaterials.push(material);

@@ -330,7 +330,7 @@ export class DistrictView extends Group {
       if (batch.visible === flags) continue;
       batch.visible = flags;
       const indices: number[] = [];
-      for (let i = 0; i < flags.length; i++) if (flags[i] === '1') { const n = i * 4; indices.push(n, n + 1, n + 2, n, n + 2, n + 3); }
+      for (let i = 0; i < flags.length; i++) if (flags[i] === '1') indices.push(...batch.indicesBySign[i]);
       const index = batch.geometry.getIndex()!; index.array.set(indices); index.needsUpdate = true;
       batch.geometry.setDrawRange(0, indices.length);
     }
