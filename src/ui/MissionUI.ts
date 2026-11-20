@@ -17,6 +17,7 @@ import { checkpointName } from '../data/checkpointNames';
 function captionText(world: SimWorld, id: string, text: string): string {
   if (id === 'L2.captain') return `Captain: ${text}`;
   if (id === 'L3.sergeant' || id === 'L3.handgun') return `Sergeant: ${text}`;
+  if (['L2.call', 'L2.dispatch', 'L2.radio', 'L3.dispatch', 'L3.alone', 'L8.broadcast'].includes(id)) return `Radio: ${text}`;
   if (world.scenario !== 'L9') return text;
   const driving = world.missions?.l9?.driving.state;
   const samName = world.entities.get(driving?.samId ?? 0)?.civilian?.survivor?.key === 'reyes' ? 'Private Reyes' : 'Sam';

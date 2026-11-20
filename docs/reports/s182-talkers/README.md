@@ -37,7 +37,7 @@ An earlier experimental walk from off-screen left the guard entering at the edge
 | L10 | Voss, Ruiz, Sam or Reyes in the hangar | Existing hangar cast; shared relaxed walk, idle and gestures. Sam approaches during the preceding exchange. |
 | L10 epilogue | Rosa | Existing survivor montage actor beside the existing courier; glance and gesture. Controlled HIGH capture reviewed; full campaign transition remains open. |
 
-Radio lines retain their existing radio labels. Other in-person lines remain to be mapped; this table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips and short clear walks; their activity needs closer visual review. No new animation clips or rigs were added.
+L10 radio lines retain their authored labels; L2 dispatch/call/fallback, L3 dispatch and L8 broadcast captions now say Radio. Other in-person lines remain to be mapped; this table is not a complete speaker inventory. The capture fixture directly advances dialogue and is not an ordinary-play proof. Background hangar researchers and guards use waiting clips and short clear walks; their activity needs closer visual review. No new animation clips or rigs were added.
 
 Latest typecheck and lint passed. The full remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on the latest code: 27 files, 105 tests passed and one skipped, in 209.5 s against the 240-second budget. An earlier complete run also passed in 232.3 s; two earlier attempts timed out. `qa:threat` byte identity and the full visual coverage have not been verified. The objective is incomplete.
 
