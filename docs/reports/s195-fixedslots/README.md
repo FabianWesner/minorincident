@@ -28,6 +28,7 @@
 - Follow-up: `npx vitest run tests/engine/l4-contact.test.ts --project default --configLoader runner` passed locally (63.43 s). Two subsequent unchanged remote suite attempts both timed out at 241.1 s and 240.8 s, so neither reproduced nor cleared the remote routing failure.
 - A focused remote run reproduced the routing failure in 175.60 s: actor 373 remained near (-6.23, 9.49) for 301 ticks, with scripted target (-3.18, 6) and no rail damage. The same test passes locally. Its relationship to the weapon change has not been established; no zombie behavior or test criteria were altered.
 - Baseline comparison: the same focused remote command on detached pre-s195 commit `94ec745d` failed at the same assertion with the same actor 373, start tick 17127 and position (-6.229738661833887, 9.491315724578172). This establishes that this remote routing failure predates s195. The required remote suite remains red; no zombie behavior or test criteria were altered.
+- Latest remote full suite on the current implementation completed in 188.5 s: 104 passed, one skipped and the same L4 actor 373 routing assertion failed. The remote gate is still red.
 
 ## Visual captures
 
