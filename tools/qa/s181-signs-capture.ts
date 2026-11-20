@@ -1,5 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import { SceneSession, stopServer } from '../scenelab/session';
+import type { Game } from '../../src/Game';
 
 const out = 'docs/reports/s181-signs'; mkdirSync(out, { recursive: true });
 const session = new SceneSession({ tier: process.argv[2] as 'high' | 'low', backend: 'webgl2', viewport: { width: 1280, height: 720 } });
@@ -14,7 +15,9 @@ try {
     const d = g.world.districts.districts.find(row => row.id === districtId)!, b = d.layout.buildings.find(row => row.label.toLowerCase() === label.toLowerCase())!;
     const x = (b.aabb.min[0] + b.aabb.max[0]) / 2 + d.origin[0] + (level === 'L10' ? 16.23 : 5.08), z = (b.aabb.min[2] + b.aabb.max[2]) / 2 + d.origin[1], y = level === 'L10' ? 3.85 : 3;
     a.missions.begin();
-    a.camera.cinematic({ target: [x, y, z], position: [x + 5.5, y + 2.7, z + 9] }, true); await a.screenshotReady();
+    const game = (window as unknown as { __SCENE__: { game: Game } }).__SCENE__.game;
+    a.teleport('player', { x: x + 1, z: z + 1 }); a.camera.follow();
+    game.view.view.reset(game.world.entities.get(1)!.transform, true); await a.screenshotReady();
     return { districtId, label, x, y, z, signs: a.getState().render.districts?.signs };
   }, process.argv[3] ?? 'L10');
   for (const zoom of [1, 1.5]) {

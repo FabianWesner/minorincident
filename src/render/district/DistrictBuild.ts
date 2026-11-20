@@ -491,7 +491,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
     ctx.fillStyle = '#17242b'; ctx.fillRect(px + 2, py + 2, cellW - 4, cellH - 4);
     ctx.strokeStyle = '#c4d2d2'; ctx.lineWidth = 6; ctx.strokeRect(px + 8, py + 8, cellW - 16, cellH - 16);
     const title = b.label.trim().replace(/\b\w/g, c => c.toUpperCase());
-    ctx.fillStyle = '#f5f3e9'; ctx.font = '600 40px Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#f5f3e9'; ctx.font = '600 60px Arial, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText(title, px + cellW / 2, py + cellH / 2, cellW - 50);
     parts.signs.push(title);
     const min = b.aabb.min, max = b.aabb.max;
@@ -507,7 +507,7 @@ function buildFacadeSigns(parts: DistrictParts, root: Group, buildings: { id: st
     } else if (b.id.startsWith('bld.reptile-house:')) {
       // Replace the lettering on the authored entrance board, on the +X face.
       const faceX = cx + 5.08, cz = (min[2] + max[2]) / 2, y = min[1] + 3;
-      positions.push(faceX,y-.19,cz+.85, faceX,y-.19,cz-.85, faceX,y+.19,cz-.85, faceX,y+.19,cz+.85);
+      positions.push(faceX,y-.28,cz+1.2, faceX,y-.28,cz-1.2, faceX,y+.28,cz-1.2, faceX,y+.28,cz+1.2);
     } else positions.push(cx-width/2,cy-height/2,z, cx+width/2,cy-height/2,z, cx+width/2,cy+height/2,z, cx-width/2,cy+height/2,z);
     uvs.push(u0,v0,u1,v0,u1,v1,u0,v1); indices.push(base,base+1,base+2,base,base+2,base+3);
   });
