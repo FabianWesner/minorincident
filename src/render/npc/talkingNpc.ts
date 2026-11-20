@@ -1,4 +1,5 @@
 import type { SimWorld } from '../../sim/world/SimWorld';
+import { cureHangar } from '../../data/l10Story';
 
 const inPersonSpeaker: Record<string, 'voss' | 'ruiz' | 'sam'> = {
   'L10.voss-intro': 'voss', 'L10.voss-sample': 'voss', 'L10.voss-cure': 'voss',
@@ -40,7 +41,11 @@ export function hangarCastMember(world: SimWorld, id: number): boolean {
 /** Keep the hangar speakers in the exchange across adjacent lines. */
 export function joiningHangarConversation(world: SimWorld, id: number): boolean {
   const state = world.missions?.state;
-  if (world.scenario !== 'L10' || !state || state.steps.research?.status !== 'active') return false;
+  if (world.scenario !== 'L10' || !state) return false;
+  const player = world.entities.get(1)?.transform;
+  if (state.actors['hangar-voss'] === id && state.steps['research-hangar']?.status === 'active' && player
+    && Math.hypot(player.x - cureHangar.entrance.x, player.z - cureHangar.entrance.z) < 18) return true;
+  if (state.steps.research?.status !== 'active') return false;
   const line = state.counters['hangar-line'];
   return state.actors['hangar-voss'] === id && line >= 0 && line <= 8
     || state.actors['hangar-sam'] === id && line >= 6 && line <= 9;
