@@ -278,11 +278,18 @@ export class CrowdView extends Group {
       // A nearby actor can die before its living LOD changes. Keep its settled
       // body tier in the loading barrier, including the director's runner
       // fallback when the opening camera contains no infected yet.
-      await Promise.all([...this.neededModels(view)].map(key => {
+      const needed = this.neededModels(view);
+      // The crash encounter appears immediately after Begin, before its entities
+      // exist during loading. Prepare its regular looks and crawler as well as
+      // the runner fallback so their living draws join the loading warm-up.
+      if (this.world.scenario === 'L10') for (const id of [...regularInfectedModels, 'infected.crawler']) {
+        const key = this.modelAliases.get(id); if (key) needed.add(key);
+      }
+      await Promise.all([...needed].map(key => {
         const def = this.definitions.get(key)!;
         // L7 starts in a fight. All nearby living/death tiers belong to the
         // loading draw, rather than the first pickup/shot's background queue.
-        const lods: CrowdLod[] = this.world.scenario === 'L7' ? this.plannedLods.get(key)! : [alphaLookAssets.includes(def.asset) ? 'lod0' : 'lod2'];
+        const lods: CrowdLod[] = this.world.scenario === 'L7' || this.world.scenario === 'L10' ? this.plannedLods.get(key)! : [alphaLookAssets.includes(def.asset) ? 'lod0' : 'lod2'];
         return Promise.all(lods.map(lod => this.requestBatch(def, lod)));
       }));
     }
