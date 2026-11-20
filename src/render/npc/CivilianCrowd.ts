@@ -1,5 +1,6 @@
 import { crowdTexture, crowdSurfaceBindings, type CrowdSurfaceBinding } from '../characters/crowdTexture';
 import { waitingIdle, idleOffset } from './waitingIdle';
+import { hangarCastMember, hangarTalker, talkClip } from './talkingNpc';
 import { l10ClosingPose } from '../characters/l10Closing';
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
@@ -275,16 +276,20 @@ class CivilianBatch extends Group {
       const walkClip: Clip = activity?.prop === 'cane' ? 'npc-cane' : activity?.prop ? 'npc-carry' : e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed';
       // E19 story beats override the routine (render-only, set by the mission script).
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
-      let clip: Clip = storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
+      const talking = !down && !rising && c.state === 'calm' && hangarTalker(this.world, e.id);
+      const conversationClip = talking ? talkClip(e.id, this.world.tick) as Clip : null;
+      let clip: Clip = conversationClip ?? (storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle');
       // Waiting civilians in the war/aftermath keep their hands close, with individual gestures.
-      if (!storyClip && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && ['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '')) clip = waitingIdle(e.id, e.appearance?.handProp, c.state === 'hide' || c.state === 'flee');
+      if ((!storyClip || hangarCastMember(this.world, e.id)) && !talking && !down && !rising && speed <= .06 && (c.state === 'hide' || c.state === 'flee' || c.state === 'calm' && (!performing || activity?.activity === 'chat' || activity?.activity === 'stand' && elapsed >= .6)) && !c.ally && !activity?.prop && (['L4', 'L5', 'L7'].includes(this.world.districts?.composition.timeOfDay ?? this.world.scenario ?? '') || hangarCastMember(this.world, e.id))) clip = waitingIdle(e.id, e.appearance?.handProp, c.state === 'hide' || c.state === 'flee');
       if (e.passengerOf === undefined && !(performing && activity?.seat) && speed > .06 && !strides[clip] && !down && !rising && c.state !== 'grabbed' && c.state !== 'bitten') clip = speed > 2.5 ? civFlee : walkClip;
       if (closingPose) clip = 'idle';
       const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + idleOffset(e.id)) / duration % 1;
       const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : loopingStory.has(clip) ? (storyElapsed + idleOffset(e.id) / duration) % 1 : Math.min(.999, storyElapsed);
-      const presented = this.presentation.sample(e.id, drawTransform, this.world.tick, alpha, c.ally?.targetId ? 14 : crowdTurnRate);
+      const facingPlayer = this.world.entities.get(1)!.transform;
+      const facingCourier = talking ? { ...drawTransform, yaw: -Math.atan2(facingPlayer.z - drawTransform.z, facingPlayer.x - drawTransform.x) } : drawTransform;
+      const presented = this.presentation.sample(e.id, facingCourier, this.world.tick, alpha, talking ? Math.PI : c.ally?.targetId ? 14 : crowdTurnRate);
       // Convulsions while on the ground: a seeded body shudder that grows with the infection.
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
       if ((performing || noticingSeated) && activity?.seat) {
