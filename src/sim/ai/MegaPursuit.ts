@@ -277,7 +277,12 @@ export class MegaPursuit {
     // other node would cut across buildings and blocked links); off the graph it joins at the nearest node.
     let best: PursuitNode | null = null, score = Infinity;
     const leg = s.passed && s.route.length && s.route[0] !== s.passed ? s.route[0] : null;
-    const candidates = s.passed ? [s.passed, ...(leg ? [leg] : [])] : [this.nearestNode(s).id];
+    // A detailed chase can leave its last graph leg far behind. Rejoin the
+    // nearest authored node instead of sending the nonresident boss back
+    // hundreds of metres to the stale passed node after the courier escapes.
+    const stale = s.passed && dist(s, this.nodes.get(s.passed)!) > 100 && (!leg || dist(s, this.nodes.get(leg)!) > 100);
+    const candidates = s.passed && !stale ? [s.passed, ...(leg ? [leg] : [])] : [this.nearestNode(s).id];
+    if (stale) s.passed = null;
     for (const id of candidates) {
       const node = this.nodes.get(id)!, c = dist(s, node) + (costs.get(id) ?? Infinity) + (id === leg && key(s.passed!, leg) in s.blocked ? BLOCKED_COST : 0);
       if (c < score) { score = c; best = node; }
