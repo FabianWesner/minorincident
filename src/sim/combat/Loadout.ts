@@ -17,7 +17,8 @@ export class Loadout {
   }
   /** Presentation order leaves slot storage, checkpoint indices and cooldowns intact. */
   orderedEntries(side: Side): { side: Side; index: number; id: string }[] {
-    return this.state[side].rack.flatMap((slot, index) => slot.id === 'ability.corgi-lure' ? [] : [{ side, index, id: slot.id }]).sort((a, b) => compareWeapons(a.id, b.id));
+    return this.state[side].rack.flatMap((slot, index) => slot.id === 'ability.corgi-lure' ? [] : [{ side, index, id: slot.id }]).sort((a, b) =>
+      (weaponKey(a.id) ?? 99) - (weaponKey(b.id) ?? 99) || compareWeapons(a.id, b.id));
   }
   /** Ordered carried actions for mouse selection; kick is part of unarmed, not a slot. */
   activeEntries(): { side: Side; index: number; id: string }[] {
