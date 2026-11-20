@@ -138,7 +138,8 @@ async function checkWeaponControlRoles(): Promise<void> {
   w.knockback(target, { x: 1, z: 0 }, 2);
   expect(target.transform.x).toBe(before);
   w.entities.delete(pinned); w.spatial.delete(pinned);
-  const suppressed = dummy(w, 2, 0, 100); equip(w, ['weapon.army-mg']); fire(w); step(w, 6);
+  w.entities.get(1)!.transform.x = -10; w.spatial.set(1, -10, 0);
+  const suppressed = dummy(w, 11, 0, 100); w.entities.get(suppressed)!.combat!.radius = 2; equip(w, ['weapon.army-mg']); fire(w); step(w, 20);
   expect(w.entities.get(suppressed)?.combat?.statuses.find(status => status.kind === 'slowed')?.def.slow).toBe(.2);
 }
 
