@@ -262,10 +262,6 @@ export class DistrictOcclusion {
         if (Math.abs(ref.position.x + entry.origin[0] - player.x) > 24 + offset || Math.abs(ref.position.z + entry.origin[1] - player.z) > 24 + offset) continue;
         const [c, sn, x, z] = DistrictOcclusion.footFrame(entry, ref);
         if (Math.abs(x - player.x) > 24 || Math.abs(z - player.z) > 24) continue;
-        // A thin fence can cover the courier between the nine subject rays (the subject also contains the corgi).
-        // Admit nearby structural spans; the existing per-fragment disc, depth and floor tests keep only their
-        // foreground portion transparent. Behind-subject fences and the rest of each span stay opaque.
-        if (isStructuralOccluder(entry.id)) { this.cutPlacements.add(ref); continue; }
         // Slab test in the placement's local frame (oriented footprint, real height).
         const ox = o.x - x, oz = o.z - z, sx = ref.scale.x, sz = ref.scale.z;
         const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz;
