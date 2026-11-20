@@ -6,7 +6,7 @@ export interface BurningObject { id: string; x: number; z: number; flameHeight: 
 export class VegetationFire {
   readonly objects: BurningObject[];
   constructor(placements: readonly Placement[], private readonly blocked: (a: Vec2, b: Vec2) => boolean = () => false) {
-    this.objects = placements.filter(p => /^prop\.(tree|street-tree|street-tree-blossom|garden-bush|hedge|picket-fence|privacy-fence)$/.test(p.assetId))
+    this.objects = placements.filter(p => /^prop\.(tree(?:\.dead)?|street-tree|street-tree-blossom|garden-bush(?:-small)?|hedge|picket-fence|privacy-fence)$/.test(p.assetId))
       .map(p => ({ id: p.id, x: p.position[0], z: p.position[2], flameHeight: /tree/.test(p.assetId) ? Math.max(1, (p.visualAabb?.max[1] ?? 4) * .45) : .25, state: 'intact' as const, at: 0 }));
   }
   ignite(position: Vec2, tick: number, radius: number): void {
