@@ -27,7 +27,7 @@ export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strengt
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
 // F-290: 2.4 rockets/s overlaps ~3 hot cores, ~8 soot clusters and up to
 // 15 debris bursts. Retain their lifetimes at both tiers without recycling live slots.
-const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 192, FIREBALLS_LOW = 96, DEBRIS = 256, FLAMES = 128, JET_FLAMES = 32, GLOWS = 40, PARTS = 12;
+const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 192, FIREBALLS_LOW = 96, DEBRIS = 256, FLAMES = 128, JET_FLAMES = 32, JET_FLAMES_LOW = 24, GLOWS = 40, PARTS = 12;
 const wind = { x: .55, z: .25 };
 /** Q-132: smoke grenade clouds and small debris fires (size < 1, a lick of flame) cast no long moon/sun shadow strip. */
 export const castsColumnShadow = (c: { cloud?: number; size: number }): boolean => !c.cloud && c.size >= 1;
@@ -750,7 +750,7 @@ export class Blasts extends Group {
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
     let flames = 0, glows = 0;
-    const reserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2) : 0;
+    const reserved = this.flameJet && now < this.flameJet.until ? (this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW) : 0;
     const sun = this.host.sunDirection?.() ?? { x: .45, y: .78, z: .43 }, horizontal = Math.hypot(sun.x, sun.z);
     let shadows = 0;
     for (const c of [...this.columns, ...this.fireColumns.values()]) {
@@ -788,11 +788,11 @@ export class Blasts extends Group {
     }
     if (this.flameJet && now >= this.flameJet.until) this.clearFlameJet();
     if (this.flameJet) {
-      const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2;
+      const j = this.flameJet, count = this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW;
       const sideX = -j.dz, sideZ = j.dx, fade = Math.min(1, (j.until - now) / .24);
       const reach = j.range * (.94 + .06 * Math.sin(now * Math.PI * 16));
       for (let i = 0; i < count; i++) {
-        const t = (now * (1.15 + (i % 5) * .035) + i / count) % 1;
+        const t = (now * 1.2 + i / count) % 1;
         const wave = Math.sin(now * 23 + i * 2.13 + j.seed) * .12 * t;
         const spread = Math.sin(i * 11.7 + j.seed) * (.025 + .3 * t) + wave;
         const x = j.x + j.dx * reach * t + sideX * spread;
@@ -879,7 +879,7 @@ export class Blasts extends Group {
     for (let i = 0; i < this.fireballs.count; i++) if (this.fbExpiry[i] > this.time) fireballs++;
     let chunks = 0; for (let i = 0; i < DEBRIS; i++) if (this.debrisExpiry[i] > this.time) chunks++;
     return { wind: { x: this.windNode.value.x, z: this.windNode.value.z }, blasts: this.blasts, puffs, puffCap: this.puffs.count, fireballs, fireballCap: this.fireballs.count, chunks, chunkCap: DEBRIS, poolOverwrites: { ...this.poolOverwrites }, flames: this.flames.visible ? this.flames.count : 0, glows: this.glows.visible ? this.glows.count : 0,
-      flameJet: this.flameJet ? { ...this.flameJet, cards: this.quality === 'high' ? JET_FLAMES : JET_FLAMES / 2, light: !!this.jetLight } : null,
+      flameJet: this.flameJet ? { ...this.flameJet, cards: this.quality === 'high' ? JET_FLAMES : JET_FLAMES_LOW, light: !!this.jetLight } : null,
       vehicleSmokeColumns: this.vehicleColumns.size, columns: this.columns.length + this.fireColumns.size + this.vehicleColumns.size, transientColumns: this.columns.length, fireColumns: this.fireColumns.size, columnShadows: this.columnShadows.count, clouds: this.cloudColumns.size, scorch: this.scorch.count, parts: this.parts.count, flash: this.flash, bulletTime: { ...this.bullet }, slowMotion: this.slowMotion };
   }
   dispose(): void {
