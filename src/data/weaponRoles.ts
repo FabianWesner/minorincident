@@ -11,5 +11,5 @@ export const weaponRoles: Readonly<Record<string, string>> = {
   'weapon.firecracker-lure': 'Draw infected toward the thrown firecracker', 'weapon.smg': 'Fast fire at close range',
   'weapon.pistol': 'Ammunition-fed sidearm', 'weapon.machine-gun': 'Sustained automatic fire',
   'weapon.machete': 'Fast, lethal cuts',
-  'ability.corgi-lure': 'Draw nearby infected toward a thrown squeaker for 5 seconds',
+  'ability.corgi-lure': 'Draw nearby infected toward the corgi for 5 seconds',
 };

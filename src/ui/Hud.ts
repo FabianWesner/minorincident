@@ -133,7 +133,7 @@ export class Hud {
     this.weaponRack.className = 'hud-weapon-rack hud-panel'; this.weaponRack.setAttribute('aria-label', 'Carried weapons and number keys');
     this.rackTooltip.className = 'weapon-rack-tooltip'; this.rackTooltip.hidden = true; this.rackTooltip.setAttribute('role', 'tooltip');
     this.bindRackTooltip(this.corgiLure);
-    this.corgiLure.tabIndex = -1; this.corgiLure.addEventListener('mousedown', event => event.preventDefault());
+    this.corgiLure.addEventListener('mousedown', event => event.preventDefault());
     vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
@@ -471,7 +471,7 @@ export class Hud {
         item.title = `${hole ? 'Not found' : label(weapon)}${weaponRoles[weapon] ? ` · ${weaponRoles[weapon]}` : ''}${shortcut ? ` · ${shortcut}` : ''}`; item.setAttribute('aria-label', item.title);
         item.dataset.tipKey = shortcut;
         this.bindRackTooltip(item);
-        item.type = 'button'; item.tabIndex = -1;
+        item.type = 'button';
         // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
         item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
         item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (!hole && key !== undefined) this.game.input.selectWeaponKey(key); });
@@ -504,7 +504,7 @@ export class Hud {
     const corgiRecharging = (player.weapons?.corgiReady ?? 0) > world.tick;
     attribute(this.corgiLure, 'aria-disabled', String(corgiRecharging));
     const corgiCooldown = Math.max(0, ((player.weapons?.corgiReady ?? 0) - world.tick) / 60);
-    this.corgiLure.dataset.tipName = 'Corgi Lure'; this.corgiLure.dataset.tipRole = 'Draws infected within 15 m to the squeaker for 5 seconds';
+    this.corgiLure.dataset.tipName = 'Corgi Lure'; this.corgiLure.dataset.tipRole = 'Draws infected within 15 m to the corgi for 5 seconds';
     this.corgiLure.dataset.tipKey = 'G'; this.corgiLure.dataset.tipExtra = corgiCooldown > 0 ? `Recharging · ${corgiCooldown.toFixed(1)}s` : 'Ready';
     setHidden(this.weaponRack, !entries.length && !holes.length && !hasLure);
     attribute(this.weaponRack, 'data-touch', String(this.game.input.scheme === 'touch'));
@@ -545,17 +545,19 @@ export class Hud {
     if (!preparing) { this.updateStory(); this.onboarding.update(this.game.input.scheme, visible); }
   }
   private bindRackTooltip(source: HTMLElement): void {
-    source.addEventListener('pointerenter', () => this.showRackTooltip(source));
+    let longPressed = false;
+    source.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') this.showRackTooltip(source); });
     source.addEventListener('pointerleave', () => this.hideRackTooltip());
     source.addEventListener('focus', () => this.showRackTooltip(source));
     source.addEventListener('blur', () => this.hideRackTooltip());
     source.addEventListener('pointerdown', event => {
-      if (event.pointerType === 'touch') { window.clearTimeout(this.rackTooltipTimer); this.rackTooltipTimer = window.setTimeout(() => this.showRackTooltip(source), 150); }
+      if (event.pointerType === 'touch') { longPressed = false; window.clearTimeout(this.rackTooltipTimer); this.rackTooltipTimer = window.setTimeout(() => { longPressed = true; this.showRackTooltip(source); }, 150); }
     });
     source.addEventListener('pointerup', event => {
       if (event.pointerType === 'touch') { window.clearTimeout(this.rackTooltipTimer); if (!this.rackTooltip.hidden) window.setTimeout(() => this.hideRackTooltip(), 1800); }
     });
     source.addEventListener('pointercancel', () => { window.clearTimeout(this.rackTooltipTimer); this.hideRackTooltip(); });
+    source.addEventListener('click', event => { if (longPressed) { event.preventDefault(); event.stopImmediatePropagation(); longPressed = false; } }, true);
   }
   private showRackTooltip(source: HTMLElement): void {
     const name = source.dataset.tipName ?? (source.dataset.hole === 'true' ? 'Not found yet' : 'Corgi Lure');

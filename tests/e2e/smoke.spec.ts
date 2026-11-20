@@ -253,8 +253,7 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     const attackCount = await page.evaluate(() => window.__SS__!.events(0).filter(event => event.type === 'combat.attack').length);
     const targets = [
       ['handgun', page.locator('.hud-weapon-choice[data-weapon="weapon.handgun"]')],
-      ['hole', page.locator('.hud-weapon-choice[data-hole="true"]').first()],
-      ['corgi', page.locator('#corgi-lure')],
+      ['corgi', page.getByTestId('corgi-lure')],
     ] as const;
     for (const [name, target] of targets) {
       await expect(target).toBeVisible();
@@ -263,6 +262,14 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
       await expect(page.locator('.weapon-rack-tooltip')).toBeVisible();
       await page.screenshot({ path: `test-results/smoke/l10-rack/tooltip-${name}-${suffix}.png` });
     }
+    const loadout = await page.evaluate(() => { const p = window.__SS__!.getState().player!; return { left: p.weapons!.LEFT.rack.map(slot => slot.id), right: p.weapons!.RIGHT.rack.map(slot => slot.id) }; });
+    await page.evaluate(async () => { const a = window.__SS__!; a.setLoadout(['weapon.machete'], ['weapon.handgun']); await a.step(1); });
+    const hole = page.locator('.hud-weapon-choice[data-hole="true"]').first();
+    const holeBox = await hole.boundingBox(); expect(holeBox).not.toBeNull();
+    await page.mouse.move(holeBox!.x + holeBox!.width / 2, holeBox!.y + holeBox!.height / 2);
+    await expect(page.locator('.weapon-rack-tooltip')).toContainText('Not found yet');
+    await page.screenshot({ path: `test-results/smoke/l10-rack/tooltip-hole-${suffix}.png` });
+    await page.evaluate(async racks => { const a = window.__SS__!; a.setLoadout(racks.left, racks.right); await a.step(1); }, loadout);
     await page.mouse.move(700, 600);
     expect(await page.evaluate(() => window.__SS__!.events(0).filter(event => event.type === 'combat.attack').length), 'tooltip hover does not attack').toBe(attackCount);
   };
