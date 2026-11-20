@@ -800,7 +800,12 @@ export class CrowdView extends Group {
           };
           this.ashHeaps = grow(this.ashHeaps); this.ashBones = grow(this.ashBones);
         }
-        const x = e.transform.x, z = e.transform.z, ground = this.world.districts?.groundHeight(x, z) ?? 0;
+        // The death clips lie toward local -X from the feet. Put the ash at
+        // the body centre, using the same resting yaw as the corpse pose.
+        const resting = e.infected ? this.corpsePosition(e, e.infected.deadAt) : e.transform;
+        const reach = .6 * Math.min(1, ashProgress * 2);
+        const x = resting.x - Math.cos(resting.yaw) * reach, z = resting.z + Math.sin(resting.yaw) * reach;
+        const ground = this.world.districts?.groundHeight(x, z) ?? 0;
         const pieces = [
           [-.17, -.06, .55, .16, .38, .2], [.16, .04, .48, .14, .35, 1.1], [-.02, .15, .42, .13, .32, 2.2], [.04, -.15, .38, .12, .3, .7],
           [-.31, .12, .18, .07, .15, .4], [.28, -.15, .16, .06, .13, 1.2], [.12, .24, .13, .05, .13, .8], [-.08, -.26, .15, .05, .12, 2],
