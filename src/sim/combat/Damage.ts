@@ -170,7 +170,7 @@ export class Damage {
       // Explosives and lethal fire finish a downed infected in every level.
       if (downed(target) && this.amount(hit, target) > 0) {
         if (!lethal(hit)) { this.world.infected!.down(target, false); return 0; }
-        if (hit.fire || hit.actionId === 'weapon.flamethrower') target.ashDeath = { at: this.world.tick };
+        if (hit.fire || hit.actionId === 'weapon.flamethrower') target.ashDeath = { at: this.world.tick, x: target.transform.x, y: target.transform.y, z: target.transform.z, yaw: target.transform.yaw };
         this.world.infected!.down(target, true);
         this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount: 0, damageType: hit.type });
       }
@@ -315,7 +315,7 @@ export class Damage {
       if (target.infected) target.infected.knockdowns = (target.infected.knockdowns ?? 0) + 1;
       // Default hits down infected; explosions and explicit permanent counters leave a corpse.
       const fireDeath = lethal(hit) && (hit.fire || hit.actionId === 'weapon.flamethrower');
-      if (fireDeath && target.infected) target.ashDeath = { at: this.world.tick };
+      if (fireDeath && target.infected) target.ashDeath = { at: this.world.tick, x: target.transform.x, y: target.transform.y, z: target.transform.z, yaw: target.transform.yaw };
       const up = target.infected && this.world.infected ? this.world.infected.down(target, lethal(hit)) : -1;
       this.world.events.emit({ ...event, type: 'combat.kill', ...(up >= 0 ? { downed: up } : {}) } satisfies GameEvent);
     }
