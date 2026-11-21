@@ -32,7 +32,10 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'military-exit', region: 'military-zone', at: [2327, -75], regular: [7, 5], dogs: 2, alphas: 1, roles: ['infected.riot', 'infected.armored'] },
   { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [6, 4], dogs: 1, alphas: 1, roles: ['infected.hazmat', 'infected.nurse'] },
   { id: 'corridor-line', region: 'destroyed-corridor', at: [3180, 95], regular: [8, 6], dogs: 2, alphas: 1, roles: ['infected.bloated', 'infected.riot'] },
-  { id: 'corridor-exit', region: 'destroyed-corridor', at: [3510, 95], regular: [7, 5], dogs: 1, alphas: 1, roles: ['infected.sprinter', 'infected.firefighter'] },
+  // Keep the existing corridor-exit pack on the final approach. The field
+  // hospital now owns its own authored cohort at x=3502; stacking both here
+  // made that recovery point a two-wave attrition wall.
+  { id: 'corridor-exit', region: 'destroyed-corridor', at: [3610, 95], regular: [7, 5], dogs: 1, alphas: 1, roles: ['infected.sprinter', 'infected.firefighter'] },
   { id: 'complex-approach-0', region: 'dispersal-complex', at: [3820, -41], regular: [7, 5], dogs: 1, alphas: 0 },
   { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [9, 6], dogs: 1, alphas: 0, roles: ['infected.runner', 'infected.runner', 'infected.firefighter'] },
 ];
@@ -40,12 +43,12 @@ export const cureEncounters: readonly CureEncounter[] = [
 export const curePaceEncounters: readonly CureEncounter[] = [
   // L10 PO 2026-11-19: every authored scene has an encounter attached so the courier
   // has to fight through the beat. Route positions follow the eastbound corridor.
-  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [3010, 16], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
-  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3076, 33], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.runner', 'infected.runner'] },
-  { id: 'setpiece-scarecrow-field', type: 'field-horde', setPiece: 'scarecrow-field', region: 'destroyed-corridor', at: [3190, 64], regular: [5, 4], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.hazmat', 'infected.runner'] },
+  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [3010, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3076, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.runner', 'infected.runner'] },
+  { id: 'setpiece-scarecrow-field', type: 'field-horde', setPiece: 'scarecrow-field', region: 'destroyed-corridor', at: [3190, 95], regular: [5, 4], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.hazmat', 'infected.runner'] },
   { id: 'setpiece-burning-convoy', type: 'field-horde', setPiece: 'burning-convoy', region: 'destroyed-corridor', at: [3260, 95], regular: [11, 8], dogs: 1, alphas: 0, roles: ['infected.firefighter', 'infected.runner', 'infected.runner'] },
   { id: 'setpiece-dark-underpass', type: 'field-horde', setPiece: 'dark-underpass', region: 'destroyed-corridor', at: [3390, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.crawler', 'infected.crawler', 'infected.crawler'] },
-  { id: 'setpiece-field-hospital', type: 'field-horde', setPiece: 'field-hospital', region: 'destroyed-corridor', at: [3502, 37], regular: [9, 7], dogs: 1, alphas: 0, roles: ['infected.nurse', 'infected.nurse', 'infected.runner'] },
+  { id: 'setpiece-field-hospital', type: 'field-horde', setPiece: 'field-hospital', region: 'destroyed-corridor', at: [3502, 95], regular: [4, 2], dogs: 0, alphas: 0, roles: ['infected.nurse', 'infected.runner'] },
   { id: 'corn-field-horde', type: 'field-horde', region: 'residential-fringe', at: [830, 80], regular: [14, 7], dogs: 1, alphas: 0 },
   { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [12, 7], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [7, 6], dogs: 0, alphas: 0 },
@@ -128,8 +131,8 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // once-only slot, so a carried save cannot admit it a second time.
     const slotOwner = group.id === 'depot-workers' && archetype === 'infected.alpha' ? 'depot-alpha' : group.id;
     return { key: `${slotOwner}:${archetype}:${index}`, archetype,
-      x: gateTower ? at[0] + 5 + (i % 3 - 1) * 2 : at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
-      z: gateTower ? at[1] + 15 + Math.floor(i / 3) * 2 : at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
+      x: gateTower ? at[0] + 3 + (i % 3 - 1) * 2 : at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
+      z: gateTower ? at[1] + 7 + Math.floor(i / 3) * 2 : at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
   });
 }
 

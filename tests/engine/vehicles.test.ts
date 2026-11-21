@@ -97,6 +97,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   const shoved = await vehicleShovesProps();
   expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
+  await motorbikeRide();
   await zooParkedBoarding();
   await zooCheckpointHandoff();
   await apcBoarders();
@@ -898,5 +899,54 @@ async function bikeMountIntent(): Promise<void> {
     expect(bike.riding, 'walked up and stopped').toBe(true);
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false }); world.update();
     expect(bike.riding, 'E dismounts').toBe(false);
+  } finally { world.dispose(); }
+}
+
+async function motorbikeRide(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('combat-arena', 1);
+  try {
+    const bike = world.vehicles!.bicycle, player = world.entities.get(1)!;
+    world.combat!.setLoadout(['weapon.handgun'], ['weapon.shotgun']);
+    const dogEntity = world.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { x: player.transform.x, y: 0, z: player.transform.z + 2, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
+    const dogId = dogEntity.id;
+    bike.spawnMotorbike({ x: player.transform.x + 1, z: player.transform.z }, Math.PI / 2);
+    world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
+    expect(bike.riding).toBe(true);
+    const dog = world.entities.get(dogId)!;
+    expect(dog.passengerOf).toBe(bike.entity!.id);
+    const target = world.spawnDummy('infected.dummy', { x: player.transform.x + 5, z: player.transform.z }, { hp: 1000 });
+    for (let i = 0; i < 30; i++) { world.setInput({ aim: { x: 1, z: 0 }, left: { down: i === 0, held: true, up: false } }); world.update(); }
+    expect(world.events.events().some(e => e.type === 'combat.hit' && e.targetId === target)).toBe(true);
+    world.entities.get(target)!.hidden = true;
+    for (const entity of world.entities.iterate()) if (entity.infected) { entity.hidden = true; entity.infected.hidden = true; }
+    const beforeOtherWeapon = world.events.events().filter(e => e.type === 'combat.attack').length;
+    world.setInput({ right: { down: true, held: true, up: false }, selectedWeaponKey: 2 }); world.update();
+    expect(world.events.events().filter(e => e.type === 'combat.attack')).toHaveLength(beforeOtherWeapon);
+    expect(player.weapons!.selectedSide).toBe('LEFT');
+    let peakSpeed = 0, travel = 0, previous = { x: player.transform.x, z: player.transform.z };
+    for (let i = 0; i < 1200; i++) {
+      world.setInput({ drive: { throttle: 1, steer: .65 } }); world.update();
+      const p = player.transform; travel += Math.hypot(p.x - previous.x, p.z - previous.z); previous = { x: p.x, z: p.z };
+      peakSpeed = Math.max(peakSpeed, bike.entity!.bicycle!.speed);
+    }
+    expect(travel).toBeGreaterThan(100);
+    expect(peakSpeed).toBeGreaterThan(8);
+    expect(peakSpeed).toBeLessThanOrEqual(9.5);
+    const infected = world.entities.get(target)!;
+    infected.hidden = false;
+    infected.infected = { hidden: false } as NonNullable<typeof infected.infected>;
+    Object.assign(infected.transform, { x: player.transform.x, z: player.transform.z });
+    bike.filter(emptyInput());
+    expect(bike.riding, 'infected contact knocks the motorbike rider off').toBe(false);
+    expect(infected.health.current).toBeGreaterThan(0);
+    expect(dog.passengerOf).toBeUndefined();
+    infected.hidden = true; infected.infected.hidden = true;
+    world.tick += 20;
+    bike.filter({ ...emptyInput(), interact: true });
+    expect(bike.riding, 'rider remounts after the knock-off lockout').toBe(true);
+    expect(dog.passengerOf).toBe(bike.entity!.id);
+    world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
+    expect(bike.riding).toBe(false);
+    expect(dog.passengerOf).toBeUndefined();
   } finally { world.dispose(); }
 }
