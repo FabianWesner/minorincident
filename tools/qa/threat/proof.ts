@@ -331,10 +331,13 @@ export async function proveThreatAudit(): Promise<void> {
   const identities = new SpawnIdentities(() => { births++; });
   const first = identities.spawn(entity), corpse = { ...entity, corpse: true };
   assert.equal(identities.identity(corpse), first, 'settled corpse clone is not a second spawn');
+  const streamed = structuredClone(entity);
+  assert.equal(identities.identity(streamed), first, 'a streamed living actor keeps its spawn identity');
   assert.equal(births, 1);
   const second = identities.spawn(entity);
   assert.notEqual(second, first, 'same numeric pool ID must count as a new spawn');
   assert.equal(identities.identity(corpse), first, 'later reuse must not relabel an already observed corpse');
+  assert.equal(identities.identity(streamed), first, 'later reuse must not relabel a previously observed streamed actor');
   assert.equal(births, 2);
   const goal = { x: 5, z: 0 };
   assert(probe.query(nav, entity, goal));

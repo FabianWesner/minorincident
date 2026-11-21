@@ -16,7 +16,7 @@ export const median = (values: readonly number[]): number | null => {
   const sorted = [...values].sort((a, b) => a - b), n = sorted.length;
   return n ? (sorted[Math.floor((n - 1) / 2)] + sorted[Math.floor(n / 2)]) / 2 : null;
 };
-/** Pool reuse is a new spawn; a frozen corpse clone retains the preceding spawn's identity. */
+/** Pool reuse is a new spawn; chunk and corpse clones retain the preceding spawn's identity. */
 export class SpawnIdentities {
   private readonly records = new WeakMap<EntitySnapshot, string>();
   private readonly ids = new Map<number, string>();
@@ -28,8 +28,11 @@ export class SpawnIdentities {
   }
   identity(e: EntitySnapshot): string {
     const saved = this.records.get(e); if (saved) return saved;
-    const corpse = e.corpse && this.ids.get(e.id);
-    if (corpse) { this.records.set(e, corpse); return corpse; }
+    // Chunk streaming serializes living actors and restores them as new
+    // objects without calling ai.spawn. Numeric IDs remain reserved for that
+    // actor; the spawn hook explicitly assigns a new token on pool reuse.
+    const previous = this.ids.get(e.id);
+    if (previous) { this.records.set(e, previous); return previous; }
     return this.spawn(e);
   }
 }
