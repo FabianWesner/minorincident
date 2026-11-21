@@ -197,6 +197,7 @@ for (const tier of tiers) {
   const authoredThrowCrateIds = new Set<number>();
   const overpassState: unknown[] = [];
   const bikeRecovery: unknown[] = [];
+  const hospitalFigures = new Map<number, { held: boolean; visibleAtBeat: boolean; released: boolean }>();
   let billboardFallTick: number | undefined, hospitalOpenTick: number | undefined;
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
   let mounts = 0, bikeTicks = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
@@ -265,6 +266,13 @@ for (const tier of tiers) {
         update(); const p = world.entities.get(1)!;
         billboardFallTick ??= world.l10Encounters?.state.billboardFallAt;
         hospitalOpenTick ??= world.l10Encounters?.state.hospitalOpenAt;
+        for (const [key, id] of Object.entries(world.l10Encounters?.state.spawned ?? {})) if (key.startsWith('setpiece-field-hospital:stage:') && id > 0) {
+          const actor = world.entities.get(id), observed = hospitalFigures.get(id) ?? { held: false, visibleAtBeat: false, released: false };
+          if (actor?.emerging && actor.health.current > 0) observed.held = true;
+          if (actor?.emerging && actor.health.current > 0 && world.missions!.state.states['l10-finale-beat-8'] && world.infected!.director.inFrame(actor.transform, 1, true)) observed.visibleAtBeat = true;
+          if (observed.held && actor?.infected && !actor.emerging && actor.health.current > 0) observed.released = true;
+          hospitalFigures.set(id, observed);
+        }
         const riding = !!world.vehicles?.bicycle.riding;
         if (p.transform.x >= 2970 && p.transform.x <= 3070 && world.tick % 60 === 0 && bikeRecovery.length < 240) {
           const bike = world.vehicles?.bicycle, frame = bike?.entity;
@@ -320,6 +328,7 @@ for (const tier of tiers) {
   if (!finaleOnly) {
     check(tier, 'billboard collapse triggers on the route', billboardFallTick !== undefined, billboardFallTick ?? null);
     check(tier, 'hospital tents open on the route', hospitalOpenTick !== undefined, hospitalOpenTick ?? null);
+    check(tier, 'hospital figures stage in frame and return to infected AI', [...hospitalFigures.values()].some(v => v.held && v.visibleAtBeat && v.released), [...hospitalFigures]);
     for (const b of roadblockRide) check(tier, `ride, fight, remount and cross roadblock ${b.x}`, !!b.crossed, b);
   }
   if (!finaleOnly) check(tier, 'overpass Mega throws the authored crate during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'prop-thrown' && e.propId !== undefined && authoredThrowCrateIds.has(e.propId) && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, crates: [...authoredThrowCrateIds], throws: overpassThrows });

@@ -1,7 +1,7 @@
 {
-  "revision": "419ee599a1805d5b61ed9fcd7f538fc1bbf2d583",
-  "sourceHash": "bf86588be97718c68ebd49155cee91a08756bd403f28cf4e4870debacac37ff1",
-  "command": "L10_STORY_TIERS=low and high separately, node --import tsx/esm tools/qa/l10-story.ts",
+  "revision": "0aab3bb81a0695af45d9602d3b7e12511c35f8a8",
+  "sourceHash": "e566cf84d76fdf4b4ef51bd2e9ab732a571859c607e084b5a0a2a1d820e3ed0a",
+  "command": "node --import tsx/esm tools/qa/l10-story.ts",
   "checks": [
     {
       "tier": "low",
@@ -65,10 +65,10 @@
       "pass": false,
       "observed": {
         "x": 3010,
-        "arrived": 63273,
-        "dismounted": 63454,
-        "fight": 63461,
-        "opened": 65690,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
         "remounted": 0,
         "crossed": 0
       }

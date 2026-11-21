@@ -11,14 +11,14 @@
 
 ## Route receipt
 
-[`pacing.json`](pacing.json) and [`roadblocks.json`](roadblocks.json) are the current LOW/HIGH ordinary-input probes after the solid-contact crash change. The probe passed 82/98 checks. Both tiers recorded 0/4 complete roadblock sequences.
+[`pacing.json`](pacing.json) and [`roadblocks.json`](roadblocks.json) are the current LOW/HIGH ordinary-input probes after the solid-contact crash change. The probe passed 84/100 checks. Both tiers recorded 0/4 complete roadblock sequences.
 
 | Tier | Hangar to gate | Longest activity gap | Bike ticks | Deaths |
 |---|---:|---:|---:|---:|
-| LOW | 406.5 s | 17.4 s | 7,748 | 3 |
-| HIGH | 293.4 s | 16.1 s | 1,883 | 8 |
+| LOW | 406.5 s | 13.6 s | 7,748 | 3 |
+| HIGH | 293.4 s | 19.6 s | 1,883 | 13 |
 
-Both tiers miss total time, cadence, and the required ride/fight/remount/cross loops. The quarantine cohort now follows the courier's approach lane like the other paced groups; its spawns still use director-safe admission. HIGH recorded first-gate arrival, fight, and opening, but no remount and crossing. Incomplete sequence state resets on death, so zero final fields do not imply no intermediate attempts. LOW and HIGH were run separately against the same source hash (41/49 checks each). Typecheck, lint, and mission interactions passed; the full gates must be rerun after this source change.
+Both tiers miss total time, cadence, and the required ride/fight/remount/cross loops. The quarantine cohort now follows the courier's approach lane like the other paced groups; its spawns still use director-safe admission. HIGH recorded first-gate arrival, fight, and opening, but no remount and crossing. Incomplete sequence state resets on death, so zero final fields do not imply no intermediate attempts. LOW and HIGH were run together; HIGH exceeds the 10-death limit, with five additional deaths after reaching the finale arena. Typecheck, lint, and mission interactions passed; the full gates must be rerun after this source change.
 
 ## Verification
 
@@ -70,3 +70,5 @@ After a nearby gate opens, the bike hint now remains visible at up to 40 m and s
 A hospital figure trial admitted two ordinary `infected.runner` actors at the tent entrance through `director.safe` while the courier approached. The native HIGH beat-8 frame still showed no figures; a follow-up entity probe showed at least one had already chased away from the tent (x≈3457, over 40 m away) before the event. The trial was discarded. A staged animation and release needs to preserve normal infected behavior after the reveal and keep the director's safe admission and persistence rules.
 
 The hospital now safely admits two existing runner figures off camera at the tent. They sway under the existing emergence hold until 90 ticks after beat 8 and the tent opening, then return to ordinary pursuit; passing x=3512 also releases them. Dead actors leave the hold without being removed. The updated native HIGH sheet shows one figure inside the lit opening and another at the entrance. Typecheck, lint, and mission interactions passed; route, threat and other final gates need rerunning. Beat 7 still lacks a readable underpass.
+
+The paired ordinary-input observer confirmed at least one staged hospital figure in the beat-8 frame and a subsequent return to infected AI on both tiers. HIGH total deaths rose from eight to thirteen after hospital staging, all five additional deaths occurring later in the arena; this regression remains open.
