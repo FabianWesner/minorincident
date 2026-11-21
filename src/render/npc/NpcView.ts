@@ -199,7 +199,7 @@ export class NpcView extends Group {
       const time = Math.max(0, this.world.tick + alpha - 1) / 60, distance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const warn = e.companion?.warn;
       // The corgi sits down next to her as the cure is released (story-script epilogue beat 1).
-      if (hero.animator && e.companion) hero.animator.sitAfter = this.world.missions?.state.cureFront ? .8 : 4;
+      if (hero.animator && e.companion) hero.animator.sitAfter = e.companion.riding ? 0 : this.world.missions?.state.cureFront ? .8 : 4;
       if (hero.animator) hero.animator.update(time, closing ? this.world.missions!.state.epilogue!.phase === 'thanks' && this.world.missions!.state.epilogue!.phaseTicks < 180 ? 1.5 : 0 : motion.speed, closing ? this.world.missions!.state.epilogue!.phaseTicks / 40 : distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, closingCast ? 0 : motion.speed, distance, down);
       if (closing && hero.head) {
