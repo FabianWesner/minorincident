@@ -2,22 +2,22 @@
 
 ## Change
 
-The `alpha.pounce` impact now adds a short expanding ground pressure ring, a radial ring of low dust that lives for about 0.8–1.0 s, dark debris flecks, and a procedural cracked-ground decal that fades over 1.35 s. HIGH emits 32 dust puffs and 12 debris pieces; LOW emits 12 and 5. The existing fixed-slot particle and ground pools are reused; emission happens only on the impact event. The existing positional `mega.impact` thud and short camera shake remain in place. Other Mega moves are unchanged.
+The `alpha.pounce` impact now adds a short expanding ground pressure ring, a radial ring of low dust that lives for about 0.8–1.0 s, dark debris flecks, and a procedural cracked-ground decal that fades over 1.35 s. HIGH emits 32 dust puffs and 12 debris pieces; LOW emits 16 dust puffs and two debris particles (the shared burst helper reduces the requested five on LOW). The existing fixed-slot particle and ground pools are reused; emission happens only on the impact event. The existing positional `mega.impact` thud and short camera shake remain in place. Other Mega moves are unchanged.
 
 ## Checks
 
 - `npm run typecheck`: passed.
 - `npm run lint`: passed.
 - `npx vitest run tests/engine/infected-ai.test.ts --configLoader runner`: passed (5 tests).
-- `npm test`: passed locally (27 files, 106 tests, 157.0 s; 150/150 budgeted cases).
+- `sh tools/remote/run.sh "$PWD" -- npm test`: passed (27 files, 105 passed, 1 skipped, 198.5 s; 150/150 budgeted cases).
 - Scene Lab: all eight HIGH/LOW, L4 day/L10 night, zoom 1/1.5 rows passed their configured gates in headless WebGL2. The initial night attempt used an invalid preset and was rerun with `L10-night`.
 
 ## Visual captures and washout
 
-[Comparison](comparison.jpg) shows frame 104, before and after, HIGH and LOW day. I inspected it: the after image adds dark curved crack lines around the Mega, but the dust and debris do not read clearly at this camera scale; the existing gold ring remains the dominant impact. This does not establish the requested heavy dust read. Captures for all eight rows are under `test-results/s216-{before,after}-{high,low}`. Scene Lab disables camera shake, and the sound was not auditioned.
+[Landing matrix](comparison.jpg) shows frame 130 in all eight settings. I inspected the images: dust now forms a visible grey-brown ring around the Mega in day and night, with a lighter cloud on LOW. At zoom 1 the landing is partly cut off by the authored camera; zoom 1.5 shows the full ring. The earlier before capture at frame 104 showed the faint gold ring and no visible dust; it was too early to judge the peak. Before captures are under `test-results/s216-before-{high,low}` and final captures under `test-results/s216-final-{high,low}`. The crack marks are visible in the earlier comparison; small debris remains difficult to distinguish at this scale. Scene Lab disables shake and the sound was not auditioned.
 
-At frame 96, the fraction of full-frame pixels brightened by at least 25/255 relative to frame 72 ranged from 1.039% to **1.928%** across the eight after rows. This detects broad brightening but includes actor motion and is not a direct washout mask; other frames remain unmeasured.
+Across frames 110, 120, 130, 140, 150, 160 and 170 in all eight rows, at most **7.55%** of full-frame pixels brightened by at least 25/255 relative to frame 72. This is a screen brightening proxy, includes actor motion, and does not measure unsampled frames or directly segment washout. The images show the ground remaining visible.
 
-## Commit and remaining
+## Commits
 
-Source commit: `0835a882`. Visual acceptance remains open: the comparison does not show a convincing heavy dust ring, and the washout measurement samples only one landing frame. Iterate the presentation and inspect the complete matrix before claiming the brief complete.
+Source: `0835a882`, `240e60c2`. The dust uses fixed particle slots, with no new per-frame CPU allocations. Existing positional impact audio and camera shake are reused.
