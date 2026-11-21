@@ -5,6 +5,13 @@ import type { DistrictLayout, Placement } from '../districts/types';
 export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-ZOO' || layout.placements.some(p => p.id === 'l8-gorilla-pillar-0')) return layout;
+    // Bring the plaza hatch exits clear of the perimeter without changing their solid shells.
+    for (const [id, anchor] of [['kit.zoo-tunnel-mouth:1819', 'tunnel-outlet-5'], ['kit.zoo-tunnel-mouth:1820', 'tunnel-outlet-6']] as const) {
+      const hatch = layout.placements.find(p => p.id === id); if (!hatch) continue;
+      hatch.position[2] += 1.5;
+      hatch.visualAabb.min[2] += 1.5; hatch.visualAabb.max[2] += 1.5;
+      if (layout.anchors[anchor]) layout.anchors[anchor].position[2] += 1.5;
+    }
     // Keep planted bushes beside the yard, rather than creating elephant-sized charge stops in its wall-bait lanes.
     for (const [id, x, z] of [['prop.garden-bush:220', -85, 20], ['prop.garden-bush:222', -35, 44], ['prop.wheelbarrow:426', 112, 38], ['prop.crates:427', 112, 42], ['prop.hose-reel:425', 112, 34]] as const) {
       const bush = layout.placements.find(p => p.id === id); if (!bush) continue;
