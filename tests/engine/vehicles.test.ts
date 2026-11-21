@@ -11,6 +11,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
 import { decodeSave, validateSave } from '../../src/sim/progression/Save';
 import { readFixture } from '../../tools/qa/fixture-io';
@@ -756,10 +757,12 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.state.steps.escape.status).toBe('pending');
     expect(mission.state.marker).toBe('l8-route');
     expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
+    expect(markerAnchor(mission), 'the visible destination stays at the entry while Nadia leads').toMatchObject({ x: 0, z: 70 });
     expect(mission.state.steps.depart.status).toBe('pending');
     mission.restore('sanctuary');
     expect(mission.state.marker).toBe('l8-route');
     expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
+    expect(markerAnchor(mission), 'checkpoint restore retains the fixed destination').toMatchObject({ x: 0, z: 70 });
     expect(mission.state.steps.escape.status).toBe('pending');
     missionControls(world).teleport(1, zoo.door());
     // r31-nadia: while Nadia still leads (a courier camping the APC never follows her), the calm lasts its 180 s cap before the breach.
