@@ -866,6 +866,12 @@ export class InfectedSystem {
   releasePin(source: EntitySnapshot): void {
     const b = source.infected!, target = this.world.entities.get(b.heardTargetId || 1), until = b.grabUntil;
     b.grabUntil = 0;
+    if (b.arenaBoss?.arena === 'lion' && until > this.world.tick) {
+      const recoveryUntil = this.world.tick + 90;
+      b.arenaBoss.exposedUntil = recoveryUntil;
+      b.arenaBoss.readyAt = Math.max(b.arenaBoss.readyAt, recoveryUntil);
+      if (b.specialAttack) { b.specialAttack.stage = 'recovery'; b.specialAttack.recoveryUntil = recoveryUntil; }
+    }
     if ((source.archetype !== 'infected.lion' && source.archetype !== 'infected.lioness' && b.alphaType !== 'leaper') || until <= this.world.tick || !target) return;
     if (target.civilian?.knockedUntil === until) target.civilian.knockedUntil = this.world.tick;
     if (target.escort?.knockedUntil === until) target.escort.knockedUntil = this.world.tick;

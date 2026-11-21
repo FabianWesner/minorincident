@@ -322,6 +322,7 @@ export class L8BossArenas {
         this.walk(e, p.transform, 2); return true;
       }
     }
+    if (arena.id === 'lion' && w.tick < boss.exposedUntil && !b.specialAttack) return true;
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
     if (arena.id === 'gorilla' && this.gorillaCover(e, arena, p)) return true;
