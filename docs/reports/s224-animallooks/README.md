@@ -79,3 +79,9 @@ LOD0/1/2 counts remain 7,644 / 2,975 / 1,074 triangles. HIGH bytes are 350,996 /
 The existing TRELLIS-derived flamingo already shows desaturated plumage and exposed red rib patches from the inspected sides. Added a localized blood tint to its bill. I opened the HIGH and LOW zoom-1.5 side views: the infected bird has visible ribs and a red bill against the pink healthy bird. The opened HIGH WebGL2 680-frame `r32-flamingo-game` sheet shows the flock in motion and the scene passed. These are partial appearance checks; the old/new all-LOD matrix remains open.
 
 LOD0/1/2 counts remain 1,835 / 759 / 316 triangles. HIGH bytes are 162,492 / 73,864 / 63,184; LOW 113,096 / 73,864 / 63,184, all below baseline. Build with `CROWD_Q=128 sh tools/assets/skin-crowd-build.sh /Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.flamingo inf.flamingo`, then losslessly consolidate its GLBs. Typecheck and lint passed.
+
+## Elephant candidate
+
+The existing TRELLIS-derived elephant has large exposed flank and back wounds. Added blood to the lower trunk, leaving the tusks ivory. The opened HIGH zoom-1.5 side view shows both red trunk tip and flank wound; LOW was captured as well. The opened HIGH WebGL2 680-frame `r32-elephant-game` sheet shows the wounds through the charge and attack, and the scene passed. This remains partial visual evidence; the old/new all-LOD matrix is open.
+
+LOD0/1/2 remain 7,494 / 2,873 / 972 triangles. HIGH GLB bytes are 251,004 / 128,196 / 77,204; LOW 212,012 / 128,196 / 77,204, each below baseline. Rebuild with `CROWD_Q=120 sh tools/assets/skin-crowd-build.sh /Users/wesner/Workspace/minorincident_3dpipeline/cast/wave2/inf.elephant inf.elephant`, then losslessly consolidate its GLBs. Typecheck and lint passed.

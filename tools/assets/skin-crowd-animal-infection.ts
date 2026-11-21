@@ -98,6 +98,8 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
   if (slash) c = [137, 29, 37];
   // The distal bill is at the forward end of the normalized bird source.
   if (species === 'flamingo' && z > .42 && y > .20 && y < .34 && Math.abs(x) < .08) c = [160, 32, 39];
+  // Blood at the lower front of the trunk, away from the ivory tusks.
+  if (species === 'elephant' && z > .36 && y < -.02 && Math.abs(x) < .13) c = [153, 31, 35];
   if (species === 'lion' || species === 'gorilla') {
     const cx = species === 'gorilla' ? .06 : 0, cy = species === 'gorilla' ? .174 : -.005;
     const rx = species === 'gorilla' ? .091 : .103, ry = species === 'gorilla' ? .060 : .061;
