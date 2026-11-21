@@ -46,6 +46,9 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     add('l8-lion-dead-tree', 'prop.tree.dead', -69, -25, [.8, .85, .8], -.35);
     for (const [i, [x, z]] of [[-71, -40], [-50, -24], [-51, -42]].entries()) add(`l8-lion-scrub-${i}`, 'prop.garden-bush-small', x, z, [1.4, .8, 1.2]);
     for (const [i, [x, z]] of [[-10, -43], [10, -43], [-10, -21], [10, -21]].entries()) add(`l8-flamingo-reed-bank-${i}`, 'prop.garden-bush-small', x, z, [1.3, .6, .8]);
+    // Set reed clumps outside the 11 m landing ring and away from both gates.
+    for (const [i, [x, z]] of [[-9.5, -40.5], [9.5, -40.5], [-9.5, -23.5], [9.5, -23.5]].entries())
+      add(`l8-flamingo-reeds-${i}`, 'prop.zoo-reeds', x, z);
     for (const [i, [x, z]] of [[49, 25], [71, 25], [49, 39], [71, 39]].entries()) add(`l8-zebra-feeding-rack-${i}`, 'prop.zoo-feeder', x, z, [.9, 1, .85], i % 2 ? Math.PI / 2 : 0);
     add('l8-zebra-trough', 'prop.zoo-trough', 68, 43);
     add('l8-zebra-shelter', 'prop.zoo-shelter', 51, 21.2);

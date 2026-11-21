@@ -16,6 +16,7 @@
 - Replaced the zebra paddock's placeholder crates and toy pool with four solid hay feeders and a water trough, using the existing positions near the paddock edge.
 - Added an open-sided timber shelter at the edge of the zebra paddock, with four solid posts and a roof above the movement area.
 - Added distinct visual ground surfaces to the six arenas and shallow water surfaces to the flamingo and elephant yards, after stable placement IDs are allocated. These are a first pass, not visual acceptance.
+- Added four solid reed clumps around the flamingo pond, outside the 11 m landing ring.
 
 ## Follow-up for s222/s223
 
@@ -24,6 +25,8 @@ The four gorilla cover IDs now use `prop.tree.dead` at the original positions. T
 The flamingo and zebra cover IDs remain at their original positions but now have rock collision rather than jersey-barrier collision. Recheck flamingo landing lanes and zebra stampede sidesteps in s222 and the full L8 run.
 
 The lion cover IDs also now use rock colliders, wider and lower than the former trunks; s221 should recheck stalking and pounce movement around them.
+
+The flamingo pond now has four reed colliders at x ±9.5 and z -40.5/-23.5. Each is at least 1.75 m from every landing-pad centre; s221 should verify live bird landing and player movement around them.
 
 The elephant yard now has a fixed log barrier at x106.5/z60.5. Its collider does not overlap the truck or yard fence, but its effect on charge paths should be reviewed by s223 in native play.
 
@@ -48,6 +51,7 @@ The zebra edge fixtures now use larger feeder and trough colliders in place of c
 - Zebra shelter follow-up: HIGH zoom 1 detail frame inspected; the roof and posts read as an open-sided shelter near hay and a feeder. Scene Lab reports zero static overlap pairs; a layout query found four post colliders without static intersections. Asset validation passes LOD0/1/2 at 132/60/60 triangles; typecheck and lint pass. The shelter's effect on the stampede and route remains unverified.
 - Current L8-only diagnostic at `6fdd6e3d`: skilled route completed in 413.15 simulated seconds with zero deaths. The diagnostic still reports zero moving kiting hits and a skilled reachability warning. At the recorded reachability sample the courier is at the APC boarding location and the unreachable infected are spread across the zoo; this evidence does not isolate the shelter as the cause. The partial selection is not a full gate.
 - Lion rock follow-up: HIGH zoom 1 Scene Lab frame inspected; rocks flank the lion rather than dead trunks, but the dark ground remains visually sparse. The crop reports zero static overlap pairs, and the three rock colliders have no static intersections. Typecheck and lint pass. The L8-only diagnostic with this change completes in 413.58 simulated seconds with zero deaths; it still reports the kiting failure and the skilled reachability warning. Native visual review and the full threat gate remain open.
+- Flamingo reeds follow-up: HIGH zoom 1 detail frame inspected; a dark cattail clump appears on the bank. The crop reports zero static overlap pairs, and all four clumps have baked collision without static intersections. Asset validation passes LOD0/1/2 at 280/56/32 triangles; typecheck and lint pass. Their live landing clearance and the boardwalk remain unverified.
 - Focused L8 scene gate: 0/18 rows ran; all four batches exited 75 because the headless browser pool cannot bind `127.0.0.1:4329` (`EPERM`).
 - Native HIGH/LOW cage captures and visual review: not verified for the same browser-pool failure.
 - Remote `npm test` at `6fdd6e3d`: PASS, 27 files and 105 tests passed, one skipped; 202.2 seconds against the 240-second budget, 150/150 registered cases. The earlier attempt could not reach a runner; this later run completed on the remote runner.

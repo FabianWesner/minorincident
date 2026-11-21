@@ -25133,5 +25133,49 @@
       "solid": true
     },
     "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-reeds",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-reeds/build.py",
+    "glb": "public/assets/models/prop.zoo-reeds.glb",
+    "sourceGlb": "assets/prop.zoo-reeds/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-reeds.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-reeds.lod2.glb"
+    },
+    "dimensions": {
+      "x": 0.9,
+      "y": 2.3,
+      "z": 0.85,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 700,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 100,
+      "lod2": 50
+    },
+    "world": {
+      "token": "apronOlive",
+      "solid": true
+    },
+    "sourceForward": "+X"
   }
 ]

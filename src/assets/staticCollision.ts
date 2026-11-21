@@ -200,4 +200,5 @@ export const staticCollision: Record<string, { source: string; hash: string; box
   "prop.zoo-feeder": {"source":"public/assets/models/prop.zoo-feeder.glb","hash":"322740f5fca2c2fcac3211b2b9acdc9c3faa11f0c18ae35e313b7620953fa5ce","boxes":[{"min":[-1.1,0.27,-0.45],"max":[1.1,0.955,0.45]}]},
   "prop.zoo-trough": {"source":"public/assets/models/prop.zoo-trough.glb","hash":"5ad528588c6d6bc3a59feb11f2857328570e4bdb33fb8555a7acb9b16f66b908","boxes":[{"min":[-1.1,0.27,-0.45],"max":[1.1,0.955,0.45]}]},
   "prop.zoo-shelter": {"source":"public/assets/models/prop.zoo-shelter.glb","hash":"5f3820573aaf7cfda0ddea1e3770f9e40130e265eafaa82d050739d92be5f698","boxes":[{"min":[-2.1,0.18,1.15],"max":[-1.9,1.65,1.35]},{"min":[-2.1,0.18,-1.35],"max":[-1.9,1.65,-1.15]},{"min":[1.9,0.18,1.15],"max":[2.1,1.65,1.35]},{"min":[1.9,0.18,-1.35],"max":[2.1,1.65,-1.15]}]},
+  "prop.zoo-reeds": {"source":"public/assets/models/prop.zoo-reeds.glb","hash":"a3e3d6953e5247688c6730c784d3ef0fb3b65f801f6bed98d5adc2c0d98e629e","boxes":[{"min":[-0.3947,0.18,-0.3573],"max":[0.4025,1.65,0.3573]}]},
 };
