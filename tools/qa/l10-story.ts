@@ -262,7 +262,7 @@ for (const tier of tiers) {
           const ids = [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id);
           fullArsenal ||= isHangarIssue(ids);
         }
-        if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, player: { ...p.transform, hp: p.health.current }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
+        if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, player: { ...p.transform, hp: p.health.current }, bike: world.vehicles?.bicycle.entity && { ...world.vehicles.bicycle.entity.transform, mounted: world.vehicles.bicycle.riding }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
       };
     },
     beforeDispose: world => { finalState = { mission: world.missions!.state, gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot(), player: world.entities.get(1)!.transform }; },
