@@ -577,12 +577,14 @@ export class LevelEightZoo {
     const stage = next && l8Route.find(r => r.id === next.id);
     const gate = stage?.entry ?? (next?.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
     const wait = !!stage && !!gate && routeOpen && (next!.phase > 0 || inRect(player.transform, stage.zone) || distance(player.transform, gate) <= 12);
-    for (const [i, id] of this.state.guards.entries()) {
+    const detail = [...this.state.guards, this.state.haleId, this.state.reyesId].filter((id, i, all) => id && all.indexOf(id) === i);
+    for (const [i, id] of detail.entries()) {
       const guard = this.w.entities.get(id), ally = guard?.civilian?.ally;
       if (!guard || guard.health.current <= 0 || !ally) continue;
+      if (guard.civilian?.survivor) continue;
       if (wait && stage && gate) {
         const dx = gate.x - (stage.zone.x0 + stage.zone.x1) / 2, dz = gate.z - (stage.zone.z0 + stage.zone.z1) / 2, length = Math.hypot(dx, dz) || 1;
-        const nx = dx / length, nz = dz / length, side = (i - (this.state.guards.length - 1) / 2) * 1.3;
+        const nx = dx / length, nz = dz / length, side = id === this.state.haleId && next?.id === 'elephant' ? 0 : (i - (detail.length - 1) / 2) * 1.3;
         const at = { x: gate.x + nx * 4 - nz * side, z: gate.z + nz * 4 + nx * side };
         ally.arenaWait = true; ally.post = at; ally.run = at; ally.hold = true;
         if (distance(guard.transform, at) > .5) this.w.npcs!.move(guard, at, 6, guard.civilian!, .3, 2400);

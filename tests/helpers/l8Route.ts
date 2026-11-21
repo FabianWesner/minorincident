@@ -101,9 +101,10 @@ export async function checkL8Route(): Promise<void> {
       expect(closeTicks.get(entryNavId), `${stage.id}: entry barrier closes on the next native tick`).toBe(armedAt + 1);
       if (index > 0) expect(closeTicks.get(previousEntryNavId), `${previous!.id}: both doors close on the next native tick`).toBe(armedAt + 1);
       expect(armedWith, `${stage.id}: no follower enters the active cage (${stragglers})`).toBe(0);
-      const guards = zoo.state.guards.map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected);
+      const detail = [...zoo.state.guards, zoo.state.haleId, zoo.state.reyesId];
+      const guards = detail.map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected);
       const shots: number[] = [];
-      const stop = w.events.on('ally.attack', event => { if (event.type === 'ally.attack' && zoo.state.guards.includes(event.sourceId) && arena.ids.includes(event.targetId)) shots.push(event.sourceId); });
+      const stop = w.events.on('ally.attack', event => { if (event.type === 'ally.attack' && detail.includes(event.sourceId) && arena.ids.includes(event.targetId)) shots.push(event.sourceId); });
       for (let tick = 0; tick < 60; tick++) {
         w.update();
         expect(guards.some(e => e && inRect(e.transform, stage.zone)), `${stage.id}: guards remain outside`).toBe(false);

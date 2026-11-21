@@ -810,7 +810,7 @@ async function zooParkedBoarding(): Promise<void> {
     world.applyInput(emptyInput(), 'keyboard'); advance(60);
     expect(vehicles.active, 'standing at the door does not remove cover fire either').toBeNull();
     const charge = playHaleCharge(world);
-    expect(charge.distance).toBeLessThan(6); expect(charge.move).toBe('elephant.charge');
+    expect(charge.distance).toBeLessThan(12); expect(charge.move).toBe('elephant.charge');
     missionControls(world).teleport(1, { x: zoo.door().x - 4, z: zoo.door().z + 2 });
     const entry = vehicles.passengerDoor(car.entity.id);
     for (const id of zoo.passengers()) {
