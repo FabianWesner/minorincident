@@ -34,3 +34,19 @@ Lanes, in order (one at a time; they share L8BossArenas/InfectedSystem):
 3. s223 — monkeys + elephant polish.
 
 Each lane: native HIGH zoom 1 captures of each move's tell and hit, looked at and described; the L8 skilled bot finishes; qa:threat 0 flags; a short "feel" note per animal (what the player has to do differently).
+
+## Why the animals are infected (story, PO 2026-11-21)
+
+PO, verbatim: "Fighting the zebras was far too easy, took only seconds, not a single attack, super boring, also they do not look like zombies" and "Also to me it's not clear why they are infected, there must be some more storyline here. We have all the ingredients in place, let's put them together nicely."
+
+Throughline: the army's sanctuary fed its dead to the problem. Beats, using what L8 already has (Nadia, Major Hale, soldiers, the gate armory, the breach, the APC):
+1. **Setup (arrival, before the breach)**: Nadia, walking: "The army burns its dead behind the animal houses. Burns *most* of them." A soldier mutters about "the bodies in the feed store". Smoke column behind the enclosures.
+2. **Breach (four gates, see s220)**: the horde floods the zoo; some pour over the low pen walls. Hale on radio: "They're in the enclosures!"
+3. **Each cage tells its own piece** (one environmental story + one short line on entering, never stopping the player): lion rocks — a dead keeper with a feed bucket, the lions over him ("They fed them from the feed store. Oh God."); zebra paddock — a broken fence and zombies still inside, the herd bitten mid-stampede; gorilla house — the vet's tranquiliser rifle on the floor, the cage door forced; primate yard — the keeper's office window smashed, monkeys dragging bloody uniforms; flamingo pond — red water; elephant — Nadia: "Not him. Not the old one…" (existing).
+4. **Departure**: Hale's last words (existing) land harder because the player saw the sanctuary's mistake.
+
+## Look
+
+Every L8 animal must read as infected at game zoom: torn hide with exposed wound patches, blood around the mouth, matted/patchy fur or feathers, milky or glowing eyes, a limp/twitch in idle, consistent with the zombie palette. Built through the TRELLIS.2 pipeline (PO rule: every figure), derived from the current animal so rigs/animations keep working; LOD budgets as the existing animal assets. Corpses must not clip through fences (zebra screenshot).
+
+Lanes: s224 animal looks (all six, assets only) runs in parallel to the behaviour lanes; the story beats go with s222 (zebras + gorilla) after s220 (breach) merges.
