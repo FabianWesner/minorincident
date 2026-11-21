@@ -44,3 +44,5 @@ A LOW trial directing the bot to approach and interact with closed gates after n
 After the hard-hit motorbike change, a HIGH trial made voluntary dismount depend on actual distance to the roadblock rather than x distance alone. It was discarded: repeated deaths at the first gate restored the rider and bike to the preceding checkpoint, yielding 32 deaths, 816.9 s hangar to gate and a 2100 s route timeout. The first fight needs coordinated placement and recovery before this approach can work.
 
 A LOW trial keeping the bot within roughly 12 m of the parked bike during nearby fights was also discarded. It caused repeated mount/dismount attempts and still abandoned the bike at the first gate; the route took 318.2 s with no deaths and a 19.8 s maximum activity gap.
+
+After making roadblocks interactable along their face, a trial made the bot press the active gate after nearby threats cleared. It was discarded: LOW took 295.0 s with a 30.2 s activity gap and HIGH took 327.2 s with a 29.4 s gap. Riding remained 3540 and 1669 ticks respectively, with the bike still left at the first gate.
