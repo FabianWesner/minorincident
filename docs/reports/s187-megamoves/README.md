@@ -4,14 +4,14 @@
 
 Fresh run on `ee57acfdb1de725ca364de9bb4b3df98269c063d` plus the changes below:
 
-- The required full threat audit completed as two shards (`test-results/s187c-final-A`, `test-results/s187c-final-B`) and merged with **0 acceptance flags**. L10 skilled completed on HIGH and LOW; its passive window ended at the documented tick budget with 0 passive flags.
+- The required full threat audit completed as two shards (`test-results/s187c-final-A`, `test-results/s187c-final-B`). The merge summary reported **0 acceptance flags**, but this is incomplete: the L10 skilled receipt contains `wave/dispersal-assault:WAVE_NO_ATTACK_WITHIN_20_SECONDS`. The audit's top-level flag aggregation counts passive flags only. L10 skilled completed; its passive window ended at the documented tick budget with 0 passive flags.
 - Moving Mega damage, seed 1 / complete profile: LOW took 25 damage over 880.90 moving seconds (**0.0284 DPS**, 1.70% of 100 HP per minute); HIGH took 50 damage over 916.98 moving seconds (**0.0545 DPS**, 3.27% per minute). Both routes completed; deaths were 0 LOW / 3 HIGH. Named Mega special-move damage was 0 in both samples. These deterministic route samples are under the 25% HP/min ceiling; they do not establish a worst-case dodge guarantee. Receipt: `test-results/s187c-moving-dps.json`.
 - `npm run typecheck`, `npm run lint`, and `npx vitest run tests/engine/infected-ai.test.ts --configLoader runner` passed (5 tests). The full `npm test` remote runner had no healthy worker; local fallback passed (27 files, 106 passed, 1 skipped).
-- A separate focused `--levels L10` diagnostic also completed the skilled route and reported 0 passive flags, but flagged `WAVE_NO_ATTACK_WITHIN_20_SECONDS` on its assault cohort. The full required sharded audit did not reproduce that flag. This discrepancy is retained for follow-up rather than hidden.
+- A separate focused `--levels L10` diagnostic also completed the skilled route and reported 0 passive flags, but flagged `WAVE_NO_ATTACK_WITHIN_20_SECONDS` on its assault cohort. The full sharded L10 receipt reproduces the flag; the top-level summary omits it.
 - Mega coarse pursuit now invalidates saved routes after restore, steers toward the player instead of an obsolete distant route node when hidden far away, and has bounded reachable-waypoint recovery around obstructed local goals. An AI regression places the Mega at the stale L10 coarse route and verifies it resumes more than 30 m of pursuit travel.
 - L10 service attackers now try the service threshold before staged/ring positions and are not reset to wandering by the dispersal-zone chase-distance rule. This does not change zombie stats.
 
-The moves stay within the measured damage target and the required full threat gate passes. Commit: `7cfea375`. The isolated L10 wave discrepancy remains open; see the run notes below.
+The sampled moves stay within the measured damage target. The skilled wave flag and top-level audit aggregation remain open. Commit: `7cfea375`.
 
 ## s187b follow-up — coarse pursuit stall
 
