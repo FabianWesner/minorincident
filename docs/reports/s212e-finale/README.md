@@ -16,7 +16,7 @@
 | `npm run test:unit` | Pass; 27 files, 106 tests |
 | `sh tools/remote/run.sh "$PWD" -- npm test` | Pass on third unchanged attempt: 27 files, 105 passed and one skipped, 216.6 s. Two earlier attempts timed out at 240 s; save progression passed separately on the runner. |
 | `npm test` on current code | Pass on rerun: 27 files, 106 tests, 172.1 s. A previous run failed the process-group cleanup assertion; that case also passed in isolation. |
-| Full threat audit, two local shards and merge | Pass: 0 fail flags; all skilled routes complete. Shards ran in 174.4 s and 251.8 s; merged receipt `test-results/qa-threat/README.md`. Remote runners were unavailable. |
+| Full threat audit, two local shards and merge | Pass on code at `e1e98e6d`: 0 fail flags; all skilled routes complete. Shards ran in 113.6 s and 131.8 s; merged receipt `test-results/qa-threat/README.md`. |
 | `node --import tsx/esm tools/verify.ts E32` | Pass; per-change typecheck, lint, and 106-test gate |
 | `E2E_PORT=5215 SCENE_PORT=5216 npm run test:smoke` | Pass: six smoke tests and one public-build smoke test; 139.8 s |
 
@@ -61,4 +61,4 @@ The headless `s212e-native-captures.ts` pass starts at the research checkpoint a
 
 ## Remaining
 
-The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, investigate the unit failures and rerun full gates on the current commit, and update this report with final receipts. The earlier threat and smoke receipts predate commit `d3cb05aa`.
+The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, rerun remaining full gates on the current code, and update this report with final receipts. The smoke and unit receipts predate later gameplay changes.
