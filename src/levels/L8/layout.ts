@@ -53,7 +53,7 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, [x, z]] of [[55, -28], [65, -28], [55, -38], [65, -38]].entries()) add(`l8-gorilla-pillar-${i}`, 'prop.tree.dead', x, z, [.8, 1.1, .8], 0, { class: 'pillar' });
     for (const [i, [x, z]] of [[59, -29], [64, -35], [55, -34], [61, -40]].entries()) add(`l8-gorilla-throw-${i}`, 'prop.crates', x, z, [.85, .8, .85]);
     for (let i = 0; i < 3; i++) add(`l8-gorilla-log-${i}`, 'prop.tree.dead', 53 + i * 7, -24 - (i % 2) * 3, [.55, .6, .55], .4);
-    for (const [i, [x, z]] of [[-4, 9], [2, 9], [-4, 31], [2, 31]].entries()) add(`l8-primate-roof-platform-${i}`, 'prop.crates', x, z, [.8, .65, .8], Math.PI / 2);
+    add('l8-primate-climbing-frame', 'prop.zoo-climbing-frame', -2, 28);
     for (let i = 0; i < 5; i++) add(`l8-monkey-debris-${i}`, 'prop.crates', -3 + i * 1.5, 20, [.35, .35, .35]);
     for (const [i, [x, z]] of [[84, 48], [108, 64], [84, 67]].entries()) add(`l8-elephant-earth-mound-${i}`, 'prop.garden-bush', x, z, [1.5, .65, 1.5]);
     // The primate yard sits behind the house, away from the public tour path.
