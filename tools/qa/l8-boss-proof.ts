@@ -85,7 +85,7 @@ export async function checkBossDamage(): Promise<void> {
         const need = (cond: boolean, text: string) => { if (!cond) failures.push(`${def.id} hp ${hp}: ${text} (pistol ${hand}, shotgun ${shot}, mg ${mg})`); };
         if (def.id === 'flamingo' || def.id === 'monkey') { need(shot >= hp - 1, 'one shotgun blast must kill'); need(mg * 6 >= hp, 'a 6-bullet MG burst must kill'); need(hand * 4 >= hp, 'four handgun hits must kill'); }
         if (def.id === 'zebra') need(shot * 2 >= hp, 'two shotgun blasts must kill a zebra');
-        if (def.id === 'lion') need(mg * 30 >= hp, 'a 30-round MG magazine must kill a lion');
+        if (def.id === 'lion') need(mg * 30 < hp && mg * 60 >= hp, 'a lion survives one MG magazine and falls within two');
         if (def.id === 'gorilla') need(mg * 60 >= hp, 'two 30-round MG magazines must kill the gorilla');
         if (def.id === 'elephant') need(mg * 30 < hp / 2, 'gunfire only chips the elephant (a magazine stays below half)');
       }
