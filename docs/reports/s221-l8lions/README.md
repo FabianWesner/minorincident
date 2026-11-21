@@ -17,11 +17,11 @@ Thirty positional cues cover idle, tell, attack, hurt and death for each of six 
 
 ## Verification
 
-- `npm run typecheck`, lint, the focused L8 boss proof, and the nightly mission-interactions test passed. The final-source two-shard threat merge passed with zero global acceptance flags ([summary](threat-summary.json)).
+- `npm run typecheck`, lint, the focused L8 boss proof, and the nightly mission-interactions test passed. The two-shard threat merge before the final all-cage exit and flamingo-turn changes passed with zero global acceptance flags ([summary](threat-summary.json)); a fresh run is in progress.
 - A prior full two-shard threat merge at `2cc66c65` passed with zero flags. The skilled L8 bot finished in 403.17 simulated seconds, with 0 deaths, 10 damage and a 4.26% follower-wait upper bound. Subsequent lion changes require a fresh gate.
-- The final-source skilled L8 stage completed in 407.8 simulated seconds, with 0 deaths and 90 damage taken. Its follower-wait upper bound was 4.33%, versus 7.52% on main. The audit also recorded two skilled L8 diagnostic flags for unreachable share and tunnel-breach first-attack time; the global acceptance result and L8 passive flags were zero.
+- The prior skilled L8 stage completed in 407.8 simulated seconds, with 0 deaths and 90 damage taken. Its follower-wait upper bound was 4.33%, versus 7.52% on main. The audit also recorded two skilled L8 diagnostic flags for unreachable share and tunnel-breach first-attack time; the global acceptance result and L8 passive flags were zero.
 - A separate detached checkout of main `97b4c6f71a188714bc07d32a6304f8520754340a` completed the L8 skilled route with 0 deaths in 430 simulated seconds ([receipt](main-l8-baseline.json)). Its L8-only threat diagnostic reports the expected partial-selection flag.
-- Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests with 1 skipped in 205.0 s.
+- The prior remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests with 1 skipped in 205.0 s; a rerun after the final cage changes is in progress.
 
 ## Visual review and limitations
 
@@ -29,4 +29,6 @@ The reviewed [native HIGH WebGL2, zoom 1 sheet](native-diagnostic.jpg) uses a he
 
 The elephant story handoff remains a risk: Hale is correctly outside the yard, but if delayed far from the entry she may miss the short proximity window for the opening charge story beat. The focused fixture places her outside near the entry; that does not prove every live route reaches the beat.
 
-The removed replacement flight no longer reanimates killed flock members, but the authored initially healthy flock can still go through its first infection collapse and rise near the start of the encounter. This may look like a bird standing up during the fight and remains open against the PO wording.
+The removed replacement flight no longer reanimates killed flock members. The encounter waits for any initial infection already in progress before starting; birds newly infected during the fight turn immediately without a collapse/rise. The initial pre-fight transformation can still be visible and the live transition has not yet been visually reviewed.
+
+The final all-cage correction keeps the monkey exit locked until every authored animal is dead, including after the leader dies. Any remaining healthy animal is turned into the fixed encounter rather than letting the gate open around it. The newest checks are in progress.

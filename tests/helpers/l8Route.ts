@@ -113,6 +113,15 @@ export async function checkL8Route(): Promise<void> {
       expect(shots, `${stage.id}: guards do not attack cage animals`).toEqual([]);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
+      if (stage.id === 'monkey') {
+        const leader = w.entities.get(arena.ids.at(-1)!)!;
+        if (!leader.infected) { w.npcs!.civilians.outbreak!.turnNow(leader); zoo.bosses.turned(leader.id); }
+        const health = leader.health.current, phase = arena.phase;
+        arena.phase = 2; leader.health.current = 0; zoo.bosses.update();
+        expect(arena.phase, 'the leader alone cannot clear a living pack').toBe(2);
+        expect(l8GateClosed('monkey.exit', { arenas: zoo.state.arenas, sealed: true })).toBe(true);
+        leader.health.current = health; arena.phase = phase;
+      }
       if (index > 0) {
         const previous = l8Route[index - 1]!;
         expect(l8GateClosed(`${previous.id}.entry`, { arenas: zoo.state.arenas, sealed: true }), `${previous.id}: return entry closes after ${stage.id} arms`).toBe(true);

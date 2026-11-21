@@ -168,7 +168,10 @@ export class L8BossArenas {
         arena.zoneAt ??= w.tick;
         if (w.tick - arena.zoneAt >= 150) for (const e of healthy) w.npcs!.civilians.outbreak!.infect(e!, arena.carrier || 1);
       }
-      if (arena.phase === 0 && routeOpen && live.length && deep && !followersInside && !this.mission.l8!.protecting()) {
+      // Finish any visible first infection before the flock fight begins; a
+      // later bird turns without a collapse/rise once the encounter is active.
+      const flockTurning = arena.id === 'flamingo' && arena.ids.some(id => !!w.entities.get(id)?.infection);
+      if (arena.phase === 0 && routeOpen && live.length && deep && !followersInside && !flockTurning && !this.mission.l8!.protecting()) {
         // The restore point is taken in phase 0 with the entry gate still open (the courier stands just outside it).
         this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.armed = false;
@@ -192,15 +195,17 @@ export class L8BossArenas {
       }
       if (arena.phase > 0 && !arena.armed && !followersInside && inZone && entryGate && Math.hypot(player.transform.x - entryGate.x, player.transform.z - entryGate.z) >= 5) arena.armed = true;
       if (!arena.phase) continue;
+      // Any authored animals that have not yet turned still belong to the
+      // fixed encounter; make them hostile rather than opening around them.
+      for (const e of healthy) w.npcs!.civilians.outbreak!.infect(e!, arena.carrier || 1);
       const pendingTurns = arena.ids.some(id => { const e = w.entities.get(id); return !!e?.infection || e?.civilian?.state === 'grabbed'; });
       const total = arena.ids.reduce((hp, id) => { const e = w.entities.get(id); return hp + (e?.civilian && e.health.current > 0 ? def.hp : Math.max(0, e?.health.current ?? 0)); }, 0);
       const halfDown = arena.ids.filter(id => { const e = w.entities.get(id); return e?.infected && e.health.current <= 0; }).length >= Math.ceil(def.count / 2);
       const secondPhase = arena.id === 'lion' ? halfDown : arena.id === 'elephant' ? arena.wallHits > 0 || total <= def.hp / 2 : ['flamingo', 'zebra', 'monkey'].includes(arena.id) ? halfDown : total <= def.hp * def.count / 2;
       if (arena.phase === 1 && secondPhase) {
-        arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); if (arena.id !== 'elephant') arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
+        arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — clear the whole pack!'); if (arena.id !== 'elephant') arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
       }
-      const leader = w.entities.get(arena.ids.at(-1)!);
-      if ((!pendingTurns && !live.length) || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
+      if (!pendingTurns && arena.ids.every(id => (w.entities.get(id)?.health.current ?? 0) <= 0)) {
         arena.phase = 3; arena.endedAt = w.tick;
         const carrier = w.entities.get(arena.carrier);
         if (carrier?.infected) delete carrier.infected.arenaCarrier;
