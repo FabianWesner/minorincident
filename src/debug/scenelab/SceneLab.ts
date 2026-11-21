@@ -31,6 +31,7 @@ import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { SimPhase } from '../../core/EventBus';
 import { l2TruckPath } from '../../data/l2';
 import { levelTwoLayouts } from '../../levels/L2/layout';
+import { levelEightLayouts } from '../../levels/L8/layout';
 import { levelTenLayouts } from '../../levels/L10/layout';
 import { L2TruckDrive, truckPoseAt, truckBodyOverlap, truckWallOverlap, type TruckRideState } from '../../sim/vehicles/L2TruckDrive';
 import { installL1Outbreak } from '../../sim/outbreak/install';
@@ -178,6 +179,7 @@ export class SceneLab {
       source = await response.json() as DistrictLayout;
       // The L3 corridor is played through its layout copy (W2/W3 dressing, wrecks, glass, the army dressing): crop that.
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
+      if (spec.layout.level === 'L8' && spec.layout.district === 'D-ZOO') [source] = levelEightLayouts([source]);
       if (spec.layout.level === 'L10' && spec.layout.district === 'D-CURE') [source] = levelTenLayouts([source]);
       if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
       // Fairhaven likewise (E22): the army reception, sandbag line, nests, parked cars and the L4 anchors.

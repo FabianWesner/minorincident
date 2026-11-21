@@ -1,0 +1,137 @@
+{
+  "revision": "3e45dfdb1ddd25612cbc1b1338ea15fd4c590a13",
+  "policy": "kiting + passive",
+  "tier": "low",
+  "flags": [],
+  "shards": [
+    "test-results/threat-shard-1",
+    "test-results/threat-shard-2"
+  ],
+  "mergeSeconds": 272.93323054099994,
+  "levels": [
+    {
+      "level": "L1",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 115.25,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 33.48837209302276
+    },
+    {
+      "level": "L2",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 159.53333333333333,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 8.999999999999934
+    },
+    {
+      "level": "L3",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 198.76666666666668,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 2.9999999999999782
+    },
+    {
+      "level": "L4",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 296.51666666666665,
+        "deaths": 9
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 36.87150837988772
+    },
+    {
+      "level": "L5",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 215.78333333333333,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 2.9999999999999782
+    },
+    {
+      "level": "L6",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 203.85,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 2.9999999999999782
+    },
+    {
+      "level": "L7",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 103.65,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 2.9999999999999782
+    },
+    {
+      "level": "L8",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 400.1,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [
+        "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+      ],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 2.9999999999999782
+    },
+    {
+      "level": "L9",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 198.7,
+        "deaths": 0
+      },
+      "skilledObservationFlags": [],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 0
+    },
+    {
+      "level": "L10",
+      "skilled": {
+        "outcome": "complete",
+        "completed": true,
+        "seconds": 1296.1333333333334,
+        "deaths": 2
+      },
+      "skilledObservationFlags": [
+        "wave/dispersal-assault:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+      ],
+      "passiveFlags": [],
+      "kitingHitsPerMinute": 2.9999999999999782
+    }
+  ]
+}

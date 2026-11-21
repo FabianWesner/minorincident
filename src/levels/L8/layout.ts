@@ -5,6 +5,26 @@ import type { DistrictLayout, Placement } from '../districts/types';
 export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-ZOO' || layout.placements.some(p => p.id === 'l8-gorilla-pillar-0')) return layout;
+    const cages = [
+      { id: 'lion', x0: -82, z0: -54, x1: -38, z1: -10 },
+      { id: 'flamingo', x0: -16, z0: -54, x1: 16, z1: -10 },
+      { id: 'zebra', x0: 38, z0: 10, x1: 82, z1: 54 },
+      { id: 'gorilla', x0: 38, z0: -54, x1: 82, z1: -10 },
+      { id: 'monkey', x0: -22, z0: 4, x1: 10, z1: 36 },
+      { id: 'elephant', x0: -82, z0: 10, x1: -38, z1: 54 },
+      { id: 'elephant-arena', x0: 82, z0: 39, x1: 110, z1: 67 },
+    ];
+    const insideCage = (p: Placement) => cages.some(c => p.position[0] >= c.x0 && p.position[0] <= c.x1 && p.position[2] >= c.z0 && p.position[2] <= c.z1);
+    // Generic plaza dressing in a cage makes the habitats read as public parks.
+    // Remove those fittings before adding the authored enclosure dressing below.
+    const removed = new Set(layout.placements.filter(p => insideCage(p) && (
+      ['prop.bench', 'prop.folding-chair', 'prop.lawn-chair-a', 'prop.lawn-chair-b', 'prop.street-lamp'].includes(p.assetId)
+      || p.id.startsWith('l8-gorilla-throw-') || p.id.startsWith('l8-gorilla-light-')
+    )).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !removed.has(p.id));
+    // Authored fallback colliders otherwise survive after their placement is
+    // removed and leave invisible obstacles in the animal pens.
+    layout.colliders = layout.colliders.filter(c => !removed.has(c.id) && ![...removed].some(id => c.id.startsWith(`${id}/`)));
     // Keep planted bushes beside the yard, rather than creating elephant-sized charge stops in its wall-bait lanes.
     for (const [id, x, z] of [['prop.garden-bush:220', -85, 20], ['prop.garden-bush:222', -35, 44], ['prop.wheelbarrow:426', 112, 38], ['prop.crates:427', 112, 42], ['prop.hose-reel:425', 112, 34]] as const) {
       const bush = layout.placements.find(p => p.id === id); if (!bush) continue;
@@ -21,6 +41,32 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push({ id, assetId, position: [x, y, z], yaw, scale, minTier: 0, maxTier: 6, lightGroup: layout.lightGroups[0]?.id ?? 'zoo', allowRoad: true,
         visualAabb: { min: [x - hx, y, z - hz], max: [x + hx, y + dim.y * scale[1], z + hz] }, ...(destruction ? { destruction } : {}) });
     };
+    // Habitat fittings are existing solid props, kept around the outside of
+    // each encounter's movement lanes and away from both gate thresholds.
+    add('l8-lion-dead-tree', 'prop.tree.dead', -69, -25, [.8, .85, .8], -.35);
+    for (const [i, [x, z]] of [[-71, -40], [-50, -24], [-51, -42]].entries()) add(`l8-lion-scrub-${i}`, 'prop.garden-bush-small', x, z, [1.4, .8, 1.2]);
+    for (const [i, [x, z]] of [[-10, -43], [10, -43], [-10, -21], [10, -21]].entries()) add(`l8-flamingo-reed-bank-${i}`, 'prop.garden-bush-small', x, z, [1.3, .6, .8]);
+    // Set reed clumps outside the 11 m landing ring and away from both gates.
+    for (const [i, [x, z]] of [[-9.5, -40.5], [9.5, -40.5], [-9.5, -23.5], [9.5, -23.5]].entries())
+      add(`l8-flamingo-reeds-${i}`, 'prop.zoo-reeds', x, z);
+    for (const [i, [x, z]] of [[49, 25], [71, 25], [49, 39], [71, 39]].entries()) add(`l8-zebra-feeding-rack-${i}`, 'prop.zoo-feeder', x, z, [.9, 1, .85], i % 2 ? Math.PI / 2 : 0);
+    add('l8-zebra-trough', 'prop.zoo-trough', 68, 43);
+    add('l8-zebra-shelter', 'prop.zoo-shelter', 51, 21.2);
+    layout.placements.at(-1)!.fixed = true;
+    // Keep the four stable tactical-cover IDs used by the gorilla behavior,
+    // while changing their silhouette from red plaza pillars to dead trunks.
+    for (const [i, [x, z]] of [[55, -28], [65, -28], [55, -38], [65, -38]].entries()) add(`l8-gorilla-pillar-${i}`, 'prop.tree.dead', x, z, [.8, 1.1, .8], 0, { class: 'pillar' });
+    for (const [i, [x, z]] of [[59, -29], [64, -35], [55, -34], [61, -40]].entries()) add(`l8-gorilla-throw-${i}`, 'prop.crates', x, z, [.85, .8, .85]);
+    for (let i = 0; i < 2; i++) add(`l8-gorilla-log-${i}`, 'prop.tree.dead', 53 + i * 7, -24 - (i % 2) * 3, [.55, .6, .55], .4);
+    // Along the north-east side, clear of the south entry and east exit.
+    add('l8-gorilla-climbing-frame', 'prop.zoo-climbing-frame', 69, -25);
+    add('l8-primate-climbing-frame', 'prop.zoo-climbing-frame', -2, 28);
+    for (let i = 0; i < 5; i++) add(`l8-monkey-debris-${i}`, 'prop.crates', -3 + i * 1.5, 20, [.35, .35, .35]);
+    for (const [i, [x, z]] of [[84, 48], [108, 64], [84, 67]].entries()) add(`l8-elephant-earth-mound-${i}`, 'prop.garden-bush', x, z, [1.5, .65, 1.5]);
+    // Set the log barrier alongside the east edge, away from the truck and
+    // the north and south gate lanes used by the charge encounter.
+    add('l8-elephant-log-barrier', 'prop.zoo-log-barrier', 106.5, 60.5, [1, 1, 1], Math.PI / 2);
+    layout.placements.at(-1)!.fixed = true;
     // The primate yard sits behind the house, away from the public tour path.
     // Its east service entrance stays available for the post-breach encounter.
     (layout.zones ??= {})['enclosure-monkey'] = [[-20, 20], [-10.48, 20], [-10.48, 31.9], [-20, 31.9]];
@@ -35,20 +81,14 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       add(`l8-primate-fence-${i}`, 'prop.crowd-fence', x, z, [1, 2.4, 1], yaw);
       layout.placements.at(-1)!.fixed = true;
     }
-    add('l8-primate-climbing-tree', 'prop.tree', -16, 27, [.45, .5, .45]);
-    add('l8-primate-light', 'prop.street-lamp', -14.5, 25.5);
-    for (const [i, [x, z]] of [[55, -28], [65, -28], [55, -38], [65, -38]].entries()) add(`l8-gorilla-pillar-${i}`, 'prop.cure-garden-wall', x, z, [.25, 1.55, 1.6], 0, { class: 'pillar' });
-    for (const [i, [x, z]] of [[59, -29], [64, -35], [55, -34], [61, -40]].entries()) add(`l8-gorilla-throw-${i}`, 'prop.bench', x, z);
-    for (let i = 0; i < 3; i++) add(`l8-gorilla-light-${i}`, 'prop.folding-chair', 58 + i * 2, -31);
+    add('l8-primate-climbing-tree', 'prop.tree.dead', -16, 27, [.65, .7, .65]);
     const wall = worldAssets['prop.cure-garden-wall'].dimensions;
     add('l8-yard-north-wall', 'prop.cure-garden-wall', 88, 46, [8 / wall.x, 3 / wall.y, .5 / wall.z], 0, { class: 'concrete', indestructible: true, bossBreakable: true });
     layout.placements.at(-1)!.fixed = true;
     add('l8-elephant-truck', 'veh.box-truck', 100, 54, [1, 1, 1], Math.PI / 2);
-    for (const [i, [x, z]] of [[-64, -30], [-55, -36], [-66, -40]].entries()) add(`l8-lion-cover-${i}`, 'prop.jersey-barrier', x, z, [1.1, 1.4, 1.6], i * Math.PI / 3);
-    for (let i = 0; i < 5; i++) add(`l8-monkey-debris-${i}`, 'prop.bench', -3 + i * 1.5, 20, [.35, .35, .35]);
+    for (const [i, [x, z]] of [[-64, -30], [-55, -36], [-66, -40]].entries()) add(`l8-lion-cover-${i}`, 'prop.zoo-rock-cover', x, z, [1, 1.4, 1.2], i * Math.PI / 3);
     for (let i = 0; i < 2; i++) {
-      add(`l8-monkey-roof-debris-${i}`, 'prop.bench', -12, 12.5 + i * 3, [.25, .25, .25], 0, undefined, 4.1);
-      add(`l8-monkey-ropes-${i}`, 'prop.laundry-line', -4 + i * 4, 22, [1, 1.2, 1.5]);
+      add(`l8-monkey-roof-debris-${i}`, 'prop.crates', -12, 12.5 + i * 3, [.25, .25, .25], 0, undefined, 4.1);
     }
     // Door-side furniture makes a real, body-width choke without closing either public escape path.
     add('l8-monkey-choke-0', 'prop.cure-garden-wall', -6, 12, [.6, 1, 1], Math.PI / 2);
@@ -56,11 +96,9 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Offset cover leaves the centre and both gates open. Pond pieces sit
     // inside the landing ring; paddock pieces leave distinct charge sidesteps.
     for (const [i, [x, z]] of [[-6, -28], [6, -28], [0, -38]].entries())
-      add(`l8-flamingo-cover-${i}`, 'prop.jersey-barrier', x, z, [.9, 1.4, 1], i === 2 ? 0 : Math.PI / 2);
-    for (const [i, [x, z]] of [[-12.5, -32], [0, -44], [11, -40]].entries())
-      add(`l8-flamingo-light-${i}`, 'prop.street-lamp', x, z);
+      add(`l8-flamingo-cover-${i}`, 'prop.zoo-rock-cover', x, z, [.75, 1.1, .7], i === 2 ? 0 : Math.PI / 2);
     for (const [i, [x, z]] of [[52, 28], [68, 28], [60, 39]].entries())
-      add(`l8-zebra-cover-${i}`, 'prop.jersey-barrier', x, z, [.9, 1.4, 1], i === 2 ? 0 : Math.PI / 2);
+      add(`l8-zebra-cover-${i}`, 'prop.zoo-rock-cover', x, z, [.75, 1.1, .7], i === 2 ? 0 : Math.PI / 2);
     return layout;
   });
 }
