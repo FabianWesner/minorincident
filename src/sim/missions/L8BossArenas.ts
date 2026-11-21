@@ -512,8 +512,10 @@ export class L8BossArenas {
     }
   }
   private hunt(e: EntitySnapshot, flank: boolean): void {
-    const p = this.w.entities.get(1)!.transform, dx = e.transform.x - p.x, dz = e.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
-    let at = { x: p.x - dz / d * 7, z: p.z + dx / d * 7 };
+    const p = this.w.entities.get(1)!.transform;
+    // The flanker aims behind the courier's facing, rather than merely choosing
+    // a point to the side of its own current position.
+    let at = { x: p.x - Math.cos(p.yaw) * 7, z: p.z + Math.sin(p.yaw) * 7 };
     if (!flank) {
       const covers = [[-64, -30], [-55, -36], [-66, -40]].map(([x, z]) => { const cx = x - p.x, cz = z - p.z, cd = Math.hypot(cx, cz) || 1; return { x: x + cx / cd * 2, z: z + cz / cd * 2 }; });
       at = covers.sort((a, b) => distance(e.transform, a) - distance(e.transform, b))[0];
@@ -580,7 +582,10 @@ export class L8BossArenas {
       }
       const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz);
       const dot = (dx * a.area.dx + dz * a.area.dz) / (d || 1);
-      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? 8 : a.move === 'zebra.kick' ? 25 : a.move === 'elephant.swipe' ? 55 : a.move === 'lion.swipe' ? 34 : 30, a.move === 'gorilla.roar' ? 60 : 30);
+      if (a.move === 'lion.swipe' && a.impactTick !== undefined && w.tick < a.impactTick + 12) return;
+      if (a.move === 'lion.swipe' && a.impactTick !== undefined) { a.hitIds.length = 0; a.attackId = w.infected!.arenaAttackId(); }
+      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? 8 : a.move === 'zebra.kick' ? 25 : a.move === 'elephant.swipe' ? 55 : a.move === 'lion.swipe' ? 24 : 30, a.move === 'gorilla.roar' ? 60 : 30);
+      if (a.move === 'lion.swipe' && a.impactTick === undefined) { a.impactTick = w.tick; return; }
       this.recover(e, a.move === 'lion.swipe' ? 90 : 120); return;
     }
     if (a.move === 'gorilla.grab-throw' || a.move === 'monkey.debris') {
@@ -619,7 +624,7 @@ export class L8BossArenas {
     if (distance(e.transform, p.transform) <= (leap ? Math.max(a.area.radius + .35, infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .1) : a.area.radius + .35)) {
       const firstContact = !a.hitIds.includes(1);
       this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : leap ? 120 : 0);
-      if (firstContact && a.hitIds.includes(1) && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabNextTick = w.tick + 30; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
+      if (firstContact && a.hitIds.includes(1) && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabNextTick = w.tick + 30; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; if (arena.id === 'lion' && p.survivor?.knockdown) p.survivor.knockdown.pinned = true; }
     }
     const landed = leap && distance(e.transform, p.transform) <= infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .05;
     if (landed || clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
@@ -632,7 +637,7 @@ export class L8BossArenas {
         if (arena.wallHits >= 3) w.combat!.damage.apply({ sourceId: 1, targetId: e.id, attackId: a.attackId, actionId: 'arena.elephant.wall', origin: p.transform, direction: { x: a.area.dx, z: a.area.dz }, base: e.health.max * 10, multiplier: 1, type: 'status', knockback: 0, stagger: 0, permanent: true });
       }
       if (a.move === 'flamingo.dive') a.impactTick = w.tick;
-      else this.recover(e, 120);
+      else this.recover(e, leap && b.grabUntil <= w.tick ? 90 : 120);
     }
   }
   /** A decorative bush can stop a charge, but only authored walls/fences or the yard truck count toward the tactic. */
@@ -671,7 +676,7 @@ export class L8BossArenas {
     const def = l8BossArenas.find(a => a.id === arena.id)!;
     const slot = e.infected!.arenaBoss!.slot;
     const angle = this.w.tick / 130 + slot * Math.PI * 2 / def.count;
-    const r = arena.id === 'gorilla' || arena.id === 'elephant' ? 2 : 7;
+    const r = arena.id === 'gorilla' || arena.id === 'elephant' ? 2 : arena.id === 'lion' ? 12 : 7;
     const target = arena.id === 'flamingo' ? l8FlamingoLanding(slot) : { x: at.x + Math.cos(angle) * r, z: at.z + Math.sin(angle) * r };
     this.walk(e, distance(e.transform, def.centre) > def.radius ? def.centre : target, speed);
   }

@@ -1,6 +1,6 @@
 # Candidate animal audio sources
 
-Research snapshot, 2026-11-21. Candidates have not yet been integrated; Hashes identify the downloaded Freesound HQ previews, not the original masters.
+Research snapshot, 2026-11-21. The integrated Freesound sources use HQ previews; hashes identify those previews, not the original masters. The gorilla uses the research recording described below.
 
 ## Lion
 
@@ -36,13 +36,13 @@ Recorded with an LG Stylus 2022.
 
 ## Monkey
 
-- Source: https://freesound.org/people/Radio_fragola_gorizia/sounds/400088/
-- License on source page: CC0 1.0 (http://creativecommons.org/publicdomain/zero/1.0/)
-- Source description: Recorded with: Zoom H4n
-Made in: Gorizia, Italy
-- HQ preview SHA-256: `440437f9a7bddaca03af1fc30bd11c083b1eb698fbc96fec181bc470d1c3bd86`
+- Source: https://freesound.org/people/Bidone/sounds/67361/
+- License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+- Field recording of a monkey at Leipzig Zoo.
+- HQ preview SHA-256: `9e71097ba25bce3c3df217f493014a35102c29efd19c8216e51c0fd59a27937c`.
 
-## Gorilla candidate
+## Gorilla
 
-- Source: https://opengameart.org/content/gorilla-sounds
-- Source page states CC0 and credits J0ck0 for the roar and mediacollege.com for the grunts and snarls. Verify original recording provenance and licensing before use.
+- Source: Luef, Breuer and Pika (2016), “Food-Associated Calling in Gorillas (Gorilla g. gorilla) in the Wild,” PLOS ONE 11(2): e0144197, [S1 File: Balema singing](https://doi.org/10.1371/journal.pone.0144197.s001).
+- [Article and CC-BY 4.0 license statement](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144197); recording of a wild western lowland gorilla, adapted by excerpting, pitch shifting, distortion, echo, and a separate gurgle layer.
+- WAV SHA-256: `f5e0488b2c23e69cd11a58b74ec78ea6b2fe64cc815be5bdb74205b5cbd62f9b`.

@@ -3576,30 +3576,30 @@
       "sha256": "27676ec134bbb99e047872f65d474387f628a5c4a9366a716845c82847403633"
     },
     "animal-monkey": {
-      "title": "monkey.wav",
-      "author": "Radio_fragola_gorizia",
+      "title": "Affen schreit.mp3",
+      "author": "Bidone",
       "license": "CC0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "url": "https://freesound.org/people/Radio_fragola_gorizia/sounds/400088/",
+      "url": "https://freesound.org/people/Bidone/sounds/67361/",
       "pack": "s221-animal-monkey",
-      "downloadUrl": "https://cdn.freesound.org/previews/400/400088_7681954-hq.mp3",
-      "downloadFile": "400088_7681954-hq.mp3",
-      "downloadSha256": "440437f9a7bddaca03af1fc30bd11c083b1eb698fbc96fec181bc470d1c3bd86",
-      "member": "400088_7681954-hq.mp3",
-      "sha256": "440437f9a7bddaca03af1fc30bd11c083b1eb698fbc96fec181bc470d1c3bd86"
+      "downloadUrl": "https://cdn.freesound.org/previews/67/67361_706955-hq.mp3",
+      "downloadFile": "67361_706955-hq.mp3",
+      "downloadSha256": "9e71097ba25bce3c3df217f493014a35102c29efd19c8216e51c0fd59a27937c",
+      "member": "67361_706955-hq.mp3",
+      "sha256": "9e71097ba25bce3c3df217f493014a35102c29efd19c8216e51c0fd59a27937c"
     },
     "animal-gorilla": {
-      "title": "gorilla roar",
-      "author": "J0ck0",
-      "license": "CC0",
-      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-      "url": "https://freesound.org/people/J0ck0/sounds/397054/",
+      "title": "Balema singing (S1 File)",
+      "author": "Eva Maria Luef, Thomas Breuer and Simone Pika",
+      "license": "CC-BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144197",
       "pack": "s221-animal-gorilla",
-      "downloadUrl": "https://opengameart.org/sites/default/files/gorilla_roar.ogg",
-      "downloadFile": "gorilla_roar.ogg",
-      "downloadSha256": "b637e567f6df2b877ef53a43333af0abc2225c0fccbcddeb01dec78f762e3c85",
-      "member": "gorilla_roar.ogg",
-      "sha256": "b637e567f6df2b877ef53a43333af0abc2225c0fccbcddeb01dec78f762e3c85"
+      "downloadUrl": "https://doi.org/10.1371/journal.pone.0144197.s001",
+      "downloadFile": "pone.0144197.s001.wav",
+      "downloadSha256": "f5e0488b2c23e69cd11a58b74ec78ea6b2fe64cc815be5bdb74205b5cbd62f9b",
+      "member": "pone.0144197.s001.wav",
+      "sha256": "f5e0488b2c23e69cd11a58b74ec78ea6b2fe64cc815be5bdb74205b5cbd62f9b"
     }
   },
   "cues": {
@@ -6670,25 +6670,25 @@
     },
     "animal.gorilla.tell": {
       "source": "animal-gorilla",
-      "start": 0.12,
+      "start": 1.5,
       "filter": "asetrate=34320,aresample=48000,acrusher=bits=8:mix=0.3,aecho=0.8:0.7:60:0.25",
       "level": -16
     },
     "animal.gorilla.attack": {
       "source": "animal-gorilla",
-      "start": 0.24,
+      "start": 3.0,
       "filter": "asetrate=36000,aresample=48000,acrusher=bits=8:mix=0.3,aecho=0.8:0.7:60:0.25",
       "level": -16
     },
     "animal.gorilla.hurt": {
       "source": "animal-gorilla",
-      "start": 0.36,
+      "start": 4.5,
       "filter": "asetrate=37680,aresample=48000,acrusher=bits=8:mix=0.3,aecho=0.8:0.7:60:0.25",
       "level": -16
     },
     "animal.gorilla.death": {
       "source": "animal-gorilla",
-      "start": 0.48,
+      "start": 6.0,
       "filter": "asetrate=39360,aresample=48000,acrusher=bits=8:mix=0.3,aecho=0.8:0.7:60:0.25",
       "level": -16
     },
