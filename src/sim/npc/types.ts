@@ -94,8 +94,6 @@ export interface AllyState {
   mag?: number; burstN?: number; reloadUntil?: number; flinchUntil?: number; lastHp?: number; still?: { x: number; z: number; tick: number }; calloutAt?: number; blockedAt?: number;
 }
 export interface Companion {
-  /** Seated in the L10 motorbike sidecar; presentation holds the authored sit clip while passengerOf pins position. */
-  riding?: boolean;
   /** Rejected L5 pair steps without meaningful progress, and the bounded yielding leg. */
   contactRejected?: number; contactFrom?: Point & { at: number; blocker: number }; contactYield?: Point & { until: number };
   transitionUntil?: number; rejoining?: boolean; following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;

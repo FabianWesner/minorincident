@@ -348,8 +348,6 @@ export class SimWorld implements Lifecycle {
       this.events.on('sim.tick', () => this.destruction?.update(), SimPhase.missions + .1);
     }
     if (composition.id === 'L10') {
-      // s213: one reusable ride for the evac road trial; s212 owns later route placements.
-      if (![...this.entities.iterate()].some(e => e.bicycle)) this.vehicles!.bicycle.spawnMotorbike({ x: 2800, z: 45 }, 0);
       installMegaPursuit(this, { route: curePursuitRoute });
       const d = districts.districts.find(d => d.id === 'D-CURE');
       const at = d?.layout.anchors['dispersal-origin'];

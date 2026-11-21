@@ -9,14 +9,10 @@ import type { InputFrame } from '../../input/InputFrame';
 import type { NoBikeZone, Vec2 } from '../outbreak/types';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-import { emitEngine, stopEngine } from './ConvoySound';
 
 /** Serialized bicycle component (lives on the `bicycle` entity, so checkpoints restore it). `heading` is atan2(z, x). */
 export interface BicycleState {
   mounted: boolean; heading: number; speed: number;
-  /** L10 motorbike reuses bicycle contacts and mount rules with independent handling. */
-  motorbike?: boolean;
-  previousWeaponSelection?: { selectedSide: 'LEFT' | 'RIGHT'; left: number; right: number };
   /** Pedal crank phase and handlebar angle for the view; both derived, never read by the sim. */
   pedal: number; steer: number;
   /** Smoothed frame lean in radians; optional for older checkpoints. */
@@ -62,19 +58,13 @@ export class Bicycle {
   private navPose = '';
   constructor(private readonly world: SimWorld) {}
   /** Creates the bicycle at `pos`; the integrator/mission calls this once per level (anchor `bike-start`). */
-  spawn(pos: Vec2, heading = 0, pavement = true, exactSpot = false): number {
+  spawn(pos: Vec2, heading = 0): number {
     const state: BicycleState = { mounted: false, heading, speed: 0, pedal: 0, steer: 0, lean: 0, standTicks: 0, armed: true, lockUntil: 0 };
-    const parking = exactSpot ? { ...pos, heading } : this.parkingSpot(pos.x, pos.z, heading, [0, .6, 1.2, 1.8, 2.4, 3, 4, 5, 6, 8], pavement);
+    const parking = this.parkingSpot(pos.x, pos.z, heading, [0, .6, 1.2, 1.8, 2.4, 3, 4, 5, 6, 8]);
     if (!parking) throw new Error('No clear pavement for courier bicycle');
     const spot = parking; heading = parking.heading; state.heading = heading;
     const e = this.world.entities.create({ kind: 'bicycle', archetype: ARCHETYPE, faction: 'environment', transform: { x: spot.x, y: this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0, z: spot.z, yaw: -heading }, health: { current: 1, max: 1 }, bicycle: state });
     this.id = e.id; this.postPhysics(); return e.id;
-  }
-  /** Creates the reusable L10 motorbike using the bicycle's persistent ride/contact state. */
-  spawnMotorbike(pos: Vec2, heading = 0): number {
-    const id = this.spawn(pos, heading, false, true), e = this.world.entities.get(id)!;
-    e.archetype = 'veh.courier-motorbike'; e.bicycle!.motorbike = true;
-    return id;
   }
   get entity(): EntitySnapshot | undefined {
     let e = this.world.entities.get(this.id);
@@ -87,10 +77,7 @@ export class Bicycle {
     return !!bike?.bicycle && !!player && player.health.current > 0 && (bike.bicycle.mounted || this.world.tick >= bike.bicycle.lockUntil && Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z) <= MOUNT_RANGE && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform));
   }
   /** Controller speed scale (7.5 m/s over the 4.5 m/s run); 1 on foot. */
-  get speedScale(): number {
-    const bike = this.entity?.bicycle;
-    return this.riding ? speedMs * (bike?.motorbike ? 1.25 : 1) / survivor.speed : 1;
-  }
+  get speedScale(): number { return this.riding ? speedMs / survivor.speed : 1; }
   addNoBikeZone(zone: NoBikeZone): void { this.noBikeZones.push(zone); }
   inNoBikeZone(p: Vec2): boolean { return this.noBikeZones.some(z => inPolygon(p, z.polygon)); }
   /** Inside a zone or within `margin` metres of its edge (a fence on the border stops the rider just outside it). */
@@ -139,14 +126,6 @@ export class Bicycle {
         Object.assign(player.transform, spot, { y: (this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0) + survivor.height / 2 + .02, yaw: -b.heading });
         this.world.physics.playerBody?.setTranslation(player.transform, true); this.world.player?.locomotion.reset(); this.world.controls.reset(); this.world.spatial.set(1, spot.x, spot.z);
         b.mounted = true; b.standTicks = 0; b.approached = false; delete b.fallen; player.riding = bike.id;
-        if (b.motorbike && player.weapons) {
-          const w = player.weapons, found = (['LEFT', 'RIGHT'] as const).flatMap(side => w[side].rack.map((slot, index) => ({ side, index, id: slot.id }))).find(slot => slot.id === 'weapon.handgun');
-          if (found) {
-            b.previousWeaponSelection = { selectedSide: w.selectedSide, left: w.LEFT.index, right: w.RIGHT.index };
-            w[found.side].index = found.index; w.selectedSide = found.side;
-          }
-        }
-        if (b.motorbike) this.boardCorgi(bike, player);
         this.lastOutside = { x: player.transform.x, z: player.transform.z };
         this.mountedInPark = mountedInPark;
         return { ...frame, interact: false };
@@ -167,7 +146,6 @@ export class Bicycle {
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= BUMP_RANGE) { this.knockOff(bike, player); return frame; }
     }
     if (this.atNoBikeZone(player.transform)) { this.dismount(bike, player, this.lastOutside); return frame; }
-    if (b.motorbike && this.world.tick % 6 === 0) emitEngine(this.world, bike.id, Math.abs(b.speed), true);
     // Arriving at the depot without the parcel: she hops off and the bike is parked visibly right there.
     const park = this.parkPoints.find(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
     const inPark = !!park;
@@ -186,45 +164,35 @@ export class Bicycle {
     if (actual < Math.abs(b.speed) * .5) b.speed = Math.sign(b.speed) * actual;
     // Bicycle kinematics: the steering angle shrinks with speed (turn radius 1.6 m crawling, 6 m flat out), the heading changes by
     // speed / radius, so the bike never pivots on the spot; speed ramps (0 to 7 m/s in 1.5 s), brakes hard, coasts gently.
-    const maxSpeed = b.motorbike ? speedMs * 1.25 : speedMs;
-    const want = frame.drive ? Math.abs(frame.drive.throttle) : Math.min(1, Math.hypot(frame.move.x, frame.move.z)), r = Math.abs(b.speed) / maxSpeed;
+    const want = frame.drive ? Math.abs(frame.drive.throttle) : Math.min(1, Math.hypot(frame.move.x, frame.move.z)), r = Math.abs(b.speed) / speedMs;
     let target = 0, steerTarget = 0;
     if (frame.drive) {
       steerTarget = Math.max(-1, Math.min(1, -frame.drive.steer)); // drive.steer > 0 is the vehicle's left; the bicycle heading grows clockwise (right)
       // S brakes forward motion before reversing; A/D steer relative to the bicycle.
       const throttle = Math.max(-1, Math.min(1, frame.drive.throttle));
-      target = throttle < 0 ? bicycleHandling.reverseMs * throttle : maxSpeed * throttle;
+      target = throttle < 0 ? bicycleHandling.reverseMs * throttle : speedMs * throttle;
     } else if (want > 0) {
       const desired = Math.atan2(frame.move.z, frame.move.x), err = Math.atan2(Math.sin(desired - b.heading), Math.cos(desired - b.heading));
       steerTarget = Math.max(-1, Math.min(1, err / .7));
       // Sharp turns shed speed; a turn straight behind slows to a crawl before swinging round.
-      target = maxSpeed * want * Math.max(.3, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
+      target = speedMs * want * Math.max(.3, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
     }
     b.steer += (steerTarget - b.steer) * Math.min(1, bicycleHandling.steeringResponse * FIXED_DT);
-    const turnScale = b.motorbike ? 1.08 : 1;
-    const radius = (bicycleHandling.slowTurnRadius + (bicycleHandling.fastTurnRadius - bicycleHandling.slowTurnRadius) * r) * turnScale;
+    const radius = bicycleHandling.slowTurnRadius + (bicycleHandling.fastTurnRadius - bicycleHandling.slowTurnRadius) * r;
     // At an obstacle, the rider can still walk the front wheel round to pull away.
     // Using only achieved speed here locks the heading forever when the capsule is stopped.
     const steeringSpeed = want > 0 ? Math.sign(b.speed || target) * Math.max(Math.abs(b.speed), .8) : b.speed;
     const turnRate = b.steer * steeringSpeed / radius;
     b.heading += turnRate * FIXED_DT;
-    const accel = accelToMs / accelS * (b.motorbike ? 1.25 : 1), braking = b.speed * target < 0 || Math.abs(target) < Math.abs(b.speed);
+    const accel = accelToMs / accelS, braking = b.speed * target < 0 || Math.abs(target) < Math.abs(b.speed);
     const change = (braking ? (want > 0 ? 9 : 3) : accel) * FIXED_DT;
     b.speed += Math.max(-change, Math.min(change, target - b.speed));
     this.lean(b, turnRate);
     if (want > 0) b.pedal += b.speed * FIXED_DT * 1.8; // cadence follows speed; freewheeling while coasting
-    const m = b.speed / maxSpeed;
-    // The bicycle disables attacks; the L10 motorcycle permits only a carried handgun.
+    const m = b.speed / speedMs;
+    // The attack buttons are disabled while riding; a coasting bicycle with no input keeps its heading.
     const off = { down: false, held: false, up: false };
-    const weapon = player.weapons;
-    const handgunSide = b.motorbike && weapon ? (['LEFT', 'RIGHT'] as const).find(side => weapon[side].rack[weapon[side].index]?.id === 'weapon.handgun') : undefined;
-    let aim = frame.aim;
-    if (b.motorbike && handgunSide && aim && Math.hypot(aim.x, aim.z) > .01) {
-      const angle = Math.atan2(aim.z, aim.x), delta = Math.atan2(Math.sin(angle - b.heading), Math.cos(angle - b.heading));
-      const limited = Math.max(-100 * Math.PI / 180, Math.min(100 * Math.PI / 180, delta));
-      aim = { x: Math.cos(b.heading + limited), z: Math.sin(b.heading + limited) };
-    }
-    const next: InputFrame = { ...frame, aim, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: handgunSide === 'LEFT' ? frame.left : off, right: handgunSide === 'RIGHT' ? frame.right : off, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined, selectedLegacyWeaponKey: undefined, selectedPositionWeaponKey: undefined, interact: !!claimed && frame.interact };
+    const next: InputFrame = { ...frame, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: off, right: { ...off }, selector: 0, interact: !!claimed && frame.interact };
     delete next.navigation; // the bicycle has its own acceleration and turning model
     return next;
   }
@@ -265,7 +233,7 @@ export class Bicycle {
       this.world.player.locomotion.props = b.mounted ? [] : [-.6, .1, .7].map(along => ({ transform: { x: bike.transform.x + fx * along, z: bike.transform.z + fz * along }, radius: .3 }));
     }
     if (b.mounted) this.clearFrame(b, player.transform);
-    if (b.mounted) { Object.assign(bike.transform, { x: player.transform.x, y: this.world.districts?.pavingHeight(player.transform.x, player.transform.z) ?? 0, z: player.transform.z, yaw: -b.heading }); player.transform.yaw = bike.transform.yaw; player.riding = bike.id; if (b.motorbike) this.placeCorgi(bike); }
+    if (b.mounted) { Object.assign(bike.transform, { x: player.transform.x, y: this.world.districts?.pavingHeight(player.transform.x, player.transform.z) ?? 0, z: player.transform.z, yaw: -b.heading }); player.transform.yaw = bike.transform.yaw; player.riding = bike.id; }
     else delete player.riding;
     // Route around parked frames too: destination clearance alone cannot stop a route
     // crossing a bike and fighting its push-out on the way to an otherwise free click.
@@ -372,41 +340,9 @@ export class Bicycle {
    * Parks beside the rider: on level pavement when there is some in reach, else on any clear level ground nearby, else
    * exactly where she got off. Never back to an older parking spot: that teleport read as the bike vanishing (PO 10-08).
    */
-  private boardCorgi(bike: EntitySnapshot, player: EntitySnapshot): void {
-    const dog = [...this.world.entities.iterate()].find(e => e.companion);
-    if (!dog) return;
-    dog.passengerOf = bike.id;
-    this.placeCorgi(bike);
-    dog.companion!.riding = true;
-    dog.companion!.state = 'follow';
-    Object.assign(dog.transform, { y: player.transform.y, yaw: bike.transform.yaw });
-  }
-  private placeCorgi(bike: EntitySnapshot): void {
-    const dog = [...this.world.entities.iterate()].find(e => e.companion && e.passengerOf === bike.id);
-    if (!dog || !bike.bicycle) return;
-    const h = bike.bicycle.heading, side = 1.05;
-    Object.assign(dog.transform, { x: bike.transform.x - Math.sin(h) * side, y: bike.transform.y + .12, z: bike.transform.z + Math.cos(h) * side, yaw: bike.transform.yaw });
-    this.world.spatial.set(dog.id, dog.transform.x, dog.transform.z);
-  }
-  private unboardCorgi(bike: EntitySnapshot): void {
-    const dog = [...this.world.entities.iterate()].find(e => e.companion && e.passengerOf === bike.id);
-    if (!dog) return;
-    delete dog.passengerOf;
-    delete dog.companion!.riding;
-    const h = bike.bicycle!.heading, side = 1.05;
-    Object.assign(dog.transform, { x: bike.transform.x - Math.sin(h) * side, z: bike.transform.z + Math.cos(h) * side, yaw: bike.transform.yaw });
-    dog.transform.y = this.world.districts?.groundBelow(dog.transform.x, dog.transform.z, bike.transform.y + .5) ?? bike.transform.y;
-    this.world.spatial.set(dog.id, dog.transform.x, dog.transform.z);
-  }
   private dismount(bike: EntitySnapshot, player: EntitySnapshot, at?: Vec2, crash = false): void {
     const b = bike.bicycle!;
     b.mounted = false; b.speed = 0; b.steer = 0; b.lean = 0; b.armed = false; b.lockUntil = this.world.tick + 18;
-    if (b.motorbike) stopEngine(this.world, bike.id);
-    if (b.motorbike) this.unboardCorgi(bike);
-    if (b.motorbike && player.weapons && b.previousWeaponSelection) {
-      player.weapons.LEFT.index = b.previousWeaponSelection.left; player.weapons.RIGHT.index = b.previousWeaponSelection.right;
-      player.weapons.selectedSide = b.previousWeaponSelection.selectedSide; delete b.previousWeaponSelection;
-    }
     delete player.riding;
     const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z;
     const spot = crash ? this.parkingSpot(x, z, b.heading, CRASH_RADII, false) ?? this.crashSpot(x, z, b.heading) : this.parkingSpot(x, z, b.heading) ?? this.parkingSpot(x, z, b.heading, CRASH_RADII, false);

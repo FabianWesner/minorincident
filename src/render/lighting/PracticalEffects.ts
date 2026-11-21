@@ -13,7 +13,6 @@ import { LampInsects } from '../AmbientLife';
  * They read exactly the same fixed-tick anchor state as emissive meshes/pools. */
 export class PracticalEffects extends Group {
   private lights: PlacedLight[] = [];
-  private readonly sweepingBeams = new Map<string, [number, number, number]>();
   private readonly beams: InstancedMesh;
   private readonly streaks: InstancedMesh;
   private readonly beamDepth = new DepthTexture(1, 1, UnsignedInt248Type);
@@ -58,11 +57,7 @@ export class PracticalEffects extends Group {
     this.streaks = new InstancedMesh(plane, streak, 128); this.streaks.count = 0; this.streaks.frustumCulled = false;
     this.add(this.beams, this.streaks, this.insects, this.motes);
   }
-  install(world: DistrictWorld): void {
-    this.lights = placedLights(world); this.sweepingBeams.clear();
-    for (const light of this.lights) if (light.placementId === 'l10-setpiece-complex-searchlight' && light.anchor.type === 'spot')
-      this.sweepingBeams.set(light.id, [...light.direction]);
-  }
+  install(world: DistrictWorld): void { this.lights = placedLights(world); }
   /** A moving lamp's visible cone for this frame (cleared by `update`): apex at `position`, `length` m along `direction`. */
   pushBeam(position: Vector3, direction: Vector3, length: number, angleDeg: number, color: Color): void {
     const slot = this.dynamic[this.dynamicCount] ??= { position: new Vector3(), direction: new Vector3(), length: 0, radius: 0, color: new Color() };
@@ -71,19 +66,6 @@ export class PracticalEffects extends Group {
   }
   update(power: LightPower | null, practical: number, focus: { x: number; z: number }, low: boolean, insects = false, seconds = 0): void {
     let beams = 0, reflections = 0;
-    // The L10 complex beacon sweeps over the approach instead of pointing like a parked work lamp.
-    for (const light of this.lights) {
-      const base = this.sweepingBeams.get(light.id); if (!base) continue;
-      const yaw = Math.sin(seconds * .28) * .72, c = Math.cos(yaw), s = Math.sin(yaw);
-      light.direction[0] = base[0] * c + base[2] * s;
-      light.direction[2] = -base[0] * s + base[2] * c;
-    }
-    // Keep the complex mast and its moving search beam legible from the far hangar exit.
-    // The local floodlight anchors remain short-range; this thin render-only ray is the distant landmark.
-    const beacon = this.lights.find(light => light.placementId === 'l10-setpiece-complex-searchlight' && (power ? power.isOn(light.id) : light.on));
-    const distantBeam = beacon && focus.x >= 2700 && focus.x <= 4020 && Math.hypot(beacon.position[0] - focus.x, beacon.position[2] - focus.z) > 40
-      ? { position: new Vector3(beacon.position[0], beacon.position[1] + 1.5, beacon.position[2]), direction: new Vector3(-Math.cos(Math.sin(seconds * .28) * .72), .035, Math.sin(Math.sin(seconds * .28) * .72)).normalize() }
-      : undefined;
     const dynamic = this.dynamicCount; this.dynamicCount = 0;
     this.motes.update(practical > 0 && dynamic ? this.dynamic.slice(0, dynamic) : [], seconds, low);
     if (practical <= 0) { this.beams.count = this.streaks.count = 0; this.insects.update([], seconds, false); return; }
@@ -92,13 +74,6 @@ export class PracticalEffects extends Group {
       this.instancePosition.copy(b.position).addScaledVector(b.direction, b.length / 2);
       this.instanceRotation.setFromUnitVectors(this.axis, this.direction.copy(b.direction).negate()); this.instanceScale.set(b.radius, b.length, b.radius);
       this.beams.setMatrixAt(beams, this.instanceMatrix.compose(this.instancePosition, this.instanceRotation, this.instanceScale)); this.beams.setColorAt(beams++, this.color.copy(b.color).multiplyScalar(practical));
-    }
-    if (distantBeam && beams < 128) {
-      const length = 1200, radius = length * Math.tan(1.4 * Math.PI / 360);
-      this.instancePosition.copy(distantBeam.position).addScaledVector(distantBeam.direction, length / 2);
-      this.instanceRotation.setFromUnitVectors(this.axis, this.direction.copy(distantBeam.direction).negate()); this.instanceScale.set(radius, length, radius);
-      this.beams.setMatrixAt(beams, this.instanceMatrix.compose(this.instancePosition, this.instanceRotation, this.instanceScale));
-      this.beams.setColorAt(beams++, this.color.set(lightPalette.light_led_white).multiplyScalar(practical));
     }
     const nearby = this.lights.filter(light => (power ? power.isOn(light.id) : light.on) && Math.hypot(light.position[0] - focus.x, light.position[2] - focus.z) < 40).sort((a, b) => Math.hypot(a.position[0] - focus.x, a.position[2] - focus.z) - Math.hypot(b.position[0] - focus.x, b.position[2] - focus.z));
     this.insects.update(nearby, seconds, insects && !low);

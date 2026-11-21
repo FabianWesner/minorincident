@@ -40,31 +40,6 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
     world.dispose();
   }
 
-  async function finaleBeatsKeepControl(): Promise<void> {
-    const world = await loadLevel('L10', 1, preset('L10-default'), 0, { quality: 'high' });
-    const mission = world.missions!, story = mission.l10!.story, player = world.entities.get(1)!;
-    const motorbike = world.vehicles!.bicycle.entity;
-    expect(motorbike?.archetype).toBe('veh.courier-motorbike');
-    expect(motorbike?.bicycle?.motorbike).toBe(true);
-    expect([motorbike?.transform.x, motorbike?.transform.z]).toEqual([2800, 45]);
-    mission.state.states['story-initialized'] = true; mission.state.states['sam-alive'] = true;
-    const lines: string[] = [];
-    world.events.on('dialogue.line', event => { if (event.type === 'dialogue.line') lines.push(event.id); });
-    for (const [x, id] of [[2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [3010, 'L10.finale-2'], [3076, 'L10.finale-3'], [3150, 'L10.finale-4'], [3260, 'L10.finale-5'], [3340, 'L10.finale-6'], [3390, 'L10.finale-7'], [3502, 'L10.finale-8'], [3550, 'L10.finale-9']] as const) {
-      player.transform.x = x; player.transform.z = 95;
-      story.update();
-      expect(lines.at(-1), `beat at x=${x}`).toBe(id);
-      expect(mission.state.phase, `beat at x=${x} never pauses play`).toBe('playing');
-      expect(mission.state.subtitle?.text.split('\n').length ?? 0, `beat at x=${x} stays to two lines`).toBeLessThanOrEqual(2);
-      if (x === 3010) {
-        world.tick += 360; player.transform.x = 3035; story.update();
-        expect(lines.at(-1), 'Reyes handset repeats its recording while nearby').toBe('L10.finale-2');
-      }
-    }
-    expect(new Set(lines.filter(id => id.startsWith('L10.finale-'))).size).toBe(10);
-    world.dispose();
-  }
-
   it('is wide on the R1–R5 road, normal in the corridor, complex, finale and at close interactions', () => {
     expect(l10RoadWeight(640, 8, false)).toBe(1);
     expect(l10RoadWeight(2150, -75, false)).toBe(1);
@@ -153,7 +128,6 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
     // Cured people only appear when infected are nearby."): the release beat always has a cured crowd around her, clear of
     // bodies; Voss's "Release it. Now." ends with the release; the closing group never stands in the Mega's body.
     await megaRevealRestoresOnce();
-    await finaleBeatsKeepControl();
     await releaseStaging();
   }, 120_000);
 });

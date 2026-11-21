@@ -19,8 +19,7 @@ export class LevelTenBot {
     [1042, 80], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
     cure.anchors['guard-tower-rifle'], cure.anchors['r4-r5-seam'],
     cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
-    [3010, 95], [3076, 95], [3190, 95], [3260, 95], [cureEscapeGaps[2].x, cureEscapeGaps[2].z],
-    [3390, 95], [3502, 95], [3577, -25], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
+    [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
   ];
   private waypoint = 0;
   private clearStairsUntil = 0;

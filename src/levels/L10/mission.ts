@@ -12,14 +12,16 @@ export const cureRegions = [
   { id: 'destroyed-corridor', chapter: 'Dispersal route', checkpoint: 'cure-corridor', minutes: 1, routeMetres: 1000 },
   { id: 'dispersal-complex', chapter: 'Dispersal complex', checkpoint: 'cure-complex', minutes: 1, routeMetres: 350 },
 ] as const;
-export const cureFinaleCheckpoints = ['l10-quarantine-gate', 'l10-convoy-7', 'l10-field-hospital'] as const;
-export const cureCheckpoints = [...cureRegions.map(r => r.checkpoint), ...cureFinaleCheckpoints, 'cure-research', 'cure-disperse-ready'];
+// Frequent regional recovery points keep a failed walk from replaying a long
+// empty stretch. The story controller records these at each crossed marker.
+export const curePaceCheckpoints = Array.from({ length: 32 }, (_, i) => `cure-pace-${i + 1}`);
+export const cureCheckpoints = [...cureRegions.map(r => r.checkpoint), ...curePaceCheckpoints, 'cure-research', 'cure-disperse-ready'];
 export const cureAnchorNames = [...cureCheckpoints, ...cureWeaponPickups.map(p => p.anchor), 'cure-terminal', 'cure-canister', 'cure-install', 'cure-console', 'river-exit', 'r4-r5-seam'] as const;
 
 /** Finale controllers own these booleans. Charge-ready means 3,600 eligible ticks; credits-finished follows the playable epilogue. */
 /** Elapsed eligible simulation ticks (durations, not absolute timestamps), available to S7/S9. */
-export const cureCounters = ['charge-ticks', 'epilogue-ticks', 'story-region', 'pace-checkpoint', 'pace-mm', 'hangar-line', 'hangar-line-ticks', 'mega-reveal-ticks', 'l10-reyes-loop-ticks'];
-export const cureStates = ['charge-active', 'console-held', 'terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished', 'story-initialized', 'sam-alive', 'gap-hint', 'hangar-radio', 'hangar-cast', 'hangar-dialogue-done', 'mega-reveal-seen', 'mega-reveal-active', 'arena-equipped', 'gate-spent', 'delivery-notified', 'epilogue-rosa', 'epilogue-sam', 'l10-gate-checkpoint', 'l10-convoy-checkpoint', 'l10-hospital-checkpoint', 'l10-overpass-mega', 'l10-final-call', ...Array.from({ length: 10 }, (_, i) => `l10-finale-beat-${i}`), ...cureWeaponPickups.map(p => `found-${p.id}`)];
+export const cureCounters = ['charge-ticks', 'epilogue-ticks', 'story-region', 'pace-checkpoint', 'pace-mm', 'hangar-line', 'hangar-line-ticks', 'mega-reveal-ticks'];
+export const cureStates = ['charge-active', 'console-held', 'terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished', 'story-initialized', 'sam-alive', 'gap-hint', 'hangar-radio', 'hangar-cast', 'hangar-dialogue-done', 'mega-reveal-seen', 'mega-reveal-active', 'arena-equipped', 'gate-spent', 'delivery-notified', 'epilogue-rosa', 'epilogue-sam', ...cureWeaponPickups.map(p => `found-${p.id}`)];
 /** The hangar issues one weapon for each combat role. */
 export const cureHangarWeapons = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb'];
 /** Optional anchors let region lanes land independently. Missing anchors cannot complete spatial objectives. */

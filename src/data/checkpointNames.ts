@@ -14,7 +14,6 @@ export const checkpointNames: Readonly<Record<string, Readonly<Record<string, st
     'cure-industrial': 'the industrial district', 'cure-military': 'the military zone',
     'cure-research-entry': 'the research campus', 'cure-research': 'the research lab',
     'cure-corridor': 'the ruined corridor', 'cure-complex': 'the dispersal complex',
-    'l10-quarantine-gate': 'Quarantine Gate', 'l10-convoy-7': 'Convoy 7', 'l10-field-hospital': 'Field Hospital',
     'cure-disperse-ready': 'the dispersal console',
   },
 };

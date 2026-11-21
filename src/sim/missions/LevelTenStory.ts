@@ -4,7 +4,7 @@ import { allyState } from '../outbreak/Allies';
 import { l4 } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
-import { cureFinaleCheckpoints } from '../../levels/L10/mission';
+import { curePaceCheckpoints } from '../../levels/L10/mission';
 import { cureWeaponPickups } from '../../levels/L10/encounters';
 
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
@@ -54,74 +54,22 @@ export class LevelTenStory {
       state.counters['story-region'] = i;
       this.mission.requestCheckpoint(cure.regions[i].checkpoint);
     }
+    // Count actual walking distance, including bends and field detours. The
+    // old east-west markers left up to 320 m between recovery points.
+    const moved = Math.hypot(p.transform.x - this.previous.x, p.transform.z - this.previous.z);
     this.previous = { x: p.transform.x, z: p.transform.z };
-    // The finale road uses four authored recovery points. A named point is
-    // committed only after its set-piece cohort has been admitted and cleared.
-    const setPieces = [
-      { flag: 'l10-gate-checkpoint', x: 3030, group: 'setpiece-quarantine-gate', id: cureFinaleCheckpoints[0] },
-      { flag: 'l10-convoy-checkpoint', x: 3290, group: 'setpiece-burning-convoy', id: cureFinaleCheckpoints[1] },
-      { flag: 'l10-hospital-checkpoint', x: 3530, group: 'setpiece-field-hospital', id: cureFinaleCheckpoints[2] },
-    ];
-    for (const beat of setPieces) {
-      if (state.states[beat.flag] || p.transform.x < beat.x) continue;
-      const cohort = Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith(`${beat.group}:`));
-      if (!cohort.length || cohort.some(([, actorId]) => (world.entities.get(actorId)?.health.current ?? 0) > 0)) continue;
-      state.states[beat.flag] = true;
-      this.mission.requestCheckpoint(beat.id);
+    if (!state.states['cure-installed']) {
+      if (moved < 8) state.counters['pace-mm'] = (state.counters['pace-mm'] ?? 0) + Math.round(moved * 1000);
+      const index = state.counters['pace-checkpoint'] ?? 0;
+      if (state.counters['pace-mm'] >= (index ? 200000 : 120000)) {
+        const next = Math.min(curePaceCheckpoints.length, index + 1);
+        state.counters['pace-checkpoint'] = next;
+        state.counters['pace-mm'] = 0;
+        this.mission.requestCheckpoint(curePaceCheckpoints[next - 1]);
+      }
     }
-    if (!state.states['hangar-radio'] && p.transform.x >= 2300) { state.states['hangar-radio'] = true; this.say('L10.armory'); }
     if (!state.states['gap-hint'] && cureEscapeGaps.some(gap => Math.hypot(p.transform.x - gap.x, p.transform.z - gap.z) < 5)) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
-    const finaleLines: readonly [number, string][] = [
-      [2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [3010, 'L10.finale-2'],
-      [3076, 'L10.finale-3'], [3150, 'L10.finale-4'], [3260, 'L10.finale-5'],
-      [3340, 'L10.finale-6'], [3390, 'L10.finale-7'], [3502, 'L10.finale-8'], [3550, 'L10.finale-9'],
-    ];
-    const nextFinaleLine = finaleLines.findIndex(([x], index) => !state.states[`l10-finale-beat-${index}`] && p.transform.x >= x);
-    if (nextFinaleLine >= 0) {
-      const [x, id] = finaleLines[nextFinaleLine];
-      const index = nextFinaleLine;
-      const key = `l10-finale-beat-${index}`;
-      if (!state.states[key] && p.transform.x >= x) {
-        state.states[key] = true;
-        if (index === 2) state.counters['l10-reyes-loop-ticks'] = world.tick + 360;
-        this.say(id, 300);
-      }
-    }
-    // Reyes's handset repeats while the courier is within range, just as the
-    // abandoned field radio was recorded; this remains a captioned, moving
-    // radio cue and does not take control of the player.
-    if (p.transform.x >= 3010 && p.transform.x < 3076 && world.tick >= state.counters['l10-reyes-loop-ticks']) {
-      state.states['l10-finale-beat-2'] = true;
-      state.counters['l10-reyes-loop-ticks'] = world.tick + 360;
-      this.say('L10.finale-2', 240);
-    }
-    if (!state.states['l10-overpass-mega'] && p.transform.x >= 3320) {
-      const pursuit = world.megaPursuit;
-      const id = pursuit?.state.id ? pursuit.state.id : pursuit?.introduce({ x: 3330, z: 111 });
-      const alpha = id ? world.entities.get(id) : undefined;
-      if (alpha?.infected) {
-        state.states['l10-overpass-mega'] = true;
-        // Re-stage the already-active hunter on the overpass shoulder, where
-        // the light crate gives its existing rage throw a visible pickup.
-        // This is an authored entrance for the beat; the pursuit resumes as
-        // soon as the normal infected update runs.
-        const at = { x: 3332, z: 100 };
-        alpha.transform.x = at.x; alpha.transform.z = at.z;
-        alpha.transform.y = (world.districts?.groundHeight(at.x, at.z) ?? 0) + .7;
-        alpha.infected.hidden = false;
-        world.spatial?.set(alpha.id, at.x, at.z);
-        alpha.infected.megaPhase = 2;
-        const dx = p.transform.x - alpha.transform.x, dz = p.transform.z - alpha.transform.z, distance = Math.hypot(dx, dz) || 1;
-        world.infected!.startSpecial(alpha.id, 'alpha.grab-throw', { id: p.id, x: p.transform.x, z: p.transform.z }, {
-          x: alpha.transform.x, z: alpha.transform.z, radius: 4, dx: dx / distance, dz: dz / distance,
-        });
-        world.l10Encounters?.callWave();
-      }
-    }
-    if (!state.states['l10-final-call'] && p.transform.x >= 3650) {
-      state.states['l10-final-call'] = true;
-      world.l10Encounters?.callWave();
-    }
+    if (!state.states['hangar-radio'] && p.transform.x >= 2300) { state.states['hangar-radio'] = true; this.say('L10.armory'); }
     if (!state.states['hangar-cast'] && Math.abs(p.transform.x - cureHangar.centre.x) < 120 && world.chunks?.resident(cureHangar.centre.x, cureHangar.centre.z)) this.spawnCast();
     if (state.steps.research?.status !== 'active' || !insideCureHangar(p.transform)) return;
     const index = state.counters['hangar-line'], line = cureHangarConversation[index];
