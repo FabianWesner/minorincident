@@ -128,6 +128,8 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // A normal pushable physics prop: the pursuit Alpha must be able to pick
     // this up for its existing overpass throw move.
     place('l10-setpiece-overpass-throwable', 'prop.crates', 3336, 98, [.8, .5, .6], .1);
+    place('l10-setpiece-overpass-throwable-north', 'prop.crates', 3336, 127, [.8, .5, .6], .1);
+    place('l10-setpiece-overpass-throwable-south', 'prop.crates', 3336, 55, [.8, .5, .6], .1);
     // Triage fencing reads as a final roadblock while the central lane stays passable.
     roadside('hospital-fence-west', 'prop.cure-mil-fence', 3502, 86, [2.7, 1.2, .2], Math.PI / 2);
     roadside('hospital-fence-east', 'prop.cure-mil-fence', 3502, 104, [2.7, 1.2, .2], Math.PI / 2);

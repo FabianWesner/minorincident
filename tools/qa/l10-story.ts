@@ -194,7 +194,7 @@ for (const tier of tiers) {
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number }[] = [];
   const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0 }));
   const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
-  let authoredThrowCrateId: number | undefined;
+  const authoredThrowCrateIds = new Set<number>();
   const overpassState: unknown[] = [];
   const bikeRecovery: unknown[] = [];
   let billboardFallTick: number | undefined, hospitalOpenTick: number | undefined;
@@ -207,7 +207,6 @@ for (const tier of tiers) {
   const run = await runLevel('L10', 'complete', 1, finaleOnly ? 360 : routeBudget, 'auto', undefined, undefined, 0, {
     quality: tier,
     beforeBegin: world => {
-      authoredThrowCrateId = world.props?.items.find(item => item.id === 'D-CURE/l10-setpiece-overpass-throwable')?.entityId;
       const inFinale = () => world.entities.get(1)!.transform.x >= 2750 && world.entities.get(1)!.transform.x <= 4005;
       world.events.on('dialogue.line', e => {
         if (e.type === 'dialogue.line' && /^L10\.finale-\d$/.test(e.id) && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'story', id: e.id });
@@ -285,7 +284,7 @@ for (const tier of tiers) {
           const alpha = world.megaPursuit!.entity();
           const object = alpha && world.infected!.props.nearestObject(alpha, 6);
           const crate = world.props?.items.find(item => item.id.includes('overpass-throwable'));
-          if (crate) authoredThrowCrateId = crate.entityId;
+          for (const item of world.props?.items ?? []) if (item.id.startsWith('D-CURE/l10-setpiece-overpass-throwable')) authoredThrowCrateIds.add(item.entityId);
           const nearbyProps = alpha && world.props?.items.filter(item => Math.hypot(item.body.translation().x - alpha.transform.x, item.body.translation().z - alpha.transform.z) <= 8).map(item => ({ id: item.id, entityId: item.entityId, mass: item.mass, fixed: item.fixed, position: item.body.translation(), los: world.infected!.hearing.lineOfSight(alpha.transform, item.body.translation()) }));
           overpassState.push({ tick: world.tick, player: { x: p.transform.x, z: p.transform.z }, playerLos: alpha && world.infected!.hearing.lineOfSight(alpha.transform, p.transform), alpha: alpha && { x: alpha.transform.x, z: alpha.transform.z, state: alpha.infected?.state, cooldown: alpha.infected?.cooldown, specialCooldowns: alpha.infected?.specialCooldowns, recovery: alpha.infected?.specialRecoveryUntil, move: alpha.infected?.specialAttack?.move, attacking: alpha.combat?.attacking }, object: object && { ...object }, objectAt: object && world.entities.get(object.id)?.transform, crate: crate && { entityId: crate.entityId, mass: crate.mass, fixed: crate.fixed, braced: crate.braced, enabled: crate.body.isEnabled(), position: crate.body.translation() }, nearbyProps });
         }
@@ -317,7 +316,7 @@ for (const tier of tiers) {
     check(tier, 'hospital tents open on the route', hospitalOpenTick !== undefined, hospitalOpenTick ?? null);
     for (const b of roadblockRide) check(tier, `ride, fight, remount and cross roadblock ${b.x}`, !!b.crossed, b);
   }
-  if (!finaleOnly) check(tier, 'overpass Mega throws the authored crate during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'prop-thrown' && e.propId === authoredThrowCrateId && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, crate: authoredThrowCrateId, throws: overpassThrows });
+  if (!finaleOnly) check(tier, 'overpass Mega throws the authored crate during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'prop-thrown' && e.propId !== undefined && authoredThrowCrateIds.has(e.propId) && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, crates: [...authoredThrowCrateIds], throws: overpassThrows });
   if (!finaleOnly) check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);
   if (!finaleOnly) check(tier, 'persistent Mega produces recurring close encounters in distinct route sections', sightings.length >= 3, sightings);
   if (!finaleOnly) check(tier, 'no ordinary infected first enters the widest frame standing idle', idleEntries.length === 0 && firstSeen.size > 0, { idleEntries, seen: firstSeen.size });
