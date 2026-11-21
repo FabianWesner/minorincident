@@ -17,9 +17,9 @@ Thirty positional cues cover idle, tell, attack, hurt and death for each of six 
 
 ## Verification
 
-- `npm run typecheck`, lint, the focused L8 boss proof, and the nightly mission-interactions test passed. The final-source threat merge is in progress.
+- `npm run typecheck`, lint, the focused L8 boss proof, and the nightly mission-interactions test passed. The final-source two-shard threat merge passed with zero global acceptance flags ([summary](threat-summary.json)).
 - A prior full two-shard threat merge at `2cc66c65` passed with zero flags. The skilled L8 bot finished in 403.17 simulated seconds, with 0 deaths, 10 damage and a 4.26% follower-wait upper bound. Subsequent lion changes require a fresh gate.
-- The final-source skilled L8 stage completed in 407.8 simulated seconds, with 0 deaths and 90 damage taken.
+- The final-source skilled L8 stage completed in 407.8 simulated seconds, with 0 deaths and 90 damage taken. Its follower-wait upper bound was 4.33%, versus 7.52% on main. The audit also recorded two skilled L8 diagnostic flags for unreachable share and tunnel-breach first-attack time; the global acceptance result and L8 passive flags were zero.
 - A separate detached checkout of main `97b4c6f71a188714bc07d32a6304f8520754340a` completed the L8 skilled route with 0 deaths in 430 simulated seconds ([receipt](main-l8-baseline.json)). Its L8-only threat diagnostic reports the expected partial-selection flag.
 - Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests with 1 skipped in 205.0 s.
 
