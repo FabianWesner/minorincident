@@ -204,6 +204,10 @@ async function checkCheckpointRacks() {
     transactArsenal(l10, ['weapon.machete'], []);
     const field = l10.hazards!.fieldFire!, cell = field.cells[0];
     expect(cell).toBeDefined();
+    const roadDistrict = l10.districts!.districts.find(d => d.layout.roads.edges.some(e => e.points.length > 1))!;
+    const road = roadDistrict.layout.roads.edges.find(e => e.points.length > 1)!;
+    const roadPoint = { x: road.points[0][0] + roadDistrict.origin[0], z: road.points[0][1] + roadDistrict.origin[1] };
+    expect(l10.hazards!.ignitePatch(roadPoint, .65, 5)).toBeNull();
     for (const district of l10.districts!.districts) for (const c of field.cells.filter(c => c.id.startsWith(`${district.id}/`))) {
       const x = c.x - district.origin[0], z = c.z - district.origin[1];
       expect(overlapsRoad(district.layout, { min: [x - 5, 0, z - 5], max: [x + 5, 0, z + 5] }), c.id).toBe(false);

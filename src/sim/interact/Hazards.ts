@@ -105,6 +105,13 @@ export class Hazards {
   ignitePatch(position: Vec2, radius: number, duration: number): number | null {
     this.fieldFire?.ignite(position, this.world.tick, Math.max(4, radius * 2));
     this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
+    // Fuel may ignite adjacent vegetation, but the persistent ground patch must
+    // not cover an authored road or paved surface.
+    for (const district of this.world.districts?.districts ?? []) {
+      const x = position.x - district.origin[0], z = position.z - district.origin[1];
+      const footprint = { min: [x - radius, 0, z - radius] as [number, number, number], max: [x + radius, 0, z + radius] as [number, number, number] };
+      if (overlapsRoad(district.layout, footprint) || overlapsPaving(district.layout, footprint)) return null;
+    }
     const until = this.world.tick + Math.ceil(duration * 60 * (this.world.weather?.modifiers.fireDuration ?? 1));
     let fires = 0, reusable: EntitySnapshot | undefined;
     for (const e of this.world.entities.iterate()) {
