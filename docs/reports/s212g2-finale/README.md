@@ -5,7 +5,7 @@
 - Motorbike knock-off now depends on an infected heavy, Alpha, or Mega attacker. Ordinary infected hits no longer eject the rider based on damage amount alone. The L1 bicycle is unchanged; L10 speed remains 1.25×.
 - A severe speed loss from at least 6 m/s now dismounts the motorbike rider as a solid-impact crash; light scraping does not.
 - Roadblock devices stay non-interactable until their safe-admitted encounter cohort is cleared, leaving E available to dismount the rider. Cleared gates still open automatically.
-- The HUD shows “Back on the bike · Press E” (or the touch action) when the nearby parked motorbike is within 10 m after a nearby roadblock opens.
+- After a nearby roadblock opens, the HUD points toward a parked motorbike within 40 m; it shows the E or touch action only when interaction is available.
 - Vehicle tests cover an ordinary 20-damage hit that keeps the rider mounted, a brute hit that dismounts, and a simulated high-speed solid impact.
 - Main's `06d3a402` overpass test fix is included: the central, north, and south throw crates are all movable props, and these three IDs are exempt from the solid-decor expectation.
 
@@ -26,7 +26,7 @@ Both tiers miss total time, cadence, and the required ride/fight/remount/cross l
 - Remote `npm test` passed on the corrected observer revision: 105 tests passed and one skipped in 203.1 s.
 - Both corrected `qa:threat` shards merged with 0 fail flags. Direct inspection confirms L10 skilled and passive flags are empty and the assault cohort first attacks at 18.68 s.
 - `qa:vehicle-campaign-motion` passed headlessly on ports 5223/5224.
-- The solid-placement audit previously reported 0 offenders, and mission interactions passed after the hospital placement and staging changes.
+- The current solid-placement audit reports 0 offenders, and mission interactions pass.
 
 These checks do not establish the failed route or underpass requirements. The native HIGH sheet contains a readable tent and two staged figures on one route, but alternate-route visibility remains unproven. The latest LOW/HIGH probes still miss all four roadblock sequences and pacing. Full verification must be repeated after further source changes.
 
