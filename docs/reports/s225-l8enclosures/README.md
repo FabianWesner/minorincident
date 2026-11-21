@@ -1,5 +1,25 @@
 # s225 — L8 enclosure dressing
 
+## Status and remaining work
+
+The enclosure dressing is an incremental pass, not visual acceptance. The native
+fight-centred frames remain dark and sparse; several authored props sit outside
+those views. In particular, the gorilla arena still reads as trunks and crates
+rather than an indoor/outdoor house. Complete the PO's enclosure criteria and
+review the resulting six native HIGH views and a LOW view again.
+
+- Lion: establish the large sun-ledge outcrop, tall dry grass, moat edge and viewing wall.
+- Flamingo: make the reeds, mud banks and island readable in play and add a viewing boardwalk without obstructing landing pads.
+- Zebra: make the savanna floor, feeding racks, trough and shelter readable while retaining the oval stampede route.
+- Gorilla: add a rock throw ledge, straw or hay, a glass viewing window and a night-house door; make the existing climbing frame and tyre swing visible without compromising cover or throws.
+- Primate: add readable high ropes and nets and a keeper office, preserving the existing house roofs and drop paths.
+- Elephant: make the pool and heavy log barrier readable while preserving the truck lure and wall-charge lanes.
+
+The merged threat audit has zero acceptance flags and the skilled bot finishes,
+but its reachability observation still needs investigation. Passing the figure
+and routine scene-gate rows does not establish habitat visual acceptance. Repeat
+the relevant collision, route, fight and gate checks after further geometry work.
+
 ## Changes
 
 - Removed park benches, folding chairs and street lamps whose bounds intersect any of the six animal arenas.
@@ -56,4 +76,4 @@ The zebra edge fixtures now use larger feeder and trough colliders in place of c
 - Focused zoo and flamingo scene gate at `1a5acd75`: 20/20 selected rows pass, zero known and zero not run, across HIGH/LOW WebGL2 and WebGPU. [Row receipt](scene-gate.json). These catalog rows cover figures and routines, not the six dressed habitat views. An earlier attempt was blocked by browser-pool permissions; the later run completed.
 - Native fixture review at `a331f831`: six HIGH zoom 1 frames and one LOW gorilla frame were captured from L8 mission-resume fixtures with the courier repositioned for inspection, Metal WebGL2, 1280×720. [Contact sheet](native-cages.jpg), [capture receipt](native-cages.json). All seven were inspected. Lion: rocks and a dark, mostly empty floor; flamingo: rounded dark pond and island with rocks, reeds outside the main view; zebra: herd and rocks, shelter and feeders outside the central view; gorilla: bare trunks and crates, with the climbing frame outside the central view; primate: trees and house, with only an edge of the climbing frame visible; elephant: truck and a small water patch, with the log barrier outside the view. LOW gorilla is similarly dark. These frames demonstrate that central fight space is visible, but they do not prove path clearance or acceptable habitat presentation; the teleport setup is not a played route.
 - Remote `npm test` at `6fdd6e3d`: PASS, 27 files and 105 tests passed, one skipped; 202.2 seconds against the 240-second budget, 150/150 registered cases. The earlier attempt could not reach a runner; this later run completed on the remote runner.
-- Visual acceptance and the required gates remain open; the preceding changes are committed as incremental work.
+- Visual acceptance remains open; the preceding changes are committed as incremental work.
