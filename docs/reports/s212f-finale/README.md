@@ -34,6 +34,8 @@ A subsequent render-batch probe showed all three hospital tents culled outside t
 
 The tent asset contains canvas and animated flaps but no silhouettes. A further trial at (3498, 85) brought a flap to the top edge of the native frame, while leaving most of the opening outside it; that placement was reverted. The hospital needs a camera-aware composition and figures from an approved TRELLIS asset.
 
+The existing `infected.runner` uses `inf.common-worker`, whose asset notes identify the PO-approved TRELLIS.2 suit zombie. The hospital cohort already contains runner slots, admitted through `director.safe`; these are candidate existing figures for a staged hospital encounter. Their current safe admission and pursuit behavior does not establish moving silhouettes inside a visible tent.
+
 Moving the first tent from z=78 to z=85 and moving its opening trigger with it was also tried. The opening fired earlier, but the event-timed native frame still showed road and a sign rather than a readable tent. That placement was reverted; the placement-to-render path and occlusion need inspection before further coordinate changes.
 
 ## Checks
