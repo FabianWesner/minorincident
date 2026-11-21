@@ -107,6 +107,15 @@ export class LevelTenEncounters {
     const discarded = this.died ? [...this.deathLedger] : [];
     this.died = false;
     this.state = incoming; this.state.weapons ??= {};
+    // Runtime roadblock walls are owned by Interactables rather than the
+    // entity snapshot. A fresh save resume must rebuild their geometry too.
+    for (const [group, id] of Object.entries(this.state.roadblockGates ?? {})) {
+      const gate = this.world.entities.get(id);
+      if (gate?.archetype !== 'device.l10-roadblock' || !gate.interactable) { delete this.state.roadblockGates![group]; continue; }
+      const { x, z } = gate.transform;
+      this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ: 40 });
+      if (gate.interactable.open) this.world.interactables!.unblock(id);
+    }
     if (retainedAssault) {
       this.state.assaultTicks = Math.max(this.state.assaultTicks ?? 0, retainedAssault.assaultTicks ?? 0);
       this.state.assaultWave = Math.max(this.state.assaultWave ?? 0, retainedAssault.assaultWave ?? 0);

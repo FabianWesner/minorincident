@@ -4,6 +4,7 @@
 
 - Restored the dispersal electric gate to `z=1`, preserving the console approach from main commit `b54a8bea`.
 - Added four encounter-backed roadblock gates. The gate colliders open after their cohort is admitted and cleared, and disable interaction after opening so they cannot be toggled closed without saved wall geometry.
+- Rebuilt runtime roadblock geometry during checkpoint restore: a cold resume restores closed colliders and leaves already-open gaps passable. The save-progression fixture exercises both states in a fresh world.
 - Fixed the overpass Alpha staging loop. It no longer resets the special every tick, the Alpha is staged beside the authored crate, and the authored attack ID is protected from combat interruption while the throw resolves. Incoming damage still applies.
 - Tightened the overpass probe to require the `infected.prop-thrown` event for the authored crate entity during the beat-6/beat-7 interval.
 - Corrected the mounted rear stair-climber damage multiplier and changed the pre-install Mega check to assert the 50% conventional damage floor.
