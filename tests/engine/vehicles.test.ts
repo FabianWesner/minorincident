@@ -15,6 +15,7 @@ import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
 import { decodeSave, validateSave } from '../../src/sim/progression/Save';
 import { readFixture } from '../../tools/qa/fixture-io';
 import { l9Course } from '../../src/data/l9';
+import { emptySetPieces, type L9ScriptedAlpha } from '../../src/sim/missions/LevelNineSetPieces';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -106,6 +107,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9BusTelegraphAndWreck();
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
+  await l9ThrowerUsesRoadObstacle();
   await l9CheckpointLanes();
   await l9BayAndHatch();
   await l9HatchCheckpointAndEvacuation();
@@ -204,6 +206,37 @@ async function l9InterruptedBoarding(): Promise<void> {
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
+}
+
+async function l9ThrowerUsesRoadObstacle(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'));
+  try {
+    world.missions!.begin();
+    const l9 = world.missions!.l9!, car = world.vehicles!.cars.get(l9.state.carId)!;
+    const p = car.entity.transform, x = p.x + 20;
+    const id = world.infected!.spawn('infected.alpha', { x, z: 12 }, { alphaType: 'thrower', state: 'chase' });
+    const alpha = world.entities.get(id)!;
+    const road = world.vehicles!.obstacles.spawn('barricade', { x, z: 0 });
+    const offRoad = world.vehicles!.obstacles.spawn('trash-can', { x, z: 12 });
+    const state = emptySetPieces(), actor: L9ScriptedAlpha = { id, role: 'thrower', piece: 'test', phase: 'cool', at: world.tick, post: { x, z: 12 }, uses: 0 };
+    state.alphas.push(actor);
+    const originalVisible = world.combat!.query.visible;
+    world.combat!.query.visible = () => true;
+    try { l9.driving.setPieces['alpha'](state, actor); } finally { world.combat!.query.visible = originalVisible; }
+    expect(actor.throwPropId).toBe(road);
+    expect(world.vehicles!.obstacles.items.find(o => o.entity.id === offRoad)?.airborne).toBeFalsy();
+    expect(world.entities.get(road)!.transform.y).toBe(.5);
+    expect(alpha.infected!.specialAttack?.stage).toBe('telegraph');
+    l9.driving.setPieces.restore(state, 7);
+    expect(actor.throwPropId, 'checkpoint timing adjustment preserves the reserved obstacle').toBe(road);
+    expect(actor.at).toBe(world.tick + 48 + 7);
+    world.tick = actor.at;
+    l9.driving.setPieces['alpha'](state, actor);
+    expect(state.flights).toHaveLength(1);
+    expect(state.flights[0].obstacleId).toBe(road);
+    expect(state.flights[0].from).toEqual({ x, z: 0 });
+    expect(world.entities.get(road)!.transform.y, 'flight starts at its resting height').toBe(.5);
+  } finally { world.dispose(); }
 }
 
 async function roadblockFaceInteraction(): Promise<void> {
