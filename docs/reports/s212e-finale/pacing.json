@@ -1,4 +1,7 @@
 {
+  "revision": "e2c5060c1da993d58daf9b78ceb94b017168d8b2",
+  "command": "L10_STORY_TICKS=2400 node --import tsx/esm tools/qa/l10-story.ts",
+  "note": "Native simulation, seed 1; LOW and HIGH, ordinary skilled input policy. Compact receipt omits detailed event trace.",
   "checks": [
     {
       "tier": "low",
