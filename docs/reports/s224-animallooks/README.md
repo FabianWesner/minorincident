@@ -107,3 +107,5 @@ The old lioness remains in the game. A new image reference based on its current 
 ## Outstanding acceptance work
 
 The combined old/new all-LOD HIGH/LOW sheet at zoom 1 and 1.5 has not been created or reviewed. Candidate checks above are partial and do not establish that all animals read as zombies in every requested view. The final animal scene-gate rows and full remote suite must pass after all asset changes; prior full-suite attempts timed out. Separately assess the increased monkey crowd-bake sizes, the lion wound saturation and eye placement, and the corpse layout's no-valid-candidate fallback.
+
+The preliminary lioness bake and rigid-node binding completed and are preserved under `derived/flat/` and `derived/rigged/` beside the high. I opened the pipeline render: the wounds are subdued, the eyes do not read, and the bound body shows dark triangular gaps near its middle; it needs repair and game-camera motion review before integration. The preliminary pipeline GLBs are approximately 180 / 155 / 136 KiB, above the game baselines; they are not the final skin-crowd delivery and do not establish budget compliance. No lioness replacement was promoted.
