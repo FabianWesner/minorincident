@@ -24,7 +24,7 @@ Both tiers miss total time, cadence, and the required ride/fight/remount/cross l
 
 - Typecheck and lint pass on the current source.
 - Remote `npm test` passed: 105 tests passed and one skipped in 197.1 s.
-- Both `qa:threat` shards merged with 0 fail flags; L10 skilled completed and passive reached its tick budget with 0 passive flags.
+- Both `qa:threat` shards merged with 0 top-level fail flags; L10 skilled completed and passive reached its tick budget with 0 passive flags. The L10 skilled wave receipt separately contains `wave/dispersal-assault:WAVE_NO_ATTACK_WITHIN_20_SECONDS`, so the full threat criterion is not green.
 - `qa:vehicle-campaign-motion` passed headlessly on ports 5223/5224.
 - The solid-placement audit previously reported 0 offenders, and mission interactions passed after the hospital placement and staging changes.
 
@@ -81,3 +81,5 @@ The skilled bot now prioritizes a visible ordinary attacker within 8 m during th
 A live camera probe of the (3394, 57) trial identified `prop.l10-underpass` as the active see-through occluder: its LOD was 0, but the projected reveal radius was 1.677 screen units. `GameView` unions living infected within 18 m into the L10 reveal subject, erasing most of the span. A local 3.2 m reveal and cutaway-deck trial restored visible beams but left a large circular hole and foreground slab; beat 8 also lacked hospital figures on that altered route. Both changes were discarded. A proper underpass treatment needs a shaped reveal that preserves the span and nearby combatants, plus a route-stable hospital composition.
 
 A LOW tactical-defense trial made the dismounted bot back away from a visible attacker within 9 m while shooting near a closed roadblock. It completed with one death but still left the bike at the first gate, recorded 0/4 loops, rode 4,598 ticks, and reached the gate in 336.1 s. It was discarded; moving defense alone does not coordinate the encounter and recovery.
+
+Direct inspection of `test-results/qa-threat/L10.json` found the skilled dispersal assault wave had no observed cohort attack after charge activation, despite the merged summary reporting zero fail flags. The passive flags are empty; the skilled wave flag remains open and must not be represented as a clean full threat audit.
