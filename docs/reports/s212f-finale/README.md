@@ -32,6 +32,8 @@ The capture now requires the billboard fall event for beat 3 and at least 15 tic
 
 A subsequent render-batch probe showed all three hospital tents culled outside the beat-8 camera frustum. Moving the first tent to (3505, 87) brought it into the loaded LOD and partly into the frame. LOW and HIGH still completed with one and eleven deaths; the opening is not yet readable. The opening now starts at tick 42990 in the native capture.
 
+The tent asset contains canvas and animated flaps but no silhouettes. A further trial at (3498, 85) brought a flap to the top edge of the native frame, while leaving most of the opening outside it; that placement was reverted. The hospital needs a camera-aware composition and figures from an approved TRELLIS asset.
+
 Moving the first tent from z=78 to z=85 and moving its opening trigger with it was also tried. The opening fired earlier, but the event-timed native frame still showed road and a sign rather than a readable tent. That placement was reverted; the placement-to-render path and occlusion need inspection before further coordinate changes.
 
 ## Checks
