@@ -17,6 +17,6 @@ The all-cage solo rule is in place: survivor followers stage outside the next en
 - `npm run lint`: passed.
 - `node node_modules/vitest/vitest.mjs run --project nightly tests/nightly/mission-interactions.test.ts`: passed.
 - Final two-shard threat merge: 0 acceptance flags. The L8 skilled route completed in 402.37 s with 0 deaths and 20 damage taken. A comparable main-branch run was not available in this workspace, so the requested deaths-vs-main comparison remains open.
-- The requested native HIGH zoom 1 capture sheet is still open. The repository browser pool could not start because the sandbox denied binding its local service port; the legacy e2e lock could not inspect host GPU load because `ps` is denied. Both attempts stayed headless and used the required unique scene/e2e ports.
-- The required remote `npm test` is still open: `tools/remote/run.sh` found no healthy runner, and local fallback does not allow the full `npm test` command.
-- Licensed animal recordings and their processed voice sets are still open. Shell network access could not resolve the recording source host, so no unverified or synthetic audio was substituted.
+- The requested native HIGH zoom 1 capture sheet is still open. Isolated headless Scene Lab captures ran successfully, but the reviewed pounce frame showed the courier standing and does not prove the arena pin. Native fight captures and visual review remain necessary.
+- The required remote `npm test` ran twice unchanged and exceeded the 240 s budget both times (244.5 and 245.5 s). Both runs reported a vehicle test failure before timeout; the first also reported a save progression failure. Final assertion details were not emitted before termination.
+- Licensed animal recordings and their processed voice sets remain open. Five candidate previews were downloaded to temporary storage after network access returned; their provenance, processing, integration and license snapshots remain to be completed.
