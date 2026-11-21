@@ -2,6 +2,7 @@ import { l3 } from '../../data/l3';
 import { Rng } from '../../core/Rng';
 import { l2 } from '../../data/l2';
 import { l4 } from '../../data/l4';
+import { inRect, l8Route } from '../../data/l8Bosses';
 import { policeTactics as pt } from '../../data/l3';
 import { policeTargetInView, policeShotRangeM } from '../../data/cameraFraming';
 import { allyCadence, allyCallout, allyOffscreenDefenceM, allyTactics, allyViewM, type AllyTactic } from '../../data/allyCombat';
@@ -64,8 +65,12 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   a.lastHp = e.health.current;
   if (c.story?.clip === 'hurt' && tick >= (a.flinchUntil ?? 0)) c.story = null;
   if (tick < (a.flinchUntil ?? 0)) return true;
-  const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
-    ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
+  const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => {
+    const arena = a.arenaWait && world.missions?.l8?.state.arenas.find(v => v.phase === 1 || v.phase === 2);
+    const zone = arena && l8Route.find(v => v.id === arena.id)?.zone;
+    if (zone && inRect(to, zone)) return false;
+    return shooter ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
+  };
   const player = world.entities.get(1);
   // Keep the local pull-back formation moving while officers cover the courier;
   // repeated self-defence shots must not pin all of them beside the van.

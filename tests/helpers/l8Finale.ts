@@ -14,6 +14,10 @@ export function playHaleCharge(world: SimWorld): { distance: number; move: strin
   });
   try {
     arena.phase = 0; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    // This isolated fixture begins at the entry, where the named soldier waits
+    // during a normal solo-yard approach.
+    const hale = world.entities.get(zoo.state.haleId)!;
+    if (!world.solids.relocate(hale, { x: 96, z: 35, y: .7 }, 'fixture.hale-outside-yard', 2, false)) throw new Error('Cannot stage Hale outside the yard');
     world.solids.relocate(player, { x: 96, z: 58, y: .7 }, 'fixture.hale-charge-entry', 2);
     world.npcs!.civilians.outbreak!.infect(elephant, 1);
     for (let tick = 0; tick < 1800 && !world.missions!.state.states['hale-fallen']; tick++) { world.applyInput(emptyInput(), 'keyboard'); world.update(); }

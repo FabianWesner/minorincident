@@ -16,7 +16,7 @@ export type AnimationState = 'idle' | 'walk' | 'run' | 'hurt' | 'die' | 'knockdo
 export const actionTicks: Record<ActionState, number> = { swing: 30, shoot: 12, throw: 36, kick: 30, interact: 45, 'enter-car': 60, mount: 24, dismount: 24, 'hand-over': 60, equip: 54, receive: 54, 'rack-grab': 120 };
 export interface SurvivorState {
   /** Physical enemy hit: serialized fixed-tick fall/stand interval. */
-  knockdown?: { started: number; until: number };
+  knockdown?: { started: number; until: number; pinned?: boolean };
   /** Plain combat timing for authored clips and trails. */
   attack?: { actionId: string; combo: number; started: number; activeAt: number; recoveryAt: number; endsAt: number; style?: 'roundhouse' };
   variant: SurvivorVariant; gearTier: GearTier; animation: AnimationState; animationTick: number;

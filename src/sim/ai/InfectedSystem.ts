@@ -200,6 +200,8 @@ export class InfectedSystem {
         if (target.infected.arenaBoss && event.damageType === 'melee') target.infected.arenaBoss.shakeHits = (target.infected.arenaBoss.shakeHits ?? 0) + 1;
         const special = target.infected.specialAttack;
         if (target.infected.alphaType && special && ((special.move === 'alpha.roar' && special.stage === 'telegraph') || (special.move === 'alpha.grab-human' && special.stage !== 'recovery' && event.damageType === 'bullet'))) this.cancelSpecial(target.id);
+        const source = world.entities.get(event.sourceId);
+        if ((target.archetype === 'infected.lion' || target.archetype === 'infected.lioness') && target.infected.grabUntil > world.tick && (source?.companion || source?.civilian?.ally)) this.releasePin(target);
         if ((target.infected.special === 'pin' || target.infected.alphaType === 'leaper') && target.infected.grabHits >= 2) this.releasePin(target);
       }
     });
@@ -864,9 +866,16 @@ export class InfectedSystem {
   releasePin(source: EntitySnapshot): void {
     const b = source.infected!, target = this.world.entities.get(b.heardTargetId || 1), until = b.grabUntil;
     b.grabUntil = 0;
-    if ((source.archetype !== 'infected.lion' && b.alphaType !== 'leaper') || until <= this.world.tick || !target) return;
+    if (b.arenaBoss?.arena === 'lion' && until > this.world.tick) {
+      const recoveryUntil = this.world.tick + 90;
+      b.arenaBoss.exposedUntil = recoveryUntil;
+      b.arenaBoss.readyAt = Math.max(b.arenaBoss.readyAt, recoveryUntil);
+      if (b.specialAttack) { b.specialAttack.stage = 'recovery'; b.specialAttack.recoveryUntil = recoveryUntil; }
+    }
+    if ((source.archetype !== 'infected.lion' && source.archetype !== 'infected.lioness' && b.alphaType !== 'leaper') || until <= this.world.tick || !target) return;
     if (target.civilian?.knockedUntil === until) target.civilian.knockedUntil = this.world.tick;
     if (target.escort?.knockedUntil === until) target.escort.knockedUntil = this.world.tick;
+    if (target.survivor?.knockdown?.until === until) delete target.survivor.knockdown;
     if (target.combat?.staggerUntil === until) target.combat.staggerUntil = this.world.tick;
     if (target.combat?.reaction?.until === until) delete target.combat.reaction;
   }
@@ -876,6 +885,13 @@ export class InfectedSystem {
       if (e.health.current > 0 && (b.heardTargetId ?? 0) <= 1 && b.grabUntil > this.world.tick && (b.special === 'pounce' || b.special === 'pin' || b.alphaType === 'leaper')) return true;
     }
     return false;
+  }
+  /** L8 lion pins accept discrete struggle presses even while knockdown blocks attacks. */
+  struggleLion(pressed: boolean): boolean {
+    const lion = this.active.find(e => e.health.current > 0 && e.infected?.arenaBoss?.arena === 'lion' && e.infected.grabUntil > this.world.tick && (e.infected.heardTargetId ?? 0) <= 1);
+    if (!lion) return false;
+    if (pressed && ++lion.infected!.grabHits >= 2) this.releasePin(lion);
+    return true;
   }
   /** Existing archetype vision: 110 degrees / 14 m, weather, light and smoke unchanged. */
   private seesPlayer(e: EntitySnapshot, player: EntitySnapshot): boolean {

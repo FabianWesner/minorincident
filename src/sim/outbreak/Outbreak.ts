@@ -661,6 +661,9 @@ export class Outbreak {
     const c = e.civilian!; c.veins = 0; c.eyesGlow = false; c.attacker = sourceId;
     if (c.state !== 'bitten') this.state(e, 'bitten', ticks(phaseS.stagger)); else c.until = tick + ticks(phaseS.stagger);
     this.world.events.emit({ type: 'outbreak.infection', tick, entityId: e.id, phase: 'stagger', progress: 0 });
+    // Once the flamingo fight is active, a remaining authored bird turns in
+    // place without a collapse/rise that reads like a killed bird returning.
+    if (c.zooAnimal === 'flamingo' && this.world.missions?.l8?.bosses.state.some(arena => arena.id === 'flamingo' && arena.phase > 0 && arena.phase < 3)) this.rise(e);
   }
   private transform(e: EntitySnapshot): void {
     const inf = e.infection!, c = e.civilian!, tick = this.world.tick;

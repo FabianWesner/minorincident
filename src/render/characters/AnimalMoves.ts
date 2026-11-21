@@ -90,7 +90,7 @@ export class AnimalMoves {
     }
     if (species === 'lion') {
       if (dead || !b) return speed > .06 ? this.stalk(p, gaitPhase, .4) : undefined;
-      if (a && (a.move === 'lion.pounce' || a.move === 'lion.flank')) {
+      if (a && !grabbing && (a.move === 'lion.pounce' || a.move === 'lion.flank')) {
         if (a.stage === 'telegraph') {
           // Crouch low, head down and forward, a short butt wiggle in the last half.
           p.crouch = .26 * windup; p.pitch = -.1 * windup; p.head = -.28 * windup; p.hind = .25 * windup; p.front = -.12 * windup;
@@ -100,8 +100,11 @@ export class AnimalMoves {
           const f = travel; p.airborne = true;
           p.pitch = .38 * Math.cos(Math.PI * f); p.front = .95; p.hind = -.75 * (1 - f * .5); p.head = -.1; p.jaw = .6;
         } else {
-          const r = clamp01((renderTick - (a.recoveryUntil - 120)) / 30);
-          p.crouch = .14 * (1 - r); p.pitch = -.12 * (1 - r); p.head = -.1 * (1 - r);
+          // A missed or broken leap leaves the lion low and visibly dazed for
+          // the punish window, rather than returning to its idle pose at once.
+          const remaining = clamp01((a.recoveryUntil - renderTick) / 18);
+          p.crouch = .24 * remaining; p.pitch = -.16 * remaining; p.head = -.24 * remaining;
+          p.roll = Math.sin(t * 5) * .09 * remaining;
         }
         return p;
       }
