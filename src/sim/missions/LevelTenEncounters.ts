@@ -41,6 +41,7 @@ export interface CureEncounterState {
   billboardFallAt?: number;
   /** The hospital flaps open when the courier reaches the triage tents. */
   hospitalOpenAt?: number;
+  hospitalStageReleaseAt?: number;
   /** Once-only halfway breach cue, retained with the encounter snapshot. */
   assaultBreach?: boolean;
   assaultAnnouncedWave?: number;
@@ -133,6 +134,7 @@ export class LevelTenEncounters {
     if (this.state.pressureAttackAt !== undefined) this.state.pressureAttackAt += delta;
     if (this.state.billboardFallAt !== undefined) this.state.billboardFallAt += delta;
     if (this.state.hospitalOpenAt !== undefined) this.state.hospitalOpenAt += delta;
+    if (this.state.hospitalStageReleaseAt !== undefined) this.state.hospitalStageReleaseAt += delta;
     if (this.state.finaleEntryNext !== undefined) this.state.finaleEntryNext += delta;
     for (const walker of this.state.finaleEntry?.walking ?? []) {
       walker.until += delta;
@@ -174,6 +176,32 @@ export class LevelTenEncounters {
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
     if (!ai || !chunks || mission?.state.phase !== 'playing') return;
+    // Admit the tent figures off camera through the director. The brief
+    // emergence hold keeps their silhouettes at the entrance until the
+    // hospital beat, then returns them to ordinary pursuit and combat.
+    const hospitalApproach = w.entities.get(1);
+    if (mission.state.states['l10-finale-beat-8'] && this.state.hospitalOpenAt !== undefined && this.state.hospitalStageReleaseAt === undefined) this.state.hospitalStageReleaseAt = w.tick + 90;
+    for (const [i, z] of [49, 53].entries()) {
+      const key = `setpiece-field-hospital:stage:${i}:0`, at = { x: 3502.5, z };
+      let id = this.state.spawned[key];
+      if (id === undefined && hospitalApproach && hospitalApproach.transform.x > 3400 && hospitalApproach.transform.x < 3480 && ai.pool.length
+        && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns
+        && chunks.resident(at.x, at.z) && ai.nav.clear(at.x, at.z, .35) && ai.director.safe('infected.runner', at)) {
+        id = ai.spawn('infected.runner', at, { state: 'idle', yaw: Math.PI, cureRegion: 'destroyed-corridor' });
+        this.state.spawned[key] = id;
+        w.entities.get(id)!.emerging = true;
+      }
+      const actor = id === undefined ? undefined : w.entities.get(id);
+      if (!actor?.emerging) continue;
+      if (actor.health.current <= 0) { actor.emerging = undefined; continue; }
+      if ((this.state.hospitalStageReleaseAt !== undefined && w.tick >= this.state.hospitalStageReleaseAt) || (hospitalApproach && hospitalApproach.transform.x > 3512)) {
+        actor.emerging = undefined;
+        ai.pursueTarget(actor.id, 1);
+      } else {
+        actor.transform.yaw = Math.PI + Math.sin((w.tick + i * 45) / 30) * .18;
+        if (actor.combat) actor.combat.staggerUntil = w.tick + 2;
+      }
+    }
     // The console's authored cohort owns its slots: ambient pressure — the resident director and the
     // chunk stream's farthest-first excess trim — must not eat the wave the console announced. The s165
     // pressure gate left the hold's ambient count at cap when the assault opened, so wave 0 admitted 5
