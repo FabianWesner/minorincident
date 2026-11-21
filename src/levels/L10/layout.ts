@@ -202,7 +202,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     beat('hospital-stretcher-b', 'prop.l10-field-stretcher', 3521, 91, [1.1, .85, .65], -.15);
     beatSolid('hospital-stretcher-a', 3504, 90, .7, .45, .9);
     beatSolid('hospital-stretcher-b', 3521, 91, .7, .45, .9);
-    place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, -27, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
+    place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
       const low = gap.z - 35, high = gap.z + 35;
       wall(`l10-gap-${i}-north`, gap.x - .2, low, gap.x + .2, gap.z - 1);
