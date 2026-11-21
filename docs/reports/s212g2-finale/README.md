@@ -23,8 +23,8 @@ Both tiers miss total time, cadence, and the required ride/fight/remount/cross l
 ## Verification
 
 - Typecheck and lint pass on the current source.
-- Remote `npm test` passed: 105 tests passed and one skipped in 197.1 s.
-- Both `qa:threat` shards merged with 0 top-level fail flags; L10 skilled completed and passive reached its tick budget with 0 passive flags. The L10 skilled wave receipt separately contains `wave/dispersal-assault:WAVE_NO_ATTACK_WITHIN_20_SECONDS`, so the full threat criterion is not green.
+- Remote `npm test` passed on the corrected observer revision: 105 tests passed and one skipped in 203.1 s.
+- Both corrected `qa:threat` shards merged with 0 fail flags. Direct inspection confirms L10 skilled and passive flags are empty and the assault cohort first attacks at 18.68 s.
 - `qa:vehicle-campaign-motion` passed headlessly on ports 5223/5224.
 - The solid-placement audit previously reported 0 offenders, and mission interactions passed after the hospital placement and staging changes.
 
@@ -84,4 +84,8 @@ A LOW tactical-defense trial made the dismounted bot back away from a visible at
 
 Direct inspection of `test-results/qa-threat/L10.json` found the skilled dispersal assault wave had no observed cohort attack after charge activation, despite the merged summary reporting zero fail flags. The passive flags are empty; the skilled wave flag remains open and must not be represented as a clean full threat audit.
 
-The skilled assault flag was traced to threat-observer identity handling. A service actor was safely spawned at tick 64501, streamed out and restored with the same reserved entity ID, then attacked at tick 64930; the observer assigned the restored object a different spawn token and failed to associate the attack with its wave. The observer now retains identity across streamed clones, while its explicit spawn hook still assigns new identities to pool reuse. `qa:threat -- --proof`, typecheck and lint pass. A focused L10 diagnostic reports the first cohort attack at 18.68 s and no L10 flags; its sole top-level flag is the expected partial-level-selection diagnostic. Full sharded threat must be rerun with the corrected observer.
+The skilled assault flag was traced to threat-observer identity handling. A service actor was safely spawned at tick 64501, streamed out and restored with the same reserved entity ID, then attacked at tick 64930; the observer assigned the restored object a different spawn token and failed to associate the attack with its wave. The observer now retains identity across streamed clones, while its explicit spawn hook still assigns new identities to pool reuse. `qa:threat -- --proof`, typecheck and lint pass. A focused L10 diagnostic reports the first cohort attack at 18.68 s and no L10 flags; its sole top-level flag is the expected partial-level-selection diagnostic. The full sharded threat audit was subsequently rerun with the corrected observer and has zero fail flags.
+
+## Time-box handoff
+
+The goal is not complete. Both tiers still record 0/4 roadblock loops; LOW is 406.5 s and HIGH 293.4 s hangar to gate, with cadence outside 45–75 s. The underpass is unreadable in the native frame, and hospital visibility needs confirmation across route variations. The current source passed remote unit tests, corrected sharded threat, typecheck, lint, mission interactions, the solid audit, and vehicle campaign motion as recorded above. Do not deploy, push, or move main.
