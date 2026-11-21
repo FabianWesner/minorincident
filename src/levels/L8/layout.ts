@@ -46,8 +46,8 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     add('l8-lion-dead-tree', 'prop.tree.dead', -69, -25, [.8, .85, .8], -.35);
     for (const [i, [x, z]] of [[-71, -40], [-50, -24], [-51, -42]].entries()) add(`l8-lion-scrub-${i}`, 'prop.garden-bush-small', x, z, [1.4, .8, 1.2]);
     for (const [i, [x, z]] of [[-10, -43], [10, -43], [-10, -21], [10, -21]].entries()) add(`l8-flamingo-reed-bank-${i}`, 'prop.garden-bush-small', x, z, [1.3, .6, .8]);
-    for (const [i, [x, z]] of [[49, 25], [71, 25], [49, 39], [71, 39]].entries()) add(`l8-zebra-feeding-rack-${i}`, 'prop.crates', x, z, [.9, .75, .7], i % 2 ? Math.PI / 2 : 0);
-    add('l8-zebra-trough', 'prop.kiddie-pool', 68, 43, [1.5, .35, .65]);
+    for (const [i, [x, z]] of [[49, 25], [71, 25], [49, 39], [71, 39]].entries()) add(`l8-zebra-feeding-rack-${i}`, 'prop.zoo-feeder', x, z, [.9, 1, .85], i % 2 ? Math.PI / 2 : 0);
+    add('l8-zebra-trough', 'prop.zoo-trough', 68, 43);
     // Keep the four stable tactical-cover IDs used by the gorilla behavior,
     // while changing their silhouette from red plaza pillars to dead trunks.
     for (const [i, [x, z]] of [[55, -28], [65, -28], [55, -38], [65, -38]].entries()) add(`l8-gorilla-pillar-${i}`, 'prop.tree.dead', x, z, [.8, 1.1, .8], 0, { class: 'pillar' });

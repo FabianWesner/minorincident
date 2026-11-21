@@ -25001,5 +25001,93 @@
       "solid": true
     },
     "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-feeder",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-feeder/build.py",
+    "glb": "public/assets/models/prop.zoo-feeder.glb",
+    "sourceGlb": "assets/prop.zoo-feeder/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-feeder.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-feeder.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.2,
+      "y": 1.0,
+      "z": 0.85,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 500,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 100,
+      "lod2": 40
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-trough",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-feeder/build.py",
+    "glb": "public/assets/models/prop.zoo-trough.glb",
+    "sourceGlb": "assets/prop.zoo-trough/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-trough.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-trough.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.2,
+      "y": 1.0,
+      "z": 0.85,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 500,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 100,
+      "lod2": 40
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
   }
 ]
