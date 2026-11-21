@@ -754,7 +754,7 @@ export class Blasts extends Group {
       let c = this.fireColumns.get(key);
       if (!c) {
         const lawn = cell.halfX !== undefined;
-        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: lawn ? (low ? .5 : 1) : (low ? 2 : 4), size: lawn ? .8 : 3, lawn, crop: !lawn, heat: 1, acc: this.rng.next(), shade: lawn ? .07 : .1, cloud: 0 };
+        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: lawn ? (low ? .5 : 1) : (low ? 2.5 : 5), size: lawn ? .8 : 4, lawn, crop: !lawn, heat: lawn ? 1 : .15, acc: this.rng.next(), shade: lawn ? .07 : .12, cloud: 0 };
         c.light = lawn ? null : this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
         this.fireColumns.set(key, c);
       }
