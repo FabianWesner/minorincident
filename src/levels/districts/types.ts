@@ -58,6 +58,8 @@ export interface Placement extends PlacementTransform {
   decor?: boolean;
   /** Decor that still blocks the courier: a physics-only static (no AI nav/cover wall, no pushable). L10 crossing scenes (r9-l10pace). */
   decorSolid?: boolean;
+  /** L10-only recovery for a substantial authored prop whose shared look collision key is missing. */
+  l10Solid?: boolean;
   /** Optional loose scatter omitted on low quality; story cores never set this flag. */
   highOnly?: boolean;
   /** L10 painted wall atlas cell (0–11), attached to an existing wall instance. */

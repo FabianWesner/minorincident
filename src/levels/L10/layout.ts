@@ -1,13 +1,16 @@
 import { finale } from '../../data/l10Finale';
 import { cureEscapeGaps, cureHangar } from '../../data/l10Story';
 import { cure } from './district';
+import { staticCollision } from '../../assets/staticCollision';
+import { worldAssets } from '../../assets/worldDefinitions';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Gameplay structures and anchors, composed before collision/nav and the separate scenery passes. */
 export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return layouts.map(source => {
-    if (source.district !== 'D-CURE' || source.placements.some(p => p.id === 'l10-hangar-shell')) return source;
+    if (source.district !== 'D-CURE') return source;
     const layout = structuredClone(source), h = cureHangar;
+    if (layout.placements.some(p => p.id === 'l10-hangar-shell')) return layout;
     for (const [name, [x, z]] of Object.entries(cure.anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     const set = (name: string, p: { x: number; z: number }) => { layout.anchors[name] = { position: [p.x, 0, p.z], yaw: 0 }; };
     set('cure-terminal', h.terminal); set('cure-canister', h.canister);
@@ -207,4 +210,15 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     return layout;
   });
+}
+
+/** Mark substantial L10 placements for collision recovery after all dressing is assembled. */
+export function markL10Solids(placements: Placement[]): void {
+    for (const p of placements) {
+      const d = worldAssets[p.assetId]?.dimensions;
+      if (!d || d.x * d.z * Math.abs(p.scale[0] * p.scale[2]) < .4 || d.y * Math.abs(p.scale[1]) < .5) continue;
+      const shape = staticCollision[p.collisionId ?? ''] ?? staticCollision[p.assetId];
+      const substantialBake = shape?.boxes.some(b => b.max[1] - b.min[1] >= .5 && b.max[1] >= .5);
+      if (worldAssets[p.assetId]?.world?.solid || substantialBake) p.l10Solid = true;
+    }
 }

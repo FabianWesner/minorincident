@@ -1,0 +1,14 @@
+{
+  "threshold": { "footprintM2": 0.4, "heightM": 0.5 },
+  "method": "For each generated L1/L2/L3 D-GROVE or D-CORRIDOR layout, classify substantial placements using the s211c world solid flag/baked-box rule, then require a non-physics-only placement collider to cover every active tier 0-6. This is collider-presence evidence, not a visual-hull or movement-contact test.",
+  "campaignLevels": [
+    { "level": "L1", "district": "D-GROVE", "sourceBefore": 0, "sourceAfter": 0, "generatedPlacements": 1321, "eligible": 1212, "offenders": 0 },
+    { "level": "L2", "district": "D-GROVE", "sourceBefore": 0, "sourceAfter": 0, "generatedPlacements": 1368, "eligible": 1234, "offenders": 0 },
+    { "level": "L3", "district": "D-CORRIDOR", "sourceBefore": 0, "sourceAfter": 0, "generatedPlacements": 1475, "eligible": 1398, "offenders": 0 }
+  ],
+  "oppositeDistrictCopies": [
+    { "level": "L1", "district": "D-CORRIDOR", "generatedPlacements": 1247, "eligible": 1229, "offenders": 0 },
+    { "level": "L2", "district": "D-CORRIDOR", "generatedPlacements": 1247, "eligible": 1229, "offenders": 0 },
+    { "level": "L3", "district": "D-GROVE", "generatedPlacements": 1314, "eligible": 1205, "offenders": 0 }
+  ]
+}
