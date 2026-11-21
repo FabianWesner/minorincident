@@ -21,7 +21,7 @@ const hash = (path: string) => createHash('sha256').update(readFileSync(path)).d
 const pcmCache = new Map<string, Float32Array>();
 const licenses = ['# Audio sources and licenses', '',
     'Built with `npx tsx tools/audio/build.ts`; source recipes: `assets/audio/imports.json`.',
-    'CC-BY recordings remain under their own license. Edits: excerpts, EQ, fades, loudness normalization, Opus/AAC encoding.',
+    'CC-BY recordings remain under their own license. Edits: excerpts, EQ, fades, loudness normalization, Opus/AAC encoding. Animal voices also use pitch shifting, distortion, echo and a wet layer.',
     'Residual synthesized system cues: Minor Incident contributors, self-made (MIT), `src/audio/synthesis.ts`.',
     'No Bruno SFX or John Murphy recordings/samples are used.', '', '| File | License | Author / source / license URL | SHA256 |', '| --- | --- | --- | --- |'];
 function run(args: string[]): Buffer {
