@@ -31,6 +31,8 @@ The complete-route probe is saved in [pacing.json](pacing.json). It does **not**
 
 Both routes miss the 420–540 s hangar-to-gate target. Several beat intervals also miss 45–75 s. Further authored roadblock encounters are required; no player speed reduction was made.
 
+An experiment adding three standard-infected cohorts was measured and discarded: LOW took 451.1 s with ten deaths and a 166.5 s beat interval; HIGH took 283.4 s with eight deaths. Both completed the full route, but neither met cadence and LOW exceeded the 20 s activity gap. More enemies alone do not establish the required ride, dismount, fight and remount rhythm.
+
 ## Captures
 
 The headless capture script subsequently ran through `tools/e2e-lock.sh` on ports 5215/5216. Its ten-frame inspection sheet was reviewed and is inadequate: frames 0 and 1 are nearly black, 2 shows a gate and figures, 3–5 show dark road and vehicles, 6 shows a figure on a road, 7 is obscured by the overpass, 8 shows dark roadside structures, and 9 is nearly black. Debug panels and an unrelated early objective cover every frame. These are static inspection views, not evidence of the actual beats; the Mega and ridden motorbike with corgi are absent. Native gameplay captures and a proper sheet remain outstanding.
