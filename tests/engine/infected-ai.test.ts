@@ -232,6 +232,10 @@ async function alphaTypeContracts() {
       expect(thrown.health.current).toBeLessThan(thrown.health.max);
       expect(thrownWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === mega.id && event.targetId === player.id && event.special === 'alpha.living-missile' && event.amount === 20)).toBe(true);
       expect(player.survivor!.knockdown?.until).toBeGreaterThan(thrownWorld.tick);
+      const existingDown = { started: thrownWorld.tick - 10, until: thrownWorld.tick + 10 };
+      player.survivor!.knockdown = { ...existingDown };
+      thrownWorld.combat!.damage.apply({ sourceId: mega.id, targetId: player.id, attackId: 999999, actionId: 'infected.alpha.living-missile', origin: mega.transform, direction: { x: -1, z: 0 }, base: 20, multiplier: 1, type: 'projectile', knockback: 0, stagger: 0, knockdownTicks: 48 });
+      expect(player.survivor!.knockdown).toEqual(existingDown);
 
       const debrisWorld = await arena(59, false), debrisPlayer = debrisWorld.entities.get(1)!;
       debrisPlayer.health.current = debrisPlayer.health.max = 1000;
