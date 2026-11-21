@@ -335,6 +335,7 @@ export class LevelTenEncounters {
           gateId = w.interactables!.spawn('gate', { x: group.at[0], z: 95 }, {
             halfX: .2, halfZ: 40, radius: 2, label: 'Open roadblock',
           });
+          w.entities.get(gateId)!.archetype = 'device.l10-roadblock';
           w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ: 40 });
           gates[group.id] = gateId;
         }
