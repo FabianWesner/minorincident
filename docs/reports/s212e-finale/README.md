@@ -14,7 +14,8 @@
 | `npm run typecheck` | Pass |
 | `npm run lint` | Pass |
 | `npm run test:unit` | Pass; 27 files, 106 tests |
-| `sh tools/remote/run.sh "$PWD" -- npm test` | Remote runner unavailable; local `npm run test:unit` passed |
+| `sh tools/remote/run.sh "$PWD" -- npm test` | Two unchanged attempts on current code timed out at 240 s. Both showed a save-progression case failing before timeout, without an assertion summary. |
+| `npm test` on current code | 105/106 passed; `tests/tools/test-budget-tools.test.ts` failed its process-group cleanup assertion. The earlier local pass predates the checkpoint fix. |
 | Full threat audit, two local shards and merge | Pass: 0 fail flags; all skilled routes complete. Shards ran in 174.4 s and 251.8 s; merged receipt `test-results/qa-threat/README.md`. Remote runners were unavailable. |
 | `node --import tsx/esm tools/verify.ts E32` | Pass; per-change typecheck, lint, and 106-test gate |
 | `E2E_PORT=5215 SCENE_PORT=5216 npm run test:smoke` | Pass: six smoke tests and one public-build smoke test; 139.8 s |
@@ -36,4 +37,4 @@ The headless capture script subsequently ran through `tools/e2e-lock.sh` on port
 
 ## Remaining
 
-The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, complete the unavailable gates, and update this report with final receipts.
+The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, investigate the unit failures and rerun full gates on the current commit, and update this report with final receipts. The earlier threat and smoke receipts predate commit `d3cb05aa`.
