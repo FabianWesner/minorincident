@@ -14,6 +14,8 @@ import { groundBurn } from '../combat/Status';
 import { cure } from '../../levels/L10/district';
 import { cureCrossingLines } from '../../levels/L10/crossingStories';
 import { overlapsPaving, overlapsRoad } from '../../levels/districts/validate';
+import { lawnFireCells } from '../../levels/lawnFire';
+import { cureEvacuationLane } from '../../levels/L10/vignettes';
 export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'tear-gas', 'extinguisher', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
@@ -62,20 +64,25 @@ export class Hazards {
     const roads = [...cure.regions.map(r => r.route), ...cure.detours.map(r => r.route), ...cureCrossingLines.map(r => r.line)];
     const blocked = (a: Vec2, b: Vec2): boolean => {
       const side = (p: Vec2, q: Vec2, x: number, z: number) => (q.x - p.x) * (z - p.z) - (q.z - p.z) * (x - p.x);
-      return roads.some(line => line.slice(1).some((end, i) => {
+      const crossing = this.world.scenario === 'L10' && roads.some(line => line.slice(1).some((end, i) => {
         const start = line[i], c = { x: start[0], z: start[1] }, d = { x: end[0], z: end[1] };
         return Math.max(Math.min(a.x, b.x), Math.min(c.x, d.x)) <= Math.min(Math.max(a.x, b.x), Math.max(c.x, d.x)) && Math.max(Math.min(a.z, b.z), Math.min(c.z, d.z)) <= Math.min(Math.max(a.z, b.z), Math.max(c.z, d.z)) && side(a, b, c.x, c.z) * side(a, b, d.x, d.z) <= 0 && side(c, d, a.x, a.z) * side(c, d, b.x, b.z) <= 0;
       }));
+      return crossing || (this.world.districts?.districts ?? []).some(d => {
+        const footprint = { min: [Math.min(a.x, b.x) - d.origin[0], 0, Math.min(a.z, b.z) - d.origin[1]] as [number, number, number], max: [Math.max(a.x, b.x) - d.origin[0], 0, Math.max(a.z, b.z) - d.origin[1]] as [number, number, number] };
+        return overlapsRoad(d.layout, footprint) || overlapsPaving(d.layout, footprint);
+      });
     };
     const districts = this.world.districts;
     this.vegetationFire = districts ? new VegetationFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), districts.composition.id === 'L10' ? blocked : undefined) : null;
     // A burning field cell affects a five metre square, so exclude cells whose
     // effect footprint overlaps an authored road lane, not just its centreline.
-    this.fieldFire = districts?.composition.id === 'L10' ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.filter(p => {
+    this.fieldFire = districts ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.filter(p => {
       if (p.assetId !== 'veg.corn-block') return true;
       const footprint = { min: [p.position[0] - 5, 0, p.position[2] - 5] as [number, number, number], max: [p.position[0] + 5, 0, p.position[2] + 5] as [number, number, number] };
       return !overlapsRoad(d.layout, footprint) && !overlapsPaving(d.layout, footprint);
-    }).map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked) : null;
+    }).map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked,
+      districts.districts.flatMap(d => lawnFireCells(d.id === 'D-CURE' ? { ...d.layout, surfaces: [...d.layout.surfaces, ...cureEvacuationLane(d.decay.placements)] } : d.layout, d.origin))) : null;
   }
   spawn(kind: HazardKind | DestructibleKind, pos: Vec2, opts: HazardOptions = {}): number {
     if (![...hazardKinds, ...destructibleKinds].includes(kind) || ![pos.x, pos.z, opts.hp ?? 1, opts.radius ?? 1, opts.burnTime ?? 1, opts.halfX ?? .5, opts.halfZ ?? .15, opts.duration ?? 1].every(Number.isFinite)
@@ -93,7 +100,7 @@ export class Hazards {
       this.world.interactables!.block(e.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15, entityId: e.id });
     }
     this.world.spatial.set(e.id, pos.x, pos.z);
-    if (kind === 'fire') this.igniteFlammables(pos, e.hazard!.radius);
+    if (kind === 'fire' && opts.playerDamageSource) this.igniteFlammables(pos, e.hazard!.radius);
     return e.id;
   }
   /** Ignite nearby ground and vegetation where an existing fire touches them. */
@@ -220,7 +227,7 @@ export class Hazards {
       for (const entity of this.world.entities.iterate()) {
         if (entity.health.current <= 0 || (entity.faction !== 'infected' && entity.kind !== 'player')) continue;
         if (entity.faction === 'infected' && entity.combat?.statuses.some(status => status.kind === 'burning')) this.fieldFire.ignite(entity.transform, tick, 5);
-        if (this.fieldFire.cells.some(cell => cell.state === 'burning' && Math.abs(cell.x - entity.transform.x) <= 5 && Math.abs(cell.z - entity.transform.z) <= 5))
+        if (this.fieldFire.cells.some(cell => cell.state === 'burning' && Math.abs(cell.x - entity.transform.x) <= (cell.halfX ?? 5) && Math.abs(cell.z - entity.transform.z) <= (cell.halfZ ?? 5)))
           this.world.combat?.status.apply(entity, groundBurn, 1, 'hazard.field-fire');
       }
     }

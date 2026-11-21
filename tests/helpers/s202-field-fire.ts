@@ -4,6 +4,7 @@ import { VegetationFire } from '../../src/sim/interact/VegetationFire';
 import { avoidFieldFire } from '../../src/sim/npc/avoidFieldFire';
 import type { Placement } from '../../src/levels/districts/types';
 import { overlapsPaving } from '../../src/levels/districts/validate';
+import { lawnFireCells } from '../../src/levels/lawnFire';
 
 const crop = (id: string, x: number, assetId = 'veg.corn-block') => ({ id, assetId, position: [x, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 6, decor: true, allowRoad: false, lightGroup: 'decor', visualAabb: { min: [x - 1, 0, -1], max: [x + 1, 2, 1] } }) as Placement;
 
@@ -36,6 +37,14 @@ function checkS202Field1(): void {
   const diagonal = { surfaces: [{ surface: 'tile', polygon: [[0, 0], [10, 10], [9, 11], [-1, 1]] }] } as Parameters<typeof overlapsPaving>[0];
   expect(overlapsPaving(diagonal, { min: [8, 0, 0], max: [9, 0, 1] })).toBe(false);
   expect(overlapsPaving(diagonal, { min: [4, 0, 4], max: [5, 0, 5] })).toBe(true);
+  const lawnLayout = { district: 'D-GROVE', lawns: [{ min: [0, 0], max: [12, 4] }], roads: { edges: [] }, surfaces: [{ surface: 'asphalt', polygon: [[8, 0], [12, 0], [12, 4], [8, 4]] }] } as unknown as Parameters<typeof lawnFireCells>[0];
+  const lawns = lawnFireCells(lawnLayout, [0, 0]);
+  expect(lawns.map(cell => cell.id)).toEqual(['D-GROVE/lawn:0:0:0']);
+  const grassFire = new FieldFire([], undefined, lawns);
+  expect(grassFire.ignite({ x: 1, z: 1 }, 1, .1)).toBe(1);
+  grassFire.update(421);
+  const grassRestored = new FieldFire([], undefined, lawns); grassRestored.restore(grassFire.snapshot());
+  expect(grassRestored.cells[0].state).toBe('scorched');
   const field = new FieldFire([crop('a', 0), crop('b', 10)], (a, b) => (a.x < 5 && b.x > 5) || (a.x > 5 && b.x < 5));
   expect(field.ignite({ x: 0, z: 0 }, 1, 15)).toBe(1);
   for (let tick = 1; tick < 600; tick++) field.update(tick);

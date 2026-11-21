@@ -210,8 +210,9 @@ async function checkCheckpointRacks() {
     expect(l10.hazards!.ignitePatch(roadPoint, .65, 5)).toBeNull();
     for (const district of l10.districts!.districts) for (const c of field.cells.filter(c => c.id.startsWith(`${district.id}/`))) {
       const x = c.x - district.origin[0], z = c.z - district.origin[1];
-      expect(overlapsRoad(district.layout, { min: [x - 5, 0, z - 5], max: [x + 5, 0, z + 5] }), c.id).toBe(false);
-      expect(overlapsPaving(district.layout, { min: [x - 5, 0, z - 5], max: [x + 5, 0, z + 5] }), c.id).toBe(false);
+      const halfX = c.halfX ?? 5, halfZ = c.halfZ ?? 5;
+      expect(overlapsRoad(district.layout, { min: [x - halfX, 0, z - halfZ], max: [x + halfX, 0, z + halfZ] }), c.id).toBe(false);
+      expect(overlapsPaving(district.layout, { min: [x - halfX, 0, z - halfZ], max: [x + halfX, 0, z + halfZ] }), c.id).toBe(false);
     }
     field.ignite(cell, l10.tick); field.update(l10.tick + 420);
     const vegetation = l10.hazards!.vegetationFire!, tree = vegetation.objects[0];

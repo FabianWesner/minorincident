@@ -354,6 +354,7 @@ export class DistrictView extends Group {
   /** Collapse and darken crop instances as their field cells burn. */
   syncFieldFire(cells: readonly import('../sim/interact/FieldFire').FieldCell[]): void {
     const states = new Map(cells.map(cell => [cell.id, cell.state]));
+    for (const grass of this.grass) grass.syncFire(states);
     for (const entry of this.lodBatches) if (entry.id === 'veg.corn-block') {
       let changed = false;
       for (const ref of entry.refs) {

@@ -100,10 +100,10 @@ async function checkS202Combat0(): Promise<void> {
   fire(w); step(w, 30);
   expect(cell.state).toBe('burning');
   const tree = w.hazards!.vegetationFire!.objects.find(o => o.state === 'intact')!;
-  w.hazards!.spawn('fire', tree, { radius: 1, duration: 3 });
+  w.hazards!.spawn('fire', tree, { radius: 1, duration: 3, playerDamageSource: true });
   expect(tree.state).toBe('burning');
   const other = w.hazards!.fieldFire!.cells.find(c => c.state === 'intact')!;
-  w.hazards!.spawn('fire', other, { radius: 1, duration: 3 });
+  w.hazards!.spawn('fire', other, { radius: 1, duration: 3, playerDamageSource: true });
   expect(other.state).toBe('burning');
 }
 
