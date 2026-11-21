@@ -40,3 +40,9 @@ The finale stall was in Mega phase 3 after the charge: its special branch used t
 - The remote `sh tools/remote/run.sh "$PWD" -- npm test` could not run: the runner reports no healthy Hetzner worker, and its local fallback rejects this wrapped command. A direct local `npm test` passed but does not satisfy the remote-runner requirement.
 - The requested native HIGH zoom-1 beat-7 frame is not captured or reviewed. The browser pool cannot bind `127.0.0.1:4329` in this sandbox (`EPERM`); the `tsx` pool launcher also fails to create its IPC pipe (`EPERM`).
 - Git staging/commit is blocked because the worktree's shared `.git` metadata is read-only here (`git add` cannot create `.git/worktrees/s219b-sinkhole/index.lock`). The source change remains in the worktree.
+
+### Continuation
+
+- The source fix and this report were committed as `c9c4a5a7` after filesystem access was restored.
+- The remote runner became available. Two unchanged remote `npm test` runs both hit the 240 s budget (246.2 s and 246.1 s, exit 124); the remote gate remains open.
+- A HIGH WebGL2 zoom-1 fixture placed the courier at (3397.05, 74) as `L10.finale-7` fired. The reviewed frame is `test-results/qa-l10-sinkhole/high-z1-beat-7.png`: the courier and rail dominate the frame; the crater is mostly clipped at the left edge, with part of the rim and a red lamp visible. This injected-position fixture is not the requested native route capture and does not prove the sinkhole is in view on the skilled route. A native capture attempt did not reach the beat within its 15,000 tick limit. Visual framing and native capture remain open.
