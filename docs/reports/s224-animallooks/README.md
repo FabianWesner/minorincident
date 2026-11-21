@@ -29,3 +29,9 @@ Measured from every mesh primitive in the current skinned HIGH GLBs with `assetI
 | elephant | 7,494; 262,868 / 216,496 | 2,873; 130,564 / 130,564 | 972; 77,884 / 77,884 |
 
 The runtime zebra provenance in `assets/inf.zebra/provenance.json` pins its TRELLIS source and production rig hashes. The old external exporter path named there is absent at the recorded location; find or reconstruct the rig-preserving texture build before modifying its output. The other five main zoo sources have existing colour painting in `tools/assets/skin-crowd-animal-infection.ts`; lioness and monkey derive from those runtime skins via `tools/assets/build-l8-monkeys.ts`.
+
+## Zebra candidate
+
+The candidate repaints the existing TRELLIS-derived skin with flank/back wounds and muzzle blood, and tapers the high mane vertices in the bind mesh. It retains the original skin and animation names and triangle counts. The regenerated crowd bakes are necessary to show the changed geometry. `node --import tsx tools/assets/paint-zebra-infection.ts` rebuilds the six GLBs from the pinned pre-change revision; byte-for-byte reproduction was checked. Its outputs are staged in a temporary directory and must be copied and rebaked deliberately. The resulting LOD0/1/2 HIGH sizes are 329,028 / 119,888 / 94,380 bytes; LOW 198,920 / 119,888 / 94,380 bytes. The separate crowd bakes increased by approximately 2.7 KB each.
+
+The rebaked HIGH side view at zoom 1.5 shows a smoother mane and visible red wound/muzzle. The HIGH WebGL2 `r32-zebra-game` scene passed 640 frames; its sheet was opened, but the small crowd frames do not establish detailed deformation quality. Typecheck and lint pass. This is a work-in-progress candidate: review both tiers, both requested zooms and all LODs side by side with the old animal, confirm motion and corpse/fence behavior, and rerun all gates after the remaining animals are changed.

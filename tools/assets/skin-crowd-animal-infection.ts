@@ -56,6 +56,20 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
     if (species === 'flamingo' && original[0] > 100 && original[2] > 80 && original[0] > original[1] * 1.1) c = [170, 145, 151];
   }
   if (!infected) return c;
+  if (species === 'zebra') {
+    // Zebra is in the production bind frame (+X forward), unlike the wave-2
+    // normalized sources. Paint both flanks and the visible dorsal surface.
+    const flank = ((x + .15) / .48) ** 2 + ((y - 1.28) / .35) ** 2 + ((Math.abs(z) - .30) / .19) ** 2;
+    const back = ((x + .25) / .42) ** 2 + ((y - 1.65) / .17) ** 2 + (z / .25) ** 2;
+    const wound = Math.min(flank, back) + .08 * Math.sin(x * 30 + y * 23);
+    if (wound < 1) {
+      c = wound > .74 ? [76, 20, 25] : [164, 35, 43];
+      if (wound < .58 && [0, 1, 2].some(i => Math.abs(x - (-.34 + i * .16) - z * .2) < .028)) c = [216, 190, 153];
+    }
+    // Broad blood around the mouth remains visible from the elevated camera.
+    if (x > 1.25 && y < 1.92 && y > 1.48) c = [122, 27, 32];
+    return c;
+  }
   // Broad readable wounds on the actual surface, not random atlas noise.
   let wound = species === 'lion' ? ((Math.abs(x) - .22) / .11) ** 2 + ((y - .015) / .115) ** 2 + ((z + .095) / .19) ** 2
     : species === 'gorilla' ? ((Math.abs(x - .01) - .20) / .14) ** 2 + ((y - .08) / .16) ** 2 + ((z - .10) / .19) ** 2
