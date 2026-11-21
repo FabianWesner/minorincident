@@ -190,6 +190,7 @@ for (const tier of tiers) {
   try {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
+  const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number }[] = [];
   const overpassThrows: { tick: number; move: string; sourceId: number; playerX: number }[] = [];
   const overpassState: unknown[] = [];
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
@@ -226,7 +227,7 @@ for (const tier of tiers) {
       world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1) { if (world.mountedGun?.mounted) mannedDamage += e.amount; recentHits.push({ tick: e.tick, action: e.actionId, amount: e.amount }); if (recentHits.length > 8) recentHits.shift(); } });
       world.events.on('player.died', () => deaths.push({ tick: world.tick, hits: [...recentHits] }));
       const update = world.update.bind(world);
-      let finalePrepared = false;
+      let finalePrepared = false, lastBike = false;
       world.update = () => {
         if (finaleOnly && !finalePrepared && world.missions!.state.phase === 'playing') {
           finalePrepared = true;
@@ -236,6 +237,8 @@ for (const tier of tiers) {
           world.megaPursuit!.introduce({ x: 3945, z: -25 });
         }
         update(); const p = world.entities.get(1)!;
+        const riding = !!world.vehicles?.bicycle.riding;
+        if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length }); lastBike = riding; }
         if (world.vehicles?.bicycle.riding && world.vehicles.bicycle.entity?.bicycle?.motorbike) bikeTicks++;
         if (world.missions!.state.states['l10-overpass-mega'] && !overpassState.length) {
           const alpha = world.megaPursuit!.entity();
@@ -283,7 +286,7 @@ for (const tier of tiers) {
   check(tier, 'hangar-to-gate finale takes 7–9 minutes', finalePacing.hangarToGateSeconds !== null && finalePacing.hangarToGateSeconds >= 420 && finalePacing.hangarToGateSeconds <= 540, finalePacing.hangarToGateSeconds);
   check(tier, 'every story beat arrives 45–75 seconds after the previous one', beatIntervals.every(seconds => seconds !== null && seconds >= 45 && seconds <= 75), beatIntervals);
   check(tier, 'fight or story gaps stay within 20 seconds', finalePacing.longestGapSeconds !== null && finalePacing.longestGapSeconds <= 20, finalePacing.longestGapSeconds);
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassThrows, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassThrows, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { check(tier, 'native route executes', false, String(error)); rows.push({ tier, routeError: String(error) }); }
 }

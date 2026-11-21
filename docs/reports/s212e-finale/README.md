@@ -35,6 +35,8 @@ An experiment adding three standard-infected cohorts was measured and discarded:
 
 The skilled bot now attempts to mount a nearby motorbike and dismount for nearby infected. A follow-up 1800 s route probe completed on both tiers, but recorded only 89/90 mounted ticks (LOW/HIGH). LOW took 295.3 s from hangar to gate with a 32.6 s longest activity gap; HIGH took 387.3 s with a 42.9 s gap. This is not yet the requested ride and remount rhythm or a passing pacing result. Typecheck, lint and mission interactions pass after this change; full gates must be rerun.
 
+The subsequent ride trace showed voluntary dismounts near the starting bike on sight of a single infected. The bot now shoots its handgun while riding and voluntarily dismounts near the four roadblocks. LOW rode for 2,219 ticks and completed, but took 395.4 s with a 113.4 s beat interval and a 29.6 s activity gap. HIGH rode for 156 ticks before dismounting amid eight nearby infected, took 549.9 s to the gate and hit the 1,800 s limit during credits. Both still fail the pacing target; full gates are required after the bot change.
+
 ## Captures
 
 The headless capture script runs through `tools/e2e-lock.sh` on ports 5215/5216. Its revised sheet teleports the courier and steps the simulation to load each location. Review: 0 shows road and an ambulance; 1 a medical building; 2 the quarantine gantry and effigies; 3–4 mostly empty road; 5 a road beside wrecks; 6 the Mega beside the courier; 7 an empty road with the courier outside the frame; 8 road and a bench; 9 dark road. The unrelated start objective remains on screen. These staged views do not show the actual story beats or ridden motorbike. Native gameplay captures and a proper sheet remain outstanding.

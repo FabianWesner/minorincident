@@ -72,7 +72,8 @@ export class LevelTenBot {
     const bike = w.vehicles?.bicycle, bikeEntity = bike?.entity;
     if (bike && bikeEntity?.bicycle?.motorbike && p.x >= 2780 && p.x < 3750 && !finale) {
       const nearThreat = threats.some(e => !isMega(e) && distance(e.transform) < 15);
-      if (bike.riding && nearThreat) { f.interact = true; return f; }
+      const roadblock = [3010, 3260, 3390, 3502].some(x => Math.abs(p.x - x) < 18);
+      if (bike.riding && nearThreat && roadblock) { f.interact = true; return f; }
       // Approach and mount a nearby bike only when the immediate fight has
       // cleared. A bike left far behind is not an objective to backtrack to.
       if (!bike.riding && !nearThreat && distance(bikeEntity.transform) < 12) {
@@ -144,7 +145,8 @@ export class LevelTenBot {
     const targetDistance = target ? distance(target.transform) : 0;
     const rocket = target && isMega(target) && targetDistance >= 18 && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
       { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, targetDistance) >= targetDistance;
-    const wanted = pouncingDog && distance(pouncingDog.transform) < 12 && rack.some(slot => slot.id === 'weapon.shotgun') ? 'weapon.shotgun'
+    const wanted = bike?.riding && bikeEntity?.bicycle?.motorbike ? 'weapon.handgun'
+      : pouncingDog && distance(pouncingDog.transform) < 12 && rack.some(slot => slot.id === 'weapon.shotgun') ? 'weapon.shotgun'
       : !finale ? travelWeapon : rocket ? 'weapon.rocket-launcher' : targetDistance < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
     const choice = rack.findIndex(slot => slot.id === wanted);
     const index = choice >= 0 ? choice : rack.length - 1, weapon = rack[index]?.id;
