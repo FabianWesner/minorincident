@@ -14,8 +14,8 @@
 | `npm run typecheck` | Pass |
 | `npm run lint` | Pass |
 | `npm run test:unit` | Pass; 27 files, 106 tests |
-| `sh tools/remote/run.sh "$PWD" -- npm test` | Two unchanged attempts on current code timed out at 240 s. Both showed a save-progression case failing before timeout, without an assertion summary. |
-| `npm test` on current code | 105/106 passed; `tests/tools/test-budget-tools.test.ts` failed its process-group cleanup assertion. The earlier local pass predates the checkpoint fix. |
+| `sh tools/remote/run.sh "$PWD" -- npm test` | Pass on third unchanged attempt: 27 files, 105 passed and one skipped, 216.6 s. Two earlier attempts timed out at 240 s; save progression passed separately on the runner. |
+| `npm test` on current code | 105/106 passed; `tests/tools/test-budget-tools.test.ts` failed its process-group cleanup assertion. Both it and save progression passed in a subsequent focused local run. The earlier full local pass predates the checkpoint fix. |
 | Full threat audit, two local shards and merge | Pass: 0 fail flags; all skilled routes complete. Shards ran in 174.4 s and 251.8 s; merged receipt `test-results/qa-threat/README.md`. Remote runners were unavailable. |
 | `node --import tsx/esm tools/verify.ts E32` | Pass; per-change typecheck, lint, and 106-test gate |
 | `E2E_PORT=5215 SCENE_PORT=5216 npm run test:smoke` | Pass: six smoke tests and one public-build smoke test; 139.8 s |
