@@ -418,9 +418,10 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
     expect(p!.decorSolid, `${id} is authored as a solid prop`).toBe(true);
     expect(placementColliders([p!], assembled.districts[0].layout.colliders).some(c => c.id === p!.id || c.id.startsWith(`${p!.id}/`)), `${id} has its own physical collider`).toBe(true);
   }
-  expect(assembled.districts[0].pushables.some(p => p.id === 'l10-setpiece-overpass-throwable'), 'overpass throw prop has a movable physics body').toBe(true);
+  for (const id of ['l10-setpiece-overpass-throwable', 'l10-setpiece-overpass-throwable-north', 'l10-setpiece-overpass-throwable-south'])
+    expect(assembled.districts[0].pushables.some(p => p.id === id), `${id} has a movable physics body`).toBe(true);
   for (const p of actualFarm.filter(item => item.id.startsWith('l10-setpiece-'))) {
-    const movableThrowable = p.id === 'l10-setpiece-overpass-throwable';
+    const movableThrowable = /^l10-setpiece-overpass-throwable(-north|-south)?$/.test(p.id);
     expect(p.decorSolid || movableThrowable, `${p.id} blocks the courier`).toBe(true);
     const colliders = placementColliders([p], assembled.districts[0].layout.colliders);
     const authored = assembled.districts[0].layout.colliders;

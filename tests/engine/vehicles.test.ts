@@ -960,7 +960,12 @@ async function motorbikeRide(): Promise<void> {
     world.events.emit({ ...hit, amount: 10 });
     expect(bike.riding, 'a light hit leaves the rider mounted').toBe(true);
     world.events.emit({ ...hit, amount: 20 });
-    expect(bike.riding, 'a hard infected hit knocks the motorbike rider off').toBe(false);
+    expect(bike.riding, 'an ordinary infected hit does not knock the motorbike rider off').toBe(true);
+    infected.archetype = 'infected.brute';
+    world.events.emit({ ...hit, amount: 10 });
+    expect(bike.riding, 'a light heavy-infected hit does not knock the motorbike rider off').toBe(true);
+    world.events.emit({ ...hit, amount: 20 });
+    expect(bike.riding, 'a heavy infected hit can knock the motorbike rider off').toBe(false);
     expect(infected.health.current).toBeGreaterThan(0);
     expect(dog.passengerOf).toBeUndefined();
     infected.hidden = true; infected.infected.hidden = true;
@@ -971,5 +976,16 @@ async function motorbikeRide(): Promise<void> {
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
     expect(bike.riding).toBe(false);
     expect(dog.passengerOf).toBeUndefined();
+    const impactAt = { x: player.transform.x, z: player.transform.z };
+    world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(3, 1, 3).setTranslation(impactAt.x, .7, impactAt.z));
+    const motorbike = bike.entity!;
+    Object.assign(player.transform, { x: impactAt.x, z: impactAt.z });
+    world.physics.playerBody!.setTranslation({ x: impactAt.x, y: player.transform.y, z: impactAt.z }, true);
+    Object.assign(motorbike.transform, impactAt);
+    Object.assign(motorbike.bicycle!, { mounted: true, speed: 8, heading: 0 });
+    player.riding = motorbike.id;
+    world.player!.locomotion.reset();
+    bike.filter(emptyInput());
+    expect(bike.riding, 'a motorbike crash into a solid at speed dismounts the rider').toBe(false);
   } finally { world.dispose(); }
 }

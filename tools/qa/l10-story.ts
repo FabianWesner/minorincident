@@ -191,7 +191,7 @@ for (const tier of tiers) {
   try {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
-  const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number }[] = [];
+  const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number; recentHits: unknown[] }[] = [];
   const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0 }));
   const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
   const authoredThrowCrateIds = new Set<number>();
@@ -239,7 +239,13 @@ for (const tier of tiers) {
         if (boss) shortestRocket = Math.min(shortestRocket, Math.hypot(boss.transform.x - e.position.x, boss.transform.z - e.position.z));
       });
       world.events.on('explosion', e => { if (e.type === 'explosion' && e.sourceId === 1 && /rocket/.test(e.defId) && Math.hypot(e.position.x - world.entities.get(1)!.transform.x, e.position.z - world.entities.get(1)!.transform.z) < 6) closeRocketBlasts++; });
-      world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1) { if (world.mountedGun?.mounted) mannedDamage += e.amount; recentHits.push({ tick: e.tick, action: e.actionId, amount: e.amount }); if (recentHits.length > 8) recentHits.shift(); } });
+      world.events.on('combat.hit', e => {
+        if (e.type !== 'combat.hit' || e.targetId !== 1) return;
+        if (world.mountedGun?.mounted) mannedDamage += e.amount;
+        const source = world.entities.get(e.sourceId);
+        recentHits.push({ tick: e.tick, action: e.actionId, amount: e.amount, sourceId: e.sourceId, sourceArchetype: source?.archetype, sourceAt: source && { x: source.transform.x, z: source.transform.z } });
+        if (recentHits.length > 8) recentHits.shift();
+      });
       world.events.on('player.died', () => {
         deaths.push({ tick: world.tick, hits: [...recentHits] });
         // A checkpoint retry starts a new attempt. Do not combine a pre-death
@@ -274,7 +280,7 @@ for (const tier of tiers) {
           if (near && riding && !lastBike && b.opened && !b.remounted) b.remounted = world.tick;
           if (riding && b.remounted && p.transform.x > b.x + 3 && !b.crossed) b.crossed = world.tick;
         }
-        if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length }); lastBike = riding; }
+        if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length, recentHits: recentHits.slice(-4) }); lastBike = riding; }
         if (world.vehicles?.bicycle.riding && world.vehicles.bicycle.entity?.bicycle?.motorbike) bikeTicks++;
         if (p.transform.x >= 3320 && p.transform.x < 3380 && world.tick % 60 === 0 && overpassProbeState.length < 24) {
           const alpha = world.megaPursuit!.entity();

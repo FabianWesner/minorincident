@@ -1,0 +1,119 @@
+{
+  "revision": "ccbedb7d55debc14951ad075b41492b4227525ef",
+  "sourceHash": "011c04a9dfbfe200355184d3ea4916ebf181f79e44e499a43538326cb8e2ac51",
+  "command": "node --import tsx/esm tools/qa/l10-story.ts --out docs/reports/s212g2-finale/pacing.json",
+  "checks": [
+    {
+      "tier": "low",
+      "name": "ride, fight, remount and cross roadblock 3010",
+      "pass": false,
+      "observed": {
+        "x": 3010,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    },
+    {
+      "tier": "low",
+      "name": "ride, fight, remount and cross roadblock 3260",
+      "pass": false,
+      "observed": {
+        "x": 3260,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    },
+    {
+      "tier": "low",
+      "name": "ride, fight, remount and cross roadblock 3390",
+      "pass": false,
+      "observed": {
+        "x": 3390,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    },
+    {
+      "tier": "low",
+      "name": "ride, fight, remount and cross roadblock 3502",
+      "pass": false,
+      "observed": {
+        "x": 3502,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    },
+    {
+      "tier": "high",
+      "name": "ride, fight, remount and cross roadblock 3010",
+      "pass": false,
+      "observed": {
+        "x": 3010,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    },
+    {
+      "tier": "high",
+      "name": "ride, fight, remount and cross roadblock 3260",
+      "pass": false,
+      "observed": {
+        "x": 3260,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    },
+    {
+      "tier": "high",
+      "name": "ride, fight, remount and cross roadblock 3390",
+      "pass": false,
+      "observed": {
+        "x": 3390,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    },
+    {
+      "tier": "high",
+      "name": "ride, fight, remount and cross roadblock 3502",
+      "pass": false,
+      "observed": {
+        "x": 3502,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
+        "remounted": 0,
+        "crossed": 0
+      }
+    }
+  ]
+}

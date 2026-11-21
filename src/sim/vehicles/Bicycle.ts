@@ -62,7 +62,13 @@ export class Bicycle {
   private navPose = '';
   constructor(private readonly world: SimWorld) {
     world.events.on('combat.hit', event => {
-      if (event.type !== 'combat.hit' || event.targetId !== 1 || event.amount < 20 || !world.entities.get(event.sourceId)?.infected) return;
+      if (event.type !== 'combat.hit' || event.targetId !== 1) return;
+      const attacker = world.entities.get(event.sourceId);
+      const heavyHit = attacker?.archetype === 'infected.brute' || attacker?.archetype === 'infected.armored'
+        || attacker?.archetype === 'infected.butcher' || attacker?.archetype === 'infected.elephant'
+        || attacker?.archetype === 'infected.alpha' || attacker?.archetype === 'infected.mega-alpha'
+        || attacker?.infected?.pursuit === true || attacker?.infected?.variant === 'inf.mega-alpha';
+      if (!heavyHit || event.amount < 20) return;
       const bike = this.entity, player = world.entities.get(1);
       if (bike?.bicycle?.motorbike && bike.bicycle.mounted && player) this.knockOff(bike, player);
     });
@@ -189,6 +195,9 @@ export class Bicycle {
     this.lastOutside = { x: player.transform.x, z: player.transform.z };
     // Speed actually achieved last tick: walls and props stop the bicycle.
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;
+    // A high-speed impact is a sudden loss of forward travel into a solid.
+    // Scraping or an ordinary infected hit alone does not eject the rider.
+    if (b.motorbike && Math.abs(b.speed) >= 6 && actual < Math.abs(b.speed) * .35) { this.knockOff(bike, player); return frame; }
     if (actual < Math.abs(b.speed) * .5) b.speed = Math.sign(b.speed) * actual;
     // Bicycle kinematics: the steering angle shrinks with speed (turn radius 1.6 m crawling, 6 m flat out), the heading changes by
     // speed / radius, so the bike never pivots on the spot; speed ramps (0 to 7 m/s in 1.5 s), brakes hard, coasts gently.

@@ -345,6 +345,9 @@ export class LevelTenEncounters {
             halfX: .2, halfZ: 40, radius: 2, label: 'Open roadblock',
           });
           w.entities.get(gateId)!.archetype = 'device.l10-roadblock';
+          // Roadblocks are encounter barriers, not early-use switches. Keep E
+          // available to dismount the rider until the safe-admitted cohort is cleared.
+          w.entities.get(gateId)!.interactable!.enabled = false;
           w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ: 40 });
           gates[group.id] = gateId;
         }
