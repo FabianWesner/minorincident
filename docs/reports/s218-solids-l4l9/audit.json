@@ -4,7 +4,7 @@
     "heightM": 0.5
   },
   "method": "For each generated campaign layout, classify substantial placements using the s211c world solid flag/baked-box rule, then require a non-physics-only placement collider to cover every active tier 0-6. Collider presence does not prove visual hull quality or movement contacts.",
-  "status": "incomplete",
+  "status": "complete",
   "campaignLevels": [
     {
       "level": "L4",
@@ -36,10 +36,7 @@
       "placements": 937,
       "eligible": 783,
       "before": 1,
-      "after": 1,
-      "offenders": [
-        "int.metro-exit:l7-northgate-mouth"
-      ]
+      "after": 0
     },
     {
       "level": "L8",
@@ -57,6 +54,5 @@
       "before": 0,
       "after": 0
     }
-  ],
-  "remaining": "L7 Northgate metro exit remains without a static shell collider; applying the L6 walls in L7 produced a follower pace flag."
+  ]
 }
