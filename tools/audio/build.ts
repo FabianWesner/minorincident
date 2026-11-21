@@ -61,7 +61,7 @@ function recording(recipe: Recipe, duration: number, loop = false, music = false
         // Recorded loops read `seam` seconds past their end and blend that continuation into the head (equal power):
         // the loop point is then continuous, so a 2 s voice bed no longer dips to silence every period ("hu-hu-hu").
         const seam = loop && !music ? Math.min(0.5, duration / 4) : 0, total = duration + seam;
-        const raw = run(['-i', master(recipe.source), '-t', String(total),
+        const raw = run(['-i', master(recipe.source),
             '-af', `atrim=start=${recipe.start}:duration=${total},asetpts=PTS-STARTPTS,${recipe.filter ? `${recipe.filter},` : ''}${recipe.level !== undefined ? 'acompressor=threshold=0.06:ratio=3:attack=5:release=80,' : ''}${music ? 'loudnorm=I=-18:TP=-2:LRA=9,' : ''}apad,atrim=duration=${total}`,
             '-ac', '1', '-ar', String(rate), '-f', 'f32le', '-']);
         let samples = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength));
@@ -128,7 +128,12 @@ try {
             for (const cue of Object.values(audioCues)) {
                 if (cue.category !== category) continue;
                 const recipe = (imports.cues as Record<string, Recipe>)[cue.id];
-                samples.set(category === 'music-L10-fx' ? synthesizeL10Farm(cue, rate) : recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : fanfareLayers[cue.id] ? layered(cue.id, synthesize(cue, rate)) : capPeak(synthesize(cue, rate), 0.7), Math.round(cue.offset * rate));
+                const body = category === 'music-L10-fx' ? synthesizeL10Farm(cue, rate) : recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : fanfareLayers[cue.id] ? layered(cue.id, synthesize(cue, rate)) : capPeak(synthesize(cue, rate), 0.7);
+                if (category === 'animal-voices') {
+                    const wet = recording({ source: 'zsp-16', start: 0, filter: 'asetrate=32000,aresample=48000,lowpass=f=800', level: -24 }, cue.duration);
+                    const mixed = Float32Array.from(body, (value, i) => value + wet[i] * .22);
+                    samples.set(capPeak(mixed, .6), Math.round(cue.offset * rate));
+                } else samples.set(body, Math.round(cue.offset * rate));
             }
             if (!category.startsWith('music')) capPeak(samples, 0.6); // sprite ceiling: about -4.4 dBFS before Opus/AAC overshoot, so every file stays under -1 dBTP
             // Streamed stereo score is 96k. Compact mono sprites keep both codecs below 4MB.
@@ -140,6 +145,7 @@ try {
             const ids = Object.values(audioCues).filter(c => c.category === category).flatMap(c => {
                 const recipe = (imports.cues as Record<string, Recipe>)[c.id]; return recipe ? [recipe.source] : (fanfareLayers[c.id] ?? []).map(layer => layer.source);
             });
+            if (category === 'animal-voices') ids.push('zsp-16');
             licenses.push(`| ${file} | ${ids.length ? 'CC0 / CC-BY / self-made (MIT); see segment map' : 'self-made (MIT)'} | ${category === 'music-L10-fx' ? 'Minor Incident contributors; tools/audio/l10-farm-synthesis.ts' : notice(ids)} | ${hash(`${output}/${file}`)} |`);
         }
     }

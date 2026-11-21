@@ -159,6 +159,8 @@ export class AudioEventMapper {
             const special = 'special' in event ? event.special : event.kind;
             const animal = animalVoice(entity?.archetype);
             if (animal) {
+                const caption = audioCues[telegraphCues[special] ?? telegraphCues[entity?.archetype ?? '']]?.caption;
+                if (caption) this.host.caption(caption, position, 'duration' in event ? event.duration : undefined);
                 this.host.play(`animal.${animal}.tell`, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
                 return;
             }
