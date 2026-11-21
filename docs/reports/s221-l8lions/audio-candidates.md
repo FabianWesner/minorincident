@@ -1,13 +1,13 @@
 # Candidate animal audio sources
 
-Research snapshot, 2026-11-21. Candidates have not yet been integrated; the lion recording needs confirmation that it is a real animal. Hashes identify the downloaded Freesound HQ previews, not the original masters.
+Research snapshot, 2026-11-21. Candidates have not yet been integrated; Hashes identify the downloaded Freesound HQ previews, not the original masters.
 
 ## Lion
 
-- Source: https://freesound.org/people/smokediggity/sounds/795986/
+- Source: https://freesound.org/people/Bidone/sounds/69570/
 - License on source page: CC0 1.0 (http://creativecommons.org/publicdomain/zero/1.0/)
-- Source description: Simple lion roar
-- HQ preview SHA-256: `984ed17045892833c51b25c6427589a04e69b5de3b829ac4b72dc0dcec6c3c0b`
+- Source description: You hear a lion bellow. The source is tagged field-recording.
+- HQ preview SHA-256: `e8889eb2985a0788133faaf9d823c293b2fcaed848b158a7e67d9d5c6f72d644`
 
 ## Flamingo
 
