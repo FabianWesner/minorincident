@@ -570,9 +570,25 @@ export class LevelEightZoo {
     const group = this.state.roster.map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined);
     if (!group.length) return;
     const x = group.reduce((n, e) => n + e.transform.x, 0) / group.length, z = group.reduce((n, e) => n + e.transform.z, 0) / group.length;
+    const player = this.w.entities.get(1)!;
+    const next = this.state.arenas.find(a => a.phase === 1 || a.phase === 2) ?? this.state.arenas.find(a => a.phase !== 3);
+    const index = next ? this.state.arenas.indexOf(next) : -1;
+    const routeOpen = index === 0 ? !!this.state.sealedAt : index > 0 && this.state.arenas[index - 1].phase === 3;
+    const stage = next && l8Route.find(r => r.id === next.id);
+    const gate = stage?.entry ?? (next?.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
+    const wait = !!stage && !!gate && routeOpen && (next!.phase > 0 || inRect(player.transform, stage.zone) || distance(player.transform, gate) <= 12);
     for (const [i, id] of this.state.guards.entries()) {
       const guard = this.w.entities.get(id), ally = guard?.civilian?.ally;
       if (!guard || guard.health.current <= 0 || !ally) continue;
+      if (wait && stage && gate) {
+        const dx = gate.x - (stage.zone.x0 + stage.zone.x1) / 2, dz = gate.z - (stage.zone.z0 + stage.zone.z1) / 2, length = Math.hypot(dx, dz) || 1;
+        const nx = dx / length, nz = dz / length, side = (i - (this.state.guards.length - 1) / 2) * 1.3;
+        const at = { x: gate.x + nx * 4 - nz * side, z: gate.z + nz * 4 + nx * side };
+        ally.arenaWait = true; ally.post = at; ally.run = at; ally.hold = true;
+        if (distance(guard.transform, at) > .5) this.w.npcs!.move(guard, at, 6, guard.civilian!, .3, 2400);
+        continue;
+      }
+      if (ally.arenaWait) { delete ally.arenaWait; ally.post = null; ally.run = null; ally.hold = false; }
       const angle = i * Math.PI / 3;
       const radius = this.boarding() ? 6 : 4;
       const desired = { x: x + Math.cos(angle) * radius, z: z + Math.sin(angle) * radius };

@@ -138,7 +138,7 @@ export class L8BossArenas {
       // r42-arenas: the gorilla house starts the fight only once she is well inside (not from the doorway, where the MG deleted it in 4 s).
       const deep = inZone && (!stage.depth || !stage.entry || distance(player.transform, stage.entry) >= stage.depth);
       const entryGate = stage.entry ?? (arena.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
-      const followers = this.mission.l8!.followers();
+      const followers = [...this.mission.l8!.followers(), ...this.mission.l8!.state.guards.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined)];
       const followersInside = followers.some(follower => inRect(follower.transform, stage.zone));
       // The old elephant stays healthy in his enclosure until the vehicle-yard
       // finale is reachable; an early distant health bar must not be a dormant boss.
