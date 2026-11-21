@@ -1,36 +1,32 @@
-# L8 animal fights — s221 implementation notes
+# L8 animal fights — s221
 
-The all-cage solo rule is in place: survivor followers stage outside the next entry, their attack controller is suppressed while staged, the corgi remains with the courier, and follower wait samples ignore only explicitly marked cage waits. The flamingo cage no longer adds replacement birds. Lions now stalk in pairs, coordinate a front roar with a rear approach, telegraph pounces, pin and bite the courier, recover after a broken/missed pounce, swipe at close range, and enrage when their partner dies. Pin release clears the matching player knockdown; an ally or corgi hit frees her immediately.
+The courier and corgi enter each animal enclosure alone. Followers, including the separately controlled soldiers and Hale/Reyes, wait outside the active entry, do not shoot at targets inside, and resume after the enclosure clears. Intended cage waits are excluded from follower-wait measurements. The flamingo flock is fixed; dead birds are not replaced or removed. Lions coordinate a roar and a flank, circle and use cover, telegraph and leap, pin and bite, accept melee/E struggle or companion rescue, recover after a missed or broken leap, swipe twice, and enrage when their partner dies. Lion balance is animal-specific.
 
 ## Feel notes
 
-- **Lions:** Keep the pair in view. The frontal roar signals the flank; dodge the crouch and tail lash, then punish the skid. While pinned, mash melee; a companion hit releases immediately.
-- **Flamingos:** Read the dive lane, step aside, and shoot the grounded bird before the flock cycles again. The authored flock is finite; dead birds stay dead.
-- **Zebras:** Read the herd lane and leave it before the pass; use the turn at the fence to punish stragglers. The rear kick rewards not standing behind one.
-- **Gorilla:** Interrupt the chest display, leave the ground-pound ring, and use the recovery after a bluff or slam. Throws make cover and spacing matter.
-- **Monkeys:** The solo cage prevents soldiers from clearing the pack for the courier. Their animal-specific gameplay remains for the next lane.
-- **Elephant:** Stay outside the charge line and bait it into heavy yard objects. The survivor group waits outside the entry while the courier and corgi handle the animal.
+- **Lions:** Watch the pair and the roar, then dodge the crouching pounce. Attack during the recovery; mash melee or E to break a pin.
+- **Flamingos:** Leave the dive lane and shoot the bird during its ground recovery. The flock has a fixed total.
+- **Zebras:** Avoid the herd's lane and watch for rear kicks. Their dedicated rework remains scheduled for s222.
+- **Gorilla:** Interrupt or evade its displays, ground attacks and thrown objects. Its dedicated rework remains scheduled for s222.
+- **Monkeys:** Fight the pack without soldiers clearing the cage. Their dedicated rework remains scheduled for s223.
+- **Elephant:** Bait the charge into heavy yard objects while the group waits outside. Further polish remains scheduled for s223.
 
-## Verification status
+## Audio
 
-- `npm run typecheck`: passed.
-- `npm run lint`: passed.
-- `node node_modules/vitest/vitest.mjs run --project nightly tests/nightly/mission-interactions.test.ts`: passed.
-- Final two-shard threat merge: 0 acceptance flags. The L8 skilled route completed in 402.37 s with 0 deaths and 20 damage taken. A comparable main-branch run was not available in this workspace, so the requested deaths-vs-main comparison remains open.
-- The requested native HIGH zoom 1 capture sheet is still open. Isolated headless Scene Lab captures ran successfully, but the reviewed pounce frame showed the courier standing and does not prove the arena pin. Native fight captures and visual review remain necessary.
-- The required remote `npm test` ran twice unchanged and exceeded the 240 s budget both times (244.5 and 245.5 s). Both runs reported a vehicle test failure before timeout; the first also reported a save progression failure. Final assertion details were not emitted before termination.
-- Licensed animal recordings and their processed voice sets remain open. Five candidate previews were downloaded to temporary storage after network access returned; their provenance, processing, integration and license snapshots remain to be completed.
+Thirty positional cues cover idle, tell, attack, hurt and death for each of six species. The recordings are pitched down and mixed with distortion, echo and a wet layer; the animal bus ducks during dialogue. WebM and AAC sprites together are under 3 MB. The [source research](audio-candidates.md), [license snapshot](../../licenses/audio/s221-animal-voices.json), source recipes and generated audio credits identify the recordings, including the CC-BY gorilla field recording and its modifications. Audible off-screen tells and subjective sound quality still need listening verification.
 
-- A focused remote rerun isolated the failures: save progression exceeded its 30 s per-test timeout, and the vehicle fixture failed the Hale charge assertion (`distance` remained Infinity). Moving Hale to the outside entry in that fixture alone did not fix it; that experiment was reverted. The finale handoff needs further investigation.
+## Verification
 
-- Vehicle fixture diagnostic: the elephant reached phase 1, but Hale remained at (92.8, 75.6), outside the 12 m / 30 tick story trigger near the opening charge. This can also strand the story beat if Hale is delayed in ordinary play. The condition needs a robust story design compatible with the solo-yard rule.
+- `npm run typecheck`, lint, the focused L8 boss proof, and the nightly mission-interactions test passed. The final-source threat merge is in progress.
+- A prior full two-shard threat merge at `2cc66c65` passed with zero flags. The skilled L8 bot finished in 403.17 simulated seconds, with 0 deaths, 10 damage and a 4.26% follower-wait upper bound. Subsequent lion changes require a fresh gate.
+- The final-source skilled L8 stage completed in 407.8 simulated seconds, with 0 deaths and 90 damage taken.
+- A separate detached checkout of main `97b4c6f71a188714bc07d32a6304f8520754340a` completed the L8 skilled route with 0 deaths in 430 simulated seconds ([receipt](main-l8-baseline.json)). Its L8-only threat diagnostic reports the expected partial-selection flag.
+- Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests with 1 skipped in 205.0 s.
 
-- Animal voice bank is integrated as a preliminary pass: six CC0 source records, 30 pitch/grit/echo variants and positional event mappings; both codecs total under 0.6 MB. The Opus slices all decode with nonzero RMS. The follow-up build adds a licensed low gurgle layer and staggered source offsets. Listening, distinct event reads, source provenance review, and end-to-end audio acceptance remain open. The animal bus ducks by 6 dB during dialogue.
+## Visual review and limitations
 
-- A native L8 capture attempt loaded HIGH WebGL2 at zoom 1 under the browser lock, but the fixture did not complete animal conversion; it produced no valid fight captures. The temporary harness was removed.
+The reviewed [native HIGH WebGL2, zoom 1 sheet](native-diagnostic.jpg) uses a headless fixture, not an uninterrupted playthrough. The lion setup is a static placement (it does not demonstrate autonomous stalking); the tell shows the low lion and warning ring, the next frame shows the airborne leap, and the pin frame shows the courier down with the lion at her feet. For the recovery frame the fixture explicitly calls the pin-release path: the courier stands and the lion remains low; the recovery state lasts 90 ticks, though a distinct physical skid is not clear in the still. The flamingo dive frame shows the bird airborne and the final frame shows it grounded beside a pad during recovery; the fixture repositioned the courier to frame that final image. The fixture releases presentation hit-stop while stepping. These frames do not prove the natural two-lion coordination or every live-game camera angle.
 
-- Native HIGH WebGL2, zoom 1 diagnostic: [sheet](native-diagnostic.jpg). The lion remains behind a jersey barrier through the tell and recovery frames; the courier remains standing, so these frames do not prove a pounce hit or pin. The flamingo post-dive frame is visually ambiguous and does not prove a grounded punish window. The fixture forced the production move inside the loaded level and is diagnostic, not a completed visual gate.
+The elephant story handoff remains a risk: Hale is correctly outside the yard, but if delayed far from the entry she may miss the short proximity window for the opening charge story beat. The focused fixture places her outside near the entry; that does not prove every live route reaches the beat.
 
-- After adding separate guard staging, focused L8 threat completed with 0 player deaths but reported `FOLLOWER_PACE_UNOBSERVED` for 365 and 366. An experimental observer that included travel while the cage-wait order was active produced `SLOW_FOLLOWER` for the same IDs, including slow holding-point corrections; it was reverted. Follow/resume behavior and coverage need a real fix and rerun rather than suppressing these flags.
-
-- Final-source gate at `2cc66c65`: sharded `qa:threat` merge passed with 0 acceptance flags. L8 skilled completed in 403.17 s, 0 deaths, 10 damage; follower-wait upper bound 4.26%. Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed 105 tests, 1 skipped in 235.2 s. The main-branch comparison remains open.
+The removed replacement flight no longer reanimates killed flock members, but the authored initially healthy flock can still go through its first infection collapse and rise near the start of the encounter. This may look like a bird standing up during the fight and remains open against the PO wording.
