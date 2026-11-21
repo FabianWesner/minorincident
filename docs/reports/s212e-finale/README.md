@@ -37,6 +37,8 @@ The skilled bot now attempts to mount a nearby motorbike and dismount for nearby
 
 The subsequent ride trace showed voluntary dismounts near the starting bike on sight of a single infected. The bot now shoots its handgun while riding and voluntarily dismounts near the four roadblocks. LOW rode for 2,219 ticks and completed, but took 395.4 s with a 113.4 s beat interval and a 29.6 s activity gap. HIGH rode for 156 ticks before dismounting amid eight nearby infected, took 549.9 s to the gate and hit the 1,800 s limit during credits. Both still fail the pacing target; full gates are required after the bot change.
 
+A prototype quarantine gate blocked the gantry opening until all encounter slots were admitted and cleared, then enabled an on-foot interaction. It was discarded after the LOW route probe completed with 23 deaths and took 615.1 s to the complex gate, including a 307.6 s final beat interval and a 23.5 s activity gap. A roadblock needs coordinated approach, enemy admission and recovery rather than simply blocking the existing route.
+
 ## Captures
 
 The headless capture script runs through `tools/e2e-lock.sh` on ports 5215/5216. Its revised sheet teleports the courier and steps the simulation to load each location. Review: 0 shows road and an ambulance; 1 a medical building; 2 the quarantine gantry and effigies; 3–4 mostly empty road; 5 a road beside wrecks; 6 the Mega beside the courier; 7 an empty road with the courier outside the frame; 8 road and a bench; 9 dark road. The unrelated start objective remains on screen. These staged views do not show the actual story beats or ridden motorbike. Native gameplay captures and a proper sheet remain outstanding.
