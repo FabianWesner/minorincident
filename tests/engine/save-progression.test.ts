@@ -273,6 +273,13 @@ async function checkCheckpointRacks() {
     l10.missions!.restore('cure-research');
     expect(ids(l10)).toEqual(expectedHangar);
     expect(l10.progression!.campaign!.racks).toEqual(expectedHangar);
+    const megaId = l10.megaPursuit!.introduce({ x: 620, z: 0 });
+    l10.missions!.checkpoint('cure-disperse-ready');
+    l10.entities.get(megaId)!.health.current = 0;
+    l10.megaPursuit!.state.mode = 'dead';
+    l10.missions!.restore('cure-disperse-ready');
+    expect(l10.megaPursuit!.state.mode, 'a later Mega kill survives an arena checkpoint retry').toBe('dead');
+    expect(l10.megaPursuit!.entity()!.health.current).toBe(0);
   } finally { l10.dispose(); }
 }
 

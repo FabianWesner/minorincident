@@ -661,7 +661,7 @@ export class MegaPursuit {
   /**
    * After the entity restore of a checkpoint. Timers shift by the checkpoint delta; a Mega killed since the checkpoint stays dead
    * (E32: a legitimate early kill remains dead); a living one keeps ≥ respawnGapM from the restored player.
-   * The ready snapshot passes `retainKill=false` and `respawn=false`: restore the exact captured boss.
+   * The ready checkpoint passes `respawn=false` to keep a living boss at its captured position; retries retain a later kill.
    * `respawn=false` is a live save resume: retain the captured position without applying the death/checkpoint fairness gap.
    */
   restore(saved: unknown, respawn = true, retainKill = true): void {
