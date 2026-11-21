@@ -706,9 +706,24 @@ for _name, _token, _x, _z, _w, _d in [
     ('elephant-earth', 'khakiSeam', 96, 53, 27, 27),
 ]:
     l.box('habitat-' + _name, _token, [_w, .025, _d], [_x, .135, _z])
-# Shallow water remains walkable in this visual layer; the existing excluded
-# flamingo pond and its landing-bank navigation remain authoritative.
-l.box('habitat-flamingo-water', 'backpackTealDark', [15, .015, 11], [0, .157, -32])
+# Organic, shallow pond edges and a low mud island are visual surfaces. The
+# existing excluded pond and the landing-bank navigation stay authoritative.
+def habitat_oval(name, token, x, z, rx, rz, height):
+    vertices = [(x, -z, height)]
+    for i in range(32):
+        a = math.tau * i / 32
+        # A slight, deterministic variation breaks the perfect ellipse.
+        r = 1 + .055 * math.sin(3 * a) + .025 * math.cos(5 * a)
+        vertices.append((x + rx * r * math.cos(a), -z + rz * r * math.sin(a), height))
+    mesh = bpy.data.meshes.new(name)
+    mesh.from_pydata(vertices, [], [(0, i + 1, (i + 1) % 32 + 1) for i in range(32)])
+    mesh.materials.append(material(token))
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    l.layers[0].append(obj)
+habitat_oval('flamingo-mud-bank', 'khaki', 0, -32, 8.0, 5.9, .151)
+habitat_oval('flamingo-water', 'backpackTeal', 0, -32, 7.2, 5.1, .158)
+habitat_oval('flamingo-island', 'khakiLight', 1.0, -32, 1.55, 1.05, .165)
 l.box('habitat-elephant-water', 'backpackTealDark', [4, .015, 3], [87, .157, 61])
 
 # Static layout pieces with identical material/attribute layouts share a program.
