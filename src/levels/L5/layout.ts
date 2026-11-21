@@ -84,7 +84,7 @@ export const l5Dressing: readonly L5Dressing[] = [
 
 /** Collapsed facades: whole street fronts that are down, against four buildings (the shops without a `w5` shell take glass, fires and rubble instead). */
 const collapses: readonly (readonly [number, number, number])[] = [
-  [18.4, -25.9, 3.14], [18.4, 25.9, 3.14], [54.8, -8.5, 0], [-53.4, -15.5, -H], [-38.4, 10.2, 0],
+  [18.4, -25.9, 3.14], [18.4, 25.9, 3.14], [54.8, -8.5, 0], [-53.4, -15.5, -H], [-39.4, 10.2, 0],
 ];
 /** Doors of the street-facing buildings and which face they are on (for the broken glass and the bullet damage). */
 export function l5Frontages(layout: DistrictLayout): { x: number; z: number; axis: 'x' | 'z'; yaw: number; plaza: boolean; asset: string }[] {
