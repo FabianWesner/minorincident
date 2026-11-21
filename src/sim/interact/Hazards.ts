@@ -13,7 +13,7 @@ import { VegetationFire } from './VegetationFire';
 import { groundBurn } from '../combat/Status';
 import { cure } from '../../levels/L10/district';
 import { cureCrossingLines } from '../../levels/L10/crossingStories';
-import { overlapsPaving, overlapsRoad } from '../../levels/districts/validate';
+import { overlapsBuilding, overlapsPaving, overlapsRoad } from '../../levels/districts/validate';
 import { lawnFireCells } from '../../levels/lawnFire';
 import { cureEvacuationLane } from '../../levels/L10/vignettes';
 import type { DistrictLayout } from '../../levels/districts/types';
@@ -74,7 +74,7 @@ export class Hazards {
       }));
       return crossing || this.fireLayouts.some(d => {
         const footprint = { min: [Math.min(a.x, b.x) - d.origin[0], 0, Math.min(a.z, b.z) - d.origin[1]] as [number, number, number], max: [Math.max(a.x, b.x) - d.origin[0], 0, Math.max(a.z, b.z) - d.origin[1]] as [number, number, number] };
-        return overlapsRoad(d.layout, footprint) || overlapsPaving(d.layout, footprint);
+        return overlapsRoad(d.layout, footprint) || overlapsPaving(d.layout, footprint) || overlapsBuilding(d.layout, footprint);
       });
     };
     this.vegetationFire = districts ? new VegetationFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), districts.composition.id === 'L10' ? blocked : undefined) : null;
@@ -83,7 +83,7 @@ export class Hazards {
     this.fieldFire = districts ? new FieldFire(districts.districts.flatMap((d, index) => d.decay.placements.filter(p => {
       if (p.assetId !== 'veg.corn-block') return true;
       const footprint = { min: [p.position[0] - 5, 0, p.position[2] - 5] as [number, number, number], max: [p.position[0] + 5, 0, p.position[2] + 5] as [number, number, number] };
-      return !overlapsRoad(this.fireLayouts[index].layout, footprint) && !overlapsPaving(this.fireLayouts[index].layout, footprint);
+      return !overlapsRoad(this.fireLayouts[index].layout, footprint) && !overlapsPaving(this.fireLayouts[index].layout, footprint) && !overlapsBuilding(this.fireLayouts[index].layout, footprint);
     }).map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked,
       this.fireLayouts.flatMap(d => lawnFireCells(d.layout, d.origin))) : null;
   }
@@ -120,7 +120,7 @@ export class Hazards {
     for (const district of this.fireLayouts) {
       const x = position.x - district.origin[0], z = position.z - district.origin[1];
       const footprint = { min: [x - radius, 0, z - radius] as [number, number, number], max: [x + radius, 0, z + radius] as [number, number, number] };
-      if (overlapsRoad(district.layout, footprint) || overlapsPaving(district.layout, footprint)) return null;
+      if (overlapsRoad(district.layout, footprint) || overlapsPaving(district.layout, footprint) || overlapsBuilding(district.layout, footprint)) return null;
     }
     const until = this.world.tick + Math.ceil(duration * 60 * (this.world.weather?.modifiers.fireDuration ?? 1));
     let fires = 0, reusable: EntitySnapshot | undefined;

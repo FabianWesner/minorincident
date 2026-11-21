@@ -74,6 +74,10 @@ export function overlapsPaving(layout: DistrictLayout, aabb: Aabb): boolean {
       && (corners.some(p => inside(p, s.polygon)) || s.polygon.some((p, i) => laneOverlap(aabb, p, s.polygon[(i + 1) % s.polygon.length], 0)));
   });
 }
+/** Ground fire must not occupy an authored building footprint. */
+export function overlapsBuilding(layout: DistrictLayout, aabb: Aabb): boolean {
+  return layout.buildings.some(({ aabb: b }) => b.min[0] <= aabb.max[0] && b.max[0] >= aabb.min[0] && b.min[2] <= aabb.max[2] && b.max[2] >= aabb.min[2]);
+}
 export function validateLayout(
   layout: DistrictLayout,
   manifest: Record<string, unknown>,

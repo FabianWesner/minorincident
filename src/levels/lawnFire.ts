@@ -1,5 +1,5 @@
 import type { DistrictLayout } from './districts/types';
-import { overlapsPaving, overlapsRoad } from './districts/validate';
+import { overlapsBuilding, overlapsPaving, overlapsRoad } from './districts/validate';
 
 /** Stable grid shared by lawn rendering and simulation. */
 export function lawnGrid(lawn: DistrictLayout['lawns'][number]) {
@@ -18,7 +18,7 @@ export function lawnFireCells(layout: DistrictLayout, origin: readonly [number, 
       const x = lawn.min[0] + (i + .5) * grid.width, z = lawn.min[1] + (j + .5) * grid.depth;
       const halfX = grid.width / 2, halfZ = grid.depth / 2;
       const footprint = { min: [x - halfX, 0, z - halfZ] as [number, number, number], max: [x + halfX, 0, z + halfZ] as [number, number, number] };
-      if (!overlapsRoad(layout, footprint) && !overlapsPaving(layout, footprint)) cells.push({ id: lawnCellId(layout.district, index, i, j), x: x + origin[0], z: z + origin[1], halfX, halfZ });
+      if (!overlapsRoad(layout, footprint) && !overlapsPaving(layout, footprint) && !overlapsBuilding(layout, footprint)) cells.push({ id: lawnCellId(layout.district, index, i, j), x: x + origin[0], z: z + origin[1], halfX, halfZ });
     }
   }
   return cells;

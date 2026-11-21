@@ -37,9 +37,11 @@ function checkS202Field1(): void {
   const diagonal = { surfaces: [{ surface: 'tile', polygon: [[0, 0], [10, 10], [9, 11], [-1, 1]] }] } as Parameters<typeof overlapsPaving>[0];
   expect(overlapsPaving(diagonal, { min: [8, 0, 0], max: [9, 0, 1] })).toBe(false);
   expect(overlapsPaving(diagonal, { min: [4, 0, 4], max: [5, 0, 5] })).toBe(true);
-  const lawnLayout = { district: 'D-GROVE', lawns: [{ min: [0, 0], max: [16, 4] }], roads: { edges: [] }, surfaces: [{ surface: 'asphalt', polygon: [[12, 0], [16, 0], [16, 4], [12, 4]] }] } as unknown as Parameters<typeof lawnFireCells>[0];
+  const lawnLayout = { district: 'D-GROVE', lawns: [{ min: [0, 0], max: [20, 4] }], roads: { edges: [] }, buildings: [{ aabb: { min: [16, 0, 0], max: [20, 4, 4] } }], surfaces: [{ surface: 'asphalt', polygon: [[12, 0], [16, 0], [16, 4], [12, 4]] }] } as unknown as Parameters<typeof lawnFireCells>[0];
   const lawns = lawnFireCells(lawnLayout, [0, 0]);
   expect(lawns.map(cell => cell.id)).toEqual(['D-GROVE/lawn:0:0:0', 'D-GROVE/lawn:0:1:0']);
+  const buildingLayout = { ...lawnLayout, surfaces: [], buildings: [{ aabb: { min: [12, 0, 0], max: [20, 4, 4] } }] } as unknown as Parameters<typeof lawnFireCells>[0];
+  expect(lawnFireCells(buildingLayout, [0, 0]).map(cell => cell.id)).toEqual(['D-GROVE/lawn:0:0:0', 'D-GROVE/lawn:0:1:0']);
   const grassFire = new FieldFire([], undefined, lawns);
   expect(grassFire.ignite({ x: 1, z: 1 }, 1, .1)).toBe(1);
   grassFire.update(241); expect(grassFire.cells[1].state).toBe('burning');
