@@ -21,6 +21,8 @@ Trying the stair foot as the first safe service admission candidate did not clea
 
 Commit `cdb56ba1` prevents Mega damage from extending an existing survivor knockdown and rejects a Mega grab against an already downed survivor. Focused infected AI tests, typecheck and lint pass; full threat and unit checks need repeating on this change. Skilled wave timing remains open.
 
+Post-guard full threat shards `test-results/s187c-current-A` and `test-results/s187c-current-B` completed and merged with 0 top-level flags and L10 skilled complete. The L10 skilled wave flag persists in the level receipt; L8 also retains three skilled diagnostic flags. The remote `npm test` reached its 240-second limit twice, including one unchanged retry; neither run completed. The post-guard unit gate remains open.
+
 ## s187b follow-up — coarse pursuit stall
 
 Full merged-source threat audit on `04d63139`: **0 flags**, all ten skilled routes complete, including L10. `npm run qa:threat:sharded` completed both remote shards and merged their receipts (392.0 s maximum shard time). Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 27 files, 105 passed, 1 skipped, 195.7 s.
