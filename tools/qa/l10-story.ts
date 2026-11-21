@@ -199,7 +199,7 @@ for (const tier of tiers) {
   const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [], overpassProbeState: unknown[] = [];
   let finalState: unknown;
   let lastRegion = '', firstMegaSeen: number | null = null, fullArsenal = false;
-  const routeBudget = Number(process.env.L10_STORY_TICKS ?? 1500);
+  const routeBudget = Number(process.env.L10_STORY_TICKS ?? 1800);
   const run = await runLevel('L10', 'complete', 1, finaleOnly ? 360 : routeBudget, 'auto', undefined, undefined, 0, {
     quality: tier,
     beforeBegin: world => {

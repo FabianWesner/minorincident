@@ -333,9 +333,9 @@ export class LevelTenEncounters {
           // foot, or the authored encounter opens it after its full cohort is
           // admitted and cleared.
           gateId = w.interactables!.spawn('gate', { x: group.at[0], z: 95 }, {
-            halfX: .2, halfZ: 10, radius: 2, label: 'Open roadblock',
+            halfX: .2, halfZ: 40, radius: 2, label: 'Open roadblock',
           });
-          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ: 10 });
+          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ: 40 });
           gates[group.id] = gateId;
         }
         const gate = gateId === undefined ? undefined : w.entities.get(gateId);
