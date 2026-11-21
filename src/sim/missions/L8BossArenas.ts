@@ -367,6 +367,13 @@ export class L8BossArenas {
       const sprint = arena.phase === 2 ? 8 : 6.72;
       if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank || arena.phase === 2 ? sprint : 3.2); return true; }
       if (distance(e.transform, p.transform) > 9) { hunt.until = w.tick; this.walk(e, p.transform, sprint); return true; }
+      const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, gap = Math.hypot(dx, dz) || 1;
+      const run = Math.max(0, gap - infectedContactDistance(e.combat!.radius) - (animalSpine[e.archetype ?? ''] ?? 0));
+      // Cover is useful while stalking, but a leap cannot pass through a jersey
+      // barrier. Navigate around it before committing the visible windup.
+      if (w.solids.sweep(e, { x: dx / gap, z: dz / gap }, run, e.combat!.radius, false, false) + .05 < run) {
+        this.walk(e, p.transform, sprint); return true;
+      }
       delete boss.hunt; this.start(e, hunt.flank ? 'lion.flank' : 'lion.pounce', 36, 8, 1); return true;
     }
     if (arena.id === 'gorilla' && boss.barrage && !boss.scavengeId) this.scavenge(e);
