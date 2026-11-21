@@ -23,6 +23,12 @@ const platformSolids: Aabb[] = [
   { min: [-4.05, 3.08, -2.05], max: [4.05, 4.1, -1.95] }, { min: [-4.05, 3.08, 1.95], max: [4.05, 4.1, 2.05] }, { min: [-4.05, 3.08, -2.05], max: [-3.95, 4.1, 2.05] },
 ];
 const dispersalPlatform = { boxes: platformSolids.concat(platformDeck, platformTreads), walkable: new Set<Aabb>([platformDeck, ...platformTreads]) };
+// Northgate is an enterable stairway with a separately animated exit gate.
+// Retain its two baked side walls while leaving the stairs and gate passage open.
+const metroExitWalls = { boxes: [
+  { min: [-3.4, .2001, -2.88], max: [2.6493, 1.65, -2.52] },
+  { min: [-3.4, .2001, 2.52], max: [2.6493, 1.65, 2.88] },
+] as Aabb[] };
 export function placementColliders(placements: Placement[], fallback: StaticCollider[]): StaticCollider[] {
   const sources = staticCollision;
   const placementIds = new Set(placements.map(p => p.id));
@@ -38,7 +44,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     // Render-only decor has no collider; `decorSolid` decor (L10 crossing scenes) blocks the courier as a physics static only.
     if (p.decor && !p.decorSolid && !p.l10Solid) return [];
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
-    const shape = platform ? dispersalPlatform : p.l10Solid ? sources[p.collisionId ?? ''] ?? sources[p.assetId] : sources[p.collisionId ?? p.assetId];
+    const shape = platform ? dispersalPlatform : p.assetId === 'int.metro-exit' && p.maxTier < 6 ? metroExitWalls : p.l10Solid ? sources[p.collisionId ?? ''] ?? sources[p.assetId] : sources[p.collisionId ?? p.assetId];
     if (!shape && p.l10Solid) {
       const d = worldAssets[p.assetId]?.dimensions;
       if (d) {
