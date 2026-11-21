@@ -1,7 +1,7 @@
 {
-  "revision": "0aab3bb81a0695af45d9602d3b7e12511c35f8a8",
-  "sourceHash": "e566cf84d76fdf4b4ef51bd2e9ab732a571859c607e084b5a0a2a1d820e3ed0a",
-  "command": "node --import tsx/esm tools/qa/l10-story.ts",
+  "revision": "19f5ed9d2c84ee5ea874398e328faeb28bbd5099",
+  "sourceHash": "83ec3c8e1103fdcb561b5e3f8705a69fdd26f7f444983bff86b5cfedfe734f48",
+  "command": "L10_STORY_TIERS=low and high separately, node --import tsx/esm tools/qa/l10-story.ts",
   "checks": [
     {
       "tier": "low",

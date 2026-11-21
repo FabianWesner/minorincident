@@ -1,7 +1,7 @@
 {
-  "sourceHash": "e566cf84d76fdf4b4ef51bd2e9ab732a571859c607e084b5a0a2a1d820e3ed0a",
+  "sourceHash": "83ec3c8e1103fdcb561b5e3f8705a69fdd26f7f444983bff86b5cfedfe734f48",
   "observerHash": "fb8e89ef695d6f74bc3a7f1d2bc11a376100e465715dbb0a073359660436f270",
-  "revision": "0aab3bb81a0695af45d9602d3b7e12511c35f8a8",
+  "revision": "19f5ed9d2c84ee5ea874398e328faeb28bbd5099",
   "checks": [
     {
       "tier": "low",
@@ -1858,8 +1858,8 @@
       "observed": {
         "outcome": "complete",
         "blocker": null,
-        "time": 1681.2333333333333,
-        "deaths": 13
+        "time": 1529.0166666666667,
+        "deaths": 9
       }
     },
     {
@@ -2067,64 +2067,6 @@
             "stage": "cancelled",
             "sourceId": 115,
             "playerX": 3990.776611328125
-          },
-          {
-            "tick": 92357,
-            "move": "alpha.grab-throw",
-            "stage": "active",
-            "sourceId": 115,
-            "playerX": 3982.598876953125
-          },
-          {
-            "tick": 92357,
-            "move": "alpha.grab-throw",
-            "stage": "prop-thrown",
-            "sourceId": 115,
-            "playerX": 3982.598876953125,
-            "propId": -1
-          },
-          {
-            "tick": 92389,
-            "move": "alpha.grab-throw",
-            "stage": "recovery",
-            "sourceId": 115,
-            "playerX": 3982.657470703125
-          },
-          {
-            "tick": 92461,
-            "move": "alpha.grab-throw",
-            "stage": "expiry",
-            "sourceId": 115,
-            "playerX": 3984.060791015625
-          },
-          {
-            "tick": 96381,
-            "move": "alpha.grab-throw",
-            "stage": "active",
-            "sourceId": 115,
-            "playerX": 3977.27099609375
-          },
-          {
-            "tick": 96381,
-            "move": "alpha.grab-throw",
-            "stage": "prop-thrown",
-            "sourceId": 115,
-            "playerX": 3977.27099609375,
-            "propId": -1
-          },
-          {
-            "tick": 96428,
-            "move": "alpha.grab-throw",
-            "stage": "recovery",
-            "sourceId": 115,
-            "playerX": 3977.3154296875
-          },
-          {
-            "tick": 96500,
-            "move": "alpha.grab-throw",
-            "stage": "expiry",
-            "sourceId": 115,
-            "playerX": 3977.82958984375
           }
         ]
       }
@@ -2194,41 +2136,6 @@
           "tick": 86217,
           "region": "8",
           "distance": 13.039992673025491
-        },
-        {
-          "tick": 86316,
-          "region": "7",
-          "distance": 12.973218089681648
-        },
-        {
-          "tick": 86320,
-          "region": "8",
-          "distance": 12.99357644587947
-        },
-        {
-          "tick": 88493,
-          "region": "7",
-          "distance": 23.451950452277043
-        },
-        {
-          "tick": 89282,
-          "region": "8",
-          "distance": 10.038703883792836
-        },
-        {
-          "tick": 90430,
-          "region": "7",
-          "distance": 8.465322869902842
-        },
-        {
-          "tick": 93078,
-          "region": "8",
-          "distance": 10.085422170188552
-        },
-        {
-          "tick": 96101,
-          "region": "7",
-          "distance": 24.744178296223303
         }
       ]
     },
@@ -2244,24 +2151,20 @@
           669,
           670,
           679,
-          705,
-          725,
-          733,
-          739,
-          756,
-          779,
-          688,
           686,
           689,
           692,
-          728,
-          672,
-          685,
+          698,
+          705,
           708,
           711,
-          718
+          718,
+          733,
+          739,
+          756,
+          792
         ],
-        "seen": 563
+        "seen": 534
       }
     },
     {
@@ -2283,7 +2186,7 @@
       "name": "no close-range ground rocket exploit",
       "pass": true,
       "observed": {
-        "shortestTarget": 18.32048442981652,
+        "shortestTarget": 18.84000970092439,
         "closeRocketBlasts": 0
       }
     },
@@ -17681,12 +17584,12 @@
         "policy": "complete",
         "seed": 1,
         "completed": true,
-        "time": 1681.2333333333333,
-        "deaths": 13,
+        "time": 1529.0166666666667,
+        "deaths": 9,
         "kills": 2,
-        "damageTaken": 1931.4200000000137,
+        "damageTaken": 1507.6033333333519,
         "failures": {
-          "player-died": 13
+          "player-died": 9
         },
         "objectiveTimeline": [
           {
@@ -17738,40 +17641,20 @@
             "t": 1434.4833333333333
           },
           {
-            "id": "hold",
-            "t": 1451.7166666666667
-          },
-          {
-            "id": "hold",
-            "t": 1514.3
-          },
-          {
-            "id": "hold",
-            "t": 1563.1666666666667
-          },
-          {
             "id": "mega",
-            "t": 1609.7333333333333
-          },
-          {
-            "id": "hold",
-            "t": 1612.3666666666666
-          },
-          {
-            "id": "mega",
-            "t": 1612.3833333333334
+            "t": 1462.4166666666667
           },
           {
             "id": "release",
-            "t": 1616.2333333333333
+            "t": 1464.0166666666667
           },
           {
             "id": "epilogue",
-            "t": 1681.2333333333333
+            "t": 1529.0166666666667
           },
           {
             "id": "credits",
-            "t": 1782.2333333333333
+            "t": 1630.0166666666667
           }
         ],
         "furthestObjective": "credits",
@@ -17848,21 +17731,21 @@
           },
           {
             "id": "dispersal-complex",
-            "seconds": 381.149999999982,
-            "travelSeconds": 47.383333333331926,
-            "combatSeconds": 21.050000000000086,
+            "seconds": 228.93333333340766,
+            "travelSeconds": 47.36666666666526,
+            "combatSeconds": 18.166666666666917,
             "interactionSeconds": 0.016666666666666666,
-            "holdSeconds": 245.71666666675435,
+            "holdSeconds": 98.38333333332903,
             "epilogueSeconds": 64.9999999999976,
-            "otherSeconds": 1.9833333333333312,
-            "metres": 1657.7941384364099
+            "otherSeconds": 0,
+            "metres": 1140.9312203609647
           }
         ],
         "maxConcurrentInfected": 70,
         "collision": {
           "failures": 0,
           "pending": 0,
-          "admitted": 1200,
+          "admitted": 1041,
           "deferred": 0,
           "requests": [],
           "offenders": []
@@ -19141,7 +19024,7 @@
         }
       ],
       "minigunKills": 17,
-      "shortestRocket": 18.32048442981652,
+      "shortestRocket": 18.84000970092439,
       "closeRocketBlasts": 0,
       "mannedDamage": 0,
       "sightings": [
@@ -19199,41 +19082,6 @@
           "tick": 86217,
           "region": "8",
           "distance": 13.039992673025491
-        },
-        {
-          "tick": 86316,
-          "region": "7",
-          "distance": 12.973218089681648
-        },
-        {
-          "tick": 86320,
-          "region": "8",
-          "distance": 12.99357644587947
-        },
-        {
-          "tick": 88493,
-          "region": "7",
-          "distance": 23.451950452277043
-        },
-        {
-          "tick": 89282,
-          "region": "8",
-          "distance": 10.038703883792836
-        },
-        {
-          "tick": 90430,
-          "region": "7",
-          "distance": 8.465322869902842
-        },
-        {
-          "tick": 93078,
-          "region": "8",
-          "distance": 10.085422170188552
-        },
-        {
-          "tick": 96101,
-          "region": "7",
-          "distance": 24.744178296223303
         }
       ],
       "firstMegaSeen": 318.68333333333334,
@@ -19244,22 +19092,18 @@
         669,
         670,
         679,
-        705,
-        725,
-        733,
-        739,
-        756,
-        779,
-        688,
         686,
         689,
         692,
-        728,
-        672,
-        685,
+        698,
+        705,
         708,
         711,
-        718
+        718,
+        733,
+        739,
+        756,
+        792
       ],
       "finalePacing": {
         "hangarToGateSeconds": 293.3666666666667,
@@ -23086,64 +22930,6 @@
           "stage": "cancelled",
           "sourceId": 115,
           "playerX": 3990.776611328125
-        },
-        {
-          "tick": 92357,
-          "move": "alpha.grab-throw",
-          "stage": "active",
-          "sourceId": 115,
-          "playerX": 3982.598876953125
-        },
-        {
-          "tick": 92357,
-          "move": "alpha.grab-throw",
-          "stage": "prop-thrown",
-          "sourceId": 115,
-          "playerX": 3982.598876953125,
-          "propId": -1
-        },
-        {
-          "tick": 92389,
-          "move": "alpha.grab-throw",
-          "stage": "recovery",
-          "sourceId": 115,
-          "playerX": 3982.657470703125
-        },
-        {
-          "tick": 92461,
-          "move": "alpha.grab-throw",
-          "stage": "expiry",
-          "sourceId": 115,
-          "playerX": 3984.060791015625
-        },
-        {
-          "tick": 96381,
-          "move": "alpha.grab-throw",
-          "stage": "active",
-          "sourceId": 115,
-          "playerX": 3977.27099609375
-        },
-        {
-          "tick": 96381,
-          "move": "alpha.grab-throw",
-          "stage": "prop-thrown",
-          "sourceId": 115,
-          "playerX": 3977.27099609375,
-          "propId": -1
-        },
-        {
-          "tick": 96428,
-          "move": "alpha.grab-throw",
-          "stage": "recovery",
-          "sourceId": 115,
-          "playerX": 3977.3154296875
-        },
-        {
-          "tick": 96500,
-          "move": "alpha.grab-throw",
-          "stage": "expiry",
-          "sourceId": 115,
-          "playerX": 3977.82958984375
         }
       ],
       "trace": [
@@ -27228,11 +27014,11 @@
             }
           ],
           "player": {
-            "x": 4001.33251953125,
+            "x": 4007.84228515625,
             "y": 0.7099999785423279,
-            "z": -32.594886779785156,
-            "yaw": 2.7014495083380092,
-            "hp": 60
+            "z": -36.6895751953125,
+            "yaw": 0.4377050757336561,
+            "hp": 80
           },
           "bike": {
             "x": 2993.7953750240695,
@@ -27258,8 +27044,8 @@
             "hp": 832.200000000006,
             "maxHp": 3000,
             "target": {
-              "x": 4000.7890625,
-              "z": -32.84896469116211
+              "x": 4007.900634765625,
+              "z": -36.329341888427734
             },
             "route": [
               "cure-route-48",
@@ -27267,8 +27053,7 @@
               "cure-route-50",
               "cure-route-51",
               "cure-route-52",
-              "cure-route-53",
-              "cure-route-54"
+              "cure-route-53"
             ],
             "routeAt": 86393,
             "passed": "cure-route-47",
@@ -27304,745 +27089,6 @@
         },
         {
           "seconds": 1470,
-          "step": "mega",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4003.04296875,
-            "y": 0.7099999785423279,
-            "z": -12.8219575881958,
-            "yaw": 0.7324492985970441,
-            "hp": 72.2769999999991
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 88200,
-            "id": 115,
-            "mode": "recover",
-            "introducedAt": 29648,
-            "introduceTick": 29648,
-            "x": 3941.062398702089,
-            "z": -26.06058496365165,
-            "hp": 1048.200000000006,
-            "maxHp": 3000,
-            "target": {
-              "x": 4003.117919921875,
-              "z": -12.819077491760254
-            },
-            "route": [
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52"
-            ],
-            "routeAt": 88200,
-            "passed": "cure-route-48",
-            "blocked": {
-              "cure-route-49|cure-route-50": 89220
-            },
-            "breach": null,
-            "stuck": {
-              "level": 3,
-              "since": 88140,
-              "sampleAt": 88140,
-              "x": 3940.0820708413453,
-              "z": -26.057309311954906,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 87103,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 88915,
-              "step": 88209,
-              "index": 37,
-              "last": {
-                "x": 3941.062398702089,
-                "z": -26.06058496365165
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1500,
-          "step": "mega",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4003.75830078125,
-            "y": 0.7099999785423279,
-            "z": -31.95611572265625,
-            "yaw": -1.352305252952227,
-            "hp": 14.685666666663824
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 90000,
-            "id": 115,
-            "mode": "detailed",
-            "introducedAt": 29648,
-            "introduceTick": 29648,
-            "x": 3998.1999877482735,
-            "z": -25.250000513821508,
-            "hp": 538.200000000006,
-            "maxHp": 3000,
-            "target": {
-              "x": 4003.822998046875,
-              "z": -31.993844985961914
-            },
-            "route": [
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53"
-            ],
-            "routeAt": 90000,
-            "passed": "cure-route-50",
-            "blocked": {},
-            "breach": null,
-            "stuck": {
-              "level": 0,
-              "since": 88140,
-              "sampleAt": 88777,
-              "x": 3979.8520271207735,
-              "z": -25.328794127080844,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 88727,
-              "amount": 210,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 90266,
-              "step": 90033,
-              "index": 38,
-              "last": {
-                "x": 3998.1999877482735,
-                "z": -25.250000513821508
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1530,
-          "step": "mega",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4009.27685546875,
-            "y": 0.7099999785423279,
-            "z": -16.684419631958008,
-            "yaw": 1.7402787941043827,
-            "hp": 70.15399999999994
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 91800,
-            "id": 115,
-            "mode": "breach",
-            "introducedAt": 33403,
-            "introduceTick": 33403,
-            "x": 3940.080878784054,
-            "z": -26.18048073456273,
-            "hp": 1048.200000000006,
-            "maxHp": 3000,
-            "target": {
-              "x": 4010.761962890625,
-              "z": -17.944883346557617
-            },
-            "route": [
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52"
-            ],
-            "routeAt": 91775,
-            "passed": "cure-route-48",
-            "blocked": {
-              "cure-route-48|cure-route-49": 91895,
-              "cure-route-49|cure-route-50": 92975
-            },
-            "breach": null,
-            "stuck": {
-              "level": 2,
-              "since": 91775,
-              "sampleAt": 91775,
-              "x": 3940.080878784054,
-              "z": -26.18048073456273,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 90858,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 92670,
-              "step": 91820,
-              "index": 37,
-              "last": {
-                "x": 3940.080878784054,
-                "z": -26.18048073456273
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1560,
-          "step": "mega",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4007.892333984375,
-            "y": 0.7099999785423279,
-            "z": -36.22939682006836,
-            "yaw": 1.537617638625428,
-            "hp": 12.298999999997463
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 93600,
-            "id": 115,
-            "mode": "detailed",
-            "introducedAt": 33403,
-            "introduceTick": 33403,
-            "x": 3998.199961796875,
-            "z": -25.2502977187855,
-            "hp": 568.200000000006,
-            "maxHp": 3000,
-            "target": {
-              "x": 4007.89599609375,
-              "z": -37.672977447509766
-            },
-            "route": [
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53"
-            ],
-            "routeAt": 93575,
-            "passed": "cure-route-48",
-            "blocked": {},
-            "breach": null,
-            "stuck": {
-              "level": 0,
-              "since": 91895,
-              "sampleAt": 92748,
-              "x": 3989.148203940284,
-              "z": -25.134477281219134,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 92719,
-              "amount": 240,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 94021,
-              "step": 93644,
-              "index": 38,
-              "last": {
-                "x": 3998.199961796875,
-                "z": -25.2502977187855
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1590,
-          "step": "mega",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 3998.782958984375,
-            "y": 0.7099999785423279,
-            "z": -21.432382583618164,
-            "yaw": 2.989832926029931,
-            "hp": 58.20733333333469
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 95400,
-            "id": 115,
-            "mode": "breach",
-            "introducedAt": 36335,
-            "introduceTick": 36335,
-            "x": 3954.948185726656,
-            "z": -24.564336662964752,
-            "hp": 1048.200000000006,
-            "maxHp": 3000,
-            "target": {
-              "x": 3998.63232421875,
-              "z": -21.299407958984375
-            },
-            "route": [
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52"
-            ],
-            "routeAt": 95397,
-            "passed": "cure-route-49",
-            "blocked": {
-              "cure-route-49|cure-route-50": 95907
-            },
-            "breach": null,
-            "stuck": {
-              "level": 1,
-              "since": 95307,
-              "sampleAt": 95307,
-              "x": 3954.948185726656,
-              "z": -24.564336662964752,
-              "noPath": 0,
-              "goal": {
-                "x": 3956.25,
-                "z": -23.75
-              }
-            },
-            "lastDamage": {
-              "tick": 93790,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 95602,
-              "step": 95424,
-              "index": 37,
-              "last": {
-                "x": 3954.948185726656,
-                "z": -24.564336662964752
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1620,
           "step": "epilogue",
           "checkpoint": "cure-disperse-ready",
           "roadblocks": [
@@ -28118,11 +27164,716 @@
             }
           ],
           "player": {
-            "x": 3990.69091796875,
+            "x": 3990.70556640625,
             "y": 0.7049999833106995,
-            "z": -27.16354751586914,
-            "yaw": 3.3740271758654763,
-            "hp": 91.74233333333316
+            "z": -26.833646774291992,
+            "yaw": -3.3731902107295997,
+            "hp": 75.61333333332809
+          },
+          "bike": {
+            "x": 2993.7953750240695,
+            "y": 0,
+            "z": 67.92918878037979,
+            "yaw": -1.2868182992920736,
+            "mounted": false
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 88200,
+            "id": 115,
+            "mode": "dead",
+            "introducedAt": 28381,
+            "introduceTick": 28381,
+            "x": 3986.8381164333728,
+            "z": -30.90093933188832,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 4001.753173828125,
+              "z": -20.69692611694336
+            },
+            "route": [],
+            "routeAt": 87743,
+            "passed": "cure-route-47",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 85673,
+              "sampleAt": 87726,
+              "x": 3986.8381164333728,
+              "z": -30.90093933188832,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 87744,
+              "amount": 232.20000000000596,
+              "sourceId": 1
+            },
+            "coarseM": 597.514046265318,
+            "audio": {
+              "next": 88999,
+              "step": 87758,
+              "index": 38,
+              "last": {
+                "x": 3986.8381164333728,
+                "z": -30.90093933188832
+              }
+            }
+          }
+        },
+        {
+          "seconds": 1500,
+          "step": "epilogue",
+          "checkpoint": "cure-disperse-ready",
+          "roadblocks": [
+            {
+              "group": "setpiece-quarantine-gate",
+              "id": 453,
+              "open": true,
+              "position": {
+                "x": 3010,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-burning-convoy",
+              "id": 513,
+              "open": true,
+              "position": {
+                "x": 3260,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-dark-underpass",
+              "id": 536,
+              "open": false,
+              "position": {
+                "x": 3390,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-field-hospital",
+              "id": 560,
+              "open": true,
+              "position": {
+                "x": 3502,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            }
+          ],
+          "hospital": [
+            {
+              "key": "setpiece-field-hospital:stage:0:0",
+              "id": 537
+            },
+            {
+              "key": "setpiece-field-hospital:stage:1:0",
+              "id": 538
+            },
+            {
+              "key": "setpiece-field-hospital:infected.nurse:0:0",
+              "id": 583
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:0:0",
+              "id": 585
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:1:0",
+              "id": 586
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:2:0",
+              "id": 587
+            }
+          ],
+          "player": {
+            "x": 3999.42236328125,
+            "y": 0.7049999833106995,
+            "z": -24.912485122680664,
+            "yaw": -0.011340332662458073,
+            "hp": 100
+          },
+          "bike": {
+            "x": 2993.7953750240695,
+            "y": 0,
+            "z": 67.92918878037979,
+            "yaw": -1.2868182992920736,
+            "mounted": false
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 90000,
+            "id": 115,
+            "mode": "dead",
+            "introducedAt": 28381,
+            "introduceTick": 28381,
+            "x": 3986.8381164333728,
+            "z": -30.90093933188832,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 4001.753173828125,
+              "z": -20.69692611694336
+            },
+            "route": [],
+            "routeAt": 87743,
+            "passed": "cure-route-47",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 85673,
+              "sampleAt": 87726,
+              "x": 3986.8381164333728,
+              "z": -30.90093933188832,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 87744,
+              "amount": 232.20000000000596,
+              "sourceId": 1
+            },
+            "coarseM": 597.514046265318,
+            "audio": {
+              "next": 88999,
+              "step": 87758,
+              "index": 38,
+              "last": {
+                "x": 3986.8381164333728,
+                "z": -30.90093933188832
+              }
+            }
+          }
+        },
+        {
+          "seconds": 1530,
+          "step": "credits",
+          "checkpoint": "cure-disperse-ready",
+          "roadblocks": [
+            {
+              "group": "setpiece-quarantine-gate",
+              "id": 453,
+              "open": true,
+              "position": {
+                "x": 3010,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-burning-convoy",
+              "id": 513,
+              "open": true,
+              "position": {
+                "x": 3260,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-dark-underpass",
+              "id": 536,
+              "open": false,
+              "position": {
+                "x": 3390,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-field-hospital",
+              "id": 560,
+              "open": true,
+              "position": {
+                "x": 3502,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            }
+          ],
+          "hospital": [
+            {
+              "key": "setpiece-field-hospital:stage:0:0",
+              "id": 537
+            },
+            {
+              "key": "setpiece-field-hospital:stage:1:0",
+              "id": 538
+            },
+            {
+              "key": "setpiece-field-hospital:infected.nurse:0:0",
+              "id": 583
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:0:0",
+              "id": 585
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:1:0",
+              "id": 586
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:2:0",
+              "id": 587
+            }
+          ],
+          "player": {
+            "x": 3999.42236328125,
+            "y": 0.7049999833106995,
+            "z": -24.912485122680664,
+            "yaw": -0.011340332662458073,
+            "hp": 100
+          },
+          "bike": {
+            "x": 2993.7953750240695,
+            "y": 0,
+            "z": 67.92918878037979,
+            "yaw": -1.2868182992920736,
+            "mounted": false
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 91800,
+            "id": 115,
+            "mode": "dead",
+            "introducedAt": 28381,
+            "introduceTick": 28381,
+            "x": 3986.8381164333728,
+            "z": -30.90093933188832,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 4001.753173828125,
+              "z": -20.69692611694336
+            },
+            "route": [],
+            "routeAt": 87743,
+            "passed": "cure-route-47",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 85673,
+              "sampleAt": 87726,
+              "x": 3986.8381164333728,
+              "z": -30.90093933188832,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 87744,
+              "amount": 232.20000000000596,
+              "sourceId": 1
+            },
+            "coarseM": 597.514046265318,
+            "audio": {
+              "next": 88999,
+              "step": 87758,
+              "index": 38,
+              "last": {
+                "x": 3986.8381164333728,
+                "z": -30.90093933188832
+              }
+            }
+          }
+        },
+        {
+          "seconds": 1560,
+          "step": "credits",
+          "checkpoint": "cure-disperse-ready",
+          "roadblocks": [
+            {
+              "group": "setpiece-quarantine-gate",
+              "id": 453,
+              "open": true,
+              "position": {
+                "x": 3010,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-burning-convoy",
+              "id": 513,
+              "open": true,
+              "position": {
+                "x": 3260,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-dark-underpass",
+              "id": 536,
+              "open": false,
+              "position": {
+                "x": 3390,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-field-hospital",
+              "id": 560,
+              "open": true,
+              "position": {
+                "x": 3502,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            }
+          ],
+          "hospital": [
+            {
+              "key": "setpiece-field-hospital:stage:0:0",
+              "id": 537
+            },
+            {
+              "key": "setpiece-field-hospital:stage:1:0",
+              "id": 538
+            },
+            {
+              "key": "setpiece-field-hospital:infected.nurse:0:0",
+              "id": 583
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:0:0",
+              "id": 585
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:1:0",
+              "id": 586
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:2:0",
+              "id": 587
+            }
+          ],
+          "player": {
+            "x": 3999.42236328125,
+            "y": 0.7049999833106995,
+            "z": -24.912485122680664,
+            "yaw": -0.011340332662458073,
+            "hp": 100
+          },
+          "bike": {
+            "x": 2993.7953750240695,
+            "y": 0,
+            "z": 67.92918878037979,
+            "yaw": -1.2868182992920736,
+            "mounted": false
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 93600,
+            "id": 115,
+            "mode": "dead",
+            "introducedAt": 28381,
+            "introduceTick": 28381,
+            "x": 3986.8381164333728,
+            "z": -30.90093933188832,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 4001.753173828125,
+              "z": -20.69692611694336
+            },
+            "route": [],
+            "routeAt": 87743,
+            "passed": "cure-route-47",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 85673,
+              "sampleAt": 87726,
+              "x": 3986.8381164333728,
+              "z": -30.90093933188832,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 87744,
+              "amount": 232.20000000000596,
+              "sourceId": 1
+            },
+            "coarseM": 597.514046265318,
+            "audio": {
+              "next": 88999,
+              "step": 87758,
+              "index": 38,
+              "last": {
+                "x": 3986.8381164333728,
+                "z": -30.90093933188832
+              }
+            }
+          }
+        },
+        {
+          "seconds": 1590,
+          "step": "credits",
+          "checkpoint": "cure-disperse-ready",
+          "roadblocks": [
+            {
+              "group": "setpiece-quarantine-gate",
+              "id": 453,
+              "open": true,
+              "position": {
+                "x": 3010,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-burning-convoy",
+              "id": 513,
+              "open": true,
+              "position": {
+                "x": 3260,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-dark-underpass",
+              "id": 536,
+              "open": false,
+              "position": {
+                "x": 3390,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-field-hospital",
+              "id": 560,
+              "open": true,
+              "position": {
+                "x": 3502,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            }
+          ],
+          "hospital": [
+            {
+              "key": "setpiece-field-hospital:stage:0:0",
+              "id": 537
+            },
+            {
+              "key": "setpiece-field-hospital:stage:1:0",
+              "id": 538
+            },
+            {
+              "key": "setpiece-field-hospital:infected.nurse:0:0",
+              "id": 583
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:0:0",
+              "id": 585
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:1:0",
+              "id": 586
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:2:0",
+              "id": 587
+            }
+          ],
+          "player": {
+            "x": 3999.42236328125,
+            "y": 0.7049999833106995,
+            "z": -24.912485122680664,
+            "yaw": -0.011340332662458073,
+            "hp": 100
+          },
+          "bike": {
+            "x": 2993.7953750240695,
+            "y": 0,
+            "z": 67.92918878037979,
+            "yaw": -1.2868182992920736,
+            "mounted": false
+          },
+          "charge": 3600,
+          "gun": {
+            "heat": 0,
+            "locked": false,
+            "mounted": false
+          },
+          "mega": {
+            "tick": 95400,
+            "id": 115,
+            "mode": "dead",
+            "introducedAt": 28381,
+            "introduceTick": 28381,
+            "x": 3986.8381164333728,
+            "z": -30.90093933188832,
+            "hp": 0,
+            "maxHp": 3000,
+            "target": {
+              "x": 4001.753173828125,
+              "z": -20.69692611694336
+            },
+            "route": [],
+            "routeAt": 87743,
+            "passed": "cure-route-47",
+            "blocked": {},
+            "breach": null,
+            "stuck": {
+              "level": 2,
+              "since": 85673,
+              "sampleAt": 87726,
+              "x": 3986.8381164333728,
+              "z": -30.90093933188832,
+              "noPath": 0,
+              "goal": null
+            },
+            "lastDamage": {
+              "tick": 87744,
+              "amount": 232.20000000000596,
+              "sourceId": 1
+            },
+            "coarseM": 597.514046265318,
+            "audio": {
+              "next": 88999,
+              "step": 87758,
+              "index": 38,
+              "last": {
+                "x": 3986.8381164333728,
+                "z": -30.90093933188832
+              }
+            }
+          }
+        },
+        {
+          "seconds": 1620,
+          "step": "credits",
+          "checkpoint": "cure-disperse-ready",
+          "roadblocks": [
+            {
+              "group": "setpiece-quarantine-gate",
+              "id": 453,
+              "open": true,
+              "position": {
+                "x": 3010,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-burning-convoy",
+              "id": 513,
+              "open": true,
+              "position": {
+                "x": 3260,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-dark-underpass",
+              "id": 536,
+              "open": false,
+              "position": {
+                "x": 3390,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "group": "setpiece-field-hospital",
+              "id": 560,
+              "open": true,
+              "position": {
+                "x": 3502,
+                "z": 95,
+                "y": 0.7,
+                "yaw": 0
+              }
+            }
+          ],
+          "hospital": [
+            {
+              "key": "setpiece-field-hospital:stage:0:0",
+              "id": 537
+            },
+            {
+              "key": "setpiece-field-hospital:stage:1:0",
+              "id": 538
+            },
+            {
+              "key": "setpiece-field-hospital:infected.nurse:0:0",
+              "id": 583
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:0:0",
+              "id": 585
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:1:0",
+              "id": 586
+            },
+            {
+              "key": "setpiece-field-hospital:infected.runner:2:0",
+              "id": 587
+            }
+          ],
+          "player": {
+            "x": 3999.42236328125,
+            "y": 0.7049999833106995,
+            "z": -24.912485122680664,
+            "yaw": -0.011340332662458073,
+            "hp": 100
           },
           "bike": {
             "x": 2993.7953750240695,
@@ -28141,808 +27892,43 @@
             "tick": 97200,
             "id": 115,
             "mode": "dead",
-            "introducedAt": 39287,
-            "introduceTick": 39287,
-            "x": 3981.4213348776666,
-            "z": -30.910187443181282,
+            "introducedAt": 28381,
+            "introduceTick": 28381,
+            "x": 3986.8381164333728,
+            "z": -30.90093933188832,
             "hp": 0,
             "maxHp": 3000,
             "target": {
-              "x": 3990.757836287431,
-              "z": -33.18461896287382
+              "x": 4001.753173828125,
+              "z": -20.69692611694336
             },
-            "route": [
-              "cure-route-48",
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53",
-              "cure-route-54"
-            ],
-            "routeAt": null,
+            "route": [],
+            "routeAt": 87743,
             "passed": "cure-route-47",
-            "blocked": {
-              "cure-route-48|cure-route-49": 97779
-            },
+            "blocked": {},
             "breach": null,
             "stuck": {
-              "level": 0,
-              "since": -1,
-              "sampleAt": 96742,
-              "x": 3981.4213348776666,
-              "z": -30.910187443181282,
+              "level": 2,
+              "since": 85673,
+              "sampleAt": 87726,
+              "x": 3986.8381164333728,
+              "z": -30.90093933188832,
               "noPath": 0,
               "goal": null
             },
             "lastDamage": {
-              "tick": 96742,
-              "amount": 6.3,
+              "tick": 87744,
+              "amount": 232.20000000000596,
               "sourceId": 1
             },
             "coarseM": 597.514046265318,
             "audio": {
-              "next": 98554,
-              "step": 96744,
-              "index": 37,
+              "next": 88999,
+              "step": 87758,
+              "index": 38,
               "last": {
-                "x": 3981.4213348776666,
-                "z": -30.910187443181282
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1650,
-          "step": "epilogue",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4009.2744140625,
-            "y": 0.7049999833106995,
-            "z": -27.769004821777344,
-            "yaw": -0.16131506620359073,
-            "hp": 100
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 99000,
-            "id": 115,
-            "mode": "dead",
-            "introducedAt": 39287,
-            "introduceTick": 39287,
-            "x": 3981.4213348776666,
-            "z": -30.910187443181282,
-            "hp": 0,
-            "maxHp": 3000,
-            "target": {
-              "x": 3990.757836287431,
-              "z": -33.18461896287382
-            },
-            "route": [
-              "cure-route-48",
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53",
-              "cure-route-54"
-            ],
-            "routeAt": null,
-            "passed": "cure-route-47",
-            "blocked": {
-              "cure-route-48|cure-route-49": 97779
-            },
-            "breach": null,
-            "stuck": {
-              "level": 0,
-              "since": -1,
-              "sampleAt": 96742,
-              "x": 3981.4213348776666,
-              "z": -30.910187443181282,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 96742,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 98554,
-              "step": 96744,
-              "index": 37,
-              "last": {
-                "x": 3981.4213348776666,
-                "z": -30.910187443181282
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1680,
-          "step": "epilogue",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4009.2744140625,
-            "y": 0.7049999833106995,
-            "z": -27.769004821777344,
-            "yaw": -0.16131506620359073,
-            "hp": 100
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 100800,
-            "id": 115,
-            "mode": "dead",
-            "introducedAt": 39287,
-            "introduceTick": 39287,
-            "x": 3981.4213348776666,
-            "z": -30.910187443181282,
-            "hp": 0,
-            "maxHp": 3000,
-            "target": {
-              "x": 3990.757836287431,
-              "z": -33.18461896287382
-            },
-            "route": [
-              "cure-route-48",
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53",
-              "cure-route-54"
-            ],
-            "routeAt": null,
-            "passed": "cure-route-47",
-            "blocked": {
-              "cure-route-48|cure-route-49": 97779
-            },
-            "breach": null,
-            "stuck": {
-              "level": 0,
-              "since": -1,
-              "sampleAt": 96742,
-              "x": 3981.4213348776666,
-              "z": -30.910187443181282,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 96742,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 98554,
-              "step": 96744,
-              "index": 37,
-              "last": {
-                "x": 3981.4213348776666,
-                "z": -30.910187443181282
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1710,
-          "step": "credits",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4009.2744140625,
-            "y": 0.7049999833106995,
-            "z": -27.769004821777344,
-            "yaw": -0.16131506620359073,
-            "hp": 100
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 102600,
-            "id": 115,
-            "mode": "dead",
-            "introducedAt": 39287,
-            "introduceTick": 39287,
-            "x": 3981.4213348776666,
-            "z": -30.910187443181282,
-            "hp": 0,
-            "maxHp": 3000,
-            "target": {
-              "x": 3990.757836287431,
-              "z": -33.18461896287382
-            },
-            "route": [
-              "cure-route-48",
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53",
-              "cure-route-54"
-            ],
-            "routeAt": null,
-            "passed": "cure-route-47",
-            "blocked": {
-              "cure-route-48|cure-route-49": 97779
-            },
-            "breach": null,
-            "stuck": {
-              "level": 0,
-              "since": -1,
-              "sampleAt": 96742,
-              "x": 3981.4213348776666,
-              "z": -30.910187443181282,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 96742,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 98554,
-              "step": 96744,
-              "index": 37,
-              "last": {
-                "x": 3981.4213348776666,
-                "z": -30.910187443181282
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1740,
-          "step": "credits",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4009.2744140625,
-            "y": 0.7049999833106995,
-            "z": -27.769004821777344,
-            "yaw": -0.16131506620359073,
-            "hp": 100
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 104400,
-            "id": 115,
-            "mode": "dead",
-            "introducedAt": 39287,
-            "introduceTick": 39287,
-            "x": 3981.4213348776666,
-            "z": -30.910187443181282,
-            "hp": 0,
-            "maxHp": 3000,
-            "target": {
-              "x": 3990.757836287431,
-              "z": -33.18461896287382
-            },
-            "route": [
-              "cure-route-48",
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53",
-              "cure-route-54"
-            ],
-            "routeAt": null,
-            "passed": "cure-route-47",
-            "blocked": {
-              "cure-route-48|cure-route-49": 97779
-            },
-            "breach": null,
-            "stuck": {
-              "level": 0,
-              "since": -1,
-              "sampleAt": 96742,
-              "x": 3981.4213348776666,
-              "z": -30.910187443181282,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 96742,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 98554,
-              "step": 96744,
-              "index": 37,
-              "last": {
-                "x": 3981.4213348776666,
-                "z": -30.910187443181282
-              }
-            }
-          }
-        },
-        {
-          "seconds": 1770,
-          "step": "credits",
-          "checkpoint": "cure-disperse-ready",
-          "roadblocks": [
-            {
-              "group": "setpiece-quarantine-gate",
-              "id": 453,
-              "open": true,
-              "position": {
-                "x": 3010,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-burning-convoy",
-              "id": 513,
-              "open": true,
-              "position": {
-                "x": 3260,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-dark-underpass",
-              "id": 536,
-              "open": false,
-              "position": {
-                "x": 3390,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            },
-            {
-              "group": "setpiece-field-hospital",
-              "id": 560,
-              "open": true,
-              "position": {
-                "x": 3502,
-                "z": 95,
-                "y": 0.7,
-                "yaw": 0
-              }
-            }
-          ],
-          "hospital": [
-            {
-              "key": "setpiece-field-hospital:stage:0:0",
-              "id": 537
-            },
-            {
-              "key": "setpiece-field-hospital:stage:1:0",
-              "id": 538
-            },
-            {
-              "key": "setpiece-field-hospital:infected.nurse:0:0",
-              "id": 583
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:0:0",
-              "id": 585
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:1:0",
-              "id": 586
-            },
-            {
-              "key": "setpiece-field-hospital:infected.runner:2:0",
-              "id": 587
-            }
-          ],
-          "player": {
-            "x": 4009.2744140625,
-            "y": 0.7049999833106995,
-            "z": -27.769004821777344,
-            "yaw": -0.16131506620359073,
-            "hp": 100
-          },
-          "bike": {
-            "x": 2993.7953750240695,
-            "y": 0,
-            "z": 67.92918878037979,
-            "yaw": -1.2868182992920736,
-            "mounted": false
-          },
-          "charge": 3600,
-          "gun": {
-            "heat": 0,
-            "locked": false,
-            "mounted": false
-          },
-          "mega": {
-            "tick": 106200,
-            "id": 115,
-            "mode": "dead",
-            "introducedAt": 39287,
-            "introduceTick": 39287,
-            "x": 3981.4213348776666,
-            "z": -30.910187443181282,
-            "hp": 0,
-            "maxHp": 3000,
-            "target": {
-              "x": 3990.757836287431,
-              "z": -33.18461896287382
-            },
-            "route": [
-              "cure-route-48",
-              "cure-route-49",
-              "cure-route-50",
-              "cure-route-51",
-              "cure-route-52",
-              "cure-route-53",
-              "cure-route-54"
-            ],
-            "routeAt": null,
-            "passed": "cure-route-47",
-            "blocked": {
-              "cure-route-48|cure-route-49": 97779
-            },
-            "breach": null,
-            "stuck": {
-              "level": 0,
-              "since": -1,
-              "sampleAt": 96742,
-              "x": 3981.4213348776666,
-              "z": -30.910187443181282,
-              "noPath": 0,
-              "goal": null
-            },
-            "lastDamage": {
-              "tick": 96742,
-              "amount": 6.3,
-              "sourceId": 1
-            },
-            "coarseM": 597.514046265318,
-            "audio": {
-              "next": 98554,
-              "step": 96744,
-              "index": 37,
-              "last": {
-                "x": 3981.4213348776666,
-                "z": -30.910187443181282
+                "x": 3986.8381164333728,
+                "z": -30.90093933188832
               }
             }
           }
@@ -29785,378 +28771,6 @@
               }
             }
           ]
-        },
-        {
-          "tick": 86983,
-          "hits": [
-            {
-              "tick": 86902,
-              "action": "infected.firefighter",
-              "amount": 0,
-              "sourceId": 861,
-              "sourceArchetype": "infected.firefighter",
-              "sourceAt": {
-                "x": 4001.185434314056,
-                "z": -33.46416879571096
-              }
-            },
-            {
-              "tick": 86902,
-              "action": "infected.firefighter",
-              "amount": 0,
-              "sourceId": 867,
-              "sourceArchetype": "infected.firefighter",
-              "sourceAt": {
-                "x": 4000.130267357881,
-                "z": -31.852536142776778
-              }
-            },
-            {
-              "tick": 86906,
-              "action": "infected.firefighter",
-              "amount": 0,
-              "sourceId": 855,
-              "sourceArchetype": "infected.firefighter",
-              "sourceAt": {
-                "x": 3999.129861981256,
-                "z": -33.11036731134687
-              }
-            },
-            {
-              "tick": 86929,
-              "action": "infected.sprinter",
-              "amount": 10,
-              "sourceId": 864,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3999.9139713466875,
-                "z": -34.05617297354175
-              }
-            },
-            {
-              "tick": 86930,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 871,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3999.2532501268224,
-                "z": -33.582100414220584
-              }
-            },
-            {
-              "tick": 86941,
-              "action": "infected.runner",
-              "amount": 0,
-              "sourceId": 673,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 4000.822750395941,
-                "z": -33.93162933690146
-              }
-            },
-            {
-              "tick": 86942,
-              "action": "infected.runner",
-              "amount": 0,
-              "sourceId": 860,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 3999.4230258899333,
-                "z": -32.21890695607419
-              }
-            },
-            {
-              "tick": 86953,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 873,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 4001.0384537420105,
-                "z": -32.29654873275922
-              }
-            }
-          ]
-        },
-        {
-          "tick": 90738,
-          "hits": [
-            {
-              "tick": 88927,
-              "action": "infected.runner",
-              "amount": 10,
-              "sourceId": 667,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 3991.1019046460287,
-                "z": -34.55748326429249
-              }
-            },
-            {
-              "tick": 88942,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 884,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3991.871336398803,
-                "z": -34.335238102722
-              }
-            },
-            {
-              "tick": 88986,
-              "action": "infected.runner",
-              "amount": 10,
-              "sourceId": 667,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 3992.7362383273344,
-                "z": -35.54863665558769
-              }
-            },
-            {
-              "tick": 88997,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 884,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3993.270665536068,
-                "z": -34.71771466978472
-              }
-            },
-            {
-              "tick": 90650,
-              "action": "infected.sprinter",
-              "amount": 10,
-              "sourceId": 668,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3989.7692041529504,
-                "z": -24.628283628082222
-              }
-            },
-            {
-              "tick": 90696,
-              "action": "infected.butcher",
-              "amount": 10,
-              "sourceId": 857,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3990.340003952908,
-                "z": -25.926985626816275
-              }
-            },
-            {
-              "tick": 90706,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 668,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3989.171969184331,
-                "z": -27.445854177481184
-              }
-            },
-            {
-              "tick": 90717,
-              "action": "infected.butcher",
-              "amount": 0,
-              "sourceId": 857,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3989.9977999814005,
-                "z": -26.77142169902083
-              }
-            }
-          ]
-        },
-        {
-          "tick": 93670,
-          "hits": [
-            {
-              "tick": 92732,
-              "action": "infected.butcher",
-              "amount": 10,
-              "sourceId": 886,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3997.149942952264,
-                "z": -29.587610020629434
-              }
-            },
-            {
-              "tick": 92744,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 668,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3997.6768402838698,
-                "z": -28.774498190087588
-              }
-            },
-            {
-              "tick": 92753,
-              "action": "infected.butcher",
-              "amount": 0,
-              "sourceId": 886,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3997.005678314292,
-                "z": -30.085781435646734
-              }
-            },
-            {
-              "tick": 92774,
-              "action": "infected.butcher",
-              "amount": 10,
-              "sourceId": 886,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3997.0483464610707,
-                "z": -30.143400036591334
-              }
-            },
-            {
-              "tick": 92806,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 650,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 3996.8650445168305,
-                "z": -30.615840883845497
-              }
-            },
-            {
-              "tick": 93620,
-              "action": "infected.runner",
-              "amount": 10,
-              "sourceId": 659,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 4007.6901416365577,
-                "z": -33.81483617470997
-              }
-            },
-            {
-              "tick": 93646,
-              "action": "infected.sprinter",
-              "amount": 0,
-              "sourceId": 658,
-              "sourceArchetype": "infected.sprinter",
-              "sourceAt": {
-                "x": 4007.8108498805996,
-                "z": -32.86094916473802
-              }
-            },
-            {
-              "tick": 93654,
-              "action": "infected.butcher",
-              "amount": 0,
-              "sourceId": 857,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 4005.997793056453,
-                "z": -33.73620057765243
-              }
-            }
-          ]
-        },
-        {
-          "tick": 96622,
-          "hits": [
-            {
-              "tick": 96497,
-              "action": "infected.runner",
-              "amount": 10,
-              "sourceId": 667,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 3978.89637076691,
-                "z": -25.59530413092053
-              }
-            },
-            {
-              "tick": 96499,
-              "action": "infected.butcher",
-              "amount": 0,
-              "sourceId": 857,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3978.7784900329134,
-                "z": -27.01646240919262
-              }
-            },
-            {
-              "tick": 96504,
-              "action": "infected.butcher",
-              "amount": 0,
-              "sourceId": 888,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3978.675093599465,
-                "z": -24.209251468391894
-              }
-            },
-            {
-              "tick": 96525,
-              "action": "infected.butcher",
-              "amount": 0,
-              "sourceId": 888,
-              "sourceArchetype": "infected.butcher",
-              "sourceAt": {
-                "x": 3978.8870801368403,
-                "z": -24.24936709595247
-              }
-            },
-            {
-              "tick": 96539,
-              "action": "infected.dog",
-              "amount": 10,
-              "sourceId": 670,
-              "sourceArchetype": "infected.dog",
-              "sourceAt": {
-                "x": 3977.2347351254225,
-                "z": -27.40335679604669
-              }
-            },
-            {
-              "tick": 96551,
-              "action": "infected.runner",
-              "amount": 0,
-              "sourceId": 667,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 3978.5404173352995,
-                "z": -25.59161658679139
-              }
-            },
-            {
-              "tick": 96578,
-              "action": "infected.firefighter",
-              "amount": 10,
-              "sourceId": 679,
-              "sourceArchetype": "infected.firefighter",
-              "sourceAt": {
-                "x": 3977.7913207192487,
-                "z": -24.540240099029173
-              }
-            },
-            {
-              "tick": 96605,
-              "action": "infected.runner",
-              "amount": 0,
-              "sourceId": 667,
-              "sourceArchetype": "infected.runner",
-              "sourceAt": {
-                "x": 3979.514106263994,
-                "z": -25.660783200252162
-              }
-            }
-          ]
         }
       ],
       "finalState": {
@@ -30691,7 +29305,7 @@
             },
             "hold": {
               "status": "completed",
-              "started": 93439,
+              "started": 82533,
               "kills": [
                 644,
                 647,
@@ -30707,12 +29321,13 @@
                 729,
                 752,
                 754,
-                770
+                770,
+                842
               ],
               "events": {
                 "cure-assault-wave-0:*": 1,
                 "mega-phase-1:*": 1,
-                "combat.kill:*": 18,
+                "combat.kill:*": 19,
                 "cure-assault-wave-1:*": 1,
                 "cure-assault-wave-2:*": 1,
                 "cure-assault-started:*": 1,
@@ -30730,35 +29345,59 @@
                 "cure-assault-wave-14:*": 1,
                 "cure-assault-wave-15:*": 1,
                 "cure-assault-wave-16:*": 1,
-                "mega-phase-3:*": 1
+                "mega-phase-3:*": 1,
+                "cure-assault-wave-17:*": 1
               },
               "interaction": 0
             },
             "mega": {
               "status": "completed",
-              "started": 96742,
-              "kills": [],
-              "events": {},
+              "started": 86069,
+              "kills": [
+                856,
+                861,
+                864,
+                857,
+                859,
+                867,
+                668,
+                673,
+                860,
+                855,
+                654,
+                698,
+                666,
+                701,
+                665,
+                683,
+                704,
+                708,
+                715,
+                730,
+                734,
+                652,
+                768,
+                115
+              ],
+              "events": {
+                "player.damaged:*": 3,
+                "combat.kill:*": 30
+              },
               "interaction": 0
             },
             "release": {
               "status": "completed",
-              "started": 96743,
-              "kills": [
-                827,
-                858,
-                666
-              ],
+              "started": 87745,
+              "kills": [],
               "events": {
                 "player.damaged:*": 1,
-                "combat.kill:*": 3,
                 "cure-released:*": 1
               },
-              "interaction": 2
+              "interaction": 16
             },
             "epilogue": {
               "status": "completed",
-              "started": 96974,
+              "started": 87841,
               "kills": [],
               "events": {
                 "epilogue-title:*": 1
@@ -30767,7 +29406,7 @@
             },
             "credits": {
               "status": "completed",
-              "started": 100874,
+              "started": 91741,
               "kills": [],
               "events": {
                 "epilogue-credits:*": 1,
@@ -30861,25 +29500,25 @@
           "cinematic": null,
           "failure": null,
           "stats": {
-            "time": 1681.2333333333333,
+            "time": 1529.0166666666667,
             "kills": 2,
-            "knockdowns": 796,
-            "damage": 1931.4200000000137,
-            "deaths": 13,
+            "knockdowns": 689,
+            "damage": 1507.6033333333519,
+            "deaths": 9,
             "rescued": 0,
             "optionalObjectives": []
           },
           "result": {
-            "time": 1681.2333333333333,
+            "time": 1529.0166666666667,
             "kills": 2,
-            "knockdowns": 796,
-            "damage": 1931.4200000000137,
-            "deaths": 13,
+            "knockdowns": 689,
+            "damage": 1507.6033333333519,
+            "deaths": 9,
             "rescued": 0,
             "optionalObjectives": []
           },
           "cureFront": {
-            "releasedAt": 96974,
+            "releasedAt": 87841,
             "elapsed": 9960,
             "radius": 20620,
             "fronts": [
@@ -31165,114 +29804,126 @@
               }
             ],
             "affectedIds": [
-              871,
-              872,
-              873,
-              874,
-              875,
-              876,
-              877,
-              654,
-              665,
+              890,
+              891,
+              892,
+              893,
+              894,
+              895,
+              896,
+              762,
               650,
               644,
+              668,
               647,
-              663,
-              720,
+              856,
+              715,
+              683,
+              864,
               828,
-              659,
+              720,
+              663,
               657,
-              762,
-              693,
+              659,
+              782,
+              827,
+              854,
               653,
               752,
+              859,
               645,
-              652,
-              715,
+              857,
               797,
               826,
-              859,
               705,
-              857,
-              867,
+              704,
               743,
-              798,
+              876,
               723,
+              798,
+              861,
               840,
-              674,
+              887,
               795,
-              668,
+              665,
               785,
-              863,
-              660,
+              693,
               736,
-              643,
-              759,
-              782,
               800,
-              860,
+              660,
+              870,
+              643,
+              845,
+              759,
               737,
               811,
               773,
+              879,
               658,
               830,
-              675,
               812,
               815,
+              674,
               642,
-              649,
-              683,
+              843,
               824,
               727,
               818,
-              866,
-              687,
-              730,
+              770,
               746,
-              673,
-              689,
+              807,
               825,
+              841,
+              842,
+              786,
               721,
-              686,
               791,
+              848,
               834,
               803,
-              845,
-              690,
+              844,
               755,
-              770,
-              842,
+              801,
+              790,
               776,
               820,
+              809,
               806,
-              843,
-              862,
+              851,
+              885,
+              793,
               788,
-              768,
-              807,
-              656,
+              734,
               651,
               646,
               836,
-              677,
-              692,
+              792,
               710,
               749,
               778,
               837,
-              701,
+              794,
+              805,
+              816,
               745,
+              858,
+              701,
               754,
               766,
               724,
+              871,
+              846,
               813,
-              694,
+              675,
               772,
-              848,
+              804,
               729,
+              862,
+              649,
+              687,
+              689,
+              690,
               702,
-              704,
-              708,
               709,
               711,
               712,
@@ -31286,56 +29937,51 @@
               757,
               760,
               774,
-              786,
-              801,
-              816,
+              882,
               832,
-              846,
-              861,
-              868,
-              809,
-              661,
+              656,
               775,
-              713,
-              841,
-              672,
-              691,
-              839,
               667,
+              839,
+              713,
+              819,
+              853,
+              686,
+              751,
+              691,
+              889,
+              808,
+              823,
+              850,
               655,
               763,
-              662,
-              676,
+              865,
+              678,
+              672,
+              873,
+              692,
+              694,
               714,
               716,
               731,
               747,
               764,
               777,
-              790,
-              804,
-              819,
-              835,
               849,
-              864,
-              678,
-              664,
               787,
-              844,
-              805,
-              850,
-              734,
-              648,
-              719,
+              661,
+              881,
               781,
-              823,
-              679,
-              670,
-              853,
-              851,
-              793,
-              697,
+              698,
+              835,
+              676,
+              719,
+              821,
+              648,
+              822,
+              869,
               696,
+              697,
               718,
               733,
               735,
@@ -31343,29 +29989,24 @@
               767,
               779,
               780,
-              792,
-              808,
-              821,
-              822,
-              838,
-              852,
-              869,
-              681,
               817,
-              751,
-              865,
-              794,
-              671,
-              684,
-              669,
+              681,
+              679,
+              852,
+              888,
+              838,
+              662,
+              664,
               732,
-              856,
-              685,
-              698,
+              670,
               748,
-              855,
+              684,
+              682,
+              671,
               699,
               700,
+              703,
+              706,
               707,
               726,
               753,
@@ -31374,67 +30015,85 @@
               783,
               784,
               799,
+              685,
               722,
               758,
               796,
               810,
               814,
               829,
-              854,
-              706,
               802,
               833,
               847,
+              863,
+              866,
+              669,
               688,
-              703,
+              738,
+              741,
               789,
               831,
-              741,
-              695,
+              677,
+              868,
               761,
-              738,
               680,
-              717,
               765,
-              870,
-              682,
+              695,
+              717,
+              708,
+              883,
+              878,
+              874,
+              872,
+              884,
+              886,
+              875,
+              880,
+              877,
+              730,
+              867,
+              855,
               639,
-              640,
               634,
+              640,
               638,
-              636,
+              633,
               641,
               635,
+              636,
+              897,
               630,
+              666,
               632,
               631,
-              878,
-              633,
+              860,
               637,
+              768,
               609,
-              610,
               606,
+              610,
               613,
               608,
               614,
-              612,
               611,
+              612,
               623,
+              603,
               588,
               607,
-              619,
               626,
-              603,
+              619,
               624,
               621,
               617,
               620,
-              605,
               604,
-              618,
+              605,
               625,
-              622,
+              654,
+              618,
               616,
+              622,
               615,
               596,
               592,
@@ -31444,6 +30103,7 @@
               593,
               597,
               575,
+              652,
               600,
               602,
               587,
@@ -31462,7 +30122,6 @@
               537,
               538,
               534,
-              666,
               570,
               571,
               563,
@@ -31504,6 +30163,7 @@
               522,
               539,
               519,
+              673,
               516,
               530,
               541,
@@ -31535,7 +30195,6 @@
               501,
               511,
               502,
-              827,
               504,
               396,
               503,
@@ -31647,7 +30306,6 @@
               368,
               371,
               386,
-              858,
               367,
               381,
               383,
@@ -31914,7 +30572,7 @@
             "phaseTicks": 0,
             "survivors": [],
             "approaching": [
-              878
+              897
             ],
             "groupsAuthored": true
           }
@@ -31925,64 +30583,54 @@
           "mounted": false
         },
         "mega": {
-          "tick": 106934,
+          "tick": 97801,
           "id": 115,
           "mode": "dead",
-          "introducedAt": 39287,
-          "introduceTick": 39287,
-          "x": 3981.4213348776666,
-          "z": -30.910187443181282,
+          "introducedAt": 28381,
+          "introduceTick": 28381,
+          "x": 3986.8381164333728,
+          "z": -30.90093933188832,
           "hp": 0,
           "maxHp": 3000,
           "target": {
-            "x": 3990.757836287431,
-            "z": -33.18461896287382
+            "x": 4001.753173828125,
+            "z": -20.69692611694336
           },
-          "route": [
-            "cure-route-48",
-            "cure-route-49",
-            "cure-route-50",
-            "cure-route-51",
-            "cure-route-52",
-            "cure-route-53",
-            "cure-route-54"
-          ],
-          "routeAt": null,
+          "route": [],
+          "routeAt": 87743,
           "passed": "cure-route-47",
-          "blocked": {
-            "cure-route-48|cure-route-49": 97779
-          },
+          "blocked": {},
           "breach": null,
           "stuck": {
-            "level": 0,
-            "since": -1,
-            "sampleAt": 96742,
-            "x": 3981.4213348776666,
-            "z": -30.910187443181282,
+            "level": 2,
+            "since": 85673,
+            "sampleAt": 87726,
+            "x": 3986.8381164333728,
+            "z": -30.90093933188832,
             "noPath": 0,
             "goal": null
           },
           "lastDamage": {
-            "tick": 96742,
-            "amount": 6.3,
+            "tick": 87744,
+            "amount": 232.20000000000596,
             "sourceId": 1
           },
           "coarseM": 597.514046265318,
           "audio": {
-            "next": 98554,
-            "step": 96744,
-            "index": 37,
+            "next": 88999,
+            "step": 87758,
+            "index": 38,
             "last": {
-              "x": 3981.4213348776666,
-              "z": -30.910187443181282
+              "x": 3986.8381164333728,
+              "z": -30.90093933188832
             }
           }
         },
         "player": {
-          "x": 4009.2744140625,
+          "x": 3999.42236328125,
           "y": 0.7049999833106995,
-          "z": -27.769004821777344,
-          "yaw": -0.16131506620359073
+          "z": -24.912485122680664,
+          "yaw": -0.011340332662458073
         }
       }
     }

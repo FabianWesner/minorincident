@@ -11,14 +11,14 @@
 
 ## Route receipt
 
-[`pacing.json`](pacing.json) and [`roadblocks.json`](roadblocks.json) are the current LOW/HIGH ordinary-input probes after the solid-contact crash change. The probe passed 84/100 checks. Both tiers recorded 0/4 complete roadblock sequences.
+[`pacing.json`](pacing.json) and [`roadblocks.json`](roadblocks.json) are the current LOW/HIGH ordinary-input probes after the solid-contact crash change. The two probes passed 84/100 checks. Both tiers recorded 0/4 complete roadblock sequences.
 
 | Tier | Hangar to gate | Longest activity gap | Bike ticks | Deaths |
 |---|---:|---:|---:|---:|
 | LOW | 406.5 s | 13.6 s | 7,748 | 3 |
-| HIGH | 293.4 s | 19.6 s | 1,883 | 13 |
+| HIGH | 293.4 s | 19.6 s | 1,883 | 9 |
 
-Both tiers miss total time, cadence, and the required ride/fight/remount/cross loops. The quarantine cohort now follows the courier's approach lane like the other paced groups; its spawns still use director-safe admission. HIGH recorded first-gate arrival, fight, and opening, but no remount and crossing. Incomplete sequence state resets on death, so zero final fields do not imply no intermediate attempts. LOW and HIGH were run together; HIGH exceeds the 10-death limit, with five additional deaths after reaching the finale arena. Typecheck, lint, and mission interactions passed; the full gates must be rerun after this source change.
+Both tiers miss total time, cadence, and the required ride/fight/remount/cross loops. The quarantine cohort now follows the courier's approach lane like the other paced groups; its spawns still use director-safe admission. HIGH recorded first-gate arrival, fight, and opening, but no remount and crossing. Incomplete sequence state resets on death, so zero final fields do not imply no intermediate attempts. LOW and HIGH were run together; HIGH remains within the 10-death limit in this probe. Typecheck, lint, and mission interactions passed; the full gates must be rerun after this source change.
 
 ## Verification
 
@@ -76,3 +76,5 @@ The paired ordinary-input observer confirmed at least one staged hospital figure
 A projection-based underpass trial placed the span at (3394, 57) with 55% vertical scale and aligned its piers and emergency lamps. The native HIGH beat-7 frame showed only a cropped edge at the right, still not a readable overhead span. This placement was discarded. The LOD0 evidence and repeated clipped frames point to a need for a redesigned split deck or camera-aware occlusion treatment, not further coordinate shifts of the complete bridge model.
 
 A cutaway underpass mesh trial retained a rear deck and full-width girders, with the bridge at (3394, 57) and 55% height. The native HIGH beat-7 frame still read as a pier and lamp, not an overhead span; its changed route also left the hospital figures out of the beat-8 frame. The mesh, packing output and placement were reverted. Hospital visibility must be checked across alternate routes, not only the earlier successful capture.
+
+The skilled bot now prioritizes a visible ordinary attacker within 8 m during the Mega fight before refocusing the boss. HIGH deaths fell from 13 to 9 in the ordinary-input probe; LOW remained at three. Both tiers still miss all roadblock loops and pacing. Typecheck and lint passed; final gates remain open.
