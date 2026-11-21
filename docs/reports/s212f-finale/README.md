@@ -35,6 +35,6 @@ The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the res
 - `tools/qa/solid-placement-audit.ts` — 0 offenders.
 - Sharded `qa:threat` merge — 0 flags (2 shards, merged receipt at `test-results/qa-threat/README.md`).
 - `qa:vehicle-campaign-motion` — pass with E2E/scene ports 5221/5222.
-- `sh tools/remote/run.sh "$PWD" -- npm test` — blocked: no healthy Hetzner runner is available, and the remote runner refuses the Mac fallback for `npm test`.
+- `sh tools/remote/run.sh "$PWD" -- npm test` — pass: 27 files, 105 tests passed and one skipped, 201.1 s.
 
-The objective is not complete. The route rhythm, ride/remount cadence, native contact sheet, vehicle campaign-motion gate, and remote unit suite remain open.
+The objective is not complete. The route rhythm, ride/remount cadence, and readable set pieces remain open. An earlier encounter release radius of 70 m was tested on LOW: the courier still bypassed closed gates, the route took 299.35 s, and the change was discarded.
