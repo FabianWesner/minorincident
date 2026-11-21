@@ -36,6 +36,8 @@ L10's largest before groups were `prop.cure-mil-fence` (113), `prop.cure-quarant
 
 ## Verification
 
+- Latest full sharded threat audit (`test-results/qa-threat-s211b-current-merged`): all 10 skilled routes completed; **4 acceptance flags** remain, all L5 follower pace: `step/look:SLOW_FOLLOWER:28`, `phase/search:SLOW_FOLLOWER:28`, `step/look:SLOW_FOLLOWER:30`, and `phase/search:SLOW_FOLLOWER:30`. L6, L8 and L10 have zero root acceptance flags. L5 follower 28 fails the skilled seed comparison and follower 30 fails the passive comparison. Detailed observations also retain L6/L8 warnings; see the individual JSON receipts. Zero-flag acceptance is not achieved.
+- Latest remote `sh tools/remote/run.sh "$PWD" -- npm test`: passed in 221.5 s, 27 files and 105 tests passed with one skipped; budget counted 150/150 cases. The first attempt timed out at 241.2 s and the unchanged rerun passed.
 - Focused tests: `tests/engine/world-systems.test.ts -t 'solid placement audit'` and `tests/engine/missions.test.ts -t 'checkpoints: death restores'` — both passed after the final subway collision adjustment.
 - `node --import tsx/esm tools/qa/solid-placement-audit.ts` — 187 before, 0 after.
 - `npm run typecheck` and `npm run lint` — passed.
