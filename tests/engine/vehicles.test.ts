@@ -15,6 +15,7 @@ import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
 import { decodeSave, validateSave } from '../../src/sim/progression/Save';
 import { readFixture } from '../../tools/qa/fixture-io';
 import { l9Course } from '../../src/data/l9';
+import { emptySetPieces, type L9ScriptedAlpha } from '../../src/sim/missions/LevelNineSetPieces';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -106,6 +107,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9BusTelegraphAndWreck();
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
+  await l9ThrowerUsesRoadObstacle();
   await l9CheckpointLanes();
   await l9BayAndHatch();
   await l9HatchCheckpointAndEvacuation();
@@ -204,6 +206,37 @@ async function l9InterruptedBoarding(): Promise<void> {
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
+}
+
+async function l9ThrowerUsesRoadObstacle(): Promise<void> {
+  const world = await loadLevel('L9', 1, preset('L9-default'));
+  try {
+    world.missions!.begin();
+    const l9 = world.missions!.l9!, car = world.vehicles!.cars.get(l9.state.carId)!;
+    const p = car.entity.transform, x = p.x + 20;
+    const id = world.infected!.spawn('infected.alpha', { x, z: 12 }, { alphaType: 'thrower', state: 'chase' });
+    const alpha = world.entities.get(id)!;
+    const road = world.vehicles!.obstacles.spawn('barricade', { x, z: 0 });
+    const offRoad = world.vehicles!.obstacles.spawn('trash-can', { x, z: 12 });
+    const state = emptySetPieces(), actor: L9ScriptedAlpha = { id, role: 'thrower', piece: 'test', phase: 'cool', at: world.tick, post: { x, z: 12 }, uses: 0 };
+    state.alphas.push(actor);
+    const originalVisible = world.combat!.query.visible;
+    world.combat!.query.visible = () => true;
+    try { l9.driving.setPieces['alpha'](state, actor); } finally { world.combat!.query.visible = originalVisible; }
+    expect(actor.throwPropId).toBe(road);
+    expect(world.vehicles!.obstacles.items.find(o => o.entity.id === offRoad)?.airborne).toBeFalsy();
+    expect(world.entities.get(road)!.transform.y).toBe(.5);
+    expect(alpha.infected!.specialAttack?.stage).toBe('telegraph');
+    l9.driving.setPieces.restore(state, 7);
+    expect(actor.throwPropId, 'checkpoint timing adjustment preserves the reserved obstacle').toBe(road);
+    expect(actor.at).toBe(world.tick + 48 + 7);
+    world.tick = actor.at;
+    l9.driving.setPieces['alpha'](state, actor);
+    expect(state.flights).toHaveLength(1);
+    expect(state.flights[0].obstacleId).toBe(road);
+    expect(state.flights[0].from).toEqual({ x, z: 0 });
+    expect(world.entities.get(road)!.transform.y, 'flight starts at its resting height').toBe(.5);
+  } finally { world.dispose(); }
 }
 
 async function roadblockFaceInteraction(): Promise<void> {
@@ -727,6 +760,78 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
       world.props!.prePhysics();
       expect(small.body.linvel().x, `${assetId} moves when the lower sedan bumper reaches it`).toBeGreaterThan(0);
     }
+    for (const [index, yaw, direction, lateral] of [[0, 0, 1, 1], [1, Math.PI / 2, 1, -1], [2, Math.PI, -1, 1], [3, -Math.PI / 2, -1, -1]] as const) {
+      const world = new SimWorld(); await world.init(); world.loadScenario('prop-yard');
+      try {
+        for (const item of world.props!.items) item.body.setEnabled(false);
+        world.physics.playerCollider!.setEnabled(false);
+        const x = -30 + index * 20, z = 35, c = Math.cos(yaw), s = Math.sin(yaw);
+        const px = x + c * direction * 5 + s * lateral, pz = z - s * direction * 5 + c * lateral;
+        const item = world.props!.spawn({ id: `l9-heading-${index}`, assetId: 'prop.trash-bin', position: [px, 0, pz], yaw: yaw + .7, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [px - .5, 0, pz - .5], max: [px + .5, 1.5, pz + .5] } });
+        const id = world.vehicles!.spawn('vehicle.military-apc', { x, z }, yaw), car = world.vehicles!.cars.get(id)!;
+        const hullShape = new RAPIER.Cuboid(car.physics.def.length / 2, 1.05, car.physics.def.width / 2);
+        car.entity.vehicle!.floor = true; world.vehicles!.active = id;
+        car.physics.body.setLinvel({ x: c * direction * 18, y: 0, z: -s * direction * 18 }, true); car.physics.postPhysics();
+        for (let tick = 0; tick < 45; tick++) {
+          world.update(); world.physics.world!.propagateModifiedBodyPositionsToColliders();
+          const t = car.physics.body.translation(), q = car.physics.body.rotation();
+          expect(t.y, `heading ${yaw}, direction ${direction}: stays on the test ground`).toBeGreaterThan(.3);
+          expect(t.y, `heading ${yaw}, direction ${direction}, tick ${tick}: grounded; position ${JSON.stringify(t)} velocity ${JSON.stringify(car.physics.body.linvel())}`).toBeLessThan(1.5);
+          const center = { x: t.x + 1.5 * (q.x * q.y - q.w * q.z), y: t.y + .75 * (1 - 2 * (q.x * q.x + q.z * q.z)), z: t.z + 1.5 * (q.y * q.z + q.w * q.x) };
+          const contact = item.collider.contactShape(hullShape, center, q, 0);
+          expect(contact?.distance ?? 0, `heading ${yaw}, direction ${direction}, tick ${tick}; pose ${JSON.stringify(item.pose.p)} body ${JSON.stringify(item.body.translation())} car ${JSON.stringify(t)} gap ${car.physics.hullDistance(item.pose.p[0], item.pose.p[2])}`).toBeGreaterThanOrEqual(-.03);
+        }
+        expect(Math.hypot(item.body.translation().x - px, item.body.translation().z - pz), `heading ${yaw}, direction ${direction}: contact displaces the bin; car ${JSON.stringify(car.entity.transform)} speed ${car.physics.speed}`).toBeGreaterThan(.1);
+      } finally { world.dispose(); }
+    }
+    // L9 speed contact fixture: repeatedly assert that a pushable never crosses
+    // the oriented APC hull, including the first tick when Rapier wakes it.
+    for (const car of world.vehicles!.cars.values()) car.physics.body.setEnabled(false);
+    for (const item of world.props!.items) item.body.setEnabled(false);
+    const cluster = ['prop.traffic-cone', 'prop.trash-bin', 'prop.recycling-bin'] as const;
+    const clusterItems = cluster.map((assetId, i) => world.props!.spawn({ id: `l9-hull-${i}`, assetId, position: [-15, 0, -30 + (i - 1) * .7], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-15.5, 0, -30 + (i - 1) * .7 - .35], max: [-14.5, 1.2, -30 + (i - 1) * .7 + .35] } }));
+    const fixtureId = world.vehicles!.spawn('vehicle.military-apc', { x: -20, z: -30 });
+    const fixture = world.vehicles!.cars.get(fixtureId)!; world.vehicles!.active = fixtureId;
+    fixture.entity.vehicle!.floor = true;
+    const barricadeId = world.vehicles!.obstacles.spawn('barricade', { x: -13, z: -30 });
+    const barricade = world.vehicles!.obstacles.items.find(item => item.entity.id === barricadeId)!;
+    const authoredId = world.hazards!.spawn('barricade', { x: -9, z: -30 });
+    const hullShape = new RAPIER.Cuboid(fixture.physics.def.length / 2, 1.05, fixture.physics.def.width / 2);
+    fixture.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); fixture.physics.postPhysics();
+    const clusterDrive = emptyInput(); clusterDrive.drive = { throttle: 1, steer: 0 }; clusterDrive.brake = false;
+    for (let tick = 0; tick < 90; tick++) {
+      world.applyInput(clusterDrive, 'keyboard'); world.update();
+      world.physics.world!.propagateModifiedBodyPositionsToColliders();
+      const yaw = fixture.entity.transform.yaw, c = Math.cos(yaw), s = Math.sin(yaw), p = fixture.entity.transform;
+      expect(p.y, `cluster tick ${tick}: APC stays on the test ground`).toBeGreaterThan(.3);
+      expect(p.y, `cluster tick ${tick}: APC remains grounded`).toBeLessThan(1.5);
+      for (const prop of clusterItems) {
+        const contact = fixture.physics.collider.contactCollider(prop.collider, 0);
+        expect(contact?.distance ?? 0, `tick ${tick}: ${prop.id} collider penetration`).toBeGreaterThanOrEqual(-.03);
+        const tallContact = prop.collider.contactShape(hullShape, { x: p.x, y: p.y + .75, z: p.z }, fixture.physics.body.rotation(), 0);
+        expect(tallContact?.distance ?? 0, `tick ${tick}: ${prop.id} tall hull penetration`).toBeGreaterThanOrEqual(-.03);
+        const q = prop.body.translation(), dx = q.x - p.x, dz = q.z - p.z;
+        const localX = dx * c - dz * s, localZ = dx * s + dz * c;
+        expect(Math.abs(localX) <= fixture.physics.def.length / 2 && Math.abs(localZ) <= fixture.physics.def.width / 2,
+          `tick ${tick}: ${prop.id} stays outside the APC hull`).toBe(false);
+      }
+      const b = barricade.body?.translation() ?? barricade.entity.transform, dx = b.x - p.x, dz = b.z - p.z;
+      const barrierContact = fixture.physics.collider.contactCollider(barricade.collider, 0);
+      expect(barrierContact?.distance ?? 0, `tick ${tick}: barricade collider penetration`).toBeGreaterThanOrEqual(-.03);
+      const tallBarrierContact = barricade.collider.contactShape(hullShape, { x: p.x, y: p.y + .75, z: p.z }, fixture.physics.body.rotation(), 0);
+      expect(tallBarrierContact?.distance ?? 0, `tick ${tick}: barricade tall hull penetration`).toBeGreaterThanOrEqual(-.03);
+      expect(Math.abs(dx * c - dz * s) <= fixture.physics.def.length / 2 && Math.abs(dx * s + dz * c) <= fixture.physics.def.width / 2,
+        `tick ${tick}: barricade stays outside the APC hull`).toBe(false);
+      const authored = world.vehicles!.obstacles.items.find(item => item.entity.id === authoredId);
+      if (authored?.body) {
+        const q = authored.body.translation(), ax = q.x - p.x, az = q.z - p.z;
+        expect(Math.abs(ax * c - az * s) <= fixture.physics.def.length / 2 && Math.abs(ax * s + az * c) <= fixture.physics.def.width / 2,
+          `tick ${tick}: authored barricade stays outside the APC hull`).toBe(false);
+      }
+    }
+    expect(fixture.entity.transform.x, 'APC passes the barricade starting position').toBeGreaterThan(-13);
+    expect(barricade.body, 'APC contact releases the barricade').toBeDefined();
+    expect(world.vehicles!.obstacles.items.find(item => item.entity.id === authoredId)?.body, 'APC contact releases the authored barricade').toBeDefined();
     for (let i = 0; i < 60; i++) world.update();
     expect(world.props!.items.filter(p => p.awake).length).toBeLessThanOrEqual(world.props!.awakeBudget);
     return world.props!.snapshot();

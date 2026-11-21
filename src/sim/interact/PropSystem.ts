@@ -124,6 +124,20 @@ export class PropSystem {
       if (gap > item.radius + .18 || Math.abs(item.pose.p[1] - .6) > item.half[1] + 1.5) continue;
       const contact = car.physics.collider.contactCollider(item.collider, .12);
       if (!contact) continue;
+      // A kinematic/scripted APC can advance across a sleeping prop faster
+      // than Rapier's contact solver can depenetrate it. Keep its full footprint
+      // outside the oriented chassis before the physics step.
+      const pose = car.physics.transform, prop = item.body.translation(), dx = prop.x - pose.x, dz = prop.z - pose.z;
+      const c = Math.cos(pose.yaw), s = Math.sin(pose.yaw), lx = dx * c - dz * s, lz = dx * s + dz * c;
+      const hx = Math.abs(c) * item.half[0] + Math.abs(s) * item.half[2], hz = Math.abs(s) * item.half[0] + Math.abs(c) * item.half[2];
+      const escapeX = car.physics.def.length / 2 + hx + .04 - Math.abs(lx), escapeZ = car.physics.def.width / 2 + hz + .04 - Math.abs(lz);
+      if (escapeX > 0 && escapeZ > 0) {
+        // Clear sideways so the faster APC cannot simply overtake the prop
+        // and carry it through the passenger compartment on the next ticks.
+        const z = Math.sign(lz || 1) * (car.physics.def.width / 2 + hz + .04);
+        prop.x = pose.x + lx * c + z * s; prop.z = pose.z - lx * s + z * c;
+        item.body.setTranslation(prop, true); this.mirror(item);
+      }
       const velocity = car.physics.body.linvel();
       const propVelocity = item.body.linvel();
       const nx = contact.normal1.x, nz = contact.normal1.z;
@@ -163,6 +177,24 @@ export class PropSystem {
         const impulse = item.mass * (SHOVE_SPEED - along);
         item.body.applyImpulse({ x: nx * impulse, y: 0, z: nz * impulse }, true);
       }
+    }
+  }
+  /** Resolve any post-step overlap with the tall armored hull before rendering. */
+  clearArmoredHull(): void {
+    const id = this.world.vehicles?.active, car = id == null ? undefined : this.world.vehicles?.cars.get(id);
+    if (!car?.entity.vehicle?.floor || car.entity.vehicle.scripted) return;
+    const body = car.physics.body, at = body.translation(), q = body.rotation();
+    const shell = new RAPIER.Cuboid(car.physics.def.length / 2, 1.5, car.physics.def.width / 2);
+    const center = { x: at.x + .3 * 2 * (q.x * q.y - q.w * q.z), y: at.y + .3 * (1 - 2 * (q.x * q.x + q.z * q.z)), z: at.z + .3 * 2 * (q.y * q.z + q.w * q.x) };
+    const yaw = car.physics.transform.yaw, c = Math.cos(yaw), s = Math.sin(yaw);
+    for (const item of this.items) {
+      if (item.fixed || item.braced || !item.body.isEnabled() || car.physics.hullDistance(item.pose.p[0], item.pose.p[2]) > item.radius + .5) continue;
+      const contact = item.collider.contactShape(shell, center, q, 0);
+      if (!contact || contact.distance >= -.001) continue;
+      const t = item.body.translation(), dx = t.x - at.x, dz = t.z - at.z, x = dx * c - dz * s, z = dx * s + dz * c;
+      const side = Math.sign(z || 1), edge = side * (car.physics.def.width / 2 + Math.hypot(...item.half) + .04);
+      item.body.setTranslation({ x: at.x + x * c + edge * s, y: t.y, z: at.z - x * s + edge * c }, true);
+      this.mirror(item);
     }
   }
   /** Mirror awake poses, recover props that fall through ground, and settle the farthest beyond the awake cap. */
@@ -344,6 +376,7 @@ export class PropSystem {
     this.updateNavigation();
   }
 }
+
 
 /** World AABB of the actual E26 cuboid, including its local centre and tipped poses. */
 export function propFootprint(p: PushProp): import('../combat/HitQuery').CoverWall {
