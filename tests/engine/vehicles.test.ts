@@ -760,28 +760,29 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
       world.props!.prePhysics();
       expect(small.body.linvel().x, `${assetId} moves when the lower sedan bumper reaches it`).toBeGreaterThan(0);
     }
-    for (const car of world.vehicles!.cars.values()) car.physics.body.setEnabled(false);
-    for (const item of world.props!.items) item.body.setEnabled(false);
-    world.physics.playerCollider!.setEnabled(false);
-    for (const obstacle of world.vehicles!.obstacles.items) { obstacle.collider.setEnabled(false); obstacle.body?.setEnabled(false); }
     for (const [index, yaw, direction, lateral] of [[0, 0, 1, 1], [1, Math.PI / 2, 1, -1], [2, Math.PI, -1, 1], [3, -Math.PI / 2, -1, -1]] as const) {
-      const x = -30 + index * 20, z = 35, c = Math.cos(yaw), s = Math.sin(yaw);
-      const px = x + c * direction * 5 + s * lateral, pz = z - s * direction * 5 + c * lateral;
-      const item = world.props!.spawn({ id: `l9-heading-${index}`, assetId: 'prop.trash-bin', position: [px, 0, pz], yaw: yaw + .7, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [px - .5, 0, pz - .5], max: [px + .5, 1.5, pz + .5] } });
-      const id = world.vehicles!.spawn('vehicle.military-apc', { x, z }, yaw), car = world.vehicles!.cars.get(id)!;
-      const hullShape = new RAPIER.Cuboid(car.physics.def.length / 2, 1.05, car.physics.def.width / 2);
-      car.entity.vehicle!.floor = true; world.vehicles!.active = id;
-      car.physics.body.setLinvel({ x: c * direction * 18, y: 0, z: -s * direction * 18 }, true); car.physics.postPhysics();
-      for (let tick = 0; tick < 45; tick++) {
-        world.update(); world.physics.world!.propagateModifiedBodyPositionsToColliders();
-        const t = car.physics.body.translation(), q = car.physics.body.rotation();
-        expect(t.y, `heading ${yaw}, direction ${direction}: stays on the test ground`).toBeGreaterThan(.3);
-        const center = { x: t.x + 1.5 * (q.x * q.y - q.w * q.z), y: t.y + .75 * (1 - 2 * (q.x * q.x + q.z * q.z)), z: t.z + 1.5 * (q.y * q.z + q.w * q.x) };
-        const contact = item.collider.contactShape(hullShape, center, q, 0);
-        expect(contact?.distance ?? 0, `heading ${yaw}, direction ${direction}, tick ${tick}; pose ${JSON.stringify(item.pose.p)} body ${JSON.stringify(item.body.translation())} car ${JSON.stringify(t)} gap ${car.physics.hullDistance(item.pose.p[0], item.pose.p[2])}`).toBeGreaterThanOrEqual(-.03);
-      }
-      expect(Math.hypot(item.body.translation().x - px, item.body.translation().z - pz), `heading ${yaw}, direction ${direction}: contact displaces the bin; car ${JSON.stringify(car.entity.transform)} speed ${car.physics.speed}`).toBeGreaterThan(.1);
-      car.physics.body.setEnabled(false); item.body.setEnabled(false);
+      const world = new SimWorld(); await world.init(); world.loadScenario('prop-yard');
+      try {
+        for (const item of world.props!.items) item.body.setEnabled(false);
+        world.physics.playerCollider!.setEnabled(false);
+        const x = -30 + index * 20, z = 35, c = Math.cos(yaw), s = Math.sin(yaw);
+        const px = x + c * direction * 5 + s * lateral, pz = z - s * direction * 5 + c * lateral;
+        const item = world.props!.spawn({ id: `l9-heading-${index}`, assetId: 'prop.trash-bin', position: [px, 0, pz], yaw: yaw + .7, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [px - .5, 0, pz - .5], max: [px + .5, 1.5, pz + .5] } });
+        const id = world.vehicles!.spawn('vehicle.military-apc', { x, z }, yaw), car = world.vehicles!.cars.get(id)!;
+        const hullShape = new RAPIER.Cuboid(car.physics.def.length / 2, 1.05, car.physics.def.width / 2);
+        car.entity.vehicle!.floor = true; world.vehicles!.active = id;
+        car.physics.body.setLinvel({ x: c * direction * 18, y: 0, z: -s * direction * 18 }, true); car.physics.postPhysics();
+        for (let tick = 0; tick < 45; tick++) {
+          world.update(); world.physics.world!.propagateModifiedBodyPositionsToColliders();
+          const t = car.physics.body.translation(), q = car.physics.body.rotation();
+          expect(t.y, `heading ${yaw}, direction ${direction}: stays on the test ground`).toBeGreaterThan(.3);
+          expect(t.y, `heading ${yaw}, direction ${direction}, tick ${tick}: grounded; position ${JSON.stringify(t)} velocity ${JSON.stringify(car.physics.body.linvel())}`).toBeLessThan(1.5);
+          const center = { x: t.x + 1.5 * (q.x * q.y - q.w * q.z), y: t.y + .75 * (1 - 2 * (q.x * q.x + q.z * q.z)), z: t.z + 1.5 * (q.y * q.z + q.w * q.x) };
+          const contact = item.collider.contactShape(hullShape, center, q, 0);
+          expect(contact?.distance ?? 0, `heading ${yaw}, direction ${direction}, tick ${tick}; pose ${JSON.stringify(item.pose.p)} body ${JSON.stringify(item.body.translation())} car ${JSON.stringify(t)} gap ${car.physics.hullDistance(item.pose.p[0], item.pose.p[2])}`).toBeGreaterThanOrEqual(-.03);
+        }
+        expect(Math.hypot(item.body.translation().x - px, item.body.translation().z - pz), `heading ${yaw}, direction ${direction}: contact displaces the bin; car ${JSON.stringify(car.entity.transform)} speed ${car.physics.speed}`).toBeGreaterThan(.1);
+      } finally { world.dispose(); }
     }
     // L9 speed contact fixture: repeatedly assert that a pushable never crosses
     // the oriented APC hull, including the first tick when Rapier wakes it.
