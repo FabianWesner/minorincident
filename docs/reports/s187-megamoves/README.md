@@ -11,7 +11,7 @@ Fresh run on `ee57acfdb1de725ca364de9bb4b3df98269c063d` plus the changes below:
 - Mega coarse pursuit now invalidates saved routes after restore, steers toward the player instead of an obsolete distant route node when hidden far away, and has bounded reachable-waypoint recovery around obstructed local goals. An AI regression places the Mega at the stale L10 coarse route and verifies it resumes more than 30 m of pursuit travel.
 - L10 service attackers now try the service threshold before staged/ring positions and are not reset to wandering by the dispersal-zone chase-distance rule. This does not change zombie stats.
 
-The moves stay within the measured damage target and the required full threat gate passes. The isolated L10 wave discrepancy and commit status remain open; see the run notes below.
+The moves stay within the measured damage target and the required full threat gate passes. Commit: `7cfea375`. The isolated L10 wave discrepancy remains open; see the run notes below.
 
 ## s187b follow-up — coarse pursuit stall
 
