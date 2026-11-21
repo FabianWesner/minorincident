@@ -15,7 +15,7 @@
 | `npm run lint` | Pass |
 | `npm run test:unit` | Pass; 27 files, 106 tests |
 | `sh tools/remote/run.sh "$PWD" -- npm test` | Remote runner unavailable; local `npm run test:unit` passed |
-| `npm run qa:threat:sharded` | Not completed; both shards exited 69 because no healthy remote runners are provisioned |
+| Full threat audit, two local shards and merge | Pass: 0 fail flags; all skilled routes complete. Shards ran in 174.4 s and 251.8 s; merged receipt `test-results/qa-threat/README.md`. Remote runners were unavailable. |
 | `node --import tsx/esm tools/verify.ts E32` | Pass; per-change typecheck, lint, and 106-test gate |
 | `npm run test:smoke` | Build passed; smoke stopped when browser pool startup returned `EPERM` on 127.0.0.1:4329 |
 
@@ -36,4 +36,4 @@ The headless capture script subsequently ran through `tools/e2e-lock.sh` on port
 
 ## Remaining
 
-The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, provision/use healthy threat runners for both shards and merge, complete the unavailable gates, and update this report with final receipts.
+The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, complete the unavailable gates, and update this report with final receipts.
