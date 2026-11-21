@@ -23,6 +23,8 @@ Commit `cdb56ba1` prevents Mega damage from extending an existing survivor knock
 
 Post-guard full threat shards `test-results/s187c-current-A` and `test-results/s187c-current-B` completed and merged with 0 top-level flags and L10 skilled complete. The L10 skilled wave flag persists in the level receipt; L8 also retains three skilled diagnostic flags. The remote `npm test` reached its 240-second limit three times, then an unchanged retry passed: 27 files, 105 passed and 1 skipped in 216.1 seconds. A complete local `npm test` also passed: 27 files, 106 passed and 1 skipped in 201.9 seconds.
 
+Post-guard HIGH and LOW seed-1 complete-profile replays both completed and reproduced the moving Mega-source rates above (LOW 0.0284 DPS, HIGH 0.0545 DPS; named special damage 0 in both). Receipt: `test-results/s187c-current-moving.json`. The audit report explicitly labels the skilled G-22 wave observation informational and gates the passive observation; its L10 passive wave passed. The skilled wave diagnostic remains a documented limitation, not a hidden top-level acceptance failure.
+
 ## s187b follow-up — coarse pursuit stall
 
 Full merged-source threat audit on `04d63139`: **0 flags**, all ten skilled routes complete, including L10. `npm run qa:threat:sharded` completed both remote shards and merged their receipts (392.0 s maximum shard time). Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 27 files, 105 passed, 1 skipped, 195.7 s.
