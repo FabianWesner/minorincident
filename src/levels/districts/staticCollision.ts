@@ -25,7 +25,10 @@ const platformSolids: Aabb[] = [
 // Shelter camp's physics bake contains only the floor slab. Its four fabric
 // walls remain solid to actors and navigation, leaving no invisible tent interior.
 const shelterCampWalls: Aabb[] = [
-  { min: [-2.8, .18, -2.8], max: [2.8, 1.05, -2.65] },
+  // The authored tent has an entrance on its -Z face. Keep the canvas solid
+  // on either side, but leave the visible doorway open for the shelter route.
+  { min: [-2.8, .18, -2.8], max: [-2.5, 1.05, -2.65] },
+  { min: [2.5, .18, -2.8], max: [2.8, 1.05, -2.65] },
   { min: [-2.8, .18, 2.65], max: [2.8, 1.05, 2.8] },
   { min: [-2.8, .18, -2.65], max: [-2.65, 1.05, 2.65] },
   { min: [2.65, .18, -2.65], max: [2.8, 1.05, 2.65] },
@@ -53,15 +56,29 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     if (p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway') return highwayColliders(p);
     if (p.collisionId === 'l5.metro-ingress') return metroIngressColliders(p);
     if (p.assetId === 'prop.flower') return [];
+    // The small broken-chair subway dressing is part of the walkable litter,
+    // not a furniture obstacle, despite the source asset's reusable bake.
+    if (p.decor && p.decorWalkable) return [];
     // Render-only details remain non-solid. Anything the asset manifest marks
     // solid keeps the same baked collision and navigation footprint as an
     // authored placement, including streamed L10 vignette/set dressing.
     const shape = sources[p.collisionId ?? ''] ?? sources[p.assetId];
+    // Authored look-only decor stays render-only even when its source asset
+    // happens to have a reusable bake. Explicit collision IDs (the L10 road
+    // dressing) and manifest-solid props still use their physical hulls.
     if (p.decor && !p.decorSolid && !shape?.boxes.length && !worldAssets[p.assetId]?.world?.solid) return [];
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
     const collisionShape = platform ? dispersalPlatform : shape;
+    if (!collisionShape?.boxes.length) {
+      const authoredGeometry = fallback.filter(c => c.id.startsWith(`${p.id}/fixed-`) || c.id.startsWith(`${p.id}/lane-`));
+      if (authoredGeometry.length) return authoredGeometry;
+    }
     const dimensions = worldAssets[p.assetId]?.dimensions;
-    const boxes = collisionShape?.boxes ?? (p.assetId === 'kit.metro-track' || p.assetId === 'kit.shelter-camp' || p.assetId === 'int.metro-exit' ? physicsAssets[p.assetId]?.boxes as Aabb[] | undefined : p.assetId === 'kit.zoo-tunnel-mouth' ? zooTunnelMouth : p.decor && dimensions ? [{ min: [-dimensions.x / 2, .18, -dimensions.z / 2] as [number, number, number], max: [dimensions.x / 2, dimensions.y, dimensions.z / 2] as [number, number, number] }] : undefined);
+    const bakedBoxes = collisionShape?.boxes;
+    const manifestSolid = worldAssets[p.assetId]?.world?.solid;
+    const physicsShape = physicsAssets[p.assetId as keyof typeof physicsAssets]?.boxes as Aabb[] | undefined;
+    const footprintFallback = (p.decor || manifestSolid && !physicsShape) && dimensions ? [{ min: [-dimensions.x / 2, .18, -dimensions.z / 2] as [number, number, number], max: [dimensions.x / 2, dimensions.y, dimensions.z / 2] as [number, number, number] }] : undefined;
+    const boxes = bakedBoxes?.length ? bakedBoxes : p.assetId === 'kit.zoo-tunnel-mouth' ? zooTunnelMouth : physicsShape ?? footprintFallback;
     if (!boxes) return fallback.filter(c => c.id === p.id);
     // The body-height bake retains the bullet tank's saddles but misses its
     // raised vessels. Keep the GLB's authored solid barrel hulls as well, so
@@ -88,7 +105,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
         yaw: p.yaw,
       };
       if(p.navBlocker) aabb.navBlocker = true;
-      return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: platform ? dispersalPlatform.walkable.has(box) : box.max[1] < .45 || extraSupports[p.assetId]?.includes(box), minTier: p.minTier, maxTier: p.maxTier }];
+      return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: platform ? dispersalPlatform.walkable.has(box) : box.max[1] < .45 || extraSupports[p.assetId]?.includes(box) || p.assetId === 'int.metro-station' && index === 0, minTier: p.minTier, maxTier: p.maxTier }];
     });
   }));
 }

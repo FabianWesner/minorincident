@@ -58,6 +58,8 @@ export interface Placement extends PlacementTransform {
   decor?: boolean;
   /** Decor that explicitly blocks actors and navigation (no pushable body). */
   decorSolid?: boolean;
+  /** Low decorative litter that is safe to step over even when its asset has a reusable bake. */
+  decorWalkable?: boolean;
   /** Optional loose scatter omitted on low quality; story cores never set this flag. */
   highOnly?: boolean;
   /** L10 painted wall atlas cell (0–11), attached to an existing wall instance. */

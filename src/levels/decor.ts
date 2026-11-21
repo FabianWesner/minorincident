@@ -20,7 +20,8 @@ const placement = (district: string, i: number, s: Spot): Placement => {
   const k = s.scale ?? 1, yaw = s.yaw ?? 0, y = s.y ?? 0, c = Math.abs(Math.cos(yaw)), n = Math.abs(Math.sin(yaw));
   const hx = (c * d.dimensions.x + n * d.dimensions.z) * k / 2, hz = (n * d.dimensions.x + c * d.dimensions.z) * k / 2;
   return { id: s.id ?? `decor-${district}-${i}`, assetId: s.asset, position: [s.x, y, s.z], yaw, scale: [k, k, k], minTier: 0, maxTier: 6, allowRoad: true,
-    lightGroup: 'decor', decor: true, visualAabb: { min: [s.x - hx, y, s.z - hz], max: [s.x + hx, y + d.dimensions.y * k, s.z + hz] } };
+    lightGroup: 'decor', decor: true, ...(district === 'D-SUBWAY' && s.asset === 'prop.broken-chair' ? { decorWalkable: true } : {}),
+    visualAabb: { min: [s.x - hx, y, s.z - hz], max: [s.x + hx, y + d.dimensions.y * k, s.z + hz] } };
 };
 
 /** L6 tunnel walkway tops (build-layout: kit.metro-tunnel boxes 7/8), track bed top and the night street slab. */

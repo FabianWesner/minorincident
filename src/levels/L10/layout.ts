@@ -6,8 +6,10 @@ import type { DistrictLayout, Placement } from '../districts/types';
 /** Gameplay structures and anchors, composed before collision/nav and the separate scenery passes. */
 export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return layouts.map(source => {
-    if (source.district !== 'D-CURE' || source.placements.some(p => p.id === 'l10-hangar-shell')) return source;
-    const layout = structuredClone(source), h = cureHangar;
+    if (source.district !== 'D-CURE') return source;
+    const layout = structuredClone(source);
+    if (layout.placements.some(p => p.id === 'l10-hangar-shell')) return layout;
+    const h = cureHangar;
     for (const [name, [x, z]] of Object.entries(cure.anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     const set = (name: string, p: { x: number; z: number }) => { layout.anchors[name] = { position: [p.x, 0, p.z], yaw: 0 }; };
     set('cure-terminal', h.terminal); set('cure-canister', h.canister);
@@ -89,6 +91,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       const offset = id.startsWith('gate-') ? [20, -79] : id.startsWith('billboard-') ? [16, -62] : id.startsWith('hospital-') ? [-18, -58] : [0, 0];
       x += offset[0]; z += offset[1];
       const p = place(`l10-setpiece-${id}`, asset, x, z, half, yaw, scale, true);
+      if (asset === 'prop.l10-abandoned-sedan-blue' || asset === 'prop.medical-cooler') p.decorSolid = true;
       p.fixed = true;
       return p;
     };
