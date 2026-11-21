@@ -747,8 +747,10 @@ export class Blasts extends Group {
     // Field fronts share the bounded flame, smoke and ember pools. Limit sources
     // to nearby visible cells so a large fire cannot allocate unbounded lights.
     let fieldSources = 0, cropSmokeSources = 0;
-    for (const [index, cell] of (this.world.hazards?.fieldFire?.cells ?? []).entries()) {
-      if (cell.state !== 'burning' || !this.sourceVisible(cell.x, cell.z, 12) || fieldSources >= 24) continue;
+    const fieldCells = (this.world.hazards?.fieldFire?.cells ?? []).flatMap((cell, index) => cell.state === 'burning' && this.sourceVisible(cell.x, cell.z, 12) ? [{ cell, index }] : []);
+    if (player) fieldCells.sort((a, b) => Math.hypot(a.cell.x - player.transform.x, a.cell.z - player.transform.z) - Math.hypot(b.cell.x - player.transform.x, b.cell.z - player.transform.z));
+    for (const { index, cell } of fieldCells) {
+      if (fieldSources >= 24) break;
       fieldSources++;
       const key = -3_000_000 - index; seen.add(key);
       const lawn = cell.halfX !== undefined, smoke = !lawn && cropSmokeSources++ < 4;
