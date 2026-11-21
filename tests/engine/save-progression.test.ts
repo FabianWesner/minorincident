@@ -256,7 +256,9 @@ async function checkCheckpointRacks() {
     if (savedFire.status === 'ok') expect(savedFire.save.cureResume?.checkpoint.fieldFire?.find(c => c.id === cell.id)?.state).toBe('scorched');
     cell.state = 'intact'; tree.state = 'intact';
     l10.combat!.setLoadout(['weapon.fire-axe'], ['weapon.rocket-launcher']);
+    l10.missions!.state.states['l10-overpass-mega'] = true;
     l10.missions!.restore('cure-crash');
+    expect(l10.missions!.state.states['l10-overpass-mega'], 'a retry before the overpass does not replay the beat').toBe(true);
     expect(cell.state).toBe('scorched'); expect(tree.state).toBe('charred');
     expect(ids(l10)).toEqual(expectedBase);
     expect(l10.progression!.campaign!.racks).toEqual(expectedBase);
