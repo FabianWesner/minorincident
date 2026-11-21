@@ -736,6 +736,7 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     fixture.entity.vehicle!.floor = true;
     const barricadeId = world.vehicles!.obstacles.spawn('barricade', { x: 57, z: 0 });
     const barricade = world.vehicles!.obstacles.items.find(item => item.entity.id === barricadeId)!;
+    const authoredId = world.hazards!.spawn('barricade', { x: 61, z: 0 });
     fixture.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); fixture.physics.postPhysics();
     for (let tick = 0; tick < 90; tick++) {
       world.update();
@@ -754,9 +755,16 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
       expect(barrierContact?.distance ?? 0, `tick ${tick}: barricade collider penetration`).toBeGreaterThanOrEqual(-.03);
       expect(Math.abs(dx * c - dz * s) <= fixture.physics.def.length / 2 && Math.abs(dx * s + dz * c) <= fixture.physics.def.width / 2,
         `tick ${tick}: barricade stays outside the APC hull`).toBe(false);
+      const authored = world.vehicles!.obstacles.items.find(item => item.entity.id === authoredId);
+      if (authored?.body) {
+        const q = authored.body.translation(), ax = q.x - p.x, az = q.z - p.z;
+        expect(Math.abs(ax * c - az * s) <= fixture.physics.def.length / 2 && Math.abs(ax * s + az * c) <= fixture.physics.def.width / 2,
+          `tick ${tick}: authored barricade stays outside the APC hull`).toBe(false);
+      }
     }
     expect(fixture.entity.transform.x, 'APC passes the barricade starting position').toBeGreaterThan(57);
     expect(barricade.body, 'APC contact releases the barricade').toBeDefined();
+    expect(world.vehicles!.obstacles.items.find(item => item.entity.id === authoredId)?.body, 'APC contact releases the authored barricade').toBeDefined();
     for (let i = 0; i < 60; i++) world.update();
     expect(world.props!.items.filter(p => p.awake).length).toBeLessThanOrEqual(world.props!.awakeBudget);
     return world.props!.snapshot();
