@@ -10,11 +10,14 @@
 - Removed the primate yard's laundry lines after visual review showed hanging clothes.
 - Added a timber climbing frame with crossbars and a tyre swing near the edge of the primate arena. Its four feet and lower bars use baked static collision; the central gate line remains open.
 - Reused that frame in the gorilla house near the north-east fence and removed one nearby dead trunk to make room. The four gorilla tactical-cover IDs remain at their existing positions.
+- Replaced the three flamingo and three zebra road barriers with solid rock outcrops at the same positions and orientations. The new prop has authored LODs and baked static collision.
 - Added distinct visual ground surfaces to the six arenas and shallow water surfaces to the flamingo and elephant yards, after stable placement IDs are allocated. These are a first pass, not visual acceptance.
 
 ## Follow-up for s222/s223
 
 The four gorilla cover IDs now use `prop.tree.dead` at the original positions. The trunks have a wider visual and collision footprint than the former narrow pillars; recheck gorilla line-of-sight cover, throw paths and charge lanes during the skilled-bot pass. The existing encounter IDs and centres are unchanged.
+
+The flamingo and zebra cover IDs remain at their original positions but now have rock collision rather than jersey-barrier collision. Recheck flamingo landing lanes and zebra stampede sidesteps in s222 and the full L8 run.
 
 ## Verification
 
@@ -28,6 +31,7 @@ The four gorilla cover IDs now use `prop.tree.dead` at the original positions. T
 - Current HIGH zoom 1 Scene Lab fixtures ran for all six cages after fixing the flamingo and monkey fixture start positions. Reviewed frames: lion has bare trees and dark, sparse ground; flamingo has a rectangular dark pond and road barriers; zebra has a dark green empty floor and road barriers; gorilla has dark earth, trunks and crates; primate has the house, trees and laundry lines (now removed); elephant is mostly obscured by the truck and foreground bush. None establishes the requested habitat look. Scene Lab reported three static pairs in the primate crop and four in the elephant crop; their causes remain to be inspected. These are scene fixtures, not a substitute for the required native frames.
 - The new climbing frame's HIGH detail capture was inspected: its timber posts, crossbars and tyre are visible. The centered primate encounter crop places most of the frame at the foreground edge, so native route review is still needed. Both captures reported zero static overlap pairs. The asset validator passes all three LODs (508, 96 and 72 triangles); typecheck and lint pass. Source LODs are reproducible with `MI_ZOO_FRAME_LOD=1` and `=2` through `tools/blender/build.py`, followed by `tools/assets/build.ts prop.zoo-climbing-frame`.
 - Gorilla frame follow-up: HIGH zoom 1 detail capture was inspected and shows the frame and tyre inside the fence; it lies outside the centered encounter crop. Both Scene Lab crops reported zero static overlap pairs. An independent layout collision query found 11 frame boxes and no intersections with other static colliders. This does not establish route clearance or gorilla behavior; native play and the full gates remain necessary. Typecheck and lint pass.
+- Rock cover follow-up: both HIGH zoom 1 Scene Lab frames were inspected; stone shapes replace the conspicuous barriers, but the flamingo pond still reads as a dark rectangle and the zebra floor is sparse. Both crops report zero static overlap pairs. All six placed rocks have baked collision at tiers 0–6. Asset validation passes 240/60/20 triangles for LOD0/1/2; typecheck and lint pass. Native fight and route clearance remain unverified after this geometry change.
 - Focused L8 scene gate: 0/18 rows ran; all four batches exited 75 because the headless browser pool cannot bind `127.0.0.1:4329` (`EPERM`).
 - Native HIGH/LOW cage captures and visual review: not verified for the same browser-pool failure.
 - Remote `npm test`: not run; `tools/remote/run.sh` found no healthy runner, and `tools/remote/scale.sh add` could not resolve the Hetzner API host because network/DNS is blocked.
