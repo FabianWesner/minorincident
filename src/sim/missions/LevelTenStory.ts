@@ -81,8 +81,12 @@ export class LevelTenStory {
     const finaleLines: readonly [number, string][] = [
       [2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [3010, 'L10.finale-2'],
       [3076, 'L10.finale-3'], [3150, 'L10.finale-4'], [3260, 'L10.finale-5'],
-      [3340, 'L10.finale-6'], [3390, 'L10.finale-7'], [3502, 'L10.finale-8'], [3550, 'L10.finale-9'],
+      [3340, 'L10.finale-6'], [3397, 'L10.finale-7'], [3502, 'L10.finale-8'], [3550, 'L10.finale-9'],
     ];
+    if (!state.states['l10-sinkhole-warning'] && p.transform.x >= 3300) {
+      state.states['l10-sinkhole-warning'] = true;
+      this.say('L10.sinkhole-warning', 180);
+    }
     const nextFinaleLine = finaleLines.findIndex(([x], index) => !state.states[`l10-finale-beat-${index}`] && p.transform.x >= x);
     if (nextFinaleLine >= 0) {
       const [x, id] = finaleLines[nextFinaleLine];
