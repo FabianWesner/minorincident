@@ -96,6 +96,8 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
     || species === 'elephant' && Math.abs(x) > .17 && z > .09 && z < .24 && Math.abs(y - (.20 - (Math.abs(x) - .17) * .7)) < .014
     || species === 'flamingo' && z > .30 && y > .01 && y < .15 && Math.abs(x + (y - .08) * .3) < .025;
   if (slash) c = [137, 29, 37];
+  // The distal bill is at the forward end of the normalized bird source.
+  if (species === 'flamingo' && z > .42 && y > .20 && y < .34 && Math.abs(x) < .08) c = [160, 32, 39];
   if (species === 'lion' || species === 'gorilla') {
     const cx = species === 'gorilla' ? .06 : 0, cy = species === 'gorilla' ? .174 : -.005;
     const rx = species === 'gorilla' ? .091 : .103, ry = species === 'gorilla' ? .060 : .061;
