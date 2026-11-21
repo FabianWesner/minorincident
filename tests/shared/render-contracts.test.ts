@@ -689,6 +689,17 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
       expect(pose.y).toBe(floor(pose.x, pose.z));
     }
   }
+  // Zebra at the L8 paddock fence: the fallen head reaches 1.37 m from
+  // the root, so a humanoid radius can leave the visible body through bars.
+  const fenceWorld = { scenario: 'L8', entities: { revision: 0, get: () => undefined, *iterate() {} },
+    districts: { districts: [], supportBelow: () => 0 }, infected: { nav: {
+      clear: (x: number, _z: number, radius: number) => x - radius > 38.025,
+      move: (p: { x: number; z: number }, dx: number, dz: number) => { p.x += dx; p.z += dz; },
+    } } } as unknown as SimWorld;
+  const zebra = { id: 426, archetype: 'infected.zebra', health: { current: 0 }, transform: { x: 39.179444, y: .73, z: 32, yaw: 0 }, combat: { radius: .45 } } as EntitySnapshot;
+  const zebraPose = new CorpseLayout(fenceWorld).place(zebra);
+  expect('radius' in zebraPose).toBe(true);
+  if ('radius' in zebraPose) expect(zebraPose.x - 1.37).toBeGreaterThan(38.025);
   // If surrounding solids admit no slide at all, the last-resort flat pose
   // still needs to clear the raised part of its footprint.
   const pinnedWorld = { scenario: 'L1', entities: { revision: 0, get: () => undefined, *iterate() {} },

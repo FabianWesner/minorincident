@@ -32,6 +32,13 @@ export function infectedLionMane({ x, y, z }: Vector3): number[] {
 export function animalColour(p: Vector3, original: number[], look: AnimalLook): number[] | undefined {
   const { x, y, z } = p, { species, infected } = look;
   let c: number[] | undefined;
+  if (species === 's224-lion') {
+    const dorsal = (x / .13) ** 2 + ((y - .10) / .12) ** 2 + ((z + .17) / .28) ** 2;
+    const flank = ((Math.abs(x) - .13) / .10) ** 2 + ((y + .025) / .14) ** 2 + ((z + .12) / .27) ** 2;
+    const wound = Math.min(dorsal, flank);
+    if (wound < 1) return wound > .77 ? [85, 20, 24] : [211, 42, 44];
+    return original;
+  }
   if (species === 'lion') {
     c = infected ? infectedLionCoat(p) : [199, 147, 69];
     // One connected neck envelope, independent of noisy TRELLIS colour islands.
@@ -56,6 +63,20 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
     if (species === 'flamingo' && original[0] > 100 && original[2] > 80 && original[0] > original[1] * 1.1) c = [170, 145, 151];
   }
   if (!infected) return c;
+  if (species === 'zebra') {
+    // Zebra is in the production bind frame (+X forward), unlike the wave-2
+    // normalized sources. Paint both flanks and the visible dorsal surface.
+    const flank = ((x + .15) / .48) ** 2 + ((y - 1.28) / .35) ** 2 + ((Math.abs(z) - .30) / .19) ** 2;
+    const back = ((x + .25) / .42) ** 2 + ((y - 1.65) / .17) ** 2 + (z / .25) ** 2;
+    const wound = Math.min(flank, back) + .08 * Math.sin(x * 30 + y * 23);
+    if (wound < 1) {
+      c = wound > .74 ? [76, 20, 25] : [164, 35, 43];
+      if (wound < .58 && [0, 1, 2].some(i => Math.abs(x - (-.34 + i * .16) - z * .2) < .028)) c = [216, 190, 153];
+    }
+    // Broad blood around the mouth remains visible from the elevated camera.
+    if (x > 1.25 && y < 1.92 && y > 1.48) c = [122, 27, 32];
+    return c;
+  }
   // Broad readable wounds on the actual surface, not random atlas noise.
   let wound = species === 'lion' ? ((Math.abs(x) - .22) / .11) ** 2 + ((y - .015) / .115) ** 2 + ((z + .095) / .19) ** 2
     : species === 'gorilla' ? ((Math.abs(x - .01) - .20) / .14) ** 2 + ((y - .08) / .16) ** 2 + ((z - .10) / .19) ** 2
@@ -68,11 +89,12 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
   const dorsal = species === 'lion' ? ((x - .04) / .1) ** 2 + ((y - .1) / .07) ** 2 + ((z + .16) / .13) ** 2 : 9;
   const onBack = dorsal < wound; if (onBack) wound = dorsal;
   if (species === 'elephant') wound = Math.min(wound, ((x - .10) / .125) ** 2 + ((y - .30) / .10) ** 2 + ((z + .08) / .19) ** 2);
+  if (species === 'gorilla') wound = Math.min(wound, ((x + .03) / .30) ** 2 + ((y - .40) / .28) ** 2 + ((z + .08) / .34) ** 2);
   wound += .07 * Math.sin(y * 130 + z * 80);
   if (wound < 1) {
-    c = wound > .77 ? [75, 22, 28] : [148, 35, 42];
+    c = wound > .77 ? [75, 22, 28] : species === 'gorilla' ? [225, 65, 58] : [148, 35, 42];
     // Three clean ivory rib strokes within the torn patch; no UV dilation.
-    const ribTop = species === 'flamingo' ? .17 : species === 'elephant' && y > .2 ? .31 : .065;
+    const ribTop = species === 'gorilla' ? .40 : species === 'flamingo' ? .17 : species === 'elephant' && y > .2 ? .31 : .065;
     const ribs = onBack ? [0, 1, 2].some(i => Math.abs(z - (-.21 + i * .05) - x * .3) < .011)
       : [0, 1, 2].some(i => Math.abs(y - (ribTop - i * .052) - (z + .1) * .15) < .011);
     if (wound < .58 && ribs) c = [211, 192, 145];
@@ -81,6 +103,10 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
     || species === 'elephant' && Math.abs(x) > .17 && z > .09 && z < .24 && Math.abs(y - (.20 - (Math.abs(x) - .17) * .7)) < .014
     || species === 'flamingo' && z > .30 && y > .01 && y < .15 && Math.abs(x + (y - .08) * .3) < .025;
   if (slash) c = [137, 29, 37];
+  // The distal bill is at the forward end of the normalized bird source.
+  if (species === 'flamingo' && z > .42 && y > .20 && y < .34 && Math.abs(x) < .08) c = [160, 32, 39];
+  // Blood at the lower front of the trunk, away from the ivory tusks.
+  if (species === 'elephant' && z > .36 && y < -.02 && Math.abs(x) < .13) c = [153, 31, 35];
   if (species === 'lion' || species === 'gorilla') {
     const cx = species === 'gorilla' ? .06 : 0, cy = species === 'gorilla' ? .174 : -.005;
     const rx = species === 'gorilla' ? .091 : .103, ry = species === 'gorilla' ? .060 : .061;
