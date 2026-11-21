@@ -264,6 +264,7 @@ async function alphaTypeContracts() {
       expect(courier.health.current).toBe(970);
       expect(courier.survivor!.knockdown?.until).toBeGreaterThan(leapWorld.tick);
       expect(leapWorld.events.events().filter(event => event.type === 'mega.move-impact' && event.sourceId === leaper.id)).toHaveLength(1);
+      expect(leapWorld.events.events().some(event => event.type === 'vfx.effect' && event.kind === 'explosion')).toBe(false);
 
       // Even after recovery, a different move must wait three seconds from the last start.
       leaper.infected!.specialAttack = undefined;

@@ -45,7 +45,7 @@ export interface VfxTargets {
   ambient?: Node<'float'>;
   sunDirection?(): { x: number; y: number; z: number };
 }
-const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'vehicle.durability-hit', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
+const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'mega.move-impact', 'vehicle.feedback', 'vehicle.durability-hit', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 1, charge: 2, splash: 1, bloated: 4 } as const;
@@ -549,6 +549,16 @@ export class Vfx extends Group {
     if (!(event.type === 'pickup.collected')) return;
     const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1);
   };
+  private readonly onMegaMoveImpact = (event: GameEvent): void => {
+    if (event.type !== 'mega.move-impact') return;
+    const source = this.world.entities.get(event.sourceId);
+    if (source?.infected?.specialAttack?.move !== 'alpha.pounce') return;
+    const { x, z } = event.position, ground = this.world.districts?.groundHeight(x, z) ?? 0, low = this.quality === 'low';
+    this.waves.spawn(this.time, .48, x, ground + .045, z, 0, 0, 0, 8, groundShape.pressure, 0xc4a67b, .72);
+    this.burst(x, ground + .2, z, 0x88745e, low ? 9 : 18, .12, .72, .4, particleShape.smoke, 1.1, .45);
+    this.burst(x, ground + .08, z, 0x62584d, low ? 3 : 7, .06, .55, 5, particleShape.spark, 1.5, 1.1);
+    if (Math.hypot((this.targets.focus?.() ?? this.world.entities.get(1)?.transform ?? { x, z }).x - x, (this.targets.focus?.() ?? this.world.entities.get(1)?.transform ?? { x, z }).z - z) < 24) this.targets.shake(this.flashReduction ? .035 : .12);
+  };
   private readonly onVfxEffect = (event: GameEvent): void => {
     if (!(event.type === 'vfx.effect')) return;
     this.effect(event.kind, event.position.x, event.position.z, event.radius, event.position.y);
@@ -574,6 +584,7 @@ export class Vfx extends Group {
     'outbreak.infection': this.onOutbreakInfection,
     'pickup.collected': this.onPickupCollected,
     'vfx.effect': this.onVfxEffect,
+    'mega.move-impact': this.onMegaMoveImpact,
   };
   readonly receive = (event: GameEvent): void => {
     if (event.type === 'vehicle.feedback') {
