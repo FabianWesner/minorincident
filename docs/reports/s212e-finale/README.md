@@ -4,7 +4,8 @@
 
 - Restored the L10 finale route, motorbike, sidecar, checkpoint migration, and QA tooling from the reverted merge.
 - Fixed the resumed Mega regression. Older console saves can lack `l10-overpass-mega`; when the saved courier position is beyond the overpass, story update now records that one-shot beat as complete instead of re-staging the Mega there.
-- Commits: `9f99e544` (resume fix), `3e1cfce4` (finale and motorbike restoration).
+- Built and integrated the motorbike GLB and LODs, aligned the corgi's presentation to the sidecar socket, and made hangar cast spawning wait for navigation. Focused asset, vehicle and save checks pass.
+- Key commits: `9f99e544` (resume fix), `3e1cfce4` (restoration), `17d3c793` (motorbike asset), `e2c5060c` (hangar streaming).
 
 ## Verification
 
@@ -14,11 +15,11 @@
 | `npm run typecheck` | Pass |
 | `npm run lint` | Pass |
 | `npm run test:unit` | Pass; 27 files, 106 tests |
-| `sh tools/remote/run.sh "$PWD" -- npm test` | Pass on third unchanged attempt: 27 files, 105 passed and one skipped, 216.6 s. Two earlier attempts timed out at 240 s; save progression passed separately on the runner. |
-| `npm test` on current code | Pass on rerun: 27 files, 106 tests, 172.1 s. A previous run failed the process-group cleanup assertion; that case also passed in isolation. |
-| Full threat audit, two local shards and merge | Pass on code at `e1e98e6d`: 0 fail flags; all skilled routes complete. Shards ran in 113.6 s and 131.8 s; merged receipt `test-results/qa-threat/README.md`. |
-| `node --import tsx/esm tools/verify.ts E32` | Pass; per-change typecheck, lint, and 106-test gate |
-| `E2E_PORT=5215 SCENE_PORT=5216 npm run test:smoke` | Pass: six smoke tests and one public-build smoke test; 139.8 s |
+| `sh tools/remote/run.sh "$PWD" -- npm test` | Pass on current code: 27 files, 105 passed and one skipped, 197.7 s. |
+| `npm test` on current code | Pass on current code: 27 files, 106 tests, 108.2 s. |
+| Full threat audit, two local shards and merge | Pass on code at `e2c5060c`: 0 fail flags; all skilled routes complete. Shards ran in 112.5 s and 132.6 s; merged receipt `test-results/qa-threat/README.md`. |
+| `npm run verify -- E32` | Pass; per-change typecheck, lint, and 106-test gate |
+| `SMOKE_WORKERS=1 E2E_UNITS=1 E2E_PORT=5215 SCENE_PORT=5216 npm run test:smoke` | Pass: six smoke tests and one public-build smoke test; 237.7 s |
 
 ## Pacing probe
 
@@ -26,10 +27,10 @@ The complete-route probe is saved in [pacing.json](pacing.json). It does **not**
 
 | Tier | Hangar to gate | Longest fight/story gap | Skilled route |
 |---|---:|---:|---|
-| LOW | 310.7 s | 14.4 s | Completed in 1284.2 s |
-| HIGH | 318.7 s | 25.4 s | Tick budget at 1500 s, before credits |
+| LOW | 367.5 s | 15.6 s | Completed in 1397.7 s, six deaths |
+| HIGH | 456.4 s | 19.8 s | Completed in 2091.1 s, 25 deaths |
 
-Both routes miss the 420–540 s hangar-to-gate target. Several beat intervals also miss 45–75 s. Further authored roadblock encounters are required; no player speed reduction was made.
+LOW misses the 420–540 s hangar-to-gate target. Beat intervals in seconds are LOW: 11.8, 45.2, 113.4, 17.5, 24.5, 17.8, 11.1, 24.9, 34.5; HIGH: 11.4, 62.8, 14.7, 44.2, 24.4, 17.8, 87.5, 24.9, 102.1. Both miss the 45–75 s cadence. Further authored roadblock encounters are required; no player speed reduction was made.
 
 An experiment adding three standard-infected cohorts was measured and discarded: LOW took 451.1 s with ten deaths and a 166.5 s beat interval; HIGH took 283.4 s with eight deaths. Both completed the full route, but neither met cadence and LOW exceeded the 20 s activity gap. More enemies alone do not establish the required ride, dismount, fight and remount rhythm.
 
@@ -51,7 +52,7 @@ A second staging trial moved the throw farther east. LOW completed with four dea
 
 The hospital-route investigation revealed an arena retry could resurrect a Mega killed after the ready checkpoint. The checkpoint seam now retains a later kill while preserving the captured position for a living boss; focused save and mission interaction checks pass. A subsequent HIGH route probe on current code stalled before the complex with 30 deaths at the 1,800 s limit, so it cannot verify the end-to-end effect or the skilled-route gate.
 
-The HIGH stall trace showed the hospital cohort repeatedly downed and recovering before a checkpoint could commit. The checkpoint now requires every authored slot to be admitted and no member to be standing, while retaining downed bodies and their normal recovery. With a 2,400 s probe budget both routes completed: LOW 1,397.7 s with six deaths, HIGH 2,091.1 s with 25 deaths. Hangar-to-gate was 367.5 s LOW and 456.4 s HIGH; longest activity gaps were 15.6 s and 19.8 s respectively. LOW remains short of target, several beat intervals remain outside 45–75 s, and HIGH still exceeds the previous 1,800 s route budget. Typecheck, lint, save progression and mission interactions passed; full gates remain to be run on this change.
+The HIGH stall trace showed the hospital cohort repeatedly downed and recovering before a checkpoint could commit. The checkpoint now requires every authored slot to be admitted and no member to be standing, while retaining downed bodies and their normal recovery. With a 2,400 s probe budget both routes completed: LOW 1,397.7 s with six deaths, HIGH 2,091.1 s with 25 deaths. Hangar-to-gate was 367.5 s LOW and 456.4 s HIGH; longest activity gaps were 15.6 s and 19.8 s respectively. LOW remains short of target, several beat intervals remain outside 45–75 s, and HIGH still exceeds the previous 1,800 s route budget. Typecheck, lint, save progression and mission interactions passed; the current threat, unit, smoke and E32 gates subsequently passed.
 
 ## Captures
 
@@ -63,4 +64,6 @@ The headless `s212e-native-captures.ts` pass starts at the research checkpoint a
 
 ## Remaining
 
-The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, rerun remaining full gates on the current code, and update this report with final receipts. The smoke and unit receipts predate later gameplay changes.
+The objective is not complete. Required follow-up: build clearable roadblocks and encounters that produce the 7–9 minute route and 45–75 s cadence on both tiers without relying on deaths; make the overpass throw reliable; capture and review the actual set pieces at HIGH zoom 1; rerun all gates after those changes. The latest 2,400 s route probe failed 12 of 86 checks, including pacing/cadence, overpass throw on LOW, idle arrivals, early Mega visibility, and two controlled combat checks.
+
+The authored motorbike now renders in the HIGH native sheet with the corgi seated in its sidecar; the subjects remain small at zoom 1. A LOW checkpoint-started riding frame also shows the seated corgi, with a large dark shape at the bottom of the image. The LOW teleport diagnostic produced a stretched skinned mesh, so that staged capture is not accepted as visual evidence.
