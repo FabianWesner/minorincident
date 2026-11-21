@@ -1759,6 +1759,7 @@ export class InfectedSystem {
   }
   cancelSpecial(sourceId: number): void {
     const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
+    if (a && this.world.scenario === 'L10' && this.world.missions?.state.states['l10-overpass-mega-staged'] && this.world.missions.state.counters['l10-overpass-mega-attack'] === a.attackId && a.move === 'alpha.grab-throw') return;
     if (!e || !b || !a) return;
     if (b.pursuit || a.stage === 'active') (b.specialCooldowns ??= {})[a.move] = a.cooldownExpiry;
     this.releaseMegaGrab(a);
@@ -1773,14 +1774,15 @@ export class InfectedSystem {
   private updateSpecial(e: EntitySnapshot): boolean {
     const b = e.infected!, a = b.specialAttack, tick = this.world.tick;
     if (!a) return tick < (b.specialRecoveryUntil ?? 0);
+    const authoredOverpassThrow = this.world.scenario === 'L10' && this.world.missions?.state.states['l10-overpass-mega-staged'] && this.world.missions.state.counters['l10-overpass-mega-attack'] === a.attackId && b.pursuit && a.move === 'alpha.grab-throw' && a.stage !== 'recovery';
     if (a.stage === 'telegraph' && (a.move === 'alpha.grab-throw' || a.move === 'alpha.grab-human' || a.move === 'gorilla.grab-throw' || a.move === 'alpha.roar')) {
       const yaw = -Math.atan2(a.area.dz, a.area.dx), delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
       e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
     }
     if (a.pickup) this.props.holdSpecial(e, a);
-    if (a.stage === 'telegraph' && Status.stunned(e, tick)) { this.cancelSpecial(e.id); return true; }
+    if (a.stage === 'telegraph' && Status.stunned(e, tick) && !authoredOverpassThrow) { this.cancelSpecial(e.id); return true; }
     if (a.stage === 'telegraph' && tick >= a.activeTick) {
-      if (Status.stunned(e, tick)) { this.cancelSpecial(e.id); return true; }
+      if (Status.stunned(e, tick) && !authoredOverpassThrow) { this.cancelSpecial(e.id); return true; }
       a.stage = 'active'; (b.specialCooldowns ??= {})[a.move] = a.cooldownExpiry;
       if (b.pursuit && (a.move === 'alpha.grab-throw' || a.move === 'alpha.living-missile')) {
         b.specialCooldowns['alpha.grab-throw'] = a.cooldownExpiry;
@@ -1789,7 +1791,7 @@ export class InfectedSystem {
       this.world.events.emit({ type: 'infected.special', tick, sourceId: e.id, move: a.move, attackId: a.attackId, stage: 'active' });
     }
     const rageSupport = !!b.pursuit && !a.megaCloseGrab && ['alpha.grab-throw','alpha.barrage','alpha.living-missile','alpha.roar'].includes(a.move);
-    if ((b.pursuit && a.stage !== 'recovery' && (Status.stunned(e, tick) || !rageSupport && !this.megaSpecialClear(e))) || (a.stage === 'active' && e.archetype === 'infected.alpha' && Status.stunned(e, tick))) { this.cancelSpecial(e.id); return true; }
+    if ((b.pursuit && a.stage !== 'recovery' && (Status.stunned(e, tick) && !authoredOverpassThrow || !rageSupport && !this.megaSpecialClear(e))) || (a.stage === 'active' && e.archetype === 'infected.alpha' && Status.stunned(e, tick) && !authoredOverpassThrow)) { this.cancelSpecial(e.id); return true; }
     if (b.pursuit && a.move === 'alpha.grab-throw' && !rageSupport) this.resolveMegaGrab(e);
     else if (a.move === 'alpha.grab-human') this.resolveAlphaHumanGrab(e);
     else this.alphaSupport.update(e);

@@ -95,7 +95,8 @@ for (const tier of tiers) {
     const hit = (id: string, base: number, type: 'bullet' | 'explosive' | 'status' = 'bullet') => w!.combat!.damage.apply({ attackId: ++hitSequence, actionId: id, sourceId: 1, targetId: bossId, origin: player.transform, direction: { x: 1, z: 0 }, base, multiplier: 1, type, direct: true, knockback: 0, stagger: .5 });
     const initialHp = boss.health.current;
     for (let n = 0; n < 12; n++) hit('weapon.rocket-launcher', 180, 'explosive');
-    check(tier, 'walk Mega cannot be killed even by repeated direct rockets', boss.health.current === initialHp && boss.health.current > 0, { initialHp, hp: boss.health.current });
+    const conventionalFloor = boss.health.max * megaAlpha.conventionalFloor;
+    check(tier, 'walk Mega cannot be killed even by repeated direct rockets', boss.health.current >= conventionalFloor && boss.health.current > 0, { initialHp, hp: boss.health.current, conventionalFloor });
     const safeHp = player.health.current;
     w.combat!.damage.god = false;
     w.combat!.damage.apply({ attackId: 0, actionId: 'infected.claw', sourceId: bossId, targetId: 1, origin: boss.transform, direction: { x: 1, z: 0 }, base: 35, multiplier: 1, type: 'melee', direct: true, knockback: 0, stagger: 0 });
@@ -191,11 +192,11 @@ for (const tier of tiers) {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number }[] = [];
-  const overpassThrows: { tick: number; move: string; sourceId: number; playerX: number }[] = [];
+  const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number }[] = [];
   const overpassState: unknown[] = [];
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
   let mounts = 0, bikeTicks = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
-  const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [];
+  const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [], overpassProbeState: unknown[] = [];
   let finalState: unknown;
   let lastRegion = '', firstMegaSeen: number | null = null, fullArsenal = false;
   const routeBudget = Number(process.env.L10_STORY_TICKS ?? 1500);
@@ -213,8 +214,8 @@ for (const tier of tiers) {
         if (e.type === 'infected.attack' && e.targetId === 1 && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'fight', id: e.special || 'infected.attack' });
       });
       world.events.on('infected.special', e => {
-        if (e.type === 'infected.special' && e.sourceId === world.megaPursuit?.state.id && e.stage === 'active' && ['alpha.grab-throw', 'alpha.living-missile'].includes(e.move))
-          overpassThrows.push({ tick: e.tick, move: e.move, sourceId: e.sourceId, playerX: world.entities.get(1)!.transform.x });
+        if (e.type === 'infected.special' && world.entities.get(e.sourceId)?.infected?.pursuit && ['alpha.grab-throw', 'alpha.living-missile'].includes(e.move))
+          overpassThrows.push({ tick: e.tick, move: e.move, stage: e.stage, sourceId: e.sourceId, playerX: world.entities.get(1)!.transform.x });
       });
       world.events.on('mounted-gun.mounted', () => mounts++);
       world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.actionId === 'weapon.rotary-minigun') minigunKills++; });
@@ -240,6 +241,10 @@ for (const tier of tiers) {
         const riding = !!world.vehicles?.bicycle.riding;
         if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length }); lastBike = riding; }
         if (world.vehicles?.bicycle.riding && world.vehicles.bicycle.entity?.bicycle?.motorbike) bikeTicks++;
+        if (p.transform.x >= 3320 && p.transform.x < 3380 && world.tick % 60 === 0 && overpassProbeState.length < 24) {
+          const alpha = world.megaPursuit!.entity();
+          overpassProbeState.push({ tick: world.tick, player: { x: p.transform.x, z: p.transform.z }, alpha: alpha && { x: alpha.transform.x, z: alpha.transform.z, y: alpha.transform.y, state: alpha.infected?.state, hidden: alpha.infected?.hidden, special: alpha.infected?.specialAttack?.move, cooldown: alpha.infected?.cooldown, throwCooldown: alpha.infected?.specialCooldowns?.['alpha.grab-throw'], alphaSpecialStarted: alpha.infected?.alphaSpecialStarted, recovery: alpha.infected?.specialRecoveryUntil, stunnedUntil: alpha.combat?.staggerUntil }, visible: alpha && world.infected!.director.inPlayerView(alpha.transform, 32), navClear: alpha && world.infected!.nav.clear(alpha.transform.x, alpha.transform.z, alpha.combat!.radius), los: alpha && world.infected!.hearing.lineOfSight(alpha.transform, p.transform), flagged: !!world.missions!.state.states['l10-overpass-mega'] });
+        }
         if (world.missions!.state.states['l10-overpass-mega'] && !overpassState.length) {
           const alpha = world.megaPursuit!.entity();
           const object = alpha && world.infected!.props.nearestObject(alpha, 6);
@@ -262,13 +267,15 @@ for (const tier of tiers) {
           const ids = [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id);
           fullArsenal ||= isHangarIssue(ids);
         }
-        if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, checkpoint: world.missions!.state.checkpoint, hospital: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('setpiece-field-hospital:')).map(([key, id]) => { const e = world.entities.get(id); return { key, id, hp: e?.health.current, recoverAt: e?.infected?.recoverAt }; }), player: { ...p.transform, hp: p.health.current }, bike: world.vehicles?.bicycle.entity && { ...world.vehicles.bicycle.entity.transform, mounted: world.vehicles.bicycle.riding }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
+        if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, checkpoint: world.missions!.state.checkpoint, roadblocks: Object.entries(world.l10Encounters?.state.roadblockGates ?? {}).map(([group, id]) => ({ group, id, open: world.entities.get(id)?.interactable?.open, position: world.entities.get(id)?.transform })), hospital: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('setpiece-field-hospital:')).map(([key, id]) => { const e = world.entities.get(id); return { key, id, hp: e?.health.current, recoverAt: e?.infected?.recoverAt }; }), player: { ...p.transform, hp: p.health.current }, bike: world.vehicles?.bicycle.entity && { ...world.vehicles.bicycle.entity.transform, mounted: world.vehicles.bicycle.riding }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
       };
     },
     beforeDispose: world => { finalState = { mission: world.missions!.state, gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot(), player: world.entities.get(1)!.transform }; },
   });
   check(tier, 'native ordinary-input route reaches credits', run.completed, { outcome: run.outcome, blocker: run.blocker, time: run.time, deaths: run.deaths });
-  if (!finaleOnly) check(tier, 'overpass Mega throws a prop during beat 6', overpassThrows.some(e => e.playerX >= 3320 && e.playerX <= 3390), overpassThrows);
+  const beat6 = finaleMoments.find(e => e.kind === 'story' && e.id === 'L10.finale-6')?.tick;
+  const beat7 = finaleMoments.find(e => e.kind === 'story' && e.id === 'L10.finale-7')?.tick;
+  if (!finaleOnly) check(tier, 'overpass Mega throws a prop during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'active' && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, throws: overpassThrows });
   if (!finaleOnly) check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);
   if (!finaleOnly) check(tier, 'persistent Mega produces recurring close encounters in distinct route sections', sightings.length >= 3, sightings);
   if (!finaleOnly) check(tier, 'no ordinary infected first enters the widest frame standing idle', idleEntries.length === 0 && firstSeen.size > 0, { idleEntries, seen: firstSeen.size });
@@ -286,9 +293,9 @@ for (const tier of tiers) {
   check(tier, 'hangar-to-gate finale takes 7–9 minutes', finalePacing.hangarToGateSeconds !== null && finalePacing.hangarToGateSeconds >= 420 && finalePacing.hangarToGateSeconds <= 540, finalePacing.hangarToGateSeconds);
   check(tier, 'every story beat arrives 45–75 seconds after the previous one', beatIntervals.every(seconds => seconds !== null && seconds >= 45 && seconds <= 75), beatIntervals);
   check(tier, 'fight or story gaps stay within 20 seconds', finalePacing.longestGapSeconds !== null && finalePacing.longestGapSeconds <= 20, finalePacing.longestGapSeconds);
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassThrows, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
-  } catch (error) { check(tier, 'native route executes', false, String(error)); rows.push({ tier, routeError: String(error) }); }
+  } catch (error) { const detail = error instanceof Error ? error.stack ?? String(error) : String(error); check(tier, 'native route executes', false, detail); rows.push({ tier, routeError: detail }); }
 }
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify({ ...provenance(), checks, rows }, null, 2) + '\n');

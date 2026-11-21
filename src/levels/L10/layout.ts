@@ -127,7 +127,7 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     roadside('overpass-rubble-east', 'prop.sandbag-pallet', 3390, 103, [1.4, .7, .8], .2);
     // A normal pushable physics prop: the pursuit Alpha must be able to pick
     // this up for its existing overpass throw move.
-    place('l10-setpiece-overpass-throwable', 'prop.crates', 3332, 101.4, [.8, .5, .6], .1);
+    place('l10-setpiece-overpass-throwable', 'prop.crates', 3336, 98, [.8, .5, .6], .1);
     // Triage fencing reads as a final roadblock while the central lane stays passable.
     roadside('hospital-fence-west', 'prop.cure-mil-fence', 3502, 86, [2.7, 1.2, .2], Math.PI / 2);
     roadside('hospital-fence-east', 'prop.cure-mil-fence', 3502, 104, [2.7, 1.2, .2], Math.PI / 2);
@@ -202,7 +202,9 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     beat('hospital-stretcher-b', 'prop.l10-field-stretcher', 3521, 91, [1.1, .85, .65], -.15);
     beatSolid('hospital-stretcher-a', 3504, 90, .7, .45, .9);
     beatSolid('hospital-stretcher-b', 3521, 91, .7, .45, .9);
-    place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, -27, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
+    // Keep the marked console approach reachable; the old gate panel occupied
+    // the exact mission anchor and made the objective fail district validation.
+    place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
       const low = gap.z - 35, high = gap.z + 35;
       wall(`l10-gap-${i}-north`, gap.x - .2, low, gap.x + .2, gap.z - 1);

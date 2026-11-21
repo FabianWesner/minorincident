@@ -32,6 +32,8 @@ export interface CureEncounterState {
   farmScares?: FarmScareState; toy?: number; convoyBarrels?: number[]; convoyCrates?: number[]; convoySupplies?: Record<string, number>;
   pressureAttackAt?: number; pressureTick?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
+  /** The four ride/fight gates that hold the motorbike until their roadblock encounter is cleared. */
+  roadblockGates?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
   /** Paced set pieces: the wave currently admitting, and the next re-target pass. */
   pacedWave?: Record<string, number>; pacedPress?: number;
@@ -322,6 +324,32 @@ export class LevelTenEncounters {
         // lane. No group relocates after admission; a paced wave restages on
         // the courier's current lane at its own gate below.
         lanes[group.id] = this.lanePull(group, player, paced);
+      }
+      if (['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id) && released.includes(group.id)) {
+        const gates = this.state.roadblockGates ??= {};
+        let gateId = gates[group.id];
+        if (gateId === undefined && chunks.resident(group.at[0], group.at[1])) {
+          // The physical gate blocks the riding lane. It can be opened on
+          // foot, or the authored encounter opens it after its full cohort is
+          // admitted and cleared.
+          gateId = w.interactables!.spawn('gate', { x: group.at[0], z: 95 }, {
+            halfX: .2, halfZ: 10, radius: 2, label: 'Open roadblock',
+          });
+          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ: 10 });
+          gates[group.id] = gateId;
+        }
+        const gate = gateId === undefined ? undefined : w.entities.get(gateId);
+        if (gate?.interactable?.open) gate.interactable.enabled = false;
+        if (gate?.interactable && !gate.interactable.open) {
+          const slots = cureEncounterSlots(group, ai.director.tier);
+          const admitted = slots.every(slot => this.state.spawned[`${slot.key}:0`] !== undefined);
+          const cleared = admitted && slots.every(slot => (w.entities.get(this.state.spawned[`${slot.key}:0`])?.health.current ?? 0) <= 0);
+          if (cleared) {
+            gate.interactable.open = true; gate.interactable.completed = true;
+            gate.interactable.enabled = false;
+            w.interactables!.unblock(gate.id);
+          }
+        }
       }
       // Let the cohort begin its safe offscreen approach first. The visible
       // board falls only when the courier is near the actual sign, which sits
