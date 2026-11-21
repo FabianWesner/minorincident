@@ -21,7 +21,7 @@ Trying the stair foot as the first safe service admission candidate did not clea
 
 Commit `cdb56ba1` prevents Mega damage from extending an existing survivor knockdown and rejects a Mega grab against an already downed survivor. Focused infected AI tests, typecheck and lint pass; full threat and unit checks need repeating on this change. Skilled wave timing remains open.
 
-Post-guard full threat shards `test-results/s187c-current-A` and `test-results/s187c-current-B` completed and merged with 0 top-level flags and L10 skilled complete. The L10 skilled wave flag persists in the level receipt; L8 also retains three skilled diagnostic flags. The remote `npm test` reached its 240-second limit three times, including two unchanged retries. A complete local `npm test` passed afterward: 27 files, 106 passed and 1 skipped in 201.9 seconds. The prescribed remote gate remains open.
+Post-guard full threat shards `test-results/s187c-current-A` and `test-results/s187c-current-B` completed and merged with 0 top-level flags and L10 skilled complete. The L10 skilled wave flag persists in the level receipt; L8 also retains three skilled diagnostic flags. The remote `npm test` reached its 240-second limit three times, then an unchanged retry passed: 27 files, 105 passed and 1 skipped in 216.1 seconds. A complete local `npm test` also passed: 27 files, 106 passed and 1 skipped in 201.9 seconds.
 
 ## s187b follow-up — coarse pursuit stall
 
