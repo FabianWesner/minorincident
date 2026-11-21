@@ -18,7 +18,7 @@ import { nightAccents, type AccentFire } from '../NightAccents';
 import { l3SmokePlumes } from '../../data/l3';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { visible?: boolean; /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
+interface Column { visible?: boolean; /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; lawn?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void; move?(x: number, z: number): void } | null;
@@ -754,7 +754,7 @@ export class Blasts extends Group {
       let c = this.fireColumns.get(key);
       if (!c) {
         const lawn = cell.halfX !== undefined;
-        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: lawn ? (low ? .5 : 1) : (low ? 1.5 : 3), size: lawn ? .8 : 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
+        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: lawn ? (low ? .5 : 1) : (low ? 1.5 : 3), size: lawn ? .8 : 3, lawn, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
         c.light = lawn ? null : this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
         this.fireColumns.set(key, c);
       }
@@ -834,15 +834,15 @@ export class Blasts extends Group {
     const e = c.ambient ? undefined : this.world.entities.get(id), field = id <= -3_000_000 && id > -5_000_000;
     if (!e && !c.ambient && !field) return;
     if (!this.sourceVisible(c.x, c.z, (field ? 3 : c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) return;
-    const big = c.ambient ? c.ambient.car : !!e?.vehicle, radius = field ? 3 : c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = field ? 6 : big ? 6 : Math.max(3, Math.round(radius * 3));
+    const big = c.ambient ? c.ambient.car : !!e?.vehicle, radius = c.lawn ? 1 : field ? 3 : c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = c.lawn ? 2 : field ? 6 : big ? 6 : Math.max(3, Math.round(radius * 3));
     // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
-    const grow = field ? 2 : c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
+    const grow = c.lawn ? .55 : field ? 2 : c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
     const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
     for (let i = 0; i < n; i++) {
       const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
       this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), field ? .65 : .8 + .4 * life);
     }
-    this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life) * (field ? .55 : 1));
+    this.writeGlow(c.x, c.z, radius * (c.lawn ? 1.5 : 3.2), 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life) * (c.lawn ? .2 : field ? .55 : 1));
   };
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
