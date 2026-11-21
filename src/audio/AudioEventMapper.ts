@@ -44,7 +44,7 @@ const l5CueSounds: Record<string, { cue: string; gain: number; rate: number }> =
 };
 /** Recorded infected voice cues (alert, hurt, death) are human performances: animals keep their own telegraphs. */
 const voicedInfected = new Set(humanInfected.map(d => d.id));
-const animalVoice = (archetype?: string): string | undefined => {
+export const animalVoice = (archetype?: string): string | undefined => {
     const name = archetype?.replace(/^infected\./, '');
     return name === 'lioness' ? 'lion' : name && ['lion', 'flamingo', 'zebra', 'gorilla', 'monkey', 'elephant'].includes(name) ? name : undefined;
 };
@@ -149,6 +149,10 @@ export class AudioEventMapper {
         if (event.type === 'mega.move-impact') {
             this.host.play('mega.impact', { position: event.position, gain: 1, rate: megaCueRates['mega.impact'], priority: 150, dry: true }, source);
             return;
+        }
+        if (event.type === 'infected.special' && event.stage === 'active') {
+            const animal = animalVoice(entity?.archetype);
+            if (animal) { this.host.play(`animal.${animal}.attack`, { position }, source); return; }
         }
         if (event.type === 'telegraph') {
             if (isMega(entity) && 'special' in event) {
@@ -441,7 +445,7 @@ export class AudioEventMapper {
         }
         if (event.type === 'infected.attack') {
             const animal = animalVoice(entity?.archetype);
-            if (animal) { this.host.play(`animal.${animal}.attack`, { position }, source); return; }
+            if (animal) { if (!entity?.infected?.specialAttack) this.host.play(`animal.${animal}.attack`, { position }, source); return; }
             // Close individual vocals are bounded by the horde manager; a landed melee attack adds only the bite.
             if (event.amount > 0 && !['barricade', 'prop-throw', 'explode'].includes(event.special))
                 this.host.play('infected.bite', { position: this.host.world.entities.get(event.targetId)?.transform ?? position }, source);
