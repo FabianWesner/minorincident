@@ -39,6 +39,8 @@ The subsequent ride trace showed voluntary dismounts near the starting bike on s
 
 A prototype quarantine gate blocked the gantry opening until all encounter slots were admitted and cleared, then enabled an on-foot interaction. It was discarded after the LOW route probe completed with 23 deaths and took 615.1 s to the complex gate, including a 307.6 s final beat interval and a 23.5 s activity gap. A roadblock needs coordinated approach, enemy admission and recovery rather than simply blocking the existing route.
 
+The LOW route probe also shows the overpass throw is not reliable. At the original staging point the Mega was already performing a roar and the throw resolver rejected the request, while the script still marked the beat complete. A prototype that interrupted the prior move once and retried did not produce a throw before the courier left the area; the Mega moved away from the crate. That prototype was discarded. The overpass spectacle remains open.
+
 ## Captures
 
 The headless capture script runs through `tools/e2e-lock.sh` on ports 5215/5216. Its revised sheet teleports the courier and steps the simulation to load each location. Review: 0 shows road and an ambulance; 1 a medical building; 2 the quarantine gantry and effigies; 3–4 mostly empty road; 5 a road beside wrecks; 6 the Mega beside the courier; 7 an empty road with the courier outside the frame; 8 road and a bench; 9 dark road. The unrelated start objective remains on screen. These staged views do not show the actual story beats or ridden motorbike. Native gameplay captures and a proper sheet remain outstanding.
