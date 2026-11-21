@@ -610,7 +610,7 @@ export class L8BossArenas {
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     if (distance(e.transform, p.transform) <= (leap ? Math.max(a.area.radius + .35, infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .1) : a.area.radius + .35)) {
       const firstContact = !a.hitIds.includes(1);
-      this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : arena.id === 'lion' && a.move === 'lion.pounce' ? 120 : 0);
+      this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : leap ? 120 : 0);
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabNextTick = w.tick + 30; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     const landed = leap && distance(e.transform, p.transform) <= infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .05;
