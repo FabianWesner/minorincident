@@ -733,6 +733,7 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     const clusterItems = cluster.map((assetId, i) => world.props!.spawn({ id: `l9-hull-${i}`, assetId, position: [55, 0, (i - 1) * .7], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [54.5, 0, (i - 1) * .7 - .35], max: [55.5, 1.2, (i - 1) * .7 + .35] } }));
     const fixtureId = world.vehicles!.spawn('vehicle.military-apc', { x: 50, z: 0 });
     const fixture = world.vehicles!.cars.get(fixtureId)!; world.vehicles!.active = fixtureId;
+    fixture.entity.vehicle!.floor = true;
     const barricadeId = world.vehicles!.obstacles.spawn('barricade', { x: 57, z: 0 });
     const barricade = world.vehicles!.obstacles.items.find(item => item.entity.id === barricadeId)!;
     fixture.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); fixture.physics.postPhysics();

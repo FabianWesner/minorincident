@@ -326,6 +326,16 @@ export class Vehicles {
       if (Math.abs(localX) > extent + halfX || Math.abs(localZ) > car.physics.def.width / 2 + halfZ) continue;
       if ((obstacle.light || obstacle.entity.archetype === 'obstacle.jersey-barrier') && speed >= 5) {
         this.obstacles.ram(obstacle, velocity, this.world.tick);
+        if (car.entity.vehicle!.floor && obstacle.body) {
+          // The obstacle's low collider can pass below the cab while its tall
+          // rendered barricade crosses the occupants. Clear it to the side of
+          // the armored hull at impact, retaining its forward and upward motion.
+          const side = Math.sign(localZ || 1), z = side * (car.physics.def.width / 2 + halfZ + .1);
+          const t = obstacle.body.translation();
+          obstacle.body.setTranslation({ x: p.x + localX * c + z * s, y: t.y, z: p.z - localX * s + z * c }, true);
+          const v = obstacle.body.linvel(), lateral = v.x * s + v.z * c;
+          if (lateral * side < 2) obstacle.body.setLinvel({ x: v.x + s * (side * 2 - lateral), y: v.y, z: v.z + c * (side * 2 - lateral) }, true);
+        }
         this.crash(car, speed);
         car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
       } else if (!obstacle.light && speed >= 2 && this.world.tick >= (car.hits.get(obstacle.entity.id) ?? 0)) {
