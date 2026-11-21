@@ -733,6 +733,8 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     const clusterItems = cluster.map((assetId, i) => world.props!.spawn({ id: `l9-hull-${i}`, assetId, position: [55, 0, (i - 1) * .7], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [54.5, 0, (i - 1) * .7 - .35], max: [55.5, 1.2, (i - 1) * .7 + .35] } }));
     const fixtureId = world.vehicles!.spawn('vehicle.military-apc', { x: 50, z: 0 });
     const fixture = world.vehicles!.cars.get(fixtureId)!; world.vehicles!.active = fixtureId;
+    const barricadeId = world.vehicles!.obstacles.spawn('barricade', { x: 57, z: 0 });
+    const barricade = world.vehicles!.obstacles.items.find(item => item.entity.id === barricadeId)!;
     fixture.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); fixture.physics.postPhysics();
     for (let tick = 0; tick < 90; tick++) {
       world.update();
@@ -743,7 +745,12 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
         expect(Math.abs(localX) <= fixture.physics.def.length / 2 && Math.abs(localZ) <= fixture.physics.def.width / 2,
           `tick ${tick}: ${prop.id} stays outside the APC hull`).toBe(false);
       }
+      const b = barricade.body?.translation() ?? barricade.entity.transform, dx = b.x - p.x, dz = b.z - p.z;
+      expect(Math.abs(dx * c - dz * s) <= fixture.physics.def.length / 2 && Math.abs(dx * s + dz * c) <= fixture.physics.def.width / 2,
+        `tick ${tick}: barricade stays outside the APC hull`).toBe(false);
     }
+    expect(fixture.entity.transform.x, 'APC passes the barricade starting position').toBeGreaterThan(57);
+    expect(barricade.body, 'APC contact releases the barricade').toBeDefined();
     for (let i = 0; i < 60; i++) world.update();
     expect(world.props!.items.filter(p => p.awake).length).toBeLessThanOrEqual(world.props!.awakeBudget);
     return world.props!.snapshot();
