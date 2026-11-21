@@ -40,3 +40,5 @@ The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the res
 The objective is not complete. The route rhythm, ride/remount cadence, and readable set pieces remain open. An earlier encounter release radius of 70 m was tested on LOW: the courier still bypassed closed gates, the route took 299.35 s, and the change was discarded.
 
 A LOW trial directing the bot to approach and interact with closed gates after nearby threats cleared was discarded: it completed in 284.5 s hangar to gate with two deaths, 207 bike ticks and a 27.8 s activity gap. The bike was still abandoned and cadence remained outside target.
+
+After the hard-hit motorbike change, a HIGH trial made voluntary dismount depend on actual distance to the roadblock rather than x distance alone. It was discarded: repeated deaths at the first gate restored the rider and bike to the preceding checkpoint, yielding 32 deaths, 816.9 s hangar to gate and a 2100 s route timeout. The first fight needs coordinated placement and recovery before this approach can work.
