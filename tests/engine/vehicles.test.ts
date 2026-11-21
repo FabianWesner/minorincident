@@ -738,14 +738,19 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     fixture.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); fixture.physics.postPhysics();
     for (let tick = 0; tick < 90; tick++) {
       world.update();
+      world.physics.world!.propagateModifiedBodyPositionsToColliders();
       const yaw = fixture.entity.transform.yaw, c = Math.cos(yaw), s = Math.sin(yaw), p = fixture.entity.transform;
       for (const prop of clusterItems) {
+        const contact = fixture.physics.collider.contactCollider(prop.collider, 0);
+        expect(contact?.distance ?? 0, `tick ${tick}: ${prop.id} collider penetration`).toBeGreaterThanOrEqual(-.03);
         const q = prop.body.translation(), dx = q.x - p.x, dz = q.z - p.z;
         const localX = dx * c - dz * s, localZ = dx * s + dz * c;
         expect(Math.abs(localX) <= fixture.physics.def.length / 2 && Math.abs(localZ) <= fixture.physics.def.width / 2,
           `tick ${tick}: ${prop.id} stays outside the APC hull`).toBe(false);
       }
       const b = barricade.body?.translation() ?? barricade.entity.transform, dx = b.x - p.x, dz = b.z - p.z;
+      const barrierContact = fixture.physics.collider.contactCollider(barricade.collider, 0);
+      expect(barrierContact?.distance ?? 0, `tick ${tick}: barricade collider penetration`).toBeGreaterThanOrEqual(-.03);
       expect(Math.abs(dx * c - dz * s) <= fixture.physics.def.length / 2 && Math.abs(dx * s + dz * c) <= fixture.physics.def.width / 2,
         `tick ${tick}: barricade stays outside the APC hull`).toBe(false);
     }
