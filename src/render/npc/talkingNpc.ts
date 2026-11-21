@@ -71,7 +71,7 @@ export function speakingNpc(world: SimWorld, id: number): boolean {
   if (world.scenario === 'L8') {
     const zoo = mission.l8?.state;
     if (subtitle.id === 'L8.gate-soldier' || subtitle.id.startsWith('L8.route-') && subtitle.id.endsWith('.soldier')) return zooSoldier(world, subtitle.id, subtitle.until) === id;
-    if (['L8.nadia-path', 'L8.nadia-lion', 'L8.nadia-elephant'].includes(subtitle.id)) return zoo?.keeperId === id;
+    if (['L8.nadia-path', 'L8.nadia-lion', 'L8.nadia-elephant', 'L8.nadia-elephant-pass', 'L8.nadia-flamingo-pass', 'L8.nadia-zebra-pass', 'L8.nadia-gorilla-pass', 'L8.nadia-safe', 'L8.nadia-gate-breach'].includes(subtitle.id)) return zoo?.keeperId === id;
     if (subtitle.id === 'L8.hale-greeting' || subtitle.id === 'L8.hale-breach' || subtitle.id === 'L8.hale-dying') return zoo?.haleId === id;
     if (subtitle.id.startsWith('L8.route-') && !subtitle.id.endsWith('.soldier')) return zoo?.keeperId === id;
   }

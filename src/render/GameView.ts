@@ -875,7 +875,7 @@ export class GameView implements Lifecycle {
       const l8Zone = l8Arena ? l8Route.find(stage => stage.id === l8Arena.id)!.zone
         : l8Boarding ? { x0: 82, z0: 39, x1: 110, z1: 89 } : undefined;
       // Frame the entire bounded pen at default zoom, including its near edge.
-      const l8Scale = l8Zone ? 4.5 * Math.max(1, 1 / this.view.camera.aspect) : 1;
+      const l8Scale = l8Zone ? 1.35 * Math.max(1, 1 / this.view.camera.aspect) : 1;
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : l8Scale;
       this.view.zoomFloor = this.world.scenario === 'L2' ? l2RescueView(this.world, this.view.playerZoom, this.view.zoomFloor, seconds) : 0;
       const ending = this.world.missions?.state.epilogue;
@@ -1074,7 +1074,12 @@ export class GameView implements Lifecycle {
   private syncMission(): void {
     const mission = this.world.missions, cinematic = mission?.state.cinematic;
     const departure = mission?.l8?.state;
-    if (departure) this.districts?.zooExit(departure.departureFrom ? Math.min(1, (this.world.tick - departure.chaseAt) / 90) : 0);
+    if (this.world.scenario === 'L8') {
+      const gateBreakAt = this.world.missions?.l8?.state.perimeterGateBreaks?.[3];
+      const breachOpen = gateBreakAt === null || gateBreakAt === undefined ? 0 : Math.max(0, Math.min(1, (this.world.tick - gateBreakAt) / 90));
+      const escapeOpen = departure?.departureFrom ? Math.min(1, (this.world.tick - departure.chaseAt) / 90) : 0;
+      this.districts?.zooExit(Math.max(breachOpen, escapeOpen));
+    } else if (departure) this.districts?.zooExit(departure.departureFrom ? Math.min(1, (this.world.tick - departure.chaseAt) / 90) : 0);
     if (cinematic && this.cinematicId !== cinematic.id) {
       this.cinematicId = cinematic.id;
       const pose = mission!.def.cinematics[cinematic.id], player = this.world.entities.get(1);
@@ -1170,7 +1175,7 @@ export class GameView implements Lifecycle {
     }
     if (this.crowd) this.crowd.visible = !this.probes?.hide.crowd;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
-    this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update(); this.l9Props?.update(alpha); this.l8Gates?.update(); this.l10Perimeter?.update();
+    this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update(); this.l9Props?.update(alpha); this.l8Landings?.update(this.world); this.l8Gates?.update(); this.l10Perimeter?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     // P1-114: L3's pulled-back framing (station attack, army rescue) is gameplay, not a story shot; it used to hide the checkpoint ring
     // and the route diamond for up to a minute ("There is no checkpoint for me to walk to"). The ring grows with the pull-back instead.

@@ -11,6 +11,7 @@ export class L8Gates extends Group {
   private readonly poseMatrix = new Matrix4();
   private readonly poseRotation = new Quaternion();
   private readonly hiddenScale = new Vector3();
+  private readonly collapseScale = new Vector3(1, 1, 1);
   /** One drawn panel per gate/wall (its rods share the flag), for the courier x-ray test. */
   private readonly panels: { bounds: Box3; shown: boolean }[] = [];
   private readonly ray = new Ray();
@@ -38,6 +39,9 @@ export class L8Gates extends Group {
     fence(l8EncounterGates.elephant, true, false, 'elephant');
     fence(l8EncounterGates.elephantEntry, true, false, 'elephantEntry');
     fence(l8EncounterGates.elephantExit, true, false, 'elephantExit');
+    fence({ x: 0, z: -86, halfX: 2.7, halfZ: .4 }, true, false, 'perimeter.0');
+    fence({ x: 0, z: 86, halfX: 2.7, halfZ: .4 }, true, false, 'perimeter.1');
+    fence({ x: -116, z: 0, halfX: .4, halfZ: 2.7 }, true, false, 'perimeter.2');
     this.mesh = new InstancedMesh(this.geometry, materials.fromColor('l8-keeper-fence', new Color('#b7a269'), 0, true), this.rods.length);
     this.mesh.castShadow = this.mesh.receiveShadow = true;
     this.add(this.mesh); this.update();
@@ -47,13 +51,19 @@ export class L8Gates extends Group {
     const closed = !arenas || l8Route.some(stage => stage.id !== 'elephant' && arenas.find(a => a.id === stage.id)?.phase !== 3);
     const ctx = { arenas: arenas ?? [], sealed: !!this.world.missions?.l8?.state.sealedAt };
     this.rods.forEach((rod, i) => {
-      const hidden = rod.key === 'elephant' ? !this.world.missions?.state.states.breached || arenas?.find(a => a.id === 'elephant')?.phase === 3
+      const outerIndex = rod.key?.startsWith('perimeter.') ? Number(rod.key.slice('perimeter.'.length)) : -1;
+      const breakAt = outerIndex >= 0 ? this.world.missions?.l8?.state.perimeterGateBreaks?.[outerIndex] : undefined;
+      const elapsed = breakAt == null ? -1 : this.world.tick - breakAt;
+      const collapsing = elapsed >= 0 && elapsed < 24;
+      const hidden = outerIndex >= 0 ? elapsed >= 24
+        : rod.key === 'elephant' ? !this.world.missions?.state.states.breached || arenas?.find(a => a.id === 'elephant')?.phase === 3
         : rod.key === 'elephantEntry' ? !!arenas && arenas.every(a => a.id === 'elephant' || a.phase === 3) && !(arenas.find(a => a.id === 'elephant')?.phase && arenas.find(a => a.id === 'elephant')?.armed)
         : rod.key === 'elephantExit' ? arenas?.find(a => a.id === 'elephant')?.phase === 3
         : rod.key ? !arenas || !l8GateClosed(rod.key, ctx)
         : rod.gate && !closed || rod.breach && !!arenas?.some(a => a.id === 'elephant' && a.phase > 0);
       this.panels[rod.panel].shown = !hidden;
-      this.poseMatrix.compose(rod.p, this.poseRotation, hidden ? this.hiddenScale : rod.s); this.mesh.setMatrixAt(i, this.poseMatrix);
+      const scale = collapsing ? this.collapseScale.set(1, Math.max(0, 1 - elapsed / 24), 1) : rod.s;
+      this.poseMatrix.compose(rod.p, this.poseRotation, hidden ? this.hiddenScale : scale); this.mesh.setMatrixAt(i, this.poseMatrix);
     });
     this.mesh.instanceMatrix.needsUpdate = true;
   }

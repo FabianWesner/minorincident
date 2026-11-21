@@ -182,7 +182,7 @@ export class CrowdView extends Group {
     for (const mesh of [this.ashHeaps, this.ashBones]) { mesh.frustumCulled = false; mesh.count = 0; this.add(mesh); }
     this.registry = sharedRegistry ?? new AssetRegistry((event) => this.logs.push(event), { materials: this.shading, textureSize: this.low ? 512 : 1024 });
     const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
-    this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
+    this.shadows = new InstancedMesh(shadow, contactShadowMaterial(this.world.scenario === 'L8' ? .065 : .3), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
   }
   async init(view?: View): Promise<void> {
     const started = performance.now();

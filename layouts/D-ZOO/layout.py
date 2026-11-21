@@ -61,9 +61,16 @@ def wall(name, x, z, length, along_x, gap=None):
         chunk = math.floor((coord+length/2)/24)
         ob['layoutBatch'] = f'zoo-wall-{name}-{chunk}-{token}'
     dims = [length,4,.8] if along_x else [.8,4,length]
-    l.data['colliders'].append(dict(id='zoo-wall-'+name,aabb=dict(min=[x-dims[0]/2,0,z-dims[2]/2],max=[x+dims[0]/2,4,z+dims[2]/2]),minTier=0,maxTier=5))
-    # `gap` = (centre, width) along the wall: the masonry is left out for the drive-out gate (its steel leaves are built below); the collider above stays whole.
+    # `gap` = (centre, width) along the wall. Leave both the masonry and its
+    # collision open for the four destructible perimeter gates.
     spans = [(-length/2, length/2)] if gap is None else [(-length/2, gap[0]-gap[1]/2), (gap[0]+gap[1]/2, length/2)]
+    for segment, (lo, hi) in enumerate(spans):
+        if hi-lo < .1: continue
+        if along_x:
+            bounds = dict(min=[x+lo,0,z-dims[2]/2],max=[x+hi,4,z+dims[2]/2])
+        else:
+            bounds = dict(min=[x-dims[0]/2,0,z+lo],max=[x+dims[0]/2,4,z+hi])
+        l.data['colliders'].append(dict(id=f'zoo-wall-{name}-{segment}',aabb=bounds,minTier=0,maxTier=5))
     for lo, hi in spans:
         span = hi - lo
         masonry('wall-plinth','sidewalk',[span,.4,dims[2]] if along_x else [dims[0],.4,span],[x+((lo+hi)/2 if along_x else 0),.2,z+(0 if along_x else (lo+hi)/2)])
@@ -82,13 +89,14 @@ def wall(name, x, z, length, along_x, gap=None):
         px=x+(t if along_x else 0); pz=z+(0 if along_x else t)
         masonry('wall-pier','brick',[1.15,4,1.15],[px,2,pz])
         masonry('pier-cap','sidewalk',[1.35,.22,1.35],[px,4.05,pz])
-for name,x,z,length,axis in [('north',0,-86,232,True),('south',0,86,232,True),('west',-116,0,172,False),('east',116,0,172,False)]: wall(name,x,z,length,axis,gap=(80.0,5.4) if name == 'east' else None)
+for name,x,z,length,axis in [('north',0,-86,232,True),('south',0,86,232,True),('west',-116,0,172,False),('east',116,0,172,False)]:
+    wall(name,x,z,length,axis,gap=(80.0,5.4) if name == 'east' else (0.0,5.4))
 
 # Real shipped architecture: ticket pavilions, intact reptile hall and staff lodge.
 for asset,x,z,label,door in [('bld.zoo-gate',0,78,'Zoo tickets','zoo-entrance'),('bld.reptile-house',-14,14,'Reptile House','reptile-door'),('bld.park-lodge',87,32,'Zoo staff and first aid','staff-door')]:
     ident=l.place(asset,[x,0,z])
     l.data['buildings'].append(dict(id=ident,assetId=asset,aabb=l.data['placements'][-1]['visualAabb'],label=label))
-    l.anchor(door,[x+7,0,z])
+    l.anchor(door,[x,0,z-8] if door == 'zoo-entrance' else [x+7,0,z])
 
 # Enclosures built from shipped metal fence modules. Each has two 5 m gates;
 # permanent posts frame the openings while both routes remain navigable.

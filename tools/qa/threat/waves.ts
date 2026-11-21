@@ -154,7 +154,8 @@ export class WaveObserver {
     }
     const zoo = w.missions!.l8?.state;
     if (zoo?.breachedAt) {
-      this.wave('tunnel-breach', zoo.breachedAt, 'L8 breachedAt/story.say', zoo.outlets.length * (w.infected!.director.tier === 'low' ? 3 : 6));
+      const perimeterOutlets = zoo.perimeterOutlets ?? [];
+      this.wave('tunnel-breach', zoo.breachedAt, 'L8 breachedAt/story.say', perimeterOutlets.length * (w.infected!.director.tier === 'low' ? 3 : 6));
       for (const q of zoo.arrivals.slice(this.l8Cursor)) {
         const wave = q.tick === zoo.breachedAt ? this.waves.get('tunnel-breach')! : this.waves.get(`tunnel-reinforcement@${q.tick}`)
           ?? this.wave(`tunnel-reinforcement@${q.tick}`, q.tick, 'L8 reinforcement clock', zoo.outlets.length * 4);
@@ -186,7 +187,7 @@ export class WaveObserver {
     return [...this.waves.values()].map(wave => {
       const acceptanceWave = wave.key === 'market-ambush' || wave.key.startsWith('station-') || wave.key.startsWith('breach-') || wave.key.startsWith('l6.breach') || wave.key.startsWith('tunnel-breach') || wave.key === 'dispersal-assault' || wave.key.startsWith('war-0@');
       const zoo = this.world.missions!.l8?.state;
-      const outletCohorts = wave.key === 'tunnel-breach' && zoo ? zoo.outlets.map((_, outlet) => ({
+      const outletCohorts = wave.key === 'tunnel-breach' && zoo ? (zoo.perimeterOutlets ?? []).map((_, outlet) => ({
         outlet, spawned: zoo.arrivals.filter(q => q.tick === zoo.breachedAt && q.outlet === outlet).length,
       })) : undefined;
       const receipt: WaveReceipt = { key: wave.key, source: wave.source, startSeconds: wave.start / 60, observedSeconds: Math.max(0, this.world.tick - wave.start) / 60,
@@ -198,7 +199,7 @@ export class WaveObserver {
       if (wave.key === 'tunnel-breach' && outletCohorts) {
         const minimum = this.world.infected!.director.tier === 'low' ? 3 : 6;
         if (outletCohorts.filter(q => q.spawned >= minimum).length < 3) breachFlags.push(`BREACH_FEWER_THAN_THREE_OUTLETS_WITH_${minimum}`);
-        const outlets = zoo!.outlets;
+        const outlets = zoo!.perimeterOutlets ?? [];
         for (let i = 0; i < outlets.length; i++) for (let j = i + 1; j < outlets.length; j++)
           if (Math.hypot(outlets[i].x - outlets[j].x, outlets[i].z - outlets[j].z) < 20) breachFlags.push('BREACH_OUTLETS_LESS_THAN_20M_APART');
       }

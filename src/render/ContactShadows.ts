@@ -5,11 +5,11 @@ import type { SimWorld } from '../sim/world/SimWorld';
 import { MotionPresentation } from './characters/MotionPresentation';
 
 /** A smooth radial footprint, shared by all figure types; one draw for companions and humans. */
-export function contactShadowMaterial(): MeshBasicNodeMaterial {
+export function contactShadowMaterial(intensity = .3): MeshBasicNodeMaterial {
   const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
   groundDepth(material, groundLayers.footprint);
   material.name = 'keep_contactShadow';
-  const opacity = uv().sub(.5).length().mul(2).smoothstep(.12, 1).oneMinus().pow(2).mul(.3);
+  const opacity = uv().sub(.5).length().mul(2).smoothstep(.12, 1).oneMinus().pow(2).mul(intensity);
   material.outputNode = vec4(color('#50375f'), opacity);
   return material;
 }
@@ -17,7 +17,7 @@ export class ContactShadows extends InstancedMesh {
   private readonly transform = new Matrix4();
   constructor(private readonly world: SimWorld) {
     const geometry = new PlaneGeometry(1.4, 1.4); geometry.rotateX(-Math.PI / 2);
-    super(geometry, contactShadowMaterial(), 512);
+    super(geometry, contactShadowMaterial(world.scenario === 'L8' ? .065 : .3), 512);
     this.name = 'figure-contact-shadows'; this.frustumCulled = false; this.count = 0;
   }
   private readonly presentation = new MotionPresentation();
