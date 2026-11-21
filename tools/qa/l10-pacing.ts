@@ -39,6 +39,10 @@ for (const quality of tiers) {
   const seenVignettes = new Set<string>(), knownInfected = new Set<number>(), trace: Record<string, unknown>[] = [];
   let deaths = 0, fights = 0, finds = 0, scares = 0, megaMoments = 0, fightUntil = 0, lastCombatBeat = -1200, lastMegaBand = -1, routeMetres = 0, lastEncounterBeat = -600;
   let gameplayEnd = 0, peakOpeningRegulars = 0, peakOpeningDogs = 0, peakOpeningAlphas = 0, arenaMetres = 0;
+  let movingSeconds = 0, megaDamageWhileMoving = 0, megaHitsWhileMoving = 0, megaDamageThisTick = 0, megaHitsThisTick = 0;
+  const megaDamageByAction: Record<string, number> = {}, megaDamageByActionThisTick: Record<string, number> = {};
+  let specialDamageThisTick = 0, specialDamageMoving = 0;
+  const specialDamageByMove: Record<string, number> = {}, specialDamageMovesTick: Record<string, number> = {};
   let previousPosition = { ...world.entities.get(1)!.transform };
   const addBeat = (kind: string, detail: string, position = world.entities.get(1)!.transform) => {
     const player = world.entities.get(1)!.transform;
@@ -52,7 +56,15 @@ for (const quality of tiers) {
     world.events.on('checkpoint.set', e => { if (e.type === 'checkpoint.set') { const p = world.entities.get(1)!.transform; checkpoints.push({ id: e.id, tick: world.tick, seconds: world.tick / 60, routeMetres, x: p.x, z: p.z }); addBeat('checkpoint', e.id); } }),
     world.events.on('checkpoint.restored', e => { if (e.type === 'checkpoint.restored') { const p = world.entities.get(1)!.transform; checkpoints.push({ id: e.id, restored: true, tick: world.tick, seconds: world.tick / 60, routeMetres, x: p.x, z: p.z }); } }),
     world.events.on('pickup.collected', e => { if (e.type === 'pickup.collected' && 'actionId' in e) { if (e.pickupId) finds++; addBeat(e.pickupId ? 'find' : 'handover', e.actionId); } else if (e.type === 'pickup.collected' && 'item' in e && e.item === 'corgi-toy') addBeat('optional-find', e.item); }),
+    world.events.on('infected.attack', e => {
+      if (e.type !== 'infected.attack' || e.targetId !== 1 || e.sourceId !== world.megaPursuit?.state.id || !(e.special.startsWith('alpha.') || e.special === 'prop-throw')) return;
+      specialDamageThisTick += e.amount; specialDamageMovesTick[e.special] = (specialDamageMovesTick[e.special] ?? 0) + e.amount;
+    }),
     world.events.on('combat.hit', e => {
+      if (e.type === 'combat.hit' && e.targetId === 1 && e.sourceId === world.megaPursuit?.state.id) {
+        megaDamageThisTick += e.amount; megaHitsThisTick++;
+        megaDamageByActionThisTick[e.actionId] = (megaDamageByActionThisTick[e.actionId] ?? 0) + e.amount;
+      }
       if (e.type !== 'combat.hit' || e.sourceId !== 1) return;
       const target = world.entities.get(e.targetId);
       if (!target?.infected) return;
@@ -80,6 +92,8 @@ for (const quality of tiers) {
       if (!active || player.health.current <= 0) { world.applyInput(emptyInput(), 'keyboard'); world.update(); continue; }
       followTenFrustum(world);
       const travelling = !mission.state.states['cure-installed'];
+      specialDamageThisTick = 0; for (const move of Object.keys(specialDamageMovesTick)) delete specialDamageMovesTick[move];
+      megaDamageThisTick = 0; megaHitsThisTick = 0; for (const action of Object.keys(megaDamageByActionThisTick)) delete megaDamageByActionThisTick[action];
       const frame = bot.sample(); world.applyInput(frame, 'keyboard'); world.update();
       const p = world.entities.get(1)!.transform;
       const separation = world.megaPursuit?.distance() ?? Infinity;
@@ -87,6 +101,11 @@ for (const quality of tiers) {
       for (const row of gapCrossings) if (world.tick / 60 - row.seconds <= 20 && Number.isFinite(separation)) row.maxSeparation20s = Math.max(row.maxSeparation20s, separation);
       if (insideCureHangar(p) && tick % 600 === 0) hangarVisits.push({ seconds: world.tick / 60, x: p.x, z: p.z, cast: Object.entries(mission.state.actors).filter(([key]) => key.startsWith('hangar-')).map(([key,id]) => ({ key, id, hp: world.entities.get(id)?.health.current })), infectedInside: world.infected!.active.filter(e=>e.health.current>0&&insideCureHangar(e.transform)).map(e=>e.id) });
       const stepMetres = distance(p, previousPosition);
+      if (stepMetres > .01) {
+        specialDamageMoving += specialDamageThisTick; for (const [move, damage] of Object.entries(specialDamageMovesTick)) specialDamageByMove[move] = (specialDamageByMove[move] ?? 0) + damage;
+        movingSeconds += 1 / 60; megaDamageWhileMoving += megaDamageThisTick; megaHitsWhileMoving += megaHitsThisTick;
+        for (const [action, damage] of Object.entries(megaDamageByActionThisTick)) megaDamageByAction[action] = (megaDamageByAction[action] ?? 0) + damage;
+      }
       // The route ends at installation. Mounted-gun pose corrections and arena
       // combat loops do not add kilometres to the checkpoint walking route.
       if (stepMetres < 8) { if (travelling) routeMetres += stepMetres; else arenaMetres += stepMetres; }
@@ -143,7 +162,7 @@ for (const quality of tiers) {
     return { metres: Number((to.routeMetres - from.routeMetres).toFixed(1)), directMetres: Number(distance(from, to).toFixed(1)), from: from.id, to: to.id };
   });
   const firstRouteCheckpoint = checkpoints.find(cp => (cp as { id: string }).id !== 'cure-crash') as { seconds: number } | undefined;
-  results.push({ quality, seed, profile: process.env.L10_PACING_PROFILE ?? 'complete', outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, gapCrossings, megaActions, megaPhases, epiloguePhases, hangarVisits, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, arenaMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
+  results.push({ quality, seed, profile: process.env.L10_PACING_PROFILE ?? 'complete', outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, megaMovingDps: { movingSeconds, damageWhileMoving: megaDamageWhileMoving, hitsWhileMoving: megaHitsWhileMoving, dps: movingSeconds ? megaDamageWhileMoving / movingSeconds : 0, damageByAction: megaDamageByAction, specialDamageMoving, specialDps: movingSeconds ? specialDamageMoving / movingSeconds : 0, specialDamageByMove }, gapCrossings, megaActions, megaPhases, epiloguePhases, hangarVisits, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, arenaMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
   // Preserve completed tiers if a later tier is interrupted. The final path
   // still appears only after the complete requested tier set has terminated.
   mkdirSync(dirname(output), { recursive: true });

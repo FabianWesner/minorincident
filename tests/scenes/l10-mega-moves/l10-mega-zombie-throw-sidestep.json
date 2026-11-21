@@ -1,0 +1,82 @@
+{
+  "name": "l10-mega-zombie-throw-sidestep",
+  "note": "Courier runs perpendicular from the start of the Mega telegraph.",
+  "seed": 187,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -15,
+      0
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    },
+    {
+      "id": "thrown-infected",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -13,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -6,
+      2.5,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "special": "alpha.living-missile",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            0,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "frames": 240,
+  "sheet": 24,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0,
+    "courierHpMin": 100,
+    "specialActiveMin": 1,
+    "specialActiveMove": "alpha.living-missile"
+  }
+}

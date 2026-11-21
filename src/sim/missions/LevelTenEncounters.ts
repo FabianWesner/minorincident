@@ -226,7 +226,6 @@ export class LevelTenEncounters {
         if (w.tick >= (this.state.finaleEntryNext ?? 0)) {
           if (!this.state.finaleEntrySlot) { ai.director.reserved++; this.state.finaleEntrySlot = true; }
           else if (ai.director.count + ai.director.pendingTurns < ai.director.cap - Math.max(0, ai.director.reserved - 1) && ai.pool.length) {
-            ai.director.reserved--; this.state.finaleEntrySlot = false;
             const livingButchers = ai.active.filter(e => e.archetype === 'infected.butcher' && e.health.current > 0).length;
             const heavyBreach = this.state.assaultBreach && livingButchers === 0;
             const archetype = heavyBreach ? 'infected.butcher'
@@ -239,14 +238,18 @@ export class LevelTenEncounters {
               const angle = ((entry.ids.length * 3 + k) % 8) * Math.PI / 4, distance = 22 + (k % 3) * 4;
               return { x: courier.transform.x + Math.cos(angle) * distance, z: courier.transform.z + Math.sin(angle) * distance };
             });
-            const candidates = [{ x: entry.sx, z: entry.sz }, ...ring];
+            // Spawn at the service threshold first, then its staged spawn point
+            // and nearby offscreen/occluded ring spots. The threshold is close
+            // enough to join the mounted-platform fight without appearing in
+            // the courier's sight.
+            const candidates = [{ x: entry.x, z: entry.z }, { x: entry.sx, z: entry.sz }, ...ring];
             const spot = candidates.map(c => cureEncounterSpot(ai.nav, { ...c, archetype },
               (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 9)).find(Boolean);
-            if (!spot) { ai.director.reserved++; this.state.finaleEntrySlot = true; this.state.finaleEntryNext = w.tick + 30; }
+            if (!spot) { this.state.finaleEntryNext = w.tick + 30; }
             else {
             const { x, z } = spot;
             const support = w.districts?.groundHeight(x, z) ?? 0;
-            const id = ai.spawn(archetype, { x, y: support + .7, z }, { state: 'chase', cureRegion: 'dispersal-complex' });
+            const id = ai.spawn(archetype, { x, y: support + .7, z }, { state: 'chase' });
             const actor = w.entities.get(id)!;
             actor.transform.y = support + .7;
             ai.pursueTarget(id, 1);

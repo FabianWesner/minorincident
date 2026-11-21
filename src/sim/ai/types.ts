@@ -94,9 +94,11 @@ export interface InfectedSpecialAttack {
   /** Existing herd/flock participants; followers keep their own cooldown and attack id. */
   members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
   grabbedId?: number; grabReleaseTick?: number;
+  /** Mega's close courier grab shares the Alpha move id with its ranged prop throw. */
+  megaCloseGrab?: true;
   destination?: { x: number; z: number };
   bait?: { x: number; z: number };
-  projectile?: { objectId: number; corpse: boolean; living?: boolean; physics?: boolean; radius?: number; restoreVelocity?: boolean; y?: number; damping?: number; lastX?: number; lastZ?: number; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number; fromY?: number; toY?: number };
+  projectile?: { objectId: number; sourceId?: number; corpse: boolean; living?: boolean; physics?: boolean; radius?: number; restoreVelocity?: boolean; y?: number; damping?: number; lastX?: number; lastZ?: number; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number; fromY?: number; toY?: number };
   pickup?: { objectId: number; corpse: boolean; living?: boolean };
   barrageProjectiles?: NonNullable<InfectedSpecialAttack['projectile']>[];
   barrageRemaining?: number; barrageNextTick?: number;

@@ -1,0 +1,58 @@
+{
+  "name": "l10-mega-ground-rubble",
+  "note": "Mega rips a concrete chunk from clear ground and throws it over 30 m.",
+  "seed": 190,
+  "ground": "asphalt",
+  "size": 90,
+  "time": "L4",
+  "dof": false,
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -30,
+      0
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "god": true,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -15,
+      2.5,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "special": "alpha.grab-throw",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 240,
+  "sheet": 40,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0,
+    "specialActiveMin": 1,
+    "specialActiveMove": "alpha.grab-throw"
+  }
+}

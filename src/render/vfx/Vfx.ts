@@ -471,14 +471,14 @@ export class Vfx extends Group {
 
     const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
     const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
-    const throwing = !source?.infected?.pursuit && 'move' in event && (['alpha.grab-throw', 'alpha.living-missile', 'alpha.barrage', 'gorilla.grab-throw'].includes(event.move ?? '')) && event.area && event.target;
+    const throwing = 'move' in event && (['alpha.grab-throw', 'alpha.living-missile', 'alpha.barrage', 'gorilla.grab-throw'].includes(event.move ?? '')) && event.area && event.target;
     const move = 'move' in event ? event.move : undefined;
     const area = 'area' in event ? event.area : undefined;
     const target = 'target' in event ? event.target : undefined;
     const arenaThrow = !!source?.infected?.arenaBoss && (move === 'gorilla.grab-throw' || move === 'monkey.debris');
     const directional = !arenaThrow && (!!source?.infected?.arenaBoss && (move === 'flamingo.dive' || move === 'monkey.grab') || move === 'alpha.pounce' || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank');
     const destination = source?.infected?.specialAttack?.destination;
-    const length = throwing ? Math.min(25, Math.hypot(target!.x - area!.x, target!.z - area!.z))
+    const length = throwing ? Math.min(source?.infected?.pursuit ? 35 : 25, Math.hypot(target!.x - area!.x, target!.z - area!.z))
       : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
       : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
       : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' || move === 'alpha.pounce' ? Math.min(move === 'alpha.pounce' ? 12 : 8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
@@ -494,7 +494,7 @@ export class Vfx extends Group {
     // r34-l8qa: a lion's ordinary windup (special 'pin', no authored move: Scene Lab / free chase) used the shared red
     // charge lane; it gets the same amber landing ring as the authored pounce.
     const lionOrdinary = !move && (source?.archetype === 'infected.lion' || source?.archetype === 'infected.lioness');
-    const animalRing = move === 'lion.pounce' || move === 'lion.flank' || move === 'monkey.grab' || lionOrdinary;
+    const animalRing = move === 'lion.pounce' || move === 'lion.flank' || move === 'monkey.grab' || lionOrdinary || source?.infected?.pursuit && move === 'alpha.pounce';
     const animalColor = this.colorblind ? undefined : move === 'flamingo.dive' ? 0xe32f3a : move === 'zebra.stampede' ? 0xc9b07c : move === 'elephant.charge' ? 0x9c8463 : animalRing ? 0xffa53a : undefined;
     if (animalRing && target && (area || lionOrdinary)) {
       const ring = move === 'monkey.grab' ? .9 : 1.3, at = destination && move !== 'lion.pounce' && !lionOrdinary ? destination : target;
@@ -742,6 +742,14 @@ export class Vfx extends Group {
     const last = this.animalCues.get(a.attackId) ?? -1, low = this.quality === 'low';
     const ground = (x: number, z: number) => this.world.districts?.groundHeight(x, z) ?? 0;
     const p = e.transform, fx = Math.cos(p.yaw), fz = -Math.sin(p.yaw);
+    if (e.infected?.pursuit && a.move === 'alpha.roar') {
+      if (a.stage === 'telegraph' && u >= .72 && last < 0) {
+        this.targets.shake(this.flashReduction ? .025 : .09);
+        this.burst(p.x, ground(p.x, p.z) + .45, p.z, 0x9d3932, low ? 3 : 7, .6, 1.2, 0, particleShape.smoke, 1, .3);
+        this.animalCues.set(a.attackId, 1);
+      }
+      return;
+    }
     const near = (r: number) => { const f = this.world.entities.get(1)?.transform; return !!f && Math.hypot(f.x - p.x, f.z - p.z) < r; };
     let cue = last;
     if (a.stage === 'telegraph') {

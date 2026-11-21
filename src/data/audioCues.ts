@@ -258,7 +258,7 @@ cue('l1.interior.hush', 'ambience', 'bed', 2, 70, { ...arc, loop: true, gain: 0.
 cue('l1.outro.sting', 'music', 'music', 2.5, 196, { ...arc, gain: 0.5, antiSpam: 0, rateSpread: 0 });
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
-    'mega.cue': 'telegraph.brute', // AudioService applies the processed recipe by cue kind.
+    'mega.cue': 'telegraph.brute', 'mega.move-impact': 'telegraph.gorilla', // AudioService applies the processed recipe by cue kind.
     'power.on': 'lamp.power-on', 'power.off': 'lamp.power-off', 'light.broken': 'lamp.break',
     'weather.gust': 'weather.gust', 'weather.lightning': 'weather.thunder', 'weather.thunder': 'weather.thunder',
     'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',
@@ -357,6 +357,10 @@ for (const [id, stock, caption, rate, priority] of [
   ['mega.charge', 'telegraph.brute', 'Mega Alpha charging: clear the marked path', .5, 150],
   ['mega.slam', 'telegraph.gorilla', 'Mega Alpha slam: leave the marked circle', .55, 150],
   ['mega.grab', 'telegraph.alpha.grab-throw', 'Mega Alpha grabbing: get out of its reach', .5, 150],
+  ['mega.rip', 'prop.break', 'Mega Alpha ripping up debris', .65, 150],
+  ['mega.throw-whoosh', 'weapon.rocket-whoosh', 'Mega Alpha hurling a projectile', .8, 150],
+  ['mega.zombie-throw', 'telegraph.gorilla.grab-throw', 'Mega Alpha throwing an infected', .55, 150],
+  ['mega.leap', 'telegraph.lion.pounce', 'Mega Alpha leaping: clear the landing ring', .5, 150],
   ['cure.recording', 'music.L6.base', undefined, 1, 120],
 ] as const) {
   megaAudioCues[id] = { ...audioCues[stock], id, caption, priority, bus: id === 'cure.recording' ? 'dialogue' : audioCues[stock].bus, rateSpread: 0, loop: false, initial: false, gain: .6 };

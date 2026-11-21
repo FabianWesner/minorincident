@@ -182,7 +182,8 @@ export class Damage {
       }
       return 0;
     }
-    if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction && !hardHit) return 0;
+    const megaThrownFall = hit.actionId === 'infected.throw-fall' && !!source.infected?.pursuit && !!target.infected;
+    if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction && !hardHit && !megaThrownFall) return 0;
     // s178: in Simple, friendly-capable bullets never damage the courier. No path produces such a hit today
     // (allies only ever aim at infected and hold fire through humans, HitQuery.alliedShotClear); the guard
     // makes the no-friendly-fire rule explicit at the damage seam. Hard removes it.
@@ -263,8 +264,9 @@ export class Damage {
     const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback, amount, damageType: hit.type, ...((hit.type === 'vehicle' || hit.type === 'prop') ? { cause: hit.type } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit', ...(shieldBlocked ? { blocked: true } : {}), ...(shieldGlance ? { shieldGlance: true } : {}), ...(shieldBreak ? { shieldBreak: true } : {}) });
     if (amount > 0 || megaReact) {
-      if (hit.knockdownTicks && target.survivor) target.survivor.knockdown = { started: this.world.tick, until: Math.max(target.survivor.knockdown?.until ?? 0, this.world.tick + hit.knockdownTicks) };
-      if ((hit.knockdownTicks || hit.knockdown) && target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + (hit.knockdownTicks ?? 90));
+      const megaDowned = !!source.infected?.pursuit && (target.survivor?.knockdown?.until ?? 0) > this.world.tick;
+      if (hit.knockdownTicks && target.survivor && !megaDowned) target.survivor.knockdown = { started: this.world.tick, until: Math.max(target.survivor.knockdown?.until ?? 0, this.world.tick + hit.knockdownTicks) };
+      if ((hit.knockdownTicks || hit.knockdown) && target.combat && !megaDowned) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + (hit.knockdownTicks ?? 90));
       if (hit.knockdownTicks && target.escort) target.escort.knockedUntil = Math.max(target.escort.knockedUntil ?? 0, this.world.tick + hit.knockdownTicks);
       if ((alphaSoldierHit || hit.knockdownTicks) && target.civilian) {
         const until = this.world.tick + (hit.knockdownTicks ?? 72), c = target.civilian!;

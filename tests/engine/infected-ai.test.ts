@@ -18,6 +18,9 @@ import { PropSystem } from '../../src/sim/interact/PropSystem';
 import { damageAmount } from '../../src/sim/combat/Damage';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
+import { loadLevel } from '../../tools/sim-runner/levels';
+import { followTenFrustum } from '../../tools/sim-runner/l10';
+import { emptyInput } from '../../src/input/InputFrame';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -213,6 +216,130 @@ async function alphaTypeContracts() {
       expect(Math.hypot(missile.transform.x, missile.transform.z)).toBeGreaterThanOrEqual(1.5);
       expect(Math.hypot(missile.transform.x, missile.transform.z)).toBeLessThanOrEqual(3);
       step(missileWorld, 37); expect(['chase', 'attack']).toContain(missile.infected!.state);
+    }
+    {
+      const thrownWorld = await arena(57, false), player = thrownWorld.entities.get(1)!;
+      player.health.current = player.health.max = 1000;
+      const pursuit = installMegaPursuit(thrownWorld, { introduceTick: null, resident: () => true });
+      const mega = thrownWorld.entities.get(pursuit.introduce({ x: 20, z: 0 }))!;
+      const thrown = spawn(thrownWorld, 'runner', 21.5, 0, 'idle');
+      mega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.grab-throw': Infinity };
+      step(thrownWorld, 1);
+      expect(mega.infected!.specialAttack?.move).toBe('alpha.living-missile');
+      expect(mega.infected!.specialAttack!.activeTick - mega.infected!.specialAttack!.startTick).toBe(megaAlpha.moves['alpha.living-missile'].windup);
+      step(thrownWorld, 160);
+      expect(thrown.infected!.thrownBy).toBeUndefined();
+      expect(thrown.health.current).toBeLessThan(thrown.health.max);
+      expect(thrownWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === mega.id && event.targetId === player.id && event.special === 'alpha.living-missile' && event.amount === 20)).toBe(true);
+      expect(player.survivor!.knockdown?.until).toBeGreaterThan(thrownWorld.tick);
+      const existingDown = { started: thrownWorld.tick - 10, until: thrownWorld.tick + 10 };
+      player.survivor!.knockdown = { ...existingDown };
+      thrownWorld.combat!.damage.apply({ sourceId: mega.id, targetId: player.id, attackId: 999999, actionId: 'infected.alpha.living-missile', origin: mega.transform, direction: { x: -1, z: 0 }, base: 20, multiplier: 1, type: 'projectile', knockback: 0, stagger: 0, knockdownTicks: 48 });
+      expect(player.survivor!.knockdown).toEqual(existingDown);
+
+      const debrisWorld = await arena(59, false), debrisPlayer = debrisWorld.entities.get(1)!;
+      debrisPlayer.health.current = debrisPlayer.health.max = 1000;
+      const debrisPursuit = installMegaPursuit(debrisWorld, { introduceTick: null, resident: () => true });
+      const debrisMega = debrisWorld.entities.get(debrisPursuit.introduce({ x: 20, z: 0 }))!;
+      debrisMega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.living-missile': Infinity };
+      debrisWorld.props = new PropSystem(debrisWorld);
+      debrisWorld.props.spawn({ id: 'mega-test-debris', assetId: 'prop.traffic-cone', position: [21, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [20.5, 0, -.5], max: [21.5, 1, .5] } });
+      step(debrisWorld, 1);
+      expect(debrisMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
+      expect(debrisWorld.events.events().some(event => event.type === 'telegraph' && event.sourceId === debrisMega.id && event.special === 'alpha.grab-throw' && event.duration >= .8)).toBe(true);
+      for (let i = 0; i < 190; i++) { debrisWorld.props.prePhysics(); step(debrisWorld, 1); debrisWorld.props.postPhysics(); }
+      expect(debrisWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === debrisMega.id)).toBe(true);
+      expect(debrisWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === debrisMega.id && event.targetId === debrisPlayer.id && event.special === 'alpha.grab-throw' && event.amount === 25)).toBe(true);
+      expect(debrisPlayer.survivor!.knockdown?.until).toBeGreaterThan(debrisWorld.tick);
+      expect(debrisWorld.events.events().filter(event => event.type === 'mega.move-impact' && event.sourceId === debrisMega.id)).toHaveLength(1);
+
+      const leapWorld = await arena(58, false), courier = leapWorld.entities.get(1)!;
+      courier.health.current = courier.health.max = 1000;
+      const leapPursuit = installMegaPursuit(leapWorld, { introduceTick: null, resident: () => true });
+      const leaper = leapWorld.entities.get(leapPursuit.introduce({ x: 20, z: 0 }))!;
+      expect(leapWorld.infected!.startSpecial(leaper.id, 'alpha.pounce', { id: courier.id, x: 0, z: 0 }, { x: 20, z: 0, radius: 4, dx: -1, dz: 0 })).toBe(true);
+      expect(leaper.infected!.specialAttack!.activeTick - leaper.infected!.specialAttack!.startTick).toBe(54);
+      step(leapWorld, 130);
+      expect(leapWorld.events.events().some(event => event.type === 'infected.attack' && event.sourceId === leaper.id && event.targetId === courier.id && event.amount === 30)).toBe(true);
+      expect(courier.health.current).toBe(970);
+      expect(courier.survivor!.knockdown?.until).toBeGreaterThan(leapWorld.tick);
+      expect(leapWorld.events.events().filter(event => event.type === 'mega.move-impact' && event.sourceId === leaper.id)).toHaveLength(1);
+
+      // Even after recovery, a different move must wait three seconds from the last start.
+      leaper.infected!.specialAttack = undefined;
+      leaper.infected!.specialRecoveryUntil = 0;
+      leaper.infected!.cooldown = 0;
+      leaper.infected!.state = 'chase';
+      leaper.infected!.alphaSpecialStarted = leapWorld.tick - 179;
+      const target = { id: courier.id, x: courier.transform.x, z: courier.transform.z };
+      const area = { x: leaper.transform.x, z: leaper.transform.z, radius: 30, dx: 1, dz: 0 };
+      expect(leapWorld.infected!.startSpecial(leaper.id, 'alpha.roar', target, area)).toBe(false);
+      leaper.infected!.alphaSpecialStarted = leapWorld.tick - 180;
+      expect(leapWorld.infected!.startSpecial(leaper.id, 'alpha.roar', target, area)).toBe(true);
+
+      const rangedWorld = await arena(60, false);
+      const rangedPursuit = installMegaPursuit(rangedWorld, { introduceTick: null, resident: () => true });
+      const rangedMega = rangedWorld.entities.get(rangedPursuit.introduce({ x: 20, z: 0 }))!;
+      rangedMega.infected!.specialCooldowns = { 'alpha.roar': Infinity, 'alpha.grab-throw': Infinity };
+      step(rangedWorld, 1);
+      expect(rangedMega.infected!.specialAttack?.move).toBe('alpha.pounce');
+
+      const roarWorld = await arena(63, false);
+      const roarPursuit = installMegaPursuit(roarWorld, { introduceTick: null, resident: () => true });
+      const roaringMega = roarWorld.entities.get(roarPursuit.introduce({ x: 20, z: 0 }))!;
+      roarWorld.infected!.hearing.lineOfSight = () => false;
+      roarWorld.infected!.director.inPlayerView = () => false;
+      expect(roarWorld.infected!.alphaSupport.tryStart(roaringMega, roarWorld.entities.get(1)!)).toBe(true);
+      expect(roaringMega.infected!.specialAttack?.move).toBe('alpha.roar');
+
+      const rubbleWorld = await arena(61, false);
+      for (let i = 0; i < 4; i++) rubbleWorld.hazards!.debris.spawn(i, { x: 50, z: 50 }, rubbleWorld.tick);
+      expect(rubbleWorld.hazards!.debris.pieces).toHaveLength(32);
+      const rubblePursuit = installMegaPursuit(rubbleWorld, { introduceTick: null, resident: () => true });
+      const rubbleMega = rubbleWorld.entities.get(rubblePursuit.introduce({ x: 20, z: 0 }))!;
+      rubbleMega.infected!.specialCooldowns = { 'alpha.roar': Infinity };
+      step(rubbleWorld, 1);
+      expect(rubbleMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
+      const chunk = rubbleWorld.hazards!.debris.pieces.find(piece => piece.material === 'concrete');
+      expect(rubbleWorld.hazards!.debris.pieces).toHaveLength(33);
+      expect(chunk?.body.collider(0).collisionGroups()).toBe(0x00010001);
+      step(rubbleWorld, 120);
+      expect(rubbleWorld.events.events().some(event => event.type === 'infected.prop-thrown' && event.sourceId === rubbleMega.id)).toBe(true);
+      expect(chunk!.body.isEnabled()).toBe(true);
+
+      const dodgeWorld = await arena(62, false), dodger = dodgeWorld.entities.get(1)!;
+      dodger.health.current = dodger.health.max = 1000;
+      const dodgePursuit = installMegaPursuit(dodgeWorld, { introduceTick: null, resident: () => true });
+      const throwerMega = dodgeWorld.entities.get(dodgePursuit.introduce({ x: 20, z: 0 }))!;
+      throwerMega.infected!.specialCooldowns = { 'alpha.roar': Infinity };
+      step(dodgeWorld, 1);
+      expect(throwerMega.infected!.specialAttack?.move).toBe('alpha.grab-throw');
+      // A sidestep begins at the tell and clears the landing radius before launch.
+      for (let i = 0; i < 60; i++) { dodger.transform.z += .06; dodgeWorld.spatial.set(dodger.id, dodger.transform.x, dodger.transform.z); step(dodgeWorld, 1); }
+      expect(dodger.transform.z).toBeGreaterThan(3.5);
+      step(dodgeWorld, 160);
+      expect(dodger.health.current).toBe(1000);
+
+      const aimWorld = await arena(64, false), movingCourier = aimWorld.entities.get(1)!;
+      const aimPursuit = installMegaPursuit(aimWorld, { introduceTick: null, resident: () => true });
+      const aimingMega = aimWorld.entities.get(aimPursuit.introduce({ x: 20, z: 0 }))!;
+      movingCourier.survivor!.velocity = { x: 0, z: 3 };
+      expect(aimWorld.infected!.startSpecial(aimingMega.id, 'alpha.grab-throw', { id: movingCourier.id, x: 0, z: 0 }, { x: 20, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
+      const aim = aimingMega.infected!.specialAttack!;
+      expect(aim.target.z).toBeCloseTo(3);
+      const aimLength = Math.hypot(aim.target.x - 20, aim.target.z);
+      expect(aim.area.dx).toBeCloseTo((aim.target.x - 20) / aimLength);
+      expect(aim.area.dz).toBeCloseTo(aim.target.z / aimLength);
+
+      const wallWorld = await arena(65, false);
+      const wallPursuit = installMegaPursuit(wallWorld, { introduceTick: null, resident: () => true });
+      const chargingMega = wallWorld.entities.get(wallPursuit.introduce({ x: 20, z: 0 }))!;
+      expect(wallWorld.infected!.startSpecial(chargingMega.id, 'alpha.charge', { id: 1, x: 0, z: 0 }, { x: 20, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
+      const wall = { x: 10, z: 0, y: 1, halfX: .3, halfZ: 5, halfY: 1 };
+      wallWorld.solids.setBarrier('mega-charge-test', wall);
+      for (let i = 0; i < 120 && !chargingMega.infected!.specialAttack?.obstructionUntil; i++) step(wallWorld, 1);
+      expect((chargingMega.infected!.specialAttack?.obstructionUntil ?? 0) - wallWorld.tick).toBe(120);
+      expect(chargingMega.combat!.staggerUntil - wallWorld.tick).toBe(120);
     }
   } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
 }
@@ -467,6 +594,19 @@ test('every human and animal role validates and spawns with its catalog health a
     if (process.env.S54_PROBE === '1') console.info(JSON.stringify({ scenario: 'horde-arena-15m', role, weapon: weapon.id, ticks: w.tick, playerHitsLanded: hits.length, targetHp: e.health.current }));
     expect(hits.length, `${role}/${weapon.id}: attack connects through continuous fire (state=${e.infected!.state}, distance=${Math.hypot(e.transform.x, e.transform.z).toFixed(1)}, tick=${w.tick})`).toBeGreaterThan(0);
     if (role === 'alpha') expect(hits.some(event => event.type === 'combat.hit' && event.actionId.startsWith('alpha.')), `${weapon.id}: Alpha uses a signature move`).toBe(true);
+  }
+  {
+    const w = await loadLevel('L10', 1, undefined, 0, { quality: 'low' }); worlds.push(w);
+    const courier = w.entities.get(1)!;
+    Object.assign(courier.transform, { x: 4002, z: -30 });
+    w.physics.playerBody!.setTranslation({ x: 4002, y: courier.transform.y, z: -30 }, true);
+    w.spatial.set(courier.id, 4002, -30); w.chunks!.update(); w.player!.locomotion.reset();
+    const pursuit = w.megaPursuit!, mega = w.entities.get(pursuit.introduce({ x: 2179.9, z: -98.285 }))!;
+    expect(w.chunks!.resident(mega.transform.x, mega.transform.z)).toBe(false);
+    Object.assign(pursuit.state, { passed: 'cure-route-23', route: ['cure-route-24', 'cure-route-25'], routeAt: -Infinity });
+    const start = { x: mega.transform.x, z: mega.transform.z };
+    for (let i = 0; i < 1200; i++) { followTenFrustum(w); w.applyInput(emptyInput(), 'keyboard'); w.update(); }
+    expect(pursuit.state.coarseM, `coarse pursuit accumulates route travel from ${start.x.toFixed(1)},${start.z.toFixed(1)}`).toBeGreaterThan(30);
   }
 });
 

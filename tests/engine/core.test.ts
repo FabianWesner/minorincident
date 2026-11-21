@@ -22,6 +22,9 @@ function checkWeaponAudioEvents(): void {
   context.currentTime = 1.2; mapper.advance();
   expect(stopLoop).toHaveBeenCalledWith('flame:1');
   expect(play).toHaveBeenCalledWith('weapon.flame-stop', expect.anything(), 1);
+  play.mockClear();
+  mapper.event({ type: 'mega.move-impact', tick: 1, sourceId: 2, position: { x: 7, z: 3 } });
+  expect(play).toHaveBeenCalledWith('mega.impact', expect.objectContaining({ position: { x: 7, z: 3 } }), 2);
 }
 
 // Engine core: the fixed-step clock, event bus, seeded RNG, service lifecycle and spatial hash

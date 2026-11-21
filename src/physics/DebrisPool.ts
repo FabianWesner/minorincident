@@ -2,24 +2,40 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import type { Physics } from './Physics';
 import type { Vec2 } from '../input/InputFrame';
-interface Piece { body: RAPIER.RigidBody; until: number; sourceId: number; half?: [number, number, number]; material?: import('../data/destruction').DestructionMaterial }
-/** At most 32 reusable physics pieces (below the 60-body low-tier budget); eight per break. */
+interface Piece { body: RAPIER.RigidBody; until: number; sourceId: number; reservedRubble?: boolean; half?: [number, number, number]; material?: import('../data/destruction').DestructionMaterial }
+/** Up to 32 cosmetic pieces and two reserved Mega chunks, below the low-tier body budget. */
 export class DebrisPool {
   readonly pieces: Piece[] = [];
+  private rubbleSource = -1_000_000;
   constructor(private readonly physics: Physics) {}
-  spawn(sourceId: number, pos: Vec2, tick: number, options: { y?: number; material?: import('../data/destruction').DestructionMaterial; count?: number; half?: [number, number, number] } = {}): number {
+  /** A briefly blocking chunk ripped from the ground by the Mega. */
+  spawnRubble(pos: Vec2, y: number, tick: number): number | undefined {
+    const source = this.rubbleSource--;
+    if (!this.spawn(source, pos, tick, { y, material: 'concrete', count: 1, half: [.55, .2, .4], rubble: true })) return undefined;
+    const index = this.pieces.findIndex(piece => piece.sourceId === source);
+    const piece = this.pieces[index];
+    piece.body.collider(0).setCollisionGroups(0x00010001);
+    piece.body.setTranslation({ x: pos.x, y, z: pos.z }, true);
+    piece.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+    piece.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    return index;
+  }
+  spawn(sourceId: number, pos: Vec2, tick: number, options: { y?: number; material?: import('../data/destruction').DestructionMaterial; count?: number; half?: [number, number, number]; rubble?: boolean } = {}): number {
     let count = 0;
     for (let i = 0; i < Math.min(8, options.count ?? 8); i++) {
-      let piece = this.pieces.find(p => p.until === 0);
-      if (!piece && this.pieces.length < 32) {
+      let piece = this.pieces.find(p => p.until === 0 && (!!options.rubble || !p.reservedRubble));
+      const ordinaryCount = this.pieces.filter(p => !p.reservedRubble).length;
+      const reserved = ordinaryCount >= 32;
+      if (!piece && (!reserved || !!options.rubble && this.pieces.length < 34)) {
         const body = this.physics.world!.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setLinearDamping(.8).setAngularDamping(.8));
         // Cosmetic physics debris does not obstruct characters or damage targets (E26/E27 own that).
         this.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(.12, .1, .22).setCollisionGroups(0x00020002), body);
-        piece = { body, until: 0, sourceId }; this.pieces.push(piece);
+        piece = { body, until: 0, sourceId, ...(reserved ? { reservedRubble: true } : {}) }; this.pieces.push(piece);
       }
       if (!piece) break;
       piece.half = options.half ?? [.12, .1, .22];
       piece.body.collider(0).setShape(new RAPIER.Cuboid(...piece.half));
+      piece.body.collider(0).setCollisionGroups(0x00020002);
       piece.until = tick + 480; piece.sourceId = sourceId; piece.material = options.material; piece.body.setEnabled(true);
       piece.body.setTranslation({ x: pos.x + (i % 4 - 1.5) * .15, y: (options.y ?? .6) + Math.floor(i / 4) * .2, z: pos.z }, true);
       piece.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);

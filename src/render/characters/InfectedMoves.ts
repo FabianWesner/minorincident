@@ -90,7 +90,7 @@ export class InfectedMoves {
       layers.trunkSwipe = special.stage === 'telegraph' ? -Math.PI / 3 * ease(windup) : Math.PI / 3 * Math.sin(Math.PI * recovery);
     }
     if (special?.move === 'gorilla.grab-throw' || special?.move === 'alpha.grab-human' || special?.move === 'alpha.grab-throw' || special?.move === 'alpha.living-missile' || special?.move === 'alpha.barrage') {
-      const windup = Math.max(0, Math.min(1, (renderTick - special.startTick) / 48));
+      const windup = Math.max(0, Math.min(1, (renderTick - special.startTick) / Math.max(1, special.activeTick - special.startTick)));
       layers.throwPose = special.stage === 'telegraph' ? windup * 1.8 : Math.max(0, 1 - (renderTick - special.activeTick) / 30) * 1.8;
     }
     if (special?.stage === 'telegraph') {

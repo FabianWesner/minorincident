@@ -138,9 +138,17 @@ export class AudioEventMapper {
             this.host.play(cue, { gain: megaBands[event.band].gain, rate: megaCueRates[cue], lowpass: 900, dry: true }, event.sourceId);
             return;
         }
+        if (event.type === 'infected.prop-thrown' && isMega(entity)) {
+            this.host.play('mega.throw-whoosh', { gain: 1, rate: megaCueRates['mega.throw-whoosh'], priority: 150, dry: true }, source);
+            return;
+        }
+        if (event.type === 'mega.move-impact') {
+            this.host.play('mega.impact', { position: event.position, gain: 1, rate: megaCueRates['mega.impact'], priority: 150, dry: true }, source);
+            return;
+        }
         if (event.type === 'telegraph') {
             if (isMega(entity) && 'special' in event) {
-                const cue = event.special === 'alpha.charge' ? 'mega.charge' : event.special === 'alpha.ground-slam' ? 'mega.slam' : event.special === 'alpha.grab-throw' ? 'mega.grab' : 'mega.roar';
+                const cue = event.special === 'alpha.charge' ? 'mega.charge' : event.special === 'alpha.ground-slam' ? 'mega.slam' : event.special === 'alpha.grab-throw' ? entity?.infected?.specialAttack?.megaCloseGrab ? 'mega.grab' : 'mega.rip' : event.special === 'alpha.living-missile' ? 'mega.zombie-throw' : event.special === 'alpha.pounce' ? 'mega.leap' : 'mega.roar';
                 this.host.play(cue, { gain: 1, rate: megaCueRates[cue], priority: 150, dry: true }, source);
                 return;
             }
