@@ -70,10 +70,9 @@ export class LevelTenStory {
       // commit the recovery point while members are still waiting to arrive.
       const slots = cureEncounterSlots(group, world.infected!.director.tier);
       if (slots.some(slot => spawned[`${slot.key}:0`] === undefined)) continue;
-      if (slots.some(slot => {
-        const actor = world.entities.get(spawned[`${slot.key}:0`]);
-        return !!actor && (actor.health.current > 0 || (actor.infected?.recoverAt ?? -1) >= 0);
-      })) continue;
+      // A downed cohort has lost the fight even if its members may later
+      // recover. Their bodies and recovery timers remain in the world.
+      if (slots.some(slot => (world.entities.get(spawned[`${slot.key}:0`])?.health.current ?? 0) > 0)) continue;
       state.states[beat.flag] = true;
       this.mission.requestCheckpoint(beat.id);
     }
