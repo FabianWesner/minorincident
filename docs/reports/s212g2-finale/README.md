@@ -16,7 +16,7 @@
 | Tier | Hangar to gate | Longest activity gap | Bike ticks | Deaths |
 |---|---:|---:|---:|---:|
 | LOW | 491.9 s | 20.8 s | 12,076 | 7 |
-| HIGH | 333.7 s | 16.1 s | 1,957 | 10 |
+| HIGH | 333.7 s | 16.2 s | 1,957 | 8 |
 
 LOW meets the total-time range only through repeated first-checkpoint attempts: its 192.4 s beat interval and seven deaths fail the requirements. HIGH misses the total time and cadence. Both tiers lack the required ride/fight/remount/cross loops. The LOW death count regressed from three before the solid-contact change; the paired trace needs bot and encounter fixes before it can be accepted. Incomplete sequence state resets on death, so zero final sequence fields do not imply no intermediate attempts.
 
@@ -57,4 +57,4 @@ A native HIGH LOD probe at beat 7 placed the underpass at (3387, 50) for diagnos
 
 Fallen motorbikes now accept E within 3.1 m after the knock-off lockout, covering the 3 m crash parking search. Recovery checks the path against fixed walls and chooses the mounting position near the bike; automatic stand-to-mount retains the original 1.5 m range. A focused vehicle fixture passes recovery at 2.5 m and rejects it through a fixed wall. Typecheck and lint pass. Dynamic and kinematic obstacles are excluded by the shared reachability query and need further verification; the paired route and final gates have not yet been rerun for this change.
 
-The extended fallen-bike recovery path check now includes dynamic and kinematic solid bodies as well as fixed walls. Focused vehicle tests verify all three block recovery; typecheck and lint pass. The paired route and full gates remain outstanding for this revision.
+The extended fallen-bike recovery path check now includes dynamic and kinematic solid bodies as well as fixed walls. Focused vehicle tests verify all three block recovery; typecheck and lint pass. The paired route was rerun: LOW and HIGH still record 0/4 loops, and the full gates remain outstanding.
