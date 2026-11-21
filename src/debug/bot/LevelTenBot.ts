@@ -148,12 +148,15 @@ export class LevelTenBot {
     const wanted = bike?.riding && bikeEntity?.bicycle?.motorbike ? 'weapon.handgun'
       : pouncingDog && distance(pouncingDog.transform) < 12 && rack.some(slot => slot.id === 'weapon.shotgun') ? 'weapon.shotgun'
       : !finale ? travelWeapon : rocket ? 'weapon.rocket-launcher' : targetDistance < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
-    const choice = rack.findIndex(slot => slot.id === wanted);
-    const index = choice >= 0 ? choice : rack.length - 1, weapon = rack[index]?.id;
+    const handgunSide = bike?.riding && bikeEntity?.bicycle?.motorbike
+      ? (['LEFT', 'RIGHT'] as const).find(side => player.weapons![side].rack[player.weapons![side].index]?.id === 'weapon.handgun') : undefined;
+    const side = handgunSide ?? 'RIGHT', selectedRack = player.weapons![side].rack;
+    const choice = selectedRack.findIndex(slot => slot.id === wanted);
+    const index = choice >= 0 ? choice : selectedRack.length - 1, weapon = selectedRack[index]?.id;
     if (!released && target && this.profile !== 'evade-only' && weapon && (weapon !== 'weapon.fire-axe' || distance(target.transform) < 2.5)) {
-      f.selectedSlot = { side: 'RIGHT', index }; f.aimSource = 'keyboard';
+      f.selectedSlot = { side, index }; f.aimSource = 'keyboard';
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
-      f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.right.held = true;
+      f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; (side === 'LEFT' ? f.left : f.right).held = true;
       if (finale && d < 10 && p.y <= .9 && !gun?.mounted && !approachGun) {
         const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
         f.move = this.walker.step(w, { x: anchor.x + Math.cos(angle) * 18, z: anchor.z + Math.sin(angle) * 18 }, 1, 'dodge') ?? f.move;
