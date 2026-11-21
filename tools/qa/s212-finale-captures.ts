@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 import { SceneSession, stopServer } from '../scenelab/session';
+import type { Game } from '../../src/Game';
 
 const out = resolve('docs/reports/s212-l10finale');
 const session = new SceneSession({ backend: 'webgl2', tier: 'high', viewport: { width: 1280, height: 720 }, query: { zoom: '1' } });
@@ -25,6 +26,10 @@ try {
       await api.screenshotReady();
     }, { x });
     await session.screenshot(`${out}/${name}.png`);
+    if (i === 3 || i === 8) console.log(name, await session.page.evaluate(() => {
+      const state = (window.__SCENE__ as unknown as { game: Game }).game.world.l10Encounters!.state;
+      return { billboardFallAt: state.billboardFallAt, hospitalOpenAt: state.hospitalOpenAt };
+    }));
     cells.push({ frame: i, jpeg: await session.snapshot() });
   }
   console.log(JSON.stringify(await session.makeSheet(cells, `${out}/finale-beats.jpg`, 480, 900)));

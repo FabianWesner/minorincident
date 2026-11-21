@@ -327,7 +327,7 @@ export class LevelTenEncounters {
       // board falls only when the courier is near the actual sign, which sits
       // offset from the encounter station.
       if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
-          Math.hypot(player.transform.x - 3066, player.transform.z - 92) <= 10) this.state.billboardFallAt = w.tick;
+          Math.hypot(player.transform.x - 3066, player.transform.z - 92) <= 15) this.state.billboardFallAt = w.tick;
       if (group.setPiece === 'field-hospital' && released.includes(group.id) && this.state.hospitalOpenAt === undefined &&
           Math.hypot(player.transform.x - 3508, player.transform.z - 83) <= 16) this.state.hospitalOpenAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
