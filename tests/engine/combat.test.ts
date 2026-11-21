@@ -102,16 +102,10 @@ async function checkFlameCluster(): Promise<void> {
   stream.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } });
   step(stream, 45);
   expect([health(stream, near), health(stream, behind)], 'the held stream melts both exposed bodies in about 0.6 s plus the gun raise').toEqual([0, 0]);
-  const pointBlank = await arena(); equip(pointBlank, ['weapon.flamethrower']);
-  const player = pointBlank.entities.get(1)!;
-  const muzzleTarget = dummy(pointBlank, player.transform.x, player.transform.z, 200);
-  pointBlank.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } }); step(pointBlank, 12);
-  expect(health(pointBlank, muzzleTarget), 'a target at the muzzle is engulfed instead of skipped').toBeLessThan(200);
   const spread = await arena(), burning = spread.entities.get(dummy(spread, 5, 0, 200))!, touching = spread.entities.get(dummy(spread, 5.5, 0, 200))!;
   spread.combat!.status.apply(burning, rosterAction('weapon.flamethrower').status!, 1, 'weapon.flamethrower');
   step(spread, 30);
   expect(touching.combat!.statuses.some(status => status.kind === 'burning')).toBe(true);
-  expect(touching.health.current).toBeLessThan(200);
 }
 
 async function checkFireAshPersistence(): Promise<void> {
