@@ -44,9 +44,11 @@ function subwayDecor(): Spot[] {
     const r = Array.from({ length: 6 }, () => rng.next());
     // The near (south) walkway sits behind the wall piers from the game camera: most pieces go to the visible north side.
     if (r[0] < (side < 0 ? .7 : .2)) continue;
-    const px = x + (r[1] - .5) * 1.6;
+    let px = x + (r[1] - .5) * 1.6;
     if (l6Blocked(px, side) || l6Camps.some(c => px > c - 3 && px < c + 4)) continue;
     const asset = wallPieces[Math.floor(r[2] * wallPieces.length)];
+    // Keep the rolled carpet clear of the retreat's north-side pursuit lane.
+    if (asset === 'prop.carpet' && side > 0 && px > 155 && px < 157) px -= 2;
     // Against the wall: the walkway spans 11.5..13.2 (south) and 16.8..18.5 (north); the courier keeps to the lane between.
     const z = side < 0 ? 11.95 + r[3] * .3 : 18.05 - r[3] * .3;
     out.push({ asset, x: px, z, y: L6Y.walk, yaw: (side < 0 ? 0 : Math.PI) + (r[4] - .5) * .9, scale: asset === 'prop.carpet' ? 1.2 : 1 });
