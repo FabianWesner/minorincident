@@ -49,6 +49,8 @@ function subwayDecor(): Spot[] {
     const asset = wallPieces[Math.floor(r[2] * wallPieces.length)];
     // Keep the rolled carpet clear of the retreat's north-side pursuit lane.
     if (asset === 'prop.carpet' && side > 0 && px > 155 && px < 157) px -= 2;
+    // Keep the two crate stacks clear of the retreat column's turn.
+    if (asset === 'prop.crates' && side > 0 && px > 167 && px < 171) px += px < 169 ? 1 : .8;
     // Against the wall: the walkway spans 11.5..13.2 (south) and 16.8..18.5 (north); the courier keeps to the lane between.
     const z = side < 0 ? 11.95 + r[3] * .3 : 18.05 - r[3] * .3;
     out.push({ asset, x: px, z, y: L6Y.walk, yaw: (side < 0 ? 0 : Math.PI) + (r[4] - .5) * .9, scale: asset === 'prop.carpet' ? 1.2 : 1 });
