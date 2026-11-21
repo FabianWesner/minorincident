@@ -11,16 +11,14 @@
 
 ## Route receipt
 
-[`pacing.json`](pacing.json) is a native ordinary-input LOW/HIGH probe on the current change set. Both routes complete (LOW 1 death, HIGH 8), but the objective is not met:
+[`pacing.json`](pacing.json) and [`roadblocks.json`](roadblocks.json) are the current LOW/HIGH ordinary-input probes after the solid-contact crash change. The probe passed 82/98 checks. Both tiers recorded 0/4 complete roadblock sequences.
 
-| Tier | Hangar to gate | Longest activity gap | Bike ticks | Roadblock sequences |
+| Tier | Hangar to gate | Longest activity gap | Bike ticks | Deaths |
 |---|---:|---:|---:|---:|
-| LOW | 299.5 s | 19.9 s | 172 | 0/4 |
-| HIGH | 275.7 s | 18.1 s | 1,569 | 0/4 |
+| LOW | 491.9 s | 20.8 s | 12,076 | 7 |
+| HIGH | 333.7 s | 16.1 s | 1,957 | 10 |
 
-The overall probe passed 82/98 assertions. Both tiers miss 420–540 s and 45–75 s beat cadence; both fail all four roadblock sequences. The game remains 120–165 s short of the route target, and the ride segment remains far below 40% of hangar-to-gate time. Subsequent bot-only remount/leash and barrier-hold trials increased deaths and stalled the route; those policies were discarded and are not in the source tree. [`roadblocks.json`](roadblocks.json) contains the six-tier/roadblock receipt (all eight incomplete).
-
-After narrowing heavy dismounts to hard hits (20+ damage), an instrumented LOW probe showed 7,288 bike ticks and a 334 s hangar-to-gate leg, but three deaths and 0/4 complete roadblock loops. An additional recovery-at-bike bot rule was tested and discarded: it caused a 2,418 s full route with 34 deaths and still 0/4 loops. That failed experiment is absent from the source. The checked-in route receipt predates the final heavy-hit threshold edit and should be treated as diagnostic evidence, not a passing final receipt.
+LOW meets the total-time range only through repeated first-checkpoint attempts: its 192.4 s beat interval and seven deaths fail the requirements. HIGH misses the total time and cadence. Both tiers lack the required ride/fight/remount/cross loops. The LOW death count regressed from three before the solid-contact change; the paired trace needs bot and encounter fixes before it can be accepted. Incomplete sequence state resets on death, so zero final sequence fields do not imply no intermediate attempts.
 
 ## Verification
 
