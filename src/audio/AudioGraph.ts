@@ -313,7 +313,7 @@ export class AudioGraph {
         voice.source.playbackRate.setValueAtTime(voice.rate * rate, time);
     }
     private depth(bus: AudioBus, at: number): number {
-        return (at < this.radioUntil && (bus === 'music' || bus === 'ambience') ? (bus === 'music' ? -8 : -6) : 0) + (at < this.megaUntil && bus !== 'telegraph' && bus !== 'dialogue' ? -12 : 0);
+        return (at < this.radioUntil && (bus === 'music' || bus === 'ambience' || bus === 'animal') ? (bus === 'music' ? -8 : -6) : 0) + (at < this.megaUntil && bus !== 'telegraph' && bus !== 'dialogue' ? -12 : 0);
     }
     private duckSend(voice: GraphVoice, time: number): void {
         const gain = voice.send.gain, bus = audioCues[voice.cue]?.bus ?? 'telegraph'; // synthesised cues without a table row (the L4 klaxon) ride the telegraph bus

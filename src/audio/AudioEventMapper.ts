@@ -44,6 +44,10 @@ const l5CueSounds: Record<string, { cue: string; gain: number; rate: number }> =
 };
 /** Recorded infected voice cues (alert, hurt, death) are human performances: animals keep their own telegraphs. */
 const voicedInfected = new Set(humanInfected.map(d => d.id));
+const animalVoice = (archetype?: string): string | undefined => {
+    const name = archetype?.replace(/^infected\./, '');
+    return name === 'lioness' ? 'lion' : name && ['lion', 'flamingo', 'zebra', 'gorilla', 'monkey', 'elephant'].includes(name) ? name : undefined;
+};
 /** Melee weapons without their own recorded hit take reuse the nearest existing one (blades like the machete, blunt tools like the bat or crowbar). */
 const fleshLike: Record<string, string> = { knife: 'machete', katana: 'machete', 'fire-axe': 'machete', 'nail-bat': 'bat', shovel: 'crowbar', 'police-baton': 'bat' };
 /** Maps the real producer events and lab events through the same ordered cue path. */
@@ -153,6 +157,11 @@ export class AudioEventMapper {
                 return;
             }
             const special = 'special' in event ? event.special : event.kind;
+            const animal = animalVoice(entity?.archetype);
+            if (animal) {
+                this.host.play(`animal.${animal}.tell`, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
+                return;
+            }
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.host.caption(special === 'alpha.charge' ? 'Alpha charging: clear the marked path' : 'Alpha ground slam: leave the marked circle', position, event.duration);
             const alphaCaption: Record<string, string> = {
@@ -401,6 +410,9 @@ export class AudioEventMapper {
             }
             if (event.type === 'combat.hit' && event.shieldGlance)
                 this.host.play('impact.body.metal', { position: target?.transform ?? position, gain: event.shieldBreak ? 1.3 : .85 }, target?.id);
+            const animal = animalVoice(target?.archetype);
+            if (target?.infected && animal && (event.type === 'combat.kill' || event.amount > 0 && target.health.current > 0))
+                this.host.play(`animal.${animal}.${event.type === 'combat.kill' ? 'death' : 'hurt'}`, { position: target.transform }, target.id);
             if (target?.infected && voicedInfected.has(target.archetype)) {
                 if (event.type === 'combat.kill')
                     this.host.play('infected.death', { position: target.transform }, target.id);
@@ -426,6 +438,8 @@ export class AudioEventMapper {
             }
         }
         if (event.type === 'infected.attack') {
+            const animal = animalVoice(entity?.archetype);
+            if (animal) { this.host.play(`animal.${animal}.attack`, { position }, source); return; }
             // Close individual vocals are bounded by the horde manager; a landed melee attack adds only the bite.
             if (event.amount > 0 && !['barricade', 'prop-throw', 'explode'].includes(event.special))
                 this.host.play('infected.bite', { position: this.host.world.entities.get(event.targetId)?.transform ?? position }, source);
@@ -446,6 +460,8 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'ai.alerted') {
+            const animal = animalVoice(this.host.world.entities.get(event.targetId)?.archetype);
+            if (animal) { this.host.play(`animal.${animal}.idle`, { position: event.position }, event.targetId); return; }
             // One shared anti-spam key: a gunshot that alerts a whole street yields a few snarls, not a wall.
             if (voicedInfected.has(this.host.world.entities.get(event.targetId)?.archetype ?? ''))
                 this.host.play('infected.alert', { position: event.position });
