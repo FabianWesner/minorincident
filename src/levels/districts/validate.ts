@@ -63,6 +63,12 @@ function laneOverlap(
 export function overlapsRoad(layout: DistrictLayout, aabb: Aabb): boolean {
   return layout.roads.edges.some(e => e.points.slice(1).some((b, i) => laneOverlap(aabb, e.points[i], b, e.laneWidth / 2)));
 }
+/** Conservative exclusion of authored paved surface bounds from a ground-fire footprint. */
+export function overlapsPaving(layout: DistrictLayout, aabb: Aabb): boolean {
+  return layout.surfaces.some(s => (s.surface === 'asphalt' || s.surface === 'tile') && s.polygon.length > 0
+    && Math.min(...s.polygon.map(p => p[0])) <= aabb.max[0] && Math.max(...s.polygon.map(p => p[0])) >= aabb.min[0]
+    && Math.min(...s.polygon.map(p => p[1])) <= aabb.max[2] && Math.max(...s.polygon.map(p => p[1])) >= aabb.min[2]);
+}
 export function validateLayout(
   layout: DistrictLayout,
   manifest: Record<string, unknown>,

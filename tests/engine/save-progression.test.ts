@@ -23,7 +23,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import { cureHangarWeapons, levelTenMission } from '../../src/levels/L10/mission';
 import { surrenderHeavyWeapons } from '../../src/sim/missions/L8Gate';
 import { weaponKey } from '../../src/data/weaponKeys';
-import { overlapsRoad } from '../../src/levels/districts/validate';
+import { overlapsPaving, overlapsRoad } from '../../src/levels/districts/validate';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
@@ -207,6 +207,7 @@ async function checkCheckpointRacks() {
     for (const district of l10.districts!.districts) for (const c of field.cells.filter(c => c.id.startsWith(`${district.id}/`))) {
       const x = c.x - district.origin[0], z = c.z - district.origin[1];
       expect(overlapsRoad(district.layout, { min: [x - 5, 0, z - 5], max: [x + 5, 0, z + 5] }), c.id).toBe(false);
+      expect(overlapsPaving(district.layout, { min: [x - 5, 0, z - 5], max: [x + 5, 0, z + 5] }), c.id).toBe(false);
     }
     field.ignite(cell, l10.tick); field.update(l10.tick + 420);
     const vegetation = l10.hazards!.vegetationFire!, tree = vegetation.objects[0];

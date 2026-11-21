@@ -3,6 +3,7 @@ import { FieldFire } from '../../src/sim/interact/FieldFire';
 import { VegetationFire } from '../../src/sim/interact/VegetationFire';
 import { avoidFieldFire } from '../../src/sim/npc/avoidFieldFire';
 import type { Placement } from '../../src/levels/districts/types';
+import { overlapsPaving } from '../../src/levels/districts/validate';
 
 const crop = (id: string, x: number, assetId = 'veg.corn-block') => ({ id, assetId, position: [x, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 6, decor: true, allowRoad: false, lightGroup: 'decor', visualAabb: { min: [x - 1, 0, -1], max: [x + 1, 2, 1] } }) as Placement;
 
@@ -29,6 +30,9 @@ function checkS202Field0(): void {
 
 
 function checkS202Field1(): void {
+  const layout = { surfaces: [{ surface: 'asphalt', polygon: [[4, -2], [6, -2], [6, 2], [4, 2]] }] } as Parameters<typeof overlapsPaving>[0];
+  expect(overlapsPaving(layout, { min: [0, 0, -5], max: [5, 0, 5] })).toBe(true);
+  expect(overlapsPaving(layout, { min: [-10, 0, -5], max: [0, 0, 5] })).toBe(false);
   const field = new FieldFire([crop('a', 0), crop('b', 10)], (a, b) => (a.x < 5 && b.x > 5) || (a.x > 5 && b.x < 5));
   expect(field.ignite({ x: 0, z: 0 }, 1, 15)).toBe(1);
   for (let tick = 1; tick < 600; tick++) field.update(tick);
