@@ -322,12 +322,9 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           }
         }
       }
-      // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
-      // references must use those placements, rather than the unchanged baked GLB empties.
-      if (d.layout.terrainChunks?.length || deps.world.composition.id === 'L8' || deps.world.composition.id === 'L7' || deps.world.composition.id === 'L6' || deps.world.composition.id === 'L5' || deps.world.composition.id === 'L4' || deps.world.composition.id === 'L3' || deps.world.composition.id === 'L2' || lab) {
-        references.clear();
-        // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
-        if (d.layout.terrainChunks?.length || lab || deps.world.composition.id === 'L2' || deps.world.composition.id === 'L8') {
+      // Crowns need placement identities to follow fire and checkpoint state.
+      // Build them from the resolved placements, including runtime layout edits.
+      {
           crowns.clear();
           for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
             const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();
@@ -337,7 +334,11 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
             ref.userData.placementId = `${d.id}/${p.id}`;
             if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
           }
-        }
+      }
+      // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
+      // references must use those placements, rather than the unchanged baked GLB empties.
+      if (d.layout.terrainChunks?.length || deps.world.composition.id === 'L8' || deps.world.composition.id === 'L7' || deps.world.composition.id === 'L6' || deps.world.composition.id === 'L5' || deps.world.composition.id === 'L4' || deps.world.composition.id === 'L3' || deps.world.composition.id === 'L2' || lab) {
+        references.clear();
         for (const p of d.decay.placements) {
           const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
           const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
