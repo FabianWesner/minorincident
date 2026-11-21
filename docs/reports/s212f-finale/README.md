@@ -28,6 +28,8 @@ The native route still misses the 420–540 s hangar-to-gate duration and 45–7
 
 The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the research checkpoint with ordinary bot input and inspected. The capture advances the render clock with the simulation: without that, an explosion's white flash persisted in every later frame. Beat 0 shows the courier beside a generator; 1 shows the mounted bike and sidecar at an intersection; 2 shows the quarantine gantry and a fight; 3 shows the billboard at the frame edge; 4 shows road without readable scarecrows; 5 shows a truck and combat; 6 shows the Mega holding the crate; 7 shows road, a pier and an emergency light without a readable underpass; 8 shows road and a sign without readable hospital tents or silhouettes; 9 shows a utility pole and building without a readable gate or searchlight. The sheet confirms that the route and framing still need work.
 
+The capture now requires the billboard fall event for beat 3 and at least 15 ticks of hospital opening for beat 8. In the latest native HIGH run the events began at ticks 37200 and 43150; the captures were at 37260 and 43170. The hospital remained outside the readable frame even after its opening began.
+
 ## Checks
 
 - `npm run typecheck` — pass.
