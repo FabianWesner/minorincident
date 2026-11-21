@@ -227,7 +227,7 @@ export class LevelEightZoo {
       if (index === 1) {
         // The ticket pavilion blocks the direct sight line from the north
         // opening; route the outside cohort through the gate and around it.
-        entity.infected!.scripted = { x: 0, z: 82 };
+        entity.infected!.scripted = { x: spread, z: 82 };
         entity.infected!.breachApproach = 'l8-north-gate';
       }
       if (index === 3) {

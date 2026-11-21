@@ -597,9 +597,9 @@ export class InfectedSystem {
       }
     }
     else if (l8GateApproach && b.breachApproach === 'l8-north-gate') {
-      b.scripted = { x: 7, z: 82 }; b.breachApproach = 'l8-north-side';
+      b.scripted = { x: e.id % 2 ? -7 : 7, z: 82 }; b.breachApproach = 'l8-north-side';
     } else if (l8GateApproach && b.breachApproach === 'l8-north-side') {
-      b.scripted = { x: 7, z: 70 }; b.breachApproach = 'l8-north-attack';
+      b.scripted = { x: b.scripted.x, z: 70 }; b.breachApproach = 'l8-north-attack';
     } else if (l8GateApproach) this.pursueTarget(e.id, b.pressureTarget?.id ?? 1, 30);
     e.combat!.attacking = false; this.place(e); return true;
   }
