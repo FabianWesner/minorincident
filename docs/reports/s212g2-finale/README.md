@@ -64,3 +64,5 @@ A Mega lure trial moved the dismounted bot away from the fallen bike until the v
 The roadblock HUD now shows “Back on the bike” while the bike cannot yet be interacted with, and adds the E/touch instruction only when the vehicle interaction is available. This avoids prompting E from outside recovery range or during the lockout. Typecheck and lint passed; a native interaction review remains open.
 
 A LOW trial aligned each roadblock's fixed collider center with its admitted encounter lane. The first gate recorded arrival, dismount, fight and opening with zero deaths, but no remount; the bike was left at that gate (3,022 riding ticks), hangar-to-gate was 304.5 s, and the activity gap reached 22.7 s. The barrier shift was discarded because it did not produce the ride loop and worsened pacing and activity.
+
+After a nearby gate opens, the bike hint now remains visible at up to 40 m and shows a screen-relative direction and distance until E/touch interaction is available. This makes a bike left during a fight easier to locate; it does not solve the bot's recovery policy. Typecheck and lint passed; native HUD review remains open.
