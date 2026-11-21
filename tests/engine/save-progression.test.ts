@@ -18,6 +18,7 @@ import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progressio
 import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progression/carryover';
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
 import { decodeSave, encodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
+import { migrateCureResume } from '../../src/sim/progression/cureSave';
 import { debugFlagEnabled } from '../../src/ui/debugFlag';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { cureHangarWeapons, levelTenMission } from '../../src/levels/L10/mission';
@@ -27,6 +28,14 @@ import { overlapsBuilding, overlapsPaving, overlapsRoad } from '../../src/levels
 import { cureEvacuationLane } from '../../src/levels/L10/vignettes';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
+function legacyL10PaceCheckpointsMigrate(): void {
+  for (const [x, expected] of [[2900, 'cure-research'], [3100, 'l10-quarantine-gate'], [3300, 'l10-convoy-7'], [3600, 'l10-field-hospital'], [3800, 'cure-complex']] as const) {
+    const snapshot = { state: { checkpoint: 'cure-pace-12', states: {}, counters: {} }, entities: [{ id: 1, transform: { x, z: 0 } }] };
+    const migrated = migrateCureResume({ current: structuredClone(snapshot), checkpoint: structuredClone(snapshot) }) as { current: typeof snapshot; checkpoint: typeof snapshot };
+    expect(migrated.current.state.checkpoint, `saved at x=${x}`).toBe(expected);
+    expect(migrated.checkpoint.state.checkpoint, `retry at x=${x}`).toBe(expected);
+  }
+}
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
 const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgun') => ({
   entities: { get: (id: number) => id === 1 ? { weapons: { selectedSide: racks.RIGHT.includes(selectedAction) ? 'RIGHT' : 'LEFT', LEFT: { index: racks.LEFT.indexOf(selectedAction), rack: racks.LEFT.map(id => ({ id })) }, RIGHT: { index: racks.RIGHT.indexOf(selectedAction), rack: racks.RIGHT.map(id => ({ id })) } } } : undefined, iterate: () => [][Symbol.iterator]() },
@@ -34,6 +43,7 @@ const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgu
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
 test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', async () => {
+  legacyL10PaceCheckpointsMigrate();
   const hangarSave = preset('L10-default');
   hangarSave.ownedActions.push('weapon.bat', 'weapon.army-mg', 'weapon.flashbang', 'weapon.grenade');
   hangarSave.racks.LEFT.push('weapon.bat'); hangarSave.racks.RIGHT.push('weapon.grenade', 'weapon.army-mg', 'weapon.flashbang');
