@@ -295,6 +295,18 @@ async function checkCheckpointRacks() {
     l10.missions!.l10!.story.update();
     expect(l10.missions!.state.states['l10-gate-checkpoint'], 'downed cohort permits checkpoint').toBe(true);
     expect(defender.infected!.recoverAt, 'checkpoint does not remove recovery').toBe(l10.tick + 600);
+    player.transform.x = 2707;
+    const resident = vi.spyOn(l10.chunks!, 'resident').mockReturnValue(true);
+    const navClear = vi.spyOn(l10.infected!.nav, 'clear').mockReturnValue(false);
+    const navCell = vi.spyOn(l10.infected!.nav, 'cell').mockReturnValue(0);
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['hangar-cast'], 'cast waits for navigation').toBe(false);
+    expect(l10.missions!.state.actors['hangar-voss']).toBeUndefined();
+    navClear.mockReturnValue(true);
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['hangar-cast']).toBe(true);
+    expect(l10.entities.get(l10.missions!.state.actors['hangar-voss'])).toBeDefined();
+    navCell.mockRestore(); navClear.mockRestore(); resident.mockRestore();
   } finally { l10.dispose(); }
 }
 

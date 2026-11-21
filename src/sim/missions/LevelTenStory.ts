@@ -148,10 +148,13 @@ export class LevelTenStory {
       ['researcher', 'npc.lab-tech-a', 2718, 69], ['sam', state.states['sam-alive'] ? this.savedSam()?.civilian?.model ?? 'npc.civilian-man-a' : 'npc.national-guard', 2712, 73],
       ['guard-west', 'npc.lab-guard', 2703, 56], ['guard-east', 'npc.lab-guard', 2711, 56],
     ] as const;
+    // Chunk residency can precede the navigation rebuild by a tick. Wait for
+    // every position before spawning so a streaming transition cannot leave
+    // a partial cast or abort the level.
+    if (cast.some(([, , x, z]) => !world.infected!.nav.clear(x, z, .35))) return;
     for (const [key, model, x, z] of cast) {
       if (state.actors[`hangar-${key}`]) continue;
       const at = { x, z };
-      if (!world.infected.nav.clear(x, z, .35)) throw new Error(`Blocked hangar actor: ${key}`);
       const id = world.npcs.civilians.spawn('resident', at, { model, waypoints: [at] });
       state.actors[`hangar-${key}`] = id;
       const e = world.entities.get(id)!;
