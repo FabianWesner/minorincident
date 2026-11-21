@@ -5,8 +5,8 @@
   "policy": "ordinary skilled LevelTenBot inputs; native simulation",
   "nativeCapture": {
     "required": "HIGH zoom 1, natural route, one JPEG contact sheet",
-    "result": "blocked",
-    "reason": "tools/e2e-lock.sh shared pool bind on 127.0.0.1:4329 returned EPERM; legacy host guard ps returned EPERM"
+    "result": "captured and reviewed; set-piece readability fails",
+    "sheet": "native-finale-high.jpg"
   },
   "tiers": {
     "low": {
@@ -41,7 +41,7 @@
     "missionInteractions": "pass",
     "typecheck": "pass",
     "lint": "pass",
-    "vehicleCampaignMotion": "not run; browser pool startup blocked",
-    "remoteNpmTest": "not run; no healthy remote runner and Mac fallback disallowed"
+    "vehicleCampaignMotion": "pass",
+    "remoteNpmTest": "pass; 27 files, 105 passed, 1 skipped, 201.1 seconds"
   }
 }
