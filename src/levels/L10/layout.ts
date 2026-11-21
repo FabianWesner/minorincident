@@ -136,6 +136,8 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const beacon = roadside('complex-searchlight', 'prop.light-tower', 3825, -60, [1.2, 9, 1.2], Math.PI, [1.2, 4, 1.2]);
     beacon.lightGroup = 'l10-complex-searchlight';
     beacon.decorLights = true;
+    const approachBeacon = roadside('approach-searchlight', 'prop.light-tower', 3660, -30, [1.2, 9, 1.2], Math.PI, [1.2, 4, 1.2]);
+    approachBeacon.lightGroup = 'l10-complex-searchlight'; approachBeacon.decorLights = true;
     layout.lightGroups.push({ id: 'l10-final-siren', offAt: 6 });
     for (const [i, z] of [-30, -20].entries()) {
       const barricade = roadside(`final-barricade-${i}`, 'prop.barricade', 3720, z, [2, .7, .35], Math.PI / 2);
@@ -155,9 +157,9 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     beat('gate-tower', 'kit.guard-tower', 2995, 107, [1.6, 2.5, 1.5]);
     beat('gate-bus', 'veh.evac-bus', 2950, 126, [5, 1.6, 1.5], Math.PI / 2);
     // An abandoned public information board beside the objective crossing.
-    beat('billboard-frame', 'prop.l10-cure-billboard', 3066, 92, [.4, 2.9, 3.8]);
-    beatSolid('billboard-frame', 3066, 92, .3, .3, 5.8);
-    beat('billboard-wreck', 'prop.l10-abandoned-sedan-blue', 3072, 124, [2.5, .8, 1.1], Math.PI / 2);
+    beat('billboard-frame', 'prop.l10-cure-billboard', 3086, 92, [.4, 2.9, 3.8]);
+    beatSolid('billboard-frame', 3086, 92, .3, .3, 5.8);
+    beat('billboard-wreck', 'prop.l10-abandoned-sedan-blue', 3092, 124, [2.5, .8, 1.1], Math.PI / 2);
     // The hazmat effigies use the retained TRELLIS source; the nearby cohort is separately admitted.
     for (let i = 0; i < 7; i++) {
       const x = 3170 + i * 7, z = 110 + (i % 2) * 2;
@@ -192,16 +194,16 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     // Field triage on the final approach: quarantine tents and a marked transport.
     for (const [i, x] of [3508, 3526, 3546].entries()) {
-      const z = i === 1 ? 89 : 83;
+      const z = i === 1 ? 57 : 51;
       beat(`hospital-tent-${i}`, 'prop.l10-field-tent', x, z, [2.2, 1.6, 3.4], i % 2 ? Math.PI : 0);
       beatSolid(`hospital-tent-${i}`, x, z, 1.6, 2.3, 2.8);
     }
-    beat('hospital-truck', 'veh.ambulance', 3538, 98, [1.5, 1.7, 3.4], Math.PI / 2);
-    beat('hospital-supplies', 'prop.medical-cooler', 3531, 91, [.5, .5, .5]);
-    beat('hospital-stretcher-a', 'prop.l10-field-stretcher', 3504, 90, [1.1, .85, .65], .2);
-    beat('hospital-stretcher-b', 'prop.l10-field-stretcher', 3521, 91, [1.1, .85, .65], -.15);
-    beatSolid('hospital-stretcher-a', 3504, 90, .7, .45, .9);
-    beatSolid('hospital-stretcher-b', 3521, 91, .7, .45, .9);
+    beat('hospital-truck', 'veh.ambulance', 3538, 67, [1.5, 1.7, 3.4], Math.PI / 2);
+    beat('hospital-supplies', 'prop.medical-cooler', 3531, 55, [.5, .5, .5]);
+    beat('hospital-stretcher-a', 'prop.l10-field-stretcher', 3504, 58, [1.1, .85, .65], .2);
+    beat('hospital-stretcher-b', 'prop.l10-field-stretcher', 3521, 59, [1.1, .85, .65], -.15);
+    beatSolid('hospital-stretcher-a', 3504, 58, .7, .45, .9);
+    beatSolid('hospital-stretcher-b', 3521, 59, .7, .45, .9);
     // Keep the marked console approach reachable; the old gate panel occupied
     // the exact mission anchor and made the objective fail district validation.
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);

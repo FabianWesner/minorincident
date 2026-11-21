@@ -1,0 +1,47 @@
+{
+  "revision": "0b0fe04c",
+  "command": "node --import tsx/esm tools/qa/l10-story.ts --out <receipt>; HIGH used L10_STORY_TIERS=high; default route budget 2100s",
+  "seed": 1,
+  "policy": "ordinary skilled LevelTenBot inputs; native simulation",
+  "nativeCapture": {
+    "required": "HIGH zoom 1, natural route, one JPEG contact sheet",
+    "result": "blocked",
+    "reason": "tools/e2e-lock.sh shared pool bind on 127.0.0.1:4329 returned EPERM; legacy host guard ps returned EPERM"
+  },
+  "tiers": {
+    "low": {
+      "runSeconds": 1087.233,
+      "completed": true,
+      "deaths": 0,
+      "hangarToGateSeconds": 299.283,
+      "beatSeconds": [0, 11.8, 85.367, 104.483, 120.933, 154.4, 177.383, 197.433, 234.8, 248.983],
+      "beatIntervalsSeconds": [11.8, 73.567, 19.117, 16.45, 33.467, 22.983, 20.05, 37.367, 14.183],
+      "longestActivityGapSeconds": 18.533,
+      "bikeTicks": 207,
+      "overpassCrateThrow": { "tick": 46631, "sourceId": 115, "playerX": 3344.484, "event": "infected.prop-thrown", "move": "alpha.grab-throw", "propId": 1631430176 },
+      "failedChecks": ["Mega visibly enters widest frame within three minutes", "no ordinary infected first enters the widest frame standing idle", "hangar-to-gate finale takes 7–9 minutes", "every story beat arrives 45–75 seconds after the previous one"]
+    },
+    "high": {
+      "runSeconds": 1781.583,
+      "completed": true,
+      "deaths": 16,
+      "hangarToGateSeconds": 300.733,
+      "beatSeconds": [0, 11.917, 86.85, 105.967, 122.417, 155.867, 178.833, 198.933, 236.25, 250.433],
+      "beatIntervalsSeconds": [11.917, 74.933, 19.117, 16.45, 33.45, 22.967, 20.1, 37.317, 14.183],
+      "longestActivityGapSeconds": 33.217,
+      "bikeTicks": 154,
+      "overpassCrateThrow": { "tick": 71700, "sourceId": 115, "playerX": 3344.443, "event": "infected.prop-thrown", "move": "alpha.grab-throw", "propId": 1631430176 },
+      "failedChecks": ["Mega visibly enters widest frame within three minutes", "no ordinary infected first enters the widest frame standing idle", "hangar-to-gate finale takes 7–9 minutes", "every story beat arrives 45–75 seconds after the previous one", "fight or story gaps stay within 20 seconds"]
+    }
+  },
+  "otherChecks": {
+    "l10StoryFixtures": "64/64 pass",
+    "solidPlacementAuditOffenders": 0,
+    "qaThreatFlags": 0,
+    "missionInteractions": "pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "vehicleCampaignMotion": "not run; browser pool startup blocked",
+    "remoteNpmTest": "not run; no healthy remote runner and Mac fallback disallowed"
+  }
+}

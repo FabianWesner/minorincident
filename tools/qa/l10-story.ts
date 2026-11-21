@@ -192,17 +192,19 @@ for (const tier of tiers) {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number }[] = [];
-  const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number }[] = [];
+  const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
+  let authoredThrowCrateId: number | undefined;
   const overpassState: unknown[] = [];
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
   let mounts = 0, bikeTicks = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
   const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [], overpassProbeState: unknown[] = [];
   let finalState: unknown;
   let lastRegion = '', firstMegaSeen: number | null = null, fullArsenal = false;
-  const routeBudget = Number(process.env.L10_STORY_TICKS ?? 1800);
+  const routeBudget = Number(process.env.L10_STORY_TICKS ?? 2100);
   const run = await runLevel('L10', 'complete', 1, finaleOnly ? 360 : routeBudget, 'auto', undefined, undefined, 0, {
     quality: tier,
     beforeBegin: world => {
+      authoredThrowCrateId = world.props?.items.find(item => item.id === 'D-CURE/l10-setpiece-overpass-throwable')?.entityId;
       const inFinale = () => world.entities.get(1)!.transform.x >= 2750 && world.entities.get(1)!.transform.x <= 4005;
       world.events.on('dialogue.line', e => {
         if (e.type === 'dialogue.line' && /^L10\.finale-\d$/.test(e.id) && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'story', id: e.id });
@@ -216,6 +218,11 @@ for (const tier of tiers) {
       world.events.on('infected.special', e => {
         if (e.type === 'infected.special' && world.entities.get(e.sourceId)?.infected?.pursuit && ['alpha.grab-throw', 'alpha.living-missile'].includes(e.move))
           overpassThrows.push({ tick: e.tick, move: e.move, stage: e.stage, sourceId: e.sourceId, playerX: world.entities.get(1)!.transform.x });
+      });
+      world.events.on('infected.prop-thrown', e => {
+        if (e.type !== 'infected.prop-thrown' || !world.entities.get(e.sourceId)?.infected?.pursuit) return;
+        const alpha = world.entities.get(e.sourceId);
+        overpassThrows.push({ tick: e.tick, move: alpha?.infected?.specialAttack?.move ?? 'none', stage: 'prop-thrown', sourceId: e.sourceId, playerX: world.entities.get(1)!.transform.x, propId: e.propId });
       });
       world.events.on('mounted-gun.mounted', () => mounts++);
       world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.actionId === 'weapon.rotary-minigun') minigunKills++; });
@@ -249,6 +256,7 @@ for (const tier of tiers) {
           const alpha = world.megaPursuit!.entity();
           const object = alpha && world.infected!.props.nearestObject(alpha, 6);
           const crate = world.props?.items.find(item => item.id.includes('overpass-throwable'));
+          if (crate) authoredThrowCrateId = crate.entityId;
           const nearbyProps = alpha && world.props?.items.filter(item => Math.hypot(item.body.translation().x - alpha.transform.x, item.body.translation().z - alpha.transform.z) <= 8).map(item => ({ id: item.id, entityId: item.entityId, mass: item.mass, fixed: item.fixed, position: item.body.translation(), los: world.infected!.hearing.lineOfSight(alpha.transform, item.body.translation()) }));
           overpassState.push({ tick: world.tick, player: { x: p.transform.x, z: p.transform.z }, playerLos: alpha && world.infected!.hearing.lineOfSight(alpha.transform, p.transform), alpha: alpha && { x: alpha.transform.x, z: alpha.transform.z, state: alpha.infected?.state, cooldown: alpha.infected?.cooldown, specialCooldowns: alpha.infected?.specialCooldowns, recovery: alpha.infected?.specialRecoveryUntil, move: alpha.infected?.specialAttack?.move, attacking: alpha.combat?.attacking }, object: object && { ...object }, objectAt: object && world.entities.get(object.id)?.transform, crate: crate && { entityId: crate.entityId, mass: crate.mass, fixed: crate.fixed, braced: crate.braced, enabled: crate.body.isEnabled(), position: crate.body.translation() }, nearbyProps });
         }
@@ -275,7 +283,7 @@ for (const tier of tiers) {
   check(tier, 'native ordinary-input route reaches credits', run.completed, { outcome: run.outcome, blocker: run.blocker, time: run.time, deaths: run.deaths });
   const beat6 = finaleMoments.find(e => e.kind === 'story' && e.id === 'L10.finale-6')?.tick;
   const beat7 = finaleMoments.find(e => e.kind === 'story' && e.id === 'L10.finale-7')?.tick;
-  if (!finaleOnly) check(tier, 'overpass Mega throws a prop during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'active' && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, throws: overpassThrows });
+  if (!finaleOnly) check(tier, 'overpass Mega throws the authored crate during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'prop-thrown' && e.propId === authoredThrowCrateId && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, crate: authoredThrowCrateId, throws: overpassThrows });
   if (!finaleOnly) check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);
   if (!finaleOnly) check(tier, 'persistent Mega produces recurring close encounters in distinct route sections', sightings.length >= 3, sightings);
   if (!finaleOnly) check(tier, 'no ordinary infected first enters the widest frame standing idle', idleEntries.length === 0 && firstSeen.size > 0, { idleEntries, seen: firstSeen.size });
