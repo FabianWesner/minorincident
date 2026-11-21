@@ -41,6 +41,8 @@ A prototype quarantine gate blocked the gantry opening until all encounter slots
 
 The LOW route probe also shows the overpass throw is not reliable. At the original staging point the Mega was already performing a roar and the throw resolver rejected the request, while the script still marked the beat complete. A prototype that interrupted the prior move once and retried did not produce a throw before the courier left the area; the Mega moved away from the crate. That prototype was discarded. The overpass spectacle remains open.
 
+Further tracing found the original staging point is blocked for the Mega and outside the view predicate, while the throw cooldown can still be active. A clear, visible staging point and nearby crate produced throws on both tiers, but the HIGH route then suffered 30 deaths and stalled before the complex; that staging change was discarded. A separate retry fix retains the one-shot flag across checkpoint restoration, preventing the original beat from being staged again after death. Save progression and the unchanged mission interactions test pass with that fix.
+
 ## Captures
 
 The headless capture script runs through `tools/e2e-lock.sh` on ports 5215/5216. Its revised sheet teleports the courier and steps the simulation to load each location. Review: 0 shows road and an ambulance; 1 a medical building; 2 the quarantine gantry and effigies; 3–4 mostly empty road; 5 a road beside wrecks; 6 the Mega beside the courier; 7 an empty road with the courier outside the frame; 8 road and a bench; 9 dark road. The unrelated start objective remains on screen. These staged views do not show the actual story beats or ridden motorbike. Native gameplay captures and a proper sheet remain outstanding.
