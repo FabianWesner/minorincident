@@ -746,18 +746,20 @@ export class Blasts extends Group {
     }
     // Field fronts share the bounded flame, smoke and ember pools. Limit sources
     // to nearby visible cells so a large fire cannot allocate unbounded lights.
-    let fieldSources = 0;
+    let fieldSources = 0, cropSmokeSources = 0;
     for (const [index, cell] of (this.world.hazards?.fieldFire?.cells ?? []).entries()) {
       if (cell.state !== 'burning' || !this.sourceVisible(cell.x, cell.z, 12) || fieldSources >= 24) continue;
       fieldSources++;
       const key = -3_000_000 - index; seen.add(key);
+      const lawn = cell.halfX !== undefined, smoke = !lawn && cropSmokeSources++ < 4;
       let c = this.fireColumns.get(key);
       if (!c) {
-        const lawn = cell.halfX !== undefined;
-        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: lawn ? (low ? .5 : 1) : (low ? 2.5 : 5), size: lawn ? .8 : 4, lawn, crop: !lawn, heat: lawn ? 1 : .15, acc: this.rng.next(), shade: lawn ? .07 : .12, cloud: 0 };
+        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: 0, size: lawn ? .8 : 4, lawn, crop: !lawn, heat: lawn ? 1 : .15, acc: this.rng.next(), shade: lawn ? .07 : .12, cloud: 0 };
         c.light = lawn ? null : this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
         this.fireColumns.set(key, c);
       }
+      // Keep a few columns alive long enough to rise within the shared puff pool.
+      c.rate = lawn ? (low ? .5 : 1) : smoke ? (low ? 2 : 4) : 0;
       if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, cell.halfX === undefined ? 3 : 1, low);
     }
     for (const [index, object] of (this.world.hazards?.vegetationFire?.objects ?? []).entries()) {
