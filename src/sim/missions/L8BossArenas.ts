@@ -87,7 +87,11 @@ export class L8BossArenas {
       this.barrier(`l8.plaza-gate.${side}`, 900860 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
     });
     l8ConnectorGates.forEach((box, i) => {
-      const key = `connector.${i}`, closed = l8GateClosed(key, ctx);
+      const key = `connector.${i}`;
+      // These public-lane branches stay closed while animal arenas remain.
+      // Reopen the lane network for the elephant finale after the earlier fights.
+      const finalApproachOpen = this.state.filter(a => a.id !== 'elephant').every(a => a.phase === 3);
+      const closed = l8GateClosed(key, ctx) && !finalApproachOpen;
       if (this.gateStates.get(key) === closed) return;
       this.gateStates.set(key, closed);
       this.barrier(`l8.connector-gate.${i}`, 900880 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
@@ -95,13 +99,17 @@ export class L8BossArenas {
     // The elephant's drive-out gate shuts while he is loose in the yard.
     const elephant = this.state.find(a => a.id === 'elephant');
     if (elephant) {
-      const closed = !!this.mission.state.states.breached && elephant.phase !== 3;
+      const eastBreachAt = this.mission.l8!.state.perimeterGateBreaks?.[3];
+      const eastBreachOpen = eastBreachAt != null && this.w.tick >= eastBreachAt;
+      const closed = !!this.mission.state.states.breached && elephant.phase !== 3 && !eastBreachOpen;
       if (this.gateStates.get('elephant') !== closed) {
         this.gateStates.set('elephant', closed);
         this.barrier('l8.arena-gate.elephant', 900830 + l8BossArenas.findIndex(a => a.id === 'elephant'), { ...l8EncounterGates.elephant, y: 1, halfY: 1 }, closed);
       }
-      const yardClosed = this.state.some(a => a.id !== 'elephant' && a.phase !== 3);
-      const entryClosed = yardClosed || elephant.phase > 0 && elephant.armed === true;
+      // Keep the public approach open during the yard finale so the outside
+      // breach cohort can continue into the fight instead of waiting behind
+      // a locked gate for the whole encounter.
+      const entryClosed = yardClosed;
       if (this.gateStates.get('elephantEntry') !== entryClosed) {
         this.gateStates.set('elephantEntry', entryClosed);
         this.barrier('l8.arena-gate.elephant-entry', 900834, { ...l8EncounterGates.elephantEntry, y: 1.5, halfY: 1.5 }, entryClosed);

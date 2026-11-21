@@ -14,7 +14,7 @@ export const l8ArenaKeys = l8BossArenas.map(a => `arena-${a.id}`);
 
 /** The service yard has two public approaches. Its keeper gates hold the
  * vehicle route until the five enclosure fights are cleared. */
-/** Close unused public-road branches without interrupting Nadia's visitor route. */
+/** Close unused public-road branches while keeping the one-way zoo loop connected. */
 export const l8PathWalls = [
   { x: 99.1, z: 5.5, halfX: .25, halfZ: 40.5 },
   // Cap the primate approach where its outer fence meets the pen wall.

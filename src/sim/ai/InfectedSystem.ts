@@ -396,7 +396,7 @@ export class InfectedSystem {
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   /** Mission-authored assaults can begin with actors outside perception range. Start an ordinary pursuit after their entrance route. */
-  pursueTarget(id: number, targetId: number): boolean {
+  pursueTarget(id: number, targetId: number, focusBiasM?: number): boolean {
     const e = this.world.entities.get(id), target = this.world.entities.get(targetId), b = e?.infected;
     if (!e || !target || !b || e.health.current <= 0) return false;
     const brain = b.l1;
@@ -406,7 +406,7 @@ export class InfectedSystem {
     }
     delete b.scripted; delete b.breachApproach; delete b.investigate; delete e.noiseTarget;
     b.state = 'wander'; b.targetId = 0; b.heardTargetId = 0; e.combat!.attacking = false;
-    return this.press(id, targetId, this.world.tick + 3600);
+    return this.press(id, targetId, this.world.tick + 3600, focusBiasM);
   }
   /** One brain tick per active infected, in `active` order: pre-brain gates, pursuit/vault, far-crowd slot, script, perception,
    * special moves, roar/pin holds, then the L1 or archetype brain. Every phase returns true when it consumed the actor's tick. */
@@ -473,6 +473,9 @@ export class InfectedSystem {
     if (!(b.scripted || b.investigate || e.noiseTarget || brain?.mode === 'attracted' || !brain && b.heardTargetId ||
         b.pressureTarget && this.world.tick < b.pressureTarget.until) ||
         e.emerging || b.specialAttack || b.state === 'attack' || b.grabUntil > this.world.tick || Status.stunned(e, this.world.tick)) return;
+    // The L8 outside cohort must finish its authored gate route before nearby
+    // party hearing can divert it into the zoo's blocked direct path.
+    if (this.world.scenario === 'L8' && b.breachApproach?.startsWith('l8-') && b.scripted) return;
     const courierDistance = Math.hypot(e.transform.x - courier.transform.x, e.transform.z - courier.transform.z);
     if (this.world.scenario === 'L4' && b.breachApproach && b.scripted &&
         (courierDistance > 3 || !this.world.combat!.query.visible(e.transform, courier.transform))) return;
@@ -573,9 +576,10 @@ export class InfectedSystem {
   /** Phase 4: an unnoticed scripted walker keeps its authored point. */
   private followScript(e: EntitySnapshot, b: InfectedState): boolean {
     const provoker = this.provoker(b);
-    // A hit interrupts authored travel, except when an L4 breach actor still
-    // needs its geometry-owned wire approach to reach the attacker.
-    if (provoker && !(this.world.scenario === 'L4' && b.breachApproach && b.scripted)) {
+    const l8GateApproach = this.world.scenario === 'L8' && b.breachApproach?.startsWith('l8-');
+    // A hit interrupts authored travel, except for actors still crossing an
+    // authored breach mouth before they resume ordinary pursuit.
+    if (provoker && !l8GateApproach && !(this.world.scenario === 'L4' && b.breachApproach && b.scripted)) {
       delete b.scripted; delete b.breachApproach; return false;
     }
     // A windup already in progress must resolve before scripted travel resumes.
@@ -586,7 +590,18 @@ export class InfectedSystem {
     const breach = line?.director.alphaJobs.find(job => job.alphaId === e.id)?.breach;
     // The generic arrival band can stop just beyond the rail's attack reach.
     const arrival = breach && !line?.breaches?.[breach]?.openAt ? .1 : .6;
-    if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > arrival) this.seek(e, b.scripted, scriptedSpeed);
+    const remaining = Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z);
+    if (!Status.stunned(e, this.world.tick) && remaining > arrival) {
+      if (l8GateApproach) {
+        const speed = b.l1?.runSpeed ?? b.speed;
+        moveAgent(e, (b.scripted.x - e.transform.x) / remaining * speed, (b.scripted.z - e.transform.z) / remaining * speed, this.infectedNav, this.world.tick, e.combat!.radius, true);
+      } else this.seek(e, b.scripted, scriptedSpeed);
+    }
+    else if (l8GateApproach && b.breachApproach === 'l8-north-gate') {
+      b.scripted = { x: 7, z: 82 }; b.breachApproach = 'l8-north-side';
+    } else if (l8GateApproach && b.breachApproach === 'l8-north-side') {
+      b.scripted = { x: 7, z: 70 }; b.breachApproach = 'l8-north-attack';
+    } else if (l8GateApproach) this.pursueTarget(e.id, b.pressureTarget?.id ?? 1, 30);
     e.combat!.attacking = false; this.place(e); return true;
   }
   /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */

@@ -41,7 +41,7 @@ export class LevelEightBot {
     // Cover the rear passenger queue on foot; the APC has no gun. Using the
     // driver's side door as this origin leaves the rear evacuees >10 m away
     // on the redesigned north-facing APC. Board the driver last.
-    let target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['central-plaza'] : boarded ? door : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
+    let target = zoo.protecting() ? m.def.anchors['central-plaza'] : m.state.steps.sanctuary.status === 'active' ? calm ? w.entities.get(zoo.state.keeperId)!.transform : m.def.anchors['zoo-gate'] : boarded ? door : { x: passengerDoor.x - 4, z: passengerDoor.z + 2 };
     if (!calm && !zoo.protecting() && this.profile === 'runner') {
       const priorPensClear = zoo.state.arenas.filter(a => a.id !== 'elephant').every(a => a.phase === 3);
       if (priorPensClear) {
@@ -62,6 +62,11 @@ export class LevelEightBot {
       if (p.x > 85 && p.z > 46) this.escapeLeg = road.length;
       while (this.escapeLeg < road.length && Math.hypot(p.x - road[this.escapeLeg].x, p.z - road[this.escapeLeg].z) < 2) this.escapeLeg++;
       if (this.escapeLeg < road.length) target = road[this.escapeLeg];
+    }
+    // The compromised entry is a real stop: hold the formed group there for
+    // the first outside wave, then fall back to the plaza for the longer hold.
+    if (this.profile === 'complete' && zoo.state.breachedAt > 0 && w.tick < zoo.state.breachedAt + 20 * 60) {
+      target = m.def.anchors['zoo-gate'];
     }
     // The final kill can leave the courier on the far side of the paddock.
     // Rejoin its public entry before waiting for followers held outside the yard.

@@ -45,12 +45,18 @@ const guideRemarks: { at: Point; radius: number; bit: number; line: string }[] =
 ];
 const perimeterGates = [
   { x: 0, z: -86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: -115 } },
-  { x: 0, z: 86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: 92 } },
+  { x: 0, z: 86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: 89 } },
   { x: -116, z: 0, halfX: .4, halfZ: 2.7, spawn: { x: -126.8, z: 0 } },
   { x: 116, z: 80, halfX: .4, halfZ: 2.7, spawn: { x: 126.8, z: 80 } },
 ];
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 const sIsClosed = (breakAt: number | null | undefined, tick: number) => breakAt == null || tick < breakAt;
+/** Keep even a full zoo rescue roster close enough to regroup during real stops. */
+function l8FormationSlot(leader: Point, heading: Point, slot: number, natural = true): Point {
+  const target = formationSlot(leader, heading, slot, natural), compressedRows = Math.max(0, Math.floor(slot / 3) - 3);
+  target.x += heading.x * compressedRows * .85; target.z += heading.z * compressedRows * .85;
+  return target;
+}
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
   readonly bosses: L8BossArenas;
@@ -164,7 +170,7 @@ export class LevelEightZoo {
     s.perimeterGateBreaks = [null, null, null, null]; s.perimeterGateReleased = [false, false, false, false]; s.perimeterGateSounded = [false, false, false, false];
     s.outlets = []; s.perimeterOutlets = perimeterGates.map(({ x, z }) => ({ x, z }));
     this.syncPerimeterGates();
-    this.mission.def.anchors['l8-route'] = { x: 0, z: 0, radius: 2 };
+    this.mission.def.anchors['l8-route'] = { x: 0, z: 0, radius: 6 };
     this.bosses.updateGates();
     // The carried group has just unloaded from L7's evacuation bus inside the perimeter.
     // Leave the APC's west-side driver door clear for the final approach.
@@ -214,7 +220,19 @@ export class LevelEightZoo {
       if (!ai.director.safe(archetype, at)) continue;
       const id = ai.spawn(archetype, at, { state: 'chase' });
       const entity = w.entities.get(id)!; if (targetId !== 1) entity.infected!.arenaCarrier = targetId;
-      ai.pursueTarget(id, targetId);
+      ai.pursueTarget(id, targetId, targetId === 1 ? 30 : undefined);
+      if (index === 1) {
+        // The ticket pavilion blocks the direct sight line from the north
+        // opening; route the outside cohort through the gate and around it.
+        entity.infected!.scripted = { x: 0, z: 82 };
+        entity.infected!.breachApproach = 'l8-north-gate';
+      }
+      if (index === 3) {
+        // The east perimeter opening is a narrow mouth off the ring road;
+        // send its outside cohort through the actual breach before pursuit.
+        entity.infected!.scripted = { x: 115, z: 80 };
+        entity.infected!.breachApproach = 'l8-gate';
+      }
       this.state.arrivals.push({ id, outlet: index, tick: w.tick, alpha: archetype === 'infected.alpha' });
       spawned.push(id);
     }
@@ -758,14 +776,18 @@ export class LevelEightZoo {
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
     const routeHeading = leaderHeading(p.transform.yaw, velocity);
-    const goal = formationSlot(p.transform, routeHeading, slot, !this.breached);
+    const goal = this.breached ? l8FormationSlot(p.transform, routeHeading, slot) : formationSlot(p.transform, routeHeading, slot, true);
+    // A resident recruited off the route should catch the moving party before
+    // taking its permanent tail slot. Long-tail slots can otherwise leave a
+    // new joiner behind a gate while the courier has already moved on.
     if (this.breached) {
       // Close ranks on the public route; arena holding positions remain authored below.
       const forward = .9 + Math.floor(slot / 3) * .4;
       goal.x += routeHeading.x * forward; goal.z += routeHeading.z * forward;
     }
-    const plaza = this.mission.def.anchors['central-plaza'];
-    // r31-nadia: once Nadia has led the courier to the plaza the group settles inside the ring around its centre.
+    const plaza = this.mission.def.anchors['l8-route'];
+    // The one-way route ends at the zoo entry gate; the party gathers around
+    // that fixed destination while Nadia delivers the safe-zone line.
     if (!this.breached && s.guideDone === 2 && distance(p.transform, plaza) <= (plaza.radius ?? 6) + 4) {
       const angle = slot * 2.399, r = Math.min(4.6, 1.8 + .72 * Math.sqrt(slot + 1));
       goal.x = plaza.x + Math.cos(angle) * r; goal.z = plaza.z + Math.sin(angle) * r;
@@ -793,8 +815,16 @@ export class LevelEightZoo {
         hold.x = Math.min(zone.x1 - 8, Math.max(zone.x0 + 8, hold.x));
         hold.z = Math.min(zone.z1 - 8, Math.max(zone.z0 + 8, hold.z));
       }
-      Object.assign(goal, formationSlot(hold, heading, slot));
+      Object.assign(goal, l8FormationSlot(hold, heading, slot));
       if (!boarding && arena.id !== 'elephant') { goal.x = Math.min(zone.x1 - 1.5, Math.max(zone.x0 + 1.5, goal.x)); goal.z = Math.min(zone.z1 - 1.5, Math.max(zone.z0 + 1.5, goal.z)); }
+    }
+    // A resident can join beside the courier with a high roster slot, then be
+    // assigned a tail position beyond the moving party. Keep separated
+    // followers on a short, reachable catch-up target until they rejoin.
+    if (this.breached && !boarding && !arena && distance(e.transform, p.transform) > 10) {
+      const side = slot % 2 ? 1 : -1;
+      goal.x = p.transform.x - routeHeading.x * 2.5 - routeHeading.z * side * 1.1;
+      goal.z = p.transform.z - routeHeading.z * 2.5 + routeHeading.x * side * 1.1;
     }
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
@@ -825,7 +855,10 @@ export class LevelEightZoo {
         // Keep the double-file tail within the courier's nearby escort ring
         // while preserving clearance for ordinary 0.35 m capsules.
         const queue = { x: door.x + dx / length * (1.7 + row * .82) - dz / length * side, z: door.z + dz / length * (1.7 + row * .82) + dx / length * side };
-        target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) && w.solids.clear({ ...queue, y: e.transform.y }, actorRadius(e), e.id, false) ? queue : e.transform;
+        // Queue slots may be occupied by another follower. That is a soft
+        // crowding condition, not a reason to give this survivor its current
+        // position as a target and leave it stranded across the plaza.
+        target = w.infected!.nav.clear(queue.x, queue.z, actorRadius(e)) ? queue : door;
       }
     }
     if (boarding) { target = this.boardingTarget(e, target); this.unjamBoarding(e, target); }
