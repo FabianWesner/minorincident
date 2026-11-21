@@ -18,6 +18,9 @@ import { PropSystem } from '../../src/sim/interact/PropSystem';
 import { damageAmount } from '../../src/sim/combat/Damage';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
+import { loadLevel } from '../../tools/sim-runner/levels';
+import { followTenFrustum } from '../../tools/sim-runner/l10';
+import { emptyInput } from '../../src/input/InputFrame';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -587,6 +590,19 @@ test('every human and animal role validates and spawns with its catalog health a
     if (process.env.S54_PROBE === '1') console.info(JSON.stringify({ scenario: 'horde-arena-15m', role, weapon: weapon.id, ticks: w.tick, playerHitsLanded: hits.length, targetHp: e.health.current }));
     expect(hits.length, `${role}/${weapon.id}: attack connects through continuous fire (state=${e.infected!.state}, distance=${Math.hypot(e.transform.x, e.transform.z).toFixed(1)}, tick=${w.tick})`).toBeGreaterThan(0);
     if (role === 'alpha') expect(hits.some(event => event.type === 'combat.hit' && event.actionId.startsWith('alpha.')), `${weapon.id}: Alpha uses a signature move`).toBe(true);
+  }
+  {
+    const w = await loadLevel('L10', 1, undefined, 0, { quality: 'low' }); worlds.push(w);
+    const courier = w.entities.get(1)!;
+    Object.assign(courier.transform, { x: 4002, z: -30 });
+    w.physics.playerBody!.setTranslation({ x: 4002, y: courier.transform.y, z: -30 }, true);
+    w.spatial.set(courier.id, 4002, -30); w.chunks!.update(); w.player!.locomotion.reset();
+    const pursuit = w.megaPursuit!, mega = w.entities.get(pursuit.introduce({ x: 2179.9, z: -98.285 }))!;
+    expect(w.chunks!.resident(mega.transform.x, mega.transform.z)).toBe(false);
+    Object.assign(pursuit.state, { passed: 'cure-route-23', route: ['cure-route-24', 'cure-route-25'], routeAt: -Infinity });
+    const start = { x: mega.transform.x, z: mega.transform.z };
+    for (let i = 0; i < 1200; i++) { followTenFrustum(w); w.applyInput(emptyInput(), 'keyboard'); w.update(); }
+    expect(pursuit.state.coarseM, `coarse pursuit accumulates route travel from ${start.x.toFixed(1)},${start.z.toFixed(1)}`).toBeGreaterThan(30);
   }
 });
 

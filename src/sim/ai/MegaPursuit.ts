@@ -76,6 +76,7 @@ export class MegaPursuit {
   private readonly local = { x: 0, z: 0 };
   private coarseGrid: NavGrid | null = null;
   private readonly coarsePath = { path: [] as number[], goal: -1, pathIndex: 0, hold: 0 };
+  private coarseEscape: { goal: { x: number; z: number }; point: { x: number; z: number } } | null = null;
   private readonly stops: (() => void)[] = [];
   private reservation = false;
   /** Nav baked at the Mega's own clearance (falls back to the shared crowd grid on very large grids). */
@@ -292,7 +293,11 @@ export class MegaPursuit {
     if (s.passed === goal.id && (best as PursuitNode | null)?.id === goal.id) return;
     for (let node = (best as PursuitNode | null)?.id; node !== undefined; node = this.parent.get(node)) { s.route.push(node); if (node === goal.id) break; }
     // Standing on the node it passed: the next leg starts here (and may be a blocked link to breach).
-    if (s.route.length > 1 && s.route[0] === s.passed && dist(s, this.nodes.get(s.passed)!) <= megaAlpha.nodeReachM) s.route.shift();
+    if (s.route.length > 1 && s.route[0] === s.passed) {
+      const from = this.nodes.get(s.passed)!, next = this.nodes.get(s.route[1])!, dx = next.x - from.x, dz = next.z - from.z;
+      const along = (s.x - from.x) * dx + (s.z - from.z) * dz;
+      if (dist(s, from) <= megaAlpha.nodeReachM || s.mode === 'coarse' && dist(s, from) <= 100 && along > 0) s.route.shift();
+    }
   }
   private readonly parent = new Map<string, string>();
   /** Dijkstra from the goal node over the authored graph (tens of nodes); blocked links cost a breach, never infinity. */
@@ -367,7 +372,7 @@ export class MegaPursuit {
     let budget = this.cruiseSpeed * Status.speed(e) * (farHidden ? farSpeed : 1) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
     if (!this.resident(t.x, t.z) && this.world.chunks) {
-      this.coarseNavigate(e, budget);
+      this.coarseNavigate(e, budget, farHidden);
       const moved = Math.hypot(t.x - startX, t.z - startZ);
       this.monitorCoarse(e);
       if (moved > 1e-6) t.yaw = -Math.atan2(t.z - startZ, t.x - startX);
@@ -438,6 +443,7 @@ export class MegaPursuit {
       }
       grid = this.coarseGrid = new NavGrid({ width: 80, depth: 80 }, walls, this.radius, { x: p.x, z: p.z }, null, .5);
       this.coarsePath.path.length = 0; this.coarsePath.goal = -1;
+      this.coarseEscape = null;
     }
     return grid;
   }
@@ -452,17 +458,53 @@ export class MegaPursuit {
     return null;
   }
   /** A bounded grid from district colliders keeps nonresident route joins out of unloaded buildings. */
-  private coarseNavigate(e: EntitySnapshot, budget: number): void {
+  private coarseNavigate(e: EntitySnapshot, budget: number, farHidden: boolean): void {
     const p = e.transform, s = this.state, grid = this.coarseGridAt(p);
     while (s.route.length && dist(p, this.nodes.get(s.route[0])!) < .02) this.pass();
-    const target = s.route.length ? this.nodes.get(s.route[0])! : s.target;
+    // At long hidden distances, chase the courier's refreshed position instead
+    // of marching back to a route node that may have become inaccessible after
+    // a restore or a long detour. The bounded grid still routes around solids.
+    const target = farHidden || !s.route.length ? s.target : this.nodes.get(s.route[0])!;
     const dx = target.x - p.x, dz = target.z - p.z, d = Math.hypot(dx, dz), stop = s.route.length ? 0 : this.radius + 1;
     if (d <= stop + 1e-6) return;
-    const scale = Math.min(1, 24 / Math.max(Math.abs(dx), Math.abs(dz)));
+    // Keep the local goal well inside the 80 m coarse grid, but let it land on
+    // a nearby authored node when the shorter look-ahead would fall inside a
+    // building footprint and have no walkable goal cell.
+    const scale = Math.min(1, 36 / Math.max(Math.abs(dx), Math.abs(dz)));
     const goal = { x: p.x + dx * scale, z: p.z + dz * scale };
-    if (!grid.steer(p, goal, this.coarsePath, this.radius, this.waypoint, 20000)) return;
+    if (!grid.steer(p, goal, this.coarsePath, this.radius, this.waypoint, 40000)) {
+      let around = this.coarseEscape && dist(this.coarseEscape.goal, target) < 25 && dist(p, this.coarseEscape.point) > .75 ? this.coarseEscape.point : null;
+      if (around && !grid.steer(p, around, this.coarsePath, this.radius, this.waypoint, 40000)) around = null;
+      if (!around) {
+        around = this.coarseForwardCell(p, target, grid);
+        if (!around) return;
+        this.coarseEscape = { goal: { ...target }, point: around };
+        if (!grid.steer(p, around, this.coarsePath, this.radius, this.waypoint, 40000)) return;
+      }
+    } else {
+      this.coarseEscape = null;
+    }
     const wx = this.waypoint.x - p.x, wz = this.waypoint.z - p.z, length = Math.hypot(wx, wz);
     if (length > 1e-6) { const step = Math.min(budget, length, d - stop); grid.move(p, wx / length * step, wz / length * step, this.radius); }
+  }
+  /** When a short coarse look-ahead falls inside a solid, pick a nearby reachable cell that advances around it. */
+  private coarseForwardCell(p: { x: number; z: number }, target: { x: number; z: number }, grid: NavGrid): { x: number; z: number } | null {
+    const dx = target.x - p.x, dz = target.z - p.z, length = Math.hypot(dx, dz);
+    if (length < 1e-6) return null;
+    const from = grid.nearestCell(p.x, p.z, this.radius);
+    if (from < 0) return null;
+    const reachable = grid.reachableFrom(from), radius = 10, cells = Math.ceil(radius / grid.cellSize);
+    let best: { x: number; z: number } | null = null, score = 0;
+    for (let oz = -cells; oz <= cells; oz++) for (let ox = -cells; ox <= cells; ox++) {
+      const cell = grid.cell(p.x + ox * grid.cellSize, p.z + oz * grid.cellSize);
+      if (cell < 0 || !reachable[cell]) continue;
+      const x = grid.x(cell) - p.x, z = grid.z(cell) - p.z, d = Math.hypot(x, z);
+      if (d < .75 || d > radius) continue;
+      const along = (x * dx + z * dz) / length, side = Math.abs(x * dz - z * dx) / length;
+      const value = along - side * .25;
+      if (along > .25 && value > score) { best = { x: grid.x(cell), z: grid.z(cell) }; score = value; }
+    }
+    return best;
   }
   /** Coarse actors still obey building and barricade solids; only the hidden mesh/crowd work is skipped. */
   private coarseLeg(e: EntitySnapshot, target: { x: number; z: number }, requested: number, full: number): boolean {
@@ -518,7 +560,21 @@ export class MegaPursuit {
       if (cell >= 0) s.goal = { x: nav.x(cell), z: nav.z(cell) };
     } else if (s.level === 2) {
       // Authored alternate: avoid the link it is on for a while and take the next-best route.
-      if (st.route.length >= 2) st.blocked[key(st.route[0], st.route[1])] = this.world.tick + Math.round(megaAlpha.blockedLinkS * 60);
+      if (st.mode === 'coarse' && st.passed && st.route.length) {
+        // A nonresident Mega can be stopped well before the next authored node
+        // by an obstacle that its bounded local grid cannot route around. The
+        // failed leg is passed → next, not next → following; rejoin the route
+        // from the nearest node that is actually connected to its local grid.
+        st.blocked[key(st.passed, st.route[0])] = this.world.tick + Math.round(megaAlpha.blockedLinkS * 60);
+        const grid = this.coarseGridAt(t), from = grid.nearestCell(t.x, t.z, this.radius), reachable = grid.reachableFrom(from);
+        let join: PursuitNode | null = null, nearest = Infinity;
+        for (const node of this.nodes.values()) {
+          const cell = grid.nearestCell(node.x, node.z, this.radius), d = dist(t, node);
+          if (cell >= 0 && reachable[cell] && d < nearest) { join = node; nearest = d; }
+        }
+        st.passed = (join ?? this.nearestNode(t)).id;
+        st.route.length = 0;
+      } else if (st.route.length >= 2) st.blocked[key(st.route[0], st.route[1])] = this.world.tick + Math.round(megaAlpha.blockedLinkS * 60);
       else if (st.route.length === 1) { const prev = this.nearestOther(st.route[0]); if (prev) st.blocked[key(prev, st.route[0])] = this.world.tick + Math.round(megaAlpha.blockedLinkS * 60); }
       st.routeAt = -Infinity; this.refresh();
       if (!this.nodes.size) {
@@ -612,7 +668,7 @@ export class MegaPursuit {
     const s = structuredClone(saved as MegaPursuitState), delta = this.world.tick - s.tick, ai = this.world.infected!;
     const killed = retainKill && this.state.mode === 'dead' && this.state.id !== 0, shift = (t: number) => t >= 0 && Number.isFinite(t) ? t + delta : t;
     if (s.audio) { s.audio.next = shift(s.audio.next); s.audio.step = shift(s.audio.step); }
-    s.introducedAt = shift(s.introducedAt); s.routeAt = retainKill ? -Infinity : shift(s.routeAt); if (s.introduceTick !== null) s.introduceTick = shift(s.introduceTick);
+    s.introducedAt = shift(s.introducedAt); s.routeAt = -Infinity; if (s.introduceTick !== null) s.introduceTick = shift(s.introduceTick);
     for (const link of Object.keys(s.blocked)) s.blocked[link] = shift(s.blocked[link]);
     if (s.breach) s.breach.until = shift(s.breach.until);
     if (retainKill) s.stuck = { level: 0, since: -1, sampleAt: this.world.tick, x: s.x, z: s.z, noPath: 0, goal: null };

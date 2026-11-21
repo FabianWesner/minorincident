@@ -1,5 +1,18 @@
 # s187-megamoves: Mega signature moves
 
+## s187c follow-up — L10 recovery and fairness
+
+Fresh run on `ee57acfdb1de725ca364de9bb4b3df98269c063d` plus the changes below:
+
+- The required full threat audit completed as two shards (`test-results/s187c-final-A`, `test-results/s187c-final-B`) and merged with **0 acceptance flags**. L10 skilled completed on HIGH and LOW; its passive window ended at the documented tick budget with 0 passive flags.
+- Moving Mega damage, seed 1 / complete profile: LOW took 25 damage over 880.90 moving seconds (**0.0284 DPS**, 1.70% of 100 HP per minute); HIGH took 50 damage over 916.98 moving seconds (**0.0545 DPS**, 3.27% per minute). Both routes completed; deaths were 0 LOW / 3 HIGH. Named Mega special-move damage was 0 in both samples. These deterministic route samples are under the 25% HP/min ceiling; they do not establish a worst-case dodge guarantee. Receipt: `test-results/s187c-moving-dps.json`.
+- `npm run typecheck`, `npm run lint`, and `npx vitest run tests/engine/infected-ai.test.ts --configLoader runner` passed (5 tests). The full `npm test` remote runner had no healthy worker; local fallback passed (27 files, 106 passed, 1 skipped).
+- A separate focused `--levels L10` diagnostic also completed the skilled route and reported 0 passive flags, but flagged `WAVE_NO_ATTACK_WITHIN_20_SECONDS` on its assault cohort. The full required sharded audit did not reproduce that flag. This discrepancy is retained for follow-up rather than hidden.
+- Mega coarse pursuit now invalidates saved routes after restore, steers toward the player instead of an obsolete distant route node when hidden far away, and has bounded reachable-waypoint recovery around obstructed local goals. An AI regression places the Mega at the stale L10 coarse route and verifies it resumes more than 30 m of pursuit travel.
+- L10 service attackers now try the service threshold before staged/ring positions and are not reset to wandering by the dispersal-zone chase-distance rule. This does not change zombie stats.
+
+The moves stay within the measured damage target and the required full threat gate passes. The isolated L10 wave discrepancy and commit status remain open; see the run notes below.
+
 ## s187b follow-up — coarse pursuit stall
 
 Full merged-source threat audit on `04d63139`: **0 flags**, all ten skilled routes complete, including L10. `npm run qa:threat:sharded` completed both remote shards and merged their receipts (392.0 s maximum shard time). Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 27 files, 105 passed, 1 skipped, 195.7 s.
