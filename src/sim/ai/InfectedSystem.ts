@@ -1893,7 +1893,6 @@ export class InfectedSystem {
       if (distance <= 2) this.physicalHit(e, target, megaAlpha.moves['alpha.pounce'].damage);
       else if (this.specialHit(e.id, target.id)) this.world.knockback(target, { x: dx / (distance || 1), z: dz / (distance || 1) }, 6);
     }
-    this.world.events.emit({ type: 'vfx.effect', tick: this.world.tick, kind: 'explosion', position: { x: p.x, y: p.y, z: p.z }, radius: 4 });
     this.world.events.emit({ type: 'mega.move-impact', tick: this.world.tick, sourceId: e.id, position: { x: p.x, y: p.y, z: p.z } });
   }
   /** Existing flock steering drives actual birds; one leader owns the flock hit set. */
