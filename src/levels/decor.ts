@@ -20,8 +20,7 @@ const placement = (district: string, i: number, s: Spot): Placement => {
   const k = s.scale ?? 1, yaw = s.yaw ?? 0, y = s.y ?? 0, c = Math.abs(Math.cos(yaw)), n = Math.abs(Math.sin(yaw));
   const hx = (c * d.dimensions.x + n * d.dimensions.z) * k / 2, hz = (n * d.dimensions.x + c * d.dimensions.z) * k / 2;
   return { id: s.id ?? `decor-${district}-${i}`, assetId: s.asset, position: [s.x, y, s.z], yaw, scale: [k, k, k], minTier: 0, maxTier: 6, allowRoad: true,
-    lightGroup: 'decor', decor: true, ...(district === 'D-SUBWAY' && s.asset === 'prop.broken-chair' ? { decorWalkable: true } : {}),
-    visualAabb: { min: [s.x - hx, y, s.z - hz], max: [s.x + hx, y + d.dimensions.y * k, s.z + hz] } };
+    lightGroup: 'decor', decor: true, visualAabb: { min: [s.x - hx, y, s.z - hz], max: [s.x + hx, y + d.dimensions.y * k, s.z + hz] } };
 };
 
 /** L6 tunnel walkway tops (build-layout: kit.metro-tunnel boxes 7/8), track bed top and the night street slab. */
@@ -44,13 +43,9 @@ function subwayDecor(): Spot[] {
     const r = Array.from({ length: 6 }, () => rng.next());
     // The near (south) walkway sits behind the wall piers from the game camera: most pieces go to the visible north side.
     if (r[0] < (side < 0 ? .7 : .2)) continue;
-    let px = x + (r[1] - .5) * 1.6;
+    const px = x + (r[1] - .5) * 1.6;
     if (l6Blocked(px, side) || l6Camps.some(c => px > c - 3 && px < c + 4)) continue;
     const asset = wallPieces[Math.floor(r[2] * wallPieces.length)];
-    // Keep the rolled carpet clear of the retreat's north-side pursuit lane.
-    if (asset === 'prop.carpet' && side > 0 && px > 155 && px < 157) px -= 2;
-    // Keep the two crate stacks clear of the retreat column's turn.
-    if (asset === 'prop.crates' && side > 0 && px > 167 && px < 171) px += px < 169 ? 1 : .8;
     // Against the wall: the walkway spans 11.5..13.2 (south) and 16.8..18.5 (north); the courier keeps to the lane between.
     const z = side < 0 ? 11.95 + r[3] * .3 : 18.05 - r[3] * .3;
     out.push({ asset, x: px, z, y: L6Y.walk, yaw: (side < 0 ? 0 : Math.PI) + (r[4] - .5) * .9, scale: asset === 'prop.carpet' ? 1.2 : 1 });

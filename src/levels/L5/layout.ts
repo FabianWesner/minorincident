@@ -59,7 +59,7 @@ export const l5Dressing: readonly L5Dressing[] = [
   d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-1'][0], l4Anchors['l4-hmg-1'][1], { yaw: PI + 1.2 }), d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-2'][0], l4Anchors['l4-hmg-2'][1], { yaw: -1.1 }),
   ...([[-78.5, 42.1, .5], [-75.5, 49.9, -.4], [-72.5, 42.3, 0], [81.2, -43.4, H + .2], [81.2, 43.5, H - .3]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
   ...([[-36, 20.6], [-5, 8.6], [-30, 28], [8.4, 3.4], [-14, -17.4], [40, -37.4], [-48, 38.6], [52, 30.4]] as const).map(([x, z], i) => d('rubble', 'decay.rubble-pile', x, z, { yaw: i * 1.3 })),
-  ...([[-17, 9], [-23, -9], [-28, 14], [-7, -8], [12, 4], [30, 35], [-40, 40], [20, -37]] as const).map(([x, z], i) => d('rubble', 'decay.rubble-pile', x, z, { yaw: i * 0.9, scale: .45 + (i % 3) * .1 })),
+  ...([[-17, 9], [-23, -9], [-28, 14], [-9, -8], [12, 4], [30, 35], [-40, 40], [20, -37]] as const).map(([x, z], i) => d('rubble', 'decay.rubble-pile', x, z, { yaw: i * 0.9, scale: .45 + (i % 3) * .1 })),
   // ---------------------------------------------------------------- three street segments narrowed by wreckage (a 1.4 m or wider gap stays open: the detour round the kerb)
   d('block', 'veh.military-truck', 31, -42.2, { yaw: H + .12, decay: 'wrecked', fixed: true }), d('block', 'veh.sedan-red', 12.6, 24.6, { yaw: .1, decay: 'burned', fixed: true }),
   d('block', 'veh.pickup-red', -18, 44.4, { yaw: H - .2, decay: 'wrecked', fixed: true }),
@@ -84,7 +84,7 @@ export const l5Dressing: readonly L5Dressing[] = [
 
 /** Collapsed facades: whole street fronts that are down, against four buildings (the shops without a `w5` shell take glass, fires and rubble instead). */
 const collapses: readonly (readonly [number, number, number])[] = [
-  [18.4, -25.9, 3.14], [18.4, 25.9, 3.14], [54.8, -8.5, 0], [-53.4, -15.5, -H], [-39.4, 10.2, 0],
+  [18.4, -25.9, 3.14], [18.4, 25.9, 3.14], [54.8, -8.5, 0], [-53.4, -15.5, -H], [-38.4, 10.2, 0],
 ];
 /** Doors of the street-facing buildings and which face they are on (for the broken glass and the bullet damage). */
 export function l5Frontages(layout: DistrictLayout): { x: number; z: number; axis: 'x' | 'z'; yaw: number; plaza: boolean; asset: string }[] {

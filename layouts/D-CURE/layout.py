@@ -1083,28 +1083,6 @@ for i, p in enumerate(_r3_units):
     marker.location.z = settle
     marker['assetId'] = asset
     marker.name = f"inst:{asset}:{int(p['id'].rsplit(':', 1)[1]) + 1}"
-def move_kiting_lane_prop(asset, x, z, dx, dz):
-    p = next(p for p in l.data['placements'] if p['assetId'] == asset
-             and abs(p['position'][0] - x) < .02 and abs(p['position'][2] - z) < .02)
-    p['position'][0] += dx; p['position'][2] += dz
-    for bound in ('min', 'max'):
-        p['visualAabb'][bound][0] += dx; p['visualAabb'][bound][2] += dz
-    for collider in l.data['colliders']:
-        if collider['id'] == p['id']:
-            for bound in ('min', 'max'):
-                collider['aabb'][bound][0] += dx; collider['aabb'][bound][2] += dz
-    index = int(p['id'].rsplit(':', 1)[1]) + 1
-    marker = next(o for o in l.empties if o.name == f"inst:{asset}:{index}")
-    marker.location.x += dx; marker.location.y -= dz
-
-# R1's pursuit lane runs diagonally through this roadside wreckage. Keep the
-# vehicle, barrier and trees solid, but move them off the shared approach so
-# infected can follow the courier instead of routing around the debris island.
-move_kiting_lane_prop('veh.pickup-red', 587.2748444025392, 9.197393414352874, -5.3, -2.8)
-move_kiting_lane_prop('prop.jersey-barrier', 595.1599401125351, 7.996380623252968, 5.3, 2.8)
-move_kiting_lane_prop('prop.tree', 588.2751883329154, 23.139402433340692, 5.3, 2.8)
-move_kiting_lane_prop('prop.tree', 598.0572393939977, 7.5, 5.3, -2.8)
-
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.

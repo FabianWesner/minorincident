@@ -306,7 +306,7 @@ test('explosions: every class follows its damage curve, full cover shields, rail
 
 });
 
-test('solid placement audit, navigation colliders and L10 story clearance', async () => {
+test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded', async () => {
   // New baked ground overlays must enter the shared layer graph, including exact-height ties.
   const { groundPriorities, groundConflicts, groundGroup } = await import('../../tools/layouts/ground-layers');
   const triangles = [0, .0002, .0002].map((y,i) => ({id:String(i),material:`m${i}`,y,points:[[0,0],[0,2],[2,0]] as [number,number][]}));
@@ -320,7 +320,6 @@ test('solid placement audit, navigation colliders and L10 story clearance', asyn
   expect(ramps.map(t=>rampRanks.get(groundGroup(t)))).toEqual([0,1,2]);
   expect(groundConflicts([ramps[0],{...ramps[1],slope:[.25,-.05]}])).toHaveLength(0);
   const { readdirSync } = await import('node:fs');
-  const { readFileSync } = await import('node:fs');
   const { execFileSync } = await import('node:child_process');
   // Decode the real GLBs outside Vitest's module transformer. The same CLI is
   // usable after any authoring tool, including the separately generated W6.
@@ -340,35 +339,6 @@ test('solid placement audit, navigation colliders and L10 story clearance', asyn
   for(const o of batched.children){const mesh=o as import('three').Mesh;mesh.geometry.dispose();(mesh.material as import('three').Material).dispose();}
   geometry.dispose();a.dispose();b.dispose();depth.dispose();
 
-  // Native CI audit: every substantial placement with a baked or manifest
-  // solid definition must produce physics and navigation geometry in every
-  // live world tier. Render-only plants, corpses, debris and decals stay out.
-  const { staticCollision: collisionBakes } = await import('../../src/assets/staticCollision');
-  const { worldAssets: assetManifest } = await import('../../src/assets/worldDefinitions');
-  const { placementColliders: placementSolids } = await import('../../src/levels/districts/staticCollision');
-  const auditRows = readdirSync('public/assets/layouts').filter(path => path.endsWith('.layout.json')).map(path => {
-    const source = JSON.parse(readFileSync(`public/assets/layouts/${path}`, 'utf8')) as import('../../src/levels/districts/types').DistrictLayout;
-    const colliders = placementSolids(source.placements, source.colliders);
-    const solidIds = new Set(colliders.filter(c => !c.aabb.physicsOnly).map(c => c.id.split('/')[0]));
-    const offenders = source.placements.filter(p => {
-      const def = assetManifest[p.assetId], d = def?.dimensions;
-      const area = d ? d.x * d.z * Math.abs(p.scale[0] * p.scale[2]) : 0;
-      const height = d ? d.y * Math.abs(p.scale[1]) : 0;
-      const boxes = collisionBakes[p.collisionId ?? p.assetId]?.boxes ?? [];
-      const knownSolid = boxes.some(b => b.max[1] >= .5 && b.max[1] - b.min[1] >= .5) || !!def?.world?.solid;
-      if (!knownSolid || area < .4 || height < .5) return false;
-      return ![0,1,2,3,4,5,6].every(tier => {
-        if (tier < p.minTier || tier > p.maxTier) return true;
-        return solidIds.has(p.id);
-      });
-    }).map(p => `${p.assetId}:${p.id}`);
-    return { level: source.district, offenders };
-  });
-  expect(auditRows.flatMap(row => row.offenders), 'all district placement solids exist in physics and navigation for every active tier').toEqual([]);
-  const auditSummary = auditRows.map(row => ({ level: row.level, offenders: row.offenders.length,
-    types: Object.entries(row.offenders.reduce<Record<string, number>>((counts, offender) => { const type = offender.split(':')[0]; counts[type] = (counts[type] ?? 0) + 1; return counts; }, {})).sort((a,b) => b[1]-a[1]).slice(0,5) }));
-  console.info('Solid placement audit by district (threshold 0.4 m² × 0.5 m):', auditSummary);
-
   const { DistrictWorld } = await import('../../src/sim/world/DistrictWorld');
   const { compositions } = await import('../../src/levels/compositions');
   const { districtDecor } = await import('../../src/levels/decor');
@@ -376,12 +346,8 @@ test('solid placement audit, navigation colliders and L10 story clearance', asyn
   const build = (skip: boolean) => { const copy = structuredClone(layout) as unknown as { geometryHash: string }; if (skip) copy.geometryHash = 'scene-lab'; return new DistrictWorld(compositions.L6, [copy as never], 1); };
   const plain = build(true), dressed = build(false), d = dressed.districts[0], p = plain.districts[0];
   expect(d.decay.placements.filter(q => q.decor).length).toBeGreaterThan(60);
-  const { placementColliders: buildPlacementColliders } = await import('../../src/levels/districts/staticCollision');
-  const solidDecor = d.decay.placements.filter(q => q.decor && (buildPlacementColliders([q], []).length > 0));
-  expect(solidDecor.length).toBeGreaterThan(0);
-  expect(dressed.nav.hash).not.toBe(plain.nav.hash);
-  const expectedDecorColliders = buildPlacementColliders(solidDecor, []);
-  expect(d.decay.colliders.length).toBe(p.decay.colliders.length + expectedDecorColliders.length);
+  expect(dressed.nav.hash).toBe(plain.nav.hash);
+  expect(d.decay.colliders).toEqual(p.decay.colliders);
   expect(d.pushables.map(q => q.id)).toEqual(p.pushables.map(q => q.id));
   expect(new DistrictWorld(compositions.L6, dressed.districts.map(x => x.layout), 1).districts[0].decay.placements.length).toBe(d.decay.placements.length);
   expect(districtDecor('D-CROSSING', [])).toEqual([]);
@@ -437,16 +403,6 @@ test('solid placement audit, navigation colliders and L10 story clearance', asyn
   }
   expect(groundMismatches, 'rasterized L10 supports and slabs match every exact nav-cell query').toBe(0);
   const actualFarm = assembled.districts[0].layout.placements;
-  const actualSolidIds = new Set(placementSolids(actualFarm, assembled.districts[0].layout.colliders)
-    .filter(c => !c.aabb.physicsOnly).map(c => c.id.split('/')[0]));
-  const actualL10Offenders = actualFarm.filter(p => {
-    const def = assetManifest[p.assetId], d = def?.dimensions;
-    const area = d ? d.x * d.z * Math.abs(p.scale[0] * p.scale[2]) : 0, height = d ? d.y * Math.abs(p.scale[1]) : 0;
-    const boxes = collisionBakes[p.collisionId ?? p.assetId]?.boxes ?? collisionBakes[p.assetId]?.boxes ?? [];
-    if (area < .4 || height < .5 || !(def?.world?.solid || boxes.some(b => b.max[1] >= .5 && b.max[1] - b.min[1] >= .5))) return false;
-    return !actualSolidIds.has(p.id);
-  }).map(p => `${p.assetId}:${p.id}`);
-  expect(actualL10Offenders, 'generated L10 placements have matching physics and navigation solids').toEqual([]);
   for (const beat of dispersalBeats) expect(actualFarm.some(p => p.id === `l10-setpiece-${beat.setPiece === 'quarantine-gate' ? 'gate-gantry' : beat.setPiece === 'propaganda-billboard' ? 'billboard-frame' : beat.setPiece === 'scarecrow-field' ? 'scarecrow-0' : beat.setPiece === 'burning-convoy' ? 'convoy-truck-a' : beat.setPiece === 'dark-underpass' ? 'underpass-mouth' : 'hospital-tent-0'}`), `${beat.setPiece} has fixed district dressing`).toBe(true);
   for (const [x, z] of [...cureConvoyBarrels, ...cureConvoyCrates]) for (const [dx, dz] of [[0, 0], [.6, 0], [-.6, 0], [0, .6], [0, -.6]]) {
     const column = Math.floor((x + dx - nav.min[0]) / nav.cellSize), row = Math.floor((z + dz - nav.min[1]) / nav.cellSize);
@@ -486,8 +442,7 @@ test('solid placement audit, navigation colliders and L10 story clearance', asyn
   expect(vignettes.every(p => p.decor && p.fixed)).toBe(true);
   const farmOverlaps = vignettes.flatMap(p => clearedFarm.filter(q => p.visualAabb.min[0] < q.visualAabb.max[0] && p.visualAabb.max[0] > q.visualAabb.min[0] && p.visualAabb.min[2] < q.visualAabb.max[2] && p.visualAabb.max[2] > q.visualAabb.min[2]).map(q => [p.id, q.id]));
   expect(farmOverlaps, 'vignette footprints must clear corn and farm structures').toEqual([]);
-  const vignetteColliders = placementColliders(vignettes, []), vignetteColliderIds = new Set(vignetteColliders.map(c => c.id.split('/')[0]));
-  expect(vignettes.filter(p => p.assetId === 'prop.sandbag-pallet').every(p => vignetteColliderIds.has(p.id))).toBe(true);
+  expect(placementColliders(vignettes, []).every(c => c.aabb.physicsOnly)).toBe(true);
   const { cureVignetteDecals, cureWallMessages } = await import('../../src/levels/L10/vignettes');
   const { CureVignetteDecals } = await import('../../src/render/district/CureVignetteDecals');
   const { DataTexture } = await import('three/webgpu');
@@ -543,11 +498,11 @@ test('solid placement audit, navigation colliders and L10 story clearance', asyn
   const solids = stories.filter(q => q.decorSolid);
   expect(stories.every(q => q.decor)).toBe(true);
   expect(solids.length > 40).toBe(crossingScenesBlock);
-  const decorColliders = placementColliders(stories, []), decorIds = new Set(decorColliders.map(c => c.id.split('/')[0]));
-  const solidColliders = decorColliders.filter(c => solids.some(p => p.id === c.id.split('/')[0]));
-  const solidIds = new Set(solidColliders.map(c => c.id.split('/')[0]));
+  expect(placementColliders(stories.filter(q => !q.decorSolid), [])).toEqual([]);
+  const solidColliders = placementColliders(solids, []), solidIds = new Set(solidColliders.map(c => c.id.split('/')[0]));
+  // Physics-only: they stop the courier but are no AI nav wall (qa:accept L10-03: nav solids starved the corridor-breach group).
+  expect(solidColliders.every(c => c.aabb.physicsOnly)).toBe(true);
   expect(solids.every(q => solidIds.has(q.id))).toBe(true);
-  expect(stories.filter(q => q.decorSolid || q.assetId === 'prop.sandbag-pallet').every(q => decorIds.has(q.id))).toBe(true);
   // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
   const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
   for (const q of stories) for (const [x, z] of [[q.visualAabb.min[0], q.visualAabb.min[2]], [q.visualAabb.max[0], q.visualAabb.max[2]]]) expect(Math.abs(bare.groundHeight(x, z))).toBeLessThan(.05);

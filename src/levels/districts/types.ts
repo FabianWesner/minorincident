@@ -54,12 +54,10 @@ export interface Placement extends PlacementTransform {
   navBlocker?: boolean;
   /** Set dressing (L10): its light anchors render (pools, emissives) but are not sim lamps, so infected sight and the sim cost stay unchanged. */
   decorLights?: boolean;
-  /** Decor placement: render-only unless the asset has a solid collision bake or explicitly opts into solidity. */
+  /** Render-only decor (look-l6-l9, src/levels/decor.ts): drawn, but no collider, pushable body or nav footprint. */
   decor?: boolean;
-  /** Decor that explicitly blocks actors and navigation (no pushable body). */
+  /** Decor that still blocks the courier: a physics-only static (no AI nav/cover wall, no pushable). L10 crossing scenes (r9-l10pace). */
   decorSolid?: boolean;
-  /** Low decorative litter that is safe to step over even when its asset has a reusable bake. */
-  decorWalkable?: boolean;
   /** Optional loose scatter omitted on low quality; story cores never set this flag. */
   highOnly?: boolean;
   /** L10 painted wall atlas cell (0–11), attached to an existing wall instance. */
