@@ -532,11 +532,14 @@ export class VehicleView extends Group {
         && [...this.occupants.values()].some(occupant => occupant.parent === record.model && occupant.visible && speakingNpc(this.world, occupant.actorId));
       // vqa-1 P2: the seated crew reads through a clean roof-off cutaway over their seats, not a dithered screen disc.
       // On foot only her own chest or head behind a vehicle counts (not a padded subject corner beside the cab).
-      if ((carryingL2Crew || speakingPassenger) && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
+      // The L9 APC is an armored vehicle: its shell is never cut open to show seated crew.
+      // The courier visibility path uses the normal foreground silhouette instead.
+      const apc = record.model.userData.assetId === 'veh.military-apc';
+      if (!apc && (carryingL2Crew || speakingPassenger) && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
       else reveal.on.value = +(enabled && !onFoot && !full);
       if (record.crewRoof) { const open = reveal.on.value === 2; record.crewRoof.trim.visible = open; for (const node of record.crewRoof.hide) node.visible = !open; }
       const transportRoof = record.model.getObjectByName('transportRoof');
-      if (transportRoof && record.model.userData.assetId === 'veh.military-apc') transportRoof.visible = !speakingPassenger;
+      if (transportRoof && apc) transportRoof.visible = true;
       if (hidesHer && vehicle) this.courierOccluded = true;
       if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
     }

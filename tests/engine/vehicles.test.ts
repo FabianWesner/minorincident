@@ -727,6 +727,23 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
       world.props!.prePhysics();
       expect(small.body.linvel().x, `${assetId} moves when the lower sedan bumper reaches it`).toBeGreaterThan(0);
     }
+    // L9 speed contact fixture: repeatedly assert that a pushable never crosses
+    // the oriented APC hull, including the first tick when Rapier wakes it.
+    const cluster = ['prop.traffic-cone', 'prop.trash-bin', 'prop.recycling-bin'] as const;
+    const clusterItems = cluster.map((assetId, i) => world.props!.spawn({ id: `l9-hull-${i}`, assetId, position: [55, 0, (i - 1) * .7], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [54.5, 0, (i - 1) * .7 - .35], max: [55.5, 1.2, (i - 1) * .7 + .35] } }));
+    const fixtureId = world.vehicles!.spawn('vehicle.military-apc', { x: 50, z: 0 });
+    const fixture = world.vehicles!.cars.get(fixtureId)!; world.vehicles!.active = fixtureId;
+    fixture.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); fixture.physics.postPhysics();
+    for (let tick = 0; tick < 90; tick++) {
+      world.update();
+      const yaw = fixture.entity.transform.yaw, c = Math.cos(yaw), s = Math.sin(yaw), p = fixture.entity.transform;
+      for (const prop of clusterItems) {
+        const q = prop.body.translation(), dx = q.x - p.x, dz = q.z - p.z;
+        const localX = dx * c - dz * s, localZ = dx * s + dz * c;
+        expect(Math.abs(localX) <= fixture.physics.def.length / 2 && Math.abs(localZ) <= fixture.physics.def.width / 2,
+          `tick ${tick}: ${prop.id} stays outside the APC hull`).toBe(false);
+      }
+    }
     for (let i = 0; i < 60; i++) world.update();
     expect(world.props!.items.filter(p => p.awake).length).toBeLessThanOrEqual(world.props!.awakeBudget);
     return world.props!.snapshot();

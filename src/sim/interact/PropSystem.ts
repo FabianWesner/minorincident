@@ -124,6 +124,20 @@ export class PropSystem {
       if (gap > item.radius + .18 || Math.abs(item.pose.p[1] - .6) > item.half[1] + 1.5) continue;
       const contact = car.physics.collider.contactCollider(item.collider, .12);
       if (!contact) continue;
+      // A kinematic/scripted APC can advance across a sleeping prop faster
+      // than Rapier's contact solver can depenetrate it. Keep its full footprint
+      // outside the oriented chassis before the physics step.
+      const pose = car.physics.transform, prop = item.body.translation(), dx = prop.x - pose.x, dz = prop.z - pose.z;
+      const c = Math.cos(pose.yaw), s = Math.sin(pose.yaw), lx = dx * c - dz * s, lz = dx * s + dz * c;
+      const hx = Math.abs(c) * item.half[0] + Math.abs(s) * item.half[2], hz = Math.abs(s) * item.half[0] + Math.abs(c) * item.half[2];
+      const escapeX = car.physics.def.length / 2 + hx + .04 - Math.abs(lx), escapeZ = car.physics.def.width / 2 + hz + .04 - Math.abs(lz);
+      if (escapeX > 0 && escapeZ > 0) {
+        // Clear sideways so the faster APC cannot simply overtake the prop
+        // and carry it through the passenger compartment on the next ticks.
+        const z = Math.sign(lz || 1) * (car.physics.def.width / 2 + hz + .04);
+        prop.x = pose.x + lx * c + z * s; prop.z = pose.z - lx * s + z * c;
+        item.body.setTranslation(prop, true); this.mirror(item);
+      }
       const velocity = car.physics.body.linvel();
       const propVelocity = item.body.linvel();
       const nx = contact.normal1.x, nz = contact.normal1.z;
@@ -344,6 +358,7 @@ export class PropSystem {
     this.updateNavigation();
   }
 }
+
 
 /** World AABB of the actual E26 cuboid, including its local centre and tipped poses. */
 export function propFootprint(p: PushProp): import('../combat/HitQuery').CoverWall {

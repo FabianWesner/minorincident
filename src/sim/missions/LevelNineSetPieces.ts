@@ -246,8 +246,13 @@ export class LevelNineSetPieces {
     }
     if (a.phase === 'throw' && tick >= a.at) {
       // Re-aim at release: the landing marker shown at the windup start stays honest within a lane width.
-      const to = this.throwTarget(T.flightTicks, a.uses), item = T.items[a.uses % T.items.length] as ObstacleKind, kind: ObstacleKind = item === 'jersey-barrier' && car.physics.speed < T.heavyMinSpeed ? 'trash-can' : item, from = { x: e.transform.x, z: e.transform.z };
-      const id = this.w.vehicles!.obstacles.spawn(kind, to);
+      const to = this.throwTarget(T.flightTicks, a.uses), item = T.items[a.uses % T.items.length] as ObstacleKind, kind: ObstacleKind = item === 'jersey-barrier' && car.physics.speed < T.heavyMinSpeed ? 'trash-can' : item;
+      // The old scripted flight spawned on the road, then teleported the prop
+      // to the thrower off-road and drew it flying back in. Keep the obstacle
+      // flight on the authored route: its launch pose is the nearest route lane.
+      const laneStart = this.lane(0) ?? { x: to.x, z: to.z };
+      const from = { x: laneStart.x, z: laneStart.z };
+      const id = this.w.vehicles!.obstacles.spawn(kind, from);
       this.w.vehicles!.obstacles.launch(id, true);
       const o = w.entities.get(id)!; Object.assign(o.transform, { x: from.x, z: from.z, y: 2.4 });
       s.flights.push({ obstacleId: id, from, to, started: tick, land: tick + T.flightTicks, sourceId: a.id });
