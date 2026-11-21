@@ -122,7 +122,7 @@ export class Combat {
   private readonly started = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
-      if (!attack.autoAim && !(attack.def.id === 'weapon.rocket-launcher' && attack.aimPoint)) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range, attack.target === undefined ? attack.def.projectile?.speed : undefined);
+      if (!attack.autoAim && !(['weapon.rocket-launcher', 'weapon.flamethrower'].includes(attack.def.id) && attack.aimPoint)) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range, attack.target === undefined ? attack.def.projectile?.speed : undefined);
       if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
         const angle = deterministicAtan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
         attack.aim.x = deterministicCos(angle); attack.aim.z = deterministicSin(angle);
@@ -235,21 +235,24 @@ export class Combat {
       for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace, attack.target)) this.hit(attack, target, source.transform, 'melee');
     } else if (def.id === 'weapon.flamethrower') {
       const origin = { ...source.transform, y: source.transform.y + .45 };
+      const streamRange = attack.aimPoint ? Math.max(2, Math.min(def.range, Math.hypot(attack.aimPoint.x - source.transform.x, attack.aimPoint.z - source.transform.z))) : def.range;
       const halfCone = Math.cos(def.spread * Math.PI / 360);
       // Heat fills the cone: each exposed infected receives the full stream tick,
       // independently of other bodies. Walls and destructibles still stop it.
-      for (const id of [...this.query.nearby(origin, def.range)]) {
+      for (const id of [...this.query.nearby(origin, streamRange)]) {
         const target = this.world.entities.get(id);
         if (!target || target.faction !== 'infected' || target.health.current <= 0 || target.hidden) continue;
         const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
-        if (distance > def.range || (distance > 1e-6 && (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone)) continue;
+        if (distance > streamRange || (distance > 1e-6 && (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone)) continue;
         const direction = { x: dx / distance, y: 0, z: dz / distance };
         if (!this.query.visible(origin, target.transform, target.id) || (this.world.destruction?.trace(origin, direction, distance)?.distance ?? distance) < distance - .05) continue;
         this.hit(attack, target, source.transform, 'bullet');
       }
-      const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
-      const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
-      this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
+      const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, streamRange)?.distance ?? streamRange;
+      const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, streamRange)) - .08);
+      // Heat touches ground along the clipped stream, not just its endpoint.
+      this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 5);
+      for (let along = 1; along < distance; along += 2) this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * along, z: origin.z + attack.aim.z * along }, .65, 5);
     } else if ((def.pellets ?? 1) > 1) {
       this.pelletHits.clear();
       const count = def.pellets!, angle = deterministicAtan2(attack.aim.z, attack.aim.x);

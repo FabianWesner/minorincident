@@ -63,6 +63,21 @@ function laneOverlap(
 export function overlapsRoad(layout: DistrictLayout, aabb: Aabb): boolean {
   return layout.roads.edges.some(e => e.points.slice(1).some((b, i) => laneOverlap(aabb, e.points[i], b, e.laneWidth / 2)));
 }
+/** Whether an authored paved polygon touches a ground-fire footprint. */
+export function overlapsPaving(layout: DistrictLayout, aabb: Aabb): boolean {
+  const corners: Point[] = [[aabb.min[0], aabb.min[2]], [aabb.max[0], aabb.min[2]], [aabb.max[0], aabb.max[2]], [aabb.min[0], aabb.max[2]]];
+  return layout.surfaces.some(s => {
+    if ((s.surface !== 'asphalt' && s.surface !== 'tile') || s.polygon.length < 3) return false;
+    let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+    for (const [x, z] of s.polygon) { minX = Math.min(minX, x); maxX = Math.max(maxX, x); minZ = Math.min(minZ, z); maxZ = Math.max(maxZ, z); }
+    return minX <= aabb.max[0] && maxX >= aabb.min[0] && minZ <= aabb.max[2] && maxZ >= aabb.min[2]
+      && (corners.some(p => inside(p, s.polygon)) || s.polygon.some((p, i) => laneOverlap(aabb, p, s.polygon[(i + 1) % s.polygon.length], 0)));
+  });
+}
+/** Ground fire must not occupy an authored building footprint. */
+export function overlapsBuilding(layout: DistrictLayout, aabb: Aabb): boolean {
+  return layout.buildings.some(({ aabb: b }) => b.min[0] <= aabb.max[0] && b.max[0] >= aabb.min[0] && b.min[2] <= aabb.max[2] && b.max[2] >= aabb.min[2]);
+}
 export function validateLayout(
   layout: DistrictLayout,
   manifest: Record<string, unknown>,

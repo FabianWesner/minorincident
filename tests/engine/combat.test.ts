@@ -1,3 +1,4 @@
+import { checkS202FieldFire } from '../helpers/s202-field-fire';
 // Combat core: one attack pipeline (loadout → runner → hit query → damage/status) serves every weapon in every level.
 import { afterEach, expect, onTestFinished, test } from 'vitest';
 import { ColliderDesc } from '@dimforge/rapier3d-compat';
@@ -77,7 +78,7 @@ function checkArsenalRoles(): void {
   expect(rosterAction('weapon.rocket-launcher').knockdown).toBe(true);
   expect(rosterAction('weapon.nail-gun').damage).toBe(14);
   expect(rosterAction('weapon.flamethrower')).toMatchObject({ range: 8, fireRate: 15, magazine: 90, reloadTime: 5, status: { duration: 4, dps: 35 } });
-  expect(weaponRoles['weapon.flamethrower']).toBe('Melt crowds up close');
+  expect(weaponRoles['weapon.flamethrower']).toBe('Melt crowds and burn dry fields');
   expect(rosterAction('weapon.flamethrower').status?.kind).toBe('burning');
 }
 
@@ -90,6 +91,38 @@ async function checkMolotovCluster(): Promise<void> {
   expect(zone).toBeDefined(); if (!zone) throw new Error('Molotov fire patch did not land'); step(w, 120);
   expect(ids.map(id => health(w, id))).toEqual([0, 0, 0, 0, 0]);
   expect(zone.expires - zone.created).toBeGreaterThanOrEqual(8 * 60);
+}
+
+async function checkS202Combat0(): Promise<void> {
+  const w = await loadLevel('L10', 1, 'low'); worlds.push(w);
+  const cell = w.hazards!.fieldFire!.cells.find(c => c.x > 600 && c.x < 1100)!;
+  expect(cell).toBeDefined();
+  missionControls(w).teleport('player', { x: cell.x, z: cell.z });
+  w.chunks!.update([cell.x, cell.z]);
+  equip(w, ['weapon.flamethrower']);
+  fire(w); step(w, 30);
+  expect(cell.state).toBe('burning');
+  const tree = w.hazards!.vegetationFire!.objects.find(o => o.state === 'intact')!;
+  w.hazards!.spawn('fire', tree, { radius: 1, duration: 3, playerDamageSource: true });
+  expect(tree.state).toBe('burning');
+  const other = w.hazards!.fieldFire!.cells.find(c => c.state === 'intact')!;
+  w.hazards!.spawn('fire', other, { radius: 1, duration: 3, playerDamageSource: true });
+  expect(other.state).toBe('burning');
+}
+
+async function checkS202Combat1(): Promise<void> {
+  const w = await arena(); equip(w, ['weapon.fire-axe'], ['weapon.molotov']);
+  fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 2, z: 0 });
+  for (let i = 0; i < 60 && !w.combat!.effects.zones.some(z => z.kind === 'fire'); i++) step(w, 1);
+  const zone = w.combat!.effects.zones.find(z => z.kind === 'fire');
+  expect(zone).toBeDefined();
+  const id = dummy(w, zone!.x + zone!.radius + 1, zone!.z, 200), target = w.entities.get(id)!;
+  step(w, 1); expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(false);
+  w.combat!.status.apply(target, { kind: 'burning', duration: 2, maxStacks: 1, dps: 10, slow: 0 }, 1, 'weapon.molotov');
+  target.transform.x = zone!.x; target.transform.z = zone!.z; w.spatial.set(id, zone!.x, zone!.z);
+  step(w, 1); expect(target.combat!.statuses.find(s => s.kind === 'burning')?.def).toMatchObject({ dps: 35, duration: 4 });
+  target.transform.x = zone!.x + zone!.radius + 1; w.spatial.set(id, target.transform.x, target.transform.z);
+  step(w, 61); expect(target.health.current).toBeLessThan(200);
 }
 
 async function checkFlameCluster(): Promise<void> {
@@ -234,6 +267,58 @@ async function checkDynamicCover(): Promise<void> {
   devices.rebuildBlockers(); compare();
 }
 
+async function checkS202Combat2(): Promise<void> {
+  const w = await arena(), player = w.entities.get(1)!, hp = player.health.current;
+  w.hazards!.spawn('fire', { x: player.transform.x, z: player.transform.z }, { radius: 1, duration: 3 });
+  step(w, 1); expect(player.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
+  step(w, 60); expect(player.health.current).toBeLessThan(hp);
+}
+
+async function checkS202Combat3(): Promise<void> {
+  const w = await arena(), id = dummy(w, 5, 0, 200), target = w.entities.get(id)!;
+  w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3 });
+  step(w, 1);
+  expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(false);
+  const hp = target.health.current;
+  step(w, 60);
+  expect(target.health.current).toBeLessThan(hp);
+  const combatFire = w.hazards!.spawn('fire', { x: 5, z: 0 }, { radius: 1, duration: 3, playerDamageSource: true });
+  step(w, 1);
+  expect(w.entities.get(combatFire)!.playerDamageSource).toBe(true);
+  expect(target.combat!.statuses.some(s => s.kind === 'burning')).toBe(true);
+}
+
+async function checkS202Combat4(): Promise<void> {
+  const w = await loadLevel('L1', 1); worlds.push(w);
+  const id = w.infected!.spawn('infected.runner', { x: 4, z: 4 }), target = w.entities.get(id)!;
+  target.health.current = 5;
+  w.hazards!.spawn('fire', { x: 4, z: 4 }, { radius: 1, duration: 3, playerDamageSource: true });
+  step(w, 60);
+  expect(target.health.current).toBe(0);
+  expect(target.ashDeath).toBeDefined();
+}
+
+async function checkS202Combat5(): Promise<void> {
+  const short = await arena(); equip(short, ['weapon.flamethrower']);
+  const near = dummy(short, 1.5, 0, 200), far = dummy(short, 6, 0, 200);
+  short.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: 3, z: 0 }, aimSource: 'pointer', left: { down: true, held: true, up: false } });
+  step(short, 30); short.clearInput();
+  expect(health(short, near)).toBeLessThan(200); expect(health(short, far)).toBe(200);
+  const patches = [...short.entities.iterate()].filter(e => e.hazard?.fuelPatch);
+  expect(patches.length).toBeGreaterThan(1);
+  expect(Math.max(...patches.map(e => e.transform.x))).toBeLessThanOrEqual(3);
+  const long = await arena(); equip(long, ['weapon.flamethrower']);
+  const distant = dummy(long, 6, 0, 200);
+  long.setInput({ aim: { x: 1, z: 0 }, aimSource: 'touch', left: { down: true, held: true, up: false } });
+  step(long, 30); expect(health(long, distant)).toBeLessThan(200);
+  const pointed = await arena(); equip(pointed, ['weapon.flamethrower']);
+  dummy(pointed, 5, .8, 200);
+  pointed.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: 6, z: 0 }, aimSource: 'pointer', left: { down: true, held: true, up: false } });
+  step(pointed, 30);
+  const shot = attacks(pointed).find(event => event.type === 'combat.attack' && event.actionId === 'weapon.flamethrower');
+  expect(shot?.direction.z).toBeCloseTo(0);
+}
+
 /** Fuel is a real, cover-clipped hazard that persists after trigger release. */
 async function checkFlamethrowerFuel(): Promise<void> {
   const w = await arena(); equip(w, ['weapon.flamethrower']);
@@ -248,7 +333,7 @@ async function checkFlamethrowerFuel(): Promise<void> {
   step(w, 60);
   expect(health(w, enemy)).toBeLessThan(100);
   expect(patch.hazard!.activeUntil).toBeGreaterThan(w.tick);
-  step(w, 180);
+  step(w, 300);
   expect(patch.hazard!.activeUntil).toBeLessThanOrEqual(w.tick);
 }
 
@@ -777,6 +862,14 @@ test('damage modifiers: shared riot shield ±35°, armor and multipliers, stun/s
 });
 
 test('every weapon category fires and hits; swept projectiles never tunnel; full cover stops melee, hitscan and projectiles', async () => {
+  checkS202FieldFire();
+  await checkS202Combat0();
+  await checkS202Combat1();
+  await checkS202Combat2();
+  await checkS202Combat3();
+  await checkS202Combat4();
+  await checkS202Combat5();
+
   await checkDynamicCover();
   await checkFlamethrowerFuel();
   await checkFuelPool();

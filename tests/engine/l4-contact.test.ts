@@ -380,7 +380,14 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       expect(distantRunner.infected!.hitByPlayer, type).toBe(true);
       expect(barEligible(distantRunner, courier.transform, true), 'player hit survives distance').toBe(true);
     }
-    const fire = world.entities.get(world.hazards!.ignitePatch(distantRunner.transform, 1, 2)!)!;
+    // The runner stands on the authored road; fuel patches now require unpaved ground.
+    let fireId: number | null = null;
+    for (const [x, z] of [[0, 8], [0, -8], [8, 0], [-8, 0], [0, 16], [0, -16]]) {
+      fireId = world.hazards!.ignitePatch({ x: distantRunner.transform.x + x, z: distantRunner.transform.z + z }, 1, 2);
+      if (fireId !== null) break;
+    }
+    expect(fireId, 'a nearby unpaved fuel patch is available').not.toBeNull();
+    const fire = world.entities.get(fireId!)!;
     delete distantRunner.infected!.hitByPlayer;
     world.combat!.damage.apply({ attackId: 8, actionId: 'hazard.fire', sourceId: fire.id, targetId: distantRunner.id,
       origin: fire.transform, direction: { x: 0, z: 0 }, base: .1, multiplier: 1, type: 'status', knockback: 0, stagger: 0 });

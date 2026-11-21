@@ -4,7 +4,7 @@ import { ticks, type ActionEffect } from '../../data/actions/schema';
 import type { Attack } from './ActionRunner';
 import type { Vec2 } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
-import { Status } from './Status';
+import { groundBurn, Status } from './Status';
 /** Arming → persistent effect → expiry follows Bruno's ExplosiveCrates (MIT), on sim time.
  * E07 consumes noise/targets; E27 can replace presentation without changing these definitions. */
 export interface ActionZone extends ActionEffect { x: number; z: number; created: number; expires: number; nextPulse: number; spreadDone?: boolean; attack: Attack }
@@ -27,6 +27,7 @@ export class ActionEffects {
     const effect = attack.def.effect; if (!effect) return;
     const zone: ActionZone = { ...effect, x: position.x, z: position.z, created: this.world.tick, expires: this.world.tick + ticks(effect.duration * (effect.kind === 'fire' ? this.world.weather?.modifiers.fireDuration ?? 1 : 1)), nextPulse: this.world.tick, attack };
     this.zones.push(zone);
+    if (effect.kind === 'fire') this.world.hazards?.igniteFlammables(position, effect.radius);
     this.world.events.emit({ type: 'combat.effect', tick: this.world.tick, sourceId: attack.sourceId, actionId: attack.def.id, kind: effect.kind, position: { x: zone.x, y: 0, z: zone.z }, radius: zone.radius, expires: zone.expires });
     if (effect.kind === 'lure') this.noise(position, effect.radius, attack.def.id);
   }
@@ -59,7 +60,7 @@ export class ActionEffects {
           zone.spreadDone = true; this.world.hazards?.spreadFire(zone, zone.radius, (zone.expires - this.world.tick) / 60, 0, zone.attack.id, zone.attack.sourceId === 1);
         }
         const pulse = this.world.tick >= zone.nextPulse;
-        for (const entity of this.world.entities.iterate()) if (entity.faction === 'infected' && entity.health.current > 0 && this.contains(zone, entity.transform) && zone.attack.def.status && (pulse || !entity.combat?.statuses.some((s) => s.kind === 'burning'))) this.world.combat!.status.apply(entity, zone.attack.def.status, zone.attack.sourceId, zone.attack.def.id);
+        for (const entity of this.world.entities.iterate()) if ((entity.faction === 'infected' || entity.kind === 'player') && entity.health.current > 0 && this.contains(zone, entity.transform) && (pulse || !entity.combat?.statuses.some((s) => s.kind === 'burning' && s.def.dps >= groundBurn.dps))) this.world.combat!.status.apply(entity, groundBurn, zone.attack.sourceId, zone.attack.def.id);
         if (pulse) zone.nextPulse += 60;
       } else if (zone.kind === 'turret' && this.world.tick >= zone.nextPulse) {
         const combat = this.world.combat!;

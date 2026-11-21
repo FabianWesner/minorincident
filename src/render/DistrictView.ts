@@ -351,6 +351,39 @@ export class DistrictView extends Group {
     this.updateSigns();
     this.dirtyEntries.clear();
   }
+  /** Collapse and darken crop instances as their field cells burn. */
+  syncFieldFire(cells: readonly import('../sim/interact/FieldFire').FieldCell[]): void {
+    const states = new Map(cells.map(cell => [cell.id, cell.state]));
+    for (const grass of this.grass) grass.syncFire(states);
+    for (const entry of this.lodBatches) if (entry.id === 'veg.corn-block') {
+      let changed = false;
+      for (const ref of entry.refs) {
+        const state = states.get(ref.userData.placementId as string) ?? 'intact';
+        if (ref.userData.fieldFireState === state) continue;
+        ref.userData.fieldFireState = state;
+        ref.userData.fieldOriginalHeight ??= ref.scale.y;
+        ref.scale.y = ref.userData.fieldOriginalHeight * (state === 'scorched' ? .12 : state === 'burning' ? .65 : 1);
+        ref.userData.tint = state === 'scorched' ? '#29231c' : state === 'burning' ? '#9c6030' : '#ffffff';
+        ref.updateMatrix(); changed = true;
+      }
+      if (changed) { for (const batch of [entry.hero, entry.near, entry.far]) if (batch.references.length) batch.update(); this.dirtyEntries.add(entry); }
+    }
+  }
+  syncVegetationFire(objects: readonly import('../sim/interact/VegetationFire').BurningObject[]): void {
+    const states = new Map(objects.map(o => [o.id, o.state]));
+    this.foliage.syncFire(states);
+    for (const entry of this.lodBatches) {
+      let changed = false;
+      for (const ref of entry.refs) {
+        const state = states.get(ref.userData.placementId as string);
+        if (!state || ref.userData.vegetationFireState === state) continue;
+        ref.userData.vegetationFireState = state;
+        ref.userData.tint = state === 'charred' ? '#27231f' : state === 'burning' ? '#a36035' : '#ffffff';
+        changed = true;
+      }
+      if (changed) for (const batch of [entry.hero, entry.near, entry.far]) if (batch.references.length) batch.update();
+    }
+  }
   /** Keep each atlas quad only while its supporting building has a real drawn LOD. */
   private updateSigns(): void {
     for (const batch of this.parts.signBatches) {

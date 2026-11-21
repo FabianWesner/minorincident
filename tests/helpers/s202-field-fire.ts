@@ -1,0 +1,108 @@
+import { expect } from 'vitest';
+import { FieldFire } from '../../src/sim/interact/FieldFire';
+import { VegetationFire } from '../../src/sim/interact/VegetationFire';
+import { avoidFieldFire } from '../../src/sim/npc/avoidFieldFire';
+import type { Placement } from '../../src/levels/districts/types';
+import { overlapsPaving } from '../../src/levels/districts/validate';
+import { lawnFireCells } from '../../src/levels/lawnFire';
+
+const crop = (id: string, x: number, assetId = 'veg.corn-block') => ({ id, assetId, position: [x, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 6, decor: true, allowRoad: false, lightGroup: 'decor', visualAabb: { min: [x - 1, 0, -1], max: [x + 1, 2, 1] } }) as Placement;
+
+function checkS202Field0(): void {
+  const placements = [crop('a', 0), crop('b', 10), crop('c', 20), crop('road', 0, 'road.asphalt')];
+  const first = new FieldFire(placements), second = new FieldFire(placements);
+  expect(first.ignite({ x: 0, z: 0 }, 10, .1)).toBe(1);
+  expect(second.ignite({ x: 0, z: 0 }, 10, .1)).toBe(1);
+  for (let tick = 10; tick <= 600; tick++) { first.update(tick); second.update(tick); }
+  expect(first.snapshot()).toEqual(second.snapshot());
+  expect(first.cells.map(c => c.state)).toEqual(['scorched', 'scorched', 'scorched']);
+  const saved = first.snapshot(), restored = new FieldFire(placements);
+  restored.restore(saved);
+  restored.update(1000);
+  expect(restored.cells.map(c => c.state)).toEqual(['scorched', 'scorched', 'scorched']);
+  const bounded = new FieldFire(Array.from({ length: 140 }, (_, i) => crop(`cap-${i}`, i)));
+  expect(bounded.ignite({ x: 70, z: 0 }, 1, 100)).toBe(FieldFire.maxBurning);
+  const resumed = new FieldFire(Array.from({ length: 140 }, (_, i) => crop(`cap-${i}`, i)));
+  resumed.restore(bounded.snapshot());
+  expect(resumed.ignite({ x: 70, z: 0 }, 1, 100)).toBe(0);
+  resumed.update(421);
+  expect(resumed.ignite({ x: 70, z: 0 }, 422, 100)).toBeGreaterThan(0);
+}
+
+
+function checkS202Field1(): void {
+  const layout = { surfaces: [{ surface: 'asphalt', polygon: [[4, -2], [6, -2], [6, 2], [4, 2]] }] } as Parameters<typeof overlapsPaving>[0];
+  expect(overlapsPaving(layout, { min: [0, 0, -5], max: [5, 0, 5] })).toBe(true);
+  expect(overlapsPaving(layout, { min: [-10, 0, -5], max: [0, 0, 5] })).toBe(false);
+  const diagonal = { surfaces: [{ surface: 'tile', polygon: [[0, 0], [10, 10], [9, 11], [-1, 1]] }] } as Parameters<typeof overlapsPaving>[0];
+  expect(overlapsPaving(diagonal, { min: [8, 0, 0], max: [9, 0, 1] })).toBe(false);
+  expect(overlapsPaving(diagonal, { min: [4, 0, 4], max: [5, 0, 5] })).toBe(true);
+  const lawnLayout = { district: 'D-GROVE', lawns: [{ min: [0, 0], max: [20, 4] }], roads: { edges: [] }, buildings: [{ aabb: { min: [16, 0, 0], max: [20, 4, 4] } }], surfaces: [{ surface: 'asphalt', polygon: [[12, 0], [16, 0], [16, 4], [12, 4]] }] } as unknown as Parameters<typeof lawnFireCells>[0];
+  const lawns = lawnFireCells(lawnLayout, [0, 0]);
+  expect(lawns.map(cell => cell.id)).toEqual(['D-GROVE/lawn:0:0:0', 'D-GROVE/lawn:0:1:0']);
+  const buildingLayout = { ...lawnLayout, surfaces: [], buildings: [{ aabb: { min: [12, 0, 0], max: [20, 4, 4] } }] } as unknown as Parameters<typeof lawnFireCells>[0];
+  expect(lawnFireCells(buildingLayout, [0, 0]).map(cell => cell.id)).toEqual(['D-GROVE/lawn:0:0:0', 'D-GROVE/lawn:0:1:0']);
+  const grassFire = new FieldFire([], undefined, lawns);
+  expect(grassFire.ignite({ x: 1, z: 1 }, 1, .1)).toBe(1);
+  grassFire.update(241); expect(grassFire.cells[1].state).toBe('burning');
+  grassFire.update(661);
+  const grassRestored = new FieldFire([], undefined, lawns); grassRestored.restore(grassFire.snapshot());
+  expect(grassRestored.cells.map(cell => cell.state)).toEqual(['scorched', 'scorched']);
+  const field = new FieldFire([crop('a', 0), crop('b', 10)], (a, b) => (a.x < 5 && b.x > 5) || (a.x > 5 && b.x < 5));
+  expect(field.ignite({ x: 0, z: 0 }, 1, 15)).toBe(1);
+  for (let tick = 1; tick < 600; tick++) field.update(tick);
+  expect(field.cells.map(cell => cell.state)).toEqual(['scorched', 'intact']);
+}
+
+
+function checkS202Field2(): void {
+  const cell = { id: 'crop', x: 10, z: 0, state: 'burning' as const, ignitedAt: 0 };
+  const target = { x: 20, z: 0 };
+  expect(avoidFieldFire({ x: 0, z: 0 }, target, [cell], () => true)).toEqual({ x: 8, z: -8 });
+  expect(avoidFieldFire({ x: 0, z: 0 }, target, [cell], () => false)).toBeNull();
+  expect(avoidFieldFire({ x: 0, z: 0 }, target, [{ ...cell, state: 'scorched' }], () => true)).toBe(target);
+}
+
+
+function checkS202Field3(): void {
+  const cells = [{ id: 'a', x: 10, z: 0, state: 'burning' as const, ignitedAt: 0 }, { id: 'b', x: 8, z: -8, state: 'burning' as const, ignitedAt: 0 }];
+  expect(avoidFieldFire({ x: 0, z: 0 }, { x: 20, z: 0 }, cells, () => true)).toEqual({ x: 8, z: 8 });
+}
+
+
+const placement = (id: string, assetId: string, x: number) => ({ id, assetId, position: [x, 0, 0] }) as Placement;
+
+function checkS202Field4(): void {
+  const tree = { ...placement('tree', 'prop.tree', 0), visualAabb: { min: [-2, 0, -2], max: [2, 5.8, 2] } } as Placement;
+  const fire = new VegetationFire([tree, placement('house', 'bld.house', 0), placement('dead-tree', 'prop.tree.dead', 0), placement('bush', 'prop.garden-bush-small', 0)]);
+  expect(fire.objects.find(object => object.id === 'tree')?.flameHeight).toBeCloseTo(4.176);
+  fire.ignite({ x: 0, z: 0 }, 10, 2);
+  expect(fire.objects).toHaveLength(3);
+  expect(fire.objects[0].state).toBe('burning');
+  fire.update(609); expect(fire.objects[0].state).toBe('burning');
+  fire.update(610); expect(fire.objects[0].state).toBe('charred');
+}
+
+
+function checkS202Field5(): void {
+  const fire = new VegetationFire(Array.from({ length: 40 }, (_, i) => placement(`tree-${i}`, 'prop.tree', i)));
+  fire.ignite({ x: 0, z: 0 }, 0, 100);
+  expect(fire.objects.filter(o => o.state === 'burning')).toHaveLength(32);
+}
+
+
+function checkS202Field6(): void {
+  const fire = new VegetationFire([placement('near', 'prop.tree', 0), placement('across', 'prop.tree', 10)], (a, b) => a.x < 5 && b.x > 5);
+  fire.ignite({ x: 0, z: 0 }, 0, 20);
+  expect(fire.objects.map(o => o.state)).toEqual(['burning', 'intact']);
+}
+
+export function checkS202FieldFire(): void {
+  checkS202Field0();
+  checkS202Field1();
+  checkS202Field2();
+  checkS202Field3();
+  checkS202Field4();
+  checkS202Field5();
+  checkS202Field6();
+}

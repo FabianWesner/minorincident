@@ -18,7 +18,7 @@ import { nightAccents, type AccentFire } from '../NightAccents';
 import { l3SmokePlumes } from '../../data/l3';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { visible?: boolean; /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
+interface Column { visible?: boolean; /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; lawn?: boolean; crop?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void; move?(x: number, z: number): void } | null;
@@ -744,6 +744,37 @@ export class Blasts extends Group {
       // High: two buoyant embers per tick spread over the fire, drifting with the wind; low keeps one at 2 Hz.
       if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.embers(now, c, e.hazard?.radius ?? .8, low);
     }
+    // Field fronts share the bounded flame, smoke and ember pools. Limit sources
+    // to nearby visible cells so a large fire cannot allocate unbounded lights.
+    let fieldSources = 0, cropSmokeSources = 0;
+    const fieldCells = (this.world.hazards?.fieldFire?.cells ?? []).flatMap((cell, index) => cell.state === 'burning' && this.sourceVisible(cell.x, cell.z, 12) ? [{ cell, index }] : []);
+    if (player) fieldCells.sort((a, b) => Math.hypot(a.cell.x - player.transform.x, a.cell.z - player.transform.z) - Math.hypot(b.cell.x - player.transform.x, b.cell.z - player.transform.z));
+    for (const { index, cell } of fieldCells) {
+      if (fieldSources >= 24) break;
+      fieldSources++;
+      const key = -3_000_000 - index; seen.add(key);
+      const lawn = cell.halfX !== undefined, smoke = !lawn && cropSmokeSources++ < 4;
+      let c = this.fireColumns.get(key);
+      if (!c) {
+        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: 0, size: lawn ? .8 : 4, lawn, crop: !lawn, heat: lawn ? 1 : .15, acc: this.rng.next(), shade: lawn ? .07 : .12, cloud: 0 };
+        c.light = lawn ? null : this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
+        this.fireColumns.set(key, c);
+      }
+      // Keep a few columns alive long enough to rise within the shared puff pool.
+      c.rate = lawn ? (low ? .5 : 1) : smoke ? (low ? 2 : 4) : 0;
+      if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, cell.halfX === undefined ? 3 : 1, low);
+    }
+    for (const [index, object] of (this.world.hazards?.vegetationFire?.objects ?? []).entries()) {
+      if (object.state !== 'burning' || !this.sourceVisible(object.x, object.z, 12)) continue;
+      const key = -4_000_000 - index; seen.add(key);
+      let c = this.fireColumns.get(key);
+      if (!c) {
+        c = { born: now, x: object.x, z: object.z, ground: (this.world.districts?.groundHeight(object.x, object.z) ?? 0) + object.flameHeight, until: Infinity, rate: low ? 1.5 : 3, size: 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
+        c.light = this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
+        this.fireColumns.set(key, c);
+      }
+      if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, 2, low);
+    }
     // L9 night accents: authored render-only fires (farm brush fires, burning wrecks, the city edge) share the flame/smoke/ember path.
     const accents = nightAccents(this.world.districts).fires;
     for (let i = 0; i < accents.length; i++) {
@@ -804,17 +835,18 @@ export class Blasts extends Group {
     return slot + 1;
   }
   private readonly writeFireColumn = (c: Column, id: number): void => {
-    const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) return;
-    if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) return;
-    const big = c.ambient ? c.ambient.car : !!e!.vehicle, radius = c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
+    const e = c.ambient ? undefined : this.world.entities.get(id), field = id <= -3_000_000 && id > -5_000_000;
+    if (!e && !c.ambient && !field) return;
+    if (!this.sourceVisible(c.x, c.z, (field ? 3 : c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) return;
+    const big = c.ambient ? c.ambient.car : !!e?.vehicle, radius = c.lawn ? 1 : field ? 3 : c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = c.lawn ? 2 : field ? 6 : big ? 6 : Math.max(3, Math.round(radius * 3));
     // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
-    const grow = c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
+    const grow = c.lawn ? .55 : field ? 2 : c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
     const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
     for (let i = 0; i < n; i++) {
-      const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-      this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+      const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * (c.crop ? 1.35 : .55)) * Math.sqrt((i + 1) / n);
+      this.writeFlame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), c.crop ? .45 : field ? .65 : .8 + .4 * life);
     }
-    this.writeGlow(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life));
+    this.writeGlow(c.x, c.z, radius * (c.lawn ? 1.5 : 3.2), 0xff7a2a, (.55 + .1 * Math.sin(this.time * 13 + sid)) * (.3 + .7 * life) * (c.lawn ? .2 : field ? .55 : 1));
   };
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {

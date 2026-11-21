@@ -8,6 +8,15 @@ import type { DamageEvent } from '../combat/Damage';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Vec2 } from '../../input/InputFrame';
+import { FieldFire } from './FieldFire';
+import { VegetationFire } from './VegetationFire';
+import { groundBurn } from '../combat/Status';
+import { cure } from '../../levels/L10/district';
+import { cureCrossingLines } from '../../levels/L10/crossingStories';
+import { overlapsBuilding, overlapsPaving, overlapsRoad } from '../../levels/districts/validate';
+import { lawnFireCells } from '../../levels/lawnFire';
+import { cureEvacuationLane } from '../../levels/L10/vignettes';
+import type { DistrictLayout } from '../../levels/districts/types';
 export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'tear-gas', 'extinguisher', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
@@ -23,6 +32,9 @@ export interface HazardOptions { hp?: number; radius?: number; burnTime?: number
 /** E11 hazard triggers/damage; E27 consumes arming/blast events for richer effects. */
 export class Hazards {
   readonly debris: DebrisPool;
+  fieldFire: FieldFire | null = null;
+  vegetationFire: VegetationFire | null = null;
+  private fireLayouts: { layout: DistrictLayout; origin: readonly [number, number] }[] = [];
   private fallbackDamage: Damage | null = null;
   /** r39-l10nan: campaign levels replace world.combat after the hazards exist (npc install). A cached Damage kept the old
    * instance, so the god cheat (set on the live one) did not cover fire/toxic zones and the courier lost HP in god mode. */
@@ -34,6 +46,7 @@ export class Hazards {
   private readonly spreading: EntitySnapshot[] = [];
   constructor(private readonly world: SimWorld) {
     this.debris = new DebrisPool(world.physics);
+
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit' || e.amount <= 0) return;
       const entity = world.entities.get(e.targetId); if (!entity) return;
@@ -48,6 +61,31 @@ export class Hazards {
       }
       if (entity.health.current <= 0) this.destroy(entity);
     });
+  }
+  installFieldFire(): void {
+    const districts = this.world.districts;
+    this.fireLayouts = (districts?.districts ?? []).map(d => ({ origin: d.origin, layout: d.id === 'D-CURE' ? { ...d.layout, surfaces: [...d.layout.surfaces, ...cureEvacuationLane(d.decay.placements)] } : d.layout }));
+    const roads = [...cure.regions.map(r => r.route), ...cure.detours.map(r => r.route), ...cureCrossingLines.map(r => r.line)];
+    const blocked = (a: Vec2, b: Vec2): boolean => {
+      const side = (p: Vec2, q: Vec2, x: number, z: number) => (q.x - p.x) * (z - p.z) - (q.z - p.z) * (x - p.x);
+      const crossing = this.world.scenario === 'L10' && roads.some(line => line.slice(1).some((end, i) => {
+        const start = line[i], c = { x: start[0], z: start[1] }, d = { x: end[0], z: end[1] };
+        return Math.max(Math.min(a.x, b.x), Math.min(c.x, d.x)) <= Math.min(Math.max(a.x, b.x), Math.max(c.x, d.x)) && Math.max(Math.min(a.z, b.z), Math.min(c.z, d.z)) <= Math.min(Math.max(a.z, b.z), Math.max(c.z, d.z)) && side(a, b, c.x, c.z) * side(a, b, d.x, d.z) <= 0 && side(c, d, a.x, a.z) * side(c, d, b.x, b.z) <= 0;
+      }));
+      return crossing || this.fireLayouts.some(d => {
+        const footprint = { min: [Math.min(a.x, b.x) - d.origin[0], 0, Math.min(a.z, b.z) - d.origin[1]] as [number, number, number], max: [Math.max(a.x, b.x) - d.origin[0], 0, Math.max(a.z, b.z) - d.origin[1]] as [number, number, number] };
+        return overlapsRoad(d.layout, footprint) || overlapsPaving(d.layout, footprint) || overlapsBuilding(d.layout, footprint);
+      });
+    };
+    this.vegetationFire = districts ? new VegetationFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), districts.composition.id === 'L10' ? blocked : undefined) : null;
+    // A burning field cell affects a five metre square, so exclude cells whose
+    // effect footprint overlaps an authored road lane, not just its centreline.
+    this.fieldFire = districts ? new FieldFire(districts.districts.flatMap((d, index) => d.decay.placements.filter(p => {
+      if (p.assetId !== 'veg.corn-block') return true;
+      const footprint = { min: [p.position[0] - 5, 0, p.position[2] - 5] as [number, number, number], max: [p.position[0] + 5, 0, p.position[2] + 5] as [number, number, number] };
+      return !overlapsRoad(this.fireLayouts[index].layout, footprint) && !overlapsPaving(this.fireLayouts[index].layout, footprint) && !overlapsBuilding(this.fireLayouts[index].layout, footprint);
+    }).map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked,
+      this.fireLayouts.flatMap(d => lawnFireCells(d.layout, d.origin))) : null;
   }
   spawn(kind: HazardKind | DestructibleKind, pos: Vec2, opts: HazardOptions = {}): number {
     if (![...hazardKinds, ...destructibleKinds].includes(kind) || ![pos.x, pos.z, opts.hp ?? 1, opts.radius ?? 1, opts.burnTime ?? 1, opts.halfX ?? .5, opts.halfZ ?? .15, opts.duration ?? 1].every(Number.isFinite)
@@ -64,10 +102,26 @@ export class Hazards {
       e.combat = { radius: Math.max(opts.halfX ?? .5, opts.halfZ ?? .15) + .1, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] };
       this.world.interactables!.block(e.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15, entityId: e.id });
     }
-    this.world.spatial.set(e.id, pos.x, pos.z); return e.id;
+    this.world.spatial.set(e.id, pos.x, pos.z);
+    if (kind === 'fire' && opts.playerDamageSource) this.igniteFlammables(pos, e.hazard!.radius);
+    return e.id;
+  }
+  /** Ignite nearby ground and vegetation where an existing fire touches them. */
+  igniteFlammables(position: Vec2, radius: number): void {
+    this.fieldFire?.ignite(position, this.world.tick, radius);
+    this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
   }
   /** Deposit fuel at a clipped weapon impact, sharing the existing fire cap, damage and expiry path. */
   ignitePatch(position: Vec2, radius: number, duration: number): number | null {
+    this.fieldFire?.ignite(position, this.world.tick, radius);
+    this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
+    // Fuel may ignite adjacent vegetation, but the persistent ground patch must
+    // not cover an authored road or paved surface.
+    for (const district of this.fireLayouts) {
+      const x = position.x - district.origin[0], z = position.z - district.origin[1];
+      const footprint = { min: [x - radius, 0, z - radius] as [number, number, number], max: [x + radius, 0, z + radius] as [number, number, number] };
+      if (overlapsRoad(district.layout, footprint) || overlapsPaving(district.layout, footprint) || overlapsBuilding(district.layout, footprint)) return null;
+    }
     const until = this.world.tick + Math.ceil(duration * 60 * (this.world.weather?.modifiers.fireDuration ?? 1));
     let fires = 0, reusable: EntitySnapshot | undefined;
     for (const e of this.world.entities.iterate()) {
@@ -166,9 +220,20 @@ export class Hazards {
     const step = radius * 1.4 * (weather?.modifiers.fireSpread ?? 1);
     return this.spawn('fire', { x: position.x + Math.cos(angle) * step, z: position.z + Math.sin(angle) * step }, { radius: radius * .85, duration, spread: generations, playerDamageSource });
   }
-  snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor }; }
+  snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor, fieldFire: this.fieldFire?.snapshot() ?? null, vegetationFire: this.vegetationFire?.snapshot() ?? null }; }
   update(): void {
     const tick = this.world.tick;
+    this.fieldFire?.update(tick);
+    this.vegetationFire?.update(tick);
+    if (tick % 60 === 0) for (const cell of this.fieldFire?.cells ?? []) if (cell.state === 'burning') this.vegetationFire?.ignite(cell, tick, cell.halfX === undefined ? 5 : Math.max(cell.halfX, cell.halfZ ?? 0));
+    if (this.fieldFire && tick % 30 === 0) {
+      for (const entity of this.world.entities.iterate()) {
+        if (entity.health.current <= 0 || (entity.faction !== 'infected' && entity.kind !== 'player')) continue;
+        if (entity.faction === 'infected' && entity.combat?.statuses.some(status => status.kind === 'burning')) this.fieldFire.ignite(entity.transform, tick, .5);
+        if (this.fieldFire.cells.some(cell => cell.state === 'burning' && Math.abs(cell.x - entity.transform.x) <= (cell.halfX ?? 5) && Math.abs(cell.z - entity.transform.z) <= (cell.halfZ ?? 5)))
+          this.world.combat?.status.apply(entity, groundBurn, 1, 'hazard.field-fire');
+      }
+    }
     const actionZones = this.world.combat?.effects.zones;
     let fireReach = 2;
     let fires = 0; this.spreading.length = 0;
@@ -207,11 +272,19 @@ export class Hazards {
       }
       const burns = d && !d.broken && d.burningUntil > tick;
       const harms = h && tick < h.activeUntil && harmfulKinds.includes(h.kind);
-      if (tick % 60 === 0 && (burns || harms)) {
+      const fire = !!burns || (h?.kind === 'fire' && !!harms);
+      if ((burns || harms) && (tick % 60 === 0 || fire)) {
         for (const id of this.nearby(e, h?.radius ?? 1)) {
           const target = this.world.entities.get(id)!;
           if (target.faction === 'environment' || target.health.current <= 0 || (h?.kind === 'toxic' && target.archetype === 'infected.hazmat')) continue;
-          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', fire: h?.kind === 'fire' || !h, knockback: 0, stagger: 0 });
+          const weaponFire = !!e.playerDamageSource && (!!burns || h?.kind === 'fire');
+          // Ambient authored fire retains its legacy direct damage pulse. The 35 DPS
+          // status belongs to combat-created flames and burning props; stacking it
+          // onto every scenery fire made L5's background streets lethal.
+          if ((target.kind === 'player' && fire) || (target.faction === 'infected' && weaponFire))
+            this.world.combat?.status.apply(target, groundBurn, e.id, 'hazard.fire');
+          if (tick % 60 !== 0) continue;
+          this.damage.apply({ attackId: 0, actionId: `hazard.${h?.kind ?? 'fire'}`, sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 10, multiplier: 1, type: 'status', fire: weaponFire, permanent: weaponFire, knockback: 0, stagger: 0 });
         }
       }
     }

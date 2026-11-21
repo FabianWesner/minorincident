@@ -73,6 +73,8 @@ export class AudioService implements Lifecycle {
     }[] = [];
     private readonly unsubscribers: (() => void)[] = [];
     private readonly loops = new Map<string, GraphVoice>();
+    private fieldFireIds = new Set<string>();
+    private fieldFireWhooshAt = 0;
     /** L4 military base alarm at the first turn (PO 2026-10-12). */
     readonly alarm: BaseAlarm;
     /** L4 in-bus radio (PO 2026-10-12). */
@@ -624,6 +626,18 @@ export class AudioService implements Lifecycle {
         // between spatial-audio polls. Retire the voice so its radar note ends too.
         for (const voice of this.graph.active.values()) if (voice.position && voice.distanceCutoffM !== undefined &&
             Math.hypot(voice.position.x - player.transform.x, voice.position.z - player.transform.z) > voice.distanceCutoffM) voice.stop(t);
+        const burning = (this.world.hazards?.fieldFire?.cells ?? []).filter(cell => cell.state === 'burning' && Math.hypot(cell.x - player.transform.x, cell.z - player.transform.z) < 50);
+        if (burning.length) {
+            const nearest = burning.reduce((a, b) => Math.hypot(a.x - player.transform.x, a.z - player.transform.z) < Math.hypot(b.x - player.transform.x, b.z - player.transform.z) ? a : b);
+            const position = { x: nearest.x, y: 0, z: nearest.z };
+            this.loop('field:fire', 'weapon.flame-loop', { position, gain: Math.min(.6, .15 + burning.length * .04) });
+            const caught = burning.find(cell => !this.fieldFireIds.has(cell.id));
+            if (caught && t >= this.fieldFireWhooshAt) {
+                this.play('weapon.flame-ignite', { position: { x: caught.x, y: 0, z: caught.z }, gain: .6 });
+                this.fieldFireWhooshAt = t + .4;
+            }
+        } else this.stopLoop('field:fire');
+        this.fieldFireIds = new Set(burning.map(cell => cell.id));
         const front = this.world.missions?.state.cureFront;
         if (front && this.level === 'L10') { this.hymn ??= new CureHymn(this.context, this.graph.buses.music); this.hymn.update(front.elapsed / 60); }
         if (front) this.loop('cure:ventilation', 'generator.idle', { position: { ...front.fronts[0], y: 2 }, gain: .55, lowpass: 1800 });
@@ -796,6 +810,8 @@ export class AudioService implements Lifecycle {
     }
     snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, story: storyMusic(this.level, this.world.missions?.state), state: this.music.state, streamed: this.score.snapshot(), radio: { level: this.radio.level, playing: this.radio.playing }, paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
     reset(): void {
+        this.fieldFireIds.clear();
+        this.fieldFireWhooshAt = 0;
         this.generation++;
         for (const off of this.unsubscribers)
             off();

@@ -1183,6 +1183,8 @@ export class GameView implements Lifecycle {
     const flashOpacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0) * (1 - this.cellarBlend));
     if (this.flashOverlay.style.opacity !== flashOpacity) this.flashOverlay.style.opacity = flashOpacity;
     this.fixtureProps?.update();
+    if (this.world.hazards?.fieldFire) this.districts?.syncFieldFire(this.world.hazards.fieldFire.cells);
+    if (this.world.hazards?.vegetationFire) this.districts?.syncVegetationFire(this.world.hazards.vegetationFire.objects);
     if (this.world.scenario === 'L10' && this.world.l10Encounters) {
       this.districts?.updateCureEffigies(this.world.tick);
       const start = this.world.l10Encounters.state.billboardFallAt;

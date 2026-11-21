@@ -1,3 +1,4 @@
+import { avoidFieldFire } from './avoidFieldFire';
 import { actorRadius } from '../world/SolidRegistry';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -70,6 +71,12 @@ export class Npcs {
       target = this.sway(e, target, nav);
     }
     const footprint = actorRadius(e);
+    const field = this.world.hazards?.fieldFire;
+    if (field && (e.companion || e.escort || e.civilian?.survivor?.mode === 'follow' || e.civilian?.ally?.follow)) {
+      const detour = avoidFieldFire(e.transform, target, field.cells, point => nav.clear(point.x, point.z, footprint) && nav.visible(e.transform, point, footprint));
+      if (!detour) return false;
+      if (detour !== target) { target = detour; stop = .1; }
+    }
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
     const distance = Math.hypot(dx, dz);
     if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }

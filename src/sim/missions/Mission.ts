@@ -408,7 +408,7 @@ export class Mission {
       arsenal.ownedActions = [...new Set([...arsenal.ownedActions, ...arsenal.racks.LEFT, ...arsenal.racks.RIGHT])];
     }
     // perf-w5d: the same snapshot as query({}) (structuredClone of every entity), copied about 3x faster.
-    return { tick: this.world.tick, state: cloneData(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world) };
+    return { tick: this.world.tick, state: cloneData(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world), ...(this.world.hazards?.fieldFire ? { fieldFire: this.world.hazards.fieldFire.snapshot() } : {}), ...(this.world.hazards?.vegetationFire ? { vegetationFire: this.world.hazards.vegetationFire.snapshot() } : {}) };
   }
   /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
   saveResume(atCheckpoint = false): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {
@@ -537,6 +537,18 @@ export class Mission {
     if (!live.weapons) this.world.combat?.clearLoadout();
     this.world.npcs?.restore(delta);
     this.l1?.restore(delta);
+    const field = this.world.hazards?.fieldFire;
+    if (field) {
+      const scorched = resume ? [] : field.snapshot().filter(cell => cell.state === 'scorched');
+      field.restore((checkpoint.fieldFire ?? field.cells.map(cell => ({ ...cell, state: 'intact' as const, ignitedAt: 0 }))).map(cell => ({ ...cell, ignitedAt: cell.state === 'burning' ? cell.ignitedAt + delta : cell.ignitedAt })));
+      field.restore(scorched);
+    }
+    const vegetation = this.world.hazards?.vegetationFire;
+    if (vegetation) {
+      const charred = resume ? [] : vegetation.snapshot().filter(o => o.state === 'charred');
+      vegetation.restore((checkpoint.vegetationFire ?? vegetation.objects.map(o => ({ ...o, state: 'intact' as const, at: 0 }))).map(o => ({ ...o, at: o.state === 'burning' ? o.at + delta : o.at })));
+      vegetation.restore(charred);
+    }
     restoreSeams(this.world, checkpoint.seams, !resume);
     this.l10?.cure.apply();
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);

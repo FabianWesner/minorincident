@@ -298,6 +298,8 @@ export interface MissionState {
 }
 export interface MissionCheckpoint {
   tick: number; state: MissionState; entities: EntitySnapshot[];
+  fieldFire?: import('../interact/FieldFire').FieldCell[];
+  vegetationFire?: import('../interact/VegetationFire').BurningObject[];
   /** Weapon entitlement and rack transaction captured with entities, never historical unlocks. */
   arsenal?: Pick<import('../progression/Campaign').CampaignSave, 'ownedActions' | 'racks'>;
   /** Monotonic combat identity: a resumed rocket must not reuse an ID in the Mega's hit ledger. */

@@ -105,9 +105,13 @@ export class Foliage extends Group {
       const object = new Object3D(); object.position.copy(reference.position); object.position.x += origin[0]; object.position.z += origin[1]; object.scale.copy(reference.scale);
       object.up.set(Math.sin(i * 2.4), Math.cos(i * 2.4), 0); object.lookAt(object.position.clone().add(facing)); object.updateMatrix();
       object.matrix.makeRotationFromQuaternion(object.quaternion).premultiply(new Matrix4().makeScale(...reference.scale.toArray())).setPosition(object.position);
-      object.userData.foliageMatrix = object.matrix.clone(); object.userData.foliageScaleY = object.scale.y; return object;
+      object.userData.placementId = reference.userData.placementId; object.userData.foliageMatrix = object.matrix.clone(); object.userData.foliageScaleY = object.scale.y; return object;
     });
     this.batches.push({ mesh, references: refs, material }); this.add(mesh);
+  }
+  syncFire(states: ReadonlyMap<string, string>): void {
+    for (const { references } of this.batches) for (const reference of references)
+      reference.userData.fireCharred = states.get(reference.userData.placementId as string) === 'charred';
   }
   /** Scale the authored crown about ground level; collision remains an authored asset property. */
   applyLook(): void {
@@ -147,6 +151,7 @@ export class Foliage extends Group {
       const limit = Math.ceil(references.length * this.materials.look.values.foliageDensity);
       for (let i = 0; i < limit; i++) {
         const reference = references[i];
+        if (reference.userData.fireCharred) continue;
         this.bounds.center.copy(reference.position); this.bounds.radius = Math.max(reference.scale.x, reference.scale.y, reference.scale.z) * 1.45;
         if (this.frustum.intersectsSphere(this.bounds)) mesh.setMatrixAt(count++, reference.matrix);
       }

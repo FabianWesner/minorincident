@@ -1,23 +1,26 @@
 import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 World/Grass.js and Wind.js (MIT, commit 41046b5).
-import { BufferGeometry, DoubleSide, Float32BufferAttribute, Mesh } from 'three/webgpu';
-import { attribute, cos, mix, positionLocal, sin, uniform, renderGroup, vec3, cameraViewMatrix } from 'three/tsl';
+import { BufferGeometry, DoubleSide, DynamicDrawUsage, Float32BufferAttribute, Mesh } from 'three/webgpu';
+import { attribute, cos, mix, positionLocal, sin, uniform, renderGroup, vec3, cameraViewMatrix, float } from 'three/tsl';
 import { Rng } from '../core/Rng';
 import { worldLook } from '../data/worldLook';
 import type { DistrictLayout } from '../levels/districts/types';
 import type { Materials } from './Materials';
+import { lawnCellId, lawnGrid } from '../levels/lawnFire';
 
 /** Dense, crossed tapered blades. Sparse prefix covers every lawn for mobile. */
 export class Grass extends Mesh {
   private readonly fullCount: number;
   private readonly sparseCount: number;
+  private readonly fireVertices: Map<string, number[]>;
+  private readonly fireStates = new Map<string, string>();
   static material(materials: Materials, phase: ReturnType<typeof windPhase>) {
-    const tip = attribute('tip', 'float'), weight = tip.mul(tip).mul(.08).mul(materials.look.nodes.windStrength).mul(weatherSurface.windStrength);
-    const material = materials.shaded(mix(materials.look.nodes.grassRoot, materials.look.nodes.grassTip, tip)); material.side = DoubleSide;
+    const tip = attribute('tip', 'float'), burn = attribute('burn', 'float'), weight = tip.mul(tip).mul(.08).mul(materials.look.nodes.windStrength).mul(weatherSurface.windStrength).mul(float(1).sub(burn));
+    const material = materials.shaded(mix(mix(materials.look.nodes.grassRoot, materials.look.nodes.grassTip, tip), vec3(.045, .035, .025), burn)); material.side = DoubleSide;
     material.normalNode = vec3(0, 1, 0).transformDirection(cameraViewMatrix);
     const gust = sin(positionLocal.x.mul(.8).add(positionLocal.z.mul(.35)).add(phase.mul(1.6)))
       .add(sin(positionLocal.z.mul(1.7).sub(phase.mul(.9))).mul(.35));
-    material.positionNode = vec3(positionLocal.x.add(gust.mul(weight)), positionLocal.y.mul(materials.look.nodes.grassHeight.div(.41)), positionLocal.z.add(cos(phase.add(positionLocal.x)).mul(weight).mul(.45)));
+    material.positionNode = vec3(positionLocal.x.add(gust.mul(weight)), positionLocal.y.mul(materials.look.nodes.grassHeight.div(.41)).mul(mix(float(1), float(.2), burn)), positionLocal.z.add(cos(phase.add(positionLocal.x)).mul(weight).mul(.45)));
     return material;
   }
   /** Lawns longer than this are cut into tiles, so frustum culling drops the grass far from the camera (one district-wide mesh drew every blade, ~200k triangles on L10). */
@@ -30,7 +33,7 @@ export class Grass extends Mesh {
       const nx = Math.max(1, Math.ceil(w / Grass.tileM)), nz = Math.max(1, Math.ceil(d / Grass.tileM));
       for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) {
         const piece = { min: [lawn.min[0] + w * i / nx, lawn.min[1] + d * j / nz] as [number, number], max: [lawn.min[0] + w * (i + 1) / nx, lawn.min[1] + d * (j + 1) / nz] as [number, number] };
-        out.push(new Grass(layout, material, seed, [piece], valid, `${index}:${i}:${j}`));
+        out.push(new Grass(layout, material, seed, [piece], valid, `${index}:${i}:${j}`, index));
       }
     }
     return out;
@@ -57,8 +60,9 @@ export class Grass extends Mesh {
     }
     return (x: number, z: number) => !(grid.get(key(Math.floor(x / cell), Math.floor(z / cell))) ?? []).some(test => test(x, z));
   }
-  constructor(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number, lawns: DistrictLayout['lawns'] = layout.lawns, valid: (x: number, z: number) => boolean = Grass.validity(layout), tile = '') {
-    const rng = new Rng(seed, `grass:${layout.district}${tile ? ':' + tile : ''}`), positions: number[] = [], tips: number[] = [];
+  constructor(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number, lawns: DistrictLayout['lawns'] = layout.lawns, valid: (x: number, z: number) => boolean = Grass.validity(layout), tile = '', lawnIndex = 0) {
+    const rng = new Rng(seed, `grass:${layout.district}${tile ? ':' + tile : ''}`), positions: number[] = [], tips: number[] = [], fireVertices = new Map<string, number[]>();
+    const original = layout.lawns[lawnIndex], grid = lawnGrid(original);
     const blade = (x: number, z: number, angle: number, height: number, width: number) => {
       const dx = Math.cos(angle) * width, dz = Math.sin(angle) * width;
       positions.push(x - dx, .015, z - dz, x + dx, .015, z + dz, x, height, z);
@@ -72,6 +76,8 @@ export class Grass extends Mesh {
           const x = lawn.min[0] + rng.next() * (lawn.max[0] - lawn.min[0]), z = lawn.min[1] + rng.next() * (lawn.max[1] - lawn.min[1]);
           if (!valid(x, z)) continue;
           const height = .15 + rng.next() ** 2 * .26, angle = rng.next() * Math.PI, width = .045 + rng.next() * .035;
+          const id = lawnCellId(layout.district, lawnIndex, Math.min(grid.nx - 1, Math.floor((x - original.min[0]) / grid.width)), Math.min(grid.nz - 1, Math.floor((z - original.min[1]) / grid.depth)));
+          const vertices = fireVertices.get(id) ?? []; vertices.push(positions.length / 3); fireVertices.set(id, vertices);
           blade(x, z, angle, height, width); blade(x, z, angle + Math.PI / 2, height * .85, width);
         }
       }
@@ -80,12 +86,23 @@ export class Grass extends Mesh {
     const geometry = new BufferGeometry();
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     geometry.setAttribute('tip', new Float32BufferAttribute(tips, 1));
+    geometry.setAttribute('burn', new Float32BufferAttribute(new Float32Array(tips.length), 1).setUsage(DynamicDrawUsage));
     geometry.computeVertexNormals(); geometry.computeBoundingSphere();
-    super(geometry, material); this.fullCount = positions.length / 3; this.sparseCount = sparseCount;
+    super(geometry, material); this.fullCount = positions.length / 3; this.sparseCount = sparseCount; this.fireVertices = fireVertices;
     this.name = 'grass-gpu-wind'; this.receiveShadow = true;
     // Every tile uses the same material and attribute layout. PreRenderer draws
     // all tiles, but only needs one representative to compile that program.
     this.userData.preRenderShared = true;
+  }
+  syncFire(states: ReadonlyMap<string, string>): void {
+    const burn = this.geometry.getAttribute('burn'); let changed = false;
+    for (const [id, starts] of this.fireVertices) {
+      const state = states.get(id) ?? 'intact'; if (this.fireStates.get(id) === state) continue;
+      this.fireStates.set(id, state); const value = state === 'scorched' ? 1 : state === 'burning' ? .35 : 0;
+      for (const start of starts) for (let i = 0; i < 6; i++) burn.setX(start + i, value);
+      changed = true;
+    }
+    if (changed) burn.needsUpdate = true;
   }
   setQuality(low: boolean, density: number = low ? worldLook.grassDensityLow : worldLook.grassDensity): void {
     const maximum = low ? this.sparseCount : this.fullCount, ratio = density / (low ? 5 : 28);

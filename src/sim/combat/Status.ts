@@ -2,6 +2,7 @@ import { ticks, type StatusDef, type StatusKind } from '../../data/actions/schem
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 export interface StatusState { attackId?: number; kind: StatusKind; stacks: number; expires: number; nextDot: number; nextSpread?: number; def: StatusDef; sourceId: number; actionId: string }
+export const groundBurn: StatusDef = { kind: 'burning', duration: 4, maxStacks: 1, dps: 35, slow: 0 };
 export interface WaterZone { x: number; z: number; radius: number }
 /** Same-kind applications refresh duration and cap stacks; water removes burning before its DoT. */
 export class Status {
@@ -14,7 +15,7 @@ export class Status {
       return;
     }
     const statuses = target.combat.statuses, existing = statuses.find((status) => status.kind === def.kind);
-    if (existing) { existing.stacks = Math.min(def.maxStacks, existing.stacks + 1); existing.expires = this.world.tick + ticks(def.duration); }
+    if (existing) { existing.stacks = Math.min(def.maxStacks, existing.stacks + 1); existing.expires = this.world.tick + ticks(def.duration); if (def.kind === 'burning' && def.dps > existing.def.dps) { existing.def = def; existing.sourceId = sourceId; existing.actionId = actionId; existing.attackId = attackId; } }
     else statuses.push({ attackId, kind: def.kind, stacks: 1, expires: this.world.tick + ticks(def.duration), nextDot: this.world.tick + 60, ...(def.kind === 'burning' ? { nextSpread: this.world.tick + 30 } : {}), def, sourceId, actionId });
     if (def.kind === 'stunned') {
       target.combat.attacking = false;

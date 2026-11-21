@@ -322,21 +322,23 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           }
         }
       }
-      // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
-      // references must use those placements, rather than the unchanged baked GLB empties.
-      if (d.layout.terrainChunks?.length || deps.world.composition.id === 'L8' || deps.world.composition.id === 'L7' || deps.world.composition.id === 'L6' || deps.world.composition.id === 'L5' || deps.world.composition.id === 'L4' || deps.world.composition.id === 'L3' || deps.world.composition.id === 'L2' || lab) {
-        references.clear();
-        // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
-        if (d.layout.terrainChunks?.length || lab || deps.world.composition.id === 'L2' || deps.world.composition.id === 'L8') {
+      // Crowns need placement identities to follow fire and checkpoint state.
+      // Build them from the resolved placements, including runtime layout edits.
+      {
           crowns.clear();
           for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
             const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();
             const [cx, cy, cz] = crown.position.map((v, a) => v * p.scale[a]);
             ref.position.set(p.position[0] + cx * Math.cos(p.yaw) + cz * Math.sin(p.yaw), p.position[1] + cy, p.position[2] - cx * Math.sin(p.yaw) + cz * Math.cos(p.yaw));
             ref.scale.set(crown.radius[0] * p.scale[0], crown.radius[1] * p.scale[1], crown.radius[2] * p.scale[2]);
+            ref.userData.placementId = `${d.id}/${p.id}`;
             if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
           }
-        }
+      }
+      // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
+      // references must use those placements, rather than the unchanged baked GLB empties.
+      if (d.layout.terrainChunks?.length || deps.world.composition.id === 'L8' || deps.world.composition.id === 'L7' || deps.world.composition.id === 'L6' || deps.world.composition.id === 'L5' || deps.world.composition.id === 'L4' || deps.world.composition.id === 'L3' || deps.world.composition.id === 'L2' || lab) {
+        references.clear();
         for (const p of d.decay.placements) {
           const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
           const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
