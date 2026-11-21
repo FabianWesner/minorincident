@@ -82,11 +82,12 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
   const dorsal = species === 'lion' ? ((x - .04) / .1) ** 2 + ((y - .1) / .07) ** 2 + ((z + .16) / .13) ** 2 : 9;
   const onBack = dorsal < wound; if (onBack) wound = dorsal;
   if (species === 'elephant') wound = Math.min(wound, ((x - .10) / .125) ** 2 + ((y - .30) / .10) ** 2 + ((z + .08) / .19) ** 2);
+  if (species === 'gorilla') wound = Math.min(wound, ((x + .03) / .30) ** 2 + ((y - .40) / .28) ** 2 + ((z + .08) / .34) ** 2);
   wound += .07 * Math.sin(y * 130 + z * 80);
   if (wound < 1) {
-    c = wound > .77 ? [75, 22, 28] : [148, 35, 42];
+    c = wound > .77 ? [75, 22, 28] : species === 'gorilla' ? [225, 65, 58] : [148, 35, 42];
     // Three clean ivory rib strokes within the torn patch; no UV dilation.
-    const ribTop = species === 'flamingo' ? .17 : species === 'elephant' && y > .2 ? .31 : .065;
+    const ribTop = species === 'gorilla' ? .40 : species === 'flamingo' ? .17 : species === 'elephant' && y > .2 ? .31 : .065;
     const ribs = onBack ? [0, 1, 2].some(i => Math.abs(z - (-.21 + i * .05) - x * .3) < .011)
       : [0, 1, 2].some(i => Math.abs(y - (ribTop - i * .052) - (z + .1) * .15) < .011);
     if (wound < .58 && ribs) c = [211, 192, 145];

@@ -539,8 +539,9 @@ export class CrowdView extends Group {
       const authoredBase = healthy ? mix(albedo, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(infectedAtlas ? albedo.mul(.65) : albedo, vec3(0), eye);
       // The gorilla's authored atlas is green-grey. Restore a dark, warm-neutral fur read
       // under zoo moonlight while retaining its local value changes and shadows.
+      // Keep red wound pixels saturated so exposed tissue reads at game zoom.
       const base = zooBoss && animal === 'gorilla'
-        ? mix(authoredBase, vec3(luminance(authoredBase)).mul(vec3(.72, .68, .61)), .88)
+        ? mix(authoredBase, vec3(luminance(authoredBase)).mul(vec3(.72, .68, .61)), albedo.r.greaterThan(albedo.g.mul(1.5)).and(albedo.r.greaterThan(albedo.b.mul(1.5))).select(0, .88))
         : authoredBase;
       const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : infectedAtlas ? vec3(1, .04373, .02843).mul(eyeDisc.select(eyeRadius.smoothstep(1, .15).mul(3).add(3), 3)).mul(regularAlpha ? 2 : 1) : vec3(3, .25, .22).mul(zooBoss ? 2 : 1);
       // r32-alphas: Alpha eyes burn twice as bright as an ordinary infected's (night-readable 'this one is tough' cue).
