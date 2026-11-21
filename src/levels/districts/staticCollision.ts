@@ -1,6 +1,7 @@
 import { metroIngressColliders } from '../L5/metro';
 import { highwayColliders } from '../L3/highway';
 import { staticCollision } from '../../assets/staticCollision';
+import { worldAssets } from '../../assets/worldDefinitions';
 import physicsAssets from '../../data/physicsAssets';
 import type { Placement, StaticCollider, Aabb } from './types';
 
@@ -21,6 +22,27 @@ const platformSolids: Aabb[] = [
   ...[-3.6, 3.6].flatMap(x => [-1.8, 1.8].map(z => ({ min: [x - .15, 0, z - .15], max: [x + .15, 2.92, z + .15] } as Aabb))),
   { min: [-4.05, 3.08, -2.05], max: [4.05, 4.1, -1.95] }, { min: [-4.05, 3.08, 1.95], max: [4.05, 4.1, 2.05] }, { min: [-4.05, 3.08, -2.05], max: [-3.95, 4.1, 2.05] },
 ];
+// Shelter camp's physics bake contains only the floor slab. Its four fabric
+// walls remain solid to actors and navigation, leaving no invisible tent interior.
+const shelterCampWalls: Aabb[] = [
+  // The authored tent has an entrance on its -Z face. Keep the canvas solid
+  // on either side, but leave the visible doorway open for the shelter route.
+  { min: [-2.8, .18, -2.8], max: [-2.5, 1.05, -2.65] },
+  { min: [2.5, .18, -2.8], max: [2.8, 1.05, -2.65] },
+  { min: [-2.8, .18, 2.65], max: [2.8, 1.05, 2.8] },
+  { min: [-2.8, .18, -2.65], max: [-2.65, 1.05, 2.65] },
+  { min: [2.65, .18, -2.65], max: [2.8, 1.05, 2.65] },
+];
+// Match the masonry shell: the +Blender-Y side has an open covered vestibule
+// from x=-1.7 to x=2.7, in addition to the front double doorway.
+const zooTunnelMouth: Aabb[] = [
+  { min: [-3.1, .18, -2.6], max: [-1.7, 3.46, -2.2] },
+  { min: [-3.1, .18, 2.2], max: [2.7, 3.46, 2.6] },
+  { min: [-3.1, .18, -2.2], max: [-2.7, 3.46, 2.2] },
+  { min: [2.7, .18, -2.6], max: [3.1, 3.46, -.9] },
+  { min: [2.7, .18, .9], max: [3.1, 3.46, 2.6] },
+  { min: [2.7, 2.5, -.9], max: [3.1, 3.46, .9] },
+];
 const dispersalPlatform = { boxes: platformSolids.concat(platformDeck, platformTreads), walkable: new Set<Aabb>([platformDeck, ...platformTreads]) };
 export function placementColliders(placements: Placement[], fallback: StaticCollider[]): StaticCollider[] {
   const sources = staticCollision;
@@ -34,17 +56,40 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     if (p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway') return highwayColliders(p);
     if (p.collisionId === 'l5.metro-ingress') return metroIngressColliders(p);
     if (p.assetId === 'prop.flower') return [];
-    // Render-only decor has no collider; `decorSolid` decor (L10 crossing scenes) blocks the courier as a physics static only.
-    if (p.decor && !p.decorSolid) return [];
+    // The small broken-chair subway dressing is part of the walkable litter,
+    // not a furniture obstacle, despite the source asset's reusable bake.
+    if (p.decor && p.decorWalkable) return [];
+    // Render-only details remain non-solid. Anything the asset manifest marks
+    // solid keeps the same baked collision and navigation footprint as an
+    // authored placement, including streamed L10 vignette/set dressing.
+    const shape = sources[p.collisionId ?? ''] ?? sources[p.assetId];
+    // Authored look-only decor stays render-only even when its source asset
+    // happens to have a reusable bake. Explicit collision IDs (the L10 road
+    // dressing) and manifest-solid props still use their physical hulls.
+    if (p.decor && !p.decorSolid && !shape?.boxes.length && !worldAssets[p.assetId]?.world?.solid) return [];
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
-    const shape = platform ? dispersalPlatform : sources[p.collisionId ?? p.assetId];
-    if (!shape) return fallback.filter(c => c.id === p.id);
+    const collisionShape = platform ? dispersalPlatform : shape;
+    if (!collisionShape?.boxes.length) {
+      const authoredGeometry = fallback.filter(c => c.id.startsWith(`${p.id}/fixed-`) || c.id.startsWith(`${p.id}/lane-`));
+      if (authoredGeometry.length) return authoredGeometry;
+    }
+    const dimensions = worldAssets[p.assetId]?.dimensions;
+    const bakedBoxes = collisionShape?.boxes;
+    const manifestSolid = worldAssets[p.assetId]?.world?.solid;
+    const physicsShape = physicsAssets[p.assetId as keyof typeof physicsAssets]?.boxes as Aabb[] | undefined;
+    const footprintFallback = (p.decor || manifestSolid && !physicsShape) && dimensions ? [{ min: [-dimensions.x / 2, .18, -dimensions.z / 2] as [number, number, number], max: [dimensions.x / 2, dimensions.y, dimensions.z / 2] as [number, number, number] }] : undefined;
+    const boxes = bakedBoxes?.length ? bakedBoxes : p.assetId === 'kit.zoo-tunnel-mouth' ? zooTunnelMouth : physicsShape ?? footprintFallback;
+    if (!boxes) return fallback.filter(c => c.id === p.id);
     // The body-height bake retains the bullet tank's saddles but misses its
     // raised vessels. Keep the GLB's authored solid barrel hulls as well, so
     // dodging cannot put the courier inside the tank during the Mega fight.
     const tankHulls = p.assetId === 'kit.dispersal-tank-bullet' && !p.collisionId ? physicsAssets[p.assetId].boxes as Aabb[] : [];
-    const boxes = shape.boxes.concat(extraSupports[p.assetId] ?? [], tankHulls);
-    return boxes.flatMap((box, index) => {
+    const collisionBoxes = boxes.concat(extraSupports[p.assetId] ?? [], p.assetId === 'kit.shelter-camp' ? shelterCampWalls : [], tankHulls);
+    return collisionBoxes.flatMap((box, index) => {
+      // Keep the metro exit's perimeter solid while leaving the authored stair
+      // and escalator runs clear for actors. These baked step hulls span the
+      // walking lanes and prevent traversal despite the matching nav surface.
+      if (p.assetId === 'int.metro-exit' && (index >= 1 && index <= 24 || index >= 27 && index <= 53)) return [];
       if (p.assetId === 'kit.army-checkpoint' && p.boomOpen && box.min[1] > 1 && box.min[0] < -5.9 && box.max[0] > -6.1 && box.min[2] < -1 && box.max[2] > 1) return [];
       const aabb: Aabb = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
       for (const x of [box.min[0], box.max[0]]) for (const y of [box.min[1], box.max[1]]) for (const z of [box.min[2], box.max[2]]) {
@@ -60,8 +105,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
         yaw: p.yaw,
       };
       if(p.navBlocker) aabb.navBlocker = true;
-      if (p.decorSolid) aabb.physicsOnly = true;
-      return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: platform ? dispersalPlatform.walkable.has(box) : box.max[1] < .45 || extraSupports[p.assetId]?.includes(box), minTier: p.minTier, maxTier: p.maxTier }];
+      return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: platform ? dispersalPlatform.walkable.has(box) : box.max[1] < .45 || extraSupports[p.assetId]?.includes(box) || p.assetId === 'int.metro-station' && index === 0, minTier: p.minTier, maxTier: p.maxTier }];
     });
   }));
 }
