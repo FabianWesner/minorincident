@@ -58,11 +58,15 @@ c1911 = shots('1911/A_42P.wav', [0.94, 5.00])
 sw = shots('Smith & Wesson 642/V_27P.wav', [0.80, 6.21])
 fam('action.weapon.handgun', ppq + [ppq[0]], LEVEL['handgun'])
 fam('action.weapon.pistol', c1911 + sw, LEVEL['handgun'])
-# Keep the separately documented pneumatic nail-gun recording when regenerating
-# the firearm recipes; a pitched pistol shot loses the weapon's quiet identity.
-for i in range(4):
+# Keep the recorded nail-gun transient, and cut its long wind-down before it can
+# read as an electric whine. The outer takes vary pitch by ±3%; the others vary
+# only the recorded tail. All four remain 300 ms slices.
+for i, (rate, tail) in enumerate([(1.0, 0.11), (0.97, 0.13), (1.03, 0.14), (1.0, 0.12)]):
     d['cues']['action.weapon.nail-gun' + (f'.v{i}' if i else '')] = dict(
-        source='s184-nailgun', start=0, filter='highpass=f=120,' + up(1 + i * .00625), level=-14)
+        source='s184-nailgun', start=0.05,
+        filter=f'highpass=f=120,{up(rate)},afade=t=out:st={tail}:d=0.04', level=-27.5)
+for i, level in enumerate((-24.5, -26.5, -26.8, -26.8)):
+    d['cues']['action.weapon.nail-gun' + (f'.v{i}' if i else '')]['level'] = level
 # ---- shotgun: deep boom with body (low shelf + slightly slowed), long tail; pump rack is its own cue
 sg_f = 'bass=g=7:f=110:w=0.8,' + up(0.9)
 fam('action.weapon.shotgun', shots('Model 12/K_22P.wav', [0.84, 7.44], sg_f) + shots('Nova/O_21P.wav', [0.43], sg_f) + shots('CD/H_21P.wav', [0.46], sg_f), LEVEL['shotgun'])
@@ -70,7 +74,12 @@ d['cues']['weapon.pump'] = dict(source=reload_src('wp-shotguncock', 'shotguncock
 for i in range(1, 4): d['cues'][f'weapon.pump.v{i}'] = dict(source='wp-shotguncock', start=0, level=-17, filter=up([0.96, 1.04, 0.92][i - 1]))
 # ---- SMG / rifles / machine guns: punchy single rounds, short tails (they fire in rapid succession)
 fam('action.weapon.smg', shots('PPSh/P_30P.wav', [0.96, 4.38, 8.24, 11.42], 'bass=g=3:f=140'), LEVEL['smg'])
-fam('action.weapon.assault-rifle', shots('AK-47/C_28P.wav', [0.61, 3.25, 6.02, 9.15]), LEVEL['rifle'])
+fam('action.weapon.assault-rifle', [
+    ('fw-AR-15-D_32P', 0.68, None), ('fw-AK-47-C_28P', 0.59, None),
+    ('fw-AR-15-D_32P', 5.62, None), ('fw-AK-47-C_28P', 3.23, None),
+], -30)
+for i, level in enumerate((-26, -27, -26, -27)):
+    d['cues']['action.weapon.assault-rifle' + (f'.v{i}' if i else '')]['level'] = level
 fam('action.weapon.machine-gun', shots('AK-47/C_28P.wav', [0.61, 3.25, 6.02, 9.15], 'bass=g=5:f=120,' + up(0.88)), LEVEL['mg'])
 fam('action.weapon.army-mg', shots('AR-15/D_32P.wav', [0.70, 5.64], 'bass=g=5:f=110,' + up(0.9)) + shots('Carl Gustav M45/G_31P.wav', [0.31, 3.50], 'bass=g=5:f=110,' + up(0.9)), LEVEL['mg'])
 fam('action.weapon.hunting-rifle', shots('Tikka/W_29P.wav', [0.57, 5.66], 'bass=g=4:f=120') + shots('Savage 10 .300 Blackout/T_27P.wav', [0.95, 4.96], 'bass=g=4:f=120'), LEVEL['hunting'])
@@ -87,7 +96,7 @@ def sw_(i, r, extra=''): return ('swish-%d' % i, 0.0, up(r) + ',lowpass=f=3200' 
 fam('action.weapon.grenade', [sw_(0, 0.7), sw_(1, 0.66), sw_(2, 0.72), sw_(3, 0.68)], LEVEL['throw'])
 fam('action.weapon.pipe-bomb', [sw_(2, 0.62), sw_(3, 0.6), sw_(0, 0.64), sw_(1, 0.62)], LEVEL['throw'])
 fam('action.weapon.smoke-grenade', [sw_(1, 0.6), sw_(0, 0.62), sw_(3, 0.58), sw_(2, 0.6)], LEVEL['throw'])
-fam('action.weapon.flashbang', [('s184-throw', t, None) for t in [0, 1, 2, 3]], LEVEL['throw'])
+
 fam('action.weapon.molotov', [('sfx2-r75-bfh1_glass_hit_01', 0.0, 'highpass=f=1200,' + up(0.9)), sw_(0, 0.66), ('sfx2-r75-bfh1_glass_hit_02', 0.0, 'highpass=f=1200,' + up(0.85)), sw_(1, 0.64)], LEVEL['throw'])
 fam('action.weapon.firecracker-lure', shots('Ruger Mark III/R_35P.wav', [0.48, 4.48], 'highpass=f=900,' + up(1.5)), LEVEL['nail'])
 # ---- melee swings: heavier tools slower/lower, light blades faster/higher (same CC0 swish takes)

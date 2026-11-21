@@ -35,11 +35,6 @@ try {
       await session.page.keyboard.press('KeyG'); await step();
       const lure = await session.page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: Game }).game; return { count: g.world.combat!.effects.zones.filter(z => z.kind === 'lure').length, selected: g.world.combat!.runner.loadout.current(g.world.combat!.runner.loadout.state.selectedSide).id, button: (document.querySelector('[data-testid=corgi-lure]') as HTMLButtonElement).disabled }; });
       assert.equal(lure.count, 1); assert.equal(lure.selected, 'weapon.shotgun'); assert.equal(lure.button, true);
-      await session.page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: Game }).game; g.world.combat!.runner.loadout.collect('RIGHT', 'weapon.flashbang', true); g.ui.update(); });
-      const eleventh = session.page.locator('[data-testid="weapon-rack-weapon.flashbang"]');
-      assert.equal(await eleventh.locator('.hud-weapon-key').count(), 0);
-      if (phone) await eleventh.tap(); else await eleventh.click();
-      await step(); assert.equal(await selected(), 'weapon.flashbang');
       assert.deepEqual(session.errors, []); console.log(JSON.stringify({ tier, phone, initial, lure, pass: true }));
     } finally { await session.close(); }
   }

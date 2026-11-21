@@ -34,6 +34,10 @@ const lethal = (hit: DamageEvent) => hit.type === 'explosive' || !!hit.permanent
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
 export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpen = false, shieldFaceDot = 0.5, megaVulnerable = false, hardFullExplosive = false): number {
   let amount = hit.base * hit.multiplier;
+  // Preserve the old 4.5 direct tick against the campaign Mega and arena bosses.
+  if (hit.actionId === 'weapon.flamethrower' && hit.type === 'bullet' && (target.infected?.pursuit || target.infected?.arenaBoss)) amount *= .3;
+  if ((hit.fire || hit.actionId === 'weapon.flamethrower' || hit.actionId === 'hazard.fire' || hit.actionId === 'environment.fire') && target.archetype === 'infected.firefighter') amount *= .25;
+  if ((hit.fire || hit.actionId === 'weapon.flamethrower') && target.archetype === 'infected.butcher') amount *= 3;
   // E11 environmental blasts retain 30% player damage; E07 enemy bursts keep their authored damage.
   // s178 Hard: friendly fire hurts me — the courier's own explosives and allied fire deal their normal damage.
   if (hit.type === 'explosive' && target.kind === 'player' && !hardFullExplosive && (target.id === hit.sourceId || !hit.actionId.startsWith('infected.'))) amount *= 0.3;
@@ -63,7 +67,7 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
   // PO 2026-11-11 ("almost unlimited health"): the armored plate is the armor. Front hits take half damage, flank/rear
   // hits full; the plate no longer stacks with the generic armor factor (it was 25 % × 50 % = 12.5 % from the front).
   if (target.infected?.special === 'armor') {
-    if (hit.type !== 'explosive' && hit.type !== 'status') {
+    if (hit.actionId !== 'weapon.flamethrower' && hit.type !== 'explosive' && hit.type !== 'status') {
       const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
       if (!distance || (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance >= 0.5) amount *= 0.5;
     }
@@ -126,6 +130,7 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    if (target.combat?.statuses.some(status => status.kind === 'burning') || hit.actionId === 'hazard.fire' || hit.actionId === 'environment.fire') hit = { ...hit, permanent: true, fire: true };
     // s178 Hard friendly fire: a friendly source (the courier or an allied fighter) hitting the courier
     // or a living human. The flag only relaxes existing guards; every other damage rule is unchanged.
     const hardHit = friendlySource(this.world, source) && (target.id === 1 || fireTarget(target));
@@ -170,7 +175,7 @@ export class Damage {
       // Explosives and lethal fire finish a downed infected in every level.
       if (downed(target) && this.amount(hit, target) > 0) {
         if (!lethal(hit)) { this.world.infected!.down(target, false); return 0; }
-        if (hit.fire || hit.actionId === 'weapon.flamethrower') target.ashDeath = { at: this.world.tick };
+        if (hit.fire || hit.actionId === 'weapon.flamethrower') target.ashDeath = { at: this.world.tick, x: target.transform.x, y: target.transform.y, z: target.transform.z, yaw: target.transform.yaw };
         this.world.infected!.down(target, true);
         this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount: 0, damageType: hit.type });
       }
@@ -315,7 +320,7 @@ export class Damage {
       if (target.infected) target.infected.knockdowns = (target.infected.knockdowns ?? 0) + 1;
       // Default hits down infected; explosions and explicit permanent counters leave a corpse.
       const fireDeath = lethal(hit) && (hit.fire || hit.actionId === 'weapon.flamethrower');
-      if (fireDeath && target.infected) target.ashDeath = { at: this.world.tick };
+      if (fireDeath && target.infected) target.ashDeath = { at: this.world.tick, x: target.transform.x, y: target.transform.y, z: target.transform.z, yaw: target.transform.yaw };
       const up = target.infected && this.world.infected ? this.world.infected.down(target, lethal(hit)) : -1;
       this.world.events.emit({ ...event, type: 'combat.kill', ...(up >= 0 ? { downed: up } : {}) } satisfies GameEvent);
     }

@@ -50,7 +50,7 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('research', 'Enter the hangar', 'cure-terminal', flag('hangar-dialogue-done'), [{ kind: 'state', key: 'terminal-read', value: true }]);
   step('cure', 'Bring the cure to the dispersal complex', 'cure-canister', spatial('cure-canister'), [
     { kind: 'grant', item: 'cure-canister' }, { kind: 'state', key: 'cure-carried', value: true },
-    { kind: 'arsenal', add: cureHangarWeapons, remove: ['weapon.bat', 'weapon.army-mg', 'weapon.flashbang'] }, { kind: 'checkpoint', id: 'cure-research' },
+    { kind: 'arsenal', add: cureHangarWeapons, remove: ['weapon.bat', 'weapon.army-mg'] }, { kind: 'checkpoint', id: 'cure-research' },
   ], 'collect');
   step('research-exit', 'Bring the cure to the dispersal complex', 'cure-research', spatial('cure-research'), [{ kind: 'checkpoint', id: 'cure-research' }], 'reach');
   step('delivery-corridor', 'Bring the cure to the dispersal complex', 'cure-corridor', spatial('cure-corridor'), [{ kind: 'checkpoint', id: 'cure-corridor' }], 'reach');

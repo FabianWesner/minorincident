@@ -67,7 +67,15 @@ export class Pickups {
           if (!campaign.ownedActions.includes(pickup.actionId)) campaign.ownedActions.push(pickup.actionId);
           campaign.racks = { LEFT: loadout.state.LEFT.rack.map(slot => slot.id), RIGHT: loadout.state.RIGHT.rack.map(slot => slot.id) };
         }
-      } else replaced = loadout.collect(side, pickup.actionId);
+      } else {
+        const previousLength = loadout.state[side].rack.length;
+        replaced = loadout.collect(side, pickup.actionId);
+        combat.rackCapacity = Math.max(combat.rackCapacity, loadout.state[side].rack.length);
+        if (loadout.state[side].rack.length === previousLength && loadout.state[side].rack.some(slot => slot.id === pickup.actionId)) {
+          const owned = loadout.state[side].rack.find(slot => slot.id === pickup.actionId)!;
+          const def = action(owned.id); owned.charges = def.charges; owned.magazine = def.magazine; owned.nextCharge = 0; owned.reloadUntil = 0;
+        }
+      }
       delete combat.runner.running[side];
       this.world.entities.remove(entity.id); this.world.spatial.delete(entity.id);
       if (replaced) this.spawn(replaced, entity.transform, true);

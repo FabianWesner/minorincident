@@ -8,11 +8,11 @@ export const weaponForKey: Readonly<Record<number, readonly string[]>> = {
   1: ['weapon.fists', 'weapon.kick', 'weapon.bat', 'weapon.fire-axe', 'weapon.machete', 'weapon.crowbar', 'weapon.knife', 'weapon.nail-bat', 'weapon.shovel', 'weapon.police-baton', 'weapon.katana'],
   2: ['weapon.handgun', 'weapon.pistol'], 3: ['weapon.shotgun'], 4: ['weapon.army-mg', 'weapon.machine-gun'], 5: ['weapon.assault-rifle', 'weapon.smg'],
   6: ['weapon.hunting-rifle'], 7: ['weapon.nail-gun'], 8: ['weapon.flamethrower'], 9: ['weapon.rocket-launcher'],
-  10: ['weapon.molotov', 'weapon.pipe-bomb', 'weapon.flashbang', 'weapon.grenade', 'weapon.smoke-grenade', 'weapon.firecracker-lure'],
+  10: ['weapon.molotov', 'weapon.pipe-bomb', 'weapon.grenade', 'weapon.smoke-grenade', 'weapon.firecracker-lure'],
 };
 /** Canonical fixed mapping, derived from the single slot table above. */
 export const weaponKeyMap: Readonly<Record<string, number>> = Object.fromEntries(Object.entries(weaponForKey).flatMap(([key, ids]) => ids.map(id => [id, Number(key)])));
-const l10 = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb', 'weapon.flashbang'];
+const l10 = ['weapon.machete', 'weapon.handgun', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.molotov', 'weapon.pipe-bomb'];
 const union = (level: Level, pickups: readonly string[]): readonly string[] => [...new Set([...levelStartWeapons[level].LEFT, ...levelStartWeapons[level].RIGHT, ...pickups])]
   .sort((a, b) => (Object.entries(weaponForKey).find(([, ids]) => ids.includes(a))?.[0] ?? '99').localeCompare(Object.entries(weaponForKey).find(([, ids]) => ids.includes(b))?.[0] ?? '99', undefined, { numeric: true }));
 export const levelWeaponSets: Readonly<Record<Level, readonly string[]>> = {

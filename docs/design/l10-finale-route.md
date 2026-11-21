@@ -25,6 +25,16 @@ The courier carries the cure; the Mega hunts it. Each beat either (a) shows what
 | 8 | Field hospital (3502) | Lit tents with moving silhouettes; cots, IV stands, triage tags | A medic's recorder on a cot: the last minutes of the field hospital | Tents burst open (s186) | **CP 3 — at the hospital after the fight** |
 | 9 | Final approach (3550–3755) | Searchlight sweeps the road, sirens, the complex gate lit up; burning barricades | Voss: "I see you. Run!" | Last stand at the gate: the Mega's final call brings everything that's left | **CP 4 — complex gate (cure-complex)** |
 
+## Motorbike (PO 2026-11-20)
+
+PO, verbatim: "Why not using a bike. A motorbike with same physics like the bike in L1. This could be a nice gameplay element for L10. Ideally I could still shoot when riding it; but only with the gun."
+
+- Found at beat 1 (evac road, by the buses), keys in it. Same handling model as the L1 bicycle, a bit quicker than the L1 bicycle (top speed ~1.25× the bike; PO), engine sound, headlight.
+- While riding: only the handgun, one-handed, aimed with the mouse (forward ~200° arc); no melee, no other weapons; other weapons return on dismount.
+- The corgi rides in a sidecar.
+- Rhythm: ride → roadblock (gate barricade, convoy wreck line, underpass rubble, hospital fence) → dismount, fight, find the way → remount (the bike can be pushed/ridden through a gap the player opens, or a second bike waits beyond). The final approach (beat 9) is ridden at full speed under the searchlight, ending at the complex gate.
+- Infected can knock her off on a hard hit (existing ride-contact rules); she can remount.
+
 ## Checkpoints
 
 Replace the automatic `cure-pace-N` checkpoints inside this stretch with the four named ones above (and any authored ones before the hangar stay as they are). Old saves at a removed `cure-pace-N` load at the nearest preceding named checkpoint (migration + test). The HUD checkpoint toast names the place ("Checkpoint — Convoy 7").

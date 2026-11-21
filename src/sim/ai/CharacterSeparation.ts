@@ -180,7 +180,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     }
     // Separation changes only X/Z. Ground once at the final position, rather
     // than sampling every pass and leaving the last push's support stale.
-    if (world.districts) for (const e of world.entities.iterate()) if (e.infected && !radii[e.id] && (e.health.current <= 0 || e.transform.y > 2) && !e.hidden && !e.infected.hidden && !e.infected.perched && e.infected.special !== 'cling' && !e.infected.specialAttack && !e.corpseThrown && e.attachedTo === undefined && !e.infectionRise && e.archetype !== 'infected.crow') {
+    if (world.districts) for (const e of world.entities.iterate()) if (!e.ashDeath && e.infected && !radii[e.id] && (e.health.current <= 0 || e.transform.y > 2) && !e.hidden && !e.infected.hidden && !e.infected.perched && e.infected.special !== 'cling' && !e.infected.specialAttack && !e.corpseThrown && e.attachedTo === undefined && !e.infectionRise && e.archetype !== 'infected.crow') {
       // Dead bodies and anything above the 2 m separation cut-off (L3 highway ramp/deck) are not separated, but still stand on
       // the support under them: a body that ends past the deck edge drops to the street, one on the ramp follows its slope, and none
       // keeps a stale height (PO: "Dead Zombies fliying"). `supportBelow` ignores a deck above the body.

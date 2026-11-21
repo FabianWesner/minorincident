@@ -80,7 +80,7 @@ export const weaponSlices: Readonly<Record<string, readonly [duration: number, a
     'weapon.handgun': [0.6, 0.05], 'weapon.pistol': [0.6, 0.05], 'weapon.nail-gun': [0.3, 0.04], 'weapon.shotgun': [1.1, 0.1], 'weapon.smg': [0.35, 0.03],
     'weapon.assault-rifle': [0.5, 0.04], 'weapon.machine-gun': [0.4, 0.03], 'weapon.army-mg': [0.45, 0.03], 'weapon.hunting-rifle': [0.9, 0.1], 'weapon.rotary-minigun': [0.28, 0.02],
     'weapon.rocket-launcher': [1.2, 0.1], 'ability.turret': [0.35, 0.03],
-    'weapon.grenade': [0.4, 0.1], 'weapon.molotov': [0.4, 0.1], 'weapon.pipe-bomb': [0.4, 0.1], 'weapon.smoke-grenade': [0.4, 0.1], 'weapon.flashbang': [0.4, 0.1], 'weapon.firecracker-lure': [0.3, 0.05],
+    'weapon.grenade': [0.4, 0.1], 'weapon.molotov': [0.4, 0.1], 'weapon.pipe-bomb': [0.4, 0.1], 'weapon.smoke-grenade': [0.4, 0.1], 'weapon.firecracker-lure': [0.3, 0.05],
     'weapon.knife': [0.24, 0.025], 'weapon.nail-bat': [0.24, 0.025], 'weapon.shovel': [0.3, 0.025], 'weapon.police-baton': [0.24, 0.025], 'weapon.fire-axe': [0.32, 0.025], 'weapon.katana': [0.24, 0.025],
     'ability.ground-slam': [0.45, 0.1],
 };
@@ -102,7 +102,8 @@ for (const weapon of ['shotgun', 'hunting-rifle', 'nail-gun', 'assault-rifle'])
     cue(`weapon.reload.${weapon}`, 'weapons', 'step', 1, 800, { gain: .5 });
 for (const weapon of ['fire-axe', 'handgun', 'army-mg', 'shotgun', 'hunting-rifle', 'nail-gun', 'assault-rifle', 'flamethrower'])
     cue(`weapon.impact.${weapon}`, 'impacts', 'step', .35, 150, { category: 'weapons', gain: .45, antiSpam: .12, rateSpread: 0 });
-cue('weapon.impact.flashbang', 'impacts', 'shot', 1, 500, { category: 'weapons', gain: .65, antiSpam: 0, rateSpread: 0 });
+cue('weapon.impact.nail-gun.infected', 'impacts', 'step', .25, 120, { category: 'weapons', gain: .45, antiSpam: .04, rateSpread: .04 });
+cue('weapon.impact.nail-gun.hard', 'impacts', 'step', .18, 1800, { category: 'weapons', gain: .35, antiSpam: .04, rateSpread: .04 });
 cue('weapon.dry', 'weapons', 'step', 0.2, 1000, { gain: 0.5 });
 /** Shotgun pump/rack after each shell, 0.45 s behind the shot. */
 cue('weapon.pump', 'weapons', 'step', 0.47, 700, { gain: 0.6, antiSpam: 0.2 });

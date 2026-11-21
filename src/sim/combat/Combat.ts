@@ -242,7 +242,7 @@ export class Combat {
         const target = this.world.entities.get(id);
         if (!target || target.faction !== 'infected' || target.health.current <= 0 || target.hidden) continue;
         const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
-        if (!distance || distance > def.range || (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone) continue;
+        if (distance > def.range || (distance > 1e-6 && (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone)) continue;
         const direction = { x: dx / distance, y: 0, z: dz / distance };
         if (!this.query.visible(origin, target.transform, target.id) || (this.world.destruction?.trace(origin, direction, distance)?.distance ?? distance) < distance - .05) continue;
         this.hit(attack, target, source.transform, 'bullet');
@@ -315,7 +315,7 @@ export class Combat {
           // Impact alerts use an explosion cue, rather than replaying the launch
           // sprite and competing with the next rocket's discharge voice.
           this.effects.noise(p, def.noiseRadius, 'explosion.rocket', p.attack.sourceId, 'explosionLarge');
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, ...(def.id === 'weapon.flashbang' ? { actionId: def.id } : {}), radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1);
         }
       } else if (p.landing) {
@@ -327,7 +327,7 @@ export class Combat {
           if (def.splash) { this.splash(p.attack, p); this.blast(p.attack, p); }
           this.effects.create(p.attack, p);
           if (def.category === 'throwable' && def.damage) this.effects.noise(p, def.noiseRadius, def.id);
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, ...(def.id === 'weapon.flashbang' ? { actionId: def.id } : {}), radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1);
         }
       } else if (age > 0) {
@@ -340,7 +340,7 @@ export class Combat {
           if (target) { p.x = target.transform.x; p.z = target.transform.z; }
           else { p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; }
           this.splash(p.attack, p, target?.id); this.blast(p.attack, p); this.effects.noise(p, def.noiseRadius, def.id);
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, ...(def.id === 'weapon.flashbang' ? { actionId: def.id } : {}), radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1); continue;
         }
         while (target && p.attack.hit.size < def.maxTargets) {

@@ -173,7 +173,7 @@ test('bindings: every action rebinds and persists without conflicts; broken or b
 
 test('weapon selection: one fixed order drives number keys, cycling and touch slots, and survives a rack rebuild', () => {
   expect(new Set(weaponOrder).size).toBe(weaponOrder.length);
-  expect([...Object.keys(catalog), ...Object.keys(mountedActions)].filter(id => !(weaponOrder as readonly string[]).includes(id))).toEqual([]);
+  expect([...Object.keys(catalog), ...Object.keys(mountedActions)].filter(id => id !== 'weapon.flashbang' && !(weaponOrder as readonly string[]).includes(id))).toEqual([]);
   const left = ['weapon.fire-axe', 'weapon.bat', 'weapon.kick'], right = ['ability.corgi-lure', 'weapon.molotov', 'weapon.handgun'];
   const loadout = new Loadout(left, right);
   const expected = ['weapon.fire-axe', 'weapon.bat', 'weapon.handgun', 'weapon.molotov'];

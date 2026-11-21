@@ -7,7 +7,7 @@ export const weaponOrder = [
   'weapon.crowbar', 'weapon.machete', 'weapon.knife', 'weapon.nail-bat', 'weapon.shovel', 'weapon.police-baton', 'weapon.katana',
   'weapon.handgun', 'weapon.pistol', 'weapon.smg', 'weapon.army-mg', 'weapon.shotgun',
   'weapon.hunting-rifle', 'weapon.assault-rifle', 'weapon.machine-gun', 'weapon.rotary-minigun', 'weapon.flamethrower', 'weapon.rocket-launcher', 'weapon.nail-gun',
-  'weapon.grenade', 'weapon.molotov', 'weapon.pipe-bomb', 'weapon.firecracker-lure', 'weapon.smoke-grenade', 'weapon.flashbang',
+  'weapon.grenade', 'weapon.molotov', 'weapon.pipe-bomb', 'weapon.firecracker-lure', 'weapon.smoke-grenade',
   'ability.corgi-lure', 'ability.ground-slam', 'ability.shield-bubble', 'ability.adrenaline', 'ability.turret',
 ] as const;
 const rank = new Map<string, number>(weaponOrder.map((id, index) => [id, index]));
