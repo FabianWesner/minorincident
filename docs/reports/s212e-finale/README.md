@@ -32,7 +32,7 @@ Both routes miss the 420–540 s hangar-to-gate target. Several beat intervals a
 
 ## Captures
 
-The ten-beat and motorbike-with-corgi-sidecar capture sheets remain outstanding. The headless capture script was invoked through `tools/e2e-lock.sh` with ports 5215/5216, but the browser pool could not start (`listen EPERM` on 127.0.0.1:4329). No screenshots were produced or visually reviewed.
+The headless capture script subsequently ran through `tools/e2e-lock.sh` on ports 5215/5216. Its ten-frame inspection sheet was reviewed and is inadequate: frames 0 and 1 are nearly black, 2 shows a gate and figures, 3–5 show dark road and vehicles, 6 shows a figure on a road, 7 is obscured by the overpass, 8 shows dark roadside structures, and 9 is nearly black. Debug panels and an unrelated early objective cover every frame. These are static inspection views, not evidence of the actual beats; the Mega and ridden motorbike with corgi are absent. Native gameplay captures and a proper sheet remain outstanding.
 
 ## Remaining
 
