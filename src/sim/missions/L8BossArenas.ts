@@ -363,8 +363,9 @@ export class L8BossArenas {
     }
     if (boss.hunt) {
       const hunt = boss.hunt;
-      if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 6.72 : 3.2); return true; }
-      if (distance(e.transform, p.transform) > 9) { hunt.until = w.tick; this.walk(e, p.transform, 6.72); return true; }
+      const sprint = arena.phase === 2 ? 8 : 6.72;
+      if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank || arena.phase === 2 ? sprint : 3.2); return true; }
+      if (distance(e.transform, p.transform) > 9) { hunt.until = w.tick; this.walk(e, p.transform, sprint); return true; }
       delete boss.hunt; this.start(e, hunt.flank ? 'lion.flank' : 'lion.pounce', 36, 8, 1); return true;
     }
     if (arena.id === 'gorilla' && boss.barrage && !boss.scavengeId) this.scavenge(e);
