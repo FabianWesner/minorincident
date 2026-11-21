@@ -275,6 +275,7 @@ export class SimWorld implements Lifecycle {
     }, SimPhase.combat - .1);
     this.events.on('sim.tick', () => {
       this.vehicles?.postPhysics();
+      this.props?.clearArmoredHull();
       if (this.combat) {
         if (!this.entities.get(1)!.pendingAdmission) { const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z); }
         this.infected?.props.update();

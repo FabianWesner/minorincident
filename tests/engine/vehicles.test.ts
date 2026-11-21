@@ -803,6 +803,17 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     expect(fixture.entity.transform.x, 'APC passes the barricade starting position').toBeGreaterThan(57);
     expect(barricade.body, 'APC contact releases the barricade').toBeDefined();
     expect(world.vehicles!.obstacles.items.find(item => item.entity.id === authoredId)?.body, 'APC contact releases the authored barricade').toBeDefined();
+    const reverseBin = world.props!.spawn({ id: 'l9-reverse-bin', assetId: 'prop.trash-bin', position: [95, 0, 80], yaw: .7, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [94.5, 0, 79.5], max: [95.5, 1.5, 80.5] } });
+    const reverseId2 = world.vehicles!.spawn('vehicle.military-apc', { x: 100, z: 80 });
+    const reverse2 = world.vehicles!.cars.get(reverseId2)!; reverse2.entity.vehicle!.floor = true; world.vehicles!.active = reverseId2;
+    reverse2.physics.body.setLinvel({ x: -18, y: 0, z: 0 }, true); reverse2.physics.postPhysics();
+    for (let tick = 0; tick < 45; tick++) {
+      world.update(); world.physics.world!.propagateModifiedBodyPositionsToColliders();
+      const t = reverse2.physics.body.translation();
+      const contact = reverseBin.collider.contactShape(hullShape, { x: t.x, y: t.y + .75, z: t.z }, reverse2.physics.body.rotation(), 0);
+      expect(contact?.distance ?? 0, `reverse hull penetration at tick ${tick}`).toBeGreaterThanOrEqual(-.03);
+    }
+    expect(reverse2.entity.transform.x).toBeLessThan(95);
     for (let i = 0; i < 60; i++) world.update();
     expect(world.props!.items.filter(p => p.awake).length).toBeLessThanOrEqual(world.props!.awakeBudget);
     return world.props!.snapshot();
