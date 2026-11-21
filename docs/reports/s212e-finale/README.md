@@ -35,6 +35,8 @@ Both routes miss the 420–540 s hangar-to-gate target. Several beat intervals a
 
 The headless capture script subsequently ran through `tools/e2e-lock.sh` on ports 5215/5216. Its ten-frame inspection sheet was reviewed and is inadequate: frames 0 and 1 are nearly black, 2 shows a gate and figures, 3–5 show dark road and vehicles, 6 shows a figure on a road, 7 is obscured by the overpass, 8 shows dark roadside structures, and 9 is nearly black. Debug panels and an unrelated early objective cover every frame. These are static inspection views, not evidence of the actual beats; the Mega and ridden motorbike with corgi are absent. Native gameplay captures and a proper sheet remain outstanding.
 
+A separate HIGH zoom 1 diagnostic teleported the player to the parked motorbike, mounted with E and drove for 120 ticks. The simulation reported a mounted motorbike at 9.375 m/s and the corgi as its passenger. The frame was inspected: the rider and corgi are very small, a large translucent shape obscures them, and the early objective remains visible. This staged image is not an acceptable native route capture; it remains uncommitted, and the capture script documents its setup.
+
 ## Remaining
 
 The objective is not complete. Required follow-up: add route content to bring both tiers into the 7–9 minute band with the requested beat cadence, obtain and visually review the captures, investigate the unit failures and rerun full gates on the current commit, and update this report with final receipts. The earlier threat and smoke receipts predate commit `d3cb05aa`.
