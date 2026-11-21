@@ -30,3 +30,5 @@ The all-cage solo rule is in place: survivor followers stage outside the next en
 - A native L8 capture attempt loaded HIGH WebGL2 at zoom 1 under the browser lock, but the fixture did not complete animal conversion; it produced no valid fight captures. The temporary harness was removed.
 
 - Native HIGH WebGL2, zoom 1 diagnostic: [sheet](native-diagnostic.jpg). The lion remains behind a jersey barrier through the tell and recovery frames; the courier remains standing, so these frames do not prove a pounce hit or pin. The flamingo post-dive frame is visually ambiguous and does not prove a grounded punish window. The fixture forced the production move inside the loaded level and is diagnostic, not a completed visual gate.
+
+- After adding separate guard staging, focused L8 threat completed with 0 player deaths but reported `FOLLOWER_PACE_UNOBSERVED` for 365 and 366. An experimental observer that included travel while the cage-wait order was active produced `SLOW_FOLLOWER` for the same IDs, including slow holding-point corrections; it was reverted. Follow/resume behavior and coverage need a real fix and rerun rather than suppressing these flags.
