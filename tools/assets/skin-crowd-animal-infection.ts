@@ -32,6 +32,13 @@ export function infectedLionMane({ x, y, z }: Vector3): number[] {
 export function animalColour(p: Vector3, original: number[], look: AnimalLook): number[] | undefined {
   const { x, y, z } = p, { species, infected } = look;
   let c: number[] | undefined;
+  if (species === 's224-lion') {
+    const dorsal = (x / .13) ** 2 + ((y - .10) / .12) ** 2 + ((z + .17) / .28) ** 2;
+    const flank = ((Math.abs(x) - .13) / .10) ** 2 + ((y + .025) / .14) ** 2 + ((z + .12) / .27) ** 2;
+    const wound = Math.min(dorsal, flank);
+    if (wound < 1) return wound > .77 ? [85, 20, 24] : [211, 42, 44];
+    return original;
+  }
   if (species === 'lion') {
     c = infected ? infectedLionCoat(p) : [199, 147, 69];
     // One connected neck envelope, independent of noisy TRELLIS colour islands.

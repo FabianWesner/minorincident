@@ -49,10 +49,11 @@ const nativeInfected = !!metadata && metadata.class !== 'quadruped' && regularIn
 // Animal fur/mane envelopes are wider than the face. Use reviewed pre-binding
 // eye landmarks instead of placing dormant/infected eyes on that envelope.
 const animalEyeRecipes = JSON.parse(readFileSync('tools/assets/skin-crowd-animal-eyes.json', 'utf8')) as Record<string, { source_sha256: string; eye_centers: number[][]; radius_extent: number; game_radius: number; tusks?: TuskRecipe }>;
-if (['inf.lion', 'inf.gorilla', 'inf.elephant', 'inf.flamingo'].includes(id) && !animalEyeRecipes[sourceId]) {
+if (['inf.lion', 'inf.gorilla', 'inf.elephant', 'inf.flamingo'].includes(id) && !animalEyeRecipes[sourceId] && sourceId !== 's224-lion') {
   throw Error(`${id}: missing animal infection recipe for ${sourceId}`);
 }
 let eyeSource = existsSync(join(source, 'eyes.json')) ? join(source, 'eyes.json') : undefined;
+if (sourceId === 's224-lion' && !eyeSource) throw Error('s224-lion: authored eye landmarks are required');
 if (metadata && ['quadruped', 'bird'].includes(metadata.class ?? '') && animalEyeRecipes[sourceId]) {
   const recipe = animalEyeRecipes[sourceId], body = join(source, 'source/flat-lod0.glb');
   if (createHash('sha256').update(readFileSync(body)).digest('hex') !== recipe.source_sha256) throw Error(`${id}: animal eye landmarks do not match the source body`);
@@ -198,7 +199,7 @@ for (const lod of [0, 1, 2]) {
     if (id === 'npc.firefighter-alive') await restoreFireHelmet(raw, join(assets, 'model.lod1.glb'), lod);
     if (id === 'amb.elephant' || id === 'inf.elephant') await restoreElephantTail(raw, join(assets, 'model.glb'), lod);
     const document = await io.read(raw);
-    if (['inf.lion', 'inf.gorilla'].includes(id)) {
+    if (['inf.lion', 'inf.gorilla'].includes(id) && sourceId !== 's224-lion') {
       const fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
       const teeth = animalTeeth(document, fit, { species: id.split('.')[1], infected: true });
       await io.write(raw, document); writeFileSync(join(report, `lod${lod}.teeth.json`), JSON.stringify(teeth, null, 2) + '\n');
@@ -209,6 +210,11 @@ for (const lod of [0, 1, 2]) {
     const info = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { triangles: number };
     bodyBudget = info.triangles - (total - workingTriangleLimit) - 8;
     if (attempt === 3 || bodyBudget <= 0) throw Error(`${id}: fitted caps exceed triangle budget ${triangleLimit}`);
+  }
+  if (sourceId === 's224-lion') {
+    const document = await io.read(raw), fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
+    paintAnimalDetails(document, false, undefined, fit, false, { species: 's224-lion', infected: true });
+    await io.write(raw, document);
   }
   const animalRecipe = animalEyeRecipes[sourceId];
   if (animalRecipe) {
@@ -268,7 +274,7 @@ for (const lod of [0, 1, 2]) {
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
-    const initialAtlas = lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
+    const initialAtlas = sourceId === 's224-lion' ? (lod === 0 ? 192 : 128) : lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
     let positionPrecision: number | undefined;
     await compressSkin(raw, target, basis, initialAtlas);
     // Keep detailed boss faces at 512 when the standalone LOD budget permits.
