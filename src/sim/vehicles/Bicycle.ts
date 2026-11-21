@@ -35,6 +35,7 @@ export interface BicycleState {
 const ARCHETYPE = 'veh.courier-bike';
 const { speedMs, accelToMs, accelS, mountInteractS } = l1v2.bicycle;
 const MOUNT_RANGE = 1.5, BUMP_RANGE = 1.15;
+const MOTORBIKE_RECOVERY_RANGE = 3.1;
 /** Short stumble after an infected knocks the rider off (input locked, no damage, no knockback). */
 const STUMBLE_TICKS = 18;
 /** A knocked-over bike drops right beside the rider: only these rings, never back to an older parking spot. */
@@ -96,7 +97,11 @@ export class Bicycle {
   get riding(): boolean { return this.entity?.bicycle?.mounted === true; }
   canInteract(): boolean {
     const bike = this.entity, player = this.world.entities.get(1);
-    return !!bike?.bicycle && !!player && player.health.current > 0 && (bike.bicycle.mounted || this.world.tick >= bike.bicycle.lockUntil && Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z) <= MOUNT_RANGE && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform));
+    if (!bike?.bicycle || !player || player.health.current <= 0) return false;
+    if (bike.bicycle.mounted) return true;
+    const d = Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z);
+    const recovery = bike.bicycle.motorbike && bike.bicycle.fallen && d <= MOTORBIKE_RECOVERY_RANGE && this.reachable(player.transform.x, player.transform.z, bike.transform.x, bike.transform.z);
+    return this.world.tick >= bike.bicycle.lockUntil && (d <= MOUNT_RANGE || !!recovery) && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform);
   }
   /** Controller speed scale (7.5 m/s over the 4.5 m/s run); 1 on foot. */
   get speedScale(): number {
@@ -143,8 +148,10 @@ export class Bicycle {
         // A bike that fell on the road is picked up where it lies (any clear level ground close by, not 8 m away on the
         // sidewalk); a parked one keeps the pavement-first search, with close-by road ground only as the last resort.
         const near = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3], wide = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3, 4, 6, 8];
+        const origin = b.motorbike && b.fallen && d > MOUNT_RANGE ? bike.transform : player.transform;
+        const accessible = (p: Vec2) => this.reachable(player.transform.x, player.transform.z, p.x, p.z);
         const spot = b.fallen
-          ? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true)
+          ? this.clearSpot(origin.x, origin.z, b.heading, near, true, false, accessible) ?? this.clearSpot(origin.x, origin.z, b.heading, wide, true, true, accessible)
           : this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false);
         if (!spot) return frame;
         const mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);

@@ -970,6 +970,14 @@ async function motorbikeRide(): Promise<void> {
     expect(dog.passengerOf).toBeUndefined();
     infected.hidden = true; infected.infected.hidden = true;
     world.tick += 20;
+    const fallen = bike.entity!;
+    Object.assign(fallen.transform, { x: player.transform.x + 2.5, z: player.transform.z });
+    expect(bike.canInteract(), 'a fallen motorbike is recoverable within its crash parking radius').toBe(true);
+    const wall = world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(.1, 1, 2).setTranslation(player.transform.x + 1.25, .7, player.transform.z));
+    world.physics.world!.step();
+    expect(bike.canInteract(), 'a wall prevents remote recovery').toBe(false);
+    world.physics.world!.removeCollider(wall, true);
+    world.physics.world!.step();
     bike.filter({ ...emptyInput(), interact: true });
     expect(bike.riding, 'rider remounts after the knock-off lockout').toBe(true);
     expect(dog.passengerOf).toBe(bike.entity!.id);
