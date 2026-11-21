@@ -24,6 +24,7 @@ import { Onboarding } from './Onboarding';
 import type { GameEvent } from '../sim/world/types';
 import type { Mission } from '../sim/missions/Mission';
 import { markerAnchor } from '../sim/missions/markerAnchor';
+import { checkpointName } from '../data/checkpointNames';
 import type { ObjectiveDef } from '../sim/missions/types';
 import type { Level } from '../sim/progression/Campaign';
 const text: typeof domText = (element, value) => domText(element, devicePrompt(value, document.body.classList.contains('touch-ui')));
@@ -107,10 +108,13 @@ export class Hud {
   private barkUntil = -1;
   private threatCount = 0;
   private readonly discoveries: HTMLSpanElement[] = [];
+  private readonly checkpointToast = node('div', 'checkpoint-toast');
+  private checkpointToastUntil = -1;
   private loadedScenario: string | null = null;
   constructor(private readonly game: Game) {
     this.onboarding = new Onboarding(game.world, game.input.bindings);
     this.civilianBark.className = 'hud-panel'; this.civilianBark.style.cssText = 'position:absolute;pointer-events:none'; this.civilianBark.hidden = true; this.root.append(this.civilianBark);
+    this.checkpointToast.style.cssText = 'position:absolute;left:50%;top:12%;transform:translateX(-50%);padding:9px 16px;border-radius:10px;background:#171b20e8;color:#fff;font:700 16px/1.2 system-ui,sans-serif;text-shadow:0 1px 2px #000;pointer-events:none;white-space:nowrap'; this.checkpointToast.hidden = true; this.root.append(this.checkpointToast);
     // PO: story bubbles read comfortably: larger outlined text, fade in/out, kept inside the frame above the speaker.
     this.storyBubble.className = 'hud-panel story-bubble'; this.storyBubble.style.cssText = 'position:absolute;pointer-events:none;transform:translate(-50%,-100%);width:max-content;max-width:min(340px,80vw);padding:8px 14px;border-radius:12px;font:700 19px/1.3 system-ui,sans-serif;color:#fff;text-shadow:0 0 3px #0b0f18,0 0 3px #0b0f18,1px 1px 0 #0b0f18,-1px -1px 0 #0b0f18,1px -1px 0 #0b0f18,-1px 1px 0 #0b0f18;white-space:normal;text-align:center;opacity:0'; this.storyBubble.hidden = true; this.root.append(this.storyBubble);
     this.survivorCue.className = 'hud-panel survivor-world-cue';
@@ -229,9 +233,15 @@ export class Hud {
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
-    for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout', 'pickup.collected'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
+    for (const type of ['combat.hit', 'combat.empty', 'corgi.sound', 'civilian.bark', 'ally.callout', 'pickup.collected', 'checkpoint.set'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
+    if (event.type === 'checkpoint.set' && this.game.world.scenario === 'L10') {
+      text(this.checkpointToast, `Checkpoint — ${checkpointName('L10', event.id)}`);
+      this.checkpointToastUntil = event.tick + 240;
+      this.checkpointToast.hidden = false;
+      return;
+    }
     if (event.type === 'pickup.collected' && 'actionId' in event && weaponKey(event.actionId) !== undefined) {
       this.pickupRole = { id: event.actionId, until: event.tick + 240, replaced: event.replaced };
     }
@@ -296,6 +306,7 @@ export class Hud {
     setHidden(this.weatherIcon, !weather);
     if (weather) { text(this.weatherIcon, weatherLabels[weather.kind]); attribute(this.weatherIcon, 'data-weather', weather.kind); }
     const world = this.game.world, player = world.entities.get(1), mission = world.missions;
+    if (this.checkpointToastUntil >= 0 && world.tick >= this.checkpointToastUntil) { this.checkpointToast.hidden = true; this.checkpointToastUntil = -1; }
     const visible = !!player && document.body.dataset.uiScreen === 'game' && (!mission || ['playing', 'cinematic'].includes(mission.state.phase));
     // Keep HUD visible beneath Pause / Settings, and update independently of the renderer.
     const hidden = !player || document.body.classList.contains('cinematic-ui') || (document.body.dataset.uiScreen !== 'game' && !['pause', 'settings'].includes(document.body.dataset.uiScreen ?? '')) || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));

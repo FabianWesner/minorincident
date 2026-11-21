@@ -386,6 +386,14 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   for (const tier of ['high', 'low'] as const) for (const group of dispersalBeats) {
     expect(cureEncounterSlots(group, tier).length, `${group.id} has a fight on ${tier}`).toBeGreaterThan(0);
   }
+  const corridor = (await import('../../src/levels/L10/district')).cure.regions[5].route;
+  for (const group of dispersalBeats) {
+    const nearest = Math.min(...corridor.slice(1).map((b, i) => {
+      const a = corridor[i], dx = b[0] - a[0], dz = b[1] - a[1], t = Math.max(0, Math.min(1, ((group.at[0] - a[0]) * dx + (group.at[1] - a[1]) * dz) / (dx * dx + dz * dz)));
+      return Math.hypot(group.at[0] - (a[0] + t * dx), group.at[1] - (a[1] + t * dz));
+    }));
+    expect(nearest, `${group.id} is staged on the skilled corridor`).toBeLessThan(5);
+  }
   for (const tier of ['high', 'low'] as const) {
     expect(farmGroups.reduce((sum, g) => sum + cureEncounterSlots(g, tier).filter(s => s.archetype !== 'infected.dog').length, 0))
       .toBe(tier === 'high' ? 51 : 37);
@@ -403,6 +411,25 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   }
   expect(groundMismatches, 'rasterized L10 supports and slabs match every exact nav-cell query').toBe(0);
   const actualFarm = assembled.districts[0].layout.placements;
+  const routeProps = ['evac-bus-open', 'evac-car-east', 'evac-car-west', 'evac-suitcases', 'evac-child-bike', 'evac-wait-sign', 'gate-wreck-west', 'gate-barricade-north', 'gate-barricade-south', 'reyes-handset', 'downed-power-line', 'crashed-helicopter', 'convoy-oil-drums', 'convoy-log', 'convoy-roadblock-0', 'convoy-roadblock-1', 'overpass-rubble-west', 'overpass-rubble-east', 'hospital-fence-west', 'hospital-fence-east', 'medic-recorder', 'complex-searchlight'];
+  for (const id of routeProps) {
+    const p = actualFarm.find(item => item.id === `l10-setpiece-${id}`);
+    expect(p, `${id} is in the district placement pipeline`).toBeDefined();
+    expect(p!.decorSolid, `${id} is authored as a solid prop`).toBe(true);
+    expect(placementColliders([p!], assembled.districts[0].layout.colliders).some(c => c.id === p!.id || c.id.startsWith(`${p!.id}/`)), `${id} has its own physical collider`).toBe(true);
+  }
+  expect(assembled.districts[0].pushables.some(p => p.id === 'l10-setpiece-overpass-throwable'), 'overpass throw prop has a movable physics body').toBe(true);
+  for (const p of actualFarm.filter(item => item.id.startsWith('l10-setpiece-'))) {
+    const movableThrowable = p.id === 'l10-setpiece-overpass-throwable';
+    expect(p.decorSolid || movableThrowable, `${p.id} blocks the courier`).toBe(true);
+    const colliders = placementColliders([p], assembled.districts[0].layout.colliders);
+    const authored = assembled.districts[0].layout.colliders;
+    const supported = colliders.some(c => c.id === p.id || c.id.startsWith(`${p.id}/`))
+      || (p.id === 'l10-setpiece-gate-gantry' && ['left', 'right'].every(side => authored.some(c => c.id.startsWith(`${p.id}-${side}-post/solid`))))
+      || (p.id === 'l10-setpiece-underpass-mouth' && authored.some(c => c.id.startsWith('l10-underpass-pier-')))
+      || (movableThrowable && assembled.districts[0].pushables.some(prop => prop.id === p.id));
+    expect(supported, `${p.id} has an authored physical collider`).toBe(true);
+  }
   for (const beat of dispersalBeats) expect(actualFarm.some(p => p.id === `l10-setpiece-${beat.setPiece === 'quarantine-gate' ? 'gate-gantry' : beat.setPiece === 'propaganda-billboard' ? 'billboard-frame' : beat.setPiece === 'scarecrow-field' ? 'scarecrow-0' : beat.setPiece === 'burning-convoy' ? 'convoy-truck-a' : beat.setPiece === 'dark-underpass' ? 'underpass-mouth' : 'hospital-tent-0'}`), `${beat.setPiece} has fixed district dressing`).toBe(true);
   for (const [x, z] of [...cureConvoyBarrels, ...cureConvoyCrates]) for (const [dx, dz] of [[0, 0], [.6, 0], [-.6, 0], [0, .6], [0, -.6]]) {
     const column = Math.floor((x + dx - nav.min[0]) / nav.cellSize), row = Math.floor((z + dz - nav.min[1]) / nav.cellSize);
