@@ -184,8 +184,8 @@ export class PropSystem {
     const id = this.world.vehicles?.active, car = id == null ? undefined : this.world.vehicles?.cars.get(id);
     if (!car?.entity.vehicle?.floor || car.entity.vehicle.scripted) return;
     const body = car.physics.body, at = body.translation(), q = body.rotation();
-    const shell = new RAPIER.Cuboid(car.physics.def.length / 2, 1.05, car.physics.def.width / 2);
-    const center = { x: at.x + .75 * 2 * (q.x * q.y - q.w * q.z), y: at.y + .75 * (1 - 2 * (q.x * q.x + q.z * q.z)), z: at.z + .75 * 2 * (q.y * q.z + q.w * q.x) };
+    const shell = new RAPIER.Cuboid(car.physics.def.length / 2, 1.5, car.physics.def.width / 2);
+    const center = { x: at.x + .3 * 2 * (q.x * q.y - q.w * q.z), y: at.y + .3 * (1 - 2 * (q.x * q.x + q.z * q.z)), z: at.z + .3 * 2 * (q.y * q.z + q.w * q.x) };
     const yaw = car.physics.transform.yaw, c = Math.cos(yaw), s = Math.sin(yaw);
     for (const item of this.items) {
       if (item.fixed || item.braced || !item.body.isEnabled() || car.physics.hullDistance(item.pose.p[0], item.pose.p[2]) > item.radius + .5) continue;
