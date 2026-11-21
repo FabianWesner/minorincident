@@ -94,6 +94,7 @@ export const dialogue: Record<string, string> = {
   'L9.mega-drive': 'Sam: Don\'t look. Drive.',
   'L9.clingers': 'They\'re on the roof!',
   'L9.hold-on': 'Hold on to something.',
+  'L9.bus.warning': 'Sam: School bus behind us — it\'s full of them, and someone\'s foot is on the gas!',
   'L9.bus.dale': 'That\'s my kid\'s school bus.',
   'L9.bus.dale-beat': 'It\'s not anymore.',
   'L9.stall.sam': 'Twenty seconds! Hold the hatch — keep them off us!',
