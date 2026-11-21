@@ -105,12 +105,12 @@ export class Hazards {
   }
   /** Ignite nearby ground and vegetation where an existing fire touches them. */
   igniteFlammables(position: Vec2, radius: number): void {
-    this.fieldFire?.ignite(position, this.world.tick, radius + 5);
+    this.fieldFire?.ignite(position, this.world.tick, radius);
     this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
   }
   /** Deposit fuel at a clipped weapon impact, sharing the existing fire cap, damage and expiry path. */
   ignitePatch(position: Vec2, radius: number, duration: number): number | null {
-    this.fieldFire?.ignite(position, this.world.tick, Math.max(4, radius * 2));
+    this.fieldFire?.ignite(position, this.world.tick, radius);
     this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
     // Fuel may ignite adjacent vegetation, but the persistent ground patch must
     // not cover an authored road or paved surface.
@@ -222,11 +222,11 @@ export class Hazards {
     const tick = this.world.tick;
     this.fieldFire?.update(tick);
     this.vegetationFire?.update(tick);
-    if (tick % 60 === 0) for (const cell of this.fieldFire?.cells ?? []) if (cell.state === 'burning') this.vegetationFire?.ignite(cell, tick, 5);
+    if (tick % 60 === 0) for (const cell of this.fieldFire?.cells ?? []) if (cell.state === 'burning') this.vegetationFire?.ignite(cell, tick, cell.halfX === undefined ? 5 : Math.max(cell.halfX, cell.halfZ ?? 0));
     if (this.fieldFire && tick % 30 === 0) {
       for (const entity of this.world.entities.iterate()) {
         if (entity.health.current <= 0 || (entity.faction !== 'infected' && entity.kind !== 'player')) continue;
-        if (entity.faction === 'infected' && entity.combat?.statuses.some(status => status.kind === 'burning')) this.fieldFire.ignite(entity.transform, tick, 5);
+        if (entity.faction === 'infected' && entity.combat?.statuses.some(status => status.kind === 'burning')) this.fieldFire.ignite(entity.transform, tick, .5);
         if (this.fieldFire.cells.some(cell => cell.state === 'burning' && Math.abs(cell.x - entity.transform.x) <= (cell.halfX ?? 5) && Math.abs(cell.z - entity.transform.z) <= (cell.halfZ ?? 5)))
           this.world.combat?.status.apply(entity, groundBurn, 1, 'hazard.field-fire');
       }

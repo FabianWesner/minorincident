@@ -753,11 +753,12 @@ export class Blasts extends Group {
       const key = -3_000_000 - index; seen.add(key);
       let c = this.fireColumns.get(key);
       if (!c) {
-        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: low ? 1.5 : 3, size: 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
-        c.light = this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
+        const lawn = cell.halfX !== undefined;
+        c = { born: now, x: cell.x, z: cell.z, ground: this.world.districts?.groundHeight(cell.x, cell.z) ?? 0, until: Infinity, rate: lawn ? (low ? .5 : 1) : (low ? 1.5 : 3), size: lawn ? .8 : 3, heat: 1, acc: this.rng.next(), shade: .07, cloud: 0 };
+        c.light = lawn ? null : this.host.light?.(c.x, c.z, '#ff8a3a', 4, 12, Infinity, true) ?? null;
         this.fireColumns.set(key, c);
       }
-      if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, 3, low);
+      if (!low || Math.floor(now * 4) % 2 === 0) this.embers(now, c, cell.halfX === undefined ? 3 : 1, low);
     }
     for (const [index, object] of (this.world.hazards?.vegetationFire?.objects ?? []).entries()) {
       if (object.state !== 'burning' || !this.sourceVisible(object.x, object.z, 12)) continue;

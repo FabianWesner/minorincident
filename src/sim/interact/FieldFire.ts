@@ -25,9 +25,9 @@ export class FieldFire {
   }
   ignite(position: Vec2, tick: number, radius = 5): number {
     let count = 0;
-    for (let x = Math.floor((position.x - radius - 2) / 16); x <= Math.floor((position.x + radius + 2) / 16); x++)
-      for (let z = Math.floor((position.z - radius - 2) / 16); z <= Math.floor((position.z + radius + 2) / 16); z++)
-        for (const cell of this.buckets.get(`${x},${z}`) ?? []) if (this.burningCount < FieldFire.maxBurning && cell.state === 'intact' && Math.hypot(Math.max(0, Math.abs(cell.x - position.x) - (cell.halfX ?? 0)), Math.max(0, Math.abs(cell.z - position.z) - (cell.halfZ ?? 0))) <= radius && !this.blocked(position, cell)) {
+    for (let x = Math.floor((position.x - radius - 5) / 16); x <= Math.floor((position.x + radius + 5) / 16); x++)
+      for (let z = Math.floor((position.z - radius - 5) / 16); z <= Math.floor((position.z + radius + 5) / 16); z++)
+        for (const cell of this.buckets.get(`${x},${z}`) ?? []) if (this.burningCount < FieldFire.maxBurning && cell.state === 'intact' && Math.hypot(Math.max(0, Math.abs(cell.x - position.x) - (cell.halfX ?? 5)), Math.max(0, Math.abs(cell.z - position.z) - (cell.halfZ ?? 5))) <= radius && !this.blocked(position, cell)) {
           cell.state = 'burning'; cell.ignitedAt = tick; count++; this.burningCount++;
         }
     return count;
