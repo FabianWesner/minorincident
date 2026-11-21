@@ -229,6 +229,11 @@ async function checkCheckpointRacks() {
     expect(tree.state).toBe('burning');
     vegetation.update(l10.tick + 600);
     l10.missions!.checkpoint('cure-crash');
+    l10.progression!.campaign!.cureResume = l10.missions!.saveResume(true);
+    expect(validateSave(l10.progression!.campaign!), 'burned ground checkpoint remains a valid campaign save').toBe(true);
+    const savedFire = decodeSave(encodeSave(l10.progression!.campaign!));
+    expect(savedFire.status).toBe('ok');
+    if (savedFire.status === 'ok') expect(savedFire.save.cureResume?.checkpoint.fieldFire?.find(c => c.id === cell.id)?.state).toBe('scorched');
     cell.state = 'intact'; tree.state = 'intact';
     l10.combat!.setLoadout(['weapon.fire-axe'], ['weapon.rocket-launcher']);
     l10.missions!.restore('cure-crash');
