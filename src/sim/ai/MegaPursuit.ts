@@ -215,7 +215,8 @@ export class MegaPursuit {
     const mission = this.world.missions, arena = mission?.def.anchors['cure-console'];
     if (b.megaPhase === 3 && arena && dist(e.transform, arena) <= finale.leashRadius && dist(e.transform, arena) > 3 && !Status.stunned(e, tick) && b.grabUntil <= tick && tick >= (b.specialRecoveryUntil ?? 0) && b.state !== 'attack') {
       b.hidden = false; b.state = 'chase'; s.mode = 'detailed';
-      this.world.infected!.seek(e, { ...arena, y: .7 + (this.world.districts?.groundHeight(arena.x, arena.z) ?? 0) });
+      if (this.grid.steer(e.transform, arena, this.path, this.radius, this.waypoint, 20000)) this.walkTo(e, this.waypoint, false);
+      else return false;
       this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
     }
     if (arena && mission?.state.states['charge-active'] && !mission.state.states['cure-released'] && this.resident(e.transform.x, e.transform.z)
@@ -231,7 +232,17 @@ export class MegaPursuit {
           b.hidden = false; s.mode = 'detailed'; b.state = 'chase'; e.combat!.attacking = false;
           const pd = dist(player.transform, arena), scale = (leash - 3) / pd;
           const edge = { x: arena.x + (player.transform.x - arena.x) * scale, z: arena.z + (player.transform.z - arena.z) * scale };
-          if (dist(e.transform, edge) > 1.5 && this.grid.steer(e.transform, this.grid.clear(edge.x, edge.z, this.radius) ? edge : arena, this.path, this.radius, this.waypoint, 20000)) this.walkTo(e, this.waypoint, false);
+          if (dist(e.transform, edge) > 1.5) {
+            const target = this.grid.clear(edge.x, edge.z, this.radius) ? edge : arena;
+            if (this.grid.steer(e.transform, target, this.path, this.radius, this.waypoint, 20000)) this.walkTo(e, this.waypoint, false);
+            else {
+              // The Mega's wide-clearance grid can have no path to the leash
+              // edge even when the shared Alpha nav can route or breach there.
+              // Hand this tick to the ordinary chase brain so a failed leash
+              // search cannot freeze the finale indefinitely.
+              return false;
+            }
+          }
           this.world.spatial.set(e.id, e.transform.x, e.transform.z);
           return true;
         }

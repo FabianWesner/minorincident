@@ -22,3 +22,21 @@ The beat-7 line trigger is at x=3397. The LOW story probe measured a 20.6 s beat
 - `qa:vehicle-campaign-motion` is unverified because the same browser-pool startup failure stopped the gate.
 - HIGH beat-7 timing has not been rerun after moving its line trigger to x=3397. Before the move it was 19.27 s versus the s212g2 reference of about 20.12 s. The LOW post-change measurement is 20.6 s.
 - The implementation and this report were committed as `b6acacd8`; the earlier index lock denial did not persist.
+
+## s219b follow-up (2026-11-21)
+
+The finale stall was in Mega phase 3 after the charge: its special branch used the shared Alpha `seek()` movement path, which retained a 46-cell route at the arena edge but made no progress. Phase 3 now uses the Mega's clearance-aware route steering and yields to the Alpha chase/breach brain if that search fails. The charge leash branch also yields on a failed route instead of holding the tick stationary.
+
+### Verification
+
+- Native ordinary-input L10 route completed on LOW in 1,174 s with 3 deaths and on HIGH in 1,552 s with 9 deaths. Both match the s212g2 death ceilings. Beat 7 and the sinkhole warning flags were reached in both runs.
+- `qa:threat` shards 1/2 and 2/2 merged successfully: L10 skilled complete, 0 fail flags.
+- `mission-interactions.test.ts`: 1 test passed.
+- Local `npm test`: 27 files and 106 tests passed. `npm run typecheck` and `npm run lint` passed.
+- The `l10-story.ts` route portions complete, but each run exits nonzero on 8 other story assertions: four roadblock ride/fight/remount checks, Mega visibility within three minutes, idle infected frame entry, the 7–9 minute finale duration, and 45–75 second story-beat intervals. LOW's measured finale duration was 386.5 s. These remain open against the broader pacing criteria.
+
+### Still open
+
+- The remote `sh tools/remote/run.sh "$PWD" -- npm test` could not run: the runner reports no healthy Hetzner worker, and its local fallback rejects this wrapped command. A direct local `npm test` passed but does not satisfy the remote-runner requirement.
+- The requested native HIGH zoom-1 beat-7 frame is not captured or reviewed. The browser pool cannot bind `127.0.0.1:4329` in this sandbox (`EPERM`); the `tsx` pool launcher also fails to create its IPC pipe (`EPERM`).
+- Git staging/commit is blocked because the worktree's shared `.git` metadata is read-only here (`git add` cannot create `.git/worktrees/s219b-sinkhole/index.lock`). The source change remains in the worktree.
