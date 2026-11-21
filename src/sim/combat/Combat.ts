@@ -242,7 +242,7 @@ export class Combat {
         const target = this.world.entities.get(id);
         if (!target || target.faction !== 'infected' || target.health.current <= 0 || target.hidden) continue;
         const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
-        if (!distance || distance > def.range || (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone) continue;
+        if (distance > def.range || (distance > 1e-6 && (dx * attack.aim.x + dz * attack.aim.z) / distance < halfCone)) continue;
         const direction = { x: dx / distance, y: 0, z: dz / distance };
         if (!this.query.visible(origin, target.transform, target.id) || (this.world.destruction?.trace(origin, direction, distance)?.distance ?? distance) < distance - .05) continue;
         this.hit(attack, target, source.transform, 'bullet');
