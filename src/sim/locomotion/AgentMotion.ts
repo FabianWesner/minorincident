@@ -97,7 +97,7 @@ export function installAgentMotion(world: SimWorld): void {
   world.events.on('sim.tick', () => {
     for (const [id] of previous) if (!world.entities.get(id) || world.entities.get(id)!.corpse) previous.delete(id);
     for (const e of world.entities.iterate()) if (actor(e)) {
-      const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z, following: false, hidden: false }; p.x = e.transform.x; p.z = e.transform.z; p.following = e.civilian?.survivor?.mode === 'follow'; p.hidden = !!(e.hidden || e.infected?.hidden); previous.set(e.id, p);
+      const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z, following: false, hidden: false }; p.x = e.transform.x; p.z = e.transform.z; p.following = e.civilian?.survivor?.mode === 'follow'; p.hidden = !!(e.attachedTo !== undefined && (e.hidden || e.infected?.hidden)); previous.set(e.id, p);
       if (forced(e, world.tick, world) && e.locomotion) resetResponse(e.locomotion);
     }
   }, SimPhase.intent);
