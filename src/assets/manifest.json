@@ -25089,5 +25089,49 @@
       "solid": true
     },
     "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-shelter",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-shelter/build.py",
+    "glb": "public/assets/models/prop.zoo-shelter.glb",
+    "sourceGlb": "assets/prop.zoo-shelter/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-shelter.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-shelter.lod2.glb"
+    },
+    "dimensions": {
+      "x": 4.6,
+      "y": 2.7,
+      "z": 3,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 300,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 80
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
   }
 ]

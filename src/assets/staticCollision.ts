@@ -199,4 +199,5 @@ export const staticCollision: Record<string, { source: string; hash: string; box
   "prop.zoo-log-barrier": {"source":"public/assets/models/prop.zoo-log-barrier.glb","hash":"7bf8ad6dc562d552fa36ff74904222673e30d5c8e79d0bc94cdc8db9843a2acc","boxes":[{"min":[-1.8,0.18,-0.2853],"max":[1.8,1.35,0.2853]}]},
   "prop.zoo-feeder": {"source":"public/assets/models/prop.zoo-feeder.glb","hash":"322740f5fca2c2fcac3211b2b9acdc9c3faa11f0c18ae35e313b7620953fa5ce","boxes":[{"min":[-1.1,0.27,-0.45],"max":[1.1,0.955,0.45]}]},
   "prop.zoo-trough": {"source":"public/assets/models/prop.zoo-trough.glb","hash":"5ad528588c6d6bc3a59feb11f2857328570e4bdb33fb8555a7acb9b16f66b908","boxes":[{"min":[-1.1,0.27,-0.45],"max":[1.1,0.955,0.45]}]},
+  "prop.zoo-shelter": {"source":"public/assets/models/prop.zoo-shelter.glb","hash":"5f3820573aaf7cfda0ddea1e3770f9e40130e265eafaa82d050739d92be5f698","boxes":[{"min":[-2.1,0.18,1.15],"max":[-1.9,1.65,1.35]},{"min":[-2.1,0.18,-1.35],"max":[-1.9,1.65,-1.15]},{"min":[1.9,0.18,1.15],"max":[2.1,1.65,1.35]},{"min":[1.9,0.18,-1.35],"max":[2.1,1.65,-1.15]}]},
 };

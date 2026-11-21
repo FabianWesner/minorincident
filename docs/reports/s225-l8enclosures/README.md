@@ -13,6 +13,7 @@
 - Replaced the three flamingo and three zebra road barriers with solid rock outcrops at the same positions and orientations. The new prop has authored LODs and baked static collision.
 - Added a fixed heavy log barrier along the east side of the actual elephant yard. It uses baked static collision and leaves the truck and north/south gate lines in place.
 - Replaced the zebra paddock's placeholder crates and toy pool with four solid hay feeders and a water trough, using the existing positions near the paddock edge.
+- Added an open-sided timber shelter at the edge of the zebra paddock, with four solid posts and a roof above the movement area.
 - Added distinct visual ground surfaces to the six arenas and shallow water surfaces to the flamingo and elephant yards, after stable placement IDs are allocated. These are a first pass, not visual acceptance.
 
 ## Follow-up for s222/s223
@@ -23,7 +24,7 @@ The flamingo and zebra cover IDs remain at their original positions but now have
 
 The elephant yard now has a fixed log barrier at x106.5/z60.5. Its collider does not overlap the truck or yard fence, but its effect on charge paths should be reviewed by s223 in native play.
 
-The zebra edge fixtures now use larger feeder and trough colliders in place of crates and a toy pool; recheck the stampede lap and turning space in s222.
+The zebra edge fixtures now use larger feeder and trough colliders in place of crates and a toy pool, and the shelter adds four post colliders at x49/53 and z19.95/22.45; recheck the stampede lap and turning space in s222.
 
 ## Verification
 
@@ -41,6 +42,7 @@ The zebra edge fixtures now use larger feeder and trough colliders in place of c
 - Pond follow-up: rebuilt D-ZOO with a rounded irregular water edge, mud bank and small island. The HIGH zoom 1 Scene Lab frame was inspected: the rectangle is gone and the bank and island are visible, though the water remains very dark at night and reeds and boardwalk still need review. Zero static overlap pairs in this crop. Generated placements, colliders, walkable data, anchors and roads compare equal to the prior district export. Typecheck and lint pass; native landing and route verification remain open.
 - Elephant log follow-up: authored asset validation passes LOD0/1/2 at 144/80/24 triangles. The HIGH detail frame was inspected; the barrier is visible but dark. The scene reports four static overlap pairs already present in the earlier elephant crop; the new barrier's collider independently has no static intersections. An L8-only threat diagnostic completes the skilled run in 413.6 simulated seconds with zero deaths, but reports the moving-hit kiting failure and a skilled reachability warning; its partial selection is not a full gate. Typecheck and lint pass.
 - Zebra fixture follow-up: HIGH zoom 1 detail frame inspected; a hay feeder and water trough are recognizable within the fence. Scene Lab reports zero static overlap pairs, and a layout query found one solid collider per fixture with no intersections. Asset validation passes feeder LOD0/1/2 at 156/72/24 triangles and trough at 120/72/24; typecheck and lint pass. Native stampede and route verification remain open.
+- Zebra shelter follow-up: HIGH zoom 1 detail frame inspected; the roof and posts read as an open-sided shelter near hay and a feeder. Scene Lab reports zero static overlap pairs; a layout query found four post colliders without static intersections. Asset validation passes LOD0/1/2 at 132/60/60 triangles; typecheck and lint pass. The shelter's effect on the stampede and route remains unverified.
 - Focused L8 scene gate: 0/18 rows ran; all four batches exited 75 because the headless browser pool cannot bind `127.0.0.1:4329` (`EPERM`).
 - Native HIGH/LOW cage captures and visual review: not verified for the same browser-pool failure.
 - Remote `npm test`: not run; `tools/remote/run.sh` found no healthy runner, and `tools/remote/scale.sh add` could not resolve the Hetzner API host because network/DNS is blocked.
