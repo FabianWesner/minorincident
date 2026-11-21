@@ -20,6 +20,8 @@ Both ordinary-input routes complete and the overpass crate throw is recorded on 
 
 The overpass events are `alpha.grab-throw` launches of the authored crate at player x=3344.5 (LOW, tick 46631) and x=3344.4 (HIGH, tick 71700). These are actual prop launches, not telegraphs or living-missile events.
 
+On the subsequent hospital placement, new route checks recorded the billboard collapse and hospital opening on both tiers. LOW completed with zero deaths and HIGH with ten; hangar-to-gate remained 301.8 s and 271.2 s respectively. A native HIGH capture still did not show the hospital clearly, so the event checks do not establish visual readability.
+
 The native route still misses the 420–540 s hangar-to-gate duration and 45–75 s beat cadence on both tiers. HIGH also has a 33.2 s activity gap. The route bot rides only briefly before a hard hit knocks it off; a remount recovery experiment increased deaths to 33–38 and was reverted.
 
 ## Visual evidence

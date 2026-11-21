@@ -195,6 +195,7 @@ for (const tier of tiers) {
   const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
   let authoredThrowCrateId: number | undefined;
   const overpassState: unknown[] = [];
+  let billboardFallTick: number | undefined, hospitalOpenTick: number | undefined;
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
   let mounts = 0, bikeTicks = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
   const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [], overpassProbeState: unknown[] = [];
@@ -245,6 +246,8 @@ for (const tier of tiers) {
           world.megaPursuit!.introduce({ x: 3945, z: -25 });
         }
         update(); const p = world.entities.get(1)!;
+        billboardFallTick ??= world.l10Encounters?.state.billboardFallAt;
+        hospitalOpenTick ??= world.l10Encounters?.state.hospitalOpenAt;
         const riding = !!world.vehicles?.bicycle.riding;
         if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length }); lastBike = riding; }
         if (world.vehicles?.bicycle.riding && world.vehicles.bicycle.entity?.bicycle?.motorbike) bikeTicks++;
@@ -283,6 +286,10 @@ for (const tier of tiers) {
   check(tier, 'native ordinary-input route reaches credits', run.completed, { outcome: run.outcome, blocker: run.blocker, time: run.time, deaths: run.deaths });
   const beat6 = finaleMoments.find(e => e.kind === 'story' && e.id === 'L10.finale-6')?.tick;
   const beat7 = finaleMoments.find(e => e.kind === 'story' && e.id === 'L10.finale-7')?.tick;
+  if (!finaleOnly) {
+    check(tier, 'billboard collapse triggers on the route', billboardFallTick !== undefined, billboardFallTick ?? null);
+    check(tier, 'hospital tents open on the route', hospitalOpenTick !== undefined, hospitalOpenTick ?? null);
+  }
   if (!finaleOnly) check(tier, 'overpass Mega throws the authored crate during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'prop-thrown' && e.propId === authoredThrowCrateId && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, crate: authoredThrowCrateId, throws: overpassThrows });
   if (!finaleOnly) check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);
   if (!finaleOnly) check(tier, 'persistent Mega produces recurring close encounters in distinct route sections', sightings.length >= 3, sightings);
