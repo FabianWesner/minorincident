@@ -4,7 +4,7 @@ import type { DistrictLayout, Placement } from '../districts/types';
 /** Encounter cover is installed before physics/destruction assembly, with the same stable IDs on both tiers. */
 export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
-    if (layout.district !== 'D-ZOO') return layout;
+    if (layout.district !== 'D-ZOO' || layout.placements.some(p => p.id === 'l8-gorilla-pillar-0')) return layout;
     const cages = [
       { id: 'lion', x0: -82, z0: -54, x1: -38, z1: -10 },
       { id: 'flamingo', x0: -16, z0: -54, x1: 16, z1: -10 },
@@ -12,14 +12,19 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       { id: 'gorilla', x0: 38, z0: -54, x1: 82, z1: -10 },
       { id: 'monkey', x0: -22, z0: 4, x1: 10, z1: 36 },
       { id: 'elephant', x0: -82, z0: 10, x1: -38, z1: 54 },
+      { id: 'elephant-arena', x0: 82, z0: 39, x1: 110, z1: 67 },
     ];
     const insideCage = (p: Placement) => cages.some(c => p.position[0] >= c.x0 && p.position[0] <= c.x1 && p.position[2] >= c.z0 && p.position[2] <= c.z1);
     // Generic plaza dressing in a cage makes the habitats read as public parks.
     // Remove those fittings before adding the authored enclosure dressing below.
-    layout.placements = layout.placements.filter(p => !(insideCage(p) && (
+    const removed = new Set(layout.placements.filter(p => insideCage(p) && (
       ['prop.bench', 'prop.folding-chair', 'prop.lawn-chair-a', 'prop.lawn-chair-b', 'prop.street-lamp'].includes(p.assetId)
       || p.id.startsWith('l8-gorilla-throw-') || p.id.startsWith('l8-gorilla-light-')
-    )));
+    )).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !removed.has(p.id));
+    // Authored fallback colliders otherwise survive after their placement is
+    // removed and leave invisible obstacles in the animal pens.
+    layout.colliders = layout.colliders.filter(c => !removed.has(c.id) && ![...removed].some(id => c.id.startsWith(`${id}/`)));
     // Keep planted bushes beside the yard, rather than creating elephant-sized charge stops in its wall-bait lanes.
     for (const [id, x, z] of [['prop.garden-bush:220', -85, 20], ['prop.garden-bush:222', -35, 44], ['prop.wheelbarrow:426', 112, 38], ['prop.crates:427', 112, 42], ['prop.hose-reel:425', 112, 34]] as const) {
       const bush = layout.placements.find(p => p.id === id); if (!bush) continue;
@@ -36,7 +41,6 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push({ id, assetId, position: [x, y, z], yaw, scale, minTier: 0, maxTier: 6, lightGroup: layout.lightGroups[0]?.id ?? 'zoo', allowRoad: true,
         visualAabb: { min: [x - hx, y, z - hz], max: [x + hx, y + dim.y * scale[1], z + hz] }, ...(destruction ? { destruction } : {}) });
     };
-    if (layout.placements.some(p => p.id === 'l8-gorilla-pillar-0')) return layout;
     // Habitat fittings are existing solid props, kept around the outside of
     // each encounter's movement lanes and away from both gate thresholds.
     add('l8-lion-dead-tree', 'prop.tree.dead', -69, -25, [.8, .85, .8], -.35);

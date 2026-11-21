@@ -6,6 +6,7 @@
 - Replaced the gorilla cover set's red plaza pillars with dead trunks while retaining the four stable `l8-gorilla-pillar-*` IDs used by the encounter. Added solid habitat dressing for the lion, flamingo, zebra, gorilla, primate and elephant yards using existing prop assets.
 - The L8 overlay filters generic enclosure lamps from the shipped district placements.
 - Baked static collision for `prop.tree.dead`, which the new cover and habitat pieces use.
+- The filter also removes matching authored fallback colliders, including those in the active elephant yard. Applying the L8 overlay twice now returns the same layout.
 - Added distinct visual ground surfaces to the six arenas and shallow water surfaces to the flamingo and elephant yards, after stable placement IDs are allocated. These are a first pass, not visual acceptance.
 
 ## Follow-up for s222/s223
@@ -16,6 +17,7 @@ The four gorilla cover IDs now use `prop.tree.dead` at the original positions. T
 
 - Typecheck and lint: PASS after the last layout and Scene Lab edits.
 - Overlay placement audit: 73 L8 placements, no duplicate IDs, no park furniture intersecting cage bounds, and no solid-placement offenders among the new placements.
+- Follow-up filter inspection: nine base furniture placements removed, zero corresponding fallback colliders remain, and the overlay is idempotent. Typecheck and lint pass on that change.
 - Sharded `qa:threat`: both shards completed; L8 skilled bot completes with 0 deaths. The merged audit still has six L8 acceptance flags: the moving-hit kiting floor plus five slow-follower results. See `test-results/qa-threat/README.md` and `audit.json` for detail.
 - D-ZOO layout rebuild succeeded with unrestricted access. Its generated changes were discarded because deleting generator placements shifts stable IDs used by the L8 overlay; the runtime filter removes the lamps instead.
 - HIGH captures ran for lion, zebra, gorilla and elephant. The gorilla image was inspected: tiled ground, bare trunks and crates still do not read as the required habitat. Flamingo and monkey fixture starts were unwalkable. Elephant reported five static overlap pairs. These captures do not satisfy visual acceptance.
