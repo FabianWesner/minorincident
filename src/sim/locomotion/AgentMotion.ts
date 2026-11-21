@@ -92,12 +92,12 @@ function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
 /** Runs once per world. Brakes actors whose behaviour supplies no movement this
  * tick, then publishes post-separation/grounding displacement for every figure. */
 export function installAgentMotion(world: SimWorld): void {
-  const previous = new Map<number, { x: number; z: number; following: boolean }>();
+  const previous = new Map<number, { x: number; z: number; following: boolean; hidden: boolean }>();
   const rejectedCompanions = new Map<EntitySnapshot, EntitySnapshot>();
   world.events.on('sim.tick', () => {
     for (const [id] of previous) if (!world.entities.get(id) || world.entities.get(id)!.corpse) previous.delete(id);
     for (const e of world.entities.iterate()) if (actor(e)) {
-      const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z, following: false }; p.x = e.transform.x; p.z = e.transform.z; p.following = e.civilian?.survivor?.mode === 'follow'; previous.set(e.id, p);
+      const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z, following: false, hidden: false }; p.x = e.transform.x; p.z = e.transform.z; p.following = e.civilian?.survivor?.mode === 'follow'; p.hidden = !!(e.hidden || e.infected?.hidden); previous.set(e.id, p);
       if (forced(e, world.tick, world) && e.locomotion) resetResponse(e.locomotion);
     }
   }, SimPhase.intent);
@@ -199,7 +199,10 @@ export function installAgentMotion(world: SimWorld): void {
       // L9 boarders are repositioned with the APC before this resolved-motion
       // pass. Their roots travel with the hull, so suppressing their render
       // motion left a stationary attack pose sliding along the vehicle.
-      motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
+      // A hidden passenger can be placed at an exit in this tick. That
+      // relocation is not a stride and must not drive its first visible pose.
+      const emerged = p.hidden && !e.hidden && !e.infected?.hidden;
+      motion.velocity.x = emerged ? 0 : dx / FIXED_DT; motion.velocity.z = emerged ? 0 : dz / FIXED_DT; motion.speed = emerged ? 0 : distance / FIXED_DT;
       motion.moving = motion.speed > (motion.moving ? .04 : .12); if (distance < 3) motion.distance += distance;
     }
     if (world.scenario === 'L5') for (const e of world.entities.iterate()) if (e.companion) {
