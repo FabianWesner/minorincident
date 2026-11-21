@@ -770,6 +770,7 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     const barricadeId = world.vehicles!.obstacles.spawn('barricade', { x: 57, z: 0 });
     const barricade = world.vehicles!.obstacles.items.find(item => item.entity.id === barricadeId)!;
     const authoredId = world.hazards!.spawn('barricade', { x: 61, z: 0 });
+    const hullShape = new RAPIER.Cuboid(fixture.physics.def.length / 2, 1.05, fixture.physics.def.width / 2);
     fixture.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); fixture.physics.postPhysics();
     for (let tick = 0; tick < 90; tick++) {
       world.update();
@@ -778,6 +779,8 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
       for (const prop of clusterItems) {
         const contact = fixture.physics.collider.contactCollider(prop.collider, 0);
         expect(contact?.distance ?? 0, `tick ${tick}: ${prop.id} collider penetration`).toBeGreaterThanOrEqual(-.03);
+        const tallContact = prop.collider.contactShape(hullShape, { x: p.x, y: p.y + .75, z: p.z }, fixture.physics.body.rotation(), 0);
+        expect(tallContact?.distance ?? 0, `tick ${tick}: ${prop.id} tall hull penetration`).toBeGreaterThanOrEqual(-.03);
         const q = prop.body.translation(), dx = q.x - p.x, dz = q.z - p.z;
         const localX = dx * c - dz * s, localZ = dx * s + dz * c;
         expect(Math.abs(localX) <= fixture.physics.def.length / 2 && Math.abs(localZ) <= fixture.physics.def.width / 2,
@@ -786,6 +789,8 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
       const b = barricade.body?.translation() ?? barricade.entity.transform, dx = b.x - p.x, dz = b.z - p.z;
       const barrierContact = fixture.physics.collider.contactCollider(barricade.collider, 0);
       expect(barrierContact?.distance ?? 0, `tick ${tick}: barricade collider penetration`).toBeGreaterThanOrEqual(-.03);
+      const tallBarrierContact = barricade.collider.contactShape(hullShape, { x: p.x, y: p.y + .75, z: p.z }, fixture.physics.body.rotation(), 0);
+      expect(tallBarrierContact?.distance ?? 0, `tick ${tick}: barricade tall hull penetration`).toBeGreaterThanOrEqual(-.03);
       expect(Math.abs(dx * c - dz * s) <= fixture.physics.def.length / 2 && Math.abs(dx * s + dz * c) <= fixture.physics.def.width / 2,
         `tick ${tick}: barricade stays outside the APC hull`).toBe(false);
       const authored = world.vehicles!.obstacles.items.find(item => item.entity.id === authoredId);
