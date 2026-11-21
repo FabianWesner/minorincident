@@ -47,6 +47,16 @@ export function migrateCureResume(raw: unknown): unknown {
     const checkpoint = copy[name];
     if (!record(checkpoint) || !record(checkpoint.state) || !record(checkpoint.state.states)) continue;
     const states = checkpoint.state.states;
+    const savedCheckpoint = String(checkpoint.state.checkpoint ?? '');
+    const player = Array.isArray(checkpoint.entities) ? checkpoint.entities.find(e => record(e) && e.id === 1) : undefined;
+    const at = record(player) && record(player.transform) ? player.transform : null;
+    const x = at && Number.isFinite(at.x) ? Number(at.x) : 2750;
+    if (/^cure-pace-\d+$/.test(savedCheckpoint)) {
+      checkpoint.state.checkpoint = x < 3010 ? 'cure-research' : x < 3260 ? 'l10-quarantine-gate' : x < 3502 ? 'l10-convoy-7' : x < 3755 ? 'l10-field-hospital' : 'cure-complex';
+    }
+    // Saves made before this beat existed cannot replay its staging after
+    // resuming at or beyond the overpass. Explicit modern flags remain intact.
+    if (states['l10-overpass-mega'] === undefined) states['l10-overpass-mega'] = x >= 3320;
     for (const key of cureStates) if (states[key] === undefined) states[key] = false;
     if (record(checkpoint.state.counters)) for (const key of cureCounters) if (checkpoint.state.counters[key] === undefined) checkpoint.state.counters[key] = 0;
     if (record(checkpoint.state.cureFront)) checkpoint.state.cureFront.radius = cureRadius(Number(checkpoint.state.cureFront.elapsed));

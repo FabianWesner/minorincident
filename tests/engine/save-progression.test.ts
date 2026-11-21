@@ -18,6 +18,7 @@ import { campaignLoadout, restoreSelectedAction } from '../../src/sim/progressio
 import { completeCampaignLevel, recordL8Transport } from '../../src/sim/progression/carryover';
 import { commitCrossingHandover } from '../../src/sim/progression/crossingHandover';
 import { decodeSave, encodeSave, SaveStore, validateSave } from '../../src/sim/progression/Save';
+import { migrateCureResume } from '../../src/sim/progression/cureSave';
 import { debugFlagEnabled } from '../../src/ui/debugFlag';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { cureHangarWeapons, levelTenMission } from '../../src/levels/L10/mission';
@@ -25,8 +26,27 @@ import { surrenderHeavyWeapons } from '../../src/sim/missions/L8Gate';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { overlapsBuilding, overlapsPaving, overlapsRoad } from '../../src/levels/districts/validate';
 import { cureEvacuationLane } from '../../src/levels/L10/vignettes';
+import { cureEncounterSlots, curePaceEncounters } from '../../src/levels/L10/encounters';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
+function legacyL10PaceCheckpointsMigrate(): void {
+  for (const [x, expected] of [[2900, 'cure-research'], [3100, 'l10-quarantine-gate'], [3300, 'l10-convoy-7'], [3600, 'l10-field-hospital'], [3800, 'cure-complex']] as const) {
+    const snapshot = { state: { checkpoint: 'cure-pace-12', states: {}, counters: {} }, entities: [{ id: 1, transform: { x, z: 0 } }] };
+    const migrated = migrateCureResume({ current: structuredClone(snapshot), checkpoint: structuredClone(snapshot) }) as { current: typeof snapshot; checkpoint: typeof snapshot };
+    expect(migrated.current.state.checkpoint, `saved at x=${x}`).toBe(expected);
+    expect(migrated.checkpoint.state.checkpoint, `retry at x=${x}`).toBe(expected);
+    expect((migrated.current.state.states as Record<string, boolean>)['l10-overpass-mega']).toBe(x >= 3320);
+    expect((migrated.checkpoint.state.states as Record<string, boolean>)['l10-overpass-mega']).toBe(x >= 3320);
+  }
+  for (const x of [3319, 3320, 3379]) {
+    const snapshot = { state: { checkpoint: 'l10-convoy-7', states: {}, counters: {} }, entities: [{ id: 1, transform: { x, z: 95 } }] };
+    const migrated = migrateCureResume({ current: snapshot, checkpoint: snapshot }) as { current: typeof snapshot };
+    expect((migrated.current.state.states as Record<string, boolean>)['l10-overpass-mega']).toBe(x >= 3320);
+  }
+  const modern = { state: { checkpoint: 'l10-convoy-7', states: { 'l10-overpass-mega': false }, counters: {} }, entities: [{ id: 1, transform: { x: 3340, z: 95 } }] };
+  const retained = migrateCureResume({ current: modern, checkpoint: modern }) as { current: typeof modern };
+  expect(retained.current.state.states['l10-overpass-mega']).toBe(false);
+}
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
 const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgun') => ({
   entities: { get: (id: number) => id === 1 ? { weapons: { selectedSide: racks.RIGHT.includes(selectedAction) ? 'RIGHT' : 'LEFT', LEFT: { index: racks.LEFT.indexOf(selectedAction), rack: racks.LEFT.map(id => ({ id })) }, RIGHT: { index: racks.RIGHT.indexOf(selectedAction), rack: racks.RIGHT.map(id => ({ id })) } } } : undefined, iterate: () => [][Symbol.iterator]() },
@@ -34,6 +54,7 @@ const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgu
 const resume = (save: CampaignSave, level: number) => { const l = campaignLoadout(save, level as Level); return new Loadout(l.LEFT, l.RIGHT, undefined, l.size); };
 
 test('L1–L10 starts clamp progressed saves and fresh handovers to story weapons, keeping eligible carry-over and selection', async () => {
+  legacyL10PaceCheckpointsMigrate();
   const hangarSave = preset('L10-default');
   hangarSave.ownedActions.push('weapon.bat', 'weapon.army-mg', 'weapon.flashbang', 'weapon.grenade');
   hangarSave.racks.LEFT.push('weapon.bat'); hangarSave.racks.RIGHT.push('weapon.grenade', 'weapon.army-mg', 'weapon.flashbang');
@@ -236,7 +257,9 @@ async function checkCheckpointRacks() {
     if (savedFire.status === 'ok') expect(savedFire.save.cureResume?.checkpoint.fieldFire?.find(c => c.id === cell.id)?.state).toBe('scorched');
     cell.state = 'intact'; tree.state = 'intact';
     l10.combat!.setLoadout(['weapon.fire-axe'], ['weapon.rocket-launcher']);
+    l10.missions!.state.states['l10-overpass-mega'] = true;
     l10.missions!.restore('cure-crash');
+    expect(l10.missions!.state.states['l10-overpass-mega'], 'a retry before the overpass does not replay the beat').toBe(true);
     expect(cell.state).toBe('scorched'); expect(tree.state).toBe('charred');
     expect(ids(l10)).toEqual(expectedBase);
     expect(l10.progression!.campaign!.racks).toEqual(expectedBase);
@@ -251,6 +274,39 @@ async function checkCheckpointRacks() {
     l10.missions!.restore('cure-research');
     expect(ids(l10)).toEqual(expectedHangar);
     expect(l10.progression!.campaign!.racks).toEqual(expectedHangar);
+    const megaId = l10.megaPursuit!.introduce({ x: 620, z: 0 });
+    l10.missions!.checkpoint('cure-disperse-ready');
+    l10.entities.get(megaId)!.health.current = 0;
+    l10.megaPursuit!.state.mode = 'dead';
+    l10.missions!.restore('cure-disperse-ready');
+    expect(l10.megaPursuit!.state.mode, 'a later Mega kill survives an arena checkpoint retry').toBe('dead');
+    expect(l10.megaPursuit!.entity()!.health.current).toBe(0);
+    const group = curePaceEncounters.find(g => g.id === 'setpiece-quarantine-gate')!;
+    const slots = cureEncounterSlots(group, 'low'), ledger = l10.l10Encounters!.state.spawned;
+    const defender = l10.entities.get(l10.infected!.spawn('infected.runner', { x: 620, z: 0 }))!;
+    const player = l10.entities.get(1)!; player.transform.x = 3031;
+    for (const slot of slots.slice(0, -1)) ledger[`${slot.key}:0`] = defender.id;
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['l10-gate-checkpoint'], 'unadmitted wave prevents checkpoint').toBe(false);
+    ledger[`${slots.at(-1)!.key}:0`] = defender.id;
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['l10-gate-checkpoint'], 'standing defender prevents checkpoint').toBe(false);
+    defender.health.current = 0; defender.infected!.recoverAt = l10.tick + 600;
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['l10-gate-checkpoint'], 'downed cohort permits checkpoint').toBe(true);
+    expect(defender.infected!.recoverAt, 'checkpoint does not remove recovery').toBe(l10.tick + 600);
+    player.transform.x = 2707;
+    const resident = vi.spyOn(l10.chunks!, 'resident').mockReturnValue(true);
+    const navClear = vi.spyOn(l10.infected!.nav, 'clear').mockReturnValue(false);
+    const navCell = vi.spyOn(l10.infected!.nav, 'cell').mockReturnValue(0);
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['hangar-cast'], 'cast waits for navigation').toBe(false);
+    expect(l10.missions!.state.actors['hangar-voss']).toBeUndefined();
+    navClear.mockReturnValue(true);
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['hangar-cast']).toBe(true);
+    expect(l10.entities.get(l10.missions!.state.actors['hangar-voss'])).toBeDefined();
+    navCell.mockRestore(); navClear.mockRestore(); resident.mockRestore();
   } finally { l10.dispose(); }
 }
 

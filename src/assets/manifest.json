@@ -14562,6 +14562,26 @@
     }
   },
   {
+    "id": "veh.courier-motorbike",
+    "category": "vehicle",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/veh.courier-motorbike/build.py",
+    "glb": "public/assets/models/veh.courier-motorbike.glb",
+    "lods": {
+      "lod1": "public/assets/models/veh.courier-motorbike.lod1.glb",
+      "lod2": "public/assets/models/veh.courier-motorbike.lod2.glb"
+    },
+    "dimensions": { "x": 2.1, "y": 1.25, "z": 2.21, "tolerance": 0.25 },
+    "forward": "+X",
+    "frontNodes": ["front"],
+    "requiredNodes": ["root", "body", "wheel_front", "wheel_rear", "sidecar_wheel", "handlebar", "seat", "sidecar_seat", "lightsFront", "lightsBrake", "exitL", "exitR", "grip_l", "grip_r", "pedal_l", "pedal_r"],
+    "animatedNodes": ["wheel_front", "wheel_rear", "sidecar_wheel", "handlebar"],
+    "sockets": ["seat", "sidecar_seat", "grip_l", "grip_r"],
+    "budget": { "triangles": 60000, "materials": 32, "fileKB": 6000, "drawCalls": 40 },
+    "decayVariants": []
+  },
+  {
     "id": "prop.package-courier",
     "category": "prop",
     "status": "integrated",

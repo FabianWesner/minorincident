@@ -25,6 +25,7 @@ import { attribute, style, text } from '../../ui/dom';
 interface Hero { model: string; humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; tongue?: CorgiTongue; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
+  sidecarSeat?: (out: Vector3) => boolean;
   private readonly civilians: CivilianCrowd;
   private readonly heroes = new Map<number, Hero>();
   private readonly companionMaterials = new Set<Material>();
@@ -180,6 +181,7 @@ export class NpcView extends Group {
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort || e.civilian?.pet === 'dog' ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
+      if (e.companion?.riding && this.sidecarSeat?.(this.point)) hero.root.position.copy(this.point);
       const closingCast = l10ClosingPose(this.world, e);
       if (closingCast) { hero.root.position.set(closingCast.x, closingCast.y - .7, closingCast.z); hero.root.rotation.y = closingCast.yaw; }
       if (e.companion && hero.head && this.world.missions?.state.items.includes('corgi-toy')) {
@@ -199,7 +201,7 @@ export class NpcView extends Group {
       const time = Math.max(0, this.world.tick + alpha - 1) / 60, distance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const warn = e.companion?.warn;
       // The corgi sits down next to her as the cure is released (story-script epilogue beat 1).
-      if (hero.animator && e.companion) hero.animator.sitAfter = this.world.missions?.state.cureFront ? .8 : 4;
+      if (hero.animator && e.companion) hero.animator.sitAfter = e.companion.riding ? 0 : this.world.missions?.state.cureFront ? .8 : 4;
       if (hero.animator) hero.animator.update(time, closing ? this.world.missions!.state.epilogue!.phase === 'thanks' && this.world.missions!.state.epilogue!.phaseTicks < 180 ? 1.5 : 0 : motion.speed, closing ? this.world.missions!.state.epilogue!.phaseTicks / 40 : distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, closingCast ? 0 : motion.speed, distance, down);
       if (closing && hero.head) {

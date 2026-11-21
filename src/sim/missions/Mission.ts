@@ -467,6 +467,7 @@ export class Mission {
     const liveMega = !resume && this.def.id === 'L10' && this.world.megaPursuit?.alive() ? this.world.megaPursuit.entity() : null;
     const retainedMegaPosition = liveMega && { id: liveMega.id, transform: { ...liveMega.transform } };
     const retainedCharge = !resume && this.def.id === 'L10' && this.state.states['cure-installed'] ? this.state.counters['charge-ticks'] : null;
+    const retainedOverpass = !resume && this.def.id === 'L10' && !!this.state.states['l10-overpass-mega'];
     const retainedCharging = !!this.state.states['charge-active'];
     const timeout = this.state.failure === 'timeout';
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
@@ -475,6 +476,7 @@ export class Mission {
     const previous = this.state as unknown as Record<string, unknown>;
     for (const key of Object.keys(previous)) if (!(key in checkpoint.state)) delete previous[key];
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
+    if (retainedOverpass) this.state.states['l10-overpass-mega'] = true;
     if (retainedCharge !== null) { this.state.counters['charge-ticks'] = Math.max(this.state.counters['charge-ticks'], retainedCharge); this.state.states['charge-active'] = retainedCharging; this.state.states['charge-ready'] = this.state.counters['charge-ticks'] >= 3600; }
     if (timeout && this.state.deadlineTicks !== null) this.state.deadlineTicks += Math.ceil((this.def.deadline?.retryGraceSeconds ?? 0) * 60);
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;

@@ -1,0 +1,2559 @@
+{
+  "revision": "e2c5060c1da993d58daf9b78ceb94b017168d8b2",
+  "command": "L10_STORY_TICKS=2400 node --import tsx/esm tools/qa/l10-story.ts",
+  "note": "Native simulation, seed 1; LOW and HIGH, ordinary skilled input policy. Compact receipt omits detailed event trace.",
+  "checks": [
+    {
+      "tier": "low",
+      "name": "optional house toy is collected once without a weapon slot",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "barn-machete is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 552,
+          "y": 0.15,
+          "z": 0.5,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "farmhouse-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 698,
+          "y": 0.15,
+          "z": 25,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "shed-molotov is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1165,
+          "y": 0.15,
+          "z": -12,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "workshop-nailgun is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1397,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "guard-tower-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1960,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 937 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 937,
+          "z": 80
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 136.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 2137 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2137,
+          "z": -75
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 78.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 3317 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 3317,
+          "z": 95
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 109.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 925 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 925,
+          "z": -12
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "gap 2110 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2110,
+          "z": -2
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "low",
+      "name": "hangar conversation completes in order with Reyes fallback",
+      "pass": true,
+      "observed": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes",
+        "L10.mega-roar"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "six living researchers, guards and continuity speaker are present",
+      "pass": true,
+      "observed": [
+        {
+          "key": "hangar-voss",
+          "id": 147,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 148,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 149,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 150,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 151,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 152,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "hangar entrance connects to indoor handoff",
+      "pass": true,
+      "observed": {
+        "cells": 56
+      }
+    },
+    {
+      "tier": "low",
+      "name": "cure handoff issues exactly ten selectable weapons",
+      "pass": true,
+      "observed": [
+        "weapon.machete",
+        "weapon.machete",
+        "weapon.hunting-rifle",
+        "weapon.molotov",
+        "weapon.nail-gun",
+        "weapon.assault-rifle",
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.flamethrower",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "full hangar inventory and conversation survive save validation and codec",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "walk Mega cannot be killed even by repeated direct rockets",
+      "pass": false,
+      "observed": {
+        "initialHp": 3000,
+        "hp": 1907.7974922019102
+      }
+    },
+    {
+      "tier": "low",
+      "name": "hangar boundary protects courier from outside attacks",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "every damaging carried weapon can hurt the finale Mega",
+      "pass": true,
+      "observed": {
+        "weapon.machete": 45,
+        "weapon.handgun": 20,
+        "weapon.shotgun": 240,
+        "weapon.assault-rifle": 26,
+        "weapon.hunting-rifle": 300,
+        "weapon.nail-gun": 14,
+        "weapon.flamethrower": 4.5,
+        "weapon.rocket-launcher": 300,
+        "weapon.molotov": 90,
+        "weapon.pipe-bomb": 270
+      }
+    },
+    {
+      "tier": "low",
+      "name": "arena has both fuel hazards and an accessible gate switch",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "powered gate damages and interrupts the finale Mega once",
+      "pass": true,
+      "observed": {
+        "beforeGate": 2730,
+        "after": 1830,
+        "staggerUntil": 3723
+      }
+    },
+    {
+      "tier": "low",
+      "name": "reinforcements continue after charge-ready",
+      "pass": true,
+      "observed": {
+        "before": 40,
+        "after": 61,
+        "assaultTicks": 1
+      }
+    },
+    {
+      "tier": "low",
+      "name": "mounted platform rejects ground melee without stunlock",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "stair climber can contest the gun from behind with reduced damage",
+      "pass": false,
+      "observed": 35
+    },
+    {
+      "tier": "low",
+      "name": "infected reaches the manned raised platform by its stair",
+      "pass": true,
+      "observed": {
+        "entered": {
+          "x": 3999.120526332994,
+          "y": 1.5999999999999999,
+          "z": -32.998553027223565,
+          "yaw": -2.9233333333333347
+        },
+        "reachedDeck": true,
+        "climb": [
+          {
+            "x": 4002.199785094547,
+            "y": 0.7,
+            "z": -32.999943445933496,
+            "yaw": 0
+          },
+          {
+            "x": 4002.1404301831367,
+            "y": 0.7,
+            "z": -32.992136790804004,
+            "yaw": -0.18333333333333332
+          },
+          {
+            "x": 4001.8591395210356,
+            "y": 0.7,
+            "z": -32.97700921629388,
+            "yaw": -0.7000000000000001
+          },
+          {
+            "x": 4000.9462920111496,
+            "y": 0.7,
+            "z": -32.98761244971891,
+            "yaw": -1.4433333333333331
+          },
+          {
+            "x": 4000.0334190524727,
+            "y": 0.7999999999999996,
+            "z": -32.994582896530524,
+            "yaw": -2.1933333333333334
+          },
+          {
+            "x": 3999.120526332994,
+            "y": 1.5999999999999999,
+            "z": -32.998553027223565,
+            "yaw": -2.9233333333333347
+          },
+          {
+            "x": 3998.207622481406,
+            "y": 2.1999999999999997,
+            "z": -33.00066622240105,
+            "yaw": -3.390000000000001
+          },
+          {
+            "x": 3997.2947130998746,
+            "y": 2.8,
+            "z": -33.00031715107086,
+            "yaw": -3.523333333333334
+          },
+          {
+            "x": 3996.3817987965544,
+            "y": 3.3999999999999995,
+            "z": -32.99944687114292,
+            "yaw": -3.3233333333333337
+          },
+          {
+            "x": 3995.468884329284,
+            "y": 3.7800000000000002,
+            "z": -32.99891226503163,
+            "yaw": -3.155474194310486
+          },
+          {
+            "x": 3994.5559697303684,
+            "y": 3.7800000000000002,
+            "z": -32.9986877943493,
+            "yaw": -3.143661767639468
+          },
+          {
+            "x": 3993.6430550625328,
+            "y": 3.7800000000000002,
+            "z": -32.99867314033478,
+            "yaw": -3.141934898509633
+          },
+          {
+            "x": 3992.730140366297,
+            "y": 3.7800000000000002,
+            "z": -32.99879365924265,
+            "yaw": -3.1417725720793936
+          },
+          {
+            "x": 3991.8172256629837,
+            "y": 3.7800000000000002,
+            "z": -32.999003404270816,
+            "yaw": -3.1418238611093425
+          },
+          {
+            "x": 3990.90921674822,
+            "y": 3.7800000000000002,
+            "z": -32.999274661241664,
+            "yaw": 3.141258320123491
+          },
+          {
+            "x": 3990.003891769071,
+            "y": 3.7800000000000002,
+            "z": -32.999596305940536,
+            "yaw": 3.1412341904075127
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          },
+          {
+            "x": 3989.92097058699,
+            "y": 3.7800000000000002,
+            "z": -32.999596488411065,
+            "yaw": 3.141017006691259
+          }
+        ]
+      }
+    },
+    {
+      "tier": "low",
+      "name": "production resume restores indoor cast, completed dialogue, cure and every selectable weapon",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "living post-crash Sam keeps his radio lines and identity model",
+      "pass": true,
+      "observed": [
+        "L10.farmstead"
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "green tide restores living infected as healthy same-ID people",
+      "pass": true,
+      "observed": {
+        "humanId": 161,
+        "archetype": "npc.resident",
+        "hp": 100
+      }
+    },
+    {
+      "tier": "low",
+      "name": "courier can walk among recovering people during release",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "title starts within 65 seconds after delivery and compressed panorama",
+      "pass": true,
+      "observed": {
+        "phase": "title",
+        "elapsed": 3900
+      }
+    },
+    {
+      "tier": "low",
+      "name": "readable credits remain for at least 89 seconds",
+      "pass": true,
+      "observed": {
+        "phase": "credits",
+        "phaseTicks": 5340,
+        "survivors": [],
+        "approaching": [
+          170,
+          171,
+          172
+        ],
+        "groupsAuthored": true
+      }
+    },
+    {
+      "tier": "low",
+      "name": "credits finish through thanks and record a skippable repeat view",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "native ordinary-input route reaches credits",
+      "pass": true,
+      "observed": {
+        "outcome": "complete",
+        "blocker": null,
+        "time": 1397.6833333333334,
+        "deaths": 6
+      }
+    },
+    {
+      "tier": "low",
+      "name": "overpass Mega throws a prop during beat 6",
+      "pass": false,
+      "observed": [
+        {
+          "tick": 29805,
+          "move": "alpha.grab-throw",
+          "sourceId": 116,
+          "playerX": 1925.8822021484375
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "Mega visibly enters widest frame within three minutes",
+      "pass": false,
+      "observed": 379.75
+    },
+    {
+      "tier": "low",
+      "name": "persistent Mega produces recurring close encounters in distinct route sections",
+      "pass": true,
+      "observed": [
+        {
+          "tick": 22785,
+          "region": "3",
+          "distance": 23.56329030918412
+        },
+        {
+          "tick": 31155,
+          "region": "4",
+          "distance": 27.166040036467255
+        },
+        {
+          "tick": 52623,
+          "region": "6",
+          "distance": 18.450877085363736
+        },
+        {
+          "tick": 61806,
+          "region": "7",
+          "distance": 26.182297424577225
+        },
+        {
+          "tick": 71498,
+          "region": "8",
+          "distance": 19.802290753430437
+        },
+        {
+          "tick": 71556,
+          "region": "7",
+          "distance": 11.890190526010361
+        },
+        {
+          "tick": 75333,
+          "region": "8",
+          "distance": 12.904773444161988
+        },
+        {
+          "tick": 77193,
+          "region": "7",
+          "distance": 18.51506626966082
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "no ordinary infected first enters the widest frame standing idle",
+      "pass": false,
+      "observed": {
+        "idleEntries": [
+          611,
+          612,
+          623,
+          629
+        ],
+        "seen": 507
+      }
+    },
+    {
+      "tier": "low",
+      "name": "natural handoff gives the whole selectable arsenal",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "name": "competent finale uses mounted gun to shred crowds",
+      "pass": true,
+      "observed": {
+        "mounts": 2,
+        "minigunKills": 18
+      }
+    },
+    {
+      "tier": "low",
+      "name": "no close-range ground rocket exploit",
+      "pass": true,
+      "observed": {
+        "shortestTarget": 18.020500125554864,
+        "closeRocketBlasts": 0
+      }
+    },
+    {
+      "tier": "low",
+      "name": "hangar-to-gate finale takes 7–9 minutes",
+      "pass": false,
+      "observed": 367.5333333333332
+    },
+    {
+      "tier": "low",
+      "name": "every story beat arrives 45–75 seconds after the previous one",
+      "pass": false,
+      "observed": [
+        11.816666666666666,
+        45.233333333333334,
+        113.39999999999999,
+        17.5,
+        24.46666666666667,
+        17.78333333333333,
+        11.116666666666674,
+        24.899999999999977,
+        34.53333333333336
+      ]
+    },
+    {
+      "tier": "low",
+      "name": "fight or story gaps stay within 20 seconds",
+      "pass": true,
+      "observed": 15.616666666666667
+    },
+    {
+      "tier": "high",
+      "name": "optional house toy is collected once without a weapon slot",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "barn-machete is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 552,
+          "y": 0.15,
+          "z": 0.5,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "farmhouse-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 698,
+          "y": 0.15,
+          "z": 25,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "shed-molotov is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1165,
+          "y": 0.15,
+          "z": -12,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "workshop-nailgun is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1397,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "guard-tower-rifle is reachable and collected on approach once",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 1960,
+          "y": 0.15,
+          "z": 16,
+          "yaw": 0
+        },
+        "reachable": true,
+        "retained": true,
+        "gone": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 937 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 937,
+          "z": 80
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 136.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 2137 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2137,
+          "z": -75
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 78.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 3317 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 3317,
+          "z": 95
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 109.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 925 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 925,
+          "z": -12
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "gap 2110 fits courier and excludes Mega",
+      "pass": true,
+      "observed": {
+        "at": {
+          "x": 2110,
+          "z": -2
+        },
+        "courierClear": true,
+        "megaClear": false,
+        "courierRoute": {
+          "connected": true,
+          "metres": 5.5
+        },
+        "megaRoute": {
+          "connected": true,
+          "metres": 77.5
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "name": "hangar conversation completes in order with Reyes fallback",
+      "pass": true,
+      "observed": [
+        "L10.voss-intro",
+        "L10.voss-sample",
+        "L10.courier-carried",
+        "L10.voss-cure",
+        "L10.voss-delivery",
+        "L10.ruiz",
+        "L10.voss-prototype",
+        "L10.sam-coming.reyes",
+        "L10.voss-stay",
+        "L10.sam-delivery.reyes",
+        "L10.mega-roar"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "six living researchers, guards and continuity speaker are present",
+      "pass": true,
+      "observed": [
+        {
+          "key": "hangar-voss",
+          "id": 147,
+          "model": "npc.lab-tech-b",
+          "hp": 100
+        },
+        {
+          "key": "hangar-ruiz",
+          "id": 148,
+          "model": "npc.national-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-researcher",
+          "id": 149,
+          "model": "npc.lab-tech-a",
+          "hp": 100
+        },
+        {
+          "key": "hangar-sam",
+          "id": 150,
+          "model": "npc.national-guard",
+          "hp": 40
+        },
+        {
+          "key": "hangar-guard-west",
+          "id": 151,
+          "model": "npc.lab-guard",
+          "hp": 100
+        },
+        {
+          "key": "hangar-guard-east",
+          "id": 152,
+          "model": "npc.lab-guard",
+          "hp": 100
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "hangar entrance connects to indoor handoff",
+      "pass": true,
+      "observed": {
+        "cells": 56
+      }
+    },
+    {
+      "tier": "high",
+      "name": "cure handoff issues exactly ten selectable weapons",
+      "pass": true,
+      "observed": [
+        "weapon.machete",
+        "weapon.machete",
+        "weapon.hunting-rifle",
+        "weapon.molotov",
+        "weapon.nail-gun",
+        "weapon.assault-rifle",
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.flamethrower",
+        "weapon.rocket-launcher",
+        "weapon.pipe-bomb"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "full hangar inventory and conversation survive save validation and codec",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "walk Mega cannot be killed even by repeated direct rockets",
+      "pass": false,
+      "observed": {
+        "initialHp": 3000,
+        "hp": 1907.7974922019102
+      }
+    },
+    {
+      "tier": "high",
+      "name": "hangar boundary protects courier from outside attacks",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "every damaging carried weapon can hurt the finale Mega",
+      "pass": true,
+      "observed": {
+        "weapon.machete": 45,
+        "weapon.handgun": 20,
+        "weapon.shotgun": 240,
+        "weapon.assault-rifle": 26,
+        "weapon.hunting-rifle": 300,
+        "weapon.nail-gun": 14,
+        "weapon.flamethrower": 4.5,
+        "weapon.rocket-launcher": 300,
+        "weapon.molotov": 90,
+        "weapon.pipe-bomb": 270
+      }
+    },
+    {
+      "tier": "high",
+      "name": "arena has both fuel hazards and an accessible gate switch",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "powered gate damages and interrupts the finale Mega once",
+      "pass": true,
+      "observed": {
+        "beforeGate": 2730,
+        "after": 1830,
+        "staggerUntil": 3723
+      }
+    },
+    {
+      "tier": "high",
+      "name": "reinforcements continue after charge-ready",
+      "pass": true,
+      "observed": {
+        "before": 38,
+        "after": 62,
+        "assaultTicks": 1
+      }
+    },
+    {
+      "tier": "high",
+      "name": "mounted platform rejects ground melee without stunlock",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "stair climber can contest the gun from behind with reduced damage",
+      "pass": false,
+      "observed": 35
+    },
+    {
+      "tier": "high",
+      "name": "infected reaches the manned raised platform by its stair",
+      "pass": true,
+      "observed": {
+        "entered": {
+          "x": 3998.516628447551,
+          "y": 1.9999999999999998,
+          "z": -33.004189788794804,
+          "yaw": -3.390000000000001
+        },
+        "reachedDeck": true,
+        "climb": [
+          {
+            "x": 4002.199778112143,
+            "y": 0.7,
+            "z": -32.99998781414322,
+            "yaw": 0
+          },
+          {
+            "x": 4002.1398683908383,
+            "y": 0.7,
+            "z": -32.99669763281195,
+            "yaw": -0.18333333333333332
+          },
+          {
+            "x": 4001.865436252272,
+            "y": 0.7,
+            "z": -32.98683763764542,
+            "yaw": -0.7000000000000001
+          },
+          {
+            "x": 4001.028240994813,
+            "y": 0.7,
+            "z": -32.99297512502561,
+            "yaw": -1.4433333333333331
+          },
+          {
+            "x": 4000.1910438645327,
+            "y": 0.7999999999999996,
+            "z": -32.99862823743519,
+            "yaw": -2.1933333333333334
+          },
+          {
+            "x": 3999.353839244388,
+            "y": 1.3999999999999997,
+            "z": -33.0022875234926,
+            "yaw": -2.9233333333333347
+          },
+          {
+            "x": 3998.516628447551,
+            "y": 1.9999999999999998,
+            "z": -33.004189788794804,
+            "yaw": -3.390000000000001
+          },
+          {
+            "x": 3997.67943355721,
+            "y": 2.5999999999999996,
+            "z": -33.000225713144054,
+            "yaw": -3.523333333333334
+          },
+          {
+            "x": 3996.8422158526887,
+            "y": 3.2,
+            "z": -32.99997206529436,
+            "yaw": -3.3233333333333337
+          },
+          {
+            "x": 3996.0049981111447,
+            "y": 3.7800000000000002,
+            "z": -32.9998464547301,
+            "yaw": -3.1555239871394023
+          },
+          {
+            "x": 3995.1677803641883,
+            "y": 3.7800000000000002,
+            "z": -32.999781551711465,
+            "yaw": -3.14378526047205
+          },
+          {
+            "x": 3994.330562613896,
+            "y": 3.7800000000000002,
+            "z": -32.999761013623896,
+            "yaw": -3.141931175791841
+          },
+          {
+            "x": 3993.4933448620004,
+            "y": 3.7800000000000002,
+            "z": -32.99976874119594,
+            "yaw": -3.1416581737869116
+          },
+          {
+            "x": 3992.6561271094756,
+            "y": 3.7800000000000002,
+            "z": -32.999794205424884,
+            "yaw": -3.1416307116360316
+          },
+          {
+            "x": 3991.818909356802,
+            "y": 3.7800000000000002,
+            "z": -32.99983114327378,
+            "yaw": -3.141637110063172
+          },
+          {
+            "x": 3990.9865973897568,
+            "y": 3.7800000000000002,
+            "z": -32.999875709831116,
+            "yaw": 3.1415343522792645
+          },
+          {
+            "x": 3990.1569693488977,
+            "y": 3.7800000000000002,
+            "z": -32.999926249842424,
+            "yaw": 3.1415313368402615
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          },
+          {
+            "x": 3989.9077667201814,
+            "y": 3.7800000000000002,
+            "z": -32.999942550076476,
+            "yaw": 3.1415091224713128
+          }
+        ]
+      }
+    },
+    {
+      "tier": "high",
+      "name": "production resume restores indoor cast, completed dialogue, cure and every selectable weapon",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "living post-crash Sam keeps his radio lines and identity model",
+      "pass": true,
+      "observed": [
+        "L10.farmstead"
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "green tide restores living infected as healthy same-ID people",
+      "pass": true,
+      "observed": {
+        "humanId": 162,
+        "archetype": "npc.resident",
+        "hp": 100
+      }
+    },
+    {
+      "tier": "high",
+      "name": "courier can walk among recovering people during release",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "title starts within 65 seconds after delivery and compressed panorama",
+      "pass": true,
+      "observed": {
+        "phase": "title",
+        "elapsed": 3900
+      }
+    },
+    {
+      "tier": "high",
+      "name": "readable credits remain for at least 89 seconds",
+      "pass": true,
+      "observed": {
+        "phase": "credits",
+        "phaseTicks": 5340,
+        "survivors": [
+          181,
+          182,
+          183,
+          184,
+          185
+        ],
+        "approaching": [
+          175,
+          176,
+          177,
+          178,
+          179,
+          180
+        ],
+        "groupsAuthored": true
+      }
+    },
+    {
+      "tier": "high",
+      "name": "credits finish through thanks and record a skippable repeat view",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "native ordinary-input route reaches credits",
+      "pass": true,
+      "observed": {
+        "outcome": "complete",
+        "blocker": null,
+        "time": 2091.0833333333335,
+        "deaths": 25
+      }
+    },
+    {
+      "tier": "high",
+      "name": "overpass Mega throws a prop during beat 6",
+      "pass": true,
+      "observed": [
+        {
+          "tick": 41109,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 1913.6197509765625
+        },
+        {
+          "tick": 42907,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 1890.94091796875
+        },
+        {
+          "tick": 70383,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 3353.099609375
+        },
+        {
+          "tick": 90706,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 3994.300537109375
+        },
+        {
+          "tick": 94053,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 3990.4107123131357
+        },
+        {
+          "tick": 94958,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 4004.1201171875
+        },
+        {
+          "tick": 98004,
+          "move": "alpha.living-missile",
+          "sourceId": 115,
+          "playerX": 4007.89306640625
+        },
+        {
+          "tick": 120500,
+          "move": "alpha.living-missile",
+          "sourceId": 115,
+          "playerX": 3995.9130859375
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "Mega visibly enters widest frame within three minutes",
+      "pass": false,
+      "observed": 492.4166666666667
+    },
+    {
+      "tier": "high",
+      "name": "persistent Mega produces recurring close encounters in distinct route sections",
+      "pass": true,
+      "observed": [
+        {
+          "tick": 29545,
+          "region": "2",
+          "distance": 14.083063364968115
+        },
+        {
+          "tick": 29554,
+          "region": "3",
+          "distance": 12.606257276830688
+        },
+        {
+          "tick": 31963,
+          "region": "2",
+          "distance": 13.979086547193722
+        },
+        {
+          "tick": 40260,
+          "region": "3",
+          "distance": 15.452350630913937
+        },
+        {
+          "tick": 62649,
+          "region": "5",
+          "distance": 27.613062540804584
+        },
+        {
+          "tick": 65966,
+          "region": "6",
+          "distance": 25.334703083093352
+        },
+        {
+          "tick": 78042,
+          "region": "7",
+          "distance": 13.88126718622535
+        },
+        {
+          "tick": 90578,
+          "region": "8",
+          "distance": 19.795129907039286
+        },
+        {
+          "tick": 90629,
+          "region": "7",
+          "distance": 13.023133378732268
+        },
+        {
+          "tick": 94415,
+          "region": "8",
+          "distance": 13.132096054787572
+        },
+        {
+          "tick": 94442,
+          "region": "7",
+          "distance": 12.953759328084304
+        },
+        {
+          "tick": 94547,
+          "region": "8",
+          "distance": 9.33010289390333
+        },
+        {
+          "tick": 97017,
+          "region": "7",
+          "distance": 8.013027643760504
+        },
+        {
+          "tick": 97752,
+          "region": "8",
+          "distance": 7.931723848134913
+        },
+        {
+          "tick": 101847,
+          "region": "7",
+          "distance": 2.992409699961153
+        },
+        {
+          "tick": 103854,
+          "region": "8",
+          "distance": 8.910336443184583
+        },
+        {
+          "tick": 107803,
+          "region": "7",
+          "distance": 19.729447853248843
+        },
+        {
+          "tick": 111120,
+          "region": "8",
+          "distance": 23.373043694159115
+        },
+        {
+          "tick": 111670,
+          "region": "7",
+          "distance": 10.00494976630544
+        },
+        {
+          "tick": 112383,
+          "region": "8",
+          "distance": 8.664263057166677
+        },
+        {
+          "tick": 114105,
+          "region": "7",
+          "distance": 14.061113717086464
+        },
+        {
+          "tick": 114179,
+          "region": "8",
+          "distance": 13.070667302735306
+        },
+        {
+          "tick": 114192,
+          "region": "7",
+          "distance": 13.868021633634907
+        },
+        {
+          "tick": 114205,
+          "region": "8",
+          "distance": 14.821991703907889
+        },
+        {
+          "tick": 114649,
+          "region": "7",
+          "distance": 15.37402130700834
+        },
+        {
+          "tick": 114720,
+          "region": "8",
+          "distance": 9.406201926810894
+        },
+        {
+          "tick": 116739,
+          "region": "7",
+          "distance": 14.909507635047998
+        },
+        {
+          "tick": 117002,
+          "region": "8",
+          "distance": 10.027698822335394
+        },
+        {
+          "tick": 118567,
+          "region": "7",
+          "distance": 15.719279082223554
+        },
+        {
+          "tick": 120729,
+          "region": "8",
+          "distance": 6.804371549442629
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "no ordinary infected first enters the widest frame standing idle",
+      "pass": false,
+      "observed": {
+        "idleEntries": [
+          651,
+          654,
+          658,
+          661,
+          663,
+          664,
+          656,
+          659,
+          662,
+          674,
+          678,
+          677,
+          682,
+          694,
+          676,
+          679,
+          691
+        ],
+        "seen": 603
+      }
+    },
+    {
+      "tier": "high",
+      "name": "natural handoff gives the whole selectable arsenal",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "name": "competent finale uses mounted gun to shred crowds",
+      "pass": true,
+      "observed": {
+        "mounts": 2,
+        "minigunKills": 29
+      }
+    },
+    {
+      "tier": "high",
+      "name": "no close-range ground rocket exploit",
+      "pass": true,
+      "observed": {
+        "shortestTarget": 19.512362889545575,
+        "closeRocketBlasts": 0
+      }
+    },
+    {
+      "tier": "high",
+      "name": "hangar-to-gate finale takes 7–9 minutes",
+      "pass": true,
+      "observed": 456.3833333333333
+    },
+    {
+      "tier": "high",
+      "name": "every story beat arrives 45–75 seconds after the previous one",
+      "pass": false,
+      "observed": [
+        11.4,
+        62.75000000000001,
+        14.666666666666657,
+        44.23333333333335,
+        24.44999999999999,
+        17.80000000000001,
+        87.5333333333333,
+        24.900000000000034,
+        102.13333333333333
+      ]
+    },
+    {
+      "tier": "high",
+      "name": "fight or story gaps stay within 20 seconds",
+      "pass": true,
+      "observed": 19.8
+    }
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "method": "Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1397.6833333333334,
+        "deaths": 6,
+        "kills": 2,
+        "damageTaken": 1101.900333333356,
+        "failures": {
+          "player-died": 6
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 23.966666666666665
+          },
+          {
+            "id": "farmstead",
+            "t": 453.53333333333336
+          },
+          {
+            "id": "farmstead",
+            "t": 480.93333333333334
+          },
+          {
+            "id": "restricted-zone",
+            "t": 636.9833333333333
+          },
+          {
+            "id": "research-hangar",
+            "t": 694.65
+          },
+          {
+            "id": "research",
+            "t": 750.6666666666666
+          },
+          {
+            "id": "cure",
+            "t": 751.5666666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 776.9666666666667
+          },
+          {
+            "id": "delivery-corridor",
+            "t": 792.1
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 1118.5
+          },
+          {
+            "id": "install",
+            "t": 1187.3333333333333
+          },
+          {
+            "id": "hold",
+            "t": 1253.1166666666666
+          },
+          {
+            "id": "hold",
+            "t": 1269.2333333333333
+          },
+          {
+            "id": "hold",
+            "t": 1308.05
+          },
+          {
+            "id": "mega",
+            "t": 1328.5666666666666
+          },
+          {
+            "id": "release",
+            "t": 1332.6833333333334
+          },
+          {
+            "id": "epilogue",
+            "t": 1397.6833333333334
+          },
+          {
+            "id": "credits",
+            "t": 1498.6833333333334
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 61.249999999997804,
+            "travelSeconds": 34.63333333333265,
+            "combatSeconds": 26.616666666666436,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 275.17356260303444
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 112.83333333332821,
+            "travelSeconds": 75.19999999999702,
+            "combatSeconds": 37.63333333333248,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 503.55312986691047
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 275.45000000007815,
+            "travelSeconds": 192.5333333333787,
+            "combatSeconds": 80.93333333333003,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 1.9833333333333312,
+            "metres": 1731.984479086268
+          },
+          {
+            "id": "military-zone",
+            "seconds": 192.33333333337853,
+            "travelSeconds": 127.78333333332736,
+            "combatSeconds": 62.566666666664396,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 1.9833333333333312,
+            "metres": 949.8555307059236
+          },
+          {
+            "id": "research-campus",
+            "seconds": 154.20000000001485,
+            "travelSeconds": 70.41666666666396,
+            "combatSeconds": 30.09999999999957,
+            "interactionSeconds": 40.43333333333232,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 13.250000000000238,
+            "metres": 539.4188964345732
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 327.3333333333643,
+            "travelSeconds": 199.8333333333845,
+            "combatSeconds": 124.91666666666086,
+            "interactionSeconds": 0.05,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 2.533333333333329,
+            "metres": 1274.8020485379388
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 274.28333333341254,
+            "travelSeconds": 53.89999999999822,
+            "combatSeconds": 14.150000000000283,
+            "interactionSeconds": 0,
+            "holdSeconds": 141.23333333333787,
+            "epilogueSeconds": 64.9999999999976,
+            "otherSeconds": 0,
+            "metres": 959.5310534903238
+          }
+        ],
+        "maxConcurrentInfected": 62,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 861,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "finalePacing": {
+        "hangarToGateSeconds": 367.5333333333332,
+        "beatSeconds": [
+          0,
+          11.816666666666666,
+          57.05,
+          170.45,
+          187.95,
+          212.41666666666666,
+          230.2,
+          241.31666666666666,
+          266.21666666666664,
+          300.75
+        ],
+        "longestGapSeconds": 15.616666666666667,
+        "storyMoments": 13,
+        "fightMoments": 1007
+      },
+      "bikeTicks": 2219,
+      "bikeTransitions": [
+        {
+          "tick": 46531,
+          "riding": true,
+          "x": 2798.9130859375,
+          "z": 45.37490463256836,
+          "nearby": 0
+        },
+        {
+          "tick": 48673,
+          "riding": false,
+          "x": 2998.47998046875,
+          "z": 73.93951416015625,
+          "nearby": 4
+        },
+        {
+          "tick": 49021,
+          "riding": true,
+          "x": 2999.4482421875,
+          "z": 71.90825653076172,
+          "nearby": 1
+        },
+        {
+          "tick": 49098,
+          "riding": false,
+          "x": 3002.711181640625,
+          "z": 74.98527526855469,
+          "nearby": 2
+        }
+      ],
+      "overpassThrows": [
+        {
+          "tick": 29805,
+          "move": "alpha.grab-throw",
+          "sourceId": 116,
+          "playerX": 1925.8822021484375
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "method": "Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 2091.0833333333335,
+        "deaths": 25,
+        "kills": 7,
+        "damageTaken": 3056.919000000022,
+        "failures": {
+          "player-died": 25
+        },
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 23.966666666666665
+          },
+          {
+            "id": "farmstead",
+            "t": 640.1333333333333
+          },
+          {
+            "id": "farmstead",
+            "t": 667.8333333333334
+          },
+          {
+            "id": "farmstead",
+            "t": 690.4166666666666
+          },
+          {
+            "id": "farmstead",
+            "t": 706.8666666666667
+          },
+          {
+            "id": "restricted-zone",
+            "t": 867.7833333333333
+          },
+          {
+            "id": "research-hangar",
+            "t": 925.1666666666666
+          },
+          {
+            "id": "research",
+            "t": 981.1833333333333
+          },
+          {
+            "id": "cure",
+            "t": 982.0833333333334
+          },
+          {
+            "id": "research-exit",
+            "t": 1007.7
+          },
+          {
+            "id": "delivery-corridor",
+            "t": 1038.6833333333334
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 1437.8666666666666
+          },
+          {
+            "id": "install",
+            "t": 1506.7
+          },
+          {
+            "id": "hold",
+            "t": 1571.1
+          },
+          {
+            "id": "hold",
+            "t": 1591.6833333333334
+          },
+          {
+            "id": "hold",
+            "t": 1638.45
+          },
+          {
+            "id": "hold",
+            "t": 1666.8166666666666
+          },
+          {
+            "id": "mega",
+            "t": 2017.2333333333333
+          },
+          {
+            "id": "mega",
+            "t": 2021.0166666666667
+          },
+          {
+            "id": "release",
+            "t": 2026.0833333333333
+          },
+          {
+            "id": "epilogue",
+            "t": 2091.0833333333335
+          },
+          {
+            "id": "credits",
+            "t": 2192.0833333333335
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 61.249999999997804,
+            "travelSeconds": 40.416666666665655,
+            "combatSeconds": 20.83333333333343,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 275.17356260303444
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 114.18333333332814,
+            "travelSeconds": 73.8499999999971,
+            "combatSeconds": 40.33333333333233,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 509.0755064476063
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 460.3166666665767,
+            "travelSeconds": 288.51666666673293,
+            "combatSeconds": 165.85000000002412,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 5.949999999999984,
+            "metres": 3435.473274950052
+          },
+          {
+            "id": "military-zone",
+            "seconds": 236.83333333341395,
+            "travelSeconds": 144.08333333334014,
+            "combatSeconds": 86.81666666666302,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 5.933333333333318,
+            "metres": 1249.5211143837384
+          },
+          {
+            "id": "research-campus",
+            "seconds": 173.45000000003017,
+            "travelSeconds": 82.48333333332994,
+            "combatSeconds": 37.11666666666584,
+            "interactionSeconds": 40.34999999999899,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 13.50000000000025,
+            "metres": 536.12111069649
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 396.7333333333012,
+            "travelSeconds": 194.1166666667133,
+            "combatSeconds": 188.7833333333757,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 13.8333333333336,
+            "metres": 2100.8615042357164
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 648.3166666664057,
+            "travelSeconds": 47.53333333333192,
+            "combatSeconds": 23.266666666666627,
+            "interactionSeconds": 0,
+            "holdSeconds": 510.5333333331977,
+            "epilogueSeconds": 64.9999999999976,
+            "otherSeconds": 1.9833333333333312,
+            "metres": 2697.9879040855435
+          }
+        ],
+        "maxConcurrentInfected": 70,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 1485,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "finalePacing": {
+        "hangarToGateSeconds": 456.3833333333333,
+        "beatSeconds": [
+          0,
+          11.4,
+          74.15,
+          88.81666666666666,
+          133.05,
+          157.5,
+          175.3,
+          262.8333333333333,
+          287.73333333333335,
+          389.8666666666667
+        ],
+        "longestGapSeconds": 19.8,
+        "storyMoments": 21,
+        "fightMoments": 1701
+      },
+      "bikeTicks": 156,
+      "bikeTransitions": [
+        {
+          "tick": 60391,
+          "riding": true,
+          "x": 2801.029052734375,
+          "z": 45.550506591796875,
+          "nearby": 0
+        },
+        {
+          "tick": 60547,
+          "riding": false,
+          "x": 2817.340087890625,
+          "z": 42.53495407104492,
+          "nearby": 8
+        }
+      ],
+      "overpassThrows": [
+        {
+          "tick": 41109,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 1913.6197509765625
+        },
+        {
+          "tick": 42907,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 1890.94091796875
+        },
+        {
+          "tick": 70383,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 3353.099609375
+        },
+        {
+          "tick": 90706,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 3994.300537109375
+        },
+        {
+          "tick": 94053,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 3990.4107123131357
+        },
+        {
+          "tick": 94958,
+          "move": "alpha.grab-throw",
+          "sourceId": 115,
+          "playerX": 4004.1201171875
+        },
+        {
+          "tick": 98004,
+          "move": "alpha.living-missile",
+          "sourceId": 115,
+          "playerX": 4007.89306640625
+        },
+        {
+          "tick": 120500,
+          "move": "alpha.living-missile",
+          "sourceId": 115,
+          "playerX": 3995.9130859375
+        }
+      ]
+    }
+  ]
+}

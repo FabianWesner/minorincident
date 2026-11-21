@@ -87,55 +87,122 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // ordinary district placement/LOD pipeline so both tiers load them before
     // they enter view; encounter cohorts are authored separately in encounters.ts.
     const beat = (id: string, asset: string, x: number, z: number, half: [number, number, number], yaw = 0, scale: [number, number, number] = [1, 1, 1]) => {
-      // Move each landmark with its encounter onto the measured objective
-      // crossing. The old R6 road is 60–80 m away from the skilled route.
-      const offset = id.startsWith('gate-') ? [20, -79] : id.startsWith('billboard-') ? [16, -62] : id.startsWith('hospital-') ? [-18, -58] : [0, 0];
-      x += offset[0]; z += offset[1];
       const p = place(`l10-setpiece-${id}`, asset, x, z, half, yaw, scale, true);
       p.fixed = true;
+      p.decorSolid = true;
       return p;
     };
+    const beatSolid = (id: string, x: number, z: number, halfX: number, halfZ: number, height: number) => layout.colliders.push({
+      id: `l10-setpiece-${id}/solid`, minTier: 0, maxTier: 6,
+      aabb: { min: [x - halfX, 0, z - halfZ], max: [x + halfX, height, z + halfZ] },
+    });
+    const roadside = (id: string, asset: string, x: number, z: number, half: [number, number, number], yaw = 0, scale: [number, number, number] = [1, 1, 1]) => {
+      const p = beat(id, asset, x, z, half, yaw, scale);
+      p.decorSolid = true;
+      // Small clue props and the fallen cable have no baked GLB collision.
+      // Give them authored solid boxes so the visual clue is also a world prop.
+      if (['util.radio', 'decal.papers', 'decay.downed-power-line'].includes(asset)) layout.colliders.push({
+        id: p.id, minTier: 0, maxTier: 6,
+        aabb: { min: [x - half[0], 0, z - half[2]], max: [x + half[0], half[1] * 2, z + half[2]] },
+      });
+      return p;
+    };
+    // Evacuation stalled on the winding approach: leave the 6 m ride lane open.
+    roadside('evac-bus-open', 'veh.evac-bus', 2790, 60, [5, 1.6, 1.5], Math.PI / 2);
+    roadside('evac-car-east', 'prop.l10-abandoned-sedan-blue', 2820, 36, [2.5, .8, 1.1], Math.PI / 2);
+    roadside('evac-car-west', 'prop.l10-abandoned-sedan-white', 2795, 0, [2.5, .8, 1.1], -Math.PI / 2);
+    roadside('evac-suitcases', 'prop.crates', 2810, 29, [.8, .5, .6], .4);
+    roadside('evac-child-bike', 'veh.courier-bike', 2818, 40, [1.1, .7, .5], Math.PI / 2);
+    roadside('evac-wait-sign', 'prop.stop-here-sign-trailer', 2787, 56, [.8, 1.7, .7], -.2);
+    // A split military roadblock lets the player thread a bike through once the fight opens the route.
+    roadside('gate-wreck-west', 'veh.military-truck', 2998, 78, [3.8, 1.5, 1.5], Math.PI / 2);
+    roadside('gate-barricade-north', 'prop.barricade', 3010, 105, [2.2, .7, .35], Math.PI / 2);
+    roadside('gate-barricade-south', 'prop.barricade', 3010, 82, [2.2, .7, .35], Math.PI / 2);
+    roadside('reyes-handset', 'util.radio', 3004, 98, [.3, .15, .2]);
+    roadside('downed-power-line', 'decay.downed-power-line', 3120, 111, [5.5, .6, 1.4], .3);
+    roadside('crashed-helicopter', 'prop.l10-crashed-helicopter', 3170, 131, [5, 1.8, 4], .5);
+    roadside('convoy-oil-drums', 'prop.cure-drum-stack', 3263, 72, [.7, .8, .6], .2);
+    roadside('convoy-log', 'decal.papers', 3268, 89, [.45, .08, .35], -.1);
+    roadside('overpass-rubble-west', 'prop.crates', 3380, 87, [1.4, .7, 1], -.4);
+    roadside('overpass-rubble-east', 'prop.sandbag-pallet', 3390, 103, [1.4, .7, .8], .2);
+    // A normal pushable physics prop: the pursuit Alpha must be able to pick
+    // this up for its existing overpass throw move.
+    place('l10-setpiece-overpass-throwable', 'prop.crates', 3332, 101.4, [.8, .5, .6], .1);
+    // Triage fencing reads as a final roadblock while the central lane stays passable.
+    roadside('hospital-fence-west', 'prop.cure-mil-fence', 3502, 86, [2.7, 1.2, .2], Math.PI / 2);
+    roadside('hospital-fence-east', 'prop.cure-mil-fence', 3502, 104, [2.7, 1.2, .2], Math.PI / 2);
+    roadside('medic-recorder', 'util.radio', 3492, 91, [.3, .15, .2]);
+    layout.lightGroups.push({ id: 'l10-complex-searchlight', offAt: 6 });
+    const beacon = roadside('complex-searchlight', 'prop.light-tower', 3825, -60, [1.2, 9, 1.2], Math.PI, [1.2, 4, 1.2]);
+    beacon.lightGroup = 'l10-complex-searchlight';
+    beacon.decorLights = true;
+    layout.lightGroups.push({ id: 'l10-final-siren', offAt: 6 });
+    for (const [i, z] of [-30, -20].entries()) {
+      const barricade = roadside(`final-barricade-${i}`, 'prop.barricade', 3720, z, [2, .7, .35], Math.PI / 2);
+      barricade.fieldLight = 'wreckfire';
+      const lamp = roadside(`final-siren-${i}`, 'prop.emergency-light', 3780, z, [.4, 1.5, .4]);
+      lamp.lightGroup = 'l10-final-siren'; lamp.decorLights = true;
+    }
+    for (const z of [-34, -16]) roadside(`final-burning-drums-${z}`, 'prop.cure-drum-stack', 3706, z, [.7, .8, .6]).fieldLight = 'wreckfire';
     // Gate warning: wire, sandbag approach, empty tower and an abandoned bus.
-    beat('gate-gantry', 'prop.l10-quarantine-gantry', 2990, 95, [.4, 2.45, 4.48], 0, [1, .7, .7]);
-    for (const z of [93.25, 96.75]) beat(`gate-effigy-${z}`, 'prop.l10-warning-effigy', 2990, z, [.46, 1.86, .39], 0, [.7, .7, .7]);
+    beat('gate-gantry', 'prop.l10-quarantine-gantry', 3010, 95, [.4, 2.45, 4.48], 0, [1, .7, .7]);
+    beatSolid('gate-gantry-left-post', 3010, 91, .23, .23, 4.9);
+    beatSolid('gate-gantry-right-post', 3010, 99, .23, .23, 4.9);
+    for (const z of [93.25, 96.75]) beat(`gate-effigy-${z}`, 'prop.l10-warning-effigy', 3010, z, [.46, 1.86, .39], 0, [.7, .7, .7]);
+    for (const z of [93.25, 96.75]) beatSolid(`gate-effigy-${z}`, 3010, z, .24, .24, 1.2);
     for (const z of [86, 104]) beat(`gate-wire-${z}`, 'prop.cure-mil-fence', 2994, z, [3.3, 1.4, .22], Math.PI / 2);
     beat('gate-sandbags', 'prop.sandbag-pallet', 2982, 99, [1.4, .7, .8]);
     beat('gate-tower', 'kit.guard-tower', 2995, 107, [1.6, 2.5, 1.5]);
     beat('gate-bus', 'veh.evac-bus', 2950, 126, [5, 1.6, 1.5], Math.PI / 2);
     // An abandoned public information board beside the objective crossing.
     beat('billboard-frame', 'prop.l10-cure-billboard', 3066, 92, [.4, 2.9, 3.8]);
+    beatSolid('billboard-frame', 3066, 92, .3, .3, 5.8);
     beat('billboard-wreck', 'prop.l10-abandoned-sedan-blue', 3072, 124, [2.5, .8, 1.1], Math.PI / 2);
     // The hazmat effigies use the retained TRELLIS source; the nearby cohort is separately admitted.
-    for (let i = 0; i < 7; i++) beat(`scarecrow-${i}`, 'prop.l10-hazmat-scarecrow', 3170 + i * 7, 56 + (i % 2) * 2, [.7, 1.3, .6], i % 2 ? .16 : -.12);
+    for (let i = 0; i < 7; i++) {
+      const x = 3170 + i * 7, z = 110 + (i % 2) * 2;
+      beat(`scarecrow-${i}`, 'prop.l10-hazmat-scarecrow', x, z, [.7, 1.3, .6], i % 2 ? .16 : -.12);
+      beatSolid(`scarecrow-${i}`, x, z, .26, .26, 1.5);
+    }
     // Wrecked military vehicles and sandbag islands create a broad fight lane.
     for (const [id, x, z, yaw] of [['a', 3240, 60, -.35], ['b', 3280, 125, Math.PI + .28]] as const) {
       const truck = beat(`convoy-truck-${id}`, 'veh.military-truck', x, z, [3.8, 1.5, 1.5], yaw);
       truck.decay = 'wrecked';
       truck.fieldLight = 'wreckfire';
     }
+    for (const [i, z] of [88, 102].entries()) {
+      const truck = roadside(`convoy-roadblock-${i}`, 'veh.military-truck', 3260, z, [3.8, 1.5, 1.5], Math.PI / 2);
+      truck.decay = 'wrecked'; truck.fieldLight = 'wreckfire';
+    }
     beat('convoy-cover-a', 'prop.sandbag-pallet', 3238, 103, [1.4, .7, .8]);
     beat('convoy-cover-b', 'prop.sandbag-pallet', 3285, 69, [1.4, .7, .8], Math.PI / 2);
     // Open-ended overpass spans the measured crossing, with lights at its sides.
-    beat('underpass-mouth', 'prop.l10-underpass', 3383, 74, [6, 3.2, 7]);
+    beat('underpass-mouth', 'prop.l10-underpass', 3383, 95, [6, 3.2, 7]);
     // Four independent pier footprints leave the full centre passage open to
     // navigation and physics; the overhead deck is not a ground-level wall.
-    for (const x of [3378.2, 3387.8]) for (const z of [67.3, 80.7]) {
+    for (const x of [3378.2, 3387.8]) for (const z of [88.3, 101.7]) {
       layout.colliders.push({ id: `l10-underpass-pier-${x}-${z}`, minTier: 0, maxTier: 6,
         aabb: { min: [x - .5, 0, z - .4], max: [x + .5, 4.9, z + .4] } });
     }
     layout.lightGroups.push({ id: 'l10-underpass', offAt: 6 });
-    for (const z of [67, 81]) {
+    for (const z of [88, 102]) {
       const lamp = beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3383, z, [.4, 1.5, .4]);
       lamp.lightGroup = 'l10-underpass';
       lamp.decorLights = true;
     }
     // Field triage on the final approach: quarantine tents and a marked transport.
-    for (const [i, x] of [3508, 3526, 3546].entries()) beat(`hospital-tent-${i}`, 'prop.l10-field-tent', x, i === 1 ? 89 : 83, [2.2, 1.6, 3.4], i % 2 ? Math.PI : 0);
+    for (const [i, x] of [3508, 3526, 3546].entries()) {
+      const z = i === 1 ? 89 : 83;
+      beat(`hospital-tent-${i}`, 'prop.l10-field-tent', x, z, [2.2, 1.6, 3.4], i % 2 ? Math.PI : 0);
+      beatSolid(`hospital-tent-${i}`, x, z, 1.6, 2.3, 2.8);
+    }
     beat('hospital-truck', 'veh.ambulance', 3538, 98, [1.5, 1.7, 3.4], Math.PI / 2);
     beat('hospital-supplies', 'prop.medical-cooler', 3531, 91, [.5, .5, .5]);
     beat('hospital-stretcher-a', 'prop.l10-field-stretcher', 3504, 90, [1.1, .85, .65], .2);
     beat('hospital-stretcher-b', 'prop.l10-field-stretcher', 3521, 91, [1.1, .85, .65], -.15);
-    place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
+    beatSolid('hospital-stretcher-a', 3504, 90, .7, .45, .9);
+    beatSolid('hospital-stretcher-b', 3521, 91, .7, .45, .9);
+    place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, -27, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
       const low = gap.z - 35, high = gap.z + 35;
       wall(`l10-gap-${i}-north`, gap.x - .2, low, gap.x + .2, gap.z - 1);

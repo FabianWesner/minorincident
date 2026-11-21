@@ -107,6 +107,16 @@ export const dialogue: Record<string, string> = {
   'L10.mega-roar': 'Courier: “What is that thing?”',
   'L10.mega-identity': 'Sam (radio): “That’s the Mega Alpha. It tracked the sample from the Annex — it won’t stop until it gets to you.”',
   'L10.farmstead': 'Sam (radio): “You alive? …Good. Don\'t stop moving. That thing doesn\'t sleep.”',
+  'L10.finale-0': 'Voss (radio): “Follow the light to the dispersal gate.”',
+  'L10.finale-1': 'Sam (radio): “They never came back for them.”',
+  'L10.finale-2': 'Private Reyes (radio): “Gate breached. The quarantine line is gone. Run.”',
+  'L10.finale-3': 'Courier: “It is. Late.”',
+  'L10.finale-4': 'Sam (radio): “Those fields are dry as tinder — light them up.”',
+  'L10.finale-5': 'Courier: “Convoy 7. They came from both sides.”',
+  'L10.finale-6': 'Courier: “It’s not chasing me. It’s herding me.”',
+  'L10.finale-7': 'Voss (radio, breaking up): “Underpass… lights… keep moving… [static]”',
+  'L10.finale-8': 'Medic recorder: “Triage is overrun. Seal the tents. Don’t wait.”',
+  'L10.finale-9': 'Voss (radio): “I see you. Run!”',
   'L10.hide-gap': 'Sam (radio): “It can\'t fit where you fit. Use that.”',
   'L10.armory': 'Sam (radio, breaking up): “…the hangar… they\'re still there… lights on…”',
   'L10.hangar-handover': 'Sergeant Ruiz: “Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty — and one of ours.” Dr. Voss: “Prototype. Burns hot. Don\'t use it in the corn.” Sam: “I\'m coming.” Dr. Voss: “You\'re bleeding into my floor. You\'re staying.” Sam: “Go finish your delivery.”',
@@ -127,4 +137,4 @@ export const dialogue: Record<string, string> = {
 
 };
 // The script's continuity rule changes the speaker, preserving every spoken line.
-for (const id of ['L10.farmstead', 'L10.hide-gap', 'L10.armory', 'L10.sam-coming', 'L10.sam-delivery']) dialogue[`${id}.reyes`] = dialogue[id].replace(/^Sam/, 'Private Reyes');
+for (const id of ['L10.farmstead', 'L10.hide-gap', 'L10.armory', 'L10.sam-coming', 'L10.sam-delivery', 'L10.finale-1', 'L10.finale-4']) dialogue[`${id}.reyes`] = dialogue[id].replace(/^Sam/, 'Private Reyes');

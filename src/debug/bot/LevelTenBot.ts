@@ -19,7 +19,8 @@ export class LevelTenBot {
     [1042, 80], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
     cure.anchors['guard-tower-rifle'], cure.anchors['r4-r5-seam'],
     cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
-    [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
+    [3010, 95], [3076, 95], [3190, 95], [3260, 95], [cureEscapeGaps[2].x, cureEscapeGaps[2].z],
+    [3390, 95], [3502, 95], [3577, -25], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
   ];
   private waypoint = 0;
   private clearStairsUntil = 0;
@@ -68,6 +69,19 @@ export class LevelTenBot {
     // omnidirectional scan shot unseen arrivals before they could enter view,
     // making the native route incomparable to real-input play.
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && (isMega(e) || !cornBlocksSight(w, [p.x, p.z], [e.transform.x, e.transform.z])) && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
+    const bike = w.vehicles?.bicycle, bikeEntity = bike?.entity;
+    if (bike && bikeEntity?.bicycle?.motorbike && p.x >= 2780 && p.x < 3750 && !finale) {
+      const nearThreat = threats.some(e => !isMega(e) && distance(e.transform) < 15);
+      const roadblock = [3010, 3260, 3390, 3502].some(x => Math.abs(p.x - x) < 18);
+      if (bike.riding && nearThreat && roadblock) { f.interact = true; return f; }
+      // Approach and mount a nearby bike only when the immediate fight has
+      // cleared. A bike left far behind is not an objective to backtrack to.
+      if (!bike.riding && !nearThreat && distance(bikeEntity.transform) < 12) {
+        f.move = this.walker.step(w, bikeEntity.transform, 1, 'motorbike') ?? f.move;
+        f.interact = bike.canInteract() && tick % 30 === 0;
+        return f;
+      }
+    }
     // A visible dog pounce has a short, committed windup. Face and hit that
     // dog while the ground telegraph is live instead of continuing to shoot
     // whichever ordinary infected happens to be a fraction closer.
@@ -131,14 +145,18 @@ export class LevelTenBot {
     const targetDistance = target ? distance(target.transform) : 0;
     const rocket = target && isMega(target) && targetDistance >= 18 && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
       { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, targetDistance) >= targetDistance;
-    const wanted = pouncingDog && distance(pouncingDog.transform) < 12 && rack.some(slot => slot.id === 'weapon.shotgun') ? 'weapon.shotgun'
+    const wanted = bike?.riding && bikeEntity?.bicycle?.motorbike ? 'weapon.handgun'
+      : pouncingDog && distance(pouncingDog.transform) < 12 && rack.some(slot => slot.id === 'weapon.shotgun') ? 'weapon.shotgun'
       : !finale ? travelWeapon : rocket ? 'weapon.rocket-launcher' : targetDistance < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
-    const choice = rack.findIndex(slot => slot.id === wanted);
-    const index = choice >= 0 ? choice : rack.length - 1, weapon = rack[index]?.id;
+    const handgunSide = bike?.riding && bikeEntity?.bicycle?.motorbike
+      ? (['LEFT', 'RIGHT'] as const).find(side => player.weapons![side].rack[player.weapons![side].index]?.id === 'weapon.handgun') : undefined;
+    const side = handgunSide ?? 'RIGHT', selectedRack = player.weapons![side].rack;
+    const choice = selectedRack.findIndex(slot => slot.id === wanted);
+    const index = choice >= 0 ? choice : selectedRack.length - 1, weapon = selectedRack[index]?.id;
     if (!released && target && this.profile !== 'evade-only' && weapon && (weapon !== 'weapon.fire-axe' || distance(target.transform) < 2.5)) {
-      f.selectedSlot = { side: 'RIGHT', index }; f.aimSource = 'keyboard';
+      f.selectedSlot = { side, index }; f.aimSource = 'keyboard';
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
-      f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.right.held = true;
+      f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; (side === 'LEFT' ? f.left : f.right).held = true;
       if (finale && d < 10 && p.y <= .9 && !gun?.mounted && !approachGun) {
         const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
         f.move = this.walker.step(w, { x: anchor.x + Math.cos(angle) * 18, z: anchor.z + Math.sin(angle) * 18 }, 1, 'dodge') ?? f.move;
