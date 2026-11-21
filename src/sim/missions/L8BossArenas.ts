@@ -186,7 +186,7 @@ export class L8BossArenas {
             arena.nextAt = w.tick + 360;
           }
         }
-        for (const e of live) e.infected!.arenaBoss!.engaged = !(arena.id === 'lion' && e.infected!.arenaBoss!.slot === 1 || arena.id === 'monkey' && e.infected!.arenaBoss!.slot === 6);
+        for (const e of live) e.infected!.arenaBoss!.engaged = !(arena.id === 'monkey' && e.infected!.arenaBoss!.slot === 6);
         this.announce(`${def.name}: ${def.counter}`); this.signal(arena, 'engaged');
       }
       if (arena.phase > 0 && !arena.armed && !followersInside && inZone && entryGate && Math.hypot(player.transform.x - entryGate.x, player.transform.z - entryGate.z) >= 5) arena.armed = true;
@@ -194,8 +194,7 @@ export class L8BossArenas {
       const pendingTurns = arena.ids.some(id => { const e = w.entities.get(id); return !!e?.infection || e?.civilian?.state === 'grabbed'; });
       const total = arena.ids.reduce((hp, id) => { const e = w.entities.get(id); return hp + (e?.civilian && e.health.current > 0 ? def.hp : Math.max(0, e?.health.current ?? 0)); }, 0);
       const halfDown = arena.ids.filter(id => { const e = w.entities.get(id); return e?.infected && e.health.current <= 0; }).length >= Math.ceil(def.count / 2);
-      const first = w.entities.get(arena.ids[0]);
-      const secondPhase = arena.id === 'lion' ? !!first?.infected && first.health.current <= first.health.max / 2 : arena.id === 'elephant' ? arena.wallHits > 0 || total <= def.hp / 2 : ['flamingo', 'zebra', 'monkey'].includes(arena.id) ? halfDown : total <= def.hp * def.count / 2;
+      const secondPhase = arena.id === 'lion' ? halfDown : arena.id === 'elephant' ? arena.wallHits > 0 || total <= def.hp / 2 : ['flamingo', 'zebra', 'monkey'].includes(arena.id) ? halfDown : total <= def.hp * def.count / 2;
       if (arena.phase === 1 && secondPhase) {
         arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); if (arena.id !== 'elephant') arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
       }
@@ -291,7 +290,7 @@ export class L8BossArenas {
       } else this.orbit(e, arena, def.centre, 2);
       return true;
     }
-    boss.engaged = arena.phase !== 3 && !(arena.id === 'lion' && boss.slot === 1 && arena.phase < 2 || arena.id === 'monkey' && boss.slot === 6 && arena.phase < 2);
+    boss.engaged = arena.phase !== 3 && !(arena.id === 'monkey' && boss.slot === 6 && arena.phase < 2);
     if (p.health.current <= 0 || arena.phase === 3) return true;
     if (arena.id === 'zebra' || arena.id === 'elephant') {
       const progress = boss.motionProgress;
@@ -304,7 +303,6 @@ export class L8BossArenas {
       }
     }
 
-    if (arena.id === 'lion' && boss.slot === 1 && arena.phase < 2) { this.walk(e, { x: -66, z: -42 }, 3); return true; }
     if (arena.id === 'monkey' && boss.slot === def.count - 1 && arena.phase < 2) { this.walk(e, { x: -22, z: 14 }, 3.5); return true; }
     if (arena.id === 'monkey' && boss.slot === 6 && arena.phase === 2 && !boss.leaderEntered) {
       this.walk(e, { x: -6, z: 14 }, 6);
@@ -484,7 +482,7 @@ export class L8BossArenas {
       arena.lane = { x: Math.max(46, Math.min(74, predicted.x)), side, staging: true, startedAt: this.w.tick };
     }
     else if (arena.id === 'lion') {
-      if (arena.phase === 2 && arena.cycle % 2 === 0) {
+      if (live.length > 1 && arena.cycle % 2 === 0) {
         this.start(e, 'lion.roar', 36, 0, 8);
         const lioness = live.find(v => v.infected!.arenaBoss!.slot === 1);
         if (lioness && !lioness.infected!.specialAttack) this.hunt(lioness, true);
