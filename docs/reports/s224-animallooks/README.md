@@ -57,3 +57,7 @@ The focused `tests/shared/render-contracts.test.ts` passed 14 tests, including a
 ## Checks after zebra and fence changes
 
 The selected `animal-zoo-healthy,night-boss-lion,foot-slide-flamingo-day,foot-slide-flamingo-night,flamingo-flock-contact` scene gate passed 14/14 rows on the current changes (HIGH/LOW as listed, WebGL2/WebGPU). It does not cover all requested animal appearances. The full remote `npm test` was attempted three times unchanged; each hit the 240-second budget and exited 124 under elevated runner load. Completed cases reported no assertion failure, but none of these three runs is a passing full suite. Re-run the unchanged command on a sufficiently quiet worker after the remaining work.
+
+## Gorilla trial
+
+A broader dorsal wound was tried on the existing wave-2 TRELLIS gorilla through `skin-crowd-build.sh`. ETC1S q128 plus lossless buffer consolidation yielded HIGH 381,196 / 175,624 / 99,564 bytes and LOW 292,056 / 175,624 / 99,564, within the current GLB sizes. I opened the HIGH game-camera image at zoom 1.5: the patch remains too dark to read clearly against the coat at this angle. The trial was reverted. Future work needs a brighter, larger and carefully placed wound or exposed bone, and checks on all views, tiers and LODs; compression-budget compliance alone is not visual acceptance. The temporary image is `test-results/followups-25/zoo-ab/s224-gorilla-candidate/high-gorilla.png`.
