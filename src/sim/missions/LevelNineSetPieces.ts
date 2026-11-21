@@ -3,7 +3,6 @@ import { l9Course, l9SetPieces, l9SetPieceTuning as tune } from '../../data/l9';
 import type { Point } from '../../levels/districts/types';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-import type { ObstacleKind } from '../vehicles/Obstacles';
 import { pursueCrossingVehicle } from './LevelNineEncounters';
 import { resetResponse } from '../locomotion/MotionResponse';
 
@@ -241,9 +240,15 @@ export class LevelNineSetPieces {
     const ready = (a.phase === 'wait' && (hull < T.startM || passed && a.uses === 0) || a.phase === 'cool' && tick >= a.at) && (!a.piece.startsWith('stall') || car.physics.speed < 1.5);
     if (ready && hull > T.stopM && e.attachedTo === undefined && !e.infected.specialAttack && (passed && a.uses === 0 || w.combat!.query.visible(e.transform, p))) {
       const target = this.throwTarget(T.windupTicks + T.flightTicks, a.uses);
-      const item = T.items[a.uses % T.items.length] as ObstacleKind, kind: ObstacleKind = item === 'jersey-barrier' && car.physics.speed < T.heavyMinSpeed ? 'trash-can' : item;
-      const placement = this.lane(20) ?? target;
-      a.throwPropId = w.vehicles!.obstacles.spawn(kind, placement);
+      // Borrow a resting obstacle already on the road. Never create a prop in
+      // mid-encounter or pull one in from an off-road thrower post.
+      const reserved = new Set(s.alphas.flatMap(alpha => alpha.throwPropId === undefined ? [] : [alpha.throwPropId]));
+      const available = w.vehicles!.obstacles.items.filter(item => item.light && !item.broken && !item.body && !item.airborne && !reserved.has(item.entity.id)
+        && Math.hypot(item.entity.transform.x - e.transform.x, item.entity.transform.z - e.transform.z) <= 25
+        && crossing.routes.some(route => lineDistance(item.entity.transform, route.points) <= route.width / 2 || lineDistance(item.entity.transform, route.detour) <= route.width / 2));
+      available.sort((a, b) => Math.hypot(a.entity.transform.x - e.transform.x, a.entity.transform.z - e.transform.z) - Math.hypot(b.entity.transform.x - e.transform.x, b.entity.transform.z - e.transform.z) || a.entity.id - b.entity.id);
+      if (!available.length) { a.phase = 'free'; a.at = tick; this.freeze(e, false); delete e.infected.scripted; w.infected!.pursueTarget(e.id, 1); pursueCrossingVehicle(w, e.id); return; }
+      a.throwPropId = available[0].entity.id;
       this.freeze(e, true); this.pose(e, 'alpha.grab-throw', 'telegraph', tick, tick + T.windupTicks, target);
       a.phase = 'throw'; a.at = tick + T.windupTicks; a.to = target; this.signal('thrower-windup', a.id); return;
     }
