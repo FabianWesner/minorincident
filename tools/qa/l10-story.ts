@@ -192,6 +192,7 @@ for (const tier of tiers) {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number }[] = [];
+  const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0 }));
   const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
   let authoredThrowCrateId: number | undefined;
   const overpassState: unknown[] = [];
@@ -212,6 +213,11 @@ for (const tier of tiers) {
       });
       world.events.on('combat.attack', e => {
         if (e.type === 'combat.attack' && e.sourceId === 1 && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'fight', id: e.actionId });
+      });
+      world.events.on('combat.hit', e => {
+        if (e.type !== 'combat.hit' || e.sourceId !== 1 || e.amount <= 0 || !world.entities.get(e.targetId)?.infected || world.vehicles?.bicycle.riding) return;
+        const p = world.entities.get(1)!.transform;
+        for (const b of roadblockRide) if (b.dismounted && !b.fight && Math.abs(p.x - b.x) <= 25 && Math.abs(p.z - 95) <= 45) b.fight = e.tick;
       });
       world.events.on('infected.attack', e => {
         if (e.type === 'infected.attack' && e.targetId === 1 && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'fight', id: e.special || 'infected.attack' });
@@ -249,6 +255,15 @@ for (const tier of tiers) {
         billboardFallTick ??= world.l10Encounters?.state.billboardFallAt;
         hospitalOpenTick ??= world.l10Encounters?.state.hospitalOpenAt;
         const riding = !!world.vehicles?.bicycle.riding;
+        for (const b of roadblockRide) {
+          const near = Math.abs(p.transform.x - b.x) <= 25 && Math.abs(p.transform.z - 95) <= 45;
+          if (near && riding && !b.arrived) b.arrived = world.tick;
+          if (near && !riding && lastBike && b.arrived && !b.dismounted) b.dismounted = world.tick;
+          const gateId = Object.values(world.l10Encounters?.state.roadblockGates ?? {}).find(id => Math.abs((world.entities.get(id)?.transform.x ?? -10000) - b.x) < 1);
+          if (b.fight && gateId !== undefined && world.entities.get(gateId)?.interactable?.open && !b.opened) b.opened = world.tick;
+          if (near && riding && !lastBike && b.opened && !b.remounted) b.remounted = world.tick;
+          if (riding && b.remounted && p.transform.x > b.x + 3 && !b.crossed) b.crossed = world.tick;
+        }
         if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length }); lastBike = riding; }
         if (world.vehicles?.bicycle.riding && world.vehicles.bicycle.entity?.bicycle?.motorbike) bikeTicks++;
         if (p.transform.x >= 3320 && p.transform.x < 3380 && world.tick % 60 === 0 && overpassProbeState.length < 24) {
@@ -289,6 +304,7 @@ for (const tier of tiers) {
   if (!finaleOnly) {
     check(tier, 'billboard collapse triggers on the route', billboardFallTick !== undefined, billboardFallTick ?? null);
     check(tier, 'hospital tents open on the route', hospitalOpenTick !== undefined, hospitalOpenTick ?? null);
+    for (const b of roadblockRide) check(tier, `ride, fight, remount and cross roadblock ${b.x}`, !!b.crossed, b);
   }
   if (!finaleOnly) check(tier, 'overpass Mega throws the authored crate during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'prop-thrown' && e.propId === authoredThrowCrateId && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, crate: authoredThrowCrateId, throws: overpassThrows });
   if (!finaleOnly) check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);

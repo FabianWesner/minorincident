@@ -24,6 +24,8 @@ On the subsequent hospital placement, new route checks recorded the billboard co
 
 The native route still misses the 420–540 s hangar-to-gate duration and 45–75 s beat cadence on both tiers. HIGH also has a 33.2 s activity gap. The route bot rides only briefly before a hard hit knocks it off; a remount recovery experiment increased deaths to 33–38 and was reverted.
 
+The [roadblock receipt](roadblocks.json) now checks each sequence in order: mounted arrival, dismount, an actual hit on an infected, gate opening, remount, and mounted crossing. All eight tier/roadblock sequences fail. LOW records the first arrival, fight and opening but no subsequent remount and crossing; HIGH does not record a mounted arrival within the measured first-gate area. This confirms total riding ticks alone cannot prove the requested rhythm.
+
 ## Visual evidence
 
 The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the research checkpoint with ordinary bot input and inspected. The capture advances the render clock with the simulation: without that, an explosion's white flash persisted in every later frame. Beat 0 shows the courier beside a generator; 1 shows the mounted bike and sidecar at an intersection; 2 shows the quarantine gantry and a fight; 3 shows the billboard at the frame edge; 4 shows road without readable scarecrows; 5 shows a truck and combat; 6 shows the Mega holding the crate; 7 shows road, a pier and an emergency light without a readable underpass; 8 shows the edge of a tent but no readable opening or silhouettes; 9 shows a utility pole and building without a readable gate or searchlight. The sheet confirms that the route and framing still need work.
