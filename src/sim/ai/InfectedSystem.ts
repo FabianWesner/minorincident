@@ -473,9 +473,6 @@ export class InfectedSystem {
     if (!(b.scripted || b.investigate || e.noiseTarget || brain?.mode === 'attracted' || !brain && b.heardTargetId ||
         b.pressureTarget && this.world.tick < b.pressureTarget.until) ||
         e.emerging || b.specialAttack || b.state === 'attack' || b.grabUntil > this.world.tick || Status.stunned(e, this.world.tick)) return;
-    // The L8 outside cohort must finish its authored gate route before nearby
-    // party hearing can divert it into the zoo's blocked direct path.
-    if (this.world.scenario === 'L8' && b.breachApproach?.startsWith('l8-') && b.scripted) return;
     const courierDistance = Math.hypot(e.transform.x - courier.transform.x, e.transform.z - courier.transform.z);
     if (this.world.scenario === 'L4' && b.breachApproach && b.scripted &&
         (courierDistance > 3 || !this.world.combat!.query.visible(e.transform, courier.transform))) return;
