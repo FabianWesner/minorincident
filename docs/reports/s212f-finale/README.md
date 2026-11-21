@@ -38,3 +38,5 @@ The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the res
 - `sh tools/remote/run.sh "$PWD" -- npm test` — pass: 27 files, 105 tests passed and one skipped, 201.1 s.
 
 The objective is not complete. The route rhythm, ride/remount cadence, and readable set pieces remain open. An earlier encounter release radius of 70 m was tested on LOW: the courier still bypassed closed gates, the route took 299.35 s, and the change was discarded.
+
+A LOW trial directing the bot to approach and interact with closed gates after nearby threats cleared was discarded: it completed in 284.5 s hangar to gate with two deaths, 207 bike ticks and a 27.8 s activity gap. The bike was still abandoned and cadence remained outside target.
