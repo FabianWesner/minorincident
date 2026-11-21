@@ -24,6 +24,7 @@ import { cureHangarWeapons, levelTenMission } from '../../src/levels/L10/mission
 import { surrenderHeavyWeapons } from '../../src/sim/missions/L8Gate';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { overlapsPaving, overlapsRoad } from '../../src/levels/districts/validate';
+import { cureEvacuationLane } from '../../src/levels/L10/vignettes';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
@@ -208,6 +209,12 @@ async function checkCheckpointRacks() {
     const road = roadDistrict.layout.roads.edges.find(e => e.points.length > 1)!;
     const roadPoint = { x: road.points[0][0] + roadDistrict.origin[0], z: road.points[0][1] + roadDistrict.origin[1] };
     expect(l10.hazards!.ignitePatch(roadPoint, .65, 5)).toBeNull();
+    const cure = l10.districts!.districts.find(d => d.id === 'D-CURE')!;
+    const evacuation = cureEvacuationLane(cure.decay.placements);
+    expect(evacuation.length).toBeGreaterThan(0);
+    const polygon = evacuation[0].polygon;
+    const evacuationPoint = { x: polygon.reduce((n, p) => n + p[0], 0) / polygon.length + cure.origin[0], z: polygon.reduce((n, p) => n + p[1], 0) / polygon.length + cure.origin[1] };
+    expect(l10.hazards!.ignitePatch(evacuationPoint, .65, 5)).toBeNull();
     for (const district of l10.districts!.districts) for (const c of field.cells.filter(c => c.id.startsWith(`${district.id}/`))) {
       const x = c.x - district.origin[0], z = c.z - district.origin[1];
       const halfX = c.halfX ?? 5, halfZ = c.halfZ ?? 5;

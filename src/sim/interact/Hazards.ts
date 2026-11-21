@@ -16,6 +16,7 @@ import { cureCrossingLines } from '../../levels/L10/crossingStories';
 import { overlapsPaving, overlapsRoad } from '../../levels/districts/validate';
 import { lawnFireCells } from '../../levels/lawnFire';
 import { cureEvacuationLane } from '../../levels/L10/vignettes';
+import type { DistrictLayout } from '../../levels/districts/types';
 export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'tear-gas', 'extinguisher', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
@@ -33,6 +34,7 @@ export class Hazards {
   readonly debris: DebrisPool;
   fieldFire: FieldFire | null = null;
   vegetationFire: VegetationFire | null = null;
+  private fireLayouts: { layout: DistrictLayout; origin: readonly [number, number] }[] = [];
   private fallbackDamage: Damage | null = null;
   /** r39-l10nan: campaign levels replace world.combat after the hazards exist (npc install). A cached Damage kept the old
    * instance, so the god cheat (set on the live one) did not cover fire/toxic zones and the courier lost HP in god mode. */
@@ -61,6 +63,8 @@ export class Hazards {
     });
   }
   installFieldFire(): void {
+    const districts = this.world.districts;
+    this.fireLayouts = (districts?.districts ?? []).map(d => ({ origin: d.origin, layout: d.id === 'D-CURE' ? { ...d.layout, surfaces: [...d.layout.surfaces, ...cureEvacuationLane(d.decay.placements)] } : d.layout }));
     const roads = [...cure.regions.map(r => r.route), ...cure.detours.map(r => r.route), ...cureCrossingLines.map(r => r.line)];
     const blocked = (a: Vec2, b: Vec2): boolean => {
       const side = (p: Vec2, q: Vec2, x: number, z: number) => (q.x - p.x) * (z - p.z) - (q.z - p.z) * (x - p.x);
@@ -68,21 +72,20 @@ export class Hazards {
         const start = line[i], c = { x: start[0], z: start[1] }, d = { x: end[0], z: end[1] };
         return Math.max(Math.min(a.x, b.x), Math.min(c.x, d.x)) <= Math.min(Math.max(a.x, b.x), Math.max(c.x, d.x)) && Math.max(Math.min(a.z, b.z), Math.min(c.z, d.z)) <= Math.min(Math.max(a.z, b.z), Math.max(c.z, d.z)) && side(a, b, c.x, c.z) * side(a, b, d.x, d.z) <= 0 && side(c, d, a.x, a.z) * side(c, d, b.x, b.z) <= 0;
       }));
-      return crossing || (this.world.districts?.districts ?? []).some(d => {
+      return crossing || this.fireLayouts.some(d => {
         const footprint = { min: [Math.min(a.x, b.x) - d.origin[0], 0, Math.min(a.z, b.z) - d.origin[1]] as [number, number, number], max: [Math.max(a.x, b.x) - d.origin[0], 0, Math.max(a.z, b.z) - d.origin[1]] as [number, number, number] };
         return overlapsRoad(d.layout, footprint) || overlapsPaving(d.layout, footprint);
       });
     };
-    const districts = this.world.districts;
     this.vegetationFire = districts ? new VegetationFire(districts.districts.flatMap(d => d.decay.placements.map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), districts.composition.id === 'L10' ? blocked : undefined) : null;
     // A burning field cell affects a five metre square, so exclude cells whose
     // effect footprint overlaps an authored road lane, not just its centreline.
-    this.fieldFire = districts ? new FieldFire(districts.districts.flatMap(d => d.decay.placements.filter(p => {
+    this.fieldFire = districts ? new FieldFire(districts.districts.flatMap((d, index) => d.decay.placements.filter(p => {
       if (p.assetId !== 'veg.corn-block') return true;
       const footprint = { min: [p.position[0] - 5, 0, p.position[2] - 5] as [number, number, number], max: [p.position[0] + 5, 0, p.position[2] + 5] as [number, number, number] };
-      return !overlapsRoad(d.layout, footprint) && !overlapsPaving(d.layout, footprint);
+      return !overlapsRoad(this.fireLayouts[index].layout, footprint) && !overlapsPaving(this.fireLayouts[index].layout, footprint);
     }).map(p => ({ ...p, id: `${d.id}/${p.id}`, position: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]] as [number, number, number] }))), blocked,
-      districts.districts.flatMap(d => lawnFireCells(d.id === 'D-CURE' ? { ...d.layout, surfaces: [...d.layout.surfaces, ...cureEvacuationLane(d.decay.placements)] } : d.layout, d.origin))) : null;
+      this.fireLayouts.flatMap(d => lawnFireCells(d.layout, d.origin))) : null;
   }
   spawn(kind: HazardKind | DestructibleKind, pos: Vec2, opts: HazardOptions = {}): number {
     if (![...hazardKinds, ...destructibleKinds].includes(kind) || ![pos.x, pos.z, opts.hp ?? 1, opts.radius ?? 1, opts.burnTime ?? 1, opts.halfX ?? .5, opts.halfZ ?? .15, opts.duration ?? 1].every(Number.isFinite)
@@ -114,7 +117,7 @@ export class Hazards {
     this.vegetationFire?.ignite(position, this.world.tick, radius + 1);
     // Fuel may ignite adjacent vegetation, but the persistent ground patch must
     // not cover an authored road or paved surface.
-    for (const district of this.world.districts?.districts ?? []) {
+    for (const district of this.fireLayouts) {
       const x = position.x - district.origin[0], z = position.z - district.origin[1];
       const footprint = { min: [x - radius, 0, z - radius] as [number, number, number], max: [x + radius, 0, z + radius] as [number, number, number] };
       if (overlapsRoad(district.layout, footprint) || overlapsPaving(district.layout, footprint)) return null;
