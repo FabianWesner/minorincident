@@ -755,27 +755,28 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.state.steps.sanctuary.status).toBe('active');
     expect(mission.state.steps.escape.status).toBe('pending');
     expect(mission.state.marker).toBe('l8-route');
-    expect(mission.def.anchors['l8-route']).toMatchObject({ x: world.entities.get(zoo.state.keeperId)!.transform.x, z: world.entities.get(zoo.state.keeperId)!.transform.z });
+    expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
     expect(mission.state.steps.depart.status).toBe('pending');
     mission.restore('sanctuary');
     expect(mission.state.marker).toBe('l8-route');
-    expect(mission.def.anchors['l8-route']).toMatchObject({ x: world.entities.get(zoo.state.keeperId)!.transform.x, z: world.entities.get(zoo.state.keeperId)!.transform.z });
+    expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
     expect(mission.state.steps.escape.status).toBe('pending');
     missionControls(world).teleport(1, zoo.door());
     // r31-nadia: while Nadia still leads (a courier camping the APC never follows her), the calm lasts its 180 s cap before the breach.
     world.tick = zoo.state.startedAt + 180 * 60 - 1; advance(1);
     expect(mission.state.states.breached).toBe(true);
-    expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the plaza after the breach').toBe('active');
+    expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the entry gate after the breach').toBe('active');
     expect(mission.state.checkpoint, 'APC camping must not award the escape-route checkpoint').toBe('breach');
     expect(zoo.boarding()).toBe(false);
     expect(zoo.canBoardDriver()).toBe(false);
     expect(mission.state.steps.escape.status).toBe('pending');
-    missionControls(world).teleport(1, mission.def.anchors['central-plaza']); advance(1);
+    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
     expect(mission.state.steps.sanctuary.status).toBe('completed');
     expect(mission.state.steps.escape.status).toBe('active');
     expect(mission.state.marker, 'the opening defence has no destination pin').toBeNull();
-    expect(objectiveText(mission, mission.def.steps[1].text)).toBe('Protect the group!');
-    world.tick = zoo.state.breachedAt + 1800; advance(1);
+    expect(objectiveText(mission, mission.def.steps[1].text)).toBe('Back to the plaza! The group is under attack');
+    missionControls(world).teleport(1, mission.def.anchors['central-plaza']); advance(1);
+    world.tick = zoo.state.breachedAt + (zoo.state.protectAway ?? 0) + 1800; advance(1);
     // r33-l8route: the marker is the route node (back to the plaza until the doors shut, then the pond gate), never an arena across a fence.
     expect(mission.state.marker).toBe('l8-route');
     expect(mission.def.steps.find(step => step.id === 'escape')!.text).toMatch(/^(Back to the plaza|Return to the plaza|Enter the flamingo pond)/);
@@ -835,6 +836,14 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.def.steps.find(step => step.id === 'escape')!.text).toBe('Board the armored vehicle · 14/14 aboard');
     expect(Math.hypot(mission.def.anchors.exit.x - zoo.door().x, mission.def.anchors.exit.z - zoo.door().z)).toBeLessThan(.3);
     advance(60);
+    // A nearby resident can join while the queue finishes. The driver stays
+    // locked until every newly joined living passenger is seated as well.
+    for (const id of zoo.passengers()) if (!car.entity.vehicle!.passengers?.some(p => p.id === id)) {
+      missionControls(world).teleport(id, entry);
+      expect(vehicles.boardPassenger(car.entity.id, id)).toBe(true);
+    }
+    for (let i = 0; i < 24 * 60 && !zoo.canBoardDriver(); i++) advance(1);
+    expect(zoo.canBoardDriver()).toBe(true);
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
     expect(vehicles.active, 'E at the driver door enters with the complete group and Hale alive').toBe(car.entity.id);
