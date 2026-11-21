@@ -67,7 +67,7 @@ export class L8Gates extends Group {
         : rod.key ? !arenas || !l8GateClosed(rod.key, ctx)
         : rod.gate && !closed || rod.breach && !!arenas?.some(a => a.id === 'elephant' && a.phase > 0);
       this.panels[rod.panel].shown = !hidden;
-      const scale = collapsing ? this.collapseScale.set(1, Math.max(0, 1 - elapsed / 24), 1) : rod.s;
+      const scale = collapsing ? this.collapseScale.set(rod.s.x, rod.s.y * Math.max(0, 1 - elapsed / 24), rod.s.z) : rod.s;
       this.poseMatrix.compose(rod.p, this.poseRotation, hidden ? this.hiddenScale : scale); this.mesh.setMatrixAt(i, this.poseMatrix);
     });
     this.mesh.instanceMatrix.needsUpdate = true;
