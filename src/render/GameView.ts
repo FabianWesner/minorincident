@@ -802,7 +802,7 @@ export class GameView implements Lifecycle {
     const player = this.world.entities.get(1);
     if (player) {
       const loadout = player.weapons && this.world.combat?.runner.loadout;
-      this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id);
+      this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id, !!this.world.vehicles?.active);
       // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
       // Q-134 (PO: "Wider camera while driving / Yes do that"): the courier steering the bike gets the same driver widening as a car.
       const steering = playerSteers(this.world.vehicles);

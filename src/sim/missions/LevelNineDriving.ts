@@ -460,7 +460,7 @@ export class LevelNineDriving {
           const id = w.infected!.spawn('infected.zebra', start, { state: 'chase', yaw: -Math.PI / 2 });
           w.entities.get(id)!.infected!.scripted = { x: start.x, z: 100 }; s.stampede.push(id);
         }
-        if (s.stampede.length) this.signal('zebra-stampede');
+        if (s.stampede.length) { this.signal('zebra-stampede'); this.mission.radio('L9.zoo-stampede'); } // PO 2026-11-21: "Why there are zebras in level 9?"
       }
     }
     if (s.fireAt === null && distance(p, cfg.fire) < 95) { s.fireAt = w.tick; this.signal('fire-countdown'); }

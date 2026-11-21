@@ -88,6 +88,7 @@ export const dialogue: Record<string, string> = {
   'L8.nadia-elephant': 'Nadia: Not him. Not the old one…',
   'L8.courier-elephant': 'I\'m sorry.',
   'L8.departure': 'The APC engine roars as the survivors pull away.',
+  'L9.zoo-stampede': 'Sam: Those are from the zoo — the whole fence went down behind us.',
   'L9.briefing': 'Bridge is forty klicks. Dawn\'s in two hours. Floor it.',
   'L9.mega-what': 'Mia: What was that?',
   'L9.mega-drive': 'Sam: Don\'t look. Drive.',

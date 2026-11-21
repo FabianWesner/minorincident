@@ -34,8 +34,9 @@ export class View {
   private maxZoom: number = zoomLimits[1];
   private zoomReturn = 0;
   /** Only the weapon held in the selected rack slot grants the longer rocket view. */
-  setEquippedWeapon(id: string | undefined): void {
-    const limit = id === 'weapon.rocket-launcher' ? rocketZoomLimit : zoomLimits[1];
+  setEquippedWeapon(id: string | undefined, driving = false): void {
+    // PO 2026-11-21 (L9 APC): "let me zoom out a bit more" — driving gets the rocket's longer view.
+    const limit = id === 'weapon.rocket-launcher' || driving ? rocketZoomLimit : zoomLimits[1];
     if (limit === this.maxZoom) return;
     this.maxZoom = limit;
     this.targetZoom = Math.min(this.targetZoom, limit);
