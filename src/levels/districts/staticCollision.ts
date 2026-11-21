@@ -1,6 +1,7 @@
 import { metroIngressColliders } from '../L5/metro';
 import { highwayColliders } from '../L3/highway';
 import { staticCollision } from '../../assets/staticCollision';
+import { worldAssets } from '../../assets/worldDefinitions';
 import physicsAssets from '../../data/physicsAssets';
 import type { Placement, StaticCollider, Aabb } from './types';
 
@@ -35,9 +36,16 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     if (p.collisionId === 'l5.metro-ingress') return metroIngressColliders(p);
     if (p.assetId === 'prop.flower') return [];
     // Render-only decor has no collider; `decorSolid` decor (L10 crossing scenes) blocks the courier as a physics static only.
-    if (p.decor && !p.decorSolid) return [];
+    if (p.decor && !p.decorSolid && !p.l10Solid) return [];
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
-    const shape = platform ? dispersalPlatform : sources[p.collisionId ?? p.assetId];
+    const shape = platform ? dispersalPlatform : p.l10Solid ? sources[p.collisionId ?? ''] ?? sources[p.assetId] : sources[p.collisionId ?? p.assetId];
+    if (!shape && p.l10Solid) {
+      const d = worldAssets[p.assetId]?.dimensions;
+      if (d) {
+        const aabb: Aabb = { min: [p.position[0] - d.x * Math.abs(p.scale[0]) / 2, p.position[1] + .18 * p.scale[1], p.position[2] - d.z * Math.abs(p.scale[2]) / 2], max: [p.position[0] + d.x * Math.abs(p.scale[0]) / 2, p.position[1] + d.y * p.scale[1], p.position[2] + d.z * Math.abs(p.scale[2]) / 2] };
+        return [{ id: `${p.id}/geometry-0`, aabb, minTier: p.minTier, maxTier: p.maxTier }];
+      }
+    }
     if (!shape) return fallback.filter(c => c.id === p.id);
     // The body-height bake retains the bullet tank's saddles but misses its
     // raised vessels. Keep the GLB's authored solid barrel hulls as well, so
@@ -60,7 +68,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
         yaw: p.yaw,
       };
       if(p.navBlocker) aabb.navBlocker = true;
-      if (p.decorSolid) aabb.physicsOnly = true;
+      if (p.decorSolid && !p.l10Solid) aabb.physicsOnly = true;
       return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: platform ? dispersalPlatform.walkable.has(box) : box.max[1] < .45 || extraSupports[p.assetId]?.includes(box), minTier: p.minTier, maxTier: p.maxTier }];
     });
   }));
