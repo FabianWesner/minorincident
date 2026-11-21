@@ -22,7 +22,7 @@ Both tiers miss total time, cadence, and the required ride/fight/remount/cross l
 
 ## Verification
 
-- Typecheck and lint pass on the current source.
+- `npm run verify -- E32` passed on the current source: typecheck, lint and 106 local tests (111.1 s for the test suite).
 - Remote `npm test` passed on the corrected observer revision: 105 tests passed and one skipped in 203.1 s.
 - Both corrected `qa:threat` shards merged with 0 fail flags. Direct inspection confirms L10 skilled and passive flags are empty and the assault cohort first attacks at 18.68 s.
 - `qa:vehicle-campaign-motion` passed headlessly on ports 5223/5224.
@@ -89,3 +89,5 @@ The skilled assault flag was traced to threat-observer identity handling. A serv
 ## Time-box handoff
 
 The goal is not complete. Both tiers still record 0/4 roadblock loops; LOW is 406.5 s and HIGH 293.4 s hangar to gate, with cadence outside 45–75 s. The underpass is unreadable in the native frame, and hospital visibility needs confirmation across route variations. The current source passed remote unit tests, corrected sharded threat, typecheck, lint, mission interactions, the solid audit, and vehicle campaign motion as recorded above. Do not deploy, push, or move main.
+
+The E32 per-change verifier subsequently passed after the earlier sandbox restriction was lifted; its receipt is `test-results/epics/E32/checks.json`. The verifier does not cover the failed finale route and visual criteria. Work stopped at the orchestrator time-box handoff, with all lane changes committed.
