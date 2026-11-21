@@ -13,7 +13,7 @@ Ordinary infected remain at 40 HP. These jobs are the selection hint; special da
 | Hunting rifle | Pick off Alphas and specials from afar | 300 | 40 m; pierce 2 | 1 shot/s; 5 rounds; 2.4 s reload | one shot per ordinary infected |
 | Nail gun | Nail them to the ground, quietly | 14 per nail; 3 nails per ordinary | 18 m | 6 nails/s; 24 nails; 1.6 s reload | pin 2 s; listed heavies 1 s; Alpha 0.5 s; refreshes; bosses immune; noise radius ≤⅓ handgun |
 | Assault rifle | Accurate all-rounder with a torch | 26 | 28 m | 7.5 shots/s; 30 rounds; 2 s reload | unchanged |
-| Flamethrower | Melt crowds up close | 4.5 per stream tick; 35 DPS burn | 8 m; 25° cone | 15 ticks/s; 6 s fuel; 5 s refill | burn lasts 4 s and spreads to touching infected; fire kills char bodies to permanent ash heaps over 1.5 s |
+| Flamethrower | Melt crowds up close | 15 per stream tick; 35 DPS burn | 8 m; 25° cone | 15 ticks/s; 6 s fuel; 5 s refill | 4 s burn spreads within 1 m and deals burn damage; butcher takes 3× fire damage; fire bypasses armored plates; firefighter takes 25%; any death while burning leaves permanent ash |
 | Rocket launcher | Blow apart groups and heavies | 180 | 35 m; 6 m blast | 1.2 rockets/s; unlimited | infected in blast knocked down; existing boss and L7 follower exceptions remain open against the requested universal knockdown |
 | Molotov | Splash blast and hurting flames | 90 | 4.5 m blast; 4 m fire pool | single use | 50% of rocket impact; fire persists 8 s |
 | Pipe bomb | Heavy delayed blast; key 0 swaps with Molotov | 270 | 6 m radius | 5 s between throws | 2 s fuse; knockdown in blast |
