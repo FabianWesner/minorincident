@@ -245,7 +245,7 @@ export class LevelTenEncounters {
             const candidates = [{ x: entry.x, z: entry.z }, { x: entry.sx, z: entry.sz }, ...ring];
             const spot = candidates.map(c => cureEncounterSpot(ai.nav, { ...c, archetype },
               (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 9)).find(Boolean);
-            if (!spot) { ai.director.reserved++; this.state.finaleEntrySlot = true; this.state.finaleEntryNext = w.tick + 30; }
+            if (!spot) { this.state.finaleEntryNext = w.tick + 30; }
             else {
             const { x, z } = spot;
             const support = w.districts?.groundHeight(x, z) ?? 0;

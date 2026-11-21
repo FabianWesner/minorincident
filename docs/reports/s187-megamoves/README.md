@@ -13,6 +13,8 @@ Fresh run on `ee57acfdb1de725ca364de9bb4b3df98269c063d` plus the changes below:
 
 The sampled moves stay within the measured damage target. The skilled wave flag and top-level audit aggregation remain open. Commit: `7cfea375`.
 
+Service admission follow-up: a failed safe-position search no longer increments the already held director reservation on every retry. Typecheck and lint pass. The focused L10 audit still completes skilled with 0 passive flags, but its skilled assault still has no recorded attack within 20 seconds; this fix does not resolve that flag. Receipt: `test-results/s187c-reservation/L10.json`.
+
 ## s187b follow-up — coarse pursuit stall
 
 Full merged-source threat audit on `04d63139`: **0 flags**, all ten skilled routes complete, including L10. `npm run qa:threat:sharded` completed both remote shards and merged their receipts (392.0 s maximum shard time). Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 27 files, 105 passed, 1 skipped, 195.7 s.
