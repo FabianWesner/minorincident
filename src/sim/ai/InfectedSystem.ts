@@ -886,6 +886,13 @@ export class InfectedSystem {
     }
     return false;
   }
+  /** L8 lion pins accept discrete struggle presses even while knockdown blocks attacks. */
+  struggleLion(pressed: boolean): boolean {
+    const lion = this.active.find(e => e.health.current > 0 && e.infected?.arenaBoss?.arena === 'lion' && e.infected.grabUntil > this.world.tick && (e.infected.heardTargetId ?? 0) <= 1);
+    if (!lion) return false;
+    if (pressed && ++lion.infected!.grabHits >= 2) this.releasePin(lion);
+    return true;
+  }
   /** Existing archetype vision: 110 degrees / 14 m, weather, light and smoke unchanged. */
   private seesPlayer(e: EntitySnapshot, player: EntitySnapshot): boolean {
     const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
