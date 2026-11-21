@@ -24,7 +24,7 @@ The native route still misses the 420–540 s hangar-to-gate duration and 45–7
 
 ## Visual evidence
 
-The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the research checkpoint with ordinary bot input and inspected. Beat 0 shows the road and courier by a generator; 1 shows the mounted bike and sidecar at an intersection; 2 shows a hazy empty field; 3 shows the billboard at the frame edge; 4 shows road without readable scarecrows; 5 shows the courier in open haze; 6 shows the Mega holding the crate; 7 shows crop rows rather than a readable underpass; 8 shows a tent edge and bench without silhouettes; 9 shows open ground and a crate without a readable gate or searchlight. The sheet confirms that the route and framing still need work.
+The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the research checkpoint with ordinary bot input and inspected. The capture advances the render clock with the simulation: without that, an explosion's white flash persisted in every later frame. Beat 0 shows the courier beside a generator; 1 shows the mounted bike and sidecar at an intersection; 2 shows the quarantine gantry and a fight; 3 shows the billboard at the frame edge; 4 shows road without readable scarecrows; 5 shows a truck and combat; 6 shows the Mega holding the crate; 7 shows road, a pier and an emergency light without a readable underpass; 8 shows road and a sign without readable hospital tents or silhouettes; 9 shows a utility pole and building without a readable gate or searchlight. The sheet confirms that the route and framing still need work.
 
 ## Checks
 
