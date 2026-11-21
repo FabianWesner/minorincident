@@ -568,9 +568,9 @@ export class LevelEightZoo {
   private escortGuards(): void {
     if (!this.breached || this.departing()) return;
     const group = this.state.roster.map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined);
-    if (!group.length) return;
-    const x = group.reduce((n, e) => n + e.transform.x, 0) / group.length, z = group.reduce((n, e) => n + e.transform.z, 0) / group.length;
     const player = this.w.entities.get(1)!;
+    const x = group.length ? group.reduce((n, e) => n + e.transform.x, 0) / group.length : player.transform.x;
+    const z = group.length ? group.reduce((n, e) => n + e.transform.z, 0) / group.length : player.transform.z;
     const next = this.state.arenas.find(a => a.phase === 1 || a.phase === 2) ?? this.state.arenas.find(a => a.phase !== 3);
     const index = next ? this.state.arenas.indexOf(next) : -1;
     const routeOpen = index === 0 ? !!this.state.sealedAt : index > 0 && this.state.arenas[index - 1].phase === 3;

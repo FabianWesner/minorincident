@@ -4,7 +4,7 @@ import { loadLevel } from '../qa/invariants/world';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 
-/** r33-l8route: per gate, the group follows the courier in and nobody is left behind the closing entry gate; the exit opens on the clear and the previous cell stays reachable. */
+/** The courier enters each cage alone with the corgi; the group waits outside until it clears. */
 export async function checkL8Route(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
@@ -101,6 +101,15 @@ export async function checkL8Route(): Promise<void> {
       expect(closeTicks.get(entryNavId), `${stage.id}: entry barrier closes on the next native tick`).toBe(armedAt + 1);
       if (index > 0) expect(closeTicks.get(previousEntryNavId), `${previous!.id}: both doors close on the next native tick`).toBe(armedAt + 1);
       expect(armedWith, `${stage.id}: no follower enters the active cage (${stragglers})`).toBe(0);
+      const guards = zoo.state.guards.map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected);
+      const shots: number[] = [];
+      const stop = w.events.on('ally.attack', event => { if (event.type === 'ally.attack' && zoo.state.guards.includes(event.sourceId) && arena.ids.includes(event.targetId)) shots.push(event.sourceId); });
+      for (let tick = 0; tick < 60; tick++) {
+        w.update();
+        expect(guards.some(e => e && inRect(e.transform, stage.zone)), `${stage.id}: guards remain outside`).toBe(false);
+      }
+      stop();
+      expect(shots, `${stage.id}: guards do not attack cage animals`).toEqual([]);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
       if (index > 0) {
@@ -129,6 +138,8 @@ export async function checkL8Route(): Promise<void> {
     // The survivor column moves out through the entry before the elephant yard locks.
     for (let tick = 0; tick < 600 && !elephant.armed; tick++) w.update();
     expect(elephant.armed, 'elephant gate arms after the courier enters the yard').toBe(true);
+    const elephantZone = l8Route.find(stage => stage.id === 'elephant')!.zone;
+    expect(zoo.state.guards.map(id => w.entities.get(id)).some(e => e && e.health.current > 0 && !e.infected && inRect(e.transform, elephantZone)), 'guards wait outside the elephant yard').toBe(false);
     const armedAt = w.tick;
     expect(closedAt.size).toBe(0);
     w.update();
