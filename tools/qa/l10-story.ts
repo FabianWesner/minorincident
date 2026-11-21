@@ -210,7 +210,7 @@ for (const tier of tiers) {
     beforeBegin: world => {
       const inFinale = () => world.entities.get(1)!.transform.x >= 2750 && world.entities.get(1)!.transform.x <= 4005;
       world.events.on('dialogue.line', e => {
-        if (e.type === 'dialogue.line' && (/^L10\.finale-\d$/.test(e.id) || e.id === 'L10.sinkhole-warning') && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'story', id: e.id });
+        if (e.type === 'dialogue.line' && /^L10\.finale-\d$/.test(e.id) && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'story', id: e.id });
       });
       world.events.on('combat.attack', e => {
         if (e.type === 'combat.attack' && e.sourceId === 1 && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'fight', id: e.actionId });

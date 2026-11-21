@@ -30,21 +30,21 @@
     },
     {
       "level": "D-CURE",
-      "rendered": 5314,
-      "before": 571,
+      "rendered": 5270,
+      "before": 546,
       "after": 0,
       "beforeTop": [
         [
           "prop.cure-mil-fence",
-          116
+          113
         ],
         [
           "prop.medical-cooler",
-          68
+          66
         ],
         [
           "prop.sandbag-pallet",
-          67
+          64
         ],
         [
           "prop.cure-quarantine-fence",
@@ -52,11 +52,11 @@
         ],
         [
           "prop.privacy-fence",
-          43
+          42
         ],
         [
           "prop.trash-bags",
-          38
+          39
         ],
         [
           "prop.tent",
@@ -137,14 +137,19 @@
       "level": "D-SUBWAY",
       "rendered": 91,
       "before": 1,
-      "after": 0,
+      "after": 1,
       "beforeTop": [
         [
           "int.metro-exit",
           1
         ]
       ],
-      "remainingTop": []
+      "remainingTop": [
+        [
+          "int.metro-exit",
+          1
+        ]
+      ]
     },
     {
       "level": "D-ZOO",
@@ -156,7 +161,7 @@
     }
   ],
   "totals": {
-    "before": 572,
-    "after": 0
+    "before": 547,
+    "after": 1
   }
 }
