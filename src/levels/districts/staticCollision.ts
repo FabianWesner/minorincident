@@ -29,6 +29,10 @@ const metroExitWalls = { boxes: [
   { min: [-3.4, .2001, -2.88], max: [2.6493, 1.65, -2.52] },
   { min: [-3.4, .2001, 2.52], max: [2.6493, 1.65, 2.88] },
 ] as Aabb[] };
+const metroExitPillars: Aabb[] = [
+  { min: [-4.375, 3.5, -2.725], max: [-3.825, 5.6, -2.175] },
+  { min: [-4.375, 3.5, 2.175], max: [-3.825, 5.6, 2.725] },
+];
 export function placementColliders(placements: Placement[], fallback: StaticCollider[]): StaticCollider[] {
   const sources = staticCollision;
   const placementIds = new Set(placements.map(p => p.id));
@@ -44,7 +48,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     // Render-only decor has no collider; `decorSolid` decor (L10 crossing scenes) blocks the courier as a physics static only.
     if (p.decor && !p.decorSolid && !p.l10Solid) return [];
     const platform = p.assetId === 'kit.dispersal-platform' && !p.collisionId;
-    const shape = platform ? dispersalPlatform : p.assetId === 'int.metro-exit' && p.maxTier < 6 ? metroExitWalls : p.l10Solid ? sources[p.collisionId ?? ''] ?? sources[p.assetId] : sources[p.collisionId ?? p.assetId];
+    const shape = platform ? dispersalPlatform : p.assetId === 'int.metro-exit' ? { boxes: p.maxTier === 6 ? metroExitPillars : metroExitWalls.boxes.concat(metroExitPillars) } : p.l10Solid ? sources[p.collisionId ?? ''] ?? sources[p.assetId] : sources[p.collisionId ?? p.assetId];
     if (!shape && p.l10Solid) {
       const d = worldAssets[p.assetId]?.dimensions;
       if (d) {
