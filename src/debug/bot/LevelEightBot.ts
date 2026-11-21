@@ -63,11 +63,6 @@ export class LevelEightBot {
       while (this.escapeLeg < road.length && Math.hypot(p.x - road[this.escapeLeg].x, p.z - road[this.escapeLeg].z) < 2) this.escapeLeg++;
       if (this.escapeLeg < road.length) target = road[this.escapeLeg];
     }
-    // The compromised entry is a real stop: hold the formed group there for
-    // the first outside wave, then fall back to the plaza for the longer hold.
-    if (this.profile === 'complete' && zoo.state.breachedAt > 0 && w.tick < zoo.state.breachedAt + 20 * 60) {
-      target = m.def.anchors['zoo-gate'];
-    }
     // The final kill can leave the courier on the far side of the paddock.
     // Rejoin its public entry before waiting for followers held outside the yard.
     const arenaExit = l8BossArenas.at(-1)!.entry;
