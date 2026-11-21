@@ -193,7 +193,7 @@ for (const tier of tiers) {
   const overpassThrows: { tick: number; move: string; sourceId: number; playerX: number }[] = [];
   const overpassState: unknown[] = [];
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
-  let mounts = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
+  let mounts = 0, bikeTicks = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
   const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [];
   let finalState: unknown;
   let lastRegion = '', firstMegaSeen: number | null = null, fullArsenal = false;
@@ -236,6 +236,7 @@ for (const tier of tiers) {
           world.megaPursuit!.introduce({ x: 3945, z: -25 });
         }
         update(); const p = world.entities.get(1)!;
+        if (world.vehicles?.bicycle.riding && world.vehicles.bicycle.entity?.bicycle?.motorbike) bikeTicks++;
         if (world.missions!.state.states['l10-overpass-mega'] && !overpassState.length) {
           const alpha = world.megaPursuit!.entity();
           const object = alpha && world.infected!.props.nearestObject(alpha, 6);
@@ -282,7 +283,7 @@ for (const tier of tiers) {
   check(tier, 'hangar-to-gate finale takes 7–9 minutes', finalePacing.hangarToGateSeconds !== null && finalePacing.hangarToGateSeconds >= 420 && finalePacing.hangarToGateSeconds <= 540, finalePacing.hangarToGateSeconds);
   check(tier, 'every story beat arrives 45–75 seconds after the previous one', beatIntervals.every(seconds => seconds !== null && seconds >= 45 && seconds <= 75), beatIntervals);
   check(tier, 'fight or story gaps stay within 20 seconds', finalePacing.longestGapSeconds !== null && finalePacing.longestGapSeconds <= 20, finalePacing.longestGapSeconds);
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassThrows, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassThrows, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { check(tier, 'native route executes', false, String(error)); rows.push({ tier, routeError: String(error) }); }
 }

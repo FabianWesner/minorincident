@@ -69,6 +69,18 @@ export class LevelTenBot {
     // omnidirectional scan shot unseen arrivals before they could enter view,
     // making the native route incomparable to real-input play.
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && (isMega(e) || !cornBlocksSight(w, [p.x, p.z], [e.transform.x, e.transform.z])) && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
+    const bike = w.vehicles?.bicycle, bikeEntity = bike?.entity;
+    if (bike && bikeEntity?.bicycle?.motorbike && p.x >= 2780 && p.x < 3750 && !finale) {
+      const nearThreat = threats.some(e => !isMega(e) && distance(e.transform) < 15);
+      if (bike.riding && nearThreat) { f.interact = true; return f; }
+      // Approach and mount a nearby bike only when the immediate fight has
+      // cleared. A bike left far behind is not an objective to backtrack to.
+      if (!bike.riding && !nearThreat && distance(bikeEntity.transform) < 12) {
+        f.move = this.walker.step(w, bikeEntity.transform, 1, 'motorbike') ?? f.move;
+        f.interact = bike.canInteract() && tick % 30 === 0;
+        return f;
+      }
+    }
     // A visible dog pounce has a short, committed windup. Face and hit that
     // dog while the ground telegraph is live instead of continuing to shoot
     // whichever ordinary infected happens to be a fraction closer.
