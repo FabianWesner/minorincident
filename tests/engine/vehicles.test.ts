@@ -98,6 +98,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
   await motorbikeRide();
+  await roadblockFaceInteraction();
   await zooParkedBoarding();
   await zooCheckpointHandoff();
   await apcBoarders();
@@ -203,6 +204,23 @@ async function l9InterruptedBoarding(): Promise<void> {
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
+}
+
+async function roadblockFaceInteraction(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('combat-arena', 1);
+  try {
+    const devices = world.interactables!, player = world.entities.get(1)!;
+    const gate = devices.spawn('gate', { x: 0, z: 0 }, { halfX: .2, halfZ: 40, radius: 2 });
+    world.entities.get(gate)!.archetype = 'device.l10-roadblock';
+    Object.assign(player.transform, { x: 1, z: 20 });
+    devices.update({ ...emptyInput(), interact: true });
+    expect(world.entities.get(gate)!.interactable!.open).toBe(true);
+    devices.update(emptyInput());
+    const normal = devices.spawn('gate', { x: 10, z: 0 }, { halfX: .2, halfZ: 40, radius: 2 });
+    Object.assign(player.transform, { x: 11, z: 20 });
+    devices.update({ ...emptyInput(), interact: true });
+    expect(world.entities.get(normal)!.interactable!.open).toBe(false);
+  } finally { world.dispose(); }
 }
 
 // The preserved s124/s126 crowded saves exercise the timed fallback against
@@ -937,7 +955,12 @@ async function motorbikeRide(): Promise<void> {
     infected.infected = { hidden: false } as NonNullable<typeof infected.infected>;
     Object.assign(infected.transform, { x: player.transform.x, z: player.transform.z });
     bike.filter(emptyInput());
-    expect(bike.riding, 'infected contact knocks the motorbike rider off').toBe(false);
+    expect(bike.riding, 'contact alone does not knock the motorbike rider off').toBe(true);
+    const hit = { type: 'combat.hit' as const, tick: world.tick, attackId: 1, actionId: 'infected.attack', sourceId: target, targetId: player.id, position: { ...player.transform }, direction: { x: 1, z: 0 }, knockback: 0, damageType: 'melee' as const };
+    world.events.emit({ ...hit, amount: 10 });
+    expect(bike.riding, 'a light hit leaves the rider mounted').toBe(true);
+    world.events.emit({ ...hit, amount: 20 });
+    expect(bike.riding, 'a hard infected hit knocks the motorbike rider off').toBe(false);
     expect(infected.health.current).toBeGreaterThan(0);
     expect(dog.passengerOf).toBeUndefined();
     infected.hidden = true; infected.infected.hidden = true;

@@ -77,6 +77,7 @@ export class MegaPursuit {
   private coarseGrid: NavGrid | null = null;
   private readonly coarsePath = { path: [] as number[], goal: -1, pathIndex: 0, hold: 0 };
   private coarseEscape: { goal: { x: number; z: number }; point: { x: number; z: number } } | null = null;
+  private coarseRouteFallback = false;
   private readonly stops: (() => void)[] = [];
   private reservation = false;
   /** Nav baked at the Mega's own clearance (falls back to the shared crowd grid on very large grids). */
@@ -327,7 +328,7 @@ export class MegaPursuit {
     const link = key(s.passed, s.route[0]);
     return link in s.blocked && dist(at, this.nodes.get(s.passed)!) <= megaAlpha.nodeReachM ? link : null;
   }
-  private pass(): void { this.state.passed = this.state.route.shift() ?? this.state.passed; }
+  private pass(): void { this.state.passed = this.state.route.shift() ?? this.state.passed; this.coarseRouteFallback = false; }
   private breachStep(): boolean {
     const s = this.state, tick = this.world.tick;
     if (s.breach) {
@@ -423,7 +424,7 @@ export class MegaPursuit {
     const s = this.state.stuck, tick = this.world.tick, t = e.transform;
     const window = Math.round(megaAlpha.stuck.windowS * 60);
     if (tick - s.sampleAt < window) return;
-    if (Math.hypot(t.x - s.x, t.z - s.z) < megaAlpha.stuck.progressM) this.escalate(e);
+    if (Math.hypot(t.x - s.x, t.z - s.z) < megaAlpha.stuck.progressM) { this.coarseRouteFallback = true; this.escalate(e); }
     else if (s.level && tick - s.since >= megaAlpha.stuck.clearS * 60) { s.level = 0; s.goal = null; }
     s.sampleAt = tick; s.x = t.x; s.z = t.z;
   }
@@ -464,7 +465,8 @@ export class MegaPursuit {
     // At long hidden distances, chase the courier's refreshed position instead
     // of marching back to a route node that may have become inaccessible after
     // a restore or a long detour. The bounded grid still routes around solids.
-    const target = farHidden || !s.route.length ? s.target : this.nodes.get(s.route[0])!;
+    if (!farHidden || !s.route.length) this.coarseRouteFallback = false;
+    const target = (farHidden && !this.coarseRouteFallback) || !s.route.length ? s.target : this.nodes.get(s.route[0])!;
     const dx = target.x - p.x, dz = target.z - p.z, d = Math.hypot(dx, dz), stop = s.route.length ? 0 : this.radius + 1;
     if (d <= stop + 1e-6) return;
     // Keep the local goal well inside the 80 m coarse grid, but let it land on
@@ -678,7 +680,7 @@ export class MegaPursuit {
     // The cap reservation follows the restored phase: held while dormant, released once introduced.
     if (!s.id && !this.reservation) { ai.director.reserved++; this.reservation = true; }
     if (s.id && this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
-    this.state = s; this.path.path.length = 0; this.path.goal = -1;
+    this.state = s; this.path.path.length = 0; this.path.goal = -1; this.coarseRouteFallback = false;
     const e = this.entity();
     if (killed && e) {
       e.health.current = 0; e.infected!.recoverAt = -1; e.infected!.state = 'dead'; e.infected!.deadAt = this.world.tick - 120;

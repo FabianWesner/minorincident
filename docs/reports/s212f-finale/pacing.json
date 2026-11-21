@@ -1,0 +1,111 @@
+{
+  "revision": "ecf7f138 plus pursuit and alternate crate changes",
+  "command": "node --import tsx/esm tools/qa/l10-story.ts",
+  "seed": 1,
+  "policy": "ordinary skilled LevelTenBot inputs; native simulation",
+  "tiers": {
+    "low": {
+      "runSeconds": 1132.35,
+      "completed": true,
+      "deaths": 3,
+      "hangarToGateSeconds": 342.20000000000005,
+      "beatSeconds": [
+        0,
+        11.8,
+        91.48333333333333,
+        106.16666666666667,
+        144.45,
+        165.11666666666667,
+        223.75,
+        239.26666666666668,
+        264.95,
+        275.76666666666665
+      ],
+      "beatIntervalsSeconds": [
+        11.8,
+        79.68333333333334,
+        14.683333333333337,
+        38.28333333333332,
+        20.666666666666686,
+        58.633333333333326,
+        15.51666666666668,
+        25.68333333333331,
+        10.816666666666663
+      ],
+      "longestActivityGapSeconds": 25.216666666666665,
+      "bikeTicks": 6648,
+      "overpassCrateThrow": [
+        {
+          "tick": 49413,
+          "move": "alpha.grab-throw",
+          "stage": "prop-thrown",
+          "sourceId": 115,
+          "playerX": 3344.302001953125,
+          "propId": 1218643094
+        }
+      ],
+      "failedChecks": [
+        "ride, fight, remount and cross roadblock 3010",
+        "ride, fight, remount and cross roadblock 3260",
+        "ride, fight, remount and cross roadblock 3390",
+        "ride, fight, remount and cross roadblock 3502",
+        "Mega visibly enters widest frame within three minutes",
+        "no ordinary infected first enters the widest frame standing idle",
+        "hangar-to-gate finale takes 7–9 minutes",
+        "every story beat arrives 45–75 seconds after the previous one",
+        "fight or story gaps stay within 20 seconds"
+      ]
+    },
+    "high": {
+      "runSeconds": 1526.1666666666667,
+      "completed": true,
+      "deaths": 10,
+      "hangarToGateSeconds": 301.1166666666667,
+      "beatSeconds": [
+        0,
+        11.916666666666666,
+        111.35,
+        126.03333333333333,
+        143.98333333333332,
+        169.01666666666668,
+        186.81666666666666,
+        198.43333333333334,
+        223.85,
+        234.68333333333334
+      ],
+      "beatIntervalsSeconds": [
+        11.916666666666666,
+        99.43333333333332,
+        14.683333333333337,
+        17.94999999999999,
+        25.03333333333336,
+        17.799999999999983,
+        11.616666666666674,
+        25.416666666666657,
+        10.833333333333343
+      ],
+      "longestActivityGapSeconds": 16.15,
+      "bikeTicks": 1957,
+      "overpassCrateThrow": [
+        {
+          "tick": 72179,
+          "move": "alpha.grab-throw",
+          "stage": "prop-thrown",
+          "sourceId": 115,
+          "playerX": 3344.48974609375,
+          "propId": 1631430176
+        }
+      ],
+      "failedChecks": [
+        "ride, fight, remount and cross roadblock 3010",
+        "ride, fight, remount and cross roadblock 3260",
+        "ride, fight, remount and cross roadblock 3390",
+        "ride, fight, remount and cross roadblock 3502",
+        "Mega visibly enters widest frame within three minutes",
+        "no ordinary infected first enters the widest frame standing idle",
+        "hangar-to-gate finale takes 7–9 minutes",
+        "every story beat arrives 45–75 seconds after the previous one"
+      ]
+    }
+  }
+}

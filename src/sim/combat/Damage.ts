@@ -160,7 +160,7 @@ export class Damage {
       if (hit.type === 'melee' && source.transform.y < target.transform.y - 1.2) return 0;
       if ((dx * gun.aim.x + dz * gun.aim.z) / distance >= 0 && (hit.type !== 'melee' || distance > 2.2)) return 0;
       // An infected which climbed the stair can reach the gunner from behind. Leave and clear the stairs.
-      hit = { ...hit, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0 };
+      hit = { ...hit, base: hit.base * .25, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0 };
     }
     // E31 hull attacks own infected melee against the APC; seated people are inside its armor.
     const transportId = target.id === 1 ? this.world.vehicles?.active : target.passengerOf;
@@ -231,7 +231,8 @@ export class Damage {
       }
     }
     let megaReact = false;
-    if (mega && hit.base * hit.multiplier > 0 && (hit.stagger > 0 || hit.knockback > 0 || hit.knockdown || hit.knockdownTicks || this.world.scenario === 'L10') && this.world.tick >= (target.infected!.megaStaggerReady ?? 0)) {
+    const authoredOverpassWindup = this.world.scenario === 'L10' && this.world.missions?.state.states['l10-overpass-mega-staged'] && target.infected?.specialAttack?.attackId === this.world.missions.state.counters['l10-overpass-mega-attack'] && target.infected.specialAttack.move === 'alpha.grab-throw' && target.infected.specialAttack.stage !== 'recovery';
+    if (!authoredOverpassWindup && mega && hit.base * hit.multiplier > 0 && (hit.stagger > 0 || hit.knockback > 0 || hit.knockdown || hit.knockdownTicks || this.world.scenario === 'L10') && this.world.tick >= (target.infected!.megaStaggerReady ?? 0)) {
       megaReact = true; target.infected!.megaStaggerReady = this.world.tick + megaAlpha.staggerCooldownTicks;
       const recovery = target.infected!.specialRecoveryUntil ?? 0;
       this.world.infected?.cancelSpecial(target.id);
@@ -306,7 +307,7 @@ export class Damage {
           }
         }
       }
-      if (pipeDown && target.health.current > 0 && target.combat && target.infected) {
+      if (pipeDown && !authoredOverpassWindup && target.health.current > 0 && target.combat && target.infected) {
         const until = this.world.tick + 150, from = { x: target.transform.x, z: target.transform.z };
         if (mega) target.infected.pipeBombReady = until + 600;
         this.world.infected?.cancelSpecial(target.id);

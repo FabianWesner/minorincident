@@ -118,7 +118,12 @@ export class Interactables {
     for (const e of this.world.entities.iterate()) {
       const c = e.interactable; if (!c) continue;
       if (c.powered && c.kind === 'generator') { c.fuel = Math.max(0, c.fuel - 1 / 60); if (c.fuel <= 1e-9) { c.fuel = 0; c.powered = false; c.completed = false; c.progress = 0; } }
-      const distance = (e.transform.x - p.transform.x) ** 2 + (e.transform.z - p.transform.z) ** 2;
+      const wall = e.archetype === 'device.l10-roadblock' ? this.authoredWalls.get(e.id) : undefined;
+      // A long roadblock can be opened from any point along its face, so the
+      // player need not cross traffic to reach a tiny central interaction ring.
+      const dx = Math.max(0, Math.abs(e.transform.x - p.transform.x) - (wall?.halfX ?? 0));
+      const dz = Math.max(0, Math.abs(e.transform.z - p.transform.z) - (wall?.halfZ ?? 0));
+      const distance = dx ** 2 + dz ** 2;
       // A small yard may have no room to leave the ring. A new press must always
       // permit another toggle; staying nearby or holding E must not repeat it.
       if (c.completed && isDoor(c.kind) && (distance > c.radius ** 2 || (c.instant && pressed))) { c.completed = false; c.progress = 0; c.cycle++; }

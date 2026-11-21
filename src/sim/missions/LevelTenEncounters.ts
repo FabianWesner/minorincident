@@ -32,6 +32,8 @@ export interface CureEncounterState {
   farmScares?: FarmScareState; toy?: number; convoyBarrels?: number[]; convoyCrates?: number[]; convoySupplies?: Record<string, number>;
   pressureAttackAt?: number; pressureTick?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
+  /** The four ride/fight gates that hold the motorbike until their roadblock encounter is cleared. */
+  roadblockGates?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
   /** Paced set pieces: the wave currently admitting, and the next re-target pass. */
   pacedWave?: Record<string, number>; pacedPress?: number;
@@ -105,6 +107,15 @@ export class LevelTenEncounters {
     const discarded = this.died ? [...this.deathLedger] : [];
     this.died = false;
     this.state = incoming; this.state.weapons ??= {};
+    // Runtime roadblock walls are owned by Interactables rather than the
+    // entity snapshot. A fresh save resume must rebuild their geometry too.
+    for (const [group, id] of Object.entries(this.state.roadblockGates ?? {})) {
+      const gate = this.world.entities.get(id);
+      if (gate?.archetype !== 'device.l10-roadblock' || !gate.interactable) { delete this.state.roadblockGates![group]; continue; }
+      const { x, z } = gate.transform;
+      this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ: 40 });
+      if (gate.interactable.open) this.world.interactables!.unblock(id);
+    }
     if (retainedAssault) {
       this.state.assaultTicks = Math.max(this.state.assaultTicks ?? 0, retainedAssault.assaultTicks ?? 0);
       this.state.assaultWave = Math.max(this.state.assaultWave ?? 0, retainedAssault.assaultWave ?? 0);
@@ -315,7 +326,7 @@ export class LevelTenEncounters {
       if (assault && !assaultActive && !assaultApproach) continue;
       const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
-        const releaseRadius = group.setPiece === 'propaganda-billboard' ? 25 : 35;
+        const releaseRadius = group.setPiece === 'propaganda-billboard' ? 25 : group.setPiece === 'field-hospital' ? 60 : 35;
         if (group.setPiece ? Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]) > releaseRadius : Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
         // A field crossing meets the same once-only hunting group on its own
@@ -323,13 +334,40 @@ export class LevelTenEncounters {
         // the courier's current lane at its own gate below.
         lanes[group.id] = this.lanePull(group, player, paced);
       }
+      if (['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id) && released.includes(group.id)) {
+        const gates = this.state.roadblockGates ??= {};
+        let gateId = gates[group.id];
+        if (gateId === undefined && chunks.resident(group.at[0], group.at[1])) {
+          // The physical gate blocks the riding lane. It can be opened on
+          // foot, or the authored encounter opens it after its full cohort is
+          // admitted and cleared.
+          gateId = w.interactables!.spawn('gate', { x: group.at[0], z: 95 }, {
+            halfX: .2, halfZ: 40, radius: 2, label: 'Open roadblock',
+          });
+          w.entities.get(gateId)!.archetype = 'device.l10-roadblock';
+          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ: 40 });
+          gates[group.id] = gateId;
+        }
+        const gate = gateId === undefined ? undefined : w.entities.get(gateId);
+        if (gate?.interactable?.open) gate.interactable.enabled = false;
+        if (gate?.interactable && !gate.interactable.open) {
+          const slots = cureEncounterSlots(group, ai.director.tier);
+          const admitted = slots.every(slot => this.state.spawned[`${slot.key}:0`] !== undefined);
+          const cleared = admitted && slots.every(slot => (w.entities.get(this.state.spawned[`${slot.key}:0`])?.health.current ?? 0) <= 0);
+          if (cleared) {
+            gate.interactable.open = true; gate.interactable.completed = true;
+            gate.interactable.enabled = false;
+            w.interactables!.unblock(gate.id);
+          }
+        }
+      }
       // Let the cohort begin its safe offscreen approach first. The visible
       // board falls only when the courier is near the actual sign, which sits
       // offset from the encounter station.
       if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
-          Math.hypot(player.transform.x - 3066, player.transform.z - 92) <= 15) this.state.billboardFallAt = w.tick;
+          Math.hypot(player.transform.x - 3086, player.transform.z - 92) <= 15) this.state.billboardFallAt = w.tick;
       if (group.setPiece === 'field-hospital' && released.includes(group.id) && this.state.hospitalOpenAt === undefined &&
-          Math.hypot(player.transform.x - 3508, player.transform.z - 83) <= 16) this.state.hospitalOpenAt = w.tick;
+          Math.hypot(player.transform.x - 3505, player.transform.z - 87) <= 16) this.state.hospitalOpenAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
       // charge clock starts, hand off to the next cohort only when that wave
       // is empty; once charging, timed windows continue independently of it.

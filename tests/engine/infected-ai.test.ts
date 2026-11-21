@@ -21,6 +21,7 @@ import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { followTenFrustum } from '../../tools/sim-runner/l10';
 import { emptyInput } from '../../src/input/InputFrame';
+import { boxContact } from '../../src/sim/world/SolidGeometry';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -608,6 +609,22 @@ test('every human and animal role validates and spawns with its catalog health a
     const start = { x: mega.transform.x, z: mega.transform.z };
     for (let i = 0; i < 1200; i++) { followTenFrustum(w); w.applyInput(emptyInput(), 'keyboard'); w.update(); }
     expect(pursuit.state.coarseM, `coarse pursuit accumulates route travel from ${start.x.toFixed(1)},${start.z.toFixed(1)}`).toBeGreaterThan(30);
+  }
+  {
+    const w = await loadLevel('L10', 1, undefined, 0, { quality: 'high' }); worlds.push(w);
+    const courier = w.entities.get(1)!;
+    Object.assign(courier.transform, { x: 3998, z: -20 });
+    w.physics.playerBody!.setTranslation({ x: 3998, y: courier.transform.y, z: -20 }, true);
+    w.combat!.damage.god = true;
+    const pursuit = w.megaPursuit!, mega = w.entities.get(pursuit.introduce({ x: 3314, z: 43 }))!;
+    const barricades = w.districts!.districts.flatMap(d => d.decay.colliders.filter(c => c.id.startsWith('decay.makeshift-barricade') && !c.walkable).map(c => ({ x: (c.aabb.min[0] + c.aabb.max[0]) / 2 + d.origin[0], z: (c.aabb.min[2] + c.aabb.max[2]) / 2 + d.origin[1], y: 1, halfX: (c.aabb.max[0] - c.aabb.min[0]) / 2, halfZ: (c.aabb.max[2] - c.aabb.min[2]) / 2, halfY: 1 })));
+    for (let i = 0; i < 9000 && mega.transform.x < 3400; i++) {
+      followTenFrustum(w); w.applyInput(emptyInput(), 'keyboard'); w.update();
+      if (i % 10 === 0) for (const box of barricades) if (Math.abs(box.x - mega.transform.x) < box.halfX + megaAlpha.radius && Math.abs(box.z - mega.transform.z) < box.halfZ + megaAlpha.radius) {
+        expect(boxContact(box, mega.transform.x, mega.transform.z, megaAlpha.radius, { depth: 0, nx: 0, nz: 0, inside: false }).depth, 'coarse detour preserves barricade collision').toBeLessThanOrEqual(1e-8);
+      }
+    }
+    expect(mega.transform.x, 'unloaded pursuit follows the long barricade detour').toBeGreaterThan(3400);
   }
 });
 

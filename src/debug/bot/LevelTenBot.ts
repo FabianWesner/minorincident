@@ -72,7 +72,7 @@ export class LevelTenBot {
     const bike = w.vehicles?.bicycle, bikeEntity = bike?.entity;
     if (bike && bikeEntity?.bicycle?.motorbike && p.x >= 2780 && p.x < 3750 && !finale) {
       const nearThreat = threats.some(e => !isMega(e) && distance(e.transform) < 15);
-      const roadblock = [3010, 3260, 3390, 3502].some(x => Math.abs(p.x - x) < 18);
+      const roadblock = Object.values(w.l10Encounters?.state.roadblockGates ?? {}).map(id => w.entities.get(id)).some(e => e?.interactable && !e.interactable.open && Math.abs(p.x - e.transform.x) < 18);
       if (bike.riding && nearThreat && roadblock) { f.interact = true; return f; }
       // Approach and mount a nearby bike only when the immediate fight has
       // cleared. A bike left far behind is not an objective to backtrack to.

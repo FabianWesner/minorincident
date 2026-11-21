@@ -102,30 +102,43 @@ export class LevelTenStory {
       state.counters['l10-reyes-loop-ticks'] = world.tick + 360;
       this.say('L10.finale-2', 240);
     }
-    // Older finale saves did not persist the one-shot overpass flag. Infer that
-    // the hunter has already passed this beat from the saved route position so
-    // loading a later checkpoint cannot pull her back to the overpass.
-    if (!state.states['l10-overpass-mega'] && p.transform.x >= 3380) state.states['l10-overpass-mega'] = true;
-    if (!state.states['l10-overpass-mega'] && p.transform.x >= 3320) {
+    // Older saves infer this one-shot in the save migration. During live play,
+    // keep retrying until the authored throw starts; passing the underpass must
+    // never silently count as a successful spectacle.
+    if (state.states['l10-finale-beat-6'] && !state.states['l10-overpass-mega'] && p.transform.x >= 3340 && p.transform.x < 3380) {
       const pursuit = world.megaPursuit;
       const id = pursuit?.state.id ? pursuit.state.id : pursuit?.introduce({ x: 3330, z: 111 });
       const alpha = id ? world.entities.get(id) : undefined;
       if (alpha?.infected) {
-        state.states['l10-overpass-mega'] = true;
-        // Re-stage the already-active hunter on the overpass shoulder, where
-        // the light crate gives its existing rage throw a visible pickup.
-        // This is an authored entrance for the beat; the pursuit resumes as
-        // soon as the normal infected update runs.
-        const at = { x: 3332, z: 100 };
-        alpha.transform.x = at.x; alpha.transform.z = at.z;
-        alpha.transform.y = (world.districts?.groundHeight(at.x, at.z) ?? 0) + .7;
-        alpha.infected.hidden = false;
-        world.spatial?.set(alpha.id, at.x, at.z);
-        alpha.infected.megaPhase = 2;
+        // Stage once in the courier's current camera view. Repeating this setup
+        // every tick cancels the telegraph and continually restarts the Alpha's
+        // special cooldown before the throw can resolve.
+        if (!state.states['l10-overpass-mega-staged']) {
+          const at = { x: p.transform.x - 2.7, z: p.transform.z };
+          alpha.transform.x = at.x; alpha.transform.z = at.z;
+          alpha.transform.y = (world.districts?.groundHeight(at.x, at.z) ?? 0) + .7;
+          alpha.infected.hidden = false;
+          world.spatial?.set(alpha.id, at.x, at.z);
+          alpha.infected.megaPhase = 2;
+          alpha.infected.specialAttack = undefined;
+          alpha.infected.state = 'chase';
+          alpha.infected.until = 0;
+          if (alpha.combat) alpha.combat.attacking = false;
+          alpha.infected.specialCooldowns ??= {};
+          alpha.infected.specialCooldowns['alpha.grab-throw'] = world.tick;
+          alpha.infected.specialRecoveryUntil = 0;
+          alpha.infected.cooldown = world.tick;
+          alpha.infected.alphaSpecialStarted = world.tick - 180;
+          if (alpha.combat) { alpha.combat.attacking = false; alpha.combat.staggerUntil = world.tick; alpha.combat.statuses.length = 0; }
+          state.states['l10-overpass-mega-staged'] = true;
+        }
         const dx = p.transform.x - alpha.transform.x, dz = p.transform.z - alpha.transform.z, distance = Math.hypot(dx, dz) || 1;
-        world.infected!.startSpecial(alpha.id, 'alpha.grab-throw', { id: p.id, x: p.transform.x, z: p.transform.z }, {
+        const thrown = world.infected!.startSpecial(alpha.id, 'alpha.grab-throw', { id: p.id, x: p.transform.x, z: p.transform.z }, {
           x: alpha.transform.x, z: alpha.transform.z, radius: 4, dx: dx / distance, dz: dz / distance,
         });
+        if (!thrown) return;
+        state.counters['l10-overpass-mega-attack'] = alpha.infected.specialAttack?.attackId ?? -1;
+        state.states['l10-overpass-mega'] = true;
         world.l10Encounters?.callWave();
       }
     }
