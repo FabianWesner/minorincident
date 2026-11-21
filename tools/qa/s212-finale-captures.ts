@@ -11,13 +11,18 @@ const beats = [
 ] as const;
 try {
   await session.open();
-  await session.inspectLevel('L10');
+  await session.page.evaluate(async () => {
+    const api = window.__SS__!;
+    await api.loadLevel('L10', { seed: 1 });
+    api.missions.begin(); api.pause(); api.camera.follow(); api.camera.zoom(1);
+  });
   const cells = [];
   for (const [i, [name, x]] of beats.entries()) {
-    await session.page.evaluate(({ x }) => {
-      window.__SS__!.pause();
-      window.__SS__!.camera.zoom(1);
-      window.__SS__!.inspect.setCamera({ position: [x - 17, 13, 115], target: [x, 1, 95] });
+    await session.page.evaluate(async ({ x }) => {
+      const api = window.__SS__!;
+      api.teleport(1, { x, z: x < 2990 ? 45 : x >= 3550 ? -25 : 95 });
+      await api.step(120);
+      await api.screenshotReady();
     }, { x });
     await session.screenshot(`${out}/${name}.png`);
     cells.push({ frame: i, jpeg: await session.snapshot() });
