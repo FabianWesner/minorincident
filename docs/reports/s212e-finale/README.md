@@ -66,6 +66,8 @@ The headless `s212e-native-captures.ts` pass starts at the research checkpoint a
 
 The objective is not complete. Required follow-up: build clearable roadblocks and encounters that produce the 7–9 minute route and 45–75 s cadence on both tiers without relying on deaths; make the overpass throw reliable; capture and review the actual set pieces at HIGH zoom 1; rerun all gates after those changes. The latest 2,400 s route probe failed 12 of 86 checks, including pacing/cadence, overpass throw on LOW, idle arrivals, early Mega visibility, and two controlled combat checks.
 
+The two controlled combat checks failed on both tiers: repeated direct rockets reduced the pre-install Mega from 3,000 to about 1,908 HP (the probe expected no HP loss), and the rear stair-climber hit dealt 35 damage (the probe expected at most 8.75). These are probe failures to investigate, not evidence that the Mega was killed. HIGH also missed its 180 s first-sighting check and had idle arrivals; LOW missed those checks and the overpass throw check as well.
+
 The branch starts at `f9049d8b`. At handoff the shared local `main` has independently advanced to `152d5e3e`; this branch has not been merged with that newer state. The receipts above verify this branch, not the combined result with the newer main.
 
 The authored motorbike now renders in the HIGH native sheet with the corgi seated in its sidecar; the subjects remain small at zoom 1. A LOW checkpoint-started riding frame also shows the seated corgi, with a large dark shape at the bottom of the image. The LOW teleport diagnostic produced a stretched skinned mesh, so that staged capture is not accepted as visual evidence.
