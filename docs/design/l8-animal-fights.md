@@ -50,3 +50,18 @@ Throughline: the army's sanctuary fed its dead to the problem. Beats, using what
 Every L8 animal must read as infected at game zoom: torn hide with exposed wound patches, blood around the mouth, matted/patchy fur or feathers, milky or glowing eyes, a limp/twitch in idle, consistent with the zombie palette. Built through the TRELLIS.2 pipeline (PO rule: every figure), derived from the current animal so rigs/animations keep working; LOD budgets as the existing animal assets. Corpses must not clip through fences (zebra screenshot).
 
 Lanes: s224 animal looks (all six, assets only) runs in parallel to the behaviour lanes; the story beats go with s222 (zebras + gorilla) after s220 (breach) merges.
+
+## Enclosures must look like enclosures (PO 2026-11-21)
+
+PO, verbatim: "Killing the gorilla was just a single shot with a shotgun. Super boring." and "Also make sure that the animal arenas look like animal arenas. This one here does not look like a place where a gorilla would live in a zoo." (Screenshot: the gorilla "house" is a paved square with park benches, folding chairs, four red pillars and a street lamp; the whole survivor group incl. soldiers is inside with the dead gorilla.)
+
+The gorilla died to one shotgun shot because the soldiers had already shot it — the solo-cage rule (s221) fixes that; its 1,200 HP stays, and s222 makes the duel last.
+
+Each cage is dressed as the habitat it is, through the district/layout pipeline (props solid, figures TRELLIS), keeping the fight space and cover the behaviours need:
+- **Lion rocks**: sandy ground, a big rock outcrop with a sun ledge (lion stalking cover), tall dry grass clumps, a dead tree, moat edge + viewing wall.
+- **Flamingo pond**: shallow pond with reeds and mud banks (landing pads on the banks), a little island, a viewing boardwalk.
+- **Zebra paddock**: savanna grass and dirt, a long oval run along the fence (stampede lap), feeding racks, a water trough, a shelter.
+- **Gorilla house**: indoor/outdoor enclosure: climbing frame of logs and ropes, a rock with a ledge (throw position), straw and hay, a glass viewing window, tyre swing, a night-house door.
+- **Primate yard**: high climbing frames, ropes, roofs to drop from, nets, a keeper office.
+- **Elephant yard**: packed earth, a pool, a heavy log barrier, the armored truck (lure target).
+No park benches, folding chairs, plaza pillars or street lamps inside a cage (lamps outside the fence are fine).
