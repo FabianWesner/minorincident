@@ -46,3 +46,5 @@ After the hard-hit motorbike change, a HIGH trial made voluntary dismount depend
 A LOW trial keeping the bot within roughly 12 m of the parked bike during nearby fights was also discarded. It caused repeated mount/dismount attempts and still abandoned the bike at the first gate; the route took 318.2 s with no deaths and a 19.8 s maximum activity gap.
 
 After making roadblocks interactable along their face, a trial made the bot press the active gate after nearby threats cleared. It was discarded: LOW took 295.0 s with a 30.2 s activity gap and HIGH took 327.2 s with a 29.4 s gap. Riding remained 3540 and 1669 ticks respectively, with the bike still left at the first gate.
+
+A second underpass mouth at z=55 was tried after the earlier native route went around the gate there. The subsequent native HIGH capture instead followed z≈92 at beat 7, and the added mouth was outside its frame. Beats 4–9 in that capture were also heavily washed out by a bright effect, preventing a reliable readability assessment. The extra mouth was discarded; the underlying exposure and route variability need investigation.
