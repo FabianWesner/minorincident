@@ -66,4 +66,6 @@ The headless `s212e-native-captures.ts` pass starts at the research checkpoint a
 
 The objective is not complete. Required follow-up: build clearable roadblocks and encounters that produce the 7–9 minute route and 45–75 s cadence on both tiers without relying on deaths; make the overpass throw reliable; capture and review the actual set pieces at HIGH zoom 1; rerun all gates after those changes. The latest 2,400 s route probe failed 12 of 86 checks, including pacing/cadence, overpass throw on LOW, idle arrivals, early Mega visibility, and two controlled combat checks.
 
+The branch starts at `f9049d8b`. At handoff the shared local `main` has independently advanced to `152d5e3e`; this branch has not been merged with that newer state. The receipts above verify this branch, not the combined result with the newer main.
+
 The authored motorbike now renders in the HIGH native sheet with the corgi seated in its sidecar; the subjects remain small at zoom 1. A LOW checkpoint-started riding frame also shows the seated corgi, with a large dark shape at the bottom of the image. The LOW teleport diagnostic produced a stretched skinned mesh, so that staged capture is not accepted as visual evidence.
