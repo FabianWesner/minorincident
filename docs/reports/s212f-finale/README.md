@@ -28,6 +28,8 @@ The [roadblock receipt](roadblocks.json) now checks each sequence in order: moun
 
 The bot now voluntarily dismounts for a closed gate rather than an x-coordinate alone. HIGH then recorded a first-gate arrival and fight, but still did not remount after it opened; LOW showed the same incomplete sequence. A broader 80 m return-to-bike trial was discarded: neither tier completed a roadblock sequence, and LOW's 496.6 s approach included a retry and a 146.1 s beat interval.
 
+A 25 m remount search trial produced 56 LOW deaths and repeated mount cycles, so it was reverted. It also exposed a receipt bug: a remount before death could be combined with a crossing after checkpoint restore. Incomplete roadblock sequences now reset on death; the current paired route has zero completed sequences on both tiers.
+
 ## Visual evidence
 
 The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the research checkpoint with ordinary bot input and inspected. The capture advances the render clock with the simulation: without that, an explosion's white flash persisted in every later frame. Beat 0 shows the courier beside a generator; 1 shows the mounted bike and sidecar at an intersection; 2 shows the quarantine gantry and a fight; 3 shows the billboard at the frame edge; 4 shows road without readable scarecrows; 5 shows a truck and combat; 6 shows the Mega holding the crate; 7 shows road, a pier and an emergency light without a readable underpass; 8 shows the edge of a tent but no readable opening or silhouettes; 9 shows a utility pole and building without a readable gate or searchlight. The sheet confirms that the route and framing still need work.

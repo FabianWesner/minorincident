@@ -1,6 +1,7 @@
 {
-  "revision": "1ed9cc73",
+  "revision": "7aa395c4",
   "command": "node --import tsx/esm tools/qa/l10-story.ts",
+  "note": "Incomplete attempts reset on death; a completed sequence must occur within one life.",
   "checks": [
     {
       "tier": "low",
@@ -8,10 +9,10 @@
       "pass": false,
       "observed": {
         "x": 3010,
-        "arrived": 38283,
-        "dismounted": 39328,
-        "fight": 39335,
-        "opened": 41440,
+        "arrived": 0,
+        "dismounted": 0,
+        "fight": 0,
+        "opened": 0,
         "remounted": 0,
         "crossed": 0
       }

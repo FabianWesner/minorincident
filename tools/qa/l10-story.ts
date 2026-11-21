@@ -196,6 +196,7 @@ for (const tier of tiers) {
   const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
   let authoredThrowCrateId: number | undefined;
   const overpassState: unknown[] = [];
+  const bikeRecovery: unknown[] = [];
   let billboardFallTick: number | undefined, hospitalOpenTick: number | undefined;
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
   let mounts = 0, bikeTicks = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
@@ -240,7 +241,12 @@ for (const tier of tiers) {
       });
       world.events.on('explosion', e => { if (e.type === 'explosion' && e.sourceId === 1 && /rocket/.test(e.defId) && Math.hypot(e.position.x - world.entities.get(1)!.transform.x, e.position.z - world.entities.get(1)!.transform.z) < 6) closeRocketBlasts++; });
       world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1) { if (world.mountedGun?.mounted) mannedDamage += e.amount; recentHits.push({ tick: e.tick, action: e.actionId, amount: e.amount }); if (recentHits.length > 8) recentHits.shift(); } });
-      world.events.on('player.died', () => deaths.push({ tick: world.tick, hits: [...recentHits] }));
+      world.events.on('player.died', () => {
+        deaths.push({ tick: world.tick, hits: [...recentHits] });
+        // A checkpoint retry starts a new attempt. Do not combine a pre-death
+        // dismount or remount with a crossing from the restored timeline.
+        for (const b of roadblockRide) if (!b.crossed) Object.assign(b, { arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0 });
+      });
       const update = world.update.bind(world);
       let finalePrepared = false, lastBike = false;
       world.update = () => {
@@ -255,6 +261,11 @@ for (const tier of tiers) {
         billboardFallTick ??= world.l10Encounters?.state.billboardFallAt;
         hospitalOpenTick ??= world.l10Encounters?.state.hospitalOpenAt;
         const riding = !!world.vehicles?.bicycle.riding;
+        if (p.transform.x >= 2970 && p.transform.x <= 3070 && world.tick % 60 === 0 && bikeRecovery.length < 240) {
+          const bike = world.vehicles?.bicycle, frame = bike?.entity;
+          const threats = world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15 && world.infected!.director.inPlayerView(e.transform, 30, 1, 5));
+          bikeRecovery.push({ tick: world.tick, x: p.transform.x, z: p.transform.z, bikeX: frame?.transform.x, bikeZ: frame?.transform.z, riding, canInteract: bike?.canInteract(), armed: frame?.bicycle?.armed, lockUntil: frame?.bicycle?.lockUntil, threats: threats.length, input: world.inputFrame.move, interact: world.inputFrame.interact });
+        }
         for (const b of roadblockRide) {
           const near = Math.abs(p.transform.x - b.x) <= 25 && Math.abs(p.transform.z - 95) <= 45;
           if (near && riding && !b.arrived) b.arrived = world.tick;
@@ -324,7 +335,7 @@ for (const tier of tiers) {
   check(tier, 'hangar-to-gate finale takes 7–9 minutes', finalePacing.hangarToGateSeconds !== null && finalePacing.hangarToGateSeconds >= 420 && finalePacing.hangarToGateSeconds <= 540, finalePacing.hangarToGateSeconds);
   check(tier, 'every story beat arrives 45–75 seconds after the previous one', beatIntervals.every(seconds => seconds !== null && seconds >= 45 && seconds <= 75), beatIntervals);
   check(tier, 'fight or story gaps stay within 20 seconds', finalePacing.longestGapSeconds !== null && finalePacing.longestGapSeconds <= 20, finalePacing.longestGapSeconds);
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, bikeRecovery, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { const detail = error instanceof Error ? error.stack ?? String(error) : String(error); check(tier, 'native route executes', false, detail); rows.push({ tier, routeError: detail }); }
 }
