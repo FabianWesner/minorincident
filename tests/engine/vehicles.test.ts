@@ -937,7 +937,12 @@ async function motorbikeRide(): Promise<void> {
     infected.infected = { hidden: false } as NonNullable<typeof infected.infected>;
     Object.assign(infected.transform, { x: player.transform.x, z: player.transform.z });
     bike.filter(emptyInput());
-    expect(bike.riding, 'infected contact knocks the motorbike rider off').toBe(false);
+    expect(bike.riding, 'contact alone does not knock the motorbike rider off').toBe(true);
+    const hit = { type: 'combat.hit' as const, tick: world.tick, attackId: 1, actionId: 'infected.attack', sourceId: target, targetId: player.id, position: { ...player.transform }, direction: { x: 1, z: 0 }, knockback: 0, damageType: 'melee' as const };
+    world.events.emit({ ...hit, amount: 10 });
+    expect(bike.riding, 'a light hit leaves the rider mounted').toBe(true);
+    world.events.emit({ ...hit, amount: 20 });
+    expect(bike.riding, 'a hard infected hit knocks the motorbike rider off').toBe(false);
     expect(infected.health.current).toBeGreaterThan(0);
     expect(dog.passengerOf).toBeUndefined();
     infected.hidden = true; infected.infected.hidden = true;

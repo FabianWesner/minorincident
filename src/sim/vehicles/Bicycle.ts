@@ -60,7 +60,13 @@ export class Bicycle {
   private id = -1;
   private lastOutside: Vec2 = { x: 0, z: 0 };
   private navPose = '';
-  constructor(private readonly world: SimWorld) {}
+  constructor(private readonly world: SimWorld) {
+    world.events.on('combat.hit', event => {
+      if (event.type !== 'combat.hit' || event.targetId !== 1 || event.amount < 20 || !world.entities.get(event.sourceId)?.infected) return;
+      const bike = this.entity, player = world.entities.get(1);
+      if (bike?.bicycle?.motorbike && bike.bicycle.mounted && player) this.knockOff(bike, player);
+    });
+  }
   /** Creates the bicycle at `pos`; the integrator/mission calls this once per level (anchor `bike-start`). */
   spawn(pos: Vec2, heading = 0, pavement = true, exactSpot = false): number {
     const state: BicycleState = { mounted: false, heading, speed: 0, pedal: 0, steer: 0, lean: 0, standTicks: 0, armed: true, lockUntil: 0 };
@@ -160,9 +166,9 @@ export class Bicycle {
     // A ring that just completed by standing in it (stand-to-interact) still owns a late `E` for 1.5 s:
     // the press the player meant for the counter must not also drop them off the bicycle (QA1-01).
     if (frame.interact && !claimed && this.world.tick - this.claimedAt > 90) { this.dismount(bike, player); return { ...frame, interact: false }; }
-    // Contact with an infected stops the bicycle and knocks the rider off (no damage, no knockback): she stumbles and the
-    // bike tips over right beside her, where it stays until she picks it up again (PO: it must never vanish).
-    for (const e of this.world.entities.iterate()) {
+    // The bicycle falls on contact. The motorbike falls on a hard infected hit;
+    // in either case the frame remains beside the courier for remounting.
+    if (!b.motorbike) for (const e of this.world.entities.iterate()) {
       if (!e.infected || e.health.current <= 0 || e.hidden || e.infected.hidden) continue;
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= BUMP_RANGE) { this.knockOff(bike, player); return frame; }
     }
