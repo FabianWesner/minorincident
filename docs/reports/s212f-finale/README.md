@@ -30,6 +30,8 @@ The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the res
 
 The capture now requires the billboard fall event for beat 3 and at least 15 ticks of hospital opening for beat 8. In the latest native HIGH run the events began at ticks 37200 and 43150; the captures were at 37260 and 43170. The hospital remained outside the readable frame even after its opening began.
 
+Moving the first tent from z=78 to z=85 and moving its opening trigger with it was also tried. The opening fired earlier, but the event-timed native frame still showed road and a sign rather than a readable tent. That placement was reverted; the placement-to-render path and occlusion need inspection before further coordinate changes.
+
 ## Checks
 
 - `npm run typecheck` — pass.
