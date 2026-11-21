@@ -865,6 +865,11 @@ export class LevelEightZoo {
       }
     }
     if (boarding) { target = this.boardingTarget(e, target); this.unjamBoarding(e, target); }
+    else if (this.breached && !arena && distance(e.transform, p.transform) > 10) {
+      // A fallen animal can obstruct the catch-up route before boarding starts.
+      // Use the same physical corpse detour that already serves the APC queue.
+      target = this.boardingTarget(e, target);
+    }
     if (boarding && queueIndex === 0 && distance(e.transform, door) < .7) w.vehicles!.boardPassenger(s.carId, e.id);
     else if (distance(e.transform, target) > .3) {
       // The roster is healed on arrival and must keep pace through the long
