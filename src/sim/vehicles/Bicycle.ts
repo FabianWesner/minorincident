@@ -384,8 +384,8 @@ export class Bicycle {
   private placeCorgi(bike: EntitySnapshot): void {
     const dog = [...this.world.entities.iterate()].find(e => e.companion && e.passengerOf === bike.id);
     if (!dog || !bike.bicycle) return;
-    const h = bike.bicycle.heading, side = 1.05;
-    Object.assign(dog.transform, { x: bike.transform.x - Math.sin(h) * side, y: bike.transform.y + .12, z: bike.transform.z + Math.cos(h) * side, yaw: bike.transform.yaw });
+    const h = bike.bicycle.heading, side = .69, along = .126;
+    Object.assign(dog.transform, { x: bike.transform.x + Math.cos(h) * along - Math.sin(h) * side, y: bike.transform.y + .12, z: bike.transform.z + Math.sin(h) * along + Math.cos(h) * side, yaw: bike.transform.yaw });
     this.world.spatial.set(dog.id, dog.transform.x, dog.transform.z);
   }
   private unboardCorgi(bike: EntitySnapshot): void {

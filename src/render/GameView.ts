@@ -640,6 +640,7 @@ export class GameView implements Lifecycle {
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
     if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials, this.quality === 'low'); this.bicycle.ground = this.drawnGround; }
+    if (this.npcs) this.npcs.sidecarSeat = out => this.bicycle?.sidecarSeatWorld(out) ?? false;
     const actions = this.actions;
     if (this.crowd) this.crowd.warmBatch = batch => this.scenePrepared ? this.warmHidden(batch) : Promise.resolve();
     return Promise.all([this.accessories.init(), this.npcs?.init(this.camera), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(this.view), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);

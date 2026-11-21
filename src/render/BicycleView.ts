@@ -61,6 +61,7 @@ function motorbikePlaceholder(): Group {
   part(root, 'sidecarFrame', new BoxGeometry(.7, .12, .1), metal, -.32, .35, .65);
   part(root, 'sidecarTub', new BoxGeometry(.98, .42, .72), red, -.3, .58, .78);
   part(root, 'sidecarSeat', new BoxGeometry(.48, .08, .46), seat, -.28, .82, .78);
+  const sidecarSeat = new Group(); sidecarSeat.name = 'sidecar_seat'; sidecarSeat.position.set(-.28, .9, .78); root.add(sidecarSeat);
   part(root, 'exhaust', new CylinderGeometry(.055, .055, .7, 8), metal, -.55, .4, -.26).rotation.z = Math.PI / 2;
   return root;
 }
@@ -135,6 +136,12 @@ export class BicycleView extends Group {
   seatWorld(out: Vector3): boolean {
     const rig = this.rig; if (!rig?.seat) return false;
     rig.root.updateMatrixWorld(true); rig.seat.getWorldPosition(out); return true;
+  }
+  /** Sidecar seating follows the drawn frame, including lean and suspension. */
+  sidecarSeatWorld(out: Vector3): boolean {
+    const rig = this.rig, seat = rig?.model.getObjectByName('sidecar_seat');
+    if (!rig || !seat) return false;
+    rig.root.updateMatrixWorld(true); seat.getWorldPosition(out); return true;
   }
   private readonly contacts = new RiderContacts();
   frameOrientation(out: Quaternion): boolean {

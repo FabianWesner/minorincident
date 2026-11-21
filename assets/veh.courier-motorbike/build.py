@@ -14,6 +14,7 @@ M = {name: palette.mat(token) for name, token in {
 
 def build(ctx):
     root = ctx.root
+    root.name = 'root'
     root['ss_physics'] = json.dumps({'class': 'light', 'mass': 180, 'friction': .8, 'restitution': .08,
         'centerOfMass': [-.05, .46, .16], 'pushable': False, 'kickable': False,
         'vaultable': False, 'flammable': True, 'sounds': 'vehicle.engine-low'})
@@ -64,7 +65,7 @@ def build(ctx):
     rear = wheel('wheel_rear', -.73, 0, .36, .36)
     front = wheel('wheel_front', .92, 0, .36, .36)
     empty('wheelR', parent=rear); empty('wheelF', parent=front)
-    side_wheel = wheel('sidecar_wheel', -.3, .85, .34, .34)
+    side_wheel = wheel('sidecar_wheel', -.3, -1.8, .34, .34)
     tube('frame_spine', (-.65,0,.42), (.9,0,.43), .055, 'red', body)
     tube('frame_down', (-.65,0,.42), (.12,0,.96), .05, 'red', body)
     tube('frame_seat', (-.65,0,.42), (-.48,0,1.04), .045, 'red', body)
@@ -78,12 +79,12 @@ def build(ctx):
     empty('grip_l', (0,.29,0), handle); empty('grip_r', (0,-.29,0), handle)
     rests = empty('footrests', (-.17,0,.38), root)
     empty('pedal_l', (0,.23,0), rests); empty('pedal_r', (0,-.23,0), rests)
-    side = mesh_node('sidecar', (-.35,.78,0))
-    box('sidecar_frame', (-.26,.78,.35), (.8,.12,.1), 'silver', side, .025)
-    box('sidecar_tub', (-.3,.78,.63), (1.05,.78,.5), 'red', side, .12)
-    box('sidecar_inner', (-.3,.78,.91), (.76,.48,.09), 'seat', side, .04)
-    box('sidecar_cushion', (-.28,.78,.99), (.53,.46,.1), 'teal', side, .04)
-    empty('sidecar_seat', (-.28,.78,1.1), root)
+    side = mesh_node('sidecar', (-.35,-1.15,0))
+    box('sidecar_frame', (-.26,-1.15,.35), (1.2,.12,.1), 'silver', side, .025)
+    box('sidecar_tub', (-.3,-1.15,.52), (1.6,1.1,.5), 'red', side, .12)
+    box('sidecar_inner', (-.3,-1.15,.77), (1.3,.8,.09), 'seat', side, .04)
+    box('sidecar_cushion', (-.28,-1.15,.81), (.9,.7,.1), 'teal', side, .04)
+    empty('sidecar_seat', (-.28,-1.15,.84), root)
     lights = mesh_node('lightsFront', (.94,0,.76))
     bpy.ops.mesh.primitive_uv_sphere_add(segments=12 if ctx.quality == 'high' else 8, ring_count=6, radius=.12, location=(.94,0,.76))
     lamp=bpy.context.object; lamp.name='headlamp'; lamp.data.materials.append(M['lamp']); bpy.context.view_layer.update(); world=lamp.matrix_world.copy(); lamp.parent=lights; lamp.matrix_world=world
