@@ -50,7 +50,7 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
     mission.state.states['story-initialized'] = true; mission.state.states['sam-alive'] = true;
     const lines: string[] = [];
     world.events.on('dialogue.line', event => { if (event.type === 'dialogue.line') lines.push(event.id); });
-    for (const [x, id] of [[2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [3010, 'L10.finale-2'], [3076, 'L10.finale-3'], [3150, 'L10.finale-4'], [3260, 'L10.finale-5'], [3340, 'L10.finale-6'], [3397, 'L10.finale-7'], [3502, 'L10.finale-8'], [3550, 'L10.finale-9']] as const) {
+    for (const [x, id] of [[2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [3010, 'L10.finale-2'], [3076, 'L10.finale-3'], [3150, 'L10.finale-4'], [3260, 'L10.finale-5'], [3340, 'L10.finale-6'], [3390, 'L10.finale-7'], [3502, 'L10.finale-8'], [3550, 'L10.finale-9']] as const) {
       player.transform.x = x; player.transform.z = 95;
       story.update();
       expect(lines.at(-1), `beat at x=${x}`).toBe(id);
