@@ -24,7 +24,7 @@ The native route still misses the 420–540 s hangar-to-gate duration and 45–7
 
 ## Visual evidence
 
-The required native HIGH zoom-1 contact sheet was not captured, so the set pieces have not been visually verified in this continuation. The prescribed `tools/e2e-lock.sh` command failed while the shared browser pool attempted to bind localhost:4329 (`EPERM`). The legacy `tools/e2e-lock.sh` path also failed because its host guard could not execute `ps` (`EPERM`). No native JPEG is included; the prior s212e sheet is not evidence for this revision.
+The [native HIGH zoom-1 sheet](native-finale-high.jpg) was captured from the research checkpoint with ordinary bot input and inspected. Beat 0 shows the road and courier by a generator; 1 shows the mounted bike and sidecar at an intersection; 2 shows a hazy empty field; 3 shows the billboard at the frame edge; 4 shows road without readable scarecrows; 5 shows the courier in open haze; 6 shows the Mega holding the crate; 7 shows crop rows rather than a readable underpass; 8 shows a tent edge and bench without silhouettes; 9 shows open ground and a crate without a readable gate or searchlight. The sheet confirms that the route and framing still need work.
 
 ## Checks
 
@@ -34,7 +34,7 @@ The required native HIGH zoom-1 contact sheet was not captured, so the set piece
 - `L10_STORY_SKIP_ROUTE=1 node --import tsx/esm tools/qa/l10-story.ts` — 64/64 fixtures pass, including the rear stair-climber and Mega damage-floor assertions.
 - `tools/qa/solid-placement-audit.ts` — 0 offenders.
 - Sharded `qa:threat` merge — 0 flags (2 shards, merged receipt at `test-results/qa-threat/README.md`).
-- `qa:vehicle-campaign-motion` — blocked at the same browser-pool startup failure.
+- `qa:vehicle-campaign-motion` — pass with E2E/scene ports 5221/5222.
 - `sh tools/remote/run.sh "$PWD" -- npm test` — blocked: no healthy Hetzner runner is available, and the remote runner refuses the Mac fallback for `npm test`.
 
 The objective is not complete. The route rhythm, ride/remount cadence, native contact sheet, vehicle campaign-motion gate, and remote unit suite remain open.
