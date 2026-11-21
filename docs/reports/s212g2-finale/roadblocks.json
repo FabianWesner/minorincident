@@ -1,7 +1,7 @@
 {
-  "revision": "e2309dc9c44a827e16f888397f908e45de0680a6",
-  "sourceHash": "ed4b195f6ae7e2c4f47907a6bf3bc940ffd54f0d82cf1a73deca1a501e8f795f",
-  "command": "node --import tsx/esm tools/qa/l10-story.ts --out docs/reports/s212g2-finale/pacing.json",
+  "revision": "419ee599a1805d5b61ed9fcd7f538fc1bbf2d583",
+  "sourceHash": "bf86588be97718c68ebd49155cee91a08756bd403f28cf4e4870debacac37ff1",
+  "command": "L10_STORY_TIERS=low and high separately, node --import tsx/esm tools/qa/l10-story.ts",
   "checks": [
     {
       "tier": "low",
@@ -23,10 +23,10 @@
       "pass": false,
       "observed": {
         "x": 3260,
-        "arrived": 0,
-        "dismounted": 0,
-        "fight": 0,
-        "opened": 0,
+        "arrived": 50227,
+        "dismounted": 50279,
+        "fight": 50286,
+        "opened": 55900,
         "remounted": 0,
         "crossed": 0
       }
@@ -68,7 +68,7 @@
         "arrived": 63273,
         "dismounted": 63454,
         "fight": 63461,
-        "opened": 76520,
+        "opened": 65690,
         "remounted": 0,
         "crossed": 0
       }

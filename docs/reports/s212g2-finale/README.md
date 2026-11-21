@@ -15,10 +15,10 @@
 
 | Tier | Hangar to gate | Longest activity gap | Bike ticks | Deaths |
 |---|---:|---:|---:|---:|
-| LOW | 491.9 s | 20.8 s | 12,076 | 7 |
-| HIGH | 333.7 s | 16.2 s | 1,957 | 8 |
+| LOW | 406.5 s | 17.4 s | 7,748 | 3 |
+| HIGH | 293.4 s | 16.1 s | 1,883 | 8 |
 
-LOW meets the total-time range only through repeated first-checkpoint attempts: its 192.4 s beat interval and seven deaths fail the requirements. HIGH misses the total time and cadence. Both tiers lack the required ride/fight/remount/cross loops. The LOW death count regressed from three before the solid-contact change; the paired trace needs bot and encounter fixes before it can be accepted. Incomplete sequence state resets on death, so zero final sequence fields do not imply no intermediate attempts.
+Both tiers miss total time, cadence, and the required ride/fight/remount/cross loops. The quarantine cohort now follows the courier's approach lane like the other paced groups; its spawns still use director-safe admission. HIGH recorded first-gate arrival, fight, and opening, but no remount and crossing. Incomplete sequence state resets on death, so zero final fields do not imply no intermediate attempts. LOW and HIGH were run separately against the same source hash (41/49 checks each). Typecheck, lint, and mission interactions passed; the full gates must be rerun after this source change.
 
 ## Verification
 

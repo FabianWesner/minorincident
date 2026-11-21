@@ -496,7 +496,6 @@ export class LevelTenEncounters {
   }
   /** The lane a group's members stage on: the courier's current lane, pulled whole for paced waves and capped for one-shot pace groups. */
   private lanePull(group: CureEncounter, player: EntitySnapshot, paced: boolean): number {
-    if (group.setPiece === 'quarantine-gate') return 0;
     const flank = group.id === 'depot-alpha' ? 8 : 0;
     const pull = Math.abs(player.transform.z - group.at[1]) > 15 ? player.transform.z - group.at[1] : 0;
     // Paced waves stage uncapped on the courier's current lane: each wave of
