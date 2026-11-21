@@ -21,4 +21,4 @@ The beat-7 line trigger is at x=3397. The LOW story probe measured a 20.6 s beat
 - Native HIGH zoom-1 frame and full sheet were not captured or visually reviewed. The headless browser pool could not bind `127.0.0.1:4329` (`EPERM`); its fallback was also blocked when process inspection returned `EPERM`.
 - `qa:vehicle-campaign-motion` is unverified because the same browser-pool startup failure stopped the gate.
 - HIGH beat-7 timing has not been rerun after moving its line trigger to x=3397. Before the move it was 19.27 s versus the s212g2 reference of about 20.12 s. The LOW post-change measurement is 20.6 s.
-- The worktree changes could not be committed: the sandbox denied creation of `.git/worktrees/s219-l10sinkhole/index.lock` (`Operation not permitted`).
+- The implementation and this report were committed as `b6acacd8`; the earlier index lock denial did not persist.
