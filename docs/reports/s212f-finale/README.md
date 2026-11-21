@@ -42,3 +42,5 @@ The objective is not complete. The route rhythm, ride/remount cadence, and reada
 A LOW trial directing the bot to approach and interact with closed gates after nearby threats cleared was discarded: it completed in 284.5 s hangar to gate with two deaths, 207 bike ticks and a 27.8 s activity gap. The bike was still abandoned and cadence remained outside target.
 
 After the hard-hit motorbike change, a HIGH trial made voluntary dismount depend on actual distance to the roadblock rather than x distance alone. It was discarded: repeated deaths at the first gate restored the rider and bike to the preceding checkpoint, yielding 32 deaths, 816.9 s hangar to gate and a 2100 s route timeout. The first fight needs coordinated placement and recovery before this approach can work.
+
+A LOW trial keeping the bot within roughly 12 m of the parked bike during nearby fights was also discarded. It caused repeated mount/dismount attempts and still abandoned the bike at the first gate; the route took 318.2 s with no deaths and a 19.8 s maximum activity gap.
