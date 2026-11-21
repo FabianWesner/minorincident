@@ -588,11 +588,13 @@ export class InfectedSystem {
     // The generic arrival band can stop just beyond the rail's attack reach.
     const arrival = breach && !line?.breaches?.[breach]?.openAt ? .1 : .6;
     const remaining = Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z);
-    if (!Status.stunned(e, this.world.tick) && remaining > arrival) {
-      if (l8GateApproach) {
-        const speed = b.l1?.runSpeed ?? b.speed;
-        moveAgent(e, (b.scripted.x - e.transform.x) / remaining * speed, (b.scripted.z - e.transform.z) / remaining * speed, this.infectedNav, this.world.tick, e.combat!.radius, true);
-      } else this.seek(e, b.scripted, scriptedSpeed);
+    if (remaining > arrival) {
+      if (!Status.stunned(e, this.world.tick)) {
+        if (l8GateApproach) {
+          const speed = b.l1?.runSpeed ?? b.speed;
+          moveAgent(e, (b.scripted.x - e.transform.x) / remaining * speed, (b.scripted.z - e.transform.z) / remaining * speed, this.infectedNav, this.world.tick, e.combat!.radius, true);
+        } else this.seek(e, b.scripted, scriptedSpeed);
+      }
     }
     else if (l8GateApproach && b.breachApproach === 'l8-north-gate') {
       b.scripted = { x: 7, z: 82 }; b.breachApproach = 'l8-north-side';
