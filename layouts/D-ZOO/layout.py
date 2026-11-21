@@ -135,13 +135,9 @@ def enclosure(species,cx,cz,w=44,d=40):
     l.place('prop.sprinkler',[cx+w/2-3 if species == 'flamingo' else cx+5,0,cz+3])
 for species,x,z in [('lion',-60,-32),('gorilla',60,-32),('elephant',-60,32),('zebra',60,32)]: enclosure(species,x,z)
 enclosure('flamingo',0,-32,28,40)
-# A recessed pond with a rounded stone rim; excluded water never blocks the gates.
+# The flamingo plaza is paved and remains walkable through its centre.
 import bpy
-bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=8,location=(0,32,-.1))
-pond=bpy.context.object; pond.name='flamingo-water'; pond.scale=(8,6,.14)
 from sslib.layout import material
-pond.data.materials.append(material('backpackTeal')); l.layers[0].append(pond)
-l.data['walkable']['excluded']=[[[ -8,-38],[8,-38],[8,-26],[-8,-26],[-8,-38]]]
 
 for x in [-96,-24,24,96]:
     for z in [-64,-32,0,32,64]:

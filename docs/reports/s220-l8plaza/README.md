@@ -5,7 +5,7 @@
 | Area | Change | Evidence / status |
 |---|---|---|
 | Flamingo landing pads | Pads are reduced to 46% scale and muted, with low opacity. They render only during the active flamingo fight and brighten/fade on the assigned bird’s dive telegraph. Flock behavior is unchanged. | Source updated; native scene review is still required. |
-| Black plaza ellipse | The leading source found in code is overlapping transparent contact-shadow planes beneath the clustered survivors/crowd. Their opacity compounded to a nearly black ragged patch that shimmered as figures moved. L8 footprint opacity is now 0.065; other levels retain 0.30. | This is a source-based diagnosis, not a visually verified reproduction. HIGH zoom 1 and LOW before/after frames could not be captured in this sandbox. |
+| Black plaza ellipse | The authored `flamingo-water` flattened sphere at (0, -32) rendered as an almost black solid patch over the paving. It was removed along with its walkability exclusion. The earlier contact-shadow opacity hypothesis was disproved and the normal opacity restored. | Inspected [plaza sheet](plaza-sheet.jpg): HIGH zoom 1 and LOW at zoom 1 both show the black oval before and uninterrupted paving after. These are controlled seed 1 captures at tick 120, with the courier teleported to the plaza during Follow Nadia; they do not reproduce the original group's position or establish the cause of the reported trembling. |
 | Nadia route and ring | The route follows outer public paths in one direction to the ticket-gate approach. The destination ring remains at that endpoint while Nadia and the player move. L8 arena-stage node movement is retained internally for steering; it does not move the ring. Arena destinations sit just inside their entry gates so arrival starts the fight. Old in-progress guide states map to the nearest node of route version 6. | LOW complete-bot trace: Nadia reached the endpoint in **76.3 s** (seed 1). The complete L8 bot now finishes the whole level in **527.5 s** (seed 1), with zero deaths. |
 | Animal remarks | Nadia gives urgent, short subtitle/radio lines while passing zebra and elephant fence lines. The new lines use the existing subtitle/radio pipeline; no matching L8 voice recordings were available. | Implemented; the full native scene remains unreviewed. |
 | Resident pickups | Visible, living zoo civilians and guards within 8 m join automatically; weapons are retained through `readyCarriedAlly`. A rate-limited radio cue confirms a join. | Implemented; the complete-bot audit records new followers but flags high wait time and slow followers. Keep this item open. |
@@ -40,7 +40,7 @@ Waypoint/route-node grep: L8 was the only mission that advanced a route node fro
 
 ## Required before closure
 
-1. Capture and personally inspect plaza before/after frames at HIGH zoom 1 and LOW, plus HIGH frames of the entry gate and one other gate breaking. Put one small contact sheet here.
+1. Inspect the plaza in motion with the survivor group, and capture HIGH frames of the entry gate and one other gate breaking.
 2. Reduce follower wait and complete the no-hit kiting/attack-rate criteria; run the full sharded threat audit and require zero flags.
 3. Rerun `scene:gate` for L8 and verify all four outside waves enter through their opened gates.
 4. Run the remote `npm test`, typecheck, lint, and scene gate successfully.
@@ -49,4 +49,4 @@ Waypoint/route-node grep: L8 was the only mission that advanced a route node fro
 ## Follow-up left open
 
 - Task 5: diagnose why recruited/boarding followers raise the wait metric, correct the behavior without changing follower rules or weakening the acceptance threshold, and rerun the complete bot plus the full threat audit. The automatic pickup implementation is present, but its acceptance check is not met yet.
-- Capture and inspect the requested native HIGH/LOW frames and commit the small contact sheet; run the scene gate, remote unit suite, and a full sharded zero-flag threat audit when their runners are available.
+- Inspect the plaza in motion and capture the two requested gate frames; run the scene gate, remote unit suite, and a full sharded zero-flag threat audit when their runners are available.
