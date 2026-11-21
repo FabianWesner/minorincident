@@ -60,3 +60,5 @@ Fallen motorbikes now accept E within 3.1 m after the knock-off lockout, coverin
 The extended fallen-bike recovery path check now includes dynamic and kinematic solid bodies as well as fixed walls. Focused vehicle tests verify all three block recovery; typecheck and lint pass. The paired route was rerun: LOW and HIGH still record 0/4 loops, and the full gates remain outstanding.
 
 A Mega lure trial moved the dismounted bot away from the fallen bike until the visible Mega was at least 10 m from it, then allowed recovery within 20 m. LOW completed with one death and 6,363 bike ticks but still no complete loops (380.1 s hangar to gate). HIGH had 11 deaths, 1,937 bike ticks and no loops (342.7 s). The trial was discarded because HIGH exceeds the death limit and neither tier achieves the ride sequence.
+
+The roadblock HUD now shows “Back on the bike” while the bike cannot yet be interacted with, and adds the E/touch instruction only when the vehicle interaction is available. This avoids prompting E from outside recovery range or during the lockout. Typecheck and lint passed; a native interaction review remains open.

@@ -562,7 +562,8 @@ export class Hud {
     setHidden(this.interaction, !device && !nearbyOpenedBlock);
     if (nearbyOpenedBlock && !device) {
       this.interaction.style.background = '#171b20e8';
-      text(this.interaction, this.game.input.scheme === 'touch' ? 'Back on the bike · Tap ACTION' : 'Back on the bike · Press E');
+      text(this.interaction, !bike?.canInteract() ? 'Back on the bike'
+        : this.game.input.scheme === 'touch' ? 'Back on the bike · Tap ACTION' : 'Back on the bike · Press E');
       attribute(this.interaction, 'data-progress', '0');
     } else if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); attribute(this.interaction, 'data-progress', String(device.progress)); }
     setHidden(this.damage, world.tick > this.damagedUntil); setHidden(this.bark, world.tick > this.barkUntil);
