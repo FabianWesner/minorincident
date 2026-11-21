@@ -17,6 +17,8 @@ Service admission follow-up: a failed safe-position search no longer increments 
 
 Wave event diagnostic: the passive run recorded opening cohort attack events with matching observer identities. In the skilled run, nearby attackers were cleared while the courier used the mounted gun; at 20 seconds later arrivals were still approaching, including one at platform height. No skilled cohort attack was observed in that window. This distinguishes the skilled result from a general failure to receive attack events, but does not establish why every attacker failed to wind up.
 
+Trying the stair foot as the first safe service admission candidate did not clear the skilled wave flag; L10 skilled still completed and passive had 0 flags. The candidate change was reverted. Receipt: `test-results/s187c-stair-admission/L10.json`.
+
 ## s187b follow-up — coarse pursuit stall
 
 Full merged-source threat audit on `04d63139`: **0 flags**, all ten skilled routes complete, including L10. `npm run qa:threat:sharded` completed both remote shards and merged their receipts (392.0 s maximum shard time). Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed: 27 files, 105 passed, 1 skipped, 195.7 s.
