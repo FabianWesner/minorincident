@@ -59,6 +59,8 @@ A LOW trial keeping the bot within roughly 12 m of the parked bike during nearby
 
 After making roadblocks interactable along their face, a trial made the bot press the active gate after nearby threats cleared. It was discarded: LOW took 295.0 s with a 30.2 s activity gap and HIGH took 327.2 s with a 29.4 s gap. Riding remained 3540 and 1669 ticks respectively, with the bike still left at the first gate.
 
+A trial created the gates before encounter release and held admission until the rider was near and slowed or dismounted. LOW completed with one death in 393.4 s hangar to gate but a 142.6 s beat interval; HIGH completed with ten deaths in 270.5 s and still abandoned the bike before the first gate. The change was reverted because it did not establish the requested rhythm.
+
 A second underpass mouth at z=55 was tried after the earlier native route went around the gate there. The subsequent native HIGH capture instead followed z≈92 at beat 7, and the added mouth was outside its frame. Beats 4–9 in that capture were also heavily washed out by a bright effect, preventing a reliable readability assessment. The extra mouth was discarded; the underlying exposure and route variability need investigation.
 
 With the capture clock corrected, shifting the scarecrows closer to beat 4, moving the underpass 12 m forward, and restoring the hospital tents to z≈83–89 was tried. The native HIGH sheet still showed no readable scarecrows, only a pier and light at beat 7, and a tent edge at beat 8. The placement trial was reverted; a framing and set-piece design change is still needed.
