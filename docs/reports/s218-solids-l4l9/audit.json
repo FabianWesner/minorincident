@@ -1,0 +1,14 @@
+{
+  "threshold": { "footprintM2": 0.4, "heightM": 0.5 },
+  "method": "For each generated campaign layout, classify substantial placements using the s211c world solid flag/baked-box rule, then require a non-physics-only placement collider to cover every active tier 0-6. Collider presence does not prove visual hull quality or movement contacts.",
+  "status": "incomplete",
+  "campaignLevels": [
+    { "level": "L4", "district": "D-FAIR", "placements": 835, "eligible": 779, "before": 0, "after": 0 },
+    { "level": "L5", "district": "D-FAIR", "placements": 889, "eligible": 757, "before": 0, "after": 0 },
+    { "level": "L6", "district": "D-SUBWAY", "placements": 91, "eligible": 61, "before": 1, "after": 1, "offenders": ["int.metro-exit:l6-24"] },
+    { "level": "L7", "district": "D-FAIR", "placements": 937, "eligible": 783, "before": 1, "after": 1, "offenders": ["int.metro-exit:l7-northgate-mouth"] },
+    { "level": "L8", "district": "D-ZOO", "placements": 2349, "eligible": 1901, "before": 0, "after": 0 },
+    { "level": "L9", "district": "D-CROSSING", "placements": 3385, "eligible": 3097, "before": 0, "after": 0 }
+  ],
+  "remaining": "The L6/L7 Northgate metro exit is a solid interactive building whose gate must swing open for the L6-to-L7 route. Its static shell currently has no placement collider. A safe shell collider must preserve the open gate passage and be validated against the route before these two offenders can be cleared."
+}
