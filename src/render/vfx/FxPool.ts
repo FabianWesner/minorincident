@@ -9,7 +9,7 @@ import { atan, texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, posit
 export const tracerLaunchS = 1 / 120;
 /** Shared quad silhouettes. Spark/drop aspect is trail length in metres; gravity remains ballistic. */
 export const particleShape = { tracer: 11, spark: 12, flash: 13, smoke: 14, drop: 15 } as const;
-export const groundShape = { pressure: 12, scorch: 13 } as const;
+export const groundShape = { pressure: 12, scorch: 13, cracks: 14 } as const;
 // The canvas and HDR scene pass both carry the living-figure stencil. WebGPU depth copies must match that format.
 const depthCopy = () => Object.assign(new DepthTexture(1, 1, UnsignedInt248Type), { format: DepthStencilFormat });
 
@@ -148,7 +148,8 @@ export class FxPool {
           const angle = atan(p.y, p.x);
           const radial = sin(angle.mul(13)).mul(sin(angle.mul(7).add(1))).mul(.16);
           const scorch = float(1).sub(r.add(radial).smoothstep(.25, .96)).mul(.8);
-          mask = shape.equal(groundShape.pressure).select(pressure, shape.equal(groundShape.scorch).select(scorch, mask));
+          const cracks = sin(angle.mul(7).add(r.mul(8))).abs().lessThan(.12).and(r.greaterThan(.22)).and(r.lessThan(.96)).select(.72, 0);
+          mask = shape.equal(groundShape.pressure).select(pressure, shape.equal(groundShape.scorch).select(scorch, shape.equal(groundShape.cracks).select(cracks, mask)));
         }
         if (warnings) {
           // World-sized fine strokes: the band marks the hit area without hiding the road.

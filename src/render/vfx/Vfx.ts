@@ -555,8 +555,16 @@ export class Vfx extends Group {
     if (source?.infected?.specialAttack?.move !== 'alpha.pounce') return;
     const { x, z } = event.position, ground = this.world.districts?.groundHeight(x, z) ?? 0, low = this.quality === 'low';
     this.waves.spawn(this.time, .48, x, ground + .045, z, 0, 0, 0, 8, groundShape.pressure, 0xc4a67b, .72);
-    this.burst(x, ground + .2, z, 0x88745e, low ? 9 : 18, .12, .72, .4, particleShape.smoke, 1.1, .45);
-    this.burst(x, ground + .08, z, 0x62584d, low ? 3 : 7, .06, .55, 5, particleShape.spark, 1.5, 1.1);
+    this.decals.spawn(this.time, 1.35, x, ground + .022, z, this.rng.next() * Math.PI, 0, 0, 3.2, groundShape.cracks, 0x28231e);
+    const dustCount = low ? 16 : 32;
+    for (let i = 0; i < dustCount; i++) {
+      const angle = (i / dustCount) * Math.PI * 2 + this.rng.next() * .12;
+      const speed = 2.6 + this.rng.next() * 1.5;
+      this.particles.spawn(this.time, .85 + this.rng.next() * .15, x, ground + .7, z,
+        Math.cos(angle) * speed, .2 + this.rng.next() * .3, Math.sin(angle) * speed,
+        1.5 + this.rng.next() * .6, particleShape.smoke, 0xb4a28a, -.18);
+    }
+    this.burst(x, ground + .1, z, 0x62584d, low ? 5 : 12, .11, .62, 5, particleShape.spark, 1.5, .8);
     if (Math.hypot((this.targets.focus?.() ?? this.world.entities.get(1)?.transform ?? { x, z }).x - x, (this.targets.focus?.() ?? this.world.entities.get(1)?.transform ?? { x, z }).z - z) < 24) this.targets.shake(this.flashReduction ? .035 : .12);
   };
   private readonly onVfxEffect = (event: GameEvent): void => {
