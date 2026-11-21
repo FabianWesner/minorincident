@@ -100,7 +100,7 @@ export class Bicycle {
     if (!bike?.bicycle || !player || player.health.current <= 0) return false;
     if (bike.bicycle.mounted) return true;
     const d = Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z);
-    const recovery = bike.bicycle.motorbike && bike.bicycle.fallen && d <= MOTORBIKE_RECOVERY_RANGE && this.reachable(player.transform.x, player.transform.z, bike.transform.x, bike.transform.z);
+    const recovery = bike.bicycle.motorbike && bike.bicycle.fallen && d <= MOTORBIKE_RECOVERY_RANGE && this.reachable(player.transform.x, player.transform.z, bike.transform.x, bike.transform.z, true);
     return this.world.tick >= bike.bicycle.lockUntil && (d <= MOUNT_RANGE || !!recovery) && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform);
   }
   /** Controller speed scale (7.5 m/s over the 4.5 m/s run); 1 on foot. */
@@ -149,7 +149,7 @@ export class Bicycle {
         // sidewalk); a parked one keeps the pavement-first search, with close-by road ground only as the last resort.
         const near = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3], wide = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3, 4, 6, 8];
         const origin = b.motorbike && b.fallen && d > MOUNT_RANGE ? bike.transform : player.transform;
-        const accessible = (p: Vec2) => this.reachable(player.transform.x, player.transform.z, p.x, p.z);
+        const accessible = (p: Vec2) => this.reachable(player.transform.x, player.transform.z, p.x, p.z, !!(b.motorbike && b.fallen && d > MOUNT_RANGE));
         const spot = b.fallen
           ? this.clearSpot(origin.x, origin.z, b.heading, near, true, false, accessible) ?? this.clearSpot(origin.x, origin.z, b.heading, wide, true, true, accessible)
           : this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false);
@@ -340,11 +340,11 @@ export class Bicycle {
    * alone is not enough; a ring search 3 m out from the gravel strip south of the L1 fire station found free grass
    * behind the 0.27 m privacy fence (PO 10-22: "the bike is now on the other side of the fence").
    */
-  private reachable(px: number, pz: number, x: number, z: number): boolean {
+  private reachable(px: number, pz: number, x: number, z: number, includeBodies = false): boolean {
     const dx = x - px, dz = z - pz, d = Math.hypot(dx, dz), physics = this.world.physics.world;
     if (d < .05 || !physics) return true;
     const ground = this.world.districts?.pavingHeight(px, pz) ?? 0, dir = { x: dx / d, y: 0, z: dz / d };
-    const flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS | RAPIER.QueryFilterFlags.EXCLUDE_DYNAMIC | RAPIER.QueryFilterFlags.EXCLUDE_KINEMATIC;
+    const flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS | (includeBodies ? 0 : RAPIER.QueryFilterFlags.EXCLUDE_DYNAMIC | RAPIER.QueryFilterFlags.EXCLUDE_KINEMATIC);
     // Knee and handlebar height: kerbs and low lips stay crossable, fences, railings and walls do not.
     return [.35, .9].every(h => !physics.castRay(new RAPIER.Ray({ x: px, y: ground + h, z: pz }, dir), d, true, flags, undefined, this.world.physics.playerCollider ?? undefined));
   }

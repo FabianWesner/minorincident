@@ -978,6 +978,14 @@ async function motorbikeRide(): Promise<void> {
     expect(bike.canInteract(), 'a wall prevents remote recovery').toBe(false);
     world.physics.world!.removeCollider(wall, true);
     world.physics.world!.step();
+    for (const descriptor of [RAPIER.RigidBodyDesc.dynamic(), RAPIER.RigidBodyDesc.kinematicPositionBased()]) {
+      const body = world.physics.world!.createRigidBody(descriptor.setTranslation(player.transform.x + 1.25, .7, player.transform.z));
+      world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(.1, 1, 2), body);
+      world.physics.world!.step();
+      expect(bike.canInteract(), 'a solid body prevents remote recovery').toBe(false);
+      world.physics.world!.removeRigidBody(body);
+      world.physics.world!.step();
+    }
     bike.filter({ ...emptyInput(), interact: true });
     expect(bike.riding, 'rider remounts after the knock-off lockout').toBe(true);
     expect(dog.passengerOf).toBe(bike.entity!.id);
