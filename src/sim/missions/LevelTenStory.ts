@@ -5,7 +5,7 @@ import { l4 } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
 import { cureFinaleCheckpoints } from '../../levels/L10/mission';
-import { cureWeaponPickups } from '../../levels/L10/encounters';
+import { cureEncounterSlots, curePaceEncounters, cureWeaponPickups } from '../../levels/L10/encounters';
 
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
 export class LevelTenStory {
@@ -64,8 +64,16 @@ export class LevelTenStory {
     ];
     for (const beat of setPieces) {
       if (state.states[beat.flag] || p.transform.x < beat.x) continue;
-      const cohort = Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith(`${beat.group}:`));
-      if (!cohort.length || cohort.some(([, actorId]) => (world.entities.get(actorId)?.health.current ?? 0) > 0)) continue;
+      const group = curePaceEncounters.find(encounter => encounter.id === beat.group)!;
+      const spawned = world.l10Encounters?.state.spawned ?? {};
+      // Admission is paced in waves. A temporary lull between waves must not
+      // commit the recovery point while members are still waiting to arrive.
+      const slots = cureEncounterSlots(group, world.infected!.director.tier);
+      if (slots.some(slot => spawned[`${slot.key}:0`] === undefined)) continue;
+      if (slots.some(slot => {
+        const actor = world.entities.get(spawned[`${slot.key}:0`]);
+        return !!actor && (actor.health.current > 0 || (actor.infected?.recoverAt ?? -1) >= 0);
+      })) continue;
       state.states[beat.flag] = true;
       this.mission.requestCheckpoint(beat.id);
     }
