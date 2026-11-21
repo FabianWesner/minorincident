@@ -17,7 +17,7 @@
 | `sh tools/remote/run.sh "$PWD" -- npm test` | Remote runner unavailable; local `npm run test:unit` passed |
 | Full threat audit, two local shards and merge | Pass: 0 fail flags; all skilled routes complete. Shards ran in 174.4 s and 251.8 s; merged receipt `test-results/qa-threat/README.md`. Remote runners were unavailable. |
 | `node --import tsx/esm tools/verify.ts E32` | Pass; per-change typecheck, lint, and 106-test gate |
-| `npm run test:smoke` | Build passed; smoke stopped when browser pool startup returned `EPERM` on 127.0.0.1:4329 |
+| `E2E_PORT=5215 SCENE_PORT=5216 npm run test:smoke` | Pass: six smoke tests and one public-build smoke test; 139.8 s |
 
 ## Pacing probe
 
