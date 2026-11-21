@@ -34,7 +34,17 @@ function legacyL10PaceCheckpointsMigrate(): void {
     const migrated = migrateCureResume({ current: structuredClone(snapshot), checkpoint: structuredClone(snapshot) }) as { current: typeof snapshot; checkpoint: typeof snapshot };
     expect(migrated.current.state.checkpoint, `saved at x=${x}`).toBe(expected);
     expect(migrated.checkpoint.state.checkpoint, `retry at x=${x}`).toBe(expected);
+    expect((migrated.current.state.states as Record<string, boolean>)['l10-overpass-mega']).toBe(x >= 3320);
+    expect((migrated.checkpoint.state.states as Record<string, boolean>)['l10-overpass-mega']).toBe(x >= 3320);
   }
+  for (const x of [3319, 3320, 3379]) {
+    const snapshot = { state: { checkpoint: 'l10-convoy-7', states: {}, counters: {} }, entities: [{ id: 1, transform: { x, z: 95 } }] };
+    const migrated = migrateCureResume({ current: snapshot, checkpoint: snapshot }) as { current: typeof snapshot };
+    expect((migrated.current.state.states as Record<string, boolean>)['l10-overpass-mega']).toBe(x >= 3320);
+  }
+  const modern = { state: { checkpoint: 'l10-convoy-7', states: { 'l10-overpass-mega': false }, counters: {} }, entities: [{ id: 1, transform: { x: 3340, z: 95 } }] };
+  const retained = migrateCureResume({ current: modern, checkpoint: modern }) as { current: typeof modern };
+  expect(retained.current.state.states['l10-overpass-mega']).toBe(false);
 }
 /** The slice of a world that completeCampaignLevel reads: the player's two racks and the selected action. */
 const fakeWorld = (racks: CampaignSave['racks'], selectedAction = 'weapon.handgun') => ({
