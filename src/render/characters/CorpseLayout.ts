@@ -340,7 +340,10 @@ export class CorpseLayout {
     if (startsOnVehicle) feet = support?.supportBelow(e.transform.x, e.transform.z, floor) ?? floor;
     if (e.corpseThrown && !startsOnVehicle && feet > (support?.supportBelow(e.transform.x, e.transform.z, feet) ?? 0) + .15) return { ...e.transform, y: feet };
     const initialYaw = e.transform.yaw + corpseYaw(e.id), direction = prone === undefined ? 1 : -1;
-    const length = prone ?? 1.25, radius = prone === undefined ? .6 : .8, height = prone === undefined ? .22 : .32;
+    // The fallen zebra extends laterally well beyond the humanoid strip:
+    // its head reached through the L8 paddock bars while the .6 m samples
+    // were still clear. Reserve its full measured silhouette around the root.
+    const length = prone ?? 1.25, radius = e.archetype === 'infected.zebra' ? 1.4 : prone === undefined ? .6 : .8, height = prone === undefined ? .22 : .32;
     const pose: RestingPose = { x: e.transform.x, y: feet, z: e.transform.z, yaw: initialYaw, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt,
       ax: 0, az: 0, bx: 0, bz: 0, radius, height, body: e, prone };
     // Rejected candidates keep numeric scratch unboxed. Publishing every
