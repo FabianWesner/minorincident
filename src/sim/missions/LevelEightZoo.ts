@@ -217,6 +217,9 @@ export class LevelEightZoo {
     if (!gate) return spawned;
     for (let n = 0; n < count; n++) {
       const spread = (n % 3 - 1) * .8, at = gate.halfX > gate.halfZ ? { x: gate.spawn.x + spread, z: gate.spawn.z } : { x: gate.spawn.x, z: gate.spawn.z + spread };
+      // Other arrivals and pending turns may fill the director between waves.
+      // Keep the mission running and admit only the capacity that remains.
+      if (ai.director.count + ai.director.pendingTurns >= ai.director.cap || !ai.pool.length) break;
       if (!ai.director.safe(archetype, at)) continue;
       const id = ai.spawn(archetype, at, { state: 'chase' });
       const entity = w.entities.get(id)!; if (targetId !== 1) entity.infected!.arenaCarrier = targetId;
