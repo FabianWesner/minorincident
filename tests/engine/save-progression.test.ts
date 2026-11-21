@@ -309,9 +309,10 @@ async function checkCheckpointRacks() {
     navCell.mockRestore(); navClear.mockRestore(); resident.mockRestore();
     const closedGate = l10.interactables!.spawn('gate', { x: 3010, z: 95 }, { halfX: .2, halfZ: 40, radius: 2 });
     const openGate = l10.interactables!.spawn('gate', { x: 3260, z: 95 }, { halfX: .2, halfZ: 40, radius: 2 });
-    for (const id of [closedGate, openGate]) l10.entities.get(id)!.archetype = 'device.l10-roadblock';
+    const collapseGate = l10.interactables!.spawn('gate', { x: 3390, z: 95 }, { halfX: .2, halfZ: 17, radius: 2 });
+    for (const id of [closedGate, openGate, collapseGate]) l10.entities.get(id)!.archetype = 'device.l10-roadblock';
     l10.entities.get(openGate)!.interactable!.open = true; l10.interactables!.unblock(openGate);
-    l10.l10Encounters!.state.roadblockGates = { 'setpiece-quarantine-gate': closedGate, 'setpiece-burning-convoy': openGate };
+    l10.l10Encounters!.state.roadblockGates = { 'setpiece-quarantine-gate': closedGate, 'setpiece-burning-convoy': openGate, 'setpiece-dark-underpass': collapseGate };
     l10.missions!.checkpoint('cure-research');
     const resume = l10.missions!.saveResume();
     const fresh = await loadLevel('L10', 1, l10Save, 0, { quality: 'low' });
@@ -319,6 +320,7 @@ async function checkCheckpointRacks() {
       fresh.missions!.loadResume(resume);
       expect(fresh.entities.get(closedGate)?.interactable?.open, 'closed roadblock survives cold resume').toBe(false);
       expect(fresh.interactables!.walls.some(w => w.entityId === closedGate), 'closed roadblock collider is rebuilt').toBe(true);
+      expect(fresh.interactables!.walls.find(w => w.entityId === collapseGate)?.halfZ, 'cold resume keeps the collapse rim open').toBe(17);
       expect(fresh.entities.get(openGate)?.interactable?.open, 'opened roadblock survives cold resume').toBe(true);
       expect(fresh.interactables!.walls.some(w => w.entityId === openGate), 'opened roadblock leaves a gap').toBe(false);
     } finally { fresh.dispose(); }
