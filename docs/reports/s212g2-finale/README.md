@@ -18,18 +18,17 @@
 | LOW | 406.5 s | 13.6 s | 7,748 | 3 |
 | HIGH | 293.4 s | 19.6 s | 1,883 | 9 |
 
-Both tiers miss total time, cadence, and the required ride/fight/remount/cross loops. The quarantine cohort now follows the courier's approach lane like the other paced groups; its spawns still use director-safe admission. HIGH recorded first-gate arrival, fight, and opening, but no remount and crossing. Incomplete sequence state resets on death, so zero final fields do not imply no intermediate attempts. LOW and HIGH were run together; HIGH remains within the 10-death limit in this probe. Typecheck, lint, and mission interactions passed; the full gates must be rerun after this source change.
+Both tiers miss total time, cadence, and the required ride/fight/remount/cross loops. The quarantine cohort now follows the courier's approach lane like the other paced groups; its spawns still use director-safe admission. HIGH recorded first-gate arrival, fight, and opening, but no remount and crossing. Incomplete sequence state resets on death, so zero final fields do not imply no intermediate attempts. LOW and HIGH were run separately against the same source hash; HIGH remains within the 10-death limit in this probe. Typecheck, lint, and mission interactions passed; the full gates must be rerun after this source change.
 
 ## Verification
 
-- `npx vitest run tests/engine/vehicles.test.ts tests/engine/save-progression.test.ts tests/nightly/mission-interactions.test.ts --maxWorkers=4` — pass, 9 tests.
-- `npm run lint` and `npm run typecheck` — pass.
-- `npm test -- --maxWorkers=4` — pass, 27 files / 106 tests.
-- `npm run typecheck` and `npm run lint` — pass after the final source edits.
-- `L10_STORY_SKIP_ROUTE=1 node --import tsx/esm tools/qa/l10-story.ts` — pass, 64/64 fixtures.
-- `node --import tsx/esm tools/qa/solid-placement-audit.ts` — pass, 0 offenders.
+- Typecheck and lint pass on the current source.
+- Remote `npm test` passed: 105 tests passed and one skipped in 197.1 s.
+- Both `qa:threat` shards merged with 0 fail flags; L10 skilled completed and passive reached its tick budget with 0 passive flags.
+- `qa:vehicle-campaign-motion` passed headlessly on ports 5223/5224.
+- The solid-placement audit previously reported 0 offenders, and mission interactions passed after the hospital placement and staging changes.
 
-Remaining gates/evidence: `npm run verify -- E32` failed before starting because the sandbox denied a tsx Unix-socket bind; remote `npm test` could not run because there is no healthy runner, and `scale.sh add` could not reach its API because DNS/network access is blocked. The earlier two-shard threat audit merged to 0 flags before the final crash-handling and hard-hit threshold changes and must be rerun. `qa:vehicle-campaign-motion` and the native HIGH capture both failed at browser-pool startup (`listen EPERM` on local control port 4329). Hospital silhouettes/framing, underpass readability, the native contact sheet, and full route pacing/ride sequences remain open; no visual-readability claim is made here. Main is still one commit ahead; the sandbox denied writes to `.git` metadata during the merge attempt, so its test fix was integrated manually but the branch ancestry was not merged.
+These checks do not establish the failed route or underpass requirements. The native HIGH sheet contains a readable tent and two staged figures on one route, but alternate-route visibility remains unproven. The latest LOW/HIGH probes still miss all four roadblock sequences and pacing. Full verification must be repeated after further source changes.
 
 ## Continuation: merged main and native evidence
 
