@@ -1,9 +1,9 @@
 /** L8 encounter tuning in metres, HP and fixed ticks.
  * r31-flamingo (PO 11-10): HP is sized to the L8 weapons (handgun, axe, shotgun, MG; no rocket). Damage.ts applies x0.6 outside an exposed window (x1.8 inside) and x0.2 from allies,
- * so one hit is handgun 12, MG 8.4, axe ~34, shotgun ~110-145. Flamingo/monkey 36: handgun 3, MG 5, axe 2, shotgun 1. Zebra 150: shotgun 2. Lion 250 ~ 30 MG. Gorilla 500 ~ 60 MG. Elephant 1200 chips; the 3 wall impacts end it. Entries sit on connected public paths. */
+ * so one hit is handgun 12, MG 8.4, axe ~34, shotgun ~110-145. Flamingo/monkey 36: handgun 3, MG 5, axe 2, shotgun 1. Zebra 150: shotgun 2. Lion 400 ~ 48 MG each. Gorilla 500 ~ 60 MG. Elephant 1200 chips; the 3 wall impacts end it. Entries sit on connected public paths. */
 export const l8BossArenas = [
   { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: 0, z: -32 }, entry: { x: 0, z: -18 }, radius: 14, counter: 'Step out of the red lanes. Use the barriers and fire as the birds land.' },
-  { id: 'lion', name: 'Lion and lioness', count: 2, hp: 250, centre: { x: -60, z: -32 }, entry: { x: -60, z: -46 }, radius: 14, counter: 'Keep your back to the rocks. Dodge sideways at the glint and fire after the landing.' },
+  { id: 'lion', name: 'Lion and lioness', count: 2, hp: 400, centre: { x: -60, z: -32 }, entry: { x: -60, z: -46 }, radius: 14, counter: 'Face the roar. Watch the other lion circle behind you, dodge the pounce, then fire while it recovers.' },
   { id: 'monkey', name: 'Monkey pack', count: 7, hp: 36, centre: { x: -6, z: 20 }, entry: { x: -20, z: 20 }, radius: 12, counter: 'Use the doorway to stop the pack surrounding you. Melee shakes off a grab.' },
   { id: 'zebra', name: 'Zebra herd', count: 4, hp: 150, centre: { x: 60, z: 32 }, entry: { x: 60, z: 46 }, radius: 14, counter: 'Leave the dust lane. The fence turns the herd; shoot the stragglers.' },
   { id: 'gorilla', name: 'Gorilla', count: 1, hp: 500, centre: { x: 60, z: -32 }, entry: { x: 60, z: -18 }, radius: 14, counter: 'Hit the chest-beat to interrupt it. Put a pillar between you and a throw.' },
@@ -111,7 +111,7 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
 }
 export const inRect = (p: { x: number; z: number }, r: { x0: number; z0: number; x1: number; z1: number }) => p.x >= r.x0 && p.x <= r.x1 && p.z >= r.z0 && p.z <= r.z1;
 
-/** Stable rim pads for the initial flock and three reinforcement flights. */
+/** Stable rim pads for the fixed authored flock. */
 export const l8FlamingoLandingCount = 26;
 export function l8FlamingoLanding(slot: number): { x: number; z: number } {
   const angle = slot * Math.PI * 2 / l8FlamingoLandingCount;

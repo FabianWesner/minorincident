@@ -163,7 +163,8 @@ export class AudioEventMapper {
                 'alpha.shield-bash': 'Alpha raising its arm: step back',
             };
             if (alphaCaption[special] && 'duration' in event) this.host.caption(alphaCaption[special], position, event.duration);
-            this.host.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
+            const animalTelegraph = /^(lion|flamingo|zebra|gorilla|monkey|elephant)\./.test(special);
+            this.host.play(id, { position, offscreen: animalTelegraph && position ? this.host.offscreen(position) : false }, source);
             return;
         }
         if (event.type === 'noise') {

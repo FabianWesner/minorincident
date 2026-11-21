@@ -200,6 +200,8 @@ export class InfectedSystem {
         if (target.infected.arenaBoss && event.damageType === 'melee') target.infected.arenaBoss.shakeHits = (target.infected.arenaBoss.shakeHits ?? 0) + 1;
         const special = target.infected.specialAttack;
         if (target.infected.alphaType && special && ((special.move === 'alpha.roar' && special.stage === 'telegraph') || (special.move === 'alpha.grab-human' && special.stage !== 'recovery' && event.damageType === 'bullet'))) this.cancelSpecial(target.id);
+        const source = world.entities.get(event.sourceId);
+        if (target.archetype === 'infected.lion' && target.infected.grabUntil > world.tick && (source?.companion || source?.civilian?.ally)) this.releasePin(target);
         if ((target.infected.special === 'pin' || target.infected.alphaType === 'leaper') && target.infected.grabHits >= 2) this.releasePin(target);
       }
     });
@@ -867,6 +869,7 @@ export class InfectedSystem {
     if ((source.archetype !== 'infected.lion' && b.alphaType !== 'leaper') || until <= this.world.tick || !target) return;
     if (target.civilian?.knockedUntil === until) target.civilian.knockedUntil = this.world.tick;
     if (target.escort?.knockedUntil === until) target.escort.knockedUntil = this.world.tick;
+    if (target.survivor?.knockdown?.until === until) delete target.survivor.knockdown;
     if (target.combat?.staggerUntil === until) target.combat.staggerUntil = this.world.tick;
     if (target.combat?.reaction?.until === until) delete target.combat.reaction;
   }

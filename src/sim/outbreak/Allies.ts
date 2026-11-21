@@ -136,6 +136,13 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const forcing = a.forceClip ?? 'ff-pry';
   if (c.story && c.story.clip === forcing && tick >= a.forceUntil) c.story = null;
   if (a.forceUntil > tick && !audibleThreat) { if (c.story?.clip !== forcing) c.story = { clip: forcing, start: tick - (e.id * 17) % 40 }; return true; }
+  // L8 solo animal cages are deliberately fought by the courier. A waiting
+  // escort must neither acquire a target nor finish an in-flight shot into it.
+  if (a.arenaWait) {
+    a.targetId = 0; a.strikeAt = 0; a.strikeTarget = 0; a.baton = false;
+    c.story = null;
+    return true;
+  }
   const leader = a.follow ? world.entities.get(a.follow.targetId) : undefined, follower = !!a.follow && !!leader && leader.health.current > 0;
   const leaderMoving = follower && Math.hypot(leader!.survivor?.velocity.x ?? 0, leader!.survivor?.velocity.z ?? 0) > .5;
   const squadRun = follower && (!!world.missions?.def.l3 || world.scenario === 'L7') && leaderMoving;

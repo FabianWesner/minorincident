@@ -87,20 +87,20 @@ export async function checkL8Route(): Promise<void> {
       for (let i = 0; i < 3600 && !arena.armed; i++) {
         w.update();
         if (arena.armed) {
-          const out = zoo.followers().filter(e => !inRect(e.transform, stage.zone)); armedWith = out.length;
-          stragglers = out.map(e => `${e.id}${e.companion ? ' companion' : ''} ${e.archetype} ${e.civilian?.state} ${e.civilian?.survivor?.mode} slot${e.civilian?.survivor?.slot} injured=${e.civilian?.survivor?.injured} path=${e.civilian?.path?.length}@${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)} after ${i} ticks`).join('; ');
+          const inside = zoo.followers().filter(e => inRect(e.transform, stage.zone)); armedWith = inside.length;
+          stragglers = inside.map(e => `${e.id} ${e.archetype} ${e.civilian?.state} ${e.civilian?.survivor?.mode} slot${e.civilian?.survivor?.slot} path=${e.civilian?.path?.length}@${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)} after ${i} ticks`).join('; ');
         }
       }
       expect(arena.phase, `${stage.id} engaged`).toBeGreaterThan(0);
       expect(markerAnchor(mission), `${stage.id}: combat marker stays at the arena centre`).toMatchObject({ x: (stage.zone.x0 + stage.zone.x1) / 2, z: (stage.zone.z0 + stage.zone.z1) / 2 });
-      expect(arena.armed, `${stage.id}: the entry gate closes behind the group`).toBe(true);
+      expect(arena.armed, `${stage.id}: the entry gate closes behind the courier`).toBe(true);
       const armedAt = w.tick;
       expect(closeTicks.has(entryNavId), `${stage.id}: the entry barrier must still be physically open on the arming tick`).toBe(false);
       if (index > 0) expect(closeTicks.has(previousEntryNavId), `${previous!.id}: its return barrier stays open until the party has passed`).toBe(false);
       w.update();
       expect(closeTicks.get(entryNavId), `${stage.id}: entry barrier closes on the next native tick`).toBe(armedAt + 1);
       if (index > 0) expect(closeTicks.get(previousEntryNavId), `${previous!.id}: both doors close on the next native tick`).toBe(armedAt + 1);
-      expect(armedWith, `${stage.id}: no follower left outside when the entry gate shuts (${stragglers})`).toBe(0);
+      expect(armedWith, `${stage.id}: no follower enters the active cage (${stragglers})`).toBe(0);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
       if (index > 0) {
@@ -126,8 +126,9 @@ export async function checkL8Route(): Promise<void> {
     const closedAt = new Map<number, number>();
     w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed' && event.blocked && [900834, 900848, 900849].includes(event.id)) closedAt.set(event.id, event.tick); });
     w.npcs!.civilians.outbreak!.infect(elephantAnimal, player.id);
-    for (let tick = 0; tick < 240 && !elephant.armed; tick++) w.update();
-    expect(elephant.armed, 'elephant gate arms after the party enters the yard').toBe(true);
+    // The survivor column moves out through the entry before the elephant yard locks.
+    for (let tick = 0; tick < 600 && !elephant.armed; tick++) w.update();
+    expect(elephant.armed, 'elephant gate arms after the courier enters the yard').toBe(true);
     const armedAt = w.tick;
     expect(closedAt.size).toBe(0);
     w.update();

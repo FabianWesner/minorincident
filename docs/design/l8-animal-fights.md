@@ -8,6 +8,7 @@ PO 2026-11-21, verbatim:
 ## Frame (applies to every cage)
 
 - Sealed cage: the entry gate locks behind the courier; the exit opens only when every animal in the cage is dead. Cage to cage, in route order.
+- Solo cages: the survivor group, including soldiers, waits outside the entry gate and neither enters nor shoots into an active cage. Only the courier and corgi fight inside. Followers resume following when the exit opens. This applies to flamingos, lions, zebras, gorilla, monkeys, and the elephant yard. Treat this deliberate wait as intended in `FOLLOWER_WAIT` checks.
 - Dead animals stay dead (arena hits are already permanent). Nothing in a cage rises from the ground mid-fight. Any reinforcement arrives visibly (flies in, drops from a roof, breaks out of a pen door) and is part of a fixed, authored total.
 - Each fight has one core idea the player has to learn, a readable tell (pose + sound + short ground telegraph) before every dangerous move, and a punish window after it. The counter hint toast names that idea.
 - Animals are infected animals, not the standard zombie archetypes, so their stats are authored per animal; the "zombies identical everywhere" rule is untouched.
