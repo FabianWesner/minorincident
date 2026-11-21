@@ -485,7 +485,7 @@ export class L8BossArenas {
     const live = arena.ids.map(id => this.w.entities.get(id)).filter((v): v is EntitySnapshot => !!v?.infected && v.health.current > 0);
     if (arena.id === 'flamingo') {
       // A rotating line of three dives while the rest circles; the lane always leaves a sidestep.
-      for (let i = 0; i < Math.min(3, live.length); i++) this.start(live[(arena.cycle * 3 + i) % live.length], 'flamingo.dive', 36, 15, 1.1);
+      for (let i = 0; i < Math.min(3, live.length); i++) this.start(live[(arena.cycle * 3 + i) % live.length], 'flamingo.dive', 48, 15, 1.1);
     }
     else if (arena.id === 'zebra') {
       const side = arena.cycle % 2 ? 1 : -1, predicted = this.predict(e, 2.2, arena);
