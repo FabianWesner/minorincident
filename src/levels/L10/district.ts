@@ -11,7 +11,12 @@ export const cure = authored as unknown as {
   detours: { id: string; region: string; route: Point[] }[];
 };
 /** Global coarse pursuit follows the same reachable turn anchors as the detailed route. */
-const walkedPoints = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route);
+// The two sinkhole-rim waypoints route the courier around the crater. Keep
+// them out of the saved Mega node table so existing route node IDs stay stable;
+// pursuit still follows the same coordinates by nav around the solid bowl.
+const sinkholeDetourNodes = new Set(['3370,95', '3374,95', '3370,74', '3382,74', '3406,74', '3406,95']);
+const walkedPoints = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route)
+  .filter(([x, z]) => !sinkholeDetourNodes.has(`${x},${z}`));
 const pursuitPoints: Point[] = [];
 for (let i = 0; i < walkedPoints.length; i++) {
   const p = walkedPoints[i], previous = walkedPoints[i - 1];

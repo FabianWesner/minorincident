@@ -411,6 +411,16 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   }
   expect(groundMismatches, 'rasterized L10 supports and slabs match every exact nav-cell query').toBe(0);
   const actualFarm = assembled.districts[0].layout.placements;
+  expect(actualFarm.some(p => p.id === 'l10-setpiece-sinkhole-bowl' && p.assetId === 'decay.crater'), 'beat 7 uses the ground-cut crater asset').toBe(true);
+  expect(actualFarm.some(p => p.id === 'l10-setpiece-sinkhole-detour-rail'), 'the narrow rim route has a solid outer rail').toBe(true);
+  expect(actualFarm.some(p => p.id.startsWith('l10-setpiece-underpass-') || p.assetId === 'prop.l10-underpass'), 'the old overhead underpass dressing is removed').toBe(false);
+  const sinkholeReachable = nav.flood([3378, 95]);
+  expect(nav.walkable([3390, 82]), 'the collapsed road surface is excluded from foot navigation').toBe(false);
+  expect(sinkholeReachable[nav.index(3402, 95)], 'the authored corridor reconnects around the sinkhole rim').toBe(1);
+  expect(nav.walkable([3390, 74]), 'the one-lane southern rim detour remains passable').toBe(true);
+  expect(nav.walkable([3390, 72]), 'the south rail bounds the detour lane').toBe(false);
+  expect(assembled.groundHeight(3390, 82), 'the floor support remains beneath the visual pit').toBe(0);
+  expect(JSON.stringify((await import('../../src/levels/L10/district')).cure.regions[5].route)).toContain('[3370,95],[3374,95],[3370,74],[3382,74],[3406,74]');
   const routeProps = ['evac-bus-open', 'evac-car-east', 'evac-car-west', 'evac-suitcases', 'evac-child-bike', 'evac-wait-sign', 'gate-wreck-west', 'gate-barricade-north', 'gate-barricade-south', 'reyes-handset', 'downed-power-line', 'crashed-helicopter', 'convoy-oil-drums', 'convoy-log', 'convoy-roadblock-0', 'convoy-roadblock-1', 'overpass-rubble-west', 'overpass-rubble-east', 'hospital-fence-west', 'hospital-fence-east', 'medic-recorder', 'complex-searchlight'];
   for (const id of routeProps) {
     const p = actualFarm.find(item => item.id === `l10-setpiece-${id}`);
@@ -427,11 +437,11 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
     const authored = assembled.districts[0].layout.colliders;
     const supported = colliders.some(c => c.id === p.id || c.id.startsWith(`${p.id}/`))
       || (p.id === 'l10-setpiece-gate-gantry' && ['left', 'right'].every(side => authored.some(c => c.id.startsWith(`${p.id}-${side}-post/solid`))))
-      || (p.id === 'l10-setpiece-underpass-mouth' && authored.some(c => c.id.startsWith('l10-underpass-pier-')))
+      || (p.id === 'l10-setpiece-sinkhole-bowl' && authored.some(c => c.id === 'l10-setpiece-sinkhole-bowl/solid'))
       || (movableThrowable && assembled.districts[0].pushables.some(prop => prop.id === p.id));
     expect(supported, `${p.id} has an authored physical collider`).toBe(true);
   }
-  for (const beat of dispersalBeats) expect(actualFarm.some(p => p.id === `l10-setpiece-${beat.setPiece === 'quarantine-gate' ? 'gate-gantry' : beat.setPiece === 'propaganda-billboard' ? 'billboard-frame' : beat.setPiece === 'scarecrow-field' ? 'scarecrow-0' : beat.setPiece === 'burning-convoy' ? 'convoy-truck-a' : beat.setPiece === 'dark-underpass' ? 'underpass-mouth' : 'hospital-tent-0'}`), `${beat.setPiece} has fixed district dressing`).toBe(true);
+  for (const beat of dispersalBeats) expect(actualFarm.some(p => p.id === `l10-setpiece-${beat.setPiece === 'quarantine-gate' ? 'gate-gantry' : beat.setPiece === 'propaganda-billboard' ? 'billboard-frame' : beat.setPiece === 'scarecrow-field' ? 'scarecrow-0' : beat.setPiece === 'burning-convoy' ? 'convoy-truck-a' : beat.setPiece === 'dark-underpass' ? 'sinkhole-bowl' : 'hospital-tent-0'}`), `${beat.setPiece} has fixed district dressing`).toBe(true);
   for (const [x, z] of [...cureConvoyBarrels, ...cureConvoyCrates]) for (const [dx, dz] of [[0, 0], [.6, 0], [-.6, 0], [0, .6], [0, -.6]]) {
     const column = Math.floor((x + dx - nav.min[0]) / nav.cellSize), row = Math.floor((z + dz - nav.min[1]) / nav.cellSize);
     expect(nav.cells[row * nav.width + column], `convoy barrel at ${x},${z} has clear ground`).toBe(1);
