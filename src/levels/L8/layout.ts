@@ -58,6 +58,10 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     add('l8-primate-climbing-frame', 'prop.zoo-climbing-frame', -2, 28);
     for (let i = 0; i < 5; i++) add(`l8-monkey-debris-${i}`, 'prop.crates', -3 + i * 1.5, 20, [.35, .35, .35]);
     for (const [i, [x, z]] of [[84, 48], [108, 64], [84, 67]].entries()) add(`l8-elephant-earth-mound-${i}`, 'prop.garden-bush', x, z, [1.5, .65, 1.5]);
+    // Set the log barrier alongside the east edge, away from the truck and
+    // the north and south gate lanes used by the charge encounter.
+    add('l8-elephant-log-barrier', 'prop.zoo-log-barrier', 106.5, 60.5, [1, 1, 1], Math.PI / 2);
+    layout.placements.at(-1)!.fixed = true;
     // The primate yard sits behind the house, away from the public tour path.
     // Its east service entrance stays available for the post-breach encounter.
     (layout.zones ??= {})['enclosure-monkey'] = [[-20, 20], [-10.48, 20], [-10.48, 31.9], [-20, 31.9]];
