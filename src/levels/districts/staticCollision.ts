@@ -33,15 +33,15 @@ const shelterCampWalls: Aabb[] = [
   { min: [-2.8, .18, -2.65], max: [-2.65, 1.05, 2.65] },
   { min: [2.65, .18, -2.65], max: [2.8, 1.05, 2.65] },
 ];
-// The zoo service mouth is a small building shell with a centered doorway on
-// its +X face. Keep three sides and the lintel solid while preserving that door.
+// Match the masonry shell: the +Blender-Y side has an open covered vestibule
+// from x=-1.7 to x=2.7, in addition to the front double doorway.
 const zooTunnelMouth: Aabb[] = [
-  { min: [-3.3, .18, -2.8], max: [3.3, 4.76, -2.65] },
-  { min: [-3.3, .18, 2.65], max: [3.3, 4.76, 2.8] },
-  { min: [-3.3, .18, -2.8], max: [-3.15, 4.76, 2.8] },
-  { min: [3.15, .18, -2.8], max: [3.3, 4.76, -.95] },
-  { min: [3.15, .18, .95], max: [3.3, 4.76, 2.8] },
-  { min: [3.15, 2.25, -.95], max: [3.3, 4.76, .95] },
+  { min: [-3.1, .18, -2.6], max: [-1.7, 3.46, -2.2] },
+  { min: [-3.1, .18, 2.2], max: [2.7, 3.46, 2.6] },
+  { min: [-3.1, .18, -2.2], max: [-2.7, 3.46, 2.2] },
+  { min: [2.7, .18, -2.6], max: [3.1, 3.46, -.9] },
+  { min: [2.7, .18, .9], max: [3.1, 3.46, 2.6] },
+  { min: [2.7, 2.5, -.9], max: [3.1, 3.46, .9] },
 ];
 const dispersalPlatform = { boxes: platformSolids.concat(platformDeck, platformTreads), walkable: new Set<Aabb>([platformDeck, ...platformTreads]) };
 export function placementColliders(placements: Placement[], fallback: StaticCollider[]): StaticCollider[] {
