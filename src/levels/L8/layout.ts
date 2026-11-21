@@ -78,7 +78,6 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, [x, z]] of [[-64, -30], [-55, -36], [-66, -40]].entries()) add(`l8-lion-cover-${i}`, 'prop.tree.dead', x, z, [.8, .9, .8], i * Math.PI / 3);
     for (let i = 0; i < 2; i++) {
       add(`l8-monkey-roof-debris-${i}`, 'prop.crates', -12, 12.5 + i * 3, [.25, .25, .25], 0, undefined, 4.1);
-      add(`l8-monkey-ropes-${i}`, 'prop.laundry-line', -4 + i * 4, 22, [1, 1.2, 1.5]);
     }
     // Door-side furniture makes a real, body-width choke without closing either public escape path.
     add('l8-monkey-choke-0', 'prop.cure-garden-wall', -6, 12, [.6, 1, 1], Math.PI / 2);
