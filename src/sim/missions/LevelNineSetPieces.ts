@@ -14,7 +14,7 @@ import { resetResponse } from '../locomotion/MotionResponse';
  * plough through; dog/runner packs that close on the hull. The rail stall gets a leaper, a thrower and a mixed rush.
  * Deterministic: every decision reads the native world; state lives in the L9 mission snapshot.
  */
-export interface L9ScriptedAlpha { id: number; role: 'leaper' | 'thrower'; piece: string; phase: 'wait' | 'windup' | 'air' | 'hull' | 'cool' | 'throw' | 'free'; at: number; post: { x: number; z: number }; uses: number; from?: { x: number; z: number }; to?: { x: number; z: number }; nextStrike?: number }
+export interface L9ScriptedAlpha { id: number; role: 'leaper' | 'thrower'; piece: string; phase: 'wait' | 'windup' | 'air' | 'hull' | 'cool' | 'throw' | 'free'; at: number; post: { x: number; z: number }; uses: number; from?: { x: number; z: number }; to?: { x: number; z: number }; nextStrike?: number; throwPropId?: number }
 export interface L9Flight { obstacleId: number; from: { x: number; z: number }; to: { x: number; z: number }; started: number; land: number; sourceId: number }
 export interface L9SetPieceState { fired: string[]; alphas: L9ScriptedAlpha[]; flights: L9Flight[]; packs: number[]; stall?: { leaper: boolean; thrower: boolean; rush: boolean } }
 export const emptySetPieces = (): L9SetPieceState => ({ fired: [], alphas: [], flights: [], packs: [] });
@@ -241,20 +241,20 @@ export class LevelNineSetPieces {
     const ready = (a.phase === 'wait' && (hull < T.startM || passed && a.uses === 0) || a.phase === 'cool' && tick >= a.at) && (!a.piece.startsWith('stall') || car.physics.speed < 1.5);
     if (ready && hull > T.stopM && e.attachedTo === undefined && !e.infected.specialAttack && (passed && a.uses === 0 || w.combat!.query.visible(e.transform, p))) {
       const target = this.throwTarget(T.windupTicks + T.flightTicks, a.uses);
+      const item = T.items[a.uses % T.items.length] as ObstacleKind, kind: ObstacleKind = item === 'jersey-barrier' && car.physics.speed < T.heavyMinSpeed ? 'trash-can' : item;
+      const placement = this.lane(20) ?? target;
+      a.throwPropId = w.vehicles!.obstacles.spawn(kind, placement);
       this.freeze(e, true); this.pose(e, 'alpha.grab-throw', 'telegraph', tick, tick + T.windupTicks, target);
       a.phase = 'throw'; a.at = tick + T.windupTicks; a.to = target; this.signal('thrower-windup', a.id); return;
     }
     if (a.phase === 'throw' && tick >= a.at) {
       // Re-aim at release: the landing marker shown at the windup start stays honest within a lane width.
-      const to = this.throwTarget(T.flightTicks, a.uses), item = T.items[a.uses % T.items.length] as ObstacleKind, kind: ObstacleKind = item === 'jersey-barrier' && car.physics.speed < T.heavyMinSpeed ? 'trash-can' : item;
-      // The old scripted flight spawned on the road, then teleported the prop
-      // to the thrower off-road and drew it flying back in. Keep the obstacle
-      // flight on the authored route: its launch pose is the nearest route lane.
-      const laneStart = this.lane(0) ?? { x: to.x, z: to.z };
-      const from = { x: laneStart.x, z: laneStart.z };
-      const id = this.w.vehicles!.obstacles.spawn(kind, from);
+      const to = this.throwTarget(T.flightTicks, a.uses), id = a.throwPropId, o = id === undefined ? undefined : w.entities.get(id);
+      delete a.throwPropId;
+      const obstacle = w.vehicles!.obstacles.items.find(item => item.entity.id === id);
+      if (id === undefined || !o || o.health.current <= 0 || !obstacle || obstacle.body || obstacle.airborne) { a.phase = 'cool'; a.at = tick + T.intervalTicks; a.uses++; return; }
+      const from = { x: o.transform.x, z: o.transform.z };
       this.w.vehicles!.obstacles.launch(id, true);
-      const o = w.entities.get(id)!; Object.assign(o.transform, { x: from.x, z: from.z, y: 2.4 });
       s.flights.push({ obstacleId: id, from, to, started: tick, land: tick + T.flightTicks, sourceId: a.id });
       this.pose(e, 'alpha.grab-throw', 'active', tick - T.windupTicks, tick, to);
       w.events.emit({ type: 'infected.prop-thrown', tick, sourceId: a.id, propId: id, attackId: e.infected.specialAttack!.attackId });
@@ -282,7 +282,7 @@ export class LevelNineSetPieces {
       const f = s.flights[i], o = w.entities.get(f.obstacleId);
       if (!o) { s.flights.splice(i, 1); continue; }
       const t = Math.min(1, (tick - f.started) / Math.max(1, f.land - f.started));
-      Object.assign(o.transform, { x: f.from.x + (f.to.x - f.from.x) * t, z: f.from.z + (f.to.z - f.from.z) * t, y: .5 + 1.9 * (1 - t) + 4 * 3 * t * (1 - t), yaw: t < 1 ? t * 9 : 0 });
+      Object.assign(o.transform, { x: f.from.x + (f.to.x - f.from.x) * t, z: f.from.z + (f.to.z - f.from.z) * t, y: .5 + 4 * 3 * t * (1 - t), yaw: t < 1 ? t * 9 : 0 });
       if (t < 1) continue;
       s.flights.splice(i, 1);
       Object.assign(o.transform, { x: f.to.x, z: f.to.z, y: .5, yaw: 0 });
