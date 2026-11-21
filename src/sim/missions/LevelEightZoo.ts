@@ -32,7 +32,7 @@ export interface L8ZooState {
   lastJoinCue?: number;
   perimeterGateBreaks?: (number | null)[]; perimeterGateReleased?: boolean[]; perimeterGateSounded?: boolean[]; gateBreachLineAt?: number;
   /** r33-l8route: tick the plaza doors shut (0 = not yet), the route-marker leg/node, and the regions whose first walk-in wave has run (bit 1 north, 2 south, 4 east). */
-  sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number;
+  sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number; driverAt?: number; departureRun?: number;
   /** r36-l8gates: ticks of the "Protect the group" hold the courier spent away from the plaza (the hold pauses meanwhile). */
   protectAway?: number;
 }
@@ -354,8 +354,16 @@ export class LevelEightZoo {
         w.storyLock = { scripted: null, skip: false }; w.clearInput();
         this.mission.radio('L8.departure');
       }
-      const elapsed = t - s.chaseAt, from = s.departureFrom, run = Math.max(0, Math.min(1, elapsed / 360));
-      const x = from.x + 42 * run, z = from.z;
+      // PO 2026-11-21: "the car is moving sideways ... through the wall and is also pushing a soldier". Drive forward along
+      // the hull's own heading (forward = (cos yaw, -sin yaw)), only as far as the nav stays walkable, and ease in/out.
+      const elapsed = t - s.chaseAt, from = s.departureFrom, fx = Math.cos(from.yaw), fz = -Math.sin(from.yaw);
+      if (s.departureRun === undefined) {
+        let clear = 0;
+        for (let d = 1; d <= 42; d++) { if (!w.districts?.nav.walkable([from.x + fx * (d + 3), from.z + fz * (d + 3)])) break; clear = d; }
+        s.departureRun = clear;
+      }
+      const u = Math.max(0, Math.min(1, elapsed / 360)), run = u * u * (3 - 2 * u);
+      const x = from.x + fx * s.departureRun * run, z = from.z + fz * s.departureRun * run;
       const previous = w.entities.get(s.carId)!.transform;
       const speed = Math.hypot(x - previous.x, z - previous.z) * 60;
       w.vehicles!.scriptPose(s.carId, { x, y: from.y, z, yaw: from.yaw }, speed);
@@ -550,6 +558,21 @@ export class LevelEightZoo {
     }
     const player = w.entities.get(1)!;
     if (!s.escapeCheckpoint && this.mission.state.steps.escape.status === 'active' && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
+    // PO 2026-11-21: "The level is not ending. I'm standing in the final yellow circle and nothing happens." A follower that
+    // never reaches the door (guards on their own escort AI, a jammed queue) held the departure forever. Once the courier
+    // has sat in the driver's seat for 10 s, every living group member still outside climbs in.
+    if (w.vehicles!.active === s.carId && s.arenas.every(arena => arena.phase === 3) && !s.departureAt) {
+      s.driverAt ||= t;
+      if (t - s.driverAt >= 600) {
+        const seats = w.entities.get(s.carId)!.vehicle!.passengers ?? [], door = w.vehicles!.passengerDoor(s.carId);
+        for (const id of this.passengers()) {
+          const e = w.entities.get(id);
+          if (!e || e.health.current <= 0 || e.infected || e.passengerOf !== undefined || seats.some(seat => seat.id === id)) continue;
+          e.transform.x = door.x; e.transform.z = door.z;
+          w.vehicles!.boardPassenger(s.carId, id, 99);
+        }
+      }
+    } else if (!s.departureAt) s.driverAt = 0;
     if (w.vehicles!.groupBoarded(s.carId, this.passengers()) && !s.departureAt) this.mission.setState('aboard', true);
   }
   /** Nearby civilians and guards join without a prompt; their existing ally component (and weapon) is retained. */

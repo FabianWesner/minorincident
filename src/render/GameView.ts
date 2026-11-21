@@ -802,7 +802,7 @@ export class GameView implements Lifecycle {
     const player = this.world.entities.get(1);
     if (player) {
       const loadout = player.weapons && this.world.combat?.runner.loadout;
-      this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id);
+      this.view.setEquippedWeapon(this.world.mountedGun?.mounted ? undefined : loadout?.current(loadout.state.selectedSide).id, !!this.world.vehicles?.active);
       // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
       // Q-134 (PO: "Wider camera while driving / Yes do that"): the courier steering the bike gets the same driver widening as a car.
       const steering = playerSteers(this.world.vehicles);
@@ -874,7 +874,8 @@ export class GameView implements Lifecycle {
         && player.transform.z >= 35 && player.transform.z <= 95;
       const l8Zone = l8Arena ? l8Route.find(stage => stage.id === l8Arena.id)!.zone
         : l8Boarding ? { x0: 82, z0: 39, x1: 110, z1: 89 } : undefined;
-      // Frame the entire bounded pen at default zoom, including its near edge.
+      // PO 2026-11-21: "Why is there a massive zoom effect? Why are we seeing it from so high now?" The old 4.5x
+      // whole-pen framing lost the courier; widen only slightly so lanes near the courier stay readable.
       const l8Scale = l8Zone ? 1.35 * Math.max(1, 1 / this.view.camera.aspect) : 1;
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : l8Scale;
       this.view.zoomFloor = this.world.scenario === 'L2' ? l2RescueView(this.world, this.view.playerZoom, this.view.zoomFloor, seconds) : 0;

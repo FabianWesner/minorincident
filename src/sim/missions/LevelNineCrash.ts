@@ -217,13 +217,23 @@ export class LevelNineCrash {
         if (s.phase !== 'crawl') { s.phase = 'crawl'; s.crawlProgress = 0; w.storyLock = null; w.clearInput(); }
         const start = this.anchor(s.crawlAnchor), end = this.anchor('crawl-end'), p = w.entities.get(1)!;
         const dx = end.x - start.x, dz = end.z - start.z, length = Math.hypot(dx, dz), move = w.inputFrame.move;
-        let forward = Math.max(0, Math.min(1, (move.x * dx + move.z * dz) / length));
-        // r34-l9qa: a player who lets go inside the yellow ring waited forever (2+ min at '1 m'). The last fifth of the crawl finishes on its own.
-        if ((s.crawlProgress ?? 0) >= CRAWL_AUTO) forward = Math.max(forward, .75);
-        s.crawlProgress = Math.min(1, (s.crawlProgress ?? 0) + forward / CRAWL);
-        const f = s.crawlProgress;
+        // PO 2026-11-21: "I cannot move no matter what I do." / "when I press right it moves left." The crawl followed a fixed
+        // start→end line and only counted input projected onto it. Now she crawls where the player steers (slowly, on walkable
+        // ground); progress is the distance crawled, and after 4 s she keeps crawling the way she faces without input.
+        const mag = Math.min(1, Math.hypot(move.x, move.z));
+        const idle = t - (approachTicks + FALL + IMPACT) >= 240 || (s.crawlProgress ?? 0) >= CRAWL_AUTO;
+        let dir: { x: number; z: number } | null = mag > .05 ? { x: move.x / Math.hypot(move.x, move.z), z: move.z / Math.hypot(move.x, move.z) }
+          : idle ? { x: Math.cos(-p.transform.yaw), z: Math.sin(-p.transform.yaw) } : null;
+        const forward = dir ? Math.max(mag, idle ? .75 : 0) : 0, stepLen = forward * Math.max(4, length) / CRAWL;
         Object.assign(w.previousPlayer!, p.transform);
-        Object.assign(p.transform, { x: lerp(start.x, end.x, f), y: survivor.height / 2 + .02, z: lerp(start.z, end.z, f), yaw: -Math.atan2(dz, dx) });
+        if (dir && stepLen > 0) {
+          const nx = p.transform.x + dir.x * stepLen, nz = p.transform.z + dir.z * stepLen;
+          if (!w.districts || w.districts.nav.walkable([nx, nz])) { p.transform.x = nx; p.transform.z = nz; p.transform.yaw = -Math.atan2(dir.z, dir.x); }
+          else dir = null;
+        }
+        s.crawlProgress = Math.min(1, (s.crawlProgress ?? 0) + (dir ? forward : 0) / CRAWL);
+        const f = s.crawlProgress;
+        p.transform.y = survivor.height / 2 + .02;
         if (s.endingAt === undefined) p.survivor!.scriptedClip = 'crawl';
         w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform); w.spatial.set(1, p.transform.x, p.transform.z);
         const sam = w.entities.get(this.driving.state.samId);
