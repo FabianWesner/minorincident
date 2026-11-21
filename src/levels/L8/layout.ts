@@ -83,7 +83,7 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     add('l8-yard-north-wall', 'prop.cure-garden-wall', 88, 46, [8 / wall.x, 3 / wall.y, .5 / wall.z], 0, { class: 'concrete', indestructible: true, bossBreakable: true });
     layout.placements.at(-1)!.fixed = true;
     add('l8-elephant-truck', 'veh.box-truck', 100, 54, [1, 1, 1], Math.PI / 2);
-    for (const [i, [x, z]] of [[-64, -30], [-55, -36], [-66, -40]].entries()) add(`l8-lion-cover-${i}`, 'prop.tree.dead', x, z, [.8, .9, .8], i * Math.PI / 3);
+    for (const [i, [x, z]] of [[-64, -30], [-55, -36], [-66, -40]].entries()) add(`l8-lion-cover-${i}`, 'prop.zoo-rock-cover', x, z, [1, 1.4, 1.2], i * Math.PI / 3);
     for (let i = 0; i < 2; i++) {
       add(`l8-monkey-roof-debris-${i}`, 'prop.crates', -12, 12.5 + i * 3, [.25, .25, .25], 0, undefined, 4.1);
     }
