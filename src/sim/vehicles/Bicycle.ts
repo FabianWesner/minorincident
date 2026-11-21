@@ -35,6 +35,7 @@ export interface BicycleState {
 const ARCHETYPE = 'veh.courier-bike';
 const { speedMs, accelToMs, accelS, mountInteractS } = l1v2.bicycle;
 const MOUNT_RANGE = 1.5, BUMP_RANGE = 1.15;
+const MOTORBIKE_RECOVERY_RANGE = 3.1;
 /** Short stumble after an infected knocks the rider off (input locked, no damage, no knockback). */
 const STUMBLE_TICKS = 18;
 /** A knocked-over bike drops right beside the rider: only these rings, never back to an older parking spot. */
@@ -62,7 +63,13 @@ export class Bicycle {
   private navPose = '';
   constructor(private readonly world: SimWorld) {
     world.events.on('combat.hit', event => {
-      if (event.type !== 'combat.hit' || event.targetId !== 1 || event.amount < 20 || !world.entities.get(event.sourceId)?.infected) return;
+      if (event.type !== 'combat.hit' || event.targetId !== 1) return;
+      const attacker = world.entities.get(event.sourceId);
+      const heavyHit = attacker?.archetype === 'infected.brute' || attacker?.archetype === 'infected.armored'
+        || attacker?.archetype === 'infected.butcher' || attacker?.archetype === 'infected.elephant'
+        || attacker?.archetype === 'infected.alpha' || attacker?.archetype === 'infected.mega-alpha'
+        || attacker?.infected?.pursuit === true || attacker?.infected?.variant === 'inf.mega-alpha';
+      if (!heavyHit || event.amount < 20) return;
       const bike = this.entity, player = world.entities.get(1);
       if (bike?.bicycle?.motorbike && bike.bicycle.mounted && player) this.knockOff(bike, player);
     });
@@ -90,7 +97,11 @@ export class Bicycle {
   get riding(): boolean { return this.entity?.bicycle?.mounted === true; }
   canInteract(): boolean {
     const bike = this.entity, player = this.world.entities.get(1);
-    return !!bike?.bicycle && !!player && player.health.current > 0 && (bike.bicycle.mounted || this.world.tick >= bike.bicycle.lockUntil && Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z) <= MOUNT_RANGE && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform));
+    if (!bike?.bicycle || !player || player.health.current <= 0) return false;
+    if (bike.bicycle.mounted) return true;
+    const d = Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z);
+    const recovery = bike.bicycle.motorbike && bike.bicycle.fallen && d <= MOTORBIKE_RECOVERY_RANGE && this.reachable(player.transform.x, player.transform.z, bike.transform.x, bike.transform.z, true);
+    return this.world.tick >= bike.bicycle.lockUntil && (d <= MOUNT_RANGE || !!recovery) && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform);
   }
   /** Controller speed scale (7.5 m/s over the 4.5 m/s run); 1 on foot. */
   get speedScale(): number {
@@ -137,8 +148,10 @@ export class Bicycle {
         // A bike that fell on the road is picked up where it lies (any clear level ground close by, not 8 m away on the
         // sidewalk); a parked one keeps the pavement-first search, with close-by road ground only as the last resort.
         const near = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3], wide = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3, 4, 6, 8];
+        const origin = b.motorbike && b.fallen && d > MOUNT_RANGE ? bike.transform : player.transform;
+        const accessible = (p: Vec2) => this.reachable(player.transform.x, player.transform.z, p.x, p.z, !!(b.motorbike && b.fallen && d > MOUNT_RANGE));
         const spot = b.fallen
-          ? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true)
+          ? this.clearSpot(origin.x, origin.z, b.heading, near, true, false, accessible) ?? this.clearSpot(origin.x, origin.z, b.heading, wide, true, true, accessible)
           : this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false);
         if (!spot) return frame;
         const mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
@@ -189,6 +202,16 @@ export class Bicycle {
     this.lastOutside = { x: player.transform.x, z: player.transform.z };
     // Speed actually achieved last tick: walls and props stop the bicycle.
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;
+    // A high-speed impact is a sudden loss of forward travel into a solid.
+    // Scraping or an ordinary infected hit alone does not eject the rider.
+    if (b.motorbike && Math.abs(b.speed) >= 6 && actual < Math.abs(b.speed) * .35) {
+      const direction = { x: Math.cos(b.heading) * Math.sign(b.speed), y: 0, z: Math.sin(b.heading) * Math.sign(b.speed) };
+      const flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS | RAPIER.QueryFilterFlags.EXCLUDE_KINEMATIC;
+      const solid = [.35, .9].some(y => this.world.physics.world!.castRay(
+        new RAPIER.Ray({ x: player.transform.x, y: (this.world.districts?.groundHeight(player.transform.x, player.transform.z) ?? 0) + y, z: player.transform.z }, direction),
+        survivor.radius + .2, true, flags, undefined, this.world.physics.playerCollider ?? undefined));
+      if (solid) { this.knockOff(bike, player); return frame; }
+    }
     if (actual < Math.abs(b.speed) * .5) b.speed = Math.sign(b.speed) * actual;
     // Bicycle kinematics: the steering angle shrinks with speed (turn radius 1.6 m crawling, 6 m flat out), the heading changes by
     // speed / radius, so the bike never pivots on the spot; speed ramps (0 to 7 m/s in 1.5 s), brakes hard, coasts gently.
@@ -317,11 +340,11 @@ export class Bicycle {
    * alone is not enough; a ring search 3 m out from the gravel strip south of the L1 fire station found free grass
    * behind the 0.27 m privacy fence (PO 10-22: "the bike is now on the other side of the fence").
    */
-  private reachable(px: number, pz: number, x: number, z: number): boolean {
+  private reachable(px: number, pz: number, x: number, z: number, includeBodies = false): boolean {
     const dx = x - px, dz = z - pz, d = Math.hypot(dx, dz), physics = this.world.physics.world;
     if (d < .05 || !physics) return true;
     const ground = this.world.districts?.pavingHeight(px, pz) ?? 0, dir = { x: dx / d, y: 0, z: dz / d };
-    const flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS | RAPIER.QueryFilterFlags.EXCLUDE_DYNAMIC | RAPIER.QueryFilterFlags.EXCLUDE_KINEMATIC;
+    const flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS | (includeBodies ? 0 : RAPIER.QueryFilterFlags.EXCLUDE_DYNAMIC | RAPIER.QueryFilterFlags.EXCLUDE_KINEMATIC);
     // Knee and handlebar height: kerbs and low lips stay crossable, fences, railings and walls do not.
     return [.35, .9].every(h => !physics.castRay(new RAPIER.Ray({ x: px, y: ground + h, z: pz }, dir), d, true, flags, undefined, this.world.physics.playerCollider ?? undefined));
   }

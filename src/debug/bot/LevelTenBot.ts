@@ -122,7 +122,10 @@ export class LevelTenBot {
       if (f.interact) return f;
     }
     if (active.id !== 'hold' && gun?.mounted) { f.interact = true; return f; }
-    const rack = player.weapons!.RIGHT.rack, target = pouncingDog ?? (active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0]);
+    // Clear an attacker in melee reach before focusing the finale Mega. An
+    // uninterrupted boss target leaves the courier surrounded on the stairs.
+    const closeAttacker = active.id === 'mega' ? threats.find(e => !isMega(e) && distance(e.transform) < 8) : undefined;
+    const rack = player.weapons!.RIGHT.rack, target = pouncingDog ?? closeAttacker ?? (active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0]);
     if (['mega', 'release'].includes(active.id) && p.y > .9) {
       // Interaction console is 2 m east of the assembly origin. Use the
       // shipped stair anchors, rather than translating them from that marker.

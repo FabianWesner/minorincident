@@ -552,8 +552,25 @@ export class Hud {
     }
     this.updateBossBar(world);
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
-    setHidden(this.interaction, !device);
-    if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); attribute(this.interaction, 'data-progress', String(device.progress)); }
+    const bike = world.vehicles?.bicycle, bikeEntity = bike?.entity;
+    const nearbyOpenedBlock = !!player && !!bikeEntity?.bicycle?.motorbike && !bike?.riding
+      && Math.hypot(player.transform.x - bikeEntity.transform.x, player.transform.z - bikeEntity.transform.z) <= 40
+      && Object.values(world.l10Encounters?.state.roadblockGates ?? {}).some(gateId => {
+        const gate = world.entities.get(gateId);
+        return !!gate?.interactable?.open && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 45;
+      });
+    setHidden(this.interaction, !device && !nearbyOpenedBlock);
+    if (nearbyOpenedBlock && !device) {
+      this.interaction.style.background = '#171b20e8';
+      const dx = bikeEntity!.transform.x - player!.transform.x, dz = bikeEntity!.transform.z - player!.transform.z;
+      // Follow camera is at +X/+Z: screen right is +X/-Z and screen up is -X/-Z.
+      const angle = Math.atan2(-(dx + dz), dx - dz);
+      const arrows = ['→', '↗', '↑', '↖', '←', '↙', '↓', '↘'];
+      const arrow = arrows[(Math.round(angle / (Math.PI / 4)) + 8) % 8];
+      text(this.interaction, !bike?.canInteract() ? `Back on the bike · ${arrow} ${Math.round(Math.hypot(dx, dz))} m`
+        : this.game.input.scheme === 'touch' ? 'Back on the bike · Tap ACTION' : 'Back on the bike · Press E');
+      attribute(this.interaction, 'data-progress', '0');
+    } else if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); attribute(this.interaction, 'data-progress', String(device.progress)); }
     setHidden(this.damage, world.tick > this.damagedUntil); setHidden(this.bark, world.tick > this.barkUntil);
     setHidden(this.shieldBlock, world.tick > this.shieldBlockUntil);
     setHidden(this.civilianBark, world.tick > this.civilianBarkUntil);
