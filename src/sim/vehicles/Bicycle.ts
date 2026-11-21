@@ -197,7 +197,14 @@ export class Bicycle {
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;
     // A high-speed impact is a sudden loss of forward travel into a solid.
     // Scraping or an ordinary infected hit alone does not eject the rider.
-    if (b.motorbike && Math.abs(b.speed) >= 6 && actual < Math.abs(b.speed) * .35) { this.knockOff(bike, player); return frame; }
+    if (b.motorbike && Math.abs(b.speed) >= 6 && actual < Math.abs(b.speed) * .35) {
+      const direction = { x: Math.cos(b.heading) * Math.sign(b.speed), y: 0, z: Math.sin(b.heading) * Math.sign(b.speed) };
+      const flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS | RAPIER.QueryFilterFlags.EXCLUDE_KINEMATIC;
+      const solid = [.35, .9].some(y => this.world.physics.world!.castRay(
+        new RAPIER.Ray({ x: player.transform.x, y: (this.world.districts?.groundHeight(player.transform.x, player.transform.z) ?? 0) + y, z: player.transform.z }, direction),
+        survivor.radius + .2, true, flags, undefined, this.world.physics.playerCollider ?? undefined));
+      if (solid) { this.knockOff(bike, player); return frame; }
+    }
     if (actual < Math.abs(b.speed) * .5) b.speed = Math.sign(b.speed) * actual;
     // Bicycle kinematics: the steering angle shrinks with speed (turn radius 1.6 m crawling, 6 m flat out), the heading changes by
     // speed / radius, so the bike never pivots on the spot; speed ramps (0 to 7 m/s in 1.5 s), brakes hard, coasts gently.
