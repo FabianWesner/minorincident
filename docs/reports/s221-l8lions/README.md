@@ -22,3 +22,5 @@ The all-cage solo rule is in place: survivor followers stage outside the next en
 - Licensed animal recordings and their processed voice sets remain open. Five candidate previews were downloaded to temporary storage after network access returned; their provenance, processing, integration and license snapshots remain to be completed.
 
 - A focused remote rerun isolated the failures: save progression exceeded its 30 s per-test timeout, and the vehicle fixture failed the Hale charge assertion (`distance` remained Infinity). Moving Hale to the outside entry in that fixture alone did not fix it; that experiment was reverted. The finale handoff needs further investigation.
+
+- Vehicle fixture diagnostic: the elephant reached phase 1, but Hale remained at (92.8, 75.6), outside the 12 m / 30 tick story trigger near the opening charge. This can also strand the story beat if Hale is delayed in ordinary play. The condition needs a robust story design compatible with the solo-yard rule.
