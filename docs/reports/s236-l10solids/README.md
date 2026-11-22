@@ -14,6 +14,8 @@ The audit additionally samples vertical LOD0 mesh faces independently of collide
 
 Mesh normals are transformed using inverse placement scale before yaw, so nonuniformly scaled placements are swept across the face in the correct direction; invalid scale is rejected. The ratcheted audit passes with this correction.
 
+Every level-specific campaign building has at least one qualifying mesh sample. The audit now asserts that property before checking colliders, so a newly introduced asset with no sampled face cannot silently pass. The audit, typecheck and lint pass with this guard.
+
 The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, and 2.2 m high door openings. The authored part bounds were tightened to those dimensions; destruction adds its existing 0.035 m hit-zone margin. Typecheck, lint, and the ratcheted sweep audit pass after this correction. This generator comparison is not a substitute for the all-district mesh-face audit or movement captures.
 
 The height-slice audit found a visible chimney with no collider in each of four farm houses. A structural chimney bound matching the generator was added; all L10 sampled misses now clear. Typecheck, lint, and the ratcheted audit pass after this change.

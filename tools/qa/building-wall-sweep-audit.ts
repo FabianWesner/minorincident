@@ -29,6 +29,7 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
       for (const d of district) for (const p of d.decay.placements) {
         if (!p.assetId.startsWith('bld.') || seen.has(`${level}/${d.id}/${p.id}`)) continue;
         seen.add(`${level}/${d.id}/${p.id}`); buildings++;
+        assert.ok(meshSamples.get(p.assetId)?.length, `${level}/${d.id}/${p.id}: no mesh wall samples for ${p.assetId}`);
         const walls = d.decay.colliders.filter(c => (c.id === p.id || c.id.startsWith(`${p.id}/`))
           && c.aabb.max[1] - c.aabb.min[1] >= 1.1 && c.aabb.max[1] > .7 && c.aabb.min[1] < 1.1);
         const destruction = world.destruction?.objects.find(o => o.id === `${d.id}/${p.id}`);
