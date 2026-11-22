@@ -102,3 +102,8 @@ Waypoint/route-node grep: L8 was the only mission that advanced a route node fro
 - Solid-placement audit: 2,352 D-ZOO placements, zero remaining offenders; zero total remaining offenders. Receipt: `test-results/s220c-bb7d-solid.json`.
 - Filtered `scene:gate -- --filter '*zoo*'`: 8/8 rows passed across WebGPU and WebGL2. This filter does not establish every L8 scene row.
 - Re-reviewed the earlier HIGH native breach sheet: the entry panel contracts and disappears between the pre-break and +25 tick images; the darker west panel also clears into a gap. These frames predate the merge and do not establish the merged revision's visual result.
+
+### Merged-revision visual checks
+
+- On `4757a71e` (source identical to `bb7d54fe`), headless HIGH WebGL2/Metal native complete-bot captures were taken at one tick before, eight ticks after and 25 ticks after the entry and west perimeter gate breaks. The paused inspection camera was moved outside each gate. In the [breach sheet](breach-sheet.jpg), the lit entry bars contract and disappear, with the group visible behind them. The west bars are dim and partly screened by trees; they contract and leave a clear gap by +25 ticks. The capture receipt in `test-results/s220c-bb7d-breach/receipt.json` records the actual break ticks and no browser errors.
+- Additional gate-list rows matching `*flamingo*` passed 9/9, and `*lion*` passed 4/4. Together with the earlier `*zoo*` 8/8, these cover the gate-list scenes named for the zoo and its animal encounters; the gate catalog may contain other scenes shared with L8.
