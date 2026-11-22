@@ -15,11 +15,11 @@ Updated retired crawl references in the L9 QA probes and corrected E31 acceptanc
 - Full `tools/qa/threat-audit.ts` — 353 s, zero fail flags; L9 skilled and passive complete.
 - `npm run build:qa` — pass.
 - `npm run verify -- E31` — blocked by the sandbox denying tsx's Unix socket (`listen EPERM`). Running `node --import tsx/esm tools/verify.ts E31` instead completed typecheck and lint, then failed the repository-wide test-budget preflight: 151/150 cases across 45 files. No test cases were added or removed for this change.
-- `sh tools/remote/run.sh "$PWD" -- npm test` — unavailable: no healthy remote runner was provisioned, and the local Mac fallback is disallowed by that command.
+- `sh tools/remote/run.sh "$PWD" -- npm test` — reached a healthy remote runner, then failed the same 151/150 preflight before running tests.
 - `npm run qa:threat -- --levels L9` — preflight rejected the same 151/150 global test-case budget. The direct full all-level audit above completed with zero fail flags.
 
 ## Visual review and open gates
 
-The requested high/low, zoom-1 native frame sequence and contact sheet are not included. Capture was attempted through `tools/e2e-lock.sh`; the sandbox returned `listen EPERM` for local preview and browser-pool listeners (including port 4329), so no browser could be admitted. Frames have therefore not been reviewed. The capture driver is `tools/qa/s233-l9ending-capture.ts`; run high and low captures through the browser pool, inspect every phase, and add one small contact sheet here once a browser-capable environment is available.
+High zoom-1 WebGL frames were captured through `tools/e2e-lock.sh` with no page errors. Review exposed a framing problem: at the roar the Mega is at the lower left edge and the courier is outside the image. The capture driver's accidental `follow()` override was removed and the result persisted on a second run. Determine whether fixed-step capture updates the cinematic camera correctly, fix the framing as needed, and review a complete high/low sequence before producing the contact sheet. No low capture or sheet has passed review yet.
 
-Remaining to close the goal: visual review/contact sheet, successful remote unit suite (healthy runner required), and resolution of the existing 151/150 test-budget gate without trimming tests.
+Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.

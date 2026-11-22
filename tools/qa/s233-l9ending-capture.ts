@@ -15,7 +15,7 @@ const step = async (ticks: number) => page.evaluate(async n => { const a = windo
 const capture = async (name: string) => {
   const info = await page.evaluate(() => {
     const g = (window.__SCENE__ as unknown as { game: Game }).game, view = g.view.view;
-    view.follow(); view.zoom(Math.log(1 / view.getState().targetZoom), true);
+    view.zoom(Math.log(1 / view.getState().targetZoom), true);
     return { tick: g.world.tick, phase: g.world.missions!.l9!.state.phase, missionPhase: g.world.missions!.state.phase,
       player: { ...g.world.entities.get(1)!.transform }, mega: g.world.entities.get(g.world.missions!.l9!.driving.state.megaId)?.transform,
       megaHidden: g.world.entities.get(g.world.missions!.l9!.driving.state.megaId)?.hidden,
