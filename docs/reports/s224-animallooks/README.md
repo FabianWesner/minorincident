@@ -201,3 +201,5 @@ Opened the 0.035 m eye-offset trial from the front and oblique side (`/tmp/s224-
 A trial projected each eye-disc corner independently onto the head surface. The opened oblique studio render (`/tmp/s224-eye-conform.png`) shows thin and triangular red fragments around the eyes instead of coherent eyes, likely because corner rays span different surfaces. This approach was rejected and reverted. Eye placement still needs a surface-aware method and game-camera review.
 
 A trial oriented each eye disc to the normal of its center-ray triangle. The opened oblique render (`/tmp/s224-eye-normal.png`) shows oversized slanted patches, so the coarse surface normal did not give acceptable placement. The trial was reverted. Eye visibility and anatomical attachment remain unresolved.
+
+An atlas-only eye trial removed the discs and painted red regions around the refined source landmarks. The build validated, but the opened HIGH zoom-1 game view (`test-results/s224-painted-eyes/`) did not show readable eyes. The trial was reverted; investigate head ownership, compressed texel colour and projected coverage before treating atlas emission as a replacement.
