@@ -68,6 +68,7 @@ The initial lane source snapshot that reproduces pace flags is `8316b243` (`Impr
 | Current source, `L8BossArenas.ts` restored to `a23b89e0` | Only `SLOW_FOLLOWER:354` | Arena-controller changes contribute follower 364 on the rebuilt layout; this does not explain corgi 354. |
 | Current source, `InfectedSystem.ts` restored to `a23b89e0` | Same flags as current: 364 twice and 354 once | Heard-gunfire pursuit is not causal for these flags. |
 | Current rebuilt layout with gorilla night-house and rock colliders removed | Same flags as current | Those two new collider groups are not causal. |
+| Current gameplay with both baseline `D-ZOO.layout.json` and `D-ZOO.base.glb` | Skilled completes; identical flags (364 twice and 354 once) | The complete layout delta is not sufficient to explain these current flags. Both rebuilt assets were restored after the diagnostic. |
 | Current source with `l8Bosses.ts` restored to `a23b89e0` | Same current flags | Boss HP increase alone is not causal. |
 | Current source with both `L8BossArenas.ts` and `l8Bosses.ts` restored to `a23b89e0` | Skilled completes; only `SLOW_FOLLOWER:354` | Reverting both encounter controller and boss HP together still leaves the corgi flag. |
 | Current source with south/west breach waypoints removed | More flags (366, 381, and 354) | Those route changes improve follower approach; restoring them is not a fix. |
