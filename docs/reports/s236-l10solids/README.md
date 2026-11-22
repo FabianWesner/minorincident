@@ -10,7 +10,7 @@ See-through selection for buildings now tests the camera-to-subject centre segme
 
 `tools/qa/building-wall-sweep-audit.ts` is wired into `tools/qa/solid-placement-audit.ts`. It sampled 664 building placements across L1–L10 with 9,760 capsule sweeps. L10: 242 buildings, 1,958 samples, zero misses. The existing solid placement portion reports 572 before and zero after across all district datasets.
 
-Coverage limitation: the sweep samples existing collider faces, not independently extracted visible mesh wall faces. It can catch colliders lost at runtime and placements with no body-height collider, but cannot detect a missing wall on a building that has other colliders. An independent mesh-face audit remains open. The five known misses below are ratcheted: any additional reported miss fails the audit.
+Coverage limitation: most sweeps sample existing collider faces. The farm house and barn additionally sample large vertical triangles from their shipped LOD0 meshes, independently of collider bounds. This adds 160 farm mesh sweeps: the full audit now reports 9,920 samples, including 2,118 in L10 with zero misses. The triangle filter does not cover small details or every wall face, and independent mesh sampling for other building assets remains open. The five known misses below are ratcheted: any additional reported miss fails the audit.
 
 The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, and 2.2 m high door openings. The authored part bounds were tightened to those dimensions; destruction adds its existing 0.035 m hit-zone margin. Typecheck, lint, and the ratcheted sweep audit pass after this correction. This generator comparison is not a substitute for the all-district mesh-face audit or movement captures.
 

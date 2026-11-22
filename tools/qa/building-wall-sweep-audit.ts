@@ -4,6 +4,7 @@ import { partColliders } from '../../src/data/destructionModel';
 import { actorRadius } from '../../src/sim/world/SolidRegistry';
 import { runnerLevels } from '../sim-runner/levels';
 import { loadLevel } from '../sim-runner/levels';
+import { farmMeshWallSamples } from './farm-mesh-wall-samples';
 
 export interface BuildingWallSweepReceipt {
   levels: { level: string; buildings: number; samples: number; misses: string[] }[];
@@ -16,6 +17,7 @@ const sweepAxes = (halfX: number, halfZ: number) => wallLike(halfX, halfZ)
 /** Uses the live SolidRegistry capsule sweep, after each level has assembled its production colliders. */
 export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepReceipt> {
   const levels: BuildingWallSweepReceipt['levels'] = [];
+  const meshSamples = await farmMeshWallSamples();
   const seen = new Set<string>();
   for (const level of runnerLevels) {
     const world = await loadLevel(level, 1);
@@ -43,6 +45,16 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
         if (!walls.length) { misses.push(`${d.id}/${p.id}:no-body-height-collider`); continue; }
         const courier = world.entities.get(1)!;
         const radius = Math.min(actorRadius(courier), .34);
+        for (const sample of meshSamples.get(p.assetId) ?? []) {
+          const c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = p.position[0] + d.origin[0] + sample.x * p.scale[0] * c + sample.z * p.scale[2] * s;
+          const z = p.position[2] + d.origin[1] - sample.x * p.scale[0] * s + sample.z * p.scale[2] * c;
+          const nx = sample.nx * c + sample.nz * s, nz = -sample.nx * s + sample.nz * c;
+          courier.transform.x = x + nx; courier.transform.z = z + nz; courier.transform.y = .9;
+          world.chunks?.update([courier.transform.x, courier.transform.z]);
+          const moved = world.solids.sweep(courier, { x: -nx, z: -nz }, 2, actorRadius(courier), false, false);
+          samples++;
+          if (moved >= 1.9) misses.push(`${d.id}/${p.id}:mesh-wall:${sample.x.toFixed(2)},${sample.z.toFixed(2)}`);
+        }
         if (level === 'L10' && p.id === 'l10-find-farm-shed') {
           // The reported scaled barn: probe a side wall, a gable pier, and the
           // centre of its visible doorway after streaming has activated it.
