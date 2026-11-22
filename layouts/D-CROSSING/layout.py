@@ -202,7 +202,7 @@ for x,z in [(-15,285),(44,215),(-238,337),(175,346)]:
     building('bld.shed',x,z,'Farm outbuilding')
 building('bld.garage-detached',10,221,'Farm workshop')
 l.place('veh.pickup-red',[20,0,219],math.pi)
-for x,z in [(-45,252),(-42,254),(57,218),(60,220),(-28,223),(15,216)]:
+for x,z in [(-45,242),(-42,242),(57,218),(60,220),(-28,223),(15,216)]:
     l.place('prop.garden-bush',[x,0,z])
 building('bld.gas-station',12,-351,'Abandoned highway stop',math.pi/2)
 building('bld.garage-detached',32,-350,'Roadside workshop',math.pi/2)
@@ -280,7 +280,7 @@ def wreck(asset,x,z,yaw,decay='wrecked'):
     l.place(asset,[x,0,z],yaw)
     if asset!='veh.wreck': l.data['placements'][-1]['decay']=decay
 for x,z,yaw in [(486,-8.4,.5),(482,8.6,-.6)]: wreck('veh.wreck',x,z,yaw)
-for asset,x,z,yaw in [('veh.military-truck',478,-8.9,.35),('veh.school-bus',490,9.7,-.42),('veh.sedan-red',494,-9.3,.9),('veh.police-sedan',476,8.8,2.6),('veh.pickup-red',465,-19,-.5)]:
+for asset,x,z,yaw in [('veh.military-truck',478,-8.9,.35),('veh.military-truck',490,9.7,-.42),('veh.sedan-red',494,-9.3,.9),('veh.police-sedan',476,8.8,2.6),('veh.pickup-red',465,-19,-.5)]:
     wreck(asset,x,z,yaw)
 for x,z,yaw in [(461,-7.4,.2),(462,7.4,-.15),(505,-7.7,.3)]: l.place('prop.barricade',[x,0,z],yaw)
 # Two cars that went over earlier lie on the gully floor, clear of the kit (z beyond +-7.5) and of every lane.

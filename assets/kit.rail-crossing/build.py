@@ -78,14 +78,15 @@ for j in range(24):
     if abs(y)>2.15:
         box('sleeper timber top',(0,y,.453),(2.46,.20,.015),'woodWarm',.006)
         for x in [-.78,.78]:
-            box('rail chair',(x,y,.465),(.32,.28,.04),'uiDark',.006)
-            for dx in [-.12,.12]: cyl('chair bolt',(x+dx,y,.50),.024,.027,'silver',n=8)
+            box('rail chair',(x,y,.435),(.32,.28,.04),'uiDark',.006)
+            for dx in [-.12,.12]: cyl('chair bolt',(x+dx,y,.47),.024,.027,'silver',n=8)
 for x in [-.78,.78]:
-    box('rail foot',(x,0,.486),(.23,10.66,.06),'silver',.009)
-    box('rail vertical web',(x,0,.535),(.085,10.66,.08),'uiDark',.007)
-    box('polished steel rail head',(x,0,.592),(.17,10.68,.07),'silver',.012)
+    box('rail foot',(x,0,.432),(.23,10.66,.06),'silver',.009)
+    box('rail vertical web',(x,0,.474),(.085,10.66,.08),'uiDark',.007)
+    # Top surface is level with the timber deck (.548 m).
+    box('polished steel rail head',(x,0,.513),(.17,10.68,.07),'silver',.012)
     inner=x-math.copysign(.16,x)
-    box('dark wheel flange channel',(inner,0,.503),(.13,4.35,.045),'uiDark',.005)
+    box('dark wheel flange channel',(inner,0,.49),(.13,4.35,.045),'uiDark',.005)
 # Asphalt approaches meet a separate wooden road deck across the rail bed.
 for lo,hi in [(-3.7,-1.32),(1.32,3.7)]:
     count=3; step=(hi-lo)/count
@@ -238,7 +239,7 @@ if a.glb:
         for lo,hi in [(-3.7,-.93),(-.65,.65),(.93,3.7)]:
             box('centerline',((lo+hi)/2,0,.566),(hi-lo-.025,.11,.02),'schoolBusYellow',0)
         for y in [-2.025,2.025]: box('edge marking',(0,y,.566),(7.4,.19,.02),'picketWhite',0)
-        for x in [-.78,.78]: box('steel rail',(x,0,.585),(.17,10.68,.085),'silver',edge)
+        for x in [-.78,.78]: box('steel rail',(x,0,.5055),(.17,10.68,.085),'silver',edge)
         nt=24 if detailed else 9
         for j in range(nt):
             box('tie',(0,-5.12+j*10.24/(nt-1),.37),(2.5,.24,.16),'leatherShadow',edge)
