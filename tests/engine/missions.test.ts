@@ -186,11 +186,11 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
       // Everyone past gate 90, the scripted leader already walking on beyond it (the old guide left the gate here).
       for (const [i, r] of l6.survivors.entries()) { const e = w.entities.get(r.id)!; w.solids.relocate(e, { x: 99 + i * 1.1, y: 1.3, z: 15 }, 'test.l6-gate', 1.5); }
       l6.leaderX = 105; l6.leaderZ = 15;
-      const player = w.entities.get(1)!, wait = LevelSixSubway.gateWait(90);
+      const player = w.entities.get(1)!;
       Object.assign(player.transform, { x: 91.2, y: 1.3, z: 16.15 }); w.physics.playerBody?.setTranslation({ ...player.transform }, true); w.spatial.set(1, 91.2, 16.15);
       for (let i = 0; i < 10; i++) w.update();
       expect(m.state.marker).toBe('l6-next');
-      expect([m.def.anchors['l6-next'].x, m.def.anchors['l6-next'].z]).toEqual([wait.x, wait.z]);
+      expect([m.def.anchors['l6-next'].x, m.def.anchors['l6-next'].z]).toEqual([exit.x, exit.z]);
       expect(m.l6!.gateStatus(gate.id)).toMatch(/close it/);
       // A click on the gate line: no E needed.
       w.applyInput({ ...emptyInput(), mouseAttack: true, aimPoint: { x: 90.2, z: 15 } }, 'mouse-keyboard');

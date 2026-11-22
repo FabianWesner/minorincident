@@ -55,6 +55,8 @@ export interface LevelRunHooks {
   beforeBegin?: (world: SimWorld) => void;
   /** Stop a disposable QA route after an observer has captured its required sample. */
   stopWhen?: (world: SimWorld) => boolean;
+  /** Native observer called after each simulation tick. */
+  onTick?: (world: SimWorld) => void;
   beforeDispose?: (world: SimWorld) => void;
   /** Native L6 adversarial QA policy; gameplay runs keep the ordinary policy. */
   l6Profile?: L6Profile;
@@ -120,11 +122,13 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
   try { world = await loadLevel(level, seed, campaign, props, hooks); }
   catch (error) { report.outcome = 'load-error'; report.failures['load-error'] = 1; report.blocker = { objective: null, detail: String(error) }; return report; }
   try {
-    if (hooks?.stopWhen) {
+    if (hooks?.stopWhen || hooks?.onTick) {
       const update = world.update.bind(world);
       world.update = (...args: Parameters<typeof world.update>) => {
-        if (hooks.stopWhen!(world)) throw new LevelRunStopped();
-        return update(...args);
+        if (hooks.stopWhen?.(world)) throw new LevelRunStopped();
+        const result = update(...args);
+        hooks.onTick?.(world);
+        return result;
       };
     }
     if (level === 'L7') return runSeven(world, report, maxSeconds, onComplete);

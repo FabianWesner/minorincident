@@ -105,12 +105,6 @@ export class LevelTenFinale {
         // charge counter, so finishing a charge must not overwrite that seam.
       }
     }
-    if (state.steps.mega.status === 'active' && boss?.alive()) {
-      // The same boss keeps walking its route, even after the charge is ready.
-      // Arrival is a consequence of pursuit, never a scheduled relocation.
-      const at = boss.entity()!.transform;
-      this.mission.def.anchors['cure-mega'] = { x: at.x, z: at.z, y: at.y, radius: 2 };
-    }
     if (state.steps.release.status === 'active' && pressed && distance <= console.radius && state.states['charge-active']
       && state.counters['charge-ticks'] === cureChargeTicks && state.states['mega-dead']) {
       state.states['cure-released'] = true;

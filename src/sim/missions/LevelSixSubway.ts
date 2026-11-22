@@ -332,9 +332,11 @@ export class LevelSixSubway {
     // The escalator floor begins at x249.4 and spans z14.325..15.675;
     // approaching from the south otherwise meets its solid side.
     if(s.phase==='exit'&&p.x<249.4){
-      const aligned=Math.abs(p.z-15)<=.7;
-      const spot=LevelSixSubway.stairSpots[aligned?0:1];
-      m.def.anchors['l6-stair']={x:spot.x,z:spot.z,y:aligned?1.0125:.6,radius:.65};
+      if (!anchors['l6-stair']) {
+        const aligned=Math.abs(p.z-15)<=.7;
+        const spot=LevelSixSubway.stairSpots[aligned?0:1];
+        anchors['l6-stair']={x:spot.x,z:spot.z,y:aligned?1.0125:.6,radius:.65};
+      }
       m.state.marker='l6-stair';
       return;
     }
@@ -351,16 +353,15 @@ export class LevelSixSubway {
     if(want===!!s.strayed)s.strayFlipAt=0;
     else if(!s.strayFlipAt)s.strayFlipAt=this.w.tick;
     if(s.strayFlipAt&&this.w.tick-s.strayFlipAt>=ticks(f.strayDwellS)){s.strayed=want;s.strayFlipAt=0;}
-    const at=(name:string,x:number,z:number,y=.6)=>{const a=anchors[name]??(anchors[name]={x,z,y,radius:2});a.x=x;a.z=z;a.y=y;};
     if(s.phase==='retreat'){
-      // Q-305 + PO 10-31 ("Checkpoint should not move with me. Checkpoint should always be in places where I need to go to
-      // reach the level end or trigger some action."): the ring never walks ahead of the group. It sits on the platform (the
-      // retreat's destination) and moves onto a service gate's wait spot only while that gate can be closed (everyone through,
-      // the courier still near it). The old walking waypoint left the gate exactly when the last survivor passed, so the
-      // "E to close" prompt (tied to this waypoint) vanished at the moment the gate became closable.
+      // Q-305 + PO 10-31: the ring stays at the platform, the retreat's next
+      // destination. Gate interaction prompts are spatially independent.
       const gate=s.gates.find(g=>this.closable(g)&&p.x>=g.x-f.gateGroupM&&p.x<=g.x+f.columnM);
-      const wait=gate&&LevelSixSubway.gateWait(gate.x),exit=anchors['exit-platform'];
-      at('l6-next',wait?.x??exit.x,wait?.z??exit.z,exit.y??.6);
+      s.gateTargetId=gate?.id;
+      const exit=anchors['exit-platform'];
+      // The ring stays at the next level destination. Gate closure prompts
+      // remain tied to each gate interaction and never drag the route marker.
+      anchors['l6-next'] ??= { ...exit, y: exit.y ?? .6, radius: 2 };
     }
     // PO 10-31: the marker is a fixed destination, never a moving group
     // or survivor position. Regroup/rescue wording stays in the objective;

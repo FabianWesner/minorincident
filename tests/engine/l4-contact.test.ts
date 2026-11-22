@@ -34,11 +34,11 @@ async function checkMortalCellarEscape(): Promise<void> {
     // 14 cm away while the finer hint grid still required its exact cell.
     Object.assign(player.transform, { x: -3.3777, z: 40.9899 });
     const cornerMarker = markerAnchor(mission)!;
-    expect(Math.hypot(cornerMarker.x - player.transform.x, cornerMarker.z - player.transform.z), 'the corner ring leads onward instead of remaining under the courier').toBeGreaterThan(1.4);
-    expect(nav.forPlayer(.37, .25).visible(player.transform, cornerMarker, .35), 'the onward ring has a clear physical approach').toBe(true);
+    expect(cornerMarker.x).toBeCloseTo(door.x);
+    expect(cornerMarker.z).toBeCloseTo(door.z);
     Object.assign(player.transform, { x: -80, z: -40 });
     const finalMarker = markerAnchor(mission);
-    expect(finalMarker, 'the last street turn exposes the cellar entrance').not.toBeNull();
+    expect(finalMarker, 'the fixed destination remains the cellar entrance').not.toBeNull();
     expect(finalMarker!.x).toBeCloseTo(door.x);
     expect(finalMarker!.z).toBeCloseTo(door.z);
     Object.assign(player.transform, { x: 48.5, z: -37.4 });

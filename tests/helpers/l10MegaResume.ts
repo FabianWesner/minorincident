@@ -6,7 +6,7 @@ import { emptyInput } from '../../src/input/InputFrame';
 import { readFixture } from '../../tools/qa/fixture-io';
 
 // r29-l10mega (called from tests/engine/missions.test.ts; the test budget forbids a new case): a resumed L10 console save kept the Mega stunned until the old absolute tick (minutes), so "Kill the Mega Alpha"
-// showed no Mega. Timers must be rebased, the Mega must reach the courier at the console, and the objective must point at it.
+// showed no Mega. Timers must be rebased, the Mega must reach the courier at the console, and the objective marker must stay at the console.
 export async function l10MegaResumeCheck(): Promise<void> {
   const f = readFixture('tests/fixtures/saves/qa/l10-dispersal-console.json.gz');
   const decoded = decodeSave(JSON.stringify(f.campaign));
@@ -32,7 +32,8 @@ export async function l10MegaResumeCheck(): Promise<void> {
     expect(near, 'Mega within 15 m of the courier').toBeGreaterThanOrEqual(0);
     expect(near / 60).toBeLessThan(20);
     expect(m.state.states['charge-ready']).toBe(true);
-    expect(guide, 'Mega objective has a live pointer').not.toBeNull();
-    expect(Math.hypot(guide!.x - console_.x, guide!.z - console_.z)).toBeLessThan(40);
+    expect(guide, 'Mega objective has a fixed console destination').not.toBeNull();
+    expect(guide!.x).toBeCloseTo(console_.x);
+    expect(guide!.z).toBeCloseTo(console_.z);
   } finally { world.dispose(); }
 }

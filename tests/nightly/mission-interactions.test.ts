@@ -256,10 +256,10 @@ test('interactions: ring, input and view predicates agree for every interact ste
         campaign.cureResume = mission.saveResume(true);
         expect(validateSave(campaign), 'farm find and checkpoint remain a loadable save').toBe(true);
         expect(mission.def.steps.find(s => s.id === 'mega')!.waypoint).toBe(false);
-        // A legacy resume's serialized marker must not reveal a distant boss.
+        // A legacy resume's combat-target marker resolves to the fixed arena destination.
         mission.def.anchors['cure-mega'] = { x: -150, z: 80, radius: 2 };
         mission.state.marker = 'cure-mega';
-        expect(markerAnchor(mission)).toBeNull();
+        expect(markerAnchor(mission)).toBe(mission.def.anchors['cure-console']);
         mission.state.marker = 'cure-console';
         expect(markerAnchor(mission)).toBe(mission.def.anchors['cure-console']);
       }
