@@ -113,6 +113,24 @@ export class CourierGroundContacts {
     }
     if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.scale).y; updateWorldTranslation(rig.hip); }
   }
+  /** Keep the authored pelvis and knee direction while lifting a penetrating shoe. */
+  groundProneRise(): void {
+    this.rig.root.updateWorldMatrix(true, true);
+    const floor = this.origin.setFromMatrixPosition(this.rig.root.matrixWorld).y, s = this.scaleNode.getWorldScale(this.scale).y;
+    for (const foot of this.feet) {
+      const ik = foot.ik;
+      this.joint.setFromMatrixPosition(ik.end.matrixWorld); ik.end.getWorldQuaternion(this.footFrame);
+      let deficit = 0;
+      for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.delta.set(x * s, -this.sole * s, 0).applyQuaternion(this.footFrame).add(this.joint).y);
+      if (deficit <= 1e-4) continue;
+      this.neutral.setFromMatrixPosition(ik.upper.matrixWorld);
+      this.landing.setFromMatrixPosition(ik.middle.matrixWorld);
+      this.forward.copy(this.joint).sub(this.neutral).normalize();
+      this.pole.copy(this.landing).sub(this.neutral).addScaledVector(this.forward, -this.delta.copy(this.landing).sub(this.neutral).dot(this.forward)).normalize();
+      this.joint.y += deficit;
+      ik.solve(this.joint, this.pole, this.footFrame, 1, true);
+    }
+  }
   update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle, worldReady = false, travel?: { x: number; z: number }): void {
     const rig = this.rig;
     this.time += dt;

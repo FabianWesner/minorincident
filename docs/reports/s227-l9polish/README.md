@@ -28,3 +28,5 @@ For s226b, seed-1 fixed-step drives checked the APC full-height hull against res
 The local worktree contained an unrelated pre-existing modification to `src/data/physicsAssets.ts` during these checks. It was not included in the commits; it changes a courier motorbike entry and a zoo tunnel hash, not the L9 APC or crossing.
 
 The curve screenshot is a single near-bend frame, not a complete visual sweep. The APC fire is visually bright and partly hides the wreck. WebGPU and human driving remain outside this headless WebGL2 review.
+
+A leg-only IK correction now raises penetrating shoes while retaining the authored pelvis path and knee direction. Four fresh fixture captures cover every tick from ten ticks before the switch through 88 ticks after it, HIGH then LOW at zoom 1 and 1.5. The lowest reported foot joint during the rise is y = 0.086 m against the y = 0 floor (previously -0.128 m). The frame sheet shows selected frames. The native playthrough and direct shoe surface contact remain to be checked; joint height alone cannot prove sole clearance.
