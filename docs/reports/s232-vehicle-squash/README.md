@@ -62,6 +62,8 @@
 
 - Decoded the actual Opus and AAC sprite cue windows with FFmpeg `volumedetect`: hit (0–0.50 s) measures −16.4/−16.2 dBFS mean and −4.3/−4.3 dBFS peak; run-over (0.58–1.23 s) measures −20.9/−20.8 dBFS mean and −4.7/−4.6 dBFS peak, respectively. Both codecs contain non-silent content at the registry offsets; these values are before runtime gain and cannot establish perceived clarity in the game mix.
 
+- Refreshed L9 HIGH then LOW at zoom 1 with a wider crop after the pooling fix. In the [sheet](sheet.jpg), the runner is visible ahead in frame 25, blood appears at the front in frame 30, and the flattened corpse appears behind by frames 50–60. Both controlled runs recorded the hit at tick 147, retained the corpse, kept the APC upright and logged no browser errors ([HIGH](l9-high.json), [LOW](l9-low.json)). The sampled bump remains 3.8 cm.
+
 ## Open acceptance
 
 - Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
