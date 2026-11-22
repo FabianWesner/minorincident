@@ -1,138 +1,140 @@
 [
   {
     "tier": "high",
-    "tick": 276,
-    "hp": 82,
-    "hits": [
-      {
-        "type": "infected.attack",
-        "tick": 276,
-        "sourceId": 398,
-        "targetId": 1,
-        "attackId": 1,
-        "special": "gorilla.grab-throw",
-        "amount": 18
-      }
-    ],
-    "throws": [
-      {
-        "type": "infected.prop-thrown",
-        "tick": 249,
-        "sourceId": 398,
-        "propId": 1686523944,
-        "attackId": 1
-      }
-    ],
-    "move": {
+    "tell": {
+      "tick": 308,
+      "at": {
+        "x": 69,
+        "z": -24.11936000585556,
+        "y": 3.0000000000000004,
+        "yaw": 2.2706891965141405
+      },
       "move": "gorilla.grab-throw",
-      "attackId": 1,
-      "stage": "recovery",
-      "startTick": 201,
-      "activeTick": 249,
-      "cooldownExpiry": 621,
-      "recoveryUntil": 324,
-      "target": {
-        "id": 1,
+      "stage": "telegraph",
+      "player": {
         "x": 65,
-        "z": -29.75
+        "y": 0.7049999833106995,
+        "z": -29.75,
+        "yaw": 0.3205919885488634
       },
-      "area": {
-        "x": 69,
-        "z": -25,
-        "radius": 1,
-        "dx": -0.6441357457827797,
-        "dz": -0.7649111981170508
-      },
-      "hitIds": [
-        1
+      "camera": [
+        75.869166653536,
+        11.16791979355699,
+        -18.880833346463994
       ],
-      "destination": {
+      "target": [
+        65,
+        0,
+        -29.75
+      ],
+      "ndc": [
+        -0.2494659940199764,
+        -0.6060660237952856,
+        0.9832763611548706
+      ],
+      "inspection": null,
+      "infectedHidden": false,
+      "archetype": "infected.gorilla",
+      "health": 1200
+    },
+    "result": {
+      "tick": 368,
+      "at": {
         "x": 69,
-        "z": -25
+        "z": -24.11936000585556,
+        "y": 3.0000000000000004,
+        "yaw": 2.2706891965141405
       },
-      "projectile": {
-        "objectId": 1686523944,
-        "corpse": false,
-        "living": false,
-        "started": 249,
-        "x": 69,
-        "z": -25,
-        "dx": -0.6441357457827797,
-        "dz": -0.7649111981170508,
-        "distance": 5.4,
-        "range": 6.209871174187111,
-        "speed": 12,
-        "fromY": 3.6,
-        "toY": 0
-      }
+      "hp": 82,
+      "hits": [
+        {
+          "type": "infected.attack",
+          "tick": 368,
+          "sourceId": 398,
+          "targetId": 1,
+          "attackId": 1,
+          "special": "gorilla.grab-throw",
+          "amount": 18
+        }
+      ],
+      "throws": [
+        {
+          "type": "infected.prop-thrown",
+          "tick": 341,
+          "sourceId": 398,
+          "propId": 1686523944,
+          "attackId": 1
+        }
+      ]
     }
   },
   {
     "tier": "low",
-    "tick": 276,
-    "hp": 82,
-    "hits": [
-      {
-        "type": "infected.attack",
-        "tick": 276,
-        "sourceId": 398,
-        "targetId": 1,
-        "attackId": 1,
-        "special": "gorilla.grab-throw",
-        "amount": 18
-      }
-    ],
-    "throws": [
-      {
-        "type": "infected.prop-thrown",
-        "tick": 249,
-        "sourceId": 398,
-        "propId": 1686523944,
-        "attackId": 1
-      }
-    ],
-    "move": {
+    "tell": {
+      "tick": 308,
+      "at": {
+        "x": 69,
+        "z": -24.11936000585556,
+        "y": 3.0000000000000004,
+        "yaw": 2.2706891965141405
+      },
       "move": "gorilla.grab-throw",
-      "attackId": 1,
-      "stage": "recovery",
-      "startTick": 201,
-      "activeTick": 249,
-      "cooldownExpiry": 621,
-      "recoveryUntil": 324,
-      "target": {
-        "id": 1,
+      "stage": "telegraph",
+      "player": {
         "x": 65,
-        "z": -29.75
+        "y": 0.7049999833106995,
+        "z": -29.75,
+        "yaw": 0.3205919885488634
       },
-      "area": {
-        "x": 69,
-        "z": -25,
-        "radius": 1,
-        "dx": -0.6441357457827797,
-        "dz": -0.7649111981170508
-      },
-      "hitIds": [
-        1
+      "camera": [
+        75.869166653536,
+        11.16791979355699,
+        -18.880833346463994
       ],
-      "destination": {
+      "target": [
+        65,
+        0,
+        -29.75
+      ],
+      "ndc": [
+        -0.2494659940199764,
+        -0.6060660237952856,
+        0.9832763611548706
+      ],
+      "inspection": null,
+      "infectedHidden": false,
+      "archetype": "infected.gorilla",
+      "health": 1200
+    },
+    "result": {
+      "tick": 368,
+      "at": {
         "x": 69,
-        "z": -25
+        "z": -24.11936000585556,
+        "y": 3.0000000000000004,
+        "yaw": 2.2706891965141405
       },
-      "projectile": {
-        "objectId": 1686523944,
-        "corpse": false,
-        "living": false,
-        "started": 249,
-        "x": 69,
-        "z": -25,
-        "dx": -0.6441357457827797,
-        "dz": -0.7649111981170508,
-        "distance": 5.4,
-        "range": 6.209871174187111,
-        "speed": 12,
-        "fromY": 3.6,
-        "toY": 0
-      }
+      "hp": 82,
+      "hits": [
+        {
+          "type": "infected.attack",
+          "tick": 368,
+          "sourceId": 398,
+          "targetId": 1,
+          "attackId": 1,
+          "special": "gorilla.grab-throw",
+          "amount": 18
+        }
+      ],
+      "throws": [
+        {
+          "type": "infected.prop-thrown",
+          "tick": 341,
+          "sourceId": 398,
+          "propId": 1686523944,
+          "attackId": 1
+        }
+      ]
     }
   }
 ]
