@@ -28,6 +28,7 @@ L5 has no `bld.*` placements in the runner level data. L1, L2, L7, L8, and L9 ha
 - `node --import tsx/esm tools/qa/solid-placement-audit.ts --out /private/tmp/s236-solid-sweep-final.json`: pass; L10 sweep misses zero
 - `npm run qa:threat`: did not finish; test budget stopped it at 600 seconds while scenarios were still running. L10 skilled stage completed in 122.321 seconds.
 - `sh tools/remote/run.sh "$PWD" -- npm test`: unavailable; no healthy Hetzner runner and the configured Mac slot rejects the full suite.
+- Subsequent full remote `npm test` passed: 27 files, 105 tests passed, one skipped, 213.5 seconds within the 240-second budget.
 - Focused scene gate and native HIGH/LOW captures: unavailable; browser-pool startup failed with `EPERM` binding its local listener / registering the browser process. No captures were produced or reviewed.
 - On a subsequent unrestricted run, the focused `l10-d2-military-breach@low-z0.5` scene row passed. The requested camera captures and other scene rows remain open.
 - HIGH WebGL2 catalog: `seethrough-not-in-the-way` passed at zoom 0.5, 1, and 1.5. `seethrough-building-first-frame` failed at all three zooms: courier visible share 0.3 against 0.6 required and zero measured cut pixels. The see-through change therefore needs correction before acceptance. Results: `/private/tmp/s236-see-high/index.md`.
