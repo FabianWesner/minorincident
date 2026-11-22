@@ -18,6 +18,8 @@ The audit also probes the reported 0.7-scale shed after chunk activation with th
 
 Native production L10 movement captures, seed 1, HIGH then LOW, used a fresh level with the courier teleported beside the shed and ordinary movement input for 120 ticks. At the side wall she stopped at x=1167.107 after starting at x=1166; through the doorway she travelled from z=-30 to z=-21.245. Both tiers produced the same positions. The reviewed wall-after frames show the barn opaque and the courier hidden; this is a production see-through failure that remains open. The door-after HIGH frame shows her outside the far opening. Captures and positions are in `/private/tmp/s236-native-movement/`; this setup did not restore the requested checkpoint or cover zoom 1.5.
 
+Follow-up: L10 expands the reveal subject around nearby infected, shifting its centre away from the courier. Building selection now tests camera segments to the courier's own centre and feet. At the same native HIGH wall position the shed is selected, and the inspected `/private/tmp/s236-native-fixed.png` shows the courier through the faded roof and walls together. Typecheck, lint, and both HIGH see-through fixtures at zoom 0.5, 1, and 1.5 pass. LOW native review and the requested checkpoint/zoom coverage remain open.
+
 Five non-L10 samples remain for follow-up because those placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893

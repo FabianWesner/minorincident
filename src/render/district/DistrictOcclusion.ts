@@ -249,7 +249,7 @@ export class DistrictOcclusion {
     for (const x of [subject.min.x, subject.max.x]) for (const y of [subject.min.y, subject.max.y]) for (const z of [subject.min.z, subject.max.z]) points[n++].set(x, y, z);
     // Buildings are revealed as a placement. A hit on a single generous
     // subject corner is not enough to cut the whole house: the camera-to-
-    // subject centre segment must cross its enclosure. Other occluders still
+    // subject centre or feet segment must cross its enclosure. Other occluders still
     // use the full projected body so narrow props cannot cover just the head.
     return this.cutBlockers(view, centre, points, n, courier);
   }
@@ -287,8 +287,13 @@ export class DistrictOcclusion {
           if (tucked && !contact && courier.y !== undefined && courier.y - .7 > ref.position.y + standOnLift) tucked = false;
         }
         const building = entry.id.startsWith('bld.');
-        for (let i = 0; i < (building ? 1 : count); i++) {
-          const point = points[i], dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
+        for (let i = 0; i < (building && courier?.y !== undefined ? 2 : count); i++) {
+          // The projected subject can include nearby infected and the corgi.
+          // Its centre may be many metres from the courier in L10; use her
+          // own centre line for building occlusion instead of that union.
+          const point = building && courier?.y !== undefined
+            ? this.holeCorner.set(courier.x, courier.y + (i === 0 ? .2 : -.55), courier.z) : points[i];
+          const dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
           let enter = 0, exit = 1;
           for (let axis = 0; axis < 3; axis++) {
             const origin = axis === 0 ? lox : axis === 1 ? o.y : loz;
