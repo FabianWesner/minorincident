@@ -17,6 +17,8 @@ On code commit `4f08dc0d`:
 - Remote `npm run verify -- E31` passed typecheck, lint and the unit suite. Per the tool, this is the per-change gate; retired epic-tag tests are not part of that command.
 
 
-For s226b, a fixed-step seed-1 drive followed both the asphalt route and its detour through completion, checking the full-height APC hull against fixed or braced pushable props each tick. No such props were resident during either drive, so there were no overlaps to measure. This is a route observation, not a proof about every static district collider or every possible driver path. The vehicle suite also covers grounded APC contact with movable props and the crash boarder's corpse persistence.
+For s226b, seed-1 fixed-step drives checked the APC full-height hull against resident fixed or braced pushable props each driving tick on all three primary routes and detours. No fixed or braced pushable props were resident and no overlap was observed. All three detours and the asphalt primary completed normally; the ordinary driver died on the other two primaries. A rerun with courier invulnerability completed the countryside primary, and a run restoring the courier's health each tick completed the shortcut primary. These protected runs check geometry, not combat balance. [The counts and outcomes](prop-route-audit.json) do not cover static district colliders or every possible driver path.
+
+The local worktree contained an unrelated pre-existing modification to `src/data/physicsAssets.ts` during these checks. It was not included in the commits; it changes a courier motorbike entry and a zoo tunnel hash, not the L9 APC or crossing.
 
 The curve screenshot is a single near-bend frame, not a complete visual sweep. The APC fire is visually bright and partly hides the wreck. WebGPU and human driving remain outside this headless WebGL2 review.
