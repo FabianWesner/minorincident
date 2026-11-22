@@ -39,6 +39,7 @@ function checkWeaponAudioEvents(): void {
 // sit under every system and every level. A change here shifts the whole simulation.
 import { expect, test, vi } from 'vitest';
 import { AudioGraph } from '../../src/audio/AudioGraph';
+import { AudioRegistry } from '../../src/audio/AudioRegistry';
 import { audioCues } from '../../src/data/audioCues';
 import { Clock } from '../../src/core/Clock';
 import { EventBus } from '../../src/core/EventBus';
@@ -110,6 +111,10 @@ test('rng streams are seeded per name; services respect lifecycle order and audi
   for (const id of ['vehicle.fire', 'vehicle.sputter', 'weather.gust', 'ambient.sprinkler', 'ambient.lawnmower', 'ambient.basketball', 'ambient.news', 'ambient.megaphone', 'ambient.radio', 'ambient.glass', 'ambient.power', 'ambient.automatic', 'ambient.collapse', 'ambient.debris'])
     expect(play(id), id).toBeNull();
   checkWeaponAudioEvents();
+  const buffer = {} as AudioBuffer, registry = new AudioRegistry({ decodeAudioData: async () => buffer } as unknown as BaseAudioContext, async () => new ArrayBuffer(0));
+  await registry.prepare('L1', false);
+  expect(registry.get('vehicle.zombie-hit', 0)?.buffer).toBe(buffer);
+  expect(registry.get('vehicle.zombie-runover', 0)?.buffer).toBe(buffer);
   expect(play('ambient.gunshot', true)).toBeNull();
   expect(canAdd).not.toHaveBeenCalled();
   for (const id of ['ambient.gunshot', 'weather.thunder', 'action.weapon.handgun', 'telegraph.runner', 'weapon.minigun-whir', 'vehicle.engine-low', 'generator.idle']) {

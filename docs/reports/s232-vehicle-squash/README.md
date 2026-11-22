@@ -56,6 +56,8 @@
 
 - The full remote suite after the audio-test and capture update again exceeded the fixed 240-second budget (241.5 s); its unchanged retry also timed out (240.9 s). The complete unit gate remains open.
 
+- First-hit audio fix: the dedicated 12 KB Opus bank is prepared with initial audio instead of lazy-loading, whose first request is skipped. The existing core test now prepares the registry and verifies both vehicle cues are immediately available; it passes along with typecheck and lint. This verifies availability and routing, not subjective sound quality.
+
 ## Open acceptance
 
 - Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
