@@ -28,12 +28,18 @@ function content(doc: Document) {
   };
 }
 const rows = [];
-for (const name of readdirSync(root).filter(name => /^(amb|inf)\.(lion|gorilla|elephant|zebra|flamingo)\.lod[012](\.low)?\.glb$/.test(name)).sort()) {
+for (const name of readdirSync(root).filter(name => /^(amb|inf)\.(lion|gorilla|elephant|zebra|flamingo)\.lod[012](\.low)?\.glb$/.test(name) || /^inf\.lioness\.lod[012](\.low)?\.glb$/.test(name)).sort()) {
   const file = join(root, name), before = readFileSync(file), after = await consolidateMeshopt(before, true);
   assert.deepEqual(content(await io.readBinary(after)), content(await io.readBinary(before)), `${name}: decoded content changed`);
   assert.ok(after.length <= before.length, `${name}: byte regression`);
   const lod = Number(name.match(/\.lod([012])/)![1]);
   assert.ok(after.length <= [600000, 250000, 150000][lod], `${name}: LOD byte budget`);
+  if (name.startsWith('inf.lioness.')) {
+    assert.ok(after.length <= [82092, 57512, 49616][lod], `${name}: lioness byte ceiling`);
+    const decoded = await io.readBinary(after);
+    const triangles = decoded.getRoot().listMeshes().flatMap(mesh => mesh.listPrimitives()).reduce((sum, primitive) => sum + (primitive.getIndices()?.getCount() ?? primitive.getAttribute('POSITION')!.getCount()) / 3, 0);
+    assert.ok(triangles <= [3837, 1944, 873][lod], `${name}: lioness triangle ceiling`);
+  }
   writeFileSync(file, after);
   rows.push({ name, before: before.length, after: after.length, saved: before.length - after.length });
 }
