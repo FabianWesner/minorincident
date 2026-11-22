@@ -57,6 +57,22 @@ This report records implementation intent and current validation only. It does n
 
 ## Continuation update — 2026-11-22
 
+### Lane pace bisect — 2026-11-22
+
+The initial lane source snapshot that reproduces pace flags is `8316b243` (`Improve L8 zebra and gorilla arena fights`); parent `a23b89e0` is the known zero-flag baseline. The repository's shared worktree index lock prevented `git bisect`, so these are manual source-snapshot comparisons with the L8-only threat diagnostic. The pace root cause is **not yet isolated or fixed**; do not treat these experiments as acceptance.
+
+| Snapshot / controlled swap | L8-only result | Finding |
+| --- | --- | --- |
+| `8316b243` source with baseline D-ZOO layout | Skilled completes; passive `SLOW_FOLLOWER:387` and `SLOW_FOLLOWER:354` | Confirms first bad source snapshot is the first lane commit after `a23b89e0`. |
+| `8316b243`, with `LevelEightZoo.ts` restored to `a23b89e0` | Only `SLOW_FOLLOWER:354` | The mission-file changes affect 387 in this snapshot; the individual change is not isolated, and corgi 354 remains. |
+| Current source, `L8BossArenas.ts` restored to `a23b89e0` | Only `SLOW_FOLLOWER:354` | Arena-controller changes contribute follower 364 on the rebuilt layout; this does not explain corgi 354. |
+| Current source, `InfectedSystem.ts` restored to `a23b89e0` | Same flags as current: 364 twice and 354 once | Heard-gunfire pursuit is not causal for these flags. |
+| Current rebuilt layout with gorilla night-house and rock colliders removed | Same flags as current | Those two new collider groups are not causal. |
+| Current source with `l8Bosses.ts` restored to `a23b89e0` | Same current flags | Boss HP increase alone is not causal. |
+| Current source with south/west breach waypoints removed | More flags (366, 381, and 354) | Those route changes improve follower approach; restoring them is not a fix. |
+
+The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
+
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
 - `layouts/D-ZOO/layout.py` added new solid colliders for the incinerator and lion feed bucket after the 0-flag main baseline. Both are now scenery only in the authoring source. `npm run layouts:build -- D-ZOO` could not run: the sandbox blocks `tsx`'s IPC socket; invoking the build entry point directly reaches Blender, which crashes in Metal backend initialization (`supports_barycentric_whitelist`). The generated layout therefore does not yet contain the current source changes.
 - Added gorilla night-house walls, barred viewing slit, broken door detail, straw bed and tyre swing, plus bloodied uniform scraps and additional zebra blood traces. Flamingo pond water now uses the blood palette. These remain visually unreviewed; broken-paddock zombie figures, smashed primate-office window, readable night lighting, and HIGH-then-LOW natural move review remain open.

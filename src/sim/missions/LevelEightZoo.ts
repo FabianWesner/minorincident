@@ -978,7 +978,7 @@ export class LevelEightZoo {
       // Nearby evacuees walk with the courier instead of repeatedly sprinting into their slots.
       // Keep R13's full catch-up outside the band and its boarding approach unchanged.
       const courierSpeed = Math.hypot(velocity.x, velocity.z);
-      const cap = !boarding && courierSpeed > .8 && distance(e.transform, p.transform) <= 10 ? courierSpeed * 1.1 : 6.4;
+      const cap = !boarding && courierSpeed > .8 && distance(e.transform, p.transform) <= 10 ? courierSpeed * 1.05 : 6.4;
       const speed = Math.min(cap, 4.5 + Math.max(0, distance(e.transform, target) - 2) * .6);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
