@@ -116,10 +116,10 @@ try {
       const impact = (captures as { name: string; attachments: { visible: boolean }[] }[]).filter(r=>r.name==='impact');
       assert(impact.every(r => side==='after' ? r.attachments.every(a=>!a.visible) : r.attachments.some(a=>a.visible)), 'impact weapon counterexample');
       await page.evaluate(()=>window.__SS__!.resume());
-      await page.waitForFunction(()=> (window.__SCENE__ as unknown as {game:Game}).game.world.missions!.l9!.state.phase==='crawl');
-      const crawling=(await state()).tick;
-      await page.waitForFunction(t=>window.__SS__!.tick()>=t,crawling+90);
-      await page.evaluate(()=>window.__SS__!.pause()); await matrix('crawl');
+      await page.waitForFunction(()=> (window.__SCENE__ as unknown as {game:Game}).game.world.missions!.l9!.state.phase==='dazed');
+      const dazed=(await state()).tick;
+      await page.waitForFunction(t=>window.__SS__!.tick()>=t,dazed+90);
+      await page.evaluate(()=>window.__SS__!.pause()); await matrix('dazed');
       if (side==='after') assert((await state()).attachments.every(a=>!a.visible));
     }
     // Controlled shared-rule fixtures: normal carried arsenal, no crash phase.

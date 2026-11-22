@@ -49,13 +49,19 @@ test('4 vehicles: all level start poses, L8 evacuation vehicles and L9 scripted 
         for (let i = 0; i <= 320 && String(c.state.phase) !== 'impact'; i++) { w.tick++; c.update(); check(car, `${c.state.phase}-${i}`); }
         expect(c.state.phase).toBe('impact');
         const player = w.entities.get(1)!; player.health.current = 1;
-        const end = m.def.anchors['crawl-end'], origin = m.def.anchors[c.state.crawlAnchor];
-        const dx = end.x - origin.x, dz = end.z - origin.z, length = Math.hypot(dx, dz);
+        const courierAt = { ...player.transform }, endingPhases = new Set<string>(), endingSignals: string[] = [];
+        w.events.on('mission.signal', event => { if (event.type === 'mission.signal' && event.name.startsWith('l9.')) endingSignals.push(event.name); });
         for (let i = 0; i < 800 && !c.state.finished; i++) {
-          w.inputFrame.move = { x: dx / length, z: dz / length }; w.tick++; c.update();
-          if (String(c.state.phase) === 'crawl') expect(w.player!.damage(2, w.tick), 'crash protection lasts through the controlled crawl').toBe(0);
+          w.inputFrame.move = { x: 1, z: 0 }; w.tick++; c.update(); endingPhases.add(c.state.phase);
+          if (['impact', 'dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(c.state.phase)) expect(w.player!.damage(2, w.tick), 'crash protection lasts through the scripted ending').toBe(0);
         }
         expect(c.state.finished).toBe(true); expect(player.health.current).toBe(1);
+        expect([...endingPhases]).toEqual(expect.arrayContaining(['dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap', 'done']));
+        expect(endingSignals.filter(name => name === 'l9.ending-finished')).toHaveLength(1);
+        expect(w.events.events().filter(event => event.type === 'mega.cue' && event.kind === 'roar' && event.sourceId === c.driving.state.megaId)).toHaveLength(1);
+        expect(player.transform.x).toBeCloseTo(courierAt.x, 3); expect(player.transform.z).toBeCloseTo(courierAt.z, 3);
+        const mega = w.entities.get(c.driving.state.megaId)!;
+        expect(mega.hidden && mega.infected!.hidden, 'the Mega is hidden after the cityward leap').toBe(true);
       }
     } finally { w.dispose(); }
   }

@@ -56,12 +56,12 @@ function validCrash(raw: unknown): boolean {
   const health = (v: unknown, alive: boolean): boolean => record(v) && Number.isFinite(v.current) && Number.isFinite(v.max) && Number(v.max) > 0 && Number(v.current) >= (alive ? 1 : 0) && Number(v.current) <= Number(v.max);
   if (raw.actors !== undefined && (!Array.isArray(raw.actors) || raw.actors.length > 2000 || !raw.actors.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && e.id !== s.carId && pose(e.transform) && health(e.health, false)) || new Set(raw.actors.map(e => (e as Record<string, unknown>).id)).size !== raw.actors.length)) return false;
   return Number.isSafeInteger(raw.tick) && Number(raw.tick) >= 0 && Number.isSafeInteger(s.startedAt) && Number(s.startedAt) <= Number(raw.tick)
-    && ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'].includes(String(s.phase)) && Number.isSafeInteger(s.carId) && Number(s.carId) > 1
+    && ['driving', 'approach', 'fall', 'impact', 'dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap', 'done'].includes(String(s.phase)) && Number.isSafeInteger(s.carId) && Number(s.carId) > 1
     && Number.isFinite(s.preCrashDurability) && Number(s.preCrashDurability) >= 0 && pose(s.from)
-    && ['crawl-start', 'crawl-fallback'].includes(String(s.crawlAnchor)) && typeof s.finished === 'boolean' && s.finished === (s.phase === 'done') && typeof s.ended === 'boolean' && (!s.ended || s.finished)
+    && ['crawl-start', 'crawl-fallback'].includes(String(s.safeAnchor)) && typeof s.finished === 'boolean' && s.finished === (s.phase === 'done') && typeof s.ended === 'boolean' && (!s.ended || s.finished)
     && p.id === 1 && pose(p.transform) && health(p.health, true) && record(p.survivor)
     && car.id === s.carId && car.archetype === 'vehicle.military-apc' && pose(car.transform) && health(car.health, false) && record(car.vehicle)
-    && (['impact', 'crawl', 'done'].includes(String(s.phase)) ? car.vehicle.damage === 'exploded' && car.vehicle.driver === null : car.vehicle.driver === 1);
+    && (!['driving', 'approach', 'fall'].includes(String(s.phase)) ? car.vehicle.damage === 'exploded' && car.vehicle.driver === null : car.vehicle.driver === 1);
 }
 /** Companion identity is carried independently of the sheltered human roster. */
 function validCorgi(raw: unknown): boolean {
@@ -129,6 +129,18 @@ export function migrate(raw:unknown):unknown {
       const out = { ...raw, unlockedLevel: 10, ownedActions: ['weapon.fists', ...raw.ownedActions.filter(id => catalog[id]?.category === 'ability')], racks: { LEFT: ['weapon.fists'], RIGHT: ['weapon.fists'] }, selectedAction: 'weapon.fists', crossingHandover: { applied: true, checkpoint: 'cure-crash', anchor: { ...crash.player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons: raw.ownedActions.filter(id => catalog[id]?.category !== 'ability'), shelteredPassengers: transport?.occupants.filter(e => e.id !== 1 && !e.companion) ?? [] } } as Record<string, unknown>;
       delete out.l9Crash; delete out.transport; delete out.pending; raw = out;
     }
+  }
+  // Older L9 saves paused during the interactive crawl now resume in the same
+  // safe authored ending, with no input route or reliance on a crawl anchor.
+  if (record(raw) && record(raw.l9Crash) && record(raw.l9Crash.state) && raw.l9Crash.state.phase === 'crawl') {
+    const crash = structuredClone(raw.l9Crash) as Record<string, unknown>, state = crash.state as Record<string, unknown>;
+    state.phase = 'dazed'; state.startedAt = 0; state.dazedAt = 0; state.safeAnchor = state.crawlAnchor ?? 'crawl-start';
+    delete state.crawlAnchor; delete state.crawlProgress; delete state.endingAt;
+    crash.tick = 0; raw = { ...raw, l9Crash: crash };
+  }
+  if (record(raw) && record(raw.l9Crash) && record(raw.l9Crash.state) && raw.l9Crash.state.safeAnchor === undefined && raw.l9Crash.state.crawlAnchor !== undefined) {
+    const crash = structuredClone(raw.l9Crash) as Record<string, unknown>, state = crash.state as Record<string, unknown>;
+    state.safeAnchor = state.crawlAnchor; delete state.crawlAnchor; raw = { ...raw, l9Crash: crash };
   }
   return raw;
 }

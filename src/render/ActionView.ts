@@ -297,14 +297,13 @@ export class ActionView extends Group {
       this.offset = 0; this.geometry.setDrawRange(0, 0); this.trailGeometry.setDrawRange(0, 0); return;
     }
     const loadout = combat.runner.loadout;
-    // Weapons are never drawn while the courier is down: the L9 scripted fall
-    // spans the crash landing as well as the later crawl clip.
+    // Weapons stay stowed for the entire L9 forced-crash ending.
     const animation = player.survivor?.animation;
     const crashPhase = this.world.missions?.l9?.state.phase;
-    const crawling = player.survivor?.scriptedClip === 'crawl' || crashPhase === 'crawl';
+    const scriptedEnding = ['dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(String(crashPhase));
     const downed = player.health.current <= 0 || !!player.survivor?.knockdown && this.world.tick < player.survivor.knockdown.until
-      || ['fall', 'impact', 'crawl'].includes(String(crashPhase))
-      || ['knockdown', 'get-up', 'die'].includes(String(animation)) || ['crawl', 'get-up-prone'].includes(String(player.survivor?.scriptedClip)) || crawling;
+      || ['fall', 'impact', 'dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(String(crashPhase))
+      || ['knockdown', 'get-up', 'die'].includes(String(animation)) || ['crawl', 'get-up-prone'].includes(String(player.survivor?.scriptedClip)) || scriptedEnding;
     // Draw the selected weapon in the dominant hand and hide the other slot.
     const selectedSide = loadout.state.selectedSide, aiming = !downed && selectedSide === this.gunSide && loadout.current(selectedSide).id === this.gunId && this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
     const selectedId = loadout.current(selectedSide).id;
@@ -362,9 +361,9 @@ export class ActionView extends Group {
         clone.traverse(node => { if (node instanceof Mesh) node.material = Array.isArray(node.material) ? node.material.map(m => this.heldMaterials.get(m) ?? m) : this.heldMaterials.get(node.material) ?? node.material; });
         holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; this.applyRifleTorch(held); }
       const prop = def.category === 'melee' || def.category === 'ranged' || (def.category === 'throwable' && held.model.userData.placeholder !== true);
-      const inHand = side === selectedSide, crawlAxe = crawling && def.id === 'weapon.fire-axe' && inHand, mount = crawlAxe ? this.holsterMount('melee') : inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
+      const inHand = side === selectedSide, endingAxe = scriptedEnding && def.id === 'weapon.fire-axe' && inHand, mount = endingAxe ? this.holsterMount('melee') : inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
       if (mount && held.holder.parent !== mount) mount.add(held.holder);
-      const pose = crawlAxe ? holsters.back : inHand ? null : holsters[def.category === 'ranged' ? 'hip' : 'back'];
+      const pose = endingAxe ? holsters.back : inHand ? null : holsters[def.category === 'ranged' ? 'hip' : 'back'];
       if (pose) { held.holder.rotation.set(pose.rot[0], pose.rot[1], pose.rot[2]); held.holder.position.set(pose.pos[0], pose.pos[1], pose.pos[2]); }
       else {
         // Melee rests tilted away from the body; gun pitch belongs to the arm pose.
@@ -373,7 +372,7 @@ export class ActionView extends Group {
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
       held.holder.scale.setScalar(inHand ? (longGunHolds[def.viewAssetId]?.scale ?? heldActionScale(def.id)) : 1);
-      held.holder.visible = !crawling && !downed && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
+      held.holder.visible = !scriptedEnding && !downed && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = loadout.definition(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(def.category === 'throwable' ? '#ffd166' : this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
