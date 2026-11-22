@@ -51,8 +51,9 @@ export function isRingedInteraction(mission: { def: MissionDef; state: MissionSt
 }
 
 /** L6: only the open gate targeted by the group's current waypoint offers its prompt. */
-export function isCurrentOpenL6Gate(state: { marker?: string; leaderX: number; waypoint?: { x: number; z: number }; gates: { id: number; x: number; closedAt: number }[] } | undefined, id: number): boolean {
+export function isCurrentOpenL6Gate(state: { marker?: string; leaderX: number; gateTargetId?: number | null; waypoint?: { x: number; z: number }; gates: { id: number; x: number; closedAt: number }[] } | undefined, id: number): boolean {
   if (!state || state.marker !== 'l6-next') return false;
+  if (state.gateTargetId !== undefined) return state.gateTargetId !== null && state.gates.some(g => !g.closedAt && g.id === id && g.id === state.gateTargetId);
   if (state.waypoint) return state.gates.some(g => !g.closedAt && g.id === id && Math.hypot(LevelSixSubway.gateWait(g.x).x - state.waypoint!.x, LevelSixSubway.gateWait(g.x).z - state.waypoint!.z) < .1);
   const next = state.gates.filter(g => !g.closedAt && g.x >= state.leaderX - 3).sort((a, b) => a.x - b.x)[0];
   return next?.id === id;
@@ -61,5 +62,5 @@ export function isCurrentOpenL6Gate(state: { marker?: string; leaderX: number; w
 /** Same, read from the running mission. */
 export function l6GateIsCurrent(mission: { def: MissionDef; state: MissionState } | null | undefined, id: number): boolean {
   const l6 = mission?.state.l6;
-  return isCurrentOpenL6Gate(mission && l6 && mission.state.marker ? { ...l6, marker: mission.state.marker, waypoint: mission.def.anchors['l6-next'] } : undefined, id);
+  return isCurrentOpenL6Gate(mission && l6 && mission.state.marker ? { ...l6, marker: mission.state.marker } : undefined, id);
 }
