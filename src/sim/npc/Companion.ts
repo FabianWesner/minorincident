@@ -6,6 +6,7 @@ import { infectedDef } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { npcs } from '../../data/npcs';
 import { cureHangar, insideCureHangar } from '../../data/l10Story';
+import { inRect, l8EncounterGates, l8Route } from '../../data/l8Bosses';
 import { angleDelta, motionLimits } from '../locomotion/MotionResponse';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -29,6 +30,27 @@ export class Companion {
         for (const enemy of world.infected!.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) <= event.radius) enemy.noiseTarget = { id: e.id, until: event.expires };
       }
     });
+  }
+  /** Match the survivor group's authored outside-cage slot while L8 seals each animal arena. */
+  private l8ArenaWait(player: EntitySnapshot): { x: number; z: number } | null {
+    const zoo = this.world.missions?.l8;
+    if (this.world.scenario !== 'L8' || !zoo || this.world.vehicles?.bicycle.riding) return null;
+    const state = zoo.state, active = state.arenas.find(arena => arena.phase === 1 || arena.phase === 2);
+    const next = active ?? state.arenas.find(arena => arena.phase !== 3);
+    const index = next ? state.arenas.indexOf(next) : -1;
+    const routeOpen = index === 0 ? !!state.sealedAt : index > 0 && state.arenas[index - 1].phase === 3;
+    const stage = next && l8Route.find(route => route.id === next.id);
+    const gate = stage?.entry ?? (next?.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
+    if (!stage || !gate || !routeOpen || !(active || inRect(player.transform, stage.zone)
+      || Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) <= 12)) return null;
+    const outwardX = gate.x - (stage.zone.x0 + stage.zone.x1) / 2;
+    const outwardZ = gate.z - (stage.zone.z0 + stage.zone.z1) / 2;
+    const length = Math.hypot(outwardX, outwardZ) || 1, nx = outwardX / length, nz = outwardZ / length;
+    const slot = state.roster.length, tx = -nz, tz = nx;
+    return {
+      x: gate.x + nx * (2.8 + Math.floor(slot / 5) * 1.6) + tx * ((slot % 5 - 2) * 1.2),
+      z: gate.z + nz * (2.8 + Math.floor(slot / 5) * 1.6) + tz * ((slot % 5 - 2) * 1.2),
+    };
   }
   spawn(): number {
     for (const e of this.world.entities.iterate()) if (e.companion) return e.id;
@@ -204,6 +226,15 @@ export class Companion {
         // Follow the survivor's position with a distance band. Never flip a
         // trailing offset to a world-axis offset when velocity falls to zero.
         const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
+        const arenaWait = this.l8ArenaWait(player);
+        if (arenaWait) {
+          c.state = 'follow'; c.arenaWait = true; c.pickup = null; c.following = false;
+          if (Math.hypot(e.transform.x - arenaWait.x, e.transform.z - arenaWait.z) > .5) {
+            this.world.npcs!.move(e, arenaWait, 6, c, .3);
+          } else if (c.velocity) c.velocity.x = c.velocity.z = 0;
+          continue;
+        }
+        delete c.arenaWait;
         // The normal follow band can stop the corgi across the hangar
         // threshold when the courier pauses just inside. Continue until the
         // dog's full elongated footprint clears the boundary.
