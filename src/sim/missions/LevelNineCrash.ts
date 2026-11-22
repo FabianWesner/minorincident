@@ -251,7 +251,7 @@ export class LevelNineCrash {
         if (sam?.civilian && sam.health.current > 0) { w.npcs!.move(sam, { x: 548, z: -8 }, 1.1, sam.civilian, .5); w.spatial.set(sam.id, sam.transform.x, sam.transform.z); }
         if (f >= 1) {
           if (s.endingAt === undefined) {
-            s.endingAt = w.tick; w.player?.resetPose(w.tick); p.survivor!.scriptedClip = 'get-up';
+            s.endingAt = w.tick; w.player?.resetPose(w.tick); p.survivor!.scriptedClip = 'get-up-prone';
             w.vehicles!.explodeScripted(s.carId);
             this.mission.state.subtitle = { id: 'L9.end-caption', text: dialogue['L9.end-caption'], until: w.tick + 180 };
             w.events.emit({ type: 'dialogue.line', tick: w.tick, id: 'L9.end-caption', text: this.mission.state.subtitle.text });

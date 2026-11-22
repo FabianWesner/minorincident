@@ -304,7 +304,7 @@ export class ActionView extends Group {
     const crawling = player.survivor?.scriptedClip === 'crawl' || crashPhase === 'crawl';
     const downed = player.health.current <= 0 || !!player.survivor?.knockdown && this.world.tick < player.survivor.knockdown.until
       || ['fall', 'impact', 'crawl'].includes(String(crashPhase))
-      || ['knockdown', 'get-up', 'die'].includes(String(animation)) || crawling;
+      || ['knockdown', 'get-up', 'die'].includes(String(animation)) || ['crawl', 'get-up-prone'].includes(String(player.survivor?.scriptedClip)) || crawling;
     // Draw the selected weapon in the dominant hand and hide the other slot.
     const selectedSide = loadout.state.selectedSide, aiming = !downed && selectedSide === this.gunSide && loadout.current(selectedSide).id === this.gunId && this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
     const selectedId = loadout.current(selectedSide).id;
