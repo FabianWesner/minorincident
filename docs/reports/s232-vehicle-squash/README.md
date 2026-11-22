@@ -34,6 +34,7 @@
 - Remote focused diagnosis on `7c098214`: the entire save-progression file passes on the runner (6 tests, 23.13 s), including the previously reported case. This does not establish the cause of its failure during the loaded full suite.
 - `E2E_PORT=5259 SCENE_PORT=5260 npm run qa:vehicle-campaign-motion` on `7c098214` — pass (exit 0): L9, L7 bus, L4 parked and L4 tank, HIGH and LOW. This measures the campaign motion diagnostic and does not replace the separate vehicle-contact gate or run-over visual review.
 - `E2E_PORT=5259 SCENE_PORT=5260 npm run qa:vehicle-motion` — pass (exit 0), all eight scenes on HIGH and LOW. The diagnostic now requires six run-over events with damaging zero-knockback hits and retained squashed bodies for ordinary APC contacts, instead of the prior sideways-shove requirement; the butcher case requires a surviving heavy reaction. Existing foot-slide, attachment, prop and other contact checks remain. Typecheck and lint pass.
+- Full remote unit command on `512f9e88` and unchanged retry again exceeded 240 s. Both reported vehicle and scene-gate files passing, and the same save-progression case failing after 30.9 s and 31.8 s respectively. The configured per-test timeout is 30 s, which is consistent with a timeout, but the runner terminated before printing the failure detail; this remains unconfirmed. The full unit gate is not green.
 
 ## Open acceptance
 
