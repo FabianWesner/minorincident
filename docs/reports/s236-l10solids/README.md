@@ -20,6 +20,8 @@ Native production L10 movement captures, seed 1, HIGH then LOW, used a fresh lev
 
 Follow-up: L10 expands the reveal subject around nearby infected, shifting its centre away from the courier. Building selection now tests camera segments to the courier's own centre and feet. At the same native HIGH wall position the shed is selected, and the inspected `/private/tmp/s236-native-fixed.png` shows the courier through the faded roof and walls together. Typecheck, lint, and both HIGH see-through fixtures at zoom 0.5, 1, and 1.5 pass. LOW native review and the requested checkpoint/zoom coverage remain open.
 
+The same native wall position was subsequently captured HIGH and LOW at zoom 1 and 1.5 (`/private/tmp/s236-native-zoom/`). The inspected LOW frames and HIGH zoom 1.5 show the courier through the whole faded barn, with its dark ground shadow still present. Both LOW see-through fixtures also pass at zoom 0.5, 1, and 1.5 (`/private/tmp/s236-courier-ray-low/`). These captures use a fresh level and teleport, not the requested checkpoint; independent corgi-only occlusion still needs verification.
+
 Five non-L10 samples remain for follow-up because those placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893
