@@ -174,6 +174,9 @@ export async function checkL8Route(): Promise<void> {
     const corgi = [...w.entities.iterate()].find(e => e.companion)!;
     expect(corgi.companion!.arenaWait, 'elephant: corgi waits outside with the survivors').toBe(true);
     expect(inRect(corgi.transform, elephantZone), 'elephant: corgi stays outside the active yard').toBe(false);
+    const dogPosition = { ...corgi.transform };
+    w.events.emit({ type: 'cinematic.completed', tick: w.tick, id: 'l8-hale' });
+    expect(corgi.transform, 'Hale cinematic completion leaves the waiting corgi outside').toEqual(dogPosition);
     const armedAt = w.tick;
     expect(closedAt.size).toBe(0);
     w.update();

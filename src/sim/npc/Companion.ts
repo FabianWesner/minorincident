@@ -21,7 +21,7 @@ export class Companion {
   private readonly rejoinProgress = new WeakMap<EntitySnapshot, { distance: number; tick: number; attempt: number; farAt?: number }>();
   constructor(readonly world: SimWorld) {
     world.events.on('cinematic.completed', () => {
-      if (!world.entities.get(1)?.hidden) this.respawnNear();
+      if (!world.entities.get(1)?.hidden) this.respawnNear(true);
     });
     world.events.on('combat.effect', event => {
       if (event.type !== 'combat.effect' || event.actionId !== 'ability.corgi-lure') return;
@@ -73,11 +73,12 @@ export class Companion {
    * After a checkpoint restore / respawn: stale response state, path and facing must not survive (the corgi used to run
    * toward the courier facing away). Snap it next to her, facing her, with a clean motion state.
    */
-  respawnNear(): void {
+  respawnNear(preserveArenaWait = false): void {
     this.courierProgress.x = NaN; this.yieldUntil = 0;
     const player = this.world.entities.get(1)!.transform;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
+      if (preserveArenaWait && c.arenaWait) continue;
       delete c.rejoining; delete c.transitionUntil; e.hidden = false; this.rejoinProgress.delete(e);
       if (e.pendingAdmission) e.pendingAdmission.hidden = false;
       c.state = 'follow'; c.courage = 100;
