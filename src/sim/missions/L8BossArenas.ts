@@ -147,7 +147,8 @@ export class L8BossArenas {
       const entryGate = stage.entry ?? (arena.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
       const cast = this.mission.l8!.state;
       const followers = [...this.mission.l8!.followers(), ...[cast.haleId, cast.reyesId, ...cast.guards].map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined)];
-      const followersInside = followers.some(follower => inRect(follower.transform, stage.zone));
+      const followersInside = followers.some(follower => inRect(follower.transform, stage.zone))
+        || [...w.entities.iterate()].some(e => !!e.companion && e.passengerOf === undefined && !e.hidden && inRect(e.transform, stage.zone));
       // The old elephant stays healthy in his enclosure until the vehicle-yard
       // finale is reachable; an early distant health bar must not be a dormant boss.
       if (arena.id === 'elephant' && !routeOpen) continue;
