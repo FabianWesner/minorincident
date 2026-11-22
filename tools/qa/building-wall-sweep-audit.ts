@@ -65,7 +65,7 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
     } finally { world.dispose(); }
   }
   const receipt = { levels, totals: { buildings: levels.reduce((n, r) => n + r.buildings, 0), samples: levels.reduce((n, r) => n + r.samples, 0), misses: levels.flatMap(r => r.misses) } };
-  const l10FarmMisses = (levels.find(row => row.level === 'L10')?.misses ?? []).filter(miss => miss.includes('/bld.farm-'));
-  assert.deepEqual(l10FarmMisses, [], 'An L10 capsule passed through a farm building wall sweep');
+  const l10Misses = levels.find(row => row.level === 'L10')?.misses ?? [];
+  assert.deepEqual(l10Misses, [], 'An L10 building has a missing or passable body-height collider');
   return receipt;
 }
