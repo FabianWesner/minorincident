@@ -36,6 +36,6 @@ All recorded destination rows in [native-trace.json](native-trace.json) have `mo
 - Focused tests: `tests/engine/l4-contact.test.ts` and `tests/nightly/mission-interactions.test.ts` passed; the L6 gate regression test passed after prompt separation.
 - `sh tools/remote/run.sh "$PWD" -- npm test` — pass: 27 files, 105 passed, 1 skipped, 208.8 s.
 
-## Open
+## Visual review
 
-- Capture and review a valid HIGH quality, zoom 2 sheet. The attempted capture shows the L4 opening cinematic and L6 shelter rather than their changed objectives; the L10 console ring is visible.
+[HIGH, zoom 1 sheet](rings-high-z1.png): L4 cellar door (left) and L10 dispersal console (right). The yellow rings and objective text identify the fixed destinations. Both rings extend beyond the bottom edge at this close zoom; their visible arcs and arrows remain legible. Captures use the L4 line-break checkpoint and a staged L10 Mega objective.
