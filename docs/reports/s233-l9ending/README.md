@@ -26,4 +26,6 @@ The nightly vehicle-scenes invariant failed before L9 at `L10/start-100` because
 
 The result capture showed mission phase `progression`: `Mission.result()` automatically continued L9. Removed that exception so L9 remains on the result screen, and changed the leap capture to ten ticks after takeoff. Typecheck, lint, QA build and nightly mission interactions pass after this change. A fresh high capture was admitted but its browser closed during the route (exit 143); the revised leap and result frames remain unverified and must be recaptured on both tiers.
 
+Subsequent high capture completed with zero page errors. The takeoff frame shows the Mega moving away from the burning wreck, and the final frame shows the Level complete result screen. A low capture was queued but did not obtain browser admission during this session; it was cancelled cleanly. The revised low takeoff/result and the contact sheet remain open.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
