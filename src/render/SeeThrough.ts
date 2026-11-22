@@ -82,8 +82,7 @@ export const seeThroughKeep = (eligible?: Node<'float'>, deck = false) => {
   const retained = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain);
   const silhouette = seeThrough.solidSilhouette.greaterThan(.5).select(retained.greaterThan(.5), retained.greaterThan(noise));
   const ordinary = lens ? keep.and(lens.not()) : keep;
-  const subjectClear = seeThroughHole(1, seeThrough.solidRadius, .85).oneMinus();
-  const whole = noise.greaterThan(seeThrough.strength.mul(subjectClear.mul(.25).add(.75)));
+  const whole = noise.greaterThan(seeThrough.strength.mul(.9));
   return eligible ? eligible.lessThan(.5).or(wholeBuilding!.select(whole, ordinary)) : silhouette;
 };
 
