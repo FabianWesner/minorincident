@@ -38,3 +38,9 @@ E2E_UNITS=1 SCENE_PORT=5264 S234_COMBAT=1 MI_PERF_ADMISSION_TIMEOUT_SECONDS=1200
 ```
 
 Typecheck and lint passed after the harness change. Verify actual attack, downed state, audio context and location in the trace before using this as evidence for the PO's hitch. The earlier replay baseline was captured before the audio unlock change and cannot serve as a before/after comparison for this mode.
+
+## Combat trace (2026-11-22)
+
+Quiet WebGPU high runs of the skilled driver completed: ticks 400–900 p99 9.5 ms, longest 29.7 ms at tick 682, 0 intervals over 33 ms (1,296 samples). A repeat with audio-state recording measured p99 9.5 ms, longest 28.0 ms at tick 680, 0 over 33 ms (1,320 samples). Audio was running and unlocked, with 201 cues logged and no audio errors; output was muted. At tick 682 the first trace had 8 infected, 6 alive, and no new material builds. The player was at x=582 near tick 470, versus the PO's x=582.32 at tick 639; at tick 639 the trace was at x=594.67. These runs do not reproduce the reported long frame or establish its cause. The two runs are repetitions of the same code, not before/after a fix. Raw traces are `test-results/s234-l10hitch/combat-before-webgpu-high/trace.json` and `test-results/s234-l10hitch/combat-audio-webgpu-high/trace.json`.
+
+The harness now asserts the audio context is running, unlocked, foreground and unmuted in settings, and records the audio snapshot. Typecheck and lint passed. A closer reproduction of the PO's movement and engagement remains necessary.

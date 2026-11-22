@@ -74,7 +74,7 @@ try {
     const frames = trace.hitchTrace.frames;
     const sorted = frames.map(f => f.dt).sort((a,b)=>a-b);
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
-    return { backend: window.__SS__!.perf().backend, tier: window.__SS__!.getState().render.quality, checkpoint: game.world.missions?.state.checkpoint,
+    return { backend: window.__SS__!.perf().backend, tier: window.__SS__!.getState().render.quality, checkpoint: game.world.missions?.state.checkpoint, audio: game.audio.snapshot(),
       frames, max: Math.max(...sorted), p99: sorted[Math.ceil(sorted.length*.99)-1], hitches: frames.filter(f=>f.dt>100), errors: [] as string[] };
   });
   result.errors = session.errors;
@@ -90,6 +90,8 @@ try {
   assert.equal(result.backend, backend === 'webgpu' ? 'webgpu' : 'webgl');
   assert.equal(result.tier, tier);
   assert.equal(result.checkpoint, 'cure-crash');
+  assert.equal(result.audio.state, 'running', 'audio context must be active');
+  assert.ok(result.audio.unlocked && !result.audio.muted && !result.audio.background, 'audio must be available');
   assert.ok(segment.some(f => f.alive >= 1), 'trace window must include infected');
   if (process.env.S194_ASSERT_WARM === '1') {
     const first = result.frames.findIndex(f => f.alive > 0);
