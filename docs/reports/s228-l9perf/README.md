@@ -8,7 +8,7 @@ This is source-level attribution, not yet a measured A/B confirmation. The nativ
 
 ## Fixture and timing
 
-Native headless WebGPU, HIGH, seed 1, 1600 × 900 at DPR 1, production `LevelNineBot` on the dry-shortcut detour, normal L9 campaign state, ticks 6,500–8,200. Run the before command with `src/render/DistrictView.ts` from parent revision `8ef2a340` and the after command with the committed version; keep the harness identical. The same fixture is used for both sides:
+Native headless WebGPU, HIGH, seed 1, 1600 × 900 at DPR 1, production `LevelNineBot` on the dry-shortcut detour, normal L9 campaign state, ticks 3,500–4,700. Run the before command with `src/render/DistrictView.ts` from parent revision `8ef2a340` and the after command with the committed version; keep the harness identical. The same fixture is used for both sides:
 
 ```sh
 SCENE_PORT=5252 E2E_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh node --import tsx/esm tools/perf/s228-l9-drive.ts before
@@ -21,6 +21,8 @@ SCENE_PORT=5252 E2E_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh no
 | After | pending | pending | pending | pending | pending | perf pending |
 
 Perf is pending because this Mac was above the quiet-run load limit (load averages 5.07 / 3.74 / 3.77 on the first attempt; quiet-run requires <3) and the alternate lock-based preflight could not spawn its process scan (`EPERM`). The browser-pool startup also failed to bind its local service (`listen EPERM`), so no native frame sample was collected. Rerun both commands in a quiet window; raw traces and JSON summaries will be in `test-results/s228-l9perf/{before,after}/trace.json`.
+
+The seed-1 native simulation dry-route probe places the APC at (281.59, 13.37) at tick 4,201, approximately 42.5 m from the reported position; the fixture window was corrected to include this passage. It is a reproducible nearby route segment, not a reconstruction of the PO’s exact state.
 
 ## Gates
 

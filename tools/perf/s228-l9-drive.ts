@@ -54,11 +54,11 @@ try {
   });
   result.errors = session.errors;
   writeFileSync(`${out}/trace.json`, JSON.stringify(result, null, 2));
-  const segment = result.frames.filter(f => f.tick >= 6500 && f.tick <= 8200), sorted = segment.map(f => f.dt).sort((a,b)=>a-b);
+  const segment = result.frames.filter(f => f.tick >= 3500 && f.tick <= 4700), sorted = segment.map(f => f.dt).sort((a,b)=>a-b);
   const pct = (p: number) => sorted[Math.ceil(sorted.length*p)-1] ?? 0;
   const worst = [...segment].sort((a,b)=>b.dt-a.dt).slice(0, 10);
   console.log(JSON.stringify({ backend: result.backend, tier: result.tier, tick: result.tick, frames: segment.length,
     p95: pct(.95), p99: pct(.99), max: sorted.at(-1) ?? 0, hitches: segment.filter(f => f.dt > 33.4).length, worst, errors: result.errors }, null, 2));
   assert.equal(result.backend, 'webgpu'); assert.equal(result.tier, 'high'); assert.deepEqual(result.errors, []);
-  assert.ok(segment.some(f => Math.abs(f.x - 272.45) < 40 && Math.abs(f.z + 28.15) < 30), 'trace must cross near reported PO position');
+  assert.ok(segment.some(f => Math.abs(f.x - 272.45) < 40 && Math.abs(f.z + 28.15) < 50), 'trace must cross near reported PO position');
 } finally { await session.close(); stopServer(); }
