@@ -8,7 +8,8 @@ try {
     try {
       await session.open();
       const spec = readSpec('tests/scenes/l9-apc/ram.json');
-      spec.camera!.zoom = 1; delete spec.expect;
+      if (spec.camera?.mode === 'game') spec.camera.zoom = 1;
+      delete spec.expect;
       await session.load(spec);
       await session.page.evaluate(() => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world;

@@ -53,7 +53,7 @@ export interface VehicleState {
   braced?: boolean; driver: number | null; attached: number[]; damage: 'normal' | 'smoking' | 'burning' | 'exploded';
   explodeAt: number | null; stuck: boolean; recoveringUntil: number;
 }
-interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number; zooParked?: boolean }
+interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number; bumpAt?: number; zooParked?: boolean }
 export interface CarTransition { carId: number; kind: 'enter' | 'exit'; tick: number; side: number; from: { x: number; y: number; z: number; yaw: number }; }
 /** E09 fixed-phase owner; player movement/combat are suspended only while driving. */
 export class Vehicles {
@@ -84,6 +84,12 @@ export class Vehicles {
   }
   /** A car can be driven while it has durability, or at the L9 floor. */
   private operable(car: Car): boolean { return car.entity.vehicle!.damage !== 'exploded' && (car.entity.health.current > 0 || !!car.entity.vehicle!.floor); }
+  /** Bound chassis lift when several wheels meet a pack during the same suspension cycle. */
+  private squashBump(car: Car): void {
+    if (this.world.tick - (car.bumpAt ?? -Infinity) < 12) return;
+    car.bumpAt = this.world.tick;
+    car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * .12, z: 0 }, true);
+  }
   /** L9 mission vehicle: 0 HP is a capped-speed floor, not a breakdown. Re-applying after a checkpoint restore replays no cue. */
   setFloorPolicy(id: number, on = true): void {
     const car = this.cars.get(id); if (!car) throw new Error(`Unknown vehicle ${id}`);
@@ -438,12 +444,13 @@ export class Vehicles {
         this.world.events.emit({ type: 'vehicle.grabbed', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id }); continue;
       }
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), radius = target.combat?.radius ?? .4;
+      if (!occupied || speed < .25) continue;
       if (car.physics.hullDistance(target.transform.x, target.transform.z) <= radius + .1 && car.entity.vehicle!.driver !== null && car.physics.intent.throttle > 0 && !car.physics.intent.brake) car.entity.vehicle!.ramImpactUntil = this.world.tick + 300;
       if (Math.abs(dx * c - dz * s) > car.physics.def.length / 2 + radius + speed / 60 || Math.abs(dx * s + dz * c) > car.physics.def.width / 2 + radius || this.world.tick < (car.hits.get(target.id) ?? 0)) continue;
       car.hits.set(target.id, this.world.tick + 60);
       const runOver = speed >= 4 && !['infected.brute', 'infected.armored', 'infected.armoured-football', 'infected.riot', 'infected.elephant', 'infected.alpha', 'infected.mega-alpha'].includes(target.archetype ?? '');
       this.world.events.emit({ type: 'vehicle.infected-hit', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id, position: { ...target.transform }, runOver });
-      if (runOver) car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * .12, z: 0 }, true);
+      if (runOver) this.squashBump(car);
       this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: target.id, origin: p, direction: { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) }, base: Math.max(1, speed * 30 * car.physics.def.ramStrength), multiplier: 1, type: 'vehicle', knockback: runOver ? 0 : target.archetype === 'infected.brute' ? 3 : 1, stagger: .5, ...(runOver ? { permanent: true } : {}) });
       if (runOver && target.health.current <= 0) { target.squashed = true; target.corpse = true; target.transform.y = (this.world.districts?.groundHeight(target.transform.x, target.transform.z) ?? 0) + .7; if (target.combat?.reaction) target.combat.reaction.groundDeath = true; }
       if (target.archetype === 'infected.brute') this.damage(car.entity.id, target.ramDamage ?? 40);
@@ -513,7 +520,7 @@ export class Vehicles {
         if ((speed >= 4 || runOverContact) && this.operable(car) && tick >= (car.hits.get(id) ?? 0)) {
           car.hits.set(id, tick + 60);
           const runOver = runOverContact;
-          if (runOver) car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * .12, z: 0 }, true);
+          if (runOver) this.squashBump(car);
           this.world.combat?.damage.apply({ attackId: contact.contactId!, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: s * pushSide, z: c * pushSide }, base: Math.max(speed, 4) * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: runOver ? 0 : target.archetype === 'infected.brute' ? 5 : 3, stagger: .5, ...(runOver ? { permanent: true } : {}) });
           if (runOver && target.health.current <= 0) { target.squashed = true; target.corpse = true; target.transform.y = (this.world.districts?.groundHeight(target.transform.x, target.transform.z) ?? 0) + .7; if (target.combat?.reaction) target.combat.reaction.groundDeath = true; }
         }
