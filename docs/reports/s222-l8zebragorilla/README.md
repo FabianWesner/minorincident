@@ -100,6 +100,8 @@ A controlled kiting trace identified the counted attacks as flamingo dives, not 
 
 Combining the separated-row trial with removal of both first-commit south/west waypoints completed skilled L8 and passed kiting, but retained `L8/phase/breached:SLOW_FOLLOWER:354`. Both changes were reverted. The combination demonstrates that the individual route and crowding effects interact; it is not a complete fix.
 
+In the combined separated-row / parent-breach trial, the breached-phase receipt sampled corgi 354 469 times (median 4.411 m/s), while most established human followers had 252 samples (group median 4.724 m/s). The corgi enters animal arenas while the human group receives `arenaWait`; the receipt therefore includes different periods for the two sets of actors. This is a measurement observation, not authorization to change the audit or exclude the corgi; the movement and full gate remain unresolved.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
