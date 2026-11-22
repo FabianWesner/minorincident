@@ -1,5 +1,11 @@
 # s224 L8 animal looks — work in progress
 
+## s229 current status (2026-11-22)
+
+**Incomplete:** the lioness still uses the pre-s229 provisional eye geometry. Painted/emissive atlas trials did not produce two readable eyes in the opened front attack; the latest HIGH/LOW idle and attack baseline review is `s229-lioness-baseline.jpg`. No lioness trial is accepted. The animal crowd material currently uses vertex emission, not a texture emission mask; authored eye-surface vertices are predominantly body-weighted, and the attack projection places the landmarks low. The detailed trials and limitations follow below.
+
+The zebra LOD2 candidate is committed, uses a retained continuous TRELLIS-derived surface and production rig, and rebuilds byte-for-byte using `tools/assets/s229-zebra-lod2.ts`. HIGH and LOW files are 66,712 bytes each against the 107,576-byte ceiling. Sampled forced `infected-run` and scripted rear-kick views were opened at zoom 1 and 1.5 in both tiers; no former large hind-leg panel was observed in those samples. `s229-zebra-kick.jpg` records the kick sample. The selected animal scene gate passed 18/18 after restoring the lioness; typecheck, lint and a logged remote unit run passed (105 passed, one skipped). These results do not accept the lioness eyes or replace review after any further asset change.
+
 The requested scope names seven asset IDs: `inf.lion`, `inf.lioness`, `inf.flamingo`, `inf.zebra`, `inf.gorilla`, `inf.monkey`, and `inf.elephant`. Lioness and monkey are derivatives of lion and gorilla respectively; both still require separate game-camera review.
 
 ## Evidence and open work
