@@ -13,6 +13,7 @@ const tier = (process.argv[3] ?? 'high') as 'high' | 'low';
 const label = process.argv[4] ?? 'before';
 const combat = process.env.S234_COMBAT === '1';
 const delay = Number(process.env.S234_DELAY ?? 0);
+const attackDelay = Number(process.env.S234_ATTACK_DELAY ?? 0);
 const matching = process.env.S234_MATCH === '1';
 const replay = JSON.parse(gunzipSync(readFileSync('tests/fixtures/perf/l10-real-input.json.gz')).toString()) as { inputs: { tick: number; frame: InputFrame }[] };
 const frames: InputFrame[] = []; let cursor = 0;
@@ -35,7 +36,7 @@ try {
     performanceNavigationStartMs = metrics.find(m => m.name === 'NavigationStart')!.value * 1000;
     performanceStartedAt = await session.page.evaluate(() => performance.now());
   }
-  await session.page.evaluate(async ({ frames, diagnostic, combat, delay, matching }) => {
+  await session.page.evaluate(async ({ frames, diagnostic, combat, delay, attackDelay, matching }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
     a.pause(); a.cheats.god(!matching); a.camera.follow(); if (matching) a.camera.zoom(.99); a.debug.cpuProfile();
@@ -52,7 +53,7 @@ try {
       const module = await import(/* @vite-ignore */ modulePath);
       const bot = new module.LevelTenBot(g.world, 'complete');
       const sample = bot.sample.bind(bot);
-      bot.sample = () => { const frame = sample(); if (g.world.tick < delay) frame.move = { x: 0, z: 0 }; return frame; };
+      bot.sample = () => { const frame = sample(); if (g.world.tick < delay) frame.move = { x: 0, z: 0 }; if (g.world.tick < attackDelay) { frame.left = { down: false, held: false, up: false }; frame.right = { down: false, held: false, up: false }; } return frame; };
       g.driver = bot;
     } else g.input.feed = feed;
     const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; x: number; z: number; builds: number; builtMaterials: Record<string, number>; buildObjects: Record<string, string>; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
@@ -83,7 +84,7 @@ try {
       if (trace.hitchTrace.running) requestAnimationFrame(sample);
     };
     requestAnimationFrame(sample); a.resume();
-  }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1', combat, delay, matching });
+  }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1', combat, delay, attackDelay, matching });
   await session.page.waitForFunction(() => window.__SS__!.tick() >= 900, null, { timeout: 180_000, polling: 20 });
   const result = await session.page.evaluate(() => {
     const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; builtMaterials: Record<string, number>; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };

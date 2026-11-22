@@ -74,3 +74,7 @@ E2E_UNITS=1 SCENE_PORT=5264 S234_COMBAT=1 S234_DELAY=135 S234_MATCH=1 S234_PROFI
 ```
 
 The profiled constructed run had no recorded simulation sample over 4 ms from ticks 12 through 890; the tick-891 grid work is therefore not evidence of a simulation spike at the PO's tick 639. Across the profiled tick-550–700 interval (2.5 seconds), sampling showed ordinary rendering/presentation work; this aggregate cannot rule out GPU scheduling or a different input history. The current fixture repeatedly calls `perf()` for instrumentation, so its CPU profile also includes measurement overhead. A recording or save from the reported session has been requested to reproduce its input and state history.
+
+## Later first-down diagnostic
+
+`S234_ATTACK_DELAY=450` holds the constructed driver's attacks until tick 450, without changing simulation rules. With `S234_DELAY=135 S234_MATCH=1 S234_PROFILE=1`, the first down occurred at tick 647 at x=581.93; its sampled simulation time was 2.4 ms and no material builds were recorded. At tick 639 the player had HP 80 and seven alive (the PO reported HP 90, six alive and one downed). The profiled 400–900 window had p99 11.2 ms, longest 30.3 ms and zero intervals over 33 ms. This different constructed input still does not reproduce the hang. Full trace/profile: `test-results/s234-l10hitch/late-attack-webgpu-high/`. Typecheck and lint passed.
