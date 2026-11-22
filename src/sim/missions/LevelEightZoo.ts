@@ -55,6 +55,12 @@ const perimeterGates = [
 ];
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 const sIsClosed = (breakAt: number | null | undefined, tick: number) => breakAt == null || tick < breakAt;
+/** Keep even a full zoo rescue roster close enough to regroup during real stops. */
+function l8FormationSlot(leader: Point, heading: Point, slot: number, natural = true): Point {
+  const target = formationSlot(leader, heading, slot, natural), compressedRows = Math.max(0, Math.floor(slot / 3) - 3);
+  target.x += heading.x * compressedRows * .85; target.z += heading.z * compressedRows * .85;
+  return target;
+}
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
   readonly bosses: L8BossArenas;
@@ -864,10 +870,15 @@ export class LevelEightZoo {
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
     const routeHeading = leaderHeading(p.transform.yaw, velocity);
-    const goal = formationSlot(p.transform, routeHeading, slot, true);
+    const goal = this.breached ? l8FormationSlot(p.transform, routeHeading, slot) : formationSlot(p.transform, routeHeading, slot, true);
     // A resident recruited off the route should catch the moving party before
     // taking its permanent tail slot. Long-tail slots can otherwise leave a
     // new joiner behind a gate while the courier has already moved on.
+    if (this.breached) {
+      // Close ranks on the public route; arena holding positions remain authored below.
+      const forward = .9 + Math.floor(slot / 3) * .4;
+      goal.x += routeHeading.x * forward; goal.z += routeHeading.z * forward;
+    }
     const plaza = this.mission.def.anchors['l8-route'];
     // The one-way route ends at the zoo entry gate; the party gathers around
     // that fixed destination while Nadia delivers the safe-zone line.
