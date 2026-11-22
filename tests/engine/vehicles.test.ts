@@ -648,6 +648,14 @@ async function apcBoarders(): Promise<void> {
     expect(car.physics.speed, 'scripted departure retains its speed').toBe(3);
     expect(car.physics.wheels[0].rotation, 'scripted departure turns its wheels').toBeGreaterThan(wheelRotation);
     expect(car.physics.rotation, 'scripted crash retains the whole-hull roll').toEqual(roll);
+    const boarderId = world.infected!.spawn('infected.runner', { x: car.entity.transform.x, z: car.entity.transform.z }, { state: 'chase', offNav: true });
+    const boarder = world.entities.get(boarderId)!;
+    boarder.attachedTo = id; car.entity.vehicle!.attached.push(boarderId);
+    world.vehicles!.destroyScripted(id, { x: 527.5, y: .72, z: 2.6, yaw: 0 }, true);
+    expect(boarder.corpse, 'crash preserves the boarder as a corpse').toBe(true);
+    expect(boarder.hidden, 'crash does not hide the corpse').toBe(false);
+    expect(world.entities.get(boarderId), 'crash retains the same entity').toBe(boarder);
+    expect(boarder.attachedTo).toBeUndefined();
   } finally { world.dispose(); }
 }
 
