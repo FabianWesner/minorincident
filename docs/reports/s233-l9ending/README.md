@@ -38,4 +38,6 @@ An additional high WebGL capture sampled the rise at ten-tick intervals and take
 
 Code review after that capture found that the leap began at the wreck centre instead of the Mega's exit position, causing a roughly two-metre position reset on takeoff. The leap now starts at the exit position and reaches the same destination. Typecheck, lint and nightly mission interactions passed; an L9-only threat diagnostic completed both bots with zero passive flags (its overall partial-selection flag is expected). The existing frames predate this correction; recapture the transition and rerun the full threat gate on the corrected revision.
 
+The corrected revision was recaptured high then low at zoom 1, with zero page errors; the sheet has been refreshed. Both show the Mega taking off from beside the wreck and the result screen. The direct all-level threat audit completed in 555.4 s with zero fail flags; L9 skilled and passive both completed. The `npm test` preflight remains open at 151/150.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
