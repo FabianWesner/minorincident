@@ -2,9 +2,10 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, origin, stopServer } from '../scenelab/session';
 const out = 'test-results/s224-lod-pilot'; mkdirSync(out, { recursive: true });
 const session = new SceneSession({ viewport: { width: 800, height: 600 } });
-const names = ['lion', 'lioness', 'flamingo', 'zebra', 'gorilla', 'monkey', 'elephant'];
+const names = process.env.S224_NAMES?.split(',') ?? ['lion', 'lioness', 'flamingo', 'zebra', 'gorilla', 'monkey', 'elephant'];
 try {
   await session.open(); const page = session.page; const results = [];
+  page.on('console', message => { if (message.text().includes('asset.lod-fallback')) console.log(message.text()); });
   for (const name of names) {
     await page.goto(`${origin}/preview/?asset=inf.${name}&test=1&renderer=webgl&production=1`);
     await page.waitForFunction(() => !!window.__ASSET__); await page.evaluate(() => window.__ASSET__!.ready);
