@@ -24,6 +24,8 @@ Perf is pending because this Mac was above the quiet-run load limit (load averag
 
 The seed-1 native simulation dry-route probe places the APC at (281.59, 13.37) at tick 4,201, approximately 42.5 m from the reported position; the fixture window was corrected to include this passage. It is a reproducible nearby route segment, not a reconstruction of the PO’s exact state.
 
+A further quiet-run admission attempt on 2026-11-22 at 07:38 CET expired after 45 seconds with load 6.16 / 5.48 / 5.00 and concurrent threat-audit workers. No browser or timing run started.
+
 ## Gates
 
 - `npm run typecheck`: pass.
