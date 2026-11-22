@@ -514,8 +514,16 @@ export class L8BossArenas {
   private beginCycle(e: EntitySnapshot, arena: L8ArenaState): void {
     const live = arena.ids.map(id => this.w.entities.get(id)).filter((v): v is EntitySnapshot => !!v?.infected && v.health.current > 0);
     if (arena.id === 'flamingo') {
-      // A rotating line of three dives while the rest circles; the lane always leaves a sidestep.
-      for (let i = 0; i < Math.min(3, live.length); i++) this.start(live[(arena.cycle * 3 + i) % live.length], 'flamingo.dive', 36, 15, 1.1);
+      // Launch birds with a clear lane first, so a flock does not waste its
+      // dives immediately colliding with its own members or the enclosure.
+      const p = this.w.entities.get(1)!;
+      const lanes = live.filter(bird => !bird.infected!.specialAttack).map(bird => {
+        const target = this.predict(bird, Math.min(2.5, .6 + distance(bird.transform, p.transform) / 17), arena);
+        const dx = target.x - bird.transform.x, dz = target.z - bird.transform.z, length = Math.hypot(dx, dz) || 1;
+        const clear = this.w.solids.sweep(bird, { x: dx / length, z: dz / length }, length, bird.combat!.radius, false, true);
+        return { bird, length, clear };
+      }).sort((a, b) => b.clear / b.length - a.clear / a.length || a.length - b.length);
+      for (const { bird } of lanes.slice(0, 3)) this.start(bird, 'flamingo.dive', 36, 15, 1.1);
     }
     else if (arena.id === 'zebra') {
       const side = arena.cycle % 2 ? 1 : -1, predicted = this.predict(e, 2.2, arena);
