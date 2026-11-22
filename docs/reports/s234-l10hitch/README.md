@@ -28,3 +28,13 @@ The source currently contains budgeted infected navigation and the prior L10 loa
 ## Quiet baseline (2026-11-22)
 
 The command above subsequently passed quiet admission and completed on native WebGPU high. In ticks 400–900: 1,352 samples, p99 **9.7 ms**, longest **29.7 ms** at tick 712, and **0 frames >33 ms**. The longest sample had no new material builds; its sampled sim/update/render were 1.0/2.3/3.0 ms. This replay did not reproduce the reported long frame, and its player position at tick 639 differs from the PO report. Attribution and a representative before/after remain open. Raw trace: `test-results/s234-l10hitch/before-webgpu-high/trace.json`. The earlier admission failures were sandbox restrictions; the subsequent run used unrestricted access.
+
+## Combat reproduction pending
+
+The recorded input has no attack inputs during ticks 400–900, so the baseline does not exercise the reported fight. Scene Lab's muted output still runs its audio graph, but requires unlocking. The harness now supports the native L10 skilled driver and unlocks audio after a browser gesture. This mode has not yet been admitted or verified to reach the reported encounter. The attempt exited 75 at the quiet-run 600-second reservation cap while other threat workers kept the host busy. Exact retry:
+
+```sh
+E2E_UNITS=1 SCENE_PORT=5264 S234_COMBAT=1 MI_PERF_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh npx tsx tools/perf/s234-l10hitch.ts webgpu high combat-before
+```
+
+Typecheck and lint passed after the harness change. Verify actual attack, downed state, audio context and location in the trace before using this as evidence for the PO's hitch. The earlier replay baseline was captured before the audio unlock change and cannot serve as a before/after comparison for this mode.
