@@ -826,7 +826,9 @@ export class GameView implements Lifecycle {
       const reveal = this.world.scenario === 'L10' && this.world.missions?.state.states['mega-reveal-active'] ? this.world.megaPursuit?.entity() : null;
       if (reveal && !this.view.spot) {
         const focus = this.world.entities.get(1)!.transform;
-        this.storyFocus.set((focus.x + reveal.transform.x) / 2, .8, (focus.z + reveal.transform.z) / 2);
+        // Lean toward the Mega but keep the courier near the centre (PO 2026-11-22: she was pushed off screen while being attacked).
+        const dx = reveal.transform.x - focus.x, dz = reveal.transform.z - focus.z, lean = Math.min(.35, 6 / Math.max(1, Math.hypot(dx, dz)));
+        this.storyFocus.set(focus.x + dx * lean, .8, focus.z + dz * lean);
         this.storyOffset.setFromSphericalCoords(Math.max(13, this.view.radius), this.view.polar, this.view.azimuth);
         this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
         this.megaRevealFraming = true;
