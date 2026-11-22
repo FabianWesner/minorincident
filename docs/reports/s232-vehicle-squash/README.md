@@ -44,8 +44,11 @@
 
 - Additional L10 HIGH then LOW capture after tightening vertical scale to 0.08: the [sheet](sheet.jpg) shows the target before contact, blood under the bike, and the corpse left behind. The camera angle makes its horizontal limbs appear raised, but the actual frozen mesh instance is grounded and its measured vertical bounding extent is 5.13 cm HIGH and 5.07 cm LOW ([HIGH](l10-high.json), [LOW](l10-low.json)). Both captures retained the marked corpse, kept the rider mounted, and logged no browser errors. Typecheck and lint pass.
 
+- On `e65444c4`, `qa:vehicle-motion` passed all HIGH and LOW contact scenes (exit 0). The full `qa:vehicle-campaign-motion` failed: L7 bus and L4 parked/tank passed, while L9 HIGH and LOW failed living-infected foot-slide rows around hulls. A focused L9 HIGH/LOW rerun also failed both tiers. This supersedes the earlier campaign-motion pass for acceptance; cause remains unconfirmed.
+- The full remote suite on this revision again exceeded 240 seconds. Vehicle and save-progression files passed, but an infected-AI case reported a failure after 30.1 seconds before the suite was terminated; no final failure detail was emitted. The unchanged retry also exceeded the budget (240.9 seconds), reporting infected-AI and save-progression failures after 33.2 and 42.1 seconds; termination again prevented final failure details.
+
 ## Open acceptance
 
 - Review the sound mix and bike bump in motion. The still captures show the contact and retained corpse, but the bike lift is subtle.
 - Complete the full remote unit suite within its unchanged 240-second budget. Multiple attempts timed out; the focused save-progression file passes on the same runner.
-- Campaign-motion and threat checks passed before the latest renderer-only change. Re-run them on the final tree if exact-revision evidence is required.
+- Investigate and fix the reproducible L9 campaign-motion foot-slide failures; re-run the full campaign gate. Threat passed before the latest renderer-only change.
