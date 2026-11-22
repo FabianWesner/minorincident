@@ -28,4 +28,6 @@ The result capture showed mission phase `progression`: `Mission.result()` automa
 
 Subsequent high capture completed with zero page errors. The takeoff frame shows the Mega moving away from the burning wreck, and the final frame shows the Level complete result screen. A low capture was queued but did not obtain browser admission during this session; it was cancelled cleanly. The revised low takeoff/result and the contact sheet remain open.
 
+The subsequent low capture completed with zero page errors. [Ending sequence](ending-sequence.jpg) shows high then low at zoom 1: impact and burning wreck; prone dazed courier beside the corgi; rise; Mega emerging, then facing the courier with Sam's line; Mega taking off with the end caption; departure; and the Level complete screen. The sampled images show no idle Mega beside the player. Still frames alone cannot establish continuity of the rise or leap animation, so that remains a visual limitation. The remote unit gate remains blocked at the 151/150 preflight; the full threat audit's zero flags predate the later result and wreck-position fixes and should be rerun on the final revision.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
