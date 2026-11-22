@@ -60,6 +60,8 @@
 
 - Full remote unit run on `bfe55399`: the first attempt exceeded the budget at 240.8 s; its unchanged retry passed in 212.0 s, with 27 files passed, 105 tests passed and 1 skipped (150/150 inventory).
 
+- Decoded the actual Opus and AAC sprite cue windows with FFmpeg `volumedetect`: hit (0–0.50 s) measures −16.4/−16.2 dBFS mean and −4.3/−4.3 dBFS peak; run-over (0.58–1.23 s) measures −20.9/−20.8 dBFS mean and −4.7/−4.6 dBFS peak, respectively. Both codecs contain non-silent content at the registry offsets; these values are before runtime gain and cannot establish perceived clarity in the game mix.
+
 ## Open acceptance
 
 - Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
