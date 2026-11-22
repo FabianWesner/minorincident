@@ -34,4 +34,6 @@ Final-revision direct all-level threat audit completed in 353.9 s with zero fail
 
 As supplemental evidence, the complete default Vitest project was run directly on the remote runner: 27 files passed, 106 tests passed and one configured test skipped, in 207.10 s. This does not pass or replace the required `npm test` budget gate.
 
+An additional high WebGL capture sampled the rise at ten-tick intervals and takeoff at five-tick intervals. The courier moves from prone to standing across the sampled frames without an apparent snap; the Mega moves away from the wreck across successive frames and leaves the camera view. The capture completed with zero page errors. The Mega exits the frame quickly, so its full airborne arc is not visible in this fixed camera.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
