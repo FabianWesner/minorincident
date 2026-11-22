@@ -67,5 +67,13 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
   const receipt = { levels, totals: { buildings: levels.reduce((n, r) => n + r.buildings, 0), samples: levels.reduce((n, r) => n + r.samples, 0), misses: levels.flatMap(r => r.misses) } };
   const l10Misses = levels.find(row => row.level === 'L10')?.misses ?? [];
   assert.deepEqual(l10Misses, [], 'An L10 building has a missing or passable body-height collider');
+  const baseline = new Set([
+    'D-CORRIDOR/bld.river-bridge:893:no-body-height-collider',
+    'D-FAIR/bld.garage-detached:644:no-body-height-collider',
+    'D-FAIR/bld.garage-detached:652:no-body-height-collider',
+    'D-FAIR/bld.shed:748:no-body-height-collider',
+    'D-SUBWAY/l6-36:no-body-height-collider',
+  ]);
+  assert.deepEqual(receipt.totals.misses.filter(miss => !baseline.has(miss)), [], 'New building wall sweep misses');
   return receipt;
 }

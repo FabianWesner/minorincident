@@ -10,7 +10,7 @@ See-through selection for buildings now tests the camera-to-subject centre segme
 
 `tools/qa/building-wall-sweep-audit.ts` is wired into `tools/qa/solid-placement-audit.ts`. It sampled 664 building placements across L1–L10 with 9,760 capsule sweeps. L10: 242 buildings, 1,958 samples, zero misses. The existing solid placement portion reports 572 before and zero after across all district datasets.
 
-Coverage limitation: the sweep samples existing collider faces, not independently extracted visible mesh wall faces. It can catch colliders lost at runtime and placements with no body-height collider, but cannot detect a missing wall on a building that has other colliders. An independent mesh-face audit and a ratchet for new non-L10 misses remain open.
+Coverage limitation: the sweep samples existing collider faces, not independently extracted visible mesh wall faces. It can catch colliders lost at runtime and placements with no body-height collider, but cannot detect a missing wall on a building that has other colliders. An independent mesh-face audit remains open. The five known misses below are ratcheted: any additional reported miss fails the audit.
 
 Five non-L10 samples remain for follow-up because those placements have no collider intersecting courier body height:
 
