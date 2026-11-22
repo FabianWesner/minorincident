@@ -13,6 +13,7 @@ const tier = (process.argv[3] ?? 'high') as 'high' | 'low';
 const label = process.argv[4] ?? 'before';
 const combat = process.env.S234_COMBAT === '1';
 const delay = Number(process.env.S234_DELAY ?? 0);
+const matching = process.env.S234_MATCH === '1';
 const replay = JSON.parse(gunzipSync(readFileSync('tests/fixtures/perf/l10-real-input.json.gz')).toString()) as { inputs: { tick: number; frame: InputFrame }[] };
 const frames: InputFrame[] = []; let cursor = 0;
 for (let tick = 0; tick < 900; tick++) {
@@ -26,10 +27,10 @@ try {
   await session.open();
   await session.page.mouse.click(10, 10);
   await session.page.evaluate('globalThis.__name = fn => fn');
-  await session.page.evaluate(async ({ frames, diagnostic, combat, delay }) => {
+  await session.page.evaluate(async ({ frames, diagnostic, combat, delay, matching }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
-    a.pause(); a.cheats.god(true); a.camera.follow(); a.debug.cpuProfile();
+    a.pause(); a.cheats.god(!matching); a.camera.follow(); if (matching) a.camera.zoom(.99); a.debug.cpuProfile();
     await g.audio.unlock();
     if (g.world.missions?.state.phase === 'briefing') g.world.missions.begin();
     let cursor = 0;
@@ -53,6 +54,10 @@ try {
     const sample = (now: number) => {
       const infected = g.world.infected?.active ?? [];
       const p = g.world.entities.get(1)!.transform;
+      if (g.world.tick >= 639 && !(trace as unknown as { checkpoint?: unknown }).checkpoint) {
+        const player = g.world.entities.get(1)!;
+        (trace as unknown as { checkpoint: unknown }).checkpoint = { tick: g.world.tick, health: player.health.current, weapons: structuredClone(player.weapons), camera: g.view.view.getState(), player: structuredClone(player.transform) };
+      }
       const materials = { ...g.view.renderer.nodeBuildMaterials };
       const builtMaterials = Object.fromEntries(Object.entries(materials).filter(([name, count]) => count > (previousMaterials[name] ?? 0)).map(([name, count]) => [name, count - (previousMaterials[name] ?? 0)]));
       const ids = new Set(Object.keys(builtMaterials).map(name => Number(/:o(\d+)$/.exec(name)?.[1])));
@@ -70,7 +75,7 @@ try {
       if (trace.hitchTrace.running) requestAnimationFrame(sample);
     };
     requestAnimationFrame(sample); a.resume();
-  }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1', combat, delay });
+  }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1', combat, delay, matching });
   await session.page.waitForFunction(() => window.__SS__!.tick() >= 900, null, { timeout: 180_000, polling: 20 });
   const result = await session.page.evaluate(() => {
     const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; builtMaterials: Record<string, number>; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
@@ -78,7 +83,7 @@ try {
     const frames = trace.hitchTrace.frames;
     const sorted = frames.map(f => f.dt).sort((a,b)=>a-b);
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
-    return { backend: window.__SS__!.perf().backend, tier: window.__SS__!.getState().render.quality, checkpoint: game.world.missions?.state.checkpoint, audio: game.audio.snapshot(),
+    return { backend: window.__SS__!.perf().backend, tier: window.__SS__!.getState().render.quality, checkpoint: game.world.missions?.state.checkpoint, encounter: (trace as unknown as { checkpoint: unknown }).checkpoint, audio: game.audio.snapshot(),
       frames, max: Math.max(...sorted), p99: sorted[Math.ceil(sorted.length*.99)-1], hitches: frames.filter(f=>f.dt>100), errors: [] as string[] };
   });
   result.errors = session.errors;

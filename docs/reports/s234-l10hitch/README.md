@@ -54,3 +54,7 @@ E2E_UNITS=1 SCENE_PORT=5264 S234_COMBAT=1 S234_DELAY=135 MI_PERF_ADMISSION_TIMEO
 ```
 
 Raw traces: `test-results/s234-l10hitch/matched-before-webgpu-high/trace.json` and `test-results/s234-l10hitch/delayed-before-webgpu-high/trace.json`. Typecheck and lint passed for the diagnostic change. Root cause, runtime fix, before/after proof and remaining gates remain open.
+
+## Normal damage and reported camera
+
+A further quiet run used `S234_MATCH=1 S234_COMBAT=1 S234_DELAY=135`, normal damage and zoom 0.99. At tick 639 the captured state was (581.63, 0.17), HP 80, machete selected, six alive and one downed; the PO reported (582.32, 0.76), HP 90, machete and the same population. Audio was running. Across ticks 400–900 p99 was 10.5 ms, longest 30.4 ms at tick 862 and 0 frames exceeded 33 ms. Full trace: `test-results/s234-l10hitch/state-before-webgpu-high/trace.json`. The constructed driver downed its first infected at tick 388, so matching a snapshot does not prove the same engagement history. Cause and fix remain unproven. The harness saves the tick-639 player, weapon and camera snapshot for future comparisons. Typecheck and lint passed.
