@@ -417,6 +417,11 @@ l.box('gorilla-viewing-window', 'backpackTealDark', [3.2, 1.1, .12], [55.6, 2.45
 for _x in (54.4, 55.2, 56.0, 56.8):
     l.box('gorilla-window-bars', 'silver', [.07, 1.2, .08], [_x, 2.45, -41.2])
 l.box('gorilla-straw-bed', 'mustardLight', [5.5, .12, 3.0], [56.2, .20, -43.5])
+# The barrage perch at (69, -25) sits on a rock shelf. Keep the base solid
+# and the approach to the arena gates clear; the boss traverses onto its top.
+l.box('gorilla-throw-rock-base', 'sidewalk', [3.8, 2.65, 3.2], [69, 1.325, -25])
+l.box('gorilla-throw-rock-ledge', 'khakiSeam', [4.3, .35, 3.7], [69, 2.825, -25])
+l.data['colliders'].append(dict(id='gorilla-throw-rock', aabb=dict(min=[67.1, 0, -26.6], max=[70.9, 2.65, -23.4]), minTier=0, maxTier=5))
 # A tyre on a short chain beneath the house beam. The torus is a non-solid visual.
 bpy.ops.mesh.primitive_torus_add(major_radius=.72, minor_radius=.18, major_segments=20, minor_segments=8, location=(64, 44.8, 1.5), rotation=(math.pi / 2, 0, 0))
 _tyre = bpy.context.object; _tyre.name = 'gorilla-tyre-swing'; _tyre.data.materials.append(material('hairShadow')); l.layers[0].append(_tyre)
