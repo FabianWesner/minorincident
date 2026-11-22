@@ -27,6 +27,7 @@
 - With network access restored, `node --import tsx/esm tools/audio/build.ts vehicle-squash` built the separate Opus and AAC bank and updated its license ledgers. Typecheck and lint pass. Audible mix review remains open.
 - Remote unit follow-up: the runner is available. The initial run stopped at the 151/150 case inventory. Two related scene-gate cases were combined without dropping assertions, bringing collection to 150/150; their focused local file passes (7 tests). Two unchanged full remote attempts then reached the 240 s limit. Both reported the vehicle file passing; the first also exposed a scope error in the combined test, subsequently corrected. A full remote pass on the corrected tree remains open.
 - Control follow-up: unoccupied or stationary cars no longer ram nearby infected, and chassis lift is limited to one impulse per 12 ticks for pack hits. Typecheck, lint, and the vehicle engine file pass. This bound is not a substitute for the required 10+ corpse driving check.
+- L9 pile simulation: `node --import tsx/esm tools/qa/diag/s232-corpse-pile.ts` places 12 retained squashed corpses across the road, then drives the actual APC through them at 14.4 m/s entry speed. All 12 were inside the hull footprint and remained present; minimum speed in the first second was 14.44 m/s, progress over 3 s was 49.45 m, peak tilt was 0.18°, and the APC stayed upright. This verifies this controlled sim case; native visual and vehicle gates remain open. Typecheck and lint pass with the probe.
 
 ## Open acceptance
 
