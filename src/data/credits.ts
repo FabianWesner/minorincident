@@ -685,6 +685,17 @@ export const audioCredits: readonly Credit[] = [
         ]
     },
     {
+        "title": "8 wet squish/slurp impacts",
+        "author": "Independent.nu",
+        "url": "https://opengameart.org/content/8-wet-squish-slurp-impacts",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "impactsplat03.mp3.flac",
+            "impactsplat07.mp3.flac"
+        ]
+    },
+    {
         "title": "Dog barking mono",
         "author": "Brandon Morris",
         "url": "https://opengameart.org/content/dog-barking-mono",
@@ -955,17 +966,6 @@ export const audioCredits: readonly Credit[] = [
         ]
     },
     {
-        "title": "8 wet squish/slurp impacts",
-        "author": "Independent.nu",
-        "url": "https://opengameart.org/content/8-wet-squish-slurp-impacts",
-        "license": "CC0",
-        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-        "files": [
-            "impactsplat03.mp3.flac",
-            "impactsplat07.mp3.flac"
-        ]
-    },
-    {
         "title": "The Free Firearm Sound Library",
         "author": "Ben Jaszczak, Brian Nelson, Kevin Heras, Matthew Nanney (OGA: bart)",
         "url": "https://opengameart.org/content/the-free-firearm-sound-library",
@@ -986,6 +986,16 @@ export const audioCredits: readonly Credit[] = [
             "V_27P.wav",
             "W_29P.wav",
             "X_39P.wav"
+        ]
+    },
+    {
+        "title": "Nail Gun Shoot and Wind Down (HQ preview)",
+        "author": "NinjaSharkStudios",
+        "url": "https://freesound.org/people/NinjaSharkStudios/sounds/712890/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "712890_4067-hq.mp3"
         ]
     },
     {
@@ -1010,6 +1020,96 @@ export const audioCredits: readonly Credit[] = [
             "boom.ogg",
             "emptyclip.wav",
             "ventilator.wav"
+        ]
+    },
+    {
+        "title": "throw swish x12 (HQ preview)",
+        "author": "hz37",
+        "url": "https://freesound.org/people/hz37/sounds/463763/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "throw.mp3"
+        ]
+    },
+    {
+        "title": "Flare ignition",
+        "author": "qubodup",
+        "url": "https://opengameart.org/content/flare-ignition",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "ignition.flac"
+        ]
+    },
+    {
+        "title": "Flamethrower (HQ preview)",
+        "author": "SamsterBirdies",
+        "url": "https://freesound.org/people/SamsterBirdies/sounds/490166/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "flamethrower.mp3"
+        ]
+    },
+    {
+        "title": "Lion loud",
+        "author": "Bidone",
+        "url": "https://freesound.org/people/Bidone/sounds/69570/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "69570_706955-hq.mp3"
+        ]
+    },
+    {
+        "title": "Flamingos",
+        "author": "Breviceps",
+        "url": "https://freesound.org/people/Breviceps/sounds/535778/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "535778_9159316-hq.mp3"
+        ]
+    },
+    {
+        "title": "Zebras",
+        "author": "TheKingOfGeeks360",
+        "url": "https://freesound.org/people/TheKingOfGeeks360/sounds/850661/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "850661_15895934-hq.mp3"
+        ]
+    },
+    {
+        "title": "Balema singing (S1 File)",
+        "author": "Eva Maria Luef, Thomas Breuer and Simone Pika",
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144197",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "pone.0144197.s001.wav"
+        ]
+    },
+    {
+        "title": "Affen schreit.mp3",
+        "author": "Bidone",
+        "url": "https://freesound.org/people/Bidone/sounds/67361/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "67361_706955-hq.mp3"
+        ]
+    },
+    {
+        "title": "Elephant sound",
+        "author": "ikbenraar",
+        "url": "https://freesound.org/people/ikbenraar/sounds/819668/",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "819668_754558-hq.mp3"
         ]
     }
 ];

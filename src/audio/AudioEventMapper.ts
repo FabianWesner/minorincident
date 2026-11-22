@@ -95,9 +95,7 @@ export class AudioEventMapper {
             const now = this.host.context.currentTime;
             if (now - this.vehicleHitAt < .09) return;
             this.vehicleHitAt = now;
-            // `infected.bite` is the existing CC0 wet impact sprite pool. Its four takes
-            // are already loaded with the licensed infected bank; slow/deepen a wheel pass.
-            this.host.play('infected.bite', { position: event.position, gain: event.runOver ? .95 : .7, rate: event.runOver ? .78 : 1 }, event.targetId);
+            this.host.play(event.runOver ? 'vehicle.zombie-runover' : 'vehicle.zombie-hit', { position: event.position }, event.targetId);
             return;
         }
         const t = this.host.context.currentTime;

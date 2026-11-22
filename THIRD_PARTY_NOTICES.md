@@ -230,6 +230,7 @@ Every recording below was modified for the game: excerpts, EQ, pitch, fades, com
 - Fantozzi's Footsteps — Fantozzi. Source: https://opengameart.org/content/fantozzis-footsteps-grasssand-stone. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: Fantozzi-SandL1.flac, Fantozzi-SandL2.flac, Fantozzi-SandR1.flac, Fantozzi-SandR2.flac, Fantozzi-StoneL1.flac, Fantozzi-StoneL2.flac, Fantozzi-StoneR1.flac, Fantozzi-StoneR2.flac.
 - Sirens and Alarm Noise — aquinn. Source: https://opengameart.org/content/sirens-and-alarm-noise. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: siren_0.mp3.
 - 12 wet towel impacts — Iwan Gabovitch (qubodup). Source: https://opengameart.org/content/12-wet-towel-hittingfallingpunching-floor-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: wet_towel_on_floor-01.flac, wet_towel_on_floor-02.flac, wet_towel_on_floor-03.flac, wet_towel_on_floor-04.flac.
+- 8 wet squish/slurp impacts — Independent.nu. Source: https://opengameart.org/content/8-wet-squish-slurp-impacts. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: impactsplat03.mp3.flac, impactsplat07.mp3.flac.
 - Dog barking mono — Brandon Morris. Source: https://opengameart.org/content/dog-barking-mono. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: dog_barking_mono.wav.
 - Zombie moans — Darsycho. Source: https://opengameart.org/content/zombie-moans. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: darsycho__zombie-moans_0.ogg.
 - Ambient Bird Sounds — isaiah658. Source: https://opengameart.org/content/ambient-bird-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: birds-isaiah658_0.ogg.
@@ -248,10 +249,19 @@ Every recording below was modified for the game: excerpts, EQ, pitch, fades, com
 - Car Sound Effects Pack (Low Quality) — GGBotNet. Source: https://opengameart.org/content/car-sound-effects-pack-low-quality. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: Car_Horn.ogg.
 - Aggressive NPC sounds — mujtaba-io. Source: https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: hey_aggressive_mujtaba.wav.
 - Voice Effects Zombie-Skeleton-Monster Human Male — ArcadeParty. Source: https://opengameart.org/content/zombie-skeleton-monster-voice-effects. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: zombieDeath1.wav, zombieDeath2.wav, zombieDeath3.wav, zombieDeath4.wav, zombieYell2.wav, zombieYell4.wav, zombieYell7.wav, zombieYell9.wav.
-- 8 wet squish/slurp impacts — Independent.nu. Source: https://opengameart.org/content/8-wet-squish-slurp-impacts. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: impactsplat03.mp3.flac, impactsplat07.mp3.flac.
 - The Free Firearm Sound Library — Ben Jaszczak, Brian Nelson, Kevin Heras, Matthew Nanney (OGA: bart). Source: https://opengameart.org/content/the-free-firearm-sound-library. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: A_42P.wav, C_28P.wav, D_32P.wav, G_31P.wav, H_21P.wav, K_17P.wav, K_22P.wav, O_21P.wav, P_30P.wav, R_35P.wav, T_27P.wav, V_27P.wav, W_29P.wav, X_39P.wav.
+- Nail Gun Shoot and Wind Down (HQ preview) — NinjaSharkStudios. Source: https://freesound.org/people/NinjaSharkStudios/sounds/712890/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: 712890_4067-hq.mp3.
 - gun reload sounds — SpringySpringo. Source: https://opengameart.org/content/gun-reload-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: assaultriflereload1_0.wav, gunreload1.wav, shotguncock_0.wav.
 - Residue SFX — FacadeGaikan. Source: https://opengameart.org/content/residue-sfx. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: boom.ogg, emptyclip.wav, ventilator.wav.
+- throw swish x12 (HQ preview) — hz37. Source: https://freesound.org/people/hz37/sounds/463763/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: throw.mp3.
+- Flare ignition — qubodup. Source: https://opengameart.org/content/flare-ignition. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: ignition.flac.
+- Flamethrower (HQ preview) — SamsterBirdies. Source: https://freesound.org/people/SamsterBirdies/sounds/490166/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: flamethrower.mp3.
+- Lion loud — Bidone. Source: https://freesound.org/people/Bidone/sounds/69570/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: 69570_706955-hq.mp3.
+- Flamingos — Breviceps. Source: https://freesound.org/people/Breviceps/sounds/535778/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: 535778_9159316-hq.mp3.
+- Zebras — TheKingOfGeeks360. Source: https://freesound.org/people/TheKingOfGeeks360/sounds/850661/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: 850661_15895934-hq.mp3.
+- Balema singing (S1 File) — Eva Maria Luef, Thomas Breuer and Simone Pika. Source: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144197. License: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Files: pone.0144197.s001.wav.
+- Affen schreit.mp3 — Bidone. Source: https://freesound.org/people/Bidone/sounds/67361/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: 67361_706955-hq.mp3.
+- Elephant sound — ikbenraar. Source: https://freesound.org/people/ikbenraar/sounds/819668/. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: 819668_754558-hq.mp3.
 
 ## Original work
 

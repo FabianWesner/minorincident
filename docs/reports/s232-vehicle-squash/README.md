@@ -8,7 +8,7 @@
 - The L9 APC applies the under-hull run-over rule to ordinary infected on contact at any speed. Brute, armored, riot, elephant, Alpha, and Mega archetypes retain resistance behavior.
 - L10 motorbike contact uses the same sound and damage policy at its rider contact point.
 - Run-overs add a small vertical chassis impulse and camera shake. Permanent corpses retain a `squashed` marker and render as flattened ground poses; the existing kill feedback supplies the blood decal.
-- The audio adapter uses the existing four-take `infected.bite` sprite pool. Its CC0 wet squish/slurp provenance remains in `assets/audio/imports.json` and `docs/licenses/audio/8-wet-squish-slurp-impacts.json`; the run-over take is slowed and raised in gain.
+- The audio adapter uses a separate `vehicle-squash` bank with a wet impact and a deeper, slower run-over cue. Both use pinned CC0 Independent.nu wet squish/slurp recordings documented in `assets/audio/imports.json` and `docs/licenses/audio/8-wet-squish-slurp-impacts.json`.
 
 ## Checks
 
@@ -23,6 +23,7 @@
 - `npm run qa:threat` — wrapper stopped before execution because the existing inventory is 151 cases against its 150-case cap. The unwrapped `node --import tsx/esm tools/qa/threat-audit.ts` completed in 811.4 s with 0 fail flags; skilled L9 and L10 completed. Several other passive stages ended at their tick budget, with no passive flags.
 - `sh tools/remote/run.sh "$PWD" -- npm test` — no healthy remote runner is provisioned; runner reported that the Mac fallback is not eligible for this command.
 - Audio bank rebuild — attempted, but source download failed under the restricted network. No new bank offsets or generated sound files were introduced.
+- With network access restored, `node --import tsx/esm tools/audio/build.ts vehicle-squash` built the separate Opus and AAC bank and updated its license ledgers. Typecheck and lint pass. Audible mix review remains open.
 
 ## Open acceptance
 
