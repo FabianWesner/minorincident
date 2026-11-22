@@ -284,7 +284,9 @@ export class L8BossArenas {
     }
     if (arena.id === 'gorilla' && boss.traversal) { this.traverseStep(e); return true; }
     if (arena.id === 'gorilla' && boss.ledgeThrow) {
-      if (!boss.roof) { this.traverse(e, { x: 69, y: 3, z: -25 }, true); return true; }
+      // The rock shelf top is at y=3; place the body's centre above it,
+      // matching the .7 m centre height used on the arena floor.
+      if (!boss.roof) { this.traverse(e, { x: 69, y: 3.7, z: -25 }, true); return true; }
       if (b.specialAttack) { this.advanceMove(e, arena); return true; }
       if (boss.barrage && !boss.scavengeId) this.scavenge(e);
       if (!boss.barrage && !boss.scavengeId && !b.specialAttack) {
