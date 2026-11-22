@@ -16,6 +16,8 @@ The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, 
 
 The audit also probes the reported 0.7-scale shed after chunk activation with the courier's full radius: a 3 m sweep stops after 1.1125 m at the side wall and 0.7625 m at a gable pier, while the doorway-centre sweep travels the full 3 m. These checks pass alongside typecheck and lint.
 
+Native production L10 movement captures, seed 1, HIGH then LOW, used a fresh level with the courier teleported beside the shed and ordinary movement input for 120 ticks. At the side wall she stopped at x=1167.107 after starting at x=1166; through the doorway she travelled from z=-30 to z=-21.245. Both tiers produced the same positions. The reviewed wall-after frames show the barn opaque and the courier hidden; this is a production see-through failure that remains open. The door-after HIGH frame shows her outside the far opening. Captures and positions are in `/private/tmp/s236-native-movement/`; this setup did not restore the requested checkpoint or cover zoom 1.5.
+
 Five non-L10 samples remain for follow-up because those placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893
