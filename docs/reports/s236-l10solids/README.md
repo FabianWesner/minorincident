@@ -26,6 +26,8 @@ The audit also probes the reported 0.7-scale shed after chunk activation with th
 
 A lifecycle review found that adding destructible walls to the static streamed bake left them blocking after destruction. Chunk refresh now reinstalls intact parts as dynamic nav blockers instead. The audit checks the shed wall after streaming, breaks its side part, and confirms the same 3 m sweep then travels freely. The ratcheted audit, typecheck and lint pass.
 
+Farm doorway headers above the standing capsule no longer block the ground-level navigation grid; their physics colliders remain. The audit checks clear route-grid cells through the scaled shed opening after chunk activation. Typecheck, lint and the full ratcheted solid-placement audit pass after this correction.
+
 A local simulation-only spot probe counted 1,312 active destructible blockers and measured chunk updates at x=700, 900, 1100, 1300 and 1500 as 79, 18, 13, 12 and 12 ms respectively. This is an unpaired diagnostic under shared machine load, not an opening-performance gate or a before/after comparison.
 
 The focused streamed shed-wall check also uses actual courier, corgi, escort and infected entities. All four stop before crossing the side wall; their measured 3 m sweeps stop at 1.1125 m, 0.6225 m, 1.1125 m and 1.1125 m respectively. This verifies the reported shed for each role, not every placement for every role.
@@ -95,4 +97,4 @@ Earlier lower sample counts and the claim that L8 and L9 had no misses predate t
 - A later LOW WebGL2 retry passed both scenes at zoom 0.5, 1, and 1.5 (`/private/tmp/s236-see-low-retry/index.md`). The zoom 1 behind-building sheet was inspected: the courier is visible on the street and the foreground facade is cleared. These L4 fixtures do not replace the requested L10 captures.
 - `tools/qa/eg-l10-farm.ts`: fails an existing crop-spacing assertion (`farmLaneDistance >= 11`); this is outside the wall collision change.
 
-Visual inspection of the barn wall/door and the reported see-through camera spot remains open. The opaque instanced dissolve and the collision sweeps are mechanically audited, but the requested HIGH/LOW native game-camera review still needs a working browser pool.
+The reviewed farm sheet covers HIGH and LOW native game-camera views at zoom 1 and 1.5, using the reconstructed checkpoint setup described above. The PO’s original saved snapshot and a manual WebGPU visual check remain open; the non-L10 sweep findings remain ratcheted for follow-up.

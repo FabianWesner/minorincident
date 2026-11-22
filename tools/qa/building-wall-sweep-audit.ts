@@ -103,6 +103,7 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
         assert.ok(part >= 0, 'Farm shed side wall part is missing');
         courier.transform.x = 1166; courier.transform.y = .9; courier.transform.z = -26;
         world.chunks!.update([1166, -26]);
+        for (const z of [-29, -28.8, -28.6]) assert.ok(world.infected!.nav.clear(1170, z, .35), `Farm shed doorway nav blocked at z=${z}`);
         const actors = [courier.id, world.npcs!.companion.spawn(), world.npcs!.escorts.spawn({ x: 1164, z: -26 }), world.infected!.spawn('infected.runner', { x: 1163, z: -26 }, { state: 'idle' })];
         for (const id of actors) {
           const actor = world.entities.get(id);
