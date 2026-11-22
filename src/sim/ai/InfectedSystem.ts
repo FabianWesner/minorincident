@@ -594,7 +594,7 @@ export class InfectedSystem {
       if (!Status.stunned(e, this.world.tick)) {
         if (l8GateApproach) {
           const speed = b.l1?.runSpeed ?? b.speed;
-          this.seek(e, b.scripted, speed);
+          moveAgent(e, (b.scripted.x - e.transform.x) / remaining * speed, (b.scripted.z - e.transform.z) / remaining * speed, this.infectedNav, this.world.tick, e.combat!.radius, true);
         } else this.seek(e, b.scripted, scriptedSpeed);
       }
     }
