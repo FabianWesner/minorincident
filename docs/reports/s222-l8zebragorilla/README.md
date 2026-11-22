@@ -59,6 +59,8 @@ This report records implementation intent and current validation only. It does n
 
 ### Lane pace bisect — 2026-11-22
 
+**Current handoff:** The requested two-hour investigation window has elapsed. The branch retains the original follower formation and restores the 1.05× human pace cap. The first bad source snapshot is `8316b243`; its west breach waypoint contributes to the original relative-pace regression, but no complete cause-level fix has passed. Latest full `qa:threat` on the restored source reports 364 twice and corgi 354 once; skilled L8 completes and all other levels have zero flags. The last applicable typecheck, lint, mission-interactions and remote unit checks passed on the restored source, but the full zero-flag threat gate remains open. The existing solo-cage contract and differing follower sample windows need consideration; no observer, threshold, speed cap or animal stat was changed to clear the flags. Natural-move and habitat review remain outside this lane.
+
 The initial lane source snapshot that reproduces pace flags is `8316b243` (`Improve L8 zebra and gorilla arena fights`); parent `a23b89e0` is the known zero-flag baseline. The repository's shared worktree index lock prevented `git bisect`, so these are manual source-snapshot comparisons with the L8-only threat diagnostic. The pace root cause is **not yet isolated or fixed**; do not treat these experiments as acceptance.
 
 | Snapshot / controlled swap | L8-only result | Finding |
