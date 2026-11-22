@@ -12,6 +12,8 @@ See-through selection for buildings now tests the camera-to-subject centre segme
 
 Coverage limitation: the sweep samples existing collider faces, not independently extracted visible mesh wall faces. It can catch colliders lost at runtime and placements with no body-height collider, but cannot detect a missing wall on a building that has other colliders. An independent mesh-face audit remains open. The five known misses below are ratcheted: any additional reported miss fails the audit.
 
+The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, and 2.2 m high door openings. The authored part bounds were tightened to those dimensions; destruction adds its existing 0.035 m hit-zone margin. Typecheck, lint, and the ratcheted sweep audit pass after this correction. This generator comparison is not a substitute for the all-district mesh-face audit or movement captures.
+
 Five non-L10 samples remain for follow-up because those placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893

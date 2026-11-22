@@ -35,12 +35,12 @@ for (const [id, house] of [['bld.farm-house-ruin', true], ['bld.farm-barn-ruin',
   const w = house ? 8 : 7, d = house ? 7 : 8, eave = house ? 2.55 : 3.35, opening = house ? 1.8 : 2.8;
   const parts: (typeof output)[string] = [];
   for (const side of [-1, 1]) {
-    parts.push({ name: `farm-side-${side}`, role: 'structure', min: [side*w/2-.27, .45, -d/2-.25], max: [side*w/2+.27, eave, d/2+.25] });
+    parts.push({ name: `farm-side-${side}`, role: 'structure', min: [side*w/2-.09, 0, -d/2], max: [side*w/2+.09, eave, d/2] });
     for (const end of [-1, 1]) {
-      const minX = side < 0 ? -w/2-.15 : opening/2-.12, maxX = side < 0 ? -opening/2+.12 : w/2+.15;
-      parts.push({ name: `farm-pier-${side}-${end}`, role: 'structure', min: [minX, .45, end*d/2-.3], max: [maxX, eave, end*d/2+.3] });
+      const minX = side < 0 ? -w/2 : opening/2, maxX = side < 0 ? -opening/2 : w/2;
+      parts.push({ name: `farm-pier-${side}-${end}`, role: 'structure', min: [minX, 0, end*d/2-.09], max: [maxX, eave, end*d/2+.09] });
     }
-    parts.push({ name: `farm-header-${side}`, role: 'structure', min: [-opening/2, 2.16, side*d/2-.3], max: [opening/2, eave, side*d/2+.3] });
+    parts.push({ name: `farm-header-${side}`, role: 'structure', min: [-opening/2, 2.2, side*d/2-.1], max: [opening/2, eave, side*d/2+.1] });
   }
   parts.push({ name: 'farm-roof', role: 'roof', min: [-w/2-.25, eave-.12, -d/2-.3], max: [w/2+.25, house ? 4.12 : 5.3, d/2+.3] });
   output[id] = parts;
