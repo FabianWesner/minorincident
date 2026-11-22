@@ -406,11 +406,18 @@ l.box('gorilla-vet-rifle-barrel', 'silver', [.85, .07, .07], [72.65, .20, -39])
 l.box('gorilla-vet-blood', 'blood', [1.2, .025, .6], [72, .16, -40])
 # The gorilla's night house reads as a keeper-built shelter from the public
 # side: masonry, a barred viewing slit, a forced service door and a bed of hay.
-# These are scenery only; the enclosure's existing combat navigation remains open.
+# Solid walls match the visible house. The open east side leaves the hay bed
+# accessible without obstructing either arena gate.
 l.box('gorilla-night-house-back', 'trouserSeam', [9.2, 3.4, .35], [57, 1.7, -49.6])
 l.box('gorilla-night-house-side', 'trouserSeam', [.35, 3.4, 8.2], [52.6, 1.7, -45.6])
 l.box('gorilla-night-house-front', 'trouserSeam', [9.2, 3.4, .35], [57, 1.7, -41.6])
 l.box('gorilla-night-house-roof', 'woodWarm', [9.2, .32, 8.2], [57, 3.42, -45.6])
+for _id, _min, _max in [
+    ('back', [52.4, 0, -49.775], [61.6, 3.4, -49.425]),
+    ('side', [52.425, 0, -49.7], [52.775, 3.4, -41.5]),
+    ('front', [52.4, 0, -41.775], [61.6, 3.4, -41.425]),
+]:
+    l.data['colliders'].append(dict(id='gorilla-night-house-' + _id, aabb=dict(min=_min, max=_max), minTier=0, maxTier=5))
 l.box('gorilla-night-house-door', 'trouserSeam', [1.6, 2.5, .16], [60.3, 1.25, -41.34])
 l.box('gorilla-night-house-door-splinter', 'woodWarm', [1.8, .14, .14], [60.2, 1.72, -41.2])
 l.box('gorilla-viewing-window', 'backpackTealDark', [3.2, 1.1, .12], [55.6, 2.45, -41.35])
