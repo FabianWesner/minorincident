@@ -113,3 +113,17 @@ The preliminary lioness bake and rigid-node binding completed and are preserved 
 After the lion change, `E2E_PORT=5231 SCENE_PORT=5232 E2E_UNITS=1 npm run scene:gate -- --filter night-boss-lion --jobs 1 --out test-results/scene-gate-s224-lion-final` passed 4/4 rows (HIGH and LOW, WebGL2 and WebGPU). This is not the complete requested animal gate or visual matrix.
 
 A fourth unchanged remote `npm test` attempt also exceeded the 240 s budget (241.1 s, test process exit 124). During that run `tests/engine/save-progression.test.ts` reported one failed case, but the runner timed out before printing the failure details; do not classify its cause without a completed run. The required unchanged rerun remains open at the time limit.
+
+## Lioness candidate built (2026-11-22)
+
+The preliminary rigid-part lioness bake was replaced by the continuous skinned crowd path, using the preserved 1,800 / 850 / 650-triangle TRELLIS solids and the production lioness skeleton. Authored source-space eye landmarks project to two emissive eye discs. A species-specific paint pass adds a broad flank/back wound with pale tissue strokes and blood on the muzzle. The build was compacted losslessly and the helper enforces the original lioness HIGH/LOW byte ceilings and total triangle ceilings:
+
+| LOD | Total triangles | HIGH / LOW bytes | Original HIGH / LOW byte ceiling |
+| --- | ---: | ---: | ---: |
+| 0 | 1,860 | 74,220 / 74,220 | 82,092 |
+| 1 | 880 | 49,960 / 49,960 | 57,512 |
+| 2 | 699 | 40,916 / 40,916 | 49,616 |
+
+The raw wound atlas was opened and the authored red areas are distinct from the neutral coat; this does not establish their game-camera readability. `npm run typecheck` and `npm run lint` passed. The complete local `npm test` passed: 27 files, 106 tests, 149.5 s. The required remote command was attempted but could not start because no healthy Hetzner runner is provisioned. The focused lioness scene and the all-animal scene-gate selection could not start: the sandbox denied the browser-pool localhost bind and the `tsx` CLI IPC socket (`EPERM`); the legacy lock path is also blocked by `mac-gpu-guard.py` being denied `ps`.
+
+The seven-animal old/new sheet remains unbuilt and unreviewed. The lioness still needs a game-camera review at zoom 1 and 1.5, HIGH/LOW and each LOD, including idle and attack motion. The same full matrix must be reviewed for lion, flamingo, zebra, gorilla, monkey and elephant; do not infer acceptance from the partial views above. Rerun the animal scene gates and the unchanged remote `npm test` after the visual review, then commit the single small comparison JPG with the review notes.
