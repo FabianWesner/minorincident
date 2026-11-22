@@ -125,6 +125,8 @@ export async function checkL8Route(): Promise<void> {
       for (let tick = 0; tick < 60; tick++) {
         w.update();
         expect(guards.some(e => e && inRect(e.transform, stage.zone)), `${stage.id}: guards remain outside`).toBe(false);
+        expect(corgi.companion!.arenaWait, `${stage.id}: corgi retains its wait order`).toBe(true);
+        expect(inRect(corgi.transform, stage.zone), `${stage.id}: corgi remains outside`).toBe(false);
       }
       stop();
       expect(shots, `${stage.id}: guards do not attack cage animals`).toEqual([]);
@@ -178,5 +180,10 @@ export async function checkL8Route(): Promise<void> {
     expect(closedAt.get(900834), 'elephant south gate closes one tick after arming').toBe(armedAt + 1);
     expect(closedAt.get(900848), 'gorilla return entry closes one tick after elephant entry').toBe(armedAt + 1);
     expect(closedAt.get(900849), 'gorilla forward exit closes one tick after elephant entry').toBe(armedAt + 1);
+    for (let tick = 0; tick < 60; tick++) {
+      w.update();
+      expect(corgi.companion!.arenaWait, 'elephant: corgi retains its wait order').toBe(true);
+      expect(inRect(corgi.transform, elephantZone), 'elephant: corgi remains outside').toBe(false);
+    }
   } finally { w.dispose(); }
 }
