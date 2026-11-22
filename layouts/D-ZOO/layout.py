@@ -404,6 +404,11 @@ l.box('zebra-blood-trace', 'blood', [1.8, .025, .7], [72, .16, 40])
 l.box('gorilla-vet-rifle-stock', 'woodWarm', [.55, .1, .18], [72, .20, -39])
 l.box('gorilla-vet-rifle-barrel', 'silver', [.85, .07, .07], [72.65, .20, -39])
 l.box('gorilla-vet-blood', 'blood', [1.2, .025, .6], [72, .16, -40])
+# Spilled feed container beside the keeper at the lion rocks. The small
+# collider keeps it a physical obstacle without closing the approach lane.
+l.box('lion-feed-bucket', 'silver', [.55, .48, .55], [-67, .39, -26])
+l.box('lion-spilled-feed', 'khakiLight', [1.1, .03, .7], [-66.3, .16, -26])
+l.data['colliders'].append(dict(id='lion-feed-bucket', aabb=dict(min=[-67.275, .15, -26.275], max=[-66.725, .63, -25.725]), minTier=0, maxTier=5))
 # Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
 for k in range(9):
     tx, tz = 60 + _zr.uniform(-18, 18), 32 + _zr.uniform(-16, 16)

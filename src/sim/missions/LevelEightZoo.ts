@@ -30,6 +30,8 @@ export interface L8ZooState {
   /** Nadia's guided walk: 0 leading, 1 aborted (she is gone/turned), 2 arrived at the entry gate. */
   guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number; guideRouteVersion?: number; guideAnimalLines?: number; infectionSetupAt?: number; infectionFeedLineAt?: number; infectionStoryLines?: number;
   lastJoinCue?: number;
+  /** Keeper killed during the breach, retained in the lion enclosure. */
+  lionStoryKeeperId?: number;
   perimeterGateBreaks?: (number | null)[]; perimeterGateReleased?: boolean[]; perimeterGateSounded?: boolean[]; gateBreachLineAt?: number;
   /** r33-l8route: tick the plaza doors shut (0 = not yet), the route-marker leg/node, and the regions whose first walk-in wave has run (bit 1 north, 2 south, 4 east). */
   sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number; driverAt?: number; departureRun?: number;
@@ -459,6 +461,15 @@ export class LevelEightZoo {
         guard.civilian.ally.run = at; guard.civilian.ally.post = at; guard.civilian.ally.runSpeed = 6; guard.civilian.ally.hold = true;
       }
       this.reyesFallback();
+      // The keeper reached the lion rocks with feed before the breach. Use the
+      // same finished-civilian representation as the authored L5 bodies so the
+      // scene survives the breach checkpoint and later animal fights.
+      const bodyAt = this.point({ x: -68, z: -26 }, .35);
+      const bodyId = w.npcs!.civilians.outbreak!.spawnPedestrian(bodyAt, { ...zooStaffLook(0), waypoints: [bodyAt] });
+      const body = w.entities.get(bodyId)!;
+      body.civilian!.state = 'finished'; body.civilian!.entered = t - 600; body.health.current = 0;
+      if (body.appearance) body.appearance.handProp = null;
+      s.lionStoryKeeperId = bodyId;
       this.mission.checkpoint('breach', this.mission.def.anchors['zoo-entrance']);
       this.mission.radio('L8.nadia-safe');
       s.gateBreachLineAt = t + 60;
