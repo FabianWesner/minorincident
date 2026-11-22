@@ -72,3 +72,5 @@ An opt-in `S234_PROFILE=1` captures a Chrome CPU profile aligned with trace time
 ```sh
 E2E_UNITS=1 SCENE_PORT=5264 S234_COMBAT=1 S234_DELAY=135 S234_MATCH=1 S234_PROFILE=1 MI_PERF_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh npx tsx tools/perf/s234-l10hitch.ts webgpu high profile
 ```
+
+The profiled constructed run had no recorded simulation sample over 4 ms from ticks 12 through 890; the tick-891 grid work is therefore not evidence of a simulation spike at the PO's tick 639. Across the profiled tick-550–700 interval (2.5 seconds), sampling showed ordinary rendering/presentation work; this aggregate cannot rule out GPU scheduling or a different input history. The current fixture repeatedly calls `perf()` for instrumentation, so its CPU profile also includes measurement overhead. A recording or save from the reported session has been requested to reproduce its input and state history.
