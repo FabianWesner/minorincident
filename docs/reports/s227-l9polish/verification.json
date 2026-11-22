@@ -1,0 +1,46 @@
+{
+  "codeCommit": "4f08dc0d",
+  "threat": {
+    "flags": 0,
+    "L9Skilled": "complete",
+    "L9Passive": "complete"
+  },
+  "remoteNpmTest": {
+    "filesPassed": 27,
+    "testsPassed": 105,
+    "skipped": 1,
+    "seconds": 202.3
+  },
+  "vehicleCampaignMotion": {
+    "passed": true,
+    "cases": 8
+  },
+  "solidPlacement": {
+    "before": 565,
+    "after": 0
+  },
+  "missionInteractions": "passed",
+  "verifyE31": {
+    "target": "E31",
+    "epics": [
+      "E31"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 50.606
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 29.861
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 204.863
+      }
+    ]
+  }
+}

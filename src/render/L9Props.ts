@@ -106,10 +106,6 @@ export class L9Props extends Group {
       for (let i = 0; i < 4; i++) fixed(red, [b.x - 3 + i * 2, .07, b.z], [.7, .04, 9]);
       this.sign('OPEN ROAD  ·  FLOOR IT', b.x - 6, b.z + 8, paint);
     }
-    // A single railway crosses all three returns. Sleepers are instanced,
-    // keeping this long sightline to three draws rather than hundreds.
-    for (let z = -350; z <= 300; z += 2) fixed(wood, [cfg.railX, .045, z], [5, .09, .22]);
-    for (const x of [cfg.railX - 1.1, cfg.railX + 1.1]) fixed(metal, [x, .105, -25], [.12, .12, 650]);
     for (const side of [-1, 1]) {
       fixed(paint, [cfg.repair.x, .065, cfg.repair.z + side * 4], [13, .045, .2]);
       fixed(paint, [cfg.repair.x + side * 6.5, .065, cfg.repair.z], [.2, .045, 8]);

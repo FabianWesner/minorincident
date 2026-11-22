@@ -123,7 +123,15 @@ export class LevelNineDriving {
       w.entities.get(s.samId)!.civilian!.survivor = { key: 'reyes', mode: 'follow', slot: s.roster.length - 1, leader: 1, cover: false, waitAt: 0, foundAt: 0 };
     }
     spawnSetPiece(w, 'bld.gas-station', { x: 418, z: 41 });
-    spawnSetPiece(w, 'kit.rail-crossing', { x: cfg.railX, z: 0, yaw: Math.PI / 2 });
+    // Each route crosses the railway at the stall plane. Align each crossing's
+    // road axis to its actual segment, including the two diagonal return legs.
+    for (const route of crossing.routes) {
+      const i = route.points.findIndex((p, index) => index > 0 && route.points[index - 1][0] <= cfg.railX && p[0] >= cfg.railX);
+      if (i < 1) continue;
+      const [ax, az] = route.points[i - 1], [bx, bz] = route.points[i];
+      const z = az + (bz - az) * (cfg.railX - ax) / (bx - ax);
+      spawnSetPiece(w, 'kit.rail-crossing', { x: cfg.railX, z, y: -.54, yaw: -Math.atan2(bz - az, bx - ax) });
+    }
     s.tankerId = spawnSetPiece(w, 'veh.fuel-truck', { ...cfg.tanker, yaw: Math.PI / 2 }).id;
     const crater = spawnSetPiece(w, 'decay.fuel-truck-crater', cfg.tanker); crater.hidden = true; s.tankerWreckId = crater.id;
     s.gateId = spawnSetPiece(w, 'l9.evac-gate', cfg.gate).id;

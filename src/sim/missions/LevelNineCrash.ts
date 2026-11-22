@@ -90,6 +90,15 @@ export class LevelNineCrash {
       if (this.state.ended) { this.mission.state.phase = 'progression'; this.mission.state.result = w.progression?.campaign?.results?.L9 ?? null; }
     }
     this.driving.prepare();
+    if (this.state.phase !== 'driving') this.hidePursuitBus();
+  }
+  /** The chase ends at the collapsed span; it must not follow the courier
+   * onto the far bank or be mistaken for the APC wreck. */
+  private hidePursuitBus(): void {
+    const id = this.driving.state.busId, bus = this.w.vehicles!.cars.get(id);
+    if (!bus) return;
+    bus.entity.hidden = true; bus.physics.body.setEnabled(false);
+    this.w.vehicles!.autopilot.delete(id); stopEngine(this.w, id);
   }
   begin(): void {
     this.mission.checkpoint('crossing-start');
@@ -120,6 +129,7 @@ export class LevelNineCrash {
       // used to sit on the deck with the objective unmet; the scripted run-up below then goes east at a floor speed.
       this.mission.checkpoint('outskirts-approach');
       this.mission.setState('crash-started', true);
+      this.hidePursuitBus();
       s.phase = 'approach'; s.startedAt = w.tick; s.from = { ...car.transform }; s.preCrashDurability = car.health.current;
       const lip = this.anchor('crash-impact'), velocity = w.vehicles!.cars.get(s.carId)!.physics.body.linvel();
       const driven = Math.hypot(velocity.x, velocity.z), eastward = velocity.x >= 1;
@@ -154,7 +164,8 @@ export class LevelNineCrash {
     if (mega) {
       mega.hidden = false; mega.infected!.hidden = false;
       const leap = Math.min(1, t / 60), at = car.transform;
-      Object.assign(mega.transform, { x: at.x - 6 * (1 - leap), z: at.z, y: at.y + 1.3 + Math.sin(Math.PI * leap) * 6, yaw: at.yaw });
+      const dismount = Math.min(1, Math.max(0, (t - approachTicks - FALL) / 60));
+      Object.assign(mega.transform, { x: at.x - 6 * (1 - leap) + 4 * dismount, z: at.z - 12 * dismount, y: lerp(at.y + 1.3, .7, dismount) + Math.sin(Math.PI * leap) * 6, yaw: at.yaw });
       w.spatial.set(mega.id, mega.transform.x, mega.transform.z);
       if (t >= 60 && s.megaLandedAt === undefined) { s.megaLandedAt = w.tick; w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.mega-boarded', actorId: mega.id }); }
     }
@@ -181,20 +192,19 @@ export class LevelNineCrash {
         w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.bridge-collapse' });
         w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.weapons-lost', actorId: s.carId });
       }
-      const f = (t - approachTicks) / FALL, start = s.fallFrom ?? approachPose(), seconds = (t - approachTicks) / 60;
-      const speed = (s.impactSpeed ?? 14) + Math.max(0, approachTicks / 60 - 1) * 3.5;
-      const y = Math.max(height + wreck.y, start.y - 4.905 * seconds * seconds), x = start.x + heading.x * speed * seconds;
+      const f = (t - approachTicks) / FALL, start = s.fallFrom ?? approachPose();
+      // The collapsing span launches the APC across the gap. It lands on the
+      // authored far shoulder, where the courier can see her own wreck.
+      const x = lerp(start.x, wreck.x, f), y = lerp(start.y, height + wreck.y, f) + Math.sin(Math.PI * f) * 1.2;
       const sam = w.entities.get(this.driving.state.samId);
       if (sam && s.samFlightFrom) {
         Object.assign(sam.transform, { x: lerp(s.samFlightFrom.x, 528, f), z: lerp(s.samFlightFrom.z, -6, f), y: lerp(s.samFlightFrom.y, .7, f) + Math.sin(Math.PI * f) * 3, yaw: start.yaw });
         w.spatial.set(sam.id, sam.transform.x, sam.transform.z);
       }
-      // Hitting the far bank removes forward momentum instead of pulling the
-      // hull back toward a predetermined wreck pose.
-      w.vehicles!.scriptPose(s.carId, { x: y < height - .8 ? Math.min(523.5, x) : x, y, z: start.z + heading.z * speed * seconds, yaw: start.yaw }, 0, rotation(Math.min(Math.PI / 2, f * Math.PI / 2)));
+      w.vehicles!.scriptPose(s.carId, { x, y, z: lerp(start.z, wreck.z, f), yaw: start.yaw }, 0, rotation(0));
     } else {
       const landed = { ...car.transform, y: height + wreck.y };
-      w.vehicles!.scriptPose(s.carId, landed, 0, rotation(Math.PI / 2));
+      w.vehicles!.scriptPose(s.carId, landed, 0, rotation(0));
       if (s.phase === 'fall' || s.phase === 'approach') {
         s.crawlAnchor = this.safeAnchor(); s.phase = 'impact';
         this.mission.setState('crash-impacted', true);
@@ -224,6 +234,7 @@ export class LevelNineCrash {
         const idle = t - (approachTicks + FALL + IMPACT) >= 240 || (s.crawlProgress ?? 0) >= CRAWL_AUTO;
         let dir: { x: number; z: number } | null = mag > .05 ? { x: move.x / Math.hypot(move.x, move.z), z: move.z / Math.hypot(move.x, move.z) }
           : idle ? { x: Math.cos(-p.transform.yaw), z: Math.sin(-p.transform.yaw) } : null;
+        if (s.endingAt !== undefined) dir = null;
         const forward = dir ? Math.max(mag, idle ? .75 : 0) : 0, stepLen = forward * Math.max(4, length) / CRAWL;
         Object.assign(w.previousPlayer!, p.transform);
         if (dir && stepLen > 0) {
@@ -240,11 +251,12 @@ export class LevelNineCrash {
         if (sam?.civilian && sam.health.current > 0) { w.npcs!.move(sam, { x: 548, z: -8 }, 1.1, sam.civilian, .5); w.spatial.set(sam.id, sam.transform.x, sam.transform.z); }
         if (f >= 1) {
           if (s.endingAt === undefined) {
-            s.endingAt = w.tick; w.player?.resetPose(w.tick);
+            s.endingAt = w.tick; w.player?.resetPose(w.tick); p.survivor!.scriptedClip = 'get-up-prone';
             w.vehicles!.explodeScripted(s.carId);
             this.mission.state.subtitle = { id: 'L9.end-caption', text: dialogue['L9.end-caption'], until: w.tick + 180 };
             w.events.emit({ type: 'dialogue.line', tick: w.tick, id: 'L9.end-caption', text: this.mission.state.subtitle.text });
           }
+          if (w.tick - s.endingAt >= 60) delete p.survivor!.scriptedClip;
           if (w.tick - s.endingAt >= 180) {
             s.phase = 'done'; s.finished = true; w.storyLock = null; w.clearInput();
             this.mission.setState('crash-finished', true);
@@ -289,8 +301,11 @@ export class LevelNineCrash {
     const s = this.state;
     if (s.phase === 'driving' || s.phase === 'done') return null;
     if (s.phase === 'crawl') {
-      const p = this.w.entities.get(1)!.transform;
-      return { position: [p.x + 14, 12, p.z - 14], target: [p.x, .35, p.z] };
+      // Include the wreck at the start, then ease back to the courier as she
+      // crawls away so her movement remains readable.
+      const p = this.w.entities.get(1)!.transform, car = this.w.entities.get(s.carId)!.transform;
+      const weight = Math.max(0, 1 - (s.crawlProgress ?? 0) * 2), x = p.x + (car.x - p.x) * .35 * weight, z = p.z + (car.z - p.z) * .35 * weight;
+      return { position: [x + 14, 12, z - 14], target: [x, .35, z] };
     }
     if (s.phase === 'impact') {
       // The landing follows the incoming velocity, so frame the actual wreck
@@ -321,9 +336,8 @@ export class LevelNineCrash {
     const s = this.state, car = this.w.entities.get(s.carId)!;
     if (s.driving) this.driving.rebuild();
     if (s.phase === 'driving') { this.w.storyLock = null; this.w.vehicles!.setFloorPolicy(s.carId); this.driving.poseHatch(); return; }
-    const roll = s.phase === 'fall' ? Math.min(1, (this.w.tick - s.startedAt - (s.approachTicks ?? 180)) / FALL) * Math.PI / 2 : s.phase === 'approach' ? 0 : Math.PI / 2;
     const yaw = car.transform.yaw;
-    this.w.vehicles!.scriptPose(s.carId, car.transform, 0, { x: Math.cos(yaw / 2) * Math.sin(roll / 2), y: Math.sin(yaw / 2) * Math.cos(roll / 2), z: -Math.sin(yaw / 2) * Math.sin(roll / 2), w: Math.cos(yaw / 2) * Math.cos(roll / 2) });
+    this.w.vehicles!.scriptPose(s.carId, car.transform, 0, { x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) });
     if (s.phase === 'crawl' || s.finished) this.w.storyLock = null; else this.lock();
   }
 }

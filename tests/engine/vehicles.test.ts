@@ -350,9 +350,11 @@ async function l9HatchCheckpointAndEvacuation(): Promise<void> {
     Object.assign(courier.survivor!, { scriptedClip: 'crawl', animation: 'knockdown', attack: { started: 0, endsAt: 120 }, knockdown: { started: 0, until: 120 } });
     Object.assign(l9.state, { phase: 'crawl', startedAt: world.tick - 750, crawlProgress: 1, endingAt: undefined });
     l9.update();
-    expect(courier.survivor!.scriptedClip, 'the L9 crawl ending exits into ordinary on-foot pose layers').toBeUndefined();
+    expect(courier.survivor!.scriptedClip, 'the L9 crawl ending starts the face-down get-up').toBe('get-up-prone');
     expect(courier.survivor!.knockdown).toBeUndefined(); expect(courier.survivor!.attack).toBeUndefined();
     expect(courier.survivor!.animation).toBe('idle');
+    world.tick += 60; l9.update();
+    expect(courier.survivor!.scriptedClip, 'get-up releases into ordinary on-foot pose layers').toBeUndefined();
   } finally { world.dispose(); }
 }
 
@@ -497,12 +499,14 @@ async function l9FloorApcThroughPile(): Promise<void> {
     const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!;
     world.missions!.begin();
     for (let i = 0; i < 5; i++) world.update();
-    const x0 = -300, z0 = -330, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
+    // The asphalt now bends; start on its long shallow segment and point
+    // along it so the cruise-speed assertion measures ramming on road.
+    const x0 = 60, z0 = -325 - 10 / 60, yaw = Math.atan2(5, 300), pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw };
     Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
-    car.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
     for (let i = 0; i < 30; i++) world.update();
     const entrySpeed = car.physics.def.topSpeed * .8;
-    car.physics.body.setLinvel({ x: entrySpeed, y: 0, z: 0 }, true); car.physics.postPhysics();
+    car.physics.body.setLinvel({ x: entrySpeed * Math.cos(yaw), y: 0, z: -entrySpeed * Math.sin(yaw) }, true); car.physics.postPhysics();
     const types = ['infected.brute', 'infected.runner', 'infected.armored', 'infected.sprinter', 'infected.crawler', 'infected.dog'];
     for (let i = 0; i < types.length; i++) world.infected!.spawn(types[i], { x: x0 + car.physics.def.length / 2 + 1, z: z0 + (i - 2.5) * .65 }, { state: 'chase' });
     const contacts: { before: number; after: number; target: string | undefined }[] = [];
@@ -542,7 +546,9 @@ async function l9FloorApcPackAtFence(): Promise<void> {
       world.missions!.begin();
       for (let i = 0; i < 5; i++) world.update();
       vehicles.damage(car.entity.id, car.entity.health.max);
-      const x0 = -265.7, z0 = -15.4, yaw = 1.45, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw };
+      // The regenerated curved route moved the former yard and its fence;
+      // use the current picket fence at (-283.7, -32.9).
+      const x0 = -283.7, z0 = -28.5, yaw = 1.45, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw };
       Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
       car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
       for (let i = 0; i < 30; i++) world.update();
@@ -645,6 +651,14 @@ async function apcBoarders(): Promise<void> {
     expect(car.physics.speed, 'scripted departure retains its speed').toBe(3);
     expect(car.physics.wheels[0].rotation, 'scripted departure turns its wheels').toBeGreaterThan(wheelRotation);
     expect(car.physics.rotation, 'scripted crash retains the whole-hull roll').toEqual(roll);
+    const boarderId = world.infected!.spawn('infected.runner', { x: car.entity.transform.x, z: car.entity.transform.z }, { state: 'chase', offNav: true });
+    const boarder = world.entities.get(boarderId)!;
+    boarder.attachedTo = id; car.entity.vehicle!.attached.push(boarderId);
+    world.vehicles!.destroyScripted(id, { x: 527.5, y: .72, z: 2.6, yaw: 0 }, true);
+    expect(boarder.corpse, 'crash preserves the boarder as a corpse').toBe(true);
+    expect(boarder.hidden, 'crash does not hide the corpse').toBe(false);
+    expect(world.entities.get(boarderId), 'crash retains the same entity').toBe(boarder);
+    expect(boarder.attachedTo).toBeUndefined();
   } finally { world.dispose(); }
 }
 

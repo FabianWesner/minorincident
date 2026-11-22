@@ -237,9 +237,15 @@ export class Vehicles {
     if (this.active === id) this.leave(car);
     state.floor = false; state.damage = 'exploded'; state.decay = 'wrecked'; state.explodeAt = null;
     if (deferExplosion) {
-      for (const actorId of state.attached) {
+      for (const [slot, actorId] of state.attached.entries()) {
         const e = this.world.entities.get(actorId); if (!e) continue;
-        delete e.attachedTo; e.hidden = true; e.health.current = 0; e.corpse = true; if (e.infected) e.infected.hidden = true; this.world.spatial.delete(e.id);
+        delete e.attachedTo;
+        if (e.health.current > 0) this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: 'l9.bridge-collapse', sourceId: id, targetId: e.id, origin: e.transform, direction: { x: 1, z: 0 }, base: e.health.max * 10 + 1000, multiplier: 1, type: 'vehicle', knockback: 0, stagger: 0 });
+        e.health.current = 0; e.corpse = true; e.hidden = false; if (e.infected) e.infected.hidden = false;
+        // Boarders fall into the same gully as the rest of the bridge pack;
+        // retain their bodies and identities rather than hiding corpses.
+        e.transform.x = 516 + (slot % 3) * 1.2; e.transform.y = -4.8; e.transform.z = (Math.floor(slot / 3) - 1) * 1.2;
+        this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       }
       state.attached = []; state.apcBoarders = {};
     }

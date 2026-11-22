@@ -7,6 +7,17 @@ import { alphaMoveClipData } from './alphaMoveClips';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
+// L9's courier is face down at the end of her authored crawl. The shared get-up
+// starts with the pelvis rolled face up, so mirror that pelvis roll for this
+// recovery while retaining the existing rig motion and timing.
+const proneGetUp = authoredClips.get('get-up');
+if (proneGetUp) authoredClips.set('get-up-prone', {
+  ...proneGetUp,
+  name: 'get-up-prone',
+  tracks: proneGetUp.tracks.map(track => track.node === 'hip' && track.path === 'rotation'
+    ? { ...track, values: track.values.map((value, i) => i % 4 === 2 ? -value : value) }
+    : track),
+});
 // r32-alphas: the humanoid Alpha move set, authored as key poses in code (same schema).
 for (const clip of alphaMoveClipData) authoredClips.set(clip.name, clip);
 /** Skin pilot: Mesh2Motion CC0 clips retargeted offline (tools/skinpilot/retarget.ts); same schema, overrides by name. */

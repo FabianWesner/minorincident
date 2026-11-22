@@ -304,7 +304,7 @@ export class ActionView extends Group {
     const crawling = player.survivor?.scriptedClip === 'crawl' || crashPhase === 'crawl';
     const downed = player.health.current <= 0 || !!player.survivor?.knockdown && this.world.tick < player.survivor.knockdown.until
       || ['fall', 'impact', 'crawl'].includes(String(crashPhase))
-      || ['knockdown', 'get-up', 'die'].includes(String(animation)) || crawling;
+      || ['knockdown', 'get-up', 'die'].includes(String(animation)) || ['crawl', 'get-up-prone'].includes(String(player.survivor?.scriptedClip)) || crawling;
     // Draw the selected weapon in the dominant hand and hide the other slot.
     const selectedSide = loadout.state.selectedSide, aiming = !downed && selectedSide === this.gunSide && loadout.current(selectedSide).id === this.gunId && this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
     const selectedId = loadout.current(selectedSide).id;
@@ -373,7 +373,7 @@ export class ActionView extends Group {
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
       held.holder.scale.setScalar(inHand ? (longGunHolds[def.viewAssetId]?.scale ?? heldActionScale(def.id)) : 1);
-      held.holder.visible = (crawlAxe || !downed) && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
+      held.holder.visible = !crawling && !downed && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = loadout.definition(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(def.category === 'throwable' ? '#ffd166' : this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;

@@ -357,14 +357,26 @@ export class PropSystem {
     this.world.physics.world!.removeRigidBody(item.body);
   }
   loadChunk(entityId: number, saved: NonNullable<ReturnType<PropSystem['chunkState']>>): void {
+    const entity = this.world.entities.get(entityId);
     for (const d of this.world.districts!.districts) {
-      const placement = d.pushables.find(p => `${d.id}/${p.id}` === saved.id); if (!placement) continue;
+      const placement = d.pushables.find(p => `${d.id}/${p.id}` === saved.id && p.assetId === entity?.archetype); if (!placement) continue;
       this.rebuildingIds.set(saved.id, entityId);
       const item = this.spawn(placement, d.origin, saved, saved.id); this.rebuildingIds.delete(saved.id);
       item.fixed = saved.fixed; item.braced = saved.braced;
       if (item.fixed || item.braced) item.body.setBodyType(RAPIER.RigidBodyType.Fixed, false);
       item.body.setEnabled(!item.braced && (this.world.entities.get(entityId)?.health.current ?? 0) > 0);
       this.updateNavigation(); return;
+    }
+    // L9's regenerated route dressing changed placement IDs. Preserve a
+    // streamed prop from an older campaign save at its saved pose and with
+    // its entity identity, rather than failing the whole checkpoint load.
+    if (this.world.scenario === 'L9' && entity && pushableProps[entity.archetype]) {
+      const p = saved.p, placement: Placement = { id: saved.id, assetId: entity.archetype, position: [...p], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 6, allowRoad: false, lightGroup: '', visualAabb: { min: [...p], max: [...p] } };
+      this.rebuildingIds.set(saved.id, entityId);
+      const item = this.spawn(placement, [0, 0], saved, saved.id); this.rebuildingIds.delete(saved.id);
+      item.fixed = saved.fixed; item.braced = saved.braced;
+      if (item.fixed || item.braced) item.body.setBodyType(RAPIER.RigidBodyType.Fixed, false);
+      item.body.setEnabled(!item.braced && entity.health.current > 0); this.updateNavigation(); return;
     }
     throw new Error(`Missing streamed prop placement: ${saved.id}`);
   }
