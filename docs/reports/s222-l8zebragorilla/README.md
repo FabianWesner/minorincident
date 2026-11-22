@@ -126,6 +126,8 @@ The 2 s skilled-route trace shows why late residents spend time catching up: ID 
 
 The authored `l8Route` describes each enclosure as the only passage between adjacent cells: entry closes during the fight and exit opens on clear, with hedge and barricade lines closing other paths. The current outside-entry hold therefore cannot simply send the human group ahead around the active enclosure while preserving the authored route. A handoff fix needs to respect those physical gates; no bypass was implemented.
 
+A read-only wrapper sampled the corpse-detour helper for the eight late residents every 2 s outside boarding: all 147 recorded calls returned the original catch-up goal. This rules out that helper redirecting those sampled movements, though it does not inspect intermediate navigation waypoints. The diagnostic source was restored.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
