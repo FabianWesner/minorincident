@@ -98,6 +98,8 @@ A read-only kiting trace with separated rows showed the three counted courier-ta
 
 A controlled kiting trace identified the counted attacks as flamingo dives, not south-gate arrivals. With baseline formation, flamingo 404 landed its dive at tick 8957; with separated rows, IDs 405–407 started the first dives and none landed. The courier was about 1.2 m farther east at the first dive in the separated run. This identifies the encounter whose outcome changes, but does not establish that its behavior is defective or justify changing attack stats.
 
+Combining the separated-row trial with removal of both first-commit south/west waypoints completed skilled L8 and passed kiting, but retained `L8/phase/breached:SLOW_FOLLOWER:354`. Both changes were reverted. The combination demonstrates that the individual route and crowding effects interact; it is not a complete fix.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
