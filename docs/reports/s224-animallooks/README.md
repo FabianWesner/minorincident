@@ -301,3 +301,17 @@ The lioness muzzle stain was moved onto the repaired source's actual front surfa
 `tools/qa/s224-zebra-skin-diagnostic.ts` evaluates baked LOD2 vertices over selected clip frames. Its longest edge is approximately 1.390 m in idle, 1.674 m in infected-run and 1.802 m in rear-kick, between body and hind-leg owners. A trial duplicated and assigned 75 long mixed torso/leg faces rigidly to the body while leaving the remaining leg surfaces animated. The opened HIGH chase/attack frames still showed large distorted panels and disconnected-looking legs; the trial was rejected and the committed assets restored. Typecheck and lint pass with the diagnostic tool. Its measurements inspect the baked clip, not all runtime contact adjustments.
 
 The retained TRELLIS zebra game-space source (`minorincident_3dpipeline/experiments/trellis2-pro-zebra-game-space-v1/raw.glb`) contains a 14,338-triangle surface plus 1,120 separate sole-cap triangles and is marked not production ready. A direct 599-triangle reduction without caps failed the continuous-body check (6 components, 31 open edges). Combining the existing caps before permissive reduction produced 597 triangles but still failed that check (14 components, 59 open edges); a non-permissive reduction retained 8,889 triangles and also failed topology. These are rejected trials, not a new delivered model. A closed, connected zebra source and a budgeted reduction are still needed before rebinding can be evaluated.
+
+### Refreshed seven-animal comparison
+
+The old/new sheet was regenerated and opened against the current assets. It covers seven animals, HIGH/LOW, zoom 1/1.5 and each substituted source LOD; all 84 current captures reported no browser errors. The fixture redirects the model and its matching bake, while its runtime metrics name the naturally selected batch. Verdicts for the captured idle angle:
+
+- **Lion:** the new red back wound is prominent; face details are too small to judge here.
+- **Lioness:** the red back wound reads clearly; separate front/side captures show glowing eyes and a red muzzle.
+- **Flamingo:** the central red mark is subtle against pink plumage; the earlier side captures show the flank wound.
+- **Zebra:** the front-facing injury cues are small and LOD2 remains angular; its separate motion review fails.
+- **Gorilla:** the red shoulder/back injury is conspicuous against the dark body.
+- **Monkey:** the red upper-body mark is visible, while facial detail is too small to assess.
+- **Elephant:** the red trunk tip and back wound read clearly in the captured LODs and tiers.
+
+The selected animal scene gate passed 18/18 rows across HIGH/LOW and WebGPU/WebGL2 (`test-results/scene-gate-s224c-current/`). The sheet and gate do not accept zebra motion or prove lioness eye attachment in every attack pose. Regenerate the sheet and rerun the gates after any final asset repair.
