@@ -399,3 +399,5 @@ Clip instrumentation showed that the ordinary chase fixture uses `infected-sprin
 A further LOD2 experiment marked two camera-visible body vertices and painted their UVs. The compacted file was 39,024 bytes, but the opened HIGH front-attack crop showed two triangular smears, not eyes. These points were not the authored eye landmarks and the trial was reverted. No lioness fix is accepted.
 
 A live tick-183 trace of the rejected head-weight trial confirms both painted center vertices are now head-owned, but project around (393.0, 273.6) and (402.9, 276.3), roughly 2–3 pixels lower than the corresponding original projected landmarks. The local reweight therefore moved these candidate marks farther down in this pose, consistent with the failed visual review; it is not a usable fix.
+
+At tick 183, candidate frontmost surfaces near screen (395, 261) and (405, 261), above the original landmark projections, map back to bind-space points approximately 0.139 m and 0.186 m from the respective authored eye landmarks. Both are body-owned. They are therefore not justified as eye UVs merely because they appear at a convenient screen location; no delivery was changed.
