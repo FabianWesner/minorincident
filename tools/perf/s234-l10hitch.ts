@@ -27,6 +27,14 @@ try {
   await session.open();
   await session.page.mouse.click(10, 10);
   await session.page.evaluate('globalThis.__name = fn => fn');
+  const cdp = process.env.S234_PROFILE === '1' ? await session.page.context().newCDPSession(session.page) : null;
+  let performanceNavigationStartMs = 0, performanceStartedAt = 0;
+  if (cdp) {
+    await cdp.send('Performance.enable'); await cdp.send('Profiler.enable'); await cdp.send('Profiler.start');
+    const { metrics } = await cdp.send('Performance.getMetrics');
+    performanceNavigationStartMs = metrics.find(m => m.name === 'NavigationStart')!.value * 1000;
+    performanceStartedAt = await session.page.evaluate(() => performance.now());
+  }
   await session.page.evaluate(async ({ frames, diagnostic, combat, delay, matching }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
@@ -87,6 +95,10 @@ try {
       frames, max: Math.max(...sorted), p99: sorted[Math.ceil(sorted.length*.99)-1], hitches: frames.filter(f=>f.dt>100), errors: [] as string[] };
   });
   result.errors = session.errors;
+  if (cdp) {
+    const { profile } = await cdp.send('Profiler.stop'); await cdp.detach();
+    writeFileSync(`${out}/trace.cpuprofile`, JSON.stringify({ ...profile, performanceNavigationStartMs, performanceStartedAt }));
+  }
   const segment = result.frames.filter(f => f.tick >= 400 && f.tick <= 900);
   const sortedSegment = segment.map(f => f.dt).sort((a,b) => a-b);
   const p99Segment = sortedSegment[Math.ceil(sortedSegment.length * .99) - 1] ?? 0;

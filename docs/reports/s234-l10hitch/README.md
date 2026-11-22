@@ -64,3 +64,11 @@ A further quiet run used `S234_MATCH=1 S234_COMBAT=1 S234_DELAY=135`, normal dam
 The remote runner became available on a later attempt of `sh tools/remote/run.sh "$PWD" -- npm test`. It exited 1 before running Vitest: the repository test-budget preflight counted 151 cases against the 150-case cap (130 Vitest, 9 e2e, 12 browser invariants). The required remote unit gate is therefore not passed. No tests were trimmed.
 
 In the position-matched `matched-before` trace, the largest recorded simulation sample in ticks 400–900 was 15.0 ms at tick 891; the following RAF interval was 26.6 ms. The sampled AI and physics portions were 0.6 and 0.7 ms respectively. These categories do not account for all work inside the simulation tick and do not identify a cause. The first infected down occurred at tick 388; the snapshot at tick 639 alone does not prove that the second engagement matches the PO's session.
+
+## CPU profile of a later simulation spike
+
+An opt-in `S234_PROFILE=1` captures a Chrome CPU profile aligned with trace timestamps. The same normal-damage, 135-tick delay fixture produced a 9.5 ms simulation tick at tick 891 (x=600.11); the earlier unprofiled position-matched run recorded 15.0 ms at that same tick. Chrome samples in the corresponding interval show `ChunkResidency.update → activate → refreshNavigation → NavGrid` constructing and indexing the ordinary grid, then `MegaPursuit.invalidateNavigation → NavGrid.withClearance` constructing its grid, followed by streamed prop blocker work. This attributes a repeatable **later chunk transition cost**, not the reported second-zombie hang around x=582/tick 639. The profiled run had p99 11.2 ms, longest interval 27.2 ms, and 0 >33 ms in ticks 400–900; profiler overhead prevents using it as an unprofiled comparison. Raw profile: `test-results/s234-l10hitch/profile-webgpu-high/trace.cpuprofile`. Typecheck and lint passed.
+
+```sh
+E2E_UNITS=1 SCENE_PORT=5264 S234_COMBAT=1 S234_DELAY=135 S234_MATCH=1 S234_PROFILE=1 MI_PERF_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh npx tsx tools/perf/s234-l10hitch.ts webgpu high profile
+```
