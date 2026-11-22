@@ -357,3 +357,7 @@ A further temporary lioness trial painted shifted atlas marks and used the exist
 The queued head-mask prototype capture completed after another lane released its exclusive browser reservation. The opened HIGH LOD2 front-attack frame shows a large red region across the face and foreleg, not two eyes, so the prototype is rejected. The remote unit suite on the committed zebra candidate passed 27 files, 105 tests with one skipped in 208.0 s.
 
 A texture-mask trial limited the baked emission flag to UV triangles around shifted painted eye centers, instead of marking the whole head. It built successfully and avoided the prior glowing foreleg, but the opened HIGH LOD2 front-attack frame showed one large red facial patch rather than two eyes. The trial was reverted. The lioness requirement remains open.
+
+The painted zebra LOD2 was captured during the chase fixture at zoom 1 and 1.5 in HIGH then LOW; all four runs reached frame 303 without reported browser errors. Opened frame 90 in each shows the hind leg without the former large triangular panel. This samples the chase motion and does not establish every frame or angle.
+
+The selected animal scene gate was rerun on the current candidate and failed: 14/18 rows passed. All four `night-boss-zoo-lineup` HIGH/LOW WebGPU/WebGL2 rows report lioness foot-slide p95 51.9 cm against 3 cm; all other selected rows passed. Results are in `test-results/scene-gate-s229/`. The cause is not yet established. The gate and lioness eye requirement remain open.
