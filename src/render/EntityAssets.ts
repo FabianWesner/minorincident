@@ -145,7 +145,7 @@ export class EntityAssets extends Group {
             let variants = this.vehicleVariants.get(entity.id); if (!variants) { variants = new Map(); this.vehicleVariants.set(entity.id, variants); }
             variants.set(lod, record);
           }
-          model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
+          model.position.set(entity.transform.x, entity.archetype === 'kit.rail-crossing' ? entity.transform.y : entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
           model.rotation.y = entity.transform.yaw;
           // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
           if (this.low && entity.kind === 'setpiece' && !id.startsWith('veh.')) model.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
@@ -281,7 +281,7 @@ export class EntityAssets extends Group {
       const flat = entity.kind === 'obstacle', pose = rec.pose!;
       const a = Math.max(0, Math.min(1, alpha));
       const y = pose.py + (pose.y - pose.py) * a;
-      model.position.set(pose.px + (pose.x - pose.px) * a, flat ? Math.max(0, y - .5) : Math.max(0, y - .7), pose.pz + (pose.z - pose.pz) * a);
+      model.position.set(pose.px + (pose.x - pose.px) * a, entity.archetype === 'kit.rail-crossing' ? y : flat ? Math.max(0, y - .5) : Math.max(0, y - .7), pose.pz + (pose.z - pose.pz) * a);
       model.rotation.y = pose.pyaw + Math.atan2(Math.sin(pose.yaw - pose.pyaw), Math.cos(pose.yaw - pose.pyaw)) * a; model.visible = !entity.hidden && (entity.kind !== 'obstacle' || entity.health.current > 0);
       // Phone tier: scripted set pieces (L4 convoy, tank, glass) beyond the light/camera reach are not drawn at all.
       if (this.low && entity.kind === 'setpiece' && model.visible) { const t = this.view?.cameraTarget ?? player0; if (t && Math.hypot(entity.transform.x - t.x, entity.transform.z - t.z) > 48) model.visible = false; }
