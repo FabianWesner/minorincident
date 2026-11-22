@@ -1,0 +1,65 @@
+{
+  "setup": {
+    "id": 115,
+    "speed": 6.805555555555561,
+    "player": {
+      "x": 2803.79296875,
+      "y": 0.7099999785423279,
+      "z": 45,
+      "yaw": 0
+    },
+    "target": {
+      "x": 2808.79296875,
+      "y": 0.7,
+      "z": 45,
+      "yaw": 0
+    }
+  },
+  "result": {
+    "id": 115,
+    "hits": [
+      {
+        "type": "vehicle.infected-hit",
+        "tick": 221,
+        "sourceId": 100,
+        "targetId": 115,
+        "position": {
+          "x": 2808.859541013414,
+          "y": 0.7,
+          "z": 45.00000425999939,
+          "yaw": 0
+        },
+        "runOver": true
+      }
+    ],
+    "target": {
+      "health": {
+        "current": 0,
+        "max": 60
+      },
+      "corpse": true,
+      "squashed": true,
+      "transform": {
+        "x": 2808.859541013414,
+        "y": 0.7,
+        "z": 45.00000425999939,
+        "yaw": 0
+      }
+    },
+    "bike": {
+      "mounted": true,
+      "heading": 0,
+      "speed": 9.375,
+      "pedal": 34.3925,
+      "steer": 0,
+      "lean": 0,
+      "standTicks": 0,
+      "armed": true,
+      "lockUntil": 0,
+      "motorbike": true,
+      "approached": false,
+      "squashBumpAt": 221
+    }
+  },
+  "errors": []
+}
