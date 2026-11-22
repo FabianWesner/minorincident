@@ -28,6 +28,8 @@ The same native wall position was subsequently captured HIGH and LOW at zoom 1 a
 
 [Farm fade sheet](farm-fade-sheet.jpg) compares current native frames at HIGH and LOW, zoom 1 and 1.5. With the courier behind the shed, walls and roof fade together and she remains visible; in front, the red barn stays opaque. A heavy ground shadow remains in both views. These use a fresh level and teleports, and do not show doorway movement or the exact checkpoint.
 
+The existing `tools/qa/l10-probe.ts` checkpoint load was retried and fails with `Unknown checkpoint: cure-residential`. A diagnostic fresh-level reconstruction reaches mission `result` with current checkpoint `cure-disperse-ready` without creating the requested residential snapshot. The checkpoint is listed as a regional checkpoint, while the test loader advances objective completions rather than travelling through the region. This is why the native sheet uses a fresh level and teleports; it is not a reproduction of the reported saved checkpoint.
+
 Building selection now also tests a segment to the nearby visible corgi, independently of the expanded subject box. The first HIGH companion fixture exposed inadequate courier visibility at the 75% fade; increasing clearance inside the subject disc while retaining the whole-building fade made both the companion and non-occluder fixtures pass (`/private/tmp/s236-companion-fix/`). Typecheck and lint pass. An isolated corgi-only building occlusion capture remains open.
 
 The same companion and non-occluder fixtures pass on LOW (`/private/tmp/s236-companion-low/`). The inspected companion sheet shows both figures visible; it does not isolate a building that occludes only the corgi.
