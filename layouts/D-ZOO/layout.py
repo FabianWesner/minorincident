@@ -431,10 +431,13 @@ l.box('gorilla-forced-door-splinter', 'mustardLight', [1.4, .08, .14], [60.4, .2
 l.box('gorilla-viewing-window', 'backpackTealDark', [3.2, 1.1, .12], [55.6, 2.45, -41.35])
 for _x in (54.4, 55.2, 56.0, 56.8):
     l.box('gorilla-window-bars', 'silver', [.07, 1.2, .08], [_x, 2.45, -41.2])
-for _i in range(36):
-    _x = 53.8 + (_i % 9) * .55 + (_i % 3) * .1
-    _z = -40.4 + (_i // 9) * .55 + (_i % 2) * .15
-    l.box('gorilla-straw-scatter', 'mustardLight' if _i % 2 else 'khakiLight', [.7, .07, .12], [_x, .2 + (_i % 3) * .04, _z])
+_straw_rng = random.Random(222)
+for _i in range(180):
+    _x = _straw_rng.uniform(53.8, 58.3)
+    _z = _straw_rng.uniform(-40.6, -38.5)
+    _straw = l.box('gorilla-straw-scatter', 'mustardLight' if _i % 2 else 'khakiLight',
+                   [_straw_rng.uniform(.25, .55), .025, .035], [_x, .19 + (_i % 3) * .025, _z])
+    _straw.rotation_euler.z = _straw_rng.uniform(0, math.tau)
 # The barrage perch at (69, -25) sits on a rock shelf. Keep the base solid
 # and the approach to the arena gates clear; the boss traverses onto its top.
 l.box('gorilla-throw-rock-base', 'sidewalk', [3.8, 2.65, 3.2], [69, 1.325, -25])
