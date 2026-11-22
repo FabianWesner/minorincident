@@ -94,3 +94,11 @@ Waypoint/route-node grep: L8 was the only mission that advanced a route node fro
 - The elephant south entry closes after the solo-yard encounter arms; the east perimeter breach remains open for outside attackers. The rendered gate follows the same state.
 - The nightly mission-interactions fixture passes after updating its setup for the entry-gate sanctuary endpoint, paused plaza clock, perimeter arrivals and retained tunnel scenery. The previous assertion that the first flamingo bite is visible within 20 m of the courier no longer holds: the courier is at the entry gate, roughly 89 m from that bite. The fixture still checks the actual bite and same-ID turn; visibility of that bite is not established.
 - The earlier zero-flag threat receipt predates the elephant gate correction and must be rerun on the final revision.
+
+### Validation at bb7d54fe
+
+- Full `qa:threat` shards 1/2 and 2/2 merged with **0 fail flags**; L8 skilled completed. The passive L8 observation reached its planned tick budget. Local receipts: `test-results/s220c-bb7d-shard-1`, `test-results/s220c-bb7d-shard-2`, and `test-results/s220c-bb7d-threat`.
+- Remote `npm test`: 27 files passed, 105 tests passed and one skipped, 200.8 s / 240 s. The nightly mission-interactions check, typecheck, and lint passed on the same source.
+- Solid-placement audit: 2,352 D-ZOO placements, zero remaining offenders; zero total remaining offenders. Receipt: `test-results/s220c-bb7d-solid.json`.
+- Filtered `scene:gate -- --filter '*zoo*'`: 8/8 rows passed across WebGPU and WebGL2. This filter does not establish every L8 scene row.
+- Re-reviewed the earlier HIGH native breach sheet: the entry panel contracts and disappears between the pre-break and +25 tick images; the darker west panel also clears into a gap. These frames predate the merge and do not establish the merged revision's visual result.
