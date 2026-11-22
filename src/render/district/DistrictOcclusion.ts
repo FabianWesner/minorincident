@@ -43,7 +43,7 @@ export class DistrictOcclusion {
   /** A tall plant prop she is tucked against covers her this frame (its foreground is lens-cut; she also draws in the depth slice). */
   courierTucked = false;
   private vehicleSilhouette = false;
-  update(view: View, reveal: boolean, player?: { x: number; y: number; z: number }, subject?: Box3, vehicleSilhouette = false): void {
+  update(view: View, reveal: boolean, player?: { x: number; y: number; z: number }, subject?: Box3, vehicleSilhouette = false, companion?: { x: number; y: number; z: number }): void {
     this.courierOccluded = this.courierTucked = false; this.vehicleSilhouette = vehicleSilhouette;
     if (player) this.updateRoofs(player);
     seeThrough.floor.value = player ? Math.max(0, player.y - .7) : 0;
@@ -59,7 +59,7 @@ export class DistrictOcclusion {
     projectReveal(view.camera, box);
     if (this.seeThroughReference) { this.updateCutPlacements(true); this.updateInteriors(view, player); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
     // Only the placements that actually sit between the lens and some part of the subject (courier or whole player vehicle) are eligible for the cut.
-    this.occludedSubject(view, box, player);
+    this.occludedSubject(view, box, player, companion);
     if (this.keepWhole) for (const entry of this.parts.lodBatches) if (entry.id === this.keepWhole) for (const ref of entry.refs) { this.cutPlacements.delete(ref); this.lensPlacements.delete(ref); }
     // Clear only the foreground of placements that enclose most of the lens.
     // The normal courier disc stays bounded; player angle and zoom stay fixed.
@@ -242,7 +242,7 @@ export class DistrictOcclusion {
   }
   /** Segments from the camera to the centre and corners of the subject (courier or whole player vehicle) against the same boxes.
    * Every placement hit by any segment is marked for the per-placement cut; the rest stay opaque. */
-  private occludedSubject(view: View, subject: Box3, courier?: { x: number; y?: number; z: number }): boolean {
+  private occludedSubject(view: View, subject: Box3, courier?: { x: number; y?: number; z: number }, companion?: { x: number; y: number; z: number }): boolean {
     const points = this.subjectPoints, centre = subject.getCenter(this.holeTarget);
     let n = 0;
     points[n++].copy(centre);
@@ -251,12 +251,12 @@ export class DistrictOcclusion {
     // subject corner is not enough to cut the whole house: the camera-to-
     // subject centre or feet segment must cross its enclosure. Other occluders still
     // use the full projected body so narrow props cannot cover just the head.
-    return this.cutBlockers(view, centre, points, n, courier);
+    return this.cutBlockers(view, centre, points, n, courier, companion);
   }
   /** Q-50 (L10 dispersal console): the corgi's generous box corner inside a prop's conservative box is contact, not cover; the
    * cut carved the uncovered console beside them into dark slivers. A subject point inside a non-building box only counts while
    * the courier herself stands within its footprint (tent, shelter); otherwise the segment must pass through the box in front of it. */
-  private cutBlockers(view: View, player: { x: number; z: number }, points: Vector3[], count: number, courier?: { x: number; y?: number; z: number }): boolean {
+  private cutBlockers(view: View, player: { x: number; z: number }, points: Vector3[], count: number, courier?: { x: number; y?: number; z: number }, companion?: { x: number; y: number; z: number }): boolean {
     const o = view.camera.position;
     let blocked = false;
     for (const entry of this.parts.lodBatches) {
@@ -287,12 +287,13 @@ export class DistrictOcclusion {
           if (tucked && !contact && courier.y !== undefined && courier.y - .7 > ref.position.y + standOnLift) tucked = false;
         }
         const building = entry.id.startsWith('bld.');
-        for (let i = 0; i < (building && courier?.y !== undefined ? 2 : count); i++) {
+        for (let i = 0; i < (building && courier?.y !== undefined ? 2 + (companion ? 1 : 0) : count); i++) {
           // The projected subject can include nearby infected and the corgi.
           // Its centre may be many metres from the courier in L10; use her
           // own centre line for building occlusion instead of that union.
           const point = building && courier?.y !== undefined
-            ? this.holeCorner.set(courier.x, courier.y + (i === 0 ? .2 : -.55), courier.z) : points[i];
+            ? i === 2 && companion ? this.holeCorner.set(companion.x, companion.y, companion.z)
+              : this.holeCorner.set(courier.x, courier.y + (i === 0 ? .2 : -.55), courier.z) : points[i];
           const dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
           let enter = 0, exit = 1;
           for (let axis = 0; axis < 3; axis++) {
