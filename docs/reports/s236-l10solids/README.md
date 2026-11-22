@@ -42,6 +42,8 @@ Building selection now also tests a segment to the nearby visible corgi, indepen
 
 The same companion and non-occluder fixtures pass on LOW (`/private/tmp/s236-companion-low/`). The inspected companion sheet shows both figures visible; it does not isolate a building that occludes only the corgi.
 
+An isolated HIGH synthetic occlusion diagnostic placed the camera at (20, 12, 20), courier at (9, 0.7, 9), and corgi at (7.5, 0.3, 7.5) near `bld.house-a` at (5, 5). With no corgi, the building selection was empty; adding the corgi selected that house. This calls the actual district selection with controlled positions and verifies the corgi-only branch, but is not a gameplay capture.
+
 An 85% uniform fade retained slightly more of the barn in a reviewed HIGH native frame, but failed the LOW companion fixture at zoom 1.5 (courier visibility 0.8 versus 0.85 required). The 90% fade was restored and that LOW row passes (`/private/tmp/s236-fade90-companion/`). The opaque shadow is rendered in a separate instanced shadow pass and remains a visual concern.
 
 The placement shadow pass now masks the selected whole-building instance; other instances retain their shadows. Reviewed HIGH and LOW native frames show the black barn footprint removed while faded and retained while the barn is opaque. The shadow switches off rather than interpolating. Typecheck, lint, and the HIGH and LOW companion, behind-building and non-occluder fixtures pass. WebGPU and a performance comparison remain unverified.
