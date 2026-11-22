@@ -161,6 +161,11 @@ export class AnimalMoves {
     }
     if (species === 'gorilla') {
       if (!b || dead) return undefined;
+      if (a?.move === 'gorilla.grab-slam') {
+        if (a.stage === 'telegraph') { p.crouch = .16 * windup; p.pitch = -.2 * windup; p.front = .8 * windup; p.head = -.15 * windup; }
+        else { const slam = 1 - ease((renderTick - a.activeTick) / 45); p.crouch = .22 * slam; p.pitch = -.35 * slam; p.front = 1.1 * slam; p.head = -.3 * slam; }
+        return p;
+      }
       if (a?.move === 'gorilla.pound') {
         if (a.stage === 'telegraph') { p.armsUp = windup; p.pitch = .3 * windup; p.head = .15 * windup; }
         else { const r = clamp01((renderTick - a.activeTick) / 40); const slam = r < .15 ? r / .15 : 1 - ease((r - .15) / .85); p.armsUp = -.35 * slam; p.pitch = -.35 * slam; p.crouch = .18 * slam; p.head = -.2 * slam; }
