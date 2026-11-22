@@ -965,7 +965,7 @@ export class CrowdView extends Group {
           const k = Math.max(0, 1 - (this.world.tick - feedback.at) / 9);
           if (k > 0) this.transform.scale(this.flinchScale.set(1 + .05 * k, 1 - .06 * k, 1 + .05 * k));
         }
-        if (e.squashed) this.transform.scale(this.flinchScale.set(1.16, .25, 1.16));
+        if (e.squashed) this.transform.scale(this.flinchScale.set(1.16, .08, 1.16));
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         // r32: flying flamingos and leaping animals cast a contact shadow on the ground under them (reads height top-down).
         if (animalLift > .3 && this.shadows.count < 350) { const g = this.world.districts?.groundHeight(x, z) ?? 0; this.shadowMatrix.makeTranslation(x, g + .02, z); this.shadows.setMatrixAt(this.shadows.count++, this.shadowMatrix); this.shadows.instanceMatrix.needsUpdate = true; }

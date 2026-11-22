@@ -107,7 +107,7 @@ class CivilianBatch extends Group {
   private bakedClip!: CrowdClip;
   private readonly hand = new Matrix4();
   private readonly gunDirection = new Vector3();
-  private readonly squashScale = new Vector3(1.16, .25, 1.16);
+  private readonly squashScale = new Vector3(1.16, .08, 1.16);
   private readonly carryRotation = new Quaternion();
   private readonly carryScale = new Vector3();
   private readonly carryDirection = new Vector3();

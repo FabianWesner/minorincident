@@ -42,8 +42,10 @@
 
 - After the renderer follow-up on `c5a5ffa4`, the vehicle-motion run regenerated all 16 HIGH/LOW scene receipts and each reports `pass: true`. The process exit status was unavailable, so this is receipt evidence rather than a separately observed exit-0 result.
 
+- Additional L10 HIGH then LOW capture after tightening vertical scale to 0.08: the [sheet](sheet.jpg) shows the target before contact, blood under the bike, and the corpse left behind. The camera angle makes its horizontal limbs appear raised, but the actual frozen mesh instance is grounded and its measured vertical bounding extent is 5.13 cm HIGH and 5.07 cm LOW ([HIGH](l10-high.json), [LOW](l10-low.json)). Both captures retained the marked corpse, kept the rider mounted, and logged no browser errors. Typecheck and lint pass.
+
 ## Open acceptance
 
-- Resolve the raised-looking LOW bike corpse limbs and confirm a fully flattened silhouette in native captures; review the sound mix and bike bump in motion. The existing controlled captures do not fully establish visual acceptance.
+- Review the sound mix and bike bump in motion. The still captures show the contact and retained corpse, but the bike lift is subtle.
 - Complete the full remote unit suite within its unchanged 240-second budget. Multiple attempts timed out; the focused save-progression file passes on the same runner.
 - Campaign-motion and threat checks passed before the latest renderer-only change. Re-run them on the final tree if exact-revision evidence is required.
