@@ -242,6 +242,13 @@ export class L8BossArenas {
     if (!target?.civilian || target.health.current <= 0 || target.infection) { delete b.arenaCarrier; return false; }
     if (e.emerging) return false;
     b.state = 'chase'; e.combat!.attacking = false;
+    // Every carrier must be able to complete its physical approach. The
+    // arena's primary carrier is also checked by update(), but additional
+    // paddock attackers use this shared control path alone.
+    if (distance(e.transform, target.transform) < 1.8 && target.civilian.state !== 'grabbed' && this.w.combat!.query.visible(e.transform, target.transform, target.id)) {
+      this.w.npcs!.civilians.outbreak!.grab(target, e);
+      return true;
+    }
     this.w.npcs!.move(e, target.transform, 4.8, b, .8, 48000);
     return true;
   }

@@ -69,8 +69,9 @@ export async function checkL8Route(): Promise<void> {
         const outside = at(-5);
         expect(w.solids.relocate(player, { ...outside, y: player.transform.y }, 'fixture.l8-route', 20, false)).toBe(true);
         const firstZebra = w.entities.get(arena.ids[0])!;
-        expect(firstZebra.civilian).toBeDefined();
-        w.npcs!.civilians.outbreak!.infect(firstZebra, player.id);
+        // The paddock attackers may already have turned this animal while
+        // the preceding enclosures were being checked.
+        if (firstZebra.civilian && !firstZebra.infection) w.npcs!.civilians.outbreak!.infect(firstZebra, player.id);
         for (let tick = 0; tick < 600; tick++) w.update();
         const herd = arena.ids.map(id => w.entities.get(id)!).filter(e => e.infected?.arenaBoss?.arena === 'zebra' && e.health.current > 0);
         expect(arena.phase, 'zebra encounter stays dormant while the courier is beyond the entry fence').toBe(0);
