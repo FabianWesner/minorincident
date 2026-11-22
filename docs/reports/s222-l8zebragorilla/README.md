@@ -92,6 +92,8 @@ A passive 210 s trace of follower 364 found its slow samples concentrated at 152
 
 The formation calculation compresses rear rows by 0.85 m per row while a separate forward offset adds 0.4 m per row, exceeding the normal 1.2 m row spacing. Removing the compression retained skilled completion and cleared all L8 pace flags, but failed `KITING_LANDED_HITS_BELOW_2`. Combining that change with the independently observed clear south spawn produced eight flags. Both trials were reverted; row separation is a promising crowding cause, but a complete route and kiting fix remains open.
 
+With formation compression removed, the kiting receipt recorded three attack starts over 20 s but no landed hits (baseline had three starts and one hit). Removing the west waypoint as well retained skilled completion but still failed kiting and reintroduced corgi 354; both changes were reverted. The receipt alone does not identify whether collision, target selection, or attack timing prevented the hit.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
