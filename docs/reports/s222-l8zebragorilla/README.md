@@ -136,6 +136,8 @@ The solo-cage behavior predates this lane: commit `6b8c71a1` records an all-cage
 
 A read-only sensitivity calculation on the stored breached-phase medians removed the eight traced late-resident IDs from the comparison population. It changed the first-bad group median from 4.769 to 4.749 m/s and the later current median from 4.850 to 4.823 m/s; the dog median remained about 4.50 m/s. Even that hypothetical omission would not clear the existing 95% criterion, so those residents contribute but do not alone explain the flag. This calculation is diagnostic only; the audit and its population were not changed.
 
+Full `npm run qa:threat` on restored formation source at `0c464170` completed in 334.9 s: skilled L8 completed; the three flags were `L8/step/escape:SLOW_FOLLOWER:364`, `L8/phase/breached:SLOW_FOLLOWER:364`, and `L8/phase/breached:SLOW_FOLLOWER:354`. All other levels had zero flags. This supersedes the full receipt for the reverted standard-formation trial.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
