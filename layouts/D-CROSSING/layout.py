@@ -289,7 +289,7 @@ for x,z,yaw in [(515,-11,1.5),(518,9.5,1.7)]:
 # Crash sequence anchors (game space). S6 owns the trigger/camera; these are validated safe positions.
 l.anchor('crash-approach',[470,0,0])          # take driving input here, before the first wreck
 l.anchor('crash-impact',[GULLY_X-GULLY_HALF,0,0])  # near lip: the APC leaves the road here
-l.anchor('crash-wreck',[GULLY_X+1.7,-GULLY_DEPTH,0.0])  # final APC wreck on the gully floor, yaw 90 (clear of slabs and piers)
+l.anchor('crash-wreck',[GULLY_X+15,0,9])  # APC lands beyond the far guardrail, visible from the crawl
 l.anchor('crawl-start',[GULLY_X+GULLY_HALF+3.5,0,2.6])   # player thrown clear on the far lip, beside the wreck
 l.anchor('crawl-fallback',[GULLY_X+GULLY_HALF+3.5,0,-3.2])
 l.anchor('crawl-end',[547,0,0])               # safe L10 on-foot start, in sight of the city
