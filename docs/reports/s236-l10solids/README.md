@@ -10,7 +10,7 @@ See-through selection for buildings now tests the camera-to-subject centre segme
 
 `tools/qa/building-wall-sweep-audit.ts` is wired into `tools/qa/solid-placement-audit.ts`. It sampled 664 building placements across L1–L10 with 9,760 capsule sweeps. L10: 242 buildings, 1,958 samples, zero misses. The existing solid placement portion reports 572 before and zero after across all district datasets.
 
-The audit additionally samples vertical LOD0 mesh faces independently of collider bounds, by intersecting triangles at local height 1 m and sampling segments at least 0.5 m long at intervals no greater than 1 local metre. It resolves model paths through the manifest, including aliases. After correcting a cross-level deduplication error and a double district-origin offset for destructible collider samples, it reports 97,455 combined sweeps across 832 level-specific placements; L10 has 23,648 samples and zero misses. Shorter segments, faces outside this height slice, and openings remain coverage limits. Known misses are ratcheted per level in `tools/qa/building-wall-sweep-baseline.json`.
+The audit additionally samples vertical LOD0 mesh faces independently of collider bounds, at local heights 0.5, 1 and 1.5 m, retaining slices within the grounded courier's body height after scaling. Segments at least 0.5 m long are sampled at intervals no greater than 1 local metre. It resolves model paths through the manifest, including aliases. The current audit reports 202,160 combined sweeps across 832 level-specific placements; L10 has 45,433 samples and zero misses. Shorter segments, gaps between slices, and openings remain coverage limits. Known misses are ratcheted per level in `tools/qa/building-wall-sweep-baseline.json`.
 
 Mesh normals are transformed using inverse placement scale before yaw, so nonuniformly scaled placements are swept across the face in the correct direction; invalid scale is rejected. The ratcheted audit passes with this correction.
 
@@ -19,6 +19,8 @@ Every level-specific campaign building has at least one qualifying mesh sample. 
 The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, and 2.2 m high door openings. The authored part bounds were tightened to those dimensions; destruction adds its existing 0.035 m hit-zone margin. Typecheck, lint, and the ratcheted sweep audit pass after this correction. This generator comparison is not a substitute for the all-district mesh-face audit or movement captures.
 
 The height-slice audit found a visible chimney with no collider in each of four farm houses. A structural chimney bound matching the generator was added; all L10 sampled misses now clear. Typecheck, lint, and the ratcheted audit pass after this change.
+
+The expanded lower slice also found unblocked hay bales integrated into five barn placements. Structural bounds matching the two bales and the attached silo were added, including placement scale. L10 has no remaining sampled misses. The expanded non-L10 baseline contains 694 sample findings, chiefly supermarket and pharmacy faces, plus the previously identified fire station, metro, garage, shed and bridge; exact placement IDs and coordinates are listed in the baseline JSON for follow-up. These findings have not been individually classified as solid walls or intended openings.
 
 The audit also probes the reported 0.7-scale shed after chunk activation with the courier's full radius: a 3 m sweep stops after 1.1125 m at the side wall and 0.7625 m at a gable pier, while the doorway-centre sweep travels the full 3 m. These checks pass alongside typecheck and lint.
 
@@ -56,10 +58,10 @@ These non-L10 findings remain for follow-up; the first five placements have no c
 - L4 D-FAIR `bld.garage-detached` placements 644 and 652
 - L4 D-FAIR `bld.shed` placement 748
 - L6 D-SUBWAY `l6-36`
-- L1 D-GROVE `bld.fire-station:853`: 46 mesh samples around local x=1.47–1.70, z=-2.52–4.19; assess whether these faces are intended to block. Exact coordinates are in the baseline JSON.
-- L2 repeats 28 samples at the same D-GROVE fire station. L5 and L7 report eight samples each at D-FAIR `bld.metro-entrance:225`, including two authored ingress collider sweeps; assess whether the visible faces and ingress are intended to block. L5 repeats the L4 garage and shed findings; L7 repeats the shed finding.
+- L1 and L2 D-GROVE `bld.fire-station:853`; assess whether its sampled faces are intended to block.
+- L3 D-CORRIDOR, L4/L5/L7 D-FAIR, L8 D-ZOO and L9 D-CROSSING: supermarket and pharmacy placements listed in the baseline JSON. L5 and L7 also report `bld.metro-entrance:225`, including two authored ingress collider sweeps. L5 repeats the L4 garage and shed findings; L7 repeats the shed finding.
 
-L8 and L9 have no reported misses. The earlier report that L5 had no buildings was caused by cross-level deduplication.
+Earlier lower sample counts and the claim that L8 and L9 had no misses predate the expanded height coverage. The earlier report that L5 had no buildings was caused by cross-level deduplication.
 
 ## Verification
 

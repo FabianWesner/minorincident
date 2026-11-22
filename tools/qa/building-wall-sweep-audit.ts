@@ -50,6 +50,7 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
         const courier = world.entities.get(1)!;
         const radius = Math.min(actorRadius(courier), .34);
         for (const sample of meshSamples.get(p.assetId) ?? []) {
+          if (sample.y * p.scale[1] < .1 || sample.y * p.scale[1] > 1.3) continue;
           const c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = p.position[0] + d.origin[0] + sample.x * p.scale[0] * c + sample.z * p.scale[2] * s;
           const z = p.position[2] + d.origin[1] - sample.x * p.scale[0] * s + sample.z * p.scale[2] * c;
           // A normal uses inverse scale before yaw; applying yaw alone points
@@ -57,11 +58,11 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
           const localX = sample.nx / p.scale[0], localZ = sample.nz / p.scale[2], length = Math.hypot(localX, localZ);
           assert.ok(Number.isFinite(length) && length > 0, `Invalid building scale: ${d.id}/${p.id}`);
           const nx = (localX * c + localZ * s) / length, nz = (-localX * s + localZ * c) / length;
-          courier.transform.x = x + nx; courier.transform.z = z + nz; courier.transform.y = .9;
+          courier.transform.x = x + nx; courier.transform.z = z + nz; courier.transform.y = p.position[1] + .7;
           world.chunks?.update([courier.transform.x, courier.transform.z]);
           const moved = world.solids.sweep(courier, { x: -nx, z: -nz }, 2, actorRadius(courier), false, false);
           samples++;
-          if (moved >= 1.9) misses.push(`${level}/${d.id}/${p.id}:mesh-wall:${sample.x.toFixed(2)},${sample.z.toFixed(2)}`);
+          if (moved >= 1.9) misses.push(`${level}/${d.id}/${p.id}:mesh-wall:${sample.x.toFixed(2)},${sample.y.toFixed(2)},${sample.z.toFixed(2)}`);
         }
         if (level === 'L10' && p.id === 'l10-find-farm-shed') {
           // The reported scaled barn: probe a side wall, a gable pier, and the

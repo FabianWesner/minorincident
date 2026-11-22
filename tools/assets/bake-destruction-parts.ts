@@ -43,6 +43,10 @@ for (const [id, house] of [['bld.farm-house-ruin', true], ['bld.farm-barn-ruin',
     parts.push({ name: `farm-header-${side}`, role: 'structure', min: [-opening/2, 2.2, side*d/2-.1], max: [opening/2, eave, side*d/2+.1] });
   }
   if (house) parts.push({ name: 'farm-chimney', role: 'structure', min: [-2.325, .3, -d*.22-.325], max: [-1.675, 4.1, -d*.22+.325] });
+  else {
+    parts.push({ name: 'farm-silo', role: 'structure', min: [3.52, .12, -3.33], max: [5.08, 4.35, -1.77] });
+    for (const z of [.75, 2.2]) parts.push({ name: `farm-hay-${z}`, role: 'structure', min: [3.77, .03, z-.55], max: [4.87, 1.13, z+.55] });
+  }
   parts.push({ name: 'farm-roof', role: 'roof', min: [-w/2-.25, eave-.12, -d/2-.3], max: [w/2+.25, house ? 4.12 : 5.3, d/2+.3] });
   output[id] = parts;
 }
