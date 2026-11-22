@@ -73,7 +73,7 @@ export class KeyframeAnimator {
     for (const p of this.restPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
     this.ground?.reset();
   }
-  constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
+  constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips, private readonly model: Object3D = rig.root) {
     this.skin = clipSource === skinClips;
     this.bones = this.skin ? courierBones(rig.root) : undefined;
     for (const node of new Set([...Object.values(rig), ...this.bones ? chainNodes(this.bones) : []])) this.restPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
@@ -232,7 +232,8 @@ export class KeyframeAnimator {
     if (proneGetUp) this.ground?.groundProneRise();
     else if (!ride && strike && /kick|knee|spinning/.test(strike)) this.ground?.groundPose();
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
-    if (pose.animation === 'die' || pose.animation === 'knockdown') settleGroundPose(this.rig.root);
+    if (this.skin && (pose.scriptedClip === 'crawl' || proneGetUp)) settleGroundPose(this.model);
+    else if (pose.animation === 'die' || pose.animation === 'knockdown') settleGroundPose(this.rig.root);
     // Skeleton v2 swings the bag with a 2-DOF pendulum after the ride contacts (CourierLiving).
     if (!this.bones) {
       const target = this.rig.torso.rotation.z * -.3;
