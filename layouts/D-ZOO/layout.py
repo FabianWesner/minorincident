@@ -410,25 +410,31 @@ l.box('gorilla-vet-blood', 'blood', [1.2, .025, .6], [72, .16, -40])
 # accessible without obstructing either arena gate.
 l.box('gorilla-night-house-back', 'trouserSeam', [9.2, 3.4, .35], [57, 1.7, -49.6])
 l.box('gorilla-night-house-side', 'trouserSeam', [.35, 3.4, 8.2], [52.6, 1.7, -45.6])
-l.box('gorilla-night-house-front', 'trouserSeam', [9.2, 3.4, .35], [57, 1.7, -41.6])
+l.box('gorilla-night-house-front-left', 'trouserSeam', [6.8, 3.4, .35], [55.8, 1.7, -41.6])
+l.box('gorilla-night-house-front-right', 'trouserSeam', [.6, 3.4, .35], [61.3, 1.7, -41.6])
+l.box('gorilla-night-house-front-header', 'trouserSeam', [1.8, .7, .35], [60.1, 3.05, -41.6])
 l.box('gorilla-night-house-roof', 'woodWarm', [9.2, .32, 8.2], [57, 3.42, -45.6])
 for _id, _min, _max in [
     ('back', [52.4, 0, -49.775], [61.6, 3.4, -49.425]),
     ('side', [52.425, 0, -49.7], [52.775, 3.4, -41.5]),
-    ('front', [52.4, 0, -41.775], [61.6, 3.4, -41.425]),
+    ('front-left', [52.4, 0, -41.775], [59.2, 3.4, -41.425]),
+    ('front-right', [61.0, 0, -41.775], [61.6, 3.4, -41.425]),
+    ('front-header', [59.2, 2.7, -41.775], [61.0, 3.4, -41.425]),
 ]:
     l.data['colliders'].append(dict(id='gorilla-night-house-' + _id, aabb=dict(min=_min, max=_max), minTier=0, maxTier=5))
-l.box('gorilla-night-house-door', 'woodWarm', [1.6, 2.5, .16], [60.3, 1.25, -41.34])
-for _x in (59.4, 61.2):
+for _x in (59.25, 60.95):
     l.box('gorilla-night-house-door-frame', 'sidewalk', [.16, 2.7, .16], [_x, 1.35, -41.18])
-l.box('gorilla-night-house-door-lintel', 'sidewalk', [1.95, .16, .16], [60.3, 2.65, -41.18])
-l.box('gorilla-night-house-door-splinter', 'mustardLight', [1.8, .14, .14], [60.2, 1.72, -41.2])
+l.box('gorilla-night-house-door-lintel', 'sidewalk', [1.85, .16, .16], [60.1, 2.65, -41.18])
+# The door was ripped out: boards and splinters lie outside the clear opening.
+l.box('gorilla-forced-door-leaf', 'woodWarm', [1.6, .12, 2.3], [61.8, .23, -39.7])
+l.box('gorilla-forced-door-splinter', 'mustardLight', [1.4, .08, .14], [60.4, .24, -40.3])
 l.box('gorilla-viewing-window', 'backpackTealDark', [3.2, 1.1, .12], [55.6, 2.45, -41.35])
 for _x in (54.4, 55.2, 56.0, 56.8):
     l.box('gorilla-window-bars', 'silver', [.07, 1.2, .08], [_x, 2.45, -41.2])
-l.box('gorilla-straw-bed', 'mustardLight', [5.5, .12, 3.0], [56.2, .20, -39.5])
-for _x, _z in [(54.4, -39.1), (55.6, -40), (57, -38.9), (58, -40.1)]:
-    l.box('gorilla-straw-scatter', 'khakiLight', [.8, .05, .12], [_x, .29, _z])
+for _i in range(36):
+    _x = 53.8 + (_i % 9) * .55 + (_i % 3) * .1
+    _z = -40.4 + (_i // 9) * .55 + (_i % 2) * .15
+    l.box('gorilla-straw-scatter', 'mustardLight' if _i % 2 else 'khakiLight', [.7, .07, .12], [_x, .2 + (_i % 3) * .04, _z])
 # The barrage perch at (69, -25) sits on a rock shelf. Keep the base solid
 # and the approach to the arena gates clear; the boss traverses onto its top.
 l.box('gorilla-throw-rock-base', 'sidewalk', [3.8, 2.65, 3.2], [69, 1.325, -25])
