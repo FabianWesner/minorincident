@@ -78,3 +78,20 @@ The profiled constructed run had no recorded simulation sample over 4 ms from ti
 ## Later first-down diagnostic
 
 `S234_ATTACK_DELAY=450` holds the constructed driver's attacks until tick 450, without changing simulation rules. With `S234_DELAY=135 S234_MATCH=1 S234_PROFILE=1`, the first down occurred at tick 647 at x=581.93; its sampled simulation time was 2.4 ms and no material builds were recorded. At tick 639 the player had HP 80 and seven alive (the PO reported HP 90, six alive and one downed). The profiled 400–900 window had p99 11.2 ms, longest 30.3 ms and zero intervals over 33 ms. This different constructed input still does not reproduce the hang. Full trace/profile: `test-results/s234-l10hitch/late-attack-webgpu-high/`. Typecheck and lint passed.
+
+## Production-style opening cause and candidate fix
+
+The earlier Scene Lab runs used `test=1`, which bypasses the five-second deferred preparation gate. With `S234_REAL_BOOT=1`, the fixture uses the normal boot scene and production catch-up limit, while still using dev/test hooks to load the checkpoint. The quiet profiled run showed repeated long intervals alongside crowd/corpse material builds. Chrome CPU samples at the first 51.5 ms interval in an initial diagnostic show Three.js `buildNodeBuilder` / `compileAsync` and `CrowdView.loadBatch` / `StaticCorpses.prepare`. `GameView.startPreparation` starts the staged crowd plan after five seconds of play, placing its cold WebGPU material builds in the opening encounter. That initial diagnostic had muted settings and is not the comparison below.
+
+`GameView` now starts and awaits the existing L10 crowd plan before the loading warm-up, so the same living and corpse batches are compiled behind the loading card. Counts, corpse retention and quality are unchanged. The same seed-1 checkpoint, skilled driver, 135-tick movement delay, normal damage, zoom 0.99, active audio and production-style boot were run through quiet-run with Chrome profiling on both sides:
+
+| Ticks 400–900 | Before | After |
+| --- | ---: | ---: |
+| Longest RAF interval | 53.1 ms (tick 428) | 28.3 ms (tick 865) |
+| p99 | 25.5 ms | 11.8 ms |
+| Intervals >33 ms | 6 | 0 |
+| Frames with new material builds | 14 | 0 |
+
+Raw traces/profiles: `test-results/s234-l10hitch/real-before-webgpu-high/` and `real-after-webgpu-high/`. These are profiled dev-build measurements with a constructed input, not the PO recording; the snapshot at tick 639 has HP 80 vs reported 90. Profile start to first trace sample was approximately 4.89 s before and 6.46 s after (roughly 1.57 s more loading, including fixture setup). Verify the PO session separately when its input is available.
+
+Typecheck and lint passed after the change. Remote `sh tools/remote/run.sh "$PWD" -- npm test` again failed its 151/150 case-budget preflight before Vitest; no tests were removed. Full threat gate remains pending; earlier L10-only diagnostic completed skilled with zero L10 passive flags, but is not the full gate.

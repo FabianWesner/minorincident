@@ -23,7 +23,7 @@ for (let tick = 0; tick < 900; tick++) {
 }
 const out = `test-results/s234-l10hitch/${label}-${backend}-${tier}`;
 mkdirSync(out, { recursive: true });
-const session = new SceneSession({ backend, tier, seed: 1, nativeFrameTiming: process.env.S194_DIAGNOSTIC !== '1', viewport: { width: 1600, height: 900 }, query: { loadProfile: '2' } });
+const session = new SceneSession({ backend, tier, seed: 1, nativeFrameTiming: process.env.S194_DIAGNOSTIC !== '1', viewport: { width: 1600, height: 900 }, query: { loadProfile: '2', ...(process.env.S234_REAL_BOOT === '1' ? { test: '0', preload: '0' } : {}) } });
 try {
   await session.open();
   await session.page.mouse.click(10, 10);
@@ -40,6 +40,7 @@ try {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
     a.pause(); a.cheats.god(!matching); a.camera.follow(); if (matching) a.camera.zoom(.99); a.debug.cpuProfile();
+    if (matching) g.audio.set({ muted: false }, false);
     await g.audio.unlock();
     if (g.world.missions?.state.phase === 'briefing') g.world.missions.begin();
     let cursor = 0;

@@ -384,6 +384,11 @@ export class GameView implements Lifecycle {
     // the first update can also request an escort model.
     this.npcs?.update(this.camera);
     await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    // L10's staged crowd plan otherwise starts five seconds into play. Each
+    // newly streamed corpse page builds a WebGPU material graph on the main
+    // thread during the opening fight. Prepare the same plan before the full
+    // loading draw, which warms its living and corpse pages together.
+    if (this.world.scenario === 'L10') { this.crowd?.startStreaming(); await this.crowd?.ready(); }
     this.npcs?.update(this.camera);
     // The resident mounted gun used to load only in update()/screenshotReady(),
     // after the full warm-up. Its white vertex-colour mesh then linked on first
