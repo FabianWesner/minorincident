@@ -29,6 +29,8 @@ export interface InfectedState {
   targetId: number;
   /** Human acquired by close hearing in the archetype brain (targetId is reserved for obstacles). */
   heardTargetId?: number;
+  /** Next L8 gunshot investigation refresh; prevents continuous fire from resetting the route every tick. */
+  l8ShotRefreshAt?: number;
   /** L5 Alpha investigates a heard burst position until `until`, without acquiring a human through cover. */
   investigate?: { x: number; z: number };
   /** Story-director walk (L4 collapse Alphas): path to this point (grid A*, not the courier flow field) and ignore targets until cleared. */

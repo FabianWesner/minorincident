@@ -607,7 +607,8 @@ export class InfectedSystem {
   }
   /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */
   private perceiveTargets(e: EntitySnapshot, b: InfectedState): boolean {
-    if (this.world.scenario === 'L8' && this.hearing.courierShotNearby(e) && !b.pursuit && !b.specialAttack && !e.emerging) {
+    if (this.world.scenario === 'L8' && this.world.tick >= (b.l8ShotRefreshAt ?? 0) && this.hearing.courierShotNearby(e) && !b.pursuit && !b.specialAttack && !e.emerging) {
+      b.l8ShotRefreshAt = this.world.tick + 60;
       delete b.pressureTarget;
       if (b.l1) {
         const gateApproach = b.l1.focusId === 1 && b.l1.focusBiasM === 30 && this.world.tick < (b.l1.focusUntil ?? 0);
@@ -1665,6 +1666,7 @@ export class InfectedSystem {
     if (b.proximityNotice) b.proximityNotice.until += delta;
     if (b.alphaSpecialStarted !== undefined) b.alphaSpecialStarted += delta;
     if (b.pressureTarget) b.pressureTarget.until += delta;
+    if (b.l8ShotRefreshAt !== undefined) b.l8ShotRefreshAt += delta;
     if (b.megaStaggerReady !== undefined) b.megaStaggerReady += delta;
     if (b.pipeBombReady !== undefined) b.pipeBombReady += delta;
     if (b.staggerReady !== undefined) b.staggerReady += delta;
