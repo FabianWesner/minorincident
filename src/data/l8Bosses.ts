@@ -5,8 +5,8 @@ export const l8BossArenas = [
   { id: 'flamingo', name: 'Flamingo flock', count: 8, hp: 36, centre: { x: 0, z: -32 }, entry: { x: 0, z: -18 }, radius: 14, counter: 'Step out of the red lanes. Use the barriers and fire as the birds land.' },
   { id: 'lion', name: 'Lion and lioness', count: 2, hp: 400, centre: { x: -60, z: -32 }, entry: { x: -60, z: -46 }, radius: 14, counter: 'Face the roar. Watch the other lion circle behind you, dodge the pounce, then fire while it recovers.' },
   { id: 'monkey', name: 'Monkey pack', count: 7, hp: 36, centre: { x: -6, z: 20 }, entry: { x: -20, z: 20 }, radius: 12, counter: 'Use the doorway to stop the pack surrounding you. Melee shakes off a grab.' },
-  { id: 'zebra', name: 'Zebra herd', count: 4, hp: 150, centre: { x: 60, z: 32 }, entry: { x: 60, z: 46 }, radius: 14, counter: 'Leave the dust lane. The fence turns the herd; shoot the stragglers.' },
-  { id: 'gorilla', name: 'Gorilla', count: 1, hp: 500, centre: { x: 60, z: -32 }, entry: { x: 60, z: -18 }, radius: 14, counter: 'Hit the chest-beat to interrupt it. Put a pillar between you and a throw.' },
+  { id: 'zebra', name: 'Zebra herd', count: 4, hp: 360, centre: { x: 60, z: 32 }, entry: { x: 60, z: 46 }, radius: 14, counter: 'Leave the dust lane. The fence turns the herd; punish the stragglers before the rear kick.' },
+  { id: 'gorilla', name: 'Gorilla', count: 1, hp: 1200, centre: { x: 60, z: -32 }, entry: { x: 60, z: -18 }, radius: 14, counter: 'Interrupt the chest beat. Dodge the throw and shockwave; punish after the slam or bluff.' },
   { id: 'elephant', name: 'Elephant', count: 1, hp: 1200, centre: { x: 96, z: 64 }, entry: { x: 96, z: 39 }, radius: 14, counter: 'Lure his charge into the truck or perimeter wall. Three impacts stop him.' },
 ] as const;
 export type L8BossId = typeof l8BossArenas[number]['id'];

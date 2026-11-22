@@ -109,6 +109,7 @@ export const infectedSpecialMoves = {
   'lion.flank': { archetype: 'infected.lion', windup: 36, cooldown: 600 },
   'lion.swipe': { archetype: 'infected.lion', windup: 24, cooldown: 210 },
   'gorilla.roar': { archetype: 'infected.gorilla', windup: 60, cooldown: 900 },
+  'gorilla.grab-slam': { archetype: 'infected.gorilla', windup: 42, cooldown: 600 },
   'gorilla.pound': { archetype: 'infected.gorilla', windup: 60, cooldown: 720 },
   'gorilla.grab-throw': { archetype: 'infected.gorilla', windup: 48, cooldown: 600 },
   'elephant.charge': { archetype: 'infected.elephant', windup: 54, cooldown: 840 },

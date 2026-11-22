@@ -282,6 +282,16 @@ export class L8BossArenas {
         return true;
       }
     }
+    if (arena.id === 'gorilla' && boss.ledgeThrow) {
+      if (boss.traversal) { this.traverseStep(e); return true; }
+      if (!boss.roof) { this.traverse(e, { x: 69, y: 3, z: -25 }, true); return true; }
+      if (boss.barrage && !boss.scavengeId && !b.specialAttack) this.scavenge(e);
+      if (!boss.barrage && !boss.scavengeId && !b.specialAttack) {
+        boss.ledgeThrow = false;
+        this.traverse(e, { x: 65, y: .7, z: -28 }, false);
+      }
+      return true;
+    }
     if (boss.scattered) { this.walk(e, { x: def.centre.x + 10, z: def.centre.z - 8 }, 6); return true; }
     if (!arena.phase) {
       const victim = arena.ids.map(id => w.entities.get(id)).find(v => v?.civilian && !v.infection && v.health.current > 0);
@@ -336,7 +346,7 @@ export class L8BossArenas {
       }
     }
     if (arena.id === 'lion' && w.tick < boss.exposedUntil && !b.specialAttack) return true;
-    if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
+    if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && boss.displayHp !== undefined && e.health.current < boss.displayHp) { arena.counters++; boss.enraged = false; this.recover(e, 150); this.announce('Chest beat interrupted — punish the stagger!'); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
     if (arena.id === 'gorilla' && this.gorillaCover(e, arena, p)) return true;
     if (arena.id === 'lion' && distance(e.transform, p.transform) <= 2.8 && w.tick >= boss.readyAt) {
@@ -521,9 +531,10 @@ export class L8BossArenas {
     else if (arena.id === 'elephant') this.start(e, 'elephant.charge', 54, 44, 1.75);
     else if (arena.id === 'gorilla') {
       const pillar = arena.phase === 2 && arena.cycle % 2 === 0 ? this.w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar') && !o.state.collapsed).sort((a, b) => distance(e.transform, { x: a.home.p[0], z: a.home.p[2] }) - distance(e.transform, { x: b.home.p[0], z: b.home.p[2] }))[0] : undefined;
-      if (distance(e.transform, this.w.entities.get(1)!.transform) < 5 && this.w.infected!.props.nearestObject(e, 25, true)) { e.infected!.arenaBoss!.barrage = 3; this.scavenge(e); }
+      if (distance(e.transform, this.w.entities.get(1)!.transform) < 3.8) this.start(e, 'gorilla.grab-slam', 42, 0, 2.8);
+      else if (distance(e.transform, this.w.entities.get(1)!.transform) < 5 && this.w.infected!.props.nearestObject(e, 25, true)) { e.infected!.arenaBoss!.barrage = 3; this.scavenge(e); }
       else if (pillar) e.infected!.arenaBoss!.smashId = pillar.id;
-      else if (arena.cycle % 3 === 2) this.scavenge(e);
+      else if (arena.cycle % 3 === 2) { e.infected!.arenaBoss!.ledgeThrow = true; e.infected!.arenaBoss!.barrage = 3; }
       else e.infected!.arenaBoss!.approach = arena.cycle % 3 === 1 ? 'gorilla.roar' : 'gorilla.pound';
     } else for (const member of live) {
       if (member.infected!.arenaBoss!.roof || member.infected!.arenaBoss!.traversal || member.infected!.arenaBoss!.slot === 6 && arena.phase < 2) continue;
@@ -569,7 +580,7 @@ export class L8BossArenas {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
     const attackId = w.infected!.arenaAttackId();
     const a = e.infected!.specialAttack = { move, attackId, stage: 'telegraph', startTick: w.tick, activeTick: w.tick + windup, cooldownExpiry: w.tick + 420, recoveryUntil: 0, target, area: { x: e.transform.x, z: e.transform.z, radius, dx: axis?.x ?? dx / d, dz: axis?.z ?? dz / d }, hitIds: [], ...(arena.id === 'elephant' ? { bait: { x: p.transform.x, z: p.transform.z } } : {}), destination: { x: e.transform.x + (axis?.x ?? dx / d) * range, z: e.transform.z + (axis?.z ?? dz / d) * range } };
-    if (move === 'gorilla.roar') e.infected!.arenaBoss!.exposedUntil = a.activeTick;
+    if (move === 'gorilla.roar') { e.infected!.arenaBoss!.exposedUntil = a.activeTick; e.infected!.arenaBoss!.displayHp = e.health.current; }
     if (move === 'gorilla.grab-throw' || move === 'monkey.debris') w.infected!.props.launchSpecial(e, a, 3, 25, arena.phase === 2 ? 18 : 12, true);
     e.infected!.attackId = attackId; e.infected!.state = 'attack'; e.infected!.until = a.activeTick; e.infected!.grabHits = 0; e.infected!.arenaBoss!.shakeHits = 0; e.combat!.attacking = true;
     e.transform.yaw = -Math.atan2(a.area.dz, a.area.dx) + (move === 'zebra.kick' ? Math.PI : 0); if (e.locomotion) resetResponse(e.locomotion);
@@ -579,11 +590,21 @@ export class L8BossArenas {
     const w = this.w, b = e.infected!, a = b.specialAttack!, boss = b.arenaBoss!;
     if (a.stage === 'telegraph') {
       if (a.projectile) w.infected!.props.holdSpecial(e, a);
-      if (a.move === 'gorilla.roar') boss.exposedUntil = a.activeTick;
+      if (a.move === 'gorilla.roar') {
+        if (boss.displayHp !== undefined && e.health.current < boss.displayHp) { arena.counters++; boss.enraged = false; this.recover(e, 150); this.announce('Chest beat interrupted — punish the stagger!'); return; }
+        boss.exposedUntil = a.activeTick;
+      }
       if (w.tick < a.activeTick) return;
+      if (a.move === 'gorilla.roar') { boss.enraged = true; this.announce('The gorilla is enraged!'); }
       a.stage = 'active'; if (a.projectile) w.events.emit({ type: 'infected.prop-thrown', tick: w.tick, sourceId: e.id, propId: a.projectile.objectId, attackId: a.attackId }); w.events.emit({ type: 'infected.special', tick: w.tick, sourceId: e.id, attackId: a.attackId, move: a.move, stage: 'active' });
     }
+    const p = w.entities.get(1)!;
     if (a.stage === 'recovery') { if (w.tick >= a.recoveryUntil) { w.events.emit({ type: 'infected.special', tick: w.tick, sourceId: e.id, attackId: a.attackId, move: a.move, stage: 'expiry' }); delete b.specialAttack; b.state = 'chase'; } return; }
+    if (a.move === 'gorilla.grab-slam') {
+      const d = distance(e.transform, p.transform), dot = ((p.transform.x - e.transform.x) * a.area.dx + (p.transform.z - e.transform.z) * a.area.dz) / (d || 1);
+      if (d <= a.area.radius && dot > .45) this.hit(e, boss.enraged ? 72 : 54, 150);
+      this.recover(e, 150); return;
+    }
     if (a.move === 'flamingo.dive' && a.impactTick !== undefined) {
       // A dive has one damaging outbound lane. Its return is a visible flight
       // to this bird's lit pad, never another pass through the courier.
@@ -592,7 +613,6 @@ export class L8BossArenas {
       else this.walk(e, landing, 6);
       return;
     }
-    const p = w.entities.get(1)!;
     if (a.move === 'lion.roar') { this.recover(e, 120); return; }
     if (['gorilla.roar', 'gorilla.pound', 'elephant.swipe', 'zebra.kick', 'lion.swipe'].includes(a.move)) {
       if (a.move === 'gorilla.pound' && boss.smashId) {
@@ -604,7 +624,7 @@ export class L8BossArenas {
       const dot = (dx * a.area.dx + dz * a.area.dz) / (d || 1);
       if (a.move === 'lion.swipe' && a.impactTick !== undefined && w.tick < a.impactTick + 12) return;
       if (a.move === 'lion.swipe' && a.impactTick !== undefined) { a.hitIds.length = 0; a.attackId = w.infected!.arenaAttackId(); }
-      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? 8 : a.move === 'zebra.kick' ? 25 : a.move === 'elephant.swipe' ? 55 : a.move === 'lion.swipe' ? 24 : 30, a.move === 'gorilla.roar' ? 60 : 30);
+      if (d <= a.area.radius && (a.move !== 'elephant.swipe' || dot >= 0) && (a.move !== 'zebra.kick' || dot >= Math.SQRT1_2)) this.hit(e, a.move === 'gorilla.roar' ? (boss.enraged ? 16 : 8) : a.move === 'zebra.kick' ? 25 : a.move === 'elephant.swipe' ? 55 : a.move === 'lion.swipe' ? 24 : boss.enraged ? 48 : 30, a.move === 'gorilla.roar' ? 60 : a.move === 'gorilla.pound' ? 90 : 30);
       if (a.move === 'lion.swipe' && a.impactTick === undefined) { a.impactTick = w.tick; return; }
       this.recover(e, a.move === 'lion.swipe' ? 90 : 120); return;
     }
@@ -682,7 +702,7 @@ export class L8BossArenas {
     const w = this.w, a = e.infected!.specialAttack!, p = w.entities.get(1)!;
     if (a.hitIds.includes(1) || !w.combat!.query.visible(e.transform, p.transform)) return;
     a.hitIds.push(1);
-    const damage = w.combat!.damage.apply({ sourceId: e.id, targetId: 1, attackId: a.attackId, actionId: `infected.${a.move}`, origin: e.transform, direction: { x: a.area.dx, z: a.area.dz }, base: amount, multiplier: 1, type: 'melee', knockback: a.move === 'zebra.kick' || a.move === 'elephant.swipe' || a.move === 'lion.swipe' ? 3 : 0, stagger: 0, knockdownTicks: stun });
+    const damage = w.combat!.damage.apply({ sourceId: e.id, targetId: 1, attackId: a.attackId, actionId: `infected.${a.move}`, origin: e.transform, direction: { x: a.area.dx, z: a.area.dz }, base: amount, multiplier: 1, type: 'melee', knockback: ['zebra.kick', 'zebra.stampede', 'gorilla.grab-slam', 'elephant.swipe', 'lion.swipe'].includes(a.move) ? a.move === 'zebra.stampede' ? 2 : a.move === 'gorilla.grab-slam' ? 3.5 : 3 : 0, stagger: 0, knockdownTicks: stun });
     w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: e.id, targetId: 1, attackId: a.attackId, special: a.move, amount: damage });
   }
   private recover(e: EntitySnapshot, ticks: number): void {

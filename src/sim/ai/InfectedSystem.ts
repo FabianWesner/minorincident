@@ -594,7 +594,7 @@ export class InfectedSystem {
       if (!Status.stunned(e, this.world.tick)) {
         if (l8GateApproach) {
           const speed = b.l1?.runSpeed ?? b.speed;
-          moveAgent(e, (b.scripted.x - e.transform.x) / remaining * speed, (b.scripted.z - e.transform.z) / remaining * speed, this.infectedNav, this.world.tick, e.combat!.radius, true);
+          this.seek(e, b.scripted, speed);
         } else this.seek(e, b.scripted, scriptedSpeed);
       }
     }
@@ -1767,7 +1767,7 @@ export class InfectedSystem {
     const distance = Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z);
     if (!this.hearing.tracks(e, target.transform)) return false;
     const rear = ((target.transform.x - e.transform.x) * -Math.cos(e.transform.yaw) + (target.transform.z - e.transform.z) * Math.sin(e.transform.yaw)) >= distance * Math.SQRT1_2;
-    const moves: InfectedSpecialMove[] = e.archetype === 'infected.zebra' ? distance <= 2 && rear ? ['zebra.kick', 'zebra.stampede'] : distance <= 15 ? ['zebra.stampede'] : [] : e.archetype === 'infected.flamingo' ? distance <= 12 ? ['flamingo.dive'] : [] : e.archetype === 'infected.lion' ? distance <= 8 ? ['lion.pounce', 'lion.flank'] : distance <= 14 ? ['lion.flank'] : [] : e.archetype === 'infected.elephant' ? distance <= 3 ? ['elephant.swipe', 'elephant.charge'] : distance <= 16 ? ['elephant.charge'] : [] : distance <= 5 ? ['gorilla.grab-throw', 'gorilla.pound', 'gorilla.roar'] : distance <= 15 ? ['gorilla.grab-throw', 'gorilla.roar'] : [];
+    const moves: InfectedSpecialMove[] = e.archetype === 'infected.zebra' ? distance <= 2 && rear ? ['zebra.kick', 'zebra.stampede'] : distance <= 15 ? ['zebra.stampede'] : [] : e.archetype === 'infected.flamingo' ? distance <= 12 ? ['flamingo.dive'] : [] : e.archetype === 'infected.lion' ? distance <= 8 ? ['lion.pounce', 'lion.flank'] : distance <= 14 ? ['lion.flank'] : [] : e.archetype === 'infected.elephant' ? distance <= 3 ? ['elephant.swipe', 'elephant.charge'] : distance <= 16 ? ['elephant.charge'] : [] : distance <= 5 ? ['gorilla.grab-slam', 'gorilla.grab-throw', 'gorilla.pound', 'gorilla.roar'] : distance <= 15 ? ['gorilla.grab-throw', 'gorilla.roar'] : [];
     for (const move of moves) if ((move !== 'gorilla.grab-throw' || !!this.props.nearestObject(e, 3)) && (move !== 'lion.flank' || this.hearing.sees(e, target.transform)) && this.startSpecial(e.id, move, { id: target.id, x: target.transform.x, z: target.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: 1, dz: 0 })) return true;
     return false;
   }
