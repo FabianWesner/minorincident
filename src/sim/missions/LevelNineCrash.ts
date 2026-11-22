@@ -90,6 +90,15 @@ export class LevelNineCrash {
       if (this.state.ended) { this.mission.state.phase = 'progression'; this.mission.state.result = w.progression?.campaign?.results?.L9 ?? null; }
     }
     this.driving.prepare();
+    if (this.state.phase !== 'driving') this.hidePursuitBus();
+  }
+  /** The chase ends at the collapsed span; it must not follow the courier
+   * onto the far bank or be mistaken for the APC wreck. */
+  private hidePursuitBus(): void {
+    const id = this.driving.state.busId, bus = this.w.vehicles!.cars.get(id);
+    if (!bus) return;
+    bus.entity.hidden = true; bus.physics.body.setEnabled(false);
+    this.w.vehicles!.autopilot.delete(id); stopEngine(this.w, id);
   }
   begin(): void {
     this.mission.checkpoint('crossing-start');
@@ -120,6 +129,7 @@ export class LevelNineCrash {
       // used to sit on the deck with the objective unmet; the scripted run-up below then goes east at a floor speed.
       this.mission.checkpoint('outskirts-approach');
       this.mission.setState('crash-started', true);
+      this.hidePursuitBus();
       s.phase = 'approach'; s.startedAt = w.tick; s.from = { ...car.transform }; s.preCrashDurability = car.health.current;
       const lip = this.anchor('crash-impact'), velocity = w.vehicles!.cars.get(s.carId)!.physics.body.linvel();
       const driven = Math.hypot(velocity.x, velocity.z), eastward = velocity.x >= 1;
