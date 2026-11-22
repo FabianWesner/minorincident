@@ -132,6 +132,8 @@ An approximate overlapping-window diagnostic found 235 moving samples with both 
 
 In the existing 2 s trace, four late residents traversed the zebra-to-gorilla leg from 322–328 s: their sampled path lengths were 36.7–38.6 m versus straight-line displacements of 36.5–38.5 m, and their courier gaps fell from 24–25 m to 12–15 m. This short segment shows normal, nearly straight catch-up, not an obvious obstacle detour; it does not cover the entire route.
 
+The solo-cage behavior predates this lane: commit `6b8c71a1` records an all-cage solo rule, with survivors outside and the corgi accompanying the courier. `tests/helpers/l8Route.ts` asserts no follower or guard enters an active cage and guards do not attack cage animals. Letting the group traverse an active cage would therefore change an established encounter contract; no such change was made.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
