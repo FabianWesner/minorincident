@@ -21,6 +21,8 @@ export interface BicycleState {
   pedal: number; steer: number;
   /** Smoothed frame lean in radians; optional for older checkpoints. */
   lean?: number;
+  /** Last wheel run-over, for the short presentation bump. */
+  squashBumpAt?: number;
   /** Stand-to-mount timer in ticks; mounting re-arms only after the player has left the bicycle. */
   standTicks: number; armed: boolean; lockUntil: number;
   /**
@@ -222,6 +224,7 @@ export class Bicycle {
         const resistant = ['infected.brute', 'infected.armored', 'infected.armoured-football', 'infected.riot', 'infected.elephant', 'infected.alpha', 'infected.mega-alpha'].includes(infected.archetype ?? ''), runOver = Math.abs(b.speed) >= 4 && !resistant;
         const direction = { x: Math.cos(b.heading) * Math.sign(b.speed), z: Math.sin(b.heading) * Math.sign(b.speed) };
         this.world.events.emit({ type: 'vehicle.infected-hit', tick: this.world.tick, sourceId: bike.id, targetId: infected.id, position: { ...infected.transform }, runOver });
+        if (runOver) b.squashBumpAt = this.world.tick;
         this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: bike.archetype, sourceId: bike.id, targetId: infected.id, origin: bike.transform, direction, base: Math.max(1, Math.abs(b.speed) * 30), multiplier: 1, type: 'vehicle', knockback: runOver ? 0 : 1, stagger: .5, ...(runOver ? { permanent: true } : {}) });
         if (runOver && infected.health.current <= 0) { infected.squashed = true; infected.corpse = true; infected.transform.y = (this.world.districts?.groundHeight(infected.transform.x, infected.transform.z) ?? 0) + .7; if (infected.combat?.reaction) infected.combat.reaction.groundDeath = true; }
       }
