@@ -34,8 +34,8 @@ export class Destruction {
   private readonly kicks: { id: string; at: number; strength: number }[] = [];
   private readonly propLinks = new Map<string, PushProp>();
   private readonly disabledProps = new Set<string>();
-  /** Intact destructible wall parts must remain in the streamed navigation/sweep wall set. */
-  activeWalls() { return this.blockers.filter(b => b.active && b.object.present && b.object.state.hp[b.part] > 0).map(b => b.wall); }
+  /** Reinstall intact parts as dynamic blockers when streaming rebuilds navigation. */
+  activeBlockers() { return this.blockers.filter(b => b.active && b.object.present && b.object.state.hp[b.part] > 0).map(b => ({ id: b.id, wall: b.wall })); }
   constructor(private readonly world: SimWorld) {
     // Local bounds depend on the asset/class, not the placement transform or HP.
     // Repeated buildings borrow those immutable templates; damage remains object-owned.

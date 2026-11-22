@@ -93,6 +93,19 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
           }
         }
       }
+      if (level === 'L10') {
+        // A streamed destructible wall must stop the courier while intact and
+        // cease blocking immediately when its part is destroyed.
+        const courier = world.entities.get(1)!, object = world.destruction!.objects.find(o => o.id === 'D-CURE/l10-find-farm-shed')!;
+        const part = object.parts.findIndex(p => p.id === 'farm-side--1');
+        assert.ok(part >= 0, 'Farm shed side wall part is missing');
+        courier.transform.x = 1166; courier.transform.y = .9; courier.transform.z = -26;
+        world.chunks!.update([1166, -26]);
+        const sweep = () => world.solids.sweep(courier, { x: 1, z: 0 }, 3, actorRadius(courier), false, false);
+        assert.ok(sweep() < 2.9, 'Intact streamed farm wall must block');
+        world.destruction!.damage({ object, part, local: [-3.5, 1, 0], normal: [-1, 0, 0], distance: 0 }, 'weapon.fire-axe', 100000);
+        assert.ok(sweep() > 2.9, 'Destroyed farm wall must stop blocking');
+      }
       levels.push({ level, buildings, samples, misses });
     } finally { world.dispose(); }
   }
