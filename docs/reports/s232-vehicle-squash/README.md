@@ -58,7 +58,8 @@
 
 - First-hit audio fix: the dedicated 12 KB Opus bank is prepared with initial audio instead of lazy-loading, whose first request is skipped. The existing core test now prepares the registry and verifies both vehicle cues are immediately available; it passes along with typecheck and lint. This verifies availability and routing, not subjective sound quality.
 
+- Full remote unit run on `bfe55399`: the first attempt exceeded the budget at 240.8 s; its unchanged retry passed in 212.0 s, with 27 files passed, 105 tests passed and 1 skipped (150/150 inventory).
+
 ## Open acceptance
 
 - Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
-- Complete the full remote unit suite within its unchanged 240-second budget. Multiple attempts timed out; the focused save-progression file passes on the same runner.
