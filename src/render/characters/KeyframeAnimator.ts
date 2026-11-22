@@ -205,7 +205,7 @@ export class KeyframeAnimator {
     for (const p of this.sampledPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
     if (this.base && (name === 'knockdown' || name === 'get-up') && pose.knockdown) {
       const span = pose.knockdown.until - pose.knockdown.started, split = Math.max(1, span - 24);
-      const phase = name === 'knockdown' ? (tick + alpha - pose.knockdown.started) / split : (tick + alpha - pose.knockdown.started - split) / Math.max(1, span - split);
+      const phase = name === 'knockdown' ? (tick + alpha - pose.knockdown.started) / (pose.knockdown.pinned ? Math.min(split, 24) : split) : (tick + alpha - pose.knockdown.started - split) / Math.max(1, span - split);
       this.base.time = Math.max(0, Math.min(1, phase)) * this.base.getClip().duration; this.base.setEffectiveTimeScale(0);
     }
     this.mixer.update(dt);

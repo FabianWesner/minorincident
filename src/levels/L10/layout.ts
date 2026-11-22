@@ -123,11 +123,11 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     roadside('crashed-helicopter', 'prop.l10-crashed-helicopter', 3170, 131, [5, 1.8, 4], .5);
     roadside('convoy-oil-drums', 'prop.cure-drum-stack', 3263, 72, [.7, .8, .6], .2);
     roadside('convoy-log', 'decal.papers', 3268, 89, [.45, .08, .35], -.1);
-    roadside('overpass-rubble-west', 'prop.crates', 3380, 87, [1.4, .7, 1], -.4);
-    roadside('overpass-rubble-east', 'prop.sandbag-pallet', 3390, 103, [1.4, .7, .8], .2);
+    roadside('overpass-rubble-west', 'prop.crates', 3380, 119, [1.4, .7, 1], -.4);
+    roadside('overpass-rubble-east', 'prop.sandbag-pallet', 3390, 119, [1.4, .7, .8], .2);
     // A normal pushable physics prop: the pursuit Alpha must be able to pick
     // this up for its existing overpass throw move.
-    place('l10-setpiece-overpass-throwable', 'prop.crates', 3336, 98, [.8, .5, .6], .1);
+    place('l10-setpiece-overpass-throwable', 'prop.crates', 3336, 93, [.8, .5, .6], .1);
     place('l10-setpiece-overpass-throwable-north', 'prop.crates', 3336, 127, [.8, .5, .6], .1);
     place('l10-setpiece-overpass-throwable-south', 'prop.crates', 3336, 55, [.8, .5, .6], .1);
     // Triage fencing reads as a final roadblock while the central lane stays passable.
@@ -180,18 +180,26 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     beat('convoy-cover-a', 'prop.sandbag-pallet', 3238, 103, [1.4, .7, .8]);
     beat('convoy-cover-b', 'prop.sandbag-pallet', 3285, 69, [1.4, .7, .8], Math.PI / 2);
-    // Open-ended overpass spans the measured crossing, with lights at its sides.
-    beat('underpass-mouth', 'prop.l10-underpass', 3383, 95, [6, 3.2, 7]);
-    // Four independent pier footprints leave the full centre passage open to
-    // navigation and physics; the overhead deck is not a ground-level wall.
-    for (const x of [3378.2, 3387.8]) for (const z of [88.3, 101.7]) {
-      layout.colliders.push({ id: `l10-underpass-pier-${x}-${z}`, minTier: 0, maxTier: 6,
-        aabb: { min: [x - .5, 0, z - .4], max: [x + .5, 4.9, z + .4] } });
-    }
-    layout.lightGroups.push({ id: 'l10-underpass', offAt: 6 });
-    for (const z of [88, 102]) {
-      const lamp = beat(`underpass-lamp-${z}`, 'prop.emergency-light', 3383, z, [.4, 1.5, .4]);
-      lamp.lightGroup = 'l10-underpass';
+    // The Collapse: a large authored blast bowl reads as a road sinkhole at
+    // follow-camera scale. The nav exclusion and solid footprint keep walkers
+    // and the bike on the one-lane rim detour; the normal ground collider below
+    // remains present, so the obstruction cannot become a falling-through gap.
+    const sinkhole = beat('sinkhole-bowl', 'decay.crater', 3390, 82, [5.2, 1.1, 4.6], 0, [2.2, 1.8, 2.2]);
+    sinkhole.position[1] = -.08;
+    layout.colliders.push({ id: 'l10-setpiece-sinkhole-bowl/solid', minTier: 0, maxTier: 6,
+      aabb: { min: [3384, 0, 77], max: [3396, 1.35, 87], navBlocker: true } });
+    const detourRail = beat('sinkhole-detour-rail', 'prop.cure-mil-fence', 3390, 72, [12, 1.2, .2], 0, [7.2, 1, 1]);
+    detourRail.fixed = true;
+    beatSolid('sinkhole-detour-rail', 3390, 72, 12, .2, 2.4);
+    // The burning car has slid nose-first into the eastern lip. Separate rim
+    // rubble leaves a single narrow pass on the south side.
+    const sinkholeCar = beat('sinkhole-burning-car', 'prop.l10-abandoned-sedan-blue', 3394.3, 83, [2.5, .8, 1.1], Math.PI + .25, [1, .8, 1]);
+    sinkholeCar.position[1] = -.35;
+    sinkholeCar.fieldLight = 'wreckfire';
+    layout.lightGroups.push({ id: 'l10-sinkhole', offAt: 6 });
+    for (const [i, [x, z]] of [[3386, 78], [3394, 78]].entries()) {
+      const lamp = beat(`sinkhole-rim-light-${i}`, 'prop.emergency-light', x, z, [.4, 1.5, .4]);
+      lamp.lightGroup = 'l10-sinkhole';
       lamp.decorLights = true;
     }
     // Field triage on the final approach: quarantine tents and a marked transport.

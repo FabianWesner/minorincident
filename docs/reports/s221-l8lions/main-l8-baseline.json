@@ -1,0 +1,50 @@
+{
+  "revision": "97b4c6f71a188714bc07d32a6304f8520754340a",
+  "command": "npm run qa:threat -- --levels L8 --maxWorkers=2 --out test-results/s221-main",
+  "note": "Partial L8-only diagnostic; whole-game acceptance is not claimed.",
+  "level": "L8",
+  "quality": "low",
+  "nativeStateHash": "08d26a79",
+  "run": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 430,
+    "deaths": 0,
+    "kills": 39,
+    "damageTaken": 180,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "sanctuary",
+        "t": 149.96666666666667
+      },
+      {
+        "id": "escape",
+        "t": 422
+      },
+      {
+        "id": "depart",
+        "t": 430
+      }
+    ],
+    "furthestObjective": "depart",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 249,
+      "deferred": 17,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "flags": [
+    "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS",
+    "step/escape:SLOW_FOLLOWER:423",
+    "phase/breached:SLOW_FOLLOWER:423"
+  ]
+}

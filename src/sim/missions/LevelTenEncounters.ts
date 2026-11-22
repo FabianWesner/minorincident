@@ -114,7 +114,7 @@ export class LevelTenEncounters {
       const gate = this.world.entities.get(id);
       if (gate?.archetype !== 'device.l10-roadblock' || !gate.interactable) { delete this.state.roadblockGates![group]; continue; }
       const { x, z } = gate.transform;
-      this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ: 40 });
+      this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ: group === 'setpiece-dark-underpass' ? 17 : 40 });
       if (gate.interactable.open) this.world.interactables!.unblock(id);
     }
     if (retainedAssault) {
@@ -369,14 +369,17 @@ export class LevelTenEncounters {
           // The physical gate blocks the riding lane. It can be opened on
           // foot, or the authored encounter opens it after its full cohort is
           // admitted and cleared.
+          // The collapse itself blocks the road; its encounter gate meets the
+          // crater's north edge instead of cutting across the southern rim.
+          const halfZ = group.id === 'setpiece-dark-underpass' ? 17 : 40;
           gateId = w.interactables!.spawn('gate', { x: group.at[0], z: 95 }, {
-            halfX: .2, halfZ: 40, radius: 2, label: 'Open roadblock',
+            halfX: .2, halfZ, radius: 2, label: 'Open roadblock',
           });
           w.entities.get(gateId)!.archetype = 'device.l10-roadblock';
           // Roadblocks are encounter barriers, not early-use switches. Keep E
           // available to dismount the rider until the safe-admitted cohort is cleared.
           w.entities.get(gateId)!.interactable!.enabled = false;
-          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ: 40 });
+          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ });
           gates[group.id] = gateId;
         }
         const gate = gateId === undefined ? undefined : w.entities.get(gateId);

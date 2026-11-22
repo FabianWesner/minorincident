@@ -1,5 +1,5 @@
 import { CureHymn } from './CureHymn';
-import { AudioEventMapper } from './AudioEventMapper';
+import { AudioEventMapper, animalVoice } from './AudioEventMapper';
 import { isMega } from '../data/megaPresentation';
 import { insideCureHangar } from '../data/l10Story';
 import type { Lifecycle } from '../core/Lifecycle';
@@ -721,7 +721,8 @@ export class AudioService implements Lifecycle {
                 }
             for (const p of this.horde.nearby)
                 if (!this.individualVocals.has(p.id) && this.individualVocals.size < 4) {
-                    const v = this.play('infected.vocal', { position: p }, p.id);
+                    const animal = animalVoice(this.world.entities.get(p.id)?.archetype);
+                    const v = this.play(animal ? `animal.${animal}.idle` : 'infected.vocal', { position: p }, p.id);
                     if (v)
                         this.individualVocals.set(p.id, v);
                 }

@@ -1,0 +1,952 @@
+{
+  "method": "Bind the new surface to each frozen production rigid-node hierarchy.\nOwnership follows nearest old semantic surfaces in normalized game space.\nCut rings receive inward caps, with quiet atlas UVs; original sockets and hidden\nstump names remain. This source binding still requires in-game motion/art review.\n",
+  "class": "quadruped",
+  "old_missing": false,
+  "lods": [
+    {
+      "lod": 0,
+      "source_bounds": [
+        [
+          -0.19013500213623047,
+          -0.25824427604675293,
+          -0.5023603439331055
+        ],
+        [
+          0.19572317600250244,
+          0.2525869905948639,
+          0.5020614266395569
+        ]
+      ],
+      "uniform_scale": 2.5525682415633733,
+      "rotation_y_degrees": 90,
+      "world_bounds": [
+        [
+          -1.586969820238032,
+          0.0,
+          -0.4846801428469818
+        ],
+        [
+          0.9768852924605986,
+          1.3039316680269826,
+          0.5002491884174507
+        ]
+      ],
+      "surface_triangles": 1898,
+      "parts": [
+        {
+          "node": "body",
+          "surface_triangles": 310,
+          "closure_triangles": 74
+        },
+        {
+          "node": "foreArmL",
+          "surface_triangles": 17,
+          "closure_triangles": 15
+        },
+        {
+          "node": "foreArmR",
+          "surface_triangles": 7,
+          "closure_triangles": 7
+        },
+        {
+          "node": "head",
+          "surface_triangles": 806,
+          "closure_triangles": 78
+        },
+        {
+          "node": "hip",
+          "surface_triangles": 118,
+          "closure_triangles": 56
+        },
+        {
+          "node": "jaw",
+          "surface_triangles": 36,
+          "closure_triangles": 22
+        },
+        {
+          "node": "legBL",
+          "surface_triangles": 25,
+          "closure_triangles": 17
+        },
+        {
+          "node": "legBR",
+          "surface_triangles": 26,
+          "closure_triangles": 14
+        },
+        {
+          "node": "legFL",
+          "surface_triangles": 2,
+          "closure_triangles": 2
+        },
+        {
+          "node": "legFR",
+          "surface_triangles": 4,
+          "closure_triangles": 4
+        },
+        {
+          "node": "pawBL",
+          "surface_triangles": 43,
+          "closure_triangles": 7
+        },
+        {
+          "node": "pawBR",
+          "surface_triangles": 46,
+          "closure_triangles": 8
+        },
+        {
+          "node": "pawFL",
+          "surface_triangles": 54,
+          "closure_triangles": 8
+        },
+        {
+          "node": "pawFR",
+          "surface_triangles": 6,
+          "closure_triangles": 6
+        },
+        {
+          "node": "shinL",
+          "surface_triangles": 3,
+          "closure_triangles": 3
+        },
+        {
+          "node": "shinR",
+          "surface_triangles": 12,
+          "closure_triangles": 10
+        },
+        {
+          "node": "tail",
+          "surface_triangles": 383,
+          "closure_triangles": 57
+        }
+      ],
+      "hidden_cap_triangles": 0,
+      "ownership_cleanup": [
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 20
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 18
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 6
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 5
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 5
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 3
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "legFR",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "hip",
+          "faces": 7
+        },
+        {
+          "from": "legBR",
+          "to": "body",
+          "faces": 2
+        },
+        {
+          "from": "legBR",
+          "to": "hip",
+          "faces": 2
+        },
+        {
+          "from": "legBR",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legFL",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "legFL",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "legFL",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "legFL",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "legFR",
+          "to": "head",
+          "faces": 3
+        },
+        {
+          "from": "legFR",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "legFR",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "legFR",
+          "to": "head",
+          "faces": 1
+        }
+      ],
+      "low_surface_only": false,
+      "distal_chain_grouping": {},
+      "retained_source_node_names": [
+        "0",
+        "1",
+        "10",
+        "10_7439e6",
+        "10_7530f3",
+        "13",
+        "17",
+        "17_28886d",
+        "17_3194f0",
+        "17_c76c63",
+        "19",
+        "2",
+        "20",
+        "20_dfed5d",
+        "20_e0273b",
+        "24",
+        "27",
+        "28",
+        "28_b5c95e",
+        "28_d2aa5e",
+        "2_029dd3",
+        "2_89c968",
+        "32",
+        "36",
+        "37",
+        "37_2a9968",
+        "37_57d7db",
+        "37_b21882",
+        "37_cf420a",
+        "38",
+        "38_477265",
+        "38_ab69cb",
+        "5",
+        "9",
+        "armL",
+        "armR",
+        "assetScale",
+        "backpackSocket",
+        "body",
+        "footL",
+        "footR",
+        "foreArmL",
+        "foreArmR",
+        "front",
+        "handL",
+        "handR",
+        "head",
+        "hip",
+        "jaw",
+        "legBL",
+        "legBR",
+        "legFL",
+        "legFR",
+        "legL",
+        "legR",
+        "neck",
+        "pawBL",
+        "pawBR",
+        "pawFL",
+        "pawFR",
+        "root",
+        "shinL",
+        "shinR",
+        "tail",
+        "torso",
+        "world"
+      ]
+    },
+    {
+      "lod": 1,
+      "source_bounds": [
+        [
+          -0.18839053809642792,
+          -0.25741586089134216,
+          -0.49727165699005127
+        ],
+        [
+          0.1947789490222931,
+          0.25192198157310486,
+          0.49960142374038696
+        ]
+      ],
+      "uniform_scale": 2.5600526002895614,
+      "rotation_y_degrees": 90,
+      "world_bounds": [
+        [
+          -1.5810660251300288,
+          0.0,
+          -0.4826824981397153
+        ],
+        [
+          0.9709814973525954,
+          1.3039316680269826,
+          0.49825154371018426
+        ]
+      ],
+      "surface_triangles": 898,
+      "parts": [
+        {
+          "node": "body",
+          "surface_triangles": 182,
+          "closure_triangles": 70
+        },
+        {
+          "node": "foreArmL",
+          "surface_triangles": 11,
+          "closure_triangles": 11
+        },
+        {
+          "node": "foreArmR",
+          "surface_triangles": 4,
+          "closure_triangles": 4
+        },
+        {
+          "node": "head",
+          "surface_triangles": 326,
+          "closure_triangles": 76
+        },
+        {
+          "node": "hip",
+          "surface_triangles": 63,
+          "closure_triangles": 35
+        },
+        {
+          "node": "jaw",
+          "surface_triangles": 23,
+          "closure_triangles": 15
+        },
+        {
+          "node": "legBL",
+          "surface_triangles": 10,
+          "closure_triangles": 6
+        },
+        {
+          "node": "legBR",
+          "surface_triangles": 10,
+          "closure_triangles": 8
+        },
+        {
+          "node": "legFL",
+          "surface_triangles": 13,
+          "closure_triangles": 9
+        },
+        {
+          "node": "legFR",
+          "surface_triangles": 2,
+          "closure_triangles": 2
+        },
+        {
+          "node": "pawBL",
+          "surface_triangles": 18,
+          "closure_triangles": 4
+        },
+        {
+          "node": "pawBR",
+          "surface_triangles": 21,
+          "closure_triangles": 5
+        },
+        {
+          "node": "pawFL",
+          "surface_triangles": 26,
+          "closure_triangles": 8
+        },
+        {
+          "node": "pawFR",
+          "surface_triangles": 3,
+          "closure_triangles": 3
+        },
+        {
+          "node": "shinL",
+          "surface_triangles": 1,
+          "closure_triangles": 1
+        },
+        {
+          "node": "shinR",
+          "surface_triangles": 5,
+          "closure_triangles": 5
+        },
+        {
+          "node": "tail",
+          "surface_triangles": 180,
+          "closure_triangles": 42
+        }
+      ],
+      "hidden_cap_triangles": 0,
+      "ownership_cleanup": [
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 5
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 4
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "legFL",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "legBL",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "head",
+          "to": "legFL",
+          "faces": 4
+        },
+        {
+          "from": "hip",
+          "to": "body",
+          "faces": 6
+        },
+        {
+          "from": "legBL",
+          "to": "body",
+          "faces": 4
+        },
+        {
+          "from": "legBL",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBL",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "hip",
+          "faces": 4
+        },
+        {
+          "from": "legBR",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "hip",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legFR",
+          "to": "head",
+          "faces": 2
+        }
+      ],
+      "low_surface_only": false,
+      "distal_chain_grouping": {},
+      "retained_source_node_names": [
+        "0",
+        "1",
+        "10",
+        "10_7439e6",
+        "10_7530f3",
+        "13",
+        "17",
+        "17_28886d",
+        "17_3194f0",
+        "17_c76c63",
+        "19",
+        "2",
+        "20",
+        "20_dfed5d",
+        "20_e0273b",
+        "24",
+        "27",
+        "28",
+        "28_b5c95e",
+        "28_d2aa5e",
+        "2_029dd3",
+        "2_89c968",
+        "32",
+        "36",
+        "37",
+        "37_2a9968",
+        "37_57d7db",
+        "37_b21882",
+        "37_cf420a",
+        "38",
+        "38_477265",
+        "38_ab69cb",
+        "5",
+        "9",
+        "armL",
+        "armR",
+        "assetScale",
+        "backpackSocket",
+        "body",
+        "footL",
+        "footR",
+        "foreArmL",
+        "foreArmR",
+        "front",
+        "handL",
+        "handR",
+        "head",
+        "hip",
+        "jaw",
+        "legBL",
+        "legBR",
+        "legFL",
+        "legFR",
+        "legL",
+        "legR",
+        "neck",
+        "pawBL",
+        "pawBR",
+        "pawFL",
+        "pawFR",
+        "root",
+        "shinL",
+        "shinR",
+        "tail",
+        "torso",
+        "world"
+      ]
+    },
+    {
+      "lod": 2,
+      "source_bounds": [
+        [
+          -0.18800568580627441,
+          -0.2535778880119324,
+          -0.5018191337585449
+        ],
+        [
+          0.19220450520515442,
+          0.25171640515327454,
+          0.4961205720901489
+        ]
+      ],
+      "uniform_scale": 2.580539075276395,
+      "rotation_y_degrees": 90,
+      "world_bounds": [
+        [
+          -1.59265346674491,
+          0.0,
+          -0.4827891045764126
+        ],
+        [
+          0.9825689389674761,
+          1.3039316680269826,
+          0.49835815014688156
+        ]
+      ],
+      "surface_triangles": 500,
+      "parts": [
+        {
+          "node": "body",
+          "surface_triangles": 80,
+          "closure_triangles": 30
+        },
+        {
+          "node": "head",
+          "surface_triangles": 202,
+          "closure_triangles": 32
+        },
+        {
+          "node": "hip",
+          "surface_triangles": 28,
+          "closure_triangles": 18
+        },
+        {
+          "node": "jaw",
+          "surface_triangles": 8,
+          "closure_triangles": 6
+        },
+        {
+          "node": "legBL",
+          "surface_triangles": 14,
+          "closure_triangles": 2
+        },
+        {
+          "node": "legBR",
+          "surface_triangles": 27,
+          "closure_triangles": 9
+        },
+        {
+          "node": "legFL",
+          "surface_triangles": 21,
+          "closure_triangles": 5
+        },
+        {
+          "node": "legFR",
+          "surface_triangles": 4,
+          "closure_triangles": 6
+        },
+        {
+          "node": "tail",
+          "surface_triangles": 116,
+          "closure_triangles": 24
+        }
+      ],
+      "hidden_cap_triangles": 0,
+      "ownership_cleanup": [
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 6
+        },
+        {
+          "from": "body",
+          "to": "hip",
+          "faces": 3
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 2
+        },
+        {
+          "from": "body",
+          "to": "head",
+          "faces": 1
+        },
+        {
+          "from": "body",
+          "to": "legBL",
+          "faces": 1
+        },
+        {
+          "from": "hip",
+          "to": "tail",
+          "faces": 5
+        },
+        {
+          "from": "legBL",
+          "to": "tail",
+          "faces": 12
+        },
+        {
+          "from": "legBL",
+          "to": "body",
+          "faces": 1
+        },
+        {
+          "from": "legBR",
+          "to": "hip",
+          "faces": 3
+        },
+        {
+          "from": "legBR",
+          "to": "body",
+          "faces": 1
+        }
+      ],
+      "low_surface_only": false,
+      "distal_chain_grouping": {
+        "foreArmL": "legFL",
+        "foreArmR": "legFR",
+        "pawBL": "legBL",
+        "pawBR": "legBR",
+        "pawFL": "legFL",
+        "pawFR": "legFR",
+        "shinL": "legBL",
+        "shinR": "legBR"
+      },
+      "retained_source_node_names": [
+        "0",
+        "1",
+        "10",
+        "10_7439e6",
+        "10_7530f3",
+        "13",
+        "17",
+        "17_28886d",
+        "17_3194f0",
+        "17_c76c63",
+        "19",
+        "2",
+        "20",
+        "20_dfed5d",
+        "20_e0273b",
+        "24",
+        "27",
+        "28",
+        "28_b5c95e",
+        "28_d2aa5e",
+        "2_029dd3",
+        "2_89c968",
+        "32",
+        "36",
+        "37",
+        "37_2a9968",
+        "37_57d7db",
+        "37_b21882",
+        "37_cf420a",
+        "38",
+        "38_477265",
+        "38_ab69cb",
+        "5",
+        "9",
+        "armL",
+        "armR",
+        "assetScale",
+        "backpackSocket",
+        "body",
+        "footL",
+        "footR",
+        "foreArmL",
+        "foreArmR",
+        "front",
+        "handL",
+        "handR",
+        "head",
+        "hip",
+        "jaw",
+        "legBL",
+        "legBR",
+        "legFL",
+        "legFR",
+        "legL",
+        "legR",
+        "neck",
+        "pawBL",
+        "pawBR",
+        "pawFL",
+        "pawFR",
+        "root",
+        "shinL",
+        "shinR",
+        "tail",
+        "torso",
+        "world"
+      ]
+    }
+  ],
+  "limitation": "Nearest semantic surface ownership and frozen production pivots; game motion quality must be reviewed before replacement."
+}

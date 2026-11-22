@@ -3,7 +3,7 @@ import { infectedDefinitions } from './infected';
 import { catalog, balanceActions, mountedActions, action } from './actions/catalog';
 import type { GameEvent } from '../sim/world/types';
 import type { Surface, PropMaterial } from './audioEvents';
-export const audioBuses = ['music', 'weapons', 'impacts', 'vehicles', 'props', 'gore', 'telegraph', 'ambience', 'dialogue', 'barks', 'ui'] as const;
+export const audioBuses = ['music', 'weapons', 'impacts', 'vehicles', 'props', 'gore', 'telegraph', 'ambience', 'dialogue', 'barks', 'animal', 'ui'] as const;
 export type AudioBus = typeof audioBuses[number];
 export type SoundShape = 'shot' | 'noise' | 'tone' | 'vocal' | 'music' | 'step' | 'bed' | 'buzz' | 'chatter' | 'fanfare';
 /** Sprite offsets are seconds; recorded and original cues share identical Opus/AAC grids. */
@@ -30,7 +30,7 @@ const offsets = new Map<string, number>();
 function cue(id: string, bus: AudioBus, shape: SoundShape, duration = 0.3, frequency = 250, options: Partial<AudioCue> = {}): void {
     const category = options.category ?? bus;
     const offset = offsets.get(category) ?? 0;
-    const priority = { weapons: 100, telegraph: 90, impacts: 80, dialogue: 75, barks: 70, vehicles: 60, gore: 45, props: 40, music: 35, ui: 35, ambience: 10 }[bus];
+    const priority = { weapons: 100, telegraph: 90, impacts: 80, dialogue: 75, barks: 70, animal: 70, vehicles: 60, gore: 45, props: 40, music: 35, ui: 35, ambience: 10 }[bus];
     audioCues[id] = { id, category, offset, duration, bus, shape, frequency, priority, gain: 0.35, antiSpam: 0.08, rateSpread: 0.06, loop: false, initial: (!category.startsWith('music-L') && !lazyCategories.has(category)) || category === 'music-L1', ...options };
     offsets.set(category, offset + duration + 0.08);
 }
@@ -52,7 +52,7 @@ for (const [move, caption] of [['alpha.grab-throw', 'Alpha winding up a throw'],
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', 'vocal', .8, 100, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
-for (const [move, caption, duration] of [['monkey.grab', 'Monkey reaching: melee to shake it off', .8], ['monkey.debris', 'Monkey debris throw: dodge the landing mark', .8], ['lion.roar', 'Lion roaring: watch for the lioness', .6], ['lion.pounce', 'Lion pounce: clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['gorilla.roar', 'Gorilla chest-beat: hit to interrupt or leave the ring', 1], ['gorilla.pound', 'Gorilla ground pound: leave the marked circle', 1], ['gorilla.grab-throw', 'Gorilla winding up a throw', .8], ['elephant.charge', 'Elephant stampede: clear the marked path', .9], ['elephant.swipe', 'Elephant trunk swipe: leave the marked arc', .7], ['zebra.kick', 'Zebra rear kick: leave the marked rear arc', .6], ['zebra.stampede', 'Zebra herd stampede: clear the marked corridors', 1], ['flamingo.dive', 'Flamingo flock dive: step sideways out of the shadow lane', .6]] as const) {
+for (const [move, caption, duration] of [['monkey.grab', 'Monkey reaching: melee to shake it off', .8], ['monkey.debris', 'Monkey debris throw: dodge the landing mark', .8], ['lion.roar', 'Lion roaring: watch for the lioness', .6], ['lion.pounce', 'Lion pounce: clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['lion.swipe', 'Lion paw combo: dodge sideways, then punish', .4], ['gorilla.roar', 'Gorilla chest-beat: hit to interrupt or leave the ring', 1], ['gorilla.pound', 'Gorilla ground pound: leave the marked circle', 1], ['gorilla.grab-throw', 'Gorilla winding up a throw', .8], ['elephant.charge', 'Elephant stampede: clear the marked path', .9], ['elephant.swipe', 'Elephant trunk swipe: leave the marked arc', .7], ['zebra.kick', 'Zebra rear kick: leave the marked rear arc', .6], ['zebra.stampede', 'Zebra herd stampede: clear the marked corridors', 1], ['flamingo.dive', 'Flamingo flock dive: step sideways out of the shadow lane', .6]] as const) {
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' || move === 'zebra.stampede' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
@@ -167,6 +167,9 @@ cue('infected.vocal', 'barks', 'vocal', 1.5, 130, { gain: 0.12, antiSpam: 0.9, r
 /** Recorded infected voices (lazy bank): alert snarl, hit pain, death, bite on a landed attack. Humanoid archetypes only. */
 for (const [id, duration, gain, antiSpam] of [['alert', 0.55, 0.3, 0.2], ['hurt', 0.5, 0.22, 0.3], ['death', 0.85, 0.3, 0.1], ['bite', 0.6, 0.45, 0.25]] as const)
     cue(`infected.${id}`, 'barks', 'vocal', duration, 140, { category: 'infected', gain, antiSpam, rateSpread: 0.14 });
+for (const animal of ['lion', 'flamingo', 'zebra', 'gorilla', 'monkey', 'elephant'])
+    for (const voice of ['idle', 'tell', 'attack', 'hurt', 'death'])
+        cue(`animal.${animal}.${voice}`, 'animal', 'vocal', 1, 140, { category: 'animal-voices', priority: voice === 'tell' ? 90 : 70, gain: voice === 'tell' ? .65 : .35, antiSpam: voice === 'idle' ? 4 : .25, rateSpread: .06 });
 cue('horde.loop', 'ambience', 'bed', 2, 150, { loop: true, gain: 0.3, antiSpam: 0 });
 cue('bed.zoo-animals', 'ambience', 'chatter', 6, 620, { gain: 0.14, loop: true, antiSpam: 0, rateSpread: 0 });
 for (const [i, surface] of surfaces.entries())

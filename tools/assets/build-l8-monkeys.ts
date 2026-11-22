@@ -11,6 +11,7 @@ import { assetIO } from './io';
 import { compressSkin, decodeSkinImage } from './skin-crowd-compress';
 import { skinCrowdBakes } from './skin-crowd-bakes';
 
+const infectedMonkeyOnly = process.argv.includes('--infected-monkey-only');
 const io = await assetIO();
 const basis = process.env.BASIS ?? resolve('../minorincident_3dpipeline/vendor/basis-encoder-2.1');
 const temporary = mkdtempSync(join(tmpdir(), 'l8-monkeys-'));
@@ -51,7 +52,7 @@ function healthyActions(d: Document): void {
   }
 }
 try {
-for (const healthy of [true, false]) {
+for (const healthy of infectedMonkeyOnly ? [false] : [true, false]) {
   const id = healthy ? 'amb.monkey' : 'inf.monkey', base = healthy ? 'amb.gorilla' : 'inf.gorilla';
   for (const lod of [0, 1, 2]) for (const quality of ['', '.low']) {
     const d = await io.read(`public/assets/models/skinned/${base}.lod${lod}${quality}.glb`), root = d.getRoot(), buffer = root.listBuffers()[0];
@@ -151,6 +152,7 @@ for (const healthy of [true, false]) {
 }
 writeFileSync('src/assets/civilianBakes.json', JSON.stringify(deliveries, null, 2) + '\n');
 } finally { rmSync(temporary, { recursive: true, force: true }); }
+if (infectedMonkeyOnly) process.exit(0);
 // Lioness: reduce the welded neck mane on the same feline skeleton; face, teeth and eye paint stay intact.
 for (const healthy of [true, false]) {
   const id = healthy ? 'amb.lioness' : 'inf.lioness', base = healthy ? 'amb.lion' : 'inf.lion';

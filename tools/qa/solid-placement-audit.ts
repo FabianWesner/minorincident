@@ -1,7 +1,9 @@
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { staticCollision } from '../../src/assets/staticCollision';
 import { worldAssets } from '../../src/assets/worldDefinitions';
 import { levelTenLayouts, markL10Solids } from '../../src/levels/L10/layout';
+import { levelEightLayouts } from '../../src/levels/L8/layout';
 import { districtDecor } from '../../src/levels/decor';
 import { applyFarmLandscape } from '../../src/levels/L10/farmLayout';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
@@ -20,7 +22,8 @@ const summarize = (items: string[]): [string, number][] => Object.entries(items.
 const layouts = readdirSync('public/assets/layouts').filter(path => path.endsWith('.layout.json')).sort().map(path =>
   JSON.parse(readFileSync(`public/assets/layouts/${path}`, 'utf8')) as DistrictLayout);
 const rows: Row[] = layouts.map(source => {
-  const layout = source.district === 'D-CURE' ? levelTenLayouts([source])[0] : source;
+  const layout = source.district === 'D-CURE' ? levelTenLayouts([source])[0]
+    : source.district === 'D-ZOO' ? levelEightLayouts([source])[0] : source;
   if (source.district === 'D-CURE') {
     layout.placements.push(...districtDecor('D-CURE', layout.placements));
     applyFarmLandscape(layout);
@@ -41,6 +44,9 @@ const rows: Row[] = layouts.map(source => {
   return { level: source.district, rendered: layout.placements.length, before: beforeBad.length, after: afterBad.length, beforeTop: summarize(beforeBad), remainingTop: summarize(afterBad) };
 });
 const report = { threshold: { footprintM2: .4, heightM: .5 }, levels: rows, totals: { before: rows.reduce((n, r) => n + r.before, 0), after: rows.reduce((n, r) => n + r.after, 0) } };
-const dir = 'docs/reports/s211c-solids'; mkdirSync(dir, { recursive: true });
-writeFileSync(`${dir}/audit.json`, `${JSON.stringify(report, null, 2)}\n`);
+const outputIndex = process.argv.indexOf('--out');
+if (outputIndex >= 0 && !process.argv[outputIndex + 1]) throw new Error('--out requires a file path');
+const output = outputIndex >= 0 ? process.argv[outputIndex + 1] : 'docs/reports/s211c-solids/audit.json';
+mkdirSync(dirname(output), { recursive: true });
+writeFileSync(output, `${JSON.stringify(report, null, 2)}\n`);
 console.log(JSON.stringify(report, null, 2));

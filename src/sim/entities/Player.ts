@@ -54,7 +54,7 @@ export class Player {
     Object.assign(this.entity.transform, p); state.grounded = this.physics.characterController!.computedGrounded();
     const speed = Math.hypot(this.locomotion.displacement.x, this.locomotion.displacement.z) / FIXED_DT;
     const knockdown = state.knockdown && tick < state.knockdown.until;
-    this.animate(state.diedAt !== null ? 'die' : knockdown ? tick < state.knockdown!.until - 24 ? 'knockdown' : 'get-up' : tick - this.lastDamage < survivor.hurtTicks ? 'hurt' : this.action && tick < this.actionUntil ? this.action : speed > 2.5 ? 'run' : speed > 0.01 ? 'walk' : 'idle', tick);
+    this.animate(state.diedAt !== null ? 'die' : knockdown ? state.knockdown!.pinned || tick < state.knockdown!.until - 24 ? 'knockdown' : 'get-up' : tick - this.lastDamage < survivor.hurtTicks ? 'hurt' : this.action && tick < this.actionUntil ? this.action : speed > 2.5 ? 'run' : speed > 0.01 ? 'walk' : 'idle', tick);
   }
   /** Returns accepted damage; independent herd contacts have already been deduplicated per zebra/attack. */
   damage(amount: number, tick: number, independentHit = false): number {

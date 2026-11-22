@@ -24872,5 +24872,310 @@
     },
     "crowdSkin": true,
     "textureMode": "baseColor"
+  },
+  {
+    "id": "prop.zoo-climbing-frame",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-climbing-frame/build.py",
+    "glb": "public/assets/models/prop.zoo-climbing-frame.glb",
+    "sourceGlb": "assets/prop.zoo-climbing-frame/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-climbing-frame.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-climbing-frame.lod2.glb"
+    },
+    "dimensions": {
+      "x": 4.2,
+      "y": 3.6,
+      "z": 2.55,
+      "tolerance": 0.2
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 2500,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": { "lod1": 160, "lod2": 100 },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-rock-cover",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-rock-cover/build.py",
+    "glb": "public/assets/models/prop.zoo-rock-cover.glb",
+    "sourceGlb": "assets/prop.zoo-rock-cover/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-rock-cover.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-rock-cover.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.6,
+      "y": 1.2,
+      "z": 1.2,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 150,
+      "lod2": 40
+    },
+    "world": {
+      "token": "khaki",
+      "solid": true
+    },
+    "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-log-barrier",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-log-barrier/build.py",
+    "glb": "public/assets/models/prop.zoo-log-barrier.glb",
+    "sourceGlb": "assets/prop.zoo-log-barrier/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-log-barrier.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-log-barrier.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.7,
+      "y": 1.4,
+      "z": 0.7,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 500,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 100,
+      "lod2": 30
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-feeder",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-feeder/build.py",
+    "glb": "public/assets/models/prop.zoo-feeder.glb",
+    "sourceGlb": "assets/prop.zoo-feeder/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-feeder.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-feeder.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.2,
+      "y": 1.0,
+      "z": 0.85,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 500,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 100,
+      "lod2": 40
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-trough",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-feeder/build.py",
+    "glb": "public/assets/models/prop.zoo-trough.glb",
+    "sourceGlb": "assets/prop.zoo-trough/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-trough.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-trough.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.2,
+      "y": 1.0,
+      "z": 0.85,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 500,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 100,
+      "lod2": 40
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-shelter",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-shelter/build.py",
+    "glb": "public/assets/models/prop.zoo-shelter.glb",
+    "sourceGlb": "assets/prop.zoo-shelter/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-shelter.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-shelter.lod2.glb"
+    },
+    "dimensions": {
+      "x": 4.6,
+      "y": 2.7,
+      "z": 3,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 300,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 80
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    },
+    "sourceForward": "+X"
+  },
+  {
+    "id": "prop.zoo-reeds",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.zoo-reeds/build.py",
+    "glb": "public/assets/models/prop.zoo-reeds.glb",
+    "sourceGlb": "assets/prop.zoo-reeds/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.zoo-reeds.lod1.glb",
+      "lod2": "public/assets/models/prop.zoo-reeds.lod2.glb"
+    },
+    "dimensions": {
+      "x": 0.9,
+      "y": 2.3,
+      "z": 0.85,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 700,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 6
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 100,
+      "lod2": 50
+    },
+    "world": {
+      "token": "apronOlive",
+      "solid": true
+    },
+    "sourceForward": "+X"
   }
 ]

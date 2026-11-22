@@ -241,7 +241,11 @@ export class SimWorld implements Lifecycle {
       const resolved = this.controls.resolve(raw), frame = this.mountedGun?.intent(raw, resolved) ?? resolved; this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame;
     }, SimPhase.input);
     this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.effectiveInput, this.scheme), SimPhase.input);
-    this.events.on('sim.tick', () => { if (this.combat && (this.vehicles?.active == null || this.missions?.l9?.driving.hatch) && !this.mountedGun?.mounted) this.combat.intent(this.effectiveInput); }, SimPhase.input);
+    this.events.on('sim.tick', () => {
+      const input = this.effectiveInput;
+      if (this.infected?.struggleLion(input.interact || input.left.down || input.right.down)) return;
+      if (this.combat && (this.vehicles?.active == null || this.missions?.l9?.driving.hatch) && !this.mountedGun?.mounted) this.combat.intent(input);
+    }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
@@ -275,6 +279,7 @@ export class SimWorld implements Lifecycle {
     }, SimPhase.combat - .1);
     this.events.on('sim.tick', () => {
       this.vehicles?.postPhysics();
+      this.props?.clearArmoredHull();
       if (this.combat) {
         if (!this.entities.get(1)!.pendingAdmission) { const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z); }
         this.infected?.props.update();

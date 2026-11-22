@@ -1,6 +1,6 @@
 import { deterministicAtan2 } from '../../core/deterministicMath';
 import { l3 } from '../../data/l3';
-import { l8BossArenas, l8PlazaCell, l8Route, inRect } from '../../data/l8Bosses';
+import { l8EncounterGates, l8PlazaCell, l8Route, inRect } from '../../data/l8Bosses';
 import type { Mission } from './Mission';
 import { FIXED_DT } from '../../core/Clock';
 import { vehicleDef } from '../../data/vehicles';
@@ -249,7 +249,7 @@ export class LevelEightZoo {
   }
   /** The living group: companions and rescued survivors that are not aboard. */
   followers(): EntitySnapshot[] {
-    return this.passengers().map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined);
+    return this.passengers().map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.companion && !e.infected && !e.infection && e.passengerOf === undefined);
   }
   /** After the opening hold the plaza doors shut once the courier and the whole group stand inside the plaza cell (a straggler stuck outside for 45 s is left to rejoin later). */
   private trySeal(): void {
@@ -344,7 +344,9 @@ export class LevelEightZoo {
     }
     const elephantArena = s.arenas.find(a => a.id === 'elephant');
     const elephantDefeated = elephantArena?.phase === 3;
-    if (elephantArena && elephantArena.phase > 0 && elephant && hale && elephant.infected?.specialAttack?.move === 'elephant.charge' && inRect(hale.transform, l8Route.find(stage => stage.id === 'elephant')!.zone) && distance(elephant.transform, hale.transform) < 6 && !this.mission.state.states['hale-keys'] && hale?.civilian && hale.health.current > 0) {
+    // The first wall breach can drop Hale with the impact while he waits outside
+    // the yard. Keep the story beat at the entry, never by moving the group in.
+    if (elephantArena?.phase === 1 && t - elephantArena.startedAt < 30 && elephant && hale && elephant.infected?.specialAttack?.move === 'elephant.charge' && !inRect(hale.transform, l8Route.find(stage => stage.id === 'elephant')!.zone) && distance(elephant.transform, hale.transform) < 12 && !this.mission.state.states['hale-keys'] && hale.civilian && hale.health.current > 0) {
       this.mission.setState('hale-keys', true); this.mission.radio('L8.hale-dying');
       hale.civilian.story = { clip: 'npc-give', start: t - 24 };
       hale.civilian.knockedUntil = t + 120;
@@ -621,11 +623,29 @@ export class LevelEightZoo {
   private escortGuards(): void {
     if (!this.breached || this.departing()) return;
     const group = this.state.roster.map(id => this.w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined);
-    if (!group.length) return;
-    const x = group.reduce((n, e) => n + e.transform.x, 0) / group.length, z = group.reduce((n, e) => n + e.transform.z, 0) / group.length;
-    for (const [i, id] of this.state.guards.entries()) {
+    const player = this.w.entities.get(1)!;
+    const x = group.length ? group.reduce((n, e) => n + e.transform.x, 0) / group.length : player.transform.x;
+    const z = group.length ? group.reduce((n, e) => n + e.transform.z, 0) / group.length : player.transform.z;
+    const next = this.state.arenas.find(a => a.phase === 1 || a.phase === 2) ?? this.state.arenas.find(a => a.phase !== 3);
+    const index = next ? this.state.arenas.indexOf(next) : -1;
+    const routeOpen = index === 0 ? !!this.state.sealedAt : index > 0 && this.state.arenas[index - 1].phase === 3;
+    const stage = next && l8Route.find(r => r.id === next.id);
+    const gate = stage?.entry ?? (next?.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
+    const wait = !!stage && !!gate && routeOpen && (next!.phase > 0 || inRect(player.transform, stage.zone) || distance(player.transform, gate) <= 12);
+    const detail = [...this.state.guards, this.state.haleId, this.state.reyesId].filter((id, i, all) => id && all.indexOf(id) === i);
+    for (const [i, id] of detail.entries()) {
       const guard = this.w.entities.get(id), ally = guard?.civilian?.ally;
       if (!guard || guard.health.current <= 0 || !ally) continue;
+      if (guard.civilian?.survivor) continue;
+      if (wait && stage && gate) {
+        const dx = gate.x - (stage.zone.x0 + stage.zone.x1) / 2, dz = gate.z - (stage.zone.z0 + stage.zone.z1) / 2, length = Math.hypot(dx, dz) || 1;
+        const nx = dx / length, nz = dz / length, side = id === this.state.haleId && next?.id === 'elephant' ? 0 : (i - (detail.length - 1) / 2) * 1.3;
+        const at = { x: gate.x + nx * 4 - nz * side, z: gate.z + nz * 4 + nx * side };
+        ally.arenaWait = true; ally.post = at; ally.run = at; ally.hold = true;
+        if (distance(guard.transform, at) > .5) this.w.npcs!.move(guard, at, 6, guard.civilian!, .3, 2400);
+        continue;
+      }
+      if (ally.arenaWait) { delete ally.arenaWait; ally.post = null; ally.run = null; ally.hold = false; }
       const angle = i * Math.PI / 3;
       const radius = this.boarding() ? 6 : 4;
       const desired = { x: x + Math.cos(angle) * radius, z: z + Math.sin(angle) * radius };
@@ -668,7 +688,7 @@ export class LevelEightZoo {
   departing(): boolean { return !!this.state.departureFrom || this.mission.state.runOutUntil !== undefined || this.mission.state.phase !== 'playing'; }
   /** At the pickup, the evacuation queue owns movement instead of civilian flee/defence. */
   boarding(): boolean {
-    return this.breached && !this.protecting() && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
+    return this.breached && this.state.arenas.every(a => a.phase === 3) && !this.protecting() && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
   }
   /** Cheat/test path (`completeObjective` before the breach): call the real tunnel breach; ordinary completion still requires the plaza rendezvous. */
   advance(): boolean {
@@ -795,41 +815,49 @@ export class LevelEightZoo {
       const angle = slot * 2.399, r = Math.min(4.6, 1.8 + .72 * Math.sqrt(slot + 1));
       goal.x = plaza.x + Math.cos(angle) * r; goal.z = plaza.z + Math.sin(angle) * r;
     }
-    // Keep the evacuees on the courier's rear flank, within the camera and rifle
-    // detail's defence. Sending them all the way back to a distant entry left
-    // them outside the fight's visible rescue window. The elephant yard retains
-    // its outside holding point so the column cannot block the opening charge.
-    const encounter = s.arenas.find(a => a.phase > 0 && a.phase < 3);
-    const arena = l8BossArenas.find(a => a.id === encounter?.id);
-    if (!boarding && arena && distance(p.transform, arena.centre) < arena.radius + 8) {
-      const dx = arena.centre.x - arena.entry.x, dz = arena.centre.z - arena.entry.z, length = Math.hypot(dx, dz) || 1;
-      const heading = { x: dx / length, z: dz / length };
-      const flank = { x: p.transform.x - heading.z * 5.5, z: p.transform.z + heading.x * 5.5 };
-      const other = { x: p.transform.x + heading.z * 5.5, z: p.transform.z - heading.x * 5.5 };
-      // The old elephant entry hold left the entire party 25 m from the courier
-      // during the charge. Keep the group on a clear perpendicular flank so it
-      // stays with the escort and out of the charge line.
-      const hold = w.infected!.nav.clear(flank.x, flank.z, .4) ? flank : other;
-      // r33-l8route: the group holds INSIDE the enclosure with the courier (a hold point behind a fence would leave it outside the closing gate).
-      const zone = l8Route.find(r => r.id === arena.id)!.zone;
-      if (arena.id !== 'elephant') {
-        // Clamp the formation origin with room for its rows, so boundary
-        // clamping does not stack several followers on the same target.
-        hold.x = Math.min(zone.x1 - 8, Math.max(zone.x0 + 8, hold.x));
-        hold.z = Math.min(zone.z1 - 8, Math.max(zone.z0 + 8, hold.z));
-      }
-      Object.assign(goal, l8FormationSlot(hold, heading, slot));
-      if (!boarding && arena.id !== 'elephant') { goal.x = Math.min(zone.x1 - 1.5, Math.max(zone.x0 + 1.5, goal.x)); goal.z = Math.min(zone.z1 - 1.5, Math.max(zone.z0 + 1.5, goal.z)); }
+    // The survivor group stops outside the next cage before the courier reaches
+    // its gate. Only the courier and corgi enter; followers resume after clear.
+    const active = s.arenas.find(a => a.phase === 1 || a.phase === 2);
+    const next = active ?? s.arenas.find(a => a.phase !== 3);
+    const nextIndex = next ? s.arenas.indexOf(next) : -1, prior = nextIndex > 0 ? s.arenas[nextIndex - 1] : undefined;
+    const routeOpen = nextIndex === 0 ? !!s.sealedAt : prior?.phase === 3;
+    const stage = next && l8Route.find(r => r.id === next.id);
+    const gate = stage?.entry ?? (next?.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
+    const waitingOutside = !boarding && routeOpen && !!stage && !!gate && (!!active || inRect(p.transform, stage.zone) || distance(p.transform, gate) <= 12);
+    const ally = c.ally;
+    if (waitingOutside && stage && gate) {
+      const outwardX = gate.x - (stage.zone.x0 + stage.zone.x1) / 2, outwardZ = gate.z - (stage.zone.z0 + stage.zone.z1) / 2;
+      const length = Math.hypot(outwardX, outwardZ) || 1, nx = outwardX / length, nz = outwardZ / length, tx = -nz, tz = nx;
+      Object.assign(goal, { x: gate.x + nx * (2.8 + Math.floor(slot / 5) * 1.6) + tx * ((slot % 5 - 2) * 1.2), z: gate.z + nz * (2.8 + Math.floor(slot / 5) * 1.6) + tz * ((slot % 5 - 2) * 1.2) });
+      // Hale's first elephant charge beat requires him at the yard entrance,
+      // including when he has joined the survivor roster.
+      if (e.id === s.haleId && next?.id === 'elephant') Object.assign(goal, { x: gate.x + nx * 4, z: gate.z + nz * 4 });
+      c.survivor!.arenaWait = true;
+      if (ally) { ally.arenaWait = true; ally.post = { ...goal }; ally.run = { ...goal }; ally.hold = true; }
+    } else if (c.survivor!.arenaWait || ally?.arenaWait) {
+      delete c.survivor!.arenaWait;
+      if (ally?.arenaWait) { delete ally.arenaWait; ally.post = null; ally.run = null; ally.hold = false; }
     }
     // A resident can join beside the courier with a high roster slot, then be
     // assigned a tail position beyond the moving party. Keep separated
     // followers on a short, reachable catch-up target until they rejoin.
-    if (this.breached && !boarding && !arena && distance(e.transform, p.transform) > 10) {
+    if (this.breached && !boarding && !waitingOutside && distance(e.transform, p.transform) > 10) {
       const side = slot % 2 ? 1 : -1;
       goal.x = p.transform.x - routeHeading.x * 2.5 - routeHeading.z * side * 1.1;
       goal.z = p.transform.z - routeHeading.z * 2.5 + routeHeading.x * side * 1.1;
     }
-    let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
+    // A blocked outside slot must never fall back to the courier inside the
+    // cage. Search nearby clear ground on the outside of this encounter.
+    if (waitingOutside && stage && !w.infected!.nav.clear(goal.x, goal.z, .35)) {
+      const original = { ...goal };
+      for (let radius = 1; radius <= 8 && !w.infected!.nav.clear(goal.x, goal.z, .35); radius++) {
+        for (let i = 0; i < 16; i++) {
+          const angle = i * Math.PI / 8, candidate = { x: original.x + Math.cos(angle) * radius, z: original.z + Math.sin(angle) * radius };
+          if (!inRect(candidate, stage.zone) && w.infected!.nav.clear(candidate.x, candidate.z, .35)) { Object.assign(goal, candidate); break; }
+        }
+      }
+    }
+    let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : waitingOutside ? e.transform : p.transform;
     let queueIndex = 0;
     if (boarding) {
       const vehicle = w.vehicles!.cars.get(s.carId)!.entity.vehicle!;
@@ -865,7 +893,7 @@ export class LevelEightZoo {
       }
     }
     if (boarding) { target = this.boardingTarget(e, target); this.unjamBoarding(e, target); }
-    else if (this.breached && !arena && distance(e.transform, p.transform) > 10) {
+    else if (this.breached && !waitingOutside && distance(e.transform, p.transform) > 10) {
       // A fallen animal can obstruct the catch-up route before boarding starts.
       // Use the same physical corpse detour that already serves the APC queue.
       target = this.boardingTarget(e, target);

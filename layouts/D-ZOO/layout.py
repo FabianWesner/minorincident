@@ -698,6 +698,38 @@ for pid in _arena_drop:
     for obj in [obj for obj in l.empties if obj.name == name or obj.name.startswith(name + '.') or obj.name.startswith(f'crown:{pid}:')]:
         l.empties.remove(obj); bpy.data.objects.remove(obj, do_unlink=True)
 
+# Habitat floors sit just above the public paving. They are visual ground,
+# with no collision walls, so the arena routes and combat movement stay open.
+# Author them after the placement allocator to preserve every stable prop ID.
+for _name, _token, _x, _z, _w, _d in [
+    ('lion-sand', 'khaki', -60, -32, 27, 27),
+    ('flamingo-mud', 'khakiSeam', 0, -32, 27, 27),
+    ('zebra-savanna', 'apronOlive', 60, 32, 27, 27),
+    ('gorilla-earth', 'trouserSeam', 60, -32, 27, 27),
+    ('primate-earth', 'khakiSeam', -6, 20, 27, 27),
+    ('elephant-earth', 'khakiSeam', 96, 53, 27, 27),
+]:
+    l.box('habitat-' + _name, _token, [_w, .025, _d], [_x, .135, _z])
+# Organic, shallow pond edges and a low mud island are visual surfaces. The
+# existing excluded pond and the landing-bank navigation stay authoritative.
+def habitat_oval(name, token, x, z, rx, rz, height):
+    vertices = [(x, -z, height)]
+    for i in range(32):
+        a = math.tau * i / 32
+        # A slight, deterministic variation breaks the perfect ellipse.
+        r = 1 + .055 * math.sin(3 * a) + .025 * math.cos(5 * a)
+        vertices.append((x + rx * r * math.cos(a), -z + rz * r * math.sin(a), height))
+    mesh = bpy.data.meshes.new(name)
+    mesh.from_pydata(vertices, [], [(0, i + 1, (i + 1) % 32 + 1) for i in range(32)])
+    mesh.materials.append(material(token))
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    l.layers[0].append(obj)
+habitat_oval('flamingo-mud-bank', 'khaki', 0, -32, 8.0, 5.9, .151)
+habitat_oval('flamingo-water', 'backpackTeal', 0, -32, 7.2, 5.1, .158)
+habitat_oval('flamingo-island', 'khakiLight', 1.0, -32, 1.55, 1.05, .165)
+l.box('habitat-elephant-water', 'backpackTealDark', [4, .015, 3], [87, .157, 61])
+
 # Static layout pieces with identical material/attribute layouts share a program.
 # PreRenderer still draws every piece, including its shadows, during warm-up.
 for _piece in l.layers[0]: _piece['preRenderShared'] = True

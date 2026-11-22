@@ -49,7 +49,7 @@ export interface Civilian {
     haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number; cower?: { x: number; z: number } } };
 }
 /** Serializable E23 survivor state. `leader` = entity id it follows in single file (the player or the follower ahead); ticks are sim ticks. */
-export interface SurvivorState { key: string; mode: 'hidden' | 'follow'; slot: number; leader: number; cover: boolean; /** Story injury, independent of the civilian's ambient walking pace. */ injured?: boolean; fearUntil?: number; waitAt: number; foundAt: number; /** L5 calm travel tick: this tick the follower tracks the courier's pace without crowd response lag (L5-08). */ briskAt?: number;
+export interface SurvivorState { key: string; mode: 'hidden' | 'follow'; slot: number; leader: number; cover: boolean; /** L8: deliberate wait outside an active animal cage. */ arenaWait?: boolean; /** Story injury, independent of the civilian's ambient walking pace. */ injured?: boolean; fearUntil?: number; waitAt: number; foundAt: number; /** L5 calm travel tick: this tick the follower tracks the courier's pace without crowd response lag (L5-08). */ briskAt?: number;
   /** Swept L7 detour legs around a large solid corpse during L5 travel. */
   corpseRoute?: Point[];
   /** Courier travel velocity as this follower perceives it: rises with the courier at once, eases off over ~0.6 s. */
@@ -80,6 +80,8 @@ export interface AllyState {
   run: Point | null; runSpeed: number;
   /** Regroup / hold point; officers never leave it. */
   post: Point | null; hold: boolean;
+  /** L8 cage wait ownership, so the survivor group resumes its previous order on clear. */
+  arenaWait?: boolean;
   /** Officers: acquisition radius around the post (the line), raised while covering an evacuee. */
   range?: number;
   targetId: number; nextAttack: number; hits: number;

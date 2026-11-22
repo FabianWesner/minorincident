@@ -62,6 +62,7 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
       }
     }
     expect(new Set(lines.filter(id => id.startsWith('L10.finale-'))).size).toBe(10);
+    expect(lines.filter(id => id === 'L10.sinkhole-warning')).toHaveLength(1);
     world.dispose();
   }
 

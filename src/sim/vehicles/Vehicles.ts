@@ -313,7 +313,8 @@ export class Vehicles {
       if (!entity?.destructible || entity.health.current <= 0 || !['fence', 'crate', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind) || speed < 5) continue;
       const dx = entity.transform.x - p.x, dz = entity.transform.z - p.z;
       if (Math.abs(dx * c - dz * s) > extent + Math.abs(c) * wall.halfX + Math.abs(s) * wall.halfZ || Math.abs(dx * s + dz * c) > car.physics.def.width / 2 + Math.abs(s) * wall.halfX + Math.abs(c) * wall.halfZ) continue;
-      this.obstacles.ramDestructible(entity, wall.halfX, wall.halfZ, velocity, this.world.tick);
+      const obstacle = this.obstacles.ramDestructible(entity, wall.halfX, wall.halfZ, velocity, this.world.tick);
+      this.clearArmoredObstacle(car, obstacle);
       this.crash(car, speed);
       car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
     }
@@ -326,6 +327,7 @@ export class Vehicles {
       if (Math.abs(localX) > extent + halfX || Math.abs(localZ) > car.physics.def.width / 2 + halfZ) continue;
       if ((obstacle.light || obstacle.entity.archetype === 'obstacle.jersey-barrier') && speed >= 5) {
         this.obstacles.ram(obstacle, velocity, this.world.tick);
+        this.clearArmoredObstacle(car, obstacle);
         this.crash(car, speed);
         car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
       } else if (!obstacle.light && speed >= 2 && this.world.tick >= (car.hits.get(obstacle.entity.id) ?? 0)) {
@@ -335,6 +337,17 @@ export class Vehicles {
         car.physics.intent.brake = true;
       }
     }
+  }
+  /** Clear a rammed obstacle's full footprint from the armored cab. */
+  private clearArmoredObstacle(car: Car, obstacle: (typeof this.obstacles.items)[number]): void {
+    if (!car.entity.vehicle!.floor || !obstacle.body) return;
+    const p = car.entity.transform, c = Math.cos(p.yaw), s = Math.sin(p.yaw), t = obstacle.body.translation();
+    const dx = t.x - p.x, dz = t.z - p.z, x = dx * c - dz * s, localZ = dx * s + dz * c;
+    const halfZ = Math.abs(s) * obstacle.halfX + Math.abs(c) * obstacle.halfZ;
+    const side = Math.sign(localZ || 1), z = side * (car.physics.def.width / 2 + halfZ + .1);
+    obstacle.body.setTranslation({ x: p.x + x * c + z * s, y: t.y, z: p.z - x * s + z * c }, true);
+    const v = obstacle.body.linvel(), lateral = v.x * s + v.z * c;
+    if (lateral * side < 2) obstacle.body.setLinvel({ x: v.x + s * (side * 2 - lateral), y: v.y, z: v.z + c * (side * 2 - lateral) }, true);
   }
   /** Hard contacts dent the body even while HP remains above the smoke threshold. */
   private crash(car: Car, speed: number): void {

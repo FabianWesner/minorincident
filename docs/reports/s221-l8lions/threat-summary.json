@@ -1,0 +1,55 @@
+{
+  "revision": "26c7387873deca267f9d7c2f3ffb46ea6d2a295f",
+  "mainRevision": "97b4c6f71a188714bc07d32a6304f8520754340a",
+  "sourceHash": "07e787bea53593e586019d966a6f92f53ee7a865e67d7c0cdccaa5c39a324bc2",
+  "observerHash": "b05c99cc5f36563a0e10e3010433100d2943c30363b365dd581bdfcee18b5d8e",
+  "globalAcceptanceFlags": [],
+  "L8DiagnosticFlags": [
+    "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS",
+    "wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+  ],
+  "L8PassiveFlags": [],
+  "L8Run": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 407.8,
+    "deaths": 0,
+    "kills": 21,
+    "damageTaken": 90,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "sanctuary",
+        "t": 149.96666666666667
+      },
+      {
+        "id": "escape",
+        "t": 399.8
+      },
+      {
+        "id": "depart",
+        "t": 407.8
+      }
+    ],
+    "furthestObjective": "depart",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 209,
+      "deferred": 17,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "L8FollowerWaitUpperBoundPercent": 4.331791054784416,
+  "mainL8FollowerWaitUpperBoundPercent": 7.5237039773426915,
+  "shardSeconds": [
+    345.762125458,
+    470.530015459
+  ]
+}

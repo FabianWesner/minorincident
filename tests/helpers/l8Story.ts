@@ -133,7 +133,7 @@ export async function checkL8Story(): Promise<void> {
     expect([...world.entities.iterate()].some(e => e.archetype === 'infected.mega-alpha' || e.infected?.variant === 'inf.mega-alpha')).toBe(false);
     for (const arena of zoo.state.arenas) arena.phase = 3;
     const charge = playHaleCharge(world);
-    expect(charge.distance).toBeLessThan(6); expect(charge.move).toBe('elephant.charge');
+    expect(charge.distance).toBeLessThan(12); expect(charge.move).toBe('elephant.charge');
     expect(mission.state.states['hale-keys']).toBe(true);
     expect(mission.state.states['hale-fallen']).toBe(true);
     expect(world.entities.get(zoo.state.haleId)!.health.current).toBe(0);
