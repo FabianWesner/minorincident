@@ -82,6 +82,9 @@ export class DistrictView extends Group {
   private overviewView?: LevelTenOverview;
   private readonly destructionSources = new Map<string, Group>();
   private readonly pending = new Map<LodBatch, Promise<void>>();
+  /** Reuse per-batch LOD partition lists. A crossing camera visits thousands of
+   * authored placements every frame; fresh partition containers create GC load. */
+  private readonly partitionScratch = new WeakMap<LodBatch, { hero: Object3D[]; near: Object3D[]; far: Object3D[] }>();
   private disposed = false;
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
@@ -414,7 +417,9 @@ export class DistrictView extends Group {
   }
   private partition(entry: LodBatch, view: View): void {
     const { hero, near, far, refs, origin, height, radius } = entry;
-    const selectedRefs = new Map([[hero, [] as Object3D[]], [near, [] as Object3D[]], [far, [] as Object3D[]]]);
+    let selectedRefs = this.partitionScratch.get(entry);
+    if (!selectedRefs) { selectedRefs = { hero: [], near: [], far: [] }; this.partitionScratch.set(entry, selectedRefs); }
+    selectedRefs.hero.length = selectedRefs.near.length = selectedRefs.far.length = 0;
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
     let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
@@ -465,19 +470,11 @@ export class DistrictView extends Group {
         if (Number.isFinite(gap)) ref.position.y -= ref.userData.propAwake ? Math.min(0, gap) : gap;
         ref.userData.propContactDirty = false; ref.userData.propContactBatch = selected;
       }
-      selectedRefs.get(selected)!.push(ref);
+      (selected === hero ? selectedRefs.hero : selected === near ? selectedRefs.near : selectedRefs.far).push(ref);
     }
-    for (const batch of [hero, near, far]) {
-      const next = selectedRefs.get(batch)!;
-      // Camera shake changes the frustum every frame, but usually keeps the same
-      // wreck/collapse instances. Upload only a changed partition or moved prop.
-      const changed = this.dirtyEntries.has(entry) || next.length !== batch.references.length || next.some((ref, i) => ref !== batch.references[i]);
-      if (!changed) continue;
-      batch.references.length = 0; batch.references.push(...next);
-      batch.visible = batch.references.length > 0;
-      for (const child of batch.children) if (child instanceof InstancedMesh) child.count = batch.references.length;
-      if (batch.references.length) batch.update();
-    }
+    this.syncPartition(entry, hero, selectedRefs.hero);
+    this.syncPartition(entry, near, selectedRefs.near);
+    this.syncPartition(entry, far, selectedRefs.far);
     // A placement in view whose LOD1 has not arrived is drawn from the LOD2 placeholder: fetch the tier now (the background prepare()
     // walks the level nearest-first from the spawn and can be far behind a fast walker).
     if ((prefetchNear || near.references.length || hero.references.length && !this.low) && !entry.nearLoaded && !this.pending.has(entry)) {
@@ -486,6 +483,17 @@ export class DistrictView extends Group {
     if ((prefetchHero || hero.references.length) && !entry.loaded && !this.pending.has(entry)) {
       this.pending.set(entry, this.loadHero(entry).finally(() => this.pending.delete(entry)));
     }
+  }
+  private syncPartition(entry: LodBatch, batch: InstancedGroup, next: Object3D[]): void {
+    // Camera shake changes the frustum every frame, but usually keeps the same
+    // wreck/collapse instances. Upload only a changed partition or moved prop.
+    let changed = this.dirtyEntries.has(entry) || next.length !== batch.references.length;
+    for (let i = 0; !changed && i < next.length; i++) if (next[i] !== batch.references[i]) changed = true;
+    if (!changed) return;
+    batch.references.length = 0; batch.references.push(...next);
+    batch.visible = batch.references.length > 0;
+    for (const child of batch.children) if (child instanceof InstancedMesh) child.count = batch.references.length;
+    if (batch.references.length) batch.update();
   }
   /** PO #15: pushable props follow their sim bodies. Placements are matched by asset and home position once;
    * only batches whose props actually moved are re-partitioned (on the next updateLods). */
