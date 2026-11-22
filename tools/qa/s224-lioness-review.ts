@@ -1,17 +1,16 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession } from '../scenelab/session';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
-import type { Game } from '../../src/Game';
 
 const out = 'test-results/s224-lioness'; mkdirSync(out, { recursive: true });
 for (const tier of ['low', 'high'] as const) for (const zoom of [1, 1.5]) {
   const session = new SceneSession({ backend: 'webgl2', tier, viewport: { width: 800, height: 600 } });
   try {
     await session.open();
-    await session.page.evaluate(() => {
-      const game = (window.__SCENE__ as unknown as { game: Game }).game, load = game.loadLevel.bind(game);
+    await session.page.evaluate(`(() => {
+      const game = window.__SCENE__.game, load = game.loadLevel.bind(game);
       game.loadLevel = (id, opts, perf, speculative) => load(id, { ...opts, setup: world => { opts?.setup?.(world); world.scenario = 'L8'; } }, perf, speculative);
-    });
+    })()`);
     const spec: SceneSpec = { name: `s224-lioness-${tier}-${zoom}`, seed: 8, ground: 'asphalt', time: 'L8-zoo', size: 40, dof: false,
       actors: [
         { id: 'healthy', kind: 'animal', species: 'lion', at: [-2, 0], yaw: -45, state: 'idle' },
