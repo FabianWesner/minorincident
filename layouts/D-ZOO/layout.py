@@ -396,6 +396,14 @@ for e in list(l.data['roads']['edges']):
 HABITAT = {name: 'sidewalk' for name in _encl}
 for k, (cx, cz, w, d) in _encl.items():
     l.box('habitat-floor', HABITAT[k], [w - 1.2, .03, d - 1.2], [cx, .015, cz])
+# Story traces remain on the ground after the outbreak. Keep the main gate
+# lanes clear: splintered fence and blood at the paddock edge, and the vet's
+# dropped tranquiliser rifle beside the gorilla house.
+l.box('zebra-broken-rail', 'woodWarm', [3.2, .12, .12], [76, .21, 42])
+l.box('zebra-blood-trace', 'blood', [1.8, .025, .7], [72, .16, 40])
+l.box('gorilla-vet-rifle-stock', 'woodWarm', [.55, .1, .18], [72, .20, -39])
+l.box('gorilla-vet-rifle-barrel', 'silver', [.85, .07, .07], [72.65, .20, -39])
+l.box('gorilla-vet-blood', 'blood', [1.2, .025, .6], [72, .16, -40])
 # Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
 for k in range(9):
     tx, tz = 60 + _zr.uniform(-18, 18), 32 + _zr.uniform(-16, 16)
@@ -705,8 +713,8 @@ for pid in _arena_drop:
 for _name, _token, _x, _z, _w, _d in [
     ('lion-sand', 'khaki', -60, -32, 27, 27),
     ('flamingo-mud', 'khakiSeam', 0, -32, 27, 27),
-    ('zebra-savanna', 'apronOlive', 60, 32, 27, 27),
-    ('gorilla-earth', 'trouserSeam', 60, -32, 27, 27),
+    ('zebra-savanna', 'khaki', 60, 32, 27, 27),
+    ('gorilla-earth', 'woodWarm', 60, -32, 27, 27),
     ('primate-earth', 'khakiSeam', -6, 20, 27, 27),
     ('elephant-earth', 'khakiSeam', 96, 53, 27, 27),
 ]:

@@ -16,3 +16,5 @@
 - Habitat diagnostic: HIGH first, then LOW, native WebGL2/Metal at zoom 1 (teleported paused courier, seed 1). The [contact sheet](habitat-review.jpg) shows both views are too dark to assess the habitat: zebra ground appears nearly black with the herd clipped at the edge; the gorilla view shows trees and crates but little recognizable enclosure structure. This is a failed visual review, not acceptance. Capture framing, night readability, and the full move tell/hit review remain open.
 
 This report records implementation intent and current validation only. It does not claim capture review or full acceptance.
+
+- Subsequent habitat pass: the visible arena floor uses savanna and earth palette colors, with a broken rail and blood trace by the zebra paddock and a dropped rifle and blood trace in the gorilla house. HIGH then LOW zoom 1 recaptures show the floor tint change, but both remain dark and the traces are outside these views. `node --import tsx/esm tools/qa/l8-habitats.ts` fails its existing 60-second breach assertion; it did not validate the habitats. Full story pieces and visual acceptance remain open.
