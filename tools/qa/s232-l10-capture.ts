@@ -20,8 +20,14 @@ try {
     return { id, speed: b.speed, player: p.transform, target: actor.transform };
   });
   const cells: { frame: number; jpeg: Buffer }[] = [];
+  const motion: { frame: number; tick: number; position: number[]; orientation: number[] }[] = [];
   for (let frame = 0; frame <= 100; frame++) {
     if (frame) await s.page.evaluate(async () => window.__SS__!.step(1));
+    if (frame >= 20 && frame <= 55) {
+      await s.ready();
+      const sample = await s.page.evaluate(() => { const game = (window.__SCENE__ as unknown as { game: Game }).game, pose = game.view.labProbes().bicycle?.snapshot(); return pose && { tick: game.world.tick, position: pose.position, orientation: pose.orientation }; });
+      if (sample) motion.push({ frame, ...sample });
+    }
     if (frame >= 20 && frame <= 65 && frame % 5 === 0) { await s.ready(); cells.push({ frame, jpeg: await s.page.screenshot({ type: 'jpeg', quality: 82, clip: { x: 460, y: 230, width: 360, height: 270 } }) }); }
   }
   await s.page.keyboard.up('KeyW');
@@ -33,6 +39,6 @@ try {
     const height = bounds ? (bounds.max.y - bounds.min.y) * slot.page.mesh.instanceMatrix.array[slot.index * 16 + 5] : null;
     const matrix = slot ? Array.from(slot.page.mesh.instanceMatrix.array.slice(slot.index * 16, slot.index * 16 + 16)) : null;
     return { matrix, height, ...probe, target: e && { health: e.health, corpse: e.corpse, squashed: e.squashed, transform: e.transform }, bike: w.vehicles!.bicycle.entity!.bicycle }; });
-  await s.makeSheet(cells, `${out}/${tier}-close.jpg`, 320); writeFileSync(`${out}/${tier}-close.json`, JSON.stringify({ setup, result, errors: s.errors }, null, 2));
+  await s.makeSheet(cells, `${out}/${tier}-close.jpg`, 320); writeFileSync(`${out}/${tier}-close.json`, JSON.stringify({ setup, result, motion, errors: s.errors }, null, 2));
   console.log(JSON.stringify({ tier, setup, result, errors: s.errors }));
 } finally { await s.close(); stopServer(); }

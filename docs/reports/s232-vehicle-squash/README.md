@@ -51,7 +51,10 @@
 - On `b9997bfb`, `qa:vehicle-motion` and `qa:vehicle-campaign-motion` passed (exit 0), including HIGH and LOW L9, L7 and L4. `npm run qa:threat` passed in 327.0 s with 0 fail flags; skilled L9 and L10 completed.
 - The full remote unit command on `b9997bfb` and its unchanged retry again hit the 240-second budget (240.6 s and 241.3 s). Both ran the full 150-case inventory; the retry reported the vehicle file passing. The full unit gate remains open.
 
+- Native L10 HIGH then LOW recapture after the pooling fix: [HIGH](l10-high.json) and [LOW](l10-low.json) include per-tick rendered bike positions and orientations around the impact. In both, the bike rises approximately 12 cm from its pre-hit position and pitches during the 18-tick bump before settling; the marked corpse remains at the impact. Reviewed the updated [sheet](sheet.jpg): the victim meets the front, disappears under the bike and emerges behind alongside blood; the bump is more measurable in the motion samples than the stills.
+- The existing core audio test now checks that slow hits and run-overs route to their distinct positional cues and that simultaneous pack events are suppressed for 90 ms; the focused test passes. This confirms routing, not subjective mix quality. Typecheck and lint pass.
+
 ## Open acceptance
 
-- Review the sound mix and bike bump in motion. The still captures show the contact and retained corpse, but the bike lift is subtle.
+- Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
 - Complete the full remote unit suite within its unchanged 240-second budget. Multiple attempts timed out; the focused save-progression file passes on the same runner.

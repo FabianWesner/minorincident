@@ -23,6 +23,14 @@ function checkWeaponAudioEvents(): void {
   expect(stopLoop).toHaveBeenCalledWith('flame:1');
   expect(play).toHaveBeenCalledWith('weapon.flame-stop', expect.anything(), 1);
   play.mockClear();
+  const hit: GameEvent = { type: 'vehicle.infected-hit', tick: 1, sourceId: 4, targetId: 2, position: target.transform, runOver: false };
+  context.currentTime = 2; mapper.event(hit);
+  expect(play).toHaveBeenCalledWith('vehicle.zombie-hit', { position: target.transform }, 2);
+  context.currentTime = 2.04; mapper.event({ ...hit, targetId: 3, runOver: true });
+  expect(play).toHaveBeenCalledTimes(1);
+  context.currentTime = 2.1; mapper.event({ ...hit, targetId: 3, runOver: true });
+  expect(play).toHaveBeenLastCalledWith('vehicle.zombie-runover', { position: target.transform }, 3);
+  play.mockClear();
   mapper.event({ type: 'mega.move-impact', tick: 1, sourceId: 2, position: { x: 7, z: 3 } });
   expect(play).toHaveBeenCalledWith('mega.impact', expect.objectContaining({ position: { x: 7, z: 3 } }), 2);
 }
