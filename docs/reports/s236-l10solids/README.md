@@ -32,6 +32,7 @@ L5 has no `bld.*` placements in the runner level data. L1, L2, L7, L8, and L9 ha
 - A subsequent remote `qa:threat` also exceeded its 600-second budget under runner load; it did not produce an aggregate verdict. L10 skilled started shortly before the timeout.
 - `sh tools/remote/run.sh "$PWD" -- npm test`: unavailable; no healthy Hetzner runner and the configured Mac slot rejects the full suite.
 - Subsequent full remote `npm test` passed: 27 files, 105 tests passed, one skipped, 213.5 seconds within the 240-second budget.
+- After tightening farm bounds, the first remote unit run timed out at 240 seconds; the required unchanged retry passed 27 files, 105 tests with one skipped, in 236.2 seconds.
 - Focused scene gate and native HIGH/LOW captures: unavailable; browser-pool startup failed with `EPERM` binding its local listener / registering the browser process. No captures were produced or reviewed.
 - On a subsequent unrestricted run, the focused `l10-d2-military-breach@low-z0.5` scene row passed. The requested camera captures and other scene rows remain open.
 - Both curated L10 gate rows passed on a later run (`l10-d2-military-breach@low-z0.5` and `l10-mega-close-contact@low-z1.5`; `/private/tmp/s236-l10-gate-final/index.md`). Their sheets show isolated actors on plain ground, so they do not verify farm walls or building fades.
