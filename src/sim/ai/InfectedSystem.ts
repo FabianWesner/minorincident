@@ -414,7 +414,12 @@ export class InfectedSystem {
    * special moves, roar/pin holds, then the L1 or archetype brain. Every phase returns true when it consumed the actor's tick. */
   update(): void {
     if (this.world.progression?.campaign?.world?.infectionCleared && this.world.scenario !== 'L10' && this.world.missions?.state.id !== 'L10') for (const e of this.active) this.world.combat?.damage.cure(e);
-    const courier = this.world.entities.get(1)!; this.budget = 2000; this.wideBudget = 12000; this.routes = 0; this.director.update();
+    const courier = this.world.entities.get(1)!;
+    // L9's authored roadblock cohort can issue several fresh scripted routes
+    // together. Cap one tick's shared A* work lower there so the searches carry
+    // their frontier across ticks instead of synchronously consuming a full
+    // 2,000-cell budget during the convoy passage.
+    this.budget = this.world.scenario === 'L9' ? 500 : 2000; this.wideBudget = 12000; this.routes = 0; this.director.update();
     this.approachParty.length = 0;
     if (!this.world.inspectionGhost) for (const human of this.world.entities.iterate()) {
       if (human.hidden || human.health.current <= 0 || human.infection || human.infected) continue;

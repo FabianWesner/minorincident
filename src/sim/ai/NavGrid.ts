@@ -76,6 +76,7 @@ export class NavGrid {
   private readonly buckets = new Map<number, Map<number, Wall[]>>();
   private readonly routeBuckets = new Map<number, Map<number, Wall[]>>();
   private readonly interruptedPaths = new WeakMap<number[], PathSearch>();
+  private readonly interruptedPathPool: PathSearch[] = [];
   private searchResult: number[] | null = null;
   private readonly searchCells: number[] = [];
   private searchFrom = -1;
@@ -802,9 +803,18 @@ export class NavGrid {
     // the shared workspace between retries without discarding this request's frontier.
     if (this.searchResult !== result) {
       if (this.searchResult && this.searching && this.searchRevision === this.revision) {
-        const cells = this.searchCells.slice();
-        this.interruptedPaths.set(this.searchResult, { from: this.searchFrom, to: this.searchTo, revision: this.searchRevision, size: this.searchSize, heap: this.heap.slice(), cells,
-          parents: cells.map(cell => this.parent[cell]), costs: cells.map(cell => this.cost[cell]), states: cells.map(cell => this.open[cell]) });
+        // Multiple infected can switch this shared A* workspace every tick.
+        // Reuse each route's snapshot buffers instead of allocating five arrays
+        // for every switch during the L9 roadblock cohort.
+        let saved = this.interruptedPaths.get(this.searchResult) ?? this.interruptedPathPool.pop();
+        if (!saved) saved = { from: -1, to: -1, revision: -1, size: 0, heap: [], cells: [], parents: [], costs: [], states: [] };
+        this.interruptedPaths.set(this.searchResult, saved);
+        saved.from = this.searchFrom; saved.to = this.searchTo; saved.revision = this.searchRevision; saved.size = this.searchSize;
+        saved.heap.length = 0; for (const value of this.heap) saved.heap.push(value);
+        saved.cells.length = 0; saved.parents.length = 0; saved.costs.length = 0; saved.states.length = 0;
+        for (const cell of this.searchCells) {
+          saved.cells.push(cell); saved.parents.push(this.parent[cell]); saved.costs.push(this.cost[cell]); saved.states.push(this.open[cell]);
+        }
       }
       this.searching = false;
       const saved = this.interruptedPaths.get(result);
@@ -821,6 +831,7 @@ export class NavGrid {
         }
         this.searching = true;
       }
+      if (saved) this.interruptedPathPool.push(saved);
       this.searchResult = result;
     }
     const resuming = this.searching && this.searchRevision === this.revision && this.searchFrom === from && this.searchTo === to, fail = this.failSeen;

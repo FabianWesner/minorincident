@@ -1,39 +1,58 @@
-# s228 — L9 drive hitch
+# s228 — L9 drive simulation hitch
 
-## Finding and change
+## Attribution and fix
 
-`DistrictView.partition()` scans the district's LOD placements on camera updates. Before this change, every asset batch allocated a new `Map`, three new partition arrays, and a temporary three-element batch array for each scan. D-CROSSING covers a 1,200 × 800 m region, so this repeats across many placement groups while driving and creates steady garbage-collection pressure. The likely hitch contributor is this per-frame partition allocation churn; the change reuses three arrays per LOD batch and synchronizes them without allocating iterator callbacks or temporary batch arrays. Frustum tests, LOD selection, ordering, instance buffers, and quality remain unchanged. No infected, corpses, or visual targets were removed or reduced.
+The browser trace identifies the cost in simulation time (not rendering). A deterministic Node run of the L9 HIGH/seed-1 dry-shortcut route reproduces the tick-4082 spike at the same road position. Per-listener timings show `InfectedSystem.update()` dominates; chunk residency, physics, vehicle contacts, mission/destruction work, and cleanup stay below 0.2 ms on that tick. The infected callback is servicing several scripted cohort path searches against the shared nav grid. Its shared A* budget was 2,000 expansions per tick, allowing a synchronous search burst.
 
-This is source-level attribution, not yet a measured A/B confirmation. The native frame trace below is the required check before treating it as the confirmed cause.
+Two changes bound that work without changing population, damage, or corpse lifetime:
 
-## Fixture and timing
+- L9 uses a 500-expansion per-tick A* budget. Unfinished searches retain their existing frontier and resume on later ticks.
+- `NavGrid` reuses per-route interrupted-search snapshot buffers from a pool. This avoids repeatedly allocating the heap, visited-cell, parent, cost, and state copies when actors alternate use of the shared A* workspace. A snapshot returns to the pool only after its state has been restored, preserving route correctness.
 
-Native headless WebGPU, HIGH, seed 1, 1600 × 900 at DPR 1, production `LevelNineBot` on the dry-shortcut detour, normal L9 campaign state, ticks 3,500–4,700. Run the before command with `src/render/DistrictView.ts` from parent revision `8ef2a340` and the after command with the committed version; keep the harness identical. The same fixture is used for both sides:
+## Deterministic Node fixture
+
+`tools/sim-runner/l9-system-profile.ts` loads the production L9 composition and HIGH layouts, seed 1, `LevelNineBot` dry-shortcut route/detour, begins the mission, and records every sim tick and every `sim.tick` listener from 3,500 through 4,700 (1,201 rows). The before run used the original 2,000-expansion budget; the after run used the L9 500-expansion budget. Both used the same harness, route, seed, and nav snapshot-pool implementation.
 
 ```sh
-SCENE_PORT=5252 E2E_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh node --import tsx/esm tools/perf/s228-l9-drive.ts before
-SCENE_PORT=5252 E2E_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh node --import tsx/esm tools/perf/s228-l9-drive.ts after
+node --import tsx/esm tools/sim-runner/l9-system-profile.ts before
+node --import tsx/esm tools/sim-runner/l9-system-profile.ts after
 ```
 
-| State | Frames | Frame p95 | Frame p99 | Longest frame | >33.4 ms | Status |
-| --- | ---: | ---: | ---: | ---: | ---: | --- |
-| Before | pending | pending | pending | pending | pending | perf pending |
-| After | pending | pending | pending | pending | pending | perf pending |
+| Run | p50 ms | p95 ms | p99 ms | Max ms |
+| --- | ---: | ---: | ---: | ---: |
+| Before | 4.63 | 37.04 | 54.63 | 178.91 |
+| After | 3.50 | 12.98 | 19.21 | 143.03 |
 
-Perf is pending because this Mac was above the quiet-run load limit (load averages 5.07 / 3.74 / 3.77 on the first attempt; quiet-run requires <3) and the alternate lock-based preflight could not spawn its process scan (`EPERM`). The browser-pool startup also failed to bind its local service (`listen EPERM`), so no native frame sample was collected. Rerun both commands in a quiet window; raw traces and JSON summaries will be in `test-results/s228-l9perf/{before,after}/trace.json`.
+Per-tick simulation and leading system timings:
 
-The seed-1 native simulation dry-route probe places the APC at (281.59, 13.37) at tick 4,201, approximately 42.5 m from the reported position; the fixture window was corrected to include this passage. It is a reproducible nearby route segment, not a reconstruction of the PO’s exact state.
+| Tick | Before sim ms | Before leading systems ms | After sim ms | After leading systems ms |
+| ---: | ---: | --- | ---: | --- |
+| 4082 | 29.56 | infected AI 28.01; solids 0.21; nav cleanup 0.20; physics 0.17 | 3.41 | infected AI 2.06; solids 0.19; nav cleanup 0.19; physics 0.14 |
+| 4410 | 4.26 | infected AI 2.02; destruction 0.89; solids 0.21; nav cleanup 0.14 | 4.82 | infected AI 2.33; destruction 0.95; solids 0.26; nav cleanup 0.18 |
+| 4569 | 4.50 | infected AI 2.84; solids 0.28; nav cleanup 0.24; physics 0.21 | 2.97 | infected AI 2.06; solids 0.13; nav cleanup 0.12; physics 0.11 |
 
-A further quiet-run admission attempt on 2026-11-22 at 07:38 CET expired after 45 seconds with load 6.16 / 5.48 / 5.00 and concurrent threat-audit workers. No browser or timing run started.
+The Node host has GC outliers elsewhere in the 1,201-tick window (max 143.03 ms after); per-tick callback timing, p95/p99, and the targeted system measurements are retained in [node-before.json](node-before.json) and [node-after.json](node-after.json). Sampled resident infected counts are 86/70/76 before and 87/75/81 after. The change is limited to navigation search scheduling and snapshot-buffer reuse; it does not change population caps, spawn requests, stats, or corpse cleanup.
+
+## Browser fixture
+
+The supplied production browser evidence was HIGH WebGPU, seed 1, ticks 3,500–4,700: before 1,195 frames / p95 32.8 ms / p99 78.4 ms / max 149.9 ms; after the DistrictView-only allocation change 1,050 frames / p95 34.3 ms / p99 81 ms / max 150.4 ms / 82 hitches. The reported sim costs were tick 4082 74 ms, tick 4410 25 ms, tick 4569 51 ms.
+
+The post-fix browser run was attempted through the required headless quiet runner:
+
+```sh
+SCENE_PORT=5252 E2E_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh node --import tsx/esm tools/perf/s228-l9-drive.ts after-final
+```
+
+The initial attempt exited 75 before startup. A subsequent admitted run completed: 1,354 frames, p95 30.5 ms, p99 36.7 ms, max 126.8 ms, 22 hitches, no browser errors. However, large sim spikes remain: tick 4104 reported 108.2 ms and tick 4109 65.6 ms. Further attribution and a fix are required; the browser result does not establish that the hitch is resolved.
 
 ## Gates
 
 - `npm run typecheck`: pass.
 - `npm run lint`: pass.
-- `node --import tsx/esm tools/qa/l9-driving-proof.ts --route road --tier high --seed 1 --max-seconds 600 --out test-results/s228-l9perf/l9-skilled-high.json`: pass; L9 phase `done` at tick 11,401, 100 HP, peak 172 living infected, peak 25 resident chunks, zero collision failures.
-- `npm run qa:threat`: pass; 0 fail flags, L9 skilled and passive complete.
-- `sh tools/remote/run.sh "$PWD" -- npm test`: pass; 27 files, 105 passed, 1 skipped, 207.8 seconds within the 240-second budget.
+- `npm test`: pass locally, 27 files, 106 passed, 120.0 seconds; full 150-case inventory unchanged. `sh tools/remote/run.sh "$PWD" -- npm test`: pass on the remote runner, 27 files, 105 passed and one skipped, 217.9 seconds.
+- L9 skilled HIGH, seed 1: complete in 191.23 sim seconds; 100 HP, peak 173 living infected, peak 25 resident chunks, zero collision failures.
+- `npm run qa:threat`: pass in 380.8 seconds; zero fail flags. L9 skilled and passive both complete.
 
-## Open
+## Notes
 
-Native before/after frame-time measurements are still required to confirm the allocation change reduces the reported L9 hitch on the same fixture. The PO may run the listed quiet-window commands; preserve their output here before closing this report.
+The earlier DistrictView partition-allocation change remains committed in `feb1c11a`; it did not reduce the supplied browser hitch and is not the fix described here. The sim changes above address the measured Node workload. The later browser run still shows large sim spikes around tick 4104; those remain open.
