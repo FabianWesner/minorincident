@@ -75,6 +75,8 @@ export const l8PlazaGates = {
 export const l8ConnectorGates = [
   // Nadia crosses this arm during the calm tour; close it only at the seal.
   { x: 56.9, z: 0, halfX: .25, halfZ: 12 },
+  // The south perimeter cohort can reach the pond before the plaza seals.
+  { x: -.3, z: -67.1, halfX: 2.9, halfZ: .25 },
   // Close the unused southbound arms of the two zebra-approach junctions.
   { x: 24, z: 67.1, halfX: 4.5, halfZ: .25 },
   { x: 60, z: 67.1, halfX: 4.5, halfZ: .25 },

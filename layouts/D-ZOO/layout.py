@@ -644,7 +644,8 @@ for _x in (92.9, 99.1):
     _fence(_x, 35.2, _x, 38)
 
 # Cap unused branches: these junctions turn toward the next animal gate.
-_fence(-27.2, -67.1, -20.8, -67.1); _fence(-3.2, -67.1, 2.6, -67.1)
+_fence(-27.2, -67.1, -20.8, -67.1)
+# The flamingo approach cap is a runtime connector gate, open during the breach.
 _barricade(-27.2, -60.9, -20.8, -60.9)
 _barricade(-63.1, -67.2, -63.1, -60.8)
 _barricade(3.1, -67.2, 3.1, -60.8)

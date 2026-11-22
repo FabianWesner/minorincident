@@ -436,6 +436,11 @@ export class LevelEightZoo {
       for (let i = 0; i < perimeterGates.length; i++) {
         const arrivals = this.releaseGate(i, count);
         s.perimeterGateReleased[i] = arrivals.length > 0;
+        if (i === 0 && arrivals.length && s.animals[5]) {
+          s.animalInterceptionId = arrivals[0];
+          w.entities.get(arrivals[0])!.infected!.arenaCarrier = s.animals[5];
+          ai.pursueTarget(arrivals[0], s.animals[5]);
+        }
       }
     }
     if (s.gateBreachLineAt && t >= s.gateBreachLineAt) { s.gateBreachLineAt = 0; this.mission.radio('L8.nadia-gate-breach'); }
@@ -447,13 +452,13 @@ export class LevelEightZoo {
         w.events.emit({ type: 'vfx.effect', tick: t, kind: 'objective', position, radius: 2 });
         s.perimeterGateSounded![i] = true;
       }
-      if (s.perimeterGateReleased?.[i]) continue;
       const count = ai.director.tier === 'low' ? 3 : 6;
-      const arrivals = this.releaseGate(i, count);
+      const arrivals = s.perimeterGateReleased?.[i] ? [] : this.releaseGate(i, count);
       if (arrivals.length) {
         s.perimeterGateReleased![i] = true;
         if (i === 0 && !s.animalInterceptionId && s.animals[5]) {
           s.animalInterceptionId = arrivals[0];
+          w.entities.get(arrivals[0])!.infected!.arenaCarrier = s.animals[5];
           ai.pursueTarget(arrivals[0], s.animals[5]);
         }
       }
@@ -563,9 +568,11 @@ export class LevelEightZoo {
     for (const arrival of s.arrivals) {
       const infected = w.entities.get(arrival.id)?.infected;
       if (!infected) continue;
-      if (arrival.id === s.dogId) ai.pursueTarget(arrival.id, s.pondKeeperId);
-      else if (arrival.id === s.animalInterceptionId && s.animals[5]) ai.pursueTarget(arrival.id, s.animals[5]);
-      else if (infected.arenaCarrier) {
+      if (arrival.id === s.dogId) {
+        if (infected.pressureTarget?.id !== s.pondKeeperId && infected.l1?.focusId !== s.pondKeeperId) ai.pursueTarget(arrival.id, s.pondKeeperId);
+      } else if (arrival.id === s.animalInterceptionId && s.animals[5]) {
+        if (infected.pressureTarget?.id !== s.animals[5] && infected.l1?.focusId !== s.animals[5]) ai.pursueTarget(arrival.id, s.animals[5]);
+      } else if (infected.arenaCarrier) {
         const target = w.entities.get(infected.arenaCarrier);
         if (!target || target.health.current <= 0 || distance(w.entities.get(arrival.id)!.transform, w.entities.get(1)!.transform) <= 9) {
           delete infected.arenaCarrier; ai.pursueTarget(arrival.id, 1);
@@ -659,10 +666,11 @@ export class LevelEightZoo {
   cameraPose(): { position: [number, number, number]; target: [number, number, number] } | null { return null; }
   private reyesFallback(): void {
     const s = this.state, w = this.w, reyes = w.entities.get(s.reyesId);
-    if (!reyes?.civilian || reyes.civilian.survivor) return;
+    if (!reyes?.civilian || reyes.civilian.survivor?.key === 'reyes') return;
     if (s.roster.some(id => { const e = w.entities.get(id); return e?.civilian?.survivor?.key === 'sam' && e.health.current > 0 && !e.infected && !e.infection; })) return;
-    reyes.civilian.survivor = { key: 'reyes', slot: s.roster.length, leader: 1, mode: 'follow', cover: false, injured: false, waitAt: 0, foundAt: w.tick };
-    readyCarriedAlly(reyes, w.tick); s.roster.push(reyes.id); this.rosterCacheTick = -1;
+    if (reyes.civilian.survivor) reyes.civilian.survivor.key = 'reyes';
+    else reyes.civilian.survivor = { key: 'reyes', slot: s.roster.length, leader: 1, mode: 'follow', cover: false, injured: false, waitAt: 0, foundAt: w.tick };
+    readyCarriedAlly(reyes, w.tick); if (!s.roster.includes(reyes.id)) s.roster.push(reyes.id); this.rosterCacheTick = -1;
     this.mission.setState('reyes-fallback', true);
   }
   /** Complete living boarding group, including companions shown in the HUD. */
