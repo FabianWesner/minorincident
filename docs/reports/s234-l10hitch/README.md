@@ -58,3 +58,9 @@ Raw traces: `test-results/s234-l10hitch/matched-before-webgpu-high/trace.json` a
 ## Normal damage and reported camera
 
 A further quiet run used `S234_MATCH=1 S234_COMBAT=1 S234_DELAY=135`, normal damage and zoom 0.99. At tick 639 the captured state was (581.63, 0.17), HP 80, machete selected, six alive and one downed; the PO reported (582.32, 0.76), HP 90, machete and the same population. Audio was running. Across ticks 400–900 p99 was 10.5 ms, longest 30.4 ms at tick 862 and 0 frames exceeded 33 ms. Full trace: `test-results/s234-l10hitch/state-before-webgpu-high/trace.json`. The constructed driver downed its first infected at tick 388, so matching a snapshot does not prove the same engagement history. Cause and fix remain unproven. The harness saves the tick-639 player, weapon and camera snapshot for future comparisons. Typecheck and lint passed.
+
+## Additional checks
+
+The remote runner became available on a later attempt of `sh tools/remote/run.sh "$PWD" -- npm test`. It exited 1 before running Vitest: the repository test-budget preflight counted 151 cases against the 150-case cap (130 Vitest, 9 e2e, 12 browser invariants). The required remote unit gate is therefore not passed. No tests were trimmed.
+
+In the position-matched `matched-before` trace, the largest recorded simulation sample in ticks 400–900 was 15.0 ms at tick 891; the following RAF interval was 26.6 ms. The sampled AI and physics portions were 0.6 and 0.7 ms respectively. These categories do not account for all work inside the simulation tick and do not identify a cause. The first infected down occurred at tick 388; the snapshot at tick 639 alone does not prove that the second engagement matches the PO's session.
