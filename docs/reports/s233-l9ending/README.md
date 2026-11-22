@@ -30,4 +30,6 @@ Subsequent high capture completed with zero page errors. The takeoff frame shows
 
 The subsequent low capture completed with zero page errors. [Ending sequence](ending-sequence.jpg) shows high then low at zoom 1: impact and burning wreck; prone dazed courier beside the corgi; rise; Mega emerging, then facing the courier with Sam's line; Mega taking off with the end caption; departure; and the Level complete screen. The sampled images show no idle Mega beside the player. Still frames alone cannot establish continuity of the rise or leap animation, so that remains a visual limitation. The remote unit gate remains blocked at the 151/150 preflight; the full threat audit's zero flags predate the later result and wreck-position fixes and should be rerun on the final revision.
 
+Final-revision direct all-level threat audit completed in 353.9 s with zero fail flags; L9 skilled and passive both completed with zero passive flags. The exact remote `npm test` command was retried on a healthy runner and again stopped at the 151/150 preflight before executing tests.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
