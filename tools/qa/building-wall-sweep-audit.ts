@@ -27,8 +27,8 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
       let buildings = 0, samples = 0;
       const misses: string[] = [];
       for (const d of district) for (const p of d.decay.placements) {
-        if (!p.assetId.startsWith('bld.') || seen.has(`${d.id}/${p.id}`)) continue;
-        seen.add(`${d.id}/${p.id}`); buildings++;
+        if (!p.assetId.startsWith('bld.') || seen.has(`${level}/${d.id}/${p.id}`)) continue;
+        seen.add(`${level}/${d.id}/${p.id}`); buildings++;
         const walls = d.decay.colliders.filter(c => (c.id === p.id || c.id.startsWith(`${p.id}/`))
           && c.aabb.max[1] - c.aabb.min[1] >= 1.1 && c.aabb.max[1] > .7 && c.aabb.min[1] < 1.1);
         const destruction = world.destruction?.objects.find(o => o.id === `${d.id}/${p.id}`);
@@ -36,14 +36,16 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
           const box = part.box, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
           const cx = (box.min[0] + box.max[0]) / 2 * p.scale[0], cz = (box.min[2] + box.max[2]) / 2 * p.scale[2];
           const hx = (box.max[0] - box.min[0]) * Math.abs(p.scale[0]) / 2, hz = (box.max[2] - box.min[2]) * Math.abs(p.scale[2]) / 2;
-          const x = p.position[0] + d.origin[0] + cx * c + cz * s, z = p.position[2] + d.origin[1] - cx * s + cz * c;
+          // Keep these synthetic colliders district-local, like decay.colliders;
+          // the common sweep path adds the district origin below.
+          const x = p.position[0] + cx * c + cz * s, z = p.position[2] - cx * s + cz * c;
           const ex = Math.abs(c) * hx + Math.abs(s) * hz, ez = Math.abs(s) * hx + Math.abs(c) * hz;
           const minY = p.position[1] + box.min[1] * p.scale[1], maxY = p.position[1] + box.max[1] * p.scale[1];
           if (maxY - minY >= 1.1 && maxY > .7 && minY < 1.1) walls.push({ id: `${p.id}/destruction-${i}`, minTier: p.minTier, maxTier: p.maxTier, aabb: {
             min: [x - ex, minY, z - ez], max: [x + ex, maxY, z + ez], navFootprint: { x, z, halfX: hx, halfZ: hz, yaw: p.yaw },
           } });
         }
-        if (!walls.length) { misses.push(`${d.id}/${p.id}:no-body-height-collider`); continue; }
+        if (!walls.length) { misses.push(`${level}/${d.id}/${p.id}:no-body-height-collider`); continue; }
         const courier = world.entities.get(1)!;
         const radius = Math.min(actorRadius(courier), .34);
         for (const sample of meshSamples.get(p.assetId) ?? []) {
@@ -58,7 +60,7 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
           world.chunks?.update([courier.transform.x, courier.transform.z]);
           const moved = world.solids.sweep(courier, { x: -nx, z: -nz }, 2, actorRadius(courier), false, false);
           samples++;
-          if (moved >= 1.9) misses.push(`${d.id}/${p.id}:mesh-wall:${sample.x.toFixed(2)},${sample.z.toFixed(2)}`);
+          if (moved >= 1.9) misses.push(`${level}/${d.id}/${p.id}:mesh-wall:${sample.x.toFixed(2)},${sample.z.toFixed(2)}`);
         }
         if (level === 'L10' && p.id === 'l10-find-farm-shed') {
           // The reported scaled barn: probe a side wall, a gable pier, and the
@@ -87,7 +89,7 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
             world.chunks?.update([courier.transform.x, courier.transform.z]);
             const moved = world.solids.sweep(courier, normal, distance, radius, false, false);
             samples++;
-            if (moved >= distance - .1) misses.push(`${d.id}/${p.id}/${c.id}/${axis}:sweep=${moved.toFixed(3)}/${distance.toFixed(3)}`);
+            if (moved >= distance - .1) misses.push(`${level}/${d.id}/${p.id}/${c.id}/${axis}:sweep=${moved.toFixed(3)}/${distance.toFixed(3)}`);
           }
         }
       }
