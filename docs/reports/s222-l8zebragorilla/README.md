@@ -71,6 +71,8 @@ The initial lane source snapshot that reproduces pace flags is `8316b243` (`Impr
 | Current source with `l8Bosses.ts` restored to `a23b89e0` | Same current flags | Boss HP increase alone is not causal. |
 | Current source with south/west breach waypoints removed | More flags (366, 381, and 354) | Those route changes improve follower approach; restoring them is not a fix. |
 
+Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on commit `2daee9f0`: 27 files, 105 tests passed and one skipped, 213.7 s. Typecheck, lint, and nightly mission-interactions passed with the same source changes.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
