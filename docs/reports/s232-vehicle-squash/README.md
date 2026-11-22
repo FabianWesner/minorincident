@@ -54,6 +54,8 @@
 - Native L10 HIGH then LOW recapture after the pooling fix: [HIGH](l10-high.json) and [LOW](l10-low.json) include per-tick rendered bike positions and orientations around the impact. In both, the bike rises approximately 12 cm from its pre-hit position and pitches during the 18-tick bump before settling; the marked corpse remains at the impact. Reviewed the updated [sheet](sheet.jpg): the victim meets the front, disappears under the bike and emerges behind alongside blood; the bump is more measurable in the motion samples than the stills.
 - The existing core audio test now checks that slow hits and run-overs route to their distinct positional cues and that simultaneous pack events are suppressed for 90 ms; the focused test passes. This confirms routing, not subjective mix quality. Typecheck and lint pass.
 
+- The full remote suite after the audio-test and capture update again exceeded the fixed 240-second budget (241.5 s); its unchanged retry also timed out (240.9 s). The complete unit gate remains open.
+
 ## Open acceptance
 
 - Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
