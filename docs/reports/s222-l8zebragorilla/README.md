@@ -82,7 +82,7 @@ The initial lane source snapshot that reproduces pace flags is `8316b243` (`Impr
 
 Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on commit `2daee9f0`: 27 files, 105 tests passed and one skipped, 213.7 s. Typecheck, lint, and nightly mission-interactions passed with the same source changes.
 
-A read-only passive trace sampled south-gate arrivals every 120 ticks. IDs 428, 429 and 445 stayed near z=-108.1 with `l8-south-gate` and a target at z=-82 for multiple seconds; ID 439 passed z=-82 while its sampled state still retained that waypoint. The trace does not distinguish collision, higher-priority AI or skipped waypoint handoff, and it does not establish causation for corgi 354. Investigate those states before modifying the route.
+A read-only passive trace sampled south-gate arrivals every 120 ticks. IDs 428, 429 and 445 stayed near z=-108.13 while retaining a waypoint at z=-82; static sweep probes identify a blockage, and the layout places `bld.apartment-block-b:451` across their direct path. ID 439 passed the waypoint while retaining it because its arena-carrier controller takes priority. Moving the south spawn from z=-115 to the clear exterior space at z=-94 retained skilled completion but produced the identical three current pace flags; the trial was reverted. The blocked approach is a real route defect, but this comparison does not establish it as the pace cause.
 
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
