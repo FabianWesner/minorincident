@@ -43,7 +43,7 @@ The post-fix browser run was attempted through the required headless quiet runne
 SCENE_PORT=5252 E2E_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh node --import tsx/esm tools/perf/s228-l9-drive.ts after-final
 ```
 
-The initial attempt exited 75 before startup. A subsequent admitted run completed: 1,354 frames, p95 30.5 ms, p99 36.7 ms, max 126.8 ms, 22 hitches, no browser errors. However, large sim spikes remain: tick 4104 reported 108.2 ms and tick 4109 65.6 ms. Further attribution and a fix are required; the browser result does not establish that the hitch is resolved.
+The initial attempt exited 75 before startup. A subsequent admitted run completed: 1,354 frames, p95 30.5 ms, p99 36.7 ms, max 126.8 ms, 22 hitches, no browser errors. However, large sim spikes remain: tick 4104 reported 108.2 ms and tick 4109 65.6 ms. The subsequent occupancy-mask run below addresses that remaining chunk rebuild.
 
 ## Gates
 
@@ -55,8 +55,12 @@ The initial attempt exited 75 before startup. A subsequent admitted run complete
 
 ## Notes
 
-The earlier DistrictView partition-allocation change remains committed in `feb1c11a`; it did not reduce the supplied browser hitch and is not the fix described here. The sim changes above address the measured Node workload. The later browser run still shows large sim spikes around tick 4104; those remain open.
+The earlier DistrictView partition-allocation change remains committed in `feb1c11a`; it did not reduce the supplied browser hitch and is not the fix described here. The sim changes above address the measured Node workload. The subsequent occupancy-mask run below addresses the chunk rebuild spike.
 
 ## Follow-up: chunk rebuild attribution
 
 The retained Node fixture identifies tick 4104's 140.89 ms sim cost as 135.42 ms in chunk residency. A further instrumented run measured 115.98 ms in `refreshNavigation()` of 118.86 ms for activation. The masked nav bake scanned every cell through full collision queries. Rasterizing walls first and applying the same residency mask afterward reduced that refresh to 64.12 ms, with total tick 4104 falling from 127.60 to 75.21 ms in the instrumented comparison. This is an intermediate improvement: the remaining synchronous mask scan/rebuild still hitches and requires further work. Navigation tests (4), typecheck and lint pass for this intermediate change; full gates and browser measurement must be repeated after the remaining fix.
+
+A numeric chunk occupancy table now replaces per-cell string-key lookups in the residency mask. In the same instrumented route fixture, tick 4104 fell from 75.21 to 27.01 ms and `refreshNavigation` from 64.12 to 14.08 ms. Window p95/p99 fell from 10.15/14.16 to 4.73/7.11 ms. Full per-tick measurements: [before](node-chunk-before.json), [after](node-chunk-after.json). The unchanged remote unit suite passed (105 passed, one skipped, 206.2 s); typecheck, lint and full threat audit passed, with zero threat flags and L9 skilled/passive complete.
+
+The final HIGH WebGPU quiet-run fixture completed with 1,677 frames, p95 14.5 ms, p99 29.2 ms, max 46 ms, one frame above 33.4 ms, and no browser errors. Around the former tick 4104–4109 burst, sampled sim times were 19.2–21.8 ms (previously 65.6–108.2 ms). The single 46 ms frame at tick 3508 reported 6.6 ms sim.

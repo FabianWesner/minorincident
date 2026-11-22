@@ -96,7 +96,21 @@ export class ChunkResidency {
     const w = this.world, ai = w.infected;
     if (!ai) return;
     const ground = this.bounds(), movementCost = ai.nav.movementCost;
-    const mask = this.activeBounds?.rectangular ? null : (x: number, z: number) => this.resident(x, z);
+    // The nav bake samples this mask for every half-metre cell. Capture a
+    // numeric chunk occupancy table once per transition instead of constructing
+    // a string key and looking up a chunk for every sample.
+    const bounds = this.activeBounds!, worldBounds = w.districts!.nav;
+    const columns = Math.ceil((bounds.max[0] - this.min[0]) / this.size), rows = Math.ceil((bounds.max[1] - this.min[1]) / this.size);
+    const occupancy = new Uint8Array(columns * rows);
+    for (const id of this.loaded) {
+      const chunk = this.lookup.get(id)!;
+      const x = Math.floor((chunk.origin[0] - this.min[0]) / this.size), z = Math.floor((chunk.origin[1] - this.min[1]) / this.size);
+      occupancy[z * columns + x] = 1;
+    }
+    const mask = bounds.rectangular ? null : (x: number, z: number) => {
+      if (x < worldBounds.min[0] || x >= worldBounds.max[0] || z < worldBounds.min[1] || z >= worldBounds.max[1] || x < bounds.min[0] || x >= bounds.max[0] || z < bounds.min[1] || z >= bounds.max[1]) return false;
+      return occupancy[Math.floor((z - this.min[1]) / this.size) * columns + Math.floor((x - this.min[0]) / this.size)] === 1;
+    };
     if (ai.nav.ground.width === ground.width && ai.nav.ground.depth === ground.depth && ai.nav.walls === this.walls) { ai.nav.mask = mask; ai.nav.recenter(ground.center!); }
     else ai.nav = new NavGrid(ground, this.walls, .5, ground.center, mask);
     ai.nav.movementCost = movementCost;
