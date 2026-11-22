@@ -24,6 +24,8 @@ Follow-up: L10 expands the reveal subject around nearby infected, shifting its c
 
 The same native wall position was subsequently captured HIGH and LOW at zoom 1 and 1.5 (`/private/tmp/s236-native-zoom/`). The inspected LOW frames and HIGH zoom 1.5 show the courier through the whole faded barn, with its dark ground shadow still present. Both LOW see-through fixtures also pass at zoom 0.5, 1, and 1.5 (`/private/tmp/s236-courier-ray-low/`). These captures use a fresh level and teleport, not the requested checkpoint; independent corgi-only occlusion still needs verification.
 
+[Farm fade sheet](farm-fade-sheet.jpg) combines those four native frames (captured before the subsequent corgi and subject-disc adjustment). It shows the stopped courier through the faded walls and roof at both quality tiers and zooms; the heavy ground shadow remains. It does not show doorway movement, the non-occluding house comparison, or the exact checkpoint.
+
 Building selection now also tests a segment to the nearby visible corgi, independently of the expanded subject box. The first HIGH companion fixture exposed inadequate courier visibility at the 75% fade; increasing clearance inside the subject disc while retaining the whole-building fade made both the companion and non-occluder fixtures pass (`/private/tmp/s236-companion-fix/`). Typecheck and lint pass. An isolated corgi-only building occlusion capture remains open.
 
 The same companion and non-occluder fixtures pass on LOW (`/private/tmp/s236-companion-low/`). The inspected companion sheet shows both figures visible; it does not isolate a building that occludes only the corgi.
