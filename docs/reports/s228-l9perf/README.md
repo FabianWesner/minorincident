@@ -56,3 +56,7 @@ The initial attempt exited 75 before startup. A subsequent admitted run complete
 ## Notes
 
 The earlier DistrictView partition-allocation change remains committed in `feb1c11a`; it did not reduce the supplied browser hitch and is not the fix described here. The sim changes above address the measured Node workload. The later browser run still shows large sim spikes around tick 4104; those remain open.
+
+## Follow-up: chunk rebuild attribution
+
+The retained Node fixture identifies tick 4104's 140.89 ms sim cost as 135.42 ms in chunk residency. A further instrumented run measured 115.98 ms in `refreshNavigation()` of 118.86 ms for activation. The masked nav bake scanned every cell through full collision queries. Rasterizing walls first and applying the same residency mask afterward reduced that refresh to 64.12 ms, with total tick 4104 falling from 127.60 to 75.21 ms in the instrumented comparison. This is an intermediate improvement: the remaining synchronous mask scan/rebuild still hitches and requires further work. Navigation tests (4), typecheck and lint pass for this intermediate change; full gates and browser measurement must be repeated after the remaining fix.

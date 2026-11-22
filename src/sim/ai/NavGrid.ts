@@ -137,7 +137,6 @@ export class NavGrid {
   /** Rectangle windows can rasterize wall footprints directly. This is exactly clear(..., clearance)
    * at cell centres, without a broad-phase lookup for every empty terrain cell on each stream seam. */
   private bake(): void {
-    if (this.mask) { for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance)); return; }
     this.blocked.fill(0);
     const r = this.clearance, step = this.cellSize;
     for (let z = 0; z < this.depth; z++) {
@@ -157,6 +156,9 @@ export class NavGrid {
         const dx = this.x(x) - ox, dz = this.z(z * this.width) - oz;
         if (f ? this.intersects(wall, this.x(x), this.z(z * this.width), r) : Math.abs(dx) < hx + r && Math.abs(dz) < hz + r) this.blocked[z * this.width + x] = 1;
       }
+    }
+    if (this.mask) for (let cell = 0; cell < this.blocked.length; cell++) {
+      if (!this.blocked[cell] && !this.mask(this.x(cell), this.z(cell))) this.blocked[cell] = 1;
     }
   }
   cell(x: number, z: number): number {

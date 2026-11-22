@@ -7,6 +7,16 @@ const world = await loadLevel('L9', 1, undefined, 0, { quality: 'high', l9Route:
 try {
   const bot = new LevelNineBot(world, 'dry-shortcut', true, .7, 'complete');
   world.missions!.begin();
+  const chunkTimings: Record<number, Record<string, number>> = {};
+  const chunks = world.chunks! as unknown as Record<string, unknown>;
+  for (const name of ['activate', 'refreshNavigation', 'sleepOutside', 'wakeInside']) {
+    const original = chunks[name] as (...args: unknown[]) => unknown;
+    chunks[name] = function (this: unknown, ...args: unknown[]) {
+      const start = performance.now(), result = original.apply(this, args), elapsed = performance.now() - start;
+      if (world.tick >= 3500 && world.tick <= 4700) (chunkTimings[world.tick] ??= {})[name] = elapsed;
+      return result;
+    };
+  }
   const bus = world.events as unknown as { callbacks: Map<string, Map<number, Set<(event: { tick: number }) => void>>> };
   const rows: Record<number, { order: number; index: number; ms: number }[]> = {};
   const systemNames: Record<string, string> = {};
@@ -43,7 +53,7 @@ try {
   const sorted = [...allTicks].sort((a,b) => a-b), pct = (p: number) => sorted[Math.ceil(sorted.length * p) - 1] ?? 0;
   const label = process.argv[2] ?? 'after', report = { label, seed: 1, route: 'dry-shortcut', detour: true, quality: 'high', fromTick: 3500, toTick: 4700,
     tickCount: allTicks.length, p50: pct(.5), p95: pct(.95), p99: pct(.99), max: sorted.at(-1) ?? 0, samples,
-    systemNames, systems: Object.fromEntries(Object.entries(rows).map(([tick, systems]) => [tick, systems.sort((a,b) => b.ms-a.ms)])), allTicks };
+    systemNames, chunkTimings, systems: Object.fromEntries(Object.entries(rows).map(([tick, systems]) => [tick, systems.sort((a,b) => b.ms-a.ms)])), allTicks };
   mkdirSync('test-results/s228-l9perf', { recursive: true }); writeFileSync(`test-results/s228-l9perf/node-${label}.json`, JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify({ label, tickCount: report.tickCount, p50: report.p50, p95: report.p95, p99: report.p99, max: report.max, samples,
     leadingSystems: Object.fromEntries([...targets].map(tick => [tick, rows[tick]?.sort((a,b) => b.ms-a.ms).slice(0,5).map(r => ({ system: systemNames[`${r.order}:${r.index}`], ms: r.ms }))])) }, null, 2));
