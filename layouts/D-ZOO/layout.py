@@ -418,12 +418,17 @@ for _id, _min, _max in [
     ('front', [52.4, 0, -41.775], [61.6, 3.4, -41.425]),
 ]:
     l.data['colliders'].append(dict(id='gorilla-night-house-' + _id, aabb=dict(min=_min, max=_max), minTier=0, maxTier=5))
-l.box('gorilla-night-house-door', 'trouserSeam', [1.6, 2.5, .16], [60.3, 1.25, -41.34])
-l.box('gorilla-night-house-door-splinter', 'woodWarm', [1.8, .14, .14], [60.2, 1.72, -41.2])
+l.box('gorilla-night-house-door', 'woodWarm', [1.6, 2.5, .16], [60.3, 1.25, -41.34])
+for _x in (59.4, 61.2):
+    l.box('gorilla-night-house-door-frame', 'sidewalk', [.16, 2.7, .16], [_x, 1.35, -41.18])
+l.box('gorilla-night-house-door-lintel', 'sidewalk', [1.95, .16, .16], [60.3, 2.65, -41.18])
+l.box('gorilla-night-house-door-splinter', 'mustardLight', [1.8, .14, .14], [60.2, 1.72, -41.2])
 l.box('gorilla-viewing-window', 'backpackTealDark', [3.2, 1.1, .12], [55.6, 2.45, -41.35])
 for _x in (54.4, 55.2, 56.0, 56.8):
     l.box('gorilla-window-bars', 'silver', [.07, 1.2, .08], [_x, 2.45, -41.2])
-l.box('gorilla-straw-bed', 'mustardLight', [5.5, .12, 3.0], [56.2, .20, -43.5])
+l.box('gorilla-straw-bed', 'mustardLight', [5.5, .12, 3.0], [56.2, .20, -39.5])
+for _x, _z in [(54.4, -39.1), (55.6, -40), (57, -38.9), (58, -40.1)]:
+    l.box('gorilla-straw-scatter', 'khakiLight', [.8, .05, .12], [_x, .29, _z])
 # The barrage perch at (69, -25) sits on a rock shelf. Keep the base solid
 # and the approach to the arena gates clear; the boss traverses onto its top.
 l.box('gorilla-throw-rock-base', 'sidewalk', [3.8, 2.65, 3.2], [69, 1.325, -25])
