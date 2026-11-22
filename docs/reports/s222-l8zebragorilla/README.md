@@ -13,6 +13,6 @@
 - `tests/nightly/mission-interactions.test.ts`: passed on the latest source. The separate `tools/qa/l8-boss-proof.ts` cue probe remains failing at its `escape.status === 'active'` assertion before reaching the animal proofs.
 - Full remote unit suite: passed (27 files, 105 tests, 1 skipped; 201 s). An initial run exposed generic gorillas selecting the arena-only grab; the generic selection was corrected before the passing run.
 - D-ZOO rebuild: `npm run layouts:build -- D-ZOO` succeeded after the filesystem restriction was lifted, producing the layout JSON and GLB.
-- Native HIGH/LOW move and habitat captures, visual review, and contact sheet: outstanding.
+- Habitat diagnostic: HIGH first, then LOW, native WebGL2/Metal at zoom 1 (teleported paused courier, seed 1). The [contact sheet](habitat-review.jpg) shows both views are too dark to assess the habitat: zebra ground appears nearly black with the herd clipped at the edge; the gorilla view shows trees and crates but little recognizable enclosure structure. This is a failed visual review, not acceptance. Capture framing, night readability, and the full move tell/hit review remain open.
 
 This report records implementation intent and current validation only. It does not claim capture review or full acceptance.
