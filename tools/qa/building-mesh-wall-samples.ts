@@ -6,8 +6,8 @@ import manifest from '../../src/assets/manifest.json' with { type: 'json' };
 /** Vertical mesh intersections at local body height, independent of collider data. */
 export async function buildingMeshWallSamples(): Promise<Map<string, { x: number; z: number; nx: number; nz: number }[]>> {
   const io = await assetIO(), result = new Map<string, { x: number; z: number; nx: number; nz: number }[]>();
-  for (const { id } of manifest.filter(asset => asset.id.startsWith('bld.') && existsSync(`public/assets/models/${asset.id}.glb`))) {
-    const doc = await io.read(`public/assets/models/${id}.glb`), samples: { x: number; z: number; nx: number; nz: number }[] = [];
+  for (const { id, glb } of manifest.filter(asset => asset.id.startsWith('bld.') && asset.glb && existsSync(asset.glb))) {
+    const doc = await io.read(glb), samples: { x: number; z: number; nx: number; nz: number }[] = [];
     for (const node of doc.getRoot().listNodes()) {
       const matrix = new Matrix4().fromArray(node.getWorldMatrix());
       for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
