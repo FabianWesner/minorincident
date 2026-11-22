@@ -1,0 +1,30 @@
+# s234 — L10 second infected opening hitch
+
+**Status: perf pending; cause and runtime fix remain open.** The PO reports an opening hitch when the second infected engages, around ticks 550–700, from the seed-1 `cure-crash` checkpoint on foot in D-CURE. The s194 first-spawn material fix is already present, but its report says its replay did not establish the PO location/trigger and quiet remeasurement was still open. That evidence does not establish this report is solved.
+
+## Fixture and measurement
+
+`tools/perf/s234-l10hitch.ts` replays the existing `tests/fixtures/perf/l10-real-input.json.gz` on L10 seed 1 from `cure-crash` through tick 900, on native headless WebGPU high at 1600×900. It records RAF frame intervals and tick, position, infected/alive counts, renderer material builds, simulation/update/render CPU times, and the existing CPU profiler categories. It reports p99, longest interval, frames over 33/50 ms, and the worst frames within ticks 400–900, and saves the full trace under `test-results/s234-l10hitch/`.
+
+Exact quiet-run command:
+
+```sh
+E2E_UNITS=1 SCENE_PORT=5264 sh tools/perf/quiet-run.sh npx tsx tools/perf/s234-l10hitch.ts webgpu high before
+```
+
+The run is **pending**. The default quiet-run path failed before browser startup because the browser-pool daemon could not bind `127.0.0.1:4329` (`listen EPERM`). The legacy quiet-run path also failed admission because the process scan returned `spawn EPERM`; it was stopped while still waiting. There is no valid baseline trace or before/after result. The orchestrator should run the exact command above when browser admission is available. After identifying and fixing the measured cause, rerun the same command with label `after` and compare the same fixture/window.
+
+## Current evidence and open work
+
+- `npm run typecheck`: passed with the new trace harness.
+- `npm run lint`: passed.
+- Remote unit suite: `sh tools/remote/run.sh "$PWD" -- npm test` could not start; there is no healthy Hetzner runner and the remote command is not eligible for the local Mac fallback.
+- L10 skilled completion: the raw threat audit completed the L10 seed-1 skilled route (`complete`, 1324.35 simulated seconds). The filtered L10-only audit is diagnostic and ends with `PARTIAL_LEVEL_SELECTION`; it is not a full gate.
+- `qa:threat` zero: the formal `npm run qa:threat -- --levels L10 --maxWorkers=1` wrapper rejected the run before execution because the repository currently has 151 cases against its 150-case budget. Running its underlying audit directly completed the L10 passive check with zero L10 passive flags (tick-budget at `hold`) but ended with `PARTIAL_LEVEL_SELECTION`; this does not prove the full `qa:threat` gate is green.
+- Cause attribution, runtime fix, before/after p99 / longest-frame / >33 ms counts, and commit of the completed fix: open.
+
+The source currently contains budgeted infected navigation and the prior L10 loading-time render warm-ups. Either may be relevant, but without a tick-aligned admitted trace they are hypotheses, not attribution. No zombie stats, corpse retention, or quality settings were changed.
+
+## Quiet baseline (2026-11-22)
+
+The command above subsequently passed quiet admission and completed on native WebGPU high. In ticks 400–900: 1,352 samples, p99 **9.7 ms**, longest **29.7 ms** at tick 712, and **0 frames >33 ms**. The longest sample had no new material builds; its sampled sim/update/render were 1.0/2.3/3.0 ms. This replay did not reproduce the reported long frame, and its player position at tick 639 differs from the PO report. Attribution and a representative before/after remain open. Raw trace: `test-results/s234-l10hitch/before-webgpu-high/trace.json`. The earlier admission failures were sandbox restrictions; the subsequent run used unrestricted access.
