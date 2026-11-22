@@ -935,8 +935,8 @@ export class CrowdView extends Group {
       let frame = alphaCrowdClips.indexOf(clip) * framesPerClip + (animalPhase >= 0 ? animalPhase : phase) * (framesPerClip - 1);
       const tint = e.ashDeath ? this.ashTint : batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
-      const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
-      const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
+      const resting = (b.state === 'dead' || e.squashed) && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
+      const settle = e.squashed ? 1 : b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
       let x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
       // r32: a clinging monkey hangs on the courier's flank (render-only pull from its contact spot onto her body).
       const clingTo = species === 'monkey' && animalPose?.airborne && !specialAttack ? this.world.entities.get(e.infected?.heardTargetId || 1) : undefined;
@@ -955,7 +955,7 @@ export class CrowdView extends Group {
           if (figure?.id === e.id) figure.instanceKey = `${e.id}/${bird}`;
         }
       } else {
-        this.transform.makeRotationY((b.state === 'dead' ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0) + animalLift, z);
+        this.transform.makeRotationY((b.state === 'dead' || e.squashed ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' || e.squashed ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (!e.squashed && reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0) + animalLift, z);
         if (e.infected?.arenaBoss?.arena === 'monkey' && e.infected.arenaBoss.slot === 6) this.transform.scale(this.arenaScale);
         // r32-alphas: type silhouette (Brute biggest, Thrower lanky, Screamer thin, Armoured bulky); presentation only.
         const alphaShape = e.infected?.alphaType && !e.infected.pursuit && b.state !== 'dead' ? alphaSilhouette[e.infected.alphaType] : undefined;
@@ -965,7 +965,7 @@ export class CrowdView extends Group {
           const k = Math.max(0, 1 - (this.world.tick - feedback.at) / 9);
           if (k > 0) this.transform.scale(this.flinchScale.set(1 + .05 * k, 1 - .06 * k, 1 + .05 * k));
         }
-        if (e.squashed && b.state === 'dead') this.transform.scale(this.flinchScale.set(1.16, .38, 1.16));
+        if (e.squashed) this.transform.scale(this.flinchScale.set(1.16, .25, 1.16));
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         // r32: flying flamingos and leaping animals cast a contact shadow on the ground under them (reads height top-down).
         if (animalLift > .3 && this.shadows.count < 350) { const g = this.world.districts?.groundHeight(x, z) ?? 0; this.shadowMatrix.makeTranslation(x, g + .02, z); this.shadows.setMatrixAt(this.shadows.count++, this.shadowMatrix); this.shadows.instanceMatrix.needsUpdate = true; }
