@@ -127,7 +127,13 @@ test('interactions: ring, input and view predicates agree for every interact ste
         levelWorld.update();
         expect(levelWorld.entities.get(interceptor)!.infected!.l1!.focusId, 'an authored courier press survives noticing a nearer follower').toBe(1);
         mission.restore('sanctuary');
-        const source = mission.l8!.state.outlets[2];
+        // Exercise the shared emergence code against the retained tunnel scenery.
+        // L8 waves now use the perimeter gates and do not populate state.outlets.
+        const district = levelWorld.districts!.districts[0];
+        const tunnelDoor = layoutHouseDoors(district.layout, district.origin, undefined, asset => asset === 'kit.zoo-tunnel-mouth')[2];
+        const exit = doorExit(levelWorld, tunnelDoor, player.transform);
+        if (!exit) throw new Error('Zoo tunnel fixture has no connected exit');
+        const source: HouseEmergence = { ...tunnelDoor, ...exit, route: [...exit.route, [-24, -64], [0, -64], [0, -56]], finishRoute: true, next: 0, ids: [], speedMs: 5.6 };
         const house = { ...source, ids: [] as number[], walking: [], route: [], ox: source.sx, oz: source.sz, speedMs: emergeSpeedMs };
         const first = new Map<number, number>();
         for (let frame = 0; frame < 420; frame++) {

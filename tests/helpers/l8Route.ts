@@ -30,6 +30,8 @@ export async function checkL8Route(): Promise<void> {
     zoo.followers().forEach((e, n) => w.solids.relocate(e, { x: (n % 6 - 2.5) * 1.5, z: 2 + Math.floor(n / 6) * 1.5, y: e.transform.y }, 'fixture.l8-route', 20, false));
     for (let i = 0; i < 400 && !zoo.state.sealedAt; i++) w.update();
     expect(zoo.state.sealedAt, 'the plaza doors shut once the group is inside').toBeGreaterThan(0);
+    // This gate fixture starts after the entry-gate sanctuary objective.
+    mission.state.steps.sanctuary.status = 'completed'; mission.state.steps.escape.status = 'active';
     const closedKeys = (): string[] => l8Route.flatMap(s => [`${s.id}.entry`, `${s.id}.exit`]).filter(k => !k.startsWith('elephant') && l8GateClosed(k, { arenas: zoo.state.arenas, sealed: true }));
     expect(closedKeys()).toContain('lion.entry');
     l8ConnectorGates.forEach((_, i) => expect(l8GateClosed(`connector.${i}`, { arenas: zoo.state.arenas, sealed: true })).toBe(true));

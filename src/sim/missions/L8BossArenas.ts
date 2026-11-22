@@ -104,10 +104,9 @@ export class L8BossArenas {
         this.gateStates.set('elephant', closed);
         this.barrier('l8.arena-gate.elephant', 900830 + l8BossArenas.findIndex(a => a.id === 'elephant'), { ...l8EncounterGates.elephant, y: 1, halfY: 1 }, closed);
       }
-      // Keep the public approach open during the yard finale so the outside
-      // breach cohort can continue into the fight instead of waiting behind
-      // a locked gate for the whole encounter.
-      const entryClosed = yardClosed;
+      // The solo yard closes behind the courier once the outside party clears
+      // the threshold. The east perimeter breach remains available to attackers.
+      const entryClosed = yardClosed || elephant.phase > 0 && elephant.phase < 3 && !!elephant.armed;
       if (this.gateStates.get('elephantEntry') !== entryClosed) {
         this.gateStates.set('elephantEntry', entryClosed);
         this.barrier('l8.arena-gate.elephant-entry', 900834, { ...l8EncounterGates.elephantEntry, y: 1.5, halfY: 1.5 }, entryClosed);

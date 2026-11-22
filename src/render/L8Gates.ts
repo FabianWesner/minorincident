@@ -61,7 +61,7 @@ export class L8Gates extends Group {
       const collapsing = elapsed >= 0 && elapsed < 24;
       const hidden = outerIndex >= 0 ? elapsed >= 24
         : rod.key === 'elephant' ? !this.world.missions?.state.states.breached || arenas?.find(a => a.id === 'elephant')?.phase === 3 || eastBreachOpen
-        : rod.key === 'elephantEntry' ? finalApproachOpen
+        : rod.key === 'elephantEntry' ? finalApproachOpen && !arenas?.some(a => a.id === 'elephant' && a.phase > 0 && a.phase < 3 && a.armed)
         : rod.key === 'elephantExit' ? arenas?.find(a => a.id === 'elephant')?.phase === 3
         : rod.key?.startsWith('connector.') ? !arenas || !l8GateClosed(rod.key, ctx) || finalApproachOpen
         : rod.key ? !arenas || !l8GateClosed(rod.key, ctx)
