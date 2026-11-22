@@ -349,9 +349,11 @@ async function l9HatchCheckpointAndEvacuation(): Promise<void> {
     Object.assign(courier.survivor!, { scriptedClip: 'crawl', animation: 'knockdown', attack: { started: 0, endsAt: 120 }, knockdown: { started: 0, until: 120 } });
     Object.assign(l9.state, { phase: 'crawl', startedAt: world.tick - 750, crawlProgress: 1, endingAt: undefined });
     l9.update();
-    expect(courier.survivor!.scriptedClip, 'the L9 crawl ending exits into ordinary on-foot pose layers').toBeUndefined();
+    expect(courier.survivor!.scriptedClip, 'the L9 crawl ending starts the get-up').toBe('get-up');
     expect(courier.survivor!.knockdown).toBeUndefined(); expect(courier.survivor!.attack).toBeUndefined();
     expect(courier.survivor!.animation).toBe('idle');
+    world.tick += 60; l9.update();
+    expect(courier.survivor!.scriptedClip, 'get-up releases into ordinary on-foot pose layers').toBeUndefined();
   } finally { world.dispose(); }
 }
 

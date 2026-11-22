@@ -151,7 +151,7 @@ export class KeyframeAnimator {
     const loco = locoStates.has(name), fade = strike ? Math.min(.05, Math.max(1, (combat?.activeAt ?? tick + 4) - (combat?.started ?? tick)) / 60 * .55) : name === 'hurt' || name === 'knockdown' || name === 'get-up' ? .055 : .2;
     this.locoSpeed += (speed - this.locoSpeed) * (1 - Math.exp(-dt / .1));
     if (!loco && (this.mode !== name || strike && !upper && this.attackTick !== pose.animationTick || name === 'hurt' && this.actionTick !== pose.animationTick || !this.base)) {
-      this.base?.fadeOut(fade); this.base = this.play(name, !!pose.scriptedClip || !!this.strides[name] || name === 'idle').fadeIn(fade);
+      this.base?.fadeOut(fade); this.base = this.play(name, name !== 'get-up' && (!!pose.scriptedClip || !!this.strides[name] || name === 'idle')).fadeIn(fade);
       if (name === 'get-up' && pose.knockdown) this.base.setEffectiveTimeScale(this.base.getClip().duration / Math.max(1 / 60, (pose.knockdown.until - pose.animationTick) / 60));
       this.mode = name; this.clip = name; this.actionTick = pose.animationTick;
     } else if (loco && this.mode !== 'loco') { this.base?.fadeOut(.2); this.base = undefined; this.mode = 'loco'; }

@@ -234,6 +234,7 @@ export class LevelNineCrash {
         const idle = t - (approachTicks + FALL + IMPACT) >= 240 || (s.crawlProgress ?? 0) >= CRAWL_AUTO;
         let dir: { x: number; z: number } | null = mag > .05 ? { x: move.x / Math.hypot(move.x, move.z), z: move.z / Math.hypot(move.x, move.z) }
           : idle ? { x: Math.cos(-p.transform.yaw), z: Math.sin(-p.transform.yaw) } : null;
+        if (s.endingAt !== undefined) dir = null;
         const forward = dir ? Math.max(mag, idle ? .75 : 0) : 0, stepLen = forward * Math.max(4, length) / CRAWL;
         Object.assign(w.previousPlayer!, p.transform);
         if (dir && stepLen > 0) {
@@ -250,11 +251,12 @@ export class LevelNineCrash {
         if (sam?.civilian && sam.health.current > 0) { w.npcs!.move(sam, { x: 548, z: -8 }, 1.1, sam.civilian, .5); w.spatial.set(sam.id, sam.transform.x, sam.transform.z); }
         if (f >= 1) {
           if (s.endingAt === undefined) {
-            s.endingAt = w.tick; w.player?.resetPose(w.tick);
+            s.endingAt = w.tick; w.player?.resetPose(w.tick); p.survivor!.scriptedClip = 'get-up';
             w.vehicles!.explodeScripted(s.carId);
             this.mission.state.subtitle = { id: 'L9.end-caption', text: dialogue['L9.end-caption'], until: w.tick + 180 };
             w.events.emit({ type: 'dialogue.line', tick: w.tick, id: 'L9.end-caption', text: this.mission.state.subtitle.text });
           }
+          if (w.tick - s.endingAt >= 60) delete p.survivor!.scriptedClip;
           if (w.tick - s.endingAt >= 180) {
             s.phase = 'done'; s.finished = true; w.storyLock = null; w.clearInput();
             this.mission.setState('crash-finished', true);
