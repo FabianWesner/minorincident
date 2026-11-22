@@ -49,7 +49,11 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
         for (const sample of meshSamples.get(p.assetId) ?? []) {
           const c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = p.position[0] + d.origin[0] + sample.x * p.scale[0] * c + sample.z * p.scale[2] * s;
           const z = p.position[2] + d.origin[1] - sample.x * p.scale[0] * s + sample.z * p.scale[2] * c;
-          const nx = sample.nx * c + sample.nz * s, nz = -sample.nx * s + sample.nz * c;
+          // A normal uses inverse scale before yaw; applying yaw alone points
+          // across the wrong face when a placement is stretched on one axis.
+          const localX = sample.nx / p.scale[0], localZ = sample.nz / p.scale[2], length = Math.hypot(localX, localZ);
+          assert.ok(Number.isFinite(length) && length > 0, `Invalid building scale: ${d.id}/${p.id}`);
+          const nx = (localX * c + localZ * s) / length, nz = (-localX * s + localZ * c) / length;
           courier.transform.x = x + nx; courier.transform.z = z + nz; courier.transform.y = .9;
           world.chunks?.update([courier.transform.x, courier.transform.z]);
           const moved = world.solids.sweep(courier, { x: -nx, z: -nz }, 2, actorRadius(courier), false, false);

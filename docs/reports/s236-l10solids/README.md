@@ -12,6 +12,8 @@ See-through selection for buildings now tests the camera-to-subject centre segme
 
 The audit additionally samples vertical LOD0 mesh faces independently of collider bounds, by intersecting triangles at local height 1 m and sampling segments at least 0.5 m long at intervals no greater than 1 local metre. It resolves model paths through the manifest, including aliases, and reports 76,594 combined sweeps across 664 placements; L10 has 23,648 samples and zero misses. All campaign building placements have mesh samples or an explicit no-body-height-collider finding. Shorter segments, faces outside this height slice, and openings remain coverage limits. Known misses are ratcheted in `tools/qa/building-wall-sweep-baseline.json`.
 
+Mesh normals are transformed using inverse placement scale before yaw, so nonuniformly scaled placements are swept across the face in the correct direction; invalid scale is rejected. The ratcheted audit passes with this correction.
+
 The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, and 2.2 m high door openings. The authored part bounds were tightened to those dimensions; destruction adds its existing 0.035 m hit-zone margin. Typecheck, lint, and the ratcheted sweep audit pass after this correction. This generator comparison is not a substitute for the all-district mesh-face audit or movement captures.
 
 The height-slice audit found a visible chimney with no collider in each of four farm houses. A structural chimney bound matching the generator was added; all L10 sampled misses now clear. Typecheck, lint, and the ratcheted audit pass after this change.
