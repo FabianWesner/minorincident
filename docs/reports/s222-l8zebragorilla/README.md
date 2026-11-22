@@ -82,6 +82,8 @@ The initial lane source snapshot that reproduces pace flags is `8316b243` (`Impr
 
 Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on commit `2daee9f0`: 27 files, 105 tests passed and one skipped, 213.7 s. Typecheck, lint, and nightly mission-interactions passed with the same source changes.
 
+A read-only passive trace sampled south-gate arrivals every 120 ticks. IDs 428, 429 and 445 stayed near z=-108.1 with `l8-south-gate` and a target at z=-82 for multiple seconds; ID 439 passed z=-82 while its sampled state still retained that waypoint. The trace does not distinguish collision, higher-priority AI or skipped waypoint handoff, and it does not establish causation for corgi 354. Investigate those states before modifying the route.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
