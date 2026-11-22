@@ -71,6 +71,7 @@ The initial lane source snapshot that reproduces pace flags is `8316b243` (`Impr
 | Current source with `l8Bosses.ts` restored to `a23b89e0` | Same current flags | Boss HP increase alone is not causal. |
 | Current source with both `L8BossArenas.ts` and `l8Bosses.ts` restored to `a23b89e0` | Skilled completes; only `SLOW_FOLLOWER:354` | Reverting both encounter controller and boss HP together still leaves the corgi flag. |
 | Current source with south/west breach waypoints removed | More flags (366, 381, and 354) | Those route changes improve follower approach; restoring them is not a fix. |
+| Current source with zebra-paddock infected arrivals temporarily removed | Skilled route hits tick budget; kiting and follower 363/381 flags | This changes the route substantially and cannot establish a corgi pace fix; the arrivals were restored. |
 
 Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on commit `2daee9f0`: 27 files, 105 tests passed and one skipped, 213.7 s. Typecheck, lint, and nightly mission-interactions passed with the same source changes.
 
