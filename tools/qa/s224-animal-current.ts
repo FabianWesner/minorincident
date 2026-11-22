@@ -2,8 +2,9 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer } from '../scenelab/session';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
-const names = ['lion', 'lioness', 'flamingo', 'zebra', 'gorilla', 'monkey', 'elephant'];
-const out = 'test-results/s224-animal-current';
+const names = process.env.S224_NAMES?.split(',') ?? ['lion', 'lioness', 'flamingo', 'zebra', 'gorilla', 'monkey', 'elephant'];
+const yaw = Number(process.env.S224_YAW ?? -45);
+const out = process.env.S224_OUT ?? 'test-results/s224-animal-current';
 mkdirSync(out, { recursive: true });
 try {
   for (const tier of ['low', 'high'] as const) {
@@ -16,7 +17,7 @@ try {
       })()`);
       for (const name of names) for (const zoom of [1, 1.5]) {
         const spec: SceneSpec = { name: `s224-${name}-${tier}-${zoom}`, seed: 8, ground: 'asphalt', time: 'L8-zoo', size: 40, dof: false,
-          actors: [{ id: 'infected', kind: 'infected', archetype: `infected.${name}`, look: { model: `inf.${name}` }, at: [0, 0], yaw: -45, state: 'idle' }],
+          actors: [{ id: 'infected', kind: 'infected', archetype: `infected.${name}`, look: { model: `inf.${name}` }, at: [0, 0], yaw, state: 'idle' }],
           camera: { mode: 'game', target: [0, .8, 0], zoom }, frames: 3 };
         await session.load(spec); await session.step(3); await session.ready();
         const metrics = await session.metrics();
