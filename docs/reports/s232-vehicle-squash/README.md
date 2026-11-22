@@ -29,6 +29,8 @@
 - Control follow-up: unoccupied or stationary cars no longer ram nearby infected, and chassis lift is limited to one impulse per 12 ticks for pack hits. Typecheck, lint, and the vehicle engine file pass. This bound is not a substitute for the required 10+ corpse driving check.
 - L9 pile simulation: `node --import tsx/esm tools/qa/diag/s232-corpse-pile.ts` places 12 retained squashed corpses across the road, then drives the actual APC through them at 14.4 m/s entry speed. All 12 were inside the hull footprint and remained present; minimum speed in the first second was 14.44 m/s, progress over 3 s was 49.45 m, peak tilt was 0.18°, and the APC stayed upright. This verifies this controlled sim case; native visual and vehicle gates remain open. Typecheck and lint pass with the probe.
 - Remote unit rerun on `280b8214` and its unchanged retry both hit the 240 s budget. Both reported the vehicle and consolidated scene-gate files passing, and both reported a failure in the L1–L10 save-progression case before termination prevented the detailed error from being printed. The complete save-progression file passes locally (6 tests, 15.25 s); this does not establish the cause of the remote failure or a full suite pass.
+- Remote focused diagnosis on `7c098214`: the entire save-progression file passes on the runner (6 tests, 23.13 s), including the previously reported case. This does not establish the cause of its failure during the loaded full suite.
+- `E2E_PORT=5259 SCENE_PORT=5260 npm run qa:vehicle-campaign-motion` on `7c098214` — pass (exit 0): L9, L7 bus, L4 parked and L4 tank, HIGH and LOW. This measures the campaign motion diagnostic and does not replace the separate vehicle-contact gate or run-over visual review.
 
 ## Open acceptance
 
