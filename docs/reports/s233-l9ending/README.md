@@ -32,4 +32,6 @@ The subsequent low capture completed with zero page errors. [Ending sequence](en
 
 Final-revision direct all-level threat audit completed in 353.9 s with zero fail flags; L9 skilled and passive both completed with zero passive flags. The exact remote `npm test` command was retried on a healthy runner and again stopped at the 151/150 preflight before executing tests.
 
+As supplemental evidence, the complete default Vitest project was run directly on the remote runner: 27 files passed, 106 tests passed and one configured test skipped, in 207.10 s. This does not pass or replace the required `npm test` budget gate.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
