@@ -18,3 +18,5 @@
 This report records implementation intent and current validation only. It does not claim capture review or full acceptance.
 
 - Subsequent habitat pass: the visible arena floor uses savanna and earth palette colors, with a broken rail and blood trace by the zebra paddock and a dropped rifle and blood trace in the gorilla house. HIGH then LOW zoom 1 recaptures show the floor tint change, but both remain dark and the traces are outside these views. `node --import tsx/esm tools/qa/l8-habitats.ts` fails its existing 60-second breach assertion; it did not validate the habitats. Full story pieces and visual acceptance remain open.
+
+- Mechanics follow-up: fixed the ledge branch so it advances the gorilla throw and completes its descent, made zebra stampede contact knock down, and require the courier to be behind a zebra before it starts the rear kick. Typecheck, lint, and mission-interactions pass; focused L8 threat audit still completes skilled L8 but reports 5 acceptance flags. Tell/hit captures and direct move verification are still required.

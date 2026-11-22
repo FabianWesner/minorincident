@@ -282,15 +282,17 @@ export class L8BossArenas {
         return true;
       }
     }
+    if (arena.id === 'gorilla' && boss.traversal) { this.traverseStep(e); return true; }
     if (arena.id === 'gorilla' && boss.ledgeThrow) {
-      if (boss.traversal) { this.traverseStep(e); return true; }
       if (!boss.roof) { this.traverse(e, { x: 69, y: 3, z: -25 }, true); return true; }
-      if (boss.barrage && !boss.scavengeId && !b.specialAttack) this.scavenge(e);
+      if (b.specialAttack) { this.advanceMove(e, arena); return true; }
+      if (boss.barrage && !boss.scavengeId) this.scavenge(e);
       if (!boss.barrage && !boss.scavengeId && !b.specialAttack) {
         boss.ledgeThrow = false;
         this.traverse(e, { x: 65, y: .7, z: -28 }, false);
+        return true;
       }
-      return true;
+      // Continue into the shared scavenge and throw handling below.
     }
     if (boss.scattered) { this.walk(e, { x: def.centre.x + 10, z: def.centre.z - 8 }, 6); return true; }
     if (!arena.phase) {
@@ -428,7 +430,8 @@ export class L8BossArenas {
         this.start(e, 'gorilla.pound', 60, 0, 5); return true;
       }
     }
-    if (arena.id === 'zebra' && distance(e.transform, p.transform) < 2 && w.tick >= boss.readyAt) { this.start(e, 'zebra.kick', 36, 0, 2); boss.readyAt = w.tick + 360; return true; }
+    const rear = (p.transform.x - e.transform.x) * -Math.cos(e.transform.yaw) + (p.transform.z - e.transform.z) * Math.sin(e.transform.yaw);
+    if (arena.id === 'zebra' && distance(e.transform, p.transform) < 2 && rear > distance(e.transform, p.transform) * Math.SQRT1_2 && w.tick >= boss.readyAt) { this.start(e, 'zebra.kick', 36, 0, 2); boss.readyAt = w.tick + 360; return true; }
     if (arena.id === 'zebra' && arena.lane?.staging) {
       const lane = arena.lane;
       const aim = this.predict(e, 1 + Math.abs(p.transform.z - (lane.side === 1 ? 16 : 48)) / 15, arena);
@@ -663,7 +666,7 @@ export class L8BossArenas {
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     if (distance(e.transform, p.transform) <= (leap ? Math.max(a.area.radius + .35, infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .1) : a.area.radius + .35)) {
       const firstContact = !a.hitIds.includes(1);
-      this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : leap ? 120 : 0);
+      this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : leap ? 120 : arena.id === 'zebra' ? 90 : 0);
       if (firstContact && a.hitIds.includes(1) && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabNextTick = w.tick + 30; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; if (arena.id === 'lion' && p.survivor?.knockdown) p.survivor.knockdown.pinned = true; }
     }
     const landed = leap && distance(e.transform, p.transform) <= infectedContactDistance(e.combat!.radius) + (animalSpine[e.archetype ?? ''] ?? 0) + .05;
