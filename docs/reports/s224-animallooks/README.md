@@ -315,3 +315,5 @@ The old/new sheet was regenerated and opened against the current assets. It cove
 - **Elephant:** the red trunk tip and back wound read clearly in the captured LODs and tiers.
 
 The selected animal scene gate passed 18/18 rows across HIGH/LOW and WebGPU/WebGL2 (`test-results/scene-gate-s224c-current/`). The sheet and gate do not accept zebra motion or prove lioness eye attachment in every attack pose. Regenerate the sheet and rerun the gates after any final asset repair.
+
+A diagnostic copied the zebra's embedded stampede and rear-kick channels to the generic crowd clip names, replacing the bake's generic gait fallback for those names. HIGH motion frames still showed triangular hind-leg distortion; ambient LOD2 also reached 108,708 bytes, over the recorded 107,576-byte ceiling. The diagnostic was rejected and the committed assets restored. Existing zebra clips alone do not repair the coarse surface and ownership problem.
