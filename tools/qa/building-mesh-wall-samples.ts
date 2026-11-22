@@ -1,10 +1,12 @@
 import { Matrix4, Vector3 } from 'three';
 import { assetIO } from '../assets/io';
+import { existsSync } from 'node:fs';
+import manifest from '../../src/assets/manifest.json' with { type: 'json' };
 
 /** Large vertical triangles in the shipped LOD0 mesh, independent of collider data. */
-export async function farmMeshWallSamples(): Promise<Map<string, { x: number; z: number; nx: number; nz: number }[]>> {
+export async function buildingMeshWallSamples(): Promise<Map<string, { x: number; z: number; nx: number; nz: number }[]>> {
   const io = await assetIO(), result = new Map<string, { x: number; z: number; nx: number; nz: number }[]>();
-  for (const id of ['bld.farm-house-ruin', 'bld.farm-barn-ruin']) {
+  for (const { id } of manifest.filter(asset => asset.id.startsWith('bld.') && existsSync(`public/assets/models/${asset.id}.glb`))) {
     const doc = await io.read(`public/assets/models/${id}.glb`), samples: { x: number; z: number; nx: number; nz: number }[] = [];
     for (const node of doc.getRoot().listNodes()) {
       const matrix = new Matrix4().fromArray(node.getWorldMatrix());

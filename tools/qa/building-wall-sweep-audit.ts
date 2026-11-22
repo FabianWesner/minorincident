@@ -4,7 +4,7 @@ import { partColliders } from '../../src/data/destructionModel';
 import { actorRadius } from '../../src/sim/world/SolidRegistry';
 import { runnerLevels } from '../sim-runner/levels';
 import { loadLevel } from '../sim-runner/levels';
-import { farmMeshWallSamples } from './farm-mesh-wall-samples';
+import { buildingMeshWallSamples } from './building-mesh-wall-samples';
 
 export interface BuildingWallSweepReceipt {
   levels: { level: string; buildings: number; samples: number; misses: string[] }[];
@@ -17,7 +17,7 @@ const sweepAxes = (halfX: number, halfZ: number) => wallLike(halfX, halfZ)
 /** Uses the live SolidRegistry capsule sweep, after each level has assembled its production colliders. */
 export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepReceipt> {
   const levels: BuildingWallSweepReceipt['levels'] = [];
-  const meshSamples = await farmMeshWallSamples();
+  const meshSamples = await buildingMeshWallSamples();
   const seen = new Set<string>();
   for (const level of runnerLevels) {
     const world = await loadLevel(level, 1);
@@ -98,6 +98,10 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
     'D-FAIR/bld.garage-detached:652:no-body-height-collider',
     'D-FAIR/bld.shed:748:no-body-height-collider',
     'D-SUBWAY/l6-36:no-body-height-collider',
+    'D-GROVE/bld.fire-station:853:mesh-wall:1.47,3.53',
+    'D-GROVE/bld.fire-station:853:mesh-wall:1.56,3.53',
+    'D-GROVE/bld.fire-station:853:mesh-wall:1.47,-0.62',
+    'D-GROVE/bld.fire-station:853:mesh-wall:1.56,-0.62',
   ]);
   assert.deepEqual(receipt.totals.misses.filter(miss => !baseline.has(miss)), [], 'New building wall sweep misses');
   return receipt;
