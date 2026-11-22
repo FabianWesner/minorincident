@@ -69,6 +69,7 @@ The initial lane source snapshot that reproduces pace flags is `8316b243` (`Impr
 | Current source, `InfectedSystem.ts` restored to `a23b89e0` | Same flags as current: 364 twice and 354 once | Heard-gunfire pursuit is not causal for these flags. |
 | Current rebuilt layout with gorilla night-house and rock colliders removed | Same flags as current | Those two new collider groups are not causal. |
 | Current source with `l8Bosses.ts` restored to `a23b89e0` | Same current flags | Boss HP increase alone is not causal. |
+| Current source with both `L8BossArenas.ts` and `l8Bosses.ts` restored to `a23b89e0` | Skilled completes; only `SLOW_FOLLOWER:354` | Reverting both encounter controller and boss HP together still leaves the corgi flag. |
 | Current source with south/west breach waypoints removed | More flags (366, 381, and 354) | Those route changes improve follower approach; restoring them is not a fix. |
 
 Remote `sh tools/remote/run.sh "$PWD" -- npm test` passed on commit `2daee9f0`: 27 files, 105 tests passed and one skipped, 213.7 s. Typecheck, lint, and nightly mission-interactions passed with the same source changes.
