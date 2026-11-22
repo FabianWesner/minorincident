@@ -18,12 +18,14 @@ try {
     return { id, speed: car.physics.speed, car: { ...p }, target: { ...actor.transform } };
   });
   const cells: { frame: number; jpeg: Buffer }[] = [];
+  const motion: { frame: number; tick: number; y: number; vy: number }[] = [];
   for (let frame = 0; frame <= 90; frame++) {
     if (frame) await s.page.evaluate(async () => window.__SS__!.step(1));
-    if (frame % 5 === 0) { await s.ready(); cells.push({ frame, jpeg: await s.snapshot() }); }
+    motion.push(await s.page.evaluate(frame => { const w = (window.__SCENE__ as unknown as { game: Game }).game.world, car = w.vehicles!.cars.get(w.missions!.l9!.state.carId)!; return { frame, tick: w.tick, y: car.physics.body.translation().y, vy: car.physics.body.linvel().y }; }, frame));
+    if (frame >= 15 && frame <= 60 && frame % 5 === 0) { await s.ready(); cells.push({ frame, jpeg: await s.page.screenshot({ type: 'jpeg', quality: 82, clip: { x: 400, y: 180, width: 480, height: 360 } }) }); }
   }
   await s.page.keyboard.up('KeyW');
   const result = await s.page.evaluate(() => { const w = (window.__SCENE__ as unknown as { game: Game }).game.world, probe = (window as unknown as { s232: { id: number; hits: unknown[] } }).s232, e = w.entities.get(probe.id), car = w.vehicles!.cars.get(w.missions!.l9!.state.carId)!; return { ...probe, target: e && { health: e.health, corpse: e.corpse, squashed: e.squashed, transform: e.transform }, car: { speed: car.physics.speed, upsideDown: car.physics.upsideDown, transform: car.entity.transform } }; });
-  await s.makeSheet(cells, `${out}/${tier}.jpg`, 320); writeFileSync(`${out}/${tier}.json`, JSON.stringify({ setup, result, errors: s.errors }, null, 2));
+  await s.makeSheet(cells, `${out}/${tier}-close.jpg`, 320); writeFileSync(`${out}/${tier}-motion.json`, JSON.stringify({ setup, result, motion, errors: s.errors }, null, 2));
   console.log(JSON.stringify({ tier, setup, result, errors: s.errors }));
 } finally { await s.close(); stopServer(); }

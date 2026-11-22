@@ -88,7 +88,7 @@ export class Vehicles {
   private squashBump(car: Car): void {
     if (this.world.tick - (car.bumpAt ?? -Infinity) < 12) return;
     car.bumpAt = this.world.tick;
-    car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * .12, z: 0 }, true);
+    car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * .9, z: 0 }, true);
   }
   /** L9 mission vehicle: 0 HP is a capped-speed floor, not a breakdown. Re-applying after a checkpoint restore replays no cue. */
   setFloorPolicy(id: number, on = true): void {
