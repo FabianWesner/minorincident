@@ -40,9 +40,10 @@
 - `npm run qa:threat` on `46b0b107` — pass, 0 fail flags in 341.8 s within its 600 s budget. Skilled L9 and L10 completed. L3/L4/L5/L8/L10 passive runs reached their tick budgets with 0 passive flags; this is the audit's recorded outcome, not a claim those passive runs completed.
 - Corpse rendering follow-up: both generic infected and civilian-derived crowd paths now apply the squash matrix from the marker even before the dead brain state is advanced. HIGH and LOW L10 were recaptured and inspected; the corpse remains visible behind the bike, but the LOW limb silhouette still looks raised at this scale, so visual acceptance remains open. Typecheck and lint pass. Browser gates and threat evidence predate this renderer change.
 
+- After the renderer follow-up on `c5a5ffa4`, the vehicle-motion run regenerated all 16 HIGH/LOW scene receipts and each reports `pass: true`. The process exit status was unavailable, so this is receipt evidence rather than a separately observed exit-0 result.
+
 ## Open acceptance
 
-- Capture and review HIGH then LOW at zoom 1 for L9 APC and L10 motorbike (before / under / bump / squashed corpse), and add one small sheet here.
-- Re-run `qa:vehicle-motion`, `qa:vehicle-campaign-motion`, and the vehicle-contact gate when the browser pool can start. Validate driving over a pile of 10+ corpses at L9 speed.
-- Run the `qa:threat` wrapper after reconciling its 151/150 inventory discrepancy; the direct audit reports 0 fail flags and skilled L9/L10 complete.
-- Run the remote unit suite when a runner is available.
+- Resolve the raised-looking LOW bike corpse limbs and confirm a fully flattened silhouette in native captures; review the sound mix and bike bump in motion. The existing controlled captures do not fully establish visual acceptance.
+- Complete the full remote unit suite within its unchanged 240-second budget. Multiple attempts timed out; the focused save-progression file passes on the same runner.
+- Campaign-motion and threat checks passed before the latest renderer-only change. Re-run them on the final tree if exact-revision evidence is required.
