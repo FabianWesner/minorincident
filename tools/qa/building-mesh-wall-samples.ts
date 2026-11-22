@@ -28,8 +28,11 @@ export async function buildingMeshWallSamples(): Promise<Map<string, { x: number
             if ((a.y <= 1 && b.y > 1) || (b.y <= 1 && a.y > 1)) intersections.push(a.clone().lerp(b, (1 - a.y) / (b.y - a.y)));
           }
           if (intersections.length !== 2 || intersections[0].distanceTo(intersections[1]) < .5) continue;
-          const centre = intersections[0].add(intersections[1]).multiplyScalar(.5);
-          samples.push({ x: centre.x, z: centre.z, nx: normal.x, nz: normal.z });
+          const [a, b] = intersections, steps = Math.ceil(a.distanceTo(b) / 1);
+          for (let j = 0; j < steps; j++) {
+            const point = a.clone().lerp(b, (j + .5) / steps);
+            samples.push({ x: point.x, z: point.z, nx: normal.x, nz: normal.z });
+          }
         }
       }
     }
