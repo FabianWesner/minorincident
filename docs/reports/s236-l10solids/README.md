@@ -27,6 +27,7 @@ L5 has no `bld.*` placements in the runner level data. L1, L2, L7, L8, and L9 ha
 - `npm run lint`: pass
 - `node --import tsx/esm tools/qa/solid-placement-audit.ts --out /private/tmp/s236-solid-sweep-final.json`: pass; L10 sweep misses zero
 - `npm run qa:threat`: did not finish; test budget stopped it at 600 seconds while scenarios were still running. L10 skilled stage completed in 122.321 seconds.
+- A subsequent remote `qa:threat` also exceeded its 600-second budget under runner load; it did not produce an aggregate verdict. L10 skilled started shortly before the timeout.
 - `sh tools/remote/run.sh "$PWD" -- npm test`: unavailable; no healthy Hetzner runner and the configured Mac slot rejects the full suite.
 - Subsequent full remote `npm test` passed: 27 files, 105 tests passed, one skipped, 213.5 seconds within the 240-second budget.
 - Focused scene gate and native HIGH/LOW captures: unavailable; browser-pool startup failed with `EPERM` binding its local listener / registering the browser process. No captures were produced or reviewed.
