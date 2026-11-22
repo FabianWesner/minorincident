@@ -53,8 +53,8 @@ try {
   await waitFor('rise'); await step(30); await capture('03-rise');
   await waitFor('mega-exit'); await step(45); const exit = await capture('04-mega-exit');
   await waitFor('mega-roar'); await step(45); await capture('05-mega-roar');
-  await waitFor('mega-leap'); await step(45); await capture('06-mega-leap');
-  await step(45); const departure = await capture('07-mega-left-frame');
+  await waitFor('mega-leap'); await step(10); await capture('06-mega-leap');
+  await step(80); const departure = await capture('07-mega-left-frame');
   await waitFor('done'); await step(1); const result = await capture('08-result');
   const perf = await page.evaluate(() => window.__SS__!.perf());
   const meta = { tier, backend: perf.backend, quality: perf.quality.tier, errors, dazed, exit, departure, result };

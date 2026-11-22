@@ -24,4 +24,6 @@ High then low zoom-1 WebGL frames were captured through `tools/e2e-lock.sh` with
 
 The nightly vehicle-scenes invariant failed before L9 at `L10/start-100` because its vehicle hull fixture was unavailable. Typecheck, lint and the QA build passed after the phase-timer fix.
 
+The result capture showed mission phase `progression`: `Mission.result()` automatically continued L9. Removed that exception so L9 remains on the result screen, and changed the leap capture to ten ticks after takeoff. Typecheck, lint, QA build and nightly mission interactions pass after this change. A fresh high capture was admitted but its browser closed during the route (exit 143); the revised leap and result frames remain unverified and must be recaptured on both tiers.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
