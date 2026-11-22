@@ -92,7 +92,7 @@ export class Npcs {
       || ['L7', 'L8'].includes(this.world.scenario ?? '') && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
     const cell = routeFollower ? nav.nearestCell(e.transform.x, e.transform.z, footprint) : -1;
     // Animal encounter goals are independent of the courier's reverse field.
-    const flowNext = routeFollower && !e.infected?.arenaBoss && !e.infected?.arenaCarrier && distance > 30 ? nav.flowNext(cell) : -1;
+    const flowNext = routeFollower && !e.infected?.arenaBoss && !e.infected?.arenaCarrier && !e.companion?.arenaWait && distance > 30 ? nav.flowNext(cell) : -1;
     if (routeFollower && cell < 0) {
       // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
       const last = this.escapes.get(e.id), tick = this.world.tick;
@@ -137,7 +137,7 @@ export class Npcs {
         // Every route search from that pocket fails, so it stood there for the rest of the level and the army boom waited
         // for it forever. After 2 s without any route, body-swept movement toward the courier's own trail slides it back
         // out and the grid takes over again; brief transient failures keep the established stand-and-retry.
-        const pocket = !!e.companion;
+        const pocket = !!e.companion && !e.companion.arenaWait;
         if (pocket && !(this.routeless.get(e.id)! <= tick)) this.routeless.set(e.id, tick); // first failure, or a restored earlier tick
         const trail = pocket && tick - this.routeless.get(e.id)! >= 120 ? this.companion.trailPoint(e) : null;
         if (!trail) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
