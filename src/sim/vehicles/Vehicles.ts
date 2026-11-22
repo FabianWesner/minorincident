@@ -495,7 +495,7 @@ export class Vehicles {
         // obstructed by a shoulder-to-shoulder horde, while this swept nudge lets the APC keep a lane through the pile.
         const pushSide = dx * s + dz * c >= 0 ? 1 : -1;
         const resistantBody = ['infected.brute', 'infected.armored', 'infected.armoured-football', 'infected.riot', 'infected.elephant', 'infected.alpha', 'infected.mega-alpha'].includes(target.archetype ?? '');
-        const runOverContact = target.health.current > 0 && !resistantBody;
+        const runOverContact = occupied && (speed > .25 || car.physics.intent.throttle !== 0 && !car.physics.intent.brake) && target.health.current > 0 && !resistantBody;
         if (!runOverContact) this.world.knockback(target, { x: s * pushSide, z: c * pushSide }, .12);
         contact ??= ledger.infected[id] = { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
         contact.separatedAt = null;
@@ -512,7 +512,7 @@ export class Vehicles {
         // E09 mass damage is independent of contact billing, so accelerating through an overlap still rams.
         if ((speed >= 4 || runOverContact) && this.operable(car) && tick >= (car.hits.get(id) ?? 0)) {
           car.hits.set(id, tick + 60);
-          const runOver = !resistantBody;
+          const runOver = runOverContact;
           if (runOver) car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * .12, z: 0 }, true);
           this.world.combat?.damage.apply({ attackId: contact.contactId!, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: s * pushSide, z: c * pushSide }, base: Math.max(speed, 4) * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: runOver ? 0 : target.archetype === 'infected.brute' ? 5 : 3, stagger: .5, ...(runOver ? { permanent: true } : {}) });
           if (runOver && target.health.current <= 0) { target.squashed = true; target.corpse = true; target.transform.y = (this.world.districts?.groundHeight(target.transform.x, target.transform.z) ?? 0) + .7; if (target.combat?.reaction) target.combat.reaction.groundDeath = true; }
@@ -633,7 +633,8 @@ export class Vehicles {
     const actor = this.world.entities.get(target.id), contact = source === 'contact';
     if (contact && actor?.infected && (actor.health.current > 0 || (actor.infected.recoverAt ?? -1) >= 0)) {
       const resistant = ['infected.brute', 'infected.armored', 'infected.armoured-football', 'infected.riot', 'infected.elephant', 'infected.alpha', 'infected.mega-alpha'].includes(actor.archetype ?? '');
-      this.world.events.emit({ type: 'vehicle.infected-hit', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id, position: { ...actor.transform }, runOver: !resistant });
+      const moving = car.physics.speed > .25 || car.physics.intent.throttle !== 0 && !car.physics.intent.brake;
+      this.world.events.emit({ type: 'vehicle.infected-hit', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id, position: { ...actor.transform }, runOver: car.entity.vehicle!.driver !== null && moving && !resistant });
     }
     const heavy = contact && ['infected.brute', 'infected.armored', 'infected.riot', 'infected.elephant'].includes(actor?.archetype ?? '');
     const bloated = contact && actor?.archetype === 'infected.bloated';
