@@ -82,12 +82,14 @@ export const l9Course = {
   /** r30-l9bridge: authored restart pose of the `bridge` checkpoint (clear lane east to the deck) and where the chasing bus is set back to. */
   bridgeStart: { x: 452, z: 0, yaw: 0, busBehindM: [60, 50, 42], busZ: [12, 0, -12] },
   /** Jumps on the route lines (r32-l9fun, PO 11-10 "driving fun, incl jumps"): road 2, countryside 2, shortcut 1. The detours skip them. */
-  ramps: [{ id: 'overpass', x: -65, z: -330 }, { id: 'ditch', x: 80, z: -30 }, { id: 'wreck-pile', x: 135, z: -330 }, { id: 'embankment', x: -105, z: 240 }, { id: 'creek-bank', x: 115, z: 240 }],
+  // PO 2026-11-22 "That place to jump is not on the road anymore": s227 curved the route lines; every ramp, boost strip and
+  // route set piece sits on its route's centre line again (z read from layouts/D-CROSSING/routes.json at the same x).
+  ramps: [{ id: 'overpass', x: -65, z: -344.2 }, { id: 'ditch', x: 80, z: -22.1 }, { id: 'wreck-pile', x: 135, z: -326.4 }, { id: 'embankment', x: -105, z: 255 }, { id: 'creek-bank', x: 115, z: 230.8 }],
   /** r32-l9fun: painted boost strips on the long straights (route lines); crossing one at speed gives the APC a 4 s engine boost. */
-  boosts: [{ x: -280, z: -330 }, { x: 230, z: -330 }, { x: -230, z: 240 }, { x: 225, z: 240 }, { x: -160, z: -30 }],
+  boosts: [{ x: -280, z: -335.6 }, { x: 230, z: -328 }, { x: -230, z: 245.4 }, { x: 225, z: 236.2 }, { x: -160, z: -26.7 }],
   boost: { ticks: 240, halfX: 4, halfZ: 6, minSpeed: 4 },
-  tanker: { x: -25, z: -330 },
-  fire: { x: -20, z: 240, closeTicks: 900 },
+  tanker: { x: -25, z: -337.5 },
+  fire: { x: -20, z: 255.7, closeTicks: 900 },
 } as const;
 
 /**

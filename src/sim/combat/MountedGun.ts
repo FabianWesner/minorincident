@@ -88,7 +88,7 @@ export class MountedGun {
   }
   /** An explicit weapon choice (number key, wheel, Q, HUD or touch slot) hands the hands back to the carried weapons. */
   private leaveByChoice(raw: InputFrame): boolean {
-    return !!raw.selectedSlot || raw.selectedActiveSlot !== undefined || raw.selector !== 0 || !!raw.selectorActive;
+    return !!raw.selectedSlot || raw.selectedActiveSlot !== undefined || raw.selector !== 0 || !!raw.selectorActive || !!raw.swapLast;
   }
   private mount(): void {
     const w = this.world, t = w.entities.get(1)!.transform;

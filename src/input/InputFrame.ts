@@ -18,8 +18,10 @@ export interface InputFrame {
   activeAttack?: boolean;
   /** Ignored legacy field retained for decoding historical recordings. */
   attackInPlace?: boolean;
-  /** RMB/Q cycle the carried actions across racks, deduplicating unarmed. */
+  /** Shift+Q cycles the carried actions across racks, deduplicating unarmed. */
   selectorActive?: boolean;
+  /** RMB / Q: flip to the last-used weapon (PO 2026-11-22). */
+  swapLast?: boolean;
   /** Ignored legacy field retained for decoding historical recordings. */
   attackTarget?: { id: number; side: 'LEFT' | 'RIGHT' };
   /** Reset keyboard attack facing and the pending attack buffer. */

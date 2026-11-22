@@ -19,7 +19,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 import { missionControls } from '../../src/sim/missions/controls';
 import { loadLevel } from '../qa/invariants/world';
 import { checkRocketCadence, checkRocketEndpoints } from '../helpers/l7Uat';
-import { emptyInput } from '../../src/input/InputFrame';
+import { emptyInput, type InputFrame } from '../../src/input/InputFrame';
 import { weaponRoles } from '../../src/data/weaponRoles';
 import { weaponName } from '../../src/data/weaponNames';
 
@@ -973,3 +973,16 @@ async function checkCorgiLure(): Promise<void> {
   expect(w.combat!.runner.loadout.state.corgiReady).toBe(ready);
 }
 
+
+test('RMB / Q flip between the current and the last-used weapon (PO 2026-11-22)', () => {
+  const l = new Loadout(['weapon.fire-axe', 'weapon.hunting-rifle'], ['weapon.handgun', 'weapon.assault-rifle']);
+  const frame = (patch: Partial<InputFrame>): InputFrame => ({ ...emptyInput(), ...patch });
+  const held = () => l.current(l.state.selectedSide).id;
+  l.input(frame({ selectedWeaponKey: weaponKey('weapon.fire-axe') }), 100); l.update(200, () => {});
+  l.input(frame({ selectedWeaponKey: weaponKey('weapon.assault-rifle') }), 200); l.update(300, () => {});
+  expect(held()).toBe('weapon.assault-rifle');
+  l.input(frame({ swapLast: true }), 300); l.update(400, () => {});
+  expect(held(), 'flip to the short-range weapon').toBe('weapon.fire-axe');
+  l.input(frame({ swapLast: true }), 400); l.update(500, () => {});
+  expect(held(), 'flip back to the long-range weapon').toBe('weapon.assault-rifle');
+});

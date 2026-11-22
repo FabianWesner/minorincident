@@ -189,8 +189,10 @@ export class LevelEightZoo {
     s.startedAt = t; s.greetingAt = t + 9 * 60; s.lionSpoken = false;
     if (surrenderHeavyWeapons(this.w, this.mission).length) s.gateToastAt = t + gateToastDelay;
     s.broadcastAt = t + 20 * 60; s.haleGreetingAt = t + 38 * 60;
-    const sanctuaryDestination = guideRoute.at(-1)!;
-    Object.assign(this.mission.def.anchors['l8-route'], { x: sanctuaryDestination.x, z: sanctuaryDestination.z });
+    // PO 2026-11-22 "L8 is not starting. Nothing happened after the level started.": the courier starts at the entry gate,
+    // which is also the tour's last stop, so a ring there sat under her feet while Nadia walked off. The ring now marks
+    // Nadia's next stop (fixed until she reaches it), ending at the entry gate.
+    Object.assign(this.mission.def.anchors['l8-route'], { x: guideRoute[0].x, z: guideRoute[0].z });
     this.mission.checkpoint('sanctuary');
   }
   door(): Point {
@@ -299,7 +301,9 @@ export class LevelEightZoo {
     const s = this.state, w = this.w, t = w.tick;
     if (s.guideDone) return;
     const keeper = w.entities.get(s.keeperId), c = keeper?.civilian, player = w.entities.get(1)!;
-    if (!keeper || !c || keeper.infection || keeper.health.current <= 0 || c.state !== 'calm') { s.guideDone = 1; return; }
+    if (!keeper || !c || keeper.infection || keeper.health.current <= 0 || c.state !== 'calm') {
+      s.guideDone = 1; const gate = guideRoute.at(-1)!; Object.assign(this.mission.def.anchors['l8-route'], { x: gate.x, z: gate.z }); return;
+    }
     c.pauseUntil = t + 2; // the shared tour schedule stays suspended while she leads
     const stand = (look: Point) => {
       keeper.transform.yaw = deterministicAtan2(look.x - keeper.transform.x, look.z - keeper.transform.z);
@@ -318,6 +322,8 @@ export class LevelEightZoo {
       break;
     }
     if (distance(keeper.transform, target) > 1) return;
+    const nextStop = guideRoute[Math.min(s.guideLeg + 1, guideRoute.length - 1)];
+    Object.assign(this.mission.def.anchors['l8-route'], { x: nextStop.x, z: nextStop.z });
     if (++s.guideLeg >= guideRoute.length) {
       s.guideDone = 2; s.guideArrivedAt = t;
       c.pauseUntil = 0; c.scheduleStep = c.schedule!.length - 1; c.activityUntil = 0;
@@ -476,7 +482,8 @@ export class LevelEightZoo {
     if (!this.breached) {
       const guide = w.entities.get(s.keeperId);
       if (guide) {
-        const destination = guideRoute.at(-1)!;
+        // Nadia's next stop while she leads (fixed until she reaches it), then the entry gate.
+        const destination = s.guideDone ? guideRoute.at(-1)! : guideRoute[Math.min(s.guideLeg, guideRoute.length - 1)];
         Object.assign(this.mission.def.anchors['l8-route'], { x: destination.x, z: destination.z });
         const step = this.mission.def.steps.find(value => value.id === 'sanctuary');
         if (step) { step.text = 'Follow Nadia'; step.anchor = 'l8-route'; step.waypoint = true; }
@@ -962,6 +969,7 @@ export class LevelEightZoo {
       this.state.lionUntil = 0;
       this.state.guideRouteVersion = 6;
     }
+    if (!this.state.guideDone) { const stop = guideRoute[Math.min(this.state.guideLeg, guideRoute.length - 1)]; Object.assign(this.mission.def.anchors['l8-route'], { x: stop.x, z: stop.z }); }
     for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'gateToastAt', 'departureAt', 'haleFallAt', 'guideArrivedAt', 'lionUntil'] as const) if (this.state[key]) this.state[key] += delta;
     if (this.state.departureFrom) this.state.chaseAt += delta;
     this.w.storyLock = this.state.departureFrom && !this.mission.state.states.departed ? { scripted: null, skip: false } : null;

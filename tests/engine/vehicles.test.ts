@@ -875,13 +875,17 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.state.steps.sanctuary.status).toBe('active');
     expect(mission.state.steps.escape.status).toBe('pending');
     expect(mission.state.marker).toBe('l8-route');
-    expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
-    expect(markerAnchor(mission), 'the visible destination stays at the entry while Nadia leads').toMatchObject({ x: 0, z: 70 });
+    // PO 2026-11-22 "L8 is not starting": the ring marks Nadia's next fixed stop, never the entry gate under the courier's feet.
+    const stops = [[-24, 64], [-24, 0], [24, 0], [24, 64], [0, 64], [0, 70]];
+    const ring = { ...mission.def.anchors['l8-route'] };
+    expect(stops.some(([x, z]) => x === ring.x && z === ring.z), 'the ring is one of Nadia\'s fixed stops').toBe(true);
+    if (!mission.l8!.state.guideDone) expect(ring, 'while Nadia leads the ring is not the start gate').not.toMatchObject({ x: 0, z: 70 });
+    expect(markerAnchor(mission)).toMatchObject({ x: ring.x, z: ring.z });
     expect(mission.state.steps.depart.status).toBe('pending');
     mission.restore('sanctuary');
     expect(mission.state.marker).toBe('l8-route');
-    expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
-    expect(markerAnchor(mission), 'checkpoint restore retains the fixed destination').toMatchObject({ x: 0, z: 70 });
+    const restored = mission.def.anchors['l8-route'];
+    expect(stops.some(([x, z]) => x === restored.x && z === restored.z), 'checkpoint restore keeps a fixed stop').toBe(true);
     expect(mission.state.steps.escape.status).toBe('pending');
     missionControls(world).teleport(1, zoo.door());
     // r31-nadia: while Nadia still leads (a courier camping the APC never follows her), the calm lasts its 180 s cap before the breach.

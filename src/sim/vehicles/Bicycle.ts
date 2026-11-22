@@ -253,7 +253,7 @@ export class Bicycle {
       const limited = Math.max(-100 * Math.PI / 180, Math.min(100 * Math.PI / 180, delta));
       aim = { x: Math.cos(b.heading + limited), z: Math.sin(b.heading + limited) };
     }
-    const next: InputFrame = { ...frame, aim, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: handgunSide === 'LEFT' ? frame.left : off, right: handgunSide === 'RIGHT' ? frame.right : off, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined, selectedLegacyWeaponKey: undefined, selectedPositionWeaponKey: undefined, interact: !!claimed && frame.interact };
+    const next: InputFrame = { ...frame, aim, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: handgunSide === 'LEFT' ? frame.left : off, right: handgunSide === 'RIGHT' ? frame.right : off, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined, selectedLegacyWeaponKey: undefined, selectedPositionWeaponKey: undefined, swapLast: undefined, interact: !!claimed && frame.interact };
     delete next.navigation; // the bicycle has its own acceleration and turning model
     return next;
   }

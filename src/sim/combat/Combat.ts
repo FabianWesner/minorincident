@@ -72,7 +72,7 @@ export class Combat {
   intent(frame: InputFrame): void {
     if (!this.world.entities.get(1)!.weapons) return;
     this.runner.loadout.update(this.world.tick, this.switched);
-    if (this.world.missions?.l8?.bosses.swapBlocked()) frame = { ...frame, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined, selectedLegacyWeaponKey: undefined, selectedPositionWeaponKey: undefined };
+    if (this.world.missions?.l8?.bosses.swapBlocked()) frame = { ...frame, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined, selectedLegacyWeaponKey: undefined, selectedPositionWeaponKey: undefined, swapLast: undefined };
     this.runner.loadout.input(frame, this.world.tick);
     this.status.update();
   }

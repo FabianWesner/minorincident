@@ -85,7 +85,8 @@ export class Loadout {
         if (rack.index !== choice.index) { rack.index = choice.index; rack.swapUntil = tick + 15; }
       }
     }
-    if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick, frame.legacyWeaponOrder);
+    if (frame.swapLast && !choice) this.swapToLast(tick);
+    else if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick, frame.legacyWeaponOrder);
     else if (frame.selector && tick >= this.state[this.state.selectedSide].swapUntil) {
       const cycling = this.state[this.state.selectedSide];
       const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
@@ -95,6 +96,20 @@ export class Loadout {
     }
     const selectedSide = this.state.selectedSide, selectedId = this.current(selectedSide).id;
     if (selectedId !== beforeId) this.state.previous = { side: beforeSide, index: beforeIndex, id: beforeId };
+  }
+  /** PO 2026-11-22: RMB / Q flip between the current and the last-used weapon; with no history yet, step to the next carried weapon. */
+  swapToLast(tick: number): void {
+    const previous = this.state.previous;
+    if (previous && tick >= this.state[previous.side].swapUntil) {
+      const state = this.state[previous.side];
+      const slot = previous.index === -1 ? state.unarmed : state.rack[previous.index];
+      if (slot && slot.id === previous.id) {
+        this.state.selectedSide = previous.side;
+        if (state.index !== previous.index) { state.index = previous.index; state.swapUntil = tick + 15; }
+        return;
+      }
+    }
+    this.cycleActive(1, tick);
   }
   /** Return to the last selection only if that same slot is still usable. */
   returnToPrevious(tick: number): boolean {
