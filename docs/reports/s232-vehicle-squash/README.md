@@ -64,6 +64,8 @@
 
 - Refreshed L9 HIGH then LOW at zoom 1 with a wider crop after the pooling fix. In the [sheet](sheet.jpg), the runner is visible ahead in frame 25, blood appears at the front in frame 30, and the flattened corpse appears behind by frames 50–60. Both controlled runs recorded the hit at tick 147, retained the corpse, kept the APC upright and logged no browser errors ([HIGH](l9-high.json), [LOW](l9-low.json)). The sampled bump remains 3.8 cm.
 
+- Roster check: the bike and sedan inflict at least 120 base damage at the 4 m/s run-over threshold (APC ram strength is higher). Authored ordinary human roles runner, crawler, sprinter, screamer and nurse have 37.5–105 HP after the shared toughness multiplier. Firefighter, hazmat, bloated, butcher and other larger roles may survive according to their existing health and heavy behavior; no stats were changed. This is a data and damage-path check, not a separate native capture of each archetype.
+
 ## Open acceptance
 
 - Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
