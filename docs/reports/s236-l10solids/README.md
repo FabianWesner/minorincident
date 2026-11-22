@@ -38,6 +38,8 @@ The same companion and non-occluder fixtures pass on LOW (`/private/tmp/s236-com
 
 An 85% uniform fade retained slightly more of the barn in a reviewed HIGH native frame, but failed the LOW companion fixture at zoom 1.5 (courier visibility 0.8 versus 0.85 required). The 90% fade was restored and that LOW row passes (`/private/tmp/s236-fade90-companion/`). The opaque shadow is rendered in a separate instanced shadow pass and remains a visual concern.
 
+The placement shadow pass now masks the selected whole-building instance; other instances retain their shadows. Reviewed HIGH native frames (`/private/tmp/s236-shadow-fade.png` and `s236-shadow-front.png`) show the black barn footprint removed while faded and retained while the barn is opaque. The shadow switches off rather than interpolating. Typecheck, lint, and the HIGH and LOW companion, behind-building and non-occluder fixtures pass. WebGPU and a performance comparison remain unverified; the report sheet predates this shadow change.
+
 These non-L10 findings remain for follow-up; the first five placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893
