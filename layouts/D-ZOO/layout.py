@@ -399,7 +399,10 @@ for k, (cx, cz, w, d) in _encl.items():
 # Story traces remain on the ground after the outbreak. Keep the main gate
 # lanes clear: splintered fence and blood at the paddock edge, and the vet's
 # dropped tranquiliser rifle beside the gorilla house.
-l.box('zebra-broken-rail', 'woodWarm', [3.2, .12, .12], [76, .21, 42])
+l.box('zebra-broken-rail', 'silver', [3.2, .12, .12], [79, .21, 41.8])
+l.box('zebra-fallen-fence-top', 'silver', [.12, .12, 2.7], [79.7, .23, 42.4])
+for _z in (41.4, 42.0, 42.6):
+    l.box('zebra-fallen-fence-bar', 'silver', [2.2, .08, .06], [79.5, .3, _z])
 l.box('zebra-blood-trace', 'blood', [1.8, .025, .7], [72, .16, 40])
 l.box('gorilla-vet-rifle-stock', 'woodWarm', [.55, .1, .18], [72, .20, -39])
 l.box('gorilla-vet-rifle-barrel', 'silver', [.85, .07, .07], [72.65, .20, -39])
@@ -757,6 +760,11 @@ l.data['placements'] = [p for p in l.data['placements'] if p is not None]
 # allocation so every remaining placement retains its authored identifier.
 _new_fences = [p for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) >= _arena_first_id]
 _arena_drop = {p['id'] for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) < _arena_first_id and abs(p['position'][0] - 14) < .01 and abs(p['position'][2] - 20) < 4}
+# The outbreak broke one panel of the outer zebra fence. The compact inner
+# arena fence remains intact, keeping the solo encounter and route sealed.
+_arena_drop |= {p['id'] for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence'
+                and int(p['id'].rsplit(':', 1)[1]) < _arena_first_id
+                and abs(p['position'][0] - 82) < .01 and abs(p['position'][2] - 41.75) < .1}
 # Remove old dressing from the newly fenced gorilla exit paving, after IDs are allocated.
 _arena_drop |= {p['id'] for p in l.data['placements'] if p['assetId'] in _DRESS
                 and p['visualAabb']['max'][0] > 74 and p['visualAabb']['min'][0] < 96
