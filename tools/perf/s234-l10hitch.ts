@@ -12,6 +12,7 @@ const backend = (process.argv[2] ?? 'webgpu') as 'webgpu' | 'webgl2';
 const tier = (process.argv[3] ?? 'high') as 'high' | 'low';
 const label = process.argv[4] ?? 'before';
 const combat = process.env.S234_COMBAT === '1';
+const delay = Number(process.env.S234_DELAY ?? 0);
 const replay = JSON.parse(gunzipSync(readFileSync('tests/fixtures/perf/l10-real-input.json.gz')).toString()) as { inputs: { tick: number; frame: InputFrame }[] };
 const frames: InputFrame[] = []; let cursor = 0;
 for (let tick = 0; tick < 900; tick++) {
@@ -25,7 +26,7 @@ try {
   await session.open();
   await session.page.mouse.click(10, 10);
   await session.page.evaluate('globalThis.__name = fn => fn');
-  await session.page.evaluate(async ({ frames, diagnostic, combat }) => {
+  await session.page.evaluate(async ({ frames, diagnostic, combat, delay }) => {
     const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
     await a.loadLevel('L10', { seed: 1, checkpoint: 'cure-crash' });
     a.pause(); a.cheats.god(true); a.camera.follow(); a.debug.cpuProfile();
@@ -40,7 +41,10 @@ try {
     if (combat) {
       const modulePath = '/src/debug/bot/LevelTenBot.ts';
       const module = await import(/* @vite-ignore */ modulePath);
-      g.driver = new module.LevelTenBot(g.world, 'complete');
+      const bot = new module.LevelTenBot(g.world, 'complete');
+      const sample = bot.sample.bind(bot);
+      bot.sample = () => { const frame = sample(); if (g.world.tick < delay) frame.move = { x: 0, z: 0 }; return frame; };
+      g.driver = bot;
     } else g.input.feed = feed;
     const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; x: number; z: number; builds: number; builtMaterials: Record<string, number>; buildObjects: Record<string, string>; infected: number; alive: number; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };
     trace.hitchTrace = { frames: [], running: true };
@@ -66,7 +70,7 @@ try {
       if (trace.hitchTrace.running) requestAnimationFrame(sample);
     };
     requestAnimationFrame(sample); a.resume();
-  }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1', combat });
+  }, { frames, diagnostic: process.env.S194_DIAGNOSTIC === '1', combat, delay });
   await session.page.waitForFunction(() => window.__SS__!.tick() >= 900, null, { timeout: 180_000, polling: 20 });
   const result = await session.page.evaluate(() => {
     const trace = window as unknown as { hitchTrace: { frames: { at: number; dt: number; tick: number; infected: number; alive: number; builtMaterials: Record<string, number>; sim: number; update: number; render: number; categories: Record<string, number> }[]; running: boolean } };

@@ -44,3 +44,13 @@ Typecheck and lint passed after the harness change. Verify actual attack, downed
 Quiet WebGPU high runs of the skilled driver completed: ticks 400–900 p99 9.5 ms, longest 29.7 ms at tick 682, 0 intervals over 33 ms (1,296 samples). A repeat with audio-state recording measured p99 9.5 ms, longest 28.0 ms at tick 680, 0 over 33 ms (1,320 samples). Audio was running and unlocked, with 201 cues logged and no audio errors; output was muted. At tick 682 the first trace had 8 infected, 6 alive, and no new material builds. The player was at x=582 near tick 470, versus the PO's x=582.32 at tick 639; at tick 639 the trace was at x=594.67. These runs do not reproduce the reported long frame or establish its cause. The two runs are repetitions of the same code, not before/after a fix. Raw traces are `test-results/s234-l10hitch/combat-before-webgpu-high/trace.json` and `test-results/s234-l10hitch/combat-audio-webgpu-high/trace.json`.
 
 The harness now asserts the audio context is running, unlocked, foreground and unmuted in settings, and records the audio snapshot. Typecheck and lint passed. A closer reproduction of the PO's movement and engagement remains necessary.
+
+## Position-matched diagnostic
+
+The skilled driver can now suppress movement for `S234_DELAY` initial ticks while retaining combat. This is a constructed input, not the PO's recording. Quiet WebGPU high with `S234_DELAY=135` reached (581.63, 0.17) at tick 639, with 6 alive and 1 downed among 7 infected; the PO reported (582.32, 0.76), 6 alive and 1 downed. Audio was running (174 logged cues). In ticks 400–900 it measured p99 13.9 ms, longest 32.1 ms at tick 871, and 0 intervals >33 ms. The longest sample had no new material builds, with sampled sim/update/render 1.9/3.4/3.8 ms. A 169-tick delay reached (579.83, 0.18) at tick 639 with the same counts; p99 10.7 ms, longest 29.4 ms at tick 897, 0 >33 ms. These are independent baselines, not a fix comparison; neither reproduced a hang. Input history, HP, actual target and exact audio/visual state still differ or are unverified.
+
+```sh
+E2E_UNITS=1 SCENE_PORT=5264 S234_COMBAT=1 S234_DELAY=135 MI_PERF_ADMISSION_TIMEOUT_SECONDS=1200 sh tools/perf/quiet-run.sh npx tsx tools/perf/s234-l10hitch.ts webgpu high matched-before
+```
+
+Raw traces: `test-results/s234-l10hitch/matched-before-webgpu-high/trace.json` and `test-results/s234-l10hitch/delayed-before-webgpu-high/trace.json`. Typecheck and lint passed for the diagnostic change. Root cause, runtime fix, before/after proof and remaining gates remain open.
