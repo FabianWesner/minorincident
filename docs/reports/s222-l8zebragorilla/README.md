@@ -128,6 +128,8 @@ The authored `l8Route` describes each enclosure as the only passage between adja
 
 A read-only wrapper sampled the corpse-detour helper for the eight late residents every 2 s outside boarding: all 147 recorded calls returned the original catch-up goal. This rules out that helper redirecting those sampled movements, though it does not inspect intermediate navigation waypoints. The diagnostic source was restored.
 
+An approximate overlapping-window diagnostic found 235 moving samples with both the corgi and at least one unheld human moving; none occurred during an active arena. Across those samples the dog median was 4.50 m/s and the median of per-frame human medians was 4.86 m/s. This is not the threat verdict and uses different aggregation and eligibility; it shows the difference also appears during shared travel, consistent with humans catching up, so unequal arena windows alone do not explain the flag.
+
 The human near-courier pace cap in `LevelEightZoo.ts` is restored to its `1.05×` baseline per task instruction. This does not clear corgi 354. The earlier corgi steering, speed, lead, and stop-radius trials were reverted. No pace threshold, observer, or zombie stat was changed. Full `qa:threat` acceptance remains open, so this report does not claim a root-cause fix.
 
 - Compared the current lane against main `8ef2a340`: the L8 gate-approach switch from `moveAgent` to `seek` landed with the zebra/gorilla work. Restoring the main movement path improved the focused L8 kiting probe from 0 to 1 landed hit in 20 seconds (3/min); the skilled L8 route completed. This diagnostic still reported follower-pace flags and a partial-selection marker, so it is not a full acceptance run.
