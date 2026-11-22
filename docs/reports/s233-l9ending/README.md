@@ -20,6 +20,8 @@ Updated retired crawl references in the L9 QA probes and corrected E31 acceptanc
 
 ## Visual review and open gates
 
-High zoom-1 WebGL frames were captured through `tools/e2e-lock.sh` with no page errors. Review exposed a framing problem: at the roar the Mega is at the lower left edge and the courier is outside the image. The capture driver's accidental `follow()` override was removed and the result persisted on a second run. Determine whether fixed-step capture updates the cinematic camera correctly, fix the framing as needed, and review a complete high/low sequence before producing the contact sheet. No low capture or sheet has passed review yet.
+High then low zoom-1 WebGL frames were captured through `tools/e2e-lock.sh` with no page errors. Review exposed a phase-timer bug that moved the wreck back across the bridge during the ending. The crash motion is now limited to approach, fall and impact; fresh high and low roar frames show the burning wreck, Mega, courier and corgi together. The dazed and rise frames show the courier beside the wreck. The sampled leap frame already has the Mega offscreen, and the sampled result frame still shows gameplay: capture earlier in the leap and wait for the actual result screen to verify both beats. A complete reviewed sheet is still needed.
+
+The nightly vehicle-scenes invariant failed before L9 at `L10/start-100` because its vehicle hull fixture was unavailable. Typecheck, lint and the QA build passed after the phase-timer fix.
 
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.

@@ -166,6 +166,10 @@ export class LevelNineCrash {
     if (mega && !['dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(s.phase)) {
       mega.hidden = true; mega.infected!.hidden = true;
     }
+    if (s.phase !== 'approach' && s.phase !== 'fall' && s.phase !== 'impact') {
+      this.updateEnding(mega);
+      return;
+    }
     if (t < approachTicks) {
       w.vehicles!.scriptPose(s.carId, approachPose());
     } else if (t < approachTicks + FALL) {
