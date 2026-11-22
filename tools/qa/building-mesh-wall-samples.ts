@@ -3,7 +3,7 @@ import { assetIO } from '../assets/io';
 import { existsSync } from 'node:fs';
 import manifest from '../../src/assets/manifest.json' with { type: 'json' };
 
-/** Large vertical triangles in the shipped LOD0 mesh, independent of collider data. */
+/** Vertical mesh intersections at local body height, independent of collider data. */
 export async function buildingMeshWallSamples(): Promise<Map<string, { x: number; z: number; nx: number; nz: number }[]>> {
   const io = await assetIO(), result = new Map<string, { x: number; z: number; nx: number; nz: number }[]>();
   for (const { id } of manifest.filter(asset => asset.id.startsWith('bld.') && existsSync(`public/assets/models/${asset.id}.glb`))) {
@@ -19,10 +19,17 @@ export async function buildingMeshWallSamples(): Promise<Map<string, { x: number
             return new Vector3().fromArray(value).applyMatrix4(matrix);
           });
           const normal = new Vector3().crossVectors(vertices[1].clone().sub(vertices[0]), vertices[2].clone().sub(vertices[0]));
-          if (normal.length() < 4) continue;
+          if (normal.length() < 1e-6) continue;
           normal.normalize();
-          const centre = vertices[0].clone().add(vertices[1]).add(vertices[2]).divideScalar(3);
-          if (Math.abs(normal.y) < .15 && centre.y > .5 && centre.y < 1.8) samples.push({ x: centre.x, z: centre.z, nx: normal.x, nz: normal.z });
+          if (Math.abs(normal.y) >= .15) continue;
+          const intersections: Vector3[] = [];
+          for (let j = 0; j < 3; j++) {
+            const a = vertices[j], b = vertices[(j + 1) % 3];
+            if ((a.y <= 1 && b.y > 1) || (b.y <= 1 && a.y > 1)) intersections.push(a.clone().lerp(b, (1 - a.y) / (b.y - a.y)));
+          }
+          if (intersections.length !== 2 || intersections[0].distanceTo(intersections[1]) < .5) continue;
+          const centre = intersections[0].add(intersections[1]).multiplyScalar(.5);
+          samples.push({ x: centre.x, z: centre.z, nx: normal.x, nz: normal.z });
         }
       }
     }

@@ -10,9 +10,11 @@ See-through selection for buildings now tests the camera-to-subject centre segme
 
 `tools/qa/building-wall-sweep-audit.ts` is wired into `tools/qa/solid-placement-audit.ts`. It sampled 664 building placements across L1–L10 with 9,760 capsule sweeps. L10: 242 buildings, 1,958 samples, zero misses. The existing solid placement portion reports 572 before and zero after across all district datasets.
 
-The audit additionally samples large vertical triangles from available building LOD0 meshes, independently of collider bounds. It now reports 13,632 combined sweeps across 664 placements; L10 has 3,262 samples and zero misses. The filter requires a triangle area of at least 2 m² and a body-height centroid, so it does not cover every wall face. Fifteen of 52 available building meshes have no qualifying triangles: `bld.house-c`, `bld.bus-stop`, `bld.gazebo`, `bld.dugout`, `bld.tunnel-portal`, `bld.power-substation`, `bld.helipad`, `bld.house-e`, `bld.town-hall`, `bld.church`, `bld.cure-duplex`, `bld.cure-security-post`, `bld.cure-service-building`, `bld.cure-guard-post`, and `bld.cure-lab-annex`. Smaller or subdivided faces and unavailable meshes remain open coverage gaps. The known misses below are ratcheted: any additional reported miss fails the audit.
+The audit additionally samples vertical LOD0 mesh faces independently of collider bounds, by intersecting triangles at local height 1 m and sampling segments at least 0.5 m long. It now reports 42,266 combined sweeps across 664 placements; L10 has 12,270 samples and zero misses. Two of 52 available building meshes (`bld.dugout` and `bld.helipad`) have no qualifying segments. Shorter segments, faces outside this height slice, unavailable meshes, and openings remain coverage limits. Known misses are ratcheted in `tools/qa/building-wall-sweep-baseline.json`.
 
 The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, and 2.2 m high door openings. The authored part bounds were tightened to those dimensions; destruction adds its existing 0.035 m hit-zone margin. Typecheck, lint, and the ratcheted sweep audit pass after this correction. This generator comparison is not a substitute for the all-district mesh-face audit or movement captures.
+
+The height-slice audit found a visible chimney with no collider in each of four farm houses. A structural chimney bound matching the generator was added; all L10 sampled misses now clear. Typecheck, lint, and the ratcheted audit pass after this change.
 
 The audit also probes the reported 0.7-scale shed after chunk activation with the courier's full radius: a 3 m sweep stops after 1.1125 m at the side wall and 0.7625 m at a gable pier, while the doorway-centre sweep travels the full 3 m. These checks pass alongside typecheck and lint.
 
@@ -32,7 +34,7 @@ These non-L10 findings remain for follow-up; the first five placements have no c
 - L4 D-FAIR `bld.garage-detached` placements 644 and 652
 - L4 D-FAIR `bld.shed` placement 748
 - L6 D-SUBWAY `l6-36`
-- L1 D-GROVE `bld.fire-station:853`: four mesh samples at local x/z (1.47, 3.53), (1.56, 3.53), (1.47, -0.62), and (1.56, -0.62); assess whether these faces are intended to block.
+- L1 D-GROVE `bld.fire-station:853`: 32 mesh samples around local x=1.47–1.70, z=-2.52–4.19; assess whether these faces are intended to block. Exact coordinates are in the baseline JSON.
 
 L5 has no `bld.*` placements in the runner level data. L2, L7, L8, and L9 had no reported misses.
 

@@ -5,6 +5,7 @@ import { actorRadius } from '../../src/sim/world/SolidRegistry';
 import { runnerLevels } from '../sim-runner/levels';
 import { loadLevel } from '../sim-runner/levels';
 import { buildingMeshWallSamples } from './building-mesh-wall-samples';
+import knownMisses from './building-wall-sweep-baseline.json' with { type: 'json' };
 
 export interface BuildingWallSweepReceipt {
   levels: { level: string; buildings: number; samples: number; misses: string[] }[];
@@ -92,17 +93,7 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
   const receipt = { levels, totals: { buildings: levels.reduce((n, r) => n + r.buildings, 0), samples: levels.reduce((n, r) => n + r.samples, 0), misses: levels.flatMap(r => r.misses) } };
   const l10Misses = levels.find(row => row.level === 'L10')?.misses ?? [];
   assert.deepEqual(l10Misses, [], 'An L10 building has a missing or passable body-height collider');
-  const baseline = new Set([
-    'D-CORRIDOR/bld.river-bridge:893:no-body-height-collider',
-    'D-FAIR/bld.garage-detached:644:no-body-height-collider',
-    'D-FAIR/bld.garage-detached:652:no-body-height-collider',
-    'D-FAIR/bld.shed:748:no-body-height-collider',
-    'D-SUBWAY/l6-36:no-body-height-collider',
-    'D-GROVE/bld.fire-station:853:mesh-wall:1.47,3.53',
-    'D-GROVE/bld.fire-station:853:mesh-wall:1.56,3.53',
-    'D-GROVE/bld.fire-station:853:mesh-wall:1.47,-0.62',
-    'D-GROVE/bld.fire-station:853:mesh-wall:1.56,-0.62',
-  ]);
+  const baseline = new Set(knownMisses);
   assert.deepEqual(receipt.totals.misses.filter(miss => !baseline.has(miss)), [], 'New building wall sweep misses');
   return receipt;
 }
