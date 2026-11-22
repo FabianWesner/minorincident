@@ -202,3 +202,5 @@ Remote unit gate rerun on committed source `87cc5edd`: passed, 27 files, 105 tes
 A trial applied the survivor group's blocked outside-slot search to the corgi. Typecheck, lint and mission-interactions passed, but the L8-only receipt was unchanged: skilled completed, the same three pace flags and waiting-share flag remained, with dog median 1.9513 m/s and waiting upper bound 23.607%. The trial was reverted; this does not establish a blocked slot as the cause.
 
 Cage containment follow-up: the existing arming check now includes the corgi, so a dog already inside must exit before the entry closes. Typecheck, lint and mission-interactions pass; the L8-only threat run completed skilled L8 and retained the same four gameplay flags (plus the partial-selection marker). Full threat acceptance and final-source remote unit validation remain open.
+
+Remote unit validation on gameplay commit `c8dd960d` passed: 27 files, 105 tests and one skipped, 203.3 s. The mission-interactions route fixture also explicitly placed the corgi inside the lion cage and confirmed the gate did not arm; that expanded fixture passed locally. Zero-flag threat acceptance remains open.
