@@ -348,7 +348,7 @@ export class LevelEightZoo {
     // Replenish the burn-site plume throughout the tour; one VFX burst lasts
     // only a few seconds and disappears well before the player reaches it.
     if (s.infectionSetupAt && !this.breached && (t - s.infectionSetupAt) % 120 === 0)
-      w.events.emit({ type: 'vfx.effect', tick: t, kind: 'smoke', position: { x: 60, y: 0, z: -78 }, radius: 4 });
+      w.events.emit({ type: 'vfx.effect', tick: t, kind: 'smoke-column', position: { x: 29, y: 0, z: 4 }, radius: 4 });
     for (const [bit, id, line, position] of [
       [1, 'lion', 'L8.story-lion', { x: -69, y: 0, z: -25 }],
       [2, 'zebra', 'L8.story-zebra', { x: 60, y: 0, z: 32 }],

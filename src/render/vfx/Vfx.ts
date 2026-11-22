@@ -664,6 +664,11 @@ export class Vfx extends Group {
       this.waves.opacity(second, .82);
       const slot = this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 8, 0xef92ff, 1);
       this.waves.opacity(slot, .25);
+    } else if (kind === 'smoke-column') {
+      const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+      // Seed the whole plume at once so it remains legible when fixed-step
+      // simulation advances several ticks between presented frames.
+      for (let i = 0; i < 8; i++) this.burst(x, ground + 1.5 + i * .55, z, 0x665f73, 4, 1.05 + i * .08, 4, -.3, particleShape.smoke, .15, .25);
     } else if (kind === 'electric') {
       this.burst(x, height, z, 0x94ecff, 12, 0.07, 0.25, 0, particleShape.spark);
       for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, height + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);

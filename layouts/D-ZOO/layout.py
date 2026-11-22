@@ -409,6 +409,12 @@ l.box('gorilla-vet-blood', 'blood', [1.2, .025, .6], [72, .16, -40])
 l.box('lion-feed-bucket', 'silver', [.55, .48, .55], [-67, .39, -26])
 l.box('lion-spilled-feed', 'khakiLight', [1.1, .03, .7], [-66.3, .16, -26])
 l.data['colliders'].append(dict(id='lion-feed-bucket', aabb=dict(min=[-67.275, .15, -26.275], max=[-66.725, .63, -25.725]), minTier=0, maxTier=5))
+# Army burn site behind the gorilla-house approach, visible from the tour.
+# The sealed metal incinerator is solid and clear of the public path.
+l.box('sanctuary-incinerator', 'uiDark', [1.8, 1.4, 1.2], [29, .7, 4])
+l.box('sanctuary-incinerator-rim', 'silver', [1.9, .12, 1.3], [29, 1.42, 4])
+l.box('sanctuary-incinerator-ash', 'hairShadow', [3.2, .025, 2.3], [29, .035, 4])
+l.data['colliders'].append(dict(id='sanctuary-incinerator', aabb=dict(min=[28.1, 0, 3.4], max=[29.9, 1.4, 4.6]), minTier=0, maxTier=5))
 # Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
 for k in range(9):
     tx, tz = 60 + _zr.uniform(-18, 18), 32 + _zr.uniform(-16, 16)
