@@ -6,9 +6,17 @@ function checkWeaponAudioEvents(): void {
   const context = { currentTime: 1 };
   const play = vi.fn(), loop = vi.fn(), stopLoop = vi.fn();
   const host = { available: () => true, level: () => 'L1', ring: vi.fn(), haptic: vi.fn(), settings: { tinnitus: false }, context, play, loop, stopLoop,
-    alarm: { onEvent: () => false }, world: { entities: new Map([[2, target]]) },
+    alarm: { onEvent: () => false }, world: { entities: new Map([[2, target]]) }, offscreen: () => true, caption: vi.fn(),
     graph: { buses: { ambience: { gain: { setTargetAtTime: vi.fn() } } } } } as unknown as AudioEventHost;
   const mapper = new AudioEventMapper(host);
+  for (const [animal, move] of [['zebra', 'zebra.stampede'], ['gorilla', 'gorilla.roar']] as const) {
+    target.archetype = `infected.${animal}`;
+    play.mockClear();
+    mapper.event({ type: 'telegraph', tick: 1, sourceId: 2, attackId: 1, special: move, duration: 1 } as GameEvent);
+    expect(play).toHaveBeenCalledWith(`animal.${animal}.tell`, expect.objectContaining({ offscreen: true }), 2);
+    expect(play).toHaveBeenCalledWith(`telegraph.${move}`, expect.objectContaining({ offscreen: true }), 2);
+  }
+  target.archetype = 'infected.runner';
   for (const weapon of ['handgun', 'army-mg', 'shotgun', 'hunting-rifle', 'nail-gun', 'assault-rifle', 'flamethrower']) {
     play.mockClear();
     mapper.event({ type: 'combat.hit', tick: 1, attackId: 1, sourceId: 1, targetId: 2, actionId: `weapon.${weapon}`, amount: 1, damageType: 'bullet', position: target.transform } as GameEvent);
