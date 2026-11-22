@@ -1,0 +1,22 @@
+# s227 L9 polish
+
+[Reviewed frames](frames.jpg) were captured at HIGH WebGL2 and game zoom 1, 1280 × 720, headless on the native L9 mission. The complete driver ran from the start without player relocation or invulnerability; it reached the stall, impact, crawl, get-up and stand. The road image is a separate run with that driver configured to follow the authored asphalt points instead of its usual off-road detour. The impact camera is scripted by the mission. The sheet is a downscaled copy of the original captures.
+
+- **Road:** the asphalt changes direction gently at the photographed bend. The change is subtle at this zoom; the other long routes have shallow bends as well. The full route was not visually swept at every bend.
+- **Crossing:** the rail-stall frame shows the rails and plank deck at the road surface, with the masts at its sides. The old independent railway that crossed over the kit was removed. The APC stops on the approach side of the crossing.
+- **Crash:** the same APC lands on the far shoulder and burns beside the courier; the infected school bus is hidden when the crash starts. The image is dark and the fire masks part of the vehicle, but its APC silhouette and wheels are visible. The shoulder placement replaces the previous wreck position inside the far bank, which was hidden from the camera.
+- **Crawl and stand:** the courier crawls with empty hands. The following images show the get-up and standing pose. The caption and objective remain visible during the scripted end.
+
+## Verification and limits
+
+On code commit `4f08dc0d`:
+
+- `npm run typecheck` and `npm run lint` passed. The remote `npm test` passed 27 files: 105 tests passed and one skipped (202.3 s of the 240 s budget). Earlier runs on a busy runner timed out and were rerun unchanged.
+- Both threat shards and their merge passed with **zero flags**; L9 skilled and passive both completed.
+- `qa:vehicle-campaign-motion` passed all eight high/low L9, L7 and L4 cases. The solid-placement audit reported **zero remaining offenders**. The nightly mission-interactions test passed.
+- Remote `npm run verify -- E31` passed typecheck, lint and the unit suite. Per the tool, this is the per-change gate; retired epic-tag tests are not part of that command.
+
+
+For s226b, a fixed-step seed-1 drive followed both the asphalt route and its detour through completion, checking the full-height APC hull against fixed or braced pushable props each tick. No such props were resident during either drive, so there were no overlaps to measure. This is a route observation, not a proof about every static district collider or every possible driver path. The vehicle suite also covers grounded APC contact with movable props and the crash boarder's corpse persistence.
+
+The curve screenshot is a single near-bend frame, not a complete visual sweep. The APC fire is visually bright and partly hides the wreck. WebGPU and human driving remain outside this headless WebGL2 review.
