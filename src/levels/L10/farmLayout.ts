@@ -1,5 +1,6 @@
 import type { DistrictLayout, Placement, Point } from '../districts/types';
 import { worldAssets } from '../../assets/worldDefinitions';
+import destructionParts from '../../data/destructionParts.json' with { type: 'json' };
 import { Rng } from '../../core/Rng';
 import { cure } from './district';
 import { cureCrossingLines } from './crossingStories';
@@ -191,21 +192,20 @@ export function applyFarmLandscape(layout: DistrictLayout): void {
   // Re-preparing an assembled layout replaces our generated solids instead of doubling them.
   layout.colliders = layout.colliders.filter(c => !c.id.includes('/farm-wood-') && !c.id.endsWith('/farm-chassis'));
   for (const p of layout.placements) if ((p.id.startsWith('decor-cure-farm-') || p.id.startsWith('l10-find-farm-')) && p.assetId.startsWith('bld.farm-')) {
-    const house = p.assetId === 'bld.farm-house-ruin', w = house ? 8 : 7, d = house ? 7 : 8, h = house ? 2.55 : 3.35;
-    const opening = house ? 1.8 : 2.8, pier = (w - opening) / 2;
-    // Match the rebuilt walls while preserving a traversable north/south escape aisle.
-    const boxes = [-1, 1].map(x => ({ x: x * w / 2, z: 0, hx: .12, hz: d / 2, h }));
-    boxes.push(...[-1, 1].flatMap(z => [-1, 1].map(x => ({ x: x * (opening + pier) / 2, z: z * d / 2, hx: pier / 2, hz: .12, h }))));
-    if (!house) boxes.push(
-      { x: 4.3, z: -2.55, hx: .8, hz: .8, h: 4.4 },
-      ...[-2.2, -.75].map(z => ({ x: 4.32, z: -z, hx: .55, hz: .55, h: 1.13 })),
-      { x: -4.7, z: -2.3, hx: .1, hz: 1.3, h: 1.3 },
-    );
-    for (const [i, b] of boxes.entries()) {
-      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = p.position[0] + b.x * c + b.z * s, z = p.position[2] - b.x * s + b.z * c;
-      const hx = (Math.abs(c) * b.hx + Math.abs(s) * b.hz) * p.scale[0], hz = (Math.abs(s) * b.hx + Math.abs(c) * b.hz) * p.scale[2];
-      const sx = p.position[0] + (x - p.position[0]) * p.scale[0], sz = p.position[2] + (z - p.position[2]) * p.scale[2];
-      layout.colliders.push({ id: `${p.id}/farm-wood-${i}`, minTier: 0, maxTier: 6, aabb: { min: [sx - hx, 0, sz - hz], max: [sx + hx, b.h * p.scale[1], sz + hz], navFootprint: { x: sx, z: sz, halfX: b.hx * p.scale[0], halfZ: b.hz * p.scale[2], yaw: p.yaw } } });
+    const pieces = destructionParts[p.assetId as keyof typeof destructionParts];
+    const walls = pieces.filter(part => part.role === 'structure' && 'min' in part && 'max' in part);
+    const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+    for (const [i, wall] of walls.entries()) {
+      if (!('min' in wall) || !('max' in wall)) continue;
+      const cx = (wall.min[0] + wall.max[0]) / 2 * p.scale[0], cz = (wall.min[2] + wall.max[2]) / 2 * p.scale[2];
+      const hx = (wall.max[0] - wall.min[0]) * Math.abs(p.scale[0]) / 2, hz = (wall.max[2] - wall.min[2]) * Math.abs(p.scale[2]) / 2;
+      const x = p.position[0] + cx * c + cz * s, z = p.position[2] - cx * s + cz * c;
+      const ex = Math.abs(c) * hx + Math.abs(s) * hz, ez = Math.abs(s) * hx + Math.abs(c) * hz;
+      const minY = p.position[1] + wall.min[1] * p.scale[1], maxY = p.position[1] + wall.max[1] * p.scale[1];
+      layout.colliders.push({ id: `${p.id}/farm-wood-${i}`, minTier: 0, maxTier: 6, aabb: {
+        min: [x - ex, minY, z - ez], max: [x + ex, maxY, z + ez],
+        navFootprint: { x, z, halfX: hx, halfZ: hz, yaw: p.yaw },
+      } });
     }
   }
   for (const p of layout.placements) if (['prop.farm-tractor', 'prop.farm-combine'].includes(p.assetId)) {

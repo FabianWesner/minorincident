@@ -150,7 +150,8 @@ export class DistrictOcclusion {
       for (const ref of entry.refs) {
         const id = `${entry.id}@${(ref.position.x + entry.origin[0]).toFixed(1)},${(ref.position.z + entry.origin[1]).toFixed(1)}`;
         const lens = seeThrough.cover.value === 1 && this.lensPlacements.has(ref) && allowed.includes(id);
-        for (const batch of [entry.hero, entry.near, entry.far]) batch.seeThrough(lens, ref, lens);
+        const whole = worldAssets[entry.id].category === 'building';
+        for (const batch of [entry.hero, entry.near, entry.far]) batch.seeThrough(lens, ref, lens, whole);
       }
     }
   }
@@ -160,9 +161,10 @@ export class DistrictOcclusion {
       for (const ref of entry.refs) {
         const enabled = all || this.cutPlacements.has(ref);
         const lens = this.lensPlacements.has(ref);
-        if (ref.userData.occluder === enabled && !!ref.userData.lensOccluder === lens) continue;
+        const whole = worldAssets[entry.id].category === 'building';
+        if (ref.userData.occluder === enabled && !!ref.userData.lensOccluder === lens && !!ref.userData.wholeOccluder === (enabled && whole)) continue;
         if (worldAssets[entry.id].category === 'building') this.interiorRevision++;
-        entry.hero.seeThrough(enabled, ref, lens); entry.near.seeThrough(enabled, ref, lens); entry.far.seeThrough(enabled, ref, lens);
+        entry.hero.seeThrough(enabled, ref, lens, whole); entry.near.seeThrough(enabled, ref, lens, whole); entry.far.seeThrough(enabled, ref, lens, whole);
       }
     }
   }
@@ -245,6 +247,10 @@ export class DistrictOcclusion {
     let n = 0;
     points[n++].copy(centre);
     for (const x of [subject.min.x, subject.max.x]) for (const y of [subject.min.y, subject.max.y]) for (const z of [subject.min.z, subject.max.z]) points[n++].set(x, y, z);
+    // Buildings are revealed as a placement. A hit on a single generous
+    // subject corner is not enough to cut the whole house: the camera-to-
+    // subject centre segment must cross its enclosure. Other occluders still
+    // use the full projected body so narrow props cannot cover just the head.
     return this.cutBlockers(view, centre, points, n, courier);
   }
   /** Q-50 (L10 dispersal console): the corgi's generous box corner inside a prop's conservative box is contact, not cover; the
@@ -280,7 +286,8 @@ export class DistrictOcclusion {
           // placement (inside its footprint, feet above its base) kept her a gold foreground ghost for the whole climb.
           if (tucked && !contact && courier.y !== undefined && courier.y - .7 > ref.position.y + standOnLift) tucked = false;
         }
-        for (let i = 0; i < count; i++) {
+        const building = entry.id.startsWith('bld.');
+        for (let i = 0; i < (building ? 1 : count); i++) {
           const point = points[i], dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
           let enter = 0, exit = 1;
           for (let axis = 0; axis < 3; axis++) {

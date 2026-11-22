@@ -95,6 +95,11 @@ export class ChunkResidency {
   private refreshNavigation(): void {
     const w = this.world, ai = w.infected;
     if (!ai) return;
+    // Chunk activation rebuilds this wall array from resident layout colliders.
+    // Keep intact destructible parts alongside them: their physics handles are
+    // placement-owned and survive streaming, but the shared actor sweep and
+    // nav wall set would otherwise lose them on the next chunk transition.
+    for (const wall of w.destruction?.activeWalls() ?? []) if (!this.walls.includes(wall)) this.walls.push(wall);
     const ground = this.bounds(), movementCost = ai.nav.movementCost;
     // The nav bake samples this mask for every half-metre cell. Capture a
     // numeric chunk occupancy table once per transition instead of constructing
