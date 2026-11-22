@@ -101,6 +101,14 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
         assert.ok(part >= 0, 'Farm shed side wall part is missing');
         courier.transform.x = 1166; courier.transform.y = .9; courier.transform.z = -26;
         world.chunks!.update([1166, -26]);
+        const actors = [courier.id, world.npcs!.companion.spawn(), world.npcs!.escorts.spawn({ x: 1164, z: -26 }), world.infected!.spawn('infected.runner', { x: 1163, z: -26 }, { state: 'idle' })];
+        for (const id of actors) {
+          const actor = world.entities.get(id);
+          assert.ok(actor, `Missing actor for farm wall sweep: ${id}`);
+          actor.transform.x = 1166; actor.transform.z = -26; actor.transform.y = actor.companion ? .3 : .9; actor.transform.yaw = 0;
+          const moved = world.solids.sweep(actor, { x: 1, z: 0 }, 3, actorRadius(actor), false, false);
+          assert.ok(moved < 2.9, `${actor.kind} passed through streamed farm wall`);
+        }
         const sweep = () => world.solids.sweep(courier, { x: 1, z: 0 }, 3, actorRadius(courier), false, false);
         assert.ok(sweep() < 2.9, 'Intact streamed farm wall must block');
         world.destruction!.damage({ object, part, local: [-3.5, 1, 0], normal: [-1, 0, 0], distance: 0 }, 'weapon.fire-axe', 100000);
