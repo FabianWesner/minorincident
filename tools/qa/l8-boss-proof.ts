@@ -84,9 +84,9 @@ export async function checkBossDamage(): Promise<void> {
         const hp = def.hp, hand = per['weapon.pistol'] ?? 0, shot = per['weapon.shotgun'] ?? 0, mg = per['weapon.army-mg'] ?? 0;
         const need = (cond: boolean, text: string) => { if (!cond) failures.push(`${def.id} hp ${hp}: ${text} (pistol ${hand}, shotgun ${shot}, mg ${mg})`); };
         if (def.id === 'flamingo' || def.id === 'monkey') { need(shot >= hp - 1, 'one shotgun blast must kill'); need(mg * 6 >= hp, 'a 6-bullet MG burst must kill'); need(hand * 4 >= hp, 'four handgun hits must kill'); }
-        if (def.id === 'zebra') need(shot * 3 >= hp, 'three shotgun blasts must finish a zebra');
+        if (def.id === 'zebra') need(shot * 3 < hp, 'a zebra must survive three shotgun blasts outside recovery');
         if (def.id === 'lion') need(mg * 30 < hp && mg * 60 >= hp, 'a lion survives one MG magazine and falls within two');
-        if (def.id === 'gorilla') { need(mg * 60 < hp, 'two 30-round MG magazines must not kill the gorilla'); need(mg * 150 >= hp, 'five 30-round MG magazines must finish the duel'); }
+        if (def.id === 'gorilla') { need(shot < hp, 'one shotgun blast must not kill the gorilla'); need(mg * 60 < hp, 'two 30-round MG magazines must not kill the gorilla outside recovery'); }
         if (def.id === 'elephant') need(mg * 30 < hp / 2, 'gunfire only chips the elephant (a magazine stays below half)');
       }
     }

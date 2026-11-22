@@ -534,11 +534,12 @@ export class L8BossArenas {
     else if (arena.id === 'elephant') this.start(e, 'elephant.charge', 54, 44, 1.75);
     else if (arena.id === 'gorilla') {
       const pillar = arena.phase === 2 && arena.cycle % 2 === 0 ? this.w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar') && !o.state.collapsed).sort((a, b) => distance(e.transform, { x: a.home.p[0], z: a.home.p[2] }) - distance(e.transform, { x: b.home.p[0], z: b.home.p[2] }))[0] : undefined;
-      if (distance(e.transform, this.w.entities.get(1)!.transform) < 3.8) this.start(e, 'gorilla.grab-slam', 42, 0, 2.8);
+      if (arena.cycle % 4 === 1) e.infected!.arenaBoss!.approach = 'gorilla.roar';
+      else if (arena.cycle % 4 === 2) { e.infected!.arenaBoss!.ledgeThrow = true; e.infected!.arenaBoss!.barrage = 3; }
+      else if (distance(e.transform, this.w.entities.get(1)!.transform) < 3.8) this.start(e, 'gorilla.grab-slam', 42, 0, 2.8);
       else if (distance(e.transform, this.w.entities.get(1)!.transform) < 5 && this.w.infected!.props.nearestObject(e, 25, true)) { e.infected!.arenaBoss!.barrage = 3; this.scavenge(e); }
       else if (pillar) e.infected!.arenaBoss!.smashId = pillar.id;
-      else if (arena.cycle % 3 === 2) { e.infected!.arenaBoss!.ledgeThrow = true; e.infected!.arenaBoss!.barrage = 3; }
-      else e.infected!.arenaBoss!.approach = arena.cycle % 3 === 1 ? 'gorilla.roar' : 'gorilla.pound';
+      else e.infected!.arenaBoss!.approach = 'gorilla.pound';
     } else for (const member of live) {
       if (member.infected!.arenaBoss!.roof || member.infected!.arenaBoss!.traversal || member.infected!.arenaBoss!.slot === 6 && arena.phase < 2) continue;
       if ((arena.cycle + member.id) % 3 === 0) this.scavenge(member);

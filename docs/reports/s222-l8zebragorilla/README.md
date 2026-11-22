@@ -2,8 +2,8 @@
 
 ## Feel notes
 
-- **Zebra herd:** Read the shared hoofbeat tell and clear the dust lane as the herd commits. The fence makes its pass turn into a slowed straggler window; watch behind you for the separate rear kick. Each animal now has 360 authored HP, so a single close shotgun blast cannot erase a zebra.
-- **Gorilla:** Interrupt the chest beat to earn a stagger window. If it completes, the gorilla enrages and its later attacks hit harder. Break line of sight for the ledge barrage, leave the pound radius, and punish after the slam or bluff stop. Its authored HP is 1,200. The close grab-and-slam is distinct from the ground-pound, and its throw barrage starts from a short climb to the house ledge before it drops back into the duel.
+- **Zebra herd:** Read the shared hoofbeat tell and clear the dust lane as the herd commits. The fence makes its pass turn into a slowed straggler window; watch behind you for the separate rear kick. Each animal has 2,000 authored HP and takes extra damage during recovery; the skilled route now has time to respond to repeated passes.
+- **Gorilla:** Interrupt the chest beat to earn a stagger window. If it completes, the gorilla enrages and its later attacks hit harder. Break line of sight for the ledge barrage, leave the pound radius, and punish after the slam or bluff stop. Its authored HP remains 1,200, with lower damage outside its exposed recovery windows. The close grab-and-slam is distinct from the ground-pound, and its throw barrage starts from a short climb to the house ledge before it drops back into the duel.
 
 ## Evidence
 
@@ -38,3 +38,5 @@ This report records implementation intent and current validation only. It does n
 - Tour and lion diagnostic: HIGH then LOW, native WebGL2/Metal at zoom 1. The [HIGH sheet](story-diagnostic.jpg) and [positions](story-diagnostic.json) show the normal complete-policy tour at five ticks and a paused teleport to the lion rocks after breach. No smoke column is recognizable in the sampled tour views; the keeper is too dark and partly covered by the courier in the lion frame. A closer smoke-site experiment also failed to produce a recognizable plume, so the original burn-site position was retained. Story visual acceptance remains open.
 
 - Burn-site visibility follow-up: moved the source beside the animal-house path, built a solid incinerator and seeded a sustained vertical plume. The [HIGH/LOW sheet](burn-site-review.jpg) shows the native guided tour at tick 3540: the column and container are visible, though the plume is stylized. The preceding L8-only audit after the new collider completed skilled L8 with 6 acceptance flags. Typecheck, lint, render contracts and mission-interactions passed after the visual change.
+
+- Duration tuning: native seed 1 skilled L8 completed in 525.35 s without deaths; zebra arena 50.95 s and gorilla arena 90.18 s. The event trace recorded 16 stampede tells, 3 interrupted chest-beat tells, 1 slam, 7 pounds and 5 throws. These are one bot run, not a human feel or every-move visual acceptance. Typecheck, lint and mission-interactions passed. Threat and full visual gates remain open.
