@@ -428,6 +428,17 @@ l.box('zebra-uniform-shirt', 'picketWhite', [.65, .12, .55], [73.1, .2, 39.1])
 l.box('zebra-uniform-blood', 'blood', [.38, .03, .42], [73.1, .28, 39.1])
 l.box('gorilla-uniform-shirt', 'picketWhite', [.65, .12, .55], [70.1, .2, -42.2])
 l.box('gorilla-uniform-blood', 'blood', [.38, .03, .42], [70.1, .28, -42.2])
+# The primate keeper office is the reptile-house building at (-14, 14).
+# A broken window on its yard-facing wall and bloodied clothing below it
+# connect the abandoned office to the monkeys in the adjoining yard.
+l.box('primate-office-broken-window', 'uiDark', [2.8, 1.4, .08], [-14, 2.4, 18.06])
+for _x in (-15.3, -12.7):
+    l.box('primate-office-window-frame', 'picketWhite', [.12, 1.55, .12], [_x, 2.4, 18.12])
+l.box('primate-office-window-sill', 'picketWhite', [2.8, .12, .2], [-14, 1.65, 18.12])
+for _x, _z in [(-14.8, 18.6), (-13.7, 19.0), (-13.1, 18.4)]:
+    l.box('primate-office-glass-shard', 'backpackTeal', [.35, .03, .18], [_x, .17, _z])
+l.box('primate-office-uniform', 'picketWhite', [.9, .1, .65], [-12.5, .2, 19.2])
+l.box('primate-office-uniform-blood', 'blood', [.55, .03, .45], [-12.5, .27, 19.2])
 # Spilled feed container beside the keeper at the lion rocks. The small
 # collider keeps it a physical obstacle without closing the approach lane.
 l.box('lion-feed-bucket', 'silver', [.55, .48, .55], [-67, .39, -26])
