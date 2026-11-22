@@ -81,7 +81,9 @@ export const seeThroughKeep = (eligible?: Node<'float'>, deck = false) => {
   // rides, 0 for the courier and her corgi on foot: PO #45 no dither dots over the figures). Shared noise across layers keeps the rest open.
   const retained = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain);
   const silhouette = seeThrough.solidSilhouette.greaterThan(.5).select(retained.greaterThan(.5), retained.greaterThan(noise));
-  return eligible ? eligible.lessThan(.5).or(wholeBuilding ? noise.greaterThan(.32) : lens ? keep.and(lens.not()) : keep) : silhouette;
+  const ordinary = lens ? keep.and(lens.not()) : keep;
+  const whole = noise.greaterThan(seeThrough.strength.mul(.95));
+  return eligible ? eligible.lessThan(.5).or(wholeBuilding!.select(whole, ordinary)) : silhouette;
 };
 
 /** A closed hull has no playable interior. Clear its full depth inside the
