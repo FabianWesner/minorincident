@@ -32,6 +32,8 @@ export interface L8ZooState {
   lastJoinCue?: number;
   /** Keeper killed during the breach, retained in the lion enclosure. */
   lionStoryKeeperId?: number;
+  /** Outbreak arrivals already placed inside the broken zebra paddock. */
+  zebraStoryAttackers?: number[];
   perimeterGateBreaks?: (number | null)[]; perimeterGateReleased?: boolean[]; perimeterGateSounded?: boolean[]; gateBreachLineAt?: number;
   /** r33-l8route: tick the plaza doors shut (0 = not yet), the route-marker leg/node, and the regions whose first walk-in wave has run (bit 1 north, 2 south, 4 east). */
   sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number; driverAt?: number; departureRun?: number;
@@ -338,6 +340,21 @@ export class LevelEightZoo {
   private story(): void {
     const s = this.state, w = this.w, t = w.tick, player = w.entities.get(1)!;
     const keeper = w.entities.get(s.keeperId), hale = w.entities.get(s.haleId);
+    if (this.breached && (s.zebraStoryAttackers?.length ?? 0) < 2) {
+      const arena = s.arenas.find(a => a.id === 'zebra');
+      const target = arena?.ids.map(id => w.entities.get(id)).find(e => e?.civilian && !e.infection && e.health.current > 0);
+      const ai = w.infected!;
+      const index = s.zebraStoryAttackers?.length ?? 0;
+      const at = [{ x: 70, z: 39 }, { x: 70, z: 35 }][index];
+      // Admit only unseen, physically clear arrivals and preserve their IDs in
+      // the checkpoint. They use the same ordinary infected stats and attacks.
+      if (target && at && ai.director.count + ai.director.pendingTurns < ai.director.cap && ai.pool.length && ai.director.safe('infected.runner', at)) {
+        const id = ai.spawn('infected.runner', at, { state: 'chase' });
+        ai.pursueTarget(id, target.id);
+        w.entities.get(id)!.infected!.arenaCarrier = target.id;
+        (s.zebraStoryAttackers ??= []).push(id);
+      }
+    }
     if (!s.infectionSetupAt && t >= s.startedAt + 300) {
       s.infectionSetupAt = t;
       this.mission.radio('L8.infection-setup');
