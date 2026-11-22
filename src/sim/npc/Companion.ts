@@ -191,6 +191,16 @@ export class Companion {
       }
       const mission = this.world.missions;
       if (mission?.l8?.companion(e)) continue;
+      const arenaWait = this.l8ArenaWait(player);
+      if (arenaWait) {
+        this.rejoinProgress.delete(e); delete c.rejoining;
+        c.state = 'follow'; c.arenaWait = true; c.pickup = null; c.following = false;
+        if (Math.hypot(e.transform.x - arenaWait.x, e.transform.z - arenaWait.z) > .5) {
+          this.world.npcs!.move(e, arenaWait, 6, c, .3);
+        } else if (c.velocity) c.velocity.x = c.velocity.z = 0;
+        continue;
+      }
+      delete c.arenaWait;
       this.rejoin(e, player);
       if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && combatHeightReachable(enemy, e) && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
@@ -226,15 +236,6 @@ export class Companion {
         // Follow the survivor's position with a distance band. Never flip a
         // trailing offset to a world-axis offset when velocity falls to zero.
         const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
-        const arenaWait = this.l8ArenaWait(player);
-        if (arenaWait) {
-          c.state = 'follow'; c.arenaWait = true; c.pickup = null; c.following = false;
-          if (Math.hypot(e.transform.x - arenaWait.x, e.transform.z - arenaWait.z) > .5) {
-            this.world.npcs!.move(e, arenaWait, 6, c, .3);
-          } else if (c.velocity) c.velocity.x = c.velocity.z = 0;
-          continue;
-        }
-        delete c.arenaWait;
         // The normal follow band can stop the corgi across the hangar
         // threshold when the courier pauses just inside. Continue until the
         // dog's full elongated footprint clears the boundary.
