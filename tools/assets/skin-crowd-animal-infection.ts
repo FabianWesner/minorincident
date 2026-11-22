@@ -88,7 +88,11 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
     }
     // The muzzle faces +Z in the normalized cast; a broad lower-front stain
     // remains readable from the elevated game camera.
-    if (z > .405 && z < .49 && y > -.075 && y < .045 && Math.abs(x) < .08) c = [158, 27, 34];
+    const muzzle = (x / .075) ** 2 + ((y - .078) / .052) ** 2 + ((z - .474) / .057) ** 2;
+    if (muzzle < 1) {
+      const blend = Math.min(1, (1 - muzzle) * 4), blood = [177, 30, 34];
+      c = c!.map((value, i) => Math.round(value * (1 - blend) + blood[i] * blend));
+    }
     return c;
   }
   // Broad readable wounds on the actual surface, not random atlas noise.
