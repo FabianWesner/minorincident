@@ -18,6 +18,8 @@ On code commit `4f08dc0d`:
 - `qa:vehicle-campaign-motion` passed all eight high/low L9, L7 and L4 cases. The solid-placement audit reported **zero remaining offenders**. The nightly mission-interactions test passed.
 - Remote `npm run verify -- E31` passed typecheck, lint and the unit suite. Per the tool, this is the per-change gate; retired epic-tag tests are not part of that command.
 
+For the candidate prone get-up commit `8e2e8b02`, `npm run typecheck`, `npm run lint`, the focused vehicle test (2 tests), and the complete default Vitest suite (27 files, 106 tests) passed locally. The requested remote `npm test` could not be admitted because no Hetzner runner is provisioned. Frame capture is still pending: the shared browser pool failed to bind its local control port (`EPERM`), and the legacy e2e-lock path's GPU guard cannot run `ps` in this sandbox. No new visual claim is made; `frames.jpg` remains the earlier sheet with the defective get-up.
+
 
 For s226b, seed-1 fixed-step drives checked the APC full-height hull against resident fixed or braced pushable props each driving tick on all three primary routes and detours. No fixed or braced pushable props were resident and no overlap was observed. All three detours and the asphalt primary completed normally; the ordinary driver died on the other two primaries. A rerun with courier invulnerability completed the countryside primary, and a run restoring the courier's health each tick completed the shortcut primary. These protected runs check geometry, not combat balance. [The counts and outcomes](prop-route-audit.json) do not cover static district colliders or every possible driver path.
 
