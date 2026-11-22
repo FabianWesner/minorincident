@@ -2,7 +2,7 @@ import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreClerkApron } from './restore-clerk-apron';
 import { restoreFireHelmet } from './restore-fire-helmet';
 import { restoreMegaSkull } from './restore-mega-skull';
-import { paintAnimalDetails, paintLionessAtlasEyes, restoreElephantTail, type TuskRecipe } from './skin-crowd-animal-details';
+import { paintAnimalDetails, restoreElephantTail, type TuskRecipe } from './skin-crowd-animal-details';
 import { animalTeeth } from './skin-crowd-animal-infection';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -220,8 +220,7 @@ for (const lod of [0, 1, 2]) {
   if (sourceId === 's224-lioness') {
     const document = await io.read(raw), fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
     const details = paintAnimalDetails(document, false, undefined, fit, false, { species: 'lioness', infected: true });
-    const eyes = paintLionessAtlasEyes(document);
-    await io.write(raw, document); writeFileSync(join(report, `lod${lod}.details.json`), JSON.stringify({ ...details, paintedEyes: eyes }, null, 2) + '\n');
+    await io.write(raw, document); writeFileSync(join(report, `lod${lod}.details.json`), JSON.stringify(details, null, 2) + '\n');
   }
   const animalRecipe = animalEyeRecipes[sourceId];
   if (animalRecipe) {
@@ -281,7 +280,7 @@ for (const lod of [0, 1, 2]) {
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
-    const initialAtlas = sourceId === 's224-lioness' ? (lod === 2 ? 192 : 128) : sourceId === 's224-lion' ? (lod === 0 ? 192 : 128) : lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
+    const initialAtlas = sourceId === 's224-lioness' ? (lod === 0 ? 128 : 96) : sourceId === 's224-lion' ? (lod === 0 ? 192 : 128) : lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
     let positionPrecision: number | undefined;
     await compressSkin(raw, target, basis, initialAtlas);
     // Keep detailed boss faces at 512 when the standalone LOD budget permits.
