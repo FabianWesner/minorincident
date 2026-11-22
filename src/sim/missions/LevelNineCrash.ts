@@ -278,7 +278,7 @@ export class LevelNineCrash {
       const f = Math.min(1, (w.tick - s.startedAt) / MEGA_LEAP);
       if (mega) {
         const start = w.entities.get(s.carId)!.transform;
-        mega.transform.x = start.x + f * 52; mega.transform.z = start.z - f * 8;
+        mega.transform.x = start.x + 2 + f * 50; mega.transform.z = start.z - 2 - f * 6;
         mega.transform.y = .7 + Math.sin(Math.PI * f) * 12; mega.transform.yaw = 0;
         w.spatial.set(mega.id, mega.transform.x, mega.transform.z);
         if (f >= 1) { mega.hidden = true; mega.infected!.hidden = true; }

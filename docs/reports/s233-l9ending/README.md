@@ -36,4 +36,6 @@ As supplemental evidence, the complete default Vitest project was run directly o
 
 An additional high WebGL capture sampled the rise at ten-tick intervals and takeoff at five-tick intervals. The courier moves from prone to standing across the sampled frames without an apparent snap; the Mega moves away from the wreck across successive frames and leaves the camera view. The capture completed with zero page errors. The Mega exits the frame quickly, so its full airborne arc is not visible in this fixed camera.
 
+Code review after that capture found that the leap began at the wreck centre instead of the Mega's exit position, causing a roughly two-metre position reset on takeoff. The leap now starts at the exit position and reaches the same destination. Typecheck, lint and nightly mission interactions passed; an L9-only threat diagnostic completed both bots with zero passive flags (its overall partial-selection flag is expected). The existing frames predate this correction; recapture the transition and rerun the full threat gate on the corrected revision.
+
 Remaining to close the goal: resolve the framing defect, complete visual review/contact sheet, and pass the remote unit suite and test-budget gate without trimming tests.
