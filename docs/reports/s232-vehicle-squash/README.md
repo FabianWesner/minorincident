@@ -37,6 +37,7 @@
 - `E2E_PORT=5259 SCENE_PORT=5260 npm run qa:vehicle-motion` — pass (exit 0), all eight scenes on HIGH and LOW. The diagnostic now requires six run-over events with damaging zero-knockback hits and retained squashed bodies for ordinary APC contacts, instead of the prior sideways-shove requirement; the butcher case requires a surviving heavy reaction. Existing foot-slide, attachment, prop and other contact checks remain. Typecheck and lint pass.
 - After the increased bump on `288e8ab6`, both `qa:vehicle-motion` and `qa:vehicle-campaign-motion` were rerun with ports 5259/5260 and exited 0. These checks cover the revised runtime, including all eight contact scenes and L9/L7/L4 campaign motion cases at both tiers.
 - Full remote unit command on `512f9e88` and unchanged retry again exceeded 240 s. Both reported vehicle and scene-gate files passing, and the same save-progression case failing after 30.9 s and 31.8 s respectively. The configured per-test timeout is 30 s, which is consistent with a timeout, but the runner terminated before printing the failure detail; this remains unconfirmed. The full unit gate is not green.
+- `npm run qa:threat` on `46b0b107` — pass, 0 fail flags in 341.8 s within its 600 s budget. Skilled L9 and L10 completed. L3/L4/L5/L8/L10 passive runs reached their tick budgets with 0 passive flags; this is the audit's recorded outcome, not a claim those passive runs completed.
 
 ## Open acceptance
 
