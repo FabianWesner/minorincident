@@ -2,7 +2,7 @@ import { l4 } from '../data/l4';
 import { PaletteMaterial } from './PaletteMaterial';
 import { SubjectOcclusion } from './SubjectOcclusion';
 import { modelLod } from './lodPolicy';
-import { Box3, Group, Mesh, Vector3, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import { Box3, Group, Matrix4, Mesh, Vector3, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { staticBatch } from '../assets/staticBatch';
 import { VehicleOccupant } from './characters/VehicleOccupant';
@@ -28,6 +28,28 @@ const actorAssets: Record<string, string> = {
 /** Last two tick poses of a scripted rigid actor; the drawn pose lerps between them like the camera does (a moving L4 convoy bus judders against the interpolated camera otherwise). */
 interface Pose { tick: number; px: number; py: number; pz: number; pyaw: number; x: number; y: number; z: number; yaw: number; distance: number; pdistance: number; steer: number }
 interface ActorRecord { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; copies: Map<PaletteMaterial, PaletteMaterial>; bounds: Box3; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }
+/** Widen the authored 4.3 m crossing for L9's lanes. Translate the outer
+ * signal assemblies intact and expand the deck between them. Geometry is
+ * cloned because the registry shares its source between instances. */
+function widenL9Crossing(model: Object3D, width: number): BufferGeometry[] {
+  model.updateMatrixWorld(true);
+  const rootInverse = new Matrix4().copy(model.matrixWorld).invert(), p = new Vector3(), result: BufferGeometry[] = [];
+  model.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    const geometry = node.geometry.clone(), position = geometry.getAttribute('position');
+    if (!position) return;
+    const toRoot = new Matrix4().multiplyMatrices(rootInverse, node.matrixWorld), fromRoot = toRoot.clone().invert();
+    for (let i = 0; i < position.count; i++) {
+      p.fromBufferAttribute(position, i).applyMatrix4(toRoot);
+      const side = Math.sign(p.z), distance = Math.abs(p.z), edge = 2.15, extra = width / 2 - edge;
+      p.z = side * (distance < edge ? distance * (width / 2) / edge : distance + extra);
+      p.applyMatrix4(fromRoot); position.setXYZ(i, p.x, p.y, p.z);
+    }
+    position.needsUpdate = true; geometry.computeVertexNormals(); geometry.computeBoundingBox(); geometry.computeBoundingSphere();
+    node.geometry = geometry; result.push(geometry);
+  });
+  return result;
+}
 /** Presentation of authored mission actors and the cosmetic corgi companion.
  * Async loads participate in screenshotReady; no visual transform changes the sim. */
 export class EntityAssets extends Group {
@@ -127,6 +149,9 @@ export class EntityAssets extends Group {
         cached.model.visible = true; this.records.set(entity.id, cached); continue;
       }
       const load = this.actorModel(id, lod).then(model => {
+        if (entity.archetype === 'kit.rail-crossing' && this.world.scenario === 'L9') {
+          for (const geometry of widenL9Crossing(model, entity.transform.z < -100 ? 12 : 9)) this.geometries.add(geometry);
+        }
         if (!this.disposed && this.world.entities.get(entity.id)) {
           model.userData.assetId = id;
           // An LOD swap keeps the interpolation history (a fresh record restarted at the tick pose: a one-frame snap per swap).
