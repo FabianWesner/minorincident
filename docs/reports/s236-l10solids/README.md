@@ -14,6 +14,8 @@ Coverage limitation: the sweep samples existing collider faces, not independentl
 
 The farm generator specifies solid 0.18 m side walls, split 0.18 m gable piers, and 2.2 m high door openings. The authored part bounds were tightened to those dimensions; destruction adds its existing 0.035 m hit-zone margin. Typecheck, lint, and the ratcheted sweep audit pass after this correction. This generator comparison is not a substitute for the all-district mesh-face audit or movement captures.
 
+The audit also probes the reported 0.7-scale shed after chunk activation with the courier's full radius: a 3 m sweep stops after 1.1125 m at the side wall and 0.7625 m at a gable pier, while the doorway-centre sweep travels the full 3 m. These checks pass alongside typecheck and lint.
+
 Five non-L10 samples remain for follow-up because those placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893

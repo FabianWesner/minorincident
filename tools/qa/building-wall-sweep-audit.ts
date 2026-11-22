@@ -43,6 +43,19 @@ export async function runBuildingWallSweepAudit(): Promise<BuildingWallSweepRece
         if (!walls.length) { misses.push(`${d.id}/${p.id}:no-body-height-collider`); continue; }
         const courier = world.entities.get(1)!;
         const radius = Math.min(actorRadius(courier), .34);
+        if (level === 'L10' && p.id === 'l10-find-farm-shed') {
+          // The reported scaled barn: probe a side wall, a gable pier, and the
+          // centre of its visible doorway after streaming has activated it.
+          const x = p.position[0] + d.origin[0], z = p.position[2] + d.origin[1];
+          for (const [name, dx, dz, nx, nz, blocked] of [
+            ['side', -4, 0, 1, 0, true], ['pier', 1.6, -4, 0, 1, true], ['door', 0, -4, 0, 1, false],
+          ] as const) {
+            courier.transform.x = x + dx; courier.transform.z = z + dz; courier.transform.y = .9;
+            world.chunks?.update([courier.transform.x, courier.transform.z]);
+            const moved = world.solids.sweep(courier, { x: nx, z: nz }, 3, actorRadius(courier), false, false);
+            assert.equal(moved < 2.9, blocked, `Scaled farm shed ${name}: sweep moved ${moved.toFixed(3)} m`);
+          }
+        }
         for (const c of walls) {
           const a = c.aabb, f = a.navFootprint;
           const cx = f?.x ?? (a.min[0] + a.max[0]) / 2, cz = f?.z ?? (a.min[2] + a.max[2]) / 2;
