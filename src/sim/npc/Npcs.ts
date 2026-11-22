@@ -22,7 +22,7 @@ export class Npcs {
   private slice = false;
   private readonly waypoint = { x: 0, z: 0 };
   /** Last walk-out search per follower: repeated only after the body moved or half a second passed (E18 sim budget). */
-  private readonly escapes = new Map<number, { x: number; z: number; tick: number; cell: number }>();
+  private readonly escapes = new Map<number, { x: number; z: number; tick: number; cell: number; step?: Point }>();
   /** A failed route search is retried after a second, not every tick (l4-collapse-2: a soldier sent to a post behind a closed
    * barricade ran a 1600-expansion A* per tick, 3 ms of every L4 war tick). */
   private readonly unreachable = new Map<number, { x: number; z: number; until: number }>();
@@ -98,9 +98,19 @@ export class Npcs {
       const last = this.escapes.get(e.id), tick = this.world.tick;
       const fresh = !last || tick < last.tick || tick - last.tick >= 30 || Math.hypot(last.x - e.transform.x, last.z - e.transform.z) >= .1;
       const escape = fresh ? nav.escapeCell(e.transform, footprint, 8, false) : last.cell;
-      if (fresh) this.escapes.set(e.id, { x: e.transform.x, z: e.transform.z, tick, cell: escape });
-      if (escape < 0) return false;
-      this.waypoint.x = nav.x(escape); this.waypoint.z = nav.z(escape);
+      let step = fresh ? undefined : last.step;
+      if (fresh && escape < 0 && this.world.scenario === 'L8') {
+        // A narrow corner can hide every crowd-grid cell despite having a clear
+        // body-sized path around it. Take one swept step to reveal that path.
+        for (const [x, z] of [[.5, 0], [-.5, 0], [0, .5], [0, -.5]]) {
+          const at = { x: e.transform.x + x, z: e.transform.z + z };
+          if (!nav.visible(e.transform, at, footprint) || this.world.solids.sweep(e, { x: x * 2, z: z * 2 }, .5, footprint, false, false) < .499 || nav.escapeCell(at, footprint, 8, false) < 0) continue;
+          if (!step || Math.hypot(at.x - target.x, at.z - target.z) < Math.hypot(step.x - target.x, step.z - target.z)) step = at;
+        }
+      }
+      if (fresh) this.escapes.set(e.id, { x: e.transform.x, z: e.transform.z, tick, cell: escape, step });
+      if (escape < 0 && !step) return false;
+      this.waypoint.x = step?.x ?? nav.x(escape); this.waypoint.z = step?.z ?? nav.z(escape);
     } else if (flowNext >= 0 && flowNext !== cell) {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
       // L3-14: the routed speed cap (4 × waypoint distance) held a far L3 corgi on the adjacent half-metre cell to ~2 m/s,

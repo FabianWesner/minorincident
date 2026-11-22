@@ -32,6 +32,8 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       if (i !== 2) fencePanels.push([-10.48, z, Math.PI / 2]);
     }
     for (const [i, [x, z, yaw]] of fencePanels.entries()) {
+      // Leave a passage from the encounter entry through the resident pen.
+      if (z === 20 && x > -17 && x < -13) continue;
       add(`l8-primate-fence-${i}`, 'prop.crowd-fence', x, z, [1, 2.4, 1], yaw);
       layout.placements.at(-1)!.fixed = true;
     }
