@@ -317,6 +317,7 @@ export const eventCues = {
     'vehicle.exited': 'ui.click',
     'vehicle.exploded': 'explosion.boom',
     'vehicle.feedback': 'ui.tick',
+    'vehicle.infected-hit': 'infected.bite',
     'vehicle.grabbed': 'vehicle.grab',
     'vehicle.obstacle-broken': 'prop.break',
     'vehicle.recovering': 'ui.tick',

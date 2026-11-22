@@ -90,6 +90,12 @@ export class AudioEventMapper {
         if (event.type === 'weather.lightning') return; // Thunder follows the sim distance delay.
         if (!this.host.available())
             return;
+        if (event.type === 'vehicle.infected-hit') {
+            // `infected.bite` is the existing CC0 wet impact sprite pool. Its four takes
+            // are already loaded with the licensed infected bank; slow/deepen a wheel pass.
+            this.host.play('infected.bite', { position: event.position, gain: event.runOver ? .95 : .7, rate: event.runOver ? .78 : 1 }, event.targetId);
+            return;
+        }
         const t = this.host.context.currentTime;
         const source = 'sourceId' in event ? event.sourceId : 'id' in event && typeof event.id === 'number' ? event.id : undefined;
         const entity = source === undefined ? undefined : this.host.world.entities.get(source);
