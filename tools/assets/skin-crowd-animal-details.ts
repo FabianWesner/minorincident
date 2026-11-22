@@ -3,12 +3,84 @@ import type { Document } from '@gltf-transform/core';
 import { getBounds, simplify, weld } from '@gltf-transform/functions';
 import { MeshoptSimplifier } from 'meshoptimizer';
 import { PNG } from 'pngjs';
-import { Matrix4, Vector3 } from 'three';
+import { Matrix4, Triangle, Vector3 } from 'three';
 import { assetIO } from './io';
 import { animalColour, type AnimalLook } from './skin-crowd-animal-infection';
 
 type Fit = { scale: number; yaw: number; translation: number[] };
 export type TuskRecipe = { capsules: { a: number[]; b: number[]; radius: number }[] };
+
+/** Paint the lioness eyes on the retained head surface and classify those same
+ * source triangles for the existing infected-eye atlas emission path. No eye
+ * geometry is added: the old provisional patches are removed. */
+export function paintLionessAtlasEyes(document: Document): { centres: number[][]; emissiveTriangles: number; paintedTexels: number } {
+  const nodes = document.getRoot().listNodes(), body = nodes.find(n => n.getName() === 'skin_body'), eyeNode = nodes.find(n => n.getName() === 'skin_eyes');
+  const primitive = body?.getMesh()?.listPrimitives()[0], eyePrimitive = eyeNode?.getMesh()?.listPrimitives()[0];
+  const position = primitive?.getAttribute('POSITION'), uv = primitive?.getAttribute('TEXCOORD_0'), indices = primitive?.getIndices(), eyePosition = eyePrimitive?.getAttribute('POSITION');
+  const texture = primitive?.getMaterial()?.getBaseColorTexture();
+  if (!primitive || !position || !uv || !eyePosition || !texture || texture.getMimeType() !== 'image/png') throw Error('Lioness painted eyes require the source PNG, UVs and provisional eye landmarks');
+  if (eyePosition.getCount() !== 12) throw Error(`Lioness eye landmarks changed (${eyePosition.getCount()} vertices)`);
+  const png = PNG.sync.read(Buffer.from(texture.getImage()!)), points = [0, 1].map(side => {
+    const p = new Vector3(); for (let i = 0; i < 6; i++) p.add(new Vector3().fromArray(eyePosition.getElement(side * 6 + i, [])));
+    return p.multiplyScalar(1 / 6);
+  });
+  const triangleCount = (indices?.getCount() ?? position.getCount()) / 3, chosen = new Uint8Array(triangleCount), painted = new Set<number>();
+  const trianglePoint = new Triangle(), bary = new Vector3(), sample = new Vector3(), pixelUv = new Vector3();
+  // Keep the painted disk in atlas space: the nearest source-surface point
+  // supplies its UV centre, while the existing triangles bound every write.
+  const radius = .012, centres: number[][] = [];
+  const vertex = (triangle: number, corner: number) => indices ? indices.getScalar(triangle * 3 + corner) : triangle * 3 + corner;
+  for (const centre of points) {
+    let best = Infinity; const bestUV = new Vector3();
+    for (let t = 0; t < triangleCount; t++) {
+      const ids = [0, 1, 2].map(k => vertex(t, k)), a = new Vector3().fromArray(position.getElement(ids[0], [])), b = new Vector3().fromArray(position.getElement(ids[1], [])), c = new Vector3().fromArray(position.getElement(ids[2], []));
+      trianglePoint.set(a, b, c); trianglePoint.closestPointToPoint(centre, sample); const distance = sample.distanceToSquared(centre);
+      if (distance < best) { best = distance; trianglePoint.getBarycoord(sample, bary); bestUV.set(0, 0, 0); for (let k = 0; k < 3; k++) bestUV.addScaledVector(new Vector3().fromArray(uv.getElement(ids[k], [])), bary.getComponent(k)); }
+    }
+    if (best > .035 * .035) throw Error(`Lioness eye landmark misses head surface (${Math.sqrt(best).toFixed(4)} m)`);
+    centres.push([bestUV.x, bestUV.y]);
+    const ux = bestUV.x * png.width, uy = bestUV.y * png.height, pixelRadius = radius * Math.min(png.width, png.height);
+    // A texel is painted only if it lies inside a triangle of the head UV
+    // chart and inside the circular iris mask.
+    for (let t = 0; t < triangleCount; t++) {
+      const ids = [0, 1, 2].map(k => vertex(t, k)), q = ids.map(i => new Vector3(uv.getElement(i, [])[0] * png.width, uv.getElement(i, [])[1] * png.height, 0)), uvTriangle = new Triangle(q[0], q[1], q[2]);
+      uvTriangle.closestPointToPoint(new Vector3(ux, uy, 0), pixelUv);
+      const du = pixelUv.x - ux, dv = pixelUv.y - uy; if (du * du + dv * dv > pixelRadius * pixelRadius) continue;
+      const loX = Math.max(0, Math.floor(Math.min(...q.map(v => v.x)))), hiX = Math.min(png.width - 1, Math.ceil(Math.max(...q.map(v => v.x))));
+      const loY = Math.max(0, Math.floor(Math.min(...q.map(v => v.y)))), hiY = Math.min(png.height - 1, Math.ceil(Math.max(...q.map(v => v.y))));
+      let hit = false;
+      for (let y = loY; y <= hiY; y++) for (let x = loX; x <= hiX; x++) {
+        pixelUv.set(x + .5, y + .5, 0); if (!uvTriangle.getBarycoord(pixelUv, bary)) continue;
+        if (Math.min(bary.x, bary.y, bary.z) < -1e-5) continue;
+        const dx = (x + .5 - ux) / pixelRadius, dy = (y + .5 - uy) / pixelRadius, d2 = dx * dx + dy * dy; if (d2 > 1) continue;
+        const d = Math.sqrt(d2), at = (y * png.width + x) * 4;
+        const colour = d < .28 ? [28, 16, 20] : d < .68 ? [244, 225, 201] : [255, 36, 28];
+        png.data.set([...colour, 255], at); painted.add(at); hit = true;
+      }
+      if (hit) chosen[t] = 1;
+    }
+  }
+  if (chosen.reduce((sum, value) => sum + value, 0) < 2) throw Error(`Lioness painted eyes did not classify head triangles: ${JSON.stringify(centres)}`);
+  texture.setImage(PNG.sync.write(png));
+  const base = primitive.getMaterial()!, emissive = document.createMaterial('emi_infectedEye').setBaseColorFactor([1, 1, 1, 1]).setEmissiveFactor([1, 0, 0]).setMetallicFactor(0).setRoughnessFactor(1);
+  const eyes: number[] = [];
+  for (let t = 0; t < triangleCount; t++) if (chosen[t]) for (let k = 0; k < 3; k++) eyes.push(vertex(t, k));
+  const make = (material: typeof base, list: number[]) => {
+    if (!list.length) return undefined;
+    const part = document.createPrimitive().setMaterial(material);
+    for (const name of primitive.listSemantics()) part.setAttribute(name, primitive.getAttribute(name)!);
+    part.setIndices(document.createAccessor().setType('SCALAR').setArray(new Uint32Array(list)));
+    return part;
+  };
+  const mesh = body!.getMesh()!; mesh.removePrimitive(primitive);
+  const ordinary: number[] = []; for (let t = 0; t < triangleCount; t++) for (let k = 0; k < 3; k++) if (!chosen[t]) ordinary.push(vertex(t, k));
+  const bodyPart = make(base, ordinary), eyePart = make(emissive, eyes);
+  if (bodyPart) mesh.addPrimitive(bodyPart); if (eyePart) mesh.addPrimitive(eyePart);
+  body!.setExtras({ ...body!.getExtras(), decorativeEmissive: 'Atlas eye signal consumed by the infected crowd bake; it has no practical light spill.' });
+  eyeNode!.setMesh(null); eyeNode!.setExtras({});
+  return { centres, emissiveTriangles: chosen.reduce((sum, value) => sum + value, 0), paintedTexels: painted.size };
+}
+
 /** Paint only UV triangle interiors. No dilation can reach another island (L6 bandage lesson). */
 export function paintAnimalDetails(document: Document, naturalEyes: boolean, tusks?: TuskRecipe, fit?: Fit, healEyeMasks = false, look?: AnimalLook) {
   const body = document.getRoot().listNodes().find(n => n.getName() === 'skin_body')!;
