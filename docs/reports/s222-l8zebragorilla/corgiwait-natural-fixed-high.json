@@ -1,0 +1,82 @@
+{
+  "revision": "0781bd0c9465f429f414fda43d10f1ddf26aa100",
+  "sourceHash": "cd5c1ba650f977b5d6931acaf17289d4ad0bf8da2cba04b0e256b066c0deee00",
+  "captureToolSha256": "45d65763da5de0da964f4f34eff37d447d150d6b5dcbb49c1ee3b813f6f69a41",
+  "rawReceiptSha256": "75eb85df2a13cf6144c915b8239a2b8851dc4eb1be189663495b24a79fbab1cc",
+  "tier": "high",
+  "method": "Physical WASD, Digit weapon shortcuts, LMB aiming/firing and E. Paused fixed-step presentation, mortal courier and NPCs. Shared policy is read only; no injected input, teleport, health edits or objective changes.",
+  "errors": [],
+  "complete": false,
+  "finalArenas": [
+    {
+      "id": "flamingo",
+      "phase": 3,
+      "armed": true
+    },
+    {
+      "id": "lion",
+      "phase": 3,
+      "armed": true
+    },
+    {
+      "id": "monkey",
+      "phase": 3,
+      "armed": true
+    },
+    {
+      "id": "zebra",
+      "phase": 0
+    },
+    {
+      "id": "gorilla",
+      "phase": 0
+    },
+    {
+      "id": "elephant",
+      "phase": 0
+    }
+  ],
+  "sampledFrames": [
+    {
+      "tick": 13848,
+      "player": {
+        "x": -60.48285675048828,
+        "y": 0.7050984501838684,
+        "z": -24.577125549316406,
+        "yaw": -2.403773395693114
+      },
+      "dog": {
+        "transform": {
+          "x": -60.32487653294879,
+          "z": -35.87948129659856,
+          "y": 0.3,
+          "yaw": -1.5768736024841492
+        }
+      },
+      "arena": "monkey",
+      "phase": 0,
+      "objective": "Enter the primate yard · 63 m"
+    },
+    {
+      "tick": 15656,
+      "player": {
+        "x": -3.7442617416381836,
+        "y": 0.7049999833106995,
+        "z": 19.400339126586914,
+        "yaw": 2.744583129609949
+      },
+      "dog": {
+        "transform": {
+          "x": -26.118789569380567,
+          "z": 12.082983743629867,
+          "y": 0.42,
+          "yaw": -1.8702289273929007
+        },
+        "wait": true
+      },
+      "arena": "monkey",
+      "phase": 1,
+      "objective": "Kill monkeys 3/7 · 2 m"
+    }
+  ]
+}
