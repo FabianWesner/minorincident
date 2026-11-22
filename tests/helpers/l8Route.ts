@@ -84,12 +84,13 @@ export async function checkL8Route(): Promise<void> {
       expect(inRect(player.transform, stage.zone), `${stage.id}: courier inside the enclosure`).toBe(true);
       if (stage.id === 'lion') {
         const corgi = [...w.entities.iterate()].find(e => e.companion)!;
-        const inside = at(3), outside = at(-5);
+        const inside = at(3);
         expect(w.solids.relocate(corgi, { ...inside, y: corgi.transform.y }, 'fixture.l8-corgi-inside', 1, false)).toBe(true);
         arena.phase = 1; arena.armed = false;
         zoo.bosses.update();
         expect(arena.armed, 'entry stays open while the corgi is inside').toBe(false);
-        expect(w.solids.relocate(corgi, { ...outside, y: corgi.transform.y }, 'fixture.l8-corgi-outside', 2, false)).toBe(true);
+        for (let tick = 0; tick < 600 && inRect(corgi.transform, stage.zone); tick++) w.update();
+        expect(inRect(corgi.transform, stage.zone), 'corgi walks out before the entry closes').toBe(false);
         arena.phase = 0; arena.armed = false;
       }
       let armedWith = -1;

@@ -204,3 +204,5 @@ A trial applied the survivor group's blocked outside-slot search to the corgi. T
 Cage containment follow-up: the existing arming check now includes the corgi, so a dog already inside must exit before the entry closes. Typecheck, lint and mission-interactions pass; the L8-only threat run completed skilled L8 and retained the same four gameplay flags (plus the partial-selection marker). Full threat acceptance and final-source remote unit validation remain open.
 
 Remote unit validation on gameplay commit `c8dd960d` passed: 27 files, 105 tests and one skipped, 203.3 s. The mission-interactions route fixture also explicitly placed the corgi inside the lion cage and confirmed the gate did not arm; that expanded fixture passed locally. Zero-flag threat acceptance remains open.
+
+The lion gate fixture now lets that corgi walk out under native simulation rather than relocating it outside; mission-interactions passes. The existing standalone passive trace stops at 150 s, before the previously identified 152–163 s follower-364 slowdown, so it adds no evidence about that flag.
