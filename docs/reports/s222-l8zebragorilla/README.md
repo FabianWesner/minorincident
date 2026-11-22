@@ -32,3 +32,5 @@ This report records implementation intent and current validation only. It does n
 - Slam follow-up: restored the intended 150-tick recovery (the shared gorilla cap had reduced it to 60) and added a distinct reach-and-slam pose. Typecheck, lint, and mission-interactions pass; the L8-only audit still completes skilled L8 with 5 acceptance flags. The revised pose and recovery need natural play and visual review.
 
 - Lion story pass: at breach, a finished zoo keeper is created beside a solid feed container and stored before the breach checkpoint. A native passive route retained that body at the lion rocks; typecheck, lint and mission-interactions pass. D-ZOO was regenerated. The L8-only audit still completes skilled L8 but now reports 11 acceptance flags, including additional passive follower pace flags; visual review and threat resolution remain open.
+
+- Burn-site smoke now replenishes every two seconds during the sanctuary tour. A native passive run observed 44 emissions before breach; restoring the breach checkpoint retained the same finished keeper ID and zero health. Typecheck and lint pass. Smoke visibility from the actual tour camera still needs review.
