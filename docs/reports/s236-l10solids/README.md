@@ -67,6 +67,7 @@ Earlier lower sample counts and the claim that L8 and L9 had no misses predate t
 
 ## Verification
 
+- After the doorway navigation correction, `npm run qa:threat` passed in 325.0 seconds with zero fail flags and L10 skilled complete; the full remote unit suite passed 27 files, 105 tests with one skipped, in 211.6 seconds.
 - `npm run typecheck`: pass
 - `npm run lint`: pass
 - `node --import tsx/esm tools/qa/solid-placement-audit.ts --out /private/tmp/s236-solid-sweep-final.json`: pass; L10 sweep misses zero
