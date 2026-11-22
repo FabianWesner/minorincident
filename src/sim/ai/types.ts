@@ -34,7 +34,7 @@ export interface InfectedState {
   /** Story-director walk (L4 collapse Alphas): path to this point (grid A*, not the courier flow field) and ignore targets until cleared. */
   scripted?: { x: number; z: number };
   /** L4 street group: finish the breach crossing before acquiring a defender. */
-  breachApproach?: 'wire' | 'vault' | 'outside' | 'inside';
+  breachApproach?: 'wire' | 'vault' | 'outside' | 'inside' | 'l8-gate' | 'l8-north-gate' | 'l8-north-side' | 'l8-north-attack';
   /** L4: first cohort through a newly opened breach. Allies leave it to the courier (G-22) until its first windup or this tick, except in close self-defence. */
   spearheadUntil?: number;
   /** L4: finish a defender flank when the courier's corpse field is saturated. */

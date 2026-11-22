@@ -39,11 +39,6 @@ export function markerAnchor(mission: (Pick<Mission, 'state' | 'def'> & { world?
     const mega = mission.world.megaPursuit.entity();
     if (mega) return { x: mega.transform.x, z: mega.transform.z, y: mega.transform.y, radius: 2 };
   }
-  // r31-nadia (PO: 'she is just running away ... I don't know which way to go'): while Nadia leads, guidance follows Nadia herself; at the plaza it is the ring.
-  if (mission?.def.id === 'L8' && mission.l8 && mission.world && mission.state.steps.sanctuary?.status === 'active' && mission.l8.state.guideDone === 0) {
-    const nadia = mission.world.entities.get(mission.l8.state.keeperId);
-    if (nadia) return { x: nadia.transform.x, z: nadia.transform.z, y: nadia.transform.y, radius: 2 };
-  }
   // r39-markers (r38-vqa P2: 'the marker sits at the bridge gate, behind the trigger'): while L9 drives, the ring is where the next
   // trigger fires: the evacuation bay until the survivors are aboard, then the middle of the bridge deck (the collapse needs the
   // hull anywhere on the deck, any speed). The static authored anchor (x 470, the bridge-gate wall) stays only as the fallback.

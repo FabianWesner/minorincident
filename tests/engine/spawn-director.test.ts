@@ -5,6 +5,7 @@ import { Matrix4, Vector3 } from 'three';
 import { View } from '../../src/render/View';
 import { missionControls } from '../../src/sim/missions/controls';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { loadLevel } from '../../tools/sim-runner/levels';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -78,6 +79,14 @@ test('caps: waves queue and resume inside both tier caps; reserved slots wait fo
   const migration = mai.director.migration([{ x: -48, z: -20 }, { x: 48, z: -20 }], 1);
   expect(migration.members).toHaveLength(0); expect(mai.director.queue).toHaveLength(1);
   blocker.health.current = 0; step(m, 1); expect(migration.members).toHaveLength(1); expect(mai.director.queue).toHaveLength(0);
+
+  const zoo = await loadLevel('L8', 1); worlds.push(zoo); zoo.missions!.begin();
+  const zd = zoo.infected!.director, outbreak = zoo.missions!.l8!;
+  zd.levelCap = 0;
+  expect(() => outbreak.advance()).not.toThrow();
+  expect(outbreak.state.arrivals).toHaveLength(0);
+  zd.levelCap = 200; step(zoo, 4);
+  expect(outbreak.state.arrivals.length, 'blocked gate cohorts retry when capacity returns').toBeGreaterThan(0);
 });
 
 test('a 150-infected migration follows its spline on time and fans out at the goal', async () => {

@@ -61,9 +61,16 @@ def wall(name, x, z, length, along_x, gap=None):
         chunk = math.floor((coord+length/2)/24)
         ob['layoutBatch'] = f'zoo-wall-{name}-{chunk}-{token}'
     dims = [length,4,.8] if along_x else [.8,4,length]
-    l.data['colliders'].append(dict(id='zoo-wall-'+name,aabb=dict(min=[x-dims[0]/2,0,z-dims[2]/2],max=[x+dims[0]/2,4,z+dims[2]/2]),minTier=0,maxTier=5))
-    # `gap` = (centre, width) along the wall: the masonry is left out for the drive-out gate (its steel leaves are built below); the collider above stays whole.
+    # `gap` = (centre, width) along the wall. Leave both the masonry and its
+    # collision open for the four destructible perimeter gates.
     spans = [(-length/2, length/2)] if gap is None else [(-length/2, gap[0]-gap[1]/2), (gap[0]+gap[1]/2, length/2)]
+    for segment, (lo, hi) in enumerate(spans):
+        if hi-lo < .1: continue
+        if along_x:
+            bounds = dict(min=[x+lo,0,z-dims[2]/2],max=[x+hi,4,z+dims[2]/2])
+        else:
+            bounds = dict(min=[x-dims[0]/2,0,z+lo],max=[x+dims[0]/2,4,z+hi])
+        l.data['colliders'].append(dict(id=f'zoo-wall-{name}-{segment}',aabb=bounds,minTier=0,maxTier=5))
     for lo, hi in spans:
         span = hi - lo
         masonry('wall-plinth','sidewalk',[span,.4,dims[2]] if along_x else [dims[0],.4,span],[x+((lo+hi)/2 if along_x else 0),.2,z+(0 if along_x else (lo+hi)/2)])
@@ -82,13 +89,14 @@ def wall(name, x, z, length, along_x, gap=None):
         px=x+(t if along_x else 0); pz=z+(0 if along_x else t)
         masonry('wall-pier','brick',[1.15,4,1.15],[px,2,pz])
         masonry('pier-cap','sidewalk',[1.35,.22,1.35],[px,4.05,pz])
-for name,x,z,length,axis in [('north',0,-86,232,True),('south',0,86,232,True),('west',-116,0,172,False),('east',116,0,172,False)]: wall(name,x,z,length,axis,gap=(80.0,5.4) if name == 'east' else None)
+for name,x,z,length,axis in [('north',0,-86,232,True),('south',0,86,232,True),('west',-116,0,172,False),('east',116,0,172,False)]:
+    wall(name,x,z,length,axis,gap=(80.0,5.4) if name == 'east' else (0.0,5.4))
 
 # Real shipped architecture: ticket pavilions, intact reptile hall and staff lodge.
 for asset,x,z,label,door in [('bld.zoo-gate',0,78,'Zoo tickets','zoo-entrance'),('bld.reptile-house',-14,14,'Reptile House','reptile-door'),('bld.park-lodge',87,32,'Zoo staff and first aid','staff-door')]:
     ident=l.place(asset,[x,0,z])
     l.data['buildings'].append(dict(id=ident,assetId=asset,aabb=l.data['placements'][-1]['visualAabb'],label=label))
-    l.anchor(door,[x+7,0,z])
+    l.anchor(door,[x,0,z-8] if door == 'zoo-entrance' else [x+7,0,z])
 
 # Enclosures built from shipped metal fence modules. Each has two 5 m gates;
 # permanent posts frame the openings while both routes remain navigable.
@@ -127,13 +135,9 @@ def enclosure(species,cx,cz,w=44,d=40):
     l.place('prop.sprinkler',[cx+w/2-3 if species == 'flamingo' else cx+5,0,cz+3])
 for species,x,z in [('lion',-60,-32),('gorilla',60,-32),('elephant',-60,32),('zebra',60,32)]: enclosure(species,x,z)
 enclosure('flamingo',0,-32,28,40)
-# A recessed pond with a rounded stone rim; excluded water never blocks the gates.
+# The flamingo plaza is paved and remains walkable through its centre.
 import bpy
-bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=8,location=(0,32,-.1))
-pond=bpy.context.object; pond.name='flamingo-water'; pond.scale=(8,6,.14)
 from sslib.layout import material
-pond.data.materials.append(material('backpackTeal')); l.layers[0].append(pond)
-l.data['walkable']['excluded']=[[[ -8,-38],[8,-38],[8,-26],[-8,-26],[-8,-38]]]
 
 for x in [-96,-24,24,96]:
     for z in [-64,-32,0,32,64]:
@@ -640,7 +644,8 @@ for _x in (92.9, 99.1):
     _fence(_x, 35.2, _x, 38)
 
 # Cap unused branches: these junctions turn toward the next animal gate.
-_fence(-27.2, -67.1, -20.8, -67.1); _fence(-3.2, -67.1, 2.6, -67.1)
+_fence(-27.2, -67.1, -20.8, -67.1)
+# The flamingo approach cap is a runtime connector gate, open during the breach.
 _barricade(-27.2, -60.9, -20.8, -60.9)
 _barricade(-63.1, -67.2, -63.1, -60.8)
 _barricade(3.1, -67.2, 3.1, -60.8)

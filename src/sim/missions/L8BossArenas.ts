@@ -85,7 +85,11 @@ export class L8BossArenas {
       this.barrier(`l8.plaza-gate.${side}`, 900860 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
     });
     l8ConnectorGates.forEach((box, i) => {
-      const key = `connector.${i}`, closed = l8GateClosed(key, ctx);
+      const key = `connector.${i}`;
+      // These public-lane branches stay closed while animal arenas remain.
+      // Reopen the lane network for the elephant finale after the earlier fights.
+      const finalApproachOpen = this.state.filter(a => a.id !== 'elephant').every(a => a.phase === 3);
+      const closed = l8GateClosed(key, ctx) && !finalApproachOpen;
       if (this.gateStates.get(key) === closed) return;
       this.gateStates.set(key, closed);
       this.barrier(`l8.connector-gate.${i}`, 900880 + i, { ...box, y: 1.5, halfY: 1.5 }, closed);
@@ -93,13 +97,16 @@ export class L8BossArenas {
     // The elephant's drive-out gate shuts while he is loose in the yard.
     const elephant = this.state.find(a => a.id === 'elephant');
     if (elephant) {
-      const closed = !!this.mission.state.states.breached && elephant.phase !== 3;
+      const eastBreachAt = this.mission.l8!.state.perimeterGateBreaks?.[3];
+      const eastBreachOpen = eastBreachAt != null && this.w.tick >= eastBreachAt;
+      const closed = !!this.mission.state.states.breached && elephant.phase !== 3 && !eastBreachOpen;
       if (this.gateStates.get('elephant') !== closed) {
         this.gateStates.set('elephant', closed);
         this.barrier('l8.arena-gate.elephant', 900830 + l8BossArenas.findIndex(a => a.id === 'elephant'), { ...l8EncounterGates.elephant, y: 1, halfY: 1 }, closed);
       }
-      const yardClosed = this.state.some(a => a.id !== 'elephant' && a.phase !== 3);
-      const entryClosed = yardClosed || elephant.phase > 0 && elephant.armed === true;
+      // The solo yard closes behind the courier once the outside party clears
+      // the threshold. The east perimeter breach remains available to attackers.
+      const entryClosed = yardClosed || elephant.phase > 0 && elephant.phase < 3 && !!elephant.armed;
       if (this.gateStates.get('elephantEntry') !== entryClosed) {
         this.gateStates.set('elephantEntry', entryClosed);
         this.barrier('l8.arena-gate.elephant-entry', 900834, { ...l8EncounterGates.elephantEntry, y: 1.5, halfY: 1.5 }, entryClosed);
@@ -489,8 +496,16 @@ export class L8BossArenas {
   private beginCycle(e: EntitySnapshot, arena: L8ArenaState): void {
     const live = arena.ids.map(id => this.w.entities.get(id)).filter((v): v is EntitySnapshot => !!v?.infected && v.health.current > 0);
     if (arena.id === 'flamingo') {
-      // A rotating line of three dives while the rest circles; the lane always leaves a sidestep.
-      for (let i = 0; i < Math.min(3, live.length); i++) this.start(live[(arena.cycle * 3 + i) % live.length], 'flamingo.dive', 48, 15, 1.1);
+      // Launch birds with a clear lane first, so a flock does not waste its
+      // dives immediately colliding with its own members or the enclosure.
+      const p = this.w.entities.get(1)!;
+      const lanes = live.filter(bird => !bird.infected!.specialAttack).map(bird => {
+        const target = this.predict(bird, Math.min(2.5, .6 + distance(bird.transform, p.transform) / 17), arena);
+        const dx = target.x - bird.transform.x, dz = target.z - bird.transform.z, length = Math.hypot(dx, dz) || 1;
+        const clear = this.w.solids.sweep(bird, { x: dx / length, z: dz / length }, length, bird.combat!.radius, false, true);
+        return { bird, length, clear };
+      }).sort((a, b) => b.clear / b.length - a.clear / a.length || a.length - b.length);
+      for (const { bird } of lanes.slice(0, 3)) this.start(bird, 'flamingo.dive', 36, 15, 1.1);
     }
     else if (arena.id === 'zebra') {
       const side = arena.cycle % 2 ? 1 : -1, predicted = this.predict(e, 2.2, arena);
