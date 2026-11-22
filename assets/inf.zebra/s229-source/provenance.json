@@ -1,0 +1,36 @@
+{
+  "source": "TRELLIS game-space raw.glb",
+  "source_sha256": "867bdd5fa6f953f28c6a10545cba6f1fdd4b77d546c7740b6e40eabdc64f2cc2",
+  "pipeline_exporter_revision": "1be1c5a1dc9951a036b594a94b2a3a13b89d9a9b",
+  "construction": {
+    "method": "solidify.py envelope; resolution 128, raster 256, closing 1; fast-simplification target 630 with cleanup",
+    "volume_faces": 47824,
+    "reduced_faces": 628,
+    "local_sha256": "f6a0b7fb3bf9ad1e691824f109763c2ce3a4f1fbf4f698c3b5608287f7e8fb97",
+    "game_transform": {
+      "scale": [
+        -7.9866,
+        7.9866,
+        -7.9866
+      ],
+      "translation": [
+        0.19257,
+        1.198,
+        0
+      ]
+    },
+    "fit": "lane/tex-zebra scripts/build_zebra_rigid.py fit; source color projected with rebake and xatlas at 512",
+    "fitted_textured_sha256": "7edfa2d89aa995b646a3968c16e64c2ddabb89fca68e8bb1a171294c348b37ff",
+    "projection_p95_m": 0.052186940626968534
+  },
+  "delivery": {
+    "rebuild": "node --import tsx tools/assets/s229-zebra-lod2.ts <output.glb>",
+    "sha256": "5a3713111842634ede272c64e608637f16781f672efc3f15c5109db0de4b4d8c",
+    "bytes": 66712,
+    "rig": "assets/inf.zebra/model.lod1.glb",
+    "texture_size": 256,
+    "basis_quality": 128,
+    "weight_bits": 8,
+    "joint_bits": 8
+  }
+}
