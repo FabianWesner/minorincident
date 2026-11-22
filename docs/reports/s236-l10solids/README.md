@@ -36,6 +36,8 @@ Building selection now also tests a segment to the nearby visible corgi, indepen
 
 The same companion and non-occluder fixtures pass on LOW (`/private/tmp/s236-companion-low/`). The inspected companion sheet shows both figures visible; it does not isolate a building that occludes only the corgi.
 
+An 85% uniform fade retained slightly more of the barn in a reviewed HIGH native frame, but failed the LOW companion fixture at zoom 1.5 (courier visibility 0.8 versus 0.85 required). The 90% fade was restored and that LOW row passes (`/private/tmp/s236-fade90-companion/`). The opaque shadow is rendered in a separate instanced shadow pass and remains a visual concern.
+
 These non-L10 findings remain for follow-up; the first five placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893
