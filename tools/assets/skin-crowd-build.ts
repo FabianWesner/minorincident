@@ -134,6 +134,7 @@ for (const lod of [0, 1, 2]) {
   if (alignment || derivedTemplate) args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
   else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata && ['quadruped', 'bird'].includes(metadata.class ?? ''))) args.push('--eyes', eyeSource);
+  if (id === 'inf.lioness') args.push('--interpolate-eye-weights');
   if (metadata && !derivedTemplate) args.push('--reconstruct-body');
   // The lowered Mega fists contain small nearest-template trouser islands.
   // Repair their semantic ownership without refitting the matching v2 rig.
@@ -216,6 +217,11 @@ for (const lod of [0, 1, 2]) {
     paintAnimalDetails(document, false, undefined, fit, false, { species: 's224-lion', infected: true });
     await io.write(raw, document);
   }
+  if (sourceId === 's224-lioness') {
+    const document = await io.read(raw), fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
+    const details = paintAnimalDetails(document, false, undefined, fit, false, { species: 'lioness', infected: true });
+    await io.write(raw, document); writeFileSync(join(report, `lod${lod}.details.json`), JSON.stringify(details, null, 2) + '\n');
+  }
   const animalRecipe = animalEyeRecipes[sourceId];
   if (animalRecipe) {
     const document = await io.read(raw), fit = JSON.parse(readFileSync(join(report, `lod${lod}.json`), 'utf8')) as { scale: number; yaw: number; translation: number[] };
@@ -274,7 +280,7 @@ for (const lod of [0, 1, 2]) {
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);
-    const initialAtlas = sourceId === 's224-lion' ? (lod === 0 ? 192 : 128) : lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
+    const initialAtlas = sourceId === 's224-lioness' ? (lod === 0 ? 128 : 96) : sourceId === 's224-lion' ? (lod === 0 ? 192 : 128) : lod === 2 && (unbound || derivedTemplate) && id.startsWith('npc.') ? 256 : low || lod > 0 ? 512 : 1024;
     let positionPrecision: number | undefined;
     await compressSkin(raw, target, basis, initialAtlas);
     // Keep detailed boss faces at 512 when the standalone LOD budget permits.
@@ -282,6 +288,14 @@ for (const lod of [0, 1, 2]) {
     for (const atlas of nativeInfected ? [] : [512, 256, 128]) {
       if (readFileSync(target).length <= byteLimit || atlas >= initialAtlas) continue;
       await compressSkin(raw, target, basis, atlas);
+    }
+    if (sourceId === 's224-lioness') {
+      const lionessByteLimit = [82092, 57512, 49616][lod];
+      for (const precision of [1 / 16384, 1 / 8192, 1 / 4096, 1 / 2048, 1 / 1024]) {
+        if (readFileSync(target).length <= lionessByteLimit) break;
+        positionPrecision = precision;
+        await compressSkin(raw, target, basis, initialAtlas, undefined, undefined, false, precision);
+      }
     }
     // Preserve L9's continuous native infected anatomy at its far file cap.
     if (lod === 2 && nativeInfected && readFileSync(target).length > byteLimit) {

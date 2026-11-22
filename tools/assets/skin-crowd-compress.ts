@@ -96,6 +96,14 @@ export async function compressSkin(input: string, output: string, basisRoot: str
         if (protectedPoints.has(point.join(','))) position.setElement(i, point);
       }
     }
+    if (process.env.CROWD_JOINT_BITS === '8') {
+      for (const mesh of doc.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+        const joints = primitive.getAttribute('JOINTS_0'); if (!joints) continue;
+        const values = Array.from(joints.getArray()! as ArrayLike<number>);
+        if (values.some((value: number) => value > 255)) throw Error('JOINTS_0 exceeds the 8-bit index range');
+        joints.setArray(Uint8Array.from(values)).setNormalized(false);
+      }
+    }
     if (coatSource) {
       const source = await io.read(coatSource), atlas = source.getRoot().listTextures()[0];
       let image = atlas.getImage()!, mime = atlas.getMimeType();
@@ -155,7 +163,7 @@ export async function compressSkin(input: string, output: string, basisRoot: str
     doc.createExtension(KHRTextureBasisu).setRequired(true);
     await doc.transform(weld(), dedup(), prune({ keepLeaves: true, keepAttributes: true }),
       // Positions stay in the bind frame: position quantization rescales the mesh node outside its skin.
-      quantize({ pattern: /^(NORMAL|TEXCOORD_0|WEIGHTS_0|COLOR_0)$/, quantizeNormal: 10, quantizeTexcoord: 14, quantizeWeight: 16, quantizeColor: 16 }),
+      quantize({ pattern: /^(NORMAL|TEXCOORD_0|WEIGHTS_0|COLOR_0)$/, quantizeNormal: 10, quantizeTexcoord: 14, quantizeWeight: Number(process.env.CROWD_WEIGHT_BITS ?? 16), quantizeColor: 16 }),
       reorder({ encoder: MeshoptEncoder }));
     doc.createExtension(KHRMeshQuantization).setRequired(true);
     doc.createExtension(EXTMeshoptCompression).setRequired(true).setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.QUANTIZE });
