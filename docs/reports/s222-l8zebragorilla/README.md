@@ -65,6 +65,7 @@ The initial lane source snapshot that reproduces pace flags is `8316b243` (`Impr
 | --- | --- | --- |
 | `8316b243` source with baseline D-ZOO layout | Skilled completes; passive `SLOW_FOLLOWER:387` and `SLOW_FOLLOWER:354` | Confirms first bad source snapshot is the first lane commit after `a23b89e0`. |
 | `8316b243`, with `LevelEightZoo.ts` restored to `a23b89e0` | Only `SLOW_FOLLOWER:354` | The mission-file changes affect 387 in this snapshot; the individual change is not isolated, and corgi 354 remains. |
+| `8316b243`, with both `LevelEightZoo.ts` and `l8Bosses.ts` restored to `a23b89e0` | Skilled completes; only `SLOW_FOLLOWER:354` | The two swaps interact: restoring boss data alone removed 354 in this snapshot, but restoring both leaves it. This does not identify a safe individual fix. |
 | Current source, `L8BossArenas.ts` restored to `a23b89e0` | Only `SLOW_FOLLOWER:354` | Arena-controller changes contribute follower 364 on the rebuilt layout; this does not explain corgi 354. |
 | Current source, `InfectedSystem.ts` restored to `a23b89e0` | Same flags as current: 364 twice and 354 once | Heard-gunfire pursuit is not causal for these flags. |
 | Current rebuilt layout with gorilla night-house and rock colliders removed | Same flags as current | Those two new collider groups are not causal. |
