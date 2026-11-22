@@ -1,6 +1,6 @@
 # s232 — Vehicle zombie hits
 
-**Status: acceptance remains open.** No run-over capture sheet has been reviewed; no visual claims are made.
+**Status: acceptance remains open.** The isolated APC sheet below was reviewed; native L9 and L10 sequences are still required.
 
 ## Implemented
 
@@ -20,6 +20,7 @@
 - Follow-up: stationary unoccupied APC contact no longer triggers a run-over. Typecheck and lint pass. A focused `VEHICLE_MOTION_SCENE=push` run completed HIGH and LOW but both still fail the shove contact proof: this fixture drives slowly in reverse and the new APC run-over policy kills the regular targets instead. The diagnostic and intended reverse-contact behavior need resolution; this is not a pass.
 - Corpse presentation follow-up: squashed corpses bypass the clear-ground vehicle avoidance search, preserving their impact position beneath the hull. Typecheck and lint pass; native visual confirmation is still required.
 - Motorbike follow-up: a run-over now produces a brief visual lift and pitch. Vehicle hit audio is limited across the pack to one playback per 90 ms. Typecheck and lint pass; the visual bump and audio mix still need native review.
+- Isolated Scene Lab APC capture, HIGH WebGL2 at zoom 1: [sheet](sheet.jpg), [events and corpse state](high-apc.json). Six run-over events occurred at ticks 90–100 and six marked corpses remained at tick 230. Reviewed the sheet: frames 70–100 show the APC reaching the group and blood at contact; frames 110–150 show bodies behind it. The dark, wide framing does not establish a readable under-wheel pose or bump. LOW did not complete before the 595-second reservation expired. This is not the requested native L9/L10 visual acceptance.
 - `npm run qa:threat` — wrapper stopped before execution because the existing inventory is 151 cases against its 150-case cap. The unwrapped `node --import tsx/esm tools/qa/threat-audit.ts` completed in 811.4 s with 0 fail flags; skilled L9 and L10 completed. Several other passive stages ended at their tick budget, with no passive flags.
 - `sh tools/remote/run.sh "$PWD" -- npm test` — no healthy remote runner is provisioned; runner reported that the Mac fallback is not eligible for this command.
 - Audio bank rebuild — attempted, but source download failed under the restricted network. No new bank offsets or generated sound files were introduced.
