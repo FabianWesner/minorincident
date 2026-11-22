@@ -24,6 +24,8 @@ The same native wall position was subsequently captured HIGH and LOW at zoom 1 a
 
 Building selection now also tests a segment to the nearby visible corgi, independently of the expanded subject box. The first HIGH companion fixture exposed inadequate courier visibility at the 75% fade; increasing clearance inside the subject disc while retaining the whole-building fade made both the companion and non-occluder fixtures pass (`/private/tmp/s236-companion-fix/`). Typecheck and lint pass. An isolated corgi-only building occlusion capture remains open.
 
+The same companion and non-occluder fixtures pass on LOW (`/private/tmp/s236-companion-low/`). The inspected companion sheet shows both figures visible; it does not isolate a building that occludes only the corgi.
+
 Five non-L10 samples remain for follow-up because those placements have no collider intersecting courier body height:
 
 - L3 D-CORRIDOR `bld.river-bridge` placement 893
