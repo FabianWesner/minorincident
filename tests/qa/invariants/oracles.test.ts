@@ -18,10 +18,10 @@ describe('invariant proof fixtures', () => {
   for (const f of fixtures) test(`fixture ${f.id}`, () => {
     expect((broken === f.id ? f.bad : f.good)(), `${f.id} invariant fixture`).toBe(false);
     expect(f.bad(), `${f.id} broken twin must be rejected`).toBe(true);
-  });
-  test('load rejects either budget independently', () => {
-    expect(oracle.load({ candidateMs: 21001, baselineMs: 20000 })).toBe(true);
-    expect(oracle.load({ candidateMs: 1099, baselineMs: 1000 })).toBe(false);
+    if (f.id === 'load') {
+      expect(oracle.load({ candidateMs: 21001, baselineMs: 20000 }), 'absolute load budget').toBe(true);
+      expect(oracle.load({ candidateMs: 1099, baselineMs: 1000 }), 'relative load budget').toBe(false);
+    }
   });
   test('missing or non-finite measurements fail closed', () => {
     expect(oracle.load({ candidateMs: NaN, baselineMs: 1000 })).toBe(true);
