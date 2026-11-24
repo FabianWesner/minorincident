@@ -8,6 +8,7 @@ import { districtDecor } from '../../src/levels/decor';
 import { applyFarmLandscape } from '../../src/levels/L10/farmLayout';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
+import { runBuildingWallSweepAudit } from './building-wall-sweep-audit';
 
 type Row = { level: string; rendered: number; before: number; after: number; beforeTop: [string, number][]; remainingTop: [string, number][] };
 const eligible = (p: Placement) => {
@@ -43,7 +44,8 @@ const rows: Row[] = layouts.map(source => {
   }
   return { level: source.district, rendered: layout.placements.length, before: beforeBad.length, after: afterBad.length, beforeTop: summarize(beforeBad), remainingTop: summarize(afterBad) };
 });
-const report = { threshold: { footprintM2: .4, heightM: .5 }, levels: rows, totals: { before: rows.reduce((n, r) => n + r.before, 0), after: rows.reduce((n, r) => n + r.after, 0) } };
+const wallSweeps = await runBuildingWallSweepAudit();
+const report = { threshold: { footprintM2: .4, heightM: .5 }, levels: rows, totals: { before: rows.reduce((n, r) => n + r.before, 0), after: rows.reduce((n, r) => n + r.after, 0) }, wallSweeps };
 const outputIndex = process.argv.indexOf('--out');
 if (outputIndex >= 0 && !process.argv[outputIndex + 1]) throw new Error('--out requires a file path');
 const output = outputIndex >= 0 ? process.argv[outputIndex + 1] : 'docs/reports/s211c-solids/audit.json';

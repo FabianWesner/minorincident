@@ -64,6 +64,10 @@ export const seeThroughKeep = (eligible?: Node<'float'>, deck = false) => {
     .or(normalWorld.y.lessThan(.5).and(positionWorld.y.greaterThan(seeThrough.floor.add(deck ? seeThrough.keepBand.max(1.6) : seeThrough.keepBand))));
   const hole = cuttable.select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
+  // A true building occluder fades as one object, including walls and roof.
+  // Screen-space ordered noise gives the instanced opaque batch a soft dissolve
+  // without depth-cutting the near wall into a floating roof/rear-wall slab.
+  const wholeBuilding = eligible?.greaterThan(2.5);
   // A placement enclosing most of the lens cannot leave a roof across the
   // entire viewport. Its foreground surfaces clear, while supports and surfaces
   // behind the subject stay intact. Other placements keep the bounded disc.
@@ -77,7 +81,9 @@ export const seeThroughKeep = (eligible?: Node<'float'>, deck = false) => {
   // rides, 0 for the courier and her corgi on foot: PO #45 no dither dots over the figures). Shared noise across layers keeps the rest open.
   const retained = hole.mul(seeThrough.retain.oneMinus()).add(seeThrough.retain);
   const silhouette = seeThrough.solidSilhouette.greaterThan(.5).select(retained.greaterThan(.5), retained.greaterThan(noise));
-  return eligible ? eligible.lessThan(.5).or(lens ? keep.and(lens.not()) : keep) : silhouette;
+  const ordinary = lens ? keep.and(lens.not()) : keep;
+  const whole = noise.greaterThan(seeThrough.strength.mul(.9));
+  return eligible ? eligible.lessThan(.5).or(wholeBuilding!.select(whole, ordinary)) : silhouette;
 };
 
 /** A closed hull has no playable interior. Clear its full depth inside the

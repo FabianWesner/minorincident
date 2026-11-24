@@ -351,10 +351,13 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       return vec4(rgb, this.fade);
     })();
   }
-  /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
+  /** Keep the see-through wrapper on every weather graph. */
   seeThrough(enabled: boolean | 'boss' | 'placement' | 'deck' | 'hull' = true): this {
     if ((this.userData.seeThrough ?? false) === enabled) return this;
     this.userData.seeThrough = enabled;
+    // The selected building's full shadow would remain an opaque slab after
+    // its surfaces fade. Sibling instances retain their ordinary shadows.
+    this.maskShadowNode = enabled === 'placement' ? attribute('_occluder', 'float').lessThan(2.5) : null;
     const mode = this.weatherMode; this.weatherMode = -1; this.setWeatherMode(mode);
     return this;
   }

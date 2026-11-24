@@ -1219,7 +1219,7 @@ export class GameView implements Lifecycle {
     const drivenCar = this.world.vehicles?.cars.get(this.world.vehicles.active ?? -1);
     this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel() ?? survivor?.velocity);
     this.districts?.cull(this.view, this.quality);
-    let subject: Box3 | undefined;
+    let subject: Box3 | undefined, revealCompanion: { x: number; y: number; z: number } | undefined;
     // Q-241: the whole L6 metro reveals with the clean cut (was the retreat only) and keeps its track rails whole.
     const metro = this.world.scenario === 'L6' || !!this.world.districts?.composition.districts.some(d => d.id === 'D-SUBWAY');
     const l6Shelter = metro && !!current && current.x < 30;
@@ -1261,6 +1261,7 @@ export class GameView implements Lifecycle {
       let pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
       if (!pet?.companion) { pet = undefined; if (this.companionSearch++ % 60 === 0) for (const e of this.world.entities.iterate()) if (e.companion) { pet = e; this.companionId = e.id; break; } }
       if (pet && !pet.hidden && Math.hypot(pet.transform.x - current.x, pet.transform.z - current.z) < 2.6) {
+        revealCompanion = pet.transform;
         this.revealPet.min.set(pet.transform.x - .5, feet, pet.transform.z - .5); this.revealPet.max.set(pet.transform.x + .5, feet + .8, pet.transform.z + .5);
         this.revealSubject.union(this.revealPet);
       }
@@ -1287,7 +1288,7 @@ export class GameView implements Lifecycle {
     // L8 enclosures (r27-visp2): while the courier stands inside one, the crowns above it thin out so the pack and her group stay visible.
     const arena = this.world.scenario === 'L8' && current ? l8BossArenas.find(a => Math.hypot(current.x - a.centre.x, current.z - a.centre.z) < a.radius + 2) : undefined;
     this.districts?.setCanopyThinning(arena?.centre.x ?? 0, arena?.centre.z ?? 0, arena?.radius ?? 0);
-    this.districts?.updateFoliage(this.view, current, undefined, subject, !this.world.entities.get(1)?.hidden);
+    this.districts?.updateFoliage(this.view, current, undefined, subject, !this.world.entities.get(1)?.hidden, revealCompanion);
     // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
     if (!this.districts) {
       seeThrough.cover.value = 0;
