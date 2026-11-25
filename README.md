@@ -121,3 +121,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Fixed checkpoint hatch blocker reconciliation: restoring an open hatch removes its infected-only blocker, and restoring a closed hatch reinstalls it. Both transitions, including a real final bash, are folded into the existing checkpoint test. The focused mission test, typecheck and lint pass; focused L6 routes complete with the same three retreat engagement flags. The all-level audit and remote unit suite remain to run on this source.
 
 - After the checkpoint fix, the full remote unit command and its unchanged retry again timed out at 240.8 s and 241.0 s under runner load. No completed unit result is available for this source.
+
+- Native L6 observer-grid check: `DistrictNavigation` has no subdistrict grids in this layout, so its hatch and exit queries use the infected-only fallback grid. The eastern wall is blocked in that same grid; the observer is not silently querying the open human grid there.
