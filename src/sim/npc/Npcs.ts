@@ -115,8 +115,13 @@ export class Npcs {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
       // L3-14: the routed speed cap (4 × waypoint distance) held a far L3 corgi on the adjacent half-metre cell to ~2 m/s,
       // so it crawled 40 m to the army boom while the evacuation waited for it. Look further along the same field.
-      const step = e.companion && this.world.missions?.def.l3 ? nav.flowWaypoint(cell, e.transform, footprint) : flowNext;
+      const step = e.companion && (this.world.missions?.def.l3 || this.world.scenario === 'L8') ? nav.flowWaypoint(cell, e.transform, footprint) : flowNext;
       this.waypoint.x = nav.x(step); this.waypoint.z = nav.z(step);
+    } else if (e.companion?.arenaWait && nav.visible(e.transform, target, footprint)) {
+      // A cage lookout only moves between nearby outside-fence points. When
+      // that short leg is visibly clear, steering to an intermediate grid
+      // cell makes the dog brake and fall behind the courier along the rim.
+      this.waypoint.x = target.x; this.waypoint.z = target.z;
     } else if (e.civilian?.vehicleYield?.target === target && nav.visible(e.transform, target, footprint)) {
       // Kerb orders have a clear direct approach. A grid-centre detour can send
       // an actor back underneath the bus it is stepping away from.

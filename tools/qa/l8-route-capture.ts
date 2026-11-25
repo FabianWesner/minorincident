@@ -18,6 +18,7 @@ const frames: unknown[] = [], captures: string[] = [], down = new Set<string>();
 const weaponPictures = new Set<string>();
 const storyPictures = new Set<string>();
 const animalPictures = new Set<string>();
+let dogCagePicture = false;
 let specialCursor = 0, animalHitCursor = 0;
 let firing = false, lastArena = '', lastPhase = -1, lastTick = -1;
 try {
@@ -84,13 +85,17 @@ try {
         move: cinematic ? { x: 0, z: 0 } : move, dx: rearTactic || habitatTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').x - origin.x : direction.x - origin.x, dy: rearTactic || habitatTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').y - origin.y : direction.y - origin.y, target, fire: !cinematic && !rearTactic && !!(plan.frame.left.held || plan.frame.right.held), interact: !cinematic && plan.frame.interact,
         weapon: cinematic ? undefined : weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
-        cinematic, wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
+        cinematic, wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, dog: [...(window.__SCENE__ as unknown as { game: Game }).game.world.entities.iterate()].find(e => e.companion && !e.hidden)?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
         objective: [...document.querySelectorAll('[data-testid=objective-text],[data-testid=mission-tracker]')].map(e => e.textContent).find(text => text?.trim()) ?? '', departed: (state.mission as { states: Record<string, boolean> })?.states.departed,
         specials: audit.specials.slice(specialCursor), animalHits: audit.animalHits.slice(animalHitCursor), specialCount: audit.specials.length, animalHitCount: audit.animalHits.length,
         animalMoves: active?.ids.map(id => ss.getEntity(id)?.infected?.specialAttack).filter(a => a && ['zebra.kick', 'gorilla.pound', 'gorilla.grab-slam'].includes(a.move)).map(a => ({ move: a!.move, stage: a!.stage, startTick: a!.startTick, activeTick: a!.activeTick })) ?? [],
       };
     }, { specialCursor, animalHitCursor });
     specialCursor = row.specialCount; animalHitCursor = row.animalHitCount;
+    if (!dogCagePicture && row.arenaPhase === 1 && row.dog && Math.hypot(row.dog.x - row.player.x, row.dog.z - row.player.z) < 18) {
+      const file = `dog-beside-${row.arena}-cage-tick-${row.tick}.jpg`;
+      await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 85 }); captures.push(file); dogCagePicture = true;
+    }
     for (const move of row.animalMoves) if (move.stage === 'telegraph' && row.tick >= (move.startTick + move.activeTick) / 2) {
       const key = `${move.move}-telegraph`;
       if (!animalPictures.has(key)) { const file = `natural-${row.arena}-${move.move}-telegraph-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); animalPictures.add(key); }

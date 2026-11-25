@@ -18,6 +18,7 @@ export class Companion {
   private readonly courierProgress = { x: NaN, z: NaN, tick: 0 };
   private yieldUntil = 0;
   private readonly idleNearby: number[] = [];
+  private arenaWaitCache: { id: string; x: number; z: number; at: { x: number; z: number }; tick: number } | null = null;
   private readonly rejoinProgress = new WeakMap<EntitySnapshot, { distance: number; tick: number; attempt: number; farAt?: number }>();
   constructor(readonly world: SimWorld) {
     world.events.on('cinematic.completed', () => {
@@ -32,7 +33,7 @@ export class Companion {
     });
   }
   /** Match the survivor group's authored outside-cage slot while L8 seals each animal arena. */
-  private l8ArenaWait(player: EntitySnapshot): { x: number; z: number } | null {
+  private l8ArenaWait(player: EntitySnapshot, dog: EntitySnapshot): { x: number; z: number } | null {
     const zoo = this.world.missions?.l8;
     if (this.world.scenario !== 'L8' || !zoo || this.world.vehicles?.bicycle.riding) return null;
     const state = zoo.state, active = state.arenas.find(arena => arena.phase === 1 || arena.phase === 2);
@@ -43,14 +44,37 @@ export class Companion {
     const gate = stage?.entry ?? (next?.id === 'elephant' ? l8EncounterGates.elephantEntry : undefined);
     if (!stage || !gate || !routeOpen || !(active || inRect(player.transform, stage.zone)
       || Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) <= 12)) return null;
-    const outwardX = gate.x - (stage.zone.x0 + stage.zone.x1) / 2;
-    const outwardZ = gate.z - (stage.zone.z0 + stage.zone.z1) / 2;
-    const length = Math.hypot(outwardX, outwardZ) || 1, nx = outwardX / length, nz = outwardZ / length;
-    const slot = state.roster.length, tx = -nz, tz = nx;
-    return {
-      x: gate.x + nx * (2.8 + Math.floor(slot / 5) * 1.6) + tx * ((slot % 5 - 2) * 1.2),
-      z: gate.z + nz * (2.8 + Math.floor(slot / 5) * 1.6) + tz * ((slot % 5 - 2) * 1.2),
+    if (!active) {
+      const outwardX = gate.x - (stage.zone.x0 + stage.zone.x1) / 2;
+      const outwardZ = gate.z - (stage.zone.z0 + stage.zone.z1) / 2;
+      const length = Math.hypot(outwardX, outwardZ) || 1, nx = outwardX / length, nz = outwardZ / length;
+      return { x: gate.x + nx * 2.8, z: gate.z + nz * 2.8 };
+    }
+    const cached = this.arenaWaitCache;
+    if (cached?.id === stage.id && this.world.tick - cached.tick < 30
+      && Math.hypot(player.transform.x - cached.x, player.transform.z - cached.z) < 1.5) return cached.at;
+    // Stay beside the fence nearest the courier, rather than at the entrance
+    // where the dog can be a whole enclosure away during a long solo fight.
+    // Sample the outside rim so corners, scenery and closed gates can be
+    // rejected by the same collision and navigation checks as ordinary travel.
+    const bounds = stage.zone, margin = 1.15, candidates: { x: number; z: number; cell: number }[] = [];
+    const add = (x: number, z: number) => {
+      const at = { x, z }, nav = this.world.infected!.nav, radius = actorRadius(dog), cell = nav.nearestCell(x, z, radius);
+      if (cell < 0 || !nav.clear(x, z, radius) || !this.world.solids.clear({ ...at, y: dog.transform.y }, radius, dog.id, false, 0)) return;
+      candidates.push({ ...at, cell });
     };
+    for (let x = bounds.x0; x <= bounds.x1; x += 2) {
+      add(x, bounds.z0 - margin); add(x, bounds.z1 + margin);
+    }
+    for (let z = bounds.z0; z <= bounds.z1; z += 2) {
+      add(bounds.x0 - margin, z); add(bounds.x1 + margin, z);
+    }
+    const nav = this.world.infected!.nav, from = nav.nearestCell(dog.transform.x, dog.transform.z, actorRadius(dog)), path: number[] = [];
+    candidates.sort((a, b) => Math.hypot(a.x - player.transform.x, a.z - player.transform.z) - Math.hypot(b.x - player.transform.x, b.z - player.transform.z));
+    const reachable = candidates.slice(0, 12).find(candidate => from >= 0 && nav.path(from, candidate.cell, path, 16000));
+    const at = reachable ?? { x: gate.x, z: gate.z + Math.sign(gate.z - (bounds.z0 + bounds.z1) / 2) * 2.8 };
+    this.arenaWaitCache = { id: stage.id, x: player.transform.x, z: player.transform.z, at, tick: this.world.tick };
+    return at;
   }
   spawn(): number {
     for (const e of this.world.entities.iterate()) if (e.companion) return e.id;
@@ -192,13 +216,21 @@ export class Companion {
       }
       const mission = this.world.missions;
       if (mission?.l8?.companion(e)) continue;
-      const arenaWait = this.l8ArenaWait(player);
+      const arenaWait = this.l8ArenaWait(player, e);
       if (arenaWait) {
         this.rejoinProgress.delete(e); delete c.rejoining;
         c.state = 'follow'; c.arenaWait = true; c.pickup = null; c.following = false;
         if (Math.hypot(e.transform.x - arenaWait.x, e.transform.z - arenaWait.z) > .5) {
-          this.world.npcs!.move(e, arenaWait, 6, c, .3);
-        } else if (c.velocity) c.velocity.x = c.velocity.z = 0;
+          this.world.npcs!.move(e, arenaWait, 6, c, .3, 16000);
+        } else {
+          if (c.velocity) c.velocity.x = c.velocity.z = 0;
+          // A quiet lookout: hold at the fence and keep its attention on the
+          // courier and the fight instead of presenting a frozen travel pose.
+          const look = -deterministicAtan2(player.transform.z - e.transform.z, player.transform.x - e.transform.x);
+          const delta = angleDelta(e.transform.yaw, look);
+          e.transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), motionLimits.turnSpeed / 60);
+          if (e.locomotion) { e.locomotion.vx = 0; e.locomotion.vz = 0; e.locomotion.omega = 0; }
+        }
         continue;
       }
       delete c.arenaWait;
