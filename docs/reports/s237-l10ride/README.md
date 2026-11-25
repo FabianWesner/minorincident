@@ -49,3 +49,7 @@ A narrower recovery rule rejoins the road only when a later checkpoint retry ret
 ## Native browser capture follow-up
 
 The HIGH native research-checkpoint bot capture crashed at beat 6 when a missing special attack was dereferenced. A guard fixes that crash; on rerun HIGH reached 9/10 beats and LOW 7/10 before the capture tick limit. The inspected [HIGH sheet](native-high-partial.jpg) shows the motorbike with sidecar, combat, road and corn; the hospital and underpass are not readable. The inspected [LOW sheet](native-low-partial.jpg) shows the gate edge and repeated fighting at the convoy, never reaching the hospital capture. These partial routes do not prove visual acceptance. Typecheck, lint and the existing seven combat tests passed after the guard.
+
+## Passive threat route investigation
+
+A diagnostic trial allowed the existing bot to attack only while on foot within 40 m of a closed L10 roadblock; the hold remained stationary and attack-free. The LOW passive audit then advanced from the first roadblock to x=3479 at the hospital, but still exhausted its 1800 s budget before the hold and reported `UNOBSERVED_PASSIVE_CRITERION_STEP:hold`. The audit change was reverted. This is not a zero-flag receipt, and a sound passive measurement must both reach the hold and state its prerequisite combat policy explicitly.
