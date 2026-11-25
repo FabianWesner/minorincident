@@ -109,6 +109,10 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     expect(infectedNav).not.toBe(humanNav);
     expect(infectedNav.walls.some(wall=>(wall as {navOnly?:boolean}).navOnly)).toBe(true);
     expect(humanNav.walls.some(wall=>(wall as {navOnly?:boolean}).navOnly)).toBe(false);
+    for (const z of [14, 15, 16]) {
+      expect(infectedNav.visible({x:241,z},{x:251,z},.35), 'infected cannot cross the eastern tunnel end').toBe(false);
+      expect(humanNav.visible({x:241,z},{x:251,z},.35), 'the evacuation route remains open to humans').toBe(true);
+    }
     const hatchWall={x:54,y:1,z:11.8,halfX:1.55,halfY:1,halfZ:.18};
     expect(infectedNav.clear(54,12.3,.35), 'an open side door is a real aperture in the infected wall').toBe(true);
     w.infected!.setInfectedBlocker(920_002,hatchWall,true);
