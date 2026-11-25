@@ -18,6 +18,9 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - On `9a3dfb1c`, a headless WebGPU diagnostic repeated all four capture cases and recorded a moving corgi with no browser errors (`/private/tmp/s235-corgi-webgpu`). The HIGH and LOW close frames were opened and show the same dense and sparse crop respectively. This establishes backend rendering, not the required manual WebGPU or temporal review.
 
+- A temporary runtime slot probe at walking frame 45 observed courier ID 1 at (557.695, 42), speed 3.825 m/s, and corgi ID 99 at (554.856, 42), speed 3.605 m/s, both with full influence and forward direction (1, 0). The probe was removed after the run. It establishes that both moving actors reach the uniforms, not that other actors or crowd saturation are covered.
+- The per-frame collector now uses an indexed scan and a reusable vehicle callback rather than allocating array and Map iterators. Typecheck, lint and all four WebGL2 capture cases passed on this change (`/private/tmp/s235-no-iterator`).
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
