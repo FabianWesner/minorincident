@@ -33,7 +33,7 @@ export function placedLights(world: import('../sim/world/DistrictWorld').Distric
       if (removed.has(placement.id) || placement.assetId.startsWith('veh.')) continue;
       for (const authored of anchorsFor(placement.assetId)) {
         const anchor = placement.id === 'l8-zebra-exterior-flood' || placement.id === 'l8-gorilla-exterior-flood'
-          ? { ...authored, intensity: 1.8, range: 20 }
+          ? { ...authored, intensity: 4, range: 32 }
           : placement.id.startsWith('l10-setpiece-sinkhole-rim-light-') ? { ...authored, flicker: 'damaged' as const, powerGroup: 'self' }
           : district.id === 'D-CURE' && placement.position[0] < 747 && placement.fieldLight === 'flood' && placement.assetId === 'prop.light-tower' && authored.type === 'spot'
           ? { ...authored, color: 'light_window_warm' as const, intensity: 3.2, range: 14 }
