@@ -187,7 +187,7 @@ export class DistrictAssets {
       if (shared) child.material = shared;
       else { this.sharedMaterials.set(key, child.material as Material); this.batchMaterials.add(child.material as Material); }
       // Batched light-bearing dressing keeps the world's existing player cutaway.
-      if (child.material instanceof PaletteMaterial) child.material.seeThrough();
+      if (child.material instanceof PaletteMaterial && child.material.userData.batchFeatures !== 'l10-corn') child.material.seeThrough();
     }
   }
   /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
@@ -280,10 +280,6 @@ export class DistrictAssets {
       root.traverse(node => { if (node instanceof Mesh) { node.material = material!; node.castShadow = false; } });
     }
     this.share(root);
-    // Corn parts geometrically; the shared static-batch player cut would erase stalks.
-    if (id === 'veg.corn-block') root.traverse(node => {
-      if (node instanceof Mesh && node.material instanceof PaletteMaterial) node.material.seeThrough(false);
-    });
     if (id === 'kit.highway-onramp') {
       // The joining layout slab uses Materials.world's asphalt detail. The
       // merged ramp previously sampled only the swatch, leaving a dark wedge
