@@ -2,6 +2,7 @@ import { DoubleSide, Vector3, type Node } from 'three/webgpu';
 import { attribute, dot, mat4, modelWorldMatrix, positionLocal, positionWorld, renderGroup, sin, uniform, vec3, vec4 } from 'three/tsl';
 import type { Materials } from './Materials';
 import type { SimWorld } from '../sim/world/SimWorld';
+import type { EntitySnapshot } from '../sim/world/types';
 
 const nearby: number[] = [];
 const search = { x: 0, z: 0, r: 22 };
@@ -21,6 +22,15 @@ function put(id: number, x: number, speed: number, z: number, vx: number, vz: nu
   const strength = Math.min(1, directions[slot].value.y + elapsed * 10);
   directions[slot].value.set(vx, strength, vz);
 }
+let vehicleElapsed = 0;
+let activeVehicle: number | null = null;
+// A reusable callback avoids creating a Map iterator or closure on each frame.
+function collectVehicle(car: { entity: EntitySnapshot; physics: { speed: number } }): void {
+  const e = car.entity, speed = Math.abs(car.physics.speed);
+  if (speed <= .1 || Math.hypot(e.transform.x - search.x, e.transform.z - search.z) > 22) return;
+  const sign = car.physics.speed < 0 ? -1 : 1;
+  put(e.id, e.transform.x, speed, e.transform.z, Math.cos(e.transform.yaw) * sign, -Math.sin(e.transform.yaw) * sign, vehicleElapsed, activeVehicle === e.id ? 2 : -1);
+}
 /** Fixed eight-slot upload: no per-stalk CPU work; the shader bends crop around nearby movers. */
 export function updateCorn(world: SimWorld): void {
   const hero = world.entities.get(1);
@@ -38,8 +48,9 @@ export function updateCorn(world: SimWorld): void {
   if (!hero.hidden && hero.health.current > 0 && heroSpeed > .1)
     put(hero.id, hero.transform.x, heroSpeed, hero.transform.z, hx / heroSpeed, hz / heroSpeed, elapsed, 0);
   search.x = hero.transform.x; search.z = hero.transform.z;
-  for (const id of world.spatial.query(search, nearby, false)) {
-    const e = world.entities.get(id);
+  world.spatial.query(search, nearby, false);
+  for (let i = 0; i < nearby.length; i++) {
+    const e = world.entities.get(nearby[i]);
     if (!e) continue;
     if (e.id === 1 || e.hidden || e.health.current <= 0 || !(e.infected || e.companion) || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
     const v = e.survivor?.velocity ?? e.motion?.velocity ?? e.companion?.velocity;
@@ -49,11 +60,9 @@ export function updateCorn(world: SimWorld): void {
       put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed, elapsed, e.companion ? 1 : -1);
     }
   }
-  if (world.vehicles) for (const car of world.vehicles.cars.values()) {
-    const e = car.entity, speed = Math.abs(car.physics.speed);
-    if (speed <= .1 || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
-    const sign = car.physics.speed < 0 ? -1 : 1;
-    put(e.id, e.transform.x, speed, e.transform.z, Math.cos(e.transform.yaw) * sign, -Math.sin(e.transform.yaw) * sign, elapsed, world.vehicles.active === e.id ? 2 : -1);
+  if (world.vehicles) {
+    vehicleElapsed = elapsed; activeVehicle = world.vehicles.active;
+    world.vehicles.cars.forEach(collectVehicle);
   }
   for (let i = 0; i < movers.length; i++) if (!seen[i] && ids[i] !== -1) {
     directions[i].value.y = Math.max(0, directions[i].value.y - elapsed);
