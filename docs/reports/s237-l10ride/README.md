@@ -95,3 +95,7 @@ A trial removed the 43→48 shortcut and kept the coarse navigator targeting the
 ## Charge pursuit correction
 
 The coarse navigator previously stopped targeting the courier as soon as the hidden Mega entered the 200 m cruise band, then could fall back to a node behind it. During the active charge it now keeps the live target in the existing bounded obstacle-aware navigator, without changing speed or collision. The focused L10 audit, with ordinary combat on the prerequisite roadblock approach and passive inputs after cure installation, reported zero L10 flags: skilled complete in 1481.0 s with 9 deaths; the 64.9 s passive hold had 8/8 reachable at its final sample and 127.5 attack starts/min. Its overall exit was nonzero solely because a one-level diagnostic is not the full audit. Typecheck and lint passed. The full remote all-level audit timed out at 600 s under load. The remote unit suite timed out twice at its 240 s budget; the second run reported two individual failures before timeout, without final failure details. Full verification remains open.
+
+## Remote unit retry after timeout
+
+The required unchanged remote unit retry was queued again after the two prior timeouts. Runner status showed it waiting in FIFO with load 7.77; after over ten minutes without admission it was cancelled because the original task timebox had elapsed. No tests started in that attempt and it supplies no pass/fail result. The preceding full remote unit run remains incomplete.
