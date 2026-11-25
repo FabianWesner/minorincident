@@ -320,7 +320,8 @@ export class VehicleView extends Group {
         }
       }
       const transition = this.world.vehicles!.transition;
-      const driverElapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick : carTransitionTicks;
+      const l2Approach = transition?.kind === 'enter' && this.world.missions?.state.l2?.truckId === id;
+      const driverElapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick - (l2Approach ? 60 : 0) : carTransitionTicks;
       const passenger = state.passengers?.find(p => p.phase !== 'seated');
       const elapsed = driverElapsed < carTransitionTicks ? driverElapsed : passenger ? this.world.tick + alpha - 1 - passenger.started : carTransitionTicks;
       const side = driverElapsed < carTransitionTicks ? transition!.side : passenger?.side ?? transition?.side ?? 1, player = this.world.entities.get(1)!;
