@@ -17,6 +17,10 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
       return { x: p.transform.x, z: p.transform.z, dog: dog?.id, quality: a.getState().render.quality, zoom };
     }, { tier, zoom });
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
+    await session.page.evaluate(() => {
+      const a = window.__SS__!, p = a.getEntity(1)!.transform;
+      a.camera.cinematic({ position: [p.x + 6, 7, p.z + 6], target: [p.x, 1, p.z] }, true);
+    });
     await session.page.evaluate(() => window.__SS__!.input.clear());
     for (const frame of [10, 20, 30, 40, 50, 60]) {
       await session.page.evaluate(async () => { const a = window.__SS__!; await a.step(10); a.settings.set({ timeOfDay: 'L1' }); });

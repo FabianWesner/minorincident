@@ -280,6 +280,10 @@ export class DistrictAssets {
       root.traverse(node => { if (node instanceof Mesh) { node.material = material!; node.castShadow = false; } });
     }
     this.share(root);
+    // Corn parts geometrically; the shared static-batch player cut would erase stalks.
+    if (id === 'veg.corn-block') root.traverse(node => {
+      if (node instanceof Mesh && node.material instanceof PaletteMaterial) node.material.seeThrough(false);
+    });
     if (id === 'kit.highway-onramp') {
       // The joining layout slab uses Materials.world's asphalt detail. The
       // merged ramp previously sampled only the swatch, leaving a dark wedge
