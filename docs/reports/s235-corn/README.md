@@ -7,7 +7,7 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 - Typecheck and lint passed on `de427978`.
 - The remote unit suite passed on `de427978` (27 files, 105 passed, one skipped, 211.9 seconds), after an unchanged rerun of a timed-out attempt.
 - HIGH and LOW WebGL2 captures at zoom 1 and 1.5 were generated under `/private/tmp/s235-corn` on `de427978`. Close frames show corn drawn in front of the courier and corgi. They do not establish clean parting, smooth recovery or the absence of distortion and popping.
-- A headless WebGPU diagnostic on `bc96c63c` reported the requested backend at both qualities and zooms, without captured console errors. Manual WebGPU review remains open.
+- A headless WebGPU diagnostic on `de6e7ff6` reported the requested backend at both qualities and zooms, without captured console errors. The zoom 1.5 frames show the courier and corgi partially obscured by dense HIGH crop and more visible in sparser LOW crop. They do not prove smooth parting. Manual WebGPU review remains open.
 - Quiet L10 performance attempts were not admitted within 180 seconds due to host load or another active browser. No current frame-time result is claimed.
 - Six fixed-camera HIGH stopped frames were inspected together. The corgi approaches and the crop remains drawn; overlapping dark silhouettes make individual stalk recovery and popping indeterminate.
 
