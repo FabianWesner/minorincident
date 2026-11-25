@@ -275,8 +275,8 @@ export class LevelTwoRescue {
   }
   /** Boarding points along the camera-facing (+x) flank (crew) and the crew door (player): the boarding reads from the screen side. */
   private seat(i: number): Point {
-    const t = this.world.entities.get(this.s.truckId)!.transform, side = 1, along = -2.4 + i * .95;
-    return this.snap({ x: t.x + Math.cos(t.yaw) * along + Math.sin(t.yaw) * side * 1.7, z: t.z - Math.sin(t.yaw) * along + Math.cos(t.yaw) * side * 1.7 }, .35);
+    const t = this.world.entities.get(this.s.truckId)!.transform, side = 1, along = -3.9 - (i % 2) * .6;
+    return this.snap({ x: t.x + Math.cos(t.yaw) * along + Math.sin(t.yaw) * side * (1.4 + Math.floor(i / 2) * .65), z: t.z - Math.sin(t.yaw) * along + Math.cos(t.yaw) * side * (1.4 + Math.floor(i / 2) * .65) }, .35);
   }
   /** The protected corgi uses its normal deterministic path and trot before boarding last. */
   boardCompanion(e: EntitySnapshot): boolean {
