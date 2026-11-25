@@ -367,18 +367,15 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, l2 = this.world.missions?.state.l2;
     const wanted: { actorId: number; seat: string; driver: boolean }[] = [];
     const transition = this.world.vehicles!.transition, elapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick : carTransitionTicks;
-    if (transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: 'driverSeat', driver: true });
+    if (l2?.truckId !== id && transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: 'driverSeat', driver: true });
     if (car.entity.vehicle!.driver !== null) wanted.push({ actorId: car.entity.vehicle!.driver!, seat: 'driverSeat', driver: true });
     for (const [i, passenger] of (car.entity.vehicle!.passengers ?? []).slice(0, car.physics.def.transport?.seats.length ?? 0).entries()) {
       if (this.world.entities.get(passenger.id)?.companion) continue; // Retained in the closed troop bay.
       if (passenger.phase !== 'exit' || this.world.tick - passenger.started < 12) wanted.push({ actorId: passenger.id, seat: `passenger${passenger.seat ?? i}`, driver: false });
     }
-    if (l2?.truckId === id) {
-      if (l2.seated) wanted.push({ actorId: 1, seat: 'crewSeat0', driver: false });
-      if (['alarm', 'ride', 'arrived'].includes(l2.phase)) for (const [i, actorId] of l2.crewIds.entries()) {
-        if (this.world.entities.get(actorId)?.hidden) wanted.push({ actorId, seat: i === 0 ? 'driverSeat' : `crewSeat${i}`, driver: i === 0 });
-      }
-    }
+    // Engine 3's riders are enclosed by its authored body. The generic seated
+    // rigs extend through the cab windows, so show the world actors only while
+    // they enter or leave and keep them hidden while aboard.
     const ids = new Set(wanted.map(o => o.actorId));
     for (const occupant of this.occupants.values()) if ((occupant.parent === record.model || occupant.parent === record.parent) && !ids.has(occupant.actorId)) occupant.visible = false;
     for (const w of wanted) {
