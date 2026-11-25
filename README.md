@@ -71,3 +71,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Geometry review: `D-SUBWAY.layout.json` has five `kit.maintenance-corridor` placements at x 54, 126, 198, 78 and 174, while the six service-door x positions are 54, 126, 198, 78, 162 and 228. The visual correspondence of the last two hatches therefore needs review before moving doors or claiming all six are visibly aligned with maintenance passages.
 
 - The remote unit suite against the current source timed out at 240.7 s under runner load; its unchanged retry remained queued and was stopped at the lane time limit. Neither run is a pass.
+
+- Running the unchanged wave invariant from archived base revision 68892f1f reproduces the identical L4 low 35/36 failure and also the L6 unannounced-hatch reservation mismatch (60 admitted versus 54 expected). These failures predate this lane; the current L6 fixture explicitly announces the entries before checking the reservation.
