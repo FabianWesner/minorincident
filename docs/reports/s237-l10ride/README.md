@@ -53,3 +53,7 @@ The HIGH native research-checkpoint bot capture crashed at beat 6 when a missing
 ## Passive threat route investigation
 
 A diagnostic trial allowed the existing bot to attack only while on foot within 40 m of a closed L10 roadblock; the hold remained stationary and attack-free. The LOW passive audit then advanced from the first roadblock to x=3479 at the hospital, but still exhausted its 1800 s budget before the hold and reported `UNOBSERVED_PASSIVE_CRITERION_STEP:hold`. The audit change was reverted. This is not a zero-flag receipt, and a sound passive measurement must both reach the hold and state its prerequisite combat policy explicitly.
+
+## Hospital composition trial
+
+Moving the first tent from (3500, 50) to (3500, 108) did not make it visible in a staged HIGH zoom-1 capture at (3502, 95). The trial was reverted because it did not improve the frame and placed the solid footprint closer to the ride lane. The cause of its absence requires render/occlusion and streaming inspection before another placement change.
