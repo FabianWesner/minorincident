@@ -258,3 +258,5 @@ Fresh natural physical-input captures ran HIGH then LOW on the merged source, he
 ### Floodlight follow-up
 
 Increased the two existing exterior floodlights' range from 20 to 32 and intensity from 1.8 to 4 to illuminate the enclosures. Fresh HIGH then LOW natural physical-input routes both completed without browser errors. In the opened [review sheet](flood-natural-review.jpg), straw and the gorilla silhouette are clearer, but the sampled pound has no clear impact cue and the grab is obscured by gunfire. Neither route sampled a zebra kick, and zebra dressing readability remains unproven. LOW spent a prolonged interval in the gorilla encounter. These remain open visual and natural-play issues. Typecheck and lint passed; the full `npm run qa:threat` completed in 308.8 s with 0 fail flags and skilled L8 complete. The remote unit pass above predates this render-only change.
+
+On lighting commit `fff1a6ab`, the required remote `npm test` passed in 217.1 s: 27 files, 104 tests passed and one skipped; the budget inventory counted 148/150 cases. The natural-play readability limitations above remain open.
