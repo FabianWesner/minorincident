@@ -16,6 +16,8 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 - `npm run qa:threat` hit its 600 s command budget before the full stage list completed (exit 124). The same untrimmed audit completed via `node tools/qa/run-threat-sharded.mjs --single`: **823.7 s, 0 fail flags**; receipt: `test-results/qa-threat/README.md`.
 - Earlier physical L6 high/low counter receipts in [`fix73-g/L6-gate.json`](../fix73-g/L6-gate.json) and [`fix73-g/L6-final-counter.json`](../fix73-g/L6-final-counter.json) report production 600 HP shield fronts, 90-tick breaks, downing by ordinary aimed input, and visible shield-break sparks plus both red bars. The source capture PNGs referenced there are not present in this checkout.
 
+- Native L6 simulation probe at exit (263.91, 28.08; player y 4.62) and tunnel (110, 15; y 1.27): production armored actors initially 1/2 m away for axe and 2/5/8 m for firearms; real held-input attack runner and hit query. [Per-hit records](native-hits.json) show positive hits for all four weapons at both locations: axe 39.2, handgun 10, MG 7, shotgun 120 initially with falloff on later shots. The 3 s samples include actor movement and shotgun knockback, so distances are starting positions only; shotgun downed at 2/5 m, other samples ended before downing. This is a controlled simulation, not a visual or physical-pointer review.
+
 ## Open
 
 - The high-tier platform probe recorded one handgun hit on the first of two native hatch actors; the second was not hit before the probe timed out. Full weapon/distance and tunnel coverage, visual review of the updated armored chip, and diagnosis of missed shots remain open.
