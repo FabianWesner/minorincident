@@ -2505,6 +2505,25 @@ export default {
     "source": "public/assets/models/veh.courier-bike.glb",
     "hash": "ee6d5cdbf3ff40b8cef07a124268654be8b2a1034e2c175c69d7c749d5bb0535"
   },
+  "veh.courier-motorbike": {
+    "class": "light",
+    "mass": 180,
+    "friction": 0.8,
+    "restitution": 0.08,
+    "centerOfMass": [
+      -0.05,
+      0.46,
+      0.16
+    ],
+    "pushable": false,
+    "kickable": false,
+    "vaultable": false,
+    "flammable": true,
+    "sounds": "vehicle.engine-low",
+    "boxes": [],
+    "source": "public/assets/models/veh.courier-motorbike.glb",
+    "hash": "15bfa3496ac99cc10ca3225dfa4cde1f885b9e4d3b4196cca905a5f36a8cd7e8"
+  },
   "prop.package-courier": {
     "class": "light",
     "mass": 4,
@@ -7446,7 +7465,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.zoo-tunnel-mouth.glb",
-    "hash": "41c7cc058032d0ba21fea2dec43351ae209e3f00b4c7617b039886a0c7cb8e06"
+    "hash": "0d7e0e6971b4fb06ddac002fd106ff2eea6037a6a48546641feadf43fcf7dc71"
   },
   "wpn.minigun-mounted": {
     "class": "fixed",

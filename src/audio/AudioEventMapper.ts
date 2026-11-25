@@ -174,6 +174,10 @@ export class AudioEventMapper {
                 const caption = audioCues[telegraphCues[special] ?? telegraphCues[entity?.archetype ?? '']]?.caption;
                 if (caption) this.host.caption(caption, position, 'duration' in event ? event.duration : undefined);
                 this.host.play(`animal.${animal}.tell`, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
+                // The species voice carries the snort/hoot; these movement
+                // cues add the hoofbeat or chest drum promised by the tell.
+                if (special === 'zebra.stampede' || special === 'gorilla.roar')
+                    this.host.play(telegraphCues[special], { position, offscreen: position ? this.host.offscreen(position) : false }, source);
                 return;
             }
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;

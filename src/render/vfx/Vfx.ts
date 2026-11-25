@@ -488,18 +488,21 @@ export class Vfx extends Group {
     if (!position) return;
     const radius = throwing ? 1.5 : directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
     const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
-    // Flamingos use the red ground lane; zebra/elephant retain dust lanes,
-    // and lion/monkey leaps use amber landing rings.
-    const animalShape = move === 'zebra.stampede' || move === 'elephant.charge' ? 12 : undefined;
+    // The zebra's moving dust is supplemented by a defined directional lane
+    // so the herd's pass remains readable against the savanna floor.
+    const animalShape = move === 'zebra.stampede' ? 2 : move === 'elephant.charge' ? 12 : undefined;
     // r34-l8qa: a lion's ordinary windup (special 'pin', no authored move: Scene Lab / free chase) used the shared red
     // charge lane; it gets the same amber landing ring as the authored pounce.
     const lionOrdinary = !move && (source?.archetype === 'infected.lion' || source?.archetype === 'infected.lioness');
     const animalRing = move === 'lion.pounce' || move === 'lion.flank' || move === 'monkey.grab' || lionOrdinary || source?.infected?.pursuit && move === 'alpha.pounce';
-    const animalColor = this.colorblind ? undefined : move === 'flamingo.dive' ? 0xe32f3a : move === 'zebra.stampede' ? 0xc9b07c : move === 'elephant.charge' ? 0x9c8463 : animalRing ? 0xffa53a : undefined;
+    const animalColor = this.colorblind ? undefined : move === 'flamingo.dive' ? 0xe32f3a : move === 'zebra.stampede' ? 0xffc35a : move === 'elephant.charge' ? 0x9c8463 : move === 'gorilla.roar' || animalRing ? 0xffa53a : undefined;
     if (animalRing && target && (area || lionOrdinary)) {
       const ring = move === 'monkey.grab' ? .9 : 1.3, at = destination && move !== 'lion.pounce' && !lionOrdinary ? destination : target;
       const ringGround = this.world.districts?.groundHeight(at.x, at.z) ?? 0, duration = 'duration' in event ? event.duration : .6;
-      const ringSlot = this.telegraphs.spawn(this.time, 1e9, at.x, ringGround + .065, at.z, area ? angle0(area) : angle, duration, 0, ring * 2, 8, animalColor ?? this.telegraphColor(kind), 0, 1, true);
+      // L8's visual habitat slabs sit above the physics ground. The ring must
+      // clear those slabs as well as the collision surface.
+      const tellLift = source?.infected?.arenaBoss ? .2 : .065;
+      const ringSlot = this.telegraphs.spawn(this.time, 1e9, at.x, ringGround + tellLift, at.z, area ? angle0(area) : angle, duration, 0, ring * 2, 8, animalColor ?? this.telegraphColor(kind), 0, 1, true);
       if (ringSlot >= 0) {
         this.visible = true;
         this.tells.set(event.attackId, { slot: ringSlot, kind, spawned: this.time, x: at.x, z: at.z, angle: area ? angle0(area) : angle, shape: 8, radius: ring, resolves: this.time + duration, ...(animalColor !== undefined ? { color: animalColor } : {}), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
@@ -507,11 +510,12 @@ export class Vfx extends Group {
       }
       return;
     }
-    const shape = animalShape ?? (arenaThrow || throwing ? 1 : move === 'alpha.shield-bash' ? 9 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' || move === 'lion.roar' ? 8 : directional ? 2 : telegraphShapes[kind]);
+    const shape = animalShape ?? (arenaThrow || throwing ? 1 : move === 'alpha.shield-bash' || move === 'gorilla.grab-slam' ? 9 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' || move === 'lion.roar' ? 8 : directional ? 2 : telegraphShapes[kind]);
     const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? source?.infected?.arenaBoss ? (area?.radius ?? .75) * 2 : 1.5 : (area?.radius ?? 1) * 2;
     const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
     if (move === 'zebra.stampede' && source) this.burst(source.transform.x, source.transform.y - .5, source.transform.z, 0xb9ab8e, this.quality === 'low' ? 3 : 6, .5, 1, 0, particleShape.smoke, .6, .2);
-    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, animalColor ?? this.telegraphColor(kind), 0, arenaThrow || throwing ? 1 : directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
+    const tellLift = source?.infected?.arenaBoss ? .2 : .065;
+    const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + tellLift, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, animalColor ?? this.telegraphColor(kind), 0, arenaThrow || throwing ? 1 : directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
     if (slot < 0) return;
     this.visible = true;
     this.tells.set(event.attackId, { slot, kind, spawned: this.time, x: position.x, z: position.z, angle, shape, radius, resolves: this.time + ('duration' in event ? event.duration : .6), ...(animalColor !== undefined ? { color: animalColor } : {}), ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
@@ -661,6 +665,11 @@ export class Vfx extends Group {
       this.waves.opacity(second, .82);
       const slot = this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 8, 0xef92ff, 1);
       this.waves.opacity(slot, .25);
+    } else if (kind === 'smoke-column') {
+      const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+      // Seed the whole plume at once so it remains legible when fixed-step
+      // simulation advances several ticks between presented frames.
+      for (let i = 0; i < 8; i++) this.burst(x, ground + 1.5 + i * .55, z, 0x665f73, 4, 1.05 + i * .08, 4, -.3, particleShape.smoke, .15, .25);
     } else if (kind === 'electric') {
       this.burst(x, height, z, 0x94ecff, 12, 0.07, 0.25, 0, particleShape.spark);
       for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, height + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);
@@ -804,7 +813,7 @@ export class Vfx extends Group {
         cue = 200;
         if (cue > last) {
           const reach = a.move === 'gorilla.pound' ? 1 : .6, x = p.x + fx * reach, z = p.z + fz * reach, g = ground(x, z);
-          this.waves.spawn(this.time, .55, x, g + .04, z, 0, 0, 0, a.move === 'gorilla.pound' ? 10 : 3, groundShape.pressure, 0xe3d3b5, 1);
+          this.waves.spawn(this.time, .55, x, g + .2, z, 0, 0, 0, a.move === 'gorilla.pound' ? 10 : 3, groundShape.pressure, 0xe3d3b5, 1);
           this.burst(x, g + .2, z, 0x9d8f7a, low ? 5 : 12, .5, 1.6, -.3, particleShape.smoke, 1, .3);
           if (near(20)) this.targets.shake(this.flashReduction ? .03 : a.move === 'gorilla.pound' ? .16 : .06);
         }

@@ -41,6 +41,10 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push({ id, assetId, position: [x, y, z], yaw, scale, minTier: 0, maxTier: 6, lightGroup: layout.lightGroups[0]?.id ?? 'zoo', allowRoad: true,
         visualAabb: { min: [x - hx, y, z - hz], max: [x + hx, y + dim.y * scale[1], z + hz] }, ...(destruction ? { destruction } : {}) });
     };
+    // Floodlights outside the west fences illuminate the night enclosures
+    // without putting plaza lamps or obstacles inside the animal arenas.
+    add('l8-zebra-exterior-flood', 'prop.light-tower', 35, 32);
+    add('l8-gorilla-exterior-flood', 'prop.light-tower', 35, -32);
     // Habitat fittings are existing solid props, kept around the outside of
     // each encounter's movement lanes and away from both gate thresholds.
     add('l8-lion-dead-tree', 'prop.tree.dead', -69, -25, [.8, .85, .8], -.35);
@@ -60,6 +64,9 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (let i = 0; i < 2; i++) add(`l8-gorilla-log-${i}`, 'prop.tree.dead', 53 + i * 7, -24 - (i % 2) * 3, [.55, .6, .55], .4);
     // Along the north-east side, clear of the south entry and east exit.
     add('l8-gorilla-climbing-frame', 'prop.zoo-climbing-frame', 69, -25);
+    // Loose bags on the upper platform are reachable from the throwing perch.
+    for (const [i, [x, z]] of [[68, -25], [69, -26], [70, -25]].entries())
+      add(`l8-gorilla-ledge-prop-${i}`, 'prop.trash-bags', x, z, [.4, .4, .4], 0, undefined, 3);
     add('l8-primate-climbing-frame', 'prop.zoo-climbing-frame', -2, 28);
     for (let i = 0; i < 5; i++) add(`l8-monkey-debris-${i}`, 'prop.crates', -3 + i * 1.5, 20, [.35, .35, .35]);
     for (const [i, [x, z]] of [[84, 48], [108, 64], [84, 67]].entries()) add(`l8-elephant-earth-mound-${i}`, 'prop.garden-bush', x, z, [1.5, .65, 1.5]);

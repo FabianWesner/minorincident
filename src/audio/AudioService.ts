@@ -195,6 +195,9 @@ export class AudioService implements Lifecycle {
         // either event to start decodeAudioData on demand can hitch the first
         // physical action while the background bank queue is still running.
         if (this.level === 'L7') await Promise.all(['pickups', 'weapons'].map(bank => this.registry.load(bank)));
+        // L8's animal tells layer the movement warning with the species voice;
+        // preload the lazy warning bank so the first tell is not dropped.
+        if (this.level === 'L8') await this.registry.load('telegraph');
         if (this.level === 'L10') await Promise.all(['telegraph', 'music-L10-fx'].map(bank => this.registry.load(bank)));
         else if (this.world.megaPursuit) await Promise.all(['telegraph', 'music-L6'].map(bank => this.registry.load(bank)));
         // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.

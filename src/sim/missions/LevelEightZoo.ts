@@ -28,8 +28,12 @@ export interface L8ZooState {
   keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number; gateToastAt?: number;
   departureAt: number; chaseAt: number; departureFrom: Transform | null; haleFallAt: number; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
   /** Nadia's guided walk: 0 leading, 1 aborted (she is gone/turned), 2 arrived at the entry gate. */
-  guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number; guideRouteVersion?: number; guideAnimalLines?: number;
+  guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number; guideRouteVersion?: number; guideAnimalLines?: number; infectionSetupAt?: number; infectionFeedLineAt?: number; infectionStoryLines?: number;
   lastJoinCue?: number;
+  /** Keeper killed during the breach, retained in the lion enclosure. */
+  lionStoryKeeperId?: number;
+  /** Outbreak arrivals already placed inside the broken zebra paddock. */
+  zebraStoryAttackers?: number[];
   perimeterGateBreaks?: (number | null)[]; perimeterGateReleased?: boolean[]; perimeterGateSounded?: boolean[]; gateBreachLineAt?: number;
   /** r33-l8route: tick the plaza doors shut (0 = not yet), the route-marker leg/node, and the regions whose first walk-in wave has run (bit 1 north, 2 south, 4 east). */
   sealedAt: number; routeStage: number; routeNode: number; legWaves: number; plazaWaveAt: number; plazaBursts: number; driverAt?: number; departureRun?: number;
@@ -54,13 +58,13 @@ const sIsClosed = (breakAt: number | null | undefined, tick: number) => breakAt 
 /** Keep even a full zoo rescue roster close enough to regroup during real stops. */
 function l8FormationSlot(leader: Point, heading: Point, slot: number, natural = true): Point {
   const target = formationSlot(leader, heading, slot, natural), compressedRows = Math.max(0, Math.floor(slot / 3) - 3);
-  target.x += heading.x * compressedRows * .85; target.z += heading.z * compressedRows * .85;
+  target.x += heading.x * compressedRows * .45; target.z += heading.z * compressedRows * .45;
   return target;
 }
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
   readonly bosses: L8BossArenas;
-  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, haleFallAt: 0, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false, guideDone: 0, guideLeg: 0, guideArrivedAt: 0, guideWaiting: false, lionUntil: 0, sealedAt: 0, routeStage: -1, routeNode: 0, legWaves: 0, plazaWaveAt: 0, plazaBursts: 0 };
+  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, haleFallAt: 0, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false, guideDone: 0, guideLeg: 0, guideArrivedAt: 0, guideWaiting: false, lionUntil: 0, infectionStoryLines: 0, sealedAt: 0, routeStage: -1, routeNode: 0, legWaves: 0, plazaWaveAt: 0, plazaBursts: 0 };
   private prepared = false;
   private rosterCacheTick = -1;
   private rosterCacheRevision = -1;
@@ -226,6 +230,16 @@ export class LevelEightZoo {
       const id = ai.spawn(archetype, at, { state: 'chase' });
       const entity = w.entities.get(id)!; if (targetId !== 1) entity.infected!.arenaCarrier = targetId;
       ai.pursueTarget(id, targetId, targetId === 1 ? 30 : undefined);
+      if (index === 0) {
+        // The south cohort crosses the opened perimeter mouth before reacquiring its target.
+        entity.infected!.scripted = { x: spread, z: -82 };
+        entity.infected!.breachApproach = 'l8-south-gate';
+      }
+      if (index === 2) {
+        // The west opening is narrow in X; keep the cohort lined up within its Z span.
+        entity.infected!.scripted = { x: -112, z: spread };
+        entity.infected!.breachApproach = 'l8-west-gate';
+      }
       if (index === 1) {
         // The ticket pavilion blocks the direct sight line from the north
         // opening; route the outside cohort through the gate and around it.
@@ -332,6 +346,46 @@ export class LevelEightZoo {
   private story(): void {
     const s = this.state, w = this.w, t = w.tick, player = w.entities.get(1)!;
     const keeper = w.entities.get(s.keeperId), hale = w.entities.get(s.haleId);
+    if (this.breached && (s.zebraStoryAttackers?.length ?? 0) < 2) {
+      const arena = s.arenas.find(a => a.id === 'zebra');
+      const target = arena?.ids.map(id => w.entities.get(id)).find(e => e?.civilian && !e.infection && e.health.current > 0);
+      const ai = w.infected!;
+      const index = s.zebraStoryAttackers?.length ?? 0;
+      const at = [{ x: 70, z: 39 }, { x: 70, z: 35 }][index];
+      // Admit only unseen, physically clear arrivals and preserve their IDs in
+      // the checkpoint. They use the same ordinary infected stats and attacks.
+      if (target && at && ai.director.count + ai.director.pendingTurns < ai.director.cap && ai.pool.length && ai.director.safe('infected.runner', at)) {
+        const id = ai.spawn('infected.runner', at, { state: 'chase' });
+        ai.pursueTarget(id, target.id);
+        w.entities.get(id)!.infected!.arenaCarrier = target.id;
+        (s.zebraStoryAttackers ??= []).push(id);
+      }
+    }
+    if (!s.infectionSetupAt && t >= s.startedAt + 300) {
+      s.infectionSetupAt = t;
+      this.mission.radio('L8.infection-setup');
+    } else if (s.infectionSetupAt && !s.infectionFeedLineAt && t >= s.infectionSetupAt + 240) {
+      s.infectionFeedLineAt = t;
+      this.mission.radio('L8.infection-feed-store');
+    }
+    // Replenish the burn-site plume throughout the tour; one VFX burst lasts
+    // only a few seconds and disappears well before the player reaches it.
+    if (s.infectionSetupAt && !this.breached && (t - s.infectionSetupAt) % 120 === 0)
+      w.events.emit({ type: 'vfx.effect', tick: t, kind: 'smoke-column', position: { x: 29, y: 0, z: 4 }, radius: 4 });
+    for (const [bit, id, line, position] of [
+      [1, 'lion', 'L8.story-lion', { x: -69, y: 0, z: -25 }],
+      [2, 'zebra', 'L8.story-zebra', { x: 60, y: 0, z: 32 }],
+      [4, 'gorilla', 'L8.story-gorilla', { x: 60, y: 0, z: -32 }],
+      [8, 'monkey', 'L8.story-monkey', { x: -15, y: 0, z: 26 }],
+      [16, 'flamingo', 'L8.story-flamingo', { x: 0, y: 0, z: -32 }],
+    ] as const) {
+      const arena = s.arenas.find(a => a.id === id);
+      if (arena?.phase === 1 && !((s.infectionStoryLines ?? 0) & bit)) {
+        s.infectionStoryLines = (s.infectionStoryLines ?? 0) | bit;
+        w.events.emit({ type: 'vfx.effect', tick: t, kind: 'objective', position, radius: 2.5 });
+        this.mission.radio(line);
+      }
+    }
     if (s.gateToastAt && t >= s.gateToastAt) { s.gateToastAt = 0; this.mission.radio('L8.gate-toast'); }
     if (s.greetingAt && t >= s.greetingAt) { s.greetingAt = 0; this.mission.radio('L8.nadia-path'); }
     if (s.broadcastAt && t >= s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 25) { s.broadcastAt = 0; this.mission.radio('L8.broadcast'); }
@@ -433,6 +487,15 @@ export class LevelEightZoo {
         guard.civilian.ally.run = at; guard.civilian.ally.post = at; guard.civilian.ally.runSpeed = 6; guard.civilian.ally.hold = true;
       }
       this.reyesFallback();
+      // The keeper reached the lion rocks with feed before the breach. Use the
+      // same finished-civilian representation as the authored L5 bodies so the
+      // scene survives the breach checkpoint and later animal fights.
+      const bodyAt = this.point({ x: -68, z: -26 }, .35);
+      const bodyId = w.npcs!.civilians.outbreak!.spawnPedestrian(bodyAt, { ...zooStaffLook(0), waypoints: [bodyAt] });
+      const body = w.entities.get(bodyId)!;
+      body.civilian!.state = 'finished'; body.civilian!.entered = t - 600; body.health.current = 0;
+      if (body.appearance) body.appearance.handProp = null;
+      s.lionStoryKeeperId = bodyId;
       this.mission.checkpoint('breach', this.mission.def.anchors['zoo-entrance']);
       this.mission.radio('L8.nadia-safe');
       s.gateBreachLineAt = t + 60;
@@ -449,7 +512,7 @@ export class LevelEightZoo {
         }
       }
     }
-    if (s.gateBreachLineAt && t >= s.gateBreachLineAt) { s.gateBreachLineAt = 0; this.mission.radio('L8.nadia-gate-breach'); }
+    if (s.gateBreachLineAt && t >= s.gateBreachLineAt) { s.gateBreachLineAt = 0; this.mission.radio('L8.hale-enclosures'); }
     if (this.breached) for (let i = 0; i < perimeterGates.length; i++) {
       if (sIsClosed(s.perimeterGateBreaks?.[i], t)) continue;
       if (!s.perimeterGateSounded![i]) {
@@ -958,7 +1021,7 @@ export class LevelEightZoo {
     this.w.openDoors.clear();
     for (const [id, door] of data.doors) this.w.openDoors.set(id, { ...door, at: door.at + delta });
     // A checkpoint restored on tick zero can have a legitimate breach time of zero.
-    this.state.startedAt += delta; if (this.breached) this.state.breachedAt += delta; if (this.state.nextWave) this.state.nextWave += delta;
+    this.state.startedAt += delta; if (this.state.infectionSetupAt) this.state.infectionSetupAt += delta; if (this.state.infectionFeedLineAt) this.state.infectionFeedLineAt += delta; if (this.breached) this.state.breachedAt += delta; if (this.state.nextWave) this.state.nextWave += delta;
     if (this.state.gateBreachLineAt) this.state.gateBreachLineAt += delta;
     if (this.state.perimeterGateBreaks) this.state.perimeterGateBreaks = this.state.perimeterGateBreaks.map(at => at === null ? null : at + delta);
     this.state.plazaBursts ??= 0; this.state.plazaWaveAt ??= 0; if (this.state.plazaWaveAt) this.state.plazaWaveAt += delta; this.state.sealedAt ??= 0; this.state.routeStage ??= -1; this.state.routeNode ??= 0; this.state.legWaves ??= 0; if (this.state.sealedAt) this.state.sealedAt += delta;

@@ -396,6 +396,87 @@ for e in list(l.data['roads']['edges']):
 HABITAT = {name: 'sidewalk' for name in _encl}
 for k, (cx, cz, w, d) in _encl.items():
     l.box('habitat-floor', HABITAT[k], [w - 1.2, .03, d - 1.2], [cx, .015, cz])
+# Story traces remain on the ground after the outbreak. Keep the main gate
+# lanes clear: splintered fence and blood at the paddock edge, and the vet's
+# dropped tranquiliser rifle beside the gorilla house.
+l.box('zebra-broken-rail', 'silver', [3.2, .12, .12], [79, .21, 41.8])
+l.box('zebra-fallen-fence-top', 'silver', [.12, .12, 2.7], [79.7, .23, 42.4])
+for _z in (41.4, 42.0, 42.6):
+    l.box('zebra-fallen-fence-bar', 'silver', [2.2, .08, .06], [79.5, .3, _z])
+l.box('zebra-blood-trace', 'blood', [1.8, .025, .7], [72, .16, 40])
+l.box('gorilla-vet-rifle-stock', 'woodWarm', [.55, .1, .18], [72, .20, -39])
+l.box('gorilla-vet-rifle-barrel', 'silver', [.85, .07, .07], [72.65, .20, -39])
+l.box('gorilla-vet-blood', 'blood', [1.2, .025, .6], [72, .16, -40])
+# The gorilla's night house reads as a keeper-built shelter from the public
+# side: masonry, a barred viewing slit, a forced service door and a bed of hay.
+# Solid walls match the visible house. The open east side leaves the hay bed
+# accessible without obstructing either arena gate.
+l.box('gorilla-night-house-back', 'trouserSeam', [9.2, 3.4, .35], [57, 1.7, -49.6])
+l.box('gorilla-night-house-side', 'trouserSeam', [.35, 3.4, 8.2], [52.6, 1.7, -45.6])
+l.box('gorilla-night-house-front-left', 'trouserSeam', [6.8, 3.4, .35], [55.8, 1.7, -41.6])
+l.box('gorilla-night-house-front-right', 'trouserSeam', [.6, 3.4, .35], [61.3, 1.7, -41.6])
+l.box('gorilla-night-house-front-header', 'trouserSeam', [1.8, .7, .35], [60.1, 3.05, -41.6])
+l.box('gorilla-night-house-roof', 'woodWarm', [9.2, .32, 8.2], [57, 3.42, -45.6])
+for _id, _min, _max in [
+    ('back', [52.4, 0, -49.775], [61.6, 3.4, -49.425]),
+    ('side', [52.425, 0, -49.7], [52.775, 3.4, -41.5]),
+    ('front-left', [52.4, 0, -41.775], [59.2, 3.4, -41.425]),
+    ('front-right', [61.0, 0, -41.775], [61.6, 3.4, -41.425]),
+    ('front-header', [59.2, 2.7, -41.775], [61.0, 3.4, -41.425]),
+]:
+    l.data['colliders'].append(dict(id='gorilla-night-house-' + _id, aabb=dict(min=_min, max=_max), minTier=0, maxTier=5))
+for _x in (59.25, 60.95):
+    l.box('gorilla-night-house-door-frame', 'sidewalk', [.16, 2.7, .16], [_x, 1.35, -41.18])
+l.box('gorilla-night-house-door-lintel', 'sidewalk', [1.85, .16, .16], [60.1, 2.65, -41.18])
+# The door was ripped out: boards and splinters lie outside the clear opening.
+l.box('gorilla-forced-door-leaf', 'woodWarm', [1.6, .12, 2.3], [61.8, .23, -39.7])
+l.box('gorilla-forced-door-splinter', 'mustardLight', [1.4, .08, .14], [60.4, .24, -40.3])
+l.box('gorilla-viewing-window', 'backpackTealDark', [3.2, 1.1, .12], [55.6, 2.45, -41.35])
+for _x in (54.4, 55.2, 56.0, 56.8):
+    l.box('gorilla-window-bars', 'silver', [.07, 1.2, .08], [_x, 2.45, -41.2])
+_straw_rng = random.Random(222)
+for _i in range(180):
+    _x = _straw_rng.uniform(53.8, 58.3)
+    _z = _straw_rng.uniform(-40.6, -38.5)
+    _straw = l.box('gorilla-straw-scatter', 'mustardLight' if _i % 2 else 'khakiLight',
+                   [_straw_rng.uniform(.25, .55), .025, .035], [_x, .19 + (_i % 3) * .025, _z])
+    _straw.rotation_euler.z = _straw_rng.uniform(0, math.tau)
+# The barrage perch at (69, -25) sits on a rock shelf. Keep the base solid
+# and the approach to the arena gates clear; the boss traverses onto its top.
+l.box('gorilla-throw-rock-base', 'sidewalk', [3.8, 2.65, 3.2], [69, 1.325, -25])
+l.box('gorilla-throw-rock-ledge', 'khakiSeam', [4.3, .35, 3.7], [69, 2.825, -25])
+l.data['colliders'].append(dict(id='gorilla-throw-rock', aabb=dict(min=[67.1, 0, -26.6], max=[70.9, 2.65, -23.4]), minTier=0, maxTier=5))
+# A tyre on a short chain beneath the house beam. The torus is a non-solid visual.
+bpy.ops.mesh.primitive_torus_add(major_radius=.72, minor_radius=.18, major_segments=20, minor_segments=8, location=(64, 44.8, 1.5), rotation=(math.pi / 2, 0, 0))
+_tyre = bpy.context.object; _tyre.name = 'gorilla-tyre-swing'; _tyre.data.materials.append(material('hairShadow')); l.layers[0].append(_tyre)
+l.box('gorilla-swing-chain-left', 'silver', [.045, 2.3, .045], [63.45, 1.4, -44.8])
+l.box('gorilla-swing-chain-right', 'silver', [.045, 2.3, .045], [64.55, 1.4, -44.8])
+# Bloodied keeper uniforms and zebra bite traces make the broken paddock event legible.
+l.box('zebra-blood-trace-2', 'blood', [2.0, .025, .65], [68.8, .17, 36.5])
+l.box('zebra-uniform-shirt', 'picketWhite', [.65, .12, .55], [73.1, .2, 39.1])
+l.box('zebra-uniform-blood', 'blood', [.38, .03, .42], [73.1, .28, 39.1])
+l.box('gorilla-uniform-shirt', 'picketWhite', [.65, .12, .55], [70.1, .2, -42.2])
+l.box('gorilla-uniform-blood', 'blood', [.38, .03, .42], [70.1, .28, -42.2])
+# The primate keeper office is the reptile-house building at (-14, 14).
+# A broken window on its yard-facing wall and bloodied clothing below it
+# connect the abandoned office to the monkeys in the adjoining yard.
+l.box('primate-office-broken-window', 'uiDark', [2.8, 1.4, .08], [-14, 2.4, 18.06])
+for _x in (-15.3, -12.7):
+    l.box('primate-office-window-frame', 'picketWhite', [.12, 1.55, .12], [_x, 2.4, 18.12])
+l.box('primate-office-window-sill', 'picketWhite', [2.8, .12, .2], [-14, 1.65, 18.12])
+for _x, _z in [(-14.8, 18.6), (-13.7, 19.0), (-13.1, 18.4)]:
+    l.box('primate-office-glass-shard', 'backpackTeal', [.35, .03, .18], [_x, .17, _z])
+l.box('primate-office-uniform', 'picketWhite', [.9, .1, .65], [-12.5, .2, 19.2])
+l.box('primate-office-uniform-blood', 'blood', [.55, .03, .45], [-12.5, .27, 19.2])
+# Spilled feed container beside the keeper at the lion rocks. The small
+# collider keeps it a physical obstacle without closing the approach lane.
+l.box('lion-feed-bucket', 'silver', [.55, .48, .55], [-67, .39, -26])
+l.box('lion-spilled-feed', 'khakiLight', [1.1, .03, .7], [-66.3, .16, -26])
+# Army burn site behind the gorilla-house approach, visible from the tour.
+# The sealed metal incinerator is solid and clear of the public path.
+l.box('sanctuary-incinerator', 'uiDark', [1.8, 1.4, 1.2], [29, .7, 4])
+l.box('sanctuary-incinerator-rim', 'silver', [1.9, .12, 1.3], [29, 1.42, 4])
+l.box('sanctuary-incinerator-ash', 'hairShadow', [3.2, .025, 2.3], [29, .035, 4])
 # Savanna tufts in the zebra paddock (grass blades, non-solid); the gate line (enclosure centre x) stays open.
 for k in range(9):
     tx, tz = 60 + _zr.uniform(-18, 18), 32 + _zr.uniform(-16, 16)
@@ -679,6 +760,11 @@ l.data['placements'] = [p for p in l.data['placements'] if p is not None]
 # allocation so every remaining placement retains its authored identifier.
 _new_fences = [p for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) >= _arena_first_id]
 _arena_drop = {p['id'] for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence' and int(p['id'].rsplit(':', 1)[1]) < _arena_first_id and abs(p['position'][0] - 14) < .01 and abs(p['position'][2] - 20) < 4}
+# The outbreak broke one panel of the outer zebra fence. The compact inner
+# arena fence remains intact, keeping the solo encounter and route sealed.
+_arena_drop |= {p['id'] for p in l.data['placements'] if p['assetId'] == 'prop.crowd-fence'
+                and int(p['id'].rsplit(':', 1)[1]) < _arena_first_id
+                and abs(p['position'][0] - 82) < .01 and abs(p['position'][2] - 41.75) < .1}
 # Remove old dressing from the newly fenced gorilla exit paving, after IDs are allocated.
 _arena_drop |= {p['id'] for p in l.data['placements'] if p['assetId'] in _DRESS
                 and p['visualAabb']['max'][0] > 74 and p['visualAabb']['min'][0] < 96
@@ -705,8 +791,8 @@ for pid in _arena_drop:
 for _name, _token, _x, _z, _w, _d in [
     ('lion-sand', 'khaki', -60, -32, 27, 27),
     ('flamingo-mud', 'khakiSeam', 0, -32, 27, 27),
-    ('zebra-savanna', 'apronOlive', 60, 32, 27, 27),
-    ('gorilla-earth', 'trouserSeam', 60, -32, 27, 27),
+    ('zebra-savanna', 'khaki', 60, 32, 27, 27),
+    ('gorilla-earth', 'woodWarm', 60, -32, 27, 27),
     ('primate-earth', 'khakiSeam', -6, 20, 27, 27),
     ('elephant-earth', 'khakiSeam', 96, 53, 27, 27),
 ]:
@@ -727,7 +813,7 @@ def habitat_oval(name, token, x, z, rx, rz, height):
     bpy.context.collection.objects.link(obj)
     l.layers[0].append(obj)
 habitat_oval('flamingo-mud-bank', 'khaki', 0, -32, 8.0, 5.9, .151)
-habitat_oval('flamingo-water', 'backpackTeal', 0, -32, 7.2, 5.1, .158)
+habitat_oval('flamingo-water', 'blood', 0, -32, 7.2, 5.1, .158)
 habitat_oval('flamingo-island', 'khakiLight', 1.0, -32, 1.55, 1.05, .165)
 l.box('habitat-elephant-water', 'backpackTealDark', [4, .015, 3], [87, .157, 61])
 

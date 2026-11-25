@@ -4,7 +4,7 @@ import { loadLevel } from '../qa/invariants/world';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 
-/** The courier enters each cage alone with the corgi; the group waits outside until it clears. */
+/** The courier enters each cage alone; the corgi and survivor group wait outside until it clears. */
 export async function checkL8Route(): Promise<void> {
   const w = await loadLevel('L8', 1);
   try {
@@ -69,8 +69,9 @@ export async function checkL8Route(): Promise<void> {
         const outside = at(-5);
         expect(w.solids.relocate(player, { ...outside, y: player.transform.y }, 'fixture.l8-route', 20, false)).toBe(true);
         const firstZebra = w.entities.get(arena.ids[0])!;
-        expect(firstZebra.civilian).toBeDefined();
-        w.npcs!.civilians.outbreak!.infect(firstZebra, player.id);
+        // The paddock attackers may already have turned this animal while
+        // the preceding enclosures were being checked.
+        if (firstZebra.civilian && !firstZebra.infection) w.npcs!.civilians.outbreak!.infect(firstZebra, player.id);
         for (let tick = 0; tick < 600; tick++) w.update();
         const herd = arena.ids.map(id => w.entities.get(id)!).filter(e => e.infected?.arenaBoss?.arena === 'zebra' && e.health.current > 0);
         expect(arena.phase, 'zebra encounter stays dormant while the courier is beyond the entry fence').toBe(0);
@@ -81,6 +82,17 @@ export async function checkL8Route(): Promise<void> {
       }
       const p0 = at((stage.depth ?? 5) + 1); w.solids.relocate(player, { ...p0, y: player.transform.y }, 'fixture.l8-route', 20, false);
       expect(inRect(player.transform, stage.zone), `${stage.id}: courier inside the enclosure`).toBe(true);
+      if (stage.id === 'lion' || stage.id === 'monkey') {
+        const corgi = [...w.entities.iterate()].find(e => e.companion)!;
+        const inside = stage.id === 'monkey' ? { x: -11.16, z: 18.70 } : at(3);
+        expect(w.solids.relocate(corgi, { ...inside, y: corgi.transform.y }, 'fixture.l8-corgi-inside', 1, false)).toBe(true);
+        arena.phase = 1; arena.armed = false;
+        zoo.bosses.update();
+        expect(arena.armed, 'entry stays open while the corgi is inside').toBe(false);
+        for (let tick = 0; tick < 600 && inRect(corgi.transform, stage.zone); tick++) w.update();
+        expect(inRect(corgi.transform, stage.zone), 'corgi walks out before the entry closes').toBe(false);
+        arena.phase = 0; arena.armed = false;
+      }
       let armedWith = -1;
       let stragglers = '';
       const entryNavId = 900840 + index * 2, previous = l8Route[index - 1], previousEntryNavId = index > 0 ? 900840 + (index - 1) * 2 : -1;
@@ -103,6 +115,9 @@ export async function checkL8Route(): Promise<void> {
       expect(closeTicks.get(entryNavId), `${stage.id}: entry barrier closes on the next native tick`).toBe(armedAt + 1);
       if (index > 0) expect(closeTicks.get(previousEntryNavId), `${previous!.id}: both doors close on the next native tick`).toBe(armedAt + 1);
       expect(armedWith, `${stage.id}: no follower enters the active cage (${stragglers})`).toBe(0);
+      const corgi = [...w.entities.iterate()].find(e => e.companion)!;
+      expect(corgi.companion!.arenaWait, `${stage.id}: corgi waits outside with the survivors`).toBe(true);
+      expect(inRect(corgi.transform, stage.zone), `${stage.id}: corgi stays outside the active cage`).toBe(false);
       const detail = [...zoo.state.guards, zoo.state.haleId, zoo.state.reyesId];
       const guards = detail.map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected);
       const shots: number[] = [];
@@ -110,6 +125,8 @@ export async function checkL8Route(): Promise<void> {
       for (let tick = 0; tick < 60; tick++) {
         w.update();
         expect(guards.some(e => e && inRect(e.transform, stage.zone)), `${stage.id}: guards remain outside`).toBe(false);
+        expect(corgi.companion!.arenaWait, `${stage.id}: corgi retains its wait order`).toBe(true);
+        expect(inRect(corgi.transform, stage.zone), `${stage.id}: corgi remains outside`).toBe(false);
       }
       stop();
       expect(shots, `${stage.id}: guards do not attack cage animals`).toEqual([]);
@@ -131,6 +148,8 @@ export async function checkL8Route(): Promise<void> {
       }
       arena.phase = 3; arena.armed = false; zoo.bosses.updateGates();
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${stage.id}: the exit opens on the clear`).toBe(false);
+      w.update();
+      expect(corgi.companion!.arenaWait, `${stage.id}: corgi rejoins after the cage clears`).toBeUndefined();
     }
     // The elephant yard has a south entry fence instead of an l8Route `entry`
     // box. Once the entire party has crossed it, both it and the gorilla return
@@ -152,11 +171,22 @@ export async function checkL8Route(): Promise<void> {
     expect(elephant.armed, 'elephant gate arms after the courier enters the yard').toBe(true);
     const elephantZone = l8Route.find(stage => stage.id === 'elephant')!.zone;
     expect(zoo.state.guards.map(id => w.entities.get(id)).some(e => e && e.health.current > 0 && !e.infected && inRect(e.transform, elephantZone)), 'guards wait outside the elephant yard').toBe(false);
+    const corgi = [...w.entities.iterate()].find(e => e.companion)!;
+    expect(corgi.companion!.arenaWait, 'elephant: corgi waits outside with the survivors').toBe(true);
+    expect(inRect(corgi.transform, elephantZone), 'elephant: corgi stays outside the active yard').toBe(false);
+    const dogPosition = { ...corgi.transform };
+    w.events.emit({ type: 'cinematic.completed', tick: w.tick, id: 'l8-hale' });
+    expect(corgi.transform, 'Hale cinematic completion leaves the waiting corgi outside').toEqual(dogPosition);
     const armedAt = w.tick;
     expect(closedAt.size).toBe(0);
     w.update();
     expect(closedAt.get(900834), 'elephant south gate closes one tick after arming').toBe(armedAt + 1);
     expect(closedAt.get(900848), 'gorilla return entry closes one tick after elephant entry').toBe(armedAt + 1);
     expect(closedAt.get(900849), 'gorilla forward exit closes one tick after elephant entry').toBe(armedAt + 1);
+    for (let tick = 0; tick < 60; tick++) {
+      w.update();
+      expect(corgi.companion!.arenaWait, 'elephant: corgi retains its wait order').toBe(true);
+      expect(inRect(corgi.transform, elephantZone), 'elephant: corgi remains outside').toBe(false);
+    }
   } finally { w.dispose(); }
 }

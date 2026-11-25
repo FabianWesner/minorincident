@@ -70,7 +70,7 @@ export function renderReport(audit: AuditReceipt, baseline = false): string {
     }
     if (!check) continue;
     const wait = level.observation?.followerWait;
-    routeWait.push(`${level.level}: ${wait?.upperBoundPercent == null ? 'unmeasured' : n(wait.upperBoundPercent) + '%'}`);
+    routeWait.push(`${level.level}: ${wait?.upperBoundPercent == null ? 'unmeasured' : n(wait.upperBoundPercent) + '%'}; designed cage-wait ticks ${wait?.arenaWaitTicks ?? 0}`);
     waitNotProven ||= followerWaitFlags(wait).length > 0;
     for (const id of check.ids) {
       const follower = row?.followerSpeeds.find(f => f.id === id), ratio = follower && row?.followerMedian ? follower.median / row.followerMedian : null;

@@ -92,7 +92,8 @@ export class Npcs {
       || ['L7', 'L8'].includes(this.world.scenario ?? '') && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
     const cell = routeFollower ? nav.nearestCell(e.transform.x, e.transform.z, footprint) : -1;
     // Animal encounter goals are independent of the courier's reverse field.
-    const flowNext = routeFollower && !e.infected?.arenaBoss && !e.infected?.arenaCarrier && distance > 30 ? nav.flowNext(cell) : -1;
+    const l8BreachCatchup = !!e.companion && this.world.scenario === 'L8' && !!this.world.missions?.l8?.state.breachedAt && distance > 6;
+    const flowNext = routeFollower && !e.infected?.arenaBoss && !e.infected?.arenaCarrier && !e.companion?.arenaWait && (distance > 30 || l8BreachCatchup) ? nav.flowNext(cell) : -1;
     if (routeFollower && cell < 0) {
       // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
       const last = this.escapes.get(e.id), tick = this.world.tick;
@@ -115,8 +116,13 @@ export class Npcs {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
       // L3-14: the routed speed cap (4 × waypoint distance) held a far L3 corgi on the adjacent half-metre cell to ~2 m/s,
       // so it crawled 40 m to the army boom while the evacuation waited for it. Look further along the same field.
-      const step = e.companion && this.world.missions?.def.l3 ? nav.flowWaypoint(cell, e.transform, footprint) : flowNext;
+      const step = e.companion && (this.world.missions?.def.l3 || this.world.scenario === 'L8') ? nav.flowWaypoint(cell, e.transform, footprint) : flowNext;
       this.waypoint.x = nav.x(step); this.waypoint.z = nav.z(step);
+    } else if (e.companion?.arenaWait && nav.visible(e.transform, target, footprint)) {
+      // A cage lookout only moves between nearby outside-fence points. When
+      // that short leg is visibly clear, steering to an intermediate grid
+      // cell makes the dog brake and fall behind the courier along the rim.
+      this.waypoint.x = target.x; this.waypoint.z = target.z;
     } else if (e.civilian?.vehicleYield?.target === target && nav.visible(e.transform, target, footprint)) {
       // Kerb orders have a clear direct approach. A grid-centre detour can send
       // an actor back underneath the bus it is stepping away from.
@@ -137,7 +143,7 @@ export class Npcs {
         // Every route search from that pocket fails, so it stood there for the rest of the level and the army boom waited
         // for it forever. After 2 s without any route, body-swept movement toward the courier's own trail slides it back
         // out and the grid takes over again; brief transient failures keep the established stand-and-retry.
-        const pocket = !!e.companion;
+        const pocket = !!e.companion && !e.companion.arenaWait;
         if (pocket && !(this.routeless.get(e.id)! <= tick)) this.routeless.set(e.id, tick); // first failure, or a restored earlier tick
         const trail = pocket && tick - this.routeless.get(e.id)! >= 120 ? this.companion.trailPoint(e) : null;
         if (!trail) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }

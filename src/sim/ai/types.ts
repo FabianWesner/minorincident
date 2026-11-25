@@ -8,7 +8,7 @@ export interface InfectedState {
   thrownBy?: number;
   /** r42-arenas: a wide body (brute, butcher, riot) that made no progress toward a courier within 10 m for 4 s walks the admission grid for 10 s instead of its wide grid (L4 shop-shelf pocket). */
   wideStuck?: { d: number; at: number }; wideFallbackUntil?: number;
-  arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; scattered?: boolean; shakeHits?: number; scavengeId?: number; scavengeProgress?: { x: number; z: number; at: number }; motionProgress?: { x: number; z: number; at: number }; smashId?: string; roof?: boolean; leaderEntered?: boolean; followUpThrow?: boolean; approach?: 'gorilla.roar' | 'gorilla.pound'; approachProgress?: { x: number; z: number; at: number }; barrage?: number; hunt?: { x: number; z: number; until: number; flank: boolean }; traversal?: { start: number; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; roof: boolean }; pace?: { x: number; z: number }; cover?: { x: number; z: number; until: number; hold?: number }; coverAt?: number; hpMark?: { hp: number; at: number } };
+  arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; enraged?: boolean; displayHp?: number; scattered?: boolean; ledgeThrow?: boolean; shakeHits?: number; scavengeId?: number; scavengeProgress?: { x: number; z: number; at: number }; motionProgress?: { x: number; z: number; at: number }; smashId?: string; roof?: boolean; leaderEntered?: boolean; followUpThrow?: boolean; approach?: 'gorilla.roar' | 'gorilla.pound'; approachProgress?: { x: number; z: number; at: number }; barrage?: number; hunt?: { x: number; z: number; until: number; flank: boolean }; traversal?: { start: number; from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; roof: boolean }; pace?: { x: number; z: number }; cover?: { x: number; z: number; until: number; hold?: number }; coverAt?: number; hpMark?: { hp: number; at: number } };
   arenaCarrier?: number;
   /** Data-driven E07 Alpha identity; absent on legacy saves, where Brute is the default. */
   alphaType?: import('../../data/alphaTypes').AlphaType;
@@ -29,12 +29,14 @@ export interface InfectedState {
   targetId: number;
   /** Human acquired by close hearing in the archetype brain (targetId is reserved for obstacles). */
   heardTargetId?: number;
+  /** Next L8 gunshot investigation refresh; prevents continuous fire from resetting the route every tick. */
+  l8ShotRefreshAt?: number;
   /** L5 Alpha investigates a heard burst position until `until`, without acquiring a human through cover. */
   investigate?: { x: number; z: number };
   /** Story-director walk (L4 collapse Alphas): path to this point (grid A*, not the courier flow field) and ignore targets until cleared. */
   scripted?: { x: number; z: number };
   /** L4 street group: finish the breach crossing before acquiring a defender. */
-  breachApproach?: 'wire' | 'vault' | 'outside' | 'inside' | 'l8-gate' | 'l8-north-gate' | 'l8-north-side' | 'l8-north-attack';
+  breachApproach?: 'wire' | 'vault' | 'outside' | 'inside' | 'l8-gate' | 'l8-south-gate' | 'l8-west-gate' | 'l8-north-gate' | 'l8-north-side' | 'l8-north-attack';
   /** L4: first cohort through a newly opened breach. Allies leave it to the courier (G-22) until its first windup or this tick, except in close self-defence. */
   spearheadUntil?: number;
   /** L4: finish a defender flank when the courier's corpse field is saturated. */

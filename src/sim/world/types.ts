@@ -91,7 +91,7 @@ export interface EntitySnapshot {
 }
 /** Presentation events contain only plain authored geometry; views never write back. */
 export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
-export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
+export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'smoke-column' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
 export type GameEvent = import('../lighting/LightPower').LightPowerEvent | import('../weather/WeatherSystem').WeatherEvent | import('../interact/Barricades').BarricadeEvent
   | import('../npc/types').NpcEvent
   | { tick: number; type: 'level.started'; id: string }

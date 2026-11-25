@@ -96,6 +96,8 @@ export interface AllyState {
   mag?: number; burstN?: number; reloadUntil?: number; flinchUntil?: number; lastHp?: number; still?: { x: number; z: number; tick: number }; calloutAt?: number; blockedAt?: number;
 }
 export interface Companion {
+  /** L8: wait with the survivors outside the active animal cage. */
+  arenaWait?: boolean;
   /** Seated in the L10 motorbike sidecar; presentation holds the authored sit clip while passengerOf pins position. */
   riding?: boolean;
   /** Rejected L5 pair steps without meaningful progress, and the bounded yielding leg. */

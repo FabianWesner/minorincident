@@ -1,0 +1,558 @@
+[
+  {
+    "tier": "high",
+    "move": "zebra.stampede",
+    "tick": 265,
+    "attack": {
+      "move": "zebra.stampede",
+      "attackId": 1,
+      "stage": "active",
+      "startTick": 200,
+      "activeTick": 260,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 0,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": 32
+      },
+      "area": {
+        "x": 60,
+        "z": 30,
+        "radius": 0.9,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": 66
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 262,
+        "sourceId": 400,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "zebra.stampede",
+        "amount": 35
+      }
+    ],
+    "hp": 65,
+    "knockdown": {
+      "started": 262,
+      "until": 352
+    }
+  },
+  {
+    "tier": "high",
+    "move": "zebra.kick",
+    "tick": 241,
+    "attack": {
+      "move": "zebra.kick",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 236,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 356,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": 32
+      },
+      "area": {
+        "x": 60,
+        "z": 30,
+        "radius": 2,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": 30
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 236,
+        "sourceId": 400,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "zebra.kick",
+        "amount": 25
+      }
+    ],
+    "hp": 75,
+    "knockdown": {
+      "started": 236,
+      "until": 266
+    }
+  },
+  {
+    "tier": "high",
+    "move": "gorilla.roar",
+    "tick": 265,
+    "attack": {
+      "move": "gorilla.roar",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 260,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 380,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 8,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 260,
+        "sourceId": 398,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "gorilla.roar",
+        "amount": 16
+      }
+    ],
+    "hp": 84,
+    "knockdown": {
+      "started": 260,
+      "until": 320
+    }
+  },
+  {
+    "tier": "high",
+    "move": "gorilla.grab-slam",
+    "tick": 247,
+    "attack": {
+      "move": "gorilla.grab-slam",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 242,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 302,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 2.8,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 242,
+        "sourceId": 398,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "gorilla.grab-slam",
+        "amount": 54
+      }
+    ],
+    "hp": 46,
+    "knockdown": {
+      "started": 242,
+      "until": 392
+    }
+  },
+  {
+    "tier": "high",
+    "move": "gorilla.pound",
+    "tick": 265,
+    "attack": {
+      "move": "gorilla.pound",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 260,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 320,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 5,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 260,
+        "sourceId": 398,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "gorilla.pound",
+        "amount": 30
+      }
+    ],
+    "hp": 70,
+    "knockdown": {
+      "started": 260,
+      "until": 350
+    }
+  },
+  {
+    "tier": "high",
+    "move": "gorilla.grab-throw",
+    "tick": 253,
+    "attack": {
+      "move": "gorilla.grab-throw",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 248,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 308,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 1,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [],
+    "hp": 100
+  },
+  {
+    "tier": "low",
+    "move": "zebra.stampede",
+    "tick": 265,
+    "attack": {
+      "move": "zebra.stampede",
+      "attackId": 1,
+      "stage": "active",
+      "startTick": 200,
+      "activeTick": 260,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 0,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": 32
+      },
+      "area": {
+        "x": 60,
+        "z": 30,
+        "radius": 0.9,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": 66
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 262,
+        "sourceId": 400,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "zebra.stampede",
+        "amount": 35
+      }
+    ],
+    "hp": 65,
+    "knockdown": {
+      "started": 262,
+      "until": 352
+    }
+  },
+  {
+    "tier": "low",
+    "move": "zebra.kick",
+    "tick": 241,
+    "attack": {
+      "move": "zebra.kick",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 236,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 356,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": 32
+      },
+      "area": {
+        "x": 60,
+        "z": 30,
+        "radius": 2,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": 30
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 236,
+        "sourceId": 400,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "zebra.kick",
+        "amount": 25
+      }
+    ],
+    "hp": 75,
+    "knockdown": {
+      "started": 236,
+      "until": 266
+    }
+  },
+  {
+    "tier": "low",
+    "move": "gorilla.roar",
+    "tick": 265,
+    "attack": {
+      "move": "gorilla.roar",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 260,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 380,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 8,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 260,
+        "sourceId": 398,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "gorilla.roar",
+        "amount": 16
+      }
+    ],
+    "hp": 84,
+    "knockdown": {
+      "started": 260,
+      "until": 320
+    }
+  },
+  {
+    "tier": "low",
+    "move": "gorilla.grab-slam",
+    "tick": 247,
+    "attack": {
+      "move": "gorilla.grab-slam",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 242,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 302,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 2.8,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 242,
+        "sourceId": 398,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "gorilla.grab-slam",
+        "amount": 54
+      }
+    ],
+    "hp": 46,
+    "knockdown": {
+      "started": 242,
+      "until": 392
+    }
+  },
+  {
+    "tier": "low",
+    "move": "gorilla.pound",
+    "tick": 265,
+    "attack": {
+      "move": "gorilla.pound",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 260,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 320,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 5,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [
+        1
+      ],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [
+      {
+        "type": "infected.attack",
+        "tick": 260,
+        "sourceId": 398,
+        "targetId": 1,
+        "attackId": 1,
+        "special": "gorilla.pound",
+        "amount": 30
+      }
+    ],
+    "hp": 70,
+    "knockdown": {
+      "started": 260,
+      "until": 350
+    }
+  },
+  {
+    "tier": "low",
+    "move": "gorilla.grab-throw",
+    "tick": 253,
+    "attack": {
+      "move": "gorilla.grab-throw",
+      "attackId": 1,
+      "stage": "recovery",
+      "startTick": 200,
+      "activeTick": 248,
+      "cooldownExpiry": 620,
+      "recoveryUntil": 308,
+      "target": {
+        "id": 1,
+        "x": 60,
+        "z": -32
+      },
+      "area": {
+        "x": 60,
+        "z": -34,
+        "radius": 1,
+        "dx": 0,
+        "dz": 1
+      },
+      "hitIds": [],
+      "destination": {
+        "x": 60,
+        "z": -34
+      }
+    },
+    "events": [],
+    "hp": 100
+  }
+]

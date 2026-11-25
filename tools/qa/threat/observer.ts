@@ -78,9 +78,9 @@ export interface PhaseReceipt {
   stuckChasers?: number[];
 }
 export interface FollowerWaitReceipt {
-  escortTicks: number; stationaryFarTicks: number; upperBoundPercent: number | null;
+  escortTicks: number; stationaryFarTicks: number; upperBoundPercent: number | null; arenaWaitTicks: number;
   followers: { id: number; escortTicks: number; stationaryFarTicks: number }[];
-  windows?: { key: string; escortTicks: number; stationaryFarTicks: number; first?: { tick: number; playerX: number; playerZ: number; followerId: number; followerX: number; followerZ: number } }[];
+  windows?: { key: string; escortTicks: number; stationaryFarTicks: number; arenaWaitTicks: number; first?: { tick: number; playerX: number; playerZ: number; followerId: number; followerX: number; followerZ: number } }[];
   /** Seeded route metrics: 2 Hz Euclidean player/follower gaps and resolved courier reversals toward a follower over 10 m away. */
   paceWindows?: { key: string; samples: number; p50GapM: number | null; p90GapM: number | null; maxGapM: number | null; waitingTicks: number; backtrackTicks: number; stuckFollowers: { id: number; maxSeconds: number; geometryContactTicks: number; bodyContactTicks: number }[] }[];
   prompts?: { wait: number; attack: number; lost: number };
@@ -240,7 +240,7 @@ export function physicalPathEntry(world: SimWorld, entity: EntitySnapshot, grid:
 }
 
 export class ThreatObserver {
-  private readonly followerWait = { escortTicks: 0, stationaryFarTicks: 0, followers: new Map<number, { escortTicks: number; stationaryFarTicks: number }>() };
+  private readonly followerWait = { escortTicks: 0, stationaryFarTicks: 0, arenaWaitTicks: 0, followers: new Map<number, { escortTicks: number; stationaryFarTicks: number }>() };
   private readonly waitWindows = new Map<string, NonNullable<FollowerWaitReceipt['windows']>[number]>();
   private readonly paceWindows = new Map<string, { gaps: number[]; waitingTicks: number; backtrackTicks: number; stuck: Map<number, { since: number; maxTicks: number }>; stuckMax: Map<number, number>; contacts: Map<number, { geometryContactTicks: number; bodyContactTicks: number }> }>();
   private readonly routeProgress = new Map<string, { progress: number; distance: number; segment: number; x: number; z: number }>();
@@ -451,7 +451,7 @@ export class ThreatObserver {
     if (followersOnly && w.tick % 30) return;
     let escorting = false, stationaryFar = false, unnecessaryWait = false, returningToFollower = false;
     const windowKey = this.level === 'L8' ? w.missions!.l8!.protecting() ? 'protect' : w.vehicles!.active !== null ? 'aboard' : w.missions!.l8!.boarding() ? 'boarding' : `escort/${w.missions!.l8!.state.arenas.find(a => a.phase !== 3)?.id ?? 'apc-approach'}` : this.active.map(r => r.key).join('|');
-    const window: NonNullable<FollowerWaitReceipt['windows']>[number] = this.waitWindows.get(windowKey) ?? { key: windowKey, escortTicks: 0, stationaryFarTicks: 0 };
+    const window: NonNullable<FollowerWaitReceipt['windows']>[number] = this.waitWindows.get(windowKey) ?? { key: windowKey, escortTicks: 0, stationaryFarTicks: 0, arenaWaitTicks: 0 };
     const pace = this.paceWindows.get(windowKey) ?? { gaps: [], waitingTicks: 0, backtrackTicks: 0, stuck: new Map<number, { since: number; maxTicks: number }>(), stuckMax: new Map<number, number>(), contacts: new Map<number, { geometryContactTicks: number; bodyContactTicks: number }>() };
     const priorRoute = this.routeProgress.get(windowKey), route = escortProgress(this.level, player.transform, priorRoute?.segment);
     const reversing = !!(priorRoute && route && priorRoute.distance <= 8 && route.distance <= 8 && route.progress < priorRoute.progress - .01);
@@ -464,8 +464,10 @@ export class ThreatObserver {
       const follower = group?.mode === 'follow' || e.escort?.state === 'follow' || e.civilian?.ally?.follow?.targetId === 1 || e.companion?.state === 'follow';
       if (!follower || !e.motion || w.storyLock) continue;
       // L8 solo-cage orders deliberately hold the party outside the active animal gate.
-      // This is encounter containment, not a follower pacing/wait failure.
-      if (this.level === 'L8' && (e.civilian?.survivor?.arenaWait || e.civilian?.ally?.arenaWait)) continue;
+      // Count the explicit orders for audit visibility, and exclude only those ticks.
+      const activeSoloArena = this.level === 'L8' && !!w.missions!.l8!.state.arenas.some(arena => arena.phase === 1 || arena.phase === 2);
+      const arenaWait = activeSoloArena && (e.companion?.arenaWait || e.civilian?.survivor?.arenaWait || e.civilian?.ally?.arenaWait);
+      if (arenaWait) { this.followerWait.arenaWaitTicks++; window.arenaWaitTicks++; continue; }
       if (e.civilian && (['grabbed', 'bitten', 'down', 'rising', 'flee'].includes(e.civilian.state)
         || e.civilian.survivor?.cover || e.civilian.story?.clip === 'npc-cower')) continue;
       const shelterResident = w.missions!.state.l6?.survivors.find(r => r.id === e.id);
@@ -675,6 +677,7 @@ export class ThreatObserver {
       followerWait: {
         windows: [...this.waitWindows.values()],
         escortTicks: this.followerWait.escortTicks, stationaryFarTicks: this.followerWait.stationaryFarTicks,
+        arenaWaitTicks: this.followerWait.arenaWaitTicks,
         upperBoundPercent: this.followerWait.escortTicks ? 100 * this.followerWait.stationaryFarTicks / this.followerWait.escortTicks : null,
         followers: [...this.followerWait.followers].map(([id, value]) => ({ id, ...value })),
         paceWindows: [...this.paceWindows].map(([key, value]) => {
