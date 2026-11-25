@@ -53,6 +53,20 @@ try {
       const entries = (window.__SCENE__ as unknown as { game: Game }).game.world.combat!.runner.loadout.activeEntries();
       const cinematic = (state.mission as { cinematic?: { id: string; elapsed: number } })?.cinematic;
       const audit = (window as unknown as { l8Audit: { attacks: { id: string; arena?: string }[]; hits: { id: string; arena?: string; amount: number }[]; specials: unknown[]; animalHits: unknown[] } }).l8Audit;
+      // Exercise the rear-kick counter in ordinary play: walk behind a live
+      // zebra for at most 20 seconds, then resume the normal combat policy.
+      const auditState = audit as Omit<typeof audit, 'specials'> & { zebraRearAt?: number; specials: { move: string }[] };
+      if (active?.id === 'zebra' && active.phase === 1) auditState.zebraRearAt ??= ss.tick();
+      const rearTactic = active?.id === 'zebra' && active.phase === 1 && auditState.zebraRearAt !== undefined
+        && ss.tick() - auditState.zebraRearAt < 1200 && !auditState.specials.some(event => event.move === 'zebra.kick');
+      if (rearTactic) {
+        const zebra = active.ids.map(id => ss.getEntity(id)).find(e => e && e.health.current > 0);
+        if (zebra) {
+          const dx = zebra.transform.x - Math.cos(zebra.transform.yaw) * 1.5 - p.x;
+          const dz = zebra.transform.z + Math.sin(zebra.transform.yaw) * 1.5 - p.z;
+          const length = Math.hypot(dx, dz); move = length > .4 ? { x: dx / length, z: dz / length } : { x: 0, z: 0 };
+        }
+      }
       const guns = ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher'];
       const needed = active?.phase ? guns.find(id => audit.attacks.filter(e => e.arena === active.id && e.id === id).length < 2 || !audit.hits.some(e => e.arena === active.id && e.id === id && e.amount > 0)) : undefined;
       const choice = entries[plan.slot];
@@ -60,7 +74,7 @@ try {
       const safeNeeded = needed === 'weapon.rocket-launcher' && plan.target && Math.hypot(plan.target.x - p.x, plan.target.z - p.z) < 8 ? undefined : needed;
       const weapon = choice?.id === 'weapon.fire-axe' ? choice.id : bossTarget ? safeNeeded ?? choice?.id : choice?.id;
       return { tick: ss.tick(), phase: (state.mission as { phase: string })?.phase, player: p, hp: player.health.current,
-        move: cinematic ? { x: 0, z: 0 } : move, dx: direction.x - origin.x, dy: direction.y - origin.y, target, fire: !cinematic && !!(plan.frame.left.held || plan.frame.right.held), interact: !cinematic && plan.frame.interact,
+        move: cinematic ? { x: 0, z: 0 } : move, dx: rearTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').x - origin.x : direction.x - origin.x, dy: rearTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').y - origin.y : direction.y - origin.y, target, fire: !cinematic && !rearTactic && !!(plan.frame.left.held || plan.frame.right.held), interact: !cinematic && plan.frame.interact,
         weapon: cinematic ? undefined : weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
         cinematic, wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
