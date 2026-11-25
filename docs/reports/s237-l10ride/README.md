@@ -75,3 +75,7 @@ A follow-up passive diagnostic allowed the normal combat approach until cure ins
 ## Remount planning trial
 
 A bot trial planned around large corpses and approached within 0.5 m of the parked bike. With normal combat enabled on the approach, the diagnostic passive route reached the hold and recorded 129 attack starts in 64.9 s, but its final reachable count was 7/8 (87.5%); the lone unreachable actor was at x=3775.5, far behind the console at x=4001.6. The L10 diagnostic retained `step/hold:BELOW_REACHABILITY_PERCENT_90`. The ordinary HIGH/LOW route trial recorded 4/4 loops and 470.1 s / 525.4 s, but LOW had a 106.3 s story interval. Both trial changes were reverted; neither the threat nor cadence criterion is established by this experiment.
+
+## Unreachable actor identity
+
+A replay of the temporary remount and combat-approach diagnostic identified the lone unreachable hold actor as the 3000 HP pursuit Mega (`infected.alpha`, `pursuit: true`), hidden in coarse pursuit at x=3769.6 while the player was near the console. In the skilled run the same pursuit actor was visible at x=3901.0. The diagnostic changes were reverted. Any fix must preserve the Mega pursuit and reveal rules while getting it into the hold’s reachable area; suppressing the actor from the audit would not resolve the measured behavior.
