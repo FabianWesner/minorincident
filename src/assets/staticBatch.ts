@@ -49,7 +49,7 @@ function* transform(position: Float32Array, normal: Float32Array, matrix: Matrix
     if (i % (slice * 3) === 0) yield;
   }
 }
-type Part = { position: Float32Array; normal: Float32Array; color: Float32Array; palette: Float32Array; light: Float32Array; surface: Float32Array; window: Float32Array; windowUv: Float32Array; index: ArrayLike<number> | null };
+type Part = { position: Float32Array; normal: Float32Array; color: Float32Array; palette: Float32Array; light: Float32Array; surface: Float32Array; window: Float32Array; windowUv: Float32Array; index: ArrayLike<number> | null; stalkRoot?: Float32Array };
 /** Packed GLBs merge furniture and masonry into material primitives. Keep connected boundary
  * geometry (walls, floors, roof trim) in the shell; only enclosed components can be culled. */
 function* interiorParts(part: Part, footprint: Box3): Generator<void, [Part, boolean][]> {
@@ -117,6 +117,14 @@ function* merge(parts: Part[]): Generator<void, BufferGeometry> {
     for (const part of parts) { merged.set(part[key] as Float32Array, at); at += (part[key] as Float32Array).length; yield; }
     geometry.setAttribute(name, new BufferAttribute(merged, size));
   }
+  if (parts.some(part => part.stalkRoot)) {
+    const roots = new Float32Array(vertices * 3); let offset = 0;
+    for (const part of parts) {
+      if (!part.stalkRoot) throw Error('Mixed corn root attributes in static batch');
+      roots.set(part.stalkRoot, offset); offset += part.stalkRoot.length; yield;
+    }
+    geometry.setAttribute('_stalk_root', new BufferAttribute(roots, 3));
+  }
   // BufferGeometry.computeBoundingSphere (box centre, farthest vertex), sliced: InstancedMesh would
   // otherwise compute it in one go when the batch is created.
   const position = geometry.getAttribute('position').array as Float32Array;
@@ -168,7 +176,11 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     const emissive = material.name.startsWith('emi_') || material.userData.emissiveStrength > 0;
     // Decode quantized attributes before applying transforms (integer arrays clamp).
     const position = yield* decode(node.geometry.getAttribute('position')), normal = yield* decode(node.geometry.getAttribute('normal'));
-    yield* transform(position, normal, door >= 0 ? leafFrame.multiplyMatrices(hinge.copy(doorNodes[door]!.matrixWorld).invert(), node.matrixWorld) : node.matrixWorld);
+    const frame = door >= 0 ? leafFrame.multiplyMatrices(hinge.copy(doorNodes[door]!.matrixWorld).invert(), node.matrixWorld) : node.matrixWorld;
+    yield* transform(position, normal, frame);
+    const rootAttribute = node.geometry.getAttribute('_stalk_root');
+    const stalkRoot = rootAttribute ? yield* decode(rootAttribute) : undefined;
+    if (stalkRoot) yield* transform(stalkRoot, new Float32Array(0), frame);
     // The evacuation coach has an open cabin behind authored clear panes.
     // Merging those panes into the opaque body concealed its seats/passengers.
     if (source.userData.assetId === 'veh.evac-bus' && material.transparent) {
@@ -227,7 +239,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       for (let i = 0; i < count; i++) { windowUv[i * 2] = (positions.getComponent(i, horizontal) - box.min.getComponent(horizontal)) / Math.max(.01, box.max.getComponent(horizontal) - box.min.getComponent(horizontal)); windowUv[i * 2 + 1] = (positions.getY(i) - box.min.y) / Math.max(.01, box.max.y - box.min.y); if (i % slice === slice - 1) yield; }
     }
 
-    const part = { position, normal, color: colors, palette: indices, light, window, windowUv, surface: new Float32Array(count).fill(material.userData.surfaceClass ?? 0), index: node.geometry.index ? node.geometry.index.array : null };
+    const part = { position, normal, color: colors, palette: indices, light, window, windowUv, stalkRoot, surface: new Float32Array(count).fill(material.userData.surfaceClass ?? 0), index: node.geometry.index ? node.geometry.index.array : null };
     const parts: [Part, boolean][] = interior && footprint ? yield* interiorParts(part, footprint) : [[part, false]];
     for (const [geometry, inside] of parts) {
       const key = bucket + (inside ? 65536 : 0);
