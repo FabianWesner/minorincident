@@ -105,3 +105,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Restored the original gate durability and L6-09 acceptance row (8–12 s versus five infected): the PO requested halving spawn counts, not gate HP. With the original durability, all six skilled measurement routes and the focused passive and early-close routes complete; player/follower attack floors still fail. Typecheck and lint pass. The existing controlled native gate fixture measured all three gates at both tiers: each held 9.82 s against five runners; closed gates blocked movement and sight, and open gates allowed both.
 
 - Refreshed the native trace and six-run matrix after restoring gate durability; prior audit provenance remains labeled to its earlier source and the all-level audit still needs rerunning.
+
+- Two further unchanged remote unit runs against the current source timed out at 244.2 s and 245.5 s (240 s budget); neither is a pass. The earlier completed remote unit pass predates subsequent gameplay changes.
