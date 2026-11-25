@@ -12,7 +12,9 @@ if (args.includes('--single')) {
 }
 const git = (...a) => execFileSync('git', a, { encoding: 'utf8' }).trim();
 const revision = git('rev-parse', 'HEAD'), main = git('rev-parse', 'refs/heads/main');
-const same = git('diff', main, '--', 'src', 'public') === '' && git('ls-files', '--others', '--exclude-standard', '--', 'src', 'public') === '';
+const diff = spawnSync('git', ['diff', '--quiet', main, '--', 'src', 'public']);
+if (diff.status !== 0 && diff.status !== 1) throw diff.error ?? new Error(`git diff failed: ${diff.status}`);
+const same = diff.status === 0 && git('ls-files', '--others', '--exclude-standard', '--', 'src', 'public') === '';
 const provenance = { QA_THREAT_REVISION: revision, QA_THREAT_MAIN_REVISION: main, QA_THREAT_SOURCE_MATCHES_MAIN: String(same) };
 const count = 2, started = Date.now();
 // RUNNER_SLOTS=1: a runner holding one shard is "full", so the second shard must land on a different runner (4 vCPUs each).
