@@ -22,8 +22,10 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - [Physical pointer receipt](pointer-hits.json): high-quality WebGL2, protected courier, controlled production armored actors at exit and tunnel, initially 1.4 m (axe) or 5 m (guns), tracked mouse aim, stepped simulation. Every weapon downed its actor at both locations: seven axe hits, 24 handgun hits, two shotgun hits, 35 MG hits. Actors were permitted to move. This is not a crowded retreat replay or a several-distance pointer matrix.
 
+- [Pointer distance matrix](pointer-matrix.json): high tier, exit and tunnel, front-facing armored actor, protected courier, stepped simulation with tracked mouse. Axe starts at 1/2 m; each firearm starts at 2/8 m. All 16 cases downed the actor. Exit cases preceded a fixture checkpoint error during the tunnel continuation; tunnel cases were repeated with a fresh level per case and finished with no page errors. Actor movement and shotgun knockback change distance during firing. The test does not recreate the reported crowd or shield-bearing riot.
+
 ## Open
 
-- A crowded retreat replay, several-distance physical pointer matrix, and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
+- A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
 - The latest remote unit suite and its unchanged rerun timed out; the remote acceptance remains open.
 
