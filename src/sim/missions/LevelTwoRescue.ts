@@ -283,7 +283,7 @@ export class LevelTwoRescue {
     const s = this.mission.state.l2, c = e.companion;
     if (!s || !c || !s.companionBoard || s.phase !== 'alarm' || !s.seated) return false;
     if (e.health.current <= 0 || e.infected) return false;
-    const target = s.companionBoard!, reached = Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < .5;
+    const target = s.companionBoard!, reached = Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < 1;
     if (reached && this.world.tick >= (s.boardingAt ?? this.world.tick) + ticks(2.8)) {
       e.hidden = true; e.passengerOf = s.truckId; if (c.velocity) c.velocity.x = c.velocity.z = 0; this.world.spatial.delete(e.id);
     } else this.world.npcs!.move(e, target, 4.4, c, .3, 2400);
@@ -349,7 +349,7 @@ export class LevelTwoRescue {
     if (this.s.seated) {
       relocatePlayer(world, x, z);
     }
-    for (const e of world.entities.iterate()) if (e.companion || (e.hidden && this.s.crewIds.includes(e.id))) { e.hidden = true; e.passengerOf = this.s.truckId; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
+    for (const e of world.entities.iterate()) if (e.hidden && (e.companion || this.s.crewIds.includes(e.id))) { e.hidden = true; e.passengerOf = this.s.truckId; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
   }
   private arrive(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
@@ -367,7 +367,7 @@ export class LevelTwoRescue {
     world.player!.locomotion.reset(); Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, out.x, out.z); world.player!.setCheckpoint(player.transform);
     world.storyLock = { scripted: null, skip: false }; world.clearInput();
     world.events.emit({ type: 'vehicle.exited', tick, sourceId: s.truckId, targetId: 1, role: 'passenger' });
-    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = side(-1.6, 2.2); Object.assign(e.transform, p); world.solids.admit(e, 'l2.relocation'); }
+    for (const e of world.entities.iterate()) if (e.companion && e.passengerOf === s.truckId) { e.hidden = false; delete e.passengerOf; const p = side(-1.6, 2.2); Object.assign(e.transform, p); world.solids.admit(e, 'l2.relocation'); }
     if (!this.mission.state.states.arrived) this.mission.setState('arrived', true);
   }
   private crewExit(): void {
