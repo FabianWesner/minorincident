@@ -27,3 +27,5 @@
 - Confirm the courier and corgi visibly climb in, and all riders exit to the street, rather than relying on simulation state assertions.
 
 - `carry()` currently hides the companion as soon as the courier boards, before the companion reaches its boarding point; arrival also leaves its `passengerOf` marker set. Removing that early hide exposed that the existing interaction test does not reach the companion boarding point within three seconds. Fix the path and entry/exit together, then rerun the checks and captures.
+
+The subtitle-free capture rerun includes four arrival samples. Review shows the crew clustered behind the truck during boarding and the exit obscured by the truck at arrival; the one-by-one climb and walk-out are still not visually demonstrated. The camera-facing door and character paths need adjustment before acceptance.

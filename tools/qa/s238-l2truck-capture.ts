@@ -20,6 +20,7 @@ try {
         const g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
         const board = g.world.missions!.def.anchors['l2-board'];
         a.teleport(1, { x: board.x, z: board.z });
+        const style = document.createElement('style'); style.textContent = '.mission-subtitle { visibility: hidden !important; }'; document.head.append(style);
         document.documentElement.setAttribute('data-scene-hud', '');
         document.querySelectorAll('#hud,.hud').forEach(n => n.setAttribute('data-scene-hud', ''));
       });
@@ -70,7 +71,11 @@ try {
       await snap('ride', 180);
       while (s.l2.phase !== 'arrived' && s.tick < s.l2.departAt + 1800) { await wait(20); s = await state(); }
       if (s.l2.phase !== 'arrived') throw new Error(`${tier}: truck did not reach arrival beat`);
-      await snap('arrival', s.tick - s.l2.departAt);
+      for (const dt of [18, 54, 96, 150]) {
+        const now = (await state()).tick, target = s.l2.arrivedAt + dt;
+        if (now < target) await wait(target - now);
+        await snap('arrival', dt);
+      }
       if (session.errors.length) throw new Error(session.errors.join('\n'));
     } finally { await session.close(); }
   }
