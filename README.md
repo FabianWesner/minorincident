@@ -107,3 +107,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Refreshed the native trace and six-run matrix after restoring gate durability; prior audit provenance remains labeled to its earlier source and the all-level audit still needs rerunning.
 
 - Two further unchanged remote unit runs against the current source timed out at 244.2 s and 245.5 s (240 s budget); neither is a pass. The earlier completed remote unit pass predates subsequent gameplay changes.
+
+- A first-gate conditional western seal completed all six skilled routes and introduced no additional focused L6 flags; the seal occurred at ticks 6539–7227, after the leader reached x≈90–96. It was discarded because the western end remained open during the shelter-to-gate leg and checkpoint re-opening was not proven. The underlying requirement is still open.
