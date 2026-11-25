@@ -63,6 +63,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - Two additional quiet HIGH eight-zombie field pairs included both the stable-tier and preload changes. In baseline-then-candidate order, p95/p99 were 6.4/8.4 ms before and 7.0/9.1 ms after. In candidate-then-baseline order, they were 7.3/9.1 ms before and 7.5/9.7 ms after. All runs traversed x=555–565 and had no browser errors. Both exact-code pairs were slower after the change, while earlier tier-only pairs did not show a slowdown; the increased cost versus run-to-run noise is unresolved and the no-regression criterion is not established.
 
+- A proposed per-mover distance guard was rejected before timing. Although the one-second wake and 1.2 m radius suggest a conservative `speed + 1.21` bound, a same-frame toggle changed 8,036 pixels by more than 20 RGB levels on HIGH and 4,950 on LOW; two unbounded controls were pixel-identical (`/private/tmp/s235-bound-compare`). The HIGH difference image was opened and changes occur at the field edges. The guard and probe were removed. The mismatch between the geometric expectation and shader output remains unexplained; this optimization must not be assumed equivalent.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
