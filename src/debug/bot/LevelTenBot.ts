@@ -108,14 +108,14 @@ export class LevelTenBot {
       else if (!bike.riding && closedGate) {
         // If a prior knock-off happened between set pieces, recover the bike
         // before entering the next roadblock. Each barrier must start mounted.
-        f.move = this.walker.step(w, bikeEntity.transform, 1, 'motorbike') ?? f.move;
+        f.move = this.walker.step(w, bikeEntity.transform, this.profile === 'threat-passive' ? .5 : 1, 'motorbike', this.profile === 'threat-passive') ?? f.move;
         f.interact = bike.canInteract() && tick % 30 === 0;
       }
       // Recover the same parked bike after a hard hit or a cleared roadblock.
       // Keep aiming and firing while walking back so the rider can create
       // space, then remount with the normal E interaction.
       else if (!closedGate && !bike.riding) {
-        f.move = this.walker.step(w, bikeEntity.transform, 1, 'motorbike') ?? f.move;
+        f.move = this.walker.step(w, bikeEntity.transform, this.profile === 'threat-passive' ? .5 : 1, 'motorbike', this.profile === 'threat-passive') ?? f.move;
         f.interact = bike.canInteract() && tick % 30 === 0;
       }
     }

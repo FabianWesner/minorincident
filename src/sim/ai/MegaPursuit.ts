@@ -477,7 +477,12 @@ export class MegaPursuit {
     // of marching back to a route node that may have become inaccessible after
     // a restore or a long detour. The bounded grid still routes around solids.
     if (!farHidden || !s.route.length) this.coarseRouteFallback = false;
-    const target = (farHidden && !this.coarseRouteFallback) || !s.route.length ? s.target : this.nodes.get(s.route[0])!;
+    // During the final charge the courier is stationary at the complex. A
+    // nonresident Mega should keep navigating toward that live target even
+    // after entering the 200 m cruise band; falling back to an old route node
+    // there can send it back along the approach indefinitely.
+    const charge = !!this.world.missions?.state.states['charge-active'];
+    const target = charge || (farHidden && !this.coarseRouteFallback) || !s.route.length ? s.target : this.nodes.get(s.route[0])!;
     const dx = target.x - p.x, dz = target.z - p.z, d = Math.hypot(dx, dz), stop = s.route.length ? 0 : this.radius + 1;
     if (d <= stop + 1e-6) return;
     // Keep the local goal well inside the 80 m coarse grid, but let it land on

@@ -91,3 +91,7 @@ The coarse graph has a shortcut from node 43 (3697, −25) to node 48 (3940, −
 ## Direct coarse target trial
 
 A trial removed the 43→48 shortcut and kept the coarse navigator targeting the courier during charge instead of falling back to a route node. The same focused L10 diagnostic still reported 7/8 hold reachability, with the Mega at x=3801.6. The trial was reverted. The local obstacle-aware navigation itself needs inspection around that point; choosing the direct target alone does not solve the route.
+
+## Charge pursuit correction
+
+The coarse navigator previously stopped targeting the courier as soon as the hidden Mega entered the 200 m cruise band, then could fall back to a node behind it. During the active charge it now keeps the live target in the existing bounded obstacle-aware navigator, without changing speed or collision. The focused L10 audit, with ordinary combat on the prerequisite roadblock approach and passive inputs after cure installation, reported zero L10 flags: skilled complete in 1481.0 s with 9 deaths; the 64.9 s passive hold had 8/8 reachable at its final sample and 127.5 attack starts/min. Its overall exit was nonzero solely because a one-level diagnostic is not the full audit. Typecheck and lint passed. The full remote all-level audit timed out at 600 s under load. The remote unit suite timed out twice at its 240 s budget; the second run reported two individual failures before timeout, without final failure details. Full verification remains open.
