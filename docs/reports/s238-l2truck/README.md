@@ -31,3 +31,5 @@
 The subtitle-free capture rerun includes four arrival samples. Review shows the crew clustered behind the truck during boarding and the exit obscured by the truck at arrival; the one-by-one climb and walk-out are still not visually demonstrated. The camera-facing door and character paths need adjustment before acceptance.
 
 After commit `3a33ea33`, the HIGH boarding frame still puts most crew at or beyond the lower edge of the camera. An opposite-flank staging experiment moved some into frame but left the truck blocking the approach, so it was reverted. The current entry animation has not passed visual acceptance.
+
+A second staging experiment moved the approach points toward the cab. The HIGH boarding capture still showed crew clustered near the rear and a character visibly intersecting the cab window; the experiment was reverted. Inspect the courier transition and provide a clear, reachable camera-facing path before acceptance.
