@@ -27,6 +27,12 @@ export function updateCorn(world: SimWorld): void {
   }
   const elapsed = Math.max(0, Math.min(60, world.tick - lastTick)) / 60; lastTick = world.tick;
   seen.fill(0);
+  // Admit the courier first when a slot is available.
+  const velocity = hero.survivor?.velocity ?? hero.motion?.velocity;
+  const hx = velocity?.x ?? hero.locomotion?.vx ?? 0, hz = velocity?.z ?? hero.locomotion?.vz ?? 0;
+  const heroSpeed = Math.hypot(hx, hz);
+  if (!hero.hidden && hero.health.current > 0 && heroSpeed > .1)
+    put(hero.id, hero.transform.x, hero.transform.y, hero.transform.z, hx / heroSpeed, hz / heroSpeed);
   for (const id of world.spatial.query({ x: hero.transform.x, z: hero.transform.z, r: 22 }, nearby, false)) {
     const e = world.entities.get(id);
     if (!e) continue;
@@ -61,7 +67,7 @@ export function cornMaterial(materials: Materials) {
     const delta = positionWorld.xz.sub(actor.xz), radius = delta.length();
     // Stalks part away from the body, with a forward lean in its travel direction.
     // The 1.2 m smooth falloff lets them spring back continuously as the mover passes.
-    const bend = radius.smoothstep(1.2, .12).mul(weight).mul(directions[i].y.smoothstep(0, 1)).mul(.5);
+    const bend = radius.smoothstep(.12, 1.2).oneMinus().mul(weight).mul(directions[i].y.smoothstep(0, 1)).mul(.5);
     const awayX = delta.x.div(radius.max(.1)), awayZ = delta.y.div(radius.max(.1));
     const forward = directions[i];
     push = push.add(vec3(awayX.sub(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.sub(forward.z.mul(.35)).mul(bend)));
