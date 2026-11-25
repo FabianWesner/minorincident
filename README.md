@@ -99,3 +99,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Hardened the candidate list so story waves accept only requested shelter door 0 or 1 and unknown wave types return no candidates; this closes a boundary case where an invalid story request could name entry 8. Existing mission assertions were extended without adding a case. Focused mission tests, typecheck and lint pass; the native L6 audit still reports the same three retreat engagement failures.
 
 - Current all-level two-shard threat rerun: all skilled routes complete, but the merged gate fails with exactly the three L6 retreat engagement flags above. The previous zero-flag result predates the strengthened checks and is not the current verdict.
+
+- A second timing experiment selected a service door within 30 m of the tail, retrying if none was near. All six routes completed, but pressure arrived only ahead (12 infected per run) and player engagement remained 0.46–1.85 attacks/min; it was discarded.
