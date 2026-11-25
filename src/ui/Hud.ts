@@ -553,14 +553,24 @@ export class Hud {
     this.updateBossBar(world);
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
     const bike = world.vehicles?.bicycle, bikeEntity = bike?.entity;
+    const roadblockAhead = !!bike?.riding && !!bikeEntity?.bicycle?.motorbike &&
+      Object.values(world.l10Encounters?.state.roadblockGates ?? {}).some(gateId => {
+        const gate = world.entities.get(gateId);
+        return !!gate?.interactable && !gate.interactable.open &&
+          Math.hypot(player!.transform.x - gate.transform.x, player!.transform.z - gate.transform.z) <= 32;
+      });
     const nearbyOpenedBlock = !!player && !!bikeEntity?.bicycle?.motorbike && !bike?.riding
       && Math.hypot(player.transform.x - bikeEntity.transform.x, player.transform.z - bikeEntity.transform.z) <= 40
       && Object.values(world.l10Encounters?.state.roadblockGates ?? {}).some(gateId => {
         const gate = world.entities.get(gateId);
         return !!gate?.interactable?.open && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 45;
       });
-    setHidden(this.interaction, !device && !nearbyOpenedBlock);
-    if (nearbyOpenedBlock && !device) {
+    setHidden(this.interaction, !device && !nearbyOpenedBlock && !roadblockAhead);
+    if (roadblockAhead && !device) {
+      this.interaction.style.background = '#171b20e8';
+      text(this.interaction, this.game.input.scheme === 'touch' ? 'Roadblock · Tap ACTION to dismount' : 'Roadblock · Press E to dismount');
+      attribute(this.interaction, 'data-progress', '0');
+    } else if (nearbyOpenedBlock && !device) {
       this.interaction.style.background = '#171b20e8';
       const dx = bikeEntity!.transform.x - player!.transform.x, dz = bikeEntity!.transform.z - player!.transform.z;
       // Follow camera is at +X/+Z: screen right is +X/-Z and screen up is -X/-Z.

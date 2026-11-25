@@ -216,7 +216,7 @@ for (const tier of tiers) {
         if (e.type === 'combat.attack' && e.sourceId === 1 && inFinale()) finaleMoments.push({ tick: e.tick, kind: 'fight', id: e.actionId });
       });
       world.events.on('combat.hit', e => {
-        if (e.type !== 'combat.hit' || e.sourceId !== 1 || e.amount <= 0 || !world.entities.get(e.targetId)?.infected || world.vehicles?.bicycle.riding) return;
+        if (e.type !== 'combat.hit' || e.sourceId !== 1 || !world.entities.get(e.targetId)?.infected || world.vehicles?.bicycle.riding) return;
         const p = world.entities.get(1)!.transform;
         for (const b of roadblockRide) if (b.dismounted && !b.fight && Math.abs(p.x - b.x) <= 25 && Math.abs(p.z - 95) <= 45) b.fight = e.tick;
       });
@@ -249,9 +249,9 @@ for (const tier of tiers) {
       });
       world.events.on('player.died', () => {
         deaths.push({ tick: world.tick, hits: [...recentHits] });
-        // A checkpoint retry starts a new attempt. Do not combine a pre-death
-        // dismount or remount with a crossing from the restored timeline.
-        for (const b of roadblockRide) if (!b.crossed) Object.assign(b, { arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0 });
+        // Roadblock progress is deliberately retained across checkpoint
+        // restores. Keep the run-level mounted/dismount/fight/open/remount
+        // sequence too, so a retry does not erase a barrier the game has kept.
       });
       const update = world.update.bind(world);
       let finalePrepared = false, lastBike = false;
@@ -280,12 +280,14 @@ for (const tier of tiers) {
           bikeRecovery.push({ tick: world.tick, x: p.transform.x, z: p.transform.z, bikeX: frame?.transform.x, bikeZ: frame?.transform.z, riding, canInteract: bike?.canInteract(), armed: frame?.bicycle?.armed, lockUntil: frame?.bicycle?.lockUntil, threats: threats.length, input: world.inputFrame.move, interact: world.inputFrame.interact });
         }
         for (const b of roadblockRide) {
-          const near = Math.abs(p.transform.x - b.x) <= 25 && Math.abs(p.transform.z - 95) <= 45;
+          // The gate detects a mounted approach at 36 m so the rider has room
+          // to brake/turn before its wall; record that same approach radius.
+          const near = Math.abs(p.transform.x - b.x) <= 36 && Math.abs(p.transform.z - 95) <= 45;
           if (near && riding && !b.arrived) b.arrived = world.tick;
           if (near && !riding && lastBike && b.arrived && !b.dismounted) b.dismounted = world.tick;
           const gateId = Object.values(world.l10Encounters?.state.roadblockGates ?? {}).find(id => Math.abs((world.entities.get(id)?.transform.x ?? -10000) - b.x) < 1);
           if (b.fight && gateId !== undefined && world.entities.get(gateId)?.interactable?.open && !b.opened) b.opened = world.tick;
-          if (near && riding && !lastBike && b.opened && !b.remounted) b.remounted = world.tick;
+          if (riding && !lastBike && b.opened && !b.remounted) b.remounted = world.tick;
           if (riding && b.remounted && p.transform.x > b.x + 3 && !b.crossed) b.crossed = world.tick;
         }
         if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length, recentHits: recentHits.slice(-4) }); lastBike = riding; }
@@ -317,7 +319,7 @@ for (const tier of tiers) {
           const ids = [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id);
           fullArsenal ||= isHangarIssue(ids);
         }
-        if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, checkpoint: world.missions!.state.checkpoint, roadblocks: Object.entries(world.l10Encounters?.state.roadblockGates ?? {}).map(([group, id]) => ({ group, id, open: world.entities.get(id)?.interactable?.open, position: world.entities.get(id)?.transform })), hospital: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('setpiece-field-hospital:')).map(([key, id]) => { const e = world.entities.get(id); return { key, id, hp: e?.health.current, recoverAt: e?.infected?.recoverAt }; }), player: { ...p.transform, hp: p.health.current }, bike: world.vehicles?.bicycle.entity && { ...world.vehicles.bicycle.entity.transform, mounted: world.vehicles.bicycle.riding }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
+        if (world.tick % 1800 === 0) trace.push({ seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, checkpoint: world.missions!.state.checkpoint, roadblocks: Object.entries(world.l10Encounters?.state.roadblockGates ?? {}).map(([group, id]) => ({ group, id, open: world.entities.get(id)?.interactable?.open, position: world.entities.get(id)?.transform, dismounted: world.l10Encounters?.state.roadblockDismounted?.[group], footFight: world.l10Encounters?.state.roadblockFootFight?.[group], slots: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith(`${group}:`)).map(([key, id]) => ({ key, id, hp: world.entities.get(id)?.health.current })) })), hospital: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('setpiece-field-hospital:')).map(([key, id]) => { const e = world.entities.get(id); return { key, id, hp: e?.health.current, recoverAt: e?.infected?.recoverAt }; }), player: { ...p.transform, hp: p.health.current }, bike: world.vehicles?.bicycle.entity && { ...world.vehicles.bicycle.entity.transform, mounted: world.vehicles.bicycle.riding }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
       };
     },
     beforeDispose: world => { finalState = { mission: world.missions!.state, gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot(), player: world.entities.get(1)!.transform }; },
