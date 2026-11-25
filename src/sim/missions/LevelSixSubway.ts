@@ -232,7 +232,7 @@ export class LevelSixSubway {
       // admission deadline, and passed hatches must not starve moving tunnel pressure.
       // Preserve other live announcements.
       const pressureReserve=wave===2||wave===3||wave===4||wave===5?0:l6.pressure.group;
-      const reserved=(wave<=3?liveEntries:otherEntries).reduce((total,e)=>total+e.remaining,0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?10:0)):0)+pressureReserve;
+      const reserved=(wave<=3?liveEntries:otherEntries).reduce((total,e)=>total+e.remaining,0)+(wave!==2?(this.s.arrivals?.remaining??(this.s.phase==='first'?l6.breach.secondCount:0)):0)+pressureReserve;
       if(occupied>=ai.director.cap-reserved) { this.retireIdleFillers(ai.director.cap-reserved); occupied=ai.director.count+ai.director.pendingTurns; }
       if(occupied>=ai.director.cap-reserved){
         const refused=n-i;
