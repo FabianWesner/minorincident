@@ -66,6 +66,8 @@ export class LevelSixSubway {
       }
       infectedWalls.splice(i,1,...segments.map(([a,b])=>({...wall,x:(a+b)/2,halfX:(b-a)/2})));
     }
+    // The exit remains open to the courier and escort, while infected cannot enter from beyond the eastern tunnel end.
+    infectedWalls.push({ x: l6.tunnel.end, y: 1, z: nav.center.z, halfX: .25, halfY: 1, halfZ: nav.ground.depth / 2 });
     w.infected!.setInfectedWalls(infectedWalls);
     const crowdWalls=nav.walls as import('../ai/NavGrid').Wall[];
     for(let i=crowdWalls.length-1;i>=0;i--)if((crowdWalls[i] as {navOnly?:boolean}).navOnly)crowdWalls.splice(i,1);
