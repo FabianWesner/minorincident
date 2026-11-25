@@ -61,3 +61,5 @@ Current `7c4c8b65` local unit run passed all 105 tests in 123.0 s. The remote ru
 The unchanged remote retry also exceeded the 240 s budget (241.1 s), after a long-running NPC case reported a failure; the process timed out before detailed diagnostics. The same current code passed the complete local suite (105/105, 123.0 s). Remote acceptance remains open.
 
 The existing interaction case now holds a living rider for 15 seconds, confirms the truck waits and the rider remains visible, then releases the rider and confirms departure; it passed. A permanently sealed path still has no automatic recovery. The latest remote default suite and unchanged retry each timed out at 240.9 s; the retry reported no assertion failures before timeout.
+
+Latest remote attempts both exceeded 240 s; the unchanged retry also reported long-running infected-AI and save-progression failures before the suite timeout prevented final diagnostics. The local 105-test suite passed. Navigation retries when a route can be found; a permanently sealed path still waits indefinitely rather than teleporting the rider.
