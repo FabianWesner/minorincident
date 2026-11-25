@@ -40,6 +40,20 @@ function consider(id: number, x: number, speed: number, z: number, vx: number, v
 }
 let vehicleElapsed = 0;
 let activeVehicle: number | null = null;
+let actorWorld: SimWorld;
+let actorElapsed = 0;
+// SpatialHash can visit matches directly, avoiding a new backing array after
+// clearing and repopulating the result on each frame.
+function collectActor(id: number): void {
+  const e = actorWorld.entities.get(id);
+  if (!e || e.id === 1 || e.hidden || e.health.current <= 0 || !(e.infected || e.companion) || Math.hypot(e.transform.x - search.x, e.transform.z - search.z) > 22) return;
+  const v = e.survivor?.velocity ?? e.motion?.velocity ?? e.companion?.velocity;
+  const vx = v?.x ?? e.locomotion?.vx ?? 0, vz = v?.z ?? e.locomotion?.vz ?? 0;
+  const speed = Math.hypot(vx, vz);
+  if (speed <= .1) return;
+  if (e.companion) put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed, actorElapsed, 1);
+  else consider(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed);
+}
 // A reusable callback avoids creating a Map iterator or closure on each frame.
 function collectVehicle(car: { entity: EntitySnapshot; physics: { speed: number; forwardSpeed: number; previous: { x: number; z: number } } }): void {
   const e = car.entity, speed = Math.abs(car.physics.speed);
@@ -68,19 +82,8 @@ export function updateCorn(world: SimWorld): void {
   if (!hero.hidden && hero.health.current > 0 && heroSpeed > .1)
     put(hero.id, hero.transform.x, heroSpeed, hero.transform.z, hx / heroSpeed, hz / heroSpeed, elapsed, 0);
   search.x = hero.transform.x; search.z = hero.transform.z; candidateCount = 0;
-  world.spatial.query(search, nearby, false);
-  for (let i = 0; i < nearby.length; i++) {
-    const e = world.entities.get(nearby[i]);
-    if (!e) continue;
-    if (e.id === 1 || e.hidden || e.health.current <= 0 || !(e.infected || e.companion) || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
-    const v = e.survivor?.velocity ?? e.motion?.velocity ?? e.companion?.velocity;
-    const vx = v?.x ?? e.locomotion?.vx ?? 0, vz = v?.z ?? e.locomotion?.vz ?? 0;
-    const speed = Math.hypot(vx, vz);
-    if (speed > .1) {
-      if (e.companion) put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed, elapsed, 1);
-      else consider(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed);
-    }
-  }
+  actorWorld = world; actorElapsed = elapsed;
+  world.spatial.query(search, nearby, false, collectActor);
   if (world.vehicles) {
     vehicleElapsed = elapsed; activeVehicle = world.vehicles.active;
     world.vehicles.cars.forEach(collectVehicle);
