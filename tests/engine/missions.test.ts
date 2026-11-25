@@ -139,6 +139,9 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
   expect(l6SpawnCandidates(2, 3, [2])).toContain(5);
   expect(l6SpawnCandidates(0, 1, [])).toEqual([0]);
   expect(l6SpawnCandidates(1, 2, [])).toEqual([1]);
+  expect(l6SpawnCandidates(8, 1, [])).toEqual([]);
+  expect(l6SpawnCandidates(2, 2, [])).toEqual([]);
+  expect(l6SpawnCandidates(8, 6, [])).toEqual([]);
   expect(l6SpawnCandidates(0, 3, [])).not.toContain(0);
   expect(l6SpawnCandidates(1, 3, [])).not.toContain(1);
   expect(l6SpawnCandidates(2, 3, [])).not.toContain(8);
