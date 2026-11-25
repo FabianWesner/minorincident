@@ -51,6 +51,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - A temporary per-slot shader toggle isolated the corgi on the same paused walking frame, leaving the courier contribution unchanged. For both quality tiers, two consecutive dog-disabled images were pixel-identical. Enabling the dog changed more than 20 RGB levels in at least one channel for 22,947 pixels on HIGH and 19,862 on LOW (WebGL2); headless WebGPU showed 23,096 and 19,850 respectively. The difference images were opened and show changed stalks around the dog (`/private/tmp/s235-dog-isolated` and `/private/tmp/s235-dog-isolated-webgpu`). This proves a visible dog contribution in those frames, not continuous motion or crowd coverage. Temporary instrumentation was removed.
 
+- A separate temporary slot toggle isolated one moving infected (ID 101, speed about 0.92 m/s) in the L10 corn on WebGL2. In the upper-left 350×250-pixel region around its stalks, consecutive disabled frames were pixel-identical; enabling its slot changed more than 20 RGB levels in 7,277 pixels on HIGH and 7,306 on LOW (`/private/tmp/s235-zombie-isolated`). Outside that region an unrelated animated area changed even with the slot disabled, so whole-frame differences are not a controlled comparison. The HIGH difference image was opened and shows altered stalks near the infected. This confirms one selected infected affects rendered corn, not all infected in a crowd. Instrumentation was removed.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
