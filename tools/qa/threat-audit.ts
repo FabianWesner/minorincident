@@ -163,7 +163,13 @@ for (const level of selected) {
     if (!row || row.attacksPerMinute + row.groupAttacksPerMinute < skilledFloors.rate)
       passiveFlags.push(`step/${skilledFloors.step}:SKILLED_BELOW_ATTACKS_PER_MINUTE_${skilledFloors.rate}`);
   }
-  if (level === 'L6' && (run?.damageTaken ?? 0) < 30) passiveFlags.push('SKILLED_DAMAGE_BELOW_30_HP');
+  if (level === 'L6') {
+    const retreat = observation?.phases.find(row => row.key === 'step/retreat');
+    if (!retreat || retreat.firstAttackSeconds === null || retreat.firstAttackSeconds > 20) passiveFlags.push('step/retreat:SKILLED_FIRST_PLAYER_ATTACK_OVER_20_SECONDS');
+    if (!retreat || retreat.attacksPerMinute < 11) passiveFlags.push('step/retreat:SKILLED_PLAYER_ATTACKS_PER_MINUTE_BELOW_11');
+    if (!retreat || retreat.groupAttacksPerMinute < 5) passiveFlags.push('step/retreat:SKILLED_FOLLOWER_ATTACKS_PER_MINUTE_BELOW_5');
+    if ((run?.damageTaken ?? 0) < 30) passiveFlags.push('SKILLED_DAMAGE_BELOW_30_HP');
+  }
   if (!passiveRun && !passiveObservation) passiveFlags.push('INCOMPLETE_PASSIVE_POLICY:error');
   if (!passiveObservation?.phases.length) passiveFlags.push('MISSING_PASSIVE_OBSERVATIONS');
   for (const id of Object.keys(threatSteps[level])) if (!passiveObservation?.phases.some(row => row.key === `step/${id}`)) passiveFlags.push(`UNOBSERVED_PASSIVE_CRITERION_STEP:${id}`);

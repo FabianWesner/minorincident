@@ -63,3 +63,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Updated the pressure measurement direction classifier from a 10 m offset from the leader to the authored 8 m offset from the walking tail, using the service door position. Six native runs complete; typecheck and lint pass.
 
 - A six-run timing experiment deferred pressure when the selected service door was more than 24 m from the walking tail. All routes completed, but each received only six pressure arrivals, all ahead; player attacks remained 0.90–1.86/min. The experiment was discarded because it did not restore the required threat or both-direction pressure.
+
+- The threat gate now enforces the retained L6-07 skilled retreat floors (11 player and 5 follower attack windups/min) and a 20 s first-player-attack limit so a long harmless stretch is flagged. The current focused L6 route completes but fails all three checks (plus the standard partial-selection flag); the earlier zero-acceptance audit predates these checks and is not current evidence of acceptance. Typecheck and lint pass.
