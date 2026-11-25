@@ -10,6 +10,7 @@ const directions = Array.from({ length: 8 }, () => uniform(new Vector3(0, 0, 0))
 const ids = new Int32Array(8).fill(-1);
 const seen = new Uint8Array(8);
 let lastTick = 0;
+let lastWorld: SimWorld | undefined;
 function put(id: number, x: number, speed: number, z: number, vx: number, vz: number): void {
   let slot = id === 1 ? 0 : ids.indexOf(id, 1);
   if (slot < 0) slot = ids.indexOf(-1, 1);
@@ -21,10 +22,10 @@ function put(id: number, x: number, speed: number, z: number, vx: number, vz: nu
 /** Fixed eight-slot upload: no per-stalk CPU work; the shader bends crop around nearby movers. */
 export function updateCorn(world: SimWorld): void {
   const hero = world.entities.get(1);
-  if (world.scenario !== 'L10' || !hero) {
+  if (world !== lastWorld || world.tick < lastTick || world.scenario !== 'L10' || !hero) {
     for (let i = 0; i < movers.length; i++) { movers[i].value.set(-10000, 0, -10000); directions[i].value.set(0, 0, 0); }
-    ids.fill(-1); lastTick = world.tick;
-    return;
+    ids.fill(-1); lastTick = world.tick; lastWorld = world;
+    if (world.scenario !== 'L10' || !hero) return;
   }
   const elapsed = Math.max(0, Math.min(60, world.tick - lastTick)) / 60; lastTick = world.tick;
   seen.fill(0);
