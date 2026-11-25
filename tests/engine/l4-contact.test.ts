@@ -409,6 +409,7 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     ai.release(reused);
     // r26-l8hitreact: L8 boss hit reaction is render-only; chip stays visible for tiny hits, fades out, never passes the bar end.
     expect(bossChip(1, 0.95, 0, 64)).toBeGreaterThanOrEqual(bossChipMinPx);
+    expect(bossChip(1, 1 - 7 / 240, 0, 64), 'a frontal MG hit has a visible chip even when the missing red slice is narrower').toBe(bossChipMinPx);
     expect(bossChip(1, 0.9, bossChipHoldTicks + bossChipFadeTicks - 1, 64)).toBeLessThan(bossChip(1, 0.9, bossChipHoldTicks, 64));
     expect(bossChip(1, 0.9, bossChipHoldTicks + bossChipFadeTicks, 64)).toBe(0);
     expect(bossChip(1, 0.02, 0, 64)).toBeLessThanOrEqual(0.98 * 64);

@@ -25,13 +25,12 @@ export function barSize(width: number, height: number, mega = false): { width: n
   const phone = Math.min(width, height) <= 480;
   return mega ? { width: phone ? 72 : 96, height: phone ? 8 : 10 } : { width: phone ? 48 : 64, height: phone ? 6 : 8 };
 }
-/** r26-l8hitreact: an L8 arena boss takes 0.6x outside its exposed windows, so a chip hit barely moves its bar. The lost slice stays
- * as a white "chip" for 0.3 s (at least 3 px wide) beside the fill; render-only, one extra mesh that is hidden when no chip is live. */
-export const bossChipHoldTicks = 12, bossChipFadeTicks = 6, bossChipMinPx = 3;
+/** A small hit can barely move a bar. A gold chip remains for 0.3 s, with a minimum width; it is render-only. */
+export const bossChipHoldTicks = 12, bossChipFadeTicks = 6, bossChipMinPx = 6;
 export function bossChip(from: number, current: number, age: number, widthPx: number): number {
   if (age >= bossChipHoldTicks + bossChipFadeTicks || from <= current) return 0;
   const fade = age <= bossChipHoldTicks ? 1 : 1 - (age - bossChipHoldTicks) / bossChipFadeTicks;
-  return Math.min(Math.max((from - current) * widthPx * fade, bossChipMinPx * fade), (1 - current) * widthPx);
+  return Math.min(Math.max((from - current) * widthPx * fade, bossChipMinPx * fade), widthPx);
 }
 export const followerPipSize = { width: 18, height: 3 } as const;
 /** Keep a small set of live, healthy attackers legible in a crowd; damaged and special infected retain their bars. */
@@ -102,7 +101,7 @@ export class HealthBars extends Group {
       const mesh = new InstancedMesh(new PlaneGeometry(1, 1), material, 400);
       mesh.frustumCulled = false; mesh.count = 0; mesh.renderOrder = 100 + i; this.add(mesh); return mesh;
     });
-    this.enemyMeshes = makeMeshes([healthBarColors.outline, healthBarColors.background, healthBarColors.fill, '#ffffff']);
+    this.enemyMeshes = makeMeshes([healthBarColors.outline, healthBarColors.background, healthBarColors.fill, '#ffd45a']);
     this.followerMeshes = makeMeshes([healthBarColors.survivorOutline, healthBarColors.survivorBackground, healthBarColors.survivorFill]);
   }
   update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean, cityNight = false): void {
@@ -211,7 +210,8 @@ export class HealthBars extends Group {
       }
       if (chipPx > 0) {
         const index = this.enemyMeshes[3].count;
-        this.point.copy(this.center).addScaledVector(this.direction.setFromMatrixColumn(camera.matrixWorld, 0), (displaySize.width * fraction - displaySize.width / 2 + chipPx / 2) * unit);
+        const chipCenter = Math.min(displaySize.width - chipPx / 2, displaySize.width * fraction + chipPx / 2);
+        this.point.copy(this.center).addScaledVector(this.direction.setFromMatrixColumn(camera.matrixWorld, 0), (chipCenter - displaySize.width / 2) * unit);
         this.barMatrix.compose(this.point, camera.quaternion, this.barScale.set(chipPx * unit, displaySize.height * unit, 1));
         this.enemyMeshes[3].setMatrixAt(index, this.barMatrix); this.enemyMeshes[3].count++;
       }
