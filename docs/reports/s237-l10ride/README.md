@@ -103,3 +103,7 @@ The required unchanged remote unit retry was queued again after the two prior ti
 ## Underpass approach trial
 
 A render-only trial placed the existing underpass model at (3380, 95) ahead of the retained sinkhole, at roughly half scale. At the staged rim pose (3390, 74) it was outside the visible frame; at an approach pose (3378, 95) it filled most of the frame and the courier see-through disc cut a large circular hole through its deck. The trial was reverted. A readable underpass requires a camera-aware split composition that does not obstruct the courier or undo the see-through behavior.
+
+## All-level sharded threat audit
+
+Three sequential local shards completed in 191.8 s, 188.1 s and 336.5 s; their merge exited zero and its aggregate reported zero flags. Direct inspection of the raw level results found 12 L8 skilled flags (unreachable share, slow followers and late tunnel-breach attack) which the aggregate does not include. All other skilled flag lists and every passive flag list were empty, including L10. The audit uses ordinary combat to pass L10 roadblocks and attack-free input after cure installation. The [summary](threat-shards-summary.json) preserves the per-level distinction; the all-level “zero flags” acceptance remains open until those L8 findings and aggregate reporting are resolved.
