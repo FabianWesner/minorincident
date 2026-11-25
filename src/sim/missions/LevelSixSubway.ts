@@ -591,7 +591,7 @@ export class LevelSixSubway {
       const near=distance(p,LevelSixSubway.gateWait(gate.x))<1.7||!!gate.requested&&p.x>gate.x+.6&&p.x<gate.x+3.4&&Math.abs(p.z-15)<2.6;
       e.interactable!.label=gate.closedAt?'Brace service gate':'Close service gate';e.interactable!.enabled=false;
       if(gate.closedAt&&near&&w.inputFrame.interact)w.barricades!.braceServiceGate(gate.id);
-      if(!gate.closedAt&&crossed&&near&&(gate.hold>0||gate.requested||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*l6.pressure.group*4));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
+      if(!gate.closedAt&&crossed&&near&&(gate.hold>0||gate.requested||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
     }
     // QA 10-21 #87: once the walking column (its healthy tail, #83) is through a gate, a death restarts there with the
     // surviving group (as L7's corridor checkpoints do), not at the shelter with the whole retreat to replay. A healthy
