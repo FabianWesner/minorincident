@@ -5,7 +5,7 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 ## Evidence
 
 - Typecheck and lint passed after the root-coordinate fix and capture update.
-- The remote unit suite passed on the matched-root LOD change (27 files, 105 passed, one skipped, 210.90 seconds; budget 213.6 seconds).
+- The remote unit suite passed on the softened turn wake (27 files, 105 passed, one skipped, 212.04 seconds; budget 215.6 seconds).
 - HIGH and LOW WebGL2 captures at zoom 1 and 1.5 were generated under `/private/tmp/s235-corn` on `845ded3a`. Close frames show corn drawn in front of the courier and corgi. They do not establish clean parting, smooth recovery or the absence of distortion and popping.
 - A headless WebGPU diagnostic on `de6e7ff6` reported the requested backend at both qualities and zooms, without captured console errors. The zoom 1.5 frames show the courier and corgi partially obscured by dense HIGH crop and more visible in sparser LOW crop. They do not prove smooth parting. Manual WebGPU review remains open.
 - Exclusive quiet-runs of `tools/perf/s194-l10hitch.ts` on the parent `7d820cdd` and candidate `845ded3a` used the same HIGH WebGL replay. Baseline: 1,298 samples, max 51.6 ms and p99 31.1 ms; candidate: 1,240 samples, max 49.9 ms and p99 30.5 ms. Both had zero frames above 100 ms and no captured errors. Both traversed x=547–589.57, z≈0: this route does not exercise the corn field and cannot establish the crop's performance impact. Earlier admission attempts expired; one shared-mode attempt was admitted but could not launch the required Chrome channel.
@@ -36,6 +36,10 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 - A later paired full-route HIGH WebGL2 quiet-run used the parent asset/render files and then the current files under one exclusive reservation. Baseline: 1,042 samples, p95 15.3 ms, p99 41.2 ms, max 63.7 ms. Candidate: 1,041 samples, p95 15.3 ms, p99 38.6 ms, max 56.0 ms. Both had no errors or frames over 100 ms; the route was x=547–589.6, z≈0 and did not enter the corn field. This pair does not show a regression on that route; it is one pair, and the separate field receipt remains the evidence for crop cost.
 
 - The turn portion now uses a close fixed camera after the game-zoom walking shots. All four HIGH/LOW runs completed without errors (`/private/tmp/s235-close-turn`); the HIGH and LOW start/end frames were opened. Corn remains visible as the courier turns and the corgi follows. Individual overlapping stalks are easier to see, but the five-tick spacing and dense crop still do not prove smooth recovery or absence of popping.
+
+- A tick-level turn probe recorded the courier’s position and velocity, then evaluated the shader’s horizontal tip displacement at a 0.2 m grid with full height and influence. The old swept-centerline direction produced a maximum 0.658 m change in one tick when the centerline crossed a sample. Using the softened mover-to-root direction reduced this sampled maximum to 0.065 m. This is a calculation over one recorded turn, not a proof for every trajectory or a GPU readback. The temporary probe was removed.
+- The updated shader was captured at both quality settings and zooms on WebGL2 (`/private/tmp/s235-soft-turn`) and in a headless WebGPU diagnostic (`/private/tmp/s235-soft-turn-webgpu`), without browser errors. Close HIGH and LOW turn frames were opened; corn remains drawn around the courier and corgi. Manual WebGPU and temporal visual acceptance remain open.
+- An exclusive paired HIGH WebGL2 field run compared the previous shader and softened direction under the same reservation: before p95 7.1 ms, p99 8.7 ms, max 12.0 ms (1,078 samples); after p95 6.2 ms, p99 8.0 ms, max 11.3 ms (1,160 samples). Both covered x=555–565.17 and reported no errors. One pair does not characterize timing variability.
 
 ## Open
 
