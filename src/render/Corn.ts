@@ -42,7 +42,7 @@ export function updateCorn(world: SimWorld): void {
     const e = world.entities.get(id);
     if (!e) continue;
     if (e.id === 1 || e.hidden || e.health.current <= 0 || !(e.infected || e.companion) || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
-    const v = e.survivor?.velocity ?? e.motion?.velocity;
+    const v = e.survivor?.velocity ?? e.motion?.velocity ?? e.companion?.velocity;
     const vx = v?.x ?? e.locomotion?.vx ?? 0, vz = v?.z ?? e.locomotion?.vz ?? 0;
     const speed = Math.hypot(vx, vz);
     if (speed > .1) {
