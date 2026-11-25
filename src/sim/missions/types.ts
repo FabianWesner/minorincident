@@ -131,6 +131,7 @@ export interface L2State {
   /** Start tick for the deterministic, one-at-a-time Engine 3 boarding beat. */
   boardingAt?: number; companionBoard?: { x: number; z: number };
   crewBoardFrom?: ({ x: number; y: number; z: number } | null)[];
+  crewExitTo?: ({ x: number; z: number } | null)[];
   truckId: number; seated: boolean; axe: boolean;
   /** Route progress (metres) and speed (m/s) of the kinematic truck. */
   rideS: number; rideV: number;

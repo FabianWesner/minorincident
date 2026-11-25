@@ -379,9 +379,19 @@ export class LevelTwoRescue {
     for (const [i, id] of s.crewIds.entries()) {
       const e = world.entities.get(id); if (!e?.civilian?.ally) continue;
       if (e.health.current <= 0 || e.infected) continue;
-      if (!e.hidden || tick < s.crewExitAt + i * 18) continue;
-      const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9, p = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
-      e.hidden = false; delete e.passengerOf; Object.assign(e.transform, p); e.transform.y = s.crewBoardFrom?.[i]?.y ?? e.transform.y; world.solids.admit(e, 'l2.passenger.exit');
+      const elapsed = tick - s.crewExitAt - i * 18;
+      if (elapsed < 0 || (e.passengerOf !== s.truckId && !e.hidden)) continue;
+      if (elapsed === 0 || !s.crewExitTo?.[i]) {
+        const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9;
+        (s.crewExitTo ??= [])[i] = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
+        e.civilian.story = { clip: 'npc-stand-up', start: tick };
+      }
+      const p = s.crewExitTo[i]!, u = Math.min(1, elapsed / ticks(.6)), weight = u * u * (3 - 2 * u);
+      const y = s.crewBoardFrom?.[i]?.y ?? .7;
+      e.hidden = false; e.transform.x = t.x + (p.x - t.x) * (.55 + .45 * weight); e.transform.z = t.z + (p.z - t.z) * (.55 + .45 * weight); e.transform.y = y + .65 * (1 - weight);
+      world.spatial.set(id, e.transform.x, e.transform.z);
+      if (u < 1) continue;
+      delete e.passengerOf; world.solids.admit(e, 'l2.passenger.exit'); e.civilian.story = null;
       // Three to the chained front doors, three to the loading door: an urgent run, not a jog.
       const [x, z] = l2.rescue.crewDoors[i];
       e.civilian!.ally.run = this.snap({ x, z }, .35); e.civilian!.ally.runSpeed = l2.rescue.crewRunMs; e.civilian!.pauseUntil = 0;
@@ -626,10 +636,10 @@ export class LevelTwoRescue {
     if (s.pending.length) this.emergePending();
     if (s.phase === 'arrived') {
       if (tick - s.arrivedAt >= ticks(.5) && player.survivor?.scriptedClip === 'dismount') { delete player.survivor.scriptedClip; world.storyLock = null; }
-      if (!s.atDoorsAt && tick - s.arrivedAt >= ticks(.8) && (!s.crewExitAt || s.crewIds.some(id => world.entities.get(id)?.hidden))) this.crewExit();
+      if (!s.atDoorsAt && tick - s.arrivedAt >= ticks(.8) && (!s.crewExitAt || s.crewIds.some(id => world.entities.get(id)?.passengerOf === s.truckId))) this.crewExit();
       if (s.crewExitAt && !s.atDoorsAt) {
         const crew = s.crewIds.map(id => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally && e.health.current > 0 && !e.infected);
-        if (crew.every(e => !e.hidden && (!e.civilian!.ally!.run || Math.hypot(e.civilian!.ally!.run.x - e.transform.x, e.civilian!.ally!.run.z - e.transform.z) < 1.5)) || tick - s.crewExitAt > ticks(8)) {
+        if (crew.every(e => !e.hidden && e.passengerOf !== s.truckId && (!e.civilian!.ally!.run || Math.hypot(e.civilian!.ally!.run.x - e.transform.x, e.civilian!.ally!.run.z - e.transform.z) < 1.5)) || tick - s.crewExitAt > ticks(8)) {
           s.atDoorsAt = tick; s.phase = 'doors'; world.events.emit({ type: 'l2.firefightersAtDoors', tick });
           for (const e of crew) {
             const a = e.civilian!.ally!, role = l2.rescue.crewDoors[s.crewIds.indexOf(e.id)]?.[2];
