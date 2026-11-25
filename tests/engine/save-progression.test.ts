@@ -76,13 +76,14 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   expect(finished.l9Crash).toBeUndefined(); expect(finished.completedLevels).toBe(10);
   const bat = 'weapon.bat', axe = 'weapon.fire-axe', handgun = 'weapon.handgun', mg = 'weapon.army-mg', shotgun = 'weapon.shotgun', rifle = 'weapon.assault-rifle', rocket = 'weapon.rocket-launcher';
   // Expected story boundaries are independent of the production pickup declarations below.
-  const expected = [[], [bat], [bat,axe], [axe,handgun], [axe,handgun,mg], [axe,handgun,mg,shotgun], [axe,handgun,mg,rifle], [axe,handgun,mg,shotgun,rocket], [axe,handgun,rifle], []];
+  // PO 2026-11-25: a weapon found once stays in every later start rack (rocket only L7/L8; L10 empty by story).
+  const expected = [[], [bat], [bat,axe], [axe,handgun], [axe,handgun,mg], [axe,handgun,mg,shotgun,rifle], [axe,handgun,mg,shotgun,rifle], [axe,handgun,mg,shotgun,rifle,rocket], [axe,handgun,mg,shotgun,rifle], []];
   const expectedSides = [
     { LEFT:['weapon.fists'], RIGHT:['weapon.kick'] }, { LEFT:[bat], RIGHT:['weapon.kick'] },
     { LEFT:[bat,axe], RIGHT:['weapon.kick'] }, { LEFT:[axe], RIGHT:[handgun] },
-    { LEFT:[axe], RIGHT:[handgun,mg] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun] },
-    { LEFT:[axe], RIGHT:[handgun,mg,rifle] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun] },
-    { LEFT:[axe], RIGHT:[handgun,rifle] }, { LEFT:['weapon.fists'], RIGHT:['weapon.kick'] },
+    { LEFT:[axe], RIGHT:[handgun,mg] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] },
+    { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] },
+    { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] }, { LEFT:['weapon.fists'], RIGHT:['weapon.kick'] },
   ];
   const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[...new Set([l5WeaponPickup, ...l5DroppedWeapons.map(p => p.actionId)])], 7:[l7Rocket.action] };
   const weapons = (racks: CampaignSave['racks']) => [...new Set([...racks.LEFT,...racks.RIGHT].filter(id => !['weapon.fists','weapon.kick'].includes(id) && catalog[id].category !== 'ability'))].sort();
@@ -105,7 +106,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
       const loadout = campaignLoadout(save, level);
       expect(weapons(loadout), `L${level} ${save === fresh ? 'fresh handover' : 'finished L10 save'}`).toEqual([...expected[level - 1]].sort());
       const actualSides = { LEFT:loadout.LEFT.filter(id=>catalog[id].category!=='ability'), RIGHT:loadout.RIGHT.filter(id=>catalog[id].category!=='ability') };
-      const openingSides = level===8 ? { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rocket] } : expectedSides[level-1];
+      const openingSides = level===8 ? { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle,rocket] } : expectedSides[level-1];
       expect(actualSides, `L${level} authored rack order for each save`).toEqual(openingSides);
       const live = new Loadout(loadout.LEFT, loadout.RIGHT, undefined, loadout.size), selected = restoreSelectedAction(live, save);
       if (save.selectedAction && [...loadout.LEFT,...loadout.RIGHT].includes(save.selectedAction)) expect(selected, `L${level} carry selection`).toBe(save.selectedAction);
@@ -130,7 +131,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   }
   // Each saved state gets the same authored list, and the L8 gate takes only the rocket.
   const l8 = preset('L8-default'), l8Start = campaignLoadout(l8, 8);
-  expect([...l8Start.LEFT,...l8Start.RIGHT].filter(id=>id.startsWith('weapon.')&&!['weapon.fists','weapon.kick'].includes(id)).sort()).toEqual([axe,handgun,mg,shotgun,rocket].sort());
+  expect([...l8Start.LEFT,...l8Start.RIGHT].filter(id=>id.startsWith('weapon.')&&!['weapon.fists','weapon.kick'].includes(id)).sort()).toEqual([axe,handgun,mg,shotgun,rifle,rocket].sort());
   const finishedL6 = preset('L10-default'); finishedL6.completedLevels = 10;
   finishedL6.ownedActions = [...new Set([...finishedL6.ownedActions,...Object.keys(catalog).filter(id=>id.startsWith('weapon.') && id!=='weapon.rotary-minigun')])];
   finishedL6.racks = { LEFT:[bat,axe], RIGHT:[rocket,rifle,shotgun,mg,handgun] }; finishedL6.selectedAction=rocket;
@@ -138,7 +139,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   try {
     const actual = replay.combat!.runner.loadout.state;
     expect(actual.LEFT.rack.map(slot=>slot.id)).toEqual([axe]);
-    expect(actual.RIGHT.rack.map(slot=>slot.id)).toEqual([handgun,mg,shotgun]);
+    expect(actual.RIGHT.rack.map(slot=>slot.id)).toEqual([handgun,mg,shotgun,rifle]);
     expect(actual.RIGHT.rack[actual.RIGHT.index].id).toBe(handgun);
   } finally { replay.dispose(); }
   const { Game } = await import('../../src/Game');
@@ -211,7 +212,7 @@ async function checkCheckpointRacks() {
   try {
     surrenderHeavyWeapons(l8, l8.missions!);
     l8.missions!.checkpoint('sanctuary');
-    const expected = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun'] };
+    const expected = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.assault-rifle'] };
     expect(ids(l8)).toEqual(expected);
     l8.combat!.setLoadout(['weapon.bat'], ['weapon.rocket-launcher']);
     l8.missions!.restore('sanctuary');
@@ -335,7 +336,7 @@ test('selection fallback: lost or empty weapons fall back to the best usable own
   const lost = preset('L8-default'); lost.selectedAction = 'weapon.shotgun';
   lost.ownedActions = lost.ownedActions.filter(id => id !== 'weapon.shotgun'); lost.racks.RIGHT = lost.racks.RIGHT.filter(id => id !== 'weapon.shotgun');
   const r = resume(lost, 9); restoreSelectedAction(r, lost);
-  expect(r.current(r.state.selectedSide).id).toBe('weapon.handgun'); // L9's authored first ranged weapon; the launcher is gone after L8
+  expect(r.current(r.state.selectedSide).id).toBe('weapon.shotgun'); // PO 2026-11-25: L9's story rack gives the shotgun back; the launcher is gone after L8
 
   const save = newCampaign(); save.ownedActions.push('weapon.bat', 'weapon.fire-axe', 'weapon.pistol', 'weapon.smg');
   const loadout = new Loadout(['weapon.bat', 'weapon.fire-axe'], ['weapon.pistol', 'weapon.smg']);
@@ -381,7 +382,7 @@ test('bare hands are innate and hidden while carrying melee; the L8 sanctuary ga
     world.events.on('dialogue.line', event => { if (event.type === 'dialogue.line') lines.push(event.id); });
     for (let i = 0; i < 5 * 60; i++) world.update();
     expect(world.entities.get(1)!.weapons!.RIGHT.rack.map(s => s.id)).not.toContain(rocket);
-    expect([...world.entities.get(1)!.weapons!.LEFT.rack,...world.entities.get(1)!.weapons!.RIGHT.rack].map(s=>s.id).filter(id=>!['weapon.fists','weapon.kick'].includes(id)).sort()).toEqual(['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun'].sort());
+    expect([...world.entities.get(1)!.weapons!.LEFT.rack,...world.entities.get(1)!.weapons!.RIGHT.rack].map(s=>s.id).filter(id=>!['weapon.fists','weapon.kick'].includes(id)).sort()).toEqual(['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun','weapon.assault-rifle'].sort());
     expect(world.progression!.campaign!.ownedActions).not.toContain(rocket);
     expect(lines).toContain('L8.gate-toast');
   } finally { world.dispose?.(); }

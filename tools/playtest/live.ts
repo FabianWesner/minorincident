@@ -154,18 +154,19 @@ if (immortal) setInterval(() => { void page.evaluate(() => window.__SS__?.cheats
 // PO 2026-11-25: immortal play must still show whether a player would have a chance. Sum the damage that lands on the
 // courier per level and count virtual deaths against 100 HP (reset after each), written to <run>/damage.jsonl.
 if (immortal && process.env.LUNA_RUN_DIR) {
-  let since = 0, virtualHp = 100, lastLevel = '';
-  const totals: Record<string, { damage: number; hits: number; virtualDeaths: number }> = {};
-  setInterval(() => { void page.evaluate(s => {
+  let absorbed = 0, virtualHp = 100, lastLevel = '';
+  const totals: Record<string, { damage: number; virtualDeaths: number }> = {};
+  setInterval(() => { void page.evaluate(() => {
     const a = window.__SS__; if (!a) return null;
-    const hits = a.events(s).filter(e => e.type === 'combat.hit' && e.targetId === 1).map(e => ({ tick: e.tick, amount: (e as { amount: number }).amount, actionId: (e as { actionId: string }).actionId }));
-    return { tick: a.getState().tick, level: (a.getState() as { scenario?: string }).scenario ?? '-', hits };
-  }, since).then(r => {
-    if (!r) return; since = r.tick + 1;
+    return { tick: a.getState().tick, level: a.getState().scenario ?? '-', absorbed: a.cheats.godAbsorbed(), hp: a.getState().entities?.find?.(e => e.id === 1)?.health?.current ?? null };
+  }).then(r => {
+    if (!r) return;
+    const delta = Math.max(0, r.absorbed - absorbed); absorbed = r.absorbed;
     if (r.level !== lastLevel) { virtualHp = 100; lastLevel = r.level; }
-    const t = totals[r.level] ??= { damage: 0, hits: 0, virtualDeaths: 0 };
-    for (const h of r.hits) { t.damage += h.amount; t.hits++; virtualHp -= h.amount; if (virtualHp <= 0) { t.virtualDeaths++; virtualHp = 100; } }
-    if (r.hits.length) appendFileSync(resolve(process.env.LUNA_RUN_DIR!, 'damage.jsonl'), JSON.stringify({ time: new Date().toISOString(), level: r.level, tick: r.tick, hits: r.hits, totals: t }) + '\n');
+    const t = totals[r.level] ??= { damage: 0, virtualDeaths: 0 };
+    if (delta > 0) { t.damage += delta; virtualHp -= delta; while (virtualHp <= 0) { t.virtualDeaths++; virtualHp += 100; } }
+    // Health regenerates/pickups are ignored: this is a pessimistic bound on how often a mortal run would have died.
+    if (delta > 0) appendFileSync(resolve(process.env.LUNA_RUN_DIR!, 'damage.jsonl'), JSON.stringify({ time: new Date().toISOString(), level: r.level, tick: r.tick, damage: delta, totals: t }) + '\n');
   }).catch(() => {}); }, 1000);
 }
 const started = Date.now() - Number(process.env.LUNA_WALL_OFFSET_MS ?? 0);

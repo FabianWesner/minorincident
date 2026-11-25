@@ -78,6 +78,8 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
 }
 export class Damage {
   god = false;
+  /** QA: damage the god cheat absorbed from the courier (before armour), so immortal playtests can judge fairness. Never read by the sim. */
+  godAbsorbed = 0;
   private amount(hit: DamageEvent, target: EntitySnapshot, hardFullExplosive = false): number {
     // Shared riot counter: a flinch lowers the shield, and a muzzle inside its
     // forward edge can shoot past it at contact distance. Hit origins are body
@@ -253,6 +255,7 @@ export class Damage {
     if (target.combat?.allyResist !== undefined && hit.sourceId !== 1) amount *= target.combat.allyResist;
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
+    if (target.id === 1 && this.god && amount > 0) this.godAbsorbed += amount;
     if (target.id === 1 && (this.god || this.world.inspectionGhost)) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick, hit.actionId === 'infected.zebra.stampede');
     else {

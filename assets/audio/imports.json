@@ -5835,49 +5835,49 @@
     "action.weapon.handgun": {
       "source": "fw-Walther_PPQ-X_39P",
       "start": 1.38,
-      "filter": "volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.handgun.v1": {
       "source": "fw-Walther_PPQ-X_39P",
       "start": 6.42,
-      "filter": "volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.handgun.v2": {
       "source": "fw-Walther_PPQ-X_39P",
       "start": 10.64,
-      "filter": "volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.handgun.v3": {
       "source": "fw-Walther_PPQ-X_39P",
       "start": 1.38,
-      "filter": "volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.pistol": {
       "source": "fw-1911-A_42P",
       "start": 0.92,
-      "filter": "volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.pistol.v1": {
       "source": "fw-1911-A_42P",
       "start": 4.98,
-      "filter": "volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.pistol.v2": {
       "source": "fw-Smith_&_Wesson_642-V_27P",
       "start": 0.78,
-      "filter": "volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.pistol.v3": {
       "source": "fw-Smith_&_Wesson_642-V_27P",
       "start": 6.19,
-      "filter": "volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.nail-gun": {
@@ -5907,25 +5907,25 @@
     "action.weapon.shotgun": {
       "source": "fw-Model_12-K_22P",
       "start": 0.82,
-      "filter": "bass=g=7:f=110:w=0.8,asetrate=43200,aresample=48000,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.shotgun.v1": {
       "source": "fw-Model_12-K_22P",
       "start": 7.42,
-      "filter": "bass=g=7:f=110:w=0.8,asetrate=43200,aresample=48000,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.shotgun.v2": {
       "source": "fw-Nova-O_21P",
       "start": 0.41,
-      "filter": "bass=g=7:f=110:w=0.8,asetrate=43200,aresample=48000,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.shotgun.v3": {
       "source": "fw-CD-H_21P",
       "start": 0.44,
-      "filter": "bass=g=7:f=110:w=0.8,asetrate=43200,aresample=48000,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "weapon.pump": {
@@ -5954,145 +5954,145 @@
     "action.weapon.smg": {
       "source": "fw-PPSh-P_30P",
       "start": 0.94,
-      "filter": "bass=g=3:f=140,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.smg.v1": {
       "source": "fw-PPSh-P_30P",
       "start": 4.36,
-      "filter": "bass=g=3:f=140,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.smg.v2": {
       "source": "fw-PPSh-P_30P",
       "start": 8.22,
-      "filter": "bass=g=3:f=140,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.smg.v3": {
       "source": "fw-PPSh-P_30P",
       "start": 11.4,
-      "filter": "bass=g=3:f=140,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -8
     },
     "action.weapon.assault-rifle": {
       "source": "fw-AR-15-D_32P",
       "start": 0.68,
-      "filter": "volume=26dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -26
     },
     "action.weapon.assault-rifle.v1": {
       "source": "fw-AK-47-C_28P",
       "start": 0.59,
-      "filter": "volume=26dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -27
     },
     "action.weapon.assault-rifle.v2": {
       "source": "fw-AR-15-D_32P",
       "start": 5.62,
-      "filter": "volume=26dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -26
     },
     "action.weapon.assault-rifle.v3": {
       "source": "fw-AK-47-C_28P",
       "start": 3.23,
-      "filter": "volume=26dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=3:f=100,acompressor=threshold=-20dB:ratio=3:attack=1:release=80",
       "level": -27
     },
     "action.weapon.machine-gun": {
       "source": "fw-AK-47-C_28P",
       "start": 0.59,
-      "filter": "bass=g=5:f=120,asetrate=42240,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.machine-gun.v1": {
       "source": "fw-AK-47-C_28P",
       "start": 3.23,
-      "filter": "bass=g=5:f=120,asetrate=42240,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.machine-gun.v2": {
       "source": "fw-AK-47-C_28P",
       "start": 6.0,
-      "filter": "bass=g=5:f=120,asetrate=42240,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.machine-gun.v3": {
       "source": "fw-AK-47-C_28P",
       "start": 9.13,
-      "filter": "bass=g=5:f=120,asetrate=42240,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.army-mg": {
-      "source": "fw-AR-15-D_32P",
-      "start": 0.68,
-      "filter": "bass=g=5:f=110,asetrate=43200,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "source": "fw-AK-47-C_28P",
+      "start": 0.58,
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.army-mg.v1": {
-      "source": "fw-AR-15-D_32P",
-      "start": 5.62,
-      "filter": "bass=g=5:f=110,asetrate=43200,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "source": "fw-AK-47-C_28P",
+      "start": 3.23,
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.army-mg.v2": {
-      "source": "fw-Carl_Gustav_M45-G_31P",
-      "start": 0.29,
-      "filter": "bass=g=5:f=110,asetrate=43200,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "source": "fw-AK-47-C_28P",
+      "start": 5.99,
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.army-mg.v3": {
-      "source": "fw-Carl_Gustav_M45-G_31P",
-      "start": 3.48,
-      "filter": "bass=g=5:f=110,asetrate=43200,aresample=48000,volume=28dB,asoftclip=type=tanh",
+      "source": "fw-AK-47-C_28P",
+      "start": 9.13,
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.hunting-rifle": {
       "source": "fw-Tikka-W_29P",
       "start": 0.55,
-      "filter": "bass=g=4:f=120,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60,aecho=0.7:0.5:90|220:0.3|0.18",
       "level": -8
     },
     "action.weapon.hunting-rifle.v1": {
       "source": "fw-Tikka-W_29P",
       "start": 5.64,
-      "filter": "bass=g=4:f=120,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60,aecho=0.7:0.5:90|220:0.3|0.18",
       "level": -8
     },
     "action.weapon.hunting-rifle.v2": {
       "source": "fw-Savage_10_.300_Blackout-T_27P",
       "start": 0.93,
-      "filter": "bass=g=4:f=120,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60,aecho=0.7:0.5:90|220:0.3|0.18",
       "level": -8
     },
     "action.weapon.hunting-rifle.v3": {
       "source": "fw-Savage_10_.300_Blackout-T_27P",
       "start": 4.94,
-      "filter": "bass=g=4:f=120,volume=30dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60,aecho=0.7:0.5:90|220:0.3|0.18",
       "level": -8
     },
     "action.weapon.rotary-minigun": {
       "source": "fw-AK-47-C_28P",
       "start": 0.59,
-      "filter": "bass=g=4:f=130,asetrate=48000,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.rotary-minigun.v1": {
       "source": "fw-AK-47-C_28P",
       "start": 3.23,
-      "filter": "bass=g=4:f=130,asetrate=48000,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.rotary-minigun.v2": {
       "source": "fw-AK-47-C_28P",
       "start": 6.0,
-      "filter": "bass=g=4:f=130,asetrate=48000,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "action.weapon.rotary-minigun.v3": {
       "source": "fw-AK-47-C_28P",
       "start": 9.13,
-      "filter": "bass=g=4:f=130,asetrate=48000,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "filter": "highpass=f=35,bass=g=4:f=90,acompressor=threshold=-18dB:ratio=3:attack=2:release=60",
       "level": -8
     },
     "weapon.hmg": {
@@ -6247,7 +6247,7 @@
     },
     "action.weapon.flashbang": {
       "source": "s184-throw",
-      "start": 0,
+      "start": 0.27,
       "level": -21
     },
     "action.weapon.molotov": {

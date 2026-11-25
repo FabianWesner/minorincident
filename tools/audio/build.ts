@@ -38,7 +38,7 @@ function master(id: string): string {
     // This also permits a verified cache when an upstream archive URL has moved.
     if (existsSync(path) && hash(path) === source.sha256) return path;
     if (!existsSync(download)) {
-        const result = spawnSync('curl', ['--fail', '--location', '--retry', '2', '--max-time', '120', '--silent', '--show-error', source.downloadUrl, '-o', download]);
+        const result = spawnSync('curl', ['--fail', '--location', '-A', 'Mozilla/5.0 (audio-build)', ...('url' in source && source.url ? ['-e', String(source.url)] : []), '--retry', '2', '--max-time', '120', '--silent', '--show-error', source.downloadUrl, '-o', download]);
         if (result.status !== 0) throw new Error(`Recording download failed: ${id}`);
     }
     if (hash(download) !== source.downloadSha256) throw new Error(`Recording download hash changed: ${id}`);
