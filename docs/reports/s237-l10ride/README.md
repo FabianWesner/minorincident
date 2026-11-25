@@ -4,7 +4,7 @@
 
 The prior 4/4 claims were invalid: the observer combined unfinished loop phases across deaths and counted a checkpoint restore or remount beyond the gate as crossing after remount. The observer now resets an unfinished loop on death and requires a nearby remount on the approach side before crossing. The [corrected current-source receipt](route-strict.json) records **1/4 complete loops on HIGH and 1/4 on LOW** (convoy only); quarantine, underpass and hospital are incomplete on both. Hangar to gate remains 446.9 s HIGH and 457.4 s LOW; the ten recorded radio intervals remain within 45–75 s. The gameplay goal is not met. Typecheck and lint passed after the observer correction. Earlier 4/4 statements below are retained as historical measurements from the flawed observer and do not establish acceptance.
 
-## Current result
+## Historical result (superseded by corrected receipt above)
 
 Both latest HIGH and LOW skilled native routes completed, with all four roadblock sequences observed: mounted arrival, E dismount, on-foot fight, opened gate, E remount and crossing. HIGH took 446.9 seconds from the finale start to the gate. LOW took 551.5 seconds, 11.5 seconds above the 540 second cap. The route therefore meets the loop count on both tiers and the time window on HIGH only.
 
@@ -21,7 +21,7 @@ Loop phase ticks are in the JSON receipt. Deaths preserve the encounter ledger, 
 
 HIGH then LOW were captured with the native game camera at zoom 1 using the dev server and headless browser pool. The capture is a teleported staging fixture, not a route replay. On both tiers the quarantine sign and figures are visible, though its upper text is clipped; the billboard is only partly in frame. The underpass reads as a dark empty road with its structure mostly outside the frame. The hospital frame shows road and a lamp, with no readable tents. These captures demonstrate the visibility work remains open. Reviewed sheets: [HIGH](captures/high/setpieces.jpg), [LOW](captures/low/setpieces.jpg).
 
-## Validation
+## Historical validation (later results and remaining gaps are recorded below)
 
 - `npm run typecheck` — pass on final source state.
 - `npm run lint` — pass on final source state.
@@ -33,10 +33,9 @@ HIGH then LOW were captured with the native game camera at zoom 1 using the dev 
 
 ## Open
 
-1. Reduce the LOW hangar-to-gate time by at least 11.5 seconds without increasing retries, and keep its story cadence within 45–75 seconds.
-2. Make the underpass and hospital readable and recapture all four set pieces on HIGH and LOW during native route variations.
-3. Reconcile the L10 passive threat audit with the required combat-gated roadblocks, then obtain a zero-flag all-level receipt.
-4. Re-run the full threat audit within the reservation limit after resolving its L10 passive coverage path.
+1. Achieve four continuous ride, fight and remount loops on each tier while retaining the 420–540 s duration and 45–75 s beat cadence.
+2. Make the underpass and hospital readable and verify all four set pieces in native route variations on HIGH and LOW.
+3. Obtain a completed current-source remote full unit suite; the latest attempts timed out or remained queued. Review the non-gating L8 skilled threat observations recorded below.
 
 ## Hospital trigger investigation
 
@@ -121,3 +120,7 @@ A local 1.5× camera framing trial near the hospital, with the first tent moved 
 Another unchanged remote unit retry acquired a slot after 552 s and exited 124 at 241.6 s. It reported a save-progression case as failed after 36.7 s, but the suite budget terminated the run before failure details were printed. The same case passed in the preceding attempt. The full current-source remote suite remains unverified.
 
 A focused local `tests/engine/save-progression.test.ts` run passed 6/6 in 24.5 s. A further unchanged remote full-suite retry remained queued for more than 12 minutes while both slots were occupied and was cancelled after the original timebox; no remote tests started and the full remote result remains open.
+
+## Short roadblock hold trial
+
+A temporary 8-second fight hold improved some strict loop counts but did not satisfy the goal. With the convoy dog retained, HIGH stalled at the convoy until the 2100 s budget; LOW completed with 2/4 loops and a 92.4 s beat gap. Removing that dog in a second wave-authoring trial yielded 3/4 loops and 305.0 s hangar to gate on HIGH, and 2/4 loops and 492.2 s on LOW. HIGH missed the underpass loop; LOW missed convoy and underpass. Both experimental edits were reverted. These are diagnostic trials, not current-source acceptance receipts.
