@@ -58,7 +58,7 @@ const sIsClosed = (breakAt: number | null | undefined, tick: number) => breakAt 
 /** Keep even a full zoo rescue roster close enough to regroup during real stops. */
 function l8FormationSlot(leader: Point, heading: Point, slot: number, natural = true): Point {
   const target = formationSlot(leader, heading, slot, natural), compressedRows = Math.max(0, Math.floor(slot / 3) - 3);
-  target.x += heading.x * compressedRows * .85; target.z += heading.z * compressedRows * .85;
+  target.x += heading.x * compressedRows * .45; target.z += heading.z * compressedRows * .45;
   return target;
 }
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */

@@ -465,7 +465,7 @@ export class ThreatObserver {
       if (!follower || !e.motion || w.storyLock) continue;
       // L8 solo-cage orders deliberately hold the party outside the active animal gate.
       // This is encounter containment, not a follower pacing/wait failure.
-      if (this.level === 'L8' && (e.civilian?.survivor?.arenaWait || e.civilian?.ally?.arenaWait)) continue;
+      if (this.level === 'L8' && (e.civilian?.survivor?.arenaWait || e.civilian?.ally?.arenaWait || e.companion?.arenaWait)) continue;
       if (e.civilian && (['grabbed', 'bitten', 'down', 'rising', 'flee'].includes(e.civilian.state)
         || e.civilian.survivor?.cover || e.civilian.story?.clip === 'npc-cower')) continue;
       const shelterResident = w.missions!.state.l6?.survivors.find(r => r.id === e.id);

@@ -291,7 +291,8 @@ export class Companion {
           } else {
             this.target.x = player.transform.x + (velocity?.x ?? 0) * lead; this.target.z = player.transform.z + (velocity?.z ?? 0) * lead;
           }
-          this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : this.target, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, Math.max(4.5, playerSpeed + Math.max(0, distance - 2) * 3)), c, riding ? 1.5 : enteringHangar ? .1 : beside || yielding ? .5 : 2);
+          const followPace = Math.max(this.world.scenario === 'L8' ? 4.8 : 4.5, playerSpeed + Math.max(0, distance - 2) * 3);
+          this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : this.target, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, followPace), c, riding ? 1.5 : enteringHangar ? .1 : beside || yielding ? .5 : 2);
         }
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
       }

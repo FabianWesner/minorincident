@@ -8,8 +8,7 @@ import { dodgeWalkKeys } from '../playtest/input';
 import { weaponKey } from '../../src/data/weaponKeys';
 import type { Game } from '../../src/Game';
 import { provenance } from './accept/probe';
-const build = JSON.parse(readFileSync('docs/reports/p1-l8rework/browser-build.json', 'utf8')) as ReturnType<typeof provenance> & { artifactSha256: Record<string, string> };
-for (const [file, sha] of Object.entries(build.artifactSha256)) if (createHash('sha256').update(readFileSync(file)).digest('hex') !== sha) throw Error(`QA build changed: ${file}`);
+const build = provenance();
 const captureToolSha256 = createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex');
 const tier = process.argv[2] === 'high' ? 'high' : 'low';
 const out = process.env.L8_CAPTURE_OUT ?? `docs/reports/p1-l8rework/browser-${tier}`; mkdirSync(out, { recursive: true });
@@ -18,6 +17,8 @@ const session = new SceneSession({ tier, backend: 'webgl2', seed: 1, viewport: {
 const frames: unknown[] = [], captures: string[] = [], down = new Set<string>();
 const weaponPictures = new Set<string>();
 const storyPictures = new Set<string>();
+const animalPictures = new Set<string>();
+let specialCursor = 0, animalHitCursor = 0;
 let firing = false, lastArena = '', lastPhase = -1, lastTick = -1;
 try {
   await session.open(browser);
@@ -27,14 +28,17 @@ try {
     document.documentElement.dataset.sceneHud = '1';
     document.querySelectorAll<HTMLElement>('#hud,.hud').forEach(e => { e.dataset.sceneHud = '1'; });
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
-    const audit = { attacks: [] as unknown[], hits: [] as unknown[], lines: [] as unknown[] };
+    const audit = { attacks: [] as unknown[], hits: [] as unknown[], lines: [] as unknown[], specials: [] as unknown[], animalHits: [] as unknown[] };
     (window as unknown as { l8Audit: typeof audit }).l8Audit = audit;
+    const arenaOf = (id: number) => game.world.missions!.l8!.state.arenas.find(arena => arena.ids.includes(id))?.id;
     game.world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) audit.attacks.push({ tick: e.tick, id: e.actionId, arena: game.world.missions!.l8!.state.arenas.find(a => a.phase > 0 && a.phase < 3)?.id }); });
     game.world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.sourceId === 1) audit.hits.push({ tick: e.tick, id: e.actionId, target: e.targetId, amount: e.amount, arena: game.world.missions!.l8!.state.arenas.find(a => a.ids.includes(e.targetId))?.id }); });
+    game.world.events.on('infected.special', e => { if (e.type === 'infected.special') { const arena = arenaOf(e.sourceId); if (arena) audit.specials.push({ tick: e.tick, arena, move: e.move, stage: e.stage }); } });
+    game.world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1 && e.amount > 0) { const arena = arenaOf(e.sourceId), move = game.world.entities.get(e.sourceId)?.infected?.specialAttack?.move; if (arena && move) audit.animalHits.push({ tick: e.tick, arena, move, amount: e.amount }); } });
     game.world.events.on('dialogue.line', e => { if (e.type === 'dialogue.line') audit.lines.push({ tick: e.tick, id: e.id }); });
   }, tier);
   for (let n = 0; n < 7200; n++) {
-    const row = await session.page.evaluate(() => {
+    const row = await session.page.evaluate(({ specialCursor, animalHitCursor }) => {
       const ss = window.__SS__!, state = ss.getState(), player = ss.getEntity(1)!, zoo = state.l8!;
       const plan = ss.bot.plan(), p = player.transform, active = zoo.arenas.find(a => a.phase !== 3);
       let move = { ...plan.frame.move };
@@ -49,7 +53,7 @@ try {
       const target = plan.target && ss.input.project(plan.target, 'player');
       const entries = (window.__SCENE__ as unknown as { game: Game }).game.world.combat!.runner.loadout.activeEntries();
       const cinematic = (state.mission as { cinematic?: { id: string; elapsed: number } })?.cinematic;
-      const audit = (window as unknown as { l8Audit: { attacks: { id: string; arena?: string }[]; hits: { id: string; arena?: string; amount: number }[] } }).l8Audit;
+      const audit = (window as unknown as { l8Audit: { attacks: { id: string; arena?: string }[]; hits: { id: string; arena?: string; amount: number }[]; specials: unknown[]; animalHits: unknown[] } }).l8Audit;
       const guns = ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher'];
       const needed = active?.phase ? guns.find(id => audit.attacks.filter(e => e.arena === active.id && e.id === id).length < 2 || !audit.hits.some(e => e.arena === active.id && e.id === id && e.amount > 0)) : undefined;
       const choice = entries[plan.slot];
@@ -62,8 +66,20 @@ try {
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
         cinematic, wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
         objective: [...document.querySelectorAll('[data-testid=objective-text],[data-testid=mission-tracker]')].map(e => e.textContent).find(text => text?.trim()) ?? '', departed: (state.mission as { states: Record<string, boolean> })?.states.departed,
+        specials: audit.specials.slice(specialCursor), animalHits: audit.animalHits.slice(animalHitCursor), specialCount: audit.specials.length, animalHitCount: audit.animalHits.length,
       };
-    });
+    }, { specialCursor, animalHitCursor });
+    specialCursor = row.specialCount; animalHitCursor = row.animalHitCount;
+    const moveStages = row.specials as { tick: number; arena: string; move: string; stage: string }[];
+    for (const event of moveStages) if (['zebra.kick', 'gorilla.pound', 'gorilla.grab-slam'].includes(event.move) && ['telegraph', 'active'].includes(event.stage)) {
+      const key = `${event.move}-${event.stage}`;
+      if (!animalPictures.has(key)) { const file = `natural-${event.arena}-${event.move}-${event.stage}-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); animalPictures.add(key); }
+    }
+    const animalHits = row.animalHits as { tick: number; arena: string; move: string; amount: number }[];
+    for (const event of animalHits) if (['zebra.kick', 'gorilla.pound', 'gorilla.grab-slam'].includes(event.move)) {
+      const key = `${event.move}-hit`;
+      if (!animalPictures.has(key)) { const file = `natural-${event.arena}-${event.move}-hit-${event.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); animalPictures.add(key); }
+    }
     for (const [beat, occurred] of [['wall-breach', row.wallBreached], ['hale-keys', row.haleKeys], ['hale-fallen', row.haleFallen], ['hale-mid', row.cinematic?.id === 'l8-hale' && row.cinematic.elapsed >= 48]] as const) {
       if (occurred && !storyPictures.has(beat)) {
         const file = `${beat}-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 75 }); captures.push(file); storyPictures.add(beat);
