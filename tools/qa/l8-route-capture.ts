@@ -98,6 +98,9 @@ try {
       const key = `${event.move}-hit`;
       if (!animalPictures.has(key)) { const file = `natural-${event.arena}-${event.move}-hit-${event.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); animalPictures.add(key); }
     }
+    if (row.arena === 'zebra' && row.arenaPhase === 1 && Math.hypot(row.player.x - 60, row.player.z - 32) < 8 && !storyPictures.has('zebra-habitat')) {
+      const file = `natural-zebra-habitat-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); storyPictures.add('zebra-habitat');
+    }
     for (const [beat, occurred] of [['wall-breach', row.wallBreached], ['hale-keys', row.haleKeys], ['hale-fallen', row.haleFallen], ['hale-mid', row.cinematic?.id === 'l8-hale' && row.cinematic.elapsed >= 48]] as const) {
       if (occurred && !storyPictures.has(beat)) {
         const file = `${beat}-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 75 }); captures.push(file); storyPictures.add(beat);
