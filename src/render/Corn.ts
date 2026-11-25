@@ -110,19 +110,23 @@ export function cornMaterial(materials: Materials) {
       const actor = movers[i];
       If(directions[i].y.greaterThan(0), () => {
         const delta = rootWorld.xz.sub(actor.xz), forward = directions[i];
-        // Estimate when the mover passed each vertex along its recent direction.
-        // The swept wake fades to zero after one second without storing per-stalk state.
-        const age = dot(delta, forward.xz).negate().div(actor.y.max(.1)).clamp(0, 1);
-        const offset = delta.add(forward.xz.mul(actor.y).mul(age)), radius = offset.length();
-        // Stalks part away from the body, with a forward lean in its travel direction.
-        // The 1.2 m smooth falloff lets them spring back continuously as the mover passes.
-        const bend = radius.smoothstep(.12, 1.2).oneMinus().mul(age.smoothstep(0, 1).oneMinus()).mul(weight).mul(forward.y.smoothstep(0, 1)).mul(.5);
-        // Orient from the mover, not from the swept centerline: that centerline can
-        // cross a stalk when the mover turns, reversing a full-strength lean in one tick.
-        // Soften the direction near the body so passing directly over a root is smooth.
-        const separation = delta.length().max(.6);
-        const awayX = delta.x.div(separation), awayZ = delta.y.div(separation);
-        result.addAssign(vec3(awayX.add(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.add(forward.z.mul(.35)).mul(bend)));
+        // A one-second wake cannot reach beyond speed plus its 1.2 m radius.
+        const reach = actor.y.add(1.21);
+        If(dot(delta, delta).lessThanEqual(reach.mul(reach)), () => {
+          // Estimate when the mover passed each vertex along its recent direction.
+          // The swept wake fades to zero after one second without storing per-stalk state.
+          const age = dot(delta, forward.xz).negate().div(actor.y.max(.1)).clamp(0, 1);
+          const offset = delta.add(forward.xz.mul(actor.y).mul(age)), radius = offset.length();
+          // Stalks part away from the body, with a forward lean in its travel direction.
+          // The 1.2 m smooth falloff lets them spring back continuously as the mover passes.
+          const bend = radius.smoothstep(.12, 1.2).oneMinus().mul(age.smoothstep(0, 1).oneMinus()).mul(weight).mul(forward.y.smoothstep(0, 1)).mul(.5);
+          // Orient from the mover, not from the swept centerline: that centerline can
+          // cross a stalk when the mover turns, reversing a full-strength lean in one tick.
+          // Soften the direction near the body so passing directly over a root is smooth.
+          const separation = delta.length().max(.6);
+          const awayX = delta.x.div(separation), awayZ = delta.y.div(separation);
+          result.addAssign(vec3(awayX.add(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.add(forward.z.mul(.35)).mul(bend)));
+        });
       });
     }
     const wind = sin(positionWorld.x.mul(.7).add(positionWorld.z.mul(.4)).add(materials.wind.mul(1.5))).mul(.09).mul(weight);
