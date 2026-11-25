@@ -29,7 +29,7 @@ export interface Eyes {
   view: { w: number; h: number };
 }
 
-export const canShootVehicleObjective = (level: string | null, objective: string): boolean => level === 'L9' && /hold the hatch/i.test(objective);
+export const canShootVehicleObjective = (level: string | null, objective: string): boolean => level === 'L9' && /hold the hatch|hold out/i.test(objective);
 export const captureZooms = [1, 1.5] as const;
 export const visibleBoarder = (passenger: boolean, figureDrawn: boolean, screen: { x: number; y: number }, view: { w: number; h: number }): boolean =>
   passenger && figureDrawn && screen.x >= 0 && screen.x < view.w && screen.y >= 0 && screen.y < view.h;
@@ -112,7 +112,7 @@ export function look(): Eyes {
       if (enemy && m?.id === 'L4') {
         const world = (window.__SCENE__ as unknown as { game: { world: import('../../src/sim/world/SimWorld').SimWorld } }).game.world;
         if (world.infected?.director.occluded(e.transform)) continue;
-      } else if (!(enemy && m?.id === 'L9' && /hold the hatch/i.test(document.body.innerText)) && !(m?.id === 'L9' && e.attachedTo !== undefined && figures.has(e.id)) && !a.input.visible(e.transform)) continue;
+      } else if (!(enemy && m?.id === 'L9' && /hold the hatch|hold out/i.test(document.body.innerText)) && !(m?.id === 'L9' && e.attachedTo !== undefined && figures.has(e.id)) && !a.input.visible(e.transform)) continue;
       const s = a.input.project(e.transform, 'player');
       const joints = figures.get(e.id)?.joints;
       if (enemy && !figures.has(e.id)) continue;

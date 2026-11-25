@@ -109,11 +109,14 @@ export class Hud {
   private threatCount = 0;
   private readonly discoveries: HTMLSpanElement[] = [];
   private readonly checkpointToast = node('div', 'checkpoint-toast');
+  /** PO 2026-11-25: "I need to know that I need to press E to leave the car. Many users will not know". Always-visible key line in any vehicle. */
+  private readonly vehicleHint = node('div', 'hud-vehicle-hint');
   private checkpointToastUntil = -1;
   private loadedScenario: string | null = null;
   constructor(private readonly game: Game) {
     this.onboarding = new Onboarding(game.world, game.input.bindings);
     this.civilianBark.className = 'hud-panel'; this.civilianBark.style.cssText = 'position:absolute;pointer-events:none'; this.civilianBark.hidden = true; this.root.append(this.civilianBark);
+    this.vehicleHint.style.cssText = 'position:absolute;left:50%;bottom:118px;transform:translateX(-50%);padding:7px 14px;border-radius:10px;background:#171b20d8;color:#ffd083;font:700 15px/1.2 system-ui,sans-serif;pointer-events:none;white-space:nowrap'; this.vehicleHint.hidden = true; this.root.append(this.vehicleHint);
     this.checkpointToast.style.cssText = 'position:absolute;left:50%;top:12%;transform:translateX(-50%);padding:9px 16px;border-radius:10px;background:#171b20e8;color:#fff;font:700 16px/1.2 system-ui,sans-serif;text-shadow:0 1px 2px #000;pointer-events:none;white-space:nowrap'; this.checkpointToast.hidden = true; this.root.append(this.checkpointToast);
     // PO: story bubbles read comfortably: larger outlined text, fade in/out, kept inside the frame above the speaker.
     this.storyBubble.className = 'hud-panel story-bubble'; this.storyBubble.style.cssText = 'position:absolute;pointer-events:none;transform:translate(-50%,-100%);width:max-content;max-width:min(340px,80vw);padding:8px 14px;border-radius:12px;font:700 19px/1.3 system-ui,sans-serif;color:#fff;text-shadow:0 0 3px #0b0f18,0 0 3px #0b0f18,1px 1px 0 #0b0f18,-1px -1px 0 #0b0f18,1px -1px 0 #0b0f18,-1px 1px 0 #0b0f18;white-space:normal;text-align:center;opacity:0'; this.storyBubble.hidden = true; this.root.append(this.storyBubble);
@@ -349,6 +352,18 @@ export class Hud {
       text(this.heat.label, near ? mountHint : gun.locked ? `OVERHEATED ${percent}%` : `Minigun heat ${percent}%`);
       attribute(this.heat.root, 'aria-valuenow', String(percent)); attribute(this.heat.root, 'aria-valuetext', gun.locked ? `Overheated, ${percent} percent` : `${percent} percent`);
       attribute(this.heatPanel, 'data-state', state); attribute(this.heatPanel, 'data-mounted', String(gun.mounted));
+    }
+    {
+      const v = world.vehicles, carId = v?.active ?? null, car = carId !== null ? v!.cars.get(carId) : undefined;
+      const l9 = mission?.l9 && mission.l9.state.carId === carId && mission.l9.state.phase === 'driving' ? mission.l9.driving : undefined;
+      let action = '';
+      if (car && l9) action = l9.hatch ? 'Back inside the APC' : car.physics.speed < 1 ? 'Open the hatch' : '';
+      else if (car) action = car.entity.vehicle?.floor ? '' : 'Get out';
+      else if (v?.bicycle?.riding) action = 'Get off';
+      else if (gun?.mounted) action = 'Leave the gun';
+      const key = this.game.input.scheme === 'touch' ? 'ACTION' : 'E';
+      setHidden(this.vehicleHint, !action);
+      if (action) text(this.vehicleHint, `${key} · ${action}`);
     }
     attribute(this.portrait, 'data-variant', player.survivor?.variant ?? 'female');
     const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
