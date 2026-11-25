@@ -25,3 +25,5 @@
 
 - Capture and inspect unobscured boarding and exit sequences; correct any visible popping or overlap they reveal.
 - Confirm the courier and corgi visibly climb in, and all riders exit to the street, rather than relying on simulation state assertions.
+
+- `carry()` currently hides the companion as soon as the courier boards, before the companion reaches its boarding point; arrival also leaves its `passengerOf` marker set. Removing that early hide exposed that the existing interaction test does not reach the companion boarding point within three seconds. Fix the path and entry/exit together, then rerun the checks and captures.
