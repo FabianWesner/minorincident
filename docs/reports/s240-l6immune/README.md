@@ -9,6 +9,7 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 ## Receipts
 
 - `tests/engine/combat.test.ts` — the existing riot-shield combat case now checks that axe, handgun, shotgun, and army-MG damage reduces health and can down a shielded infected from both front and back. Existing distance/angle and frontal MG shield-break checks remain in this case.
+- The same existing combat case also exercises the current 240 HP armored actor with all four weapon damage types: each hit reduces HP, front damage is halved, rear damage is full, and repeated hits down it. This calls the damage pipeline directly, so it does not establish actual weapon hit selection or platform collision.
 - `tests/engine/l4-contact.test.ts` — the existing production health-bar test models a 600 HP riot and a 2.52 HP MG chip, then asserts that the damage-chip mesh is present. The underlying red fill delta is subpixel.
 - Focused verification: `npm test -- --run tests/engine/combat.test.ts -t 'damage modifiers: shared riot shield'` passed; `npm test -- --run tests/engine/l4-contact.test.ts -t 'every contact archetype interrupts approach/lure'` passed; `npm run typecheck` and `npm run lint` passed.
 - `npm run test:unit` passed locally: 105 tests across 27 files. Two unchanged remote invocations reached their 240 s limit (exit 124); the combat file passed in both, but neither full suite completed.
