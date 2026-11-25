@@ -294,10 +294,12 @@ export class LevelTwoRescue {
     }
     if (!s.companionBoard || s.phase !== 'alarm' || !s.seated) return false;
     const target = s.companionBoard!, reached = Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < 1;
-    if (!s.companionEnter && reached && this.world.tick >= (s.boardingAt ?? this.world.tick) + ticks(2.4)) s.companionEnter = { tick: this.world.tick, x: e.transform.x, z: e.transform.z };
+    let crewAboard = true;
+    for (const id of s.crewIds) { const rider = this.world.entities.get(id); if (rider && rider.health.current > 0 && !rider.infected && !rider.hidden) { crewAboard = false; break; } }
+    if (!s.companionEnter && reached && crewAboard && this.world.tick >= (s.boardingAt ?? this.world.tick) + ticks(2.4)) s.companionEnter = { tick: this.world.tick, x: e.transform.x, z: e.transform.z };
     if (s.companionEnter) {
-      const t = this.world.entities.get(s.truckId)!.transform, u = Math.min(1, (this.world.tick - s.companionEnter.tick) / ticks(.4));
-      const doorX = t.x - Math.cos(t.yaw) * 3.5 + Math.sin(t.yaw) * 1.05, doorZ = t.z + Math.sin(t.yaw) * 3.5 + Math.cos(t.yaw) * 1.05;
+      const t = this.world.entities.get(s.truckId)!.transform, u = Math.min(1, (this.world.tick - s.companionEnter.tick) / ticks(.25));
+      const doorX = t.x - Math.cos(t.yaw) * 3.5 + Math.sin(t.yaw) * .35, doorZ = t.z + Math.sin(t.yaw) * 3.5 + Math.cos(t.yaw) * .35;
       e.transform.x = s.companionEnter.x + (doorX - s.companionEnter.x) * u; e.transform.z = s.companionEnter.z + (doorZ - s.companionEnter.z) * u; e.transform.y = .3 + .45 * u;
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       if (u >= 1) { e.hidden = true; e.passengerOf = s.truckId; if (c.velocity) c.velocity.x = c.velocity.z = 0; this.world.spatial.delete(e.id); }
@@ -638,10 +640,9 @@ export class LevelTwoRescue {
             const from = s.crewBoardFrom?.[i], truck = world.entities.get(s.truckId)!.transform;
             if (from) {
               const u = (tick - story.start) / ticks(.4), weight = u * u * (3 - 2 * u);
-              // End at the camera-facing rear step, not halfway toward the
-              // engine centre: otherwise a rider disappears out on the grass.
-              const doorX = truck.x - Math.cos(truck.yaw) * 3.5 + Math.sin(truck.yaw) * 1.05;
-              const doorZ = truck.z + Math.sin(truck.yaw) * 3.5 + Math.cos(truck.yaw) * 1.05;
+              // Cross the rear sill into the enclosed body before hiding.
+              const doorX = truck.x - Math.cos(truck.yaw) * 3.5 + Math.sin(truck.yaw) * .35;
+              const doorZ = truck.z + Math.sin(truck.yaw) * 3.5 + Math.cos(truck.yaw) * .35;
               e.transform.x = from.x + (doorX - from.x) * weight;
               e.transform.z = from.z + (doorZ - from.z) * weight;
               e.transform.y = from.y + .65 * weight;

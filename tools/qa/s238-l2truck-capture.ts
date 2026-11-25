@@ -31,7 +31,7 @@ try {
             const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
             a.camera.zoom(zoom); await a.step(1); await a.screenshotReady();
             const l = g.world.missions!.state.l2!, crew = l.crewIds.map(id => g.world.entities.get(id)!);
-            return { tick: g.world.tick, phase: l.phase, boardingAt: l.boardingAt ?? null, seated: l.seated,
+            return { tick: g.world.tick, phase: l.phase, boardingAt: l.boardingAt ?? null, departAt: l.departAt, seated: l.seated,
               courierVisible: !g.world.entities.get(1)!.hidden, crewVisible: crew.filter(e => !e.hidden).length,
               sitDown: crew.filter(e => e.civilian?.story?.clip === 'npc-sit-down').length,
               crew: crew.map(e => ({ id: e.id, x: e.transform.x, z: e.transform.z, hidden: !!e.hidden, run: e.civilian?.ally?.run, story: e.civilian?.story })),
