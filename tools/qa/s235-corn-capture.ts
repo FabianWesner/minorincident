@@ -45,6 +45,17 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
     }
     if (!followFrames.some(dog => dog.speed > .1)) throw Error('Corgi did not follow at game-camera zoom');
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
+    await session.page.evaluate(() => window.__SS__!.input.set({ move: { x: 0, z: 1 } }));
+    const turnFrames: { frame: number; x: number; z: number; vx: number; vz: number }[] = [];
+    for (const frame of [5, 10, 15, 20, 25, 30]) {
+      await session.page.evaluate(async () => { await window.__SS__!.step(5); });
+      turnFrames.push(await session.page.evaluate(frame => {
+        const e = window.__SS__!.getEntity(1)!, v = e.survivor?.velocity;
+        return { frame, x: e.transform.x, z: e.transform.z, vx: v?.x ?? 0, vz: v?.z ?? 0 };
+      }, frame));
+      await session.screenshot(`${out}/${tier}-zoom-${zoom}-turn-${frame}.png`);
+    }
+    if (!turnFrames.some(frame => frame.vz > .1)) throw Error('Courier did not turn');
     await session.page.evaluate(() => {
       const a = window.__SS__!, p = a.getEntity(1)!.transform;
       a.camera.cinematic({ position: [p.x + 6, 7, p.z + 6], target: [p.x, 1, p.z] }, true);
@@ -54,7 +65,7 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
       await session.page.evaluate(async () => { const a = window.__SS__!; await a.step(10); a.settings.set({ timeOfDay: 'L1' }); });
       await session.screenshot(`${out}/${tier}-zoom-${zoom}-stop-${frame}.png`);
     }
-    writeJson(`${out}/${tier}-zoom-${zoom}.json`, { ...setup, end, dogFrames, followFrames, errors: session.errors });
+    writeJson(`${out}/${tier}-zoom-${zoom}.json`, { ...setup, end, dogFrames, followFrames, turnFrames, errors: session.errors });
     if (session.errors.length) throw new Error(session.errors.join('\n'));
     console.log(`${tier} zoom ${zoom}: ${JSON.stringify(setup)}`);
   } finally { await session.close(); stopServer(); }
