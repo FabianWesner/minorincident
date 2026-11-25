@@ -69,3 +69,5 @@ A half-scale first tent at (3500, 91) was fully visible in a staged HIGH frame, 
 ## Underpass source finding
 
 The current L10 layout contains no `prop.l10-underpass`: mainline s219 replaced the bridge, piers and lamps with the sinkhole collapse at x=3390. See [the s219 report](../s219-l10sinkhole/README.md) and commit `b6acacd8`. The requested readable underpass therefore requires new composition around the retained collapse and detour; camera or occlusion changes alone cannot reveal an asset that is absent. Preserve the existing sinkhole collision and route while addressing this requirement.
+
+A follow-up passive diagnostic allowed the normal combat approach until cure installation and retained attack-free input thereafter. It still stopped at the hospital before the hold. At tick 107401 the hospital gate was open, all three authored wave slots had been hit and were down, and the courier was on foot near x=3479 trying to return to the bike amid bodies. The measurement policy trial was reverted. This narrows the remaining issue to native remount/path recovery after the open gate; it does not establish a zero-flag audit.
