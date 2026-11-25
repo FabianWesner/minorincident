@@ -18,10 +18,10 @@ try {
     return { id, speed: car.physics.speed, car: { ...p }, target: { ...actor.transform } };
   });
   const cells: { frame: number; jpeg: Buffer }[] = [];
-  const motion: { frame: number; tick: number; y: number; vy: number }[] = [];
+  const motion: { frame: number; tick: number; y: number; vy: number; drawnY: number | null }[] = [];
   for (let frame = 0; frame <= 90; frame++) {
     if (frame) await s.page.evaluate(async () => window.__SS__!.step(1));
-    motion.push(await s.page.evaluate(frame => { const w = (window.__SCENE__ as unknown as { game: Game }).game.world, car = w.vehicles!.cars.get(w.missions!.l9!.state.carId)!; return { frame, tick: w.tick, y: car.physics.body.translation().y, vy: car.physics.body.linvel().y }; }, frame));
+    motion.push(await s.page.evaluate(frame => { const game = (window.__SCENE__ as unknown as { game: Game }).game, w = game.world, car = w.vehicles!.cars.get(w.missions!.l9!.state.carId)!; const view = game.view as unknown as { vehicles: { records: Map<number, { parent: { position: { y: number } } }> } | null }; return { frame, tick: w.tick, y: car.physics.body.translation().y, vy: car.physics.body.linvel().y, drawnY: view.vehicles?.records.get(car.entity.id)?.parent.position.y ?? null }; }, frame));
     if (frame >= 15 && frame <= 60 && frame % 5 === 0) { await s.ready(); cells.push({ frame, jpeg: await s.page.screenshot({ type: 'jpeg', quality: 82, clip: { x: 280, y: 140, width: 720, height: 405 } }) }); }
   }
   await s.page.keyboard.up('KeyW');

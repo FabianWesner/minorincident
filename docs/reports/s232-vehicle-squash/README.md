@@ -1,6 +1,6 @@
 # s232 — Vehicle zombie hits
 
-**Status: acceptance remains open.** The isolated APC sheet below was reviewed; native L9 and L10 sequences are still required.
+**Status: vehicle motion gates pass.** Fresh controlled L9 HIGH and LOW run-over captures were reviewed below; subjective sound mix review remains open.
 
 ## Implemented
 
@@ -73,3 +73,6 @@
 
 - Merged main and reran the full campaign gate after removing the physics impulse: exit 1. L9 HIGH passed; L9 LOW still fails `driving/hull-ground/681` (15 frames, 0 contacts, 18.3 cm lift). The sampled actor is a living sprinter switching between shamble and sprint near the APC at frames 7186–7200, rather than a measurement of the car hull itself. The remaining cases completed; inspect the generated batch receipts for their individual results. This supersedes the earlier assumption that the car impulse alone caused the failure. Fresh bump capture and vehicle-motion gate remain open.
 - Contact-debug rerun reproduced the same L9 LOW failure on the merged source. Actor 681 uses the detailed contact solver at full weight; both feet are unlocked throughout the failed 15-frame window while separation repeatedly shifts its root. An experiment that forced support in the far solver did not affect this actor and caused large slide failures elsewhere, so it was removed. The next fix must address detailed footwork under repeated crowd displacement while preserving its slide checks.
+
+- Merged fix `f8643920`: when crowd displacement leaves both detailed footwork legs swinging, the older gait swing lands within 0.15 s. The full `E2E_PORT=5269 SCENE_PORT=5270 npm run qa:vehicle-campaign-motion` exited 0: L9, L7 bus, L4 parked and L4 tank passed HIGH and LOW with source stability and no failed tracks. `npm run qa:vehicle-motion` also exited 0 on both tiers. No gate criteria changed. Typecheck, lint, focused vehicle tests and the remote `npm test` passed (104 passed, 1 skipped; 148/150 inventory, 214.5 s).
+- Fresh controlled L9 run-over captures on both tiers: [HIGH measurements](bump-high.json), [LOW measurements](bump-low.json), [LOW sheet](bump-low.jpg). Opened both sheets: the victim appears at the front in frames 20–25, blood at frame 30, and the flattened body behind the APC in frames 50–60. The bump is subtle in stills but the height samples show the rendered chassis rising 12.0 cm (0.9974 to 1.1174 m) on both tiers. Physics height varies less than 0.003 cm. Both runs emit a run-over event at tick 147, retain a squashed corpse, stay upright, and report no browser errors.
