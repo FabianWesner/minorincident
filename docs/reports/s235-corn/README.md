@@ -35,6 +35,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - A later paired full-route HIGH WebGL2 quiet-run used the parent asset/render files and then the current files under one exclusive reservation. Baseline: 1,042 samples, p95 15.3 ms, p99 41.2 ms, max 63.7 ms. Candidate: 1,041 samples, p95 15.3 ms, p99 38.6 ms, max 56.0 ms. Both had no errors or frames over 100 ms; the route was x=547–589.6, z≈0 and did not enter the corn field. This pair does not show a regression on that route; it is one pair, and the separate field receipt remains the evidence for crop cost.
 
+- The turn portion now uses a close fixed camera after the game-zoom walking shots. All four HIGH/LOW runs completed without errors (`/private/tmp/s235-close-turn`); the HIGH and LOW start/end frames were opened. Corn remains visible as the courier turns and the corgi follows. Individual overlapping stalks are easier to see, but the five-tick spacing and dense crop still do not prove smooth recovery or absence of popping.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.

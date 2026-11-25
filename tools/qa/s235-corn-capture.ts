@@ -45,7 +45,11 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
     }
     if (!followFrames.some(dog => dog.speed > .1)) throw Error('Corgi did not follow at game-camera zoom');
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
-    await session.page.evaluate(() => window.__SS__!.input.set({ move: { x: 0, z: 1 } }));
+    await session.page.evaluate(() => {
+      const a = window.__SS__!, p = a.getEntity(1)!.transform;
+      a.camera.cinematic({ position: [p.x + 6, 7, p.z + 6], target: [p.x, 1, p.z] }, true);
+      a.input.set({ move: { x: 0, z: 1 } });
+    });
     const turnFrames: { frame: number; x: number; z: number; vx: number; vz: number }[] = [];
     for (const frame of [5, 10, 15, 20, 25, 30]) {
       await session.page.evaluate(async () => { await window.__SS__!.step(5); });
