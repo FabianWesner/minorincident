@@ -908,7 +908,10 @@ export class GameView implements Lifecycle {
       if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
       if (this.world.scenario === 'L8') this.view.pull(l8Zone ? (l8Zone.x0 + l8Zone.x1) / 2 : 0, l8Zone ? (l8Zone.z0 + l8Zone.z1) / 2 : 0, l8Zone ? 1 : 0, 0);
       this.updateEnding();
-      const focus = this.vehicles?.rideFocus(this.rideFocus) ? this.rideFocus : player.transform;
+      const l2 = this.world.missions?.state.l2;
+      const truck = l2?.phase === 'alarm' && l2.seated ? this.world.entities.get(l2.truckId) : undefined;
+      const focus = truck ? this.rideFocus.set(truck.transform.x - Math.cos(truck.transform.yaw) * 2.5, player.transform.y, truck.transform.z + Math.sin(truck.transform.yaw) * 2.5)
+        : this.vehicles?.rideFocus(this.rideFocus) ? this.rideFocus : player.transform;
       if (this.cameraSnap) { this.cameraSnap = false; this.view.snapTo(focus); }
       else this.view.update(focus, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
