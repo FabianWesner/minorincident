@@ -1,6 +1,6 @@
 # s235 corn parting — work in progress
 
-The corn-specific opacity fade and the shared player see-through cut were removed. The current shader uses a fixed set of mover uniforms and a one-second directional wake. The courier, corgi and driven car have reserved slots; other nearby infected and vehicles compete for five remaining slots, prioritized by distance with an incumbent bias. Replaced influences fade out before their slots can be reused. Corpses and building occlusion code were not changed.
+The corn-specific opacity fade and the shared player see-through cut were removed. The current shader uses a fixed set of mover uniforms and a one-second directional wake. The courier, corgi and driven car have reserved slots; other nearby infected and vehicles compete for thirteen remaining slots, prioritized by distance with an incumbent bias. Replaced influences fade out before their slots can be reused. Corpses and building occlusion code were not changed.
 
 ## Evidence
 
@@ -53,8 +53,12 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - A separate temporary slot toggle isolated one moving infected (ID 101, speed about 0.92 m/s) in the L10 corn on WebGL2. In the upper-left 350×250-pixel region around its stalks, consecutive disabled frames were pixel-identical; enabling its slot changed more than 20 RGB levels in 7,277 pixels on HIGH and 7,306 on LOW (`/private/tmp/s235-zombie-isolated`). Outside that region an unrelated animated area changed even with the slot disabled, so whole-frame differences are not a controlled comparison. The HIGH difference image was opened and shows altered stalks near the infected. This confirms one selected infected affects rendered corn, not all infected in a crowd. Instrumentation was removed.
 
+- The shared capacity was increased from five to thirteen. In the same eight-zombie L10 probe, all seven infected moving faster than 0.1 m/s were tracked; the eighth was stationary. A hard limit remains, and saturated handoffs still wait for the outgoing influence to fade.
+- Simply doubling the shader slots raised field p95 from 6.2 to 7.6 ms in a quiet paired eight-zombie replay, so the shader was changed to skip inactive slots. In a later quiet pair, the eight-slot baseline recorded p95 6.9 ms, p99 8.6 ms, max 11.2 ms (1,026 samples), while sixteen conditional slots recorded p95 6.7 ms, p99 8.8 ms, max 11.3 ms (1,043 samples). Both covered x=555–565.17, had no errors, and used HIGH WebGL2. This is one pair; other crowd sizes and the full-route receipt remain to be checked.
+- The conditional shader passed HIGH and LOW captures at zoom 1 and 1.5 on WebGL2 (`/private/tmp/s235-sixteen-branch-webgl-final`) and headless WebGPU (`/private/tmp/s235-sixteen-branch-webgpu-final`) with no captured errors. HIGH and LOW close frames were opened; corn remains visible around the courier and corgi. This does not resolve the LOD transition or constitute manual WebGPU motion review.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
 
-Resolve the remaining visible corn LOD leaf-shape transition without regressing the L10 budget. Replace or otherwise resolve the five-shared-slot crowd limit and measure its performance; three slots are reserved for the courier, corgi and driven car. Review HIGH then LOW at both requested zooms with the courier and following corgi, including a temporal sequence. Confirm WebGPU separately and assess variability in the paired L10 and field receipts. The current work is not acceptance complete.
+Resolve the remaining visible corn LOD leaf-shape transition without regressing the L10 budget. Assess the thirteen-shared-slot crowd limit, handoff delay, and performance at larger crowd sizes; three slots are reserved for the courier, corgi and driven car. Review HIGH then LOW at both requested zooms with the courier and following corgi, including a temporal sequence. Confirm WebGPU separately and assess variability in the paired L10 and field receipts. The current work is not acceptance complete.
