@@ -59,3 +59,5 @@ After `7c4c8b65`, fresh HIGH/LOW captures reach the ride at 213 ticks (3.55 s) a
 Current `7c4c8b65` local unit run passed all 105 tests in 123.0 s. The remote run timed out at 241.0 s after a long-running infected-AI case failed; an unchanged retry was queued. Code inspection confirms there is no recovery path if a living rider remains permanently unable to reach the truck, so the mission can wait indefinitely.
 
 The unchanged remote retry also exceeded the 240 s budget (241.1 s), after a long-running NPC case reported a failure; the process timed out before detailed diagnostics. The same current code passed the complete local suite (105/105, 123.0 s). Remote acceptance remains open.
+
+The existing interaction case now holds a living rider for 15 seconds, confirms the truck waits and the rider remains visible, then releases the rider and confirms departure; it passed. A permanently sealed path still has no automatic recovery. The latest remote default suite and unchanged retry each timed out at 240.9 s; the retry reported no assertion failures before timeout.
