@@ -51,3 +51,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - A six-run experiment favoring the nearest open service door completed all routes but produced mixed engagement (player 0.44–3.51/min; followers 2.63–5.65/min) and did not meet L6-07. The experimental routing was discarded; authored counts and the 14 s interval were unchanged.
 
 - The pre-stream second-breach capacity reservation now reads the authored count (10 → 5); this prevents the old cohort size from reserving extra slots. Typecheck and lint pass and the focused L6 native run has zero L6 flags; its command reports the expected partial-selection flag. The remote unit rerun was stopped while queued and the full threat audit has not been rerun after this reservation change.
+
+- A temporary diagnostic announced all six entries before the full-hold reservation check; it advanced past the filler count assertion but then a dedicated entry still spawned 0 of 1. The committed invariant was restored unchanged. The cause of that admission refusal needs investigation before the hatch-arrival invariant can pass.
