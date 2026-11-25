@@ -37,7 +37,7 @@ export const l6Entries = [2, 5, 3, 6, 4, 7].map((door, i) => ({ door, count: 1, 
 /** Only authored service mouths admit tunnel cohorts; announced arrivals stay bound to their own hatch. */
 export function l6SpawnCandidates(requested: number, wave: number, closedDoors: readonly number[]): number[] {
   const serviceDoors = l6Entries.map(entry => entry.door);
-  const route = wave <= 2 || wave === 4 || wave === 5 ? [requested] : [requested, ...serviceDoors.filter(door => door !== requested)];
+  const route = wave <= 2 ? [requested] : wave === 4 || wave === 5 ? serviceDoors.filter(door => door === requested) : [...serviceDoors.filter(door => door === requested), ...serviceDoors.filter(door => door !== requested)];
   return route.filter(index => !closedDoors.includes(index));
 }
 /** r42 Alpha mix (docs/design/boss-and-alpha-moves.md: L6 Screamer in the tunnels, Leaper): the front member of these entry doors. */
