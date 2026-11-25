@@ -102,6 +102,6 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 
 - A second timing experiment selected a service door within 30 m of the tail, retrying if none was near. All six routes completed, but pressure arrived only ahead (12 infected per run) and player engagement remained 0.46–1.85 attacks/min; it was discarded.
 
-- Restored the original gate durability and L6-09 acceptance row (8–12 s versus five infected): the PO requested halving spawn counts, not gate HP. With the original durability, all six skilled measurement routes and the focused passive and early-close routes complete; player/follower attack floors still fail. Typecheck and lint pass. The original five-infected gate-duration criterion has not been remeasured in this lane.
+- Restored the original gate durability and L6-09 acceptance row (8–12 s versus five infected): the PO requested halving spawn counts, not gate HP. With the original durability, all six skilled measurement routes and the focused passive and early-close routes complete; player/follower attack floors still fail. Typecheck and lint pass. The existing controlled native gate fixture measured all three gates at both tiers: each held 9.82 s against five runners; closed gates blocked movement and sight, and open gates allowed both.
 
 - Refreshed the native trace and six-run matrix after restoring gate durability; prior audit provenance remains labeled to its earlier source and the all-level audit still needs rerunning.
