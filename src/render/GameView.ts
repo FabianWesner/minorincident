@@ -3,7 +3,6 @@ import { cureDust } from './CureDust';
 import { updateCorn } from './Corn';
 import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
-import { l8Route } from '../data/l8Bosses';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { l2RescueView } from '../data/l2';
@@ -874,16 +873,10 @@ export class GameView implements Lifecycle {
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
-      const l8Arena = this.world.missions?.l8?.state.arenas.find(arena => arena.phase > 0 && arena.phase < 3);
-      const l8Boarding = this.world.scenario === 'L8' && this.world.vehicles?.active === null
-        && this.world.missions?.l8?.state.arenas.every(arena => arena.phase === 3)
-        && !this.world.missions.l8.departing() && player.transform.x >= 80 && player.transform.x <= 120
-        && player.transform.z >= 35 && player.transform.z <= 95;
-      const l8Zone = l8Arena ? l8Route.find(stage => stage.id === l8Arena.id)!.zone
-        : l8Boarding ? { x0: 82, z0: 39, x1: 110, z1: 89 } : undefined;
       // PO 2026-11-21: "Why is there a massive zoom effect? Why are we seeing it from so high now?" The old 4.5x
       // whole-pen framing lost the courier; widen only slightly so lanes near the courier stay readable.
-      const l8Scale = l8Zone ? 1.35 * Math.max(1, 1 / this.view.camera.aspect) : 1;
+      // PO 2026-11-25: "The camera should not move when I enter an animal [cage]" -> no encounter zoom in L8.
+      const l8Scale = 1;
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : l8Scale;
       this.view.zoomFloor = this.world.scenario === 'L2' ? l2RescueView(this.world, this.view.playerZoom, this.view.zoomFloor, seconds) : 0;
       const ending = this.world.missions?.state.epilogue;
@@ -906,7 +899,9 @@ export class GameView implements Lifecycle {
       // Brief l3-polish (the phone finale cropped the group at the right edge): a portrait screen pulls less toward the line, so
       // the courier and her group stay in frame next to the surge.
       if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
-      if (this.world.scenario === 'L8') this.view.pull(l8Zone ? (l8Zone.x0 + l8Zone.x1) / 2 : 0, l8Zone ? (l8Zone.z0 + l8Zone.z1) / 2 : 0, l8Zone ? 1 : 0, 0);
+      // PO 2026-11-25 (gorilla below the screen edge, "I cannot move around and zoom freely here"): no arena-centre pull in L8.
+      // The camera follows the courier with free zoom; a pull made the view 'scripted' and locked the zoom.
+      if (this.world.scenario === 'L8') this.view.pull(0, 0, 0, 0);
       this.updateEnding();
       const focus = this.vehicles?.rideFocus(this.rideFocus) ? this.rideFocus : player.transform;
       if (this.cameraSnap) { this.cameraSnap = false; this.view.snapTo(focus); }
