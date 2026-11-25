@@ -109,7 +109,7 @@ for id in selected:
    if tris>CAPS[id][lod]:raise RuntimeError(f'{id} lod{lod}: {tris} > {CAPS[id][lod]}')
    materials=len(set(m.name for m in body.data.materials))
    if materials>4:raise RuntimeError(f'{id} lod{lod}: {materials} material slots > 4')
-   bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=str(folder/f'model{suffix}.glb'),export_format='GLB',use_selection=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='ACTIVE')
+   bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=str(folder/f'model{suffix}.glb'),export_format='GLB',use_selection=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='ACTIVE',export_attributes=True)
    if lod==0 and not burned:
     decay=['burned'] if id in ['prop.tree.dead','prop.farm-tractor','prop.farm-combine','bld.farm-barn-ruin','bld.farm-house-ruin'] else []
     definition=next(m for m in manifest if m['id']==id)

@@ -65,13 +65,15 @@ def fold_palette(obj):
 def corn(root, lod):
     """Volumetric stalks, curled ribbons, dry soil and stubble in one coloured mesh."""
     rng = random.Random(1029)
-    vertices, faces, colors, smooth_faces = [], [], [], []
+    vertices, faces, colors, smooth_faces, roots = [], [], [], [], []
+    stalk_root = None
     white = mat('picketWhite').diffuse_color[:3]
     swatches = {token: tuple(mat(token).diffuse_color[i]/white[i] for i in range(3))
                 for token in ['canvasTan','khakiLight','brass','woodWarm','khakiSeam','leatherShadow','leather','trouserSeam']}
     def part(points, polygons, tokens, smooth=False):
         n=len(vertices)
         vertices.extend(points)
+        roots.extend([stalk_root if stalk_root is not None else (0, 0, 0)] * len(points))
         faces.extend(tuple(n+i for i in face) for face in polygons)
         smooth_faces.extend([smooth]*len(polygons))
         colors.extend(swatches[token] for token in ([tokens]*len(points) if isinstance(tokens,str) else tokens))
@@ -101,6 +103,7 @@ def corn(root, lod):
         for row in range(8):
             for col in range(6):
                 x,y=-4.6+row*9.2/7,-4.6+col*9.2/5
+                stalk_root=(x,y,0)
                 h=rng.uniform(2.1,2.65)
                 angle=(row%2)*math.pi/2+.3
                 dx,dy=math.cos(angle),math.sin(angle)
@@ -118,6 +121,7 @@ def corn(root, lod):
                     continue
                 x=-4.5+row*9/(rows-1)+rng.uniform(-.07,.07)
                 y=-4.6+col*9.2/(columns-1)+rng.uniform(-.1,.1)
+                stalk_root=(x,y,0)
                 snapped=rng.random()<.14
                 h=rng.uniform(.65,1.65) if snapped else rng.uniform(2.25,2.6)
                 lean=rng.uniform(-.36,.36)
@@ -170,6 +174,7 @@ def corn(root, lod):
                         ears+=1
         for k in range(12 if lod==0 else 3):
             x,y=rng.uniform(-4.8,4.8),rng.uniform(-4.8,4.8)
+            stalk_root=(x,y,0)
             prism((x,y,.03),(x+.04,y,.16+rng.random()*.18),.018,.008,'woodWarm')
     obj=mesh(root,'dry-corn-volume-and-furrows',vertices,faces,'picketWhite')
     for face,smooth in zip(obj.data.polygons,smooth_faces):
@@ -178,6 +183,11 @@ def corn(root, lod):
     for i,rgb in enumerate(colors):
         layer.data[i].color=(*rgb,1)
     obj.data.color_attributes.active_color=layer
+    # Shared root for every vertex of a stalk, including its leaves and tassels.
+    # Blender exports custom attributes beginning with an underscore to glTF.
+    root_layer=obj.data.attributes.new(name='_STALK_ROOT',type='FLOAT_VECTOR',domain='POINT')
+    for i,root_position in enumerate(roots):
+        root_layer.data[i].vector=root_position
     root['cornStalks']=stalks
     root['cornCurledLeaves']=leaves
     root['cornBrokenStalks']=broken
