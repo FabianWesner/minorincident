@@ -1,5 +1,5 @@
 import { DoubleSide, Vector3, type Node } from 'three/webgpu';
-import { attribute, positionLocal, positionWorld, renderGroup, sin, uniform, vec3 } from 'three/tsl';
+import { attribute, dot, positionLocal, positionWorld, renderGroup, sin, uniform, vec3 } from 'three/tsl';
 import type { Materials } from './Materials';
 import type { SimWorld } from '../sim/world/SimWorld';
 
@@ -10,12 +10,12 @@ const directions = Array.from({ length: 8 }, () => uniform(new Vector3(0, 0, 0))
 const ids = new Int32Array(8).fill(-1);
 const seen = new Uint8Array(8);
 let lastTick = 0;
-function put(id: number, x: number, y: number, z: number, vx: number, vz: number): void {
+function put(id: number, x: number, speed: number, z: number, vx: number, vz: number): void {
   let slot = id === 1 ? 0 : ids.indexOf(id, 1);
   if (slot < 0) slot = ids.indexOf(-1, 1);
   if (slot < 0) return;
   ids[slot] = id; seen[slot] = 1;
-  movers[slot].value.set(x, y, z);
+  movers[slot].value.set(x, speed, z);
   directions[slot].value.set(vx, 1, vz);
 }
 /** Fixed eight-slot upload: no per-stalk CPU work; the shader bends crop around nearby movers. */
@@ -33,7 +33,7 @@ export function updateCorn(world: SimWorld): void {
   const hx = velocity?.x ?? hero.locomotion?.vx ?? 0, hz = velocity?.z ?? hero.locomotion?.vz ?? 0;
   const heroSpeed = Math.hypot(hx, hz);
   if (!hero.hidden && hero.health.current > 0 && heroSpeed > .1)
-    put(hero.id, hero.transform.x, hero.transform.y, hero.transform.z, hx / heroSpeed, hz / heroSpeed);
+    put(hero.id, hero.transform.x, heroSpeed, hero.transform.z, hx / heroSpeed, hz / heroSpeed);
   search.x = hero.transform.x; search.z = hero.transform.z;
   for (const id of world.spatial.query(search, nearby, false)) {
     const e = world.entities.get(id);
@@ -43,14 +43,14 @@ export function updateCorn(world: SimWorld): void {
     const vx = v?.x ?? e.locomotion?.vx ?? 0, vz = v?.z ?? e.locomotion?.vz ?? 0;
     const speed = Math.hypot(vx, vz);
     if (speed > .1) {
-      put(e.id, e.transform.x, e.transform.y, e.transform.z, vx / speed, vz / speed);
+      put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed);
     }
   }
   if (world.vehicles) for (const car of world.vehicles.cars.values()) {
     const e = car.entity, speed = Math.abs(car.physics.speed);
     if (speed <= .1 || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
     const sign = car.physics.speed < 0 ? -1 : 1;
-    put(e.id, e.transform.x, e.transform.y, e.transform.z, Math.cos(e.transform.yaw) * sign, -Math.sin(e.transform.yaw) * sign);
+    put(e.id, e.transform.x, speed, e.transform.z, Math.cos(e.transform.yaw) * sign, -Math.sin(e.transform.yaw) * sign);
   }
   for (let i = 0; i < movers.length; i++) if (!seen[i] && ids[i] !== -1) {
     directions[i].value.y = Math.max(0, directions[i].value.y - elapsed);
@@ -66,12 +66,15 @@ export function cornMaterial(materials: Materials) {
   let push: Node<'vec3'> = vec3(0);
   for (let i = 0; i < movers.length; i++) {
     const actor = movers[i];
-    const delta = positionWorld.xz.sub(actor.xz), radius = delta.length();
+    const delta = positionWorld.xz.sub(actor.xz), forward = directions[i];
+    // Estimate when the mover passed each vertex along its recent direction.
+    // The swept wake fades to zero after one second without storing per-stalk state.
+    const age = dot(delta, forward.xz).negate().div(actor.y.max(.1)).clamp(0, 1);
+    const offset = delta.add(forward.xz.mul(actor.y).mul(age)), radius = offset.length();
     // Stalks part away from the body, with a forward lean in its travel direction.
     // The 1.2 m smooth falloff lets them spring back continuously as the mover passes.
-    const bend = radius.smoothstep(.12, 1.2).oneMinus().mul(weight).mul(directions[i].y.smoothstep(0, 1)).mul(.5);
-    const awayX = delta.x.div(radius.max(.1)), awayZ = delta.y.div(radius.max(.1));
-    const forward = directions[i];
+    const bend = radius.smoothstep(.12, 1.2).oneMinus().mul(age.smoothstep(0, 1).oneMinus()).mul(weight).mul(forward.y.smoothstep(0, 1)).mul(.5);
+    const awayX = offset.x.div(radius.max(.1)), awayZ = offset.y.div(radius.max(.1));
     push = push.add(vec3(awayX.add(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.add(forward.z.mul(.35)).mul(bend)));
   }
   const wind = sin(positionWorld.x.mul(.7).add(positionWorld.z.mul(.4)).add(materials.wind.mul(1.5))).mul(.09).mul(weight);
