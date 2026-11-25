@@ -1,12 +1,10 @@
 # s240 · L6 shield heavy damage feedback
 
-## Cause
+## Current evidence and correction
 
-The two helmeted actors are the L6 hatch-front `infected.riot` shield bearers. L6 retains their existing 600 HP. A frontal army-MG round is deliberately reduced to 18% damage: `14 × 0.18 = 2.52 HP`. On the 64 px high-quality infected bar, that moves the red fill only `64 × 2.52 / 600 = 0.27 px`, so the bar looks stationary even though HP decreases. The earlier L6 role mismatch (an armored football actor wearing the riot-cop variant) was already fixed; the current problem is that real shield-chip damage has no minimum visible health-bar movement.
+The earlier claim that current L6 hatch fronts are 600 HP riot actors was wrong. The current production hatch spawn creates `infected.armored` at 240 HP, without the riot shield flag. A high-tier native L6 probe spawned two such actors and relocated them to the reported platform. Ordinary pointer input hit actor 57 with the handgun at tick 39: 240 → 230 HP, at y 4.6. The capture showed its red bar partly depleted. The second actor received no recorded hit before the probe timed out, so the cause of the PO's full-bar report is not yet established. The earlier riot evidence below is historical, not proof of the current hatch actors.
 
-## Change
-
-Shielded infected now use the existing damage-chip overlay already used for arena bosses. A tiny HP loss leaves a minimum 3 px white chip beside the red fill for 18 ticks (0.3 s). Frontal shield hits also retain their existing sparks, recoil, `SHIELD STRAIN · CHIP` callout, and 90-tick shield-break window. Flank and rear hits keep full damage. No L6 counts, spawn code, or enemy stats changed.
+The armored front plate halves frontal damage and flank hits take full damage. To make small hits easier to read, the existing minimum-width damage chip now applies to armored actors as well as shield bearers and arena bosses. This is presentation only; it does not prove that all weapons hit at the reported position.
 
 ## Receipts
 
@@ -19,6 +17,6 @@ Shielded infected now use the existing damage-chip overlay already used for aren
 
 ## Open
 
-- A fresh high-tier capture at the reported exit platform and a physical weapon-by-weapon L6 exit/tunnel run remain unverified. The historical browser probe could not start its preview server; a current QA build and fixture are needed.
+- The high-tier platform probe recorded one handgun hit on the first of two native hatch actors; the second was not hit before the probe timed out. Full weapon/distance and tunnel coverage, visual review of the updated armored chip, and diagnosis of missed shots remain open.
 - The remote unit suite timed out twice; the remote acceptance remains open.
 
