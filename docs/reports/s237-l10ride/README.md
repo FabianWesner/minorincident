@@ -79,3 +79,7 @@ A bot trial planned around large corpses and approached within 0.5 m of the park
 ## Unreachable actor identity
 
 A replay of the temporary remount and combat-approach diagnostic identified the lone unreachable hold actor as the 3000 HP pursuit Mega (`infected.alpha`, `pursuit: true`), hidden in coarse pursuit at x=3769.6 while the player was near the console. In the skilled run the same pursuit actor was visible at x=3901.0. The diagnostic changes were reverted. Any fix must preserve the Mega pursuit and reveal rules while getting it into the hold’s reachable area; suppressing the actor from the audit would not resolve the measured behavior.
+
+## Mega route trace
+
+A temporary passive-approach replay sampled the Mega every 600 ticks after cure installation. While the courier stood at x≈4002, the coarse pursuit moved from x=3783 to x=3802, entered stuck level 2, then followed route nodes 44 → 43 west to x=3709 before returning east. It repeated the pattern by tick 60600. The skilled run instead advanced through nodes 45–47 toward the complex. This identifies a coarse route fallback loop as the source of the far-away Mega observation; the diagnostic changes were reverted. A repair must retain obstacle-aware movement and normal pursuit speed while preventing backward cycling.
