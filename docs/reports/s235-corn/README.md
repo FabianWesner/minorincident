@@ -5,7 +5,7 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 ## Evidence
 
 - Typecheck and lint passed after the root-coordinate fix and capture update.
-- The remote unit suite passed on the corgi velocity change (27 files, 105 passed, one skipped, 210.84 seconds; budget 213.3 seconds).
+- The remote unit suite passed on the iterator change (27 files, 105 passed, one skipped, 220.99 seconds; budget 223.6 seconds).
 - HIGH and LOW WebGL2 captures at zoom 1 and 1.5 were generated under `/private/tmp/s235-corn` on `845ded3a`. Close frames show corn drawn in front of the courier and corgi. They do not establish clean parting, smooth recovery or the absence of distortion and popping.
 - A headless WebGPU diagnostic on `de6e7ff6` reported the requested backend at both qualities and zooms, without captured console errors. The zoom 1.5 frames show the courier and corgi partially obscured by dense HIGH crop and more visible in sparser LOW crop. They do not prove smooth parting. Manual WebGPU review remains open.
 - Exclusive quiet-runs of `tools/perf/s194-l10hitch.ts` on the parent `7d820cdd` and candidate `845ded3a` used the same HIGH WebGL replay. Baseline: 1,298 samples, max 51.6 ms and p99 31.1 ms; candidate: 1,240 samples, max 49.9 ms and p99 30.5 ms. Both had zero frames above 100 ms and no captured errors. Both traversed x=547–589.57, z≈0: this route does not exercise the corn field and cannot establish the crop's performance impact. Earlier admission attempts expired; one shared-mode attempt was admitted but could not launch the required Chrome channel.
@@ -19,7 +19,7 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 - On `9a3dfb1c`, a headless WebGPU diagnostic repeated all four capture cases and recorded a moving corgi with no browser errors (`/private/tmp/s235-corgi-webgpu`). The HIGH and LOW close frames were opened and show the same dense and sparse crop respectively. This establishes backend rendering, not the required manual WebGPU or temporal review.
 
 - A temporary runtime slot probe at walking frame 45 observed courier ID 1 at (557.695, 42), speed 3.825 m/s, and corgi ID 99 at (554.856, 42), speed 3.605 m/s, both with full influence and forward direction (1, 0). The probe was removed after the run. It establishes that both moving actors reach the uniforms, not that other actors or crowd saturation are covered.
-- The per-frame collector now uses an indexed scan and a reusable vehicle callback rather than allocating array and Map iterators. Typecheck, lint and all four WebGL2 capture cases passed on this change (`/private/tmp/s235-no-iterator`).
+- The per-frame collector now uses an indexed scan and a reusable vehicle callback rather than allocating array and Map iterators. Typecheck, lint and all four WebGL2 capture cases passed on this change (`/private/tmp/s235-no-iterator`); each walking frame 45 was pixel-identical to its pre-change counterpart. A temporary synthetic collector probe assigned the courier, corgi, driven vehicle and moving infected to their expected slots and excluded a parked vehicle. The probe was removed.
 
 ## Open
 
