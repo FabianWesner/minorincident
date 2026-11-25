@@ -180,7 +180,8 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     yield* transform(position, normal, frame);
     const rootAttribute = node.geometry.getAttribute('_stalk_root');
     const stalkRoot = rootAttribute ? yield* decode(rootAttribute) : undefined;
-    if (stalkRoot) yield* transform(stalkRoot, new Float32Array(0), frame);
+    // Corn roots are authored in the batch's Y-up coordinates. The optimizer's
+    // node transform dequantizes POSITION only; it does not quantize this custom attribute.
     // The evacuation coach has an open cabin behind authored clear panes.
     // Merging those panes into the opaque body concealed its seats/passengers.
     if (source.userData.assetId === 'veh.evac-bus' && material.transparent) {

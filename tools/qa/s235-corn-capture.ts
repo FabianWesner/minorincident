@@ -24,7 +24,7 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
       await session.page.evaluate(async () => { const a = window.__SS__!; await a.step(5); a.settings.set({ timeOfDay: 'L1' }); });
       await session.screenshot(`${out}/${tier}-zoom-${zoom}-walk-${frame}.png`);
     }
-    const end = await session.page.evaluate(() => window.__SS__!.getEntity(1)!.transform);
+    const end = await session.page.evaluate(() => { const e = window.__SS__!.getEntity(1)!; return { ...e.transform, velocity: e.survivor?.velocity, motion: e.motion?.velocity, locomotion: e.locomotion }; });
     if (Math.hypot(end.x - 555, end.z - 42) < .2) throw Error('Courier did not move');
     await session.page.evaluate(zoom => { const a = window.__SS__!; a.camera.follow(); a.camera.zoom(zoom); }, zoom);
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
@@ -37,7 +37,7 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
       await session.page.evaluate(async () => { const a = window.__SS__!; await a.step(10); a.settings.set({ timeOfDay: 'L1' }); });
       await session.screenshot(`${out}/${tier}-zoom-${zoom}-stop-${frame}.png`);
     }
-    writeJson(`${out}/${tier}-zoom-${zoom}.json`, { ...setup, errors: session.errors });
+    writeJson(`${out}/${tier}-zoom-${zoom}.json`, { ...setup, end, errors: session.errors });
     if (session.errors.length) throw new Error(session.errors.join('\n'));
     console.log(`${tier} zoom ${zoom}: ${JSON.stringify(setup)}`);
   } finally { await session.close(); stopServer(); }
