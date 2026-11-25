@@ -67,6 +67,13 @@ try {
           const length = Math.hypot(dx, dz); move = length > .4 ? { x: dx / length, z: dz / length } : { x: 0, z: 0 };
         }
       }
+      const habitatState = auditState as typeof auditState & { zebraHabitatAt?: number };
+      if (active?.id === 'zebra' && auditState.specials.some(event => event.move === 'zebra.kick')) habitatState.zebraHabitatAt ??= ss.tick();
+      const habitatTactic = active?.id === 'zebra' && active.phase === 1 && habitatState.zebraHabitatAt !== undefined && ss.tick() - habitatState.zebraHabitatAt < 1200;
+      if (habitatTactic) {
+        const dx = 51 - p.x, dz = 25 - p.z, length = Math.hypot(dx, dz);
+        move = length > 1 ? { x: dx / length, z: dz / length } : { x: 0, z: 0 };
+      }
       const guns = ['weapon.handgun', 'weapon.shotgun', 'weapon.army-mg', 'weapon.rocket-launcher'];
       const needed = active?.phase ? guns.find(id => audit.attacks.filter(e => e.arena === active.id && e.id === id).length < 2 || !audit.hits.some(e => e.arena === active.id && e.id === id && e.amount > 0)) : undefined;
       const choice = entries[plan.slot];
@@ -74,7 +81,7 @@ try {
       const safeNeeded = needed === 'weapon.rocket-launcher' && plan.target && Math.hypot(plan.target.x - p.x, plan.target.z - p.z) < 8 ? undefined : needed;
       const weapon = choice?.id === 'weapon.fire-axe' ? choice.id : bossTarget ? safeNeeded ?? choice?.id : choice?.id;
       return { tick: ss.tick(), phase: (state.mission as { phase: string })?.phase, player: p, hp: player.health.current,
-        move: cinematic ? { x: 0, z: 0 } : move, dx: rearTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').x - origin.x : direction.x - origin.x, dy: rearTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').y - origin.y : direction.y - origin.y, target, fire: !cinematic && !rearTactic && !!(plan.frame.left.held || plan.frame.right.held), interact: !cinematic && plan.frame.interact,
+        move: cinematic ? { x: 0, z: 0 } : move, dx: rearTactic || habitatTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').x - origin.x : direction.x - origin.x, dy: rearTactic || habitatTactic ? ss.input.project({ x: p.x + move.x * 8, z: p.z + move.z * 8 }, 'player').y - origin.y : direction.y - origin.y, target, fire: !cinematic && !rearTactic && !!(plan.frame.left.held || plan.frame.right.held), interact: !cinematic && plan.frame.interact,
         weapon: cinematic ? undefined : weapon, actualWeapon: entries.find(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index)?.id,
         damagedWeapons: [...new Set(audit.hits.filter(e => e.arena === active?.id && e.amount > 0).map(e => e.id))], marker: (state.mission as { marker?: string })?.marker,
         cinematic, wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
@@ -100,6 +107,9 @@ try {
     }
     if (row.arena === 'zebra' && row.arenaPhase === 1 && Math.hypot(row.player.x - 60, row.player.z - 32) < 8 && !storyPictures.has('zebra-habitat')) {
       const file = `natural-zebra-habitat-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); storyPictures.add('zebra-habitat');
+    }
+    if (row.arena === 'zebra' && row.arenaPhase === 1 && Math.hypot(row.player.x - 51, row.player.z - 25) < 2 && !storyPictures.has('zebra-fittings')) {
+      const file = `natural-zebra-fittings-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); storyPictures.add('zebra-fittings');
     }
     for (const [beat, occurred] of [['wall-breach', row.wallBreached], ['hale-keys', row.haleKeys], ['hale-fallen', row.haleFallen], ['hale-mid', row.cinematic?.id === 'l8-hale' && row.cinematic.elapsed >= 48]] as const) {
       if (occurred && !storyPictures.has(beat)) {
