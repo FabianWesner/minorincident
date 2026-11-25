@@ -128,8 +128,8 @@ export function cornMaterial(materials: Materials) {
           // Orient from the mover, not from the swept centerline: that centerline can
           // cross a stalk when the mover turns, reversing a full-strength lean in one tick.
           // Soften the direction near the body so passing directly over a root is smooth.
-          const separation = delta.length().max(.6);
-          const awayX = delta.x.div(separation), awayZ = delta.y.div(separation);
+          const inverseSeparation = dot(delta, delta).max(.36).inverseSqrt();
+          const awayX = delta.x.mul(inverseSeparation), awayZ = delta.y.mul(inverseSeparation);
           result.addAssign(vec3(awayX.add(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.add(forward.z.mul(.35)).mul(bend)));
         });
       });
