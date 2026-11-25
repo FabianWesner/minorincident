@@ -39,3 +39,7 @@ HIGH then LOW were captured with the native game camera at zoom 1 using the dev 
 The opening trigger is centered at (3500, 50), away from the road at z=95. A trial moving the trigger to within 32 m of (3502, 95) made the native probe report the tent opening on both tiers. LOW still completed in 1539.1 s, but HIGH reached the 2100 s budget at the release objective with 44 deaths. The trial was reverted because it destabilized the full route; the staged figures also remained unverified. The next fix needs to preserve the native route while making the hospital visible and opening it from the road.
 
 A subsequent change opens the tents from the road approach while holding staged figures until 90 ticks after the courier crosses x=3512. The HIGH and LOW native probes both completed with 4/4 recorded loops and unchanged hangar-to-gate times of 446.9 s and 551.5 s. Both recorded the tent opening; both still failed the in-frame figure check. Typecheck and lint passed. This establishes the trigger, while visual readability and the LOW timing remain open.
+
+## Checkpoint route investigation
+
+The LOW trace showed repeated deaths after a checkpoint returned the bot from the underpass to x≈3100 while its route waypoint remained near x=3370. A trial reacquiring the nearest route waypoint after a backward jump over 100 m improved LOW to 487.3 s, 9 deaths, 4/4 loops and story intervals of 45–67.7 s. HIGH regressed to 684.0 s and 22 deaths despite retaining 4/4 loops. The trial was reverted; a recovery policy needs to work on both tiers before it can qualify.
