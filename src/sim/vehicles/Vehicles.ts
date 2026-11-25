@@ -84,11 +84,10 @@ export class Vehicles {
   }
   /** A car can be driven while it has durability, or at the L9 floor. */
   private operable(car: Car): boolean { return car.entity.vehicle!.damage !== 'exploded' && (car.entity.health.current > 0 || !!car.entity.vehicle!.floor); }
-  /** Bound chassis lift when several wheels meet a pack during the same suspension cycle. */
+  /** A short presentation-only chassis bump when the wheels pass over an infected. */
   private squashBump(car: Car): void {
     if (this.world.tick - (car.bumpAt ?? -Infinity) < 12) return;
     car.bumpAt = this.world.tick;
-    car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * .9, z: 0 }, true);
   }
   /** L9 mission vehicle: 0 HP is a capped-speed floor, not a breakdown. Re-applying after a checkpoint restore replays no cue. */
   setFloorPolicy(id: number, on = true): void {
