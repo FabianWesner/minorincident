@@ -62,7 +62,7 @@ function checkCompactFollowerOverlap(): void {
   const followers = Array.from({ length: 6 }, (_, i) => ({ id: 16 + i, faction: 'civilian', health: { current: 60, max: 60 }, transform: { x: 500, y: .7, z: 500 }, civilian: { state: 'calm', survivor: { mode: 'follow' } } }));
   const player = { id: 1, transform: { x: 500, y: .7, z: 500 } };
   const all = [player, ...followers];
-  const world = { scenario: 'L6', entities: { iterate: () => all.values(), get: (id: number) => all.find(e => e.id === id) }, physics: { world: null } } as unknown as SimWorld;
+  const world = { scenario: 'L6', events: { on: () => () => {} }, entities: { iterate: () => all.values(), get: (id: number) => all.find(e => e.id === id) }, physics: { world: null } } as unknown as SimWorld;
   const camera = new PerspectiveCamera(25, 1280 / 720, .1, 600);
   camera.position.set(500, 4, 510); camera.lookAt(500, .8, 500); camera.updateMatrixWorld();
   const body = new Box3(new Vector3(499.7, 0, 499.7), new Vector3(500.3, 1, 500.3));
@@ -683,6 +683,17 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
           base: 14, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
         bars.update(camera, 1280, 720);
         expect(enemyLayers[3].count, 'a tiny shield chip stays visible when red-fill movement is subpixel').toBe(1);
+        // A first hit can reveal a previously hidden armored bar. The hit
+        // event must seed its chip before the first eligible render.
+        const armored = w.entities.get(w.infected!.spawn('infected.armored', { x: -61.5, z: 51.5 }, { yaw: 0 }))!;
+        const armorBars = new HealthBars(w);
+        try {
+          w.combat!.damage.apply({ attackId: 910_002, actionId: 'weapon.army-mg', sourceId: 1, targetId: armored.id,
+            origin: { x: -58.5, z: 51.5 }, direction: { x: -1, z: 0 }, base: 14, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
+          const chips = (armorBars as unknown as { chips: Map<number, { from: number; last: number }> }).chips;
+          expect(chips.get(armored.id)!.from).toBe(1);
+          expect(chips.get(armored.id)!.last).toBeLessThan(1);
+        } finally { armorBars.dispose(); w.infected!.release(armored); }
         w.physics.world!.createCollider(ColliderDesc.cuboid(.7, 2, .7).setTranslation(-60.7, 2, 52.3));
         w.physics.world!.step();
         bars.update(camera, 1280, 720);

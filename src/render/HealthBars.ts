@@ -77,10 +77,19 @@ export class HealthBars extends Group {
   private readonly definitions = new Map(infectedDefinitions.map(def => [def.id, { ...def }]));
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
   private readonly chips = new Map<number, { last: number; from: number; at: number }>();
+  private readonly stopHit: () => void;
   private readonly megaWeakSpot = new Mesh(new SphereGeometry(.42, 12, 8), new MeshBasicNodeMaterial({ color: 0xff5a2a, toneMapped: false, fog: false, depthTest: false, transparent: true, opacity: .9 }));
   private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld, private readonly courierBounds?: (out: Box3) => boolean) {
     super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
+    this.stopHit = world.events.on('combat.hit', event => {
+      if (event.type !== 'combat.hit' || event.amount <= 0) return;
+      const e = world.entities.get(event.targetId);
+      if (!e?.infected || !(e.infected.arenaBoss || e.infected.special === 'armor' || e.combat?.shield) || e.health.max <= 0) return;
+      const current = healthFraction(e.health.current, e.health.max), previous = healthFraction(e.health.current + event.amount, e.health.max);
+      const chip = this.chips.get(e.id);
+      this.chips.set(e.id, { last: current, from: chip && world.tick - chip.at < bossChipHoldTicks + bossChipFadeTicks ? Math.max(chip.from, previous) : previous, at: world.tick });
+    });
     this.megaWeakSpot.visible = false; this.megaWeakSpot.renderOrder = 95; this.add(this.megaWeakSpot);
     const makeMeshes = (colors: readonly string[]) => colors.map((color, i) => {
       const material = new MeshBasicNodeMaterial({ depthTest: false, depthWrite: false, toneMapped: false, fog: false });
@@ -216,5 +225,5 @@ export class HealthBars extends Group {
   setCourierMask(mask?: Texture): void { this.courierMask.value = mask ?? this.unoccluded; }
   get count(): number { return this.enemyMeshes[0].count + this.followerMeshes[1].count; }
   snapshot() { return { count: this.probes.length || this.count, draws: [...this.enemyMeshes, ...this.followerMeshes].filter(mesh => mesh.count).length, bars: this.probes }; }
-  dispose(): void { for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.megaWeakSpot.geometry.dispose(); this.megaWeakSpot.material.dispose(); this.unoccluded.dispose(); this.clear(); }
+  dispose(): void { this.stopHit(); for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.megaWeakSpot.geometry.dispose(); this.megaWeakSpot.material.dispose(); this.unoccluded.dispose(); this.clear(); }
 }
