@@ -11,13 +11,15 @@ const ids = new Int32Array(8).fill(-1);
 const seen = new Uint8Array(8);
 let lastTick = 0;
 let lastWorld: SimWorld | undefined;
-function put(id: number, x: number, speed: number, z: number, vx: number, vz: number): void {
+function put(id: number, x: number, speed: number, z: number, vx: number, vz: number, elapsed: number): void {
   let slot = id === 1 ? 0 : ids.indexOf(id, 1);
   if (slot < 0) slot = ids.indexOf(-1, 1);
   if (slot < 0) return;
+  if (ids[slot] !== id) directions[slot].value.y = 0;
   ids[slot] = id; seen[slot] = 1;
   movers[slot].value.set(x, speed, z);
-  directions[slot].value.set(vx, 1, vz);
+  const strength = Math.min(1, directions[slot].value.y + elapsed * 10);
+  directions[slot].value.set(vx, strength, vz);
 }
 /** Fixed eight-slot upload: no per-stalk CPU work; the shader bends crop around nearby movers. */
 export function updateCorn(world: SimWorld): void {
@@ -34,7 +36,7 @@ export function updateCorn(world: SimWorld): void {
   const hx = velocity?.x ?? hero.locomotion?.vx ?? 0, hz = velocity?.z ?? hero.locomotion?.vz ?? 0;
   const heroSpeed = Math.hypot(hx, hz);
   if (!hero.hidden && hero.health.current > 0 && heroSpeed > .1)
-    put(hero.id, hero.transform.x, heroSpeed, hero.transform.z, hx / heroSpeed, hz / heroSpeed);
+    put(hero.id, hero.transform.x, heroSpeed, hero.transform.z, hx / heroSpeed, hz / heroSpeed, elapsed);
   search.x = hero.transform.x; search.z = hero.transform.z;
   for (const id of world.spatial.query(search, nearby, false)) {
     const e = world.entities.get(id);
@@ -44,14 +46,14 @@ export function updateCorn(world: SimWorld): void {
     const vx = v?.x ?? e.locomotion?.vx ?? 0, vz = v?.z ?? e.locomotion?.vz ?? 0;
     const speed = Math.hypot(vx, vz);
     if (speed > .1) {
-      put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed);
+      put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed, elapsed);
     }
   }
   if (world.vehicles) for (const car of world.vehicles.cars.values()) {
     const e = car.entity, speed = Math.abs(car.physics.speed);
     if (speed <= .1 || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
     const sign = car.physics.speed < 0 ? -1 : 1;
-    put(e.id, e.transform.x, speed, e.transform.z, Math.cos(e.transform.yaw) * sign, -Math.sin(e.transform.yaw) * sign);
+    put(e.id, e.transform.x, speed, e.transform.z, Math.cos(e.transform.yaw) * sign, -Math.sin(e.transform.yaw) * sign, elapsed);
   }
   for (let i = 0; i < movers.length; i++) if (!seen[i] && ids[i] !== -1) {
     directions[i].value.y = Math.max(0, directions[i].value.y - elapsed);
