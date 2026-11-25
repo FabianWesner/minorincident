@@ -362,15 +362,15 @@ export class LevelTwoRescue {
     // authored dismount pose; crew leave the compartment in their own stagger.
     const t = world.entities.get(s.truckId)!.transform, player = world.entities.get(1)!;
     const side = (lx: number, lz: number) => this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .45);
-    const out = side(.6, 1.9);
-    if (world.vehicles) world.vehicles.transition = { carId: s.truckId, kind: 'exit', tick, side: 1, from: { ...t } };
+    const out = side(.6, -1.9);
+    if (world.vehicles) world.vehicles.transition = { carId: s.truckId, kind: 'exit', tick, side: -1, from: { ...t } };
     Object.assign(player.transform, { x: out.x, z: out.z }); player.hidden = false; player.survivor!.scriptedClip = 'dismount'; player.survivor!.animationTick = tick; s.seated = false;
     world.solids.admit(player, 'l2.vehicle.exit');
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform); world.physics.playerCollider!.setEnabled(true);
     world.player!.locomotion.reset(); Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, out.x, out.z); world.player!.setCheckpoint(player.transform);
     world.storyLock = { scripted: null, skip: false }; world.clearInput();
     world.events.emit({ type: 'vehicle.exited', tick, sourceId: s.truckId, targetId: 1, role: 'passenger' });
-    for (const e of world.entities.iterate()) if (e.companion && e.passengerOf === s.truckId) { e.hidden = false; delete e.passengerOf; const p = side(-1.6, 2.2); Object.assign(e.transform, p); world.solids.admit(e, 'l2.relocation'); }
+    for (const e of world.entities.iterate()) if (e.companion && e.passengerOf === s.truckId) { e.hidden = false; delete e.passengerOf; const p = side(-1.6, -2.2); Object.assign(e.transform, p); world.solids.admit(e, 'l2.relocation'); }
     if (!this.mission.state.states.arrived) this.mission.setState('arrived', true);
   }
   private crewExit(): void {
@@ -382,7 +382,7 @@ export class LevelTwoRescue {
       const elapsed = tick - s.crewExitAt - i * 18;
       if (elapsed < 0 || (e.passengerOf !== s.truckId && !e.hidden)) continue;
       if (elapsed === 0 || !s.crewExitTo?.[i]) {
-        const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9;
+        const lx = 2.8 - i * 1.15, lz = -1.9 - (i % 2) * .9;
         (s.crewExitTo ??= [])[i] = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
         e.civilian.story = { clip: 'npc-stand-up', start: tick };
       }
