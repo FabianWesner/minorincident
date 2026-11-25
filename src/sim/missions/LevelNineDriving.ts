@@ -48,6 +48,8 @@ export const emptyDriving = (): L9DrivingState => ({
 const tuneStall = l9SetPieceTuning.stall;
 const busRamCap = 3;
 const stallTicks = 20 * 60;
+/** Hold hint: on the hatch she may climb out; on foot she gets back in at the door. */
+const w1 = (w: { vehicles?: { active: number | null } | null }) => w.vehicles?.active != null ? 'shoot boarders · E climb out and fight' : 'fight around the APC · E at the door to get back in';
 const busTelegraphTicks = 90;
 const evacuationFallbackTicks = 8 * 60;
 const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -408,11 +410,11 @@ export class LevelNineDriving {
     this.evacuate(); this.coverDoor(); this.waves();
     // Once the stopped crew opens it, a bus nudge cannot magically close the
     // hatch and disable the player's weapon in the middle of the defence.
+    // PO 2026-11-25: "This kind of fighting is not fun. I cannot move." During a hold (stall, evacuation) the hatch stays open and
+    // E climbs out: she fights on foot around the APC and gets back in at the door; the hold runs on either way.
+    car.entity.vehicle!.exitOpen = this.holding(car.entity.id) && car.physics.speed < 1;
     if (!this.holding(car.entity.id)) s.hatchOpen = false;
-    else if (car.physics.speed < 1) {
-      if (w.inputFrame.interact && !s.hatchInteractHeld) s.hatchOpen = !s.hatchOpen;
-      if (s.hatchOpen === undefined) s.hatchOpen = true;
-    }
+    else if (car.physics.speed < 1 && s.hatchOpen === undefined) s.hatchOpen = true;
     s.hatchInteractHeld = !!w.inputFrame.interact;
     this.poseHatch();
     for (const id of this.hatch ? s.roster : []) {
@@ -927,10 +929,10 @@ export class LevelNineDriving {
     if (s.stallAt !== null && !s.restarted) {
       const remaining = Math.max(0, stallTicks - tick + s.stallAt), seconds = Math.ceil(remaining / 60), filled = Math.ceil(remaining / stallTicks * 10);
       const bar = `[${'■'.repeat(filled)}${'·'.repeat(10 - filled)}]`;
-      return `Engine stalled — hold the hatch (0:${String(seconds).padStart(2, '0')}) ${bar} · shoot boarders · F close/open hatch · cannot leave APC`;
+      return `Engine stalled — hold out (0:${String(seconds).padStart(2, '0')}) ${bar} · ${w1(this.w)}`;
     }
     if ((s.busRamAt ?? 0) > tick) return `School bus lining up a ram · dodge now! ${Math.ceil(((s.busRamAt ?? tick) - tick) / 60)} s`;
-    if (s.stallAt !== null && s.restarted && tick - s.stallAt < stallTicks + 180) return 'Engine restarted — drive! (W)';
+    if (s.stallAt !== null && s.restarted && tick - s.stallAt < stallTicks + 180) return this.w.vehicles!.active === this.car.entity.id ? 'Engine restarted — drive! (W)' : 'Engine restarted — back in the APC (E at the door)';
     if (s.evacuationAt !== null && !s.evacuationDone) {
       const living = s.roster.filter(id => id !== s.samId && alive(this.w.entities.get(id))).length;
       const count = `${s.evacuated.length}/${living} at the trucks`;

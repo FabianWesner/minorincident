@@ -329,14 +329,18 @@ async function l9HatchCheckpointAndEvacuation(): Promise<void> {
     const toggle = (interact: boolean) => world.applyInput({ ...emptyInput(), interact }, 'keyboard');
     for (const age of [0, 600, 1180]) {
       s.stallAt = world.tick - age; s.restarted = false; s.hatchOpen = true; s.hatchInteractHeld = false;
+      // PO 2026-11-25: during a hold E climbs out to fight on foot, and E at the door gets back in.
       toggle(true); world.update(); toggle(false); world.update();
-      expect(l9.driving.hatch, `F closes the hatch at stall age ${age}`).toBe(false);
-      expect(world.vehicles!.active, 'closed hatch still owns driving controls').toBe(car.entity.id);
-      expect(world.entities.get(1)!.passengerOf, 'closed hatch keeps passenger/driver relation').toBe(car.entity.id);
-      toggle(true); world.update(); toggle(false); world.update();
-      expect(l9.driving.hatch, `F reopens the hatch at stall age ${age}`).toBe(true);
+      expect(world.vehicles!.active, `E climbs out of the hatch at stall age ${age}`).toBe(null);
+      expect(world.entities.get(1)!.passengerOf, 'on foot beside the APC').toBeUndefined();
+      for (let i = 0; i < 240 && world.vehicles!.active === null; i++) { toggle(true); world.update(); }
+      toggle(false); world.update();
+      expect(world.vehicles!.active, `E at the door gets back in at stall age ${age}`).toBe(car.entity.id);
+      for (let i = 0; i < 30 && !l9.driving.hatch && !s.restarted; i++) world.update();
+      if (!s.restarted) expect(l9.driving.hatch, `the hatch is open again at stall age ${age}`).toBe(true);
     }
 
+    s.stallAt = world.tick; s.restarted = false; s.hatchOpen = true; world.applyInput(emptyInput(), "keyboard"); world.update();
     // Simulate a vehicle shove/knockback transform; the hatch controller owns
     // the courier's position again on the next pose pass.
     Object.assign(world.entities.get(1)!.transform, { x: car.entity.transform.x + 3, y: car.entity.transform.y + .1, z: car.entity.transform.z + 3 });

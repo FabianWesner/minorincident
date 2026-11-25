@@ -42,6 +42,8 @@ export interface VehicleState {
   ramImpactUntil?: number;
   /** L9 mission policy: durability clamps to 0 but the vehicle stays driveable at a capped speed, cannot be exited and is never destroyed by E09. Persisted with the entity. */
   floor?: boolean;
+  /** PO 2026-11-25 (L9 hatch holds: "I cannot move. I can just stay there and shoot"): while set, a floor vehicle can be left with E. */
+  exitOpen?: boolean;
   scripted?: boolean;
   scriptedExplosionEmitted?: boolean;
   /** Cumulative damage stage (0 none, 1 <=75%, 2 <=50%, 3 <=25%, 4 = 0%); persisted so a reload restores it without replaying cues. */
@@ -121,7 +123,7 @@ export class Vehicles {
     state.damage = (state.stage ?? 0) >= 3 ? 'smoking' : 'normal'; state.explodeAt = null;
   }
   canInteract(): boolean {
-    if (this.active != null) return !this.cars.get(this.active)?.entity.vehicle?.floor &&
+    if (this.active != null) return (!this.cars.get(this.active)?.entity.vehicle?.floor || !!this.cars.get(this.active)?.entity.vehicle?.exitOpen) &&
       !(this.world.missions?.l8?.state.carId === this.active && this.world.missions.l8.departing());
     if (this.bicycle.canInteract()) return true;
     const player = this.world.entities.get(1);
@@ -130,8 +132,10 @@ export class Vehicles {
       if (!this.operable(car) || car.physics.speed >= 1 || this.world.tick < car.noEnterUntil) continue;
       const zoo = this.world.missions?.l8;
       if (zoo?.state.carId === car.entity.id && !zoo.canBoardDriver()) continue;
-      this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (zoo?.state.carId === car.entity.id ? 1 : .55));
-      if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (zoo?.state.carId === car.entity.id ? 2 : .7)) return true;
+      // The L8 escape APC and the L9 APC during a hatch hold (PO 11-25: climb out, get back in) use a wide door zone.
+      const wide = zoo?.state.carId === car.entity.id || !!car.entity.vehicle!.exitOpen;
+      this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (wide ? 1 : .55));
+      if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (wide ? 2 : .7)) return true;
     }
     return false;
   }
@@ -151,7 +155,7 @@ export class Vehicles {
       // A held E must not eject the driver before the campaign copies the APC.
       const departingZoo=zoo?.state.carId===car.entity.id&&zoo.departing();
       // The floor vehicle has no voluntary exit until the scripted crash.
-      if (this.active === car.entity.id && frame.interact && !state.floor && !departingZoo) this.exit(car);
+      if (this.active === car.entity.id && frame.interact && (!state.floor || state.exitOpen) && !departingZoo) this.exit(car);
       const waitingForBoarding=zoo?.state.carId===car.entity.id&&!zoo.canDrive();
       // L8's destination is fixed. Blasts must not slide/rotate its doorway away
       // from that marker while the group boards. Keep suspension and damage live;
@@ -190,8 +194,9 @@ export class Vehicles {
         // r42-l9pin: the handbrake (Space, the L9 shake-off hint) no longer locks the rear wheels of the recovery reverse.
         if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.steer = drive.throttle > 0 && drive.steer > .1 ? -.6 : .6; drive.throttle = -.8; drive.brake = false; drive.handbrake = false; }
       } else if (this.active === null && player.health.current > 0 && this.operable(car) && this.world.tick >= car.noEnterUntil && car.physics.speed < 1 && (zoo?.state.carId !== car.entity.id || zoo.canBoardDriver())) {
-        this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (zoo?.state.carId === car.entity.id ? 1 : .55));
-        const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (zoo?.state.carId === car.entity.id ? 2 : .7);
+        const wide = zoo?.state.carId === car.entity.id || !!car.entity.vehicle!.exitOpen;
+        this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + (wide ? 1 : .55));
+        const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= (wide ? 2 : .7);
         const still = Math.hypot(frame.move.x, frame.move.z) < .05;
         car.doorTicks = near && still ? car.doorTicks + 1 : 0;
         if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
@@ -279,7 +284,7 @@ export class Vehicles {
   }
   /** Checks a full survivor capsule against current Rapier geometry, trying both sides. */
   exit(car = this.cars.get(this.active!)!): boolean {
-    if (!car || this.active !== car.entity.id || car.entity.vehicle!.floor && this.world.entities.get(1)!.health.current > 0) return false;
+    if (!car || this.active !== car.entity.id || car.entity.vehicle!.floor && !car.entity.vehicle!.exitOpen && this.world.entities.get(1)!.health.current > 0) return false;
     const out = car.physics.def.width / 2 + .55, along = Math.sqrt(2.5 ** 2 - out ** 2) - .01;
     for (const side of [1, -1]) for (const offset of [0, -.8, .7]) {
       // The long cab anchor still needs an exit inside E09's 2.5 m placement radius.
