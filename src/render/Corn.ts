@@ -11,8 +11,8 @@ const ids = new Int32Array(8).fill(-1);
 const seen = new Uint8Array(8);
 let lastTick = 0;
 function put(id: number, x: number, y: number, z: number, vx: number, vz: number): void {
-  let slot = ids.indexOf(id);
-  if (slot < 0) slot = ids.indexOf(-1);
+  let slot = id === 1 ? 0 : ids.indexOf(id, 1);
+  if (slot < 0) slot = ids.indexOf(-1, 1);
   if (slot < 0) return;
   ids[slot] = id; seen[slot] = 1;
   movers[slot].value.set(x, y, z);
@@ -28,7 +28,7 @@ export function updateCorn(world: SimWorld): void {
   }
   const elapsed = Math.max(0, Math.min(60, world.tick - lastTick)) / 60; lastTick = world.tick;
   seen.fill(0);
-  // Admit the courier first when a slot is available.
+  // The courier has a reserved slot even when other movers fill the field.
   const velocity = hero.survivor?.velocity ?? hero.motion?.velocity;
   const hx = velocity?.x ?? hero.locomotion?.vx ?? 0, hz = velocity?.z ?? hero.locomotion?.vz ?? 0;
   const heroSpeed = Math.hypot(hx, hz);
@@ -38,7 +38,7 @@ export function updateCorn(world: SimWorld): void {
   for (const id of world.spatial.query(search, nearby, false)) {
     const e = world.entities.get(id);
     if (!e) continue;
-    if (e.hidden || e.health.current <= 0 || !(e.id === 1 || e.infected || e.companion) || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
+    if (e.id === 1 || e.hidden || e.health.current <= 0 || !(e.infected || e.companion) || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
     const v = e.survivor?.velocity ?? e.motion?.velocity;
     const vx = v?.x ?? e.locomotion?.vx ?? 0, vz = v?.z ?? e.locomotion?.vz ?? 0;
     const speed = Math.hypot(vx, vz);
