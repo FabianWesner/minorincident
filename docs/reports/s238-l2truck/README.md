@@ -23,3 +23,5 @@ Engine 3 keeps its authored roof in place during the ride. The courier walks aro
 A denser HIGH review sampled boarding every 10 ticks and exit every 18 ticks after the door-timing fix. The courier crosses around the rear toward the cab, firefighters converge on the rear step in sequence, and riders emerge in order on arrival. Some approach silhouettes overlap; these sampled stills cannot prove absence of a one-frame pop. The current remote suite and unchanged retry again timed out at 245.7 s and 243.4 s respectively, without a reported assertion failure before timeout.
 
 After `3ad2ca95`, the corgi waits for the crew and riders cross the rear sill into the body before hiding. The current remote unit attempt and unchanged retry timed out at 241.1 s and 240.7 s; the retry reported no assertion failures before timeout.
+
+A one-tick boundary capture exposed a remaining pop: the corgi is still visibly outside the rear bumper immediately before it is hidden. Moving the endpoint deeper and fading the companion did not produce a convincing climb, so that experiment was reverted. A proper entry animation and occlusion transition remain required.
