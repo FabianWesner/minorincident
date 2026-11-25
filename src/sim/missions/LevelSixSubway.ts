@@ -476,7 +476,7 @@ export class LevelSixSubway {
     // Bites use this same reservation as the authored spawns. Turning a
     // bystander must not steal a slot promised to the next breach or hatch.
     w.infected!.director.reserved=(s.entries??[]).reduce((n,e)=>n+(e.warnedAt&&(!e.closedAt||e.brokenAt)&&
-      (s.phase!=='retreat'&&s.phase!=='exit'||l6Doors[e.door].x>=s.leaderX-20&&l6Doors[e.door].x<=s.leaderX+40)?e.remaining:0),0)+(s.arrivals?.remaining??(s.phase==='shelter'||s.phase==='first'?10:0));
+      (s.phase!=='retreat'&&s.phase!=='exit'||l6Doors[e.door].x>=s.leaderX-20&&l6Doors[e.door].x<=s.leaderX+40)?e.remaining:0),0)+(s.arrivals?.remaining??(s.phase==='shelter'||s.phase==='first'?l6.breach.secondCount:0));
     if(s.phase==='retreat'||s.phase==='exit')w.infected!.director.reserved+=l6.pressure.group;
     let turning=0;for(const e of w.entities.iterate())if(e.infection&&!e.infected)turning++;
     w.infected!.director.pendingTurns=turning;
