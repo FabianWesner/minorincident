@@ -4,14 +4,14 @@ Engine 3 keeps its authored roof in place during the ride. The courier walks aro
 
 ## Captures
 
-[Contact sheet](capture-sheet.jpg) shows HIGH then LOW at zoom 1 and 1.5: approach, five boarding samples, ride, and five arrival samples. Full frames and metadata are generated in `test-results/s238-l2truck/` by `tools/qa/s238-l2truck-capture.ts`. In the latest capture, both tiers reached the ride 213 ticks (3.55 s) after boarding began. The roof remains closed and no seated rig protrudes. The cab door opens during the courier step-in pose and closes for the ride. The images show riders approaching, clearing the rear step, and emerging at arrival; some bunch during the approach. Stills do not prove that every transition is free of popping.
+[Contact sheet](capture-sheet.jpg) shows HIGH then LOW at zoom 1 and 1.5: approach, five boarding samples, ride, and five arrival samples. Full frames and metadata are generated in `test-results/s238-l2truck/` by `tools/qa/s238-l2truck-capture.ts`. In the latest capture, both tiers reached the ride 234 ticks (3.9 s) after boarding began. The roof remains closed and no seated rig protrudes. The cab door opens during the courier step-in pose and closes for the ride. The images show riders approaching, clearing the rear step, and emerging at arrival; some bunch during the approach. Stills do not prove that every transition is free of popping.
 
 ## Validation
 
 - Typecheck and lint passed after the latest product change.
 - The existing nightly mission-interactions case passed, including a 15-second delayed rider who remains visible, followed by boarding and departure after release. No test case was added.
-- Local default unit suite passed 105/105 tests in 123.0 s; the budget wrapper reports 148/150 cases.
-- Threat audit passed after the boarding-gate change, with 0 fail flags in 397.2 s.
+- Local default unit suite passed 105/105 tests in 112.5 s; the budget wrapper reports 148/150 cases.
+- Threat audit passed after the boarding-gate change, with 0 fail flags in 326.0 s.
 - Remote default suite passed for the earlier product revision in 231.6 s (104 passed, 1 skipped). Attempts against the current boarding gate and their unchanged retries exceeded the 240-second budget. Some long-running cases reported failures before the overall timeout prevented final diagnostics. The latest remote run and unchanged retry both exceeded the 240-second budget; the retry reported no assertion failures before timeout. A passing current remote run remains required.
 
 ## Open
@@ -21,3 +21,5 @@ Engine 3 keeps its authored roof in place during the ride. The courier walks aro
 - Obtain a current remote unit pass.
 
 A denser HIGH review sampled boarding every 10 ticks and exit every 18 ticks after the door-timing fix. The courier crosses around the rear toward the cab, firefighters converge on the rear step in sequence, and riders emerge in order on arrival. Some approach silhouettes overlap; these sampled stills cannot prove absence of a one-frame pop. The current remote suite and unchanged retry again timed out at 245.7 s and 243.4 s respectively, without a reported assertion failure before timeout.
+
+After `3ad2ca95`, the corgi waits for the crew and riders cross the rear sill into the body before hiding. The current remote unit attempt and unchanged retry timed out at 241.1 s and 240.7 s; the retry reported no assertion failures before timeout.
