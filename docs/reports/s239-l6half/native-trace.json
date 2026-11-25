@@ -898,5 +898,118 @@
     ],
     "basePassiveFlags": [],
     "currentPassiveFlags": []
+  },
+  "pressureMatrix": {
+    "method": "tools/qa/r12-l6-measure.ts, ordinary complete policy, seeds 1-3, both tiers; historical direction classifier uses 10 m threshold despite new 8 m authored spacing.",
+    "runs": [
+      {
+        "tier": "low",
+        "actualTier": "low",
+        "seed": 1,
+        "completed": true,
+        "simSeconds": 192.48333333333332,
+        "pressureArrivals": 20,
+        "pressureArrivalsPerMinute": 8.945210585165858,
+        "directionCounts": {
+          "ahead": 10,
+          "behind": 8,
+          "near": 2
+        },
+        "playerAttacksPerMinute": 1.3908564069542821,
+        "followerAttacksPerMinute": 3.7089504185447524,
+        "damageTaken": 40,
+        "maxConcurrentInfected": 20
+      },
+      {
+        "tier": "low",
+        "actualTier": "low",
+        "seed": 2,
+        "completed": true,
+        "simSeconds": 211.26666666666668,
+        "pressureArrivals": 20,
+        "pressureArrivalsPerMinute": 8.623787279913762,
+        "directionCounts": {
+          "ahead": 10,
+          "behind": 6,
+          "near": 4
+        },
+        "playerAttacksPerMinute": 1.7729623245506032,
+        "followerAttacksPerMinute": 3.1026840679635557,
+        "damageTaken": 20,
+        "maxConcurrentInfected": 19
+      },
+      {
+        "tier": "low",
+        "actualTier": "low",
+        "seed": 3,
+        "completed": true,
+        "simSeconds": 201.75,
+        "pressureArrivals": 20,
+        "pressureArrivalsPerMinute": 8.61038029179622,
+        "directionCounts": {
+          "ahead": 11,
+          "behind": 8,
+          "near": 1
+        },
+        "playerAttacksPerMinute": 0.8846295613711758,
+        "followerAttacksPerMinute": 4.423147806855879,
+        "damageTaken": 10,
+        "maxConcurrentInfected": 19
+      },
+      {
+        "tier": "high",
+        "actualTier": "high",
+        "seed": 1,
+        "completed": true,
+        "simSeconds": 192.48333333333332,
+        "pressureArrivals": 20,
+        "pressureArrivalsPerMinute": 8.945210585165858,
+        "directionCounts": {
+          "ahead": 10,
+          "behind": 8,
+          "near": 2
+        },
+        "playerAttacksPerMinute": 1.3908564069542821,
+        "followerAttacksPerMinute": 3.7089504185447524,
+        "damageTaken": 40,
+        "maxConcurrentInfected": 20
+      },
+      {
+        "tier": "high",
+        "actualTier": "high",
+        "seed": 2,
+        "completed": true,
+        "simSeconds": 211.26666666666668,
+        "pressureArrivals": 20,
+        "pressureArrivalsPerMinute": 8.623787279913762,
+        "directionCounts": {
+          "ahead": 10,
+          "behind": 6,
+          "near": 4
+        },
+        "playerAttacksPerMinute": 1.7729623245506032,
+        "followerAttacksPerMinute": 3.1026840679635557,
+        "damageTaken": 20,
+        "maxConcurrentInfected": 19
+      },
+      {
+        "tier": "high",
+        "actualTier": "high",
+        "seed": 3,
+        "completed": true,
+        "simSeconds": 201.75,
+        "pressureArrivals": 20,
+        "pressureArrivalsPerMinute": 8.61038029179622,
+        "directionCounts": {
+          "ahead": 11,
+          "behind": 8,
+          "near": 1
+        },
+        "playerAttacksPerMinute": 0.8846295613711758,
+        "followerAttacksPerMinute": 4.423147806855879,
+        "damageTaken": 10,
+        "maxConcurrentInfected": 19
+      }
+    ]
   }
 }
