@@ -42,6 +42,8 @@ export class DistrictOcclusion {
   courierOccluded = false;
   /** A tall plant prop she is tucked against covers her this frame (its foreground is lens-cut; she also draws in the depth slice). */
   courierTucked = false;
+  /** L10 only (s236): a building between the lens and the courier or corgi fades as one object; every other level keeps the bounded lens cut. */
+  wholeBuildings = false;
   private vehicleSilhouette = false;
   update(view: View, reveal: boolean, player?: { x: number; y: number; z: number }, subject?: Box3, vehicleSilhouette = false, companion?: { x: number; y: number; z: number }): void {
     this.courierOccluded = this.courierTucked = false; this.vehicleSilhouette = vehicleSilhouette;
@@ -150,7 +152,7 @@ export class DistrictOcclusion {
       for (const ref of entry.refs) {
         const id = `${entry.id}@${(ref.position.x + entry.origin[0]).toFixed(1)},${(ref.position.z + entry.origin[1]).toFixed(1)}`;
         const lens = seeThrough.cover.value === 1 && this.lensPlacements.has(ref) && allowed.includes(id);
-        const whole = worldAssets[entry.id].category === 'building';
+        const whole = this.wholeBuildings && worldAssets[entry.id].category === 'building';
         for (const batch of [entry.hero, entry.near, entry.far]) batch.seeThrough(lens, ref, lens, whole);
       }
     }
@@ -161,7 +163,7 @@ export class DistrictOcclusion {
       for (const ref of entry.refs) {
         const enabled = all || this.cutPlacements.has(ref);
         const lens = this.lensPlacements.has(ref);
-        const whole = worldAssets[entry.id].category === 'building';
+        const whole = this.wholeBuildings && worldAssets[entry.id].category === 'building';
         if (ref.userData.occluder === enabled && !!ref.userData.lensOccluder === lens && !!ref.userData.wholeOccluder === (enabled && whole)) continue;
         if (worldAssets[entry.id].category === 'building') this.interiorRevision++;
         entry.hero.seeThrough(enabled, ref, lens, whole); entry.near.seeThrough(enabled, ref, lens, whole); entry.far.seeThrough(enabled, ref, lens, whole);
@@ -286,7 +288,7 @@ export class DistrictOcclusion {
           // placement (inside its footprint, feet above its base) kept her a gold foreground ghost for the whole climb.
           if (tucked && !contact && courier.y !== undefined && courier.y - .7 > ref.position.y + standOnLift) tucked = false;
         }
-        const building = entry.id.startsWith('bld.');
+        const building = this.wholeBuildings && entry.id.startsWith('bld.');
         for (let i = 0; i < (building && courier?.y !== undefined ? 2 + (companion ? 1 : 0) : count); i++) {
           // The projected subject can include nearby infected and the corgi.
           // Its centre may be many metres from the courier in L10; use her
