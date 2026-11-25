@@ -1,11 +1,11 @@
 # s235 corn parting — work in progress
 
-The corn-specific opacity fade and the shared player see-through cut were removed. The current shader uses a fixed set of mover uniforms and a one-second directional wake. The courier, corgi and driven car have reserved slots; other nearby infected and vehicles compete for five remaining slots. Corpses and building occlusion code were not changed.
+The corn-specific opacity fade and the shared player see-through cut were removed. The current shader uses a fixed set of mover uniforms and a one-second directional wake. The courier, corgi and driven car have reserved slots; other nearby infected and vehicles compete for five remaining slots, prioritized by distance with an incumbent bias. Replaced influences fade out before their slots can be reused. Corpses and building occlusion code were not changed.
 
 ## Evidence
 
 - Typecheck and lint passed after the root-coordinate fix and capture update.
-- The remote unit suite passed on the softened turn wake (27 files, 105 passed, one skipped, 212.04 seconds; budget 215.6 seconds).
+- The remote unit suite passed on the shared-slot priority change (27 files, 105 passed, one skipped, 212.63 seconds; budget 215.4 seconds).
 - HIGH and LOW WebGL2 captures at zoom 1 and 1.5 were generated under `/private/tmp/s235-corn` on `845ded3a`. Close frames show corn drawn in front of the courier and corgi. They do not establish clean parting, smooth recovery or the absence of distortion and popping.
 - A headless WebGPU diagnostic on `de6e7ff6` reported the requested backend at both qualities and zooms, without captured console errors. The zoom 1.5 frames show the courier and corgi partially obscured by dense HIGH crop and more visible in sparser LOW crop. They do not prove smooth parting. Manual WebGPU review remains open.
 - Exclusive quiet-runs of `tools/perf/s194-l10hitch.ts` on the parent `7d820cdd` and candidate `845ded3a` used the same HIGH WebGL replay. Baseline: 1,298 samples, max 51.6 ms and p99 31.1 ms; candidate: 1,240 samples, max 49.9 ms and p99 30.5 ms. Both had zero frames above 100 ms and no captured errors. Both traversed x=547–589.57, z≈0: this route does not exercise the corn field and cannot establish the crop's performance impact. Earlier admission attempts expired; one shared-mode attempt was admitted but could not launch the required Chrome channel.
@@ -43,8 +43,12 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - A temporary HIGH WebGL2 tick-level recovery probe sampled the courier uniform for 100 ticks after input release (`recovery-probe.json`). The courier stopped at tick 5; its tracked position remained fixed and its influence decreased monotonically from 0.9833 to zero over 60 ticks. The shader applies smoothstep to that influence. The HIGH stop frames at ticks 10, 60 and 90 were opened (`/private/tmp/s235-recovery`): crop remains drawn, while the corgi continues to move. This confirms the courier uniform timing for this stop, not individual GPU stalk motion or all movers. The probe instrumentation was removed.
 
+- An eight-zombie L10 probe exposed saturation: before prioritization, a moving zombie 2.23 m from the courier was omitted while a moving zombie 7.43 m away was tracked. After prioritization the closer zombie is tracked in the same replay. `crowd-slot-probe.json` records both samples. Five shared slots remain a hard ceiling; another moving zombie 3.67 m away was not tracked in the candidate sample while an outgoing owner was still fading.
+- A synthetic handoff probe showed the displaced influence decreasing over 60 ticks and the new owner beginning its ramp on tick 61. This avoids abrupt removal but can delay representation for about one second. All four HIGH/LOW WebGL2 capture cases passed without errors (`/private/tmp/s235-priority-capture`); HIGH and LOW close turn frames were opened and show corn present around both actors.
+- A paired eight-zombie field timing attempt did not obtain quiet admission within 120 seconds and produced no measurement. The selection change therefore still needs a crowd performance receipt.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
 
-Resolve the remaining visible corn LOD leaf-shape transition without regressing the L10 budget. Verify the eight-slot limit against crowds and vehicles; three slots are reserved for the courier, corgi and driven car. Review HIGH then LOW at both requested zooms with the courier and following corgi, including a temporal sequence. Confirm WebGPU separately and assess variability in the paired L10 and field receipts. The current work is not acceptance complete.
+Resolve the remaining visible corn LOD leaf-shape transition without regressing the L10 budget. Replace or otherwise resolve the five-shared-slot crowd limit and measure its performance; three slots are reserved for the courier, corgi and driven car. Review HIGH then LOW at both requested zooms with the courier and following corgi, including a temporal sequence. Confirm WebGPU separately and assess variability in the paired L10 and field receipts. The current work is not acceptance complete.
