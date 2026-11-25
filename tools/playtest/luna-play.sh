@@ -34,7 +34,7 @@ write_summary() {
 const fs=require('fs'),p=require('path'),d=process.env.LUNA_RUN_DIR;
 const read=n=>fs.readFileSync(p.join(d,n),'utf8').split(/\n/).filter(Boolean).flatMap(x=>{try{return [JSON.parse(x)]}catch{return []}});
 const api=read('log.jsonl'),pl=read('player.jsonl'),keepDir=p.join(d,'keep');
-const shots=fs.readdirSync(keepDir).filter(x=>x.endsWith('.jpg')).sort().reverse();for(const f of shots.slice(3))fs.unlinkSync(p.join(keepDir,f));const kept=shots.slice(0,3);
+const shots=fs.readdirSync(keepDir).filter(x=>x.endsWith('.jpg')).sort().reverse();const keepN=Number(process.env.LUNA_KEEP||3);for(const f of shots.slice(keepN))fs.unlinkSync(p.join(keepDir,f));const kept=shots.slice(0,keepN);
 const levels=[...new Set(pl.map(x=>x.level).filter(x=>x&&x!=='-'))],finished=[...new Set(pl.filter(x=>x.level_finished).map(x=>x.level))];
 const deaths=new Map();for(const x of api)if(x.level&&x.level!=='-')deaths.set(x.level,x.deaths||0);
 const reports=(field,type)=>pl.filter(x=>x[field]&&x[field]!=='none').map(x=>{const f=kept.find(n=>n.startsWith(`turn-${String(x.turn).padStart(6,'0')}-${type}`));return `- Turn ${x.turn}: ${x[field]} — ${f?`keep/${f}`:'screenshot unavailable'}`});
@@ -56,7 +56,7 @@ npm run build:qa
 start=$(date +%s); cap=$((LUNA_MAX_MINUTES*60)); turn=0; last_level='-'; last_objective=''; deaths=0; recent=''; session=''; credits=0
 ready=0
 for attempt in 1 2; do
-  LUNA_WALL_OFFSET_MS=0 LUNA_TURN_OFFSET=0 node --import tsx tools/playtest/live.ts --screen --autofight --quality low --level "${LUNA_LEVEL:-L1}" >>"$run/live.out" 2>&1 & live_pid=$!; segments=$attempt
+  LUNA_WALL_OFFSET_MS=0 LUNA_TURN_OFFSET=0 node --import tsx tools/playtest/live.ts --screen --autofight --quality "${LUNA_QUALITY:-high}" --level "${LUNA_LEVEL:-L1}" >>"$run/live.out" 2>&1 & live_pid=$!; segments=$attempt
   for i in $(seq 1 120); do
     if ! kill -0 "$live_pid" 2>/dev/null; then break; fi
     if curl -fsS "http://127.0.0.1:$LIVE_PORT/look" >"$run/current.json" 2>/dev/null; then ready=1; break; fi

@@ -151,6 +151,23 @@ if (step) await page.evaluate(() => window.__SS__!.pause());
 // the acceptance criterias". Screen play is immortal unless LUNA_MORTAL=1: attacks still land and are logged, but the courier takes no damage.
 const immortal = screenOnly && process.env.LUNA_MORTAL !== '1';
 if (immortal) setInterval(() => { void page.evaluate(() => window.__SS__?.cheats.god(true)).catch(() => {}); }, 1000);
+// PO 2026-11-25: immortal play must still show whether a player would have a chance. Sum the damage that lands on the
+// courier per level and count virtual deaths against 100 HP (reset after each), written to <run>/damage.jsonl.
+if (immortal && process.env.LUNA_RUN_DIR) {
+  let since = 0, virtualHp = 100, lastLevel = '';
+  const totals: Record<string, { damage: number; hits: number; virtualDeaths: number }> = {};
+  setInterval(() => { void page.evaluate(s => {
+    const a = window.__SS__; if (!a) return null;
+    const hits = a.events(s).filter(e => e.type === 'combat.hit' && e.targetId === 1).map(e => ({ tick: e.tick, amount: (e as { amount: number }).amount, actionId: (e as { actionId: string }).actionId }));
+    return { tick: a.getState().tick, level: (a.getState() as { scenario?: string }).scenario ?? '-', hits };
+  }, since).then(r => {
+    if (!r) return; since = r.tick + 1;
+    if (r.level !== lastLevel) { virtualHp = 100; lastLevel = r.level; }
+    const t = totals[r.level] ??= { damage: 0, hits: 0, virtualDeaths: 0 };
+    for (const h of r.hits) { t.damage += h.amount; t.hits++; virtualHp -= h.amount; if (virtualHp <= 0) { t.virtualDeaths++; virtualHp = 100; } }
+    if (r.hits.length) appendFileSync(resolve(process.env.LUNA_RUN_DIR!, 'damage.jsonl'), JSON.stringify({ time: new Date().toISOString(), level: r.level, tick: r.tick, hits: r.hits, totals: t }) + '\n');
+  }).catch(() => {}); }, 1000);
+}
 const started = Date.now() - Number(process.env.LUNA_WALL_OFFSET_MS ?? 0);
 let deaths = 0, lastHp = Infinity, lastPos: { x: number; z: number } | null = null;
 const body = (b: Body, p: NonNullable<Eyes['player']>) => `${b.kind}#${b.id} ${Math.round(b.d)}m dir ${compass(b.x - p.x, b.z - p.z)} hp ${Math.round(b.hp)}/${b.max} screen ${Math.round(b.aim.x)},${Math.round(b.aim.y)}${b.attacking ? ' ATTACKING' : ''}${b.state ? ` (${b.state})` : ''}`;
