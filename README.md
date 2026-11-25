@@ -83,3 +83,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - A native seed 1 western-boundary timing probe found three living infected west of x=30 at retreat start (tick 3784). The area first had none at tick 4350, but infected reappeared west at tick 4404 and remained until tick 6311. Closing merely on the first empty tick would strand later reactivations; a safe seal must account for retained downed or streamed identities as well as living actors.
 
 - The eastern boundary was also probed through the native solid registry: at x=246 and z=14, 15 and 16, an infected-radius placement is blocked while the same player-radius placement is clear. This supplements the navigation-line probe; the western end remains open.
+
+- A conditional western boundary was tested after all west-side living, turning and recoverable actors cleared and the shelter arrivals drained. Skilled and passive L6 completed, but the early-close trace gained follower pace flags and total births changed from 38 to 42; moreover the end remained open until clearance. The experiment was discarded pending a design that seals the end without degrading the route.
