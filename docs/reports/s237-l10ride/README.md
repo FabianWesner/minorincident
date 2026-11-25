@@ -1,5 +1,9 @@
 # s237 · L10 finale ride loop
 
+## Corrected current result (supersedes earlier loop counts below)
+
+The prior 4/4 claims were invalid: the observer combined unfinished loop phases across deaths and counted a checkpoint restore or remount beyond the gate as crossing after remount. The observer now resets an unfinished loop on death and requires a nearby remount on the approach side before crossing. The [corrected current-source receipt](route-strict.json) records **1/4 complete loops on HIGH and 1/4 on LOW** (convoy only); quarantine, underpass and hospital are incomplete on both. Hangar to gate remains 446.9 s HIGH and 457.4 s LOW; the ten recorded radio intervals remain within 45–75 s. The gameplay goal is not met. Typecheck and lint passed after the observer correction. Earlier 4/4 statements below are retained as historical measurements from the flawed observer and do not establish acceptance.
+
 ## Current result
 
 Both latest HIGH and LOW skilled native routes completed, with all four roadblock sequences observed: mounted arrival, E dismount, on-foot fight, opened gate, E remount and crossing. HIGH took 446.9 seconds from the finale start to the gate. LOW took 551.5 seconds, 11.5 seconds above the 540 second cap. The route therefore meets the loop count on both tiers and the time window on HIGH only.

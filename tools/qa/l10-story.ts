@@ -249,9 +249,9 @@ for (const tier of tiers) {
       });
       world.events.on('player.died', () => {
         deaths.push({ tick: world.tick, hits: [...recentHits] });
-        // Roadblock progress is deliberately retained across checkpoint
-        // restores. Keep the run-level mounted/dismount/fight/open/remount
-        // sequence too, so a retry does not erase a barrier the game has kept.
+        // Gate state persists after a retry, but a failed attempt must not be
+        // joined to a later crossing to manufacture a continuous ride loop.
+        for (const b of roadblockRide) if (!b.crossed) Object.assign(b, { arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0 });
       });
       const update = world.update.bind(world);
       let finalePrepared = false, lastBike = false;
@@ -287,7 +287,10 @@ for (const tier of tiers) {
           if (near && !riding && lastBike && b.arrived && !b.dismounted) b.dismounted = world.tick;
           const gateId = Object.values(world.l10Encounters?.state.roadblockGates ?? {}).find(id => Math.abs((world.entities.get(id)?.transform.x ?? -10000) - b.x) < 1);
           if (b.fight && gateId !== undefined && world.entities.get(gateId)?.interactable?.open && !b.opened) b.opened = world.tick;
-          if (riding && !lastBike && b.opened && !b.remounted) b.remounted = world.tick;
+          // A checkpoint can restore the mounted bike beyond this gate. That
+          // is not a remount-and-ride-across event: require E to mount near the
+          // barrier on its approach side, then observe an eastbound crossing.
+          if (near && p.transform.x <= b.x + 3 && riding && !lastBike && b.opened && !b.remounted) b.remounted = world.tick;
           if (riding && b.remounted && p.transform.x > b.x + 3 && !b.crossed) b.crossed = world.tick;
         }
         if (riding !== lastBike) { bikeTransitions.push({ tick: world.tick, riding, x: p.transform.x, z: p.transform.z, nearby: world.infected!.active.filter(e => e.health.current > 0 && !e.infected?.pursuit && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 15).length, recentHits: recentHits.slice(-4) }); lastBike = riding; }
