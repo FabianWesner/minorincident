@@ -87,3 +87,7 @@ A temporary passive-approach replay sampled the Mega every 600 ticks after cure 
 ## Pursuit shortcut trial
 
 The coarse graph has a shortcut from node 43 (3697, −25) to node 48 (3940, −25). Removing that link in the temporary combat-approach/remount diagnostic moved the unreachable Mega from x≈3775 to (3897, −30) at the final hold sample, but the sample still had only 7/8 reachable and retained `step/hold:BELOW_REACHABILITY_PERCENT_90`. The skilled route completed. The shortcut and diagnostic policy were restored; the route needs a further obstacle-aware correction and a full native regression pass.
+
+## Direct coarse target trial
+
+A trial removed the 43→48 shortcut and kept the coarse navigator targeting the courier during charge instead of falling back to a route node. The same focused L10 diagnostic still reported 7/8 hold reachability, with the Mega at x=3801.6. The trial was reverted. The local obstacle-aware navigation itself needs inspection around that point; choosing the direct target alone does not solve the route.
