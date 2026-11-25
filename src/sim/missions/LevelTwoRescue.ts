@@ -285,8 +285,8 @@ export class LevelTwoRescue {
     if (e.health.current <= 0 || e.infected) return false;
     if (s.phase === 'arrived' && e.passengerOf === s.truckId && s.companionExit) {
       const t = this.world.entities.get(s.truckId)!.transform, elapsed = this.world.tick - s.arrivedAt;
-      const u = Math.max(0, Math.min(1, (elapsed - 30) / ticks(.5)));
-      if (elapsed < 30) return true;
+      const start = ticks(.8 + s.crewIds.length * .6), u = Math.max(0, Math.min(1, (elapsed - start) / ticks(.5)));
+      if (elapsed < start) return true;
       e.hidden = false; e.transform.x = t.x + (s.companionExit.x - t.x) * (.55 + .45 * u); e.transform.z = t.z + (s.companionExit.z - t.z) * (.55 + .45 * u); e.transform.y = .3 + .45 * (1 - u);
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       if (u >= 1) { delete e.passengerOf; this.world.solids.admit(e, 'l2.companion.exit'); }
@@ -394,7 +394,7 @@ export class LevelTwoRescue {
     for (const [i, id] of s.crewIds.entries()) {
       const e = world.entities.get(id); if (!e?.civilian?.ally) continue;
       if (e.health.current <= 0 || e.infected) continue;
-      const elapsed = tick - s.crewExitAt - i * 18;
+      const elapsed = tick - s.crewExitAt - i * ticks(.6);
       if (elapsed < 0 || (e.passengerOf !== s.truckId && !e.hidden)) continue;
       if (elapsed === 0 || !s.crewExitTo?.[i]) {
         const lx = 2.8 - i * 1.15, lz = -1.9 - (i % 2) * .9;
@@ -666,7 +666,9 @@ export class LevelTwoRescue {
       if (!s.atDoorsAt && tick - s.arrivedAt >= ticks(.8) && (!s.crewExitAt || s.crewIds.some(id => world.entities.get(id)?.passengerOf === s.truckId))) this.crewExit();
       if (s.crewExitAt && !s.atDoorsAt) {
         const crew = s.crewIds.map(id => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally && e.health.current > 0 && !e.infected);
-        if (crew.every(e => !e.hidden && e.passengerOf !== s.truckId && (!e.civilian!.ally!.run || Math.hypot(e.civilian!.ally!.run.x - e.transform.x, e.civilian!.ally!.run.z - e.transform.z) < 1.5)) || tick - s.crewExitAt > ticks(8)) {
+        let companionOut = true;
+        for (const e of world.entities.iterate()) if (e.companion && e.health.current > 0 && !e.infected && e.passengerOf === s.truckId) { companionOut = false; break; }
+        if ((companionOut && crew.every(e => !e.hidden && e.passengerOf !== s.truckId && (!e.civilian!.ally!.run || Math.hypot(e.civilian!.ally!.run.x - e.transform.x, e.civilian!.ally!.run.z - e.transform.z) < 1.5))) || tick - s.crewExitAt > ticks(8)) {
           s.atDoorsAt = tick; s.phase = 'doors'; world.events.emit({ type: 'l2.firefightersAtDoors', tick });
           for (const e of crew) {
             const a = e.civilian!.ally!, role = l2.rescue.crewDoors[s.crewIds.indexOf(e.id)]?.[2];
