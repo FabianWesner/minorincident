@@ -12,7 +12,7 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 - The same existing combat case also exercises the current 240 HP armored actor with all four weapon damage types: each hit reduces HP, front damage is halved, rear damage is full, and repeated hits down it. This calls the damage pipeline directly, so it does not establish actual weapon hit selection or platform collision.
 - `tests/engine/l4-contact.test.ts` — the existing production health-bar test models a 600 HP riot and a 2.52 HP MG chip, then asserts that the damage-chip mesh is present. The underlying red fill delta is subpixel.
 - Focused verification: `npm test -- --run tests/engine/combat.test.ts -t 'damage modifiers: shared riot shield'` passed; `npm test -- --run tests/engine/l4-contact.test.ts -t 'every contact archetype interrupts approach/lure'` passed; `npm run typecheck` and `npm run lint` passed.
-- `npm run test:unit` passed locally: 105 tests across 27 files. Two unchanged remote invocations reached their 240 s limit (exit 124); the combat file passed in both, but neither full suite completed.
+- `npm run test:unit` passed locally: 105 tests across 27 files. The latest remote invocation reported 27 files passed, 104 tests passed and one skipped in 237.59 s, but the wrapper timed out at 240.2 s and returned exit 124. Its unchanged rerun also timed out at 245.6 s; the remote gate remains open.
 - `npm run qa:threat` hit its 600 s command budget before the full stage list completed (exit 124). The same untrimmed audit completed via `node tools/qa/run-threat-sharded.mjs --single`: **823.7 s, 0 fail flags**; receipt: `test-results/qa-threat/README.md`.
 - Earlier physical L6 high/low counter receipts in [`fix73-g/L6-gate.json`](../fix73-g/L6-gate.json) and [`fix73-g/L6-final-counter.json`](../fix73-g/L6-final-counter.json) report production 600 HP shield fronts, 90-tick breaks, downing by ordinary aimed input, and visible shield-break sparks plus both red bars. The source capture PNGs referenced there are not present in this checkout.
 
@@ -20,8 +20,10 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - A fresh high-tier WebGL2 capture at the exit platform applies one controlled frontal MG damage event (240 → 233 HP) to an armored actor. [Capture](first-hit-high.png) was opened: the red bar appears above the dark helmeted figure; the six-pixel gold chip is distinct against the red fill and white outline at 1280 × 720. The previous implementation capped the chip to the missing slice, defeating its minimum width; the marker now overlaps the fill while staying within the bar. The first capture exposed that an initially hidden bar had no previous render state; the hit event now seeds that state before first presentation. The existing contact test covers this case and passed. This capture uses direct damage, not physical input, and does not establish visual readability for every weapon.
 
+- [Physical pointer receipt](pointer-hits.json): high-quality WebGL2, protected courier, controlled production armored actors at exit and tunnel, initially 1.4 m (axe) or 5 m (guns), tracked mouse aim, stepped simulation. Every weapon downed its actor at both locations: seven axe hits, 24 handgun hits, two shotgun hits, 35 MG hits. Actors were permitted to move. This is not a crowded retreat replay or a several-distance pointer matrix.
+
 ## Open
 
-- The high-tier platform probe recorded one handgun hit on the first of two native hatch actors; the second was not hit before the probe timed out. Full weapon/distance and tunnel coverage, visual review of the updated armored chip, and diagnosis of missed shots remain open.
-- The remote unit suite timed out twice; the remote acceptance remains open.
+- A crowded retreat replay, several-distance physical pointer matrix, and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
+- The latest remote unit suite and its unchanged rerun timed out; the remote acceptance remains open.
 
