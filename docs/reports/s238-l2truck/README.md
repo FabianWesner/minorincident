@@ -19,3 +19,5 @@ Engine 3 keeps its authored roof in place during the ride. The courier walks aro
 - Review the full animation, including every rider's transition, for visible popping; the contact sheet alone cannot establish this.
 - A permanently sealed boarding path can leave a living rider and truck waiting indefinitely. Temporary delay and recovery are covered by the interaction case; no automatic recovery from a sealed path is implemented.
 - Obtain a current remote unit pass.
+
+A denser HIGH review sampled boarding every 10 ticks and exit every 18 ticks after the door-timing fix. The courier crosses around the rear toward the cab, firefighters converge on the rear step in sequence, and riders emerge in order on arrival. Some approach silhouettes overlap; these sampled stills cannot prove absence of a one-frame pop. The current remote suite and unchanged retry again timed out at 245.7 s and 243.4 s respectively, without a reported assertion failure before timeout.
