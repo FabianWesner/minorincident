@@ -81,7 +81,7 @@ export function renderReport(audit: AuditReceipt, baseline = false): string {
   const missingPace = audit.flags.some(flag => flag.includes('FOLLOWER_PACE_UNOBSERVED'));
   text += `| G-13 | ${[...followerFindings].map(([id, ratio]) => `${id} (${(ratio * 100).toFixed(0)}% of group median)`).join(', ') || 'none'} | ${routePace.join('; ') || '—'}; wait upper bounds: ${routeWait.join(', ') || '—'} | every follower ≥ 95% of group median; ≥10 walking samples for each named follower; stationary >10m lag ≤10% of escort time | ${followerFindings.size || missingPace || waitNotProven ? 'FAIL' : 'PASS'} |\n`;
   for (const row of focusedCriteria(audit.levels)) text += `| ${row.id} | ${row.passive} | ${row.skilled} | ${row.expected} | ${row.verdict} |\n`;
-  text += '| L6-03/04 | Breach cohorts: see L6 wave table | — | breach 1 ≥6; breach 2 ≥10 | See wave flags |\n';
+  text += '| L6-03/04 | Breach cohorts: see L6 wave table | — | breach 1 4; breach 2 5 | See wave flags |\n';
   const l8 = audit.levels.find(item => item.level === 'L8'), breach = l8?.passiveObservation?.waves.find(wave => wave.key === 'tunnel-breach');
   const outletCounts = breach?.outletCohorts?.map(row => row.spawned) ?? [];
   const breachLedger = breach ? `${breach.spawned}/${breach.expected ?? '—'} across ${outletCounts.length} outlets [${outletCounts.join(', ')}]` : 'not measured';

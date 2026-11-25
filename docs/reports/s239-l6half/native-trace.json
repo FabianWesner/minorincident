@@ -1,0 +1,827 @@
+{
+  "provenance": {
+    "currentFocusedTrace": "test-results/qa-threat-l6/L6.json (native seed 1, after this lane changes)",
+    "beforeTrace": "docs/reports/r12-l6/evidence/pressure-after.json (native low seed 1, historical L6 pressure-after baseline)",
+    "fullAllLevelsAudit": "test-results/qa-threat-merged/audit.json"
+  },
+  "before": {
+    "outcome": "result",
+    "simSeconds": 441.3666666666667,
+    "totalSpawnedInRetreat": 96,
+    "peakConcurrentInfected": 30,
+    "pressureArrivals": 27
+  },
+  "completedNativeRoute": {
+    "outcome": "complete",
+    "simSeconds": 192.48333333333332,
+    "totalSpawnedIncludingConversions": 38,
+    "peakConcurrentInfected": 20,
+    "retreatPhaseSpawned": 26,
+    "threatFlags": [],
+    "passiveFlags": [],
+    "spawnEvents": [
+      {
+        "id": 57,
+        "door": 0,
+        "x": -10,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 58,
+        "door": 1,
+        "x": 10.8,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 59,
+        "door": 0,
+        "x": -9.25,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 61,
+        "door": 1,
+        "x": 11.8,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 63,
+        "door": 0,
+        "x": -10,
+        "z": -5,
+        "tick": 3253,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 64,
+        "door": 1,
+        "x": 10,
+        "z": -5,
+        "tick": 3343,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 65,
+        "door": 0,
+        "x": -10,
+        "z": 6,
+        "tick": 3433,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 67,
+        "door": 1,
+        "x": 10,
+        "z": -5,
+        "tick": 3523,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 69,
+        "door": 0,
+        "x": -10,
+        "z": 6,
+        "tick": 3613,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 71,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 3792,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 72,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 3792,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 76,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 4632,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 77,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 4632,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 79,
+        "door": 2,
+        "x": 51,
+        "z": 13.009999904632569,
+        "tick": 5083,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 80,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 5472,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 81,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 5472,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 83,
+        "door": 5,
+        "x": 75,
+        "z": 16.99000009536743,
+        "tick": 5712,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 84,
+        "door": 3,
+        "x": 126,
+        "z": 12.6,
+        "tick": 6312,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 85,
+        "door": 3,
+        "x": 126.8,
+        "z": 12.6,
+        "tick": 6312,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 87,
+        "door": 3,
+        "x": 123,
+        "z": 13.05999990463257,
+        "tick": 7141,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 88,
+        "door": 3,
+        "x": 126,
+        "z": 12.6,
+        "tick": 7152,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 89,
+        "door": 3,
+        "x": 126.8,
+        "z": 12.6,
+        "tick": 7152,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 91,
+        "door": 5,
+        "x": 78,
+        "z": 17.400000000000002,
+        "tick": 7992,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 92,
+        "door": 5,
+        "x": 78.8,
+        "z": 17.400000000000002,
+        "tick": 7992,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 94,
+        "door": 6,
+        "x": 159,
+        "z": 16.99000009536743,
+        "tick": 7999,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 95,
+        "door": 4,
+        "x": 198,
+        "z": 12.6,
+        "tick": 8832,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 96,
+        "door": 4,
+        "x": 198.8,
+        "z": 12.6,
+        "tick": 8832,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 98,
+        "door": 4,
+        "x": 195,
+        "z": 13.05999990463257,
+        "tick": 9003,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 99,
+        "door": 3,
+        "x": 126,
+        "z": 12.6,
+        "tick": 9672,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 100,
+        "door": 3,
+        "x": 126.8,
+        "z": 12.6,
+        "tick": 9672,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 102,
+        "door": 7,
+        "x": 225,
+        "z": 16.99000009536743,
+        "tick": 9835,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 103,
+        "door": 6,
+        "x": 163,
+        "z": 17.400000000000002,
+        "tick": 10512,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 104,
+        "door": 6,
+        "x": 162.8,
+        "z": 18.150000000000002,
+        "tick": 10512,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 106,
+        "door": 4,
+        "x": 198,
+        "z": 12.6,
+        "tick": 11001,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 107,
+        "door": 4,
+        "x": 198.8,
+        "z": 12.6,
+        "tick": 11001,
+        "wave": 3,
+        "offscreen": true
+      }
+    ],
+    "hatchEvents": [
+      {
+        "door": 2,
+        "warnedAt": 4963,
+        "remaining": 0,
+        "nextAt": 6982,
+        "switchId": 48,
+        "closedAt": 5662,
+        "hits": 0,
+        "hitAt": 6982,
+        "brokenAt": 6982,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 5,
+        "warnedAt": 5592,
+        "remaining": 0,
+        "nextAt": 7630,
+        "switchId": 49,
+        "closedAt": 6310,
+        "hits": 0,
+        "hitAt": 7630,
+        "brokenAt": 7630,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 3,
+        "warnedAt": 7021,
+        "remaining": 0,
+        "nextAt": 8961,
+        "switchId": 50,
+        "closedAt": 7641,
+        "hits": 0,
+        "hitAt": 8961,
+        "brokenAt": 8961,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 6,
+        "warnedAt": 7879,
+        "remaining": 0,
+        "nextAt": 10018,
+        "switchId": 51,
+        "closedAt": 8698,
+        "hits": 0,
+        "hitAt": 10018,
+        "brokenAt": 10018,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 4,
+        "warnedAt": 8883,
+        "remaining": 0,
+        "nextAt": 10981,
+        "switchId": 52,
+        "closedAt": 9661,
+        "hits": 0,
+        "hitAt": 10981,
+        "brokenAt": 10981,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 7,
+        "warnedAt": 9715,
+        "remaining": 0,
+        "nextAt": 11561,
+        "switchId": 53,
+        "closedAt": 10421,
+        "hits": 4,
+        "hitAt": 11501
+      }
+    ]
+  },
+  "earlyCloseNativeRoute": {
+    "outcome": "complete",
+    "simSeconds": 200.3,
+    "totalSpawnedIncludingConversions": 38,
+    "peakConcurrentInfected": 19,
+    "authoredSpawnEventCount": 35,
+    "countsByDoor": {
+      "0": 5,
+      "1": 4,
+      "2": 7,
+      "3": 7,
+      "4": 5,
+      "5": 3,
+      "6": 1,
+      "7": 3
+    },
+    "zeroTunnelEndOrRemovedEntry8Spawns": true,
+    "spawnEvents": [
+      {
+        "id": 57,
+        "door": 0,
+        "x": -10,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 58,
+        "door": 1,
+        "x": 10.8,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 59,
+        "door": 0,
+        "x": -9.25,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 61,
+        "door": 1,
+        "x": 11.8,
+        "z": -13,
+        "tick": 1992,
+        "wave": 1,
+        "offscreen": true
+      },
+      {
+        "id": 63,
+        "door": 0,
+        "x": -10,
+        "z": -5,
+        "tick": 3253,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 64,
+        "door": 1,
+        "x": 10,
+        "z": -5,
+        "tick": 3343,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 65,
+        "door": 0,
+        "x": -10,
+        "z": 6,
+        "tick": 3433,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 67,
+        "door": 1,
+        "x": 10,
+        "z": -5,
+        "tick": 3523,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 69,
+        "door": 0,
+        "x": -10,
+        "z": 6,
+        "tick": 3613,
+        "wave": 2,
+        "offscreen": true
+      },
+      {
+        "id": 71,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 3792,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 72,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 3792,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 76,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 4632,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 77,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 4632,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 79,
+        "door": 2,
+        "x": 51,
+        "z": 13.009999904632569,
+        "tick": 5120,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 80,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 5472,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 81,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 5472,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 83,
+        "door": 5,
+        "x": 75,
+        "z": 16.99000009536743,
+        "tick": 5794,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 84,
+        "door": 3,
+        "x": 126,
+        "z": 12.6,
+        "tick": 6312,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 85,
+        "door": 3,
+        "x": 126.8,
+        "z": 12.6,
+        "tick": 6312,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 87,
+        "door": 3,
+        "x": 126,
+        "z": 12.6,
+        "tick": 7152,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 88,
+        "door": 3,
+        "x": 126.8,
+        "z": 12.6,
+        "tick": 7152,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 90,
+        "door": 3,
+        "x": 122.26526843463441,
+        "z": 13.611271242968684,
+        "tick": 7215,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 91,
+        "door": 5,
+        "x": 78,
+        "z": 17.400000000000002,
+        "tick": 7992,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 92,
+        "door": 5,
+        "x": 78.8,
+        "z": 17.400000000000002,
+        "tick": 7992,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 94,
+        "door": 6,
+        "x": 159,
+        "z": 16.99000009536743,
+        "tick": 8152,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 95,
+        "door": 4,
+        "x": 198,
+        "z": 12.6,
+        "tick": 8832,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 96,
+        "door": 4,
+        "x": 198.8,
+        "z": 12.6,
+        "tick": 8832,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 98,
+        "door": 4,
+        "x": 195,
+        "z": 13.05999990463257,
+        "tick": 9212,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 99,
+        "door": 3,
+        "x": 126,
+        "z": 12.6,
+        "tick": 9672,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 100,
+        "door": 3,
+        "x": 126.8,
+        "z": 12.6,
+        "tick": 9672,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 102,
+        "door": 7,
+        "x": 225,
+        "z": 16.99000009536743,
+        "tick": 10028,
+        "wave": 4,
+        "offscreen": true
+      },
+      {
+        "id": 103,
+        "door": 7,
+        "x": 228,
+        "z": 17.400000000000002,
+        "tick": 10512,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 104,
+        "door": 7,
+        "x": 228.8,
+        "z": 17.400000000000002,
+        "tick": 10512,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 106,
+        "door": 4,
+        "x": 198,
+        "z": 12.6,
+        "tick": 11215,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 107,
+        "door": 4,
+        "x": 198.8,
+        "z": 12.6,
+        "tick": 11215,
+        "wave": 3,
+        "offscreen": true
+      }
+    ],
+    "hatchCloseAndBreakEvents": [
+      {
+        "door": 2,
+        "warnedAt": 5000,
+        "remaining": 0,
+        "nextAt": 7039,
+        "switchId": 48,
+        "closedAt": 5719,
+        "hits": 0,
+        "hitAt": 7039,
+        "brokenAt": 7039,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 5,
+        "warnedAt": 5674,
+        "remaining": 0,
+        "nextAt": 7680,
+        "switchId": 49,
+        "closedAt": 6360,
+        "hits": 0,
+        "hitAt": 7680,
+        "brokenAt": 7680,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 3,
+        "warnedAt": 7095,
+        "remaining": 0,
+        "nextAt": 9134,
+        "switchId": 50,
+        "closedAt": 7814,
+        "hits": 0,
+        "hitAt": 9134,
+        "brokenAt": 9134,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 6,
+        "warnedAt": 8032,
+        "remaining": 0,
+        "nextAt": 10145,
+        "switchId": 51,
+        "closedAt": 8825,
+        "hits": 0,
+        "hitAt": 10145,
+        "brokenAt": 10145,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 4,
+        "warnedAt": 9092,
+        "remaining": 0,
+        "nextAt": 11124,
+        "switchId": 52,
+        "closedAt": 9804,
+        "hits": 0,
+        "hitAt": 11124,
+        "brokenAt": 11124,
+        "reopenRemaining": 0
+      },
+      {
+        "door": 7,
+        "warnedAt": 9908,
+        "remaining": 0,
+        "nextAt": 11757,
+        "switchId": 53,
+        "closedAt": 10617,
+        "hits": 4,
+        "hitAt": 11697
+      }
+    ],
+    "allDoorsClosedInvariant": "Existing waves invariant verifies no pressure candidates with all six service doors closed; with one broken hatch, only that door is a pressure candidate."
+  },
+  "mergedThreatAudit": {
+    "levelCount": 10,
+    "acceptanceFlags": [],
+    "l6Outcome": "complete",
+    "l6Flags": [],
+    "l6PassiveFlags": []
+  }
+}

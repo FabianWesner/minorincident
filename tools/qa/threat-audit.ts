@@ -16,6 +16,7 @@ import { readFile } from 'node:fs/promises';
 import type { L3SurvivalSeed } from './threat/l3SurvivalSeeds';
 import type { KitingReceipt } from './threat/kiting';
 import { provenance } from './accept/probe';
+import { l6Entries } from '../../src/data/l6';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
@@ -117,6 +118,24 @@ for (const level of selected) {
   if (level === 'L6' && (earlyStage?.error || !l6EarlyClose?.run?.completed))
     passiveFlags.push(`L6_EARLY_CLOSE_INCOMPLETE:${earlyStage?.error ?? l6EarlyClose?.run?.outcome ?? 'missing'}`);
   if (level === 'L6') {
+    const admissionFlags = (source: ReturnType<ThreatObserver['finish']> | null, label: string): string[] => {
+      const trace = source?.l6Admissions;
+      if (!trace) return [`${label}:MISSING_L6_ADMISSION_TRACE`];
+      const allowed = new Set(l6Entries.map(entry => entry.door)), out: string[] = [];
+      for (const spawn of trace.spawns) {
+        if (spawn.wave <= 2) {
+          if (spawn.door === 0 || spawn.door === 1) continue; // authored shelter breach
+          out.push(`${label}:ILLEGAL_L6_BREACH_DOOR_${spawn.door}_WAVE_${spawn.wave}`); continue;
+        }
+        if (!allowed.has(spawn.door)) out.push(`${label}:ILLEGAL_L6_ENTRY_DOOR_${spawn.door}_WAVE_${spawn.wave}`);
+        const hatch = trace.hatches.find(entry => entry.door === spawn.door);
+        if (hatch?.closedAt && spawn.tick >= hatch.closedAt && (!hatch.brokenAt || spawn.tick < hatch.brokenAt))
+          out.push(`${label}:SPAWN_THROUGH_CLOSED_L6_HATCH_${spawn.door}`);
+      }
+      return out;
+    };
+    passiveFlags.push(...admissionFlags(observation, 'skilled'));
+    passiveFlags.push(...admissionFlags(l6EarlyClose?.observation ?? null, 'early-close'));
     for (const row of l6EarlyClose?.observation?.phases ?? [])
       passiveFlags.push(...row.flags.map(flag => `early-close/${row.key}:${flag}`));
     for (const wave of l6EarlyClose?.observation?.waves ?? [])

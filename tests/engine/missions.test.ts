@@ -128,14 +128,21 @@ test('graph timing: parallel tasks join in any order; a timeout fires exactly at
 
 // N11: the L6 service gates have their own predicate (the group's waypoint, else the next open gate ahead of the leader).
 test('interactions: only the open L6 gate the group is heading for offers its prompt', async () => {
-  expect(l6.breach.firstCount).toBe(8);
-  expect(l6.breach.secondCount).toBeGreaterThanOrEqual(6);
-  expect(l6.breach.secondCount).toBeLessThanOrEqual(10);
-  expect(l6Entries.every(entry => entry.count === 2)).toBe(true);
-  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeGreaterThanOrEqual(2);
-  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeLessThanOrEqual(4);
+  expect(l6.breach.firstCount).toBe(4);
+  expect(l6.breach.secondCount).toBe(5);
+  expect(l6.infected).toEqual({ high: 33, low: 33 });
+  expect(l6.pressure.group).toBe(2);
+  expect(l6Entries.every(entry => entry.count === 1)).toBe(true);
+  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeGreaterThanOrEqual(1);
+  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeLessThanOrEqual(2);
   expect(l6.hatch.safeS + l6.hatch.hits * l6.hatch.hitS).toBeLessThan(30);
   expect(l6SpawnCandidates(2, 3, [2])).toContain(5);
+  expect(l6SpawnCandidates(0, 1, [])).toEqual([0]);
+  expect(l6SpawnCandidates(1, 2, [])).toEqual([1]);
+  expect(l6SpawnCandidates(0, 3, [])).not.toContain(0);
+  expect(l6SpawnCandidates(1, 3, [])).not.toContain(1);
+  expect(l6SpawnCandidates(2, 3, [])).not.toContain(8);
+  expect(l6SpawnCandidates(2, 3, [2, 3, 4, 5, 6, 7])).toEqual([]);
   expect(l6SpawnCandidates(2, 4, [2])).toEqual([]);
   const gates = [{ id: 1, x: 10, closedAt: 0 }, { id: 2, x: 30, closedAt: 0 }, { id: 3, x: 50, closedAt: 0 }];
   const state = (patch: Partial<NonNullable<Parameters<typeof isCurrentOpenL6Gate>[0]>> = {}) => ({ marker: 'l6-next', leaderX: 0, gates, ...patch });

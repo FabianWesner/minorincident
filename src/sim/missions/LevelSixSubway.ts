@@ -5,7 +5,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
 import { seatAnchor } from '../npc/seats';
 import { leaveSeat } from '../npc/MorningRoutines';
-import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines, l6HatchAlphas, l6SpawnCandidates, l6PressureExitDoor } from '../../data/l6';
+import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines, l6HatchAlphas, l6SpawnCandidates } from '../../data/l6';
 import { l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
@@ -18,6 +18,7 @@ const ticks = (s: number) => Math.round(s*60);
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
 export class LevelSixSubway {
   private readonly aroundCourier = new Map<number, Point>();
+  private readonly hatchBlockers = new Set<number>();
   constructor(private readonly mission: Mission) {
     for (const type of ['infected.attack', 'civilian.grabbed'] as const) mission.world.events.on(type, event => {
       if (event.type !== 'infected.attack' && event.type !== 'civilian.grabbed') return;
@@ -39,15 +40,35 @@ export class LevelSixSubway {
   private get s() { return this.mission.state.l6!; }
   prepare(): void {
     const w=this.w, rng=new Rng(w.seed,'l6-story'), start=w.tick;
+    for(const door of this.hatchBlockers)w.infected!.setInfectedBlocker(920_000+door,this.hatchWall(door),false);
+    this.hatchBlockers.clear();
     // The courier needs the authored floor boundary for physical/click routes.
     // Applying it to the shared crowd grid changes pursuit and strands the
     // retreat; keep the existing actor domain and its maintenance approaches.
     const nav = w.infected!.nav, previousMask = nav.mask;
-    // The metro's navOnly lane edges separated the side platforms from the
-    // tracks for crowd routing. They are not gates: infected must enter the
-    // connected tunnel floor unless the player closes an actual service gate.
-    const crowdWalls = nav.walls as import('../ai/NavGrid').Wall[];
-    for (let i=crowdWalls.length-1;i>=0;i--) if(crowdWalls[i].navOnly) crowdWalls.splice(i,1);
+    // Track-edge walls divide the side passages from the rail corridor. Cut
+    // only the six authored door apertures; infected routing and collision
+    // still see solid walls everywhere else.
+    const infectedWalls = nav.walls.map(wall=>({...wall}));
+    const apertures = l6Entries.map(entry => ({ x: l6Doors[entry.door].x, south: l6Doors[entry.door].z < l6.tunnel.z }));
+    for (let i=infectedWalls.length-1;i>=0;i--) {
+      const wall=infectedWalls[i]; if(!(wall as {navOnly?:boolean}).navOnly)continue;
+      const south=Math.abs(wall.z-12.35)<.5, north=Math.abs(wall.z-17.65)<.5;
+      const sideApertures=apertures.filter(a=>south&&a.south||north&&!a.south);
+      let segments:[number,number][]=[[wall.x-wall.halfX,wall.x+wall.halfX]];
+      for(const aperture of sideApertures){
+        const lo=aperture.x-1.6,hi=aperture.x+1.6;
+        segments=segments.flatMap(([a,b]):[number,number][]=>{
+          if(hi<=a||lo>=b)return [[a,b]];
+          const left:[number,number]=[a,Math.max(a,lo)],right:[number,number]=[Math.min(b,hi),b];
+          return [left,right].filter(([x0,x1])=>x1-x0>.2);
+        });
+      }
+      infectedWalls.splice(i,1,...segments.map(([a,b])=>({...wall,x:(a+b)/2,halfX:(b-a)/2})));
+    }
+    w.infected!.setInfectedWalls(infectedWalls);
+    const crowdWalls=nav.walls as import('../ai/NavGrid').Wall[];
+    for(let i=crowdWalls.length-1;i>=0;i--)if((crowdWalls[i] as {navOnly?:boolean}).navOnly)crowdWalls.splice(i,1);
     nav.rebake();
     // Subway exclusions are axis-aligned rectangles. Index their exact bounds
     // by x so every 20 cm steering sample checks only its neighbouring strips.
@@ -136,6 +157,15 @@ export class LevelSixSubway {
     this.say(this.s.survivors.find(r=>r.key==='rosa'||r.routine==='treat')!.id,l6InjuryLines.treatment);
     w.events.on('combat.attack',e=>{if(e.type==='combat.attack'&&e.sourceId===1&&e.actionId==='weapon.army-mg'&&w.tick-this.s.lastShot>=30){this.s.lastShot=w.tick;w.events.emit({type:'outbreak.distraction',tick:w.tick,id:500000+w.tick*64,kind:'gunfire',position:e.position,radius:30,until:w.tick+360});}});
   }
+  private hatchWall(door:number) {
+    const at=l6Doors[door];
+    return {x:at.x,y:1,z:at.z<l6.tunnel.z?11.8:18.2,halfX:1.55,halfY:1,halfZ:.18};
+  }
+  private setHatchBlocked(door:number,blocked:boolean):void {
+    const id=920_000+door,already=this.hatchBlockers.has(door);
+    if(blocked&&!already){this.w.infected!.setInfectedBlocker(id,this.hatchWall(door),true);this.hatchBlockers.add(door);}
+    else if(!blocked&&already){this.w.infected!.setInfectedBlocker(id,this.hatchWall(door),false);this.hatchBlockers.delete(door);}
+  }
   private say(id: number,text: string):void {const e=this.w.entities.get(id);if(e){this.s.say={id,text,at:this.w.tick,until:this.w.tick+ticks(4.5)};this.w.events.emit({type:'story.say',tick:this.w.tick,id,text,position:e.transform});}}
   private power():void {
     const d=this.w.districts!.districts[0];d.decay.lights=['shelter-camp','self',...(this.s.mainPower?['metro-main']:[]),...(this.s.emergency?['metro-emergency']:[])];
@@ -183,7 +213,7 @@ export class LevelSixSubway {
     }
   }
   private spawn(n:number,doors:number[],wave:number):number {
-    const w=this.w,ai=w.infected!,o=w.npcs!.civilians.outbreak!,player=w.entities.get(1)!.transform;let spawned=0;
+    const w=this.w,ai=w.infected!,o=w.npcs!.civilians.outbreak!;let spawned=0;
     // Saves from before the hold telemetry do not contain this optional ledger.
     this.s.spawnRefusals??={cap:0,offscreen:0,snap:0};
     this.s.spawnRefusals.reserved??=0;
@@ -212,19 +242,15 @@ export class LevelSixSubway {
       }
       const requested=doors[i%doors.length];
       const courierApproach=wave===1||wave===4||wave===2&&requested%2===0;
-      // A watched shelter doorway cannot pop an infected into view. Use a real
-      // tunnel access instead, rotating the alternatives so breach two retains
-      // at least two sources. Test the snapped pose, which is the actual spawn.
-      // Tunnel pressure can route to another live service mouth when the
-      // selected hatch is closed. Only the hatch's own announced arrivals
-      // (wave 4) must wait for that particular door to break open.
+      // Story breaches use only their shelter doors. Tunnel pressure can route
+      // to another live service mouth when its preferred hatch is closed; the
+      // named hatch arrival (wave 4) must wait for that particular door.
       const candidates=l6SpawnCandidates(requested,wave,(this.s.entries??[]).filter(e=>e.closedAt&&!e.brokenAt).map(e=>e.door));
       if(!candidates.length){this.s.spawnRefusals.hatch=(this.s.spawnRefusals.hatch??0)+1;continue;}
       // Both tunnel walls emit inward. The old fixed -Z offset put north-side arrivals in the unbuilt void.
-      const mouth=(index:number,breachOffset=20)=>{const original=index===8?{x:Math.min(l6PressureExitDoor.x,player.x+(wave===3?12:18)),z:l6PressureExitDoor.z}:l6Doors[index];
-        // Breach two falls back from the watched shelter doors to tunnel mouths.
-        // Keep the first corridor access near the tunnel entrance so its lead
-        // runner reaches the courier before the cohort is swallowed by the retreat.
+      const mouth=(index:number,breachOffset=20)=>{const original=l6Doors[index];
+        // Breach two enters through the watched shelter doors and approaches
+        // the corridor without appearing among the shelter residents.
         const base=wave===2&&index<2?{...original,z:-14}:original;
         const rank=wave===4?this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length%2:0;
         const inward=wave===4?1.4+rank*1.4:1.4;
@@ -375,7 +401,7 @@ export class LevelSixSubway {
     // Keep ordinary formation/combat steering until a body actually touches or
     // crosses an artificial lane edge. Collected walkers keep their return route.
     const side=e.transform.z-l6.tunnel.z;
-    const acrossLane=base.walls.some(w=>(w as {navOnly?:boolean}).navOnly&&Math.abs(e.transform.x-w.x)<w.halfX+radius&&(w.z-l6.tunnel.z)*side>0&&Math.abs(side)>Math.abs(w.z-l6.tunnel.z)-w.halfZ-radius);
+    const acrossLane=base.walls.some(w=>(w as {navOnly?:boolean}).navOnly&&Math.abs(e.transform.x-w.x)<w.halfX+radius&&(w.z-l6.tunnel.z)*side>0&&Math.abs(side)>1.5);
     if(!r.collected&&!r.rejoined&&!acrossLane)return base;
     const floor=base.forPlayer(radius);
     // Maintenance rooms extend beyond the courier floor; preserve their NPC route.
@@ -464,7 +490,7 @@ export class LevelSixSubway {
     if(!s.secondBang&&t>=s.breach2At-120){s.secondBang=true;this.bang(true);}
     if(s.phase==='shelter'&&t>=s.breach1At)this.breach(false);
     if(s.phase==='first'&&t>=s.breach2At)this.breach(true);
-    if(s.arrivals && t>=s.arrivals.nextAt){const a=s.arrivals;if(this.spawn(1,[a.door++%2],2)){a.remaining--;a.nextAt=t+ticks(.75);}else a.nextAt=t+15;if(!a.remaining)delete s.arrivals;}
+    if(s.arrivals && t>=s.arrivals.nextAt){const a=s.arrivals;if(this.spawn(1,[a.door++%2],2)){a.remaining--;a.nextAt=t+ticks(1.5);}else a.nextAt=t+15;if(!a.remaining)delete s.arrivals;}
     if(s.phase==='fails'&&(t>=s.breach2At+900||s.survivors.filter(r=>r.status==='turned'||r.status==='dead').length>=3))this.abandon();
     // A watched doorway can refuse part of the opening cohort. Keep trying
     // until its eight arrivals have reached a valid off-screen entrance.
@@ -476,7 +502,7 @@ export class LevelSixSubway {
     // A hatch closed before the retreat also shuts off fallback breach spawns.
     for(const entry of s.entries??[]){
       const door=l6Doors[entry.door],sw=entry.switchId===undefined?undefined:w.entities.get(entry.switchId);
-      if(sw?.interactable&&!entry.closedAt&&!entry.brokenAt&&sw.interactable.completed){entry.closedAt=t;entry.hits=l6.hatch.hits;entry.nextAt=t+ticks(l6.hatch.safeS);w.events.emit({type:'barricade.sound',tick:t,sourceId:sw.id,position:{x:door.x,y:1.2,z:door.z},phase:'brace',hp:l6.hatch.hits,maxHp:l6.hatch.hits});}
+      if(sw?.interactable&&!entry.closedAt&&!entry.brokenAt&&sw.interactable.completed){entry.closedAt=t;entry.hits=l6.hatch.hits;entry.nextAt=t+ticks(l6.hatch.safeS);this.setHatchBlocked(entry.door,true);w.events.emit({type:'barricade.sound',tick:t,sourceId:sw.id,position:{x:door.x,y:1.2,z:door.z},phase:'brace',hp:l6.hatch.hits,maxHp:l6.hatch.hits});}
       if(sw?.interactable){sw.interactable.enabled=!entry.closedAt&&!entry.brokenAt;sw.interactable.label=entry.brokenAt?'Hatch broken':entry.closedAt?'Hatch closed':'Close the hatch';}
     }
     if(s.phase!=='retreat'&&s.phase!=='exit')return;
@@ -524,11 +550,10 @@ export class LevelSixSubway {
           w.events.emit({type:'barricade.sound',tick:t,sourceId:sw?.id??0,position:{x:door.x,y:1.2,z:door.z},phase:entry.hits>0?'hit':'break',hp:Math.max(0,entry.hits),maxHp:l6.hatch.hits});
           if(entry.hits<=0){
             entry.brokenAt=t;
-            // A hatch reopening far behind the retreating column cannot add
-            // pressure to the encounter; avoid admitting a cohort after its
-            // route is already safely past the Northgate approach.
-            const passed=(s.phase==='retreat'||s.phase==='exit')&&door.x<s.leaderX-40;
-            entry.reopenRemaining=entry.remaining===0&&!passed?1:0;
+            this.setHatchBlocked(entry.door,false);
+            // The authored one-member hatch quota is not duplicated on break;
+            // recurring two-member pressure can use the reopened door instead.
+            entry.reopenRemaining=0;
             entry.remaining=Math.max(entry.remaining,entry.reopenRemaining);
             entry.nextAt=t;w.events.emit({type:'l6.hatch-broken',tick:t,door:entry.door});
           }
@@ -538,14 +563,16 @@ export class LevelSixSubway {
     }
     if(t>=s.nextWave){
       s.nextWave=t+ticks(l6.pressure.intervalS);
-      const pressureDoors=[...l6Doors.map((d,i)=>({d,i})),{d:{x:Math.min(l6PressureExitDoor.x,p.x+18),z:l6PressureExitDoor.z},i:8}];
-      const aheadM=s.phase==='exit'?8:l6.pressure.aheadM;
-      const ahead=pressureDoors.filter(({d,i})=>i>1&&d.x>=s.leaderX+aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
-      const fallback=pressureDoors.filter(({i})=>i>1).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
-      // Replenishing pressure comes from ahead when possible. Sending every
-      // other cohort behind a same-speed retreating group created safe gaps;
-      // the Northgate mouth becomes the ahead source at the final platform.
-      const source=ahead??fallback;
+      const closed=(s.entries??[]).filter(e=>e.closedAt&&!e.brokenAt).map(e=>e.door);
+      const open=(s.entries??[]).map(e=>e.door).filter(door=>!closed.includes(door));
+      const serviceDoors=open.map(i=>({d:l6Doors[i],i}));
+      const ahead=serviceDoors.filter(({d})=>d.x>=tail+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x);
+      const behind=serviceDoors.filter(({d})=>d.x<=tail-l6.pressure.behindM).sort((a,b)=>b.d.x-a.d.x);
+      // Alternate pressure along both directions of the sealed corridor.
+      // Closed service hatches leave no source; a broken hatch rejoins the pool.
+      const ordinal=this.s.spawnLog.filter(row=>row.wave===3).length/l6.pressure.group;
+      const preferred=ordinal%2===0?ahead:behind, other=ordinal%2===0?behind:ahead;
+      const source=preferred[0]??other[0]??serviceDoors.sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
       const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
       if(sources.length){const admitted=this.spawn(sources.length,sources,3);if(admitted<sources.length)s.nextWave=t+ticks(5);}
     }
@@ -562,7 +589,7 @@ export class LevelSixSubway {
       const near=distance(p,LevelSixSubway.gateWait(gate.x))<1.7||!!gate.requested&&p.x>gate.x+.6&&p.x<gate.x+3.4&&Math.abs(p.z-15)<2.6;
       e.interactable!.label=gate.closedAt?'Brace service gate':'Close service gate';e.interactable!.enabled=false;
       if(gate.closedAt&&near&&w.inputFrame.interact)w.barricades!.braceServiceGate(gate.id);
-      if(!gate.closedAt&&crossed&&near&&(gate.hold>0||gate.requested||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
+      if(!gate.closedAt&&crossed&&near&&(gate.hold>0||gate.requested||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60&&w.npcs!.companion.insideBeforeClosing({x:gate.x,z:15},{x:gate.x+2,z:15})){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*l6.pressure.group*4));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
     }
     // QA 10-21 #87: once the walking column (its healthy tail, #83) is through a gate, a death restarts there with the
     // surviving group (as L7's corridor checkpoints do), not at the shelter with the whole retreat to replay. A healthy

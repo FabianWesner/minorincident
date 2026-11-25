@@ -9,7 +9,7 @@ export const threatSteps: Record<RunnerLevel, Record<string, string>> = {
   L3: { defend: 'combat; L3-03' },
   L4: { hold: 'combat; L4-07' },
   L5: { look: 'combat; L5-05' },
-  L6: { stop: 'combat; L6-05' },
+  L6: { stop: 'combat; L6-05', retreat: 'rail pressure; L6-07' },
   L7: { corridor: 'combat; L7-05' },
   L8: { escape: 'breach combat; L8-06' },
   L9: {}, // Driving hazard rows are not combat phases and cannot use attacks/min.
@@ -17,7 +17,7 @@ export const threatSteps: Record<RunnerLevel, Record<string, string>> = {
 };
 
 const threatPhases: Record<RunnerLevel, readonly string[]> = {
-  L1: ['spread'], L2: ['collapse', 'escape'], L3: [], L4: [], L5: [], L6: [], L7: [], L8: [], L9: [], L10: [],
+  L1: ['spread'], L2: ['collapse', 'escape'], L3: [], L4: [], L5: [], L6: ['retreat'], L7: [], L8: [], L9: [], L10: [],
 };
 
 export interface Phase { key: string; label: string; threat: boolean }
