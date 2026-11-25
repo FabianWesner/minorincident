@@ -25,6 +25,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 - A temporary LOD trace identified that density jump: at frame 30 the corn block centered at (565, 42) changes from LOD1 to LOD0 at 5.81 m. This is a visible tier pop, independent of the earlier isolated bend comparison, and fails the no-popping criterion. The trace was removed. The HIGH LOD0 and LOD1 authored grids have different stalk counts and positions, so a tier transition needs a visual solution and performance check.
 - A fresh exclusive full-route L10 receipt was attempted but cancelled after more than three minutes waiting for quiet admission while other jobs used the machine; it produced no new measurement.
 
+- A matched-root LOD1 prototype reused LOD0 plant positions and simplified each stalk to fit 1,358 triangles within the 1,500 cap. Three leaf simplifications were visually inspected in `/private/tmp/s235-matched-lod{,2,3}`. The final prototype reduced the layout mismatch but retained a conspicuous density/shape jump and degraded the LOW leaves, so the generator and assets were restored. A satisfactory transition must preserve leaf silhouettes as well as stalk roots, within the performance budget.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
