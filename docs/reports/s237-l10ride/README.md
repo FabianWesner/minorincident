@@ -33,3 +33,7 @@ HIGH then LOW were captured with the native game camera at zoom 1 using the dev 
 2. Make the underpass and hospital readable and recapture all four set pieces on HIGH and LOW during native route variations.
 3. Reconcile the L10 passive threat audit with the required combat-gated roadblocks, then obtain a zero-flag all-level receipt.
 4. Re-run the full threat audit within the reservation limit after resolving its L10 passive coverage path.
+
+## Hospital trigger investigation
+
+The opening trigger is centered at (3500, 50), away from the road at z=95. A trial moving the trigger to within 32 m of (3502, 95) made the native probe report the tent opening on both tiers. LOW still completed in 1539.1 s, but HIGH reached the 2100 s budget at the release objective with 44 deaths. The trial was reverted because it destabilized the full route; the staged figures also remained unverified. The next fix needs to preserve the native route while making the hospital visible and opening it from the road.
