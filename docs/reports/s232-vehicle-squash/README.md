@@ -70,3 +70,5 @@
 ## Open acceptance
 
 - Listen to the sound mix in the game to assess its subjective clarity. The bike bump is measured in the native motion samples, although it remains subtle in stills.
+
+- Merged main and reran the full campaign gate after removing the physics impulse: exit 1. L9 HIGH passed; L9 LOW still fails `driving/hull-ground/681` (15 frames, 0 contacts, 18.3 cm lift). The sampled actor is a living sprinter switching between shamble and sprint near the APC at frames 7186–7200, rather than a measurement of the car hull itself. The remaining cases completed; inspect the generated batch receipts for their individual results. This supersedes the earlier assumption that the car impulse alone caused the failure. Fresh bump capture and vehicle-motion gate remain open.
