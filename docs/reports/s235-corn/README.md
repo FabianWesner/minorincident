@@ -16,6 +16,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - The capture now records the corgi’s position and resolved speed on each walking frame and fails if it never moves. All four HIGH/LOW and zoom runs passed without browser errors (`/private/tmp/s235-corgi-velocity`); for HIGH zoom 1, the dog traveled from x=553.735 to 554.856 and reached 3.61 m/s. The shader uses companion velocity as a fallback when its general motion record is absent. The HIGH and LOW close frames were opened: corn is present around both characters, though the dark overlapping geometry still makes smoothness difficult to judge.
 
+- On `9a3dfb1c`, a headless WebGPU diagnostic repeated all four capture cases and recorded a moving corgi with no browser errors (`/private/tmp/s235-corgi-webgpu`). The HIGH and LOW close frames were opened and show the same dense and sparse crop respectively. This establishes backend rendering, not the required manual WebGPU or temporal review.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
