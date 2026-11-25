@@ -33,7 +33,17 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
     const end = await session.page.evaluate(() => { const e = window.__SS__!.getEntity(1)!; return { ...e.transform, velocity: e.survivor?.velocity, motion: e.motion?.velocity, locomotion: e.locomotion }; });
     if (!setup.dog || !dogFrames.some(dog => dog.speed > .1)) throw Error('Corgi did not follow through corn');
     if (Math.hypot(end.x - 555, end.z - 42) < .2) throw Error('Courier did not move');
-    await session.page.evaluate(async zoom => { const a = window.__SS__!; a.input.clear(); a.camera.follow(); a.camera.zoom(zoom); await a.step(120); a.input.set({ move: { x: 1, z: 0 } }); await a.step(5); }, zoom);
+    await session.page.evaluate(async zoom => { const a = window.__SS__!; a.input.clear(); a.camera.follow(); a.camera.zoom(zoom); await a.step(120); a.input.set({ move: { x: 1, z: 0 } }); }, zoom);
+    const followFrames: { frame: number; x: number; z: number; speed: number }[] = [];
+    for (const frame of [5, 10, 15, 20, 25, 30, 35, 40, 45]) {
+      await session.page.evaluate(async () => { await window.__SS__!.step(5); });
+      followFrames.push(await session.page.evaluate(({ id, frame }) => {
+        const dog = window.__SS__!.getEntity(id!)!, v = dog.motion?.velocity ?? dog.companion?.velocity;
+        return { frame, x: dog.transform.x, z: dog.transform.z, speed: Math.hypot(v?.x ?? 0, v?.z ?? 0) };
+      }, { id: setup.dog, frame }));
+      await session.screenshot(`${out}/${tier}-zoom-${zoom}-follow-${frame}.png`);
+    }
+    if (!followFrames.some(dog => dog.speed > .1)) throw Error('Corgi did not follow at game-camera zoom');
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
     await session.page.evaluate(() => {
       const a = window.__SS__!, p = a.getEntity(1)!.transform;
@@ -44,7 +54,7 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
       await session.page.evaluate(async () => { const a = window.__SS__!; await a.step(10); a.settings.set({ timeOfDay: 'L1' }); });
       await session.screenshot(`${out}/${tier}-zoom-${zoom}-stop-${frame}.png`);
     }
-    writeJson(`${out}/${tier}-zoom-${zoom}.json`, { ...setup, end, dogFrames, errors: session.errors });
+    writeJson(`${out}/${tier}-zoom-${zoom}.json`, { ...setup, end, dogFrames, followFrames, errors: session.errors });
     if (session.errors.length) throw new Error(session.errors.join('\n'));
     console.log(`${tier} zoom ${zoom}: ${JSON.stringify(setup)}`);
   } finally { await session.close(); stopServer(); }
