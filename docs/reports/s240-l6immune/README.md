@@ -24,6 +24,8 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - [Pointer distance matrix](pointer-matrix.json): high tier, exit and tunnel, front-facing armored actor, protected courier, stepped simulation with tracked mouse. Axe starts at 1/2 m; each firearm starts at 2/8 m. All 16 cases downed the actor. Exit cases preceded a fixture checkpoint error during the tunnel continuation; tunnel cases were repeated with a fresh level per case and finished with no page errors. Actor movement and shotgun knockback change distance during firing. The test does not recreate the reported crowd or shield-bearing riot.
 
+- [Two-heavy crowd probe](crowd-hits.json): high-tier headless WebGL2 at the exit, two spawned armored actors and three runners placed nearby, protected courier, tracked mouse MG fire with stepped simulation. Both armored actors reached 0 HP. During fire at the first, hits also landed on the second and two runners; the first received 35 hits and the second was then downed in 29 further hits. The before capture was inspected: two gray helmeted armored figures and two visible ordinary figures appear against the dark platform, with one additional runner outside the visible view. This controlled starting composition is not the PO save or the actual retreat step, and it does not establish why the original bars remained full. No page errors were recorded.
+
 ## Open
 
 - A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
