@@ -78,7 +78,7 @@ try {
       await snap('ride', 180);
       while (s.l2.phase !== 'arrived' && s.tick < s.l2.departAt + 1800) { await wait(20); s = await state(); }
       if (s.l2.phase !== 'arrived') throw new Error(`${tier}: truck did not reach arrival beat`);
-      for (const dt of [18, 54, 96, 150]) {
+      for (const dt of [18, 78, 150, 222, 300]) {
         const now = (await state()).tick, target = s.l2.arrivedAt + dt;
         if (now < target) await wait(target - now);
         await snap('arrival', dt);
