@@ -376,13 +376,18 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
             parts.dressingEntries.push({ id, batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius, foot: { cx: bounds.center.x, cz: bounds.center.z, hx: size.x / 2, hz: size.z / 2 }, height: size.y });
             parts.dressingBatches.push(batch); root.add(batch); freezeBatch(batch); return;
           }
-          const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
+          const corn = id === 'veg.corn-block';
+          const nearLoaded = corn && deps.low() ? true : initialLods.get(id)?.has('lod1') ?? true;
           const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
           const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => deps.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2', decay)));
           // L1 uses the shared vertex-attribute instancing path; live counts stay
           // unchanged while shader code no longer depends on placement capacity.
           const capacity = Math.max(refs.length, deps.instanceCapacity ?? refs.length);
-          const hero = new InstancedGroup(prototypes[0], refs.slice(), capacity), near = new InstancedGroup(prototypes[0], refs.slice(), capacity), far = new InstancedGroup(prototypes[1], refs.slice(), capacity);
+          // Corn keeps one visible tier per quality; make it resident before the
+          // first draw so a late placeholder replacement cannot pop an entire field.
+          const cornHero = corn && !deps.low();
+          const heroPrototype = cornHero ? await deps.registry.asset(id, power === 'true', 'lod0', decay) : prototypes[0];
+          const hero = new InstancedGroup(heroPrototype, refs.slice(), capacity), near = new InstancedGroup(prototypes[0], refs.slice(), capacity), far = new InstancedGroup(prototypes[1], refs.slice(), capacity);
           // Distant low-tier props keep their shaded production art without a shadow draw.
           if (deps.low()) far.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
           // Phone tier: a building heavier than 30k triangles per placement would be drawn twice (view + shadow) for little shade.
@@ -395,7 +400,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
             batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') parts.windows.push(o); });
           }
           const footBox = new Box3().setFromObject(prototypes[0]), dimensions = footBox.getSize(new Vector3()), footCenter = footBox.getCenter(new Vector3());
-          parts.lodBatches.push({ foot: { cx: footCenter.x, cz: footCenter.z, hx: dimensions.x / 2, hz: dimensions.z / 2 }, hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+          parts.lodBatches.push({ foot: { cx: footCenter.x, cz: footCenter.z, hx: dimensions.x / 2, hz: dimensions.z / 2 }, hero, near, far, refs, id, decay, lit: power === 'true', loaded: cornHero, nearLoaded, farLoaded, heroShown: cornHero ? 'lod0' : nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           if (linedBuildings(id)) { const liner = interiorLiner(id, refs, deps.materials); root.add(liner.mesh); parts.ownedGeometry.push(liner.geometry); }
         }),
       );

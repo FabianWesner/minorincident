@@ -448,9 +448,9 @@ export class DistrictView extends Group {
       }
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       let band = this.low
-        ? (entry.id === 'veg.corn-block' ? distance > 45 ? 'lod2' : 'lod1' : entry.id === 'prop.sandbag-pallet' ? distance > 32 ? 'lod2' : 'lod1' : distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1')
-        : pickLod(detailDistance, entry.bands[index], policy);
-      if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
+        ? (entry.id === 'veg.corn-block' ? 'lod1' : entry.id === 'prop.sandbag-pallet' ? distance > 32 ? 'lod2' : 'lod1' : distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1')
+        : entry.id === 'veg.corn-block' ? 'lod0' : pickLod(detailDistance, entry.bands[index], policy);
+      if (!this.low && entry.id !== 'veg.corn-block' && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
         const extent = Math.max(size.x * ref.scale.x, size.y * ref.scale.y, size.z * ref.scale.z);
         this.viewPoint.copy(this.bounds.center).applyMatrix4(view.lodCamera.matrixWorldInverse);
