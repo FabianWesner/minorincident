@@ -862,5 +862,41 @@
         "offscreen": true
       }
     ]
+  },
+  "l8BaselineComparison": {
+    "revision": "68892f1f6230c09a9e3d58a6a8190e3a5197672e",
+    "method": "Native L8 seed 1 from archived base revision; L8 receipt written before wrapper failed to read Git provenance from archive.",
+    "baseOutcome": "complete",
+    "currentOutcome": "complete",
+    "baseSkilledFlags": [
+      "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS",
+      "step/escape:SLOW_FOLLOWER:389",
+      "step/escape:SLOW_FOLLOWER:394",
+      "step/escape:SLOW_FOLLOWER:374",
+      "step/escape:SLOW_FOLLOWER:384",
+      "step/escape:SLOW_FOLLOWER:378",
+      "phase/breached:SLOW_FOLLOWER:389",
+      "phase/breached:SLOW_FOLLOWER:394",
+      "phase/breached:SLOW_FOLLOWER:374",
+      "phase/breached:SLOW_FOLLOWER:384",
+      "phase/breached:SLOW_FOLLOWER:378",
+      "wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+    ],
+    "currentSkilledFlags": [
+      "step/escape:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS",
+      "step/escape:SLOW_FOLLOWER:389",
+      "step/escape:SLOW_FOLLOWER:394",
+      "step/escape:SLOW_FOLLOWER:374",
+      "step/escape:SLOW_FOLLOWER:384",
+      "step/escape:SLOW_FOLLOWER:378",
+      "phase/breached:SLOW_FOLLOWER:389",
+      "phase/breached:SLOW_FOLLOWER:394",
+      "phase/breached:SLOW_FOLLOWER:374",
+      "phase/breached:SLOW_FOLLOWER:384",
+      "phase/breached:SLOW_FOLLOWER:378",
+      "wave/tunnel-breach:WAVE_FIRST_ATTACK_OVER_20_SECONDS"
+    ],
+    "basePassiveFlags": [],
+    "currentPassiveFlags": []
   }
 }
