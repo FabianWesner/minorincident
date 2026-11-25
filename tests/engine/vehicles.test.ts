@@ -108,6 +108,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9BusTelegraphAndWreck();
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
+  await vehicleRunOver();
   await l9ThrowerUsesRoadObstacle();
   await l9CheckpointLanes();
   await l9BayAndHatch();
@@ -207,6 +208,25 @@ async function l9InterruptedBoarding(): Promise<void> {
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
+}
+
+async function vehicleRunOver(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('combat-arena', 1);
+  try {
+    const player = world.entities.get(1)!;
+    const targetId = world.spawnDummy('infected.dummy', { x: player.transform.x, z: player.transform.z }, { hp: 100 });
+    const target = world.entities.get(targetId)!;
+    const carId = world.vehicles!.spawn('vehicle.sedan', { x: target.transform.x, z: target.transform.z });
+    const car = world.vehicles!.cars.get(carId)!;
+    Object.assign(car.entity.transform, { yaw: 0 });
+    car.entity.vehicle!.driver = 1; car.physics.speed = 15;
+    car.physics.intent.throttle = 1; car.physics.intent.brake = false;
+    (world.vehicles as unknown as { infected: (vehicle: typeof car) => void }).infected(car);
+    expect(target.health.current, 'driving-speed contact kills a regular infected').toBe(0);
+    expect(target.squashed && target.corpse, 'the run-over leaves a persistent squashed corpse').toBe(true);
+    expect(world.events.events().some(e => e.type === 'vehicle.infected-hit' && e.targetId === targetId && e.runOver), 'the audio event distinguishes a wheel pass').toBe(true);
+    expect(target.combat?.reaction?.groundDeath, 'the run-over skips a launch ragdoll').toBe(true);
+  } finally { world.dispose(); }
 }
 
 async function l9ThrowerUsesRoadObstacle(): Promise<void> {

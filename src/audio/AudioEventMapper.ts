@@ -52,6 +52,7 @@ export const animalVoice = (archetype?: string): string | undefined => {
 const fleshLike: Record<string, string> = { knife: 'machete', katana: 'machete', 'fire-axe': 'machete', 'nail-bat': 'bat', shovel: 'crowbar', 'police-baton': 'bat' };
 /** Maps the real producer events and lab events through the same ordered cue path. */
 export class AudioEventMapper {
+    private vehicleHitAt = -Infinity;
     private ambienceDuckUntil = 0;
     private readonly corgiWarnAt = new Map<string, number>();
     private attackUntil = 0;
@@ -69,7 +70,7 @@ export class AudioEventMapper {
     /** The L1 arc left its calm phase. */
     markIncident(): void { this.incidentSeen = true; }
     /** A new level's events are bound: forget the previous level's rate-limit clocks. */
-    beginLevel(): void { this.corgiWarnAt.clear(); }
+    beginLevel(): void { this.corgiWarnAt.clear(); this.vehicleHitAt = -Infinity; }
     /** Level change or teardown: the music policy starts over (a pending ambience duck still expires in `advance`). */
     reset(): void { if (this.flameUntil) this.host.stopLoop(`flame:${this.flameSource}`); this.flameUntil = 0; this.external = null; this.incidentSeen = false; this.completed = false; this.attackUntil = 0; }
     /** Per service update: the combat duck of the ambience bus lasts 0.5 s, then it recovers. */
@@ -90,6 +91,13 @@ export class AudioEventMapper {
         if (event.type === 'weather.lightning') return; // Thunder follows the sim distance delay.
         if (!this.host.available())
             return;
+        if (event.type === 'vehicle.infected-hit') {
+            const now = this.host.context.currentTime;
+            if (now - this.vehicleHitAt < .09) return;
+            this.vehicleHitAt = now;
+            this.host.play(event.runOver ? 'vehicle.zombie-runover' : 'vehicle.zombie-hit', { position: event.position }, event.targetId);
+            return;
+        }
         const t = this.host.context.currentTime;
         const source = 'sourceId' in event ? event.sourceId : 'id' in event && typeof event.id === 'number' ? event.id : undefined;
         const entity = source === undefined ? undefined : this.host.world.entities.get(source);

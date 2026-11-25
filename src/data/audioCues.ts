@@ -237,6 +237,9 @@ for (const original of Object.values(audioCues)) {
     }
     audioVariationPools[original.id] = ids;
 }
+// Prepare the small dedicated bank up front so the first vehicle contact is audible.
+cue('vehicle.zombie-hit', 'impacts', 'noise', .5, 110, { category: 'vehicle-squash', initial: true, gain: .8, antiSpam: .09 });
+cue('vehicle.zombie-runover', 'impacts', 'noise', .65, 75, { category: 'vehicle-squash', initial: true, gain: .9, antiSpam: .09 });
 /** L1 v2 sound arc (lane H): calm layer, accident beats, chaos layer, fire-station interior. One sprite category. */
 const arc = { category: 'l1arc', rateSpread: 0.04 } as const;
 cue('l1.calm.chatter', 'ambience', 'chatter', 8, 260, { ...arc, loop: true, gain: 0.22, antiSpam: 0 });
@@ -317,6 +320,7 @@ export const eventCues = {
     'vehicle.exited': 'ui.click',
     'vehicle.exploded': 'explosion.boom',
     'vehicle.feedback': 'ui.tick',
+    'vehicle.infected-hit': 'vehicle.zombie-hit',
     'vehicle.grabbed': 'vehicle.grab',
     'vehicle.obstacle-broken': 'prop.break',
     'vehicle.recovering': 'ui.tick',

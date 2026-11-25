@@ -250,6 +250,17 @@ export class VehicleView extends Group {
       }
       record.parent.position.set(lerp(prev.x, p.x, alpha), lerp(prev.y, p.y, alpha), lerp(prev.z, p.z, alpha));
       record.parent.quaternion.copy(body.previousRotation).slerp(this.chassisRotation.copy(body.rotation), alpha);
+      // The squash reaction is presentation only: keep Rapier's hull grounded
+      // while the drawn chassis gives a brief, readable bump over the victim.
+      if (car.bumpAt !== undefined) {
+        const age = (this.world.tick + alpha - car.bumpAt) / 18;
+        const pitch = age >= 0 && age < 1 ? .08 * Math.sin(2 * Math.PI * age) : 0;
+        record.model.rotation.z = record.feel.restPitch + pitch;
+        if (age >= 0 && age < 1) {
+          const bump = Math.sin(Math.PI * age);
+          record.parent.position.y += .12 * bump;
+        }
+      }
       for (let i = 0; i < record.wheels.length; i++) {
         const index = i < 4 ? i : i - 2;
         const wheel = record.wheels[i], physics = body.wheels[index], previous = body.previousWheels[index];

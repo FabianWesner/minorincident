@@ -248,7 +248,15 @@ export class CourierGroundContacts {
           landed = previous >= 0 && p < previous;
           // Progress from the release phase: a stance fraction shifting under a walk/run blend must not stall the swing.
           u = landed ? 1 : Math.max(0, (p - swing.releaseP) / (1 - swing.releaseP));
-          if (style?.maxSwing && !landed) { u = Math.max(u, (this.time - swing.start) / style.maxSwing); if (u >= 1) { u = 1; landed = true; foot.hold = true; } }
+          if (style?.maxSwing && !landed) {
+            // When crowd displacement releases both feet, finish the older
+            // swing promptly so one foot can support the next step.
+            const bothAir = this.feet.every(f => !f.locked && f.swing);
+            const older = bothAir && this.feet.every(f => !f.swing || swing.start <= f.swing.start);
+            const limit = older ? Math.min(style.maxSwing, .15) : style.maxSwing;
+            u = Math.max(u, (this.time - swing.start) / limit);
+            if (u >= 1) { u = 1; landed = true; foot.hold = true; }
+          }
           // Land where the swing arrived (no touchdown jump); the stance holds that plant.
           if (!landed) {
             // Actor-space swing matching the stance velocity at toe-off and, when walking, at heel strike

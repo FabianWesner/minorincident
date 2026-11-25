@@ -290,6 +290,14 @@ export class BicycleView extends Group {
         gR -= cR; gF -= cF; pitch = solve(gR, gF);
         rig.root.position.y = gR + rR - xR * Math.sin(pitch) - rR * Math.cos(pitch); rig.lean.rotation.z = pitch;
       }
+      if (riding && b.motorbike && b.squashBumpAt !== undefined) {
+        const age = (this.world.tick + alpha - b.squashBumpAt) / 18;
+        if (age >= 0 && age < 1) {
+          const bump = Math.sin(Math.PI * age);
+          rig.root.position.y += .12 * bump;
+          rig.lean.rotation.z += .08 * Math.sin(2 * Math.PI * age);
+        }
+      }
       this.parkedPose = !riding && !fallen ? { x: t.x, y: t.y, z: t.z, yaw: t.yaw, steer: ride.steer, pedal: ride.pedal, speed: ride.speed, ground: this.world.districts, sampler: this.ground } : null;
     }
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.

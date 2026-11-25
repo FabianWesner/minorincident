@@ -3822,6 +3822,18 @@
       "source": "wet-0",
       "start": 0
     },
+    "vehicle.zombie-hit": {
+      "source": "inu-impactsplat03",
+      "start": 0,
+      "filter": "lowpass=f=2500,afade=t=out:st=0.36:d=0.14",
+      "level": -14
+    },
+    "vehicle.zombie-runover": {
+      "source": "inu-impactsplat07",
+      "start": 0,
+      "filter": "asetrate=36000,aresample=48000,lowpass=f=1400,afade=t=out:st=0.50:d=0.15",
+      "level": -11
+    },
     "corgi.warning": {
       "source": "dog",
       "start": 0

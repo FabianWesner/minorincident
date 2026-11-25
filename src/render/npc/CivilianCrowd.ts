@@ -107,6 +107,7 @@ class CivilianBatch extends Group {
   private bakedClip!: CrowdClip;
   private readonly hand = new Matrix4();
   private readonly gunDirection = new Vector3();
+  private readonly squashScale = new Vector3(1.16, .08, 1.16);
   private readonly carryRotation = new Quaternion();
   private readonly carryScale = new Vector3();
   private readonly carryDirection = new Vector3();
@@ -570,10 +571,11 @@ class CivilianBatch extends Group {
     // The baked walking hunch also reaches beyond the roots while approaching a
     // neighbour. Yield that upper-body pose before two otherwise clear feet meet.
     if (contact && !still && !heavy && !b.specialAttack && b.state !== 'dead') { layers.lean = -.15; layers.lurch = 0; }
-    const resting = b.state === 'dead' && !e.knockbackSlide ? corpseLayout(this.world).place(e) : presented;
-    const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (tick - b.deadAt - 8) / 52)) : 0;
-    if (b.state === 'dead') this.transform.makeRotationY(resting.yaw);
-    this.transform.setPosition(presented.x + (resting.x - presented.x) * settle, (presented.y - .7) * (1 - settle) + (b.state === 'dead' ? resting.y : presented.y - .7) * settle, presented.z + (resting.z - presented.z) * settle);
+    const resting = (b.state === 'dead' || e.squashed) && !e.knockbackSlide ? corpseLayout(this.world).place(e) : presented;
+    const settle = e.squashed ? 1 : b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (tick - b.deadAt - 8) / 52)) : 0;
+    if (b.state === 'dead' || e.squashed) this.transform.makeRotationY(resting.yaw);
+    this.transform.setPosition(presented.x + (resting.x - presented.x) * settle, (presented.y - .7) * (1 - settle) + (b.state === 'dead' || e.squashed ? resting.y : presented.y - .7) * settle, presented.z + (resting.z - presented.z) * settle);
+    if (e.squashed) this.transform.scale(this.squashScale);
     if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: this.transform.elements[12], y: this.transform.elements[13], z: this.transform.elements[14] });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;

@@ -21,6 +21,8 @@ export interface BicycleState {
   pedal: number; steer: number;
   /** Smoothed frame lean in radians; optional for older checkpoints. */
   lean?: number;
+  /** Last wheel run-over, for the short presentation bump. */
+  squashBumpAt?: number;
   /** Stand-to-mount timer in ticks; mounting re-arms only after the player has left the bicycle. */
   standTicks: number; armed: boolean; lockUntil: number;
   /**
@@ -61,6 +63,7 @@ export class Bicycle {
   private id = -1;
   private lastOutside: Vec2 = { x: 0, z: 0 };
   private navPose = '';
+  private readonly zombieHits = new Map<number, number>();
   constructor(private readonly world: SimWorld) {
     world.events.on('combat.hit', event => {
       if (event.type !== 'combat.hit' || event.targetId !== 1) return;
@@ -213,6 +216,19 @@ export class Bicycle {
       if (solid) { this.knockOff(bike, player); return frame; }
     }
     if (actual < Math.abs(b.speed) * .5) b.speed = Math.sign(b.speed) * actual;
+    if (b.motorbike && Math.abs(b.speed) > .25) {
+      for (const infected of this.world.entities.iterate()) {
+        if (!infected.infected || infected.health.current <= 0 || infected.corpse || infected.hidden || infected.infected.hidden || this.world.tick < (this.zombieHits.get(infected.id) ?? 0)) continue;
+        if (Math.hypot(infected.transform.x - player.transform.x, infected.transform.z - player.transform.z) > BUMP_RANGE) continue;
+        this.zombieHits.set(infected.id, this.world.tick + 60);
+        const resistant = ['infected.brute', 'infected.armored', 'infected.armoured-football', 'infected.riot', 'infected.elephant', 'infected.alpha', 'infected.mega-alpha'].includes(infected.archetype ?? ''), runOver = Math.abs(b.speed) >= 4 && !resistant;
+        const direction = { x: Math.cos(b.heading) * Math.sign(b.speed), z: Math.sin(b.heading) * Math.sign(b.speed) };
+        this.world.events.emit({ type: 'vehicle.infected-hit', tick: this.world.tick, sourceId: bike.id, targetId: infected.id, position: { ...infected.transform }, runOver });
+        if (runOver) b.squashBumpAt = this.world.tick;
+        this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: bike.archetype, sourceId: bike.id, targetId: infected.id, origin: bike.transform, direction, base: Math.max(1, Math.abs(b.speed) * 30), multiplier: 1, type: 'vehicle', knockback: runOver ? 0 : 1, stagger: .5, ...(runOver ? { permanent: true } : {}) });
+        if (runOver && infected.health.current <= 0) { infected.squashed = true; infected.corpse = true; infected.transform.y = (this.world.districts?.groundHeight(infected.transform.x, infected.transform.z) ?? 0) + .7; if (infected.combat?.reaction) infected.combat.reaction.groundDeath = true; }
+      }
+    }
     // Bicycle kinematics: the steering angle shrinks with speed (turn radius 1.6 m crawling, 6 m flat out), the heading changes by
     // speed / radius, so the bike never pivots on the spot; speed ramps (0 to 7 m/s in 1.5 s), brakes hard, coasts gently.
     const maxSpeed = b.motorbike ? speedMs * 1.25 : speedMs;
