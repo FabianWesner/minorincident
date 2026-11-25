@@ -109,3 +109,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Two further unchanged remote unit runs against the current source timed out at 244.2 s and 245.5 s (240 s budget); neither is a pass. The earlier completed remote unit pass predates subsequent gameplay changes.
 
 - A first-gate conditional western seal completed all six skilled routes and introduced no additional focused L6 flags; the seal occurred at ticks 6539–7227, after the leader reached x≈90–96. It was discarded because the western end remained open during the shelter-to-gate leg and checkpoint re-opening was not proven. The underlying requirement is still open.
+
+- A six-run experiment ranked eligible ahead/behind service doors by player proximity instead of tail proximity. It produced identical route metrics to the current source for all six runs and was discarded; it did not improve engagement.
