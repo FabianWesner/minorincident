@@ -123,3 +123,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - After the checkpoint fix, the full remote unit command and its unchanged retry again timed out at 240.8 s and 241.0 s under runner load. No completed unit result is available for this source.
 
 - Native L6 observer-grid check: `DistrictNavigation` has no subdistrict grids in this layout, so its hatch and exit queries use the infected-only fallback grid. The eastern wall is blocked in that same grid; the observer is not silently querying the open human grid there.
+
+- A second all-closed native probe completed all six switch states through the mission update: each installed an infected blocker with eight hits; no arrivals occurred before door 2 broke at tick 1321, and two entered through door 2 at tick 1681. The fixture sets switch completion directly and holds the other bash timers, so it does not simulate the player walking to or operating each switch.

@@ -1104,5 +1104,70 @@
         "damageEvents": 37
       }
     ]
+  },
+  "switchControlledAllClosedProbe": {
+    "method": "six switch completion states applied through native update; only hatch 2 receives scheduled bashes, other timers held; player interaction navigation not simulated",
+    "start": 1,
+    "initialAdmissions": 0,
+    "closed": [
+      {
+        "door": 2,
+        "closedAt": 1,
+        "hits": 8,
+        "infectedBlocked": true
+      },
+      {
+        "door": 5,
+        "closedAt": 1,
+        "hits": 8,
+        "infectedBlocked": true
+      },
+      {
+        "door": 3,
+        "closedAt": 1,
+        "hits": 8,
+        "infectedBlocked": true
+      },
+      {
+        "door": 6,
+        "closedAt": 1,
+        "hits": 8,
+        "infectedBlocked": true
+      },
+      {
+        "door": 4,
+        "closedAt": 1,
+        "hits": 8,
+        "infectedBlocked": true
+      },
+      {
+        "door": 7,
+        "closedAt": 1,
+        "hits": 8,
+        "infectedBlocked": true
+      }
+    ],
+    "brokenAt": 1321,
+    "end": 1681,
+    "events": [
+      {
+        "id": 57,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 1681,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 58,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 1681,
+        "wave": 3,
+        "offscreen": true
+      }
+    ]
   }
 }
