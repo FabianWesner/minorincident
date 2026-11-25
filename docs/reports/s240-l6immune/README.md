@@ -26,6 +26,8 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - [Two-heavy crowd probe](crowd-hits.json): high-tier headless WebGL2 at the exit, two spawned armored actors and three runners placed nearby, protected courier, tracked mouse MG fire with stepped simulation. Both armored actors reached 0 HP. During fire at the first, hits also landed on the second and two runners; the first received 35 hits and the second was then downed in 29 further hits. The before capture was inspected: two gray helmeted armored figures and two visible ordinary figures appear against the dark platform, with one additional runner outside the visible view. This controlled starting composition is not the PO save or the actual retreat step, and it does not establish why the original bars remained full. No page errors were recorded.
 
+- [Riot pointer probe](riot-pointer.json): actual shielded 225 HP riot spawned in the L6 retreat step at the exit and tunnel, with protected courier and tracked mouse input; fresh level per case, actors allowed to move. Axe, handgun, shotgun and MG all downed it in both locations. Frontal MG hits begin at 2.52 HP and break the shield on hit six; handgun begins at 3.6 HP and breaks it on hit four; shotgun breaks it in one hit; axe deals full melee damage. These are controlled spawn/placement cases, not the PO save or a crowd replay. No page errors.
+
 ## Open
 
 - A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
