@@ -181,7 +181,12 @@ export class HealthBars extends Group {
       // The known L7 escort keeps its individual health UI through fence/wall
       // reveals. A static head ray otherwise erases bars above visible bodies.
       if (!evacuee && physics?.castRay(this.ray, Math.max(0, distance - .01), true, undefined, undefined, undefined, undefined, this.solidCollider)) continue;
-      if (!evacuee && occluded?.(this.center)) continue;
+      // The courier reveal can expose a close enemy through district geometry
+      // that still reports as opaque to the bar ray. Keep hit feedback for
+      // nearby heavies; the physical solid ray above still blocks real walls.
+      const closeHitHeavy = !!e.infected?.hitByPlayer && (e.infected.special === 'armor' || !!e.combat?.shield) &&
+        Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 2.5;
+      if (!evacuee && !closeHitHeavy && occluded?.(this.center)) continue;
       this.center.copy(this.point);
       this.center.x = x / width * 2 - 1;
       this.center.y = 1 - y / height * 2;
