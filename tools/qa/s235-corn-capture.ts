@@ -26,7 +26,7 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
     }
     const end = await session.page.evaluate(() => { const e = window.__SS__!.getEntity(1)!; return { ...e.transform, velocity: e.survivor?.velocity, motion: e.motion?.velocity, locomotion: e.locomotion }; });
     if (Math.hypot(end.x - 555, end.z - 42) < .2) throw Error('Courier did not move');
-    await session.page.evaluate(zoom => { const a = window.__SS__!; a.camera.follow(); a.camera.zoom(zoom); }, zoom);
+    await session.page.evaluate(async zoom => { const a = window.__SS__!; a.input.clear(); a.camera.follow(); a.camera.zoom(zoom); await a.step(120); a.input.set({ move: { x: 1, z: 0 } }); await a.step(5); }, zoom);
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
     await session.page.evaluate(() => {
       const a = window.__SS__!, p = a.getEntity(1)!.transform;
