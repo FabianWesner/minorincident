@@ -72,7 +72,7 @@ export function cornMaterial(materials: Materials) {
     const bend = radius.smoothstep(.12, 1.2).oneMinus().mul(weight).mul(directions[i].y.smoothstep(0, 1)).mul(.5);
     const awayX = delta.x.div(radius.max(.1)), awayZ = delta.y.div(radius.max(.1));
     const forward = directions[i];
-    push = push.add(vec3(awayX.sub(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.sub(forward.z.mul(.35)).mul(bend)));
+    push = push.add(vec3(awayX.add(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.add(forward.z.mul(.35)).mul(bend)));
   }
   const wind = sin(positionWorld.x.mul(.7).add(positionWorld.z.mul(.4)).add(materials.wind.mul(1.5))).mul(.09).mul(weight);
   material.positionNode = positionLocal.add(push).add(vec3(wind, 0, wind.mul(.4)));
