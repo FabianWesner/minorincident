@@ -115,3 +115,5 @@ A further scaled tent trial rotated the asset’s +X entrance toward the follow 
 A local 1.5× camera framing trial near the hospital, with the first tent moved to z=82, still produced only a cropped tent wall in the staged HIGH frame. Both the camera and placement trial were reverted; the existing corridor and Mega reveal framing remain in place.
 
 Another unchanged remote unit retry acquired a slot after 552 s and exited 124 at 241.6 s. It reported a save-progression case as failed after 36.7 s, but the suite budget terminated the run before failure details were printed. The same case passed in the preceding attempt. The full current-source remote suite remains unverified.
+
+A focused local `tests/engine/save-progression.test.ts` run passed 6/6 in 24.5 s. A further unchanged remote full-suite retry remained queued for more than 12 minutes while both slots were occupied and was cancelled after the original timebox; no remote tests started and the full remote result remains open.
