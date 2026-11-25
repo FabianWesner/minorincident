@@ -111,3 +111,5 @@ Three sequential local shards completed in 191.8 s, 188.1 s and 336.5 s; their m
 A later unchanged remote unit retry acquired a slot after 615 s and again exceeded the 240 s suite budget (exit 124, 243.4 s). The two individual tests that had appeared as failed during the preceding timed-out run passed in this retry, but the suite did not finish, so current full remote unit validation remains open.
 
 A further scaled tent trial rotated the asset’s +X entrance toward the follow camera at (3499, 89). The staged HIGH frame still showed only a cropped canvas edge; it did not establish a readable entrance or figures. The placement was reverted.
+
+A local 1.5× camera framing trial near the hospital, with the first tent moved to z=82, still produced only a cropped tent wall in the staged HIGH frame. Both the camera and placement trial were reverted; the existing corridor and Mega reveal framing remain in place.
