@@ -41,6 +41,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 - The updated shader was captured at both quality settings and zooms on WebGL2 (`/private/tmp/s235-soft-turn`) and in a headless WebGPU diagnostic (`/private/tmp/s235-soft-turn-webgpu`), without browser errors. Close HIGH and LOW turn frames were opened; corn remains drawn around the courier and corgi. Manual WebGPU and temporal visual acceptance remain open.
 - An exclusive paired HIGH WebGL2 field run compared the previous shader and softened direction under the same reservation: before p95 7.1 ms, p99 8.7 ms, max 12.0 ms (1,078 samples); after p95 6.2 ms, p99 8.0 ms, max 11.3 ms (1,160 samples). Both covered x=555–565.17 and reported no errors. One pair does not characterize timing variability.
 
+- A temporary HIGH WebGL2 tick-level recovery probe sampled the courier uniform for 100 ticks after input release (`recovery-probe.json`). The courier stopped at tick 5; its tracked position remained fixed and its influence decreased monotonically from 0.9833 to zero over 60 ticks. The shader applies smoothstep to that influence. The HIGH stop frames at ticks 10, 60 and 90 were opened (`/private/tmp/s235-recovery`): crop remains drawn, while the corgi continues to move. This confirms the courier uniform timing for this stop, not individual GPU stalk motion or all movers. The probe instrumentation was removed.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
