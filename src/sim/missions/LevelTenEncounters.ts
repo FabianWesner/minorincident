@@ -220,7 +220,8 @@ export class LevelTenEncounters {
     // emergence hold keeps their silhouettes at the entrance until the
     // hospital beat, then returns them to ordinary pursuit and combat.
     const hospitalApproach = w.entities.get(1);
-    if (mission.state.states['l10-finale-beat-8'] && this.state.hospitalOpenAt !== undefined && this.state.hospitalStageReleaseAt === undefined) this.state.hospitalStageReleaseAt = w.tick + 90;
+    if (mission.state.states['l10-finale-beat-8'] && this.state.hospitalOpenAt !== undefined && this.state.hospitalStageReleaseAt === undefined &&
+        hospitalApproach && hospitalApproach.transform.x > 3512) this.state.hospitalStageReleaseAt = w.tick + 90;
     for (const [i, z] of [49, 53].entries()) {
       const key = `setpiece-field-hospital:stage:${i}:0`, at = { x: 3502.5, z };
       let id = this.state.spawned[key];
@@ -234,7 +235,7 @@ export class LevelTenEncounters {
       const actor = id === undefined ? undefined : w.entities.get(id);
       if (!actor?.emerging) continue;
       if (actor.health.current <= 0) { actor.emerging = undefined; continue; }
-      if ((this.state.hospitalStageReleaseAt !== undefined && w.tick >= this.state.hospitalStageReleaseAt) || (hospitalApproach && hospitalApproach.transform.x > 3512)) {
+      if (this.state.hospitalStageReleaseAt !== undefined && w.tick >= this.state.hospitalStageReleaseAt) {
         actor.emerging = undefined;
         ai.pursueTarget(actor.id, 1);
       } else {
@@ -454,7 +455,7 @@ export class LevelTenEncounters {
       if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
           Math.hypot(player.transform.x - 3086, player.transform.z - 92) <= 15) this.state.billboardFallAt = w.tick;
       if (group.setPiece === 'field-hospital' && released.includes(group.id) && this.state.hospitalOpenAt === undefined &&
-          Math.hypot(player.transform.x - 3500, player.transform.z - 50) <= 16) this.state.hospitalOpenAt = w.tick;
+          Math.hypot(player.transform.x - 3502, player.transform.z - 95) <= 32) this.state.hospitalOpenAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
       // charge clock starts, hand off to the next cohort only when that wave
       // is empty; once charging, timed windows continue independently of it.

@@ -37,3 +37,5 @@ HIGH then LOW were captured with the native game camera at zoom 1 using the dev 
 ## Hospital trigger investigation
 
 The opening trigger is centered at (3500, 50), away from the road at z=95. A trial moving the trigger to within 32 m of (3502, 95) made the native probe report the tent opening on both tiers. LOW still completed in 1539.1 s, but HIGH reached the 2100 s budget at the release objective with 44 deaths. The trial was reverted because it destabilized the full route; the staged figures also remained unverified. The next fix needs to preserve the native route while making the hospital visible and opening it from the road.
+
+A subsequent change opens the tents from the road approach while holding staged figures until 90 ticks after the courier crosses x=3512. The HIGH and LOW native probes both completed with 4/4 recorded loops and unchanged hangar-to-gate times of 446.9 s and 551.5 s. Both recorded the tent opening; both still failed the in-frame figure check. Typecheck and lint passed. This establishes the trigger, while visual readability and the LOW timing remain open.
