@@ -882,8 +882,9 @@ export class LevelEightZoo {
     // taking its permanent tail slot. Long-tail slots can otherwise leave a
     // new joiner behind a gate while the courier has already moved on.
     if (this.breached) {
-      // Close ranks on the public route; arena holding positions remain authored below.
-      const forward = .9 + Math.floor(slot / 3) * .4;
+      // Bring the formation closer without squeezing successive rows into
+      // one another; arena holding positions remain authored below.
+      const forward = .9;
       goal.x += routeHeading.x * forward; goal.z += routeHeading.z * forward;
     }
     const plaza = this.mission.def.anchors['l8-route'];
