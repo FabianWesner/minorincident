@@ -681,6 +681,7 @@ export class LevelSixSubway {
     if(s.phase==='retreat'||s.phase==='exit') for(const r of s.survivors) if(r.status==='shelter') this.startWalking(r);
     if(s.waitFor?.kind==='fetch'||s.waitFor?.kind==='bring'){delete s.waitFor;s.waitFlipAt=0;}
     for(const e of s.entries??[]){if(e.warnedAt)e.warnedAt+=delta;if(e.nextAt)e.nextAt+=delta;if(e.closedAt)e.closedAt+=delta;if(e.hitAt)e.hitAt+=delta;if(e.brokenAt)e.brokenAt+=delta;}
+    for(const entry of l6Entries){const restored=s.entries?.find(e=>e.door===entry.door);this.setHatchBlocked(entry.door,!!restored?.closedAt&&!restored.brokenAt);}
     if(s.arrivals)s.arrivals.nextAt+=delta;
     if(s.alarm)s.alarm.until+=delta;
     for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;

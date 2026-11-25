@@ -269,6 +269,18 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   const w = await loadMissionLevel('L6', 1);
   try {
     const mission = w.missions!;
+    const hatch = mission.state.l6!.entries!.find(entry => entry.door === 2)!;
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35)).toBe(true);
+    w.entities.get(hatch.switchId!)!.interactable!.completed = true; w.update();
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'closing installs the infected blocker').toBe(false);
+    mission.checkpoint('abandon');
+    mission.state.l6!.phase = 'retreat'; hatch.warnedAt = w.tick; hatch.hits = 1; hatch.nextAt = w.tick + 1; w.update();
+    expect(hatch.brokenAt, 'the final bash breaks the hatch').toBeGreaterThan(0);
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'breaking removes the infected blocker').toBe(true);
+    mission.restore('abandon');
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'restoring a closed hatch reinstalls the blocker').toBe(false);
+    mission.restore('shelter');
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'restoring an open hatch removes the blocker').toBe(true);
     mission.completeObjective('shelter'); mission.completeObjective('stop'); w.update();
     const state = mission.state.l6!;
     expect(state.phase).toBe('retreat');
