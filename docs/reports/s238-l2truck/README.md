@@ -41,3 +41,9 @@ The seat-order capture after `0a30a920` shows at most one firefighter in the sit
 Per-rider capture telemetry shows two firefighters detouring 6–8 m from their assigned targets after interaction. Assigning the nearest flank improved the sampled departure only slightly (about 5.9 s) and obscured entries behind the engine, so it was reverted. The capture helper now records rider positions and uses boarding sample times after the interaction hold completes.
 
 Correction to the earlier timing review: the helper had placed the courier inside the interaction ring during the approach, and boarding started automatically before its scripted interaction. The helper now starts outside the ring and asserts boarding has not begun before input. A fresh HIGH capture reaches the ride at 213 ticks (3.55 s) after boarding starts. The character visible at the cab window still needs identification and clipping review; the full sequence has not passed visual acceptance.
+
+## Latest review (after `3f6fbd0f`)
+
+The contact sheet shows all 52 corrected captures, HIGH then LOW, at zoom 1 and 1.5. The authored roof remains closed through the ride and no seated rig protrudes. The boarding frames show the group approaching and clearing the scene; arrival frames show riders appearing beside the engine. The stills do not establish that each courier, corgi, and firefighter crosses the door without popping, so visual acceptance remains open.
+
+The current interaction test passed and the threat audit completed with 0 fail flags (779.6 s). The remote unit run timed out at 241.5 s after reporting two long-running test failures; its unchanged retry waited over ten minutes in the shared queue and was cancelled at the job time limit. A clean full unit result is still required. Typecheck and lint passed after the latest product code change.
