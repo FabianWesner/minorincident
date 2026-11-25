@@ -35,6 +35,8 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - [Native gate-210 trace](native-gate210.json): seed 1 high, ordinary complete bot, no mission skips or target edits. At tick 10520 the retreat checkpoint has an armored actor 163 at 232/240 HP in chase among nearby Alpha and runners. At ticks 10611 and 10616 the bot's MG hits that same ID for 14 each; at 10630 the shotgun downs it for the remaining 204. Actor and courier support heights are included. The route reaches the exit at tick 11381; it is a different playthrough from the PO's tick 29926 and does not establish the PO actors' identities.
 
+- [Recovery probe](recovery.json): controlled L6 exit-platform armored and riot actors were downed, allowed to recover naturally, then queried at the first get-up tick. The production ray returned the same actor ID and a direct MG damage application reduced armor 240 → 233 and riot 225 → 211 (the staggered shield is open). This checks the first recovery tick and identity, not a complete animation or physical weapon input. Downed actors have zero HP and are ineligible for their health bar; living get-up actors are not categorically rejected by the damage path.
+
 ## Open
 
 - A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
