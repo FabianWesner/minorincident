@@ -171,10 +171,16 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     Object.assign(player.transform, { x: 3, z: 0 }); w.spatial.set(1, 3, 0);
     w.physics.playerBody!.setTranslation(player.transform, true); followFrustum(w);
     // Announced breaches now outrank future hatches; recurring retreat filler must still reserve all six hatch arrivals.
-    state.phase = 'retreat'; delete state.arrivals;
+    state.phase = 'first'; state.arrivals = { remaining: 0, door: 0, nextAt: 0 };
+    for (const entry of state.entries!) {
+      entry.warnedAt = 1; entry.closedAt = 0; delete entry.brokenAt;
+      const door = l6Doors[entry.door];
+      w.infected!.setInfectedBlocker(920_000 + entry.door, { x: door.x, y: 1, z: door.z < 15 ? 11.8 : 18.2, halfX: 1.55, halfY: 1, halfZ: .18 }, false);
+    }
     const reserved = state.entries!.reduce((sum, entry) => sum + entry.remaining, 0);
     expect(c.spawn(60, [0, 1], 3), 'filler preserves every authored hatch slot').toBe(l6.infected[tier] - reserved);
     expect(c.spawn(1, [0, 1], 3)).toBe(0);
+    state.phase = 'retreat';
     for (const entry of state.entries!) {
       const door = l6Doors[entry.door];
       Object.assign(player.transform, { x: door.x - 24, z: 15 }); w.spatial.set(1, player.transform.x, 15);
