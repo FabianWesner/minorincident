@@ -15,7 +15,7 @@ Loop phase ticks are in the JSON receipt. Deaths preserve the encounter ledger, 
 
 ## Set-piece visibility
 
-I could not inspect current native-frame captures. The HIGH-then-LOW capture script is [s237-l10ride-captures.ts](../../../tools/qa/s237-l10ride-captures.ts) and targets the quarantine gate, billboard, underpass and field hospital at zoom 1. Two pool starts failed with `listen EPERM` on loopback ports 4329 and 4328. The legacy headless lock also failed its GPU guard because sandbox policy denies `ps`. No screenshots were produced; set-piece readability is unverified.
+HIGH then LOW were captured with the native game camera at zoom 1 using the dev server and headless browser pool. The capture is a teleported staging fixture, not a route replay. On both tiers the quarantine sign and figures are visible, though its upper text is clipped; the billboard is only partly in frame. The underpass reads as a dark empty road with its structure mostly outside the frame. The hospital frame shows road and a lamp, with no readable tents. These captures demonstrate the visibility work remains open. Reviewed sheets: [HIGH](captures/high/setpieces.jpg), [LOW](captures/low/setpieces.jpg).
 
 ## Validation
 
@@ -24,12 +24,12 @@ I could not inspect current native-frame captures. The HIGH-then-LOW capture scr
 - Targeted regression tests for L10 camera framing and save progression — 9/9 pass after fixing the story cadence and underpass wall restore regressions.
 - Full local `npm test` — pass, 105/105 tests across 27 files (the suite budget remains 148/150).
 - `npm run qa:threat` — final all-level run exceeded its 600s browser reservation and exited 124. The previous completed audit reported one L10 LOW passive flag, `UNOBSERVED_PASSIVE_CRITERION_STEP:hold`; its no-attack route stopped at the first combat roadblock. Zero flags are not verified.
-- Required remote `sh tools/remote/run.sh "$PWD" -- npm test` — unavailable: no healthy Hetzner runner is running or provisioned. The retry produced the same result.
+- Required remote `sh tools/remote/run.sh "$PWD" -- npm test` — pass: 104 passed, 1 skipped, 27 files, 220.3 s.
 - No test cases were added. The configured suite remains 148/150 cases (127 Vitest, 9 E2E, 12 browser invariants across 45 files).
 
 ## Open
 
 1. Reduce the LOW hangar-to-gate time by at least 11.5 seconds without increasing retries, and keep its story cadence within 45–75 seconds.
-2. Capture and inspect all four set pieces on HIGH and LOW when loopback/browser process access is available.
+2. Make the underpass and hospital readable and recapture all four set pieces on HIGH and LOW during native route variations.
 3. Reconcile the L10 passive threat audit with the required combat-gated roadblocks, then obtain a zero-flag all-level receipt.
 4. Re-run the full threat audit within the reservation limit after resolving its L10 passive coverage path.
