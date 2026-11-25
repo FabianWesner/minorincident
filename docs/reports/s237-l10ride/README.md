@@ -65,3 +65,7 @@ At the staged road pose (3502, 95), the camera target was (3502.55, 0, 95) and a
 ## Scaled tent composition trial
 
 A half-scale first tent at (3500, 91) was fully visible in a staged HIGH frame, but showed a blank side and occupied the edge of the road; the opening and figures remained unreadable. Both native bot routes completed with 4/4 recorded loops and 459.5 s HIGH / 458.7 s LOW, but HIGH had 15 deaths versus 10 in the prior trace. The trial was reverted; a readable triage composition needs an entrance and figures in view without compromising the lane.
+
+## Underpass source finding
+
+The current L10 layout contains no `prop.l10-underpass`: mainline s219 replaced the bridge, piers and lamps with the sinkhole collapse at x=3390. See [the s219 report](../s219-l10sinkhole/README.md) and commit `b6acacd8`. The requested readable underpass therefore requires new composition around the retained collapse and detour; camera or occlusion changes alone cannot reveal an asset that is absent. Preserve the existing sinkhole collision and route while addressing this requirement.
