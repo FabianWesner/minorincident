@@ -21,7 +21,9 @@ for (let k = 0; k <= route.length; k++) {
       a.phase = index >= 0 && index < k ? 3 : 0;
     }
     zoo.bosses.updateGates();
-    assert(w.solids.relocate(p, { x: 0, z: 0, y: .7 }, 'qa.runner-entry', 8));
+    // Cleared pens close behind the party; the finale begins at the last exit.
+    const start = k === route.length ? { x: 70, z: -32 } : { x: 0, z: 0 };
+    assert(w.solids.relocate(p, { ...start, y: .7 }, 'qa.runner-entry', 8));
     const bot = new LevelEightBot(w, 'runner'); let enteredYard = false, deepest = -1;
     // The full visitor route is several hundred metres long. The locked
     // states need 90 s of escape attempts; walking every cleared cell needs
@@ -40,5 +42,5 @@ for (let k = 0; k <= route.length; k++) {
   } finally { w.dispose(); }
 }
 const out = process.env.L8_GATE_OUT ?? 'docs/reports/r33-l8route/route-gates.json'; mkdirSync(out.slice(0, out.lastIndexOf('/')), { recursive: true });
-writeFileSync(out, JSON.stringify({ ...provenance(), method: 'Independent controlled setup for each route state; real runner policy movement, player protection only; each enclosure lock independently tested. No combat completion claim.', pass: true, rows }, null, 2));
+writeFileSync(out, JSON.stringify({ ...provenance(), method: 'Independent controlled setup for each route state; runner starts at the plaza for locked states and at the gorilla exit once the earlier pens have cleared. Real runner policy movement, player protection only; each enclosure lock independently tested. No combat completion claim.', pass: true, rows }, null, 2));
 console.log(JSON.stringify({ out, pass: true, rows }));

@@ -45,10 +45,12 @@ export class LevelEightBot {
     if (!calm && !zoo.protecting() && this.profile === 'runner') {
       const priorPensClear = zoo.state.arenas.filter(a => a.id !== 'elephant').every(a => a.phase === 3);
       if (priorPensClear) {
-        // The elephant leg starts at the gorilla exit; the runner may still be
-        // at the plaza. Replay the authored public route so it never cuts
-        // across sealed service lanes or enclosure walls.
+        // The elephant leg starts at the gorilla exit. Follow its authored
+        // nodes through the service lane and into the yard.
         const road = l8Route.flatMap(stage => stage.nodes);
+        // Cleared pens seal behind the party. A runner first observing this
+        // state starts at the final leg instead of seeking the locked plaza.
+        if (this.escapeLeg === 0) this.escapeLeg = road.length - l8Route.at(-1)!.nodes.length;
         if (p.x > 85 && p.z > 46) this.escapeLeg = road.length;
         while (this.escapeLeg < road.length && Math.hypot(p.x - road[this.escapeLeg].x, p.z - road[this.escapeLeg].z) < 2) this.escapeLeg++;
         target = this.escapeLeg < road.length ? road[this.escapeLeg] : { x: 90, z: 60 };

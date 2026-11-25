@@ -1,7 +1,7 @@
 /** Orchestrator diagnostic: top-down PNG of L8 walkable nav, arenas and the authored player route. */
 import { writeFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
-import { l8Route, l8YardGates, l8PlazaGates, l8ConnectorGates, l8PathWalls, l8YardWalls } from '../../../src/data/l8Bosses';
+import { l8Route, l8YardGates, l8PlazaGates, l8ConnectorGates, l8PathWalls, l8YardWalls, l8EncounterGates } from '../../../src/data/l8Bosses';
 import { loadLevel } from '../../sim-runner/levels';
 const world = await loadLevel('L8', 1);
 const nav = world.districts!.nav;
@@ -35,6 +35,7 @@ for (const g of l8YardWalls) gate(g, [0, 100, 255]);
 for (const g of l8PathWalls) gate(g, [255, 50, 160]);
 for (const g of l8ConnectorGates) gate(g, [255, 110, 0]);
 for (const g of Object.values(l8PlazaGates)) gate(g, [0, 200, 200]);
+for (const g of Object.values(l8EncounterGates)) gate(g, [150, 50, 50]);
 // The outer wall is authored in the layout with four gate gaps.
 for (const [a, b] of [[{x:-116,z:-86},{x:-2.7,z:-86}], [{x:2.7,z:-86},{x:116,z:-86}], [{x:-116,z:86},{x:-2.7,z:86}], [{x:2.7,z:86},{x:116,z:86}], [{x:-116,z:-86},{x:-116,z:-2.7}], [{x:-116,z:2.7},{x:-116,z:86}], [{x:116,z:-86},{x:116,z:77.3}], [{x:116,z:82.7},{x:116,z:86}]] as const) line(a,b,[120,60,30],1);
 const raw = Buffer.alloc((W * 3 + 1) * H); for (let y = 0; y < H; y++) { raw[y * (W * 3 + 1)] = 0; px.copy(raw, y * (W * 3 + 1) + 1, y * W * 3, (y + 1) * W * 3); }
