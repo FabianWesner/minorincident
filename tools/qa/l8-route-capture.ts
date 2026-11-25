@@ -66,9 +66,14 @@ try {
         cinematic, wallBreached: !!zoo.arenas.find(a => a.id === 'elephant')?.breachAt, haleKeys: !!(state.mission as { states: Record<string, boolean> })?.states['hale-keys'], haleFallen: !!(state.mission as { states: Record<string, boolean> })?.states['hale-fallen'], hale: ss.getEntity(zoo.haleId)?.transform, boarding: !active ? zoo.roster.map(id => ss.getEntity(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined).map(e => ({ id: e!.id, at: e!.transform })) : undefined, carrier: active && ss.getEntity(active.carrier)?.transform, animal: active && ss.getEntity(active.ids[0])?.transform, arena: active?.id ?? 'boarding', arenaPhase: active?.phase ?? 3, arenaHP: active?.ids.map(id => ss.getEntity(id)?.health.current), arenas: zoo.arenas.map(a => ({ id: a.id, phase: a.phase })),
         objective: [...document.querySelectorAll('[data-testid=objective-text],[data-testid=mission-tracker]')].map(e => e.textContent).find(text => text?.trim()) ?? '', departed: (state.mission as { states: Record<string, boolean> })?.states.departed,
         specials: audit.specials.slice(specialCursor), animalHits: audit.animalHits.slice(animalHitCursor), specialCount: audit.specials.length, animalHitCount: audit.animalHits.length,
+        animalMoves: active?.ids.map(id => ss.getEntity(id)?.infected?.specialAttack).filter(a => a && ['zebra.kick', 'gorilla.pound', 'gorilla.grab-slam'].includes(a.move)).map(a => ({ move: a!.move, stage: a!.stage, startTick: a!.startTick, activeTick: a!.activeTick })) ?? [],
       };
     }, { specialCursor, animalHitCursor });
     specialCursor = row.specialCount; animalHitCursor = row.animalHitCount;
+    for (const move of row.animalMoves) if (move.stage === 'telegraph' && row.tick >= (move.startTick + move.activeTick) / 2) {
+      const key = `${move.move}-telegraph`;
+      if (!animalPictures.has(key)) { const file = `natural-${row.arena}-${move.move}-telegraph-tick-${row.tick}.jpg`; await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 80 }); captures.push(file); animalPictures.add(key); }
+    }
     const moveStages = row.specials as { tick: number; arena: string; move: string; stage: string }[];
     for (const event of moveStages) if (['zebra.kick', 'gorilla.pound', 'gorilla.grab-slam'].includes(event.move) && ['telegraph', 'active'].includes(event.stage)) {
       const key = `${event.move}-${event.stage}`;
