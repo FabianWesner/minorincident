@@ -302,6 +302,7 @@ export class LevelTwoRescue {
     const { world } = this.mission, player = world.entities.get(1)!, tick = world.tick;
     if (this.s.seated || this.s.phase !== 'alarm') return;
     if (!this.s.axe) this.mission.state.steps.axe.status = 'cancelled';
+    if (world.vehicles) world.vehicles.transition = { carId: this.s.truckId, kind: 'enter', tick, side: 1, from: { ...player.transform } };
     this.s.seated = true; this.s.boardingAt = tick; this.s.companionBoard = this.seat(0); player.hidden = false; player.survivor!.scriptedClip = 'enter-car'; player.survivor!.animationTick = tick;
     world.physics.playerCollider!.setEnabled(false); world.player!.locomotion.reset();
     this.mission.setState('boarded', true);
@@ -361,6 +362,7 @@ export class LevelTwoRescue {
     const t = world.entities.get(s.truckId)!.transform, player = world.entities.get(1)!;
     const side = (lx: number, lz: number) => this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .45);
     const out = side(.6, 1.9);
+    if (world.vehicles) world.vehicles.transition = { carId: s.truckId, kind: 'exit', tick, side: 1, from: { ...t } };
     Object.assign(player.transform, { x: out.x, z: out.z }); player.hidden = false; player.survivor!.scriptedClip = 'dismount'; player.survivor!.animationTick = tick; s.seated = false;
     world.solids.admit(player, 'l2.vehicle.exit');
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform); world.physics.playerCollider!.setEnabled(true);
