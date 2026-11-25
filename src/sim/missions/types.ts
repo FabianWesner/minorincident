@@ -130,6 +130,7 @@ export interface L2State {
   alarmAt: number; departAt: number; arrivedAt: number; crewExitAt: number; atDoorsAt: number; doorsOpenAt: number; radioAt: number; crossedAt: number; gateClosedAt: number;
   /** Start tick for the deterministic, one-at-a-time Engine 3 boarding beat. */
   boardingAt?: number; companionBoard?: { x: number; z: number };
+  companionEnter?: { tick: number; x: number; z: number }; companionExit?: { x: number; z: number };
   crewBoardFrom?: ({ x: number; y: number; z: number } | null)[];
   crewExitTo?: ({ x: number; z: number } | null)[];
   truckId: number; seated: boolean; axe: boolean;

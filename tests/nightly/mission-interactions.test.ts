@@ -109,7 +109,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(l2Crew.filter(e => e.hidden).length, 'firefighters board in a visible seat-order stagger').toBeGreaterThan(0);
         expect(l2Crew.filter(e => e.hidden).length).toBeLessThan(l2Crew.length);
         expect(mission.state.l2!.phase, 'Engine 3 waits for the boarding sequence').toBe('alarm');
-        for (let tick = 0; tick < 120; tick++) levelWorld.update();
+        for (let tick = 0; tick < 300 && mission.state.l2!.phase === 'alarm'; tick++) levelWorld.update();
         if (corgi) { expect(corgi.hidden).toBe(true); expect(corgi.passengerOf).toBe(mission.state.l2!.truckId); }
         expect(mission.state.l2!.phase).toBe('ride');
       }

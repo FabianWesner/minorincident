@@ -281,11 +281,25 @@ export class LevelTwoRescue {
   /** The protected corgi uses its normal deterministic path and trot before boarding last. */
   boardCompanion(e: EntitySnapshot): boolean {
     const s = this.mission.state.l2, c = e.companion;
-    if (!s || !c || !s.companionBoard || s.phase !== 'alarm' || !s.seated) return false;
+    if (!s || !c) return false;
     if (e.health.current <= 0 || e.infected) return false;
+    if (s.phase === 'arrived' && e.passengerOf === s.truckId && s.companionExit) {
+      const t = this.world.entities.get(s.truckId)!.transform, elapsed = this.world.tick - s.arrivedAt;
+      const u = Math.max(0, Math.min(1, (elapsed - 30) / ticks(.5)));
+      if (elapsed < 30) return true;
+      e.hidden = false; e.transform.x = t.x + (s.companionExit.x - t.x) * (.55 + .45 * u); e.transform.z = t.z + (s.companionExit.z - t.z) * (.55 + .45 * u); e.transform.y = .3 + .45 * (1 - u);
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (u >= 1) { delete e.passengerOf; this.world.solids.admit(e, 'l2.companion.exit'); }
+      return true;
+    }
+    if (!s.companionBoard || s.phase !== 'alarm' || !s.seated) return false;
     const target = s.companionBoard!, reached = Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < 1;
-    if (reached && this.world.tick >= (s.boardingAt ?? this.world.tick) + ticks(2.8)) {
-      e.hidden = true; e.passengerOf = s.truckId; if (c.velocity) c.velocity.x = c.velocity.z = 0; this.world.spatial.delete(e.id);
+    if (!s.companionEnter && reached && this.world.tick >= (s.boardingAt ?? this.world.tick) + ticks(2.4)) s.companionEnter = { tick: this.world.tick, x: e.transform.x, z: e.transform.z };
+    if (s.companionEnter) {
+      const t = this.world.entities.get(s.truckId)!.transform, u = Math.min(1, (this.world.tick - s.companionEnter.tick) / ticks(.4));
+      e.transform.x = s.companionEnter.x + (t.x - s.companionEnter.x) * .55 * u; e.transform.z = s.companionEnter.z + (t.z - s.companionEnter.z) * .55 * u; e.transform.y = .3 + .45 * u;
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (u >= 1) { e.hidden = true; e.passengerOf = s.truckId; if (c.velocity) c.velocity.x = c.velocity.z = 0; this.world.spatial.delete(e.id); }
     } else this.world.npcs!.move(e, target, 4.4, c, .3, 2400);
     return true;
   }
@@ -370,7 +384,7 @@ export class LevelTwoRescue {
     world.player!.locomotion.reset(); Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, out.x, out.z); world.player!.setCheckpoint(player.transform);
     world.storyLock = { scripted: null, skip: false }; world.clearInput();
     world.events.emit({ type: 'vehicle.exited', tick, sourceId: s.truckId, targetId: 1, role: 'passenger' });
-    for (const e of world.entities.iterate()) if (e.companion && e.passengerOf === s.truckId) { e.hidden = false; delete e.passengerOf; const p = side(-1.6, -2.2); Object.assign(e.transform, p); world.solids.admit(e, 'l2.relocation'); }
+    s.companionExit = side(-1.6, -2.2);
     if (!this.mission.state.states.arrived) this.mission.setState('arrived', true);
   }
   private crewExit(): void {
