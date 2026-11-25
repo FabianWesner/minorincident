@@ -113,3 +113,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - A six-run experiment ranked eligible ahead/behind service doors by player proximity instead of tail proximity. It produced identical route metrics to the current source for all six runs and was discarded; it did not improve engagement.
 
 - A six-run experiment offset the first retreat pressure tick by 7 s while retaining the two-infected group and 14 s subsequent interval. All routes completed and arrivals came from both directions, but seed 3 had zero player attacks; the offset was discarded.
+
+- Two more unchanged remote unit attempts timed out at 240.6 s and 241.5 s. The runner emitted an NPC case failure before each timeout but did not finish the suite or print the final assertion, so those attempts do not establish its cause.
