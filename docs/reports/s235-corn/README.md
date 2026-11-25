@@ -47,6 +47,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 - A synthetic handoff probe showed the displaced influence decreasing over 60 ticks and the new owner beginning its ramp on tick 61. This avoids abrupt removal but can delay representation for about one second. All four HIGH/LOW WebGL2 capture cases passed without errors (`/private/tmp/s235-priority-capture`); HIGH and LOW close turn frames were opened and show corn present around both actors.
 - A paired eight-zombie field timing attempt did not obtain quiet admission within 120 seconds and produced no measurement. The selection change therefore still needs a crowd performance receipt.
 
+- A second paired eight-zombie browser timing attempt also expired after 120 seconds waiting for quiet admission (a foreign Blender job and load). A separate Node-only selector microbenchmark used 24 synthetic moving infected, six alternating 30,000-update samples after warmup. Median update times were 0.001750 ms before priority selection and 0.001508 ms after; this synthetic CPU result does not measure browser frame time, GPU cost, or the real spatial query. Temporary benchmark files were removed.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
