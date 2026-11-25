@@ -17,8 +17,11 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
       return { x: p.transform.x, z: p.transform.z, dog: dog?.id, quality: a.getState().render.quality, zoom };
     }, { tier, zoom });
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
-    await session.page.evaluate(async () => { const a = window.__SS__!; a.input.clear(); await a.step(60); a.settings.set({ timeOfDay: 'L1' }); });
-    await session.screenshot(`${out}/${tier}-zoom-${zoom}-rest.png`);
+    await session.page.evaluate(() => window.__SS__!.input.clear());
+    for (const frame of [10, 20, 30, 40, 50, 60]) {
+      await session.page.evaluate(async () => { const a = window.__SS__!; await a.step(10); a.settings.set({ timeOfDay: 'L1' }); });
+      await session.screenshot(`${out}/${tier}-zoom-${zoom}-stop-${frame}.png`);
+    }
     writeJson(`${out}/${tier}-zoom-${zoom}.json`, { ...setup, errors: session.errors });
     if (session.errors.length) throw new Error(session.errors.join('\n'));
     console.log(`${tier} zoom ${zoom}: ${JSON.stringify(setup)}`);
