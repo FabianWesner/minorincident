@@ -85,3 +85,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - The eastern boundary was also probed through the native solid registry: at x=246 and z=14, 15 and 16, an infected-radius placement is blocked while the same player-radius placement is clear. This supplements the navigation-line probe; the western end remains open.
 
 - A conditional western boundary was tested after all west-side living, turning and recoverable actors cleared and the shelter arrivals drained. Skilled and passive L6 completed, but the early-close trace gained follower pace flags and total births changed from 38 to 42; moreover the end remained open until clearance. The experiment was discarded pending a design that seals the end without degrading the route.
+
+- Source inventory: `src/levels/L6` and `D-SUBWAY.layout.json` contain no additional infected-wave counts. The existing L6 distant-filler recycler skips corpses and downed actors; the PO corpse-persistence rule was not changed.
