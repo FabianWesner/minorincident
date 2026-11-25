@@ -19,7 +19,7 @@ try {
         a.missions.begin(); a.pause(); a.inspect.enable(false); a.camera.follow(); a.cheats.god(true);
         const g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
         const board = g.world.missions!.def.anchors['l2-board'];
-        a.teleport(1, { x: board.x, z: board.z });
+        a.teleport(1, { x: board.x - 4, z: board.z });
         const style = document.createElement('style'); style.textContent = '.mission-subtitle { visibility: hidden !important; }'; document.head.append(style);
         document.documentElement.setAttribute('data-scene-hud', '');
         document.querySelectorAll('#hud,.hud').forEach(n => n.setAttribute('data-scene-hud', ''));
@@ -56,6 +56,12 @@ try {
         if (now < target) await wait(target - now);
         await snap('approach', dt);
       }
+      await session.page.evaluate(() => {
+        const g = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
+        const board = g.world.missions!.def.anchors['l2-board'];
+        window.__SS__!.teleport(1, { x: board.x, z: board.z });
+      });
+      if ((await state()).l2.boardingAt) throw new Error(`${tier}: boarding started before interaction`);
       await session.page.evaluate(() => window.__SS__!.input.set({ interact: true }));
       for (let i = 0; i < 50 && !(await state()).l2.boardingAt; i++) await wait(1);
       await session.page.evaluate(() => window.__SS__!.input.clear());
