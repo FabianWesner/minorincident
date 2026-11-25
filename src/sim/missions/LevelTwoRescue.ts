@@ -616,6 +616,9 @@ export class LevelTwoRescue {
         // Wait for the courier's interaction, then finish the existing walk
         // clip with the authored sit-down/climb pose, staggered by seat order.
         const start = (s.boardingAt ?? tick) + i * 24;
+        // The truck's navigation clearance can stop a runner short of the
+        // target cell. Hand off to the step animation once within reach.
+        if (s.seated && a.run && Math.hypot(a.run.x - e.transform.x, a.run.z - e.transform.z) < 1.2) a.run = null;
         let earlierBoarded = true;
         for (let j = 0; j < i; j++) {
           const previous = world.entities.get(s.crewIds[j]);
@@ -628,12 +631,12 @@ export class LevelTwoRescue {
             (s.crewBoardFrom ??= [])[i] = { x: e.transform.x, y: e.transform.y, z: e.transform.z };
             e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER;
           }
-          else if (tick - story.start >= ticks(.6)) {
+          else if (tick - story.start >= ticks(.4)) {
             e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id);
           } else {
             const from = s.crewBoardFrom?.[i], truck = world.entities.get(s.truckId)!.transform;
             if (from) {
-              const u = (tick - story.start) / ticks(.6), weight = u * u * (3 - 2 * u);
+              const u = (tick - story.start) / ticks(.4), weight = u * u * (3 - 2 * u);
               e.transform.x = from.x + (truck.x - from.x) * weight * .55;
               e.transform.z = from.z + (truck.z - from.z) * weight * .55;
               e.transform.y = from.y + .65 * weight;
