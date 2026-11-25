@@ -64,6 +64,9 @@ def fold_palette(obj):
 
 def corn(root, lod):
     """Volumetric stalks, curled ribbons, dry soil and stubble in one coloured mesh."""
+    detail_lod = lod
+    # Keep hero and near plants in the same places; simplify their geometry only.
+    if lod == 1: lod = 0
     rng = random.Random(1029)
     vertices, faces, colors, smooth_faces, roots = [], [], [], [], []
     stalk_root = None
@@ -87,7 +90,10 @@ def corn(root, lod):
         polygons=[(k,(k+1)%3,(k+1)%3+3,k+3) for k in range(3)]
         if caps:
             polygons += [(0,2,1),(3,4,5)]
-        part(points,polygons,['leatherShadow']*3+[token]*3)
+        if detail_lod == 1 and stalk_root is not None:
+            part([points[0],points[1],points[4]],[(0,1,2)],['leatherShadow','leatherShadow',token])
+        else:
+            part(points,polygons,['leatherShadow']*3+[token]*3)
     # Sculpted soil beds/furrows stay below the wind weight. One mesh, no extra draw.
     part([(-5,-5,.024),(5,-5,.024),(5,5,.024),(-5,5,.024)],[(0,1,2,3)],'leather')
     soil_rows=9 if lod==1 else 12
@@ -159,23 +165,32 @@ def corn(root, lod):
                     polygons=[(j*2,j*2+1,(j+1)*2+1,(j+1)*2) for j in range(len(centers)-1)]
                     leaf_token=rng.choice(['canvasTan','khakiLight','brass','woodWarm','khakiSeam'])
                     tip_token='woodWarm' if rng.random()<.3 else leaf_token
-                    part(points,polygons,['khakiSeam']*2+[leaf_token]*(len(points)-4)+[tip_token]*2,True)
+                    if detail_lod == 1:
+                        middle=(Vector(points[2])+Vector(points[3]))*.5
+                        left=middle+(Vector(points[2])-middle)*1.6
+                        right=middle+(Vector(points[3])-middle)*1.6
+                        points=[points[0],tuple(left),points[6],tuple(right)]
+                        polygons=[(0,1,2,3)]
+                        part(points,polygons,[leaf_token]*4,True)
+                    else:
+                        part(points,polygons,['khakiSeam']*2+[leaf_token]*(len(points)-4)+[tip_token]*2,True)
                     leaves+=1
                 if not snapped:
                     # Forked tassels have narrow branches; ears are closed tetrahedral husks.
                     for side in ([-1,1] if lod==0 else [1] if rng.random()<.5 else []):
                         a=tip+Vector((0,0,-.03));b=tip+Vector((side*.14,.045,.22))
-                        part([tuple(a+Vector((-.009,0,0))),tuple(a+Vector((.009,0,0))),tuple(b)],[(0,1,2)],token)
+                        if detail_lod != 1: part([tuple(a+Vector((-.009,0,0))),tuple(a+Vector((.009,0,0))),tuple(b)],[(0,1,2)],token)
                     if rng.random() < (.5 if lod==0 else .08):
                         c=Vector((x+.07,y,h*.64))
-                        part([tuple(c+Vector((-.065,0,0))),tuple(c+Vector((.065,0,0))),
+                        if detail_lod != 1: part([tuple(c+Vector((-.065,0,0))),tuple(c+Vector((.065,0,0))),
                               tuple(c+Vector((0,.08,.1))),tuple(c+Vector((.07,0,.34)))],
                              [(0,1,2),(0,3,1),(1,3,2),(2,3,0)],'brass')
                         ears+=1
         for k in range(12 if lod==0 else 3):
             x,y=rng.uniform(-4.8,4.8),rng.uniform(-4.8,4.8)
             stalk_root=(x,y,0)
-            prism((x,y,.03),(x+.04,y,.16+rng.random()*.18),.018,.008,'woodWarm')
+            stubble_height=.16+rng.random()*.18
+            if detail_lod != 1: prism((x,y,.03),(x+.04,y,stubble_height),.018,.008,'woodWarm')
     obj=mesh(root,'dry-corn-volume-and-furrows',vertices,faces,'picketWhite')
     for face,smooth in zip(obj.data.polygons,smooth_faces):
         face.use_smooth=smooth
