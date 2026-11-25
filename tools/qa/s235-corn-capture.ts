@@ -2,8 +2,9 @@ import { resolve } from 'node:path';
 import { SceneSession, stopServer, writeJson } from '../scenelab/session';
 
 const out = resolve(process.env.S235_OUT ?? '/private/tmp/s235-corn');
+const backend = process.env.S235_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
-  const session = new SceneSession({ tier, viewport: { width: 1280, height: 720 }, seed: 32 });
+  const session = new SceneSession({ backend, tier, viewport: { width: 1280, height: 720 }, seed: 32 });
   try {
     await session.open();
     const setup = await session.page.evaluate(async ({ tier, zoom }) => {
@@ -14,8 +15,9 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, 1.5]) {
       await a.step(12); a.input.set({ move: { x: 1, z: 0 } }); await a.step(45);
       a.settings.set({ timeOfDay: 'L1', cheapDof: false });
       const p = a.getEntity(1)!; if (Math.hypot(p.transform.x - 555, p.transform.z - 42) < .2) throw Error('Courier did not move');
-      return { x: p.transform.x, z: p.transform.z, dog: dog?.id, quality: a.getState().render.quality, zoom };
+      return { x: p.transform.x, z: p.transform.z, dog: dog?.id, quality: a.getState().render.quality, backend: a.perf().backend, zoom };
     }, { tier, zoom });
+    if (setup.backend !== (backend === 'webgpu' ? 'webgpu' : 'webgl')) throw Error(`Requested ${backend}, got ${setup.backend}`);
     await session.screenshot(`${out}/${tier}-zoom-${zoom}.png`);
     await session.page.evaluate(() => {
       const a = window.__SS__!, p = a.getEntity(1)!.transform;
