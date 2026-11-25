@@ -69,3 +69,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - The director’s per-tick pre-stream breach reservation also now uses the authored second cohort (10 → 5), matching the spawn-side reservation. Typecheck and lint pass; the focused L6 route still completes with 38 births and peak 20, and still fails the same three retreat engagement checks. The full all-level audit and remote unit suite need rerunning after this source change.
 
 - Geometry review: `D-SUBWAY.layout.json` has five `kit.maintenance-corridor` placements at x 54, 126, 198, 78 and 174, while the six service-door x positions are 54, 126, 198, 78, 162 and 228. The visual correspondence of the last two hatches therefore needs review before moving doors or claiming all six are visibly aligned with maintenance passages.
+
+- The remote unit suite against the current source timed out at 240.7 s under runner load; its unchanged retry remained queued and was stopped at the lane time limit. Neither run is a pass.
