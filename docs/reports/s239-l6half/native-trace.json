@@ -833,5 +833,34 @@
     "peakConcurrentInfected": 41,
     "retreatPhaseSpawned": 56,
     "flags": []
+  },
+  "allClosedNativeProbe": {
+    "method": "Native L6 low seed 1 world; set retreat, disable shelter arrivals, initialize all six hatches closed and warned, set eight hits each; schedule door 2 bashes starting at tick 900 and keep other hatch bash timers at infinity. Advance SimWorld.update with the normal pressure clock until the first post-break admission. Hatch states are initialized directly, not closed by player interactions.",
+    "start": 0,
+    "closedWindowEnd": 840,
+    "closedAdmissions": 0,
+    "brokenAt": 1320,
+    "end": 1681,
+    "hitsRemaining": 0,
+    "events": [
+      {
+        "id": 57,
+        "door": 2,
+        "x": 54,
+        "z": 12.6,
+        "tick": 1681,
+        "wave": 3,
+        "offscreen": true
+      },
+      {
+        "id": 58,
+        "door": 2,
+        "x": 54.8,
+        "z": 12.6,
+        "tick": 1681,
+        "wave": 3,
+        "offscreen": true
+      }
+    ]
   }
 }
