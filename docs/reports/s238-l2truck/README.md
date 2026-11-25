@@ -25,3 +25,5 @@ A denser HIGH review sampled boarding every 10 ticks and exit every 18 ticks aft
 After `3ad2ca95`, the corgi waits for the crew and riders cross the rear sill into the body before hiding. The current remote unit attempt and unchanged retry timed out at 241.1 s and 240.7 s; the retry reported no assertion failures before timeout.
 
 A one-tick boundary capture exposed a remaining pop: the corgi is still visibly outside the rear bumper immediately before it is hidden. Moving the endpoint deeper and fading the companion did not produce a convincing climb, so that experiment was reverted. A proper entry animation and occlusion transition remain required.
+
+Further inspection of the same boundary captures also shows a firefighter fully visible beside the rear wheel immediately before hiding, then absent one tick later (`high/boundary-before-f126-z1.png` and `high/boundary-after-f126-z1.png` in the generated test results). The correction must cover the human riders as well as the corgi; the existing sampled contact sheet misses this transition.
