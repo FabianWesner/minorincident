@@ -187,7 +187,8 @@ def corn(root, lod):
     # Blender exports custom attributes beginning with an underscore to glTF.
     root_layer=obj.data.attributes.new(name='_STALK_ROOT',type='FLOAT_VECTOR',domain='POINT')
     for i,root_position in enumerate(roots):
-        root_layer.data[i].vector=root_position
+        # glTF custom vectors are exported verbatim; match the Y-up position conversion.
+        root_layer.data[i].vector=(root_position[0], root_position[2], -root_position[1])
     root['cornStalks']=stalks
     root['cornCurledLeaves']=leaves
     root['cornBrokenStalks']=broken
