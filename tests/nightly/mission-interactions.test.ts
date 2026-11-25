@@ -100,6 +100,8 @@ test('interactions: ring, input and view predicates agree for every interact ste
         levelWorld.setInput(emptyInput());
         expect(mission.state.states.boarded, 'the authored l2-board interaction starts boarding').toBe(true);
         expect(player.hidden, 'courier remains visible through the enter-car pose').toBe(false);
+        const corgi = [...levelWorld.entities.iterate()].find(e => e.companion);
+        if (corgi) expect(!corgi.hidden, 'the corgi stays visible while it walks to the truck').toBe(true);
         levelWorld.update();
         expect(player.survivor!.scriptedClip).toBe('enter-car');
         for (let tick = 0; tick < 59; tick++) levelWorld.update();
@@ -108,6 +110,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(l2Crew.filter(e => e.hidden).length).toBeLessThan(l2Crew.length);
         expect(mission.state.l2!.phase, 'Engine 3 waits for the boarding sequence').toBe('alarm');
         for (let tick = 0; tick < 120; tick++) levelWorld.update();
+        if (corgi) { expect(corgi.hidden).toBe(true); expect(corgi.passengerOf).toBe(mission.state.l2!.truckId); }
         expect(mission.state.l2!.phase).toBe('ride');
       }
       if (level === 'L8') {

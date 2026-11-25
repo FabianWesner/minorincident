@@ -278,6 +278,17 @@ export class LevelTwoRescue {
     const t = this.world.entities.get(this.s.truckId)!.transform, side = 1, along = -2.4 + i * .95;
     return this.snap({ x: t.x + Math.cos(t.yaw) * along + Math.sin(t.yaw) * side * 1.7, z: t.z - Math.sin(t.yaw) * along + Math.cos(t.yaw) * side * 1.7 }, .35);
   }
+  /** The protected corgi uses its normal deterministic path and trot before boarding last. */
+  boardCompanion(e: EntitySnapshot): boolean {
+    const s = this.mission.state.l2, c = e.companion;
+    if (!s || !c || !s.companionBoard || s.phase !== 'alarm' || !s.seated) return false;
+    if (e.health.current <= 0 || e.infected) return false;
+    const target = s.companionBoard!, reached = Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < .5;
+    if (reached && this.world.tick >= (s.boardingAt ?? this.world.tick) + ticks(2.8)) {
+      e.hidden = true; e.passengerOf = s.truckId; if (c.velocity) c.velocity.x = c.velocity.z = 0; this.world.spatial.delete(e.id);
+    } else this.world.npcs!.move(e, target, 4.4, c, .3, 2400);
+    return true;
+  }
   private takeAxe(): void {
     const combat = this.world.combat; if (!combat || this.s.axe) return;
     this.s.axe = true;
@@ -291,7 +302,7 @@ export class LevelTwoRescue {
     const { world } = this.mission, player = world.entities.get(1)!, tick = world.tick;
     if (this.s.seated || this.s.phase !== 'alarm') return;
     if (!this.s.axe) this.mission.state.steps.axe.status = 'cancelled';
-    this.s.seated = true; this.s.boardingAt = tick; player.hidden = false; player.survivor!.scriptedClip = 'enter-car'; player.survivor!.animationTick = tick;
+    this.s.seated = true; this.s.boardingAt = tick; this.s.companionBoard = this.seat(0); player.hidden = false; player.survivor!.scriptedClip = 'enter-car'; player.survivor!.animationTick = tick;
     world.physics.playerCollider!.setEnabled(false); world.player!.locomotion.reset();
     this.mission.setState('boarded', true);
     world.storyLock = { scripted: null, skip: false };
@@ -338,7 +349,7 @@ export class LevelTwoRescue {
     if (this.s.seated) {
       relocatePlayer(world, x, z);
     }
-    for (const e of world.entities.iterate()) if (e.companion || (e.hidden && this.s.crewIds.includes(e.id))) { e.hidden = true; if (this.s.crewIds.includes(e.id)) e.passengerOf = this.s.truckId; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
+    for (const e of world.entities.iterate()) if (e.companion || (e.hidden && this.s.crewIds.includes(e.id))) { e.hidden = true; e.passengerOf = this.s.truckId; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
   }
   private arrive(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
@@ -587,7 +598,9 @@ export class LevelTwoRescue {
         }
       }
       const crewIn = s.crewIds.every(id => { const e = world.entities.get(id); return !e || e.health.current <= 0 || !!e.infected || e.hidden === true; });
-      if (s.seated && (crewIn || tick - (s.boardingAt ?? s.alarmAt) > ticks(l2.calm.crewToTruckMaxS + 6))) {
+      let companionIn = true;
+      for (const e of world.entities.iterate()) if (e.companion && e.health.current > 0 && !e.infected && e.hidden !== true) { companionIn = false; break; }
+      if (s.seated && ((crewIn && companionIn) || tick - (s.boardingAt ?? s.alarmAt) > ticks(l2.calm.crewToTruckMaxS + 6))) {
         for (const id of s.crewIds) { const e = world.entities.get(id); if (e && e.health.current > 0 && !e.infected) { e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); } }
         s.phase = 'ride'; s.departAt = tick; this.parkNav(false); world.events.emit({ type: 'l2.truckDeparted', tick });
       }
