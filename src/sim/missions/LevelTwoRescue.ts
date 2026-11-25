@@ -603,7 +603,7 @@ export class LevelTwoRescue {
     if (s.phase === 'alarm') {
       if (s.seated && !player.hidden) {
         const boardedAt = s.boardingAt ?? tick;
-        if (tick >= boardedAt + ticks(1)) {
+        if (tick >= boardedAt + ticks(2)) {
           player.hidden = true; delete player.survivor!.scriptedClip; player.survivor!.animation = 'idle'; player.survivor!.animationTick = tick;
         } else {
           player.survivor!.scriptedClip = 'enter-car'; player.survivor!.animationTick = boardedAt;
@@ -640,7 +640,7 @@ export class LevelTwoRescue {
       const crewIn = s.crewIds.every(id => { const e = world.entities.get(id); return !e || e.health.current <= 0 || !!e.infected || e.hidden === true; });
       let companionIn = true;
       for (const e of world.entities.iterate()) if (e.companion && e.health.current > 0 && !e.infected && e.hidden !== true) { companionIn = false; break; }
-      if (s.seated && ((crewIn && companionIn) || tick - (s.boardingAt ?? s.alarmAt) > ticks(l2.calm.crewToTruckMaxS + 6))) {
+      if (s.seated && player.hidden && ((crewIn && companionIn) || tick - (s.boardingAt ?? s.alarmAt) > ticks(l2.calm.crewToTruckMaxS + 6))) {
         for (const id of s.crewIds) { const e = world.entities.get(id); if (e && e.health.current > 0 && !e.infected) { e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); } }
         s.phase = 'ride'; s.departAt = tick; this.parkNav(false); world.events.emit({ type: 'l2.truckDeparted', tick });
       }
