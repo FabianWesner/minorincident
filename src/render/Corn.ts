@@ -10,6 +10,8 @@ const movers = Array.from({ length: 8 }, () => uniform(new Vector3(-10000, 0, -1
 const directions = Array.from({ length: 8 }, () => uniform(new Vector3(0, 0, 0)).setGroup(renderGroup));
 const ids = new Int32Array(8).fill(-1);
 const seen = new Uint8Array(8);
+const candidates = Array.from({ length: 5 }, () => ({ id: -1, x: 0, z: 0, speed: 0, vx: 0, vz: 0, score: 0 }));
+let candidateCount = 0;
 let lastTick = 0;
 let lastWorld: SimWorld | undefined;
 function put(id: number, x: number, speed: number, z: number, vx: number, vz: number, elapsed: number, reserved = -1): void {
@@ -22,6 +24,20 @@ function put(id: number, x: number, speed: number, z: number, vx: number, vz: nu
   const strength = Math.min(1, directions[slot].value.y + elapsed * 10);
   directions[slot].value.set(vx, strength, vz);
 }
+// Keep the nearest shared movers. A modest incumbent bias avoids repeated
+// handoffs when two actors are nearly equally distant from the courier.
+function consider(id: number, x: number, speed: number, z: number, vx: number, vz: number): void {
+  const dx = x - search.x, dz = z - search.z;
+  const score = (dx * dx + dz * dz) * (ids.indexOf(id, 3) >= 0 ? .8 : 1);
+  let at = 0;
+  while (at < candidateCount && (candidates[at].score < score || candidates[at].score === score && candidates[at].id < id)) at++;
+  if (at >= candidates.length) return;
+  const last = Math.min(candidateCount, candidates.length - 1), item = candidates[last];
+  for (let i = last; i > at; i--) candidates[i] = candidates[i - 1];
+  candidates[at] = item;
+  item.id = id; item.x = x; item.z = z; item.speed = speed; item.vx = vx; item.vz = vz; item.score = score;
+  candidateCount = Math.min(candidateCount + 1, candidates.length);
+}
 let vehicleElapsed = 0;
 let activeVehicle: number | null = null;
 // A reusable callback avoids creating a Map iterator or closure on each frame.
@@ -29,7 +45,9 @@ function collectVehicle(car: { entity: EntitySnapshot; physics: { speed: number 
   const e = car.entity, speed = Math.abs(car.physics.speed);
   if (speed <= .1 || Math.hypot(e.transform.x - search.x, e.transform.z - search.z) > 22) return;
   const sign = car.physics.speed < 0 ? -1 : 1;
-  put(e.id, e.transform.x, speed, e.transform.z, Math.cos(e.transform.yaw) * sign, -Math.sin(e.transform.yaw) * sign, vehicleElapsed, activeVehicle === e.id ? 2 : -1);
+  const vx = Math.cos(e.transform.yaw) * sign, vz = -Math.sin(e.transform.yaw) * sign;
+  if (activeVehicle === e.id) put(e.id, e.transform.x, speed, e.transform.z, vx, vz, vehicleElapsed, 2);
+  else consider(e.id, e.transform.x, speed, e.transform.z, vx, vz);
 }
 /** Fixed eight-slot upload: no per-stalk CPU work; the shader bends crop around nearby movers. */
 export function updateCorn(world: SimWorld): void {
@@ -47,7 +65,7 @@ export function updateCorn(world: SimWorld): void {
   const heroSpeed = Math.hypot(hx, hz);
   if (!hero.hidden && hero.health.current > 0 && heroSpeed > .1)
     put(hero.id, hero.transform.x, heroSpeed, hero.transform.z, hx / heroSpeed, hz / heroSpeed, elapsed, 0);
-  search.x = hero.transform.x; search.z = hero.transform.z;
+  search.x = hero.transform.x; search.z = hero.transform.z; candidateCount = 0;
   world.spatial.query(search, nearby, false);
   for (let i = 0; i < nearby.length; i++) {
     const e = world.entities.get(nearby[i]);
@@ -57,12 +75,18 @@ export function updateCorn(world: SimWorld): void {
     const vx = v?.x ?? e.locomotion?.vx ?? 0, vz = v?.z ?? e.locomotion?.vz ?? 0;
     const speed = Math.hypot(vx, vz);
     if (speed > .1) {
-      put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed, elapsed, e.companion ? 1 : -1);
+      if (e.companion) put(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed, elapsed, 1);
+      else consider(e.id, e.transform.x, speed, e.transform.z, vx / speed, vz / speed);
     }
   }
   if (world.vehicles) {
     vehicleElapsed = elapsed; activeVehicle = world.vehicles.active;
     world.vehicles.cars.forEach(collectVehicle);
+  }
+  // Old owners retain their last pose while fading. New owners enter only when
+  // a slot is free, so priority changes do not abruptly remove bent stalks.
+  for (let i = 0; i < candidateCount; i++) {
+    const c = candidates[i]; put(c.id, c.x, c.speed, c.z, c.vx, c.vz, elapsed);
   }
   for (let i = 0; i < movers.length; i++) if (!seen[i] && ids[i] !== -1) {
     directions[i].value.y = Math.max(0, directions[i].value.y - elapsed);
