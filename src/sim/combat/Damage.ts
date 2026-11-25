@@ -237,7 +237,8 @@ export class Damage {
       }
     }
     let megaReact = false;
-    const authoredOverpassWindup = this.world.scenario === 'L10' && this.world.missions?.state.states['l10-overpass-mega-staged'] && target.infected?.specialAttack?.attackId === this.world.missions.state.counters['l10-overpass-mega-attack'] && target.infected.specialAttack.move === 'alpha.grab-throw' && target.infected.specialAttack.stage !== 'recovery';
+    const overpassAttack = target.infected?.specialAttack;
+    const authoredOverpassWindup = this.world.scenario === 'L10' && this.world.missions?.state.states['l10-overpass-mega-staged'] && !!overpassAttack && overpassAttack.attackId === this.world.missions.state.counters['l10-overpass-mega-attack'] && overpassAttack.move === 'alpha.grab-throw' && overpassAttack.stage !== 'recovery';
     if (!authoredOverpassWindup && mega && hit.base * hit.multiplier > 0 && (hit.stagger > 0 || hit.knockback > 0 || hit.knockdown || hit.knockdownTicks || this.world.scenario === 'L10') && this.world.tick >= (target.infected!.megaStaggerReady ?? 0)) {
       megaReact = true; target.infected!.megaStaggerReady = this.world.tick + megaAlpha.staggerCooldownTicks;
       const recovery = target.infected!.specialRecoveryUntil ?? 0;
