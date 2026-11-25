@@ -33,3 +33,5 @@ The subtitle-free capture rerun includes four arrival samples. Review shows the 
 After commit `3a33ea33`, the HIGH boarding frame still puts most crew at or beyond the lower edge of the camera. An opposite-flank staging experiment moved some into frame but left the truck blocking the approach, so it was reverted. The current entry animation has not passed visual acceptance.
 
 A second staging experiment moved the approach points toward the cab. The HIGH boarding capture still showed crew clustered near the rear and a character visibly intersecting the cab window; the experiment was reverted. Inspect the courier transition and provide a clear, reachable camera-facing path before acceptance.
+
+The board interaction anchor is on truck-local negative Z, while the generic courier transition targets positive Z at the cab. Testing negative Z avoids crossing the body but places the animation behind the engine from the game camera; that experiment was reverted. A visible route must take the courier around the rear to the camera-facing side before entering.
