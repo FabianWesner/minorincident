@@ -269,7 +269,9 @@ let previousWindow: Awaited<ReturnType<typeof windowServerSnapshot>>, previousAt
 let sampling = false;
 const timer = setInterval(() => {
   pump();
-  for (const lease of leases.values()) if (Date.now() - lease.acquiredAt >= 600_000) closeLease(lease, '10-minute browser reservation cap reached; split the batch');
+  // A Luna real-play session plays a whole level in one page (one GPU browser): 35 min cap (PO 11-25 Luna playthrough).
+  const capMs = (lease: Lease) => lease.connection.job?.startsWith('luna-screen-play-') ? 2_100_000 : 600_000;
+  for (const lease of leases.values()) if (Date.now() - lease.acquiredAt >= capMs(lease)) closeLease(lease, 'browser reservation cap reached; split the batch');
   for (const lease of leases.values()) if (!lease.closing && lease.calls === 0 && Date.now() - lease.last >= idleMs) closeLease(lease, 'Idle browser lease released');
   if (!leases.size && !waiters.length && !starting.size && !exclusives.length && browsers.size && Date.now() - lastUse >= browserIdleMs) {
     lastUse = Date.now(); launchChain = launchChain.then(() => closeBrowsers('idle')).catch(error => event('idle-error', { error: String(error) }));
