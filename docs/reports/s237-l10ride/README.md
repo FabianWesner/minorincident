@@ -61,3 +61,7 @@ Moving the first tent from (3500, 50) to (3500, 108) did not make it visible in 
 ## Hospital frustum diagnostic
 
 At the staged road pose (3502, 95), the camera target was (3502.55, 0, 95) and all three original tents were culled outside its frustum; no see-through placements were cut. A trial at (3500, 108) was also culled. Moving the first tent to (3494, 87) selected LOD1 but left only an edge at the top of the image; (3498, 90) brought a large cropped wall into view while encroaching on the route. Both trials were reverted. The evidence points to the follow-camera composition and tent orientation/scale, rather than the see-through cut, as the remaining visual problem.
+
+## Scaled tent composition trial
+
+A half-scale first tent at (3500, 91) was fully visible in a staged HIGH frame, but showed a blank side and occupied the edge of the road; the opening and figures remained unreadable. Both native bot routes completed with 4/4 recorded loops and 459.5 s HIGH / 458.7 s LOW, but HIGH had 15 deaths versus 10 in the prior trace. The trial was reverted; a readable triage composition needs an entrance and figures in view without compromising the lane.
