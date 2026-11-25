@@ -49,6 +49,8 @@ The corn-specific opacity fade and the shared player see-through cut were remove
 
 - A second paired eight-zombie browser timing attempt also expired after 120 seconds waiting for quiet admission (a foreign Blender job and load). A separate Node-only selector microbenchmark used 24 synthetic moving infected, six alternating 30,000-update samples after warmup. Median update times were 0.001750 ms before priority selection and 0.001508 ms after; this synthetic CPU result does not measure browser frame time, GPU cost, or the real spatial query. Temporary benchmark files were removed.
 
+- A temporary per-slot shader toggle isolated the corgi on the same paused walking frame, leaving the courier contribution unchanged. For both quality tiers, two consecutive dog-disabled images were pixel-identical. Enabling the dog changed more than 20 RGB levels in at least one channel for 22,947 pixels on HIGH and 19,862 on LOW (WebGL2); headless WebGPU showed 23,096 and 19,850 respectively. The difference images were opened and show changed stalks around the dog (`/private/tmp/s235-dog-isolated` and `/private/tmp/s235-dog-isolated-webgpu`). This proves a visible dog contribution in those frames, not continuous motion or crowd coverage. Temporary instrumentation was removed.
+
 ## Open
 
 The generator now authors a common root for each stalk, leaf and tassel; all three packed LODs and static bakes contain it, and the shader evaluates influence at that root. Review motion through turns and after passing, including whether the one-second straight-line wake reads naturally.
