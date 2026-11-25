@@ -109,6 +109,12 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(l2Crew.filter(e => e.hidden).length, 'firefighters board in a visible seat-order stagger').toBeGreaterThan(0);
         expect(l2Crew.filter(e => e.hidden).length).toBeLessThan(l2Crew.length);
         expect(mission.state.l2!.phase, 'Engine 3 waits for the boarding sequence').toBe('alarm');
+        const delayed = l2Crew.at(-1)!, ally = delayed.civilian!.ally!, originalRun = ally.run, originalSpeed = ally.runSpeed;
+        ally.run = { x: delayed.transform.x + 100, z: delayed.transform.z }; ally.runSpeed = 0;
+        for (let tick = 0; tick < 15 * 60; tick++) levelWorld.update();
+        expect(mission.state.l2!.phase, 'a delayed living rider cannot be forced aboard by a timeout').toBe('alarm');
+        expect(!delayed.hidden, 'the delayed rider remains visible').toBe(true);
+        ally.run = originalRun; ally.runSpeed = originalSpeed;
         for (let tick = 0; tick < 300 && mission.state.l2!.phase === 'alarm'; tick++) levelWorld.update();
         if (corgi) { expect(corgi.hidden).toBe(true); expect(corgi.passengerOf).toBe(mission.state.l2!.truckId); }
         expect(mission.state.l2!.phase).toBe('ride');
