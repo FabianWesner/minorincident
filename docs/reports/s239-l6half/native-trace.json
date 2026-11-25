@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "currentFocusedTrace": "test-results/qa-threat-current/L6.json (native seed 1, commit a003c310)",
+    "currentFocusedTrace": "test-results/s239-gate-original-l6/L6.json (native seed 1, gate durability restored; source subsequently committed as 6b73daa0)",
     "beforeTrace": "docs/reports/r12-l6/evidence/pressure-after.json (native low seed 1, historical L6 pressure-after baseline)",
     "fullAllLevelsAudit": "test-results/s239-final-merged/audit.json (merged shards, source commit be03a278)"
   },
@@ -13,12 +13,19 @@
   },
   "completedNativeRoute": {
     "outcome": "complete",
-    "simSeconds": 192.48333333333332,
+    "simSeconds": 192.5,
     "totalSpawnedIncludingConversions": 38,
     "peakConcurrentInfected": 20,
     "retreatPhaseSpawned": 26,
-    "threatFlags": [],
-    "passiveFlags": [],
+    "threatFlags": [
+      "step/retreat:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS",
+      "phase/retreat:UNREACHABLE_SHARE_OVER_30_PERCENT_FOR_OVER_20_SECONDS"
+    ],
+    "passiveFlags": [
+      "step/retreat:SKILLED_FIRST_PLAYER_ATTACK_OVER_20_SECONDS",
+      "step/retreat:SKILLED_PLAYER_ATTACKS_PER_MINUTE_BELOW_11",
+      "step/retreat:SKILLED_FOLLOWER_ATTACKS_PER_MINUTE_BELOW_5"
+    ],
     "spawnEvents": [
       {
         "id": 57,
@@ -295,7 +302,7 @@
         "door": 7,
         "x": 225,
         "z": 16.99000009536743,
-        "tick": 9835,
+        "tick": 9811,
         "wave": 4,
         "offscreen": true
       },
@@ -322,7 +329,7 @@
         "door": 4,
         "x": 198,
         "z": 12.6,
-        "tick": 11001,
+        "tick": 11002,
         "wave": 3,
         "offscreen": true
       },
@@ -331,7 +338,7 @@
         "door": 4,
         "x": 198.8,
         "z": 12.6,
-        "tick": 11001,
+        "tick": 11002,
         "wave": 3,
         "offscreen": true
       }
@@ -389,29 +396,29 @@
         "door": 4,
         "warnedAt": 8883,
         "remaining": 0,
-        "nextAt": 10981,
+        "nextAt": 10922,
         "switchId": 52,
-        "closedAt": 9661,
+        "closedAt": 9602,
         "hits": 0,
-        "hitAt": 10981,
-        "brokenAt": 10981,
+        "hitAt": 10922,
+        "brokenAt": 10922,
         "reopenRemaining": 0
       },
       {
         "door": 7,
-        "warnedAt": 9715,
+        "warnedAt": 9691,
         "remaining": 0,
-        "nextAt": 11561,
+        "nextAt": 11608,
         "switchId": 53,
-        "closedAt": 10421,
-        "hits": 4,
-        "hitAt": 11501
+        "closedAt": 10408,
+        "hits": 3,
+        "hitAt": 11548
       }
     ]
   },
   "earlyCloseNativeRoute": {
     "outcome": "complete",
-    "simSeconds": 200.3,
+    "simSeconds": 195.43333333333334,
     "totalSpawnedIncludingConversions": 38,
     "peakConcurrentInfected": 19,
     "authoredSpawnEventCount": 35,
@@ -648,7 +655,7 @@
         "door": 6,
         "x": 159,
         "z": 16.99000009536743,
-        "tick": 8152,
+        "tick": 8154,
         "wave": 4,
         "offscreen": true
       },
@@ -675,7 +682,7 @@
         "door": 4,
         "x": 195,
         "z": 13.05999990463257,
-        "tick": 9212,
+        "tick": 9222,
         "wave": 4,
         "offscreen": true
       },
@@ -702,7 +709,7 @@
         "door": 7,
         "x": 225,
         "z": 16.99000009536743,
-        "tick": 10028,
+        "tick": 10038,
         "wave": 4,
         "offscreen": true
       },
@@ -729,7 +736,7 @@
         "door": 4,
         "x": 198,
         "z": 12.6,
-        "tick": 11215,
+        "tick": 11222,
         "wave": 3,
         "offscreen": true
       },
@@ -738,7 +745,7 @@
         "door": 4,
         "x": 198.8,
         "z": 12.6,
-        "tick": 11215,
+        "tick": 11222,
         "wave": 3,
         "offscreen": true
       }
@@ -772,47 +779,47 @@
         "door": 3,
         "warnedAt": 7095,
         "remaining": 0,
-        "nextAt": 9134,
+        "nextAt": 9125,
         "switchId": 50,
-        "closedAt": 7814,
+        "closedAt": 7805,
         "hits": 0,
-        "hitAt": 9134,
-        "brokenAt": 9134,
+        "hitAt": 9125,
+        "brokenAt": 9125,
         "reopenRemaining": 0
       },
       {
         "door": 6,
-        "warnedAt": 8032,
+        "warnedAt": 8034,
         "remaining": 0,
-        "nextAt": 10145,
+        "nextAt": 10150,
         "switchId": 51,
-        "closedAt": 8825,
+        "closedAt": 8830,
         "hits": 0,
-        "hitAt": 10145,
-        "brokenAt": 10145,
+        "hitAt": 10150,
+        "brokenAt": 10150,
         "reopenRemaining": 0
       },
       {
         "door": 4,
-        "warnedAt": 9092,
+        "warnedAt": 9102,
         "remaining": 0,
-        "nextAt": 11124,
+        "nextAt": 11142,
         "switchId": 52,
-        "closedAt": 9804,
+        "closedAt": 9822,
         "hits": 0,
-        "hitAt": 11124,
-        "brokenAt": 11124,
+        "hitAt": 11142,
+        "brokenAt": 11142,
         "reopenRemaining": 0
       },
       {
         "door": 7,
-        "warnedAt": 9908,
+        "warnedAt": 9918,
         "remaining": 0,
-        "nextAt": 11757,
+        "nextAt": 11762,
         "switchId": 53,
-        "closedAt": 10617,
+        "closedAt": 10622,
         "hits": 4,
-        "hitAt": 11697
+        "hitAt": 11702
       }
     ],
     "allDoorsClosedInvariant": "Existing waves invariant verifies no pressure candidates with all six service doors closed; with one broken hatch, only that door is a pressure candidate."
@@ -915,16 +922,16 @@
         "actualTier": "low",
         "seed": 1,
         "completed": true,
-        "simSeconds": 192.48333333333332,
+        "simSeconds": 192.5,
         "pressureArrivals": 20,
-        "pressureArrivalsPerMinute": 8.945210585165858,
+        "pressureArrivalsPerMinute": 8.944099378881987,
         "directionCounts": {
           "ahead": 12,
           "behind": 8,
           "near": 0
         },
-        "playerAttacksPerMinute": 1.3908564069542821,
-        "followerAttacksPerMinute": 3.7089504185447524,
+        "playerAttacksPerMinute": 0.9271182075714653,
+        "followerAttacksPerMinute": 3.7084728302858614,
         "damageTaken": 40,
         "maxConcurrentInfected": 20
       },
@@ -933,16 +940,16 @@
         "actualTier": "low",
         "seed": 2,
         "completed": true,
-        "simSeconds": 211.26666666666668,
+        "simSeconds": 211.43333333333334,
         "pressureArrivals": 20,
-        "pressureArrivalsPerMinute": 8.623787279913762,
+        "pressureArrivalsPerMinute": 8.612440191387561,
         "directionCounts": {
           "ahead": 14,
           "behind": 6,
           "near": 0
         },
-        "playerAttacksPerMinute": 1.7729623245506032,
-        "followerAttacksPerMinute": 3.1026840679635557,
+        "playerAttacksPerMinute": 1.7707820954254796,
+        "followerAttacksPerMinute": 2.2134776192818495,
         "damageTaken": 20,
         "maxConcurrentInfected": 19
       },
@@ -951,16 +958,16 @@
         "actualTier": "low",
         "seed": 3,
         "completed": true,
-        "simSeconds": 201.75,
+        "simSeconds": 198.13333333333333,
         "pressureArrivals": 20,
-        "pressureArrivalsPerMinute": 8.61038029179622,
+        "pressureArrivalsPerMinute": 8.839779005524862,
         "directionCounts": {
           "ahead": 12,
           "behind": 8,
           "near": 0
         },
-        "playerAttacksPerMinute": 0.8846295613711758,
-        "followerAttacksPerMinute": 4.423147806855879,
+        "playerAttacksPerMinute": 0.45443069931835395,
+        "followerAttacksPerMinute": 4.54430699318354,
         "damageTaken": 10,
         "maxConcurrentInfected": 19
       },
@@ -969,16 +976,16 @@
         "actualTier": "high",
         "seed": 1,
         "completed": true,
-        "simSeconds": 192.48333333333332,
+        "simSeconds": 192.5,
         "pressureArrivals": 20,
-        "pressureArrivalsPerMinute": 8.945210585165858,
+        "pressureArrivalsPerMinute": 8.944099378881987,
         "directionCounts": {
           "ahead": 12,
           "behind": 8,
           "near": 0
         },
-        "playerAttacksPerMinute": 1.3908564069542821,
-        "followerAttacksPerMinute": 3.7089504185447524,
+        "playerAttacksPerMinute": 0.9271182075714653,
+        "followerAttacksPerMinute": 3.7084728302858614,
         "damageTaken": 40,
         "maxConcurrentInfected": 20
       },
@@ -987,16 +994,16 @@
         "actualTier": "high",
         "seed": 2,
         "completed": true,
-        "simSeconds": 211.26666666666668,
+        "simSeconds": 211.43333333333334,
         "pressureArrivals": 20,
-        "pressureArrivalsPerMinute": 8.623787279913762,
+        "pressureArrivalsPerMinute": 8.612440191387561,
         "directionCounts": {
           "ahead": 14,
           "behind": 6,
           "near": 0
         },
-        "playerAttacksPerMinute": 1.7729623245506032,
-        "followerAttacksPerMinute": 3.1026840679635557,
+        "playerAttacksPerMinute": 1.7707820954254796,
+        "followerAttacksPerMinute": 2.2134776192818495,
         "damageTaken": 20,
         "maxConcurrentInfected": 19
       },
@@ -1005,16 +1012,16 @@
         "actualTier": "high",
         "seed": 3,
         "completed": true,
-        "simSeconds": 201.75,
+        "simSeconds": 198.13333333333333,
         "pressureArrivals": 20,
-        "pressureArrivalsPerMinute": 8.61038029179622,
+        "pressureArrivalsPerMinute": 8.839779005524862,
         "directionCounts": {
           "ahead": 12,
           "behind": 8,
           "near": 0
         },
-        "playerAttacksPerMinute": 0.8846295613711758,
-        "followerAttacksPerMinute": 4.423147806855879,
+        "playerAttacksPerMinute": 0.45443069931835395,
+        "followerAttacksPerMinute": 4.54430699318354,
         "damageTaken": 10,
         "maxConcurrentInfected": 19
       }
