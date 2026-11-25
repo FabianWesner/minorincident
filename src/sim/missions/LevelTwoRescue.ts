@@ -247,7 +247,7 @@ export class LevelTwoRescue {
     if (id === 'board') this.board();
     if (id === 'axe') this.takeAxe();
     if (id === 'ride' && (this.s.phase === 'ride' || this.s.phase === 'alarm')) {
-      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; e.passengerOf = this.s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
+      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e && e.health.current > 0 && !e.infected) { e.hidden = true; e.passengerOf = this.s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
       if (!this.s.seated) this.board();
       this.s.phase = 'ride'; this.s.departAt ||= this.world.tick; this.s.rideS = this.routeInfo().length; this.ride();
     }
@@ -365,7 +365,7 @@ export class LevelTwoRescue {
     if (this.s.seated) {
       relocatePlayer(world, x, z);
     }
-    for (const e of world.entities.iterate()) if (e.hidden && (e.companion || this.s.crewIds.includes(e.id))) { e.hidden = true; e.passengerOf = this.s.truckId; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
+    for (const e of world.entities.iterate()) if (e.hidden && e.passengerOf === this.s.truckId && e.health.current > 0 && !e.infected) { e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
   }
   private arrive(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
