@@ -29,3 +29,5 @@
 - `carry()` currently hides the companion as soon as the courier boards, before the companion reaches its boarding point; arrival also leaves its `passengerOf` marker set. Removing that early hide exposed that the existing interaction test does not reach the companion boarding point within three seconds. Fix the path and entry/exit together, then rerun the checks and captures.
 
 The subtitle-free capture rerun includes four arrival samples. Review shows the crew clustered behind the truck during boarding and the exit obscured by the truck at arrival; the one-by-one climb and walk-out are still not visually demonstrated. The camera-facing door and character paths need adjustment before acceptance.
+
+After commit `3a33ea33`, the HIGH boarding frame still puts most crew at or beyond the lower edge of the camera. An opposite-flank staging experiment moved some into frame but left the truck blocking the approach, so it was reverted. The current entry animation has not passed visual acceptance.
