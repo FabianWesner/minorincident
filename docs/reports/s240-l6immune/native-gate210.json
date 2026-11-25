@@ -1,0 +1,231 @@
+{
+  "method": "Seed 1 high native L6, complete bot, unmodified mission; snapshots on checkpoint changes and player combat.hit events. This is not the PO save.",
+  "gate210": {
+    "tick": 10520,
+    "checkpoint": "gate-210",
+    "phase": "retreat",
+    "player": {
+      "x": 213.4935302734375,
+      "y": 1.590000033378601,
+      "z": 16.977916717529297,
+      "yaw": 2.726546208613871
+    },
+    "alive": 16,
+    "near": [
+      {
+        "id": 129,
+        "type": "infected.runner",
+        "hp": 46,
+        "max": 60,
+        "state": "chase",
+        "hidden": false,
+        "brainHidden": false,
+        "at": {
+          "x": 209.28987467335983,
+          "z": 14.034742750291663,
+          "y": 1.2999999999999998,
+          "yaw": -1.2471561462044898
+        }
+      },
+      {
+        "id": 133,
+        "type": "infected.runner",
+        "hp": 46,
+        "max": 60,
+        "state": "chase",
+        "hidden": false,
+        "brainHidden": false,
+        "at": {
+          "x": 207.41317161611317,
+          "z": 14.593440127310917,
+          "y": 1.2999999999999998,
+          "yaw": -0.007436080279294675
+        }
+      },
+      {
+        "id": 140,
+        "type": "infected.runner",
+        "hp": 32,
+        "max": 60,
+        "state": "attack",
+        "hidden": false,
+        "brainHidden": false,
+        "at": {
+          "x": 210.60854782227392,
+          "z": 15.746811141408653,
+          "y": 1.2999999999999998,
+          "yaw": -0.5120648401126873
+        }
+      },
+      {
+        "id": 153,
+        "type": "infected.alpha",
+        "hp": 46.60000000000001,
+        "max": 300,
+        "state": "stagger",
+        "brainHidden": false,
+        "at": {
+          "x": 211.84032765626839,
+          "z": 15.294760052970078,
+          "y": 1.2999999999999998,
+          "yaw": -0.33416998547419585
+        }
+      },
+      {
+        "id": 163,
+        "type": "infected.armored",
+        "hp": 232,
+        "max": 240,
+        "state": "chase",
+        "brainHidden": false,
+        "at": {
+          "x": 220.74032569308784,
+          "y": 1.2999999999999998,
+          "z": 15.200008066963242,
+          "yaw": 0.6726115580050187
+        }
+      },
+      {
+        "id": 164,
+        "type": "infected.runner",
+        "hp": 22,
+        "max": 60,
+        "state": "chase",
+        "hidden": false,
+        "brainHidden": false,
+        "at": {
+          "x": 222.13431726866747,
+          "z": 15.715967002358381,
+          "y": 1.2999999999999998,
+          "yaw": 1.7783102852736998
+        }
+      },
+      {
+        "id": 166,
+        "type": "infected.runner",
+        "hp": 60,
+        "max": 60,
+        "state": "attracted",
+        "brainHidden": false,
+        "at": {
+          "x": 227.78335273558884,
+          "z": 17.3369925196338,
+          "y": 1.5700000143051147,
+          "yaw": 0.09333333333333334
+        }
+      },
+      {
+        "id": 167,
+        "type": "infected.runner",
+        "hp": 60,
+        "max": 60,
+        "state": "chase",
+        "hidden": false,
+        "brainHidden": false,
+        "at": {
+          "x": 228.70257347536156,
+          "z": 17.286397959981972,
+          "y": 1.5700000143051147,
+          "yaw": 2.061336581985162
+        }
+      },
+      {
+        "id": 169,
+        "type": "infected.runner",
+        "hp": 60,
+        "max": 60,
+        "state": "attracted",
+        "hidden": false,
+        "brainHidden": false,
+        "at": {
+          "x": 228.3410501166575,
+          "z": 18.13146079401375,
+          "y": 1.5700000143051147,
+          "yaw": 1.674293586307981
+        }
+      },
+      {
+        "id": 171,
+        "type": "infected.runner",
+        "hp": 60,
+        "max": 60,
+        "state": "chase",
+        "hidden": false,
+        "brainHidden": false,
+        "at": {
+          "x": 229.61528287492317,
+          "z": 17.397136196019773,
+          "y": 1.5700000143051147,
+          "yaw": 3.286760076255981
+        }
+      }
+    ]
+  },
+  "actor163Hits": [
+    {
+      "tick": 10611,
+      "id": 163,
+      "amount": 14,
+      "hp": 218,
+      "action": "weapon.army-mg",
+      "actor": {
+        "x": 223.13678783004815,
+        "y": 1.2999999999999998,
+        "z": 14.316069365887023,
+        "yaw": 0.5674625781473334
+      },
+      "player": {
+        "x": 215.21945190429688,
+        "y": 1.5049583911895752,
+        "z": 16.588407516479492,
+        "yaw": 0.27934433905477724
+      },
+      "state": "chase"
+    },
+    {
+      "tick": 10616,
+      "id": 163,
+      "amount": 14,
+      "hp": 204,
+      "action": "weapon.army-mg",
+      "actor": {
+        "x": 222.93371055571833,
+        "y": 1.2999999999999998,
+        "z": 14.25525767290048,
+        "yaw": 0.1963110835535573
+      },
+      "player": {
+        "x": 215.5873260498047,
+        "y": 1.4151318073272705,
+        "z": 16.503459930419922,
+        "yaw": 0.2961483664320965
+      },
+      "state": "chase"
+    },
+    {
+      "tick": 10630,
+      "id": 163,
+      "amount": 204,
+      "hp": 0,
+      "action": "weapon.shotgun",
+      "actor": {
+        "x": 222.7462950779259,
+        "y": 1.2999999999999998,
+        "z": 14.220469872541411,
+        "yaw": -0.7074060710143276
+      },
+      "player": {
+        "x": 216.6192169189453,
+        "y": 1.2699999809265137,
+        "z": 16.30929183959961,
+        "yaw": 0.32694071850214534
+      },
+      "state": "chase"
+    }
+  ],
+  "end": {
+    "end": 12231,
+    "phase": "cinematic",
+    "checkpoint": "exit-platform"
+  }
+}

@@ -33,6 +33,8 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - [High-tier shield capture](first-hit-high.png), [hit event](riot-visual.json): in active L6 retreat at the exit, actual mouse-fired MG hit a 225 HP riot for 2.52 HP. The opened image shows a yellow spark on the shield, a red health bar with a gold chip, and the “SHIELD STRAIN · CHIP” label. The first capture exposed that the label covered the bar; the label now sits 48 px higher. This is a controlled protected-courier fixture, not the PO save. No page errors.
 
+- [Native gate-210 trace](native-gate210.json): seed 1 high, ordinary complete bot, no mission skips or target edits. At tick 10520 the retreat checkpoint has an armored actor 163 at 232/240 HP in chase among nearby Alpha and runners. At ticks 10611 and 10616 the bot's MG hits that same ID for 14 each; at 10630 the shotgun downs it for the remaining 204. Actor and courier support heights are included. The route reaches the exit at tick 11381; it is a different playthrough from the PO's tick 29926 and does not establish the PO actors' identities.
+
 ## Open
 
 - A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
