@@ -304,6 +304,7 @@ export class LevelTwoRescue {
     if (!this.s.axe) this.mission.state.steps.axe.status = 'cancelled';
     if (world.vehicles) world.vehicles.transition = { carId: this.s.truckId, kind: 'enter', tick, side: 1, from: { ...player.transform } };
     this.s.seated = true; this.s.boardingAt = tick; this.s.companionBoard = this.seat(0); player.hidden = false; player.survivor!.scriptedClip = 'enter-car'; player.survivor!.animationTick = tick;
+    this.s.crewBoardFrom = this.s.crewIds.map(() => null);
     world.physics.playerCollider!.setEnabled(false); world.player!.locomotion.reset();
     this.mission.setState('boarded', true);
     world.storyLock = { scripted: null, skip: false };
@@ -380,7 +381,7 @@ export class LevelTwoRescue {
       if (e.health.current <= 0 || e.infected) continue;
       if (!e.hidden || tick < s.crewExitAt + i * 18) continue;
       const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9, p = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
-      e.hidden = false; delete e.passengerOf; Object.assign(e.transform, p); world.solids.admit(e, 'l2.passenger.exit');
+      e.hidden = false; delete e.passengerOf; Object.assign(e.transform, p); e.transform.y = s.crewBoardFrom?.[i]?.y ?? e.transform.y; world.solids.admit(e, 'l2.passenger.exit');
       // Three to the chained front doors, three to the loading door: an urgent run, not a jog.
       const [x, z] = l2.rescue.crewDoors[i];
       e.civilian!.ally.run = this.snap({ x, z }, .35); e.civilian!.ally.runSpeed = l2.rescue.crewRunMs; e.civilian!.pauseUntil = 0;
@@ -593,9 +594,22 @@ export class LevelTwoRescue {
         const start = (s.boardingAt ?? tick) + i * 24;
         if (s.seated && !a.run && tick >= start) {
           const story = e.civilian!.story;
-          if (story?.clip !== 'npc-sit-down') e.civilian!.story = { clip: 'npc-sit-down', start: tick };
+          if (story?.clip !== 'npc-sit-down') {
+            e.civilian!.story = { clip: 'npc-sit-down', start: tick };
+            (s.crewBoardFrom ??= [])[i] = { x: e.transform.x, y: e.transform.y, z: e.transform.z };
+            e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER;
+          }
           else if (tick - story.start >= ticks(.6)) {
             e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id);
+          } else {
+            const from = s.crewBoardFrom?.[i], truck = world.entities.get(s.truckId)!.transform;
+            if (from) {
+              const u = (tick - story.start) / ticks(.6), weight = u * u * (3 - 2 * u);
+              e.transform.x = from.x + (truck.x - from.x) * weight * .55;
+              e.transform.z = from.z + (truck.z - from.z) * weight * .55;
+              e.transform.y = from.y + .65 * weight;
+              world.spatial.set(id, e.transform.x, e.transform.z);
+            }
           }
         }
       }
