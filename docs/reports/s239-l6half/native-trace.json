@@ -2,7 +2,7 @@
   "provenance": {
     "currentFocusedTrace": "test-results/qa-threat-current/L6.json (native seed 1, commit a003c310)",
     "beforeTrace": "docs/reports/r12-l6/evidence/pressure-after.json (native low seed 1, historical L6 pressure-after baseline)",
-    "fullAllLevelsAudit": "test-results/qa-threat-current/audit.json (merged shards, commit a003c310)"
+    "fullAllLevelsAudit": "test-results/s239-final-merged/audit.json (merged shards, source commit be03a278)"
   },
   "before": {
     "outcome": "result",
@@ -819,10 +819,18 @@
   },
   "mergedThreatAudit": {
     "levelCount": 10,
-    "acceptanceFlags": [],
+    "acceptanceFlags": [
+      "L6/step/retreat:SKILLED_FIRST_PLAYER_ATTACK_OVER_20_SECONDS",
+      "L6/step/retreat:SKILLED_PLAYER_ATTACKS_PER_MINUTE_BELOW_11",
+      "L6/step/retreat:SKILLED_FOLLOWER_ATTACKS_PER_MINUTE_BELOW_5"
+    ],
     "l6Outcome": "complete",
     "l6Flags": [],
-    "l6PassiveFlags": []
+    "l6PassiveFlags": [
+      "step/retreat:SKILLED_FIRST_PLAYER_ATTACK_OVER_20_SECONDS",
+      "step/retreat:SKILLED_PLAYER_ATTACKS_PER_MINUTE_BELOW_11",
+      "step/retreat:SKILLED_FOLLOWER_ATTACKS_PER_MINUTE_BELOW_5"
+    ]
   },
   "reconstructedBaseline": {
     "revision": "68892f1f6230c09a9e3d58a6a8190e3a5197672e",
