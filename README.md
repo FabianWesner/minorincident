@@ -89,3 +89,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - Source inventory: `src/levels/L6` and `D-SUBWAY.layout.json` contain no additional infected-wave counts. The existing L6 distant-filler recycler skips corpses and downed actors; the PO corpse-persistence rule was not changed.
 
 - Folded eastern-boundary infected/human navigation checks into the existing L6 wave invariant, without adding a test case. Both tier runs passed those assertions and reached the previously documented escort failure; the L4 low failure also remains.
+
+- Eastern-wall exit receipt limitation: when the courier reached x≈271, the passive exit snapshot had 26 living infected and 0 reachable to the courier; the skilled snapshot had 3 living and 0 reachable. The exit phase lasted less than the audit’s 20 s sustained-unreachability threshold, so no flag was raised. This must be resolved or explicitly addressed to satisfy the no-straggler requirement; a blocked end alone is not sufficient proof.
