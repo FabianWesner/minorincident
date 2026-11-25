@@ -30,11 +30,10 @@ try {
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
     const audit = { attacks: [] as unknown[], hits: [] as unknown[], lines: [] as unknown[], specials: [] as unknown[], animalHits: [] as unknown[] };
     (window as unknown as { l8Audit: typeof audit }).l8Audit = audit;
-    const arenaOf = (id: number) => game.world.missions!.l8!.state.arenas.find(arena => arena.ids.includes(id))?.id;
     game.world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) audit.attacks.push({ tick: e.tick, id: e.actionId, arena: game.world.missions!.l8!.state.arenas.find(a => a.phase > 0 && a.phase < 3)?.id }); });
     game.world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.sourceId === 1) audit.hits.push({ tick: e.tick, id: e.actionId, target: e.targetId, amount: e.amount, arena: game.world.missions!.l8!.state.arenas.find(a => a.ids.includes(e.targetId))?.id }); });
-    game.world.events.on('infected.special', e => { if (e.type === 'infected.special') { const arena = arenaOf(e.sourceId); if (arena) audit.specials.push({ tick: e.tick, arena, move: e.move, stage: e.stage }); } });
-    game.world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1 && e.amount > 0) { const arena = arenaOf(e.sourceId), move = game.world.entities.get(e.sourceId)?.infected?.specialAttack?.move; if (arena && move) audit.animalHits.push({ tick: e.tick, arena, move, amount: e.amount }); } });
+    game.world.events.on('infected.special', e => { if (e.type === 'infected.special') { const arena = game.world.missions!.l8!.state.arenas.find(a => a.ids.includes(e.sourceId))?.id; if (arena) audit.specials.push({ tick: e.tick, arena, move: e.move, stage: e.stage }); } });
+    game.world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1 && e.amount > 0) { const arena = game.world.missions!.l8!.state.arenas.find(a => a.ids.includes(e.sourceId))?.id, move = game.world.entities.get(e.sourceId)?.infected?.specialAttack?.move; if (arena && move) audit.animalHits.push({ tick: e.tick, arena, move, amount: e.amount }); } });
     game.world.events.on('dialogue.line', e => { if (e.type === 'dialogue.line') audit.lines.push({ tick: e.tick, id: e.id }); });
   }, tier);
   for (let n = 0; n < 7200; n++) {
