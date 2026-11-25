@@ -34,6 +34,7 @@ try {
             return { tick: g.world.tick, phase: l.phase, boardingAt: l.boardingAt ?? null, seated: l.seated,
               courierVisible: !g.world.entities.get(1)!.hidden, crewVisible: crew.filter(e => !e.hidden).length,
               sitDown: crew.filter(e => e.civilian?.story?.clip === 'npc-sit-down').length,
+              crew: crew.map(e => ({ id: e.id, x: e.transform.x, z: e.transform.z, hidden: !!e.hidden, run: e.civilian?.ally?.run, story: e.civilian?.story })),
               render: a.getState().render.vehicles.find(v => v.id === l.truckId) };
           }, zoom);
           const file = `${out}/${stage}-f${String(frame).padStart(3, '0')}-z${zoom}.png`;
@@ -60,7 +61,7 @@ try {
       await session.page.evaluate(() => window.__SS__!.input.clear());
       s = await state();
       if (!s.l2.boardingAt) throw new Error(`${tier}: l2-board interaction did not start boarding`);
-      for (const dt of [18, 54, 96, 150, 210]) {
+      for (const dt of [80, 110, 140, 170, 210]) {
         const now = (await state()).tick, target = s.l2.boardingAt + dt;
         if (now < target) await wait(target - now);
         await snap('boarding', dt);
