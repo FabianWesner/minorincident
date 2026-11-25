@@ -41,6 +41,8 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - Tunnel first-hit visual review: high-tier WebGL2 at (110, 15), active retreat, controlled actors and physical mouse input. All eight type/weapon combinations landed. Opened captures showed red/gold bars for the three firearms on armor and handgun/MG on riot; shotgun downed riot with a shield-broken cue. Both axe hits initially had no bar despite visible actors. Instrumentation found district visual occlusion returned true while the physical solid ray was clear. The close player-hit heavy now retains its bar through district reveal, while the physical solid ray still blocks walls. The refreshed [armor axe capture](tunnel-axe-high.png) and [trace](tunnel-occlusion.json) show a bar at 0.837 fraction; riot shows 0.652. Existing overlap regression, typecheck and lint passed. These controlled cases do not reproduce the original crowd.
 
+- [Riot distance and facing matrix](riot-distance-matrix.json): 32 high-tier controlled L6 retreat cases, front and rear initial facing at the exit and tunnel, real mouse input and stepped simulation. Axe starts 1/2 m away; firearms start 2/8 m away. All cases downed the 225 HP riot. Initial frontal handgun/MG hits were 3.6/2.52 HP and signaled shield glance; initial rear hits were full 20/14 HP. Shotgun broke the front shield and downed in one hit; axe dealt full melee damage. The actor may turn and move after setup, so distance and facing are initial conditions. No page errors.
+
 ## Open
 
 - A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
