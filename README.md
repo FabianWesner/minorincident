@@ -61,3 +61,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - An isolated native reproduction of the threatened-escort fixture gives identical one-tick positions on base revision 68892f1f and this lane: the first escort moves x 130 → 129.9577666, the second x 130 → 130.0092120. The assertion failure therefore predates the L6 changes; it remains an open invariant failure.
 
 - Updated the pressure measurement direction classifier from a 10 m offset from the leader to the authored 8 m offset from the walking tail, using the service door position. Six native runs complete; typecheck and lint pass.
+
+- A six-run timing experiment deferred pressure when the selected service door was more than 24 m from the walking tail. All routes completed, but each received only six pressure arrivals, all ahead; player attacks remained 0.90–1.86/min. The experiment was discarded because it did not restore the required threat or both-direction pressure.
