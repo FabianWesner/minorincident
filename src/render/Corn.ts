@@ -41,11 +41,13 @@ function consider(id: number, x: number, speed: number, z: number, vx: number, v
 let vehicleElapsed = 0;
 let activeVehicle: number | null = null;
 // A reusable callback avoids creating a Map iterator or closure on each frame.
-function collectVehicle(car: { entity: EntitySnapshot; physics: { speed: number } }): void {
+function collectVehicle(car: { entity: EntitySnapshot; physics: { speed: number; forwardSpeed: number; previous: { x: number; z: number } } }): void {
   const e = car.entity, speed = Math.abs(car.physics.speed);
   if (speed <= .1 || Math.hypot(e.transform.x - search.x, e.transform.z - search.z) > 22) return;
-  const sign = car.physics.speed < 0 ? -1 : 1;
-  const vx = Math.cos(e.transform.yaw) * sign, vz = -Math.sin(e.transform.yaw) * sign;
+  const dx = e.transform.x - car.physics.previous.x, dz = e.transform.z - car.physics.previous.z, distance = Math.hypot(dx, dz);
+  const sign = car.physics.forwardSpeed < 0 ? -1 : 1;
+  const vx = distance > 1e-5 ? dx / distance : Math.cos(e.transform.yaw) * sign;
+  const vz = distance > 1e-5 ? dz / distance : -Math.sin(e.transform.yaw) * sign;
   if (activeVehicle === e.id) put(e.id, e.transform.x, speed, e.transform.z, vx, vz, vehicleElapsed, 2);
   else consider(e.id, e.transform.x, speed, e.transform.z, vx, vz);
 }
