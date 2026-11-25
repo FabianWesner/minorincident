@@ -43,6 +43,9 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - [Riot distance and facing matrix](riot-distance-matrix.json): 32 high-tier controlled L6 retreat cases, front and rear initial facing at the exit and tunnel, real mouse input and stepped simulation. Axe starts 1/2 m away; firearms start 2/8 m away. All cases downed the 225 HP riot. Initial frontal handgun/MG hits were 3.6/2.52 HP and signaled shield glance; initial rear hits were full 20/14 HP. Shotgun broke the front shield and downed in one hit; axe dealt full melee damage. The actor may turn and move after setup, so distance and facing are initial conditions. No page errors.
 
+- [Late-state attempt](late-native.json): seed-1 high native bot advanced to gate-210, then the courier was teleported to the reported position and protected while idle. At tick 10800 the retreat remained active with 20 alive and no infected within 15 m; the mission reached exit-platform and cinematic at tick 12346, before the reported tick 29926. This controlled route cannot reconstruct the PO's prolonged run or identify its two actors.
+- Threat audit provenance: `git diff 68892f1f HEAD -- src/sim src/data src/levels src/debug tools/qa/threat-audit.ts tools/qa/threat tools/sim-runner` is empty. The previous untrimmed 0-flag threat audit therefore exercised the same simulation and audit sources; the standard 600 s wrapper itself timed out and remains a failed gate.
+
 ## Open
 
 - A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
