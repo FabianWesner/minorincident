@@ -285,7 +285,7 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
   }
   const keyboardSeen = new Set<string>();
   for (let i = 0; i < l10HangarWeapons.length * 3 && keyboardSeen.size < l10HangarWeapons.length; i++) {
-    await page.keyboard.press('q'); await page.evaluate(async () => { await window.__SS__!.step(16); });
+    await page.keyboard.press('Shift+Q'); await page.evaluate(async () => { await window.__SS__!.step(16); });
     const selected = await page.evaluate(() => { const p = window.__SS__!.getState().player!, side = p.weapons!.selectedSide, rack = p.weapons![side]; const id = rack.index < 0 ? 'weapon.fists' : rack.rack[rack.index].id; return id === 'weapon.kick' ? 'weapon.fists' : id; });
     if (l10HangarWeapons.includes(selected)) keyboardSeen.add(selected);
   }

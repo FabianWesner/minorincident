@@ -74,6 +74,7 @@ function checkArsenalRoles(): void {
   const owned = carried.activeEntries().map(e => e.id); carried.collect('RIGHT', 'weapon.shotgun');
   expect(carried.activeEntries().map(e => e.id)).toEqual(expect.arrayContaining([...owned, 'weapon.shotgun']));
   expect(carried.collect('LEFT', 'weapon.pipe-bomb')).toBe('weapon.molotov');
+  swapLastCheck();
   expect(rosterAction('weapon.pipe-bomb').damage).toBeGreaterThan(0);
   expect(rosterAction('weapon.rocket-launcher').knockdown).toBe(true);
   expect(rosterAction('weapon.nail-gun').damage).toBe(14);
@@ -974,7 +975,8 @@ async function checkCorgiLure(): Promise<void> {
 }
 
 
-test('RMB / Q flip between the current and the last-used weapon (PO 2026-11-22)', () => {
+/** RMB / Q flip between the current and the last-used weapon (PO 2026-11-22); runs inside the carried-loadout test. */
+function swapLastCheck(): void {
   const l = new Loadout(['weapon.fire-axe', 'weapon.hunting-rifle'], ['weapon.handgun', 'weapon.assault-rifle']);
   const frame = (patch: Partial<InputFrame>): InputFrame => ({ ...emptyInput(), ...patch });
   const held = () => l.current(l.state.selectedSide).id;
@@ -985,4 +987,4 @@ test('RMB / Q flip between the current and the last-used weapon (PO 2026-11-22)'
   expect(held(), 'flip to the short-range weapon').toBe('weapon.fire-axe');
   l.input(frame({ swapLast: true }), 400); l.update(500, () => {});
   expect(held(), 'flip back to the long-range weapon').toBe('weapon.assault-rifle');
-});
+}

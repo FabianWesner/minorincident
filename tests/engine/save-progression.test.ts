@@ -186,10 +186,10 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
         expect(log).toHaveBeenCalled(); log.mockRestore();
 
         world.entities.get(1)!.health.current = living.player.health.current;
-        for (const phase of ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'] as const) {
+        for (const phase of ['driving', 'approach', 'fall', 'impact', 'dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap', 'done'] as const) {
           l9.state.phase = phase; l9.state.finished = phase === 'done';
           const car = world.entities.get(l9.state.carId)!;
-          if (['impact', 'crawl', 'done'].includes(phase)) { car.vehicle!.damage = 'exploded'; car.vehicle!.driver = null; }
+          if (!['driving', 'approach', 'fall'].includes(phase)) { car.vehicle!.damage = 'exploded'; car.vehicle!.driver = null; }
           else { car.vehicle!.damage = 'normal'; car.vehicle!.driver = 1; }
           const candidate = structuredClone(save); candidate.l9Crash = l9.save();
           expect(validateSave(candidate), `L9 phase ${phase}`).toBe(true);
@@ -530,11 +530,11 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   expect(decodeSave(JSON.stringify({ ...JSON.parse(expand(read('b60-l10-01-cure-crash.json.gz'))), seed: 'x' })).status).toBe('error');
 });
 
-// N10: the destructive L9 -> L10 crossing commits once, after the crawl, and Continue resumes the committed save.
-test('crossing handover: needs the finished crawl, commits once, drops weapons and transport, keeps passengers and the corgi', () => {
+// N10: the destructive L9 -> L10 crossing commits once, after the scripted ending, and Continue resumes the committed save.
+test('crossing handover: needs the finished ending, commits once, drops weapons and transport, keeps passengers and the corgi', () => {
   const rack = (ids: string[]) => ({ rack: ids.map(id => ({ id })) });
   const make = (finished: boolean) => {
-    const player = { id: 1, transform: { x: 3, y: .7, z: 4, yaw: 1 }, health: { current: 10, max: 100 }, survivor: { scriptedClip: 'crawl', knockdown: { started: 0, until: 120 }, attack: { started: 0, endsAt: 120 }, animation: 'knockdown', animationTick: 30 }, weapons: { LEFT: rack(['weapon.bat']), RIGHT: rack(['weapon.shotgun']) } };
+    const player = { id: 1, transform: { x: 3, y: .7, z: 4, yaw: 1 }, health: { current: 10, max: 100 }, survivor: { scriptedClip: 'get-up-prone', knockdown: { started: 0, until: 120 }, attack: { started: 0, endsAt: 120 }, animation: 'knockdown', animationTick: 30 }, weapons: { LEFT: rack(['weapon.bat']), RIGHT: rack(['weapon.shotgun']) } };
     const pose = { x: 1, y: .7, z: 2, yaw: 0 };
     const corgi = { id: 7, kind: 'companion', archetype: 'char.corgi', companion: { path: [], courage: 1, until: 0, barkAt: 0, hurtAt: 0 }, health: { current: 8, max: 8 }, transform: pose };
     const rider = { id: 8, kind: 'civilian', health: { current: 40, max: 50 }, transform: pose }, dead = { id: 9, kind: 'civilian', health: { current: 0, max: 50 }, transform: pose };
@@ -553,14 +553,14 @@ test('crossing handover: needs the finished crawl, commits once, drops weapons a
     return { save, world, player, projectiles, setLoadout, removed };
   };
   const early = make(false);
-  expect(() => commitCrossingHandover(early.save, early.world as never), 'premature commit').toThrow('completed crawl');
+  expect(() => commitCrossingHandover(early.save, early.world as never), 'premature commit').toThrow();
   expect(early.save.crossingHandover).toBeUndefined();
   expect(early.save.transport).toBeDefined();
 
   const { save, world, player, projectiles, setLoadout, removed } = make(true);
   const before = [...new Set([...save.ownedActions, 'weapon.bat', 'weapon.shotgun'])].filter(id => catalog[id].category !== 'ability');
   commitCrossingHandover(save, world as never);
-  expect(player.survivor.scriptedClip, 'L10 handover releases the completed L9 crawl pose').toBeUndefined();
+  expect(player.survivor.scriptedClip, 'L10 handover releases the completed L9 get-up pose').toBeUndefined();
   expect(player.survivor.knockdown).toBeUndefined(); expect(player.survivor.attack).toBeUndefined();
   expect(player.survivor.animation, 'handover starts ordinary on-foot locomotion').toBe('idle'); expect(player.survivor.animationTick).toBe(120);
   expect(player.health.current, 'handover restores ordinary on-foot health').toBe(100);

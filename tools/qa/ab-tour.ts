@@ -151,7 +151,7 @@ export async function prepareStop({ stop, seed, save, zoom, driveRoute, walkRout
       }
     }finally{g.input.feed=null;a.input.clear();}
     if(stop.setup==='l9-fall')await seek(()=>g.world.missions!.l9!.state.phase==='fall',2000);
-    if(stop.setup==='l9-crawl')await seek(()=>g.world.missions!.l9!.state.phase==='crawl',2000);
+    if(stop.setup==='l9-crawl')await seek(()=>g.world.missions!.l9!.state.phase==='dazed',2000);
   }
   if(stop.level==='L10'&&stop.checkpoint){
     // Graph-prefix loading reconstructs inventory/objectives, but does not move the courier to a later region.

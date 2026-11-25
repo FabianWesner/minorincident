@@ -110,6 +110,7 @@ export const dialogue: Record<string, string> = {
   'L9.okafor': 'You came back for us. Every time.',
   'L9.sam-stays': 'Someone has to watch your back. And somebody has to see what\'s on that campus.',
   'L9.end-caption': 'Everything went into the river. Almost everything.',
+  'L9.mega-survived': 'Sam: It survived. It’s heading for the city!',
   'L7.start': 'Night. While you were underground, Fairhaven was overrun. The rocket launcher in the wrecked army truck by the exit is your way through.',
   'L10.crash': 'Get away from the river. Find a way through the farms.',
   'L10.briefing': 'Get away from the river. Find a way through the farms.',
