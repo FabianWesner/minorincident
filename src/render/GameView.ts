@@ -384,6 +384,11 @@ export class GameView implements Lifecycle {
     // the first update can also request an escort model.
     this.npcs?.update(this.camera);
     await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    // L10's staged crowd plan otherwise starts five seconds into play. Each
+    // newly streamed corpse page builds a WebGPU material graph on the main
+    // thread during the opening fight. Prepare the same plan before the full
+    // loading draw, which warms its living and corpse pages together.
+    if (this.world.scenario === 'L10') { this.crowd?.startStreaming(); await this.crowd?.ready(); }
     this.npcs?.update(this.camera);
     // The resident mounted gun used to load only in update()/screenshotReady(),
     // after the full warm-up. Its white vertex-colour mesh then linked on first
@@ -826,7 +831,9 @@ export class GameView implements Lifecycle {
       const reveal = this.world.scenario === 'L10' && this.world.missions?.state.states['mega-reveal-active'] ? this.world.megaPursuit?.entity() : null;
       if (reveal && !this.view.spot) {
         const focus = this.world.entities.get(1)!.transform;
-        this.storyFocus.set((focus.x + reveal.transform.x) / 2, .8, (focus.z + reveal.transform.z) / 2);
+        // Lean toward the Mega but keep the courier near the centre (PO 2026-11-22: she was pushed off screen while being attacked).
+        const dx = reveal.transform.x - focus.x, dz = reveal.transform.z - focus.z, lean = Math.min(.35, 6 / Math.max(1, Math.hypot(dx, dz)));
+        this.storyFocus.set(focus.x + dx * lean, .8, focus.z + dz * lean);
         this.storyOffset.setFromSphericalCoords(Math.max(13, this.view.radius), this.view.polar, this.view.azimuth);
         this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
         this.megaRevealFraming = true;
@@ -1217,7 +1224,7 @@ export class GameView implements Lifecycle {
     const drivenCar = this.world.vehicles?.cars.get(this.world.vehicles.active ?? -1);
     this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel() ?? survivor?.velocity);
     this.districts?.cull(this.view, this.quality);
-    let subject: Box3 | undefined;
+    let subject: Box3 | undefined, revealCompanion: { x: number; y: number; z: number } | undefined;
     // Q-241: the whole L6 metro reveals with the clean cut (was the retreat only) and keeps its track rails whole.
     const metro = this.world.scenario === 'L6' || !!this.world.districts?.composition.districts.some(d => d.id === 'D-SUBWAY');
     const l6Shelter = metro && !!current && current.x < 30;
@@ -1259,6 +1266,7 @@ export class GameView implements Lifecycle {
       let pet = this.companionId >= 0 ? this.world.entities.get(this.companionId) : undefined;
       if (!pet?.companion) { pet = undefined; if (this.companionSearch++ % 60 === 0) for (const e of this.world.entities.iterate()) if (e.companion) { pet = e; this.companionId = e.id; break; } }
       if (pet && !pet.hidden && Math.hypot(pet.transform.x - current.x, pet.transform.z - current.z) < 2.6) {
+        revealCompanion = pet.transform;
         this.revealPet.min.set(pet.transform.x - .5, feet, pet.transform.z - .5); this.revealPet.max.set(pet.transform.x + .5, feet + .8, pet.transform.z + .5);
         this.revealSubject.union(this.revealPet);
       }
@@ -1285,7 +1293,7 @@ export class GameView implements Lifecycle {
     // L8 enclosures (r27-visp2): while the courier stands inside one, the crowns above it thin out so the pack and her group stay visible.
     const arena = this.world.scenario === 'L8' && current ? l8BossArenas.find(a => Math.hypot(current.x - a.centre.x, current.z - a.centre.z) < a.radius + 2) : undefined;
     this.districts?.setCanopyThinning(arena?.centre.x ?? 0, arena?.centre.z ?? 0, arena?.radius ?? 0);
-    this.districts?.updateFoliage(this.view, current, undefined, subject, !this.world.entities.get(1)?.hidden);
+    this.districts?.updateFoliage(this.view, current, undefined, subject, !this.world.entities.get(1)?.hidden, revealCompanion);
     // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
     if (!this.districts) {
       seeThrough.cover.value = 0;

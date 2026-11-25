@@ -1,0 +1,122 @@
+{
+  "method": "Seed 1 fixed-step route drives; each tick tests the APC full-height hull against resident fixed or braced pushable props. Protected reruns are labeled.",
+  "runs": [
+    {
+      "route": "road",
+      "detour": false,
+      "finished": true,
+      "phase": "done",
+      "tick": 9992,
+      "health": 100,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "none"
+    },
+    {
+      "route": "road",
+      "detour": true,
+      "finished": true,
+      "phase": "done",
+      "tick": 11160,
+      "health": 24.0000000000002,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "none"
+    },
+    {
+      "route": "countryside",
+      "detour": false,
+      "finished": false,
+      "phase": "driving",
+      "tick": 11561,
+      "health": 0,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "none"
+    },
+    {
+      "route": "countryside",
+      "detour": true,
+      "finished": true,
+      "phase": "done",
+      "tick": 11496,
+      "health": 43.99999999999977,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "none"
+    },
+    {
+      "route": "dry-shortcut",
+      "detour": false,
+      "finished": false,
+      "phase": "driving",
+      "tick": 8702,
+      "health": 0,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "none"
+    },
+    {
+      "route": "dry-shortcut",
+      "detour": true,
+      "finished": true,
+      "phase": "done",
+      "tick": 10053,
+      "health": 53.99999999999977,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "none"
+    },
+    {
+      "route": "countryside",
+      "detour": false,
+      "finished": true,
+      "phase": "done",
+      "tick": 16093,
+      "health": 33.999999999999986,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "invulnerability"
+    },
+    {
+      "route": "dry-shortcut",
+      "detour": false,
+      "finished": false,
+      "phase": "driving",
+      "tick": 8702,
+      "health": 0,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "invulnerability"
+    },
+    {
+      "route": "dry-shortcut",
+      "detour": false,
+      "finished": true,
+      "phase": "done",
+      "tick": 12878,
+      "health": 100,
+      "checks": 0,
+      "maxFixed": 0,
+      "closest": 0,
+      "hits": [],
+      "protection": "health restored each tick"
+    }
+  ]
+}

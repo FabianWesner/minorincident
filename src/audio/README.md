@@ -110,7 +110,7 @@ and per-event replacements.
 
 The lazy `infected` bank holds recorded humanoid voices: `infected.alert` (shared anti-spam key on `ai.alerted`),
 `infected.hurt` / `infected.death` (melee/ranged hits and kills on human archetypes), and `infected.bite` (a landed
-infected melee attack). Idle groans (`infected.vocal`, max four nearby via
+infected melee attack). Vehicle contacts use the separate initially loaded `vehicle-squash` bank: a wet impact and a deeper, slower wheel-crush cue. Both are CC0 Independent.nu recordings from the `8-wet-squish-slurp-impacts` pack; source hashes and license are pinned in `assets/audio/imports.json` and `docs/licenses/audio/8-wet-squish-slurp-impacts.json`. Idle groans (`infected.vocal`, max four nearby via
 `HordeClusters`) remain in the initial banks. Legacy clustered `horde.loop.*`
 slices are retained for offset compatibility and do not play. Telegraph wind-ups
 for human archetypes share one CC0 performer with

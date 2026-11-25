@@ -291,7 +291,7 @@ export class InfectedSystem {
     // arrivals must receive normal movement and body separation again.
     delete entity.ashDeath; delete entity.emerging; delete entity.doorLane;
     delete entity.infected!.scripted; delete entity.infected!.clearingStreet; delete entity.infected!.breachApproach; delete entity.infected!.l4FlankTarget;
-    delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
+    delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse; delete entity.squashed;
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.pipeBombReady; delete entity.infected!.staggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
     delete entity.infected!.arenaBoss; delete entity.infected!.arenaCarrier;
     delete entity.infected!.megaPhase; delete entity.infected!.megaWeakTicks; delete entity.infected!.megaBurnTicks; delete entity.infected!.megaArmourBroken;
@@ -414,7 +414,12 @@ export class InfectedSystem {
    * special moves, roar/pin holds, then the L1 or archetype brain. Every phase returns true when it consumed the actor's tick. */
   update(): void {
     if (this.world.progression?.campaign?.world?.infectionCleared && this.world.scenario !== 'L10' && this.world.missions?.state.id !== 'L10') for (const e of this.active) this.world.combat?.damage.cure(e);
-    const courier = this.world.entities.get(1)!; this.budget = 2000; this.wideBudget = 12000; this.routes = 0; this.director.update();
+    const courier = this.world.entities.get(1)!;
+    // L9's authored roadblock cohort can issue several fresh scripted routes
+    // together. Cap one tick's shared A* work lower there so the searches carry
+    // their frontier across ticks instead of synchronously consuming a full
+    // 2,000-cell budget during the convoy passage.
+    this.budget = this.world.scenario === 'L9' ? 500 : 2000; this.wideBudget = 12000; this.routes = 0; this.director.update();
     this.approachParty.length = 0;
     if (!this.world.inspectionGhost) for (const human of this.world.entities.iterate()) {
       if (human.hidden || human.health.current <= 0 || human.infection || human.infected) continue;
@@ -816,7 +821,10 @@ export class InfectedSystem {
     if (b.special === 'revive' && this.revivable(e)) range = 20;
     const packAngle = b.packIndex * Math.PI / 2;
     const packReady = !b.pack || b.special !== 'pounce' || distance <= this.strikeRange(e, player) || (-dx * Math.cos(packAngle) - dz * Math.sin(packAngle)) / Math.max(0.01, distance) >= 0.85;
-    if (packReady && distance <= range && combatHeightReachable(e, player) && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); return; }
+    // PO 2026-11-22 (L10): "the camera is going over to the Mega ... at the same moment I'm attacked by zombies and I cannot do anything".
+    // During the short scripted Mega reveal nobody starts a new swing at the courier; they keep closing in, so pressure resumes right after.
+    const revealHold = this.world.scenario === 'L10' && !!this.world.missions?.state.states['mega-reveal-active'];
+    if (!revealHold && packReady && distance <= range && combatHeightReachable(e, player) && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); return; }
     if (b.special === 'pounce' && b.pack && combatHeightReachable(e, player) && (!packReady || distance > 4)) {
       this.waypoint.x = player.transform.x + Math.cos(packAngle) * 3; this.waypoint.z = player.transform.z + Math.sin(packAngle) * 3;
       this.seek(e, this.waypoint);

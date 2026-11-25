@@ -113,6 +113,24 @@ export class CourierGroundContacts {
     }
     if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.scale).y; updateWorldTranslation(rig.hip); }
   }
+  /** Keep the authored pelvis and knee direction while lifting a penetrating shoe. */
+  groundProneRise(): void {
+    this.rig.root.updateWorldMatrix(true, true);
+    const floor = this.origin.setFromMatrixPosition(this.rig.root.matrixWorld).y, s = this.scaleNode.getWorldScale(this.scale).y;
+    for (const foot of this.feet) {
+      const ik = foot.ik;
+      this.joint.setFromMatrixPosition(ik.end.matrixWorld); ik.end.getWorldQuaternion(this.footFrame);
+      let deficit = 0;
+      for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.delta.set(x * s, -this.sole * s, 0).applyQuaternion(this.footFrame).add(this.joint).y);
+      if (deficit <= 1e-4) continue;
+      this.neutral.setFromMatrixPosition(ik.upper.matrixWorld);
+      this.landing.setFromMatrixPosition(ik.middle.matrixWorld);
+      this.forward.copy(this.joint).sub(this.neutral).normalize();
+      this.pole.copy(this.landing).sub(this.neutral).addScaledVector(this.forward, -this.delta.copy(this.landing).sub(this.neutral).dot(this.forward)).normalize();
+      this.joint.y += deficit;
+      ik.solve(this.joint, this.pole, this.footFrame, 1, true);
+    }
+  }
   update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle, worldReady = false, travel?: { x: number; z: number }): void {
     const rig = this.rig;
     this.time += dt;
@@ -230,7 +248,15 @@ export class CourierGroundContacts {
           landed = previous >= 0 && p < previous;
           // Progress from the release phase: a stance fraction shifting under a walk/run blend must not stall the swing.
           u = landed ? 1 : Math.max(0, (p - swing.releaseP) / (1 - swing.releaseP));
-          if (style?.maxSwing && !landed) { u = Math.max(u, (this.time - swing.start) / style.maxSwing); if (u >= 1) { u = 1; landed = true; foot.hold = true; } }
+          if (style?.maxSwing && !landed) {
+            // When crowd displacement releases both feet, finish the older
+            // swing promptly so one foot can support the next step.
+            const bothAir = this.feet.every(f => !f.locked && f.swing);
+            const older = bothAir && this.feet.every(f => !f.swing || swing.start <= f.swing.start);
+            const limit = older ? Math.min(style.maxSwing, .15) : style.maxSwing;
+            u = Math.max(u, (this.time - swing.start) / limit);
+            if (u >= 1) { u = 1; landed = true; foot.hold = true; }
+          }
           // Land where the swing arrived (no touchdown jump); the stance holds that plant.
           if (!landed) {
             // Actor-space swing matching the stance velocity at toe-off and, when walking, at heel strike

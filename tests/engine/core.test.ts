@@ -31,6 +31,14 @@ function checkWeaponAudioEvents(): void {
   expect(stopLoop).toHaveBeenCalledWith('flame:1');
   expect(play).toHaveBeenCalledWith('weapon.flame-stop', expect.anything(), 1);
   play.mockClear();
+  const hit: GameEvent = { type: 'vehicle.infected-hit', tick: 1, sourceId: 4, targetId: 2, position: target.transform, runOver: false };
+  context.currentTime = 2; mapper.event(hit);
+  expect(play).toHaveBeenCalledWith('vehicle.zombie-hit', { position: target.transform }, 2);
+  context.currentTime = 2.04; mapper.event({ ...hit, targetId: 3, runOver: true });
+  expect(play).toHaveBeenCalledTimes(1);
+  context.currentTime = 2.1; mapper.event({ ...hit, targetId: 3, runOver: true });
+  expect(play).toHaveBeenLastCalledWith('vehicle.zombie-runover', { position: target.transform }, 3);
+  play.mockClear();
   mapper.event({ type: 'mega.move-impact', tick: 1, sourceId: 2, position: { x: 7, z: 3 } });
   expect(play).toHaveBeenCalledWith('mega.impact', expect.objectContaining({ position: { x: 7, z: 3 } }), 2);
 }
@@ -39,6 +47,7 @@ function checkWeaponAudioEvents(): void {
 // sit under every system and every level. A change here shifts the whole simulation.
 import { expect, test, vi } from 'vitest';
 import { AudioGraph } from '../../src/audio/AudioGraph';
+import { AudioRegistry } from '../../src/audio/AudioRegistry';
 import { audioCues } from '../../src/data/audioCues';
 import { Clock } from '../../src/core/Clock';
 import { EventBus } from '../../src/core/EventBus';
@@ -110,6 +119,10 @@ test('rng streams are seeded per name; services respect lifecycle order and audi
   for (const id of ['vehicle.fire', 'vehicle.sputter', 'weather.gust', 'ambient.sprinkler', 'ambient.lawnmower', 'ambient.basketball', 'ambient.news', 'ambient.megaphone', 'ambient.radio', 'ambient.glass', 'ambient.power', 'ambient.automatic', 'ambient.collapse', 'ambient.debris'])
     expect(play(id), id).toBeNull();
   checkWeaponAudioEvents();
+  const buffer = {} as AudioBuffer, registry = new AudioRegistry({ decodeAudioData: async () => buffer } as unknown as BaseAudioContext, async () => new ArrayBuffer(0));
+  await registry.prepare('L1', false);
+  expect(registry.get('vehicle.zombie-hit', 0)?.buffer).toBe(buffer);
+  expect(registry.get('vehicle.zombie-runover', 0)?.buffer).toBe(buffer);
   expect(play('ambient.gunshot', true)).toBeNull();
   expect(canAdd).not.toHaveBeenCalled();
   for (const id of ['ambient.gunshot', 'weather.thunder', 'action.weapon.handgun', 'telegraph.runner', 'weapon.minigun-whir', 'vehicle.engine-low', 'generator.idle']) {

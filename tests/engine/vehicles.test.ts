@@ -108,6 +108,7 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
   await l9BusTelegraphAndWreck();
   await l9FloorApcThroughPile();
   await l9CompanionsBoardDiagonalApc();
+  await vehicleRunOver();
   await l9ThrowerUsesRoadObstacle();
   await l9CheckpointLanes();
   await l9BayAndHatch();
@@ -207,6 +208,25 @@ async function l9InterruptedBoarding(): Promise<void> {
       expect(world.tick - (s.evacuationAt! + l9Course.evacuation.defendTicks)).toBeLessThanOrEqual(1200);
     } finally { world.dispose(); }
   }
+}
+
+async function vehicleRunOver(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('combat-arena', 1);
+  try {
+    const player = world.entities.get(1)!;
+    const targetId = world.spawnDummy('infected.dummy', { x: player.transform.x, z: player.transform.z }, { hp: 100 });
+    const target = world.entities.get(targetId)!;
+    const carId = world.vehicles!.spawn('vehicle.sedan', { x: target.transform.x, z: target.transform.z });
+    const car = world.vehicles!.cars.get(carId)!;
+    Object.assign(car.entity.transform, { yaw: 0 });
+    car.entity.vehicle!.driver = 1; car.physics.speed = 15;
+    car.physics.intent.throttle = 1; car.physics.intent.brake = false;
+    (world.vehicles as unknown as { infected: (vehicle: typeof car) => void }).infected(car);
+    expect(target.health.current, 'driving-speed contact kills a regular infected').toBe(0);
+    expect(target.squashed && target.corpse, 'the run-over leaves a persistent squashed corpse').toBe(true);
+    expect(world.events.events().some(e => e.type === 'vehicle.infected-hit' && e.targetId === targetId && e.runOver), 'the audio event distinguishes a wheel pass').toBe(true);
+    expect(target.combat?.reaction?.groundDeath, 'the run-over skips a launch ragdoll').toBe(true);
+  } finally { world.dispose(); }
 }
 
 async function l9ThrowerUsesRoadObstacle(): Promise<void> {
@@ -347,12 +367,14 @@ async function l9HatchCheckpointAndEvacuation(): Promise<void> {
     expect(l9.driving.text()).toBe('Drive onto the bridge');
 
     const courier = world.entities.get(1)!;
-    Object.assign(courier.survivor!, { scriptedClip: 'crawl', animation: 'knockdown', attack: { started: 0, endsAt: 120 }, knockdown: { started: 0, until: 120 } });
-    Object.assign(l9.state, { phase: 'crawl', startedAt: world.tick - 750, crawlProgress: 1, endingAt: undefined });
+    Object.assign(courier.survivor!, { animation: 'knockdown', attack: { started: 0, endsAt: 120 }, knockdown: { started: 0, until: 120 } });
+    Object.assign(l9.state, { phase: 'dazed', startedAt: world.tick - 120, dazedAt: world.tick - 120 });
     l9.update();
-    expect(courier.survivor!.scriptedClip, 'the L9 crawl ending exits into ordinary on-foot pose layers').toBeUndefined();
+    expect(courier.survivor!.scriptedClip, 'the L9 clean rise uses the face-down get-up').toBe('get-up-prone');
     expect(courier.survivor!.knockdown).toBeUndefined(); expect(courier.survivor!.attack).toBeUndefined();
     expect(courier.survivor!.animation).toBe('idle');
+    world.tick += 60; l9.update();
+    expect(courier.survivor!.scriptedClip, 'get-up releases into ordinary on-foot pose layers').toBeUndefined();
   } finally { world.dispose(); }
 }
 
@@ -497,12 +519,14 @@ async function l9FloorApcThroughPile(): Promise<void> {
     const l9 = world.missions!.l9!, vehicles = world.vehicles!, car = vehicles.cars.get(l9.state.carId)!;
     world.missions!.begin();
     for (let i = 0; i < 5; i++) world.update();
-    const x0 = -300, z0 = -330, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw: 0 };
+    // The asphalt now bends; start on its long shallow segment and point
+    // along it so the cruise-speed assertion measures ramming on road.
+    const x0 = 60, z0 = -325 - 10 / 60, yaw = Math.atan2(5, 300), pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw };
     Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
-    car.physics.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
     for (let i = 0; i < 30; i++) world.update();
     const entrySpeed = car.physics.def.topSpeed * .8;
-    car.physics.body.setLinvel({ x: entrySpeed, y: 0, z: 0 }, true); car.physics.postPhysics();
+    car.physics.body.setLinvel({ x: entrySpeed * Math.cos(yaw), y: 0, z: -entrySpeed * Math.sin(yaw) }, true); car.physics.postPhysics();
     const types = ['infected.brute', 'infected.runner', 'infected.armored', 'infected.sprinter', 'infected.crawler', 'infected.dog'];
     for (let i = 0; i < types.length; i++) world.infected!.spawn(types[i], { x: x0 + car.physics.def.length / 2 + 1, z: z0 + (i - 2.5) * .65 }, { state: 'chase' });
     const contacts: { before: number; after: number; target: string | undefined }[] = [];
@@ -542,7 +566,9 @@ async function l9FloorApcPackAtFence(): Promise<void> {
       world.missions!.begin();
       for (let i = 0; i < 5; i++) world.update();
       vehicles.damage(car.entity.id, car.entity.health.max);
-      const x0 = -265.7, z0 = -15.4, yaw = 1.45, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw };
+      // The regenerated curved route moved the former yard and its fence;
+      // use the current picket fence at (-283.7, -32.9).
+      const x0 = -283.7, z0 = -28.5, yaw = 1.45, pose = { x: x0, z: z0, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, yaw };
       Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose); car.physics.body.setTranslation(pose, true);
       car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
       for (let i = 0; i < 30; i++) world.update();
@@ -645,6 +671,14 @@ async function apcBoarders(): Promise<void> {
     expect(car.physics.speed, 'scripted departure retains its speed').toBe(3);
     expect(car.physics.wheels[0].rotation, 'scripted departure turns its wheels').toBeGreaterThan(wheelRotation);
     expect(car.physics.rotation, 'scripted crash retains the whole-hull roll').toEqual(roll);
+    const boarderId = world.infected!.spawn('infected.runner', { x: car.entity.transform.x, z: car.entity.transform.z }, { state: 'chase', offNav: true });
+    const boarder = world.entities.get(boarderId)!;
+    boarder.attachedTo = id; car.entity.vehicle!.attached.push(boarderId);
+    world.vehicles!.destroyScripted(id, { x: 527.5, y: .72, z: 2.6, yaw: 0 }, true);
+    expect(boarder.corpse, 'crash preserves the boarder as a corpse').toBe(true);
+    expect(boarder.hidden, 'crash does not hide the corpse').toBe(false);
+    expect(world.entities.get(boarderId), 'crash retains the same entity').toBe(boarder);
+    expect(boarder.attachedTo).toBeUndefined();
   } finally { world.dispose(); }
 }
 
@@ -861,13 +895,17 @@ async function zooParkedBoarding(): Promise<void> {
     expect(mission.state.steps.sanctuary.status).toBe('active');
     expect(mission.state.steps.escape.status).toBe('pending');
     expect(mission.state.marker).toBe('l8-route');
-    expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
-    expect(markerAnchor(mission), 'the visible destination stays at the entry while Nadia leads').toMatchObject({ x: 0, z: 70 });
+    // PO 2026-11-22 "L8 is not starting": the ring marks Nadia's next fixed stop, never the entry gate under the courier's feet.
+    const stops = [[-24, 64], [-24, 0], [24, 0], [24, 64], [0, 64], [0, 70]];
+    const ring = { ...mission.def.anchors['l8-route'] };
+    expect(stops.some(([x, z]) => x === ring.x && z === ring.z), 'the ring is one of Nadia\'s fixed stops').toBe(true);
+    if (!mission.l8!.state.guideDone) expect(ring, 'while Nadia leads the ring is not the start gate').not.toMatchObject({ x: 0, z: 70 });
+    expect(markerAnchor(mission)).toMatchObject({ x: ring.x, z: ring.z });
     expect(mission.state.steps.depart.status).toBe('pending');
     mission.restore('sanctuary');
     expect(mission.state.marker).toBe('l8-route');
-    expect(mission.def.anchors['l8-route']).toMatchObject({ x: 0, z: 70 });
-    expect(markerAnchor(mission), 'checkpoint restore retains the fixed destination').toMatchObject({ x: 0, z: 70 });
+    const restored = mission.def.anchors['l8-route'];
+    expect(stops.some(([x, z]) => x === restored.x && z === restored.z), 'checkpoint restore keeps a fixed stop').toBe(true);
     expect(mission.state.steps.escape.status).toBe('pending');
     missionControls(world).teleport(1, zoo.door());
     // r31-nadia: while Nadia still leads (a courier camping the APC never follows her), the calm lasts its 180 s cap before the breach.

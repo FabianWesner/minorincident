@@ -252,7 +252,7 @@ export class Mission {
     this.l9?.end();
     this.emit({ type: 'level.completed', id: this.def.id, result: this.state.result });
     // E20/E21: no caption card or reward screen after L2 and L3; the campaign continues straight into the next level.
-    if (this.def.l2 || this.def.l3 || this.def.l4 || this.def.l5 || this.def.l8 || this.def.l9 || this.state.epilogue) this.continue();
+    if (this.def.l2 || this.def.l3 || this.def.l4 || this.def.l5 || this.def.l8 || this.state.epilogue) this.continue();
   }
   continue(): void { if (this.state.phase === 'result') { this.state.phase = 'progression'; this.emit({ type: 'progression.requested', id: this.def.id }); } }
   private fail(reason: FailReason, def?: ObjectiveDef): void {

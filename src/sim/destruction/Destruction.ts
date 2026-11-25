@@ -34,6 +34,13 @@ export class Destruction {
   private readonly kicks: { id: string; at: number; strength: number }[] = [];
   private readonly propLinks = new Map<string, PushProp>();
   private readonly disabledProps = new Set<string>();
+  /** Reinstall intact parts as dynamic blockers when streaming rebuilds navigation. */
+  activeBlockers() { return this.blockers.filter(b => b.active && b.object.present && b.object.state.hp[b.part] > 0 && this.blocksNavigation(b)).map(b => ({ id: b.id, wall: b.wall })); }
+  private blocksNavigation(b: Blocker): boolean {
+    // Farm headers above a standing capsule must not close their visible door
+    // in the 2D route grid; their physics and height-aware cover remain intact.
+    return b.wall.y - b.wall.halfY < (b.object.parts[b.part].id.startsWith('farm-header-') ? 1.35 : 1.6);
+  }
   constructor(private readonly world: SimWorld) {
     // Local bounds depend on the asset/class, not the placement transform or HP.
     // Repeated buildings borrow those immutable templates; damage remains object-owned.
@@ -116,9 +123,9 @@ export class Destruction {
       if (active) {
         const w = b.wall;
         b.handle = this.world.physics.addStatic({ min: [w.x-w.halfX,w.y-w.halfY,w.z-w.halfZ], max: [w.x+w.halfX,w.y+w.halfY,w.z+w.halfZ], navFootprint: w.navFootprint }, [0,0]);
-        this.world.interactables!.walls.push(w); if (w.y-w.halfY < 1.6) this.world.districts!.nav.block(b.id, w);
+        this.world.interactables!.walls.push(w); if (this.blocksNavigation(b)) this.world.districts!.nav.block(b.id, w);
       } else { this.world.physics.removeBlocker(b.handle); const walls = this.world.interactables!.walls, index = walls.indexOf(b.wall); if (index >= 0) walls.splice(index, 1); this.world.districts!.nav.unblock(b.id); }
-      if (b.wall.y-b.wall.halfY < 1.6) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: b.id, wall: b.wall, blocked: active });
+      if (this.blocksNavigation(b)) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: b.id, wall: b.wall, blocked: active });
     }
     if(blockersChanged) this.world.combat?.query.invalidate();
   }

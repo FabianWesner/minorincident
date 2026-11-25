@@ -14,6 +14,8 @@ export interface EntitySnapshot {
   /** Persistent death pose: no brain or collision obstacle; only explicit
    * throws and cosmetic blast flights move its retained transform. */
   corpse?: boolean;
+  /** Vehicle run-over: permanent flat ground pose, retained with the corpse entity. */
+  squashed?: boolean;
   /** Fire death animation start; the retained corpse settles into a permanent ash heap. */
   ashDeath?: { at: number; x?: number; y?: number; z?: number; yaw?: number };
   /** A retained death pose in flight; the crowd view follows its actual transform. */
@@ -121,6 +123,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'interact.interrupted'; id: number; progress: number }
   /** E31 IDs are monotonically allocated per vehicle, shared across contacts and attacks. */
   | { tick: number; type: 'vehicle.durability-hit'; sourceId: number; targetId: number; source: 'contact' | 'attack' | 'obstacle'; contactId: number | null; attackId: number | null; before: number; after: number }
+  | { tick: number; type: 'vehicle.infected-hit'; sourceId: number; targetId: number; position: Transform; runOver: boolean }
   /** L9 floor policy: one event per cumulative damage stage (1 = 75%, 2 = 50%, 3 = 25%, 4 = 0%), never replayed on load. */
   | { tick: number; type: 'vehicle.damage-stage'; sourceId: number; stage: number }
   | { tick: number; type: 'vehicle.attack-windup'; sourceId: number; targetId: number; attackId: number; hitAt: number }

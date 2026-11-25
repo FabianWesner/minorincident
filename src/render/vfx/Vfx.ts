@@ -45,7 +45,7 @@ export interface VfxTargets {
   ambient?: Node<'float'>;
   sunDirection?(): { x: number; y: number; z: number };
 }
-const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'mega.move-impact', 'vehicle.feedback', 'vehicle.durability-hit', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
+const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'mega.move-impact', 'vehicle.feedback', 'vehicle.infected-hit', 'vehicle.durability-hit', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 1, charge: 2, splash: 1, bloated: 4 } as const;
@@ -599,6 +599,7 @@ export class Vfx extends Group {
     'mega.move-impact': this.onMegaMoveImpact,
   };
   readonly receive = (event: GameEvent): void => {
+    if (event.type === 'vehicle.infected-hit' && event.runOver) this.targets.shake(this.flashReduction ? .012 : .035);
     if (event.type === 'vehicle.feedback') {
       let vehicle = this.vehicles.get(event.id);
       if (!vehicle) { vehicle = { ...event, position: { ...event.position } }; this.vehicles.set(event.id, vehicle); }

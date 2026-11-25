@@ -192,7 +192,8 @@ test('scene gate resume requires identical rows, revision and backend identities
   expect(f.run(['--backend', 'webgl2'], { FAIL_BACKEND: 'webgpu' }).status, 'explicit WebGL2 selection respects manual WebGPU policy').toBe(0);
 });
 
-test('scene gate rejects stale, failed, malformed and incomplete child results', () => {
+test('scene gate rejects bad child results, invalid arguments and empty selections', () => {
+  {
   const f = gateFixture();
   for (const mode of ['startup', 'timeout', 'signal', 'bad-exit', 'malformed', 'incomplete', 'wrong-types']) {
     const dir = join(f.root, 'output/webgl2-high-1'); mkdirSync(dir, { recursive: true });
@@ -205,9 +206,8 @@ test('scene gate rejects stale, failed, malformed and incomplete child results',
   expect(f.run(['--filter', 'alpha'], { VEHICLE_CONTACT_EXIT: '1' }).status, 'filtered catalog diagnostics do not run unrelated vehicle contacts').toBe(0);
   f.select(['alpha', 'beta'], undefined, { 'alpha@high': 'fixture', 'beta@high': 'fixture' });
   expect(f.run([], { CHILD_BEHAVIOR: 'known' }).status, 'fresh complete failures all explicitly triaged').toBe(0);
-});
-
-test('scene gate rejects invalid arguments and empty selections before running children', () => {
+  }
+  {
   const f = gateFixture();
   for (const args of [
     ['--batch', 'NaN'], ['--batch', 'Infinity'], ['--batch', '0'], ['--batch', '-1'], ['--batch', '1.5'],
@@ -227,6 +227,7 @@ test('scene gate rejects invalid arguments and empty selections before running c
   expect(rows.every(row => /@(?:high|low)(?:-z[\d.]+)?$/.test(row))).toBe(true);
   // The final authored scene must survive the subprocess's immediate exit.
   expect(rows).toContain('world-fill-l9-road@low-z0.5');
+  }
 });
 
 function buildCacheFixture() {

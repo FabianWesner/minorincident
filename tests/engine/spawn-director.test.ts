@@ -113,7 +113,8 @@ test('pooling: spawn/kill cycles reuse prewarmed records, keep every corpse, and
 
   const r = await arena(), runner = spawn(r, 'runner', 10, 0, 'idle'); step(r, 1);
   expect(r.player!.locomotion.crowd[0].radius).toBe(0.35);
-  runner.health.current = 0; step(r, 2762);
-  const gorilla = spawn(r, 'gorilla', 10, 0, 'idle'); expect(gorilla).toBe(runner); step(r, 1);
+  const corpseId = runner.id; runner.health.current = 0; runner.squashed = true; step(r, 2762);
+  expect(r.entities.get(corpseId)?.squashed).toBe(true);
+  const gorilla = spawn(r, 'gorilla', 10, 0, 'idle'); expect(gorilla).toBe(runner); expect(gorilla.squashed).toBeUndefined(); step(r, 1);
   expect(r.player!.locomotion.crowd[0].radius).toBe(0.7);
 });

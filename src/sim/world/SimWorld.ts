@@ -250,7 +250,7 @@ export class SimWorld implements Lifecycle {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
       if (player.pendingAdmission) { body.setLinvel({ x: 0, y: 0, z: 0 }, true); body.setTranslation(player.transform, true); return; }
-      if (this.vehicles?.active != null || this.mountedGun?.mounted || this.missions?.l9?.state.phase === 'crawl') return;
+      if (this.vehicles?.active != null || this.mountedGun?.mounted || ['dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(this.missions?.l9?.state.phase ?? '')) return;
       if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (inCorn(this, [player.transform.x, player.transform.z]) ? .85 : 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.locomotion.cornerSlip = !(this.vehicles?.bicycle.riding ?? false); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
@@ -292,7 +292,7 @@ export class SimWorld implements Lifecycle {
       this.hazards?.update(); this.pickups?.update(); this.barricades?.update(); this.interactables?.update(this.effectiveInput);
     }, SimPhase.missions);
     this.events.on('sim.tick', () => {
-      if (this.entities.get(1)!.pendingAdmission || this.vehicles?.active != null || this.mountedGun?.mounted || this.missions?.l9?.state.phase === 'crawl') return;
+      if (this.entities.get(1)!.pendingAdmission || this.vehicles?.active != null || this.mountedGun?.mounted || ['dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(this.missions?.l9?.state.phase ?? '')) return;
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
       Object.assign(this.entities.get(1)!.transform, p);

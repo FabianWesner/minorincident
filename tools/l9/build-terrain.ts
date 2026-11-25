@@ -3,8 +3,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { cloneDocument, join, prune } from '@gltf-transform/functions';
-import { MeshoptDecoder } from 'meshoptimizer';
+import { cloneDocument, join, prune, simplify } from '@gltf-transform/functions';
+import { MeshoptDecoder, MeshoptSimplifier } from 'meshoptimizer';
 import { packStatic } from '../assets/pack-static';
 import { layoutTerrainChunks } from '../../src/sim/world/TerrainChunks';
 import type { DistrictLayout } from '../../src/levels/districts/types';
@@ -58,6 +58,12 @@ if (district === 'D-CURE') {
   horizon.getRoot().listScenes()[0].addChild(horizon.createNode('horizon-ground').setMesh(sheet));
 }
 await horizon.transform(join(), prune());
+// D-CROSSING's distant static horizon can discard coplanar subdivisions;
+// detailed resident cells retain their full geometry.
+if (district === 'D-CROSSING') {
+  await MeshoptSimplifier.ready;
+  await horizon.transform(simplify({ simplifier: MeshoptSimplifier, ratio: .9, error: .001 }), prune());
+}
 const horizonTriangles = horizon.getRoot().listMeshes().reduce((sum, mesh) => sum + mesh.listPrimitives().reduce((n, p) => n + (p.getIndices()?.getCount() ?? p.getAttribute('POSITION')!.getCount()) / 3, 0), 0);
 if (horizonTriangles > 10_000) throw Error(`Horizon: ${horizonTriangles} exceeds 10,000`);
 await io.write(`public/assets/layouts/${district}.horizon.glb`, horizon);

@@ -73,7 +73,7 @@ export class KeyframeAnimator {
     for (const p of this.restPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
     this.ground?.reset();
   }
-  constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
+  constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips, private readonly model: Object3D = rig.root) {
     this.skin = clipSource === skinClips;
     this.bones = this.skin ? courierBones(rig.root) : undefined;
     for (const node of new Set([...Object.values(rig), ...this.bones ? chainNodes(this.bones) : []])) this.restPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
@@ -148,10 +148,11 @@ export class KeyframeAnimator {
     // smoothed ground speed, all on one stride-matched phase), never discrete clip restarts; start/stop/turn
     // pops are gone. Other actions fade over it.
     if (pose.scriptedClip) name = pose.scriptedClip;
-    const loco = locoStates.has(name), fade = strike ? Math.min(.05, Math.max(1, (combat?.activeAt ?? tick + 4) - (combat?.started ?? tick)) / 60 * .55) : name === 'hurt' || name === 'knockdown' || name === 'get-up' ? .055 : .2;
+    const proneGetUp = name === 'get-up-prone';
+    const loco = locoStates.has(name), fade = strike ? Math.min(.05, Math.max(1, (combat?.activeAt ?? tick + 4) - (combat?.started ?? tick)) / 60 * .55) : name === 'hurt' || name === 'knockdown' || name === 'get-up' || proneGetUp ? .055 : .2;
     this.locoSpeed += (speed - this.locoSpeed) * (1 - Math.exp(-dt / .1));
     if (!loco && (this.mode !== name || strike && !upper && this.attackTick !== pose.animationTick || name === 'hurt' && this.actionTick !== pose.animationTick || !this.base)) {
-      this.base?.fadeOut(fade); this.base = this.play(name, !!pose.scriptedClip || !!this.strides[name] || name === 'idle').fadeIn(fade);
+      this.base?.fadeOut(fade); this.base = this.play(name, name !== 'get-up' && !proneGetUp && (!!pose.scriptedClip || !!this.strides[name] || name === 'idle')).fadeIn(fade);
       if (name === 'get-up' && pose.knockdown) this.base.setEffectiveTimeScale(this.base.getClip().duration / Math.max(1 / 60, (pose.knockdown.until - pose.animationTick) / 60));
       this.mode = name; this.clip = name; this.actionTick = pose.animationTick;
     } else if (loco && this.mode !== 'loco') { this.base?.fadeOut(.2); this.base = undefined; this.mode = 'loco'; }
@@ -211,7 +212,7 @@ export class KeyframeAnimator {
     this.mixer.update(dt);
     this.guardFinitePose();
     for (const p of this.sampledPose) { p.position.copy(p.node.position); p.rotation.copy(p.node.quaternion); }
-    if (this.skin && !['die', 'knockdown', 'get-up'].includes(name)) this.keepTorsoForward();
+    if (this.skin && !['die', 'knockdown', 'get-up', 'get-up-prone'].includes(name)) this.keepTorsoForward();
     const plantedAction = !ride && (name === 'hurt' || !!strike && !/kick|knee|spinning/.test(strike));
     if (this.skin && this.lunge > 0 && !upper) {
       const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1;
@@ -228,9 +229,11 @@ export class KeyframeAnimator {
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
     if (!this.skin && this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; const offset = .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); this.rig.hip.position.x += offset; }
-    if (!ride && strike && /kick|knee|spinning/.test(strike)) this.ground?.groundPose();
+    if (proneGetUp) this.ground?.groundProneRise();
+    else if (!ride && strike && /kick|knee|spinning/.test(strike)) this.ground?.groundPose();
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
-    if (pose.animation === 'die' || pose.animation === 'knockdown') settleGroundPose(this.rig.root);
+    if (this.skin && (pose.scriptedClip === 'crawl' || proneGetUp)) settleGroundPose(this.model);
+    else if (pose.animation === 'die' || pose.animation === 'knockdown') settleGroundPose(this.rig.root);
     // Skeleton v2 swings the bag with a 2-DOF pendulum after the ride contacts (CourierLiving).
     if (!this.bones) {
       const target = this.rig.torso.rotation.z * -.3;

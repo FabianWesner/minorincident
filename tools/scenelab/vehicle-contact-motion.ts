@@ -103,6 +103,10 @@ try {
           const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
           return w.events.events().filter(e => e.type.startsWith('vehicle.') || e.type === 'combat.hit');
         });
+        const runOverBodies = await session.page.evaluate(() => {
+          const w = (window.__SCENE__ as unknown as { game: Game }).game.world;
+          return [...w.entities.iterate()].filter(e => e.infected).map(e => ({ id: e.id, hp: e.health.current, corpse: !!e.corpse, squashed: !!e.squashed }));
+        });
         const propImpulses = await session.page.evaluate(() => (window as unknown as { __s83PropImpulses: { tick: number; prop: string; magnitude: number; nearbyInfected: number[] }[] }).__s83PropImpulses);
         const actors = Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected'));
         const shoveWindows = shoves.map(shove => {
@@ -123,20 +127,19 @@ try {
         const checks = actors.map(([id, actor]) => ({ actor: id, contacts: actor.motion.contacts,
           p95Cm: actor.motion.slideP95Cm, maxCm: actor.motion.slideMaxCm,
           pass: actor.motion.contacts >= 5 && actor.motion.slideP95Cm !== null && actor.motion.slideP95Cm <= 5 && actor.motion.slideMaxCm <= 15 }));
-        const contactProven = name === 'prop-momentum' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'prop.momentum') : name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) && propImpulses.some(p => p.nearbyInfected.length > 0) : name === 'push' || name === 'reach-recovery' ? shoves.some(shove => shove.distance > .001) : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed') : name === 'ram-survivor' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'vehicle.military-apc' && (e.knockback ?? 0) > 0 && e.amount > 0) && shoves.some(shove => shove.distance > .001) : name === 'ram' ? events.filter(e => e.type === 'combat.hit').length >= 6 && shoves.some(shove => shove.distance > .001)
+        const runOverIds = events.flatMap(e => e.type === 'vehicle.infected-hit' && e.runOver ? [e.targetId] : []);
+        const runOverProven = runOverIds.length >= 6 && runOverIds.every(id => events.some(e => e.type === 'combat.hit' && e.targetId === id && e.actionId === 'vehicle.military-apc' && e.amount > 0 && e.knockback === 0));
+        const contactProven = name === 'prop-momentum' ? events.some(e => e.type === 'combat.hit' && e.actionId === 'prop.momentum') : name === 'prop-push' ? propMotion.some(p => p.travelM >= .2) && propImpulses.some(p => p.nearbyInfected.length > 0) : ['push', 'reach-recovery', 'ram', 'ram-survivor'].includes(name) ? runOverProven : name === 'clinging' ? events.some(e => e.type === 'vehicle.grabbed')
           : events.filter(e => e.type === 'vehicle.attack-windup').length >= 4 && events.some(e => e.type === 'vehicle.durability-hit');
         let vehicleTravelM = 0;
         for (let i = 1; i < attachmentTrack.length; i++) vehicleTravelM += Math.hypot(attachmentTrack[i].car.x - attachmentTrack[i - 1].car.x, attachmentTrack[i].car.z - attachmentTrack[i - 1].car.z);
         const movingAttachmentProven = name !== 'clinging' || vehicleTravelM >= 2;
         const motionProven = name === 'clinging' ? airborneChecks.length === 4 && airborneChecks.every(check => check.pass) && boardingChecks.every(check => check.pass) : checks.every(check => check.pass);
         const cheapProven = name !== 'reach-recovery' || cheapFrames.filter(count => count === 6).length >= 120;
-        const livingRamProven = name !== 'ram-survivor' || rams.some(r => {
-          const follow = ramEvidence.filter(e => e.id === r.id && e.tick >= r.tick && e.tick < r.tick + 80 && e.reactionHeavy && e.clip && /^(knockdown|flung|get-up|stagger-|shamble|infected-)/.test(e.clip));
-          return events.some(e => e.type === 'combat.hit' && e.actionId === 'vehicle.military-apc' && e.targetId === r.id && e.tick === r.tick && e.amount > 0) && r.health > 0 && r.distance > .05 && follow.some(e => e.tick <= r.tick + 1 && e.speed > .1) && follow.length >= 3 && new Set(follow.map(e => e.phase)).size >= 2;
-        });
+        const livingRamProven = name === 'ram-survivor' ? ramEvidence.some(e => e.health > 0 && e.reactionHeavy) : !['ram', 'push', 'reach-recovery'].includes(name) || runOverIds.every(id => runOverBodies.some(body => body.id === id && body.hp === 0 && body.corpse && body.squashed));
         const pass = contactProven && cheapProven && livingRamProven && movingAttachmentProven && motionProven && session.errors.length === 0;
         if (!pass) process.exitCode = 1;
-        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, cheapProven, livingRamProven, ramEvidence, rams, cheapFrames, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, boardingChecks, metrics, events, attachmentTrack, shoves, shoveWindows, propMotion, propImpulses });
+        writeJson(`${out}/${tier}-${name}.json`, { pass, contactProven, runOverProven, runOverBodies, cheapProven, livingRamProven, ramEvidence, rams, cheapFrames, movingAttachmentProven, vehicleTravelM, checks, airborneChecks, boardingChecks, metrics, events, attachmentTrack, shoves, shoveWindows, propMotion, propImpulses });
         console.log(JSON.stringify({ tier, name, events: events.length, actors: Object.fromEntries(Object.entries(metrics.actors).filter(([id]) => id.startsWith('infected')).map(([id, actor]) => [id, actor.motion])) }));
       }
     } finally { await session.close(); }

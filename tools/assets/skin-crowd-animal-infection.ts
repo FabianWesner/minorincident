@@ -77,6 +77,24 @@ export function animalColour(p: Vector3, original: number[], look: AnimalLook): 
     if (x > 1.25 && y < 1.92 && y > 1.48) c = [122, 27, 32];
     return c;
   }
+  if (species === 'lioness') {
+    const flank = Math.min(
+      ((Math.abs(x) - .125) / .09) ** 2 + ((y + .015) / .105) ** 2 + ((z + .08) / .22) ** 2,
+      ((x - .025) / .105) ** 2 + ((y - .155) / .075) ** 2 + ((z + .12) / .18) ** 2,
+    ) + .05 * Math.sin(y * 90 + z * 73);
+    if (flank < 1) {
+      c = flank > .74 ? [67, 17, 24] : [221, 48, 49];
+      if (flank < .48 && [0, 1, 2].some(i => Math.abs(z - (-.19 + i * .062) - x * .24) < .012)) c = [229, 210, 165];
+    }
+    // The muzzle faces +Z in the normalized cast; a broad lower-front stain
+    // remains readable from the elevated game camera.
+    const muzzle = (x / .075) ** 2 + ((y - .078) / .052) ** 2 + ((z - .474) / .057) ** 2;
+    if (muzzle < 1) {
+      const blend = Math.min(1, (1 - muzzle) * 4), blood = [177, 30, 34];
+      c = c!.map((value, i) => Math.round(value * (1 - blend) + blood[i] * blend));
+    }
+    return c;
+  }
   // Broad readable wounds on the actual surface, not random atlas noise.
   let wound = species === 'lion' ? ((Math.abs(x) - .22) / .11) ** 2 + ((y - .015) / .115) ** 2 + ((z + .095) / .19) ** 2
     : species === 'gorilla' ? ((Math.abs(x - .01) - .20) / .14) ** 2 + ((y - .08) / .16) ** 2 + ((z - .10) / .19) ** 2

@@ -145,7 +145,7 @@ function surfaceNearest(surface: Surface) {
 }
 const rigid: Surface = { pos: [], uv: [], owner: [], tris: [] };
 let removedClosureTriangles = 0, removedDegenerateTriangles = 0;
-const eyes: { pos: number[]; uv: number[]; owner: number; tris: number[] }[] = [];
+const eyes: { pos: number[]; uv: number[]; owner: number; tris: number[]; joints?: number[]; weights?: number[] }[] = [];
 let texture: { image: Uint8Array; mime: string } | undefined;
 const v = new Vector3();
 const retained = (node: GNode) => {
@@ -1104,7 +1104,33 @@ if (!eyes.length && !args.includes('--no-eye-discs')) {
       if (!Number.isFinite(x)) continue;
       const pos: number[] = [], radius = paintedEyes ? paintedEyes.game_radius ?? Math.min(.02, paintedEyes.radius_extent * Number(arg('--body-scale', '1')) * .65) : anatomicalEyes ? Math.min(.024, Math.max(.018, authoredIrises[0].getSize(new Vector3()).y * .5)) : Math.min(.024, (hi.y - lo.y) * .05);
       for (const [dy, dz] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) new Vector3(x + .006, y + dy * radius, z + dz * radius).applyMatrix4(rest).toArray(pos, pos.length);
-      eyes.push({ pos, uv: [0, 0, 0, 1, 1, 1, 1, 0], owner: head, tris: [0, 1, 2, 0, 2, 3] });
+      const eye: (typeof eyes)[number] = { pos, uv: [0, 0, 0, 1, 1, 1, 1, 0], owner: head, tris: [0, 1, 2, 0, 2, 3] };
+      if (args.includes('--interpolate-eye-weights')) {
+        eye.joints = []; eye.weights = [];
+        const triangle = new Triangle(), nearest = new Vector3(), bary = new Vector3();
+        for (let vertex = 0; vertex < 4; vertex++) {
+          const patchPoint = new Vector3().fromArray(pos, vertex * 3);
+          const bestBary = new Vector3(); let best = Infinity, bestIds: number[] | undefined;
+          for (let t = 0; t < body.tris.length; t += 3) {
+            const ids = body.tris.slice(t, t + 3);
+            if (ids.some(i => body.owner[i] !== head && JOINTS[body.owner[i]] !== 'jaw')) continue;
+            triangle.set(...ids.map(i => new Vector3().fromArray(body.pos, i * 3)) as [Vector3, Vector3, Vector3]);
+            triangle.closestPointToPoint(patchPoint, nearest);
+            const distance = nearest.distanceToSquared(patchPoint);
+            if (distance < best && triangle.getBarycoord(nearest, bary)) { best = distance; bestIds = ids; bestBary.copy(bary); }
+          }
+          if (!bestIds) throw Error('Could not interpolate eye weights from the head surface');
+          const mixed = new Map<number, number>();
+          for (let corner = 0; corner < 3; corner++) for (let k = 0; k < 4; k++) {
+            const influence = joints4[weldOf[bestIds[corner]] * 4 + k];
+            const weight = weights4[weldOf[bestIds[corner]] * 4 + k] * bestBary.getComponent(corner);
+            if (weight > 1e-6 && ['head', 'jaw', 'neck', 'body'].includes(JOINTS[influence])) mixed.set(influence, (mixed.get(influence) ?? 0) + weight);
+          }
+          const sorted = [...mixed].sort((a, b) => b[1] - a[1]).slice(0, 4), sum = sorted.reduce((total, [, weight]) => total + weight, 0);
+          for (let k = 0; k < 4; k++) { eye.joints.push(sorted[k]?.[0] ?? head); eye.weights.push((sorted[k]?.[1] ?? 0) / sum); }
+        }
+      }
+      eyes.push(eye);
     }
     if (paintedEyes && eyes.length !== paintedEyes.eye_centers.length) throw Error('A painted eye landmark did not project onto the head surface');
     if (paintedEyes) fit.eyeLandmarks = arg('--eyes');
@@ -1125,7 +1151,11 @@ if (eyes.length) {
   const pos: number[] = [], tris: number[] = [], eyeUV: number[] = [];
   for (const e of eyes) { const base = pos.length / 3; pos.push(...e.pos); eyeUV.push(...e.uv); tris.push(...e.tris.map(t => t + base)); }
   const count = pos.length / 3, eyeNormals = new Float32Array(count * 3), j = new Uint16Array(count * 4), wt = new Float32Array(count * 4);
-  for (let i = 0; i < count; i++) { j[i * 4] = eyes[0].owner; wt[i * 4] = 1; eyeNormals[i * 3] = 1; }
+  for (let i = 0; i < count; i++) {
+    const eye = eyes[Math.floor(i / 4)], local = i % 4;
+    for (let k = 0; k < 4; k++) { j[i * 4 + k] = eye.joints?.[local * 4 + k] ?? eye.owner; wt[i * 4 + k] = eye.weights?.[local * 4 + k] ?? Number(k === 0); }
+    eyeNormals[i * 3] = 1;
+  }
   const ep = out.createPrimitive().setMaterial(eyeMaterial)
     .setAttribute('POSITION', out.createAccessor().setType('VEC3').setArray(new Float32Array(pos)))
     .setAttribute('NORMAL', out.createAccessor().setType('VEC3').setArray(eyeNormals))

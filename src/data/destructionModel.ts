@@ -69,7 +69,15 @@ export function partAt(parts: readonly DestructionPart[], point: readonly number
 /** Exact owned portions of the original compound collider; ground supports remain immutable. */
 export function partColliders(assetId: string, parts: readonly DestructionPart[]): { part: number; box: Aabb }[] {
   const result: { part: number; box: Aabb }[] = [];
-  for (const box of staticCollision[assetId]?.boxes ?? []) {
+  const sourceBoxes = staticCollision[assetId]?.boxes ?? [];
+  // The rebuilt L10 farm shells are intentionally open ruins and have no
+  // shared collision bake. Their authored structural part bounds are the
+  // visible wall faces and doorway gaps; keep those walls in the destruction
+  // blocker set instead of dropping the placement's entire collider set.
+  if (!sourceBoxes.length && /^bld\.farm-(?:house|barn)-ruin$/.test(assetId)) {
+    return parts.flatMap((part, index) => part.role === 'structure' && part.id.startsWith('farm-') ? [{ part: index, box: part.bounds }] : []);
+  }
+  for (const box of sourceBoxes) {
     if (box.max[1] < .45) continue;
     let remaining = [box];
     for (const [part, def] of parts.entries()) {

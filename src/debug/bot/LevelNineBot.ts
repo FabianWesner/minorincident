@@ -6,7 +6,7 @@ import { downed } from '../../sim/combat/Damage';
 import { l9Course } from '../../data/l9';
 
 /** Ordinary keyboard policy: follow a route, avoid heavy bodies, shake boarders,
- * defend stopped hatches and supply the controlled crawl. No simulation writes. */
+ * defend stopped hatches and complete the scripted ending. No simulation writes. */
 export class LevelNineBot {
   private index = 1;
   private avoid: { x: number; z: number; until: number } | null = null;
@@ -63,7 +63,6 @@ export class LevelNineBot {
       this.avoid = null; this.reverseUntil = 0; this.blockedAt = null;
     }
     this.previousPosition = { x: car.transform.x, z: car.transform.z };
-    if (l9.state.phase === 'crawl') { const end = w.missions!.def.anchors['crawl-end'], dx = end.x - w.entities.get(1)!.transform.x, dz = end.z - w.entities.get(1)!.transform.z, length = Math.hypot(dx, dz) || 1; f.move = { x: dx / length, z: dz / length }; return f; }
     if (l9.state.phase !== 'driving') return f;
     const driving = l9.driving.state;
     if (l9.driving.hatch) {

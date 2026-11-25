@@ -226,6 +226,12 @@ export class CorpseLayout {
       courierClear: !player || bodies.every(p => pointDistanceSquared(player.x, player.z, p.ax, p.az, p.bx, p.bz) >= .949 ** 2) };
   }
   place(e: EntitySnapshot, deadAt = e.infected?.deadAt ?? 0, prone?: number): RestingPose | EntitySnapshot['transform'] {
+    // A run-over leaves the body where it went under the wheels. The usual
+    // clear-ground search deliberately moves corpses away from vehicle hulls.
+    if (e.squashed && !e.corpseBlast) {
+      this.removePose(e.id); this.deferred.delete(e.id);
+      return { ...e.transform, y: e.transform.y - .7 };
+    }
     const epilogue = this.world.missions?.def.id === 'L10' && !!this.world.missions.state.cureFront;
     if (epilogue !== this.epilogue) {
       this.epilogue = epilogue; this.search = undefined;

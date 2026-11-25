@@ -219,7 +219,7 @@ export class CharacterView extends Group {
         } });
         character.rig.head.add(headlamp);
       }
-      const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
+      const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined, character.model);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
       this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, tierGear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
       // Before the first compile (warm-up), so the foreground slice never rebuilds her programs during play (Q-208).

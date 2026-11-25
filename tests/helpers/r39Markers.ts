@@ -32,6 +32,12 @@ export async function checkL9BridgeMarker(): Promise<void> {
     const marker = markerAnchor(m)!;
     expect(marker.x, 'ring on the deck, not at the gate wall').toBeGreaterThanOrEqual(l9Course.bridge.x);
     expect(marker.x).toBeLessThanOrEqual(l9Course.bridge.endX);
+    const fixed = { x: marker.x, z: marker.z };
+    const player = world.entities.get(1)!;
+    const playerStart = { ...player.transform };
+    Object.assign(player.transform, { x: player.transform.x + 7, z: player.transform.z + 5 });
+    expect(markerAnchor(m)).toMatchObject(fixed);
+    Object.assign(player.transform, playerStart);
     const car = world.vehicles!.cars.get(l9.state.carId)!, pose = { x: 490, y: car.entity.transform.y, z: 0 };
     car.physics.body.setTranslation(pose, true); car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
     Object.assign(car.entity.transform, pose);

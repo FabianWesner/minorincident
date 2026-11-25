@@ -49,6 +49,8 @@ export class InputSystem implements Lifecycle {
   private cancelMove = false;
   private readonly clicks: { x: number; y: number }[] = [];
   private selectedWeaponKey: number | undefined;
+  /** PO 2026-11-22: RMB / Q flip between the current and the last-used weapon (short + long range pair). */
+  private swapLast = false;
   private lure = false;
   corgiLureOnce(): void { if (!this.drivingContext && !this.mountedGunContext) this.lure = true; }
   private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
@@ -133,9 +135,9 @@ export class InputSystem implements Lifecycle {
     this.hint.textContent = this.drivingContext && scheme !== 'touch' ? scheme === 'mouse-only'
       ? 'Hold LMB and steer toward the cursor · release to brake · E / F exit'
       : 'W gas · S brake / reverse · A / D steer left / right · Space / K handbrake (throws boarders) · J / LMB horn / boost · E / F exit' : {
-      'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / Shift+Q cycle · RMB next · G corgi lure · E / F interact · number keys select weapons',
-      'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / Shift+Q cycle · RMB next · G corgi lure · E / F interact · number keys select weapons',
-      keyboard: 'WASD / arrows move · J / K / Space aim assist · number keys select weapons · Q / Shift+Q cycle · G corgi lure · E / F interact',
+      'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · RMB / Q last weapon · Shift+Q cycle · G corgi lure · E / F interact · number keys select weapons',
+      'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · RMB / Q last weapon · Shift+Q cycle · G corgi lure · E / F interact · number keys select weapons',
+      keyboard: 'WASD / arrows move · J / K / Space aim assist · number keys select weapons · Q last weapon · Shift+Q cycle · G corgi lure · E / F interact',
       touch: 'Stick to move (driving: up gas, down brake / reverse, left / right steer) · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
     }[scheme];
   }
@@ -163,7 +165,8 @@ export class InputSystem implements Lifecycle {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
     if (code === 'KeyG') { if (held) this.corgiLureOnce(); return; }
     if (code === 'KeyQ') {
-      if (held && !this.drivingContext && !this.mountedGunContext) this.selectors.push({ direction: this.shift() ? -1 : 1, active: true });
+      // PO 2026-11-22: Q flips to the last-used weapon; Shift+Q still rolls through the whole list.
+      if (held && !this.drivingContext && !this.mountedGunContext) { if (this.shift()) this.selectors.push({ direction: 1, active: true }); else this.swapLast = true; }
       return;
     }
     if (held && /^Digit[0-9]$/.test(code)) {
@@ -191,7 +194,7 @@ export class InputSystem implements Lifecycle {
     const action = held ? this.boundAction(code) : this.heldTokens.get(code);
     if (!action) return;
     if (held && code === 'Mouse0') this.clicks.push({ x: this.pointer.x, y: this.pointer.y });
-    else if (held && code === 'Mouse2') { this.selectors.push({ direction: 1, active: true }); this.heldTokens.set(code, action); return; }
+    else if (held && code === 'Mouse2') { if (!this.drivingContext && !this.mountedGunContext) this.swapLast = true; this.heldTokens.set(code, action); return; }
     else if (held && (action.startsWith('move') || action === 'left' || action === 'right' || action === 'interact')) this.cancelMove = true;
     if (held) this.heldTokens.set(code, action); else this.heldTokens.delete(code);
     if (code === 'Space' && action === 'left') this.space.set(code, held);
@@ -224,7 +227,7 @@ export class InputSystem implements Lifecycle {
     const frame = this.frame;
     const mouseAim = !this.drivingContext && this.scheme !== 'touch';
     if (mouseAim) frame.strafe = true; else delete frame.strafe;
-    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.orderedSelection; delete frame.selectedActiveSlot; delete frame.selectedWeaponKey; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.orderedSelection; delete frame.selectedActiveSlot; delete frame.selectedWeaponKey; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive; delete frame.swapLast;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     const driveX = this.drivingContext && this.aiming() ? this.axis('aimRight', 'aimLeft') : x;
@@ -311,6 +314,7 @@ export class InputSystem implements Lifecycle {
     delete frame.corgiLure; if (this.lure) { frame.corgiLure = true; this.lure = false; }
     if (this.selectedWeaponKey !== undefined) { frame.selectedWeaponKey = this.selectedWeaponKey; this.selectedWeaponKey = undefined; }
     if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; frame.orderedSelection = true; this.selectedSlot = undefined; }
+    if (this.swapLast) { frame.swapLast = true; this.swapLast = false; }
     const selection = this.selectors.shift();
     frame.selector = selection?.direction ?? 0;
     if (selection?.side) frame.selectorSide = selection.side;

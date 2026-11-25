@@ -92,9 +92,10 @@ test('keyboard aim (Q-196): WASD/arrows follow the screen at every camera yaw; k
   c.key('Space', true); const space = c.sample();
   expect(space.activeAttack).toBe(true); expect(space.aimSource).toBe('assist'); expect(space.aim).toBeNull(); expect(space.move.x).toBeLessThan(0);
   c.key('KeyG', true); expect(c.sample().corgiLure).toBe(true); c.key('KeyG', false); expect(c.sample().corgiLure).toBeUndefined();
-  c.key('KeyQ', true); expect(c.sample().selector).toBe(1); c.key('KeyQ', false);
-  c.key('ShiftLeft', true); c.key('KeyQ', true); const reverse = c.sample();
-  expect(reverse.selector).toBe(-1); expect(reverse.selectorActive).toBe(true);
+  // PO 2026-11-22: Q flips to the last-used weapon; Shift+Q rolls through the whole list.
+  c.key('KeyQ', true); const swap = c.sample(); expect(swap.swapLast).toBe(true); expect(swap.selector).toBe(0); c.key('KeyQ', false);
+  c.key('ShiftLeft', true); c.key('KeyQ', true); const roll = c.sample();
+  expect(roll.selector).toBe(1); expect(roll.selectorActive).toBe(true); expect(roll.swapLast).toBeUndefined();
   c.key('KeyQ', false); c.key('ShiftLeft', false);
   c.pointer(1200, 350); expect(c.sample().aimSource).toBe('assist');
   const recording = Recorder.parse(Recorder.serialize(c.input.recorder.stop()));
