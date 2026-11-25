@@ -4,6 +4,7 @@ import type { Materials } from './Materials';
 import type { SimWorld } from '../sim/world/SimWorld';
 
 const nearby: number[] = [];
+const search = { x: 0, z: 0, r: 22 };
 const movers = Array.from({ length: 8 }, () => uniform(new Vector3(-10000, 0, -10000)).setGroup(renderGroup));
 const directions = Array.from({ length: 8 }, () => uniform(new Vector3(0, 0, 0)).setGroup(renderGroup));
 const ids = new Int32Array(8).fill(-1);
@@ -33,7 +34,8 @@ export function updateCorn(world: SimWorld): void {
   const heroSpeed = Math.hypot(hx, hz);
   if (!hero.hidden && hero.health.current > 0 && heroSpeed > .1)
     put(hero.id, hero.transform.x, hero.transform.y, hero.transform.z, hx / heroSpeed, hz / heroSpeed);
-  for (const id of world.spatial.query({ x: hero.transform.x, z: hero.transform.z, r: 22 }, nearby, false)) {
+  search.x = hero.transform.x; search.z = hero.transform.z;
+  for (const id of world.spatial.query(search, nearby, false)) {
     const e = world.entities.get(id);
     if (!e) continue;
     if (e.hidden || e.health.current <= 0 || !(e.id === 1 || e.infected || e.companion) || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
@@ -44,7 +46,7 @@ export function updateCorn(world: SimWorld): void {
       put(e.id, e.transform.x, e.transform.y, e.transform.z, vx / speed, vz / speed);
     }
   }
-  for (const car of world.vehicles?.cars.values() ?? []) {
+  if (world.vehicles) for (const car of world.vehicles.cars.values()) {
     const e = car.entity, speed = Math.abs(car.physics.speed);
     if (speed <= .1 || Math.hypot(e.transform.x - hero.transform.x, e.transform.z - hero.transform.z) > 22) continue;
     const sign = car.physics.speed < 0 ? -1 : 1;
