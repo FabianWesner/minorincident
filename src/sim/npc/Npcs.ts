@@ -92,7 +92,8 @@ export class Npcs {
       || ['L7', 'L8'].includes(this.world.scenario ?? '') && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
     const cell = routeFollower ? nav.nearestCell(e.transform.x, e.transform.z, footprint) : -1;
     // Animal encounter goals are independent of the courier's reverse field.
-    const flowNext = routeFollower && !e.infected?.arenaBoss && !e.infected?.arenaCarrier && !e.companion?.arenaWait && distance > 30 ? nav.flowNext(cell) : -1;
+    const l8BreachCatchup = !!e.companion && this.world.scenario === 'L8' && !!this.world.missions?.l8?.state.breachedAt && distance > 6;
+    const flowNext = routeFollower && !e.infected?.arenaBoss && !e.infected?.arenaCarrier && !e.companion?.arenaWait && (distance > 30 || l8BreachCatchup) ? nav.flowNext(cell) : -1;
     if (routeFollower && cell < 0) {
       // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
       const last = this.escapes.get(e.id), tick = this.world.tick;
