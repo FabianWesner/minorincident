@@ -57,3 +57,7 @@ A diagnostic trial allowed the existing bot to attack only while on foot within 
 ## Hospital composition trial
 
 Moving the first tent from (3500, 50) to (3500, 108) did not make it visible in a staged HIGH zoom-1 capture at (3502, 95). The trial was reverted because it did not improve the frame and placed the solid footprint closer to the ride lane. The cause of its absence requires render/occlusion and streaming inspection before another placement change.
+
+## Hospital frustum diagnostic
+
+At the staged road pose (3502, 95), the camera target was (3502.55, 0, 95) and all three original tents were culled outside its frustum; no see-through placements were cut. A trial at (3500, 108) was also culled. Moving the first tent to (3494, 87) selected LOD1 but left only an edge at the top of the image; (3498, 90) brought a large cropped wall into view while encroaching on the route. Both trials were reverted. The evidence points to the follow-camera composition and tent orientation/scale, rather than the see-through cut, as the remaining visual problem.
