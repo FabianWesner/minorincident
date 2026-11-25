@@ -119,3 +119,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - The existing NPC test file was run locally as a diagnostic after the incomplete remote logs: all 3 cases passed in 8.30 s. The configured per-test timeout is 30 s, and the remote log showed the affected case exceeding that duration; the incomplete run did not print a final assertion, so load-related timeout is plausible but unconfirmed. This diagnostic is not a substitute for the required full remote suite.
 
 - Fixed checkpoint hatch blocker reconciliation: restoring an open hatch removes its infected-only blocker, and restoring a closed hatch reinstalls it. Both transitions, including a real final bash, are folded into the existing checkpoint test. The focused mission test, typecheck and lint pass; focused L6 routes complete with the same three retreat engagement flags. The all-level audit and remote unit suite remain to run on this source.
+
+- After the checkpoint fix, the full remote unit command and its unchanged retry again timed out at 240.8 s and 241.0 s under runner load. No completed unit result is available for this source.
