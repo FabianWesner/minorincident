@@ -252,7 +252,8 @@ export class Hud {
       const p = this.game.view.project(event.position.x, event.position.y + 1.2, event.position.z);
       this.shieldBlock.textContent = event.shieldBreak ? 'SHIELD BROKEN · 1.5s' : event.shieldGlance ? 'SHIELD STRAIN · CHIP' : 'BLOCKED · FLANK';
       this.shieldBlock.style.left = `${Math.max(10, Math.min(90, (p[0] + 1) * 50))}%`;
-      this.shieldBlock.style.top = `${Math.max(18, Math.min(85, (1 - p[1]) * 50))}%`;
+      // Leave the head-anchored health bar visible beneath the shield cue.
+      this.shieldBlock.style.top = `calc(${Math.max(18, Math.min(85, (1 - p[1]) * 50))}% - 48px)`;
       this.shieldBlockUntil = this.game.world.tick + (event.shieldBreak ? 90 : 30);
       return;
     }

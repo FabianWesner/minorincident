@@ -25,13 +25,15 @@ export function barSize(width: number, height: number, mega = false): { width: n
   const phone = Math.min(width, height) <= 480;
   return mega ? { width: phone ? 72 : 96, height: phone ? 8 : 10 } : { width: phone ? 48 : 64, height: phone ? 6 : 8 };
 }
-/** r26-l8hitreact: an L8 arena boss takes 0.6x outside its exposed windows, so a chip hit barely moves its bar. The lost slice stays
- * as a white "chip" for 0.3 s (at least 3 px wide) beside the fill; render-only, one extra mesh that is hidden when no chip is live. */
-export const bossChipHoldTicks = 12, bossChipFadeTicks = 6, bossChipMinPx = 3;
-export function bossChip(from: number, current: number, age: number, widthPx: number): number {
+/** A small hit can barely move a bar. A gold chip remains for 0.3 s, with a minimum width; it is render-only. */
+export const bossChipHoldTicks = 12, bossChipFadeTicks = 6, bossChipMinPx = 6;
+export function bossChip(from: number, current: number, age: number, widthPx: number, pulse = false): number {
   if (age >= bossChipHoldTicks + bossChipFadeTicks || from <= current) return 0;
   const fade = age <= bossChipHoldTicks ? 1 : 1 - (age - bossChipHoldTicks) / bossChipFadeTicks;
-  return Math.min(Math.max((from - current) * widthPx * fade, bossChipMinPx * fade), (1 - current) * widthPx);
+  // A short expansion restarts on every heavy hit, even when rapid chip
+  // damage would otherwise leave the minimum-width marker motionless.
+  const minimum = bossChipMinPx + (pulse ? 4 * Math.max(0, 1 - age / 6) : 0);
+  return Math.min(Math.max((from - current) * widthPx * fade, minimum * fade), widthPx);
 }
 export const followerPipSize = { width: 18, height: 3 } as const;
 /** Keep a small set of live, healthy attackers legible in a crowd; damaged and special infected retain their bars. */
@@ -77,10 +79,19 @@ export class HealthBars extends Group {
   private readonly definitions = new Map(infectedDefinitions.map(def => [def.id, { ...def }]));
   private readonly probes: { id: number; fraction: number; x: number; y: number; width: number; height: number; gap: number; anchor: number[] }[] = [];
   private readonly chips = new Map<number, { last: number; from: number; at: number }>();
+  private readonly stopHit: () => void;
   private readonly megaWeakSpot = new Mesh(new SphereGeometry(.42, 12, 8), new MeshBasicNodeMaterial({ color: 0xff5a2a, toneMapped: false, fog: false, depthTest: false, transparent: true, opacity: .9 }));
   private readonly probing = __QA_HOOKS__ && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   constructor(private readonly world: SimWorld, private readonly courierBounds?: (out: Box3) => boolean) {
     super(); this.name = 'infected-health-bars'; this.unoccluded.needsUpdate = true;
+    this.stopHit = world.events.on('combat.hit', event => {
+      if (event.type !== 'combat.hit' || event.amount <= 0) return;
+      const e = world.entities.get(event.targetId);
+      if (!e?.infected || !(e.infected.arenaBoss || e.infected.special === 'armor' || e.combat?.shield) || e.health.max <= 0) return;
+      const current = healthFraction(e.health.current, e.health.max), previous = healthFraction(e.health.current + event.amount, e.health.max);
+      const chip = this.chips.get(e.id);
+      this.chips.set(e.id, { last: current, from: chip && world.tick - chip.at < bossChipHoldTicks + bossChipFadeTicks ? Math.max(chip.from, previous) : previous, at: world.tick });
+    });
     this.megaWeakSpot.visible = false; this.megaWeakSpot.renderOrder = 95; this.add(this.megaWeakSpot);
     const makeMeshes = (colors: readonly string[]) => colors.map((color, i) => {
       const material = new MeshBasicNodeMaterial({ depthTest: false, depthWrite: false, toneMapped: false, fog: false });
@@ -93,7 +104,7 @@ export class HealthBars extends Group {
       const mesh = new InstancedMesh(new PlaneGeometry(1, 1), material, 400);
       mesh.frustumCulled = false; mesh.count = 0; mesh.renderOrder = 100 + i; this.add(mesh); return mesh;
     });
-    this.enemyMeshes = makeMeshes([healthBarColors.outline, healthBarColors.background, healthBarColors.fill, '#ffffff']);
+    this.enemyMeshes = makeMeshes([healthBarColors.outline, healthBarColors.background, healthBarColors.fill, '#ffd45a']);
     this.followerMeshes = makeMeshes([healthBarColors.survivorOutline, healthBarColors.survivorBackground, healthBarColors.survivorFill]);
   }
   update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean, cityNight = false): void {
@@ -158,7 +169,7 @@ export class HealthBars extends Group {
       // into a shared row above her head. Special threats and followers retain
       // their information above the silhouette.
       if ((follower || e.faction === 'infected') && x + displaySize.width / 2 >= this.heroScreen.left - 2 && x - displaySize.width / 2 <= this.heroScreen.right + 2 && y + displaySize.height / 2 >= this.heroScreen.top - 2 && y - displaySize.height / 2 <= this.heroScreen.bottom + 2) {
-        if (!follower && !mandatoryBar(e)) continue;
+        if (!follower && !mandatoryBar(e) && !(e.infected?.special === 'armor' && e.infected.hitByPlayer)) continue;
         y = this.heroScreen.top - 4 - displaySize.height / 2;
       }
       if (x - displaySize.width / 2 - (pip ? 0 : 2) < 0 || x + displaySize.width / 2 + (pip ? 0 : 2) > width || y - displaySize.height / 2 < 0 || y + displaySize.height / 2 > height) continue;
@@ -173,7 +184,12 @@ export class HealthBars extends Group {
       // The known L7 escort keeps its individual health UI through fence/wall
       // reveals. A static head ray otherwise erases bars above visible bodies.
       if (!evacuee && physics?.castRay(this.ray, Math.max(0, distance - .01), true, undefined, undefined, undefined, undefined, this.solidCollider)) continue;
-      if (!evacuee && occluded?.(this.center)) continue;
+      // The courier reveal can expose a close enemy through district geometry
+      // that still reports as opaque to the bar ray. Keep hit feedback for
+      // nearby heavies; the physical solid ray above still blocks real walls.
+      const closeHitHeavy = !!e.infected?.hitByPlayer && (e.infected.special === 'armor' || !!e.combat?.shield) &&
+        Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 2.5;
+      if (!evacuee && !closeHitHeavy && occluded?.(this.center)) continue;
       this.center.copy(this.point);
       this.center.x = x / width * 2 - 1;
       this.center.y = 1 - y / height * 2;
@@ -183,11 +199,13 @@ export class HealthBars extends Group {
       const fraction = healthFraction(e.health.current, e.health.max), layers = follower ? this.followerMeshes : this.enemyMeshes;
       const indices = pip ? [1, 2] : [0, 1, 2];
       let chipPx = 0;
-      if (e.infected?.arenaBoss && !follower) {
+      // Small hits on armored and shielded infected can move the red fill by
+      // less than a pixel. Show the same damage chip used for arena bosses.
+      if ((e.infected?.arenaBoss || e.infected?.special === 'armor' || e.combat?.shield) && !follower) {
         const chip = this.chips.get(e.id) ?? { last: fraction, from: fraction, at: -Infinity };
         if (fraction < chip.last - 1e-6) { chip.from = this.world.tick - chip.at < bossChipHoldTicks + bossChipFadeTicks ? Math.max(chip.from, chip.last) : chip.last; chip.at = this.world.tick; }
         chip.last = fraction; this.chips.set(e.id, chip);
-        chipPx = bossChip(chip.from, fraction, this.world.tick - chip.at, displaySize.width);
+        chipPx = bossChip(chip.from, fraction, this.world.tick - chip.at, displaySize.width, !!e.combat?.shield || e.infected?.special === 'armor');
       }
       for (const i of indices) {
         const index = layers[i].count;
@@ -200,7 +218,8 @@ export class HealthBars extends Group {
       }
       if (chipPx > 0) {
         const index = this.enemyMeshes[3].count;
-        this.point.copy(this.center).addScaledVector(this.direction.setFromMatrixColumn(camera.matrixWorld, 0), (displaySize.width * fraction - displaySize.width / 2 + chipPx / 2) * unit);
+        const chipCenter = Math.min(displaySize.width - chipPx / 2, displaySize.width * fraction + chipPx / 2);
+        this.point.copy(this.center).addScaledVector(this.direction.setFromMatrixColumn(camera.matrixWorld, 0), (chipCenter - displaySize.width / 2) * unit);
         this.barMatrix.compose(this.point, camera.quaternion, this.barScale.set(chipPx * unit, displaySize.height * unit, 1));
         this.enemyMeshes[3].setMatrixAt(index, this.barMatrix); this.enemyMeshes[3].count++;
       }
@@ -214,5 +233,5 @@ export class HealthBars extends Group {
   setCourierMask(mask?: Texture): void { this.courierMask.value = mask ?? this.unoccluded; }
   get count(): number { return this.enemyMeshes[0].count + this.followerMeshes[1].count; }
   snapshot() { return { count: this.probes.length || this.count, draws: [...this.enemyMeshes, ...this.followerMeshes].filter(mesh => mesh.count).length, bars: this.probes }; }
-  dispose(): void { for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.megaWeakSpot.geometry.dispose(); this.megaWeakSpot.material.dispose(); this.unoccluded.dispose(); this.clear(); }
+  dispose(): void { this.stopHit(); for (const layer of [...this.enemyMeshes, ...this.followerMeshes]) { layer.geometry.dispose(); (layer.material as MeshBasicNodeMaterial).dispose(); } this.megaWeakSpot.geometry.dispose(); this.megaWeakSpot.material.dispose(); this.unoccluded.dispose(); this.clear(); }
 }

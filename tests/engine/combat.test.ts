@@ -815,6 +815,57 @@ test('damage modifiers: shared riot shield ±35°, armor and multipliers, stun/s
   }
   expect(health(melee, meleeRiot)).toBe(0);
   expect(melee.entities.get(meleeRiot)!.infected!.recoverAt).toBeGreaterThan(melee.tick);
+  // Full loadout proof for the shielded heavy: tiny frontal firearm chips
+  // still count as damage, while every weapon can resolve the same target.
+  for (const weapon of [
+    { actionId: 'weapon.fire-axe', type: 'melee' as const, base: 56, distance: 1 },
+    { actionId: 'weapon.handgun', type: 'bullet' as const, base: 20, distance: 5 },
+    { actionId: 'weapon.shotgun', type: 'bullet' as const, base: 30, distance: 5 },
+    { actionId: 'weapon.army-mg', type: 'bullet' as const, base: 14, distance: 10 },
+  ]) for (const side of ['front', 'back'] as const) {
+    const duel = await arena(); duel.loadScenario('horde-arena', 1); duel.scenario = 'L6';
+    const targetId = duel.infected!.spawn('infected.riot', { x: 0, z: 0 }, { yaw: 0 });
+    const attacker = duel.entities.get(1)!; Object.assign(attacker.transform, { x: side === 'front' ? weapon.distance : -weapon.distance, z: 0 });
+    let previous = health(duel, targetId);
+    for (let hitIndex = 0; hitIndex < 30 && health(duel, targetId) > 0; hitIndex++) {
+      duel.tick += 6;
+      const from = attacker.transform;
+      duel.combat!.damage.apply({ attackId: hitIndex + 1, actionId: weapon.actionId, sourceId: 1, targetId,
+        origin: from, ...(weapon.type === 'bullet' ? { shotOrigin: from } : {}),
+        direction: { x: side === 'front' ? -1 : 1, z: 0 }, base: weapon.base, multiplier: 1,
+        type: weapon.type, knockback: 0, stagger: 0 });
+      const current = health(duel, targetId);
+      expect(current, `${weapon.actionId}/${side} hit ${hitIndex + 1} must visibly reduce health`).toBeLessThan(previous);
+      previous = current;
+    }
+    expect(health(duel, targetId), `${weapon.actionId}/${side} can defeat a shielded infected`).toBe(0);
+    expect(duel.events.events().some(event => event.type === 'combat.kill' && event.targetId === targetId)).toBe(true);
+  }
+  // Current L6 hatch fronts use the catalog armored role (240 HP), not riot.
+  // Check each carried weapon against the actual actor and its directional plate.
+  for (const weapon of [
+    { id: 'weapon.fire-axe', type: 'melee' as const, damage: 56 },
+    { id: 'weapon.handgun', type: 'bullet' as const, damage: 20 },
+    { id: 'weapon.shotgun', type: 'bullet' as const, damage: 30 },
+    { id: 'weapon.army-mg', type: 'bullet' as const, damage: 14 },
+  ]) for (const side of ['front', 'back'] as const) {
+    const duel = await arena(); duel.loadScenario('horde-arena', 1); duel.scenario = 'L6';
+    const targetId = duel.infected!.spawn('infected.armored', { x: 0, z: 0 }, { yaw: 0 });
+    const target = duel.entities.get(targetId)!;
+    expect(target.health.max).toBe(240);
+    const origin = { x: side === 'front' ? 3 : -3, z: 0 };
+    let previous = target.health.current;
+    for (let hit = 0; hit < 40 && target.health.current > 0; hit++) {
+      duel.tick += 6;
+      const amount = duel.combat!.damage.apply({ attackId: hit + 1, actionId: weapon.id, sourceId: 1, targetId,
+        origin, direction: { x: side === 'front' ? -1 : 1, z: 0 }, base: weapon.damage, multiplier: 1,
+        type: weapon.type, knockback: 0, stagger: 0 });
+      if (hit === 0) expect(amount, `${weapon.id}/${side} plate`).toBe(weapon.damage * (side === 'front' ? .5 : 1));
+      expect(target.health.current, `${weapon.id}/${side} hit ${hit + 1}`).toBeLessThan(previous);
+      previous = target.health.current;
+    }
+    expect(target.health.current, `${weapon.id}/${side} can down the armored actor`).toBe(0);
+  }
   // The barrel can pass the shield at physical contact; a melee flinch opens
   // a frontal firing window until stagger expires in every level.
   for (const level of Array.from({ length: 10 }, (_, i) => `L${i + 1}`)) {
