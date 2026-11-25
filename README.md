@@ -73,3 +73,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - The remote unit suite against the current source timed out at 240.7 s under runner load; its unchanged retry remained queued and was stopped at the lane time limit. Neither run is a pass.
 
 - Running the unchanged wave invariant from archived base revision 68892f1f reproduces the identical L4 low 35/36 failure and also the L6 unannounced-hatch reservation mismatch (60 admitted versus 54 expected). These failures predate this lane; the current L6 fixture explicitly announces the entries before checking the reservation.
+
+- Native infected-grid probe at z=14, 15 and 16 found clear cells across both authored tunnel limits (x 29–31 and x 245–247). Removing end spawn sources has not made the tunnel ends solid for infected. The shelter approach and exit route need an infected-only end-boundary design that preserves the story breach and player/escort passage; the closed-corridor acceptance criterion remains unmet.
