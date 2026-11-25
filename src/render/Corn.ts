@@ -1,5 +1,5 @@
 import { DoubleSide, Vector3 } from 'three/webgpu';
-import { Fn, If, attribute, dot, mat4, modelWorldMatrix, positionLocal, positionWorld, renderGroup, sin, uniform, vec3, vec4 } from 'three/tsl';
+import { Fn, If, attribute, dot, float, mat4, modelWorldMatrix, positionLocal, positionWorld, renderGroup, sin, uniform, vec3, vec4 } from 'three/tsl';
 import type { Materials } from './Materials';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { EntitySnapshot } from '../sim/world/types';
@@ -98,11 +98,13 @@ export function cornMaterial(materials: Materials) {
   // indices across a curved leaf would sample unrelated palette colours between them.
   const ground = positionLocal.y.lessThan(.12);
   const material = materials.shaded(attribute('color', 'vec3'), undefined, ground.select(1, 1));
-  const weight = positionLocal.y.smoothstep(.05, 2.3);
   const placement = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
   const rootWorld = modelWorldMatrix.mul(placement.mul(vec4(attribute('_stalk_root', 'vec3'), 1))).xyz;
   // Inactive uniform slots skip the wake calculation, keeping spare crowd capacity cheap.
-  const push = Fn(() => {
+  material.positionNode = Fn(() => {
+    // Explicit assignment keeps this shared value outside every mover branch.
+    const weight = float(0).toVar();
+    weight.assign(positionLocal.y.smoothstep(.05, 2.3));
     const result = vec3(0).toVar();
     for (let i = 0; i < movers.length; i++) {
       const actor = movers[i];
@@ -123,10 +125,9 @@ export function cornMaterial(materials: Materials) {
         result.addAssign(vec3(awayX.add(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.add(forward.z.mul(.35)).mul(bend)));
       });
     }
-    return result;
+    const wind = sin(positionWorld.x.mul(.7).add(positionWorld.z.mul(.4)).add(materials.wind.mul(1.5))).mul(.09).mul(weight);
+    return positionLocal.add(result).add(vec3(wind, 0, wind.mul(.4)));
   })();
-  const wind = sin(positionWorld.x.mul(.7).add(positionWorld.z.mul(.4)).add(materials.wind.mul(1.5))).mul(.09).mul(weight);
-  material.positionNode = positionLocal.add(push).add(vec3(wind, 0, wind.mul(.4)));
   material.side = DoubleSide; material.alphaTest = .1; material.alphaToCoverage = true;
   material.name = 'pal_l10-dry-corn'; material.userData.batchFeatures = 'l10-corn';
   return material;
