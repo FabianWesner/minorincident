@@ -84,6 +84,9 @@ function checkCompactFollowerOverlap(): void {
     Object.assign(followers[0], { archetype: 'infected.alpha' });
     bars.update(camera, 1280, 720);
     expect(bars.count, 'mandatory Alpha bars retain their information above the courier').toBe(1);
+    Object.assign(followers[0], { archetype: 'infected.armored', infected: { special: 'armor', hitByPlayer: true } });
+    bars.update(camera, 1280, 720);
+    expect(bars.count, 'player-hit armored bars remain visible at melee overlap').toBe(1);
   } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); vi.unstubAllGlobals(); }
 }
 

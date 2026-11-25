@@ -166,7 +166,7 @@ export class HealthBars extends Group {
       // into a shared row above her head. Special threats and followers retain
       // their information above the silhouette.
       if ((follower || e.faction === 'infected') && x + displaySize.width / 2 >= this.heroScreen.left - 2 && x - displaySize.width / 2 <= this.heroScreen.right + 2 && y + displaySize.height / 2 >= this.heroScreen.top - 2 && y - displaySize.height / 2 <= this.heroScreen.bottom + 2) {
-        if (!follower && !mandatoryBar(e)) continue;
+        if (!follower && !mandatoryBar(e) && !(e.infected?.special === 'armor' && e.infected.hitByPlayer)) continue;
         y = this.heroScreen.top - 4 - displaySize.height / 2;
       }
       if (x - displaySize.width / 2 - (pip ? 0 : 2) < 0 || x + displaySize.width / 2 + (pip ? 0 : 2) > width || y - displaySize.height / 2 < 0 || y + displaySize.height / 2 > height) continue;

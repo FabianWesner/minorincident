@@ -37,6 +37,8 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 - [Recovery probe](recovery.json): controlled L6 exit-platform armored and riot actors were downed, allowed to recover naturally, then queried at the first get-up tick. The production ray returned the same actor ID and a direct MG damage application reduced armor 240 → 233 and riot 225 → 211 (the staggered shield is open). This checks the first recovery tick and identity, not a complete animation or physical weapon input. Downed actors have zero HP and are ineligible for their health bar; living get-up actors are not categorically rejected by the damage path.
 
+- [First-hit weapon review](firsthit-weapons.json): high-tier WebGL2, active retreat, controlled exit placement and real mouse input for each weapon against both armored and riot actors. All eight first hits reduced HP. Full-size captures were opened: armored handgun, shotgun and MG show red/gold bars; the armored axe initially hid its bar over the courier, so the overlap rule now moves a player-hit armored bar above her, confirmed in a fresh capture. Riot axe shows red/gold, handgun and MG show shield strain plus bar, and shotgun downs the riot immediately with the shield-broken cue. No page errors. These are first-hit captures, not the original PO crowd. The existing overlap test was extended and passed.
+
 ## Open
 
 - A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
