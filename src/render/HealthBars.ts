@@ -27,10 +27,13 @@ export function barSize(width: number, height: number, mega = false): { width: n
 }
 /** A small hit can barely move a bar. A gold chip remains for 0.3 s, with a minimum width; it is render-only. */
 export const bossChipHoldTicks = 12, bossChipFadeTicks = 6, bossChipMinPx = 6;
-export function bossChip(from: number, current: number, age: number, widthPx: number): number {
+export function bossChip(from: number, current: number, age: number, widthPx: number, pulse = false): number {
   if (age >= bossChipHoldTicks + bossChipFadeTicks || from <= current) return 0;
   const fade = age <= bossChipHoldTicks ? 1 : 1 - (age - bossChipHoldTicks) / bossChipFadeTicks;
-  return Math.min(Math.max((from - current) * widthPx * fade, bossChipMinPx * fade), widthPx);
+  // A short expansion restarts on every heavy hit, even when rapid chip
+  // damage would otherwise leave the minimum-width marker motionless.
+  const minimum = bossChipMinPx + (pulse ? 4 * Math.max(0, 1 - age / 6) : 0);
+  return Math.min(Math.max((from - current) * widthPx * fade, minimum * fade), widthPx);
 }
 export const followerPipSize = { width: 18, height: 3 } as const;
 /** Keep a small set of live, healthy attackers legible in a crowd; damaged and special infected retain their bars. */
@@ -202,7 +205,7 @@ export class HealthBars extends Group {
         const chip = this.chips.get(e.id) ?? { last: fraction, from: fraction, at: -Infinity };
         if (fraction < chip.last - 1e-6) { chip.from = this.world.tick - chip.at < bossChipHoldTicks + bossChipFadeTicks ? Math.max(chip.from, chip.last) : chip.last; chip.at = this.world.tick; }
         chip.last = fraction; this.chips.set(e.id, chip);
-        chipPx = bossChip(chip.from, fraction, this.world.tick - chip.at, displaySize.width);
+        chipPx = bossChip(chip.from, fraction, this.world.tick - chip.at, displaySize.width, !!e.combat?.shield || e.infected?.special === 'armor');
       }
       for (const i of indices) {
         const index = layers[i].count;

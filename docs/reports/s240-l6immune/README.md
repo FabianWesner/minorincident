@@ -9,6 +9,8 @@ The earlier claim that current L6 hatch fronts are 600 HP riot actors was wrong.
 
 The armored front plate halves frontal damage and flank hits take full damage. To make small hits easier to read, the existing minimum-width damage chip now applies to armored actors as well as shield bearers and arena bosses. This is presentation only; it does not prove that all weapons hit at the reported position.
 
+For rapid heavy hits, the gold marker briefly expands and contracts on each new hit. Without this pulse, successive subpixel MG hits can leave the minimum-width marker nearly stationary until enough damage accumulates to move the red edge. The existing health-bar regression checks the expansion and contraction; damage values are unchanged.
+
 ## Receipts
 
 - `tests/engine/combat.test.ts` — the existing riot-shield combat case now checks that axe, handgun, shotgun, and army-MG damage reduces health and can down a shielded infected from both front and back. Existing distance/angle and frontal MG shield-break checks remain in this case.
@@ -50,6 +52,6 @@ The armored front plate halves frontal damage and flank hits take full damage. T
 
 ## Open
 
-- A crowded retreat replay and diagnosis of the original reported full bars remain open. The high-tier platform probe previously missed its second actor; the isolated pointer receipt above does not reproduce that crowd.
+- Diagnosis of the original reported full bars remains open: the controlled crowded retreat fixtures do not reproduce the PO's save, target state, or exact shot history.
 - The latest remote unit suite and its unchanged rerun timed out; the remote acceptance remains open.
 
