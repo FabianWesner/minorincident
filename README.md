@@ -111,3 +111,5 @@ Acceptance reports are generated with `npm run qa:accept -- --level all`. See [t
 - A first-gate conditional western seal completed all six skilled routes and introduced no additional focused L6 flags; the seal occurred at ticks 6539–7227, after the leader reached x≈90–96. It was discarded because the western end remained open during the shelter-to-gate leg and checkpoint re-opening was not proven. The underlying requirement is still open.
 
 - A six-run experiment ranked eligible ahead/behind service doors by player proximity instead of tail proximity. It produced identical route metrics to the current source for all six runs and was discarded; it did not improve engagement.
+
+- A six-run experiment offset the first retreat pressure tick by 7 s while retaining the two-infected group and 14 s subsequent interval. All routes completed and arrivals came from both directions, but seed 3 had zero player attacks; the offset was discarded.
