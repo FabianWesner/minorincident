@@ -183,7 +183,10 @@ export class HealthBars extends Group {
       const fraction = healthFraction(e.health.current, e.health.max), layers = follower ? this.followerMeshes : this.enemyMeshes;
       const indices = pip ? [1, 2] : [0, 1, 2];
       let chipPx = 0;
-      if (e.infected?.arenaBoss && !follower) {
+      // Riot front hits can be only 2.52 HP on L6's 600 HP hatch shielders:
+      // the red fill then moves less than half a pixel. Keep a minimum-width
+      // damage chip for any shielded infected, just as for arena bosses.
+      if ((e.infected?.arenaBoss || e.combat?.shield) && !follower) {
         const chip = this.chips.get(e.id) ?? { last: fraction, from: fraction, at: -Infinity };
         if (fraction < chip.last - 1e-6) { chip.from = this.world.tick - chip.at < bossChipHoldTicks + bossChipFadeTicks ? Math.max(chip.from, chip.last) : chip.last; chip.at = this.world.tick; }
         chip.last = fraction; this.chips.set(e.id, chip);

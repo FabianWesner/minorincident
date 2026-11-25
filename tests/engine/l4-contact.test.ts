@@ -673,6 +673,16 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
         expect(cast(head), 'the drawn head is clear above that obstruction').toBeNull();
         bars.update(camera, 1280, 720);
         expect(bars.count, 'a real lamp covering the torso must not erase a visible head bar').toBe(1);
+        const enemyLayers = (bars as unknown as { enemyMeshes: { count: number }[] }).enemyMeshes;
+        expect(enemyLayers[3].count, 'an untouched riot has no damage chip').toBe(0);
+        // L6's production hatch front keeps the existing armored 600 HP while
+        // carrying the real riot shield. A 14-damage MG round chips just 2.52.
+        w.entities.get(id)!.health.current = w.entities.get(id)!.health.max = 600;
+        w.combat!.damage.apply({ attackId: 910_001, actionId: 'weapon.army-mg', sourceId: 1, targetId: id,
+          origin: { x: -58.5, z: 51.5 }, shotOrigin: { x: -58.5, z: 51.5 }, direction: { x: -1, z: 0 },
+          base: 14, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
+        bars.update(camera, 1280, 720);
+        expect(enemyLayers[3].count, 'a tiny shield chip stays visible when red-fill movement is subpixel').toBe(1);
         w.physics.world!.createCollider(ColliderDesc.cuboid(.7, 2, .7).setTranslation(-60.7, 2, 52.3));
         w.physics.world!.step();
         bars.update(camera, 1280, 720);
