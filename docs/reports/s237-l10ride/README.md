@@ -83,3 +83,7 @@ A replay of the temporary remount and combat-approach diagnostic identified the 
 ## Mega route trace
 
 A temporary passive-approach replay sampled the Mega every 600 ticks after cure installation. While the courier stood at x≈4002, the coarse pursuit moved from x=3783 to x=3802, entered stuck level 2, then followed route nodes 44 → 43 west to x=3709 before returning east. It repeated the pattern by tick 60600. The skilled run instead advanced through nodes 45–47 toward the complex. This identifies a coarse route fallback loop as the source of the far-away Mega observation; the diagnostic changes were reverted. A repair must retain obstacle-aware movement and normal pursuit speed while preventing backward cycling.
+
+## Pursuit shortcut trial
+
+The coarse graph has a shortcut from node 43 (3697, −25) to node 48 (3940, −25). Removing that link in the temporary combat-approach/remount diagnostic moved the unreachable Mega from x≈3775 to (3897, −30) at the final hold sample, but the sample still had only 7/8 reachable and retained `step/hold:BELOW_REACHABILITY_PERCENT_90`. The skilled route completed. The shortcut and diagnostic policy were restored; the route needs a further obstacle-aware correction and a full native regression pass.
