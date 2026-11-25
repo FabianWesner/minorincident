@@ -4,7 +4,7 @@ Engine 3 keeps its authored roof in place during the ride. The courier walks aro
 
 ## Captures
 
-[Contact sheet](capture-sheet.jpg) shows HIGH then LOW at zoom 1 and 1.5: approach, five boarding samples, ride, and five arrival samples. Full frames and metadata are generated in `test-results/s238-l2truck/` by `tools/qa/s238-l2truck-capture.ts`. In the latest capture, both tiers reached the ride 213 ticks (3.55 s) after boarding began. The roof remains closed and no seated rig protrudes. The images show riders approaching, clearing the rear step, and emerging at arrival; some bunch during the approach. Stills do not prove that every transition is free of popping.
+[Contact sheet](capture-sheet.jpg) shows HIGH then LOW at zoom 1 and 1.5: approach, five boarding samples, ride, and five arrival samples. Full frames and metadata are generated in `test-results/s238-l2truck/` by `tools/qa/s238-l2truck-capture.ts`. In the latest capture, both tiers reached the ride 213 ticks (3.55 s) after boarding began. The roof remains closed and no seated rig protrudes. The cab door opens during the courier step-in pose and closes for the ride. The images show riders approaching, clearing the rear step, and emerging at arrival; some bunch during the approach. Stills do not prove that every transition is free of popping.
 
 ## Validation
 
@@ -12,7 +12,7 @@ Engine 3 keeps its authored roof in place during the ride. The courier walks aro
 - The existing nightly mission-interactions case passed, including a 15-second delayed rider who remains visible, followed by boarding and departure after release. No test case was added.
 - Local default unit suite passed 105/105 tests in 123.0 s; the budget wrapper reports 148/150 cases.
 - Threat audit passed after the boarding-gate change, with 0 fail flags in 397.2 s.
-- Remote default suite passed for the earlier product revision in 231.6 s (104 passed, 1 skipped). Attempts against the current boarding gate and their unchanged retries exceeded the 240-second budget. Some long-running cases reported failures before the overall timeout prevented final diagnostics. A passing current remote run remains required.
+- Remote default suite passed for the earlier product revision in 231.6 s (104 passed, 1 skipped). Attempts against the current boarding gate and their unchanged retries exceeded the 240-second budget. Some long-running cases reported failures before the overall timeout prevented final diagnostics. The latest remote run and unchanged retry both exceeded the 240-second budget; the retry reported no assertion failures before timeout. A passing current remote run remains required.
 
 ## Open
 
