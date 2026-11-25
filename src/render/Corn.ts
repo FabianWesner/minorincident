@@ -6,11 +6,11 @@ import type { EntitySnapshot } from '../sim/world/types';
 
 const nearby: number[] = [];
 const search = { x: 0, z: 0, r: 22 };
-const movers = Array.from({ length: 8 }, () => uniform(new Vector3(-10000, 0, -10000)).setGroup(renderGroup));
-const directions = Array.from({ length: 8 }, () => uniform(new Vector3(0, 0, 0)).setGroup(renderGroup));
-const ids = new Int32Array(8).fill(-1);
-const seen = new Uint8Array(8);
-const candidates = Array.from({ length: 5 }, () => ({ id: -1, x: 0, z: 0, speed: 0, vx: 0, vz: 0, score: 0 }));
+const movers = Array.from({ length: 16 }, () => uniform(new Vector3(-10000, 0, -10000)).setGroup(renderGroup));
+const directions = Array.from({ length: 16 }, () => uniform(new Vector3(0, 0, 0)).setGroup(renderGroup));
+const ids = new Int32Array(16).fill(-1);
+const seen = new Uint8Array(16);
+const candidates = Array.from({ length: 13 }, () => ({ id: -1, x: 0, z: 0, speed: 0, vx: 0, vz: 0, score: 0 }));
 let candidateCount = 0;
 let lastTick = 0;
 let lastWorld: SimWorld | undefined;
@@ -49,7 +49,7 @@ function collectVehicle(car: { entity: EntitySnapshot; physics: { speed: number 
   if (activeVehicle === e.id) put(e.id, e.transform.x, speed, e.transform.z, vx, vz, vehicleElapsed, 2);
   else consider(e.id, e.transform.x, speed, e.transform.z, vx, vz);
 }
-/** Fixed eight-slot upload: no per-stalk CPU work; the shader bends crop around nearby movers. */
+/** Fixed sixteen-slot upload: no per-stalk CPU work; the shader bends crop around nearby movers. */
 export function updateCorn(world: SimWorld): void {
   const hero = world.entities.get(1);
   if (world !== lastWorld || world.tick < lastTick || world.scenario !== 'L10' || !hero) {
