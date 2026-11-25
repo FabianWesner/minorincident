@@ -54,7 +54,7 @@ export class L8BossArenas {
       this.state.push({ id: def.id, ids, carrier: 0, phase: 0, startedAt: 0, endedAt: 0, nextAt: 0, cycle: 0, wallHits: 0, grabs: 0, counters: 0 });
     }
   }
-  /** r33-l8route: every cell door follows `l8GateClosed`; the pond's north door and the plaza doors follow the seal, the yard keeps its own locks. */
+  /** Every cell door follows `l8GateClosed`; the plaza and yard keep their own locks. */
   updateGates(): void {
     const breached = this.state.some(a => a.id === 'elephant' && !!a.breachAt);
     if (this.gateStates.get('breach') !== breached) {
@@ -149,8 +149,11 @@ export class L8BossArenas {
       const followers = [...this.mission.l8!.followers(), ...[cast.haleId, cast.reyesId, ...cast.guards].map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && !e.infected && !e.infection && e.passengerOf === undefined)];
       const followersInside = followers.some(follower => inRect(follower.transform, stage.zone))
         || [...w.entities.iterate()].some(e => !!e.companion && e.passengerOf === undefined && !e.hidden && inRect(e.transform, stage.zone));
-      // The old elephant stays healthy in his enclosure until the vehicle-yard
-      // finale is reachable; an early distant health bar must not be a dormant boss.
+      // PO 2026-11-25: "they should all be zombies ... at the moment when the zombie attack starts". Every zoo
+      // animal turns with the breach; the fight itself still starts when the courier enters its cage.
+      for (const id of arena.ids) { const e = w.entities.get(id); if (e?.civilian && !e.infection && e.health.current > 0 && e.civilian.state !== 'grabbed') w.npcs!.civilians.outbreak!.infect(e, arena.carrier || 1); }
+      // The elephant has turned at the breach, but the yard encounter waits
+      // until the preceding enclosures are clear.
       if (arena.id === 'elephant' && !routeOpen) continue;
       this.observeMotion(arena, player);
       const healthy = arena.ids.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.infection && e.health.current > 0);
@@ -440,8 +443,9 @@ export class L8BossArenas {
         this.start(e, 'gorilla.pound', 60, 0, 5); return true;
       }
     }
-    const rear = (p.transform.x - e.transform.x) * -Math.cos(e.transform.yaw) + (p.transform.z - e.transform.z) * Math.sin(e.transform.yaw);
-    if (arena.id === 'zebra' && distance(e.transform, p.transform) < 2 && rear > distance(e.transform, p.transform) * Math.SQRT1_2 && w.tick >= boss.readyAt) { this.start(e, 'zebra.kick', 36, 0, 2); boss.readyAt = w.tick + 360; return true; }
+    // PO 2026-11-25: "they're not attacking me. I can just stay there and do nothing." Between stampedes a zebra closes in and
+    // kicks (the move turns its rear to her; 36-tick windup to dodge) instead of needing her to stand exactly behind it.
+    if (arena.id === 'zebra' && distance(e.transform, p.transform) < 2.4 && w.tick >= boss.readyAt) { this.start(e, 'zebra.kick', 36, 0, 2); boss.readyAt = w.tick + 240; return true; }
     if (arena.id === 'zebra' && arena.lane?.staging) {
       const lane = arena.lane;
       const aim = this.predict(e, 1 + Math.abs(p.transform.z - (lane.side === 1 ? 16 : 48)) / 15, arena);
@@ -469,6 +473,7 @@ export class L8BossArenas {
       this.start(e, 'elephant.swipe', 42, 0, 5.5); boss.readyAt = w.tick + 420;
     } else if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), 5);
     else if (arena.id === 'flamingo') this.orbit(e, arena, def.centre, 6);
+    else if (arena.id === 'zebra') this.walk(e, p.transform, 7);
     else this.orbit(e, arena, p.transform, 4);
     return true;
   }

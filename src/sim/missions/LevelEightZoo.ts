@@ -155,10 +155,10 @@ export class LevelEightZoo {
     s.keeperId = outbreak.spawnPedestrian(keeper, { ...staff, walkSpeed: 4.6, waypoints: tour,
       schedule: [...tour.map(target => ({ activity: 'walk' as const, anchor: 'zoo/tour', target, ticks: 1 })),
         { activity: 'look', anchor: 'zoo/plaza', target: tour.at(-1)!, facing: { x: -4, z: 0 }, ticks: 36_000 }] });
-    const pondPost = this.point({ x: 1, z: -21 });
-    s.pondKeeperId = outbreak.spawnPedestrian(pondPost, { ...zooStaffLook(0), waypoints: [pondPost, { x: 2, z: -21 }] });
-    // This keeper stays with the birds during the first alarm, still fully
-    // biteable and rescuable through the ordinary shared outbreak rules.
+    const pondPost = this.point({ x: 0, z: -57 });
+    s.pondKeeperId = outbreak.spawnPedestrian(pondPost, { ...zooStaffLook(0), waypoints: [pondPost, { x: 1, z: -57 }] });
+    // The keeper stands outside the pond's north fence, reachable by the
+    // opening cohort and still rescuable through ordinary outbreak rules.
     w.entities.get(s.pondKeeperId)!.civilian!.l1!.haven = { ...pondPost, route: [], leg: 0 };
     for (const [key, x] of [['majorHale', -4], ['privateReyes', -2]] as const) {
       const at = this.point({ x, z: 0 });

@@ -43,7 +43,7 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     };
     // Floodlights outside the west fences illuminate the night enclosures
     // without putting plaza lamps or obstacles inside the animal arenas.
-    add('l8-zebra-exterior-flood', 'prop.light-tower', 35, 32);
+    add('l8-zebra-exterior-flood', 'prop.light-tower', 35, 39);
     add('l8-gorilla-exterior-flood', 'prop.light-tower', 35, -32);
     // Habitat fittings are existing solid props, kept around the outside of
     // each encounter's movement lanes and away from both gate thresholds.

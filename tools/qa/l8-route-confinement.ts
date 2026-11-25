@@ -14,7 +14,11 @@ const distanceToSegment = (p: { x: number; z: number }, a: { x: number; z: numbe
   const t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / d2));
   return Math.hypot(p.x - a.x - t * dx, p.z - a.z - t * dz);
 };
-const authoredEdges = l8Route.flatMap(stage => stage.nodes.slice(1).map((b, i) => ({ id: stage.id, edge: i, a: stage.nodes[i]!, b })));
+const authoredEdges = l8Route.flatMap((stage, index) => {
+  const previousExit = l8Route[index - 1]?.exit;
+  const nodes = previousExit ? [previousExit, ...stage.nodes] : stage.nodes;
+  return nodes.slice(1).map((b, i) => ({ id: stage.id, edge: i, a: nodes[i]!, b }));
+});
 const routeDistance = (p: { x: number; z: number }) => Math.min(...authoredEdges.map(e => distanceToSegment(p, e.a, e.b)));
 const walker = new Walker();
 try {
