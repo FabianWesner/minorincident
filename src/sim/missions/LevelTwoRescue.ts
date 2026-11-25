@@ -616,7 +616,12 @@ export class LevelTwoRescue {
         // Wait for the courier's interaction, then finish the existing walk
         // clip with the authored sit-down/climb pose, staggered by seat order.
         const start = (s.boardingAt ?? tick) + i * 24;
-        if (s.seated && !a.run && tick >= start) {
+        let earlierBoarded = true;
+        for (let j = 0; j < i; j++) {
+          const previous = world.entities.get(s.crewIds[j]);
+          if (previous && previous.health.current > 0 && !previous.infected && !previous.hidden) { earlierBoarded = false; break; }
+        }
+        if (s.seated && !a.run && tick >= start && earlierBoarded) {
           const story = e.civilian!.story;
           if (story?.clip !== 'npc-sit-down') {
             e.civilian!.story = { clip: 'npc-sit-down', start: tick };

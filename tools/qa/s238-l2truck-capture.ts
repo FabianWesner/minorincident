@@ -60,7 +60,7 @@ try {
       await session.page.evaluate(() => window.__SS__!.input.clear());
       s = await state();
       if (!s.l2.boardingAt) throw new Error(`${tier}: l2-board interaction did not start boarding`);
-      for (const dt of [18, 54, 96]) {
+      for (const dt of [18, 54, 96, 150, 210]) {
         const now = (await state()).tick, target = s.l2.boardingAt + dt;
         if (now < target) await wait(target - now);
         await snap('boarding', dt);
