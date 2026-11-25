@@ -1,5 +1,5 @@
 import { DoubleSide, Vector3, type Node } from 'three/webgpu';
-import { attribute, dot, positionLocal, positionWorld, renderGroup, sin, uniform, vec3 } from 'three/tsl';
+import { attribute, dot, mat4, modelWorldMatrix, positionLocal, positionWorld, renderGroup, sin, uniform, vec3, vec4 } from 'three/tsl';
 import type { Materials } from './Materials';
 import type { SimWorld } from '../sim/world/SimWorld';
 
@@ -64,10 +64,12 @@ export function cornMaterial(materials: Materials) {
   const ground = positionLocal.y.lessThan(.12);
   const material = materials.shaded(attribute('color', 'vec3'), undefined, ground.select(1, 1));
   const weight = positionLocal.y.smoothstep(.05, 2.3);
+  const placement = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
+  const rootWorld = modelWorldMatrix.mul(placement.mul(vec4(attribute('_stalk_root', 'vec3'), 1))).xyz;
   let push: Node<'vec3'> = vec3(0);
   for (let i = 0; i < movers.length; i++) {
     const actor = movers[i];
-    const delta = positionWorld.xz.sub(actor.xz), forward = directions[i];
+    const delta = rootWorld.xz.sub(actor.xz), forward = directions[i];
     // Estimate when the mover passed each vertex along its recent direction.
     // The swept wake fades to zero after one second without storing per-stalk state.
     const age = dot(delta, forward.xz).negate().div(actor.y.max(.1)).clamp(0, 1);
