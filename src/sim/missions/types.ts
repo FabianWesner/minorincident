@@ -128,6 +128,8 @@ export interface L1State {
 export interface L2State {
   phase: 'calm' | 'alarm' | 'ride' | 'arrived' | 'doors' | 'collapse' | 'escape' | 'checkpoint' | 'done';
   alarmAt: number; departAt: number; arrivedAt: number; crewExitAt: number; atDoorsAt: number; doorsOpenAt: number; radioAt: number; crossedAt: number; gateClosedAt: number;
+  /** Start tick for the deterministic, one-at-a-time Engine 3 boarding beat. */
+  boardingAt?: number;
   truckId: number; seated: boolean; axe: boolean;
   /** Route progress (metres) and speed (m/s) of the kinematic truck. */
   rideS: number; rideV: number;

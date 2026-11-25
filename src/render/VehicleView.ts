@@ -546,7 +546,9 @@ export class VehicleView extends Group {
       // The L9 APC is an armored vehicle: its shell is never cut open to show seated crew.
       // The courier visibility path uses the normal foreground silhouette instead.
       const apc = record.model.userData.assetId === 'veh.military-apc';
-      if (!apc && (carryingL2Crew || speakingPassenger) && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
+      // Engine 3 has an enclosed crew compartment. Keep its authored roof on
+      // during the ride; the generic crew cutaway made it read as open-topped.
+      if (!apc && !carryingL2Crew && speakingPassenger && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
       else reveal.on.value = +(enabled && !onFoot && !full);
       if (record.crewRoof) { const open = reveal.on.value === 2; record.crewRoof.trim.visible = open; for (const node of record.crewRoof.hide) node.visible = !open; }
       const transportRoof = record.model.getObjectByName('transportRoof');
