@@ -110,12 +110,12 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     expect(infectedNav.walls.some(wall=>(wall as {navOnly?:boolean}).navOnly)).toBe(true);
     expect(humanNav.walls.some(wall=>(wall as {navOnly?:boolean}).navOnly)).toBe(false);
     const hatchWall={x:54,y:1,z:11.8,halfX:1.55,halfY:1,halfZ:.18};
-    expect(infectedNav.clear(54,12.35,.35), 'an open side door is a real aperture in the infected wall').toBe(true);
+    expect(infectedNav.clear(54,12.3,.35), 'an open side door is a real aperture in the infected wall').toBe(true);
     w.infected!.setInfectedBlocker(920_002,hatchWall,true);
-    expect(infectedNav.clear(54,12.35,.35), 'a closed side hatch blocks infected passage').toBe(false);
-    expect(humanNav.clear(54,12.35,.35), 'the hatch wall does not strand the friendly escort route').toBe(true);
+    expect(infectedNav.clear(54,12.3,.35), 'a closed side hatch blocks infected passage').toBe(false);
+    expect(humanNav.clear(54,12.3,.35), 'the hatch wall does not strand the friendly escort route').toBe(true);
     w.infected!.setInfectedBlocker(920_002,hatchWall,false);
-    expect(infectedNav.clear(54,12.35,.35), 'breaking the hatch reopens its infected route').toBe(true);
+    expect(infectedNav.clear(54,12.3,.35), 'breaking the hatch reopens its infected route').toBe(true);
     state.breach1At = state.breach2At = Infinity;
     // Shelter breaches may engage any resident; hatch routing probes require courier contact across the tracks.
     let courierOnly = false;
