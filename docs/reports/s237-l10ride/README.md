@@ -43,3 +43,5 @@ A subsequent change opens the tents from the road approach while holding staged 
 ## Checkpoint route investigation
 
 The LOW trace showed repeated deaths after a checkpoint returned the bot from the underpass to x≈3100 while its route waypoint remained near x=3370. A trial reacquiring the nearest route waypoint after a backward jump over 100 m improved LOW to 487.3 s, 9 deaths, 4/4 loops and story intervals of 45–67.7 s. HIGH regressed to 684.0 s and 22 deaths despite retaining 4/4 loops. The trial was reverted; a recovery policy needs to work on both tiers before it can qualify.
+
+A narrower recovery rule rejoins the road only when a later checkpoint retry returns west of x=3150. The [new native trace](route-recovery.json) completed HIGH in 1520.6 s (10 deaths) and LOW in 1411.0 s (8 deaths), with 4/4 run-level loops on each. Hangar to gate was 446.9 s HIGH and 457.4 s LOW. Story beat intervals were 45–48.5 s HIGH and 45–67.7 s LOW. Loop progress is retained across deaths as described above. Typecheck and lint passed. Visual readability and zero threat flags remain open.

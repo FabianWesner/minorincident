@@ -29,6 +29,7 @@ export class LevelTenBot {
   private waypoint = 0;
   private clearStairsUntil = 0;
   private coolingGun = false;
+  private lastPosition?: { x: number; z: number };
   private readonly startTick: number;
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') {
@@ -41,6 +42,19 @@ export class LevelTenBot {
     const active = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
     if (this.finished || this.profile === 'idle' || !active || player.health.current <= 0 || mission.state.phase === 'retry') return f;
     const tick = w.tick - this.startTick, p = player.transform;
+    // The quarantine checkpoint can restore the bike west of the billboard
+    // after a later roadblock death. Rejoin the marked road there rather than
+    // steering directly at a stale waypoint past the intervening obstacles.
+    if (this.lastPosition && this.lastPosition.x > 3300 && p.x >= 3000 && p.x < 3150 && p.x < this.lastPosition.x - 100) {
+      let nearest = this.waypoint, best = Infinity;
+      for (let i = 0; i < this.route.length; i++) {
+        if (this.route[i][0] < 2980 || this.route[i][0] > 3260) continue;
+        const d = Math.hypot(this.route[i][0] - p.x, this.route[i][1] - p.z);
+        if (d < best) { best = d; nearest = i; }
+      }
+      this.waypoint = nearest;
+    }
+    this.lastPosition = { x: p.x, z: p.z };
     if (['install', 'hold', 'mega', 'release', 'epilogue', 'credits'].includes(active.id)) this.waypoint = this.route.length;
     const finale = active.id === 'hold' || active.id === 'mega';
     const anchor = mission.def.anchors[active.id === 'mega' ? 'cure-console' : active.anchor];
