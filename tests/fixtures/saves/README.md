@@ -7,7 +7,7 @@ Format: gzip (`.json.gz`) or brotli (`.json.br`) of `{ kind, label, level, descr
 
 | Fixture | Level | Kind | Where the player starts |
 |---|---|---|---|
-| `l8-before-lion` | L8 | mission-resume | after the breach, checkpoint `cleared-flamingo`; the lion arena (entry (-60,-56)) is next, not engaged |
+| `l8-before-lion` | L8 | mission-resume | after the breach, checkpoint `cleared-flamingo`; the lion arena (east entry (-46,-32)) is next, not engaged |
 | `l8-before-gorilla` | L8 | mission-resume | after the breach, checkpoint `cleared-zebra`; the gorilla arena (entry (60,-12)) is next, not engaged |
 | `l8-before-elephant` | L8 | mission-resume | after the breach, checkpoint `cleared-gorilla`; the elephant arena (entry (96,46)) is next |
 | `l8-elephant-apc-yard-engaged` | L8 | mission-resume | elephant just engaged at the vehicle yard (checkpoint `arena-elephant`), APC present |
