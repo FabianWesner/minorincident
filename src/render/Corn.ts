@@ -88,7 +88,11 @@ export function cornMaterial(materials: Materials) {
     // Stalks part away from the body, with a forward lean in its travel direction.
     // The 1.2 m smooth falloff lets them spring back continuously as the mover passes.
     const bend = radius.smoothstep(.12, 1.2).oneMinus().mul(age.smoothstep(0, 1).oneMinus()).mul(weight).mul(forward.y.smoothstep(0, 1)).mul(.5);
-    const awayX = offset.x.div(radius.max(.1)), awayZ = offset.y.div(radius.max(.1));
+    // Orient from the mover, not from the swept centerline: that centerline can
+    // cross a stalk when the mover turns, reversing a full-strength lean in one tick.
+    // Soften the direction near the body so passing directly over a root is smooth.
+    const separation = delta.length().max(.6);
+    const awayX = delta.x.div(separation), awayZ = delta.y.div(separation);
     push = push.add(vec3(awayX.add(forward.x.mul(.35)).mul(bend), bend.mul(-.12), awayZ.add(forward.z.mul(.35)).mul(bend)));
   }
   const wind = sin(positionWorld.x.mul(.7).add(positionWorld.z.mul(.4)).add(materials.wind.mul(1.5))).mul(.09).mul(weight);
