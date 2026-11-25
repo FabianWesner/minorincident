@@ -2,7 +2,11 @@
 
 The [before map](barriers-before.png) overlays runtime barriers on the old layout. Brown marks the outer wall, orange connector gates, pink path walls, blue yard walls, cyan yard gates and purple plaza gates. The green line includes crossings from each entry marker to its exit and measures 567.5 m; the same full-polyline convention gives 401.41 m after the change. The original authored-leg diagnostic measured 445.31 m before the change.
 
+![Before: route and barriers](barriers-before.png)
+
 The [current map](route-after.png) uses the orchestrator's native navigation diagnostic: coloured lines lead from each preceding exit to the next stage's marker, without including the walk across each arena. It reports **299.59 m** (13 + 36 + 66 + 49 + 40 + 95 m; individual values rounded), within the 300 m target. Orange marks connector gates, pink path walls, blue yard walls, magenta yard gates, cyan plaza gates, brown the perimeter, red-brown Elephant encounter gates, black entries and white exits. Opened map: the Flamingo west and Lion east gates face one another; Zebra's west approach now reaches its gate. The Lion-to-Monkey leg cuts across the former verge fences, and the Gorilla-to-Elephant leg runs down the eastern edge. The map alone does not prove the route can be walked or that every former gap is closed.
+
+![After: route and barriers](route-after.png)
 
 A centreline scan of the final rebuilt road graph and the native walk found the following 16 cut segments. The HIGH views show fixed concrete jersey barriers and 2.8 m keeper-fence panels across their respective road mouths. The Lion road endpoint now passes layout validation.
 
