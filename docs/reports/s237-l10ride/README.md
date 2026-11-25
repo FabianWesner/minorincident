@@ -99,3 +99,7 @@ The coarse navigator previously stopped targeting the courier as soon as the hid
 ## Remote unit retry after timeout
 
 The required unchanged remote unit retry was queued again after the two prior timeouts. Runner status showed it waiting in FIFO with load 7.77; after over ten minutes without admission it was cancelled because the original task timebox had elapsed. No tests started in that attempt and it supplies no pass/fail result. The preceding full remote unit run remains incomplete.
+
+## Underpass approach trial
+
+A render-only trial placed the existing underpass model at (3380, 95) ahead of the retained sinkhole, at roughly half scale. At the staged rim pose (3390, 74) it was outside the visible frame; at an approach pose (3378, 95) it filled most of the frame and the courier see-through disc cut a large circular hole through its deck. The trial was reverted. A readable underpass requires a camera-aware split composition that does not obstruct the courier or undo the see-through behavior.
