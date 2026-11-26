@@ -97,10 +97,11 @@ export class LevelTenEncounters {
       this.died = true;
       // Survivors still waiting for admission must survive another retry.
       this.deathLedger.clear();
+      const sleeping = new Map([...this.world.chunks?.inactiveEntities() ?? []].map(actor => [actor.id, actor]));
       for (const [key, id] of Object.entries(this.state.spawned)) {
         if (key.startsWith('dispersal-assault:')) continue;
         this.deathLedger.add(key);
-        const actor = this.world.entities.get(id);
+        const actor = this.world.entities.get(id) ?? sleeping.get(id);
         if (!actor || actor.corpse || actor.health.current <= 0 && (actor.infected?.recoverAt ?? -1) < 0) continue;
         const group = this.encounterFor(key);
         if (group) this.carried.set(key, { archetype: actor.archetype, x: actor.transform.x, z: actor.transform.z, group: group.id, region: group.region });
@@ -592,6 +593,15 @@ export class LevelTenEncounters {
     this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'mega-escort-called' });
   }
   /** The authored group that owns a spawned slot key (finale assault waves excluded). */
+  /** Keep living members of an unresolved roadblock in the active simulation. */
+  holdsRoadblockMember(id: number): boolean {
+    for (const group of curePaceEncounters) {
+      const gateId = this.state.roadblockGates?.[group.id];
+      if (gateId === undefined || this.world.entities.get(gateId)?.interactable?.open) continue;
+      if (cureEncounterSlots(group, this.world.infected!.director.tier).some(slot => this.state.spawned[`${slot.key}:0`] === id)) return true;
+    }
+    return false;
+  }
   /** Open on the first encounter update after the final cohort member dies. */
   private updateRoadblockClearance(): void {
     const w = this.world, tier = w.infected!.director.tier;
@@ -600,10 +610,16 @@ export class LevelTenEncounters {
       const gate = id === undefined ? undefined : w.entities.get(id);
       if (!gate?.interactable || gate.interactable.open || !this.state.roadblockDismounted?.[group.id]) continue;
       const slots = cureEncounterSlots(group, tier);
-      const cleared = slots.every(slot => {
+      let cleared = true;
+      for (const slot of slots) {
         const key = `${slot.key}:0`, actorId = this.state.spawned[key];
-        return actorId !== undefined && !this.carried.has(key) && (w.entities.get(actorId)?.health.current ?? 0) <= 0;
-      });
+        if (actorId === undefined || this.carried.has(key)) { cleared = false; continue; }
+        if (actorId === RETIRED_SLOT) continue;
+        const actor = w.entities.get(actorId);
+        if (actor && actor.health.current <= 0 && (actor.infected?.recoverAt ?? -1) < 0)
+          this.state.spawned[key] = RETIRED_SLOT;
+        else cleared = false;
+      }
       if (cleared) {
         gate.interactable.open = true; gate.interactable.completed = true;
         gate.interactable.enabled = false;
