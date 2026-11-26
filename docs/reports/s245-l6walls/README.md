@@ -60,3 +60,5 @@ The fallback admission and its retries now require nav visibility from the curre
 A further remote full-suite attempt on the committed fix ran the corgi and mission files successfully but again hit the 240 s limit (242.0 s, exit 124). The previously recorded local full-suite pass remains the complete unit result.
 
 Remote retry with the same full inventory and 240 s budget, explicitly using the permitted four Vitest workers, timed out at 240.7 s (exit 124). The corgi, L6 mission and vehicle files passed before timeout. The runner was sharing CPU with another job; this is not a full remote pass.
+
+A whole-run isolated remote retry reserved both runner slots and ran the unmodified `npm run test:unit`; it still timed out at 245.4 s (exit 124), after the corgi and long L4 contact files passed. This confirms the current remote host did not complete the gate within 240 s even without another scheduled runner job.
