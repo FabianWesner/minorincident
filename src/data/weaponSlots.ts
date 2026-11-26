@@ -17,7 +17,7 @@ const union = (level: Level, pickups: readonly string[]): readonly string[] => [
   .sort((a, b) => (Object.entries(weaponForKey).find(([, ids]) => ids.includes(a))?.[0] ?? '99').localeCompare(Object.entries(weaponForKey).find(([, ids]) => ids.includes(b))?.[0] ?? '99', undefined, { numeric: true }));
 export const levelWeaponSets: Readonly<Record<Level, readonly string[]>> = {
   1: union(1, ['weapon.bat']), 2: union(2, ['weapon.fire-axe']), 3: union(3, ['weapon.handgun']),
-  4: union(4, ['weapon.army-mg']), 5: union(5, ['weapon.shotgun', 'weapon.assault-rifle']), 6: union(6, []),
+  4: union(4, ['weapon.army-mg']), 5: union(5, ['weapon.shotgun']), 6: union(6, []),
   7: union(7, [...l7DefaultArsenal.LEFT, ...l7DefaultArsenal.RIGHT, l7Rocket.action]),
   8: union(8, []), 9: union(9, []), 10: union(10, l10),
 };

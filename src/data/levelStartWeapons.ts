@@ -8,7 +8,8 @@ export const levelStartWeapons: Readonly<Record<Level, { LEFT: readonly string[]
   3: { LEFT: ['weapon.bat', 'weapon.fire-axe'], RIGHT: [] },
   4: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun'] },
   5: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg'] },
-  6: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.assault-rifle'] },
+  // PO 2026-11-26: L5's dropped rifles are survivor-only pickups, so the courier first carries the assault rifle in L7.
+  6: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun'] },
   7: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.assault-rifle'] },
   8: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.rocket-launcher'] },
   9: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.assault-rifle'] },

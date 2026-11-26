@@ -8,7 +8,7 @@ import { action, catalog } from '../../src/data/actions/catalog';
 import { l2WeaponPickup } from '../../src/data/l2';
 import { l3WeaponPickup } from '../../src/data/l3';
 import { l4 } from '../../src/data/l4';
-import { l5DroppedWeapons, l5WeaponPickup } from '../../src/data/l5';
+import { l5WeaponPickup } from '../../src/data/l5';
 import { l7Rocket } from '../../src/data/l7';
 import { transactArsenal } from '../../src/sim/progression/arsenal';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -77,15 +77,15 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   const bat = 'weapon.bat', axe = 'weapon.fire-axe', handgun = 'weapon.handgun', mg = 'weapon.army-mg', shotgun = 'weapon.shotgun', rifle = 'weapon.assault-rifle', rocket = 'weapon.rocket-launcher';
   // Expected story boundaries are independent of the production pickup declarations below.
   // PO 2026-11-25: a weapon found once stays in every later start rack (rocket only L7/L8; L10 empty by story).
-  const expected = [[], [bat], [bat,axe], [axe,handgun], [axe,handgun,mg], [axe,handgun,mg,shotgun,rifle], [axe,handgun,mg,shotgun,rifle], [axe,handgun,mg,shotgun,rifle,rocket], [axe,handgun,mg,shotgun,rifle], []];
+  const expected = [[], [bat], [bat,axe], [axe,handgun], [axe,handgun,mg], [axe,handgun,mg,shotgun], [axe,handgun,mg,shotgun,rifle], [axe,handgun,mg,shotgun,rifle,rocket], [axe,handgun,mg,shotgun,rifle], []];
   const expectedSides = [
     { LEFT:['weapon.fists'], RIGHT:['weapon.kick'] }, { LEFT:[bat], RIGHT:['weapon.kick'] },
     { LEFT:[bat,axe], RIGHT:['weapon.kick'] }, { LEFT:[axe], RIGHT:[handgun] },
-    { LEFT:[axe], RIGHT:[handgun,mg] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] },
+    { LEFT:[axe], RIGHT:[handgun,mg] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun] },
     { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] },
     { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] }, { LEFT:['weapon.fists'], RIGHT:['weapon.kick'] },
   ];
-  const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[...new Set([l5WeaponPickup, ...l5DroppedWeapons.map(p => p.actionId)])], 7:[l7Rocket.action] };
+  const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[l5WeaponPickup], 7:[rifle, l7Rocket.action] }; // L5 dropped rifles are survivor-only (PO 11-26)
   const weapons = (racks: CampaignSave['racks']) => [...new Set([...racks.LEFT,...racks.RIGHT].filter(id => !['weapon.fists','weapon.kick'].includes(id) && catalog[id].category !== 'ability'))].sort();
   const fresh = newCampaign();
   for (let level = 1; level <= 10; level++) {
@@ -139,7 +139,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
   try {
     const actual = replay.combat!.runner.loadout.state;
     expect(actual.LEFT.rack.map(slot=>slot.id)).toEqual([axe]);
-    expect(actual.RIGHT.rack.map(slot=>slot.id)).toEqual([handgun,mg,shotgun,rifle]);
+    expect(actual.RIGHT.rack.map(slot=>slot.id)).toEqual([handgun,mg,shotgun]);
     expect(actual.RIGHT.rack[actual.RIGHT.index].id).toBe(handgun);
   } finally { replay.dispose(); }
   const { Game } = await import('../../src/Game');
