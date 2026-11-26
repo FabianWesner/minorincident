@@ -1,0 +1,2016 @@
+{
+  "level": "L10",
+  "quality": "low",
+  "definitions": [
+    {
+      "id": "crash",
+      "text": "Get away from the river",
+      "type": "custom"
+    },
+    {
+      "id": "farmstead",
+      "text": "Find a way through the farms",
+      "type": "reach"
+    },
+    {
+      "id": "restricted-zone",
+      "text": "Get through the restricted zone",
+      "type": "reach"
+    },
+    {
+      "id": "research-hangar",
+      "text": "Enter the hangar",
+      "type": "reach"
+    },
+    {
+      "id": "research",
+      "text": "Enter the hangar",
+      "type": "custom"
+    },
+    {
+      "id": "cure",
+      "text": "Bring the cure to the dispersal complex",
+      "type": "collect"
+    },
+    {
+      "id": "research-exit",
+      "text": "Bring the cure to the dispersal complex",
+      "type": "reach"
+    },
+    {
+      "id": "delivery-corridor",
+      "text": "Bring the cure to the dispersal complex",
+      "type": "reach"
+    },
+    {
+      "id": "dispersal-complex",
+      "text": "Bring the cure to the dispersal complex",
+      "type": "reach"
+    },
+    {
+      "id": "install",
+      "text": "Install the cure",
+      "type": "interact"
+    },
+    {
+      "id": "hold",
+      "text": "Hold the console",
+      "type": "custom"
+    },
+    {
+      "id": "mega",
+      "text": "Kill the Mega Alpha",
+      "type": "custom"
+    },
+    {
+      "id": "release",
+      "text": "Release the cure",
+      "type": "interact"
+    },
+    {
+      "id": "epilogue",
+      "text": "Release the cure",
+      "type": "custom"
+    },
+    {
+      "id": "credits",
+      "text": "Minor Incident",
+      "type": "custom"
+    }
+  ],
+  "run": {
+    "level": "L10",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 1800,
+    "deaths": 7,
+    "kills": 7,
+    "damageTaken": 1110.881333333315,
+    "failures": {
+      "player-died": 7,
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "crash",
+        "t": 23.966666666666665
+      },
+      {
+        "id": "farmstead",
+        "t": 420.6333333333333
+      },
+      {
+        "id": "farmstead",
+        "t": 456.96666666666664
+      },
+      {
+        "id": "restricted-zone",
+        "t": 605.7833333333333
+      },
+      {
+        "id": "research-hangar",
+        "t": 663.35
+      },
+      {
+        "id": "research",
+        "t": 719.3666666666667
+      },
+      {
+        "id": "cure",
+        "t": 720.2666666666667
+      },
+      {
+        "id": "research-exit",
+        "t": 745.4833333333333
+      },
+      {
+        "id": "delivery-corridor",
+        "t": 770.3166666666667
+      }
+    ],
+    "furthestObjective": "dispersal-complex",
+    "activeObjectives": [
+      "dispersal-complex"
+    ],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "dispersal-complex",
+      "detail": "tick-budget: Bring the cure to the dispersal complex",
+      "player": {
+        "x": 3253.695556640625,
+        "z": 89.78545379638672
+      },
+      "distance": 457.92415300506667,
+      "actors": {}
+    },
+    "cureReleases": 0,
+    "regions": [
+      {
+        "id": "crash-outskirts",
+        "seconds": 61.249999999997804,
+        "travelSeconds": 40.69999999999897,
+        "combatSeconds": 20.550000000000114,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 275.1647177687576
+      },
+      {
+        "id": "residential-fringe",
+        "seconds": 112.83333333332821,
+        "travelSeconds": 75.58333333333033,
+        "combatSeconds": 37.24999999999917,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 504.4762313619515
+      },
+      {
+        "id": "industrial-area",
+        "seconds": 242.15000000008484,
+        "travelSeconds": 154.51666666668177,
+        "combatSeconds": 85.64999999999642,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 1.9833333333333312,
+        "metres": 1515.7271217392968
+      },
+      {
+        "id": "military-zone",
+        "seconds": 194.41666666671352,
+        "travelSeconds": 117.94999999999459,
+        "combatSeconds": 74.48333333333039,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 1.9833333333333312,
+        "metres": 1002.5654145962875
+      },
+      {
+        "id": "research-campus",
+        "seconds": 195.6833333333812,
+        "travelSeconds": 96.28333333332915,
+        "combatSeconds": 43.683333333332136,
+        "interactionSeconds": 40.34999999999899,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 15.36666666666701,
+        "metres": 810.3516759835306
+      },
+      {
+        "id": "destroyed-corridor",
+        "seconds": 993.6666666660916,
+        "travelSeconds": 703.6666666663554,
+        "combatSeconds": 282.0000000000722,
+        "interactionSeconds": 0.06666666666666667,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 7.9333333333333105,
+        "metres": 4929.273905358093
+      },
+      {
+        "id": "dispersal-complex",
+        "seconds": 0,
+        "travelSeconds": 0,
+        "combatSeconds": 0,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 0
+      }
+    ],
+    "maxConcurrentInfected": 50,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 528,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 108000,
+    "totalSpawned": 521,
+    "peakConcurrentInfected": 50,
+    "followerWait": {
+      "windows": [
+        {
+          "key": "step/crash",
+          "escortTicks": 1438,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/farmstead",
+          "escortTicks": 24067,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/restricted-zone",
+          "escortTicks": 10842,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/research-hangar",
+          "escortTicks": 3454,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/research",
+          "escortTicks": 3361,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/cure",
+          "escortTicks": 54,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/research-exit",
+          "escortTicks": 1424,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/delivery-corridor",
+          "escortTicks": 263,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/dispersal-complex",
+          "escortTicks": 54651,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        }
+      ],
+      "escortTicks": 99554,
+      "stationaryFarTicks": 0,
+      "arenaWaitTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 99,
+          "escortTicks": 99554,
+          "stationaryFarTicks": 0
+        }
+      ],
+      "paceWindows": [
+        {
+          "key": "step/crash",
+          "samples": 47,
+          "p50GapM": 2.001150074322954,
+          "p90GapM": 2.3424678368108367,
+          "maxGapM": 2.7383765904558452,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/farmstead",
+          "samples": 802,
+          "p50GapM": 2.000215724795261,
+          "p90GapM": 3.79248080391367,
+          "maxGapM": 57.68254987350515,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": [
+            {
+              "id": 99,
+              "maxSeconds": 0.016666666666666666,
+              "geometryContactTicks": 0,
+              "bodyContactTicks": 0
+            }
+          ]
+        },
+        {
+          "key": "step/restricted-zone",
+          "samples": 362,
+          "p50GapM": 2.000653240219815,
+          "p90GapM": 2.327763240147245,
+          "maxGapM": 9.792619957550462,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/research-hangar",
+          "samples": 115,
+          "p50GapM": 2.0006755935046843,
+          "p90GapM": 2.0298656383486184,
+          "maxGapM": 3.2851164009726785,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/research",
+          "samples": 112,
+          "p50GapM": 1.2645426219570186,
+          "p90GapM": 1.2645426219570186,
+          "maxGapM": 5.95096172994202,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/cure",
+          "samples": 2,
+          "p50GapM": 1.2649999999999768,
+          "p90GapM": 2.047452652368646,
+          "maxGapM": 2.047452652368646,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/research-exit",
+          "samples": 48,
+          "p50GapM": 17.644723707526822,
+          "p90GapM": 32.488755830454096,
+          "maxGapM": 35.34659161450286,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": [
+            {
+              "id": 99,
+              "maxSeconds": 0.2,
+              "geometryContactTicks": 14,
+              "bodyContactTicks": 0
+            }
+          ]
+        },
+        {
+          "key": "step/delivery-corridor",
+          "samples": 10,
+          "p50GapM": 2.0822773281018194,
+          "p90GapM": 2.1833820172619114,
+          "maxGapM": 2.3027074860497483,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/dispersal-complex",
+          "samples": 1826,
+          "p50GapM": 5.506475537806499,
+          "p90GapM": 7.525148714294048,
+          "maxGapM": 8.15839690033432,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        }
+      ],
+      "prompts": {
+        "wait": 0,
+        "attack": 0,
+        "lost": 0
+      }
+    },
+    "phases": [
+      {
+        "key": "step/crash",
+        "label": "crash: Get away from the river",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.966666666666665,
+        "spawned": 8,
+        "initial": 0,
+        "observed": 8,
+        "reachableEver": 8,
+        "within2_5m": 5,
+        "attacks": 9,
+        "attacksPerMinute": 22.531293463143253,
+        "firstAttackSeconds": 4.633333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 42,
+            "median": 4.500695191167237
+          }
+        ],
+        "followerMin": 4.500695191167237,
+        "followerMedian": 4.500695191167237,
+        "boundedPaths": {
+          "samples": 11,
+          "minimumPercent": 100,
+          "worstTick": 1321,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1321,
+          "alive": 4,
+          "reachable": 4,
+          "playerX": 636.2798461914062,
+          "playerZ": -11.794421195983887,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/farmstead",
+        "label": "farmstead: Find a way through the farms",
+        "threat": false,
+        "startSeconds": 23.966666666666665,
+        "seconds": 401.1166666666667,
+        "spawned": 230,
+        "initial": 4,
+        "observed": 238,
+        "reachableEver": 228,
+        "within2_5m": 77,
+        "attacks": 129,
+        "attacksPerMinute": 19.296131632525864,
+        "firstAttackSeconds": 2.816666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 755,
+            "median": 4.498069397008316
+          }
+        ],
+        "followerMin": 4.498069397008316,
+        "followerMedian": 4.498069397008316,
+        "boundedPaths": {
+          "samples": 116,
+          "minimumPercent": 0,
+          "worstTick": 5278,
+          "nearby": 2,
+          "reachable": 0,
+          "blockedIds": [
+            136,
+            137
+          ],
+          "blockedPositions": [
+            {
+              "identity": "136@30",
+              "id": 136,
+              "x": 939.9388995879915,
+              "z": 52.734152049387305,
+              "playerX": 919.9334106445312,
+              "playerZ": 47.09917068481445
+            },
+            {
+              "identity": "137@31",
+              "id": 137,
+              "x": 939.2354577750485,
+              "z": 61.03767964213799,
+              "playerX": 919.9334106445312,
+              "playerZ": 47.09917068481445
+            }
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 27391,
+          "alive": 27,
+          "reachable": 27,
+          "playerX": 1853.33056640625,
+          "playerZ": 23.44139289855957,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/restricted-zone",
+        "label": "restricted-zone: Get through the restricted zone",
+        "threat": false,
+        "startSeconds": 420.6333333333333,
+        "seconds": 180.7,
+        "spawned": 107,
+        "initial": 17,
+        "observed": 147,
+        "reachableEver": 139,
+        "within2_5m": 26,
+        "attacks": 54,
+        "attacksPerMinute": 17.93027116768124,
+        "firstAttackSeconds": 3.433333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 343,
+            "median": 4.500425917462731
+          }
+        ],
+        "followerMin": 4.500425917462731,
+        "followerMedian": 4.500425917462731,
+        "boundedPaths": {
+          "samples": 63,
+          "minimumPercent": 11.11111111111111,
+          "worstTick": 31378,
+          "nearby": 9,
+          "reachable": 1,
+          "blockedIds": [
+            311,
+            312,
+            313,
+            314,
+            315,
+            316,
+            317,
+            318
+          ],
+          "blockedPositions": [
+            {
+              "identity": "311@270",
+              "id": 311,
+              "x": 2149.368739447535,
+              "z": 47.132571954880206,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            },
+            {
+              "identity": "312@271",
+              "id": 312,
+              "x": 2148.4125536984307,
+              "z": 48.163659339502246,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            },
+            {
+              "identity": "313@272",
+              "id": 313,
+              "x": 2149.8505970645183,
+              "z": 49.69986980295525,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            },
+            {
+              "identity": "314@273",
+              "id": 314,
+              "x": 2148.7540941743,
+              "z": 51.16922403007845,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            },
+            {
+              "identity": "315@274",
+              "id": 315,
+              "x": 2150.627422802689,
+              "z": 52.631045103556694,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            },
+            {
+              "identity": "316@275",
+              "id": 316,
+              "x": 2149.3991023353524,
+              "z": 53.66993352443607,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            },
+            {
+              "identity": "317@276",
+              "id": 317,
+              "x": 2148.6218740856953,
+              "z": 54.66261789930469,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            },
+            {
+              "identity": "318@277",
+              "id": 318,
+              "x": 2150.1724400795197,
+              "z": 57.47152720815433,
+              "playerX": 2126.384765625,
+              "playerZ": 63.65667724609375
+            }
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 36298,
+          "alive": 24,
+          "reachable": 24,
+          "playerX": 2461.727783203125,
+          "playerZ": -3.073908567428589,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-hangar",
+        "label": "research-hangar: Enter the hangar",
+        "threat": false,
+        "startSeconds": 605.7833333333333,
+        "seconds": 57.56666666666667,
+        "spawned": 24,
+        "initial": 34,
+        "observed": 71,
+        "reachableEver": 71,
+        "within2_5m": 2,
+        "attacks": 9,
+        "attacksPerMinute": 9.380428488708743,
+        "firstAttackSeconds": 3.533333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 115,
+            "median": 4.498911928414479
+          }
+        ],
+        "followerMin": 4.498911928414479,
+        "followerMedian": 4.498911928414479,
+        "boundedPaths": {
+          "samples": 16,
+          "minimumPercent": 100,
+          "worstTick": 39707,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 39707,
+          "alive": 6,
+          "reachable": 6,
+          "playerX": 2703.669921875,
+          "playerZ": 51.115684509277344,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research",
+        "label": "research: Enter the hangar",
+        "threat": false,
+        "startSeconds": 663.35,
+        "seconds": 56.016666666666666,
+        "spawned": 0,
+        "initial": 7,
+        "observed": 26,
+        "reachableEver": 26,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 5,
+            "median": 6.4838904378296585
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 29,
+          "minimumPercent": 100,
+          "worstTick": 43161,
+          "nearby": 13,
+          "reachable": 13,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 43161,
+          "alive": 26,
+          "reachable": 26,
+          "playerX": 2699.474853515625,
+          "playerZ": 65.45608520507812,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/cure",
+        "label": "cure: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 719.3666666666667,
+        "seconds": 0.9,
+        "spawned": 0,
+        "initial": 26,
+        "observed": 26,
+        "reachableEver": 26,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 2,
+            "median": 1.4094203072203373
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 43162,
+          "nearby": 13,
+          "reachable": 13,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 43162,
+          "alive": 26,
+          "reachable": 26,
+          "playerX": 2699.474853515625,
+          "playerZ": 65.45608520507812,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-exit",
+        "label": "research-exit: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 720.2666666666667,
+        "seconds": 25.216666666666665,
+        "spawned": 14,
+        "initial": 18,
+        "observed": 32,
+        "reachableEver": 32,
+        "within2_5m": 0,
+        "attacks": 3,
+        "attacksPerMinute": 7.138136153337739,
+        "firstAttackSeconds": 14.166666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 47,
+            "median": 4.414076994789952
+          }
+        ],
+        "followerMin": 4.414076994789952,
+        "followerMedian": 4.414076994789952,
+        "boundedPaths": {
+          "samples": 10,
+          "minimumPercent": 100,
+          "worstTick": 44536,
+          "nearby": 3,
+          "reachable": 3,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 44656,
+          "alive": 19,
+          "reachable": 19,
+          "playerX": 2798.990478515625,
+          "playerZ": 45.167259216308594,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/delivery-corridor",
+        "label": "delivery-corridor: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 745.4833333333333,
+        "seconds": 24.833333333333332,
+        "spawned": 16,
+        "initial": 18,
+        "observed": 45,
+        "reachableEver": 45,
+        "within2_5m": 4,
+        "attacks": 15,
+        "attacksPerMinute": 36.241610738255034,
+        "firstAttackSeconds": 1.1333333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 3,
+            "median": 1.883267529382177
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 9,
+          "minimumPercent": 100,
+          "worstTick": 45689,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 46169,
+          "alive": 14,
+          "reachable": 14,
+          "playerX": 2933.3076171875,
+          "playerZ": 3.9526267051696777,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/dispersal-complex",
+        "label": "dispersal-complex: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 770.3166666666667,
+        "seconds": 1029.6833333333334,
+        "spawned": 122,
+        "initial": 14,
+        "observed": 136,
+        "reachableEver": 136,
+        "within2_5m": 29,
+        "attacks": 71,
+        "attacksPerMinute": 4.1371942830320005,
+        "firstAttackSeconds": 6.266666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 1792,
+            "median": 3.721281319042999
+          }
+        ],
+        "followerMin": 3.721281319042999,
+        "followerMedian": 3.721281319042999,
+        "boundedPaths": {
+          "samples": 500,
+          "minimumPercent": 0,
+          "worstTick": 107899,
+          "nearby": 8,
+          "reachable": 0,
+          "blockedIds": [
+            504,
+            514,
+            515,
+            516,
+            518,
+            519,
+            520,
+            521
+          ],
+          "blockedPositions": [
+            {
+              "identity": "504@505",
+              "id": 504,
+              "x": 3261.3439866269614,
+              "z": 94.22360789309863,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            },
+            {
+              "identity": "514@514",
+              "id": 514,
+              "x": 3260.5500000000006,
+              "z": 95.56761667776681,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            },
+            {
+              "identity": "515@515",
+              "id": 515,
+              "x": 3260.550000291332,
+              "z": 96.4740607008077,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            },
+            {
+              "identity": "516@516",
+              "id": 516,
+              "x": 3261.7790333078206,
+              "z": 88.19402826910897,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            },
+            {
+              "identity": "518@518",
+              "id": 518,
+              "x": 3260.5500000800525,
+              "z": 94.66974948954578,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            },
+            {
+              "identity": "519@519",
+              "id": 519,
+              "x": 3260.5500178676066,
+              "z": 93.75260917986579,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            },
+            {
+              "identity": "520@520",
+              "id": 520,
+              "x": 3260.5500050563387,
+              "z": 83.50325071700875,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            },
+            {
+              "identity": "521@521",
+              "id": 521,
+              "x": 3260.5502135176976,
+              "z": 97.39099993992764,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            }
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 107899,
+          "alive": 17,
+          "reachable": 16,
+          "playerX": 3253.21484375,
+          "playerZ": 97.34550476074219,
+          "positions": [
+            {
+              "identity": "115@10",
+              "id": 115,
+              "x": 3062.0041958430074,
+              "z": 38.66140165858444,
+              "playerX": 3253.21484375,
+              "playerZ": 97.34550476074219
+            }
+          ]
+        },
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "flags": [
+    "INCOMPLETE_NATIVE_POLICY:tick-budget",
+    "UNOBSERVED_THREAT_STEP:hold"
+  ],
+  "passiveRun": {
+    "level": "L10",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 1800,
+    "deaths": 0,
+    "kills": 7,
+    "damageTaken": 0,
+    "failures": {
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "crash",
+        "t": 23.966666666666665
+      },
+      {
+        "id": "farmstead",
+        "t": 316.9
+      },
+      {
+        "id": "restricted-zone",
+        "t": 471.73333333333335
+      },
+      {
+        "id": "research-hangar",
+        "t": 529.1833333333333
+      },
+      {
+        "id": "research",
+        "t": 585.2
+      },
+      {
+        "id": "cure",
+        "t": 586.1
+      },
+      {
+        "id": "research-exit",
+        "t": 611.4666666666667
+      },
+      {
+        "id": "delivery-corridor",
+        "t": 628.3
+      }
+    ],
+    "furthestObjective": "dispersal-complex",
+    "activeObjectives": [
+      "dispersal-complex"
+    ],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "dispersal-complex",
+      "detail": "tick-budget: Bring the cure to the dispersal complex",
+      "player": {
+        "x": 3253.661865234375,
+        "z": 90.31533813476562
+      },
+      "distance": 458.0898699454058,
+      "actors": {}
+    },
+    "cureReleases": 0,
+    "regions": [
+      {
+        "id": "crash-outskirts",
+        "seconds": 61.249999999997804,
+        "travelSeconds": 40.69999999999897,
+        "combatSeconds": 20.550000000000114,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 275.1647177687576
+      },
+      {
+        "id": "residential-fringe",
+        "seconds": 112.09999999999492,
+        "travelSeconds": 75.499999999997,
+        "combatSeconds": 36.599999999999206,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 501.4226572002501
+      },
+      {
+        "id": "industrial-area",
+        "seconds": 139.16666666666956,
+        "travelSeconds": 95.76666666666252,
+        "combatSeconds": 43.39999999999882,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 624.8745819428156
+      },
+      {
+        "id": "military-zone",
+        "seconds": 163.93333333335593,
+        "travelSeconds": 120.29999999999445,
+        "combatSeconds": 43.63333333333214,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 736.0834598171585
+      },
+      {
+        "id": "research-campus",
+        "seconds": 179.20000000003475,
+        "travelSeconds": 81.11666666666335,
+        "combatSeconds": 44.24999999999877,
+        "interactionSeconds": 40.33333333333233,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 13.50000000000025,
+        "metres": 690.0796228159271
+      },
+      {
+        "id": "destroyed-corridor",
+        "seconds": 1144.349999999288,
+        "travelSeconds": 635.7999999997504,
+        "combatSeconds": 508.48333333319954,
+        "interactionSeconds": 0.06666666666666667,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 5071.77786202553
+      },
+      {
+        "id": "dispersal-complex",
+        "seconds": 0,
+        "travelSeconds": 0,
+        "combatSeconds": 0,
+        "interactionSeconds": 0,
+        "holdSeconds": 0,
+        "epilogueSeconds": 0,
+        "otherSeconds": 0,
+        "metres": 0
+      }
+    ],
+    "maxConcurrentInfected": 47,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 374,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveObservation": {
+    "ticks": 108000,
+    "totalSpawned": 367,
+    "peakConcurrentInfected": 47,
+    "followerWait": {
+      "windows": [
+        {
+          "key": "step/crash",
+          "escortTicks": 1438,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/farmstead",
+          "escortTicks": 17576,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/restricted-zone",
+          "escortTicks": 9290,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/research-hangar",
+          "escortTicks": 3447,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/research",
+          "escortTicks": 3361,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/cure",
+          "escortTicks": 54,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/research-exit",
+          "escortTicks": 1434,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/delivery-corridor",
+          "escortTicks": 0,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/dispersal-complex",
+          "escortTicks": 66834,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        }
+      ],
+      "escortTicks": 103434,
+      "stationaryFarTicks": 0,
+      "arenaWaitTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 99,
+          "escortTicks": 103434,
+          "stationaryFarTicks": 0
+        }
+      ],
+      "paceWindows": [
+        {
+          "key": "step/crash",
+          "samples": 47,
+          "p50GapM": 2.001150074322954,
+          "p90GapM": 2.3424678368108367,
+          "maxGapM": 2.7383765904558452,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/farmstead",
+          "samples": 586,
+          "p50GapM": 2.000255961757679,
+          "p90GapM": 14.021484546631253,
+          "maxGapM": 57.68254987350515,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": [
+            {
+              "id": 99,
+              "maxSeconds": 0.016666666666666666,
+              "geometryContactTicks": 0,
+              "bodyContactTicks": 0
+            }
+          ]
+        },
+        {
+          "key": "step/restricted-zone",
+          "samples": 310,
+          "p50GapM": 2.0024406626423694,
+          "p90GapM": 26.761454192962752,
+          "maxGapM": 59.161898876442045,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": [
+            {
+              "id": 99,
+              "maxSeconds": 0.016666666666666666,
+              "geometryContactTicks": 0,
+              "bodyContactTicks": 0
+            }
+          ]
+        },
+        {
+          "key": "step/research-hangar",
+          "samples": 115,
+          "p50GapM": 2.000618994144606,
+          "p90GapM": 2.044512413327529,
+          "maxGapM": 3.936905606407886,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/research",
+          "samples": 112,
+          "p50GapM": 1.264539627919417,
+          "p90GapM": 1.264539627919417,
+          "maxGapM": 6.22121550763224,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/cure",
+          "samples": 2,
+          "p50GapM": 1.2860512907471946,
+          "p90GapM": 2.441424002926473,
+          "maxGapM": 2.441424002926473,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/research-exit",
+          "samples": 48,
+          "p50GapM": 20.239275032276243,
+          "p90GapM": 27.005051700677246,
+          "maxGapM": 29.503907153780606,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": [
+            {
+              "id": 99,
+              "maxSeconds": 0.03333333333333333,
+              "geometryContactTicks": 3,
+              "bodyContactTicks": 0
+            }
+          ]
+        },
+        {
+          "key": "step/delivery-corridor",
+          "samples": 0,
+          "p50GapM": null,
+          "p90GapM": null,
+          "maxGapM": null,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/dispersal-complex",
+          "samples": 2229,
+          "p50GapM": 5.391538383301009,
+          "p90GapM": 7.532233258983841,
+          "maxGapM": 11.97146319975135,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        }
+      ],
+      "prompts": {
+        "wait": 0,
+        "attack": 0,
+        "lost": 0
+      }
+    },
+    "phases": [
+      {
+        "key": "step/crash",
+        "label": "crash: Get away from the river",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.966666666666665,
+        "spawned": 8,
+        "initial": 0,
+        "observed": 8,
+        "reachableEver": 8,
+        "within2_5m": 5,
+        "attacks": 9,
+        "attacksPerMinute": 22.531293463143253,
+        "firstAttackSeconds": 4.633333333333334,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 42,
+            "median": 4.500695191167237
+          }
+        ],
+        "followerMin": 4.500695191167237,
+        "followerMedian": 4.500695191167237,
+        "boundedPaths": {
+          "samples": 11,
+          "minimumPercent": 100,
+          "worstTick": 1321,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1321,
+          "alive": 4,
+          "reachable": 4,
+          "playerX": 636.2798461914062,
+          "playerZ": -11.794421195983887,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/farmstead",
+        "label": "farmstead: Find a way through the farms",
+        "threat": false,
+        "startSeconds": 23.966666666666665,
+        "seconds": 292.93333333333334,
+        "spawned": 148,
+        "initial": 4,
+        "observed": 156,
+        "reachableEver": 154,
+        "within2_5m": 52,
+        "attacks": 90,
+        "attacksPerMinute": 18.43422849340009,
+        "firstAttackSeconds": 2.816666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 558,
+            "median": 4.4980749196436935
+          }
+        ],
+        "followerMin": 4.4980749196436935,
+        "followerMedian": 4.4980749196436935,
+        "boundedPaths": {
+          "samples": 76,
+          "minimumPercent": 0,
+          "worstTick": 5278,
+          "nearby": 2,
+          "reachable": 0,
+          "blockedIds": [
+            136,
+            137
+          ],
+          "blockedPositions": [
+            {
+              "identity": "136@30",
+              "id": 136,
+              "x": 939.9388995879915,
+              "z": 52.734152049387305,
+              "playerX": 919.9334106445312,
+              "playerZ": 47.09917068481445
+            },
+            {
+              "identity": "137@31",
+              "id": 137,
+              "x": 939.2354577750485,
+              "z": 61.03767964213799,
+              "playerX": 919.9334106445312,
+              "playerZ": 47.09917068481445
+            }
+          ]
+        },
+        "maxBlockedSeconds": 4,
+        "blockedEvidence": {
+          "tick": 18598,
+          "alive": 2,
+          "reachable": 1,
+          "playerX": 1826.3795166015625,
+          "playerZ": 12.465627670288086,
+          "positions": [
+            {
+              "identity": "115@10",
+              "id": 115,
+              "x": 1629.1301213997854,
+              "z": 42.5593217109784,
+              "playerX": 1826.3795166015625,
+              "playerZ": 12.465627670288086
+            }
+          ]
+        },
+        "last": {
+          "tick": 18958,
+          "alive": 6,
+          "reachable": 5,
+          "playerX": 1851.3453369140625,
+          "playerZ": 22.59813117980957,
+          "positions": [
+            {
+              "identity": "115@10",
+              "id": 115,
+              "x": 1661.0231963047925,
+              "z": 37.44372325614087,
+              "playerX": 1851.3453369140625,
+              "playerZ": 22.59813117980957
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/restricted-zone",
+        "label": "restricted-zone: Get through the restricted zone",
+        "threat": false,
+        "startSeconds": 316.9,
+        "seconds": 154.83333333333334,
+        "spawned": 97,
+        "initial": 7,
+        "observed": 109,
+        "reachableEver": 109,
+        "within2_5m": 11,
+        "attacks": 24,
+        "attacksPerMinute": 9.30032292787944,
+        "firstAttackSeconds": 7.15,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 304,
+            "median": 4.497852646251364
+          }
+        ],
+        "followerMin": 4.497852646251364,
+        "followerMedian": 4.497852646251364,
+        "boundedPaths": {
+          "samples": 45,
+          "minimumPercent": 0,
+          "worstTick": 22974,
+          "nearby": 5,
+          "reachable": 0,
+          "blockedIds": [
+            308,
+            309,
+            310,
+            311,
+            312
+          ],
+          "blockedPositions": [
+            {
+              "identity": "308@194",
+              "id": 308,
+              "x": 2139.044593644663,
+              "z": -8.452564196195883,
+              "playerX": 2128.91162109375,
+              "playerZ": -32.505619049072266
+            },
+            {
+              "identity": "309@195",
+              "id": 309,
+              "x": 2138.5768301125045,
+              "z": -5.851332322056039,
+              "playerX": 2128.91162109375,
+              "playerZ": -32.505619049072266
+            },
+            {
+              "identity": "310@196",
+              "id": 310,
+              "x": 2138.8825476989655,
+              "z": -6.71821691509115,
+              "playerX": 2128.91162109375,
+              "playerZ": -32.505619049072266
+            },
+            {
+              "identity": "311@197",
+              "id": 311,
+              "x": 2137.385107362033,
+              "z": -5.569114459970373,
+              "playerX": 2128.91162109375,
+              "playerZ": -32.505619049072266
+            },
+            {
+              "identity": "312@198",
+              "id": 312,
+              "x": 2137.650525414557,
+              "z": -4.340740700778355,
+              "playerX": 2128.91162109375,
+              "playerZ": -32.505619049072266
+            }
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 28254,
+          "alive": 20,
+          "reachable": 19,
+          "playerX": 2464.37109375,
+          "playerZ": -10.06580638885498,
+          "positions": [
+            {
+              "identity": "115@10",
+              "id": 115,
+              "x": 2279.183666293531,
+              "z": -75.72922007076997,
+              "playerX": 2464.37109375,
+              "playerZ": -10.06580638885498
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-hangar",
+        "label": "research-hangar: Enter the hangar",
+        "threat": false,
+        "startSeconds": 471.73333333333335,
+        "seconds": 57.45,
+        "spawned": 32,
+        "initial": 21,
+        "observed": 67,
+        "reachableEver": 67,
+        "within2_5m": 1,
+        "attacks": 7,
+        "attacksPerMinute": 7.310704960835509,
+        "firstAttackSeconds": 7.516666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 115,
+            "median": 4.495073601969443
+          }
+        ],
+        "followerMin": 4.495073601969443,
+        "followerMedian": 4.495073601969443,
+        "boundedPaths": {
+          "samples": 15,
+          "minimumPercent": 100,
+          "worstTick": 31664,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 31664,
+          "alive": 7,
+          "reachable": 6,
+          "playerX": 2704.135986328125,
+          "playerZ": 51.43852996826172,
+          "positions": [
+            {
+              "identity": "115@10",
+              "id": 115,
+              "x": 2510.2044107658626,
+              "z": -12.079718932022573,
+              "playerX": 2704.135986328125,
+              "playerZ": 51.43852996826172
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research",
+        "label": "research: Enter the hangar",
+        "threat": false,
+        "startSeconds": 529.1833333333333,
+        "seconds": 56.016666666666666,
+        "spawned": 8,
+        "initial": 7,
+        "observed": 39,
+        "reachableEver": 39,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 5,
+            "median": 6.972557414935737
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 29,
+          "minimumPercent": 100,
+          "worstTick": 35111,
+          "nearby": 25,
+          "reachable": 25,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 35111,
+          "alive": 39,
+          "reachable": 39,
+          "playerX": 2699.469970703125,
+          "playerZ": 65.46354675292969,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/cure",
+        "label": "cure: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 585.2,
+        "seconds": 0.9,
+        "spawned": 0,
+        "initial": 39,
+        "observed": 39,
+        "reachableEver": 39,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 1,
+            "median": 1.9414557323935226
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 35112,
+          "nearby": 25,
+          "reachable": 25,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 35112,
+          "alive": 39,
+          "reachable": 39,
+          "playerX": 2699.469970703125,
+          "playerZ": 65.46354675292969,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/research-exit",
+        "label": "research-exit: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 586.1,
+        "seconds": 25.366666666666667,
+        "spawned": 14,
+        "initial": 28,
+        "observed": 42,
+        "reachableEver": 42,
+        "within2_5m": 4,
+        "attacks": 6,
+        "attacksPerMinute": 14.19185282522996,
+        "firstAttackSeconds": 3.816666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 41,
+            "median": 4.897699436379934
+          }
+        ],
+        "followerMin": 4.897699436379934,
+        "followerMedian": 4.897699436379934,
+        "boundedPaths": {
+          "samples": 12,
+          "minimumPercent": 100,
+          "worstTick": 36606,
+          "nearby": 3,
+          "reachable": 3,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 36606,
+          "alive": 27,
+          "reachable": 27,
+          "playerX": 2798.89453125,
+          "playerZ": 45.28430938720703,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/delivery-corridor",
+        "label": "delivery-corridor: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 611.4666666666667,
+        "seconds": 16.833333333333332,
+        "spawned": 4,
+        "initial": 28,
+        "observed": 41,
+        "reachableEver": 41,
+        "within2_5m": 2,
+        "attacks": 2,
+        "attacksPerMinute": 7.128712871287129,
+        "firstAttackSeconds": 1.0833333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 5,
+          "minimumPercent": 100,
+          "worstTick": 37168,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": [],
+          "blockedPositions": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 37648,
+          "alive": 18,
+          "reachable": 18,
+          "playerX": 2933.33740234375,
+          "playerZ": 3.8207509517669678,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/dispersal-complex",
+        "label": "dispersal-complex: Bring the cure to the dispersal complex",
+        "threat": false,
+        "startSeconds": 628.3,
+        "seconds": 1171.7,
+        "spawned": 56,
+        "initial": 18,
+        "observed": 74,
+        "reachableEver": 74,
+        "within2_5m": 21,
+        "attacks": 294,
+        "attacksPerMinute": 15.055048220534266,
+        "firstAttackSeconds": 13.116666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 99,
+            "samples": 2223,
+            "median": 3.7263564872487125
+          }
+        ],
+        "followerMin": 3.7263564872487125,
+        "followerMedian": 3.7263564872487125,
+        "boundedPaths": {
+          "samples": 576,
+          "minimumPercent": 0,
+          "worstTick": 107898,
+          "nearby": 8,
+          "reachable": 0,
+          "blockedIds": [
+            490,
+            500,
+            501,
+            502,
+            503,
+            504,
+            505,
+            506
+          ],
+          "blockedPositions": [
+            {
+              "identity": "490@351",
+              "id": 490,
+              "x": 3260.550005416626,
+              "z": 92.65099574515253,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            },
+            {
+              "identity": "500@360",
+              "id": 500,
+              "x": 3260.5501152634724,
+              "z": 96.63042591305377,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            },
+            {
+              "identity": "501@361",
+              "id": 501,
+              "x": 3260.5500000553025,
+              "z": 94.31394079141467,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            },
+            {
+              "identity": "502@362",
+              "id": 502,
+              "x": 3261.363052427066,
+              "z": 94.73120047817257,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            },
+            {
+              "identity": "503@363",
+              "id": 503,
+              "x": 3260.55014288286,
+              "z": 95.23521023575441,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            },
+            {
+              "identity": "504@364",
+              "id": 504,
+              "x": 3261.7790857001073,
+              "z": 90.33917557954503,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            },
+            {
+              "identity": "505@365",
+              "id": 505,
+              "x": 3261.7790883497314,
+              "z": 91.7405471048131,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            },
+            {
+              "identity": "506@366",
+              "id": 506,
+              "x": 3261.146124605384,
+              "z": 95.93258700162097,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            }
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 107898,
+          "alive": 18,
+          "reachable": 17,
+          "playerX": 3253.17626953125,
+          "playerZ": 97.95024108886719,
+          "positions": [
+            {
+              "identity": "115@10",
+              "id": 115,
+              "x": 3027.540886822871,
+              "z": 95.09880627136171,
+              "playerX": 3253.17626953125,
+              "playerZ": 97.95024108886719
+            }
+          ]
+        },
+        "flags": []
+      }
+    ],
+    "waves": []
+  },
+  "passiveFlags": [
+    "UNOBSERVED_PASSIVE_CRITERION_STEP:hold"
+  ],
+  "kiting": {
+    "kitingSeconds": 20.000000000000146,
+    "attacks": 9,
+    "attacksPerMinute": 26.999999999999805,
+    "samples": 1200,
+    "style": "retreat",
+    "minimumHordeSize": 3,
+    "minimumMoveSpeedMps": 0.05,
+    "diagnostics": {
+      "startTick": 674,
+      "endTick": 1873,
+      "firingFrames": 1200,
+      "playerAttackStarts": 50,
+      "framesWithoutThreats": 0,
+      "movingSeconds": 20.000000000000146,
+      "immobilizedSeconds": 0,
+      "distanceMeters": 39.94510917984046,
+      "bodyAvoidanceFrames": 0,
+      "phases": [
+        "step/crash"
+      ]
+    },
+    "hits": 1,
+    "stationaryHits": 0,
+    "hitsPerMinute": 2.9999999999999782
+  },
+  "wallSeconds": 155.763,
+  "nativeStateHash": "28e0d371"
+}

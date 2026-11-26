@@ -468,6 +468,14 @@ export class Mission {
     const retainedMegaPosition = liveMega && { id: liveMega.id, transform: { ...liveMega.transform } };
     const retainedCharge = !resume && this.def.id === 'L10' && this.state.states['cure-installed'] ? this.state.counters['charge-ticks'] : null;
     const retainedOverpass = !resume && this.def.id === 'L10' && !!this.state.states['l10-overpass-mega'];
+    // Radio beats are one-shots across a checkpoint retry. Rewinding their
+    // flags could replay several lines at once or stretch the L10 cadence.
+    const retainedFinaleRadio = !resume && this.def.id === 'L10' && this.state.states['l10-finale-beat-0'] ? {
+      beats: Array.from({ length: 10 }, (_, i) => !!this.state.states[`l10-finale-beat-${i}`]),
+      nextBeat: this.state.counters['l10-finale-next-beat-tick'] ?? 0,
+      reyesLoop: this.state.counters['l10-reyes-loop-ticks'] ?? 0,
+      sinkholeWarning: !!this.state.states['l10-sinkhole-warning'],
+    } : undefined;
     const retainedCharging = !!this.state.states['charge-active'];
     const timeout = this.state.failure === 'timeout';
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
@@ -477,6 +485,12 @@ export class Mission {
     for (const key of Object.keys(previous)) if (!(key in checkpoint.state)) delete previous[key];
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
     if (retainedOverpass) this.state.states['l10-overpass-mega'] = true;
+    if (retainedFinaleRadio) {
+      retainedFinaleRadio.beats.forEach((seen, i) => { if (seen) this.state.states[`l10-finale-beat-${i}`] = true; });
+      this.state.counters['l10-finale-next-beat-tick'] = Math.max(this.state.counters['l10-finale-next-beat-tick'] ?? 0, retainedFinaleRadio.nextBeat);
+      this.state.counters['l10-reyes-loop-ticks'] = Math.max(this.state.counters['l10-reyes-loop-ticks'] ?? 0, retainedFinaleRadio.reyesLoop);
+      if (retainedFinaleRadio.sinkholeWarning) this.state.states['l10-sinkhole-warning'] = true;
+    }
     if (retainedCharge !== null) { this.state.counters['charge-ticks'] = Math.max(this.state.counters['charge-ticks'], retainedCharge); this.state.states['charge-active'] = retainedCharging; this.state.states['charge-ready'] = this.state.counters['charge-ticks'] >= 3600; }
     if (timeout && this.state.deadlineTicks !== null) this.state.deadlineTicks += Math.ceil((this.def.deadline?.retryGraceSeconds ?? 0) * 60);
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;

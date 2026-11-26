@@ -37,7 +37,7 @@ export class SpawnIdentities {
     return this.spawn(e);
   }
 }
-export interface Position { identity: string; id: number; x: number; z: number; playerX: number; playerZ: number }
+export interface Position { identity: string; id: number; x: number; z: number; playerX: number; playerZ: number; diagnostic?: Record<string, unknown> }
 export interface Snapshot { tick: number; alive: number; reachable: number; playerX: number; playerZ: number; positions: Position[] }
 export interface BlockedWindow { streakStart: number | null; maxBlockedSeconds: number; blockedEvidence: Snapshot | null }
 export function observeBlocked(window: BlockedWindow, snapshot: Snapshot): void {
@@ -252,6 +252,7 @@ export class ThreatObserver {
   private peakConcurrentInfected = 0;
   private readonly births = new SpawnIdentities(() => { this.totalSpawned++; for (const row of this.active) row.spawned++; });
   private readonly paths = new PathProbe();
+  private readonly l10Births = new Map<string, { tick: number; requested: { x: number; z: number }; actual: { x: number; z: number } }>();
   private entityRevision = -1;
   private entityRows: EntitySnapshot[] = [];
   /** Keep live records in insertion order; component/state mutations remain visible. */
@@ -355,7 +356,10 @@ export class ThreatObserver {
       // Per-instance observation; no game data, health, inputs, movement or AI budgets are changed.
       ai.spawn = (...args) => {
         const id = spawn(...args);
-        if (!args[3]) { const e = ai.active.find(e => e.id === id); if (e) this.born(e); }
+        if (!args[3]) { const e = ai.active.find(e => e.id === id); if (e) {
+          const token = this.born(e);
+          if (level === 'L10') this.l10Births.set(token, { tick: world.tick, requested: { x: args[1].x, z: args[1].z }, actual: { x: e.transform.x, z: e.transform.z } });
+        } }
         return id;
       };
       observeAttackStarts(world, (sourceId, targetId, tick) => {
@@ -647,7 +651,13 @@ export class ThreatObserver {
       // of doing a second independent A* / destructible-barrier search.
       if (boundedPath && (this.level === 'L4' || (e.combat?.radius ?? .35) <= source.clearance) && goal.x === player.transform.x && goal.z === player.transform.z
         || (!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, goal, legalStretch, authored) || legalBarrierPath(Infinity)) reachable.add(token);
-      else positions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z });
+      else positions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z,
+        ...(this.level === 'L10' ? { diagnostic: { archetype: e.archetype, y: e.transform.y, pursuit: !!e.infected?.pursuit,
+          pending: !!e.pendingAdmission, state: e.infected?.state, radius: e.combat?.radius, goal, spawn: this.l10Births.get(token) ?? null,
+          ledger: Object.entries(w.l10Encounters?.state.spawned ?? {}).filter(([, id]) => id === e.id).map(([key]) => key),
+          ground: w.districts?.groundHeight(e.transform.x, e.transform.z), gridClear: source.clear(e.transform.x, e.transform.z, e.combat?.radius ?? .35),
+          physicalClear: w.solids.clear(e.transform, e.combat?.radius ?? .35, e.id, false, .02),
+          entry: physicalPathEntry(w, e, source) ?? null } } : {}) });
     }
     // Geometry is sampled after the sim tick. Charge it to the phases now
     // active, not a combat phase that ended when that tick closed a safe gate.

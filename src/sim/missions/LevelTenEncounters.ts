@@ -1,5 +1,6 @@
 import { layoutHouseDoors, type HouseEmergence } from '../outbreak/HouseEmergence';
 import { finale } from '../../data/l10Finale';
+import { infectedDef } from '../../data/infected';
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups, cureConvoyBarrels, cureConvoyCrates, type CureEncounter } from '../../levels/L10/encounters';
@@ -10,6 +11,8 @@ import type { EntitySnapshot } from '../world/types';
 
 /** A slot whose member died on a discarded retry timeline: consumed for the run, never re-spawned. Never a valid entity id. */
 const RETIRED_SLOT = -1;
+/** Span the driveable district bounds on both sides of the road centre. */
+const roadblockHalfZ = Math.max(...cure.bounds.map(([, z]) => Math.abs(z - 95))) + 1;
 /** Farm set pieces that admit as assault-style waves rather than one whole-cohort dump.
  * A full dump released 120 m ahead disengages at walk pace: the faster members rush the
  * release-time spot, the rest starve the shared path budget behind the farm buildings and
@@ -34,6 +37,12 @@ export interface CureEncounterState {
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   /** The four ride/fight gates that hold the motorbike until their roadblock encounter is cleared. */
   roadblockGates?: Record<string, number>;
+  /** Each barrier admits its fight only after a nearby dismount and opens only after an on-foot hit. */
+  roadblockMountedApproach?: Record<string, boolean>;
+  roadblockDismounted?: Record<string, boolean>;
+  roadblockFootFight?: Record<string, boolean>;
+  roadblockFootFightAt?: Record<string, number>;
+  roadblockFootHits?: Record<string, Record<string, boolean>>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number; lastAssaultAdmission?: number;
   /** Paced set pieces: the wave currently admitting, and the next re-target pass. */
   pacedWave?: Record<string, number>; pacedPress?: number;
@@ -65,6 +74,30 @@ export class LevelTenEncounters {
     world.events.on('infected.attack', event => {
       if (event.type === 'infected.attack' && event.special === 'escort-hit' && event.targetId === 1) this.state.pressureAttackAt = event.tick;
     });
+    world.events.on('combat.hit', event => {
+      if (event.type !== 'combat.hit' || event.sourceId !== 1 || this.world.vehicles?.bicycle.riding) return;
+      const key = Object.entries(this.state.spawned).find(([, id]) => id === event.targetId)?.[0];
+      if (!key) return;
+      const group = this.encounterFor(key);
+      if (!group || !['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id)) return;
+      const gateId = this.state.roadblockGates?.[group.id], gate = gateId === undefined ? undefined : this.world.entities.get(gateId);
+      const player = this.world.entities.get(1);
+      if (gate && player && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 40) {
+        if (!this.state.roadblockFootFight?.[group.id]) {
+          (this.state.roadblockFootFight ??= {})[group.id] = true;
+          (this.state.roadblockFootFightAt ??= {})[group.id] = event.tick;
+        }
+        const slotKey = key.replace(/:\d+$/, '');
+        ((this.state.roadblockFootHits ??= {})[group.id] ??= {})[slotKey] = true;
+      }
+    });
+    // Hazard damage runs after the normal encounter update. Resolve a final
+    // cohort death synchronously so a cleared gate does not wait a tick.
+    world.events.on('combat.kill', event => {
+      if (event.type === 'combat.kill' && !event.downed &&
+          Object.values(this.state.spawned).includes(event.targetId) &&
+          this.world.missions?.state.phase === 'playing') this.updateRoadblockClearance();
+    });
     world.events.on('player.died', event => {
       if (event.type !== 'player.died' || !this.world.infected) return;
       // A death freezes every released cohort: members killed on this attempt
@@ -72,12 +105,13 @@ export class LevelTenEncounters {
       // The ledger is captured here, before any death-window admission adds
       // keys the checkpoint never held; only these slots are consumed.
       this.died = true;
-      this.carried.clear();
+      // Survivors still waiting for admission must survive another retry.
       this.deathLedger.clear();
+      const sleeping = new Map([...this.world.chunks?.inactiveEntities() ?? []].map(actor => [actor.id, actor]));
       for (const [key, id] of Object.entries(this.state.spawned)) {
         if (key.startsWith('dispersal-assault:')) continue;
         this.deathLedger.add(key);
-        const actor = this.world.entities.get(id);
+        const actor = this.world.entities.get(id) ?? sleeping.get(id);
         if (!actor || actor.corpse || actor.health.current <= 0 && (actor.infected?.recoverAt ?? -1) < 0) continue;
         const group = this.encounterFor(key);
         if (group) this.carried.set(key, { archetype: actor.archetype, x: actor.transform.x, z: actor.transform.z, group: group.id, region: group.region });
@@ -99,6 +133,13 @@ export class LevelTenEncounters {
       nextAssaultAt: this.state.nextAssaultAt, assaultBreach: this.state.assaultBreach,
       assaultAnnouncedWave: this.state.assaultAnnouncedWave,
     } : undefined;
+    const retainedRoadblock = this.died ? {
+      mountedApproach: structuredClone(this.state.roadblockMountedApproach ?? {}),
+      dismounted: structuredClone(this.state.roadblockDismounted ?? {}),
+      footFight: structuredClone(this.state.roadblockFootFight ?? {}),
+      footFightAt: structuredClone(this.state.roadblockFootFightAt ?? {}),
+      footHits: structuredClone(this.state.roadblockFootHits ?? {}),
+    } : undefined;
     const incoming = structuredClone(value as CureEncounterState);
     // A death retry resumes released encounters rather than replaying them:
     // every slot the checkpoint predates stays consumed (kills made on the
@@ -108,13 +149,23 @@ export class LevelTenEncounters {
     const discarded = this.died ? [...this.deathLedger] : [];
     this.died = false;
     this.state = incoming; this.state.weapons ??= {};
+    if (retainedRoadblock) {
+      this.state.roadblockMountedApproach = { ...retainedRoadblock.mountedApproach, ...this.state.roadblockMountedApproach };
+      this.state.roadblockDismounted = { ...retainedRoadblock.dismounted, ...this.state.roadblockDismounted };
+      this.state.roadblockFootFight = { ...retainedRoadblock.footFight, ...this.state.roadblockFootFight };
+      this.state.roadblockFootFightAt = { ...retainedRoadblock.footFightAt, ...this.state.roadblockFootFightAt };
+      this.state.roadblockFootHits = structuredClone(retainedRoadblock.footHits);
+      for (const [group, slots] of Object.entries(incoming.roadblockFootHits ?? {}))
+        this.state.roadblockFootHits[group] = { ...this.state.roadblockFootHits[group], ...slots };
+    }
     // Runtime roadblock walls are owned by Interactables rather than the
     // entity snapshot. A fresh save resume must rebuild their geometry too.
     for (const [group, id] of Object.entries(this.state.roadblockGates ?? {})) {
       const gate = this.world.entities.get(id);
       if (gate?.archetype !== 'device.l10-roadblock' || !gate.interactable) { delete this.state.roadblockGates![group]; continue; }
       const { x, z } = gate.transform;
-      this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ: group === 'setpiece-dark-underpass' ? 17 : 40 });
+      const halfZ = roadblockHalfZ;
+      this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ });
       if (gate.interactable.open) this.world.interactables!.unblock(id);
     }
     if (retainedAssault) {
@@ -126,7 +177,11 @@ export class LevelTenEncounters {
     }
     const slots = this.state.spawned ??= {};
     for (const key of discarded) {
-      if (key in slots) { this.carried.delete(key); continue; }
+      // The checkpoint may contain an older version of this same cohort.
+      // Remove its live copy before re-admitting the survivor from the failed
+      // attempt; a killed member stays retired instead of returning at full HP.
+      const restored = this.world.entities.get(slots[key]);
+      if (restored?.infected && !restored.corpse && restored.health.current > 0) this.world.infected?.release(restored);
       slots[key] = RETIRED_SLOT;
     }
     if (this.world.infected) this.world.infected.director.reserved += (this.state.finaleEntrySlot ? 1 : 0) - heldEntrySlot;
@@ -180,7 +235,8 @@ export class LevelTenEncounters {
     // emergence hold keeps their silhouettes at the entrance until the
     // hospital beat, then returns them to ordinary pursuit and combat.
     const hospitalApproach = w.entities.get(1);
-    if (mission.state.states['l10-finale-beat-8'] && this.state.hospitalOpenAt !== undefined && this.state.hospitalStageReleaseAt === undefined) this.state.hospitalStageReleaseAt = w.tick + 90;
+    if (mission.state.states['l10-finale-beat-8'] && this.state.hospitalOpenAt !== undefined && this.state.hospitalStageReleaseAt === undefined &&
+        hospitalApproach && hospitalApproach.transform.x > 3512) this.state.hospitalStageReleaseAt = w.tick + 90;
     for (const [i, z] of [49, 53].entries()) {
       const key = `setpiece-field-hospital:stage:${i}:0`, at = { x: 3502.5, z };
       let id = this.state.spawned[key];
@@ -194,7 +250,7 @@ export class LevelTenEncounters {
       const actor = id === undefined ? undefined : w.entities.get(id);
       if (!actor?.emerging) continue;
       if (actor.health.current <= 0) { actor.emerging = undefined; continue; }
-      if ((this.state.hospitalStageReleaseAt !== undefined && w.tick >= this.state.hospitalStageReleaseAt) || (hospitalApproach && hospitalApproach.transform.x > 3512)) {
+      if (this.state.hospitalStageReleaseAt !== undefined && w.tick >= this.state.hospitalStageReleaseAt) {
         actor.emerging = undefined;
         ai.pursueTarget(actor.id, 1);
       } else {
@@ -282,8 +338,17 @@ export class LevelTenEncounters {
             // enough to join the mounted-platform fight without appearing in
             // the courier's sight.
             const candidates = [{ x: entry.x, z: entry.z }, { x: entry.sx, z: entry.sz }, ...ring];
+            const district = w.districts!.districts.find(d => d.id === 'D-CURE')!;
+            const radius = infectedDef(archetype).radius;
+            const tanks = district.layout.colliders.filter(c => c.id.startsWith('kit.dispersal-tank'));
+            // The tank's supports leave nav-clear islands under its body. A
+            // service arrival admitted there cannot leave the enclosed pocket.
+            const clearTank = (x: number, z: number) => !tanks.some(c =>
+              x + radius > c.aabb.min[0] + district.origin[0] &&
+              x - radius < c.aabb.max[0] + district.origin[0] && z + radius > c.aabb.min[2] + district.origin[1] &&
+              z - radius < c.aabb.max[2] + district.origin[1]);
             const spot = candidates.map(c => cureEncounterSpot(ai.nav, { ...c, archetype },
-              (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 9)).find(Boolean);
+              (x, z) => clearTank(x, z) && !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 9)).find(Boolean);
             if (!spot) { this.state.finaleEntryNext = w.tick + 30; }
             else {
             const { x, z } = spot;
@@ -302,6 +367,7 @@ export class LevelTenEncounters {
         }
       }
     }
+    this.updateRoadblockClearance();
     if (w.tick % 10 !== 0) return;
     const player = w.entities.get(1)!;
     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;
@@ -362,38 +428,35 @@ export class LevelTenEncounters {
         // the courier's current lane at its own gate below.
         lanes[group.id] = this.lanePull(group, player, paced);
       }
-      if (['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id) && released.includes(group.id)) {
+      const roadblock = ['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id);
+      if (roadblock && released.includes(group.id)) {
         const gates = this.state.roadblockGates ??= {};
         let gateId = gates[group.id];
         if (gateId === undefined && chunks.resident(group.at[0], group.at[1])) {
-          // The physical gate blocks the riding lane. It can be opened on
-          // foot, or the authored encounter opens it after its full cohort is
-          // admitted and cleared.
-          // The collapse itself blocks the road; its encounter gate meets the
-          // crater's north edge instead of cutting across the southern rim.
-          const halfZ = group.id === 'setpiece-dark-underpass' ? 17 : 40;
-          gateId = w.interactables!.spawn('gate', { x: group.at[0], z: 95 }, {
+          // Span the road and the underpass rim detour with the same barrier.
+          const gateZ = 95;
+          const halfZ = roadblockHalfZ;
+          gateId = w.interactables!.spawn('gate', { x: group.at[0], z: gateZ }, {
             halfX: .2, halfZ, radius: 2, label: 'Open roadblock',
           });
           w.entities.get(gateId)!.archetype = 'device.l10-roadblock';
           // Roadblocks are encounter barriers, not early-use switches. Keep E
           // available to dismount the rider until the safe-admitted cohort is cleared.
           w.entities.get(gateId)!.interactable!.enabled = false;
-          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: 95, halfX: .2, halfY: 1.2, halfZ });
+          w.interactables!.block(gateId, { x: group.at[0], y: .7, z: gateZ, halfX: .2, halfY: 1.2, halfZ });
           gates[group.id] = gateId;
         }
         const gate = gateId === undefined ? undefined : w.entities.get(gateId);
-        if (gate?.interactable?.open) gate.interactable.enabled = false;
-        if (gate?.interactable && !gate.interactable.open) {
-          const slots = cureEncounterSlots(group, ai.director.tier);
-          const admitted = slots.every(slot => this.state.spawned[`${slot.key}:0`] !== undefined);
-          const cleared = admitted && slots.every(slot => (w.entities.get(this.state.spawned[`${slot.key}:0`])?.health.current ?? 0) <= 0);
-          if (cleared) {
-            gate.interactable.open = true; gate.interactable.completed = true;
-            gate.interactable.enabled = false;
-            w.interactables!.unblock(gate.id);
-          }
-        }
+        if (gate && w.vehicles?.bicycle.riding && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 36)
+          (this.state.roadblockMountedApproach ??= {})[group.id] = true;
+        if (gate && this.state.roadblockMountedApproach?.[group.id] && !w.vehicles?.bicycle.riding && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 30)
+          (this.state.roadblockDismounted ??= {})[group.id] = true;
+        // The admitted cohort is fixed once cleared; an unfilled slot must
+        // neither hold the gate nor spawn a new member after it opens.
+        if (gate?.interactable?.open) { gate.interactable.enabled = false; continue; }
+        // The bike cannot shoot the gate cohort away before the required
+        // dismount. The visible barrier and HUD cue hold the lane until E.
+        if (roadblock && !this.state.roadblockDismounted?.[group.id]) continue;
       }
       // Let the cohort begin its safe offscreen approach first. The visible
       // board falls only when the courier is near the actual sign, which sits
@@ -401,7 +464,7 @@ export class LevelTenEncounters {
       if (group.setPiece === 'propaganda-billboard' && released.includes(group.id) && this.state.billboardFallAt === undefined &&
           Math.hypot(player.transform.x - 3086, player.transform.z - 92) <= 15) this.state.billboardFallAt = w.tick;
       if (group.setPiece === 'field-hospital' && released.includes(group.id) && this.state.hospitalOpenAt === undefined &&
-          Math.hypot(player.transform.x - 3500, player.transform.z - 50) <= 16) this.state.hospitalOpenAt = w.tick;
+          Math.hypot(player.transform.x - 3502, player.transform.z - 95) <= 32) this.state.hospitalOpenAt = w.tick;
       // The pre-staged opening wave can be spent on the approach. Before the
       // charge clock starts, hand off to the next cohort only when that wave
       // is empty; once charging, timed windows continue independently of it.
@@ -519,8 +582,12 @@ export class LevelTenEncounters {
         for (const slot of cureEncounterSlots(group, ai.director.tier)) {
           const id = this.state.spawned[`${slot.key}:0`];
           const e = id === undefined || id === RETIRED_SLOT ? undefined : w.entities.get(id);
-          if (!e || e.health.current <= 0 || e.infected!.pursuit || e.transform.x < player.transform.x - 24) continue;
-          if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 140) ai.press(e.id, 1, w.tick + 600);
+          if (!e || e.health.current <= 0 || e.infected!.pursuit) continue;
+          const gateId = this.state.roadblockGates?.[group.id];
+          const closedGate = gateId !== undefined && !w.entities.get(gateId)?.interactable?.open;
+          if (!closedGate && e.transform.x < player.transform.x - 24) continue;
+          if (closedGate || Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 140)
+            ai.press(e.id, 1, w.tick + 600);
         }
       }
     }
@@ -535,7 +602,8 @@ export class LevelTenEncounters {
     // depot ambush is the exception: its yard sits 60–90 m off her road, so
     // its cohort crosses that gap as a chase instead of teleporting onto her
     // lane together with its Alpha.
-    const capped = paced ? group.id === 'depot-alpha' : group.id === 'farmhouse-defense' || group.id === 'shed-field-crossing' || group.id === 'depot-alpha';
+    const roadblock = ['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id);
+    const capped = paced ? group.id === 'depot-alpha' || roadblock : group.id === 'farmhouse-defense' || group.id === 'shed-field-crossing' || group.id === 'depot-alpha';
     return (capped ? Math.max(-15, Math.min(15, pull)) : pull) + flank;
   }
   /** A rage roar requests the next escort wave through the same cap/breather gate. */
@@ -546,6 +614,41 @@ export class LevelTenEncounters {
     this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'mega-escort-called' });
   }
   /** The authored group that owns a spawned slot key (finale assault waves excluded). */
+  /** Keep living members of an unresolved roadblock in the active simulation. */
+  holdsRoadblockMember(id: number): boolean {
+    for (const group of curePaceEncounters) {
+      const gateId = this.state.roadblockGates?.[group.id];
+      if (gateId === undefined || this.world.entities.get(gateId)?.interactable?.open) continue;
+      if (cureEncounterSlots(group, this.world.infected!.director.tier).some(slot => this.state.spawned[`${slot.key}:0`] === id)) return true;
+    }
+    return false;
+  }
+  /** Open on the first encounter update after the final cohort member dies. */
+  private updateRoadblockClearance(): void {
+    const w = this.world, tier = w.infected!.director.tier;
+    for (const group of curePaceEncounters) {
+      const id = this.state.roadblockGates?.[group.id];
+      const gate = id === undefined ? undefined : w.entities.get(id);
+      if (!gate?.interactable || gate.interactable.open || !this.state.roadblockDismounted?.[group.id]) continue;
+      const slots = cureEncounterSlots(group, tier);
+      let cleared = true;
+      for (const slot of slots) {
+        const key = `${slot.key}:0`, actorId = this.state.spawned[key];
+        if (this.carried.has(key)) { cleared = false; continue; }
+        if (actorId === undefined) continue;
+        if (actorId === RETIRED_SLOT) continue;
+        const actor = w.entities.get(actorId);
+        if (actor && actor.health.current <= 0 && (actor.infected?.recoverAt ?? -1) < 0)
+          this.state.spawned[key] = RETIRED_SLOT;
+        else cleared = false;
+      }
+      if (cleared) {
+        gate.interactable.open = true; gate.interactable.completed = true;
+        gate.interactable.enabled = false;
+        w.interactables!.unblock(gate.id);
+      }
+    }
+  }
   private encounterFor(key: string): CureEncounter | undefined {
     return [...cureEncounters, ...curePaceEncounters].find(group => !group.assault &&
       cureEncounterSlots(group, this.world.infected!.director.tier).some(slot => `${slot.key}:0` === key));
