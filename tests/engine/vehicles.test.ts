@@ -1089,6 +1089,11 @@ async function motorbikeRide(): Promise<void> {
     const dogEntity = world.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { x: player.transform.x, y: 0, z: player.transform.z + 2, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
     const dogId = dogEntity.id;
     bike.spawnMotorbike({ x: player.transform.x + 1, z: player.transform.z }, Math.PI / 2);
+    bike.entity!.transform.x = player.transform.x + 1.6;
+    expect(bike.canInteract(), 'an upright motorbike can be reached from its outer edge').toBe(true);
+    bike.entity!.transform.x = player.transform.x + 1.8;
+    expect(bike.canInteract(), 'the upright motorbike interaction remains local').toBe(false);
+    bike.entity!.transform.x = player.transform.x + 1;
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false });
     expect(bike.riding).toBe(true);
     const dog = world.entities.get(dogId)!;

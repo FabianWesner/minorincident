@@ -36,7 +36,7 @@ export interface BicycleState {
 }
 const ARCHETYPE = 'veh.courier-bike';
 const { speedMs, accelToMs, accelS, mountInteractS } = l1v2.bicycle;
-const MOUNT_RANGE = 1.5, BUMP_RANGE = 1.15;
+const MOUNT_RANGE = 1.5, MOTORBIKE_MOUNT_RANGE = 1.7, BUMP_RANGE = 1.15;
 const MOTORBIKE_RECOVERY_RANGE = 3.1;
 /** Short stumble after an infected knocks the rider off (input locked, no damage, no knockback). */
 const STUMBLE_TICKS = 18;
@@ -104,7 +104,8 @@ export class Bicycle {
     if (bike.bicycle.mounted) return true;
     const d = Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z);
     const recovery = bike.bicycle.motorbike && bike.bicycle.fallen && d <= MOTORBIKE_RECOVERY_RANGE && this.reachable(player.transform.x, player.transform.z, bike.transform.x, bike.transform.z, true);
-    return this.world.tick >= bike.bicycle.lockUntil && (d <= MOUNT_RANGE || !!recovery) && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform);
+    const mountRange = bike.bicycle.motorbike ? MOTORBIKE_MOUNT_RANGE : MOUNT_RANGE;
+    return this.world.tick >= bike.bicycle.lockUntil && (d <= mountRange || !!recovery) && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform);
   }
   /** Controller speed scale (7.5 m/s over the 4.5 m/s run); 1 on foot. */
   get speedScale(): number {
@@ -139,10 +140,11 @@ export class Bicycle {
       }
       const still = Math.hypot(frame.move.x, frame.move.z) < .05;
       // Stand-to-mount is "walk up to the bike and stop", never "stay where you already were".
-      b.approached = d <= MOUNT_RANGE && (b.approached === true || !still);
+      const mountRange = b.motorbike ? MOTORBIKE_MOUNT_RANGE : MOUNT_RANGE;
+      b.approached = d <= mountRange && (b.approached === true || !still);
       // At the depot the courier waits for the parcel, rather than immediately auto-mounting the parked bike.
       const waitingAtDepot = !player.survivor?.carrying && this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
-      b.standTicks = d <= MOUNT_RANGE && still && b.armed && b.approached && !waitingAtDepot ? b.standTicks + 1 : 0;
+      b.standTicks = d <= mountRange && still && b.armed && b.approached && !waitingAtDepot ? b.standTicks + 1 : 0;
       const free = alive && this.canInteract() && !this.world.vehicles?.active;
       if (free && !this.world.missions?.interactionAvailable() && (frame.interact || b.standTicks >= mountInteractS * 60)) {
         // Mount the entire frame on level pavement, including its forward saddle offset.
@@ -151,8 +153,8 @@ export class Bicycle {
         // A bike that fell on the road is picked up where it lies (any clear level ground close by, not 8 m away on the
         // sidewalk); a parked one keeps the pavement-first search, with close-by road ground only as the last resort.
         const near = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3], wide = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3, 4, 6, 8];
-        const origin = b.motorbike && b.fallen && d > MOUNT_RANGE ? bike.transform : player.transform;
-        const accessible = (p: Vec2) => this.reachable(player.transform.x, player.transform.z, p.x, p.z, !!(b.motorbike && b.fallen && d > MOUNT_RANGE));
+        const origin = b.motorbike && b.fallen && d > mountRange ? bike.transform : player.transform;
+        const accessible = (p: Vec2) => this.reachable(player.transform.x, player.transform.z, p.x, p.z, !!(b.motorbike && b.fallen && d > mountRange));
         const spot = b.fallen
           ? this.clearSpot(origin.x, origin.z, b.heading, near, true, false, accessible) ?? this.clearSpot(origin.x, origin.z, b.heading, wide, true, true, accessible)
           : this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false);

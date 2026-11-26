@@ -138,3 +138,14 @@ The strict observer now records each loop-state transition and death reset. In t
 LOW's underpass first attempt ended in death before opening; on retry it opened at tick 60480 but the courier remained near the parked bike and died before remounting. The next retry had an already-open gate and does not satisfy the strict closed-to-open loop. A trial applying the passive policy's closer corpse-aware bike recovery to skilled play timed out LOW at 2100 s with 17 deaths; its HIGH leg was stopped after that regression, and the change was reverted. An earlier trial that incorrectly used the 6 m distance for both dismount and fight recognition completed HIGH 4/4 in 1895 s but timed out LOW at convoy (1/4); the correction retains wider fight recognition.
 
 The focused [L10 threat audit](threat-close-approach.json) reports skilled completion and zero L10 skilled and passive flags; its exit 1 is solely `PARTIAL_LEVEL_SELECTION`. Typecheck and targeted lint passed. The required LOW 4/4, full `qa:threat`, current-source remote unit run, native captures, and whole-route reachability and gate-delay proof remain open. The 420–540 s ride window and 45–75 s beat cadence are reported by the route receipt and were not tuned.
+
+## Motorbike mount reach
+
+The LOW underpass retry reached the open gate's parked upright bike but oscillated at 1.51–1.57 m from its center, outside the 1.5 m interaction range, until the pursuing Mega killed the courier. The game now permits upright motorbike interaction within 1.7 m, preserving the existing mounted-frame clearance and placement search. The bicycle's original range remains 1.5 m. An added vehicle regression checks motorbike interaction at 1.6 m and rejection at 1.8 m. The observer also records the underpass bike interaction state and movement input.
+
+| Tier | Strict loops | Native route | Deaths | Receipt |
+|---|---:|---|---:|---|
+| HIGH | 4/4 | 2100 s timeout at Mega | 49 | [route](route-mount-margin.json) |
+| LOW | 4/4 | complete in 1503.02 s | 8 | [route](route-mount-margin.json) |
+
+A 1.6 m motorbike margin trial produced HIGH 4/4 with a 2100 s timeout and LOW 2/4 with a 2100 s timeout; the 1.7 m version above is retained. HIGH repeatedly dies in the finale after charge completion and its Mega health returns to the checkpoint state; this is not a skilled native completion. The [focused L10 threat receipt](threat-mount-margin.json) reports skilled completion and zero L10 flags; its only command-level failure is `PARTIAL_LEVEL_SELECTION`. Typecheck, targeted lint and the vehicle test file (2 tests) passed. Full threat audit, current-source remote unit, native captures, whole-route reachable-cohort proof and gate-delay measurement remain open. Ride and beat timing are in the receipt and were not tuned.
