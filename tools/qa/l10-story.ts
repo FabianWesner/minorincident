@@ -248,7 +248,7 @@ for (const tier of tiers) {
         if (recentHits.length > 8) recentHits.shift();
       });
       world.events.on('player.died', () => {
-        deaths.push({ tick: world.tick, hits: [...recentHits] });
+        deaths.push({ tick: world.tick, hits: [...recentHits], slots: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('setpiece-quarantine-gate:')).map(([key, id]) => ({ key, id, hp: world.entities.get(id)?.health.current, corpse: world.entities.get(id)?.corpse, recoverAt: world.entities.get(id)?.infected?.recoverAt })) });
         // Gate state persists after a retry, but a failed attempt must not be
         // joined to a later crossing to manufacture a continuous ride loop.
         for (const b of roadblockRide) if (!b.crossed) Object.assign(b, { arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0 });
