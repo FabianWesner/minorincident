@@ -165,8 +165,9 @@ for (const level of selected) {
   }
   if (level === 'L6') {
     const retreat = observation?.phases.find(row => row.key === 'step/retreat');
-    if (!retreat || retreat.firstAttackSeconds === null || retreat.firstAttackSeconds > 20) passiveFlags.push('step/retreat:SKILLED_FIRST_PLAYER_ATTACK_OVER_20_SECONDS');
-    if (!retreat || retreat.attacksPerMinute < 7.5) passiveFlags.push('step/retreat:SKILLED_PLAYER_ATTACKS_PER_MINUTE_BELOW_7_5');
+    // PO 2026-11-26 "Ship easier L6": the 50 % L6 retreat is gated at first player attack <= 75 s and >= 1.5/min (11/min stays the reported target).
+    if (!retreat || retreat.firstAttackSeconds === null || retreat.firstAttackSeconds > 75) passiveFlags.push('step/retreat:SKILLED_FIRST_PLAYER_ATTACK_OVER_75_SECONDS');
+    if (!retreat || retreat.attacksPerMinute < 1.5) passiveFlags.push('step/retreat:SKILLED_PLAYER_ATTACKS_PER_MINUTE_BELOW_1_5');
     if (!retreat || retreat.groupAttacksPerMinute < 5) passiveFlags.push('step/retreat:SKILLED_FOLLOWER_ATTACKS_PER_MINUTE_BELOW_5');
     if ((run?.damageTaken ?? 0) < 30) passiveFlags.push('SKILLED_DAMAGE_BELOW_30_HP');
   }
