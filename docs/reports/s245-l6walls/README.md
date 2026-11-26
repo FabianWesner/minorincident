@@ -35,7 +35,7 @@ Threat audit before and after both report **zero L6-specific flags**. Each invoc
 - `tests/engine/npcs.test.ts` corgi regression: pass.
 - E24 verifier via `node --import tsx/esm tools/verify.ts E24`: pass. The `npm run verify` tsx launcher cannot create its IPC pipe under this sandbox.
 - Full unit suite in the verifier: pass, 27/27 files and 107/107 executed tests, 136.9 s of the 240 s budget. The test-budget scan covered 150 cases across 45 files.
-- Remote unit request: no healthy Hetzner runner was available. The local suite above passed.
+- Remote unit request on the final commit: runner available, but the 240 s budget expired at 245.6 s (exit 124); the suite did not finish. Completed files, including the corgi test, passed. The local suite above passed.
 
 ## Visual review
 
@@ -46,3 +46,5 @@ HIGH and LOW Scene Lab runs passed at game-camera zoom 1.5 with zero console err
 The prior flood measured the tunnel-side approach to each door, not a traversal across the doorway. A physical clearance sweep found the placed north maintenance corridor at x=174 had been sealed by the new wall. The layout now leaves a 4.6 m aperture there. A regression samples an actor-radius path at x=172.25 from z=17.5 to 19.9; it passes. The L6 threat audit after this correction again has zero L6 flags and only `PARTIAL_LEVEL_SELECTION`. Typecheck, lint and the focused corgi test pass.
 
 A sweep at 0.25 m horizontal and 0.1 m depth intervals found clear crossing samples at the five placed maintenance corridors (54, 78, 126, 174 and 198). The authored hatch at x=228 has no clear crossing sample in its 4 m mouth, and the x=162 and x=228 hatches have no corresponding placed maintenance corridor in the current layout. The level spawns hatch arrivals on the tunnel side; whether these should be physical passages and how they should be represented visually remains unproven. The hatch arrivals are spawned inside the tunnel; subsequent investigation closed the wall gaps at x=162 and x=228, where there are no placed corridors. Their tunnel-side approaches remain reachable and the L6 threat audit still reports zero level flags. The old 180-point samples excluded different apertures; the current 186-point sampling excludes all five placed corridor mouths. The images show the updated player-grid flood and final HIGH and LOW scene captures.
+
+The generated collider interval audit covers x=30–246 on both sides except the five placed corridor intervals, at y=.35–4.1. The crowd admission fallback and a full movement traversal remain unverified.
