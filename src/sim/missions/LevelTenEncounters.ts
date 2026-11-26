@@ -153,7 +153,7 @@ export class LevelTenEncounters {
       const gate = this.world.entities.get(id);
       if (gate?.archetype !== 'device.l10-roadblock' || !gate.interactable) { delete this.state.roadblockGates![group]; continue; }
       const { x, z } = gate.transform;
-      const halfZ = group === 'setpiece-dark-underpass' ? 17 : 50;
+      const halfZ = 50;
       this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ });
       if (gate.interactable.open) this.world.interactables!.unblock(id);
     }
@@ -343,6 +343,7 @@ export class LevelTenEncounters {
         }
       }
     }
+    this.updateRoadblockClearance();
     if (w.tick % 10 !== 0) return;
     const player = w.entities.get(1)!;
     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;
@@ -408,10 +409,9 @@ export class LevelTenEncounters {
         const gates = this.state.roadblockGates ??= {};
         let gateId = gates[group.id];
         if (gateId === undefined && chunks.resident(group.at[0], group.at[1])) {
-          // The underpass route bends south after x3370; put the gate on its
-          // incoming road lane so the rider reaches it mounted before turning.
+          // Span the road and the underpass rim detour with the same barrier.
           const gateZ = 95;
-          const halfZ = group.id === 'setpiece-dark-underpass' ? 17 : 50;
+          const halfZ = 50;
           gateId = w.interactables!.spawn('gate', { x: group.at[0], z: gateZ }, {
             halfX: .2, halfZ, radius: 2, label: 'Open roadblock',
           });
@@ -428,19 +428,6 @@ export class LevelTenEncounters {
         if (gate && this.state.roadblockMountedApproach?.[group.id] && !w.vehicles?.bicycle.riding && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 30)
           (this.state.roadblockDismounted ??= {})[group.id] = true;
         if (gate?.interactable?.open) gate.interactable.enabled = false;
-        if (gate?.interactable && !gate.interactable.open) {
-          const slots = cureEncounterSlots(group, ai.director.tier);
-          const admitted = slots.every(slot => this.state.spawned[`${slot.key}:0`] !== undefined);
-          const cleared = admitted && slots.every(slot => {
-            const key = `${slot.key}:0`, id = this.state.spawned[key];
-            return !this.carried.has(key) && (w.entities.get(id)?.health.current ?? 0) <= 0;
-          });
-          if (cleared && this.state.roadblockDismounted?.[group.id]) {
-            gate.interactable.open = true; gate.interactable.completed = true;
-            gate.interactable.enabled = false;
-            w.interactables!.unblock(gate.id);
-          }
-        }
         // The bike cannot shoot the gate cohort away before the required
         // dismount. The visible barrier and HUD cue hold the lane until E.
         if (roadblock && !this.state.roadblockDismounted?.[group.id]) continue;
@@ -597,6 +584,25 @@ export class LevelTenEncounters {
     this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'mega-escort-called' });
   }
   /** The authored group that owns a spawned slot key (finale assault waves excluded). */
+  /** Open on the first encounter update after the final cohort member dies. */
+  private updateRoadblockClearance(): void {
+    const w = this.world, tier = w.infected!.director.tier;
+    for (const group of curePaceEncounters) {
+      const id = this.state.roadblockGates?.[group.id];
+      const gate = id === undefined ? undefined : w.entities.get(id);
+      if (!gate?.interactable || gate.interactable.open || !this.state.roadblockDismounted?.[group.id]) continue;
+      const slots = cureEncounterSlots(group, tier);
+      const cleared = slots.every(slot => {
+        const key = `${slot.key}:0`, actorId = this.state.spawned[key];
+        return actorId !== undefined && !this.carried.has(key) && (w.entities.get(actorId)?.health.current ?? 0) <= 0;
+      });
+      if (cleared) {
+        gate.interactable.open = true; gate.interactable.completed = true;
+        gate.interactable.enabled = false;
+        w.interactables!.unblock(gate.id);
+      }
+    }
+  }
   private encounterFor(key: string): CureEncounter | undefined {
     return [...cureEncounters, ...curePaceEncounters].find(group => !group.assault &&
       cureEncounterSlots(group, this.world.infected!.director.tier).some(slot => `${slot.key}:0` === key));
