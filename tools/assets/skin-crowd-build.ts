@@ -1,3 +1,4 @@
+import { fitFlamingoWings } from './skin-crowd-flamingo-wings';
 import { restoreCrowdGlasses } from './skin-crowd-glasses';
 import { restoreClerkApron } from './restore-clerk-apron';
 import { restoreFireHelmet } from './restore-fire-helmet';
@@ -131,12 +132,12 @@ for (const lod of [0, 1, 2]) {
   const contract = join(assets, 'model.glb'); if (existsSync(contract)) args.push('--contract', contract);
   const placement = metadata?.lods.find(p => p.lod === sourceLod);
   if (existsSync(body)) args.push('--body', body, '--body-scale', String(alignment?.initial_game_height_scale ?? placement?.uniform_scale ?? placement?.world_scale ?? 1), '--body-rot-y', String(alignment?.game_alignment_rotation_y_degrees ?? placement?.rotation_y_degrees ?? 0));
-  if (alignment || derivedTemplate) args.push('--body-yaw-fixed');
+  if (alignment || derivedTemplate || sourceId === 's247-inf.flamingo-openwing') args.push('--body-yaw-fixed');
   if (unbound && id === 'inf.dog') args.push('--atlas-base-half', '--eyes', join(source, 'eyes.json'));
   else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata && ['quadruped', 'bird'].includes(metadata.class ?? ''))) args.push('--eyes', eyeSource);
   if (id === 'inf.lioness') args.push('--interpolate-eye-weights');
   if (metadata && !derivedTemplate) args.push('--reconstruct-body');
-  if (id === 'inf.flamingo') args.push('--repair-flamingo-tail');
+  if (sourceId === 'inf.flamingo') args.push('--repair-flamingo-tail');
   // The lowered Mega fists contain small nearest-template trouser islands.
   // Repair their semantic ownership without refitting the matching v2 rig.
   if (metadata?.class === 'mega') args.push('--repair-contacts');
@@ -278,6 +279,7 @@ for (const lod of [0, 1, 2]) {
       writeFileSync(join(report,`lod${lod}.proportions.json`),JSON.stringify({plan,...receipt},null,2)+'\n');
     }
   }
+  if (sourceId === 's247-inf.flamingo-openwing') { const document = await io.read(raw); fitFlamingoWings(document); await io.write(raw, document); }
   const tiers = [];
   for (const low of [false, true]) {
     const target = join(output, `${id}.lod${lod}${low ? '.low' : ''}.glb`);

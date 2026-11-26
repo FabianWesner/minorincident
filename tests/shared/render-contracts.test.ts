@@ -19,6 +19,8 @@ import { createSkinnedCrowdFixture } from '../fixtures/skinnedCrowd';
 import { packSkin, premultiplyRow, restInverses, skinnedVertexMatrix } from '../../src/render/characters/skinnedCrowd';
 import { StaticCorpses } from '../../src/render/characters/StaticCorpses';
 import { CrowdPosePalette } from '../../src/render/characters/CrowdPosePalette';
+import { CrowdLocomotion } from '../../src/render/characters/CrowdLocomotion';
+import { stripGlbTextures } from '../../tools/assets/stripGlbTextures';
 import { PickBodies } from '../../src/render/characters/PickBodies';
 import { CrowdView } from '../../src/render/CrowdView';
 import { VehicleView } from '../../src/render/VehicleView';
@@ -101,6 +103,30 @@ async function checkWarmPipelineDraws(): Promise<void> {
   const renderer = { backend, nextNodeFrame: vi.fn() } as unknown as Renderer;
   await expect(Renderer.prototype.prepareWarmRender.call(renderer, () => { throw new Error('failed draw'); })).rejects.toThrow('failed draw');
   expect(backend.createRenderPipeline).toBe(create); expect(backend.draw).toBe(draw);
+  }
+}
+
+/** The shipped flamingo must keep its animated feather pivots through the prebuilt atlas path. */
+async function checkFlamingoWingRig(): Promise<void> {
+  await MeshoptDecoder.ready;
+  const bytes = readFileSync('assets/inf.flamingo/model.skin.glb');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(stripGlbTextures(bytes), '');
+  expect(scene.getObjectByName('root')?.userData.openWingRest).toBe(true);
+  const deliveries = JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) as Record<string, string>;
+  for (const lod of ['lod0', 'lod1', 'lod2']) {
+    const packed = gunzipSync(readFileSync(`public${deliveries[`inf.flamingo:${lod}:infected`]}`));
+    const clip = decodeCivilianBake(packed.buffer.slice(packed.byteOffset, packed.byteOffset + packed.byteLength)).clip;
+    for (const joint of ['wingL', 'wingR', 'foreArmL', 'foreArmR']) expect(clip.parts).toContain(joint);
+    const row = Float32Array.from(clip.matrices.slice(0, clip.parts.length * 16)), rest = row.slice();
+    const locomotion = new CrowdLocomotion(scene, clip);
+    const pose = { crouch: 0, pitch: 0, roll: 0, head: 0, jaw: 0, front: 0, hind: 0, armsUp: 0, stamp: 0, trunk: 0, wing: 1, flap: .65, airborne: true };
+    locomotion.correct(1, row, new Matrix4(), 0, 'run', 1, 0, { animal: pose });
+    const left = clip.parts.indexOf('wingL') * 16, right = clip.parts.indexOf('wingR') * 16;
+    expect(Array.from(row.slice(left, left + 12))).not.toEqual(Array.from(rest.slice(left, left + 12)));
+    expect(Array.from(row.slice(right, right + 12))).not.toEqual(Array.from(rest.slice(right, right + 12)));
+    const down = rest.slice(); pose.flap = -.65;
+    locomotion.correct(1, down, new Matrix4(), 0, 'run', 1, 0, { animal: pose });
+    expect(Array.from(down.slice(left, left + 12))).not.toEqual(Array.from(row.slice(left, left + 12)));
   }
 }
 
@@ -649,7 +675,8 @@ test('textured corpse draws bind their surface and upload placements added after
   } finally { crowd.dispose(); baked.geometry.dispose(); shading.dispose(); lighting.dispose(); }
 });
 
-test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
+test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', async () => {
+  await checkFlamingoWingRig();
   checkFractionalCrowdPicking(); checkAlphaMoveSet(); checkOrdinaryInfectedPresentation(); checkFiniteActionClips();
   const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
   const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1);

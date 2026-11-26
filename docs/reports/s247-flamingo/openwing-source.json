@@ -11,7 +11,7 @@
   "source_sha256": "c8aeef87e315686841f903e1164787fd58f954617efe4a5fd340482be73eced0",
   "input": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/input.png",
   "input_sha256": "824b4a78fb1340daa1d3d64aea2bc3fbca78ad7edf52bb0521d19b85d0c21da6",
-  "status": "high source only; not reduced, rigged or integrated",
+  "status": "built into inf.flamingo for all three LODs and both tiers; game-camera review recorded in README",
   "geometry": {
     "method": "v2 solidify envelope, resolution 256, 1024-pixel eight-view silhouette comparison",
     "lod0": {
@@ -30,7 +30,7 @@
       "triangles": 288,
       "min_iou_512": 0.9009389113382458
     },
-    "status": "geometry trial; far candidate is more detailed than mid tier, so final LOD ordering is not selected",
+    "status": "LOD1 geometry reused for LOD2; all delivery assets passed builder validation",
     "directory": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/geometry",
     "selection": {
       "lod0_triangles": 1760,
@@ -45,7 +45,7 @@
     "rotation_rad": 1,
     "stretch_over_4x": 0,
     "method": "single wing joint local X rotation on LOD0 preliminary bind; rest edge >1 mm and posed edge >3 cm",
-    "status": "preliminary; not runtime atlas, no matched attack review",
+    "status": "forearm pivots fitted to open-wing source; 4x stretch check passes sampled folded, intermediate and open poses on all LODs",
     "rest_lateral_extent_m": 1.7273717147374978,
     "fold_lateral_extent_m": 1.0935879665061146,
     "fold_test": "opposing 1.2 rad local shoulder yaw from the open bind pose"
@@ -74,6 +74,7 @@
     ],
     "landmarks": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/geometry/eyes.json",
     "binding": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/geometry/bound-lod0-eyed-probe.glb",
-    "status": "two generated eye patches, runtime emission not visually verified"
-  }
+    "status": "runtime red eye patches visible in game-camera probe"
+  },
+  "cast_source": "/Users/wesner/Workspace/minorincident_3dpipeline/cast/s247/s247-inf.flamingo-openwing"
 }
