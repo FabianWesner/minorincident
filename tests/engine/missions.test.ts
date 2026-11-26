@@ -128,14 +128,24 @@ test('graph timing: parallel tasks join in any order; a timeout fires exactly at
 
 // N11: the L6 service gates have their own predicate (the group's waypoint, else the next open gate ahead of the leader).
 test('interactions: only the open L6 gate the group is heading for offers its prompt', async () => {
-  expect(l6.breach.firstCount).toBe(8);
-  expect(l6.breach.secondCount).toBeGreaterThanOrEqual(6);
-  expect(l6.breach.secondCount).toBeLessThanOrEqual(10);
-  expect(l6Entries.every(entry => entry.count === 2)).toBe(true);
-  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeGreaterThanOrEqual(2);
-  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeLessThanOrEqual(4);
+  expect(l6.breach.firstCount).toBe(4);
+  expect(l6.breach.secondCount).toBe(5);
+  expect(l6.infected).toEqual({ high: 33, low: 33 });
+  expect(l6.pressure.group).toBe(2);
+  expect(l6Entries.every(entry => entry.count === 1)).toBe(true);
+  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeGreaterThanOrEqual(1);
+  expect(l6.pressure.group * 10 / l6.pressure.intervalS).toBeLessThanOrEqual(2);
   expect(l6.hatch.safeS + l6.hatch.hits * l6.hatch.hitS).toBeLessThan(30);
   expect(l6SpawnCandidates(2, 3, [2])).toContain(5);
+  expect(l6SpawnCandidates(0, 1, [])).toEqual([0]);
+  expect(l6SpawnCandidates(1, 2, [])).toEqual([1]);
+  expect(l6SpawnCandidates(8, 1, [])).toEqual([]);
+  expect(l6SpawnCandidates(2, 2, [])).toEqual([]);
+  expect(l6SpawnCandidates(8, 6, [])).toEqual([]);
+  expect(l6SpawnCandidates(0, 3, [])).not.toContain(0);
+  expect(l6SpawnCandidates(1, 3, [])).not.toContain(1);
+  expect(l6SpawnCandidates(2, 3, [])).not.toContain(8);
+  expect(l6SpawnCandidates(2, 3, [2, 3, 4, 5, 6, 7])).toEqual([]);
   expect(l6SpawnCandidates(2, 4, [2])).toEqual([]);
   const gates = [{ id: 1, x: 10, closedAt: 0 }, { id: 2, x: 30, closedAt: 0 }, { id: 3, x: 50, closedAt: 0 }];
   const state = (patch: Partial<NonNullable<Parameters<typeof isCurrentOpenL6Gate>[0]>> = {}) => ({ marker: 'l6-next', leaderX: 0, gates, ...patch });
@@ -259,6 +269,18 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   const w = await loadMissionLevel('L6', 1);
   try {
     const mission = w.missions!;
+    const hatch = mission.state.l6!.entries!.find(entry => entry.door === 2)!;
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35)).toBe(true);
+    w.entities.get(hatch.switchId!)!.interactable!.completed = true; w.update();
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'closing installs the infected blocker').toBe(false);
+    mission.checkpoint('abandon');
+    mission.state.l6!.phase = 'retreat'; hatch.warnedAt = w.tick; hatch.hits = 1; hatch.nextAt = w.tick + 1; w.update();
+    expect(hatch.brokenAt, 'the final bash breaks the hatch').toBeGreaterThan(0);
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'breaking removes the infected blocker').toBe(true);
+    mission.restore('abandon');
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'restoring a closed hatch reinstalls the blocker').toBe(false);
+    mission.restore('shelter');
+    expect(w.infected!.infectedNav.clear(54, 12.3, .35), 'restoring an open hatch removes the blocker').toBe(true);
     mission.completeObjective('shelter'); mission.completeObjective('stop'); w.update();
     const state = mission.state.l6!;
     expect(state.phase).toBe('retreat');
