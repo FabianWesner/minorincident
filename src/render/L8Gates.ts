@@ -30,7 +30,7 @@ export class L8Gates extends Group {
       for (const y of [.65, 1.55, 2.5]) add(0, y, length, .16);
       for (let along = -length / 2; along <= length / 2; along += 1) add(along, 1.4, .12, 2.8);
     };
-    l8PathWalls.forEach(box => fence(box, false));
+    l8PathWalls.forEach((box, i) => fence(box, i === 0, false, i === 0 ? 'path.0' : undefined));
     l8YardWalls.forEach((box, i) => { if (i !== 2) fence(box, false); });
     l8YardGates.forEach(box => fence(box, true));
     for (const stage of l8Route) { if (stage.entry) fence(stage.entry, true, false, `${stage.id}.entry`); if (stage.exit) fence(stage.exit, true, false, `${stage.id}.exit`); }

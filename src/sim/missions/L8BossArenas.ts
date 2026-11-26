@@ -69,6 +69,11 @@ export class L8BossArenas {
       l8YardGates.forEach((gate, i) => this.barrier(`l8.yard-gate.${i}`, 900820 + i, { ...gate, y: 1.5, halfY: 1.5 }, yardClosed));
     }
     const ctx = { arenas: this.state, sealed: !!this.mission.l8!.state.sealedAt, followers: this.mission.l8!.followers().map(e => e.transform) };
+    const pathClosed = l8GateClosed('path.0', ctx);
+    if (this.gateStates.get('pond-path') !== pathClosed) {
+      this.gateStates.set('pond-path', pathClosed);
+      this.barrier('l8.path-wall.0', 900890, { ...l8PathWalls[0], y: 1.5, halfY: 1.5 }, pathClosed);
+    }
     l8Route.forEach((stage, i) => {
       for (const [side, box, navId] of [['entry', stage.entry, 900840 + i * 2], ['exit', stage.exit, 900841 + i * 2]] as const) {
         if (!box) continue;

@@ -95,8 +95,8 @@ export async function checkL8Route(): Promise<void> {
       let armedWith = -1;
       let stragglers = '';
       const entryNavId = 900840 + index * 2, previous = l8Route[index - 1], previousEntryNavId = index > 0 ? 900840 + (index - 1) * 2 : -1;
-      const closeTicks = new Map<number, number>();
-      w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed' && event.blocked) closeTicks.set(event.id, event.tick); });
+      const closeTicks = new Map<number, number>(), openTicks = new Map<number, number>();
+      w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed') (event.blocked ? closeTicks : openTicks).set(event.id, event.tick); });
       for (let i = 0; i < 3600 && !arena.armed; i++) {
         w.update();
         if (arena.armed) {
@@ -130,7 +130,14 @@ export async function checkL8Route(): Promise<void> {
       stop();
       expect(shots, `${stage.id}: guards do not attack cage animals`).toEqual([]);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
-      expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
+      expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${stage.id}: outlet admits outbreak only at the pond`).toBe(stage.id !== 'flamingo');
+      if (stage.id === 'flamingo') {
+        expect(l8GateClosed('path.0', { arenas: zoo.state.arenas, sealed: true })).toBe(false);
+        expect(openTicks.has(900841), 'pond exit physically opens when the fight begins').toBe(true);
+        expect(openTicks.has(900890), 'the outbreak path physically opens when the fight begins').toBe(true);
+        const birds = arena.ids.map(id => w.entities.get(id)).filter(e => e && e.health.current > 0);
+        expect(birds.every(e => inRect(e!.transform, stage.zone)), 'the active flock remains in the pond').toBe(true);
+      }
       if (stage.id === 'monkey') {
         const leader = w.entities.get(arena.ids.at(-1)!)!;
         if (!leader.infected) { w.npcs!.civilians.outbreak!.turnNow(leader); zoo.bosses.turned(leader.id); }
@@ -146,6 +153,7 @@ export async function checkL8Route(): Promise<void> {
         expect(l8GateClosed(`${previous.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${previous.id}: forward exit closes after ${stage.id} arms`).toBe(true);
       }
       arena.phase = 3; arena.armed = false; zoo.bosses.updateGates();
+      if (stage.id === 'flamingo') expect(closeTicks.has(900890), 'the path wall closes again on clear').toBe(true);
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${stage.id}: the exit opens on the clear`).toBe(false);
       w.update();
       expect(corgi.companion!.arenaWait, `${stage.id}: corgi rejoins after the cage clears`).toBeUndefined();

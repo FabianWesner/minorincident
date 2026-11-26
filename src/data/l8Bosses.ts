@@ -81,6 +81,9 @@ export const l8PlazaCell = { x0: -13, z0: -11, x1: 13, z1: 7 } as const;
 export interface L8GateContext { arenas: readonly { id: L8BossId; phase: number; armed?: boolean }[]; sealed: boolean; followers?: readonly { x: number; z: number }[] }
 /** One rule for the sim barriers and the drawn fences: `<id>.entry`, `<id>.exit` or `plaza.<w|e|s>`. */
 export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
+  const pond = ctx.arenas.find(a => a.id === 'flamingo');
+  const pondActive = !!pond && pond.phase > 0 && pond.phase < 3;
+  if (key === 'path.0') return !pondActive;
   if (key.startsWith('plaza.') || key.startsWith('connector.')) return ctx.sealed;
   const [id, side] = key.split('.') as [L8BossId, 'entry' | 'exit'];
   const index = ctx.arenas.findIndex(a => a.id === id), arena = ctx.arenas[index];
@@ -98,7 +101,7 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
     if (!straggler) return true;
   }
   // The pond exit stays open during the opening alarm; it shuts with the plaza.
-  if (id === 'flamingo') return ctx.sealed && arena.phase !== 3;
+  if (id === 'flamingo') return ctx.sealed && arena.phase === 0;
   return arena.phase !== 3;
 }
 export const inRect = (p: { x: number; z: number }, r: { x0: number; z0: number; x1: number; z1: number }) => p.x >= r.x0 && p.x <= r.x1 && p.z >= r.z0 && p.z <= r.z1;
