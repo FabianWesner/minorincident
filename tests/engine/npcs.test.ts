@@ -440,6 +440,16 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       w.npcs!.companion.respawnNear();
       expect(Math.abs(dog.transform.z - 15)).toBeLessThan(4);
       expect(nav.visible(p.transform, dog.transform, .3)).toBe(true);
+      // No reachable placement must remain deferred, including admission retries.
+      const visible = vi.spyOn(nav, 'visible').mockReturnValue(false);
+      w.npcs!.companion.respawnNear();
+      expect(dog.pendingAdmission).toBeDefined();
+      for (let i = 0; i < 35; i++) { w.tick++; w.solids.commit(); }
+      expect(dog.pendingAdmission).toBeDefined();
+      visible.mockRestore();
+      for (let i = 0; i < 35 && dog.pendingAdmission; i++) { w.tick++; w.solids.commit(); }
+      expect(dog.pendingAdmission).toBeUndefined();
+      expect(nav.visible(p.transform, dog.transform, .3)).toBe(true);
       // The north corridor at x=174 is a real placed module. Its doorway is
       // offset from the centre by its existing end-wall geometry.
       for (let z = 17.5; z <= 19.9; z += .1)
