@@ -56,3 +56,5 @@ The fallback admission and its retries now require nav visibility from the curre
 ## Movement sweep
 
 `node --import tsx/esm tools/qa/diag/l6-wall-reach.ts /private/tmp/s245-sweep.png` uses the shared static actor sweep from the track toward each side at 0.5 m x intervals, omitting the placed corridor openings and ignoring other actors. All 402 south and 412 north samples stopped before crossing the outer face; no leaks were recorded. This samples actual movement collision, while the continuous collider intervals establish coverage between samples. The sweep can also stop at other static geometry and therefore does not independently establish that each stop was the added wall. Typecheck and lint passed after adding the diagnostic.
+
+A further remote full-suite attempt on the committed fix ran the corgi and mission files successfully but again hit the 240 s limit (242.0 s, exit 124). The previously recorded local full-suite pass remains the complete unit result.
