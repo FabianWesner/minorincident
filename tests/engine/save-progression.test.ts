@@ -653,12 +653,8 @@ test('L10 roadblocks open on the final permanent cohort kill on both tiers', asy
         world.combat!.damage.apply({ ...hit, actionId: 'weapon.rocket-launcher', type: 'explosive' });
         expect(gate.interactable!.open, `${tier}/${groupId} surviving member`).toBe(false);
         world.combat!.damage.apply({ ...hit, targetId: survivorId, base: survivor.health.current, actionId: 'weapon.rocket-launcher', type: 'explosive' });
-        expect(gate.interactable!.open, `${tier}/${groupId} unadmitted member`).toBe(false);
-        const lastId = world.infected!.spawn('infected.runner', { x: 7, z: 0 }, { offNav: true });
-        encounters.state.spawned[`${slots[2].key}:0`] = lastId;
-        world.combat!.damage.apply({ ...hit, targetId: lastId, base: world.entities.get(lastId)!.health.current, actionId: 'weapon.rocket-launcher', type: 'explosive' });
         expect(world.tick).toBe(tick);
-        expect(gate.interactable!.open, `${tier}/${groupId} final kill`).toBe(true);
+        expect(gate.interactable!.open, `${tier}/${groupId} final admitted kill with an unfilled slot`).toBe(true);
         expect(world.interactables!.walls.some(w => w.entityId === gateId)).toBe(false);
         expect(world.entities.get(actorId)).toBeDefined();
       }

@@ -451,7 +451,9 @@ export class LevelTenEncounters {
           (this.state.roadblockMountedApproach ??= {})[group.id] = true;
         if (gate && this.state.roadblockMountedApproach?.[group.id] && !w.vehicles?.bicycle.riding && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 30)
           (this.state.roadblockDismounted ??= {})[group.id] = true;
-        if (gate?.interactable?.open) gate.interactable.enabled = false;
+        // The admitted cohort is fixed once cleared; an unfilled slot must
+        // neither hold the gate nor spawn a new member after it opens.
+        if (gate?.interactable?.open) { gate.interactable.enabled = false; continue; }
         // The bike cannot shoot the gate cohort away before the required
         // dismount. The visible barrier and HUD cue hold the lane until E.
         if (roadblock && !this.state.roadblockDismounted?.[group.id]) continue;
@@ -632,7 +634,8 @@ export class LevelTenEncounters {
       let cleared = true;
       for (const slot of slots) {
         const key = `${slot.key}:0`, actorId = this.state.spawned[key];
-        if (actorId === undefined || this.carried.has(key)) { cleared = false; continue; }
+        if (this.carried.has(key)) { cleared = false; continue; }
+        if (actorId === undefined) continue;
         if (actorId === RETIRED_SLOT) continue;
         const actor = w.entities.get(actorId);
         if (actor && actor.health.current <= 0 && (actor.infected?.recoverAt ?? -1) < 0)
