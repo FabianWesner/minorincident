@@ -440,6 +440,10 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       w.npcs!.companion.respawnNear();
       expect(Math.abs(dog.transform.z - 15)).toBeLessThan(4);
       expect(nav.visible(p.transform, dog.transform, .3)).toBe(true);
+      // The north corridor at x=174 is a real placed module. Its doorway is
+      // offset from the centre by its existing end-wall geometry.
+      for (let z = 17.5; z <= 19.9; z += .1)
+        expect(w.solids.clear({ x: 172.25, y: .6, z }, .3, 1, false), `north corridor mouth z=${z}`).toBe(true);
       const playerNav = nav.forPlayer(.35), start = playerNav.nearestCell(p.transform.x, p.transform.z, .35), path: number[] = [];
       for (const x of [54, 78, 126, 162, 198, 228]) {
         const wallZ = [54,126,198].includes(x) ? 11.2 : 18.8;

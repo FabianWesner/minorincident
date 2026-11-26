@@ -40,3 +40,9 @@ Threat audit before and after both report **zero L6-specific flags**. Each invoc
 ## Visual review
 
 HIGH and LOW Scene Lab runs passed at game-camera zoom 1.5 with zero console errors and undrawn frames. The [evidence sheet](evidence.jpg) shows the courier on the illuminated side walkway at the drawn wall and the survivor group on the track. Both tiers preserve the visible tunnel geometry. The capture does not independently prove all movement contacts; the physical collision sampling above supplies the wall coverage evidence. Individual frames and metrics are in `test-results/s245-high/` and `test-results/s245-low/`.
+
+## Follow-up: corridor mouth
+
+The prior flood measured the tunnel-side approach to each door, not a traversal across the doorway. A physical clearance sweep found the placed north maintenance corridor at x=174 had been sealed by the new wall. The layout now leaves a 4.6 m aperture there. A regression samples an actor-radius path at x=172.25 from z=17.5 to 19.9; it passes. The L6 threat audit after this correction again has zero L6 flags and only `PARTIAL_LEVEL_SELECTION`. Typecheck, lint and the focused corgi test pass.
+
+A sweep at 0.25 m horizontal and 0.1 m depth intervals found clear crossing samples at the five placed maintenance corridors (54, 78, 126, 174 and 198). The authored hatch at x=228 has no clear crossing sample in its 4 m mouth, and the x=162 and x=228 hatches have no corresponding placed maintenance corridor in the current layout. The level spawns hatch arrivals on the tunnel side; whether these should be physical passages and how they should be represented visually remains unproven. The existing flood and scene captures do not prove those crossings.
