@@ -10,6 +10,8 @@ import type { EntitySnapshot } from '../world/types';
 
 /** A slot whose member died on a discarded retry timeline: consumed for the run, never re-spawned. Never a valid entity id. */
 const RETIRED_SLOT = -1;
+/** Span the driveable district bounds on both sides of the road centre. */
+const roadblockHalfZ = Math.max(...cure.bounds.map(([, z]) => Math.abs(z - 95))) + 1;
 /** Farm set pieces that admit as assault-style waves rather than one whole-cohort dump.
  * A full dump released 120 m ahead disengages at walk pace: the faster members rush the
  * release-time spot, the rest starve the shared path budget behind the farm buildings and
@@ -161,7 +163,7 @@ export class LevelTenEncounters {
       const gate = this.world.entities.get(id);
       if (gate?.archetype !== 'device.l10-roadblock' || !gate.interactable) { delete this.state.roadblockGates![group]; continue; }
       const { x, z } = gate.transform;
-      const halfZ = 50;
+      const halfZ = roadblockHalfZ;
       this.world.interactables!.block(id, { x, y: .7, z, halfX: .2, halfY: 1.2, halfZ });
       if (gate.interactable.open) this.world.interactables!.unblock(id);
     }
@@ -423,7 +425,7 @@ export class LevelTenEncounters {
         if (gateId === undefined && chunks.resident(group.at[0], group.at[1])) {
           // Span the road and the underpass rim detour with the same barrier.
           const gateZ = 95;
-          const halfZ = 50;
+          const halfZ = roadblockHalfZ;
           gateId = w.interactables!.spawn('gate', { x: group.at[0], z: gateZ }, {
             halfX: .2, halfZ, radius: 2, label: 'Open roadblock',
           });
