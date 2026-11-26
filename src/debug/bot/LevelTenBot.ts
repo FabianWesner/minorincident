@@ -98,7 +98,7 @@ export class LevelTenBot {
       // Each physical roadblock is a mounted approach followed by an on-foot
       // fight. E dismounts the rider; the device stays disabled until its
       // admitted cohort is cleared, so this press cannot toggle the barrier.
-      if (bike.riding && closedGate) { f.interact = true; return f; }
+      if (bike.riding && closedGate && Math.abs(p.x - closedGate.entity!.transform.x) < 6) { f.interact = true; return f; }
       const fightingThisGate = !!closedGate && !!w.l10Encounters?.state.roadblockDismounted?.[closedGate.group];
       if (!bike.riding && closedGate && fightingThisGate) {
         const side = Math.floor(tick / 180) % 2 ? -10 : 10;

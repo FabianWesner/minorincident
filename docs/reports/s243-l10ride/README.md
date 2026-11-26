@@ -125,3 +125,16 @@ The gate previously treated an unfilled authored spawn slot as a living member, 
 | LOW | 4/4 | complete in 1234.63 s | 6 | [route](route-admitted.json) |
 
 The HIGH quarantine and underpass attempts remain interrupted by deaths. The focused [L10 threat receipt](threat-admitted.json) reports skilled completion, zero L10 skilled or passive flags, and 8/8 reachable at the last hold sample; the command exits 1 for `PARTIAL_LEVEL_SELECTION`, so full `qa:threat` is not established. Typecheck, full lint, save/progression (7 tests) and L10 camera (3 tests) passed. The current-source remote unit run passed: 27 files, 105 tests passed and one skipped, 236.4 s against the 240 s budget. Full audit, native captures and whole-route reachability and gate-delay proof remain open.
+
+## Closer roadblock approach and transition timeline
+
+The strict observer now records each loop-state transition and death reset. In the preceding HIGH receipt, quarantine's courier dismounted 24 m west, fought, and was killed by the pursuing Mega before the gate cleared; underpass cleared and the courier remounted 23 m west but died before crossing. The bot now approaches within 6 m before choosing to dismount while still recognizing a closed gate within 24 m for combat and recovery. This uses ordinary controls and the same policy on both tiers.
+
+| Tier | Strict loops | Native route | Deaths | Receipt |
+|---|---:|---|---:|---|
+| HIGH | 4/4 | complete in 1566 s | 16 | [route](route-close-approach.json) |
+| LOW | 3/4 | complete in 1400 s | 10 | [route](route-close-approach.json) |
+
+LOW's underpass first attempt ended in death before opening; on retry it opened at tick 60480 but the courier remained near the parked bike and died before remounting. The next retry had an already-open gate and does not satisfy the strict closed-to-open loop. A trial applying the passive policy's closer corpse-aware bike recovery to skilled play timed out LOW at 2100 s with 17 deaths; its HIGH leg was stopped after that regression, and the change was reverted. An earlier trial that incorrectly used the 6 m distance for both dismount and fight recognition completed HIGH 4/4 in 1895 s but timed out LOW at convoy (1/4); the correction retains wider fight recognition.
+
+The focused [L10 threat audit](threat-close-approach.json) reports skilled completion and zero L10 skilled and passive flags; its exit 1 is solely `PARTIAL_LEVEL_SELECTION`. Typecheck and targeted lint passed. The required LOW 4/4, full `qa:threat`, current-source remote unit run, native captures, and whole-route reachability and gate-delay proof remain open. The 420–540 s ride window and 45–75 s beat cadence are reported by the route receipt and were not tuned.
