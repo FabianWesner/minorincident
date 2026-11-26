@@ -162,3 +162,14 @@ A diagnostic-only observer recorded each roadblock's last permanent cohort kill 
 The 4/4 counts and route outcomes come from [route-mount-margin.json](route-mount-margin.json); the shorter timing replay is not a completion run. The motorbike 1.7 m reach, close approach and admitted-cohort clearance are retained. Fresh closed/open camera captures, full threat audit, and current-source remote unit validation remain open unless results below say otherwise.
 
 The current-source `npm run qa:threat:sharded` attempt finished shard 1 successfully in 524.1 s, but shard 2 hit its 600 s budget at 600.5 s (exit 124). No merged all-level audit result was produced; the focused L10 zero-flag diagnostic remains the available L10 evidence. The previously listed full threat audit remains open.
+
+## Orchestrator takeover (2026-11-26 evening)
+
+Main at HIGH (same observer, old route without roadblocks) completes in 1142 s with 3 deaths; the lane's HIGH timeout was two bot defects, not game code: (1) the bot stayed on the motorbike into install/hold/Mega (handgun only, Mega untouched at 3000 HP) → it now dismounts once install begins; (2) after a death in the Mega step the console respawn stands at y≈1.0, which the bot's `p.y > .9` stair branch took for the gun-deck ramp → frozen for 15 min; the stair branch now needs y > 1.5 (deck is 3 m).
+
+| Tier | Strict loops | Native route | Deaths | Receipt |
+|---|---:|---|---:|---|
+| HIGH | 4/4 | complete in 1244 s | 2 | [route](route-orchestrator-final.json) |
+| LOW | 4/4 | complete in 1491 s | 8 | [route](route-orchestrator-final.json) |
+
+Reverting the lane's 45 s radio-beat metering (to main's LevelTenStory) made HIGH time out (32 deaths) and LOW lose the underpass loop, so the metering stays. Open follow-ups: hospital tent figures not in frame at their beat (from the approach-side roadblock staging; fails with either story version), HIGH overpass Mega crate throw not observed in the beat 6–7 window (main passes). Ride window/beat cadence reported only.

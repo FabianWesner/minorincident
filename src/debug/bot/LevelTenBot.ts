@@ -89,6 +89,9 @@ export class LevelTenBot {
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && (isMega(e) || !cornBlocksSight(w, [p.x, p.z], [e.transform.x, e.transform.z])) && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
     const bike = w.vehicles?.bicycle, bikeEntity = bike?.entity;
     let roadblockFight = false;
+    // A player gets off the motorbike for the console fight: riding only allows the handgun,
+    // which cannot hurt the Mega. Dismount once the install/hold/Mega/release steps begin.
+    if (bike?.riding && ['install', 'hold', 'mega', 'release'].includes(active.id)) { f.interact = tick % 30 === 0; return f; }
     if (bike && bikeEntity?.bicycle?.motorbike && p.x >= 2780 && p.x < 3750 && !finale) {
       const gates = Object.entries(w.l10Encounters?.state.roadblockGates ?? {})
         .map(([group, id]) => ({ group, entity: w.entities.get(id) })).filter(g => !!g.entity?.interactable)
@@ -168,7 +171,8 @@ export class LevelTenBot {
     const rack = player.weapons!.RIGHT.rack, target = pouncingDog ?? closeAttacker ??
       (roadblockFight ? threats.find(e => !isMega(e)) ?? downedRoadblockThreat : undefined) ??
       (active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0]);
-    if (['mega', 'release'].includes(active.id) && p.y > .9) {
+    // The console respawn (cure-disperse-ready) stands at y≈1.0 on its plinth; only the gun deck/ramp is above 1.5 m.
+    if (['mega', 'release'].includes(active.id) && p.y > 1.5) {
       // Interaction console is 2 m east of the assembly origin. Use the
       // shipped stair anchors, rather than translating them from that marker.
       const [topX, topZ] = cure.anchors['dispersal-stair-top'], [footX, footZ] = cure.anchors['dispersal-stair-foot'];
