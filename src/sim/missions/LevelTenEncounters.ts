@@ -1,5 +1,6 @@
 import { layoutHouseDoors, type HouseEmergence } from '../outbreak/HouseEmergence';
 import { finale } from '../../data/l10Finale';
+import { infectedDef } from '../../data/infected';
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups, cureConvoyBarrels, cureConvoyCrates, type CureEncounter } from '../../levels/L10/encounters';
@@ -337,8 +338,17 @@ export class LevelTenEncounters {
             // enough to join the mounted-platform fight without appearing in
             // the courier's sight.
             const candidates = [{ x: entry.x, z: entry.z }, { x: entry.sx, z: entry.sz }, ...ring];
+            const district = w.districts!.districts.find(d => d.id === 'D-CURE')!;
+            const radius = infectedDef(archetype).radius;
+            const tanks = district.layout.colliders.filter(c => c.id.startsWith('kit.dispersal-tank'));
+            // The tank's supports leave nav-clear islands under its body. A
+            // service arrival admitted there cannot leave the enclosed pocket.
+            const clearTank = (x: number, z: number) => !tanks.some(c =>
+              x + radius > c.aabb.min[0] + district.origin[0] &&
+              x - radius < c.aabb.max[0] + district.origin[0] && z + radius > c.aabb.min[2] + district.origin[1] &&
+              z - radius < c.aabb.max[2] + district.origin[1]);
             const spot = candidates.map(c => cureEncounterSpot(ai.nav, { ...c, archetype },
-              (x, z) => !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 9)).find(Boolean);
+              (x, z) => clearTank(x, z) && !insideCureHangar({ x, z }) && chunks.resident(x, z) && ai.director.safe(archetype, { x, z }), 9)).find(Boolean);
             if (!spot) { this.state.finaleEntryNext = w.tick + 30; }
             else {
             const { x, z } = spot;
