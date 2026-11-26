@@ -242,6 +242,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const l6RailCaptures = new Set<string>();
   const l6ShieldPhotos = new Set<number>();
   const l7DeparturePhotos = new Set<number>();
+  const l7BoardingPhotos = new Set<string>();
   const l7RoutePhotos = new Set<string>();
   let l6GatePhoto = false;
   let l5GuardStarted = false, l5GuardDone = false, l5MetroPhoto = false;
@@ -292,8 +293,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (eyes.level === 'L7' && process.env.PLAYTEST_L7_DEPARTURE_CAPTURES === '1') {
       const shot = await page.evaluate(() => {
         const w = (window.__SCENE__ as unknown as { game: Game }).game.world, d = w.l7Departure?.state;
-        return d?.phase === 'departing' ? { tick: w.tick, seconds: (w.tick - d.startedAt) / 60, bus: { ...w.entities.get(d.busId)!.transform }, boarded: [...d.boarded] } : null;
+        return d ? { phase: d.phase, tick: w.tick, seconds: d.phase === 'departing' ? (w.tick - d.startedAt) / 60 : 0,
+          bus: { ...w.entities.get(d.busId)!.transform }, boarded: [...d.boarded] } : null;
       });
+      if (shot?.phase === 'boarding' && !l7BoardingPhotos.has(o.quality)) {
+        l7BoardingPhotos.add(o.quality); await page.evaluate(() => window.__SS__!.pause());
+        try {
+          const file = await capture(`L7-bus-boarding-${o.quality}`);
+          log({ l7BoardingPhoto: { file, tick: shot.tick, bus: shot.bus, boarded: shot.boarded, quality: o.quality, ...await photoPresentation() } });
+        } finally { await page.evaluate(() => window.__SS__!.resume()); }
+      }
       if (shot) for (const seconds of [.5, 3, 8]) if (shot.seconds >= seconds && !l7DeparturePhotos.has(seconds)) {
         l7DeparturePhotos.add(seconds);
         const file = await capture(`L7-departure-${seconds}`);

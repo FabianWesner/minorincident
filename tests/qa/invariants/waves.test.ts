@@ -270,8 +270,9 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       const home = i === 0 ? l7Encounters.horde : l7Encounters.streets[i - 1];
       // These groups are authored idle at their destination: verify the admitted poses are in that area.
       // The second final Alpha now guards the eastern flank rather than the horde centre.
+      const finalAlphaSpots = [{ x: -64, z: 50 }, { x: -43, z: 41.7 }, { x: -59, z: 41.7 }, { x: -49, z: 50 }, { x: -54, z: 45 }, { x: -47, z: 46 }];
       const atGoal = arrivals.filter(a => i === 0 && a.alpha
-        ? Math.min(Math.hypot(a.x + 64, a.z - 50), Math.hypot(a.x + 43, a.z - 41.7)) <= 6
+        ? Math.min(...finalAlphaSpots.map(p => Math.hypot(a.x - p.x, a.z - p.z))) <= 6
         : a.group >= l7Encounters.firstStreetGroup + 4
           ? poses.get(a.group)!.some(p => Math.hypot(a.x - p.x, a.z - p.z) <= 20)
           : Math.hypot(a.x - home.x, a.z - home.z) <= 20).length;
@@ -280,6 +281,7 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       if (ids.length !== expected) errors.push(`L7/cohort-${cohort} packs ${packs.join('+')}: authored ${expected}, admitted ${ids.length}`);
       if (atGoal !== expected) errors.push(`L7/cohort-${cohort}: authored ${expected}, admitted inside goal area ${atGoal}`);
     }
+    expect([...authored.values()].reduce((sum, row) => sum + row.alphas, 0), `${tier} L7 authors exactly fourteen Alphas across the route`).toBe(14);
   });
   await withWorld('L8', tier, w => {
     const c = w.missions!.l8!;

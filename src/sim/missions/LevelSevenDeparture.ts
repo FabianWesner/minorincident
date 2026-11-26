@@ -47,6 +47,7 @@ export class LevelSevenDeparture {
   private readonly clearingGuards = new Set<number>();
   private readonly evacuatedGuards = new Set<number>();
   private readonly boarding = l7CorridorAnchors['l7-bus-boarding'].position;
+  private departureClearanceWait = 0;
   private readonly wall: CoverWall = { x: l7Bus.x, y: 1.5, z: l7Bus.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
   // Bounds from the delivered veh.evac-bus GLB collision bake. Keep these
   // aligned with staticCollision.json: the front body reaches +4.705 m.
@@ -68,6 +69,7 @@ export class LevelSevenDeparture {
     }, SimPhase.cleanup + 1);
   }
   private get bus(): EntitySnapshot { return this.world.entities.get(this.state.busId)!; }
+  private followSpeedMs(): number { return 6.5; }
   private get door() { return { x: cfg.door.x, z: cfg.door.z }; }
   private clearance(e: EntitySnapshot, x: number): number {
     const dx = Math.max(0, Math.abs(e.transform.x - x) - this.busHalfLength);
@@ -185,7 +187,7 @@ export class LevelSevenDeparture {
       }
       // Carried injury affects combat reactions, not evacuation pace: no one
       // should become a lone straggler during the bus departure.
-      w.npcs!.move(e, goal, cfg.followMs, c, goal === queue ? .5 : .05, 1600);
+      w.npcs!.move(e, goal, this.followSpeedMs(), c, goal === queue ? .5 : .05, 1600);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
@@ -214,7 +216,7 @@ export class LevelSevenDeparture {
       }
       const queue = this.queue(e.civilian!.survivor!.slot), remaining = distance(e.transform, queue);
       if (remaining > .1) {
-        const step = Math.min(remaining, cfg.followMs / 60);
+        const step = Math.min(remaining, this.followSpeedMs() / 60);
         const dx = (queue.x - e.transform.x) / remaining, dz = (queue.z - e.transform.z) / remaining;
         e.transform.x += dx * step; e.transform.z += dz * step; e.transform.yaw = -Math.atan2(dz, dx);
         w.spatial.set(id, e.transform.x, e.transform.z);
@@ -323,7 +325,12 @@ export class LevelSevenDeparture {
     // Support soldiers are not part of the boarding roster. They can still be
     // following the courier at the door when the shot begins, so clear them
     // from the bus's next hull position and hold the bus until they have room.
-    if (this.clearGuards(tr.x, desiredX)) { s.startedAt++; return; }
+    if (this.clearGuards(tr.x, desiredX)) {
+      // A dense retained crowd can keep one guard inside the swept hull even
+      // after the lateral clearance fallback. Give it half a second to clear,
+      // then keep the departure moving; cleanup continues pushing bodies out.
+      if (++this.departureClearanceWait <= 30) { s.startedAt++; return; }
+    } else this.departureClearanceWait = 0;
     const x = desiredX;
     const speed = Math.abs(x - tr.x) * 60;
     tr.x = x; tr.z = cfg.lane.z; tr.yaw = 0; tr.y = w.districts!.groundHeight(x, cfg.lane.z) + .7;

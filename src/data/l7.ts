@@ -32,7 +32,7 @@ export const l7Departure = {
   /** Reach this radius to start boarding; followers keep loading while the courier covers the rear and boards last. */
   boardRadius: 6,
   /** Departure approach includes crowd separation in this movement bound. */
-  followMs: 5.2,
+  followMs: 6.5,
   /** Where survivors queue (in front of the bus nose) and the door they step through; one new passenger at most every `gapTicks`. */
   // Keep the staging lane south of the courier's boarding anchor. A queue on
   // the bus road funnels the last followers through the stationary courier

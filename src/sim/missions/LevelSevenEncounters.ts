@@ -45,6 +45,7 @@ export class LevelSevenEncounters {
       if (follower && this.state.roster.some(r => r.id === follower.id && r.status === 'following') && this.behind(follower)) this.warn(follower, 'attack');
     });
   }
+  private followerSpeedMs(): number { return 6.5; }
   private launcher(): EntitySnapshot | undefined {
     if (!this.launcherId) {
       const pickup = [...this.world.entities.iterate()].find(item => item.pickup && 'actionId' in item.pickup && item.pickup.actionId === l7Rocket.action);
@@ -128,7 +129,7 @@ export class LevelSevenEncounters {
     // playable. Deferring the nearest group through the offscreen spawn gate
     // admitted it one victim at a time at rocket range and removed all contact.
     this.state.requestedGroups = [l7Encounters.firstStreetGroup];
-    this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], 28, 1, true);
+    this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], 28, 3, true);
     // Eight ordinary rifle soldiers screen the moving column; four hold the
     // boarding approach, with four more covering HIGH's heavier corridor.
     // These remain normal, mortal
@@ -183,10 +184,11 @@ export class LevelSevenEncounters {
       const p = this.roadConnected(this.clearPoint(at, radius), centre, radius);
       return { ...p, y: .7 + this.world.districts!.pavingHeight(p.x, p.z) };
     };
+    const finalAlphaSpots = [{ x: -64, z: 50 }, { x: -43, z: 41.7 }, { x: -59, z: 41.7 }, { x: -49, z: 50 }, { x: -54, z: 45 }, { x: -47, z: 46 }];
     for (let i = 0; i < alphas; i++) {
       const at = group === l7Encounters.finalGroup
-        ? i ? { x: -43, z: 41.7 } : { x: -64, z: 50 }
-        : { x: centre.x + (group === l7Encounters.firstStreetGroup ? 8.5 : 0), z: centre.z + (i ? 3 : -3) };
+        ? finalAlphaSpots[i % finalAlphaSpots.length]!
+        : { x: centre.x + (group === l7Encounters.firstStreetGroup ? 8.5 : 0) + Math.floor(i / 2) * 2.5, z: centre.z + (i % 2 ? 1 : -1) * (3 + Math.floor(i / 2) * 2) };
       admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI,
         alphaType: this.alphaType(group, i) });
     }
@@ -274,7 +276,7 @@ export class LevelSevenEncounters {
       const group = l7Encounters.firstStreetGroup + i + 1;
       if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
-      this.group(group, l7Encounters.streets[i + 1], 49, i !== 1 ? 1 : 0);
+      this.group(group, l7Encounters.streets[i + 1], low ? 57 : 65, [2, 1, 2][i]!);
     }
     // The opening's remaining ranks follow from the east once the column
     // clears pickup; high-tier blocks also release a second approach behind it.
@@ -292,14 +294,14 @@ export class LevelSevenEncounters {
       const threshold = i === 2 ? centre.x : centre.x - 35;
       if (p.x > threshold || requested.includes(group)) continue;
       requested.push(group);
-      this.group(group, { x: centre.x + 10, z: centre.z }, 49, 0);
+      this.group(group, { x: centre.x + 10, z: centre.z }, 49, 1);
     }
     // Stage the long corridor horde while the courier is still on the final
     // junction so its complete authored cohort clears the offscreen admission
     // gate before the group reaches the boarding lane.
     if (p.x <= (low ? 95 : 140) && !requested.includes(l7Encounters.finalGroup)) {
       requested.push(l7Encounters.finalGroup);
-      this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 84 : 168, 2);
+      this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 60 : 120, low ? 6 : 3);
     }
   }
   /** Run before AI so external explosion fixtures and combat ticks share the same active-pool cap. */
@@ -422,7 +424,7 @@ export class LevelSevenEncounters {
       const exit = { x: launcher.transform.x - l7Rocket.exitOffset[0], z: launcher.transform.z - l7Rocket.exitOffset[1] };
       const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - exit.z, road.x - exit.x));
       const origin = { x: exit.x - heading.x * 3.5, z: exit.z - heading.z * 3.5 };
-      w.npcs!.move(e, formationSlot(origin, heading, s.slot, false), 5.2, c, .3);
+      w.npcs!.move(e, formationSlot(origin, heading, s.slot, false), this.followerSpeedMs(), c, .3);
       w.spatial.set(e.id, e.transform.x, e.transform.z);
       return true;
     }
@@ -477,7 +479,7 @@ export class LevelSevenEncounters {
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
       const budget = d > l7FollowerRangeM ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
-      w.npcs!.move(e, destination, 5.2, c, 0, budget, nav);
+      w.npcs!.move(e, destination, this.followerSpeedMs(), c, 0, budget, nav);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
@@ -523,7 +525,7 @@ export class LevelSevenEncounters {
       const c = e.civilian!;
       c.vehicleYield = { target, until: w.tick + 15 };
       c.state = 'calm'; c.story = null; c.survivor!.cover = false; c.survivor!.briskAt = w.tick;
-      w.npcs!.move(e, target, 5.2, c, .1);
+      w.npcs!.move(e, target, this.followerSpeedMs(), c, .1);
       w.spatial.set(e.id, e.transform.x, e.transform.z);
       return true;
     }
@@ -596,7 +598,7 @@ export class LevelSevenEncounters {
     if (!route.points.length) { this.pocketRoutes.delete(e.id); this.approaches.delete(e.id); return false; }
     const target = route.points[0], dx = target.x - e.transform.x, dz = target.z - e.transform.z, length = Math.hypot(dx, dz);
     const direction = { x: dx / length, z: dz / length };
-    const wanted = Math.min(length, 5.2 / 60), radius = actorRadius(e);
+    const wanted = Math.min(length, this.followerSpeedMs() / 60), radius = actorRadius(e);
     // Static sweeps use square-expanded boxes. Sample the rounded physical
     // footprint with 1 cm extra clearance at <=1 cm intervals: every point
     // between samples is therefore clear for the complete original radius.

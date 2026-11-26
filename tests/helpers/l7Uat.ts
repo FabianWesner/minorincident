@@ -38,15 +38,19 @@ export async function checkL7Navigation() {
     const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
     expect(launcher, 'the authored launcher remains present for the approach').toBeDefined();
     for (const e of w.infected!.active) e.hidden = true;
-    for (let tick = 0; tick < 300; tick++) {
-      w.applyInput(emptyInput(), 'keyboard'); w.update();
-      expect(w.missions!.state.steps.rocket.status, 'the uncollected launcher stays active').toBe('active');
-      for (const row of w.l7Encounters!.state.roster) {
-        if (row.status !== 'following') continue;
-        const e = w.entities.get(row.id)!;
-        expect(Math.hypot(e.transform.x - launcher!.transform.x, e.transform.z - launcher!.transform.z), `survivor ${row.id} stays outside the 2 m objective ring plus body clearance at tick ${w.tick}`).toBeGreaterThanOrEqual(2.35);
+    const infected = w.infected!, updateInfected = infected.update.bind(infected);
+    infected.update = () => {};
+    try {
+      for (let tick = 0; tick < 300; tick++) {
+        w.applyInput(emptyInput(), 'keyboard'); w.update();
+        expect(w.missions!.state.steps.rocket.status, 'the uncollected launcher stays active').toBe('active');
+        for (const row of w.l7Encounters!.state.roster) {
+          if (row.status !== 'following') continue;
+          const e = w.entities.get(row.id)!;
+          expect(Math.hypot(e.transform.x - launcher!.transform.x, e.transform.z - launcher!.transform.z), `survivor ${row.id} stays outside the 2 m objective ring plus body clearance at tick ${w.tick}`).toBeGreaterThanOrEqual(2.35);
+        }
       }
-    }
+    } finally { infected.update = updateInfected; }
     checkL7FollowerBars(w);
     // The loading renderer must see the actual resident models at tick zero;
     // discovering their pedestrian looks on the first AI tick builds new
@@ -55,17 +59,20 @@ export async function checkL7Navigation() {
     expect(residents.length).toBeGreaterThan(0);
     expect(residents.every(e => e.appearance?.entityId === e.id && e.appearance.asset.startsWith('npc.'))).toBe(true);
     const alphas = w.infected!.active.filter(e => e.archetype === 'infected.alpha');
-    expect(alphas, 'only the pickup Alpha occupies the opening cap').toHaveLength(1);
+    expect(alphas, 'the opening cap contains its three authored Alphas').toHaveLength(3);
     expect(alphas.every(e => e.health.max === 450 && e.health.current === 450), 'L7 Alpha toughness is level-local').toBe(true);
     expect(w.infected!.active.some(e => e.infected?.pack === 700), 'the final horde does not occupy opening slots').toBe(false);
     w.l7Encounters!.start();
-    Object.assign(w.entities.get(1)!.transform, { x: 85, z: 46 });
+    Object.assign(w.entities.get(1)!.transform, { x: 20, z: 46 });
     w.l7Encounters!.update();
+    expect(w.infected!.active.filter(e => e.archetype === 'infected.alpha').length
+      + w.infected!.director.queue.filter(entry => entry.archetype === 'infected.alpha').length,
+    'high-tier L7 authors fourteen Alphas over the route').toBe(14);
     const queuedFinal = w.infected!.director.queue.filter(entry => entry.options.pack === 700);
     const residentFinal = w.infected!.active.filter(e => e.infected?.pack === 700);
     const finals = [...queuedFinal.filter(e => e.archetype === 'infected.runner').map(e => e.position), ...residentFinal.filter(e => e.archetype === 'infected.runner').map(e => e.transform)];
-    expect(finals, 'the full high-tier horde is requested on approach').toHaveLength(168);
-    expect(queuedFinal.filter(e => e.archetype === 'infected.alpha').length + residentFinal.filter(e => e.archetype === 'infected.alpha').length).toBe(2);
+    expect(finals, 'the high-tier escape blocker is requested on approach').toHaveLength(120);
+    expect(queuedFinal.filter(e => e.archetype === 'infected.alpha').length + residentFinal.filter(e => e.archetype === 'infected.alpha').length).toBe(3);
     expect(new Set(finals.map(e => Math.round(e.z))).size, 'final arrivals approach from both verges and the road').toBeGreaterThanOrEqual(3);
     const district = w.districts!;
     const destinations = Object.entries(w.missions!.def.anchors);
@@ -269,7 +276,7 @@ async function checkPharmacyCourier() {
       const input = emptyInput(); input.move.z = -1; w.applyInput(input, 'keyboard'); w.update();
       for (const [id, old] of before) {
         const at = w.entities.get(id)!.transform;
-        expect(Math.hypot(at.x - old.x, at.z - old.z), 'pharmacy followers leave continuously without popping').toBeLessThanOrEqual(.1);
+        expect(Math.hypot(at.x - old.x, at.z - old.z), 'pharmacy followers leave continuously without popping').toBeLessThanOrEqual(6.5 / 60 + .002);
       }
     }
     expect(pharmacyColumn.player.z - p.transform.z, 'the recorded pharmacy body jam clears along its open north side').toBeGreaterThan(3);
@@ -377,7 +384,8 @@ async function checkCorpseCatchup() {
       w.tick++; nav.flow(player.transform.x,player.transform.z,1500);
       for (const [id] of packed) {
         const e=w.entities.get(id)!,before={...e.transform}; w.l7Encounters!.follower(e);
-        expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).toBeLessThanOrEqual(5.2/60+.001);
+        const speed = 6.5;
+        expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).toBeLessThanOrEqual(speed/60+.001);
         expect(Math.hypot(e.transform.x-corpse.transform.x,e.transform.z-corpse.transform.z)).toBeGreaterThanOrEqual(1.35-.021);
       }
       w.solids.commit();
@@ -413,7 +421,8 @@ async function checkPharmacyCatchup() {
           const before = { ...follower.transform };
           w.tick++; w.infected!.nav.flow(player.transform.x, player.transform.z, 1500);
           w.l7Encounters!.follower(follower); w.solids.commit();
-          expect(Math.hypot(follower.transform.x - before.x, follower.transform.z - before.z)).toBeLessThanOrEqual(5.2 / 60 + 1e-6);
+          const speed = 6.5;
+          expect(Math.hypot(follower.transform.x - before.x, follower.transform.z - before.z)).toBeLessThanOrEqual(speed / 60 + 1e-6);
           arrived = Math.hypot(follower.transform.x - player.transform.x, follower.transform.z - player.transform.z) < 18;
         }
         expect(arrived, `${quality} pharmacy ${at.x},${at.z}`).toBe(true);
@@ -421,7 +430,13 @@ async function checkPharmacyCatchup() {
         expect(w.solids.offenders).toEqual([]);
       }
       if (quality === 'high') checkNearRangeCatchup(w);
-      else checkLowBoardingCorner(w);
+      else {
+        checkLowBoardingCorner(w);
+        w.l7Encounters!.start(); w.entities.get(1)!.transform.x = 85; w.l7Encounters!.update();
+        expect(w.infected!.active.filter(e => e.archetype === 'infected.alpha').length
+          + w.infected!.director.queue.filter(entry => entry.archetype === 'infected.alpha').length,
+        'low-tier L7 authors fourteen Alphas over the route').toBe(14);
+      }
     } finally { w.dispose(); }
   }
 }
