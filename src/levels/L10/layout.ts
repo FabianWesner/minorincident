@@ -11,6 +11,18 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     if (source.district !== 'D-CURE') return source;
     const layout = structuredClone(source), h = cureHangar;
     if (layout.placements.some(p => p.id === 'l10-hangar-shell')) return layout;
+    // The damaged clinic annex sat across the diagonal ride from the cure
+    // corridor, knocking the courier off at its southwest corner before the
+    // first roadblock approach. Shift its footprint west along the frontage;
+    // keep its visual and collision bounds together in this L10-only layout.
+    const leadInAnnex = layout.placements.find(p => p.id === 'bld.clinic-annex:2150');
+    const leadInAnnexCollider = layout.colliders.find(c => c.id === 'bld.clinic-annex:2150');
+    if (leadInAnnex && leadInAnnexCollider) {
+      const offset = 28;
+      leadInAnnex.position[0] -= offset;
+      leadInAnnex.visualAabb.min[0] -= offset; leadInAnnex.visualAabb.max[0] -= offset;
+      leadInAnnexCollider.aabb.min[0] -= offset; leadInAnnexCollider.aabb.max[0] -= offset;
+    }
     for (const [name, [x, z]] of Object.entries(cure.anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     const set = (name: string, p: { x: number; z: number }) => { layout.anchors[name] = { position: [p.x, 0, p.z], yaw: 0 }; };
     set('cure-terminal', h.terminal); set('cure-canister', h.canister);
@@ -115,7 +127,9 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     roadside('evac-child-bike', 'veh.courier-bike', 2818, 40, [1.1, .7, .5], Math.PI / 2);
     roadside('evac-wait-sign', 'prop.stop-here-sign-trailer', 2787, 56, [.8, 1.7, .7], -.2);
     // A split military roadblock lets the player thread a bike through once the fight opens the route.
-    roadside('gate-wreck-west', 'veh.military-truck', 2998, 78, [3.8, 1.5, 1.5], Math.PI / 2);
+    // Keep the center approach lane clear after the encounter gate opens; the
+    // wreck still anchors the west end of the checkpoint scene.
+    roadside('gate-wreck-west', 'veh.military-truck', 2998, 132, [3.8, 1.5, 1.5], Math.PI / 2);
     roadside('gate-barricade-north', 'prop.barricade', 3010, 105, [2.2, .7, .35], Math.PI / 2);
     roadside('gate-barricade-south', 'prop.barricade', 3010, 82, [2.2, .7, .35], Math.PI / 2);
     roadside('reyes-handset', 'util.radio', 3004, 98, [.3, .15, .2]);

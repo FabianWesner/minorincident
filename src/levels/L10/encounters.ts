@@ -43,12 +43,12 @@ export const cureEncounters: readonly CureEncounter[] = [
 export const curePaceEncounters: readonly CureEncounter[] = [
   // L10 PO 2026-11-19: every authored scene has an encounter attached so the courier
   // has to fight through the beat. Route positions follow the eastbound corridor.
-  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [3010, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
-  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3076, 95], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.runner', 'infected.runner'] },
-  { id: 'setpiece-scarecrow-field', type: 'field-horde', setPiece: 'scarecrow-field', region: 'destroyed-corridor', at: [3190, 95], regular: [5, 4], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.hazmat', 'infected.runner'] },
-  { id: 'setpiece-burning-convoy', type: 'field-horde', setPiece: 'burning-convoy', region: 'destroyed-corridor', at: [3260, 95], regular: [11, 8], dogs: 1, alphas: 0, roles: ['infected.firefighter', 'infected.runner', 'infected.runner'] },
-  { id: 'setpiece-dark-underpass', type: 'field-horde', setPiece: 'dark-underpass', region: 'destroyed-corridor', at: [3390, 74], regular: [8, 6], dogs: 0, alphas: 0, roles: ['infected.crawler', 'infected.crawler', 'infected.crawler'] },
-  { id: 'setpiece-field-hospital', type: 'field-horde', setPiece: 'field-hospital', region: 'destroyed-corridor', at: [3502, 95], regular: [4, 2], dogs: 0, alphas: 0, roles: ['infected.nurse', 'infected.runner'] },
+  { id: 'setpiece-quarantine-gate', type: 'field-horde', setPiece: 'quarantine-gate', region: 'destroyed-corridor', at: [3010, 95], regular: [4, 4], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-propaganda-billboard', type: 'field-horde', setPiece: 'propaganda-billboard', region: 'destroyed-corridor', at: [3076, 95], regular: [4, 3], dogs: 0, alphas: 0, roles: ['infected.runner', 'infected.runner'] },
+  { id: 'setpiece-scarecrow-field', type: 'field-horde', setPiece: 'scarecrow-field', region: 'destroyed-corridor', at: [3190, 95], regular: [3, 3], dogs: 0, alphas: 0, roles: ['infected.hazmat', 'infected.hazmat', 'infected.runner'] },
+  { id: 'setpiece-burning-convoy', type: 'field-horde', setPiece: 'burning-convoy', region: 'destroyed-corridor', at: [3260, 95], regular: [4, 4], dogs: 1, alphas: 0, roles: ['infected.firefighter', 'infected.runner', 'infected.runner'] },
+  { id: 'setpiece-dark-underpass', type: 'field-horde', setPiece: 'dark-underpass', region: 'destroyed-corridor', at: [3390, 74], regular: [4, 4], dogs: 0, alphas: 0, roles: ['infected.crawler', 'infected.crawler', 'infected.crawler'] },
+  { id: 'setpiece-field-hospital', type: 'field-horde', setPiece: 'field-hospital', region: 'destroyed-corridor', at: [3502, 95], regular: [3, 3], dogs: 0, alphas: 0, roles: ['infected.nurse', 'infected.runner'] },
   { id: 'corn-field-horde', type: 'field-horde', region: 'residential-fringe', at: [830, 80], regular: [14, 7], dogs: 1, alphas: 0 },
   { id: 'shed-field-crossing', type: 'field-horde', region: 'residential-fringe', at: [1205, 25], regular: [12, 7], dogs: 0, alphas: 0 },
   { id: 'farm-road-pair-3', region: 'industrial-area', at: [1305, 100], regular: [7, 6], dogs: 0, alphas: 0 },
@@ -124,15 +124,17 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // a retreat into the full road groups. Staggered rows retain every slot
     // while leaving the northern verge open for an eastbound escape.
     const militaryPatrol = group.id.startsWith('military-zone-direct-');
-    // The quarantine cohort gathers behind the tower base, rather than being
-    // scattered over the road. The ordinary safe admission still prevents pop-in.
-    const gateTower = group.setPiece === 'quarantine-gate';
+    // Roadblock cohorts stage on the courier's approach side. Putting the
+    // actors beyond the blocker made the fight impossible to reach and left
+    // the rider exposed to the pursuing Mega on a closed gate.
+    const roadblock = ['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id);
+    const gateOffsets = [20, 26, 32, 38];
     // Moving the industrial Alpha into the first cohort must retain its old
     // once-only slot, so a carried save cannot admit it a second time.
     const slotOwner = group.id === 'depot-workers' && archetype === 'infected.alpha' ? 'depot-alpha' : group.id;
     return { key: `${slotOwner}:${archetype}:${index}`, archetype,
-      x: gateTower ? at[0] + 3 + (i % 3 - 1) * 2 : at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
-      z: gateTower ? at[1] + 7 + Math.floor(i / 3) * 2 : at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
+      x: roadblock ? at[0] - 22 - Math.floor(i / 2) * 2 : at[0] + (militaryPatrol ? (i % 4 - 1.5) * 3 : Math.cos(angle) * radius),
+      z: roadblock ? at[1] + gateOffsets[i % gateOffsets.length] : at[1] + (militaryPatrol ? -18 - Math.floor(i / 4) * 3 : Math.sin(angle) * radius) };
   });
 }
 

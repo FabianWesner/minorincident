@@ -88,6 +88,10 @@ export async function loadLevel(level: RunnerLevel, seed: number, campaign?: Cam
         // Hold at the native defence position. The skilled policy otherwise
         // dodges during L4 and flees L3 before its later waves can be observed.
         const hold = level === 'L3' && !!m?.l3?.attackAt || level === 'L4' && m?.l4?.phase === 'war';
+        // L10 has combat-locked roadblocks before its stationary hold. Use
+        // ordinary combat inputs on approach, then suppress attacks for the
+        // measured hold as in the other passive windows.
+        if (level === 'L10' && !m?.states['cure-installed']) { applyInput(frame, scheme); return; }
         applyInput({ ...frame, ...(hold ? { move: { x: 0, z: 0 } } : {}), mouseAttack: false, activeAttack: false, attackInPlace: false, attackTarget: undefined, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } }, scheme);
       };
       world.player!.damage = () => 0;

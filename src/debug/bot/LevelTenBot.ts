@@ -19,13 +19,17 @@ export class LevelTenBot {
     [1042, 80], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
     cure.anchors['guard-tower-rifle'], cure.anchors['r4-r5-seam'],
     cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
-    [3010, 95], [3076, 95], [3190, 95], [3260, 95], [cureEscapeGaps[2].x, cureEscapeGaps[2].z],
+    // Approach the first roadblock along its open west lane. A direct diagonal
+    // from the cure corridor clips the clinic annex at x≈3000,z≈65 and stalls
+    // the long-wheelbase motorbike at its southwest corner.
+    [2920, 95], [2980, 95], [3010, 95], [3076, 95], [3190, 95], [3260, 95], [cureEscapeGaps[2].x, cureEscapeGaps[2].z],
     [3370, 95], [3374, 95], [3370, 74], [3382, 74], [3406, 74], [3406, 95],
     [3502, 95], [3577, -25], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
   ];
   private waypoint = 0;
   private clearStairsUntil = 0;
   private coolingGun = false;
+  private lastPosition?: { x: number; z: number };
   private readonly startTick: number;
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') {
@@ -38,6 +42,19 @@ export class LevelTenBot {
     const active = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
     if (this.finished || this.profile === 'idle' || !active || player.health.current <= 0 || mission.state.phase === 'retry') return f;
     const tick = w.tick - this.startTick, p = player.transform;
+    // The quarantine checkpoint can restore the bike west of the billboard
+    // after a later roadblock death. Rejoin the marked road there rather than
+    // steering directly at a stale waypoint past the intervening obstacles.
+    if (this.lastPosition && this.lastPosition.x > 3300 && p.x >= 3000 && p.x < 3150 && p.x < this.lastPosition.x - 100) {
+      let nearest = this.waypoint, best = Infinity;
+      for (let i = 0; i < this.route.length; i++) {
+        if (this.route[i][0] < 2980 || this.route[i][0] > 3260) continue;
+        const d = Math.hypot(this.route[i][0] - p.x, this.route[i][1] - p.z);
+        if (d < best) { best = d; nearest = i; }
+      }
+      this.waypoint = nearest;
+    }
+    this.lastPosition = { x: p.x, z: p.z };
     if (['install', 'hold', 'mega', 'release', 'epilogue', 'credits'].includes(active.id)) this.waypoint = this.route.length;
     const finale = active.id === 'hold' || active.id === 'mega';
     const anchor = mission.def.anchors[active.id === 'mega' ? 'cure-console' : active.anchor];
@@ -71,16 +88,35 @@ export class LevelTenBot {
     // making the native route incomparable to real-input play.
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && (isMega(e) || !cornBlocksSight(w, [p.x, p.z], [e.transform.x, e.transform.z])) && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
     const bike = w.vehicles?.bicycle, bikeEntity = bike?.entity;
+    let roadblockFight = false;
     if (bike && bikeEntity?.bicycle?.motorbike && p.x >= 2780 && p.x < 3750 && !finale) {
-      const nearThreat = threats.some(e => !isMega(e) && distance(e.transform) < 15);
-      const roadblock = Object.values(w.l10Encounters?.state.roadblockGates ?? {}).map(id => w.entities.get(id)).some(e => e?.interactable && !e.interactable.open && Math.abs(p.x - e.transform.x) < 18);
-      if (bike.riding && nearThreat && roadblock) { f.interact = true; return f; }
-      // Approach and mount a nearby bike only when the immediate fight has
-      // cleared. A bike left far behind is not an objective to backtrack to.
-      if (!bike.riding && !nearThreat && distance(bikeEntity.transform) < 12) {
-        f.move = this.walker.step(w, bikeEntity.transform, 1, 'motorbike') ?? f.move;
+      const gates = Object.entries(w.l10Encounters?.state.roadblockGates ?? {})
+        .map(([group, id]) => ({ group, entity: w.entities.get(id) })).filter(g => !!g.entity?.interactable)
+        .sort((a, b) => Math.abs(a.entity!.transform.x - p.x) - Math.abs(b.entity!.transform.x - p.x));
+      const closedGate = gates.find(g => !g.entity!.interactable!.open && Math.abs(p.x - g.entity!.transform.x) < 24);
+      roadblockFight = !!closedGate;
+      // Each physical roadblock is a mounted approach followed by an on-foot
+      // fight. E dismounts the rider; the device stays disabled until its
+      // admitted cohort is cleared, so this press cannot toggle the barrier.
+      if (bike.riding && closedGate) { f.interact = true; return f; }
+      const fightingThisGate = !!closedGate && !!w.l10Encounters?.state.roadblockDismounted?.[closedGate.group];
+      if (!bike.riding && closedGate && fightingThisGate) {
+        const side = Math.floor(tick / 180) % 2 ? -10 : 10;
+        const approach = { x: closedGate.entity!.transform.x - 6, z: closedGate.entity!.transform.z + side, radius: 1.5 };
+        f.move = this.walker.step(w, approach, .8, 'roadblock-fight') ?? f.move;
+      }
+      else if (!bike.riding && closedGate) {
+        // If a prior knock-off happened between set pieces, recover the bike
+        // before entering the next roadblock. Each barrier must start mounted.
+        f.move = this.walker.step(w, bikeEntity.transform, this.profile === 'threat-passive' ? .5 : 1, 'motorbike', this.profile === 'threat-passive') ?? f.move;
         f.interact = bike.canInteract() && tick % 30 === 0;
-        return f;
+      }
+      // Recover the same parked bike after a hard hit or a cleared roadblock.
+      // Keep aiming and firing while walking back so the rider can create
+      // space, then remount with the normal E interaction.
+      else if (!closedGate && !bike.riding) {
+        f.move = this.walker.step(w, bikeEntity.transform, this.profile === 'threat-passive' ? .5 : 1, 'motorbike', this.profile === 'threat-passive') ?? f.move;
+        f.interact = bike.canInteract() && tick % 30 === 0;
       }
     }
     // A visible dog pounce has a short, committed windup. Face and hit that
@@ -126,7 +162,9 @@ export class LevelTenBot {
     // Clear an attacker in melee reach before focusing the finale Mega. An
     // uninterrupted boss target leaves the courier surrounded on the stairs.
     const closeAttacker = active.id === 'mega' ? threats.find(e => !isMega(e) && distance(e.transform) < 8) : undefined;
-    const rack = player.weapons!.RIGHT.rack, target = pouncingDog ?? closeAttacker ?? (active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0]);
+    const rack = player.weapons!.RIGHT.rack, target = pouncingDog ?? closeAttacker ??
+      (roadblockFight ? threats.find(e => !isMega(e)) : undefined) ??
+      (active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0]);
     if (['mega', 'release'].includes(active.id) && p.y > .9) {
       // Interaction console is 2 m east of the assembly origin. Use the
       // shipped stair anchors, rather than translating them from that marker.

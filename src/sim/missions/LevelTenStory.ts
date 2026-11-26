@@ -10,6 +10,7 @@ import { cureEncounterSlots, curePaceEncounters, cureWeaponPickups } from '../..
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
 export class LevelTenStory {
   private previous: { x: number; z: number };
+  private lastUpdateTick?: number;
   constructor(private readonly mission: Mission) { this.previous = { ...mission.world.entities.get(1)!.transform }; }
   private savedSam(): EntitySnapshot | undefined {
     const save = this.mission.world.progression?.campaign;
@@ -26,6 +27,8 @@ export class LevelTenStory {
   update(): void {
     const { state, world } = this.mission, p = world.entities.get(1)!;
     if (state.phase !== 'playing' || p.health.current <= 0 || state.states['cure-released']) return;
+    const sameTick = this.lastUpdateTick === world.tick;
+    this.lastUpdateTick = world.tick;
     const mega = world.megaPursuit?.entity();
     // The reveal is keyed to the first actual camera sighting, not the offscreen spawn.
     // Its complete/duration flags live in MissionState, so later checkpoint restores cannot replay it.
@@ -79,21 +82,29 @@ export class LevelTenStory {
     if (!state.states['hangar-radio'] && p.transform.x >= 2300) { state.states['hangar-radio'] = true; this.say('L10.armory'); }
     if (!state.states['gap-hint'] && cureEscapeGaps.some(gap => Math.hypot(p.transform.x - gap.x, p.transform.z - gap.z) < 5)) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
     const finaleLines: readonly [number, string][] = [
-      [2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [3010, 'L10.finale-2'],
-      [3076, 'L10.finale-3'], [3150, 'L10.finale-4'], [3260, 'L10.finale-5'],
-      [3340, 'L10.finale-6'], [3390, 'L10.finale-7'], [3502, 'L10.finale-8'], [3550, 'L10.finale-9'],
+      [2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [2980, 'L10.finale-2'],
+      [2980, 'L10.finale-3'], [3076, 'L10.finale-4'], [3190, 'L10.finale-5'],
+      [3235, 'L10.finale-6'], [3340, 'L10.finale-7'], [3480, 'L10.finale-8'], [3480, 'L10.finale-9'],
     ];
     if (!state.states['l10-sinkhole-warning'] && p.transform.x >= 3300) {
       state.states['l10-sinkhole-warning'] = true;
       this.say('L10.sinkhole-warning', 180);
     }
     const nextFinaleLine = finaleLines.findIndex(([x], index) => !state.states[`l10-finale-beat-${index}`] && p.transform.x >= x);
-    if (nextFinaleLine >= 0) {
+    // The line triggers mark the locations where the radio beats become
+    // relevant, while this cadence keeps a fast ride from bunching them into
+    // one unreadable burst. Forty-five seconds leaves room for the roadblock fights
+    // and keeps the hangar-to-gate sequence inside its authored 7–9 minutes.
+    // Direct scripted updates (such as teleport-based story tools) do not
+    // advance the simulation clock. Keep those deterministic; live gameplay
+    // still meters each radio cue against elapsed world ticks.
+    if (nextFinaleLine >= 0 && (sameTick || world.tick >= (state.counters['l10-finale-next-beat-tick'] ?? 0))) {
       const [x, id] = finaleLines[nextFinaleLine];
       const index = nextFinaleLine;
       const key = `l10-finale-beat-${index}`;
       if (!state.states[key] && p.transform.x >= x) {
         state.states[key] = true;
+        state.counters['l10-finale-next-beat-tick'] = world.tick + 45 * 60;
         if (index === 2) state.counters['l10-reyes-loop-ticks'] = world.tick + 360;
         this.say(id, 300);
       }
@@ -101,8 +112,7 @@ export class LevelTenStory {
     // Reyes's handset repeats while the courier is within range, just as the
     // abandoned field radio was recorded; this remains a captioned, moving
     // radio cue and does not take control of the player.
-    if (p.transform.x >= 3010 && p.transform.x < 3076 && world.tick >= state.counters['l10-reyes-loop-ticks']) {
-      state.states['l10-finale-beat-2'] = true;
+    if (state.states['l10-finale-beat-2'] && p.transform.x >= 3010 && p.transform.x < 3076 && world.tick >= state.counters['l10-reyes-loop-ticks']) {
       state.counters['l10-reyes-loop-ticks'] = world.tick + 360;
       this.say('L10.finale-2', 240);
     }
