@@ -193,6 +193,7 @@ for (const tier of tiers) {
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number; recentHits: unknown[] }[] = [];
   const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0 }));
+  const previousGateOpen = new Map<number, boolean>();
   const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
   const authoredThrowCrateIds = new Set<number>();
   const overpassState: unknown[] = [];
@@ -286,7 +287,10 @@ for (const tier of tiers) {
           if (near && riding && !b.arrived) b.arrived = world.tick;
           if (near && !riding && lastBike && b.arrived && !b.dismounted) b.dismounted = world.tick;
           const gateId = Object.values(world.l10Encounters?.state.roadblockGates ?? {}).find(id => Math.abs((world.entities.get(id)?.transform.x ?? -10000) - b.x) < 1);
-          if (b.fight && gateId !== undefined && world.entities.get(gateId)?.interactable?.open && !b.opened) b.opened = world.tick;
+          const gateOpen = gateId === undefined ? undefined : world.entities.get(gateId)?.interactable?.open;
+          if (b.fight && gateOpen && previousGateOpen.get(b.x) === false && !b.opened) b.opened = world.tick;
+          if (gateOpen !== undefined) previousGateOpen.set(b.x, gateOpen);
+          else previousGateOpen.delete(b.x);
           // A checkpoint can restore the mounted bike beyond this gate. That
           // is not a remount-and-ride-across event: require E to mount near the
           // barrier on its approach side, then observe an eastbound crossing.

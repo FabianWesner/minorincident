@@ -212,6 +212,19 @@ export class LevelTenBot {
         }
       }
     }
+    // Walk out of visible ground fire while fighting or returning to the bike.
+    if (!bike?.riding && p.x >= 2780 && p.x < 3750 && !finale) {
+      const fires = [...w.entities.iterate()].filter(e => e.hazard?.kind === 'fire' && w.tick < e.hazard.activeUntil &&
+        distance(e.transform) < e.hazard.radius + 1.5);
+      let dx = 0, dz = 0;
+      for (const fire of fires) {
+        const x = p.x - fire.transform.x, z = p.z - fire.transform.z, d = Math.hypot(x, z) || 1;
+        dx += x / d; dz += z / d;
+      }
+      const d = Math.hypot(dx, dz);
+      if (d > 0 && w.infected!.nav.visible(p, { x: p.x + dx / d * 2, z: p.z + dz / d * 2 }, .35))
+        f.move = { x: dx / d, z: dz / d };
+    }
     if (this.profile === 'newbie') { f.move.x *= .8; f.move.z *= .8; }
     return f;
   }
