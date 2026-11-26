@@ -95,7 +95,7 @@ export class LevelTenEncounters {
       // The ledger is captured here, before any death-window admission adds
       // keys the checkpoint never held; only these slots are consumed.
       this.died = true;
-      this.carried.clear();
+      // Survivors still waiting for admission must survive another retry.
       this.deathLedger.clear();
       for (const [key, id] of Object.entries(this.state.spawned)) {
         if (key.startsWith('dispersal-assault:')) continue;
@@ -166,7 +166,11 @@ export class LevelTenEncounters {
     }
     const slots = this.state.spawned ??= {};
     for (const key of discarded) {
-      if (key in slots) { this.carried.delete(key); continue; }
+      // The checkpoint may contain an older version of this same cohort.
+      // Remove its live copy before re-admitting the survivor from the failed
+      // attempt; a killed member stays retired instead of returning at full HP.
+      const restored = this.world.entities.get(slots[key]);
+      if (restored?.infected && !restored.corpse && restored.health.current > 0) this.world.infected?.release(restored);
       slots[key] = RETIRED_SLOT;
     }
     if (this.world.infected) this.world.infected.director.reserved += (this.state.finaleEntrySlot ? 1 : 0) - heldEntrySlot;
