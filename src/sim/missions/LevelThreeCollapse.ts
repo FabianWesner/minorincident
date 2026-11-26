@@ -381,7 +381,9 @@ export class LevelThreeCollapse {
     s.squad = squad.map(id => ({ id, farSince: 0 }));
     world.events.emit({ type: 'l3.fallback', tick, cause, squad: [...squad] });
     this.mission.radio('L3.fallback');
-    if (this.mission.state.steps.armory.status === 'active') this.mission.state.steps.armory.status = 'cancelled';
+    // Luna 11-26: a player who missed the armory before the attack fought all of L3 with the axe only.
+    // The squad falls back with a handgun for the courier either way.
+    if (this.mission.state.steps.armory.status === 'active') { this.mission.state.steps.armory.status = 'cancelled'; this.takeHandgun(); }
     if (!this.mission.state.states.fallback) this.mission.setState('fallback', true);
     s.furthest = player.transform.x; s.furthestAt = tick;
     this.mission.requestCheckpoint('fallback');
