@@ -556,8 +556,12 @@ export class LevelTenEncounters {
         for (const slot of cureEncounterSlots(group, ai.director.tier)) {
           const id = this.state.spawned[`${slot.key}:0`];
           const e = id === undefined || id === RETIRED_SLOT ? undefined : w.entities.get(id);
-          if (!e || e.health.current <= 0 || e.infected!.pursuit || e.transform.x < player.transform.x - 24) continue;
-          if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 140) ai.press(e.id, 1, w.tick + 600);
+          if (!e || e.health.current <= 0 || e.infected!.pursuit) continue;
+          const gateId = this.state.roadblockGates?.[group.id];
+          const closedGate = gateId !== undefined && !w.entities.get(gateId)?.interactable?.open;
+          if (!closedGate && e.transform.x < player.transform.x - 24) continue;
+          if (closedGate || Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 140)
+            ai.press(e.id, 1, w.tick + 600);
         }
       }
     }

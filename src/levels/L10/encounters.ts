@@ -128,7 +128,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // actors beyond the blocker made the fight impossible to reach and left
     // the rider exposed to the pursuing Mega on a closed gate.
     const roadblock = ['setpiece-quarantine-gate', 'setpiece-burning-convoy', 'setpiece-dark-underpass', 'setpiece-field-hospital'].includes(group.id);
-    const gateOffsets = [20, 26, 32, 38];
+    const gateOffsets = [-20, -26, -32, -38];
     // Moving the industrial Alpha into the first cohort must retain its old
     // once-only slot, so a carried save cannot admit it a second time.
     const slotOwner = group.id === 'depot-workers' && archetype === 'infected.alpha' ? 'depot-alpha' : group.id;

@@ -15,3 +15,9 @@ Typecheck passed after the per-tick change. Lint failed on an unrelated pre-exis
 ## Quarantine actor trace
 
 A HIGH replay with slot positions added to the existing observer again reached 2100 s and 32 deaths. At 2010 s the live hazmat was at (2988, 115), while two live runner IDs in the quarantine ledger were around (2930–2940, −3–−1), over 100 m from the courier at (3003, 86). Those runners were in `attracted` state; the hazmat remained near (2988, 115) across several samples in `chase`. The same runner slot IDs appeared dead and then alive after a retry. The checkpoint restore and actor identity/ledger interaction needs investigation before treating these distant actors as cohort survivors or changing their behavior. The observer now records position and state to support that diagnosis. This replay is diagnostic and does not establish 4/4 or reachability.
+
+## Cohort pursuit and staging trial
+
+Closed-gate cohorts now receive the existing pursuit pressure even when they fall behind the courier; the former 24 m cutoff left them attracted far away. Roadblock cohorts stage on the opposite flank, away from the quarantine tower where the hazmat remained stationary. The first pressure-only HIGH trial still timed out at 2100 s with 31 deaths and 0/4 loops. With both changes, [HIGH](route-high-trial.json) recorded 2/4 loops but timed out at 2100 s with 43 deaths; [LOW](route-low-trial.json) completed in 1674 s with 17 deaths and 3/4 loops, missing hospital. These are incomplete trial results, not acceptance. Typecheck passed.
+
+HIGH subsequently retried the convoy after its earlier recorded crossing; living dog and firefighter actors were around (3187, 41–45), while the player repeatedly died near the gate. Checkpoint slot identity and survivor handling need further investigation. Hospital loop, same-tick opening, gate coverage, threat audit, captures and remaining validation remain open.
