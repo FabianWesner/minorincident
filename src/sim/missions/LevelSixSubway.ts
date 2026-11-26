@@ -214,7 +214,7 @@ export class LevelSixSubway {
       ai.release(e);this.s.distantRecycled=(this.s.distantRecycled??0)+1;
     }
   }
-  private spawn(n:number,doors:number[],wave:number,arrivalPoints?:Point[]):number {
+  private spawn(n:number,doors:number[],wave:number):number {
     const w=this.w,ai=w.infected!,o=w.npcs!.civilians.outbreak!;let spawned=0;
     // Saves from before the hold telemetry do not contain this optional ledger.
     this.s.spawnRefusals??={cap:0,offscreen:0,snap:0};
@@ -266,7 +266,7 @@ export class LevelSixSubway {
       const offsets=wave===1?[5,9,14,20]:wave===2?[9,14,20]:[20];
       for(const offset of offsets){
           let candidate:Point;
-          try{candidate=this.snap(arrivalPoints?.[i]??mouth(index,offset),wave===4?w.entities.get(1)!.transform:undefined);snapped=true;}catch{continue;}
+          try{candidate=this.snap(mouth(index,offset),wave===4?w.entities.get(1)!.transform:undefined);snapped=true;}catch{continue;}
           if(ai.director.offscreen(candidate,.6)){door=index;at=candidate;break;}
         }
         if(door!==undefined)break;
@@ -325,7 +325,7 @@ export class LevelSixSubway {
   }
   private abandon():void {
     if(this.s.abandonAt)return;
-    const s=this.s;s.abandonAt=this.w.tick;s.phase='retreat';s.nextWave=this.w.tick;
+    const s=this.s;s.abandonAt=this.w.tick;s.phase='retreat';
     const residents=s.survivors.map(r=>this.w.entities.get(r.id)!);
     const existing=residents.slice(1).filter(e=>!!e.civilian?.ally?.gun).length;
     const hasShotgun=residents.slice(1).some(e=>e.civilian?.ally?.weapon==='shotgun'&&!!e.civilian.ally.gun);
@@ -581,13 +581,9 @@ export class LevelSixSubway {
       const ordinal=this.s.spawnLog.filter(row=>row.wave===3).length/l6.pressure.group;
       const near=behind.filter(({d})=>d.x>=tail-30);
       const ahead2=[...ahead,...shutAhead].sort((a,b)=>a.d.x-b.d.x);
-      const player=w.entities.get(1)!.transform;
       const source=(ordinal%2===1?near[0]??ahead2[0]:ahead2[0]??near[0])??serviceDoors.filter(({d})=>!sealed(d.x)&&d.x>=tail-30).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
       const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
-      // Aim each replenishing cohort at the courier's live route; service doors
-      // are too far from her retreat start to create first contact in time.
-      const arrivalPoints=Array.from({length:l6.pressure.group},(_,i)=>({x:player.x+8+i*3,z:player.z+5}));
-      if(sources.length){const admitted=this.spawn(sources.length,sources,3,arrivalPoints);if(admitted<sources.length)s.nextWave=t+ticks(5);}
+      if(sources.length){const admitted=this.spawn(sources.length,sources,3);if(admitted<sources.length)s.nextWave=t+ticks(5);}
     }
     if(s.phase==='exit'&&s.survivors.some(r=>r.status==='out')){
       // Keep the escape leg legible while the column passes the open gate one by one.
