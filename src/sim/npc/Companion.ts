@@ -53,10 +53,8 @@ export class Companion {
     const cached = this.arenaWaitCache;
     if (cached?.id === stage.id && this.world.tick - cached.tick < 30
       && Math.hypot(player.transform.x - cached.x, player.transform.z - cached.z) < 1.5) return cached.at;
-    // Stay beside the fence nearest the courier, rather than at the entrance
-    // where the dog can be a whole enclosure away during a long solo fight.
-    // Sample the outside rim so corners, scenery and closed gates can be
-    // rejected by the same collision and navigation checks as ordinary travel.
+    // Wait beside the entry. Sample the outside rim so scenery and closed
+    // gates can be rejected by the normal collision and navigation checks.
     const bounds = stage.zone, margin = 1.15, candidates: { x: number; z: number; cell: number }[] = [];
     const add = (x: number, z: number) => {
       const at = { x, z }, nav = this.world.infected!.nav, radius = actorRadius(dog), cell = nav.nearestCell(x, z, radius);
@@ -70,9 +68,11 @@ export class Companion {
       add(bounds.x0 - margin, z); add(bounds.x1 + margin, z);
     }
     const nav = this.world.infected!.nav, from = nav.nearestCell(dog.transform.x, dog.transform.z, actorRadius(dog)), path: number[] = [];
-    candidates.sort((a, b) => Math.hypot(a.x - player.transform.x, a.z - player.transform.z) - Math.hypot(b.x - player.transform.x, b.z - player.transform.z));
+    candidates.sort((a, b) => Math.hypot(a.x - gate.x, a.z - gate.z) - Math.hypot(b.x - gate.x, b.z - gate.z));
     const reachable = candidates.slice(0, 12).find(candidate => from >= 0 && nav.path(from, candidate.cell, path, 16000));
-    const at = reachable ?? { x: gate.x, z: gate.z + Math.sign(gate.z - (bounds.z0 + bounds.z1) / 2) * 2.8 };
+    const dx = gate.x - (bounds.x0 + bounds.x1) / 2, dz = gate.z - (bounds.z0 + bounds.z1) / 2;
+    const length = Math.hypot(dx, dz) || 1;
+    const at = reachable ?? { x: gate.x + dx / length * 2.8, z: gate.z + dz / length * 2.8 };
     this.arenaWaitCache = { id: stage.id, x: player.transform.x, z: player.transform.z, at, tick: this.world.tick };
     return at;
   }

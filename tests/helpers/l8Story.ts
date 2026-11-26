@@ -46,20 +46,13 @@ export async function checkL8Story(): Promise<void> {
   expect(vestSize.z).toBeCloseTo(.47); expect(vestSize.x).toBeGreaterThan(.4); expect(vestSize.y).toBeGreaterThan(.15);
   for (const model of [vest, dogModel.scene]) model.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
   const world = await loadLevel('L8', 1808), mission = world.missions!, zoo = mission.l8!, lines: string[] = [];
-  const watchedAnimalId = zoo.state.animals[5], bites: { tick: number }[] = [], turns: { tick: number; infectedId: number }[] = [];
+  const watchedAnimalId = zoo.state.animals[5], turns: { tick: number; infectedId: number }[] = [];
   const habitats: Record<string, { minX: number; maxX: number; minZ: number; maxZ: number }> = {
     lion: { minX: -82, maxX: -38, minZ: -52, maxZ: -12 }, gorilla: { minX: 38, maxX: 82, minZ: -52, maxZ: -12 },
     lioness: { minX: -82, maxX: -38, minZ: -52, maxZ: -12 }, elephant: { minX: -82, maxX: -38, minZ: 12, maxZ: 52 }, zebra: { minX: 38, maxX: 82, minZ: 12, maxZ: 52 },
     flamingo: { minX: -14, maxX: 14, minZ: -52, maxZ: -12 }, monkey: { minX: -20, maxX: -10.48, minZ: 20, maxZ: 31.9 },
   };
-  let biteDistance = Infinity;
   const off = world.events.on('dialogue.line', event => { if (event.type === 'dialogue.line') lines.push(event.id); });
-  const offBite = world.events.on('outbreak.bite', event => {
-    if (event.type !== 'outbreak.bite' || event.targetId !== watchedAnimalId) return;
-    bites.push({ tick: event.tick });
-    const player = world.entities.get(1)!.transform;
-    biteDistance = Math.hypot(player.x - event.position.x, player.z - event.position.z);
-  });
   const offTurn = world.events.on('civilian.turned', event => {
     if (event.type === 'civilian.turned' && event.id === watchedAnimalId) turns.push({ tick: event.tick, infectedId: event.infectedId });
   });
@@ -103,14 +96,13 @@ export async function checkL8Story(): Promise<void> {
     expect(zoo.state.arrivals.some(arrival => arrival.id === zoo.state.dogId && arrival.outlet === 0), 'K9 enters through the broken gate').toBe(true);
     const bird = world.entities.get(watchedAnimalId), runner = world.entities.get(zoo.state.animalInterceptionId);
     expect(bird?.archetype, `flamingo turns in the first 30 s; bird=${JSON.stringify({ at: bird?.transform, state: bird?.civilian?.state, infection: bird?.infection })}; runner=${JSON.stringify({ at: runner?.transform, emerging: runner?.emerging })}`).toBe('infected.flamingo');
-    // The fixed sanctuary endpoint is at the entry gate, away from the pond.
-    expect(Number.isFinite(biteDistance), 'the opening bite is recorded').toBe(true);
+    const unturned = zoo.state.arenas.flatMap(arena => arena.ids.map(id => ({ arena: arena.id, id, animal: world.entities.get(id) })))
+      .filter(({ animal }) => animal && !animal.infected && !animal.infection && animal.health.current > 0);
+    expect(unturned.map(({ arena, id, animal }) => `${arena}:${id}:${animal?.civilian?.state}`), 'all living zoo animals begin turning at the breach').toEqual([]);
     expect(zoo.state.keeperAttacked, 'the pond keeper is pulled down, independently of Nadia').toBe(true);
     const turn = turns[0];
     if (!turn) throw new Error('Opening flamingo has no same-ID turn event');
-    expect(turn.infectedId).toBe(watchedAnimalId); expect(bites.length).toBeGreaterThan(0);
-    expect(turn.tick - bites[0].tick).toBeGreaterThanOrEqual(150);
-    expect(turn.tick - bites[0].tick).toBeLessThanOrEqual(210);
+    expect(turn.infectedId).toBe(watchedAnimalId);
 
     const sam = zoo.state.roster.map(id => world.entities.get(id)).find(e => e?.civilian?.survivor?.key === 'sam');
     if (sam) sam.health.current = 0;
@@ -151,5 +143,5 @@ export async function checkL8Story(): Promise<void> {
     expect([zoo.state.keeperId, zoo.state.haleId, zoo.state.reyesId]).toEqual(cast);
     for (const id of cast) expect(world.entities.get(id)!.health.current).toBeGreaterThan(0);
     expect(zoo.state.greetingAt - world.tick).toBe(540); // after the gate beat (soldier line, then the HUD line)
-  } finally { off(); offBite(); offTurn(); world.dispose(); }
+  } finally { off(); offTurn(); world.dispose(); }
 }

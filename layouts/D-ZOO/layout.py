@@ -106,22 +106,27 @@ def fence(x,z,yaw=0,span=2.4):
     # panels otherwise topple together and trap actors beside the escape route.
     if x > 72 and z > 40: l.data['placements'][-1]['fixed'] = True
 
-def enclosure(species,cx,cz,w=44,d=40):
+def enclosure(species,cx,cz,w=44,d=40,gates=('north','south')):
     l.zone('enclosure-'+species,[[cx-w/2,cz-d/2],[cx+w/2,cz-d/2],[cx+w/2,cz+d/2],[cx-w/2,cz+d/2]])
     for side in [-1,1]:
         for i in range(math.ceil(d/2.38)):
             span=min(2.38,d-i*2.38)
-            fence(cx+side*w/2,cz-d/2+i*2.38+span/2,math.pi/2,span)
-        for a,b in [(-w/2,-3),(3,w/2)]:
+            along=-d/2+i*2.38+span/2
+            if 'west' in gates and side == -1 and abs(along) < 3.5: continue
+            if 'east' in gates and side == 1 and abs(along) < 3.5: continue
+            fence(cx+side*w/2,cz+along,math.pi/2,span)
+        offset = 5 if species == 'lion' and side == 1 else 0
+        spans = [(-w/2,offset-3),(offset+3,w/2)] if ('north' if side < 0 else 'south') in gates else [(-w/2,w/2)]
+        for a,b in spans:
             count=math.ceil((b-a)/2.38)
             for i in range(count):
                 span=min(2.38,b-a-i*2.38)
                 fence(cx+a+i*2.38+span/2,cz+side*d/2,0,span)
-        # Route from each gate to the nearest public path.
-        gate_z=cz+side*d/2; path_z=0 if abs(gate_z)<32 else side*64
-        l.anchor(f'{species}-gate-{"north" if side<0 else "south"}',[cx,0,gate_z])
-        point(f'{species}-gate-{side}',cx,gate_z)
-        path(f'p{cx}:{path_z}',f'{species}-gate-{side}',5)
+        if ('north' if side < 0 else 'south') in gates:
+            gate_z=cz+side*d/2; path_z=0 if abs(gate_z)<32 else side*64
+            l.anchor(f'{species}-gate-{"north" if side<0 else "south"}',[cx+offset,0,gate_z])
+            point(f'{species}-gate-{side}',cx+offset,gate_z)
+            path(f'p{cx}:{path_z}',f'{species}-gate-{side}',3 if species == 'lion' and side == 1 else 5)
     # Normal flamingos need a walkable shore spawn, not the excluded pond centre.
     l.anchor('animal-'+species,[cx-10 if species == 'flamingo' else cx,0,cz])
     l.place('prop.street-lamp',[cx+9,0,cz+5])
@@ -133,8 +138,8 @@ def enclosure(species,cx,cz,w=44,d=40):
         l.data['lawns'].append(dict(min=[cx+dx-2,cz+dz-2],max=[cx+dx+2,cz+dz+2]))
     l.place('prop.hose-reel',[cx+w/2-3,0,cz])
     l.place('prop.sprinkler',[cx+w/2-3 if species == 'flamingo' else cx+5,0,cz+3])
-for species,x,z in [('lion',-60,-32),('gorilla',60,-32),('elephant',-60,32),('zebra',60,32)]: enclosure(species,x,z)
-enclosure('flamingo',0,-32,28,40)
+for species,x,z,gates in [('lion',-60,-32,('east','south')),('gorilla',60,-32,('north','south')),('elephant',-60,32,('north','south')),('zebra',60,32,('west','north'))]: enclosure(species,x,z,gates=gates)
+enclosure('flamingo',0,-32,28,40,('south','west'))
 # The flamingo plaza is paved and remains walkable through its centre.
 import bpy
 from sslib.layout import material
@@ -551,6 +556,8 @@ print('look-l10-l8-2 zoo dressing placements', _placed, 'lawns', len(l.data['law
 # Dressing that a new line would sit on is removed by id (other ids unchanged); everything is removed LAST because ids are placement indices.
 _route_start = len(l.data['placements'])
 _route_boxes = []                               # (x0, z0, x1, z1) footprints of the new pieces, used to clear dressing under them
+# The lion's shifted outer opening has a diagonal public approach; clear its lane.
+_route_boxes.append((-62.5, -14.5, -52.5, 2.5))
 
 def _route_piece(asset, x, z, yaw, span, fence_piece=False):
     dim = l.manifest[asset]['dimensions']['x']
@@ -669,8 +676,8 @@ def _arena_wall(cx, cz, half, entry_side, exit_side, gate_half=3):
         if cx == 96: _fence(cx-half, 52.3, cx-half, cz+half)
         else: across_z(cx-half, 'west')
         across_z(cx+half, 'east')
-for _cx, _cz, _in, _out in [(0, -32, 'south', 'north'), (-60, -32, 'north', 'south'),
-                            (60, 32, 'north', 'south'), (60, -32, 'south', 'east'),
+for _cx, _cz, _in, _out in [(0, -32, 'south', 'west'), (-60, -32, 'east', 'south'),
+                            (60, 32, 'west', 'north'), (60, -32, 'south', 'east'),
                             (-6, 20, 'west', 'east'), (96, 53, 'south', 'north')]:
     _arena_wall(_cx, _cz, 14, _in, _out, 5 if _cx == 96 else 3)
     # Continuous low ground strip makes the bounded combat floor readable at
@@ -695,9 +702,10 @@ def _spur(x0, z0, x1, z1, width=4):
         xlo, xhi = x0-width/2, x0+width/2; zlo, zhi = min(z0,z1), max(z0,z1)
     l.box('clean-path', 'asphalt', [xhi-xlo,.12,zhi-zlo], [(xlo+xhi)/2,.06,(zlo+zhi)/2])
     l.data['surfaces'].append(dict(surface='tile',height=.12,polygon=[[xlo,zlo],[xhi,zlo],[xhi,zhi],[xlo,zhi],[xlo,zlo]]))
-_spur(0,-12,0,-18); _spur(0,-46,0,-52)
-_spur(-60,-52,-60,-46); _spur(-60,-18,-60,-12)
-_spur(60,52,60,46); _spur(60,18,60,12)
+_spur(0,-12,0,-18)
+_spur(-60,-18,-60,-12)
+_spur(-60,-12,-55,-12)
+_spur(60,18,60,12)
 _spur(60,-12,60,-18); _spur(74,-32,82,-32)
 _spur(-24,8,-24,20); _spur(-24,20,-20,20)
 
@@ -706,15 +714,16 @@ _spur(-24,8,-24,20); _spur(-24,20,-20,20)
 for _edge_x in (20.9, 27.1):
     if _edge_x == 20.9:
         _fence(_edge_x, 3.2, _edge_x, 16.8); _fence(_edge_x, 23.2, _edge_x, 60.8)
-    else: _fence(_edge_x, 3.2, _edge_x, 60.8)
+    else:
+        _fence(_edge_x, 3.2, _edge_x, 28.8); _fence(_edge_x, 35.2, _edge_x, 60.8)
 _spur(8,20,24,20)
 # Visitor-route verges: append after the existing placement sequence. Public
 # road junctions and enclosure door approaches retain their clear openings.
 for _z in (-67.1, -60.9):
     _fence(-56.8 if _z == -60.9 else -60, _z, -27.2, _z); _fence(-20.8, _z, -3.2, _z)
 for _z in (60.9, 67.1): _fence(27.2, _z, 56.8 if _z == 60.9 else 60, _z)
-for _z in (-3.1, 3.1): _fence(-56.8, _z, -27.2, _z)
-for _x in (-63.1, -56.9): _fence(_x, -17, _x, -3.2)
+_fence(-56.8, 3.1, -27.2, 3.1)
+_fence(-63.1, -17, -63.1, -3.2)
 for _x in (-27.1, -20.9):
     _fence(_x, 3.2, _x, 16.8)
 for _z in (16.9, 23.1): _fence(8.3, _z, 20.8, _z)

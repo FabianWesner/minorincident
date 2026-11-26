@@ -54,7 +54,7 @@ export class L8BossArenas {
       this.state.push({ id: def.id, ids, carrier: 0, phase: 0, startedAt: 0, endedAt: 0, nextAt: 0, cycle: 0, wallHits: 0, grabs: 0, counters: 0 });
     }
   }
-  /** r33-l8route: every cell door follows `l8GateClosed`; the pond's north door and the plaza doors follow the seal, the yard keeps its own locks. */
+  /** Every cell door follows `l8GateClosed`; the plaza and yard keep their own locks. */
   updateGates(): void {
     const breached = this.state.some(a => a.id === 'elephant' && !!a.breachAt);
     if (this.gateStates.get('breach') !== breached) {
@@ -151,10 +151,9 @@ export class L8BossArenas {
         || [...w.entities.iterate()].some(e => !!e.companion && e.passengerOf === undefined && !e.hidden && inRect(e.transform, stage.zone));
       // PO 2026-11-25: "they should all be zombies ... at the moment when the zombie attack starts". Every zoo
       // animal turns with the breach; the fight itself still starts when the courier enters its cage.
-      // The scripted opening bite stays the first infection; the rest of the zoo turns right after it.
-      if (this.mission.l8!.state.animalBiteStarted) for (const id of arena.ids) { const e = w.entities.get(id); if (e?.civilian && !e.infection && e.health.current > 0 && e.civilian.state !== 'grabbed' && id !== this.mission.l8!.state.animals[5]) w.npcs!.civilians.outbreak!.infect(e, arena.carrier || 1); }
-      // The old elephant stays healthy in his enclosure until the vehicle-yard
-      // finale is reachable; an early distant health bar must not be a dormant boss.
+      for (const id of arena.ids) { const e = w.entities.get(id); if (e?.civilian && !e.infection && e.health.current > 0 && e.civilian.state !== 'grabbed') w.npcs!.civilians.outbreak!.infect(e, arena.carrier || 1); }
+      // The elephant has turned at the breach, but the yard encounter waits
+      // until the preceding enclosures are clear.
       if (arena.id === 'elephant' && !routeOpen) continue;
       this.observeMotion(arena, player);
       const healthy = arena.ids.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.infection && e.health.current > 0);

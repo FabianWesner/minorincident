@@ -7,7 +7,7 @@ mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend: process.env.MOTION_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2', tier: process.env.MOTION_TIER === 'low' ? 'low' : 'high', viewport: { width: 1280, height: 720 } });
 try {
   await session.open();
-  console.log(await loadFixtureInPage(session.page, readFixture('tests/fixtures/saves/qa/l8-before-lion.json.gz')));
+  console.log(await loadFixtureInPage(session.page, readFixture('tests/fixtures/saves/qa/l8-before-lion.json.br')));
   await session.page.evaluate(() => { window.__SS__!.debug.figureJoints(true); window.__SS__!.cheats.god(true); window.__SS__!.camera.cinematic({ position: [-28, 18, 3], target: [-45, 0, -14] }, true); });
   if (process.env.MOTION_FIXTURE_ROUTE) await session.page.evaluate(async (zoom) => {
     const game = (window.__SCENE__ as unknown as { game: import('../../../src/Game').Game }).game;

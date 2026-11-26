@@ -1,11 +1,10 @@
 /** Orchestrator diagnostic: top-down PNG of L8 walkable nav, arenas and the authored player route. */
 import { writeFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
-import { l8Route, l8YardGates, l8PlazaGates } from '../../../src/data/l8Bosses';
+import { l8Route, l8YardGates, l8PlazaGates, l8ConnectorGates, l8PathWalls, l8YardWalls, l8EncounterGates } from '../../../src/data/l8Bosses';
 import { loadLevel } from '../../sim-runner/levels';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- diagnostic reads the district nav grid
-const world = await loadLevel("L8", 1) as any;
-const nav = world.districts.nav;
+const world = await loadLevel('L8', 1);
+const nav = world.districts!.nav;
 const X0 = -110, X1 = 150, Z0 = -100, Z1 = 110, S = 4;
 const W = (X1 - X0) * S, H = (Z1 - Z0) * S, px = Buffer.alloc(W * H * 3);
 const set = (x: number, y: number, c: number[]) => { if (x < 0 || y < 0 || x >= W || y >= H) return; const i = (y * W + x) * 3; px[i] = c[0]; px[i + 1] = c[1]; px[i + 2] = c[2]; };
@@ -32,11 +31,17 @@ l8Route.forEach((s, i) => {
   prev = s.exit ? { x: s.exit.x, z: s.exit.z } : s.nodes.at(-1)!;
 });
 for (const g of l8YardGates) gate(g, [255, 0, 255]);
+for (const g of l8YardWalls) gate(g, [0, 100, 255]);
+for (const g of l8PathWalls) gate(g, [255, 50, 160]);
+for (const g of l8ConnectorGates) gate(g, [255, 110, 0]);
 for (const g of Object.values(l8PlazaGates)) gate(g, [0, 200, 200]);
+for (const g of Object.values(l8EncounterGates)) gate(g, [150, 50, 50]);
+// The outer wall is authored in the layout with four gate gaps.
+for (const [a, b] of [[{x:-116,z:-86},{x:-2.7,z:-86}], [{x:2.7,z:-86},{x:116,z:-86}], [{x:-116,z:86},{x:-2.7,z:86}], [{x:2.7,z:86},{x:116,z:86}], [{x:-116,z:-86},{x:-116,z:-2.7}], [{x:-116,z:2.7},{x:-116,z:86}], [{x:116,z:-86},{x:116,z:77.3}], [{x:116,z:82.7},{x:116,z:86}]] as const) line(a,b,[120,60,30],1);
 const raw = Buffer.alloc((W * 3 + 1) * H); for (let y = 0; y < H; y++) { raw[y * (W * 3 + 1)] = 0; px.copy(raw, y * (W * 3 + 1) + 1, y * W * 3, (y + 1) * W * 3); }
 const crc = (b: Buffer) => { let c = ~0; for (const v of b) { c ^= v; for (let k = 0; k < 8; k++) c = c & 1 ? (c >>> 1) ^ 0xedb88320 : c >>> 1; } return ~c >>> 0; };
 const chunk = (t: string, d: Buffer) => { const l = Buffer.alloc(4); l.writeUInt32BE(d.length); const td = Buffer.concat([Buffer.from(t), d]); const c = Buffer.alloc(4); c.writeUInt32BE(crc(td)); return Buffer.concat([l, td, c]); };
 const ihdr = Buffer.alloc(13); ihdr.writeUInt32BE(W, 0); ihdr.writeUInt32BE(H, 4); ihdr[8] = 8; ihdr[9] = 2;
 writeFileSync(process.argv[2]!, Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]), chunk('IHDR', ihdr), chunk('IDAT', deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]));
-console.log(rows.join('\n')); console.log(`authored route total ${total.toFixed(0)} m; nav bounds ${nav.min} .. ${nav.max}`);
+console.log(rows.join('\n')); console.log(`authored route total ${total.toFixed(2)} m; nav bounds ${nav.min} .. ${nav.max}`);
 process.exit(0);

@@ -160,12 +160,11 @@ export async function checkL8Route(): Promise<void> {
     followers.forEach((e, n) => w.solids.relocate(e, { x: 84 + n % 8 * 3, z: 54 + Math.floor(n / 8) * 3, y: e.transform.y }, 'fixture.l8-elephant-gate', 2, false));
     w.solids.relocate(player, { x: 96, z: 52, y: player.transform.y }, 'fixture.l8-elephant-gate', 2, false);
     const elephantAnimal = w.entities.get(elephant.ids[0])!;
-    expect(elephantAnimal.civilian).toBeDefined();
+    expect(elephantAnimal.infected, 'elephant has turned at the breach').toBeDefined();
     zoo.bosses.updateGates();
     expect(w.solids.relocate(player, { x: 96, z: 52, y: player.transform.y }, 'fixture.l8-elephant-gate-open', 2, false)).toBe(true);
     const closedAt = new Map<number, number>();
     w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed' && event.blocked && [900834, 900848, 900849].includes(event.id)) closedAt.set(event.id, event.tick); });
-    w.npcs!.civilians.outbreak!.infect(elephantAnimal, player.id);
     // The survivor column moves out through the entry before the elephant yard locks.
     for (let tick = 0; tick < 600 && !elephant.armed; tick++) w.update();
     expect(elephant.armed, 'elephant gate arms after the courier enters the yard').toBe(true);

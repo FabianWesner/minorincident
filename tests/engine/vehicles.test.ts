@@ -1034,17 +1034,19 @@ async function zooCheckpointHandoff(): Promise<void> {
       zoo.state.haleFallAt = 0;
       const hale = world.entities.get(zoo.state.haleId)!;
       hale.health.current = fallen ? 0 : hale.health.max; hale.civilian!.state = fallen ? 'finished' : 'calm';
-      const group = zoo.passengers(); expect(group).toHaveLength(14);
+      // Refresh the cached living roster after the fixture changes Hale's health.
+      world.update();
+      const group = zoo.passengers(); expect(group).toHaveLength(fallen ? 30 : 31);
       missionControls(world).teleport(1, { x: zoo.door().x - 4, z: zoo.door().z + 2 });
       for (const id of group) {
         if (world.entities.get(id)!.passengerOf !== undefined) continue;
         missionControls(world).teleport(id, vehicles.passengerDoor(car.id));
-        expect(vehicles.boardPassenger(car.id, id)).toBe(true);
+        expect(vehicles.boardPassenger(car.id, id), `passenger ${id} at ${JSON.stringify(world.entities.get(id)!.transform)}; door ${JSON.stringify(vehicles.passengerDoor(car.id))}`).toBe(true);
       }
       world.applyInput(emptyInput(), 'keyboard');
       for (let tick = 0; tick < 61; tick++) world.update();
       expect(zoo.canBoardDriver(), `${quality}, Hale fallen=${fallen}`).toBe(true);
-      expect(objectiveText(mission, mission.def.steps.find(step => step.id === 'escape')!.text)).toBe('Board the armored vehicle · 14/14 aboard');
+      expect(objectiveText(mission, mission.def.steps.find(step => step.id === 'escape')!.text)).toBe(`Board the armored vehicle · ${group.length}/${group.length} aboard`);
       expect(mission.state.marker).toBe('exit');
       missionControls(world).teleport(1, zoo.door());
       world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); world.update();
