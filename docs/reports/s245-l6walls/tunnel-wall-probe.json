@@ -1,0 +1,27 @@
+{
+  "name": "s245-l6-tunnel-wall-probe",
+  "l6Subway": "gate",
+  "time": "L6-subway",
+  "dof": false,
+  "hud": true,
+  "ground": "district",
+  "layout": {
+    "level": "L6",
+    "district": "D-SUBWAY",
+    "bbox": [[-32, -30], [288, 32]]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [112, 15.4],
+      "loadout": ["weapon.fire-axe", "weapon.army-mg"],
+      "state": { "walk": [[112, 9.5]] }
+    }
+  ],
+  "camera": { "mode": "game", "target": [112, 15], "zoom": 1.5 },
+  "frames": 150,
+  "shots": [1, 75, 149],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 },
+  "note": "PO 11-26 wall probe: game camera zoom 1.5; courier walks from the tunnel across the south drawn wall. Confirm the wall blocks the courier without an invisible obstacle in the walkway."
+}

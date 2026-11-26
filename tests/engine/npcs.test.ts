@@ -426,6 +426,45 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
 });
 
 test('corgi: warns of an offscreen threat within 18 m with a unit direction', async () => {
+  // PO 11-26: full-height tunnel side walls keep respawns and movement inside
+  // the drawn trackway while preserving the authored maintenance openings.
+  {
+    const w = await loadRunnerLevel('L6', 1, preset('L6-default'), 0, { quality: 'low' });
+    try {
+      const p = w.entities.get(1)!, dog = [...w.entities.iterate()].find(e => e.companion)!;
+      Object.assign(p.transform, { x: 110.18, z: 15.62, y: 1.27 });
+      const nav = w.infected!.nav;
+      expect(nav.visible(p.transform, { x: 110.18, z: 10.2 }, .35)).toBe(false);
+      expect(nav.visible(p.transform, { x: 110.18, z: 19.8 }, .35)).toBe(false);
+      expect(nav.clear(110.18, 15.62, .35)).toBe(true);
+      w.npcs!.companion.respawnNear();
+      expect(Math.abs(dog.transform.z - 15)).toBeLessThan(4);
+      expect(nav.visible(p.transform, dog.transform, .3)).toBe(true);
+      // No reachable placement must remain deferred, including admission retries.
+      const visible = vi.spyOn(nav, 'visible').mockReturnValue(false);
+      w.npcs!.companion.respawnNear();
+      expect(dog.pendingAdmission).toBeDefined();
+      for (let i = 0; i < 35; i++) { w.tick++; w.solids.commit(); }
+      expect(dog.pendingAdmission).toBeDefined();
+      visible.mockRestore();
+      for (let i = 0; i < 35 && dog.pendingAdmission; i++) { w.tick++; w.solids.commit(); }
+      expect(dog.pendingAdmission).toBeUndefined();
+      expect(nav.visible(p.transform, dog.transform, .3)).toBe(true);
+      // The north corridor at x=174 is a real placed module. Its doorway is
+      // offset from the centre by its existing end-wall geometry.
+      for (let z = 17.5; z <= 19.9; z += .1)
+        expect(w.solids.clear({ x: 172.25, y: .6, z }, .3, 1, false), `north corridor mouth z=${z}`).toBe(true);
+      for (const x of [162, 228])
+        expect(w.solids.clear({ x, y: .6, z: 19 }, .3, 1, false), `unbuilt exterior at ${x}`).toBe(false);
+      const playerNav = nav.forPlayer(.35), start = playerNav.nearestCell(p.transform.x, p.transform.z, .35), path: number[] = [];
+      for (const x of [54, 78, 126, 162, 198, 228]) {
+        const wallZ = [54,126,198].includes(x) ? 11.2 : 18.8;
+        const door = playerNav.nearestCell(x, wallZ + (wallZ < 15 ? .8 : -.8), .35);
+        expect(door, `service opening at ${x} has a nearby walkable door cell`).toBeGreaterThanOrEqual(0);
+        expect(playerNav.path(start, door, path, 16000), `tunnel reaches service opening at ${x}`).toBe(true);
+      }
+    } finally { w.dispose(); }
+  }
   const w = await world('civ-street'); w.infected!.director.camera.halfWidth = 5; w.infected!.director.camera.halfDepth = 5;
   const threat = w.infected!.spawn('infected.runner', { x: 17, z: 0 }, { state: 'chase' }); step(w, 1);
   expect(w.events.events().find(e => e.type === 'corgi.bark')).toMatchObject({ threatId: threat, direction: { x: 1, z: 0 } });

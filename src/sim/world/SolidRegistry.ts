@@ -419,13 +419,15 @@ export class SolidRegistry {
     return distance;
   }
   /** Bounded nearest-first search. null means retain the request; never accept the blocked anchor. */
-  find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true, playerClearance = 0): Point | null {
+  find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true, playerClearance = 0, reachableFromPlayer = false): Point | null {
     const nav = this.world.infected?.nav, e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     let connected = false;
     const blockers: { entity: EntitySnapshot; reach2: number }[] = [];
     const direction = { x: 0, z: 0 };
     const player = playerClearance ? this.world.entities.get(1) : undefined;
     const fits = (p: Point) => {
+      const courier = reachableFromPlayer ? this.world.entities.get(1) : undefined;
+      if (courier && nav && !nav.visible(courier.transform, p, radius)) return false;
       if (playerClearance && player && ignoreId !== 1 && layers(p, player.transform) && Math.hypot(p.x - player.transform.x, p.z - player.transform.z) < playerClearance) return false;
       if (navigation && nav && !nav.contains(p.x, p.z, radius)) return false;
       // Adjacent admission probes often hit the same body. As in commit(), a
@@ -491,7 +493,7 @@ export class SolidRegistry {
     this.maxActor = Math.max(this.maxActor, actorRadius(e) + (e.companion ? .4 : 0));
     this.committed.delete(e); this.validated.delete(e);
     this.syncHulls(); this.writers.set(e, writer);
-    const to = this.find(e.transform, actorRadius(e), e.id, range, navigation, this.spawnClearance(e, writer));
+    const to = this.find(e.transform, actorRadius(e), e.id, range, navigation, this.spawnClearance(e, writer), writer === 'companion.respawn');
     if (!to) {
       if (!e.pendingAdmission) { e.pendingAdmission = { ...e.transform, writer, hidden: e.hidden, range, navigation, ...(e.id === 1 ? { colliderEnabled: this.world.physics.playerCollider?.isEnabled() } : {}) }; this.deferred++; }
       else Object.assign(e.pendingAdmission, e.transform, { writer, range, navigation, hidden });
@@ -561,7 +563,7 @@ export class SolidRegistry {
         const scripted = pending.x !== p.x || pending.z !== p.z || pending.y !== p.y;
         if (scripted) Object.assign(pending, p);
         if (!scripted && this.world.tick % 30 !== e.id % 30) { e.hidden = true; this.world.spatial.delete(e.id); continue; }
-        const to = this.find(pending, actorRadius(e), e.id, pending.range ?? 4, pending.navigation ?? true, this.spawnClearance(e, pending.writer));
+        const to = this.find(pending, actorRadius(e), e.id, pending.range ?? 4, pending.navigation ?? true, this.spawnClearance(e, pending.writer), pending.writer === 'companion.respawn');
         if (to) { Object.assign(e.transform, to); this.releasePending(e); this.admitted++; this.publish(e); }
         else { e.hidden = true; this.world.spatial.delete(e.id); continue; }
       }

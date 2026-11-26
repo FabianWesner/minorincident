@@ -109,8 +109,20 @@ export class Companion {
       // Navigation clearance alone does not account for actors or solid hulls. Find
       // a physically clear point near the courier, then commit that exact point.
       const at = { x: player.x, z: player.z, y: player.y - .4 };
-      const spot = this.world.solids.find({ ...at, z: at.z + 2 }, actorRadius(e), e.id, 1.5, true, .8)
-        ?? this.world.solids.find(at, actorRadius(e), e.id, 4, true, .8);
+      const nav = this.world.infected?.nav, radius = actorRadius(e);
+      const connectedSpot = (origin: typeof at, range: number) => {
+        for (let distance = 0; distance <= range; distance += .25) {
+          const steps = distance === 0 ? 1 : Math.ceil(2 * Math.PI * distance / .4);
+          for (let i = 0; i < steps; i++) {
+            const angle = i * Math.PI * 2 / steps;
+            const candidate = { x: origin.x + Math.cos(angle) * distance, z: origin.z + Math.sin(angle) * distance, y: origin.y };
+            const clear = this.world.solids.find(candidate, radius, e.id, 0, true, .8);
+            if (clear && (!nav || nav.visible(player, clear, radius))) return clear;
+          }
+        }
+        return null;
+      };
+      const spot = connectedSpot({ ...at, z: at.z + 2 }, 1.5) ?? connectedSpot(at, 4);
       if (!spot || !this.world.solids.relocate(e, spot, 'companion.respawn', 0)) {
         // If a crowd fills every nearby point, wait for admission here instead
         // of preserving a remote pose from the discarded checkpoint timeline.
