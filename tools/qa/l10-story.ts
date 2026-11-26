@@ -202,6 +202,7 @@ for (const tier of tiers) {
   let billboardFallTick: number | undefined, hospitalOpenTick: number | undefined;
   let finaleStartTick: number | null = null, finaleGateTick: number | null = null;
   let mounts = 0, bikeTicks = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
+  const gateCrossings: unknown[] = [], gateMembers = new Map<string, { id: number; x: number; z: number }>();
   const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [], overpassProbeState: unknown[] = [];
   let finalState: unknown;
   let lastRegion = '', firstMegaSeen: number | null = null, fullArsenal = false;
@@ -265,6 +266,18 @@ for (const tier of tiers) {
           world.megaPursuit!.introduce({ x: 3945, z: -25 });
         }
         update(); const p = world.entities.get(1)!;
+        for (const [group, gateId] of Object.entries(world.l10Encounters?.state.roadblockGates ?? {})) {
+          const gate = world.entities.get(gateId);
+          if (!gate?.interactable || gate.interactable.open) continue;
+          for (const [key, id] of Object.entries(world.l10Encounters?.state.spawned ?? {})) {
+            if (!key.startsWith(`${group}:`) || id < 0) continue;
+            const actor = world.entities.get(id); if (!actor?.infected || actor.health.current <= 0) continue;
+            const previous = gateMembers.get(key);
+            if ((!previous || previous.id !== id || previous.x < gate.transform.x) && actor.transform.x >= gate.transform.x && gateCrossings.length < 40)
+              gateCrossings.push({ tick: world.tick, key, id, previous, current: { x: actor.transform.x, z: actor.transform.z }, gate: { x: gate.transform.x, z: gate.transform.z }, player: { x: p.transform.x, z: p.transform.z }, gateCenterResident: world.chunks!.resident(gate.transform.x, gate.transform.z), wallPresent: world.infected!.nav.clear(gate.transform.x, actor.transform.z, .35) === false });
+            gateMembers.set(key, { id, x: actor.transform.x, z: actor.transform.z });
+          }
+        }
         billboardFallTick ??= world.l10Encounters?.state.billboardFallAt;
         hospitalOpenTick ??= world.l10Encounters?.state.hospitalOpenAt;
         for (const [key, id] of Object.entries(world.l10Encounters?.state.spawned ?? {})) if (key.startsWith('setpiece-field-hospital:stage:') && id > 0) {
@@ -326,7 +339,7 @@ for (const tier of tiers) {
           const ids = [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id);
           fullArsenal ||= isHangarIssue(ids);
         }
-        if (world.tick % 1800 === 0) trace.push({ director: { downedExcluded: world.infected!.director.downedExcluded, count: world.infected!.director.count, cap: world.infected!.director.cap, pending: world.infected!.director.pendingTurns }, seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, checkpoint: world.missions!.state.checkpoint, roadblocks: Object.entries(world.l10Encounters?.state.roadblockGates ?? {}).map(([group, id]) => ({ group, id, open: world.entities.get(id)?.interactable?.open, position: world.entities.get(id)?.transform, dismounted: world.l10Encounters?.state.roadblockDismounted?.[group], footFight: world.l10Encounters?.state.roadblockFootFight?.[group], slots: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith(`${group}:`)).map(([key, id]) => ({ key, id, hp: world.entities.get(id)?.health.current, position: world.entities.get(id)?.transform, state: world.entities.get(id)?.infected?.state, recoverAt: world.entities.get(id)?.infected?.recoverAt, active: world.infected?.active.some(actor => actor.id === id), held: world.npcs?.civilians.holds(id) })) })), hospital: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('setpiece-field-hospital:')).map(([key, id]) => { const e = world.entities.get(id); return { key, id, hp: e?.health.current, recoverAt: e?.infected?.recoverAt }; }), player: { ...p.transform, hp: p.health.current }, bike: world.vehicles?.bicycle.entity && { ...world.vehicles.bicycle.entity.transform, mounted: world.vehicles.bicycle.riding }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
+        if (world.tick % 1800 === 0) trace.push({ director: { downedExcluded: world.infected!.director.downedExcluded, count: world.infected!.director.count, cap: world.infected!.director.cap, pending: world.infected!.director.pendingTurns }, seconds: world.tick / 60, step: world.missions!.def.steps.find(step => world.missions!.state.steps[step.id].status === 'active')?.id, checkpoint: world.missions!.state.checkpoint, roadblocks: Object.entries(world.l10Encounters?.state.roadblockGates ?? {}).map(([group, id]) => ({ group, id, open: world.entities.get(id)?.interactable?.open, position: world.entities.get(id)?.transform && { ...world.entities.get(id)!.transform }, dismounted: world.l10Encounters?.state.roadblockDismounted?.[group], footFight: world.l10Encounters?.state.roadblockFootFight?.[group], slots: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith(`${group}:`)).map(([key, id]) => ({ key, id, hp: world.entities.get(id)?.health.current, position: world.entities.get(id)?.transform && { ...world.entities.get(id)!.transform }, state: world.entities.get(id)?.infected?.state, recoverAt: world.entities.get(id)?.infected?.recoverAt, active: world.infected?.active.some(actor => actor.id === id), held: world.npcs?.civilians.holds(id) })) })), hospital: Object.entries(world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('setpiece-field-hospital:')).map(([key, id]) => { const e = world.entities.get(id); return { key, id, hp: e?.health.current, recoverAt: e?.infected?.recoverAt }; }), player: { ...p.transform, hp: p.health.current }, bike: world.vehicles?.bicycle.entity && { ...world.vehicles.bicycle.entity.transform, mounted: world.vehicles.bicycle.riding }, charge: world.missions!.state.counters['charge-ticks'], gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot() });
       };
     },
     beforeDispose: world => { finalState = { mission: world.missions!.state, gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot(), player: world.entities.get(1)!.transform }; },
@@ -358,7 +371,7 @@ for (const tier of tiers) {
   check(tier, 'hangar-to-gate finale takes 7–9 minutes', finalePacing.hangarToGateSeconds !== null && finalePacing.hangarToGateSeconds >= 420 && finalePacing.hangarToGateSeconds <= 540, finalePacing.hangarToGateSeconds);
   check(tier, 'every story beat arrives 45–75 seconds after the previous one', beatIntervals.every(seconds => seconds !== null && seconds >= 45 && seconds <= 75), beatIntervals);
   check(tier, 'fight or story gaps stay within 20 seconds', finalePacing.longestGapSeconds !== null && finalePacing.longestGapSeconds <= 20, finalePacing.longestGapSeconds);
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, bikeRecovery, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, bikeRecovery, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, gateCrossings, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { const detail = error instanceof Error ? error.stack ?? String(error) : String(error); check(tier, 'native route executes', false, detail); rows.push({ tier, routeError: detail }); }
 }
