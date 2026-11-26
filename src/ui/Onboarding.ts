@@ -9,6 +9,13 @@ export const onboardingKey = 'minor-incident.onboarding.v1';
 const lessons = ['move', 'evade', 'interact', 'pickup', 'attack', 'selector', 'second-side', 'vehicle'] as const;
 type Lesson = typeof lessons[number];
 const descriptions: Record<Lesson, string> = { move: 'Move toward your objective', evade: 'Infected nearby. Keep moving', interact: 'Stand in the ring to interact', pickup: 'Walk over the weapon to pick it up', attack: 'Attack with your active weapon', selector: 'Switch to your next weapon', 'second-side': 'Try your other weapon', vehicle: 'Stand by the door to enter' };
+/** Distinct carried weapons a selector can switch between (the lure, kick and fists are not weapons to switch to). */
+export function carriedWeapons(state: { LEFT: { rack: { id: string }[] }; RIGHT: { rack: { id: string }[] } } | undefined): number {
+  if (!state) return 0;
+  const ids = new Set<string>();
+  for (const side of [state.LEFT, state.RIGHT]) for (const slot of side.rack) if (!['ability.corgi-lure', 'weapon.kick', 'weapon.fists'].includes(slot.id)) ids.add(slot.id);
+  return ids.size;
+}
 export class Onboarding {
   readonly element = node('div', 'onboarding-prompt');
   private readonly seen = new Set<Lesson>();
@@ -85,6 +92,8 @@ export class Onboarding {
         }
         if (l1 && lesson === 'selector') { this.completed.add('selector'); continue; }
         if (l1 && ['attack', 'second-side'].includes(lesson) && !player.weapons) break;
+        // Luna 11-26: L2 showed 'switch to your next weapon' with a single carried weapon. Wait until there is a second one.
+        if ((lesson === 'selector' || lesson === 'second-side') && carriedWeapons(player.weapons) < 2) break;
         if (lesson === 'vehicle' && !this.world.vehicles?.canInteract()) break;
         this.current = lesson; this.seen.add(lesson); this.startTick = this.world.tick;
         try { this.storage?.setItem(onboardingKey, JSON.stringify([...this.seen])); } catch { /* Once per session when storage is disabled. */ }
