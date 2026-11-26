@@ -136,6 +136,9 @@ export class AnimalMoves {
         if (a.impactTick !== undefined && b.arenaBoss) {
           const pad = l8FlamingoLanding(b.arenaBoss.slot);
           target = flamingoCruise * Math.min(1, Math.hypot(e.transform.x - pad.x, e.transform.z - pad.z) / 3);
+          // The lane impact happens before the return to the landing pad. Keep
+          // the peck low during that beat, then climb for the return flight.
+          target *= ease((renderTick - a.impactTick - 8) / 16);
         }
       }
       const h = this.heights.get(e.id) ?? { y: 0, tick: renderTick, pitch: 0 };
@@ -143,19 +146,39 @@ export class AnimalMoves {
       // Keep the same continuous render state across take-off, dive and landing.
       // Snapping to the active arc teleported a partially climbed bird by 1.69 m.
       const diving = a?.move === 'flamingo.dive' && a.stage === 'active' && a.impactTick === undefined;
-      h.y += (target - h.y) * (1 - Math.exp(-dt * (dead || diving ? 6 : 2.2)));
-      h.pitch += ((diving ? -.55 * Math.cos(Math.PI * travel) : .08) - h.pitch) * (1 - Math.exp(-dt * 6));
+      const impact = a?.move === 'flamingo.dive' && a.impactTick !== undefined && renderTick - a.impactTick < 24;
+      h.y += (target - h.y) * (1 - Math.exp(-dt * (impact ? 8 : dead || diving ? 6 : 2.2)));
+      h.pitch += ((diving ? -.55 + .2 * travel : .08) - h.pitch) * (1 - Math.exp(-dt * 6));
       h.tick = renderTick; this.heights.set(e.id, h);
       this.lift = h.y;
       if (h.y > .15) {
         p.airborne = true; p.wing = 1; p.hind = -1.25 * clamp01(h.y / .8);
-        if (diving) {
+        if (a?.move === 'flamingo.dive' && a.stage === 'active' && (diving || a.impactTick !== undefined && renderTick - a.impactTick < 24)) {
           // Swoop: wings swept, nose down into the lane and up out of it.
-          p.pitch = h.pitch; p.wing = .45; p.flap = .25; p.head = -.2;
+          const impact = a?.impactTick === undefined ? 0 : ease(1 - clamp01((renderTick - a.impactTick - 8) / 16));
+          p.pitch = h.pitch - .12 * impact; p.wing = .55 + .25 * impact; p.flap = .18;
+          // Reach the neck into the dive, fold the long legs back, then snap
+          // the beak down at the authored impact tick.
+          p.head = -.8 - .3 * impact; p.hind = 1.35 + .2 * impact;
+        } else if (a?.move === 'flamingo.dive' && a.stage === 'recovery') {
+          const recover = clamp01((renderTick - (a.recoveryUntil - 120)) / 120);
+          p.wing = 1 - .55 * recover; p.flap = Math.sin(t * 15) * .12;
+          p.head = -.45 * (1 - recover); p.hind = .55 * (1 - recover);
+        } else if (a?.stage === 'telegraph') {
+          // Climb and gather: neck recoils while the wings lift into a held pose.
+          this.flightPhase = (t * 4.6) % 1;
+          p.head = .34 * windup; p.hind = -.35;
+          p.flap = .65 * Math.sin(this.flightPhase * Math.PI * 2) * (1 - windup) + .65 * windup;
         } else {
-          const beat = a?.stage === 'telegraph' ? 4.6 : 3;
-          this.flightPhase = (t * beat) % 1; p.flap = Math.sin(this.flightPhase * Math.PI * 2) * .75; p.pitch = h.pitch;
+          this.flightPhase = (t * 3) % 1; p.flap = Math.sin(this.flightPhase * Math.PI * 2) * .75; p.pitch = h.pitch;
+          p.head = -.08;
         }
+      } else if (a?.move === 'flamingo.dive' && a.stage === 'recovery' && h.y > .02) {
+        // Landing recovery: a brief forward peck, then fold the wings as the
+        // rendered height settles. The sim recovery window is unchanged.
+        const recover = clamp01((renderTick - (a.recoveryUntil - 120)) / 120);
+        p.airborne = true; p.wing = 1 - .55 * recover; p.flap = Math.sin(t * 15) * .12;
+        p.head = -.45 * (1 - recover); p.hind = .55 * (1 - recover);
       }
       return p.airborne ? p : undefined;
     }

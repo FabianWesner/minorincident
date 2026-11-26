@@ -1,0 +1,79 @@
+{
+  "seed": 42,
+  "res": "1024",
+  "steps": 12,
+  "image-sha256": "824b4a78fb1340daa1d3d64aea2bc3fbca78ad7edf52bb0521d19b85d0c21da6",
+  "infer-completed-at": 1795733426.830764,
+  "infer-seconds": 23.2,
+  "extract-300000-2048-completed-at": 1795733445.498174,
+  "extract-300000-2048-seconds": 18.3,
+  "source": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/tris300000_tex2048.glb",
+  "source_sha256": "c8aeef87e315686841f903e1164787fd58f954617efe4a5fd340482be73eced0",
+  "input": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/input.png",
+  "input_sha256": "824b4a78fb1340daa1d3d64aea2bc3fbca78ad7edf52bb0521d19b85d0c21da6",
+  "status": "high source only; not reduced, rigged or integrated",
+  "geometry": {
+    "method": "v2 solidify envelope, resolution 256, 1024-pixel eight-view silhouette comparison",
+    "lod0": {
+      "triangles": 1760,
+      "min_iou": 0.9518234630136339
+    },
+    "lod1": {
+      "triangles": 704,
+      "min_iou": 0.9417168870071821
+    },
+    "far_candidate": {
+      "triangles": 960,
+      "min_iou": 0.9444149688737974
+    },
+    "rejected_288": {
+      "triangles": 288,
+      "min_iou_512": 0.9009389113382458
+    },
+    "status": "geometry trial; far candidate is more detailed than mid tier, so final LOD ordering is not selected",
+    "directory": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/geometry",
+    "selection": {
+      "lod0_triangles": 1760,
+      "lod1_triangles": 704,
+      "lod2_triangles": 704,
+      "note": "reuse mid-tier geometry for far tier; 288 failed silhouette and 960 reverses LOD ordering; still requires delivery byte and runtime gates"
+    }
+  },
+  "binding_probe": {
+    "wingL_vertices_moved_over_5cm": 974,
+    "wingR_vertices_moved_over_5cm": 969,
+    "rotation_rad": 1,
+    "stretch_over_4x": 0,
+    "method": "single wing joint local X rotation on LOD0 preliminary bind; rest edge >1 mm and posed edge >3 cm",
+    "status": "preliminary; not runtime atlas, no matched attack review",
+    "rest_lateral_extent_m": 1.7273717147374978,
+    "fold_lateral_extent_m": 1.0935879665061146,
+    "fold_test": "opposing 1.2 rad local shoulder yaw from the open bind pose"
+  },
+  "atlas_pose_probe": {
+    "model": "preliminary openwing LOD0",
+    "clip": "run",
+    "space": "baked atlas model coordinates; absolute extent depends on rig scale",
+    "run_unlayered_lateral": 2.0904357816,
+    "existing_flight_layer_lateral": 1.15452488,
+    "experimental_open_flight_lateral": 2.0904357816,
+    "experimental_fold_lateral": 1.2721586516,
+    "status": "CPU probe only; requires runtime implementation and rendered review"
+  },
+  "eye_probe": {
+    "method": "v2 readable_eye_pick on own 1500px front render",
+    "pixels": [
+      [
+        640,
+        245
+      ],
+      [
+        810,
+        245
+      ]
+    ],
+    "landmarks": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/geometry/eyes.json",
+    "binding": "/Users/wesner/Workspace/trellis-highs/s247-inf.flamingo-openwing/geometry/bound-lod0-eyed-probe.glb",
+    "status": "two generated eye patches, runtime emission not visually verified"
+  }
+}

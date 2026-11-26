@@ -136,6 +136,7 @@ for (const lod of [0, 1, 2]) {
   else if (eyeSource && (id.startsWith('inf.') || alignment?.healthy_toy_eyes || metadata && ['quadruped', 'bird'].includes(metadata.class ?? ''))) args.push('--eyes', eyeSource);
   if (id === 'inf.lioness') args.push('--interpolate-eye-weights');
   if (metadata && !derivedTemplate) args.push('--reconstruct-body');
+  if (id === 'inf.flamingo') args.push('--repair-flamingo-tail');
   // The lowered Mega fists contain small nearest-template trouser islands.
   // Repair their semantic ownership without refitting the matching v2 rig.
   if (metadata?.class === 'mega') args.push('--repair-contacts');

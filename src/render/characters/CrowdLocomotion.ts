@@ -340,8 +340,12 @@ export class CrowdLocomotion {
       if (a.wing) {
         // Flamingo wings: swing out from the folded rest, then beat about the body's long axis.
         const out = side === 'L' ? -1 : 1;
-        turn(arm, Y, -out * 1.25 * a.wing); turn(arm, X, out * (a.flap - .15 * a.wing) * -1);
-        turn(fore, Y, -out * .35 * a.wing);
+        turn(arm, Y, out * 1.25 * a.wing); turn(arm, X, out * (a.flap - .15 * a.wing) * -1);
+        turn(fore, Y, out * .35 * a.wing);
+        // TRELLIS flamingos have dedicated feathered wing pivots below each arm.
+        // Driving both levels opens the silhouette instead of rotating only the shoulder.
+        turn(rig[`wing${side}`], Y, out * .35 * a.wing);
+        turn(rig[`wing${side}`], X, out * a.flap * -.8);
       } else {
         turn(arm, Z, a.front + (side === 'L' ? a.stamp * .75 : 0) + a.armsUp * 2.5);
         turn(fore, Z, -a.front * .45 - (side === 'L' ? a.stamp * 1.1 : 0) - a.armsUp * .6);

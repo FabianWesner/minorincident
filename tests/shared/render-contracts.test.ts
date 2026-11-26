@@ -216,6 +216,20 @@ function checkOrdinaryInfectedPresentation(): void {
   const flamingos = new AnimalMoves(), flamingo = { ...entity('chase'), archetype: 'infected.flamingo' };
   expect(flamingos.sample(flamingo, 129, 1.2, 0)).toBeUndefined();
   expect(flamingos.lift).toBe(0);
+  // The arena uses a 36-tick tell. Its presentation must take off within that
+  // window and retain a distinct peck at the simulation's impact tick.
+  const bird = { ...flamingo, transform: { x: 0, y: .7, z: 0 }, infected: { ...flamingo.infected!, arenaBoss: { arena: 'flamingo', slot: 0 }, specialAttack: { move: 'flamingo.dive', stage: 'telegraph', startTick: 200, activeTick: 236, recoveryUntil: 0, area: { x: 0, z: 0 }, destination: { x: 15, z: 0 } } } } as unknown as EntitySnapshot;
+  for (let tick = 200; tick <= 234; tick++) flamingos.sample(bird, tick, 0, 0);
+  expect(flamingos.lift).toBeGreaterThan(1);
+  const tell = flamingos.sample(bird, 235, 0, 0)!;
+  expect(tell.wing).toBe(1); expect(tell.head).toBeGreaterThan(.3);
+  bird.infected!.specialAttack!.stage = 'active';
+  bird.infected!.specialAttack!.impactTick = 236;
+  const peck = flamingos.sample(bird, 236, 0, 0)!;
+  expect(peck.head).toBeLessThan(-.9); expect(peck.hind).toBeGreaterThan(1);
+  const impactLift = flamingos.lift;
+  for (let tick = 237; tick <= 244; tick++) flamingos.sample(bird, tick, 0, 0);
+  expect(flamingos.lift).toBeLessThan(impactLift * .4);
   const reaction = { index: 0, started: 100, until: 101, direction: { x: 1, z: 0 }, from: { x: 0, z: 0 }, to: { x: 0, z: 0 }, heavy: false };
   expect(InfectedMoves.flinch(entity('chase', reaction), 101)).toBeGreaterThan(.4);
   expect(InfectedMoves.flinch(entity('chase', reaction), 110)).toBeGreaterThan(.5);
