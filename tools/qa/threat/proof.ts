@@ -276,7 +276,7 @@ export async function proveThreatAudit(): Promise<void> {
   assert(waveFlags({ firstAttackSeconds: null, observedSeconds: 21, spawned: 3 }).includes('WAVE_NO_ATTACK_WITHIN_20_SECONDS'));
   assert(waveFlags({ firstAttackSeconds: null, observedSeconds: 5, spawned: 3 }).includes('WAVE_OBSERVATION_ENDED_BEFORE_ATTACK'));
   assert(waveFlags({ firstAttackSeconds: 0, observedSeconds: 30, spawned: 2 }).includes('WAVE_FEWER_THAN_THREE_COHORT_MEMBERS'));
-  assert.deepEqual(l6EntryFlags({ expected: 2, spawned: 2 }), []);
+  assert.deepEqual(l6EntryFlags({ expected: 1, spawned: 1 }), []);
   assert.deepEqual(l6EntryFlags({ expected: 2, spawned: 1 }), ['L6_ENTRY_COUNT_MISMATCH']);
   assert.deepEqual(l6EntryFlags({ expected: 3, spawned: 3 }), ['L6_ENTRY_COUNT_MISMATCH']);
   assert.deepEqual(l6HatchReopenFlags({ expected: 1, spawned: 1 }), []);

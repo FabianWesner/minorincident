@@ -112,6 +112,21 @@ export class InfectedSystem {
   private wideBudget = 0;
   /** Infected steering, separation and impulses share this collision registry. Humans retain `nav`. */
   get infectedNav(): NavGrid { return this.admissionNav ?? this.nav; }
+  /** L6 may seal crowd-only service-lane edges for infected while keeping the escort grid open. */
+  setInfectedWalls(walls: readonly NonNullable<ScenarioDefinition['walls']>[number][]): void {
+    const nav=this.nav;
+    this.admissionNav=new NavGrid(nav.ground,walls,nav.clearance,nav.center,nav.mask,nav.cellSize);
+    this.admissionNav.movementCost=nav.movementCost;
+    this.navigation=new DistrictNavigation({...this.definition,walls:[...walls]},this.admissionNav);
+    for(const [id,wall] of this.world.props?.navWalls??[]){this.admissionNav.setBlocker(id,wall,true);for(const district of this.navigation.districts)district.grid.setBlocker(id,wall,true);}
+    for(const wall of this.world.interactables?.walls??[])if(wall.entityId!==undefined){this.admissionNav.setBlocker(wall.entityId,wall,true);for(const district of this.navigation.districts)district.grid.setBlocker(wall.entityId,wall,true);}
+  }
+  /** A closable L6 hatch changes infected routing/collision but leaves the friendly escort floor connected. */
+  setInfectedBlocker(id:number,wall:NonNullable<ScenarioDefinition['walls']>[number],blocked:boolean):void {
+    this.infectedNav.setBlocker(id,wall,blocked);
+    for(const district of this.navigation.districts)district.grid.setBlocker(id,wall,blocked);
+    for(const entity of this.active){entity.infected!.goal=-1;entity.infected!.path.length=0;if(entity.infected!.l1)entity.infected!.l1.directTick=-1;}
+  }
   excludeInfected(walls: readonly import('../combat/HitQuery').CoverWall[]): void {
     const n = this.nav;
     this.admissionNav = n.withClearance(['L1', 'L2', 'L4'].includes(this.world.scenario ?? '') ? .35 : n.clearance);
@@ -157,7 +172,7 @@ export class InfectedSystem {
   private forecourt: { x: number; z: number } | null = null;
   private readonly lureTarget = { x: 0, z: 0 };
   private readonly waypoint = { x: 0, z: 0 };
-  constructor(readonly world: SimWorld, definition: ScenarioDefinition, mask: NavGrid['mask'] = null) {
+  constructor(readonly world: SimWorld, private readonly definition: ScenarioDefinition, mask: NavGrid['mask'] = null) {
     this.hearing = new Perception(world);
     this.perches = definition.perches ?? [];
     installCharacterSeparation(world); installAgentMotion(world);

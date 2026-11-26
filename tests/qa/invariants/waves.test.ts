@@ -3,7 +3,7 @@ import { loadLevel } from './world';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { l2, l2TruckPath } from '../../../src/data/l2';
 import { l3 } from '../../../src/data/l3';
-import { l6, l6Entries, l6Doors } from '../../../src/data/l6';
+import { l6, l6Entries, l6Doors, l6SpawnCandidates } from '../../../src/data/l6';
 import { LevelSevenEncounters } from '../../../src/sim/missions/LevelSevenEncounters';
 import { l7Encounters } from '../../../src/data/l7';
 import { cureEncounters, cureEncounterSlots } from '../../../src/levels/L10/encounters';
@@ -105,6 +105,21 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
   await withWorld('L6', tier, w => {
     const c = w.missions!.l6! as unknown as { spawn(n: number, doors: number[], wave: number): number };
     const state = w.missions!.state.l6!;
+    const humanNav=w.infected!.nav,infectedNav=w.infected!.infectedNav;
+    expect(infectedNav).not.toBe(humanNav);
+    expect(infectedNav.walls.some(wall=>(wall as {navOnly?:boolean}).navOnly)).toBe(true);
+    expect(humanNav.walls.some(wall=>(wall as {navOnly?:boolean}).navOnly)).toBe(false);
+    for (const z of [14, 15, 16]) {
+      expect(infectedNav.visible({x:241,z},{x:251,z},.35), 'infected cannot cross the eastern tunnel end').toBe(false);
+      expect(humanNav.visible({x:241,z},{x:251,z},.35), 'the evacuation route remains open to humans').toBe(true);
+    }
+    const hatchWall={x:54,y:1,z:11.8,halfX:1.55,halfY:1,halfZ:.18};
+    expect(infectedNav.clear(54,12.3,.35), 'an open side door is a real aperture in the infected wall').toBe(true);
+    w.infected!.setInfectedBlocker(920_002,hatchWall,true);
+    expect(infectedNav.clear(54,12.3,.35), 'a closed side hatch blocks infected passage').toBe(false);
+    expect(humanNav.clear(54,12.3,.35), 'the hatch wall does not strand the friendly escort route').toBe(true);
+    w.infected!.setInfectedBlocker(920_002,hatchWall,false);
+    expect(infectedNav.clear(54,12.3,.35), 'breaking the hatch reopens its infected route').toBe(true);
     state.breach1At = state.breach2At = Infinity;
     // Shelter breaches may engage any resident; hatch routing probes require courier contact across the tracks.
     let courierOnly = false;
@@ -115,8 +130,8 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
     const measured = new Set<number>(), apply = w.combat!.damage.apply.bind(w.combat!.damage);
     // An immortal route probe must also be protected from repeated gunfire stagger.
     vi.spyOn(w.combat!.damage, 'apply').mockImplementation(hit => (hit.targetId === 1 || measured.has(hit.targetId)) ? 0 : apply(hit));
-    // Four per breach at the opening; eight staggered at the second; every maintenance entry has its own quota.
-    for (const [name, count, doors, wave] of [['breach-1', 8, [0, 1], 1], ['breach-2', 8, [0, 1], 2], ['retreat-reinforcement', 1, [0, 1], 3], ...l6Entries.map((entry, i) => [`entry-${i}`, entry.count, [entry.door], 4])] as [string, number, number[], number][]) {
+    // Four at the first breach, five at the second, and one per maintenance entry.
+    for (const [name, count, doors, wave] of [['breach-1', 4, [0, 1], 1], ['breach-2', 5, [0, 1], 2], ['retreat-reinforcement', 1, [2], 3], ...l6Entries.map((entry, i) => [`entry-${i}`, entry.count, [entry.door], 4])] as [string, number, number[], number][]) {
       courierOnly = wave === 4;
       for (const e of [...w.infected!.active]) w.infected!.release(e);
       if (wave === 4) {
@@ -153,17 +168,23 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
         if (courierOnly) for (const id of ids) { w.infected!.press(id, 1, w.tick + 120); w.infected!.rush(id, w.entities.get(1)!.transform, w.tick+120, true); }
       }, true));
     }
-    // Hold knockdowns retain their pool slots. Leave all twelve side arrivals
+    // Hold knockdowns retain their pool slots. Leave all six side arrivals
     // available even after the hold budget is full, on both quality tiers.
     for (const e of [...w.infected!.active]) w.infected!.release(e);
     const player = w.entities.get(1)!;
     Object.assign(player.transform, { x: 3, z: 0 }); w.spatial.set(1, 3, 0);
     w.physics.playerBody!.setTranslation(player.transform, true); followFrustum(w);
-    // Announced breaches now outrank future hatches; recurring retreat filler must still reserve all twelve hatch arrivals.
-    state.phase = 'retreat'; delete state.arrivals;
+    // Announced breaches now outrank future hatches; recurring retreat filler must still reserve all six hatch arrivals.
+    state.phase = 'first'; state.arrivals = { remaining: 0, door: 0, nextAt: 0 };
+    for (const entry of state.entries!) {
+      entry.warnedAt = 1; entry.closedAt = 0; delete entry.brokenAt;
+      const door = l6Doors[entry.door];
+      w.infected!.setInfectedBlocker(920_000 + entry.door, { x: door.x, y: 1, z: door.z < 15 ? 11.8 : 18.2, halfX: 1.55, halfY: 1, halfZ: .18 }, false);
+    }
     const reserved = state.entries!.reduce((sum, entry) => sum + entry.remaining, 0);
     expect(c.spawn(60, [0, 1], 3), 'filler preserves every authored hatch slot').toBe(l6.infected[tier] - reserved);
     expect(c.spawn(1, [0, 1], 3)).toBe(0);
+    state.phase = 'retreat';
     for (const entry of state.entries!) {
       const door = l6Doors[entry.door];
       Object.assign(player.transform, { x: door.x - 24, z: 15 }); w.spatial.set(1, player.transform.x, 15);
@@ -171,6 +192,14 @@ for (const tier of ['high', 'low'] as const) test(`5 @nightly authored wave cens
       expect(c.spawn(entry.remaining, [entry.door], 4), 'dedicated entries retain their slots after a full hold').toBe(entry.remaining);
       entry.remaining = 0;
     }
+    for (const e of [...w.infected!.active]) w.infected!.release(e);
+    for (const entry of state.entries!) { entry.closedAt = w.tick || 1; delete entry.brokenAt; }
+    const available = () => l6SpawnCandidates(2, 3, state.entries!.filter(entry => entry.closedAt && !entry.brokenAt).map(entry => entry.door));
+    expect(available(), 'all closed service hatches stop tunnel pressure').toEqual([]);
+    state.entries!.find(entry => entry.door === 2)!.brokenAt = w.tick || 1;
+    const reopened = available();
+    expect(reopened, 'pressure resumes through the broken hatch only').toEqual([2]);
+    expect(c.spawn(2, reopened, 3), 'the broken hatch admits the next cohort').toBe(2);
   });
   await withWorld('L6', tier, w => {
     const m = w.missions!;

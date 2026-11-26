@@ -3,7 +3,7 @@ import { dirname } from 'node:path';
 import { preset } from '../../src/sim/progression/Campaign';
 import { runLevel } from '../sim-runner/levels';
 import { ThreatObserver } from './threat/observer';
-import { l6 } from '../../src/data/l6';
+import { l6, l6Doors } from '../../src/data/l6';
 import { provenance } from './accept/probe';
 
 const output = process.argv[2] ?? 'test-results/r12-l6/pressure-matrix.json';
@@ -26,15 +26,19 @@ for (const tier of tiers) for (const seed of seeds) {
       actualTier = world.infected!.director.tier;
       const update = world.update.bind(world);
       world.update = () => {
+        const prior = world.missions?.state.l6;
+        const healthy = prior?.survivors.filter(r => (r.status === 'shelter' || r.status === 'following') && !r.injured).map(r => world.entities.get(r.id)!).filter(Boolean) ?? [];
+        const column = healthy.filter(e => e.transform.x >= (prior?.leaderX ?? 0) - l6.follow.columnM);
+        const tail = column.length ? Math.min(...column.map(e => e.transform.x)) : healthy.length ? Math.min(...healthy.map(e => e.transform.x)) : prior?.leaderX ?? 0;
         update();
         const state = world.missions?.state.l6;
         if (!state) return;
         maxInfected = Math.max(maxInfected, world.infected?.director.count ?? 0);
         const log = state.spawnLog.filter(row => row.wave === 3);
         for (const row of log.slice(waveCursor)) {
-          const delta = row.x - state.leaderX;
+          const delta = l6Doors[row.door].x - tail;
           directions.push({ x: row.x, leaderX: state.leaderX,
-            direction: delta > 10 ? 'ahead' : delta < -10 ? 'behind' : 'near', tick: row.tick });
+            direction: delta >= l6.pressure.aheadM ? 'ahead' : delta <= -l6.pressure.behindM ? 'behind' : 'near', tick: row.tick });
         }
         waveCursor = log.length;
       };

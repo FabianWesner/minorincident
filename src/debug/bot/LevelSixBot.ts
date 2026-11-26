@@ -11,19 +11,28 @@ export class LevelSixBot {
   private readonly walker=new Walker();
   private shotgunTarget=0;
   private preparedWeapon=false;
+  private earlyCloseRetreatWeapon=false;
   constructor(private readonly w:SimWorld,readonly profile:L6Profile='complete'){}
   sample():InputFrame {
     const w=this.w,m=w.missions!,s=m.state.l6,f=emptyInput(),p=w.entities.get(1)!.transform;
     this.finished=m.state.phase==='result'||m.state.phase==='progression';if(this.finished||!s)return f;
     if(m.state.phase==='briefing')m.begin();if(m.state.phase==='cinematic'){f.interact=true;return f;}
-    if(m.state.phase==='retry'){m.restore();this.walker.reset();this.shotgunTarget=0;return f;}
+    if(m.state.phase==='retry'){m.restore();this.walker.reset();this.shotgunTarget=0;this.preparedWeapon=false;this.earlyCloseRetreatWeapon=false;return f;}
     if(this.profile==='idle'||w.entities.get(1)!.health.current<=0)return f;
-    // The campaign opens with the handgun; a skilled defender may equip the
-    // authored MG before the shelter breach using ordinary selection input.
-    if(!this.preparedWeapon && (this.profile==='complete'||this.profile==='early-close')) {
-      const index=w.entities.get(1)!.weapons?.RIGHT.rack.findIndex(slot=>slot.id==='weapon.army-mg')??-1;
+    // Let the authored shelter breach engage during the shelter objectives;
+    // the MG comes out for the long tunnel retreat.
+    if(!this.preparedWeapon && this.profile==='complete') {
+      const index=w.entities.get(1)!.weapons?.RIGHT.rack.findIndex(slot=>slot.id==='weapon.handgun')??-1;
       if(index>=0)f.selectedSlot={side:'RIGHT',index};
       this.preparedWeapon=true;
+    }
+    if(this.profile==='early-close'&&!this.preparedWeapon){
+      const index=w.entities.get(1)!.weapons?.RIGHT.rack.findIndex(slot=>slot.id==='weapon.handgun')??-1;
+      if(index>=0)f.selectedSlot={side:'RIGHT',index};this.preparedWeapon=true;
+    }
+    if(this.profile==='early-close'&&s.phase==='retreat'&&!this.earlyCloseRetreatWeapon){
+      const index=w.entities.get(1)!.weapons?.RIGHT.rack.findIndex(slot=>slot.id==='weapon.army-mg')??-1;
+      if(index>=0)f.selectedSlot={side:'RIGHT',index};this.earlyCloseRetreatWeapon=true;
     }
     const typical=this.profile==='typical';
     const go=(target:{x:number;z:number},stop:number,key:string)=>{const dir=this.walker.step(w,target,stop,key);if(dir)f.move=dir;return !dir;};
@@ -34,6 +43,8 @@ export class LevelSixBot {
     // A visible bite on the group is an immediate rescue even beyond the newbie's normal 16 m threat scan.
     // The existing bite-priority ordering was ineffective there despite the machine gun reaching the victim.
     const enemies=w.infected!.active.filter(e=>e.health.current>0&&!e.infectionRise&&!e.hidden&&w.combat!.query.shotVisible(p,e.transform,e.id)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(this.profile==='newbie'&&biteRisk(e)>0?16:typical?21:22)).sort((a,b)=>biteRisk(a)-biteRisk(b)||Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z));
+    if(this.profile==='complete'&&s.phase==='fails'&&w.tick<s.breach2At+225){go({x:-9,z:-4},.6,'breach-courier');return f;}
+    if(this.profile==='early-close'&&s.phase==='fails'&&Math.hypot(p.x+9,p.z+4)>1){go({x:-9,z:-4},.6,'breach-courier');return f;}
     // Close each reachable hatch while advancing. Keep the movement toward the
     // switch active during ordinary combat so the adversarial route defends as
     // it closes, instead of walking through incoming attacks without firing.
@@ -62,7 +73,7 @@ export class LevelSixBot {
       if((e.archetype==='infected.armored'||e.combat?.shield)&&e.infected!.state==='attack')this.shotgunTarget=e.id;
       if((w.entities.get(this.shotgunTarget)?.health.current??0)<=0)this.shotgunTarget=0;
       const closeArmor=!!this.shotgunTarget&&d<=8&&shotgun>=0,side=closeArmor?'RIGHT':d<2.2?'LEFT':'RIGHT';
-      const mg=rack.findIndex(slot=>slot.id==='weapon.army-mg'),index=closeArmor?shotgun:mg;
+      const mg=rack.findIndex(slot=>slot.id===(s.phase==='retreat'?'weapon.army-mg':'weapon.handgun')),index=closeArmor?shotgun:mg;
       if(side==='RIGHT'&&index>=0)f.selectedSlot={side:'RIGHT',index};
       strikeAt(f,e,side,p);
       if(typical && w.tick%180<30 && d>5) { const angle=.3, x=f.aim!.x, z=f.aim!.z; f.aim={x:x*Math.cos(angle)-z*Math.sin(angle),z:x*Math.sin(angle)+z*Math.cos(angle)}; f.aimPoint={x:e.transform.x+f.aim.x*2.6,z:e.transform.z+f.aim.z*2.6}; }
