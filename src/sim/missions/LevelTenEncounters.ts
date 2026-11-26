@@ -425,21 +425,17 @@ export class LevelTenEncounters {
         const gate = gateId === undefined ? undefined : w.entities.get(gateId);
         if (gate && w.vehicles?.bicycle.riding && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 36)
           (this.state.roadblockMountedApproach ??= {})[group.id] = true;
-        if (gate && this.state.roadblockMountedApproach?.[group.id] && !w.vehicles?.bicycle.riding && Math.abs(player.transform.x - gate.transform.x) <= 30 && Math.abs(player.transform.z - gate.transform.z) <= 30)
+        if (gate && this.state.roadblockMountedApproach?.[group.id] && !w.vehicles?.bicycle.riding && Math.hypot(player.transform.x - gate.transform.x, player.transform.z - gate.transform.z) <= 30)
           (this.state.roadblockDismounted ??= {})[group.id] = true;
         if (gate?.interactable?.open) gate.interactable.enabled = false;
         if (gate?.interactable && !gate.interactable.open) {
           const slots = cureEncounterSlots(group, ai.director.tier);
           const admitted = slots.every(slot => this.state.spawned[`${slot.key}:0`] !== undefined);
-          const resolved = admitted && slots.filter(slot => {
-            const id = this.state.spawned[`${slot.key}:0`];
-            return !!this.state.roadblockFootHits?.[group.id]?.[slot.key] || (w.entities.get(id!)?.health.current ?? 0) <= 0;
-          }).length >= Math.min(group.id === 'setpiece-dark-underpass' || group.id === 'setpiece-field-hospital' ? 2 : 3, slots.length);
-          const fightAt = this.state.roadblockFootFightAt?.[group.id] ?? w.tick;
-          const holdSeconds = ai.director.tier === 'high' ? 45
-            : group.id === 'setpiece-field-hospital' ? 21 : 30;
-          const holdTicks = holdSeconds * 60;
-          if (resolved && this.state.roadblockDismounted?.[group.id] && this.state.roadblockFootFight?.[group.id] && w.tick - fightAt >= holdTicks) {
+          const cleared = admitted && slots.every(slot => {
+            const key = `${slot.key}:0`, id = this.state.spawned[key];
+            return !this.carried.has(key) && (w.entities.get(id)?.health.current ?? 0) <= 0;
+          });
+          if (cleared && this.state.roadblockDismounted?.[group.id]) {
             gate.interactable.open = true; gate.interactable.completed = true;
             gate.interactable.enabled = false;
             w.interactables!.unblock(gate.id);
