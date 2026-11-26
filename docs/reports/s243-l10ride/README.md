@@ -66,7 +66,7 @@ A trial made the bot move toward visible roadblock threats to reach flamethrower
 
 ## Final-kill timing fixture
 
-The focused `tests/engine/l10-roadblocks.test.ts` fixture passes for all four roadblocks on HIGH and LOW. Using production damage calls, it verifies that a recoverable knockdown, another living member, and an unadmitted slot each keep the gate closed; the final permanent explosive kill opens it and removes its wall without advancing the simulation tick. The killed actor remains present. Typecheck and targeted lint passed. This fixture sets the mounted/dismounted state and uses retired slots as setup; it does not prove native reachability, all death paths, or the 4/4 route. The strict route, threat audit, captures, and other required checks remain open.
+The focused roadblock fixture (now in `tests/engine/save-progression.test.ts`) passes for all four roadblocks on HIGH and LOW. Using production damage calls, it verifies that a recoverable knockdown, another living member, and an unadmitted slot each keep the gate closed; the final permanent explosive kill opens it and removes its wall without advancing the simulation tick. The killed actor remains present. Typecheck and targeted lint passed. This fixture sets the mounted/dismounted state and uses retired slots as setup; it does not prove native reachability, all death paths, or the 4/4 route. The strict route, threat audit, captures, and other required checks remain open.
 
 ## Current L10 threat diagnostic
 
@@ -89,3 +89,10 @@ The same staged test crossed every closed gate at z=0, 40 and 150, outside the w
 A continuous staged motorbike route started 25 m west of each gate on the road, rode to z=40, then east without teleporting across the barrier. With the old 50 m half-width, the bike passed the closed convoy, underpass and hospital gates on HIGH and LOW in 673 ticks; the quarantine attempt stopped at scenery before reaching the detour. The [collision receipt](gate-detour.json) repeats that old-width fixture and the new wall in the same world. The actual gate now spans the authored district z bounds on spawn and restore (`halfZ=396`, centered at z=95). With the new wall the same three detours stopped west of the gates on both tiers; direct closed samples at z=0, 40, 74/95 and 150 stopped, and directly opened samples crossed. The quarantine detour remains limited by scenery in this fixture. This uses a long collision wall and its camera presentation remains hard to read; it needs native play review.
 
 The [strict route trial](route-wide-trial.json) with the new wall recorded 0/4 on HIGH and LOW, both at the 2100 s limit, with 11 and 12 deaths. Both stopped at convoy with recoverable cohort members; route completion and L10 threat remain unmet. Typecheck, targeted lint, and the L10 roadblock, camera and save progression test files passed (10 tests). The earlier threat diagnostic and camera captures predate the widened wall. Full audit, native captures, remote unit and other required checks remain open.
+
+
+## Unit and lint validation
+
+The first remote run stopped before execution because the new standalone test raised the file budget to 46/45. The roadblock test was moved into the existing save progression file; the L8 plaza diagnostic's pre-existing explicit `any` was replaced with its inferred type to clear lint. Full lint and typecheck passed; the two focused L10/save files passed 10/10 locally.
+
+The next remote unit run admitted 149/150 cases and 45/45 files but timed out at 245.5 s against the 240 s budget. An unchanged retry completed: 27 files passed, 105 tests passed and one skipped, 239.0 s, exit 0. This validates the unit gate on the current implementation, not native 4/4 loops, threat, or the visual/collision findings.

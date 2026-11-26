@@ -1,8 +1,8 @@
 import { writeFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
 import { loadLevel } from '../../sim-runner/levels';
-const w: any = await loadLevel('L8', 1);
-const anchors = w.missions.def.anchors; const c = anchors['central-plaza']; console.log('plaza', c);
+const w = await loadLevel('L8', 1);
+const anchors = w.missions!.def.anchors; const c = anchors['central-plaza']; console.log('plaza', c);
 const X0=-120,X1=120,Z0=-100,Z1=100,G=0.5; const NX=(X1-X0)/G, NZ=(Z1-Z0)/G;
 const free=new Uint8Array(NX*NZ), seen=new Uint8Array(NX*NZ);
 for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){const p={x:X0+i*G+G/2,y:0,z:Z0+j*G+G/2}; free[j*NX+i]=w.solids.clear(p,0.35,1,false)?1:0;}
