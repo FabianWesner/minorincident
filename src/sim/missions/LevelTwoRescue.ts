@@ -247,7 +247,7 @@ export class LevelTwoRescue {
     if (id === 'board') this.board();
     if (id === 'axe') this.takeAxe();
     if (id === 'ride' && (this.s.phase === 'ride' || this.s.phase === 'alarm')) {
-      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; e.passengerOf = this.s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
+      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e && e.health.current > 0 && !e.infected) { e.hidden = true; e.passengerOf = this.s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
       if (!this.s.seated) this.board();
       this.s.phase = 'ride'; this.s.departAt ||= this.world.tick; this.s.rideS = this.routeInfo().length; this.ride();
     }
@@ -275,8 +275,36 @@ export class LevelTwoRescue {
   }
   /** Boarding points along the camera-facing (+x) flank (crew) and the crew door (player): the boarding reads from the screen side. */
   private seat(i: number): Point {
-    const t = this.world.entities.get(this.s.truckId)!.transform, side = 1, along = -2.4 + i * .95;
-    return this.snap({ x: t.x + Math.cos(t.yaw) * along + Math.sin(t.yaw) * side * 1.7, z: t.z - Math.sin(t.yaw) * along + Math.cos(t.yaw) * side * 1.7 }, .35);
+    const t = this.world.entities.get(this.s.truckId)!.transform, side = 1, along = -3.9 - (i % 2) * .6;
+    return this.snap({ x: t.x + Math.cos(t.yaw) * along + Math.sin(t.yaw) * side * (1.4 + Math.floor(i / 2) * .65), z: t.z - Math.sin(t.yaw) * along + Math.cos(t.yaw) * side * (1.4 + Math.floor(i / 2) * .65) }, .35);
+  }
+  /** The protected corgi uses its normal deterministic path and trot before boarding last. */
+  boardCompanion(e: EntitySnapshot): boolean {
+    const s = this.mission.state.l2, c = e.companion;
+    if (!s || !c) return false;
+    if (e.health.current <= 0 || e.infected) return false;
+    if (s.phase === 'arrived' && e.passengerOf === s.truckId && s.companionExit) {
+      const t = this.world.entities.get(s.truckId)!.transform, elapsed = this.world.tick - s.arrivedAt;
+      const start = ticks(.8 + s.crewIds.length * .6), u = Math.max(0, Math.min(1, (elapsed - start) / ticks(.5)));
+      if (elapsed < start) return true;
+      e.hidden = false; e.transform.x = t.x + (s.companionExit.x - t.x) * (.55 + .45 * u); e.transform.z = t.z + (s.companionExit.z - t.z) * (.55 + .45 * u); e.transform.y = .3 + .45 * (1 - u);
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (u >= 1) { delete e.passengerOf; this.world.solids.admit(e, 'l2.companion.exit'); }
+      return true;
+    }
+    if (!s.companionBoard || s.phase !== 'alarm' || !s.seated) return false;
+    const target = s.companionBoard!, reached = Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < 1;
+    let crewAboard = true;
+    for (const id of s.crewIds) { const rider = this.world.entities.get(id); if (rider && rider.health.current > 0 && !rider.infected && !rider.hidden) { crewAboard = false; break; } }
+    if (!s.companionEnter && reached && crewAboard && this.world.tick >= (s.boardingAt ?? this.world.tick) + ticks(2.4)) s.companionEnter = { tick: this.world.tick, x: e.transform.x, z: e.transform.z };
+    if (s.companionEnter) {
+      const t = this.world.entities.get(s.truckId)!.transform, u = Math.min(1, (this.world.tick - s.companionEnter.tick) / ticks(.25));
+      const doorX = t.x - Math.cos(t.yaw) * 3.5 + Math.sin(t.yaw) * .35, doorZ = t.z + Math.sin(t.yaw) * 3.5 + Math.cos(t.yaw) * .35;
+      e.transform.x = s.companionEnter.x + (doorX - s.companionEnter.x) * u; e.transform.z = s.companionEnter.z + (doorZ - s.companionEnter.z) * u; e.transform.y = .3 + .45 * u;
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (u >= 1) { e.hidden = true; e.passengerOf = s.truckId; if (c.velocity) c.velocity.x = c.velocity.z = 0; this.world.spatial.delete(e.id); }
+    } else this.world.npcs!.move(e, target, 4.4, c, .3, 2400);
+    return true;
   }
   private takeAxe(): void {
     const combat = this.world.combat; if (!combat || this.s.axe) return;
@@ -291,7 +319,10 @@ export class LevelTwoRescue {
     const { world } = this.mission, player = world.entities.get(1)!, tick = world.tick;
     if (this.s.seated || this.s.phase !== 'alarm') return;
     if (!this.s.axe) this.mission.state.steps.axe.status = 'cancelled';
-    this.s.seated = true; player.hidden = true; world.physics.playerCollider!.setEnabled(false); world.player!.locomotion.reset();
+    if (world.vehicles) world.vehicles.transition = { carId: this.s.truckId, kind: 'enter', tick, side: 1, from: { ...player.transform } };
+    this.s.seated = true; this.s.boardingAt = tick; this.s.companionBoard = this.seat(0); player.hidden = false; player.survivor!.scriptedClip = 'enter-car'; player.survivor!.animationTick = tick;
+    this.s.crewBoardFrom = this.s.crewIds.map(() => null);
+    world.physics.playerCollider!.setEnabled(false); world.player!.locomotion.reset();
     this.mission.setState('boarded', true);
     world.storyLock = { scripted: null, skip: false };
     world.events.emit({ type: 'vehicle.entered', tick, sourceId: this.s.truckId, targetId: 1, role: 'passenger' });
@@ -337,38 +368,51 @@ export class LevelTwoRescue {
     if (this.s.seated) {
       relocatePlayer(world, x, z);
     }
-    for (const e of world.entities.iterate()) if (e.companion || (e.hidden && this.s.crewIds.includes(e.id))) { e.hidden = true; if (this.s.crewIds.includes(e.id)) e.passengerOf = this.s.truckId; e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
+    for (const e of world.entities.iterate()) if (e.hidden && e.passengerOf === this.s.truckId && e.health.current > 0 && !e.infected) { e.transform.x = x; e.transform.z = z; world.spatial.delete(e.id); }
   }
   private arrive(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
     s.phase = 'arrived'; s.arrivedAt = tick; s.rideV = 0;
     world.events.emit({ type: 'l2.truckArrived', tick });
     this.parkNav(true);
-    // Everyone out: the player at the crew door (control back at once), the corgi, the crew on both flanks.
+    // The courier steps down at the crew door, then control returns with the
+    // authored dismount pose; crew leave the compartment in their own stagger.
     const t = world.entities.get(s.truckId)!.transform, player = world.entities.get(1)!;
     const side = (lx: number, lz: number) => this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .45);
-    const out = side(.6, 1.9);
-    Object.assign(player.transform, { x: out.x, z: out.z }); player.hidden = false; s.seated = false;
+    const out = side(.6, -1.9);
+    if (world.vehicles) world.vehicles.transition = { carId: s.truckId, kind: 'exit', tick, side: -1, from: { ...t } };
+    Object.assign(player.transform, { x: out.x, z: out.z }); player.hidden = false; player.survivor!.scriptedClip = 'dismount'; player.survivor!.animationTick = tick; s.seated = false;
     world.solids.admit(player, 'l2.vehicle.exit');
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform); world.physics.playerCollider!.setEnabled(true);
     world.player!.locomotion.reset(); Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, out.x, out.z); world.player!.setCheckpoint(player.transform);
-    world.storyLock = null; world.clearInput();
+    world.storyLock = { scripted: null, skip: false }; world.clearInput();
     world.events.emit({ type: 'vehicle.exited', tick, sourceId: s.truckId, targetId: 1, role: 'passenger' });
-    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = side(-1.6, 2.2); Object.assign(e.transform, p); world.solids.admit(e, 'l2.relocation'); }
+    s.companionExit = side(-1.6, -2.2);
     if (!this.mission.state.states.arrived) this.mission.setState('arrived', true);
   }
   private crewExit(): void {
     const { world } = this.mission, tick = world.tick, s = this.s, t = world.entities.get(s.truckId)!.transform;
-    s.crewExitAt = tick;
+    if (!s.crewExitAt) { s.crewExitAt = tick; world.events.emit({ type: 'l2.crewExit', tick }); }
     for (const [i, id] of s.crewIds.entries()) {
       const e = world.entities.get(id); if (!e?.civilian?.ally) continue;
-      const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9, p = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
-      e.hidden = false; delete e.passengerOf; Object.assign(e.transform, p); world.solids.admit(e, 'l2.passenger.exit');
+      if (e.health.current <= 0 || e.infected) continue;
+      const elapsed = tick - s.crewExitAt - i * ticks(.6);
+      if (elapsed < 0 || (e.passengerOf !== s.truckId && !e.hidden)) continue;
+      if (elapsed === 0 || !s.crewExitTo?.[i]) {
+        const lx = 2.8 - i * 1.15, lz = -1.9 - (i % 2) * .9;
+        (s.crewExitTo ??= [])[i] = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
+        e.civilian.story = { clip: 'npc-stand-up', start: tick };
+      }
+      const p = s.crewExitTo[i]!, u = Math.min(1, elapsed / ticks(.6)), weight = u * u * (3 - 2 * u);
+      const y = s.crewBoardFrom?.[i]?.y ?? .7;
+      e.hidden = false; e.transform.x = t.x + (p.x - t.x) * (.55 + .45 * weight); e.transform.z = t.z + (p.z - t.z) * (.55 + .45 * weight); e.transform.y = y + .65 * (1 - weight);
+      world.spatial.set(id, e.transform.x, e.transform.z);
+      if (u < 1) continue;
+      delete e.passengerOf; world.solids.admit(e, 'l2.passenger.exit'); e.civilian.story = null;
       // Three to the chained front doors, three to the loading door: an urgent run, not a jog.
       const [x, z] = l2.rescue.crewDoors[i];
       e.civilian!.ally.run = this.snap({ x, z }, .35); e.civilian!.ally.runSpeed = l2.rescue.crewRunMs; e.civilian!.pauseUntil = 0;
     }
-    world.events.emit({ type: 'l2.crewExit', tick });
   }
   private openDoors(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
@@ -560,25 +604,71 @@ export class LevelTwoRescue {
       return;
     }
     if (s.phase === 'alarm') {
-      for (const id of s.crewIds) {
-        const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
-        // Seated crew have no station routine: its expiry otherwise makes them exit inside the moving truck.
-        if (!a.run) { e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); }
+      if (s.seated && !player.hidden) {
+        const boardedAt = s.boardingAt ?? tick;
+        if (tick >= boardedAt + ticks(2)) {
+          player.hidden = true; delete player.survivor!.scriptedClip; player.survivor!.animation = 'idle'; player.survivor!.animationTick = tick;
+        } else {
+          player.survivor!.scriptedClip = 'enter-car'; player.survivor!.animationTick = boardedAt;
+        }
       }
-      const crewIn = s.crewIds.every(id => world.entities.get(id)?.hidden !== false);
-      if (s.seated && (crewIn || tick - s.alarmAt > ticks(l2.calm.crewToTruckMaxS + 6))) {
-        for (const id of s.crewIds) { const e = world.entities.get(id); if (e) { e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); } }
+      for (const [i, id] of s.crewIds.entries()) {
+        const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
+        if (e.health.current <= 0 || e.infected) continue;
+        // Seated crew have no station routine: its expiry otherwise makes them exit inside the moving truck.
+        // Wait for the courier's interaction, then finish the existing walk
+        // clip with the authored sit-down/climb pose, staggered by seat order.
+        const start = (s.boardingAt ?? tick) + i * 24;
+        // The truck's navigation clearance can stop a runner short of the
+        // target cell. Hand off to the step animation once within reach.
+        if (s.seated && a.run && Math.hypot(a.run.x - e.transform.x, a.run.z - e.transform.z) < 1.2) a.run = null;
+        let earlierBoarded = true;
+        for (let j = 0; j < i; j++) {
+          const previous = world.entities.get(s.crewIds[j]);
+          if (previous && previous.health.current > 0 && !previous.infected && !previous.hidden) { earlierBoarded = false; break; }
+        }
+        if (s.seated && !a.run && tick >= start && earlierBoarded) {
+          const story = e.civilian!.story;
+          if (story?.clip !== 'npc-sit-down') {
+            e.civilian!.story = { clip: 'npc-sit-down', start: tick };
+            (s.crewBoardFrom ??= [])[i] = { x: e.transform.x, y: e.transform.y, z: e.transform.z };
+            e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER;
+          }
+          else if (tick - story.start >= ticks(.4)) {
+            e.hidden = true; e.passengerOf = s.truckId; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id);
+          } else {
+            const from = s.crewBoardFrom?.[i], truck = world.entities.get(s.truckId)!.transform;
+            if (from) {
+              const u = (tick - story.start) / ticks(.4), weight = u * u * (3 - 2 * u);
+              // Cross the rear sill into the enclosed body before hiding.
+              const doorX = truck.x - Math.cos(truck.yaw) * 3.5 + Math.sin(truck.yaw) * .35;
+              const doorZ = truck.z + Math.sin(truck.yaw) * 3.5 + Math.cos(truck.yaw) * .35;
+              e.transform.x = from.x + (doorX - from.x) * weight;
+              e.transform.z = from.z + (doorZ - from.z) * weight;
+              e.transform.y = from.y + .65 * weight;
+              world.spatial.set(id, e.transform.x, e.transform.z);
+            }
+          }
+        }
+      }
+      const crewIn = s.crewIds.every(id => { const e = world.entities.get(id); return !e || e.health.current <= 0 || !!e.infected || e.hidden === true; });
+      let companionIn = true;
+      for (const e of world.entities.iterate()) if (e.companion && e.health.current > 0 && !e.infected && e.hidden !== true) { companionIn = false; break; }
+      if (s.seated && player.hidden && crewIn && companionIn) {
         s.phase = 'ride'; s.departAt = tick; this.parkNav(false); world.events.emit({ type: 'l2.truckDeparted', tick });
       }
-      if (s.seated) this.carry(world.entities.get(s.truckId)!.transform.x, world.entities.get(s.truckId)!.transform.z);
+      if (s.seated && player.hidden) this.carry(world.entities.get(s.truckId)!.transform.x, world.entities.get(s.truckId)!.transform.z);
     }
     if (s.phase === 'ride') this.ride();
     if (s.pending.length) this.emergePending();
     if (s.phase === 'arrived') {
-      if (!s.crewExitAt && tick - s.arrivedAt >= ticks(.8)) this.crewExit();
+      if (tick - s.arrivedAt >= ticks(.5) && player.survivor?.scriptedClip === 'dismount') { delete player.survivor.scriptedClip; world.storyLock = null; }
+      if (!s.atDoorsAt && tick - s.arrivedAt >= ticks(.8) && (!s.crewExitAt || s.crewIds.some(id => world.entities.get(id)?.passengerOf === s.truckId))) this.crewExit();
       if (s.crewExitAt && !s.atDoorsAt) {
-        const crew = s.crewIds.map(id => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally);
-        if (crew.every(e => !e.civilian!.ally!.run || Math.hypot(e.civilian!.ally!.run.x - e.transform.x, e.civilian!.ally!.run.z - e.transform.z) < 1.5) || tick - s.crewExitAt > ticks(8)) {
+        const crew = s.crewIds.map(id => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally && e.health.current > 0 && !e.infected);
+        let companionOut = true;
+        for (const e of world.entities.iterate()) if (e.companion && e.health.current > 0 && !e.infected && e.passengerOf === s.truckId) { companionOut = false; break; }
+        if ((companionOut && crew.every(e => !e.hidden && e.passengerOf !== s.truckId && (!e.civilian!.ally!.run || Math.hypot(e.civilian!.ally!.run.x - e.transform.x, e.civilian!.ally!.run.z - e.transform.z) < 1.5))) || tick - s.crewExitAt > ticks(8)) {
           s.atDoorsAt = tick; s.phase = 'doors'; world.events.emit({ type: 'l2.firefightersAtDoors', tick });
           for (const e of crew) {
             const a = e.civilian!.ally!, role = l2.rescue.crewDoors[s.crewIds.indexOf(e.id)]?.[2];
@@ -873,6 +963,7 @@ export class LevelTwoRescue {
     this.world.infected!.director.strict = true;
     this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['alarmAt', 'departAt', 'arrivedAt', 'crewExitAt', 'atDoorsAt', 'doorsOpenAt', 'radioAt', 'crossedAt', 'gateClosedAt'] as const) if (s[key]) s[key] += delta;
+    if (s.boardingAt) s.boardingAt += delta;
     for (const a of s.ambush) if (a.at) a.at += delta;
     for (const q of s.pending) if (q.at) q.at += delta;
     for (const t of s.trips ?? []) t.at += delta;

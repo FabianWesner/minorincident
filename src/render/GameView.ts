@@ -903,7 +903,10 @@ export class GameView implements Lifecycle {
       // The camera follows the courier with free zoom; a pull made the view 'scripted' and locked the zoom.
       if (this.world.scenario === 'L8') this.view.pull(0, 0, 0, 0);
       this.updateEnding();
-      const focus = this.vehicles?.rideFocus(this.rideFocus) ? this.rideFocus : player.transform;
+      const l2 = this.world.missions?.state.l2;
+      const truck = l2?.phase === 'alarm' && l2.seated ? this.world.entities.get(l2.truckId) : undefined;
+      const focus = truck ? this.rideFocus.set(truck.transform.x - Math.cos(truck.transform.yaw) * 2.5, player.transform.y, truck.transform.z + Math.sin(truck.transform.yaw) * 2.5)
+        : this.vehicles?.rideFocus(this.rideFocus) ? this.rideFocus : player.transform;
       if (this.cameraSnap) { this.cameraSnap = false; this.view.snapTo(focus); }
       else this.view.update(focus, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);

@@ -209,12 +209,14 @@ export class Companion {
       progress.x = player.transform.x; progress.z = player.transform.z; progress.tick = this.world.tick;
     }
     for (const e of this.world.entities.iterate()) {
-      const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
+      const c = e.companion; if (!c) continue;
+      const mission = this.world.missions;
+      if (mission?.l2?.boardCompanion(e)) continue;
+      if (e.passengerOf !== undefined) continue;
       if (c.transitionUntil !== undefined) {
         if (this.world.tick < c.transitionUntil) continue;
         delete c.transitionUntil; e.hidden = false; this.world.solids.admit(e, 'companion.door-arrival', 1, false);
       }
-      const mission = this.world.missions;
       if (mission?.l8?.companion(e)) continue;
       const arenaWait = this.l8ArenaWait(player, e);
       if (arenaWait) {

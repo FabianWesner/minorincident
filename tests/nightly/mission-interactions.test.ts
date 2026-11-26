@@ -94,6 +94,30 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(mission.state.steps.board.status, 'dispatch enables boarding without an axe').toBe('active');
         expect(mission.state.marker).toBe('l2-board');
         expect(activeInteractions(mission).find(i => i.step.id === 'axe')?.ring, 'optional rack keeps its ground ring').toBe(true);
+        missionControls(levelWorld).teleport(1, mission.def.anchors['l2-board']);
+        levelWorld.setInput({ ...emptyInput(), interact: true });
+        for (let tick = 0; tick < 40 && !mission.state.states.boarded; tick++) levelWorld.update();
+        levelWorld.setInput(emptyInput());
+        expect(mission.state.states.boarded, 'the authored l2-board interaction starts boarding').toBe(true);
+        expect(player.hidden, 'courier remains visible through the enter-car pose').toBe(false);
+        const corgi = [...levelWorld.entities.iterate()].find(e => e.companion);
+        if (corgi) expect(!corgi.hidden, 'the corgi stays visible while it walks to the truck').toBe(true);
+        levelWorld.update();
+        expect(player.survivor!.scriptedClip).toBe('enter-car');
+        for (let tick = 0; tick < 59; tick++) levelWorld.update();
+        const l2Crew = mission.state.l2!.crewIds.map(id => levelWorld.entities.get(id)!);
+        expect(l2Crew.filter(e => e.hidden).length, 'firefighters board in a visible seat-order stagger').toBeGreaterThan(0);
+        expect(l2Crew.filter(e => e.hidden).length).toBeLessThan(l2Crew.length);
+        expect(mission.state.l2!.phase, 'Engine 3 waits for the boarding sequence').toBe('alarm');
+        const delayed = l2Crew.at(-1)!, ally = delayed.civilian!.ally!, originalRun = ally.run, originalSpeed = ally.runSpeed;
+        ally.run = { x: delayed.transform.x + 100, z: delayed.transform.z }; ally.runSpeed = 0;
+        for (let tick = 0; tick < 15 * 60; tick++) levelWorld.update();
+        expect(mission.state.l2!.phase, 'a delayed living rider cannot be forced aboard by a timeout').toBe('alarm');
+        expect(!delayed.hidden, 'the delayed rider remains visible').toBe(true);
+        ally.run = originalRun; ally.runSpeed = originalSpeed;
+        for (let tick = 0; tick < 300 && mission.state.l2!.phase === 'alarm'; tick++) levelWorld.update();
+        if (corgi) { expect(corgi.hidden).toBe(true); expect(corgi.passengerOf).toBe(mission.state.l2!.truckId); }
+        expect(mission.state.l2!.phase).toBe('ride');
       }
       if (level === 'L8') {
         mission.begin();
