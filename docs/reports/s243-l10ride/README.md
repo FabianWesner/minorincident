@@ -49,3 +49,11 @@ The [flamethrower trial](route-flame-trial.json) recorded 0/4 on both tiers, wit
 In the flamethrower trial, the last recorded damage before death was `hazard.fire` for 5/29 HIGH deaths and 9/20 LOW deaths. The bot now moves out of nearby active ground fire using ordinary movement and the existing navigation visibility check. The [trial receipt](route-fire-avoid-trial.json) reported HIGH 2/4, 25 deaths and LOW 1/4, 7 deaths; both exhausted 2100 s, with no `hazard.fire` final hit in either tier. HIGH stopped at underpass with a living crawler around (3324, 91), and LOW at convoy with recoverable actors. Typecheck and targeted lint passed.
 
 Inspection of that receipt found that HIGH quarantine recorded its fight and gate opening on the same tick after a retry. The observer accepted an already-open gate as a new opening whenever it first saw a fight; it now requires an observed closed-to-open transition. Thus the trial's 2/4 and 1/4 counts use the earlier, weaker observer, and cannot establish strict acceptance. A new HIGH/LOW run is required. Reachability, completion, zero-delay proof, threat, captures and full checks remain open.
+
+## Corrected transition receipt and clearance timing
+
+The [corrected observer receipt](route-transition.json) at `0dad4af7` records HIGH 1/4 (convoy) and LOW 1/4 (quarantine); both hit 2100 s, with 25 and 7 deaths respectively. It predates the timing change below and is not a current-source acceptance receipt.
+
+Fire hazards update at simulation phase 5, after the encounter's phase 4.9 update. A permanent kill there could leave the gate closed for one tick. The encounter now rechecks clearance synchronously on a permanent cohort `combat.kill`, in addition to its normal update. This removes that ordering gap for emitted kill events; measured zero delay and coverage of all death paths remain open.
+
+Typecheck and targeted lint passed. The existing L10 camera and save progression tests passed 9/9 after updating the cold-resume expectation from the old 17 m underpass half-width to 50 m, which covers the rim. Full route, threat audit, captures and remaining validation are open.

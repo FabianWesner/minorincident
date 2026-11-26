@@ -321,7 +321,7 @@ async function checkCheckpointRacks() {
       fresh.missions!.loadResume(resume);
       expect(fresh.entities.get(closedGate)?.interactable?.open, 'closed roadblock survives cold resume').toBe(false);
       expect(fresh.interactables!.walls.some(w => w.entityId === closedGate), 'closed roadblock collider is rebuilt').toBe(true);
-      expect(fresh.interactables!.walls.find(w => w.entityId === collapseGate)?.halfZ, 'cold resume keeps the collapse rim open').toBe(17);
+      expect(fresh.interactables!.walls.find(w => w.entityId === collapseGate)?.halfZ, 'cold resume blocks the collapse rim').toBe(50);
       expect(fresh.entities.get(openGate)?.interactable?.open, 'opened roadblock survives cold resume').toBe(true);
       expect(fresh.interactables!.walls.some(w => w.entityId === openGate), 'opened roadblock leaves a gap').toBe(false);
     } finally { fresh.dispose(); }

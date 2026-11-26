@@ -88,6 +88,13 @@ export class LevelTenEncounters {
         ((this.state.roadblockFootHits ??= {})[group.id] ??= {})[slotKey] = true;
       }
     });
+    // Hazard damage runs after the normal encounter update. Resolve a final
+    // cohort death synchronously so a cleared gate does not wait a tick.
+    world.events.on('combat.kill', event => {
+      if (event.type === 'combat.kill' && !event.downed &&
+          Object.values(this.state.spawned).includes(event.targetId) &&
+          this.world.missions?.state.phase === 'playing') this.updateRoadblockClearance();
+    });
     world.events.on('player.died', event => {
       if (event.type !== 'player.died' || !this.world.infected) return;
       // A death freezes every released cohort: members killed on this attempt
