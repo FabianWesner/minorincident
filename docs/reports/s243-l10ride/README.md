@@ -57,3 +57,9 @@ The [corrected observer receipt](route-transition.json) at `0dad4af7` records HI
 Fire hazards update at simulation phase 5, after the encounter's phase 4.9 update. A permanent kill there could leave the gate closed for one tick. The encounter now rechecks clearance synchronously on a permanent cohort `combat.kill`, in addition to its normal update. This removes that ordering gap for emitted kill events; measured zero delay and coverage of all death paths remain open.
 
 Typecheck and targeted lint passed. The existing L10 camera and save progression tests passed 9/9 after updating the cold-resume expectation from the old 17 m underpass half-width to 50 m, which covers the rim. Full route, threat audit, captures and remaining validation are open.
+
+## Convoy recovery diagnosis and approach trial
+
+The corrected LOW trace showed four convoy members at 0 HP for many minutes. A diagnostic recorded them active, not held, and with the director's recovery cap disabled. Their recovery deadlines moved because they stood up and were knocked down again: in the 1100 s diagnostic, 28 recorded convoy knockdowns came from the bot's assault rifle, versus one permanent flamethrower kill. This is the normal infected recovery behavior, not proof of sleeping or an identity error.
+
+A trial made the bot move toward visible roadblock threats to reach flamethrower range. The [trial receipt](route-close-trial.json) recorded HIGH 1/4 and LOW 0/4, both at 2100 s and 12 deaths. The preceding corrected observer recorded 1/4 on each tier. The movement trial was reverted; this receipt is not current-source acceptance. The observer retains recovery, active-membership and director diagnostics. Targeted lint passed. The roadblock fights, full routes, zero-delay measurement, threat, captures and required checks remain open.
