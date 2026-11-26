@@ -569,12 +569,19 @@ export class LevelSixSubway {
       const open=(s.entries??[]).map(e=>e.door).filter(door=>!closed.includes(door));
       const serviceDoors=open.map(i=>({d:l6Doors[i],i}));
       const ahead=serviceDoors.filter(({d})=>d.x>=tail+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x);
-      const behind=serviceDoors.filter(({d})=>d.x<=tail-l6.pressure.behindM).sort((a,b)=>b.d.x-a.d.x);
-      // Alternate pressure along both directions of the sealed corridor.
-      // Closed service hatches leave no source; a broken hatch rejoins the pool.
+      // A door behind a closed service gate is sealed off from the column (gate-187 qa:threat: every
+      // behind-spawn stranded, 0/5 reachable, 1 attack/min in the retreat). Use only reachable sources.
+      const sealed=(x:number)=>s.gates.some(g=>!!g.closedAt&&g.x>x&&g.x<tail);
+      const behind=serviceDoors.filter(({d})=>d.x<=tail-l6.pressure.behindM&&!sealed(d.x)).sort((a,b)=>b.d.x-a.d.x);
+      // With every reachable door shut, the next closed hatch ahead takes the cohort: it bashes the hatch open (8 s).
+      const shutAhead=closed.map(i=>({d:l6Doors[i],i})).filter(({d})=>d.x>=tail+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x);
+      // Design 11-26 (orchestrator): pressure meets the column head-on from the next door ahead; a door behind
+      // counts only within 30 m of the tail (farther chasers walk at the column's pace and never arrive).
+      // Every other cohort still takes a close door behind when one exists, so both directions stay live.
       const ordinal=this.s.spawnLog.filter(row=>row.wave===3).length/l6.pressure.group;
-      const preferred=ordinal%2===0?ahead:behind, other=ordinal%2===0?behind:ahead;
-      const source=preferred[0]??other[0]??serviceDoors.sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
+      const near=behind.filter(({d})=>d.x>=tail-30);
+      const ahead2=[...ahead,...shutAhead].sort((a,b)=>a.d.x-b.d.x);
+      const source=(ordinal%2===1?near[0]??ahead2[0]:ahead2[0]??near[0])??serviceDoors.filter(({d})=>!sealed(d.x)&&d.x>=tail-30).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
       const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
       if(sources.length){const admitted=this.spawn(sources.length,sources,3);if(admitted<sources.length)s.nextWave=t+ticks(5);}
     }
