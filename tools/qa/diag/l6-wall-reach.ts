@@ -44,7 +44,7 @@ const anchors=w.missions!.def.anchors, anchorReach=Object.entries(anchors).map((
 const doors=l6Doors.map((d,i)=>{const z=d.z>0?d.z+(d.z>15?-.8:.8):d.z;return{name:`service-${i}`,x:d.x,z:d.z,inside:[d.x,z],reachable:(()=>{const k=nav.nearestCell(d.x,z,.35);return k>=0&&!!now[k];})()};});
 const walls={south:{samples:0,blocked:0},north:{samples:0,blocked:0}};
 for(let x=30.5;x<246;x+=1){
-  const opening=l6Doors.some(d=>d.z>0&&Math.abs(d.x-x)<2.7);
+  const opening=[54,78,126,174,198].some(doorX=>Math.abs(doorX-x)<2.7);
   if(opening)continue;
   for(const [side,z] of [['south',11.0],['north',19.0]] as const){walls[side].samples++;if(!w.solids.clear({x,y:.6,z},.35,1,false))walls[side].blocked++;}
 }

@@ -444,6 +444,8 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       // offset from the centre by its existing end-wall geometry.
       for (let z = 17.5; z <= 19.9; z += .1)
         expect(w.solids.clear({ x: 172.25, y: .6, z }, .3, 1, false), `north corridor mouth z=${z}`).toBe(true);
+      for (const x of [162, 228])
+        expect(w.solids.clear({ x, y: .6, z: 19 }, .3, 1, false), `unbuilt exterior at ${x}`).toBe(false);
       const playerNav = nav.forPlayer(.35), start = playerNav.nearestCell(p.transform.x, p.transform.z, .35), path: number[] = [];
       for (const x of [54, 78, 126, 162, 198, 228]) {
         const wallZ = [54,126,198].includes(x) ? 11.2 : 18.8;
