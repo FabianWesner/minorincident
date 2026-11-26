@@ -193,7 +193,8 @@ for (const tier of tiers) {
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number; recentHits: unknown[] }[] = [];
   const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0 }));
-  const underpassRecovery: unknown[] = [];
+  const underpassRecovery: unknown[] = [], clearanceTiming: unknown[] = [];
+  const cohortByActor = new Map<number, string>(), lastCohortKill = new Map<string, number>();
   const previousGateOpen = new Map<number, boolean>();
   const roadblockEvents: unknown[] = [], lastRoadblockState = new Map<number, string>();
   const overpassThrows: { tick: number; move: string; stage: string; sourceId: number; playerX: number; propId?: number }[] = [];
@@ -237,7 +238,12 @@ for (const tier of tiers) {
         overpassThrows.push({ tick: e.tick, move: alpha?.infected?.specialAttack?.move ?? 'none', stage: 'prop-thrown', sourceId: e.sourceId, playerX: world.entities.get(1)!.transform.x, propId: e.propId });
       });
       world.events.on('mounted-gun.mounted', () => mounts++);
-      world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.actionId === 'weapon.rotary-minigun') minigunKills++; });
+      world.events.on('combat.kill', e => {
+        if (e.type !== 'combat.kill') return;
+        if (e.actionId === 'weapon.rotary-minigun') minigunKills++;
+        const group = cohortByActor.get(e.targetId);
+        if (group && !e.downed) lastCohortKill.set(group, e.tick);
+      });
       world.events.on('combat.attack', e => {
         if (e.type !== 'combat.attack' || e.actionId !== 'weapon.rocket-launcher') return;
         const boss = world.megaPursuit?.entity();
@@ -266,6 +272,11 @@ for (const tier of tiers) {
           while (world.missions!.state.steps.install.status !== 'active') world.missions!.completeObjective();
           world.player!.restoreVitals(world.tick);
           world.megaPursuit!.introduce({ x: 3945, z: -25 });
+        }
+        cohortByActor.clear();
+        for (const [group] of Object.entries(world.l10Encounters?.state.roadblockGates ?? {})) {
+          for (const [key, id] of Object.entries(world.l10Encounters?.state.spawned ?? {}))
+            if (key.startsWith(`${group}:`) && !key.includes(':stage:') && id > 0) cohortByActor.set(id, group);
         }
         update(); const p = world.entities.get(1)!;
         for (const [group, gateId] of Object.entries(world.l10Encounters?.state.roadblockGates ?? {})) {
@@ -309,6 +320,11 @@ for (const tier of tiers) {
           if (near && !riding && lastBike && b.arrived && !b.dismounted) b.dismounted = world.tick;
           const gateId = Object.values(world.l10Encounters?.state.roadblockGates ?? {}).find(id => Math.abs((world.entities.get(id)?.transform.x ?? -10000) - b.x) < 1);
           const gateOpen = gateId === undefined ? undefined : world.entities.get(gateId)?.interactable?.open;
+          if (gateOpen && previousGateOpen.get(b.x) === false) {
+            const group = Object.entries(world.l10Encounters?.state.roadblockGates ?? {}).find(([, id]) => id === gateId)?.[0];
+            const lastKill = group === undefined ? undefined : lastCohortKill.get(group);
+            clearanceTiming.push({ group, opened: world.tick, lastKill, delayTicks: lastKill === undefined ? null : world.tick - lastKill });
+          }
           if (b.fight && gateOpen && previousGateOpen.get(b.x) === false && !b.opened) b.opened = world.tick;
           if (gateOpen !== undefined) previousGateOpen.set(b.x, gateOpen);
           else previousGateOpen.delete(b.x);
@@ -384,7 +400,7 @@ for (const tier of tiers) {
   check(tier, 'hangar-to-gate finale takes 7–9 minutes', finalePacing.hangarToGateSeconds !== null && finalePacing.hangarToGateSeconds >= 420 && finalePacing.hangarToGateSeconds <= 540, finalePacing.hangarToGateSeconds);
   check(tier, 'every story beat arrives 45–75 seconds after the previous one', beatIntervals.every(seconds => seconds !== null && seconds >= 45 && seconds <= 75), beatIntervals);
   check(tier, 'fight or story gaps stay within 20 seconds', finalePacing.longestGapSeconds !== null && finalePacing.longestGapSeconds <= 20, finalePacing.longestGapSeconds);
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, bikeRecovery, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, gateCrossings, roadblockEvents, underpassRecovery, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, bikeRecovery, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, gateCrossings, roadblockEvents, underpassRecovery, clearanceTiming, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { const detail = error instanceof Error ? error.stack ?? String(error) : String(error); check(tier, 'native route executes', false, detail); rows.push({ tier, routeError: detail }); }
 }

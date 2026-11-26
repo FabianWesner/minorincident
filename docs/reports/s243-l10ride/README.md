@@ -149,3 +149,16 @@ The LOW underpass retry reached the open gate's parked upright bike but oscillat
 | LOW | 4/4 | complete in 1503.02 s | 8 | [route](route-mount-margin.json) |
 
 A 1.6 m motorbike margin trial produced HIGH 4/4 with a 2100 s timeout and LOW 2/4 with a 2100 s timeout; the 1.7 m version above is retained. HIGH repeatedly dies in the finale after charge completion and its Mega health returns to the checkpoint state; this is not a skilled native completion. The [focused L10 threat receipt](threat-mount-margin.json) reports skilled completion and zero L10 flags; its only command-level failure is `PARTIAL_LEVEL_SELECTION`. Typecheck, targeted lint and the vehicle test file (2 tests) passed. Full threat audit, current-source remote unit, native captures, whole-route reachable-cohort proof and gate-delay measurement remain open. Ride and beat timing are in the receipt and were not tuned.
+
+## Native clearance timing
+
+A diagnostic-only observer recorded each roadblock's last permanent cohort kill and the closed-to-open transition during a 1300 s native replay. The [timing receipt](route-clearance-timing.json) measured **0 ticks** for all four roadblocks on both HIGH and LOW. These eight observed openings do not prove that every possible death path or every living cohort member is reachable.
+
+| Tier | Strict loops on complete-route receipt | Native outcome | Deaths | Still open |
+|---|---:|---|---:|---|
+| HIGH | 4/4 | 2100 s timeout at Mega | 49 | Native completion; whole-route cohort reachability |
+| LOW | 4/4 | complete in 1503.02 s | 8 | Whole-route cohort reachability |
+
+The 4/4 counts and route outcomes come from [route-mount-margin.json](route-mount-margin.json); the shorter timing replay is not a completion run. The motorbike 1.7 m reach, close approach and admitted-cohort clearance are retained. Fresh closed/open camera captures, full threat audit, and current-source remote unit validation remain open unless results below say otherwise.
+
+The current-source `npm run qa:threat:sharded` attempt finished shard 1 successfully in 524.1 s, but shard 2 hit its 600 s budget at 600.5 s (exit 124). No merged all-level audit result was produced; the focused L10 zero-flag diagnostic remains the available L10 evidence. The previously listed full threat audit remains open.
