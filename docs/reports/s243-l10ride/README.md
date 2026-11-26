@@ -67,3 +67,7 @@ A trial made the bot move toward visible roadblock threats to reach flamethrower
 ## Final-kill timing fixture
 
 The focused `tests/engine/l10-roadblocks.test.ts` fixture passes for all four roadblocks on HIGH and LOW. Using production damage calls, it verifies that a recoverable knockdown, another living member, and an unadmitted slot each keep the gate closed; the final permanent explosive kill opens it and removes its wall without advancing the simulation tick. The killed actor remains present. Typecheck and targeted lint passed. This fixture sets the mounted/dismounted state and uses retired slots as setup; it does not prove native reachability, all death paths, or the 4/4 route. The strict route, threat audit, captures, and other required checks remain open.
+
+## Current L10 threat diagnostic
+
+At `71391434`, `node --import tsx/esm tools/qa/threat-audit.ts --levels L10 --maxWorkers 2 --out /tmp/s243-threat` completed in 156 s. The [L10 receipt](threat-l10-diagnostic.json) reports one passive flag, `UNOBSERVED_PASSIVE_CRITERION_STEP:hold`. Skilled reports `INCOMPLETE_NATIVE_POLICY:tick-budget` and `UNOBSERVED_THREAT_STEP:hold`. Both policies reached the 1800 s limit at the convoy near (3254, 90); skilled had seven deaths and passive had none. This partial selection also carries the audit's `PARTIAL_LEVEL_SELECTION` flag, so it is diagnostic only. The L10 zero-flag objective and full audit remain open.
