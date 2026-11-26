@@ -3,6 +3,7 @@ import { observeAttackStarts } from './attackStarts';
 import { Status } from '../../../src/sim/combat/Status';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
+import type { L6State } from '../../../src/sim/missions/types';
 import type { RunnerLevel } from '../../sim-runner/levels';
 import type { NavGrid } from '../../../src/sim/ai/NavGrid';
 import { phases, threatSteps, type Phase } from './phases';
@@ -247,7 +248,9 @@ export class ThreatObserver {
   private readonly prompts = { wait: 0, attack: 0, lost: 0 };
   private readonly rows = new Map<string, Row>();
   private active: Row[] = [];
-  private readonly births = new SpawnIdentities(() => { for (const row of this.active) row.spawned++; });
+  private totalSpawned = 0;
+  private peakConcurrentInfected = 0;
+  private readonly births = new SpawnIdentities(() => { this.totalSpawned++; for (const row of this.active) row.spawned++; });
   private readonly paths = new PathProbe();
   private entityRevision = -1;
   private entityRows: EntitySnapshot[] = [];
@@ -396,6 +399,7 @@ export class ThreatObserver {
       const innerEnd = performance.now();
       this.simMilliseconds += innerEnd - innerStart;
       if (world.tick === before) { this.overheadMilliseconds += innerStart - entered; return; }
+      this.peakConcurrentInfected = Math.max(this.peakConcurrentInfected, world.infected?.director.count ?? 0);
       for (const row of this.active) row.ticks += world.tick - before;
       const leaderAfter = world.entities.get(1)!.transform;
       this.observe(Math.hypot(leaderAfter.x - leaderX, leaderAfter.z - leaderZ) * 60 / (world.tick - before), options.followersOnly);
@@ -670,9 +674,15 @@ export class ThreatObserver {
       observeBlocked(row, snapshot);
     }
   }
-  finish(): { phases: PhaseReceipt[]; waves: ReturnType<WaveObserver['finish']>; ticks: number; followerWait: FollowerWaitReceipt; l3Squad?: { initial: number | null; army: number | null; losses: { id: number; cause: string; tick: number }[] } } {
+  finish(): { phases: PhaseReceipt[]; waves: ReturnType<WaveObserver['finish']>; ticks: number; totalSpawned: number; peakConcurrentInfected: number; followerWait: FollowerWaitReceipt; l6Admissions?: { spawns: L6State['spawnLog']; hatches: NonNullable<L6State['entries']> }; l3Squad?: { initial: number | null; army: number | null; losses: { id: number; cause: string; tick: number }[] } } {
     return {
       ticks: this.lastTick,
+      totalSpawned: this.totalSpawned,
+      peakConcurrentInfected: this.peakConcurrentInfected,
+      ...(this.level === 'L6' && this.world.missions!.state.l6 ? { l6Admissions: {
+        spawns: structuredClone(this.world.missions!.state.l6.spawnLog),
+        hatches: structuredClone(this.world.missions!.state.l6.entries ?? []),
+      } } : {}),
       ...(this.level === 'L3' ? { l3Squad: { initial: this.initialSquad, army: this.armySquad, losses: this.world.missions!.state.l3!.lost.map(q => ({ ...q })) } } : {}),
       followerWait: {
         windows: [...this.waitWindows.values()],

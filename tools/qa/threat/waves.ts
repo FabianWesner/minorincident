@@ -4,6 +4,7 @@ import type { EntitySnapshot } from '../../../src/sim/world/types';
 import type { RunnerLevel } from '../../sim-runner/levels';
 import { l4BreachApproaches, l4Emergence } from '../../../src/data/l4';
 import { l4BreachSite } from '../../../src/data/l4Perimeter';
+import { l6 } from '../../../src/data/l6';
 
 export interface WaveReceipt {
   key: string; source: string; startSeconds: number; observedSeconds: number; expected: number | null;
@@ -18,10 +19,10 @@ export function waveFlags(wave: Pick<WaveReceipt, 'firstAttackSeconds' | 'observ
   return [wave.observedSeconds > 20 ? 'WAVE_NO_ATTACK_WITHIN_20_SECONDS' : 'WAVE_OBSERVATION_ENDED_BEFORE_ATTACK'];
 }
 
-/** L6-06 authors exactly two infected at each of six side entries; these are
+/** L6-06 authors exactly one infected at each of six side entries; these are
  * route admissions, not three-member attack cohorts. */
 export function l6EntryFlags(wave: Pick<WaveReceipt, 'expected' | 'spawned'>): string[] {
-  return wave.expected === 2 && wave.spawned === 2 ? [] : ['L6_ENTRY_COUNT_MISMATCH'];
+  return wave.expected === 1 && wave.spawned === 1 ? [] : ['L6_ENTRY_COUNT_MISMATCH'];
 }
 /** A hatch that breaks after its original quota has arrived releases one explicitly separate replacement. */
 export function l6HatchReopenFlags(wave: Pick<WaveReceipt, 'expected' | 'spawned'>): string[] {
@@ -47,7 +48,7 @@ export class WaveObserver {
     });
     world.events.on('l2.doorsOpen', e => { if (e.type === 'l2.doorsOpen') this.wave('market-ambush', e.tick, 'l2.doorsOpen'); });
     for (const type of ['l6.breach1', 'l6.breach2'] as const) world.events.on(type, e => {
-      if (e.type === type) this.wave(type, e.tick, type, type === 'l6.breach1' ? 8 : 10);
+      if (e.type === type) this.wave(type, e.tick, type, type === 'l6.breach1' ? l6.breach.firstCount : l6.breach.secondCount);
     });
     world.events.on('l6.hatch-broken', e => {
       if(e.type!=='l6.hatch-broken')return;
