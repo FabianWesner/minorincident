@@ -191,5 +191,9 @@ export async function checkL8Route(): Promise<void> {
       expect(corgi.companion!.arenaWait, 'elephant: corgi retains its wait order').toBe(true);
       expect(inRect(corgi.transform, elephantZone), 'elephant: corgi remains outside').toBe(false);
     }
+    elephant.phase = 3; elephant.armed = false;
+    w.update();
+    expect(mission.state.marker, 'elephant clear points to the vehicle').toBe('exit');
+    expect(markerAnchor(mission), 'final marker uses the vehicle exit anchor').toMatchObject(mission.def.anchors.exit);
   } finally { w.dispose(); }
 }

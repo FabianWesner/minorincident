@@ -12,7 +12,7 @@
 
 ## Marker order
 
-After the plaza seal, `L8BossArenas` order is flamingo → lion → monkey → zebra → gorilla → elephant. The objective marker is computed from the first uncleared arena and its entry nodes. The route fixture asserts each next-arena marker after the preceding clear.
+After the plaza seal, `L8BossArenas` order is flamingo → lion → monkey → zebra → gorilla → elephant → armored vehicle. The objective marker is computed from the first uncleared arena and its entry nodes. The route fixture asserts each next-arena marker after the preceding clear and the vehicle marker after the elephant.
 
 ## QA status
 
@@ -21,6 +21,7 @@ After the plaza seal, `L8BossArenas` order is flamingo → lion → monkey → z
 - `node --import tsx/esm tools/qa/diag/l8-protect-arrival.ts`: north gate spawn at z=89 was rejected after the camera settled. Moving it to z=108 admits six infected. Using navigation around the obstruction at z=106 brings four within 15 m at breach +6 s and three within 2.6 m at +12 s.
 - `node --import tsx/esm tools/qa/threat-audit.ts --levels L8`: skilled completes with 28 survivors saved from a roster of 29. Staging Hale and Reyes with the arrival group eliminated the follower waiting flag. A longer L8 corgi follow prediction removed the final pace flag: the corgi median is 4.80 m/s versus the group median 5.03 m/s. One L8 flag remains, sustained unreachable share. Partial level selection is informational.
 - Nightly mission interactions: passed (41.59 s), including the pond keeper story, first attack within 35 s, at least three attack starts during the 30 s hold, the fixed hold deadline, and the marker assertion after each arena clear. The south gate cohort now uses navigation around the same kind of obstruction as the north gate.
+- Nightly mission interactions passed again (44.64 s) after adding the final elephant-to-vehicle marker assertion.
 - After correcting the two soldiers' calm patrol waypoint to stay near arrival, nightly mission interactions passed in 44.15 s. A post-commit threat audit of `ee0b2989` again completed skilled with 28/29 saved and one L8 flag: 8/49 infected reachable at the worst sample, with a 108 s blocked interval. The partial-level-selection flag is informational.
 - The previous passive unreachable evidence occurred while the courier was held inside the closed flamingo arena: 0/40 outside infected could reach the courier for 106 s. The closed arena and remaining follower behavior need a game-side resolution.
 - Tried directing followers to the close catch-up target at 6 m rather than 10 m. The L8 audit worsened from three to fifteen flags despite skilled completion; the change was reverted.
