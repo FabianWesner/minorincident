@@ -163,7 +163,7 @@ export class LevelTenBot {
     // uninterrupted boss target leaves the courier surrounded on the stairs.
     const closeAttacker = active.id === 'mega' ? threats.find(e => !isMega(e) && distance(e.transform) < 8) : undefined;
     const downedRoadblockThreat = roadblockFight ? w.infected!.active.find(e =>
-      e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0 && distance(e.transform) < 8 &&
+      e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0 && distance(e.transform) < 28 &&
       w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)) : undefined;
     const rack = player.weapons!.RIGHT.rack, target = pouncingDog ?? closeAttacker ??
       (roadblockFight ? threats.find(e => !isMega(e)) ?? downedRoadblockThreat : undefined) ??
@@ -188,11 +188,15 @@ export class LevelTenBot {
     // Prefer the long-range rifle to the quiet pinning tool while crossing open ground.
     const travelWeapon = ['weapon.army-mg', 'weapon.assault-rifle', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.machete', 'weapon.fire-axe'].find(id => rack.some(slot => slot.id === id));
     const targetDistance = target ? distance(target.transform) : 0;
-    const rocket = target && isMega(target) && targetDistance >= 18 && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
-      { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, targetDistance) >= targetDistance;
+    const mega = w.megaPursuit?.entity();
+    const rocket = target && (isMega(target) && targetDistance >= 18 || roadblockFight && targetDistance >= 14) &&
+      (!mega || mega.health.current <= 0 || distance(mega.transform) >= 16) &&
+      rack.some(slot => slot.id === 'weapon.rocket-launcher') && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
+        { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, targetDistance) >= targetDistance;
     const wanted = bike?.riding && bikeEntity?.bicycle?.motorbike ? 'weapon.handgun'
       : pouncingDog && distance(pouncingDog.transform) < 12 && rack.some(slot => slot.id === 'weapon.shotgun') ? 'weapon.shotgun'
       : roadblockFight && target && !isMega(target) && targetDistance < 8 && rack.some(slot => slot.id === 'weapon.flamethrower') ? 'weapon.flamethrower'
+      : roadblockFight && rocket ? 'weapon.rocket-launcher'
       : !finale ? travelWeapon : rocket ? 'weapon.rocket-launcher' : targetDistance < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
     const handgunSide = bike?.riding && bikeEntity?.bicycle?.motorbike
       ? (['LEFT', 'RIGHT'] as const).find(side => player.weapons![side].rack[player.weapons![side].index]?.id === 'weapon.handgun') : undefined;
