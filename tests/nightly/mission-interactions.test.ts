@@ -128,7 +128,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         // visible on the apron. Exercise its native six-person door queue here,
         // without adding another registered case or relaxing the scene gate.
         expect(mission.state.marker).toBe('l8-route');
-        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia');
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Clear the zoo');
         const flock = mission.l8!.bosses.state.find(arena => arena.id === 'flamingo')!;
         const savedPhase = flock.phase, savedPlayer = { ...player.transform };
         const flockCentre = l8BossArenas.find(d => d.id === 'flamingo')!.centre;
@@ -136,7 +136,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         const flockBodies = flock.ids.map(id => levelWorld.entities.get(id)!);
         const savedHealth = flockBodies.map(body => body.health.current);
         flockBodies.forEach((body, index) => { body.health.current = index < 3 ? 0 : body.health.max; });
-        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Follow Nadia · 5 left');
+        expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Clear the zoo · 5 left');
         flockBodies.forEach((body, index) => { body.health.current = savedHealth[index]; });
         flock.phase = savedPhase; Object.assign(player.transform, savedPlayer);
         await checkL8Story();

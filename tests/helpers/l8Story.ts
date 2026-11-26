@@ -10,6 +10,7 @@ import { zooExitGate, poseZooExitGate } from '../../src/render/district/zooExitG
 import { k9VestModel } from '../../src/render/characters/K9Vest';
 import { survivorName } from '../../src/sim/missions/survivorName';
 import { loadLevel } from '../qa/invariants/world';
+import { observeAttackStarts } from '../../tools/qa/threat/attackStarts';
 
 function gateGeometry(): void {
   const root = new Group(), source = new BoxGeometry(.12, 2.6, 2.7);
@@ -84,14 +85,23 @@ export async function checkL8Story(): Promise<void> {
       }
     }
     expect(calmHealthy, 'no animal turns or dies before the alarm').toBe(true);
-    expect(leadGap, 'Nadia never gets more than 12 m ahead of the courier while leading').toBeLessThan(12);
-    expect(zoo.state.guideDone, 'Nadia reaches the zoo entry gate').toBe(2);
-    expect(lines).toEqual(expect.arrayContaining(['L8.nadia-path', 'L8.nadia-zebra-pass', 'L8.broadcast', 'L8.nadia-safe']));
+    // PO 2026-11-26: no guided tour; the gates break 20 s after arrival.
+    expect(leadGap).toBe(0);
+    expect(zoo.state.guideDone, 'the tour is skipped').toBe(1);
+    expect(world.tick - zoo.state.startedAt, 'breach 20 s after arrival').toBeLessThanOrEqual(20 * 60 + 2);
+    expect(lines).toEqual(expect.arrayContaining(['L8.nadia-path', 'L8.nadia-safe']));
     expect(mission.state.states.breached).toBe(true);
 
-    zoo.state.nextWave = Number.MAX_SAFE_INTEGER; world.combat!.damage.god = true;
+    const openingAttacks: number[] = [];
+    observeAttackStarts(world, (_source, target, tick) => {
+      if (zoo.protecting() && (target === 1 || zoo.roster().includes(target))) openingAttacks.push(tick);
+    });
+    world.combat!.damage.god = true;
     world.applyInput(emptyInput(), 'keyboard');
-    for (let i = 0; i < 1800 && (!world.entities.get(watchedAnimalId)?.infected || !zoo.state.keeperAttacked); i++) world.update();
+    for (let i = 0; i < 1800; i++) world.update();
+    expect(openingAttacks.length, 'at least six attacks per minute during the 30 s hold').toBeGreaterThanOrEqual(3);
+    expect(openingAttacks[0] - zoo.state.startedAt, 'first attack within 35 s of arrival').toBeLessThanOrEqual(35 * 60);
+    expect(zoo.protecting(), 'the hold ends after 30 s').toBe(false);
     expect(world.entities.get(zoo.state.dogId)?.infected?.variant).toBe('inf.dog-k9');
     expect(zoo.state.arrivals.some(arrival => arrival.id === zoo.state.dogId && arrival.outlet === 0), 'K9 enters through the broken gate').toBe(true);
     const bird = world.entities.get(watchedAnimalId), runner = world.entities.get(zoo.state.animalInterceptionId);

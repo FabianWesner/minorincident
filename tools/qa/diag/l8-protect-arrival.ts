@@ -3,7 +3,6 @@ import { loadLevel } from '../../sim-runner/levels';
 import { emptyInput } from '../../../src/input/InputFrame';
 const w = await loadLevel('L8', 1); const m = w.missions!, zoo = m.l8!;
 w.combat!.damage.god = true;
-const plaza = m.def.anchors['central-plaza'] ?? m.def.anchors['l8-route'];
 for (let i = 0; i < 150 * 60; i++) {
   w.applyInput(emptyInput(), 'keyboard'); w.update();
   if (!m.state.states.breached || (w.tick - zoo.state.breachedAt) % 120) continue;

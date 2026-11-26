@@ -12,8 +12,8 @@ export function levelEightMission(resolve: (district: DistrictId, name: string) 
     checkpoints: ['sanctuary', 'breach', 'sealed', 'escape-route', 'arena-flamingo', 'arena-lion', 'arena-monkey', 'arena-zebra', 'arena-gorilla', 'arena-elephant', 'cleared-flamingo', 'cleared-lion', 'cleared-monkey', 'cleared-zebra', 'cleared-gorilla'], cinematics: {
       'l8-hale': { seconds: 1.5, caption: dialogue['L8.hale-dying'], position: [108, 12, 89], target: [88, 1, 70], actions: [] },
     },
-    steps: [{ id: 'sanctuary', type: 'custom', text: 'Follow Nadia', anchor: 'l8-route', waypoint: true,
-      start: { kind: 'start' }, complete: { kind: 'all', triggers: [{ kind: 'state', key: 'breached', equals: true }, { kind: 'volume', anchor: 'zoo-gate', edge: 'inside' }] }, fail: [] },
+    steps: [{ id: 'sanctuary', type: 'custom', text: 'Clear the zoo', anchor: 'l8-route', waypoint: true,
+      start: { kind: 'start' }, complete: { kind: 'state', key: 'breached', equals: true }, fail: [] },
     { id: 'escape', type: 'custom', text: 'Lead the group to the armored vehicle', anchor: 'exit', waypoint: false,
       start: { kind: 'objectives', ids: ['sanctuary'], mode: 'all' }, complete: { kind: 'state', key: 'player-boarded', equals: true }, fail: [{ trigger: { kind: 'state', key: 'apc-destroyed', equals: true }, reason: 'target-destroyed' }] },
     { id: 'depart', type: 'custom', text: 'Cover the survivors while they board', anchor: 'exit', waypoint: false,

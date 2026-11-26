@@ -59,7 +59,11 @@ export function objectiveText(mission: Mission, fallback: string): string {
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
-    if (zoo.protecting()) return zoo.awayFromPlaza() ? 'Back to the plaza! The group is under attack' : 'Protect the group!';
+    if (zoo.protecting()) {
+      const group = [w.entities.get(1)!, ...zoo.followers()];
+      const threatened = w.infected!.active.some(e => e.health.current > 0 && !e.hidden && group.some(member => Math.hypot(e.transform.x - member.transform.x, e.transform.z - member.transform.z) < 15));
+      return threatened ? 'Protect the group!' : 'Stay with the group';
+    }
     if (l8SanctuaryResting(mission)) return 'Rest at the plaza with the group';
     if (zoo.state.departureFrom) return 'Something is following you.';
     // Short verb line during arena fights (s60); the flamingo Phase 2 keeps its remaining-flock count (s68).
