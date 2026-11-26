@@ -17,6 +17,7 @@ import { Recorder } from '../../src/input/Recorder';
 import { Settings } from '../../src/ui/Settings';
 import { Loadout } from '../../src/sim/combat/Loadout';
 import type { EntitySnapshot } from '../../src/sim/world/types';
+import { carriedWeapons } from '../../src/ui/Onboarding';
 
 afterEach(() => vi.unstubAllGlobals());
 function element() {
@@ -319,4 +320,12 @@ test('click pick: head-to-feet body capsule picks the infected; downed stay pick
   expect(picker.pick(...at, [{ ...lying, corpse: true } as unknown as EntitySnapshot])).toBeNull();
   expect(picker.pick(...screen(1.2, 1.25, 0), [infected(4, 1.2, 0, 40, { hidden: true })])).toBeNull();
   expect(picker.pick(...screen(1.2, 1.25, 0), [{ ...infected(5, 1.2, 0), faction: 'civilian' } as unknown as EntitySnapshot])).toBeNull();
+});
+
+test('onboarding switch-weapon hint counts distinct carried weapons, not the lure, kick, fists or a duplicate (Luna 11-26)', () => {
+  const rack = (...ids: string[]) => ({ rack: ids.map(id => ({ id })) });
+  expect(carriedWeapons({ LEFT: rack('weapon.bat'), RIGHT: rack('ability.corgi-lure', 'weapon.kick') })).toBe(1);
+  expect(carriedWeapons({ LEFT: rack('weapon.bat'), RIGHT: rack('weapon.bat') })).toBe(1);
+  expect(carriedWeapons(undefined)).toBe(0);
+  expect(carriedWeapons({ LEFT: rack('weapon.bat'), RIGHT: rack('weapon.pistol', 'ability.corgi-lure') })).toBe(2);
 });
