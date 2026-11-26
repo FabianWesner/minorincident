@@ -53,6 +53,20 @@ const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='me
 };
 place('int.metro-station',0,SZ);
 for(let i=0;i<18;i++) place('kit.metro-tunnel',36+i*12,15,.35);
+// The shipped tunnel mesh has raised side curbs but no collision hull for its
+// full-height walls. Close those faces between the authored service openings;
+// each opening remains wide enough for its maintenance corridor/mission door.
+const tunnelWallOpenings = l6Doors.map(d => ({ x: d.x, z: d.z, half: 2.3 }));
+for (const [side, z0, z1] of [['south', 10.85, 11.2], ['north', 18.8, 19.15]] as const) {
+  const cuts = tunnelWallOpenings.filter(d => side === 'south' ? d.z < 15 : d.z > 15)
+    .map(d => [d.x - d.half, d.x + d.half] as const).sort((a,b) => a[0] - b[0]);
+  let x = 30;
+  for (const [a,b] of cuts) {
+    if (a > x) layout.colliders.push({id:`tunnel-wall-${side}-${x}`,aabb:{min:[x,.35,z0],max:[a,4.1,z1]},walkable:false,minTier:0,maxTier:5});
+    x = Math.max(x,b);
+  }
+  if (x < 246) layout.colliders.push({id:`tunnel-wall-${side}-${x}`,aabb:{min:[x,.35,z0],max:[246,4.1,z1]},walkable:false,minTier:0,maxTier:5});
+}
 for(const x of [54,126,198]) place('kit.maintenance-corridor',x,6.2,.4,Math.PI/2);
 for(const x of [78,174]) place('kit.maintenance-corridor',x,23.8,.4,-Math.PI/2);
 // Centre the dead escalator on the tunnel route (z=15), rather than its unwalkable gap.
