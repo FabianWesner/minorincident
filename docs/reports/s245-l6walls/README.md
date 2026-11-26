@@ -52,3 +52,7 @@ The generated collider interval audit covers x=30–246 on both sides except the
 ## Deferred respawn admission
 
 The fallback admission and its retries now require nav visibility from the current courier position before placing the companion. A focused regression forces all visibility checks to fail, confirms the dog stays hidden and pending through retries, then restores visibility and confirms a reachable admission. The focused test, typecheck, lint and local E24 verifier passed (107 tests, 141.2 s). L6 threat audit remains at zero L6 flags, with the partial-selection marker. The remote full suite again exceeded its 240 s budget (245.6 s, exit 124); its corgi and L6 mission test files passed before timeout.
+
+## Movement sweep
+
+`node --import tsx/esm tools/qa/diag/l6-wall-reach.ts /private/tmp/s245-sweep.png` uses the shared static actor sweep from the track toward each side at 0.5 m x intervals, omitting the placed corridor openings and ignoring other actors. All 402 south and 412 north samples stopped before crossing the outer face; no leaks were recorded. This samples actual movement collision, while the continuous collider intervals establish coverage between samples. The sweep can also stop at other static geometry and therefore does not independently establish that each stop was the added wall. Typecheck and lint passed after adding the diagnostic.

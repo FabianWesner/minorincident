@@ -48,5 +48,17 @@ for(let x=30.5;x<246;x+=1){
   if(opening)continue;
   for(const [side,z] of [['south',11.0],['north',19.0]] as const){walls[side].samples++;if(!w.solids.clear({x,y:.6,z},.35,1,false))walls[side].blocked++;}
 }
-console.log(JSON.stringify({imagePath,grid:[nav.width,nav.depth],reached:now.reduce((a,b)=>a+b,0),outsideFootprint:escaped.length,firstOutside:escaped.slice(0,10).map(k=>[nav.x(k),nav.z(k)]),wallCollisionSamples:walls,anchors:anchorReach,doors},null,2));
+// Sweep an actor from the track toward each wall at half-metre intervals.
+// Ignore other actors so crowd placement cannot mask a missing static wall.
+const courier=w.entities.get(1)!, original={...courier.transform};
+const sweeps={south:{samples:0,leaks:[] as number[]},north:{samples:0,leaks:[] as number[]}};
+for(let x=30.25;x<246;x+=.5) for(const [side,sign,openings] of [['south',-1,[54,126,198]],['north',1,[78,174]]] as const) {
+  if(openings.some(opening=>Math.abs(x-opening)<2.3))continue;
+  Object.assign(courier.transform,{x,y:.9,z:15});
+  const distance=w.solids.sweep(courier,{x:0,z:sign},5,.3,false,false);
+  sweeps[side].samples++;
+  if(distance>3.8)sweeps[side].leaks.push(x);
+}
+Object.assign(courier.transform,original);
+console.log(JSON.stringify({imagePath,grid:[nav.width,nav.depth],reached:now.reduce((a,b)=>a+b,0),outsideFootprint:escaped.length,firstOutside:escaped.slice(0,10).map(k=>[nav.x(k),nav.z(k)]),wallCollisionSamples:walls,movementSweeps:sweeps,anchors:anchorReach,doors},null,2));
 w.dispose();
