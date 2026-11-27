@@ -1,0 +1,117 @@
+{
+  "method": "sweep-g-l5-pace.mjs high, complete bot, seed 1; samples every 30 ticks using the same movement-sample predicate as the threat observer; trace end hash matched the uninstrumented acceptance receipt",
+  "source": "baseline main at 540ab32a",
+  "controlMatched": true,
+  "followers": {
+    "28": "Dale",
+    "32": "Sam"
+  },
+  "samples": [
+    {
+      "tick": 7440,
+      "follower": 28,
+      "phase": "look",
+      "courierSpeed": 4.5,
+      "resolvedFollowerSpeed": 0.2,
+      "distanceToCourier": 1.03,
+      "combat": false,
+      "requestedSpeed": 0.322,
+      "blockingBody": null,
+      "reading": "calm near-slot correction deliberately requests a short stride"
+    },
+    {
+      "tick": 5220,
+      "follower": 32,
+      "phase": "look",
+      "courierSpeed": 3.75,
+      "resolvedFollowerSpeed": 1.33,
+      "distanceToCourier": 0.72,
+      "combat": false,
+      "requestedSpeed": 1.444,
+      "blockingBody": null,
+      "reading": "calm near-slot correction deliberately requests a short stride"
+    },
+    {
+      "tick": 8250,
+      "follower": 28,
+      "phase": "look",
+      "courierSpeed": 4.5,
+      "resolvedFollowerSpeed": 1.91,
+      "distanceToCourier": 4.65,
+      "combat": false,
+      "requestedSpeed": 4.725,
+      "blockingBody": null,
+      "position": [18.4, 30.6],
+      "courierPosition": [17.95, 35.23],
+      "reading": "requested pace exceeds resolved displacement; no actor blocker is reported, and the cause is unclassified"
+    },
+    {
+      "tick": 8250,
+      "follower": 32,
+      "phase": "look",
+      "courierSpeed": 4.5,
+      "resolvedFollowerSpeed": 2.47,
+      "distanceToCourier": 5.33,
+      "combat": false,
+      "requestedSpeed": 4.725,
+      "blockingBody": null,
+      "position": [18.22, 29.92],
+      "courierPosition": [17.95, 35.23],
+      "reading": "requested pace exceeds resolved displacement; no actor blocker is reported, and the cause is unclassified"
+    },
+    {
+      "tick": 8190,
+      "follower": 28,
+      "phase": "look",
+      "courierSpeed": 4.5,
+      "resolvedFollowerSpeed": 3.8,
+      "combat": true,
+      "requestedSpeed": null,
+      "reading": "authored defensive pace applies while the shared combat state is active"
+    }
+  ],
+  "candidate": {
+    "sourceHash": "85354567f5798d2edfb3fd1b3308015c5687d40d307373fe0d82c7e7783bb9cc",
+    "low": {
+      "g13": "PASS",
+      "l5_08_band": "PASS",
+      "paceRatios": {
+        "daleLook": 0.959,
+        "daleMetro": 0.958,
+        "samLook": 0.977,
+        "samMetro": 0.988
+      },
+      "bandSharesPercent": {
+        "dale": 99.4,
+        "sam": 99.9,
+        "rosa": 98.9,
+        "mia": 100,
+        "okafor": 96.44
+      }
+    },
+    "high": {
+      "g13": "FAIL",
+      "l5_08_band": "FAIL",
+      "paceRatios": {
+        "daleLookSeed1": 0.871,
+        "daleLookSeed2": 0.931,
+        "daleLookSeed3": 0.777
+      },
+      "bandSharesPercent": {
+        "dale": 99.6,
+        "sam": 93.46,
+        "rosa": 100,
+        "mia": 99.73,
+        "okafor": 96.61
+      }
+    },
+    "threatAudit": {
+      "substantiveFlags": [
+        "L5/KITING_LANDED_HITS_BELOW_2:0.00",
+        "L5/step/look:SKILLED_BELOW_ATTACKS_PER_MINUTE_3"
+      ],
+      "result": "FAIL"
+    },
+    "retained": false
+  }
+}
