@@ -67,3 +67,7 @@ Four L1 frames were opened: high/low `campaign-L1-t12.jpg` show warm pavement, c
 ## L10 low mortal run
 
 The matching low-tier command (`E2E_PORT=5402 npx tsx tools/playtest/play.ts --levels L10 --quality low --zoom 1.5 --capture-zooms 1,1.5 --level-minutes 18 --session-seconds 480 --no-skip --out test-results/v1-l1l10/l10-low`) exited 1 without completion after four segments, 1490 sampled seconds total. Segment deaths were 3 + 8 + 0 + 4 = 15; no skips or assists. The driver recorded four P2 navigation warnings and two P0 stops after 90.3 s without visible progress, near `(1809.3,-2.3)` and `(1764.1,-16.1)`. As with high, this is a failed driver run, not yet proof that a player cannot proceed. The logs and captures remain in the named ignored directory; captures have not been reviewed. Both-tier mortal runs are incomplete and fairness remains unqualified.
+
+## L10-06 review
+
+Fresh **FAIL** replaces the stale PASS: the high and low controlled dog fixtures each report speed ratio `1.65` versus the `1.1` requirement. Repro: `npm run qa:accept -- --level L10 --skip-browser --reuse`, then inspect `native dog speed ratio` in each fixture receipt. The fixture divides spawned dog `infected.speed` by `survivor.speed`; the source of the changed ratio is not isolated. The other clauses and current dog/corgi appearance remain unreviewed. [Review JSON](../../qa/reviews/L10-06.json) records both receipt hashes and the observation.
