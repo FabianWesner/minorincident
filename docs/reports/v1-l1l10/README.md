@@ -253,3 +253,11 @@ The `L10_STORY_FINAL_ONLY=1 L10_STORY_TIERS=high,low L10_STORY_SEED=1` existing 
 | L10-02 | stale PASS → still NOT CHECKED | Native first widest-frame sighting 71.8 / 69.53 s; close sections `[1,6,7,8]` both. Twenty oversized direct-rocket hits leave 1780.10 / 1780.10 of 3000 HP before installation; production floor 1500 HP. | [Qualification](L10-02/qualification.json), current native receipts referenced there; `src/sim/combat/Damage.ts`, `src/render/HealthBars.ts`, `src/ui/Hud.ts`. | Clarify whether the no-bar clause excludes the overhead bar required by G-24. |
 
 The old fixture incorrectly calls any HP loss an immunity failure; the current row prohibits killing, not damage, and the damage floor plus the measured 20-hit result support survival. The criterion also says no HP bar before the finale, while G-24 explicitly requires the pursuing Mega's overhead bar; the HUD's separate screen-wide boss bar is restricted to the installed-cure finale. `HealthBars.barEligible` marks pursuit mandatory when visible, but no current physical image establishes the actual onscreen result. Confirm interpretation and inspect physical sightings/terrain escapes before closing. No source, criterion or checker changed.
+
+## L10-04 pacing diagnostic on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-04 | stale PASS → still NOT CHECKED | Native complete bot: 6 / 7 route-ambush emergence signals; consecutive gaps 74.50–154.67 / 67.83–136.67 s; first such signal 458.67 / 367.17 s. Completed with 4 / 3 deaths. | [Pacing receipt](L10-04/pacing.json); previous physical run diagnostics above. | — |
+
+`L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts` exited 0. Its named `l10-scare-emerged` signals are only one category of authored scare, and its longest gap between *all* beats includes radio, vignettes and objectives; neither establishes the 30–60 s quiet or approximate scare-cadence requirement. The native route is not a physical-input fairness run. Current peak counts alone also do not establish what is normal. A per-tick local crowd distribution, complete scare classification and visual moving-group review remain open. No game or checker change.
