@@ -163,7 +163,18 @@ export class LevelNineCrash {
     };
     const rotation = (roll: number) => ({ x: Math.cos(s.from.yaw / 2) * Math.sin(roll / 2), y: Math.sin(s.from.yaw / 2) * Math.cos(roll / 2), z: -Math.sin(s.from.yaw / 2) * Math.sin(roll / 2), w: Math.cos(s.from.yaw / 2) * Math.cos(roll / 2) });
     const mega = w.entities.get(this.driving.state.megaId);
-    if (mega && !['dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(s.phase)) {
+    if (mega && s.phase === 'approach' && t >= 60 && s.megaLandedAt === undefined) {
+      s.megaLandedAt = w.tick;
+      w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.mega-boarded', actorId: mega.id });
+    }
+    if (mega && (s.phase === 'approach' || s.phase === 'fall') && s.megaLandedAt !== undefined) {
+      // The Mega lands on the APC mid-span and rides the visible vehicle through
+      // the section collapse. The ending after impact still has it climb out.
+      const c = Math.cos(car.transform.yaw), sn = Math.sin(car.transform.yaw);
+      mega.hidden = false; mega.infected!.hidden = false;
+      Object.assign(mega.transform, { x: car.transform.x + c * 1.4, y: car.transform.y + 2.7, z: car.transform.z - sn * 1.4, yaw: car.transform.yaw });
+      w.spatial.set(mega.id, mega.transform.x, mega.transform.z);
+    } else if (mega && !['dazed', 'rise', 'mega-exit', 'mega-roar', 'mega-leap'].includes(s.phase)) {
       mega.hidden = true; mega.infected!.hidden = true;
     }
     if (s.phase !== 'approach' && s.phase !== 'fall' && s.phase !== 'impact') {

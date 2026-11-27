@@ -495,7 +495,8 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
         const mega = signalTick('mega-boarded'), collapse = signalTick('bridge-collapse'), impact = signalTick('crash-impact');
         add('L9-16', 'Mega landing precedes deck collapse and impact', { mega, collapse, impact }, 'landing < collapse < impact; physical motion and span readability remain open', mega !== undefined && collapse !== undefined && impact !== undefined && mega < collapse && collapse < impact);
         const weapons = [...new Set([...(final.racks?.LEFT ?? []), ...(final.racks?.RIGHT ?? [])])];
-        add('L9-17', 'completed crossing retains only the axe in carried racks', { weapons, lostAt: signalTick('weapons-lost'), clearAt: signalTick('crawl-finished') }, 'exactly [axe], with loss before clearance; rendered rack and input causality remain open', weapons.length === 1 && weapons[0] === 'weapon.fire-axe' && (signalTick('weapons-lost') ?? Infinity) < (signalTick('crawl-finished') ?? -Infinity));
+        // PO 2026-11-22 removed the crawl; l9.rise is the current clearance signal.
+        add('L9-17', 'completed crossing retains only the axe in carried racks', { weapons, lostAt: signalTick('weapons-lost'), clearAt: signalTick('rise') }, 'exactly [axe], with loss before clearance; rendered rack and input causality remain open', weapons.length === 1 && weapons[0] === 'weapon.fire-axe' && (signalTick('weapons-lost') ?? Infinity) < (signalTick('rise') ?? -Infinity));
       }
       add('L9-13', 'ordinary optional repair stays within its finite tick budget', driving?.repairTicks ?? null, '1..1200 held ticks; zero means the optional bay was skipped', driving?.repairTicks ? driving.repairTicks <= 1200 : undefined);
       break;

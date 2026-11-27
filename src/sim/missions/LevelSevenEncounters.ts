@@ -185,12 +185,15 @@ export class LevelSevenEncounters {
       return { ...p, y: .7 + this.world.districts!.pavingHeight(p.x, p.z) };
     };
     const finalAlphaSpots = [{ x: -64, z: 50 }, { x: -43, z: 41.7 }, { x: -59, z: 41.7 }, { x: -49, z: 50 }, { x: -54, z: 45 }, { x: -47, z: 46 }];
-    for (let i = 0; i < alphas; i++) {
-      const at = group === l7Encounters.finalGroup
-        ? finalAlphaSpots[i % finalAlphaSpots.length]!
-        : { x: centre.x + (group === l7Encounters.firstStreetGroup ? 8.5 : 0) + Math.floor(i / 2) * 2.5, z: centre.z + (i % 2 ? 1 : -1) * (3 + Math.floor(i / 2) * 2) };
-      admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI,
-        alphaType: this.alphaType(group, i) });
+    const priorAlphas = this.state.arrivals.filter(arrival => arrival.group === group && arrival.alpha).length;
+    if (priorAlphas < alphas) {
+      for (let i = priorAlphas; i < alphas; i++) {
+        const at = group === l7Encounters.finalGroup
+          ? finalAlphaSpots[i % finalAlphaSpots.length]!
+          : { x: centre.x + (group === l7Encounters.firstStreetGroup ? 8.5 : 0) + Math.floor(i / 2) * 2.5, z: centre.z + (i % 2 ? 1 : -1) * (3 + Math.floor(i / 2) * 2) };
+        admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI,
+          alphaType: this.alphaType(group, i) });
+      }
     }
     // Only the final horde spans the wide corridor. Street packs stay on the
     // road; the wide rows put Lakeshore residents behind frontage obstacles.
@@ -642,5 +645,23 @@ export class LevelSevenEncounters {
     director.queue.splice(0, director.queue.length, ...structuredClone(record.queue));
     director.levelCap = l7Encounters.concurrentCap.high; director.strict = true; director.ambientTarget = 0;
     this.reserveSlots();
+  }
+  /** Keep authored Alpha slots and their actors through a checkpoint retry; the PO total is per full run. */
+  restoreRetry(saved: ReturnType<LevelSevenEncounters['snapshot']>, actors: EntitySnapshot[]): void {
+    const arrivals = new Map([...this.state.arrivals, ...saved.state.arrivals].map(a => [`${a.group}:${a.id}`, a]));
+    this.state.arrivals = [...arrivals.values()].sort((a, b) => a.tick - b.tick || a.id - b.id);
+    this.state.finalReady ||= saved.state.finalReady;
+    for (const arrival of this.state.arrivals) this.seen.add(`${arrival.group}:${arrival.id}`);
+    for (const actor of actors) {
+      const current = this.world.entities.get(actor.id);
+      if (!current || current.archetype !== actor.archetype || current.infected?.pack !== actor.infected?.pack) {
+        const restored = structuredClone(actor);
+        this.world.entities.replace(restored);
+        const activeIndex = this.world.infected!.active.findIndex(e => e.id === restored.id);
+        if (activeIndex >= 0) this.world.infected!.active.splice(activeIndex, 1);
+        if (!restored.corpse) this.world.infected!.active.push(restored);
+        this.world.spatial.set(restored.id, restored.transform.x, restored.transform.z);
+      }
+    }
   }
 }

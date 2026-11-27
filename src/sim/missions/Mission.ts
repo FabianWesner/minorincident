@@ -470,6 +470,11 @@ export class Mission {
   /** Restore mission/actors/racks, retain run totals and permanently killed scripted bosses. */
   restore(id = this.state.checkpoint ?? 'start', resume = false): void {
     this.closingGates.clear();
+    const l7Retry = !resume && this.def.id === 'L7' && this.world.l7Encounters ? {
+      encounters: this.world.l7Encounters.snapshot(),
+      actors: [...this.world.entities.iterate()].filter(e => e.archetype === 'infected.alpha' && e.infected
+        && e.infected.pack >= 700 && e.infected.pack <= 714).map(e => structuredClone(e)),
+    } : undefined;
     if (!resume && this.state.cureFront) { this.l10?.cure.apply(); return; }
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
@@ -575,6 +580,7 @@ export class Mission {
       vegetation.restore(charred);
     }
     restoreSeams(this.world, checkpoint.seams, !resume);
+    if (l7Retry) this.world.l7Encounters?.restoreRetry(l7Retry.encounters, l7Retry.actors);
     this.l10?.cure.apply();
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier);

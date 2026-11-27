@@ -126,12 +126,12 @@ export class L9Props extends Group {
       stripes.instanceMatrix.needsUpdate = true; stripes.castShadow = stripes.receiveShadow = true; parent.add(stripes);
     }
     this.gate.position.x = cfg.gate.x; this.bridgeGate.position.x = cfg.bridgeGate.x; this.add(this.gate, this.bridgeGate);
-    // Six independently dropping spans show the break advancing under and
-    // behind the moving vehicle. The old broken kit remains in the creek.
-    for (let i = 0; i < 6; i++) {
-      const span = new Group(); span.position.set(478 + i * 8, -.04, 0);
-      box(span, concrete, [4, -.2, 0], [7.96, .4, 12]);
-      for (const side of [-1, 1]) box(span, metal, [4, .55, side * 5.9], [8, 1.1, .12]);
+    // The baked terrain has a gap at x=508..524. The bridge sections must
+    // occupy that gap, otherwise the road hides them when they drop.
+    for (let i = 0; i < 4; i++) {
+      const span = new Group(); span.position.set(508 + i * 4, .05, 0);
+      box(span, concrete, [2, -.2, 0], [3.96, .4, 12]);
+      for (const side of [-1, 1]) box(span, metal, [2, .55, side * 5.9], [4, 1.1, .12]);
       this.bridge.push(span); this.add(span);
     }
     // The same rack stays on the hull before the impact, then tumbles out.
@@ -176,8 +176,8 @@ export class L9Props extends Group {
     const car = this.world.entities.get(s.carId)!, t = this.world.tick + alpha - s.startedAt, approach = s.approachTicks ?? 180;
     this.gate.visible = driving.gateClosed; this.bridgeGate.visible = !driving.evacuationDone;
     for (const [i, span] of this.bridge.entries()) {
-      const fall = s.phase === 'driving' ? 0 : Math.max(0, Math.min(1, (t - 60 - i * 25) / 100));
-      span.rotation.z = -fall * 1.1; span.position.y = -.04 - fall * 1.8;
+      const fall = s.phase === 'driving' ? 0 : Math.max(0, Math.min(1, (t - approach - i * 14) / 35));
+      span.rotation.z = -fall * 1.1; span.position.y = .05 - fall * 2.5;
     }
     const p = car.transform, fall = Math.max(0, (t - approach) / 60), loose = ['fall', 'impact', 'crawl', 'done'].includes(s.phase);
     if (!loose) {
