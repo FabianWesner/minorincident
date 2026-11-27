@@ -12,7 +12,7 @@ The targeted acceptance checks pass on both tiers. The full L6 report still has 
 
 ## Open
 
-`node --import tsx/esm tools/qa/threat-audit.ts --levels L6` still reports two passive exit pacing flags: `step/exit:SLOW_FOLLOWER:16` and `phase/exit:SLOW_FOLLOWER:16`. The passive sample has Marcus at 3.40 m/s and follower 16 at 2.20 m/s. `PARTIAL_LEVEL_SELECTION` is expected for a one-level audit. The required zero-flag threat audit is not yet met; the exit pacing discrepancy needs a game-side fix.
+`node --import tsx/esm tools/qa/threat-audit.ts --levels L6` still reports two passive exit pacing flags: `step/exit:SLOW_FOLLOWER:16` and `phase/exit:SLOW_FOLLOWER:16`. The passive sample has the corgi (entity 15) at 3.40 m/s and Marcus (entity 16) at 2.20 m/s; native level initialization confirms those identities. `PARTIAL_LEVEL_SELECTION` is expected for a one-level audit. The required zero-flag threat audit is not yet met; the exit pacing discrepancy needs a game-side fix.
 
 ## Changed files
 
