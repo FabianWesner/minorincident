@@ -34,3 +34,5 @@ All five native runs completed, with no checkpoint reaching the three-deaths-in-
 - Baseline review: the L5 slot table and failing expectation are both unchanged from parent `48a14ae4`, so that failure predates s248. A second LOW boarding fixture retained infected and used the follow camera, but the 0.5 zoom frame failed the passenger pixel check and showed no horde; it does not satisfy the live-pressure visual review.
 
 - Follow-up LOW live-pressure capture: the game follow camera shows 22 boarded, a survivor approaching, and infected engaging guards at the edge of frame (12 living infected within 30 m). This controlled fixture moved the 24-person roster to the queue, requested the authored final wave and stepped 400 ticks with player invulnerability; it is not a native completion run. The four reviewed frames are collected in [captures.jpg](captures.jpg).
+
+- Remote isolation follow-up: `timing-isolated.sh --whole-run npm run test:unit` remained in the FIFO queue for over 14 minutes while the runner slots were occupied; the request was cancelled before execution. The prior remote timeout and the passing local full gate remain the latest suite results.
