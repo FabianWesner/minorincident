@@ -119,3 +119,7 @@ Current controlled fixtures: **PASS**, 5 initial; low 30/30 and high 44/50 at +1
 ## L1-01 refresh at 92c233e2
 
 **PASS**: both current native complete policies finish. Initial deadline is null, racks absent and owned actions contain only fists/kick (unarmed). [Review](../../qa/reviews/L1-01.json), [high](L1-01/current-high-complete.json), [low](L1-01/current-low-complete.json). This is a native run, not current physical-input evidence. No game change or open numeric clause.
+
+## L1-08 at 92c233e2
+
+**PASS** in current native policies: both stationary tiers first player windup at 2.3167 s and 330.18 windups/min over 290.57 s; bounded-path minimum 100% across 147 samples each. Complete low/high rates 27.93/19.20 per minute and minimum 100% across 23 samples each. The rate counts player-target windup events, not damage; reachability samples actors within 30 m with path ≤2.5× direct. [Review](../../qa/reviews/L1-08.json), [high stationary](L1-08/high-stationary.json), [low stationary](L1-08/low-stationary.json), complete receipts under L1-01. No game change; no open native clause.
