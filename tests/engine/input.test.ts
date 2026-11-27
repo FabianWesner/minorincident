@@ -292,7 +292,7 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
     expect(slots.every(slot => !slot.owned)).toBe(true);
     expect(weaponRackSlots(level, levelWeaponSets[level]).every(slot => slot.owned)).toBe(true);
   }
-  const expectedLevelKeys = [[1], [1], [1, 2], [1, 2, 4], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 9], [1, 2, 3, 4, 5, 9], [1, 2, 3, 4, 5], [1, 2, 3, 5, 6, 7, 8, 9, 10]];
+  const expectedLevelKeys = [[1], [1], [1, 2], [1, 2, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4, 5, 9], [1, 2, 3, 4, 5, 9], [1, 2, 3, 4, 5], [1, 2, 3, 5, 6, 7, 8, 9, 10]];
   expectedLevelKeys.forEach((keys, index) => {
     const level = (index + 1) as keyof typeof levelWeaponSets;
     const holes = weaponRackSlots(level, []);
