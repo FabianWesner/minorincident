@@ -8,7 +8,7 @@ Run date: 2026-11-27. Acceptance used `--skip-browser`; source and evaluator thr
 |---|---:|---:|---|
 | L4-07 low bounded reachability | 66.0% | 66.2% | Fail, target 90% |
 | L4-07 high bounded reachability | 70.0% | 69.8% | Fail, target 90% |
-| L5-05 low complete windups/min | 4.30 | 1.57 | Fail, target 3/min |
+| L5-05 low complete player/group windups/min | 4.30 | 1.97 (1.57 player only) | Fail, target 3/min |
 | L5-05 high complete windups/min | 2.26 | 3.44 | Pass, target 3/min |
 | L5-05 low stationary | 0 windups / 228.35 s; no first attack | 0 / 228.35 s; no first attack | Fail |
 | L5-05 high stationary | 0 windups / 228.35 s; no first attack | 0 / 228.35 s; no first attack | Fail |
@@ -37,4 +37,4 @@ No game change was retained; the source is restored to the baseline. L4 and L5 c
 
 ## Open
 
-L4-07 still needs an accessible route through the north interior line/reception footprint. L5-05 needs an attack placement outside the first-rescue corridor and on connected road cells; the current attack-pressure regression at low tier is open. L5 G-13 needs a way to bring followers 28 and 32 up to group pace without causing other followers to leave their measured band. This lane did not meet the full acceptance goal.
+L4-07 still needs an accessible route through the north interior line/reception footprint. L5-05 needs an attack placement outside the first-rescue corridor and on connected road cells; the trial attack-pressure regression at low tier needs avoiding. L5 G-13 needs a way to bring followers 28 and 32 up to group pace without causing other followers to leave their measured band. This lane did not meet the full acceptance goal.
