@@ -68,7 +68,7 @@ export class L8BossArenas {
       l8YardWalls.forEach((wall, i) => this.barrier(`l8.yard-wall.${i}`, 900810 + i, { ...wall, y: 1.5, halfY: 1.5 }, !(i === 2 && breached)));
       l8YardGates.forEach((gate, i) => this.barrier(`l8.yard-gate.${i}`, 900820 + i, { ...gate, y: 1.5, halfY: 1.5 }, yardClosed));
     }
-    const ctx = { arenas: this.state, sealed: !!this.mission.l8!.state.sealedAt, followers: this.mission.l8!.followers().map(e => e.transform) };
+    const ctx = { arenas: this.state, sealed: !!this.mission.l8!.state.sealedAt, breached: !!this.mission.state.states.breached, followers: this.mission.l8!.followers().map(e => e.transform) };
     const pathClosed = l8GateClosed('path.0', ctx);
     if (this.gateStates.get('pond-path') !== pathClosed) {
       this.gateStates.set('pond-path', pathClosed);
@@ -111,7 +111,10 @@ export class L8BossArenas {
       }
       // The solo yard closes behind the courier once the outside party clears
       // the threshold. The east perimeter breach remains available to attackers.
-      const entryClosed = yardClosed || elephant.phase > 0 && elephant.phase < 3 && !!elephant.armed;
+      // Keep the elephant yard's perimeter entry open while the boss is active;
+      // the follower controller holds the courier outside, while attackers need
+      // a real path through the arena mouth.
+      const entryClosed = yardClosed;
       if (this.gateStates.get('elephantEntry') !== entryClosed) {
         this.gateStates.set('elephantEntry', entryClosed);
         this.barrier('l8.arena-gate.elephant-entry', 900834, { ...l8EncounterGates.elephantEntry, y: 1.5, halfY: 1.5 }, entryClosed);
@@ -188,8 +191,6 @@ export class L8BossArenas {
       // later bird turns without a collapse/rise once the encounter is active.
       const flockTurning = arena.id === 'flamingo' && arena.ids.some(id => !!w.entities.get(id)?.infection);
       if (arena.phase === 0 && routeOpen && live.length && deep && !followersInside && !flockTurning && !this.mission.l8!.protecting()) {
-        // The restore point is taken in phase 0 with the entry gate still open (the courier stands just outside it).
-        this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.armed = false;
         // r42-arenas: the gorilla opens with a charge-and-pound (cycle 3), not a roar from across the house.
         if (arena.id === 'gorilla') { arena.cycle = 2; arena.nextAt = w.tick + 20; }
@@ -207,6 +208,10 @@ export class L8BossArenas {
           }
         }
         for (const e of live) e.infected!.arenaBoss!.engaged = !(arena.id === 'monkey' && e.infected!.arenaBoss!.slot === 6);
+        // Capture after the encounter phase and opening beat are committed.
+        // A phase-0 snapshot re-entered this block on restore and recaptured
+        // the fixture's dirty rack before the ordinary death restore settled.
+        this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         this.announce(`${def.name}: ${def.counter}`); this.signal(arena, 'engaged');
       }
       if (arena.phase > 0 && !arena.armed && !followersInside && inZone && entryGate && Math.hypot(player.transform.x - entryGate.x, player.transform.z - entryGate.z) >= 5) arena.armed = true;

@@ -22,7 +22,9 @@ export const l8PathWalls = [
 ] as const;
 export const l8YardWalls = [
   { x: 84, z: 51, halfX: .25, halfZ: 5 },
-  { x: 84, z: 77, halfX: .25, halfZ: 13 },
+  // Leave a walkable skirt beside the south gate so breach arrivals on the
+  // elephant yard's west side can route around the partition.
+  { x: 84, z: 77, halfX: .25, halfZ: 4 },
   { x: 88, z: 46, halfX: 4, halfZ: .25 },
   { x: 108, z: 46, halfX: 8, halfZ: .25 },
 ] as const;
@@ -78,20 +80,23 @@ export const l8ConnectorGates = [
 /** The plaza cell: the group must be inside it for the gates to shut. */
 export const l8PlazaCell = { x0: -13, z0: -11, x1: 13, z1: 7 } as const;
 
-export interface L8GateContext { arenas: readonly { id: L8BossId; phase: number; armed?: boolean }[]; sealed: boolean; followers?: readonly { x: number; z: number }[] }
+export interface L8GateContext { arenas: readonly { id: L8BossId; phase: number; armed?: boolean }[]; sealed: boolean; breached?: boolean; followers?: readonly { x: number; z: number }[] }
 /** One rule for the sim barriers and the drawn fences: `<id>.entry`, `<id>.exit` or `plaza.<w|e|s>`. */
 export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
   const pond = ctx.arenas.find(a => a.id === 'flamingo');
   const pondActive = !!pond && pond.phase > 0 && pond.phase < 3;
-  if (key === 'path.0') return !pondActive;
-  if (key.startsWith('plaza.') || key.startsWith('connector.')) return ctx.sealed;
+  if (key === 'path.0') return !(pondActive || ctx.breached);
+  if (key.startsWith('plaza.') || key.startsWith('connector.')) return ctx.sealed && !ctx.breached;
   const [id, side] = key.split('.') as [L8BossId, 'entry' | 'exit'];
   const index = ctx.arenas.findIndex(a => a.id === id), arena = ctx.arenas[index];
   if (!arena) return true;
-  const fighting = arena.phase > 0 && arena.phase < 3;
-  if (side === 'entry') return (index > 0 && ctx.arenas[index - 1].phase !== 3) || fighting && !!arena.armed
-    // Once the party has entered the next enclosure and its entry gate is armed,
-    // seal the cleared pen on both ends. The return door stays open until then.
+  // After the perimeter is breached, infected can cross either end of a
+  // habitat. Keeping a closed entry or exit strands attackers behind a pen.
+  if (ctx.breached) return false;
+  const fighting = arena.phase === 1 || arena.phase === 2;
+  if (side === 'entry') return (index > 0 && ctx.arenas[index - 1].phase !== 3)
+    // Keep the entry passable during a fight so outside infected can reach the
+    // courier. The survivor controller continues to hold the group outside.
     || arena.phase === 3 && (!!ctx.arenas[index + 1]?.armed || ctx.arenas[index + 1]?.phase === 3);
   // Keep a completed section's exit open until the whole party is through the next entry gate.
   const next = ctx.arenas[index + 1];
@@ -102,7 +107,7 @@ export function l8GateClosed(key: string, ctx: L8GateContext): boolean {
   }
   // The pond exit stays open during the opening alarm; it shuts with the plaza.
   if (id === 'flamingo') return ctx.sealed && arena.phase === 0;
-  return arena.phase !== 3;
+  return arena.phase !== 3 && !fighting;
 }
 export const inRect = (p: { x: number; z: number }, r: { x0: number; z0: number; x1: number; z1: number }) => p.x >= r.x0 && p.x <= r.x1 && p.z >= r.z0 && p.z <= r.z1;
 

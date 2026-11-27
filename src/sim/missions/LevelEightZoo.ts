@@ -25,7 +25,7 @@ export interface L8ZooState {
   roster: number[]; guards: number[]; animals: number[]; outlets: HouseEmergence[]; perimeterOutlets?: Point[];
   arrivals: { id: number; outlet: number; tick: number; alpha: boolean }[];
   escapeCheckpoint: boolean;
-  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number; gateToastAt?: number;
+  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number; gateToastAt?: number; heavyWeaponsSurrendered?: boolean;
   departureAt: number; chaseAt: number; departureFrom: Transform | null; haleFallAt: number; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
   /** Nadia's guided walk: 0 leading, 1 aborted (she is gone/turned), 2 arrived at the entry gate. */
   guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number; guideRouteVersion?: number; guideAnimalLines?: number; infectionSetupAt?: number; infectionFeedLineAt?: number; infectionStoryLines?: number;
@@ -50,10 +50,12 @@ const guideRemarks: { at: Point; radius: number; bit: number; line: string }[] =
   { at: { x: -24, z: 32 }, radius: 18, bit: 64, line: 'L8.nadia-elephant-pass' },
 ];
 const perimeterGates = [
-  { x: 0, z: -86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: -115 } },
-  { x: 0, z: 86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: 108 } },
-  { x: -116, z: 0, halfX: .4, halfZ: 2.7, spawn: { x: -126.8, z: 0 } },
-  { x: 116, z: 80, halfX: .4, halfZ: 2.7, spawn: { x: 126.8, z: 80 } },
+  { x: 0, z: -86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: -92 } },
+  // Put the north mouth west of the ticket pavilion; its centreline was a
+  // dead end behind the building, so arrivals could not reach the courtyard.
+  { x: -18, z: 80, halfX: 2.7, halfZ: .4, spawn: { x: -18, z: 80.5 } },
+  { x: -116, z: 0, halfX: .4, halfZ: 2.7, spawn: { x: -122, z: 0 } },
+  { x: 116, z: 80, halfX: .4, halfZ: 2.7, spawn: { x: 122, z: 80 } },
 ];
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 const sIsClosed = (breakAt: number | null | undefined, tick: number) => breakAt == null || tick < breakAt;
@@ -193,7 +195,6 @@ export class LevelEightZoo {
   begin(): void {
     const s = this.state, t = this.w.tick;
     s.startedAt = t; s.greetingAt = t + 9 * 60; s.lionSpoken = false;
-    if (surrenderHeavyWeapons(this.w, this.mission).length) s.gateToastAt = t + gateToastDelay;
     s.broadcastAt = t + 20 * 60; s.haleGreetingAt = t + 38 * 60;
     // The guided tour is skipped; the opening objective points at the real breach gate.
     Object.assign(this.mission.def.anchors['l8-route'], this.mission.def.anchors['zoo-gate']);
@@ -218,29 +219,29 @@ export class LevelEightZoo {
     });
   }
   /** Gate arrivals begin outside the zoo only when SpawnDirector confirms a safe, unseen, clear point. */
-  private releaseGate(index: number, count = 1, targetId = 1, archetype = 'infected.runner'): number[] {
+  private releaseGate(index: number, count = 1, targetId = 1, archetype = 'infected.runner', forcePlayerTarget = false): number[] {
     const w = this.w, ai = w.infected!, gate = perimeterGates[index], spawned: number[] = [];
     if (!gate) return spawned;
     for (let n = 0; n < count; n++) {
-      const spread = (n % 3 - 1) * .8, at = gate.halfX > gate.halfZ ? { x: gate.spawn.x + spread, z: gate.spawn.z } : { x: gate.spawn.x, z: gate.spawn.z + spread };
+      const spread = (n - (count - 1) / 2) * 1.2, at = gate.halfX > gate.halfZ ? { x: gate.spawn.x + spread, z: gate.spawn.z } : { x: gate.spawn.x, z: gate.spawn.z + spread };
       // Other arrivals and pending turns may fill the director between waves.
       // Keep the mission running and admit only the capacity that remains.
       if (ai.director.count + ai.director.pendingTurns >= ai.director.cap || !ai.pool.length) break;
       if (!ai.director.safe(archetype, at)) continue;
-      const target = targetId === 1 && this.protecting()
+      const target = targetId === 1 && this.protecting() && !forcePlayerTarget
         ? [...this.followers(), w.entities.get(1)!].filter(e => e.health.current > 0 && !e.infection && !e.infected)
           .sort((a, b) => distance(at, a.transform) - distance(at, b.transform))[0]
         : undefined;
       const pursuedTarget = target?.id ?? targetId;
       const id = ai.spawn(archetype, at, { state: 'chase' });
       const entity = w.entities.get(id)!; if (targetId !== 1) entity.infected!.arenaCarrier = targetId;
-      ai.pursueTarget(id, pursuedTarget, pursuedTarget === 1 ? 30 : undefined);
-      if (index === 0) {
+      ai.pursueTarget(id, pursuedTarget, pursuedTarget === 1 ? 30 : undefined, forcePlayerTarget);
+      if (!forcePlayerTarget && index === 0) {
         // The south cohort crosses the opened perimeter mouth before reacquiring its target.
         entity.infected!.scripted = { x: spread, z: -82 };
         entity.infected!.breachApproach = 'l8-south-gate';
       }
-      if (index === 2) {
+      if (!forcePlayerTarget && index === 2) {
         // The west opening is narrow in X; keep the cohort lined up within its Z span.
         entity.infected!.scripted = { x: -112, z: spread };
         entity.infected!.breachApproach = 'l8-west-gate';
@@ -248,10 +249,10 @@ export class LevelEightZoo {
       if (index === 1) {
         // The ticket pavilion blocks the direct sight line from the north
         // opening; route the outside cohort through the gate and around it.
-        entity.infected!.scripted = { x: spread, z: 82 };
+        entity.infected!.scripted = { x: -24, z: 70 };
         entity.infected!.breachApproach = 'l8-north-gate';
       }
-      if (index === 3) {
+      if (!forcePlayerTarget && index === 3) {
         // The east perimeter opening is a narrow mouth off the ring road;
         // send its outside cohort through the actual breach before pursuit.
         entity.infected!.scripted = { x: 115, z: 80 };
@@ -295,6 +296,10 @@ export class LevelEightZoo {
     if (p.z < -52 && p.x < 14) return 1;
     if (p.z > 12 && !inRect(p, l8Route[2].zone) && !inRect(p, l8Route[3].zone)) return 2;
     return 0;
+  }
+  private nearestPerimeterGate(p: Point): number {
+    return perimeterGates.map((gate, index) => ({ index, distance: distance(p, gate.spawn) }))
+      .sort((a, b) => a.distance - b.distance)[0].index;
   }
   /** The opening shock keeps the group in the plaza before the APC route appears. */
   protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60; }
@@ -483,6 +488,12 @@ export class LevelEightZoo {
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
       this.mission.setState('breached', true);
+      // Keep the authored rocket in the sanctuary opening; the gate soldier
+      // collects heavy weapons when the outbreak forces the gate.
+      if (!s.heavyWeaponsSurrendered) {
+        s.heavyWeaponsSurrendered = true;
+        if (surrenderHeavyWeapons(w, this.mission).length) s.gateToastAt = t + gateToastDelay;
+      }
       const door = this.door();
       for (const [i, id] of [s.haleId, s.reyesId, ...s.guards].entries()) {
         const guard = w.entities.get(id); if (!guard?.civilian?.ally || guard.health.current <= 0) continue;
@@ -507,7 +518,7 @@ export class LevelEightZoo {
       // share the breach tick for the gate-pressure audit; the visible break remains staggered.
       const count = ai.director.tier === 'low' ? 3 : 6;
       for (let i = 0; i < perimeterGates.length; i++) {
-        const arrivals = this.releaseGate(i, count);
+        const arrivals = this.releaseGate(i, count, 1, 'infected.runner', true);
         s.perimeterGateReleased[i] = arrivals.length > 0;
         if (i === 0 && arrivals.length && s.animals[5]) {
           s.animalInterceptionId = arrivals[0];
@@ -616,15 +627,15 @@ export class LevelEightZoo {
       // The animal arenas carry the outbreak after the first tunnel surge (PO 11-08).
       // Four ordinary arrivals sustain the opening, without turning the zoo into another horde slaughter.
       s.nextWave = t + 36_000;
-      for (let i = 0; i < perimeterGates.length; i++) this.releaseGate(i, 1);
+      this.releaseGate(this.nearestPerimeterGate(w.entities.get(1)!.transform), 4, 1, 'infected.runner', true);
     }
     // The first time the courier crosses a region with tunnels (after the seal), a small cohort walks in from its outlets.
     const here = s.sealedAt ? this.region(w.entities.get(1)!.transform) : 0;
     // "Protect the group!" is a sustained fight: two more bursts come out of the plaza hatches at 12 s and 24 s of the 30 s hold.
     if (this.protecting() && s.plazaBursts < 2 && t >= s.breachedAt + (s.plazaBursts + 1) * 12 * 60) {
       s.plazaBursts++;
-      const burst = ai.director.tier === 'low' ? 1 : 2;
-      this.releaseGate(0, burst); this.releaseGate(1, burst);
+      const burst = ai.director.tier === 'low' ? 3 : 4;
+      this.releaseGate(this.nearestPerimeterGate(w.entities.get(1)!.transform), burst, 1, 'infected.runner', true);
     }
     // A courier camping in the sealed plaza keeps being hunted from the two hatches in the cell (the flamingo fight has not started).
     if (here === 8 && s.arenas[0]?.phase === 0 && t >= (s.plazaWaveAt ||= t + 40 * 60)) {
@@ -634,8 +645,8 @@ export class LevelEightZoo {
     }
     if (here && here !== 8 && !(s.legWaves & here)) {
       s.legWaves |= here;
-      const gate = here === 1 ? 0 : here === 2 ? 1 : here === 4 ? 3 : 2;
-      this.releaseGate(gate, ai.director.tier === 'low' ? 2 : 4);
+      const gate = this.nearestPerimeterGate(w.entities.get(1)!.transform);
+      this.releaseGate(gate, ai.director.tier === 'low' ? 3 : 4, 1, 'infected.runner', true);
     }
     for (const arrival of s.arrivals) {
       const infected = w.entities.get(arrival.id)?.infected;
@@ -995,7 +1006,7 @@ export class LevelEightZoo {
     }
     if (c.ally && !boarding) {
       c.ally.run = null; c.ally.post = null; c.ally.hold = true;
-      updateAlly(w, e, (a, b) => w.infected!.nav.visible(a, b, 0));
+      updateAlly(w, e, (a, b) => w.infected!.nav.visible(a, b, 0), false, false);
     }
     return true;
   }

@@ -616,10 +616,16 @@ export class InfectedSystem {
       }
     }
     else if (l8GateApproach && b.breachApproach === 'l8-north-gate') {
-      b.scripted = { x: e.id % 2 ? -7 : 7, z: 82 }; b.breachApproach = 'l8-north-side';
-    } else if (l8GateApproach && b.breachApproach === 'l8-north-side') {
-      b.scripted = { x: b.scripted.x, z: 70 }; b.breachApproach = 'l8-north-attack';
-    } else if (l8GateApproach) this.pursueTarget(e.id, b.pressureTarget?.id ?? 1, 30);
+      // The ticket pavilion blocks the centreline. Keep the outer-gate entry,
+      // then take the clear west lane past the building directly to the group.
+      b.scripted = { x: -24, z: 70 }; b.breachApproach = 'l8-north-attack';
+    } else if (l8GateApproach) {
+      // Once a gate approach reaches its attack leg, hand it off to ordinary
+      // pursuit. Keeping the completed waypoint replays this branch forever.
+      this.pursueTarget(e.id, b.pressureTarget?.id ?? 1, 30);
+      delete b.scripted; delete b.breachApproach;
+      return false;
+    }
     e.combat!.attacking = false; this.place(e); return true;
   }
   /** Phase 5: provocation by hits, the Alpha's sight/hearing acquisition and its territory leash. */
@@ -1209,6 +1215,11 @@ export class InfectedSystem {
       if (this.world.scenario === 'L4') state.l4ArmyApproach = targetId !== 1;
       if (this.world.scenario === 'L10' && authoredAssault) {
         state.state = 'chase'; state.until = 0;
+      } else if (this.world.scenario === 'L8' && authoredAssault) {
+        // L8 perimeter cohorts are admitted specifically to pressure the
+        // courier; begin ordinary chase immediately instead of waiting for a
+        // second perception pass after the gate approach.
+        state.state = 'chase'; state.until = 0; state.heardTargetId = targetId;
       } else if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
         state.state = 'alerted'; state.until = this.world.tick + hearingReactionTicks;
       }
@@ -1219,7 +1230,7 @@ export class InfectedSystem {
     brain.focusId = targetId; brain.focusUntil = untilTick;
     if (focusBiasM !== undefined) brain.focusBiasM = focusBiasM; else delete brain.focusBiasM;
     const sent = this.rush(id, target.transform, untilTick);
-    if (sent && this.world.scenario === 'L10' && authoredAssault) {
+    if (sent && (this.world.scenario === 'L10' || this.world.scenario === 'L8') && authoredAssault) {
       // Finale arrivals are admitted out of frame specifically to run in;
       // don't spend their entrance distance in the ordinary hearing windup.
       brain.mode = 'chase'; brain.targetId = targetId; brain.pauseUntil = 0;
