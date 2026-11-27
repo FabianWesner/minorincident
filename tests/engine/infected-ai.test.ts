@@ -629,6 +629,21 @@ test('every human and animal role validates and spawns with its catalog health a
 });
 
 test('perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius', async () => {
+  // Finale reservations must not sleep their own admitted members.
+  {
+    const w = await loadLevel('L10', 0, undefined, 0, { quality: 'high' }); worlds.push(w);
+    const ai = w.infected!, player = w.entities.get(1)!;
+    const x = player.transform.x, z = player.transform.z;
+    const assault = ai.spawn('infected.dog', { x: x + 12, z }, { state: 'chase' });
+    const ambient = ai.spawn('infected.runner', { x: x + 4, z }, { state: 'chase' });
+    w.missions!.state.states['cure-installed'] = true;
+    w.l10Encounters!.state.spawned['dispersal-assault:service:test'] = assault;
+    ai.director.reserved = ai.director.cap - 1;
+    w.chunks!.update();
+    expect(w.entities.get(assault), 'the reserved assault member stays simulated').toBeDefined();
+    expect(w.entities.get(ambient), 'excess ambient pressure yields its slot').toBeUndefined();
+  }
+
   const w = await arena();
   // L10 authored assault actors begin beyond ordinary hearing range, but their
   // director press must keep them moving toward the courier until acquired.

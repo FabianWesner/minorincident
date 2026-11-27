@@ -135,7 +135,12 @@ export class ChunkResidency {
       let count = ai.director.count; const player = this.world.entities.get(1)!.transform;
       // Door walkers have a live scripted route keyed by entity ID. Sleeping one
       // during emergence makes its controller lose the route before it wakes.
-      const candidates = ai.active.filter(e => this.managed(e) && e.health.current > 0 && !e.emerging);
+      // The finale's reservation belongs to these admitted actors as well as
+      // its still-unfilled wave slots. Trimming an admitted actor to make room
+      // for its own reservation parks it until it can wake in the camera.
+      const finale = this.world.missions?.state.states['cure-installed'] && !this.world.missions.state.states['cure-released'];
+      const assault = new Set(finale ? Object.entries(this.world.l10Encounters?.state.spawned ?? {}).filter(([key]) => key.startsWith('dispersal-assault:')).map(([, id]) => id) : []);
+      const candidates = ai.active.filter(e => this.managed(e) && e.health.current > 0 && !e.emerging && !assault.has(e.id));
       candidates.sort((a, b) => Math.hypot(b.transform.x - player.x, b.transform.z - player.z) - Math.hypot(a.transform.x - player.x, a.transform.z - player.z) || b.id - a.id);
       for (const e of candidates) { if (count <= ai.director.cap - ai.director.reserved - ai.director.pendingTurns) break; excess.add(e.id); count -= e.archetype === 'infected.crow' ? e.infected!.birds * .25 : 1; }
     }
