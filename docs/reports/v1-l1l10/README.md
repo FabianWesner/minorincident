@@ -32,9 +32,9 @@ The commands emitted refreshed L1/L10 aggregate outputs and used receipt inputs 
 | L10-12 | PASS, stale | NOT CHECKED | Current native report has four PASS checks; no current physical fight/death review. [L10 report](../fix51-verify/L10.json) | No current boss/corpse frames inspected. |
 | L10-14 | PASS, stale | NOT CHECKED | Current native report has six PASS and four NOT CHECKED clauses. [L10 report](../fix51-verify/L10.json) | No current cure mist/ending frames inspected. |
 
-## Current machine defects with repros
+## Initial machine flags (qualification updated)
 
-These are fresh FAILs from the scoped L10 acceptance run (they are listed separately from the six NOT CHECKED target rows). A FAIL is retained as measured evidence; it does not close the other clauses of that row.
+The initial evaluator reported the following flags. Subsequent review confirmed L10-06 and L10-15 as defects; the other flags below are diagnostic leads, not established acceptance failures. In particular, the immunity criterion prohibits killing rather than any HP loss; duration is approximate; the crowd bound says normally rather than peak; the current starting-weapon criterion permits kick; and the Mega position jump needs attribution. The fixture receipts cited here predate the latest head; see the current row entries below for fresh evidence.
 
 | Row | Before → after numbers | Cause / repro | Evidence |
 |---|---|---|---|
@@ -46,7 +46,7 @@ These are fresh FAILs from the scoped L10 acceptance run (they are listed separa
 | L10-07 | Maximum Mega step `203.92–372.85 m/tick` across tier/policy runs → target `≤1 m/tick`. | Run the full native route and stationary hold while recording consecutive Mega positions; observed maximum step exceeds the limit in all four runs. | [L10 native receipts](../fix51-verify/receipts/) |
 | L10-15 | `cure-disperse-ready` expected boss alive at `1116 HP` low / `1072.8151 HP` high; death-control result is dead at `0 HP` in both. | Replay the checkpoint death-control fixture and compare restored boss snapshot after the ordinary courier death; location and racks match, boss state does not. Five named L10 checkpoint fixtures also throw `Cannot read properties of undefined (reading 'id')` per tier. | [low checkpoints](../fix51-verify/receipts/L10-low-checkpoints.json), [high checkpoints](../fix51-verify/receipts/L10-high-checkpoints.json) |
 
-## Open work and constraints
+## Initial open work and constraints (historical)
 
 The fresh headless real-input route, high then low, zoom 1.5 and default, and manual inspection of every cited capture have not been performed. Consequently no PASS/FAIL/P JSON was written for the 18 target rows; writing one would overstate evidence. Current source has extensive changes since the frozen source named in the saved reviews, so merely rebasing their digest would be invalid.
 
