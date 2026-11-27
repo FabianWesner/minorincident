@@ -261,3 +261,11 @@ The old fixture incorrectly calls any HP loss an immunity failure; the current r
 | L10-04 | stale PASS → still NOT CHECKED | Native complete bot: 6 / 7 route-ambush emergence signals; consecutive gaps 74.50–154.67 / 67.83–136.67 s; first such signal 458.67 / 367.17 s. Completed with 4 / 3 deaths. | [Pacing receipt](L10-04/pacing.json); previous physical run diagnostics above. | — |
 
 `L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts` exited 0. Its named `l10-scare-emerged` signals are only one category of authored scare, and its longest gap between *all* beats includes radio, vignettes and objectives; neither establishes the 30–60 s quiet or approximate scare-cadence requirement. The native route is not a physical-input fairness run. Current peak counts alone also do not establish what is normal. A per-tick local crowd distribution, complete scare classification and visual moving-group review remain open. No game or checker change.
+
+## L10-03 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-03 | stale PASS → fresh FAIL | Cure release after 1349.35 / 1194.37 s (22:29.35 / 19:54.37); high is 149.35 s beyond the acceptance evaluator's 1200 s upper bound for ≈15 min. Native retries: 4 / 3 deaths. | [Review](../../qa/reviews/L10-03.json), [pacing route](L10-04/pacing.json), both current complete receipts in `L10-native/`. | — |
+
+**Defect and repro:** Run `L10_PACING_SEED=1 L10_PACING_TIERS=high,low L10_PACING_MAX_SECONDS=1800 npx tsx tools/qa/l10-pacing.ts --out <file>`; high reaches release in 22:29.35, before its 65-second epilogue, rather than within the evaluator's 10–20 minute band. Four deaths and checkpoint retries are included; their contribution to excess duration is not isolated, and this is a native bot result rather than proof of a skilled human's time. The objective ledger visits crash, farmstead, restricted zone, hangar and dispersal in order, but physical completion, all seven visual region boundaries and idle-padding attribution remain open. No game change.
