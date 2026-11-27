@@ -3,26 +3,26 @@
   "status": "FAIL",
   "reviewer": "Codex v1-l1l10",
   "date": "2026-11-27",
-  "commit": "2f7ee5f06bf5562305e17b787d3573d2ef9f4efd",
+  "commit": "540ab32a79efd11134863f0c93bce83a606ccd7f",
   "clauses": [
     {
       "clause": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "verdict": "FAIL",
-      "note": "High and low controlled fixtures report dog speed / survivor run speed 1.65, versus 1.1 required. Repro: run npm run qa:accept -- --level L10 --skip-browser --reuse; inspect native dog speed ratio in both fixture receipts. Other clauses and current appearance are not fully reviewed."
+      "note": "Both tiers: spawned dog speed / survivor run speed 1.65 versus required 1.1. Repro: npm run qa:accept -- --level L10 --skip-browser --reuse; inspect native dog speed ratio in fixture receipts. Appearance and other clauses remain open."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
-      "sha256": "9d98f8a54ba585450d5e3c3b1c62901ae13affb7f0821193714a45f89222c207",
-      "what": "Current controlled dog fixture: spawned dog speed / survivor run speed is 1.65, versus required 1.1."
+      "file": "docs/reports/v1-l1l10/L10-native/L10-high-fixtures.json",
+      "sha256": "8537fe8668f73296a45de2a26dc456ca83418c01108d6acff6866585dc02b909",
+      "what": "Current controlled dog fixture speed ratio."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
-      "sha256": "b80bf989f70be83a76603be6d7175e6eec5d38f0a595abc86bf216d64c8b016b",
-      "what": "Current controlled dog fixture: spawned dog speed / survivor run speed is 1.65, versus required 1.1."
+      "file": "docs/reports/v1-l1l10/L10-native/L10-low-fixtures.json",
+      "sha256": "11b37bca485c9c6261df54e618662c174fc5b6f686913ee6fbe4b7638f7186d7",
+      "what": "Current controlled dog fixture speed ratio."
     }
   ],
-  "notes": "Measured failing clause only; no visual or full-row pass claimed.",
-  "sourceDigest": "d4b77aa1088e0d17ac55fcb11cdaa6989d940bcdc74422050d02e82389d133f1"
+  "notes": "Current controlled fixture; failing clause only.",
+  "sourceDigest": "f42e82d0fbeb0b8f2d7d4023a94d9be7553520956afc9c4833f19874b7fa115b"
 }

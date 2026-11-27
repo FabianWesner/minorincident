@@ -95,3 +95,7 @@ On `540ab32a`, the new both-tier fixture retains the preceding result: 5 initial
 ## L1-09 current-main review
 
 **PASS** on both qualities: 300 production runner spawns per fixture, 100 per speed tier, all within 4.4 m/s and their tier's 1.04× upper bound; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s versus ≥85%. This is a deterministic equal-tier sample. [Review](../../qa/reviews/L1-09.json) hashes the retained L1-07 fixture receipts. No game changes; no open measured clause for this row.
+
+## L10 current-main refresh
+
+On `540ab32a`, the scoped native run finished with seven machine FAIL rows and six incomplete rows; five checkpoint fixture errors per tier remain. **L10-06 FAIL** persists: dog speed ratio 1.65 vs 1.1 at both tiers. Repro: run `npm run qa:accept -- --level L10 --skip-browser --reuse`, inspect native dog speed ratio in the fixture receipts. Cause not isolated; appearance and other clauses remain open. [Review](../../qa/reviews/L10-06.json), [high fixture](L10-native/L10-high-fixtures.json), [low fixture](L10-native/L10-low-fixtures.json).
