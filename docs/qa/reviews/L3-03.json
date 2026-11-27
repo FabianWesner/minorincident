@@ -1,43 +1,38 @@
 {
   "row": "L3-03",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "reviewer": "Codex/v2-l2l4",
+  "date": "2026-11-28",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
-      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 3.4 s); attacks on the player ≥ 4/min (tune).",
+      "clause": "Yard combat reachability and attacks",
       "verdict": "PASS",
-      "note": "14 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 23.483365949119374; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334}; target ≤10 s (PASS); low/stationary real player/group windups per minute: 149.56114686951435; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 31.57894736842105; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25}; target ≤10 s (PASS); high/stationary real player/group windups per minute: 298.94736842105266; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95; target 90 ≤ value ≤ 100 (PASS)"
+      "note": "Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L3-03-native.json",
-      "sha256": "6f39659d8eace26cafb305d022a656b49c2e5cd29a4ce5c9cae476a5082e677c",
-      "what": "14 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 23.483365949119374; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334}; target ≤10 s (PASS); low/stationary real player/group windups per minute: 149.56114686951435; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 31.57894736842105; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25}; target ≤10 s (PASS); high/stationary real player/group windups per minute: 298.94736842105266; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95; target 90 ≤ value ≤ 100 (PASS)"
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "105f0b04cb27abfa85b053d9e852e112f8a1c74ca1bc6b3175e468bd2c7902c2",
+      "what": "Current low-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
-      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "sha256": "4c2d5fe02b152915592cb1b9b208c9ace33ca881a74aff678e5aa557487f34ed",
+      "what": "Current low-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
-      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "94eaf7882f627252c9381bbca92044908d57491a84e7e1798e61d2faa59f1bd4",
+      "what": "Current high-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
-      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
-      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "sha256": "f634d21c8c87b0bd039f11ab8aa21ded6d1c7f82abb527e9fad93bf2fbda4b3d",
+      "what": "Current high-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
+  "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above.",
+  "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }
