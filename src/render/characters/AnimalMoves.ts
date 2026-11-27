@@ -43,7 +43,7 @@ export const flamingoCruise = 2.4;
 export class AnimalMoves {
   private readonly pose: AnimalPose = { crouch: 0, pitch: 0, roll: 0, head: 0, jaw: 0, front: 0, hind: 0, armsUp: 0, stamp: 0, trunk: 0, wing: 0, flap: 0, airborne: false };
   /** Smoothed render height per flying/leaping animal (m above its sim position). */
-  private readonly heights = new Map<number, { y: number; tick: number; pitch: number }>();
+  private readonly heights = new Map<number, { y: number; tick: number; pitch: number; hind?: number; bodyPitch?: number }>();
   private readonly dogStrikes = new Map<number, number>();
   /** Embedded dog bite phase, including render-only recovery; -1 outside an attack. */
   dogPhase = -1;
@@ -180,6 +180,13 @@ export class AnimalMoves {
         p.airborne = true; p.wing = 1 - .55 * recover; p.flap = Math.sin(t * 15) * .12;
         p.head = -.45 * (1 - recover); p.hind = .55 * (1 - recover);
       }
+      // Stage switches change the leg fold and body pitch targets at once; the
+      // hock fold swings the long lower leg, so ease both instead of snapping
+      // the feet up to ~90 cm in one frame (scene flamingo-flock-contact).
+      const blend = 1 - Math.exp(-dt * 10);
+      h.hind = (h.hind ?? 0) + ((p.airborne ? p.hind : 0) - (h.hind ?? 0)) * blend;
+      h.bodyPitch = (h.bodyPitch ?? 0) + ((p.airborne ? p.pitch : 0) - (h.bodyPitch ?? 0)) * blend;
+      if (p.airborne) { p.hind = h.hind; p.pitch = h.bodyPitch; }
       return p.airborne ? p : undefined;
     }
     if (species === 'gorilla') {
