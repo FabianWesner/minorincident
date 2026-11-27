@@ -13,6 +13,8 @@ Pressure spawns used the courier's x coordinate instead of the selected door's x
 
 Early-close still flags `step/retreat` and `phase/retreat` for over 30% unreachable for more than 20 seconds. The latest evidence at tick 11532 contains four unreachable infected, including converted shelter residents 41, 21 and 29 far behind the courier. Removing named survivors from the world would require separate design work; the current cleanup preserves them. `PARTIAL_LEVEL_SELECTION` is expected for the L6-only audit.
 
+Follow-up experiment: retiring off-screen turned residents cleared all L6 threat flags, but deleting their entities broke an existing mission test. Retaining hidden roster snapshots repaired that test and preserved the zero-flag audit; however, the subsequent high and low acceptance runs each measured only 20 HP retreat damage (target 30), producing one fresh L6-07 failure per tier. Both unarmed maneuvers completed in 364.98 s with 7 deaths. The experiment was reverted to the committed 55 HP version above, which leaves the two early-close audit flags open. Generated fix51 receipts now reflect the reverted experiment, not the committed source; the earlier 55 HP measurements were recorded before the experiment.
+
 Changes: `src/sim/missions/LevelSixSubway.ts` (door placement, source selection and cleanup), `src/sim/npc/Companion.ts` (exit pace). Earlier marker, checkpoint and loadout changes remain in the preceding commits.
 
 High then low `qa:accept -- --level L6 --skip-browser` each reported zero fresh failing rows, with 14 and 12 incomplete rows respectively. Typecheck and lint passed; focused mission and progression tests passed 12/12. Threat audit failed with the two flags above. Generated fix51 receipts were left uncommitted as instructed.
