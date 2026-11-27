@@ -3,26 +3,26 @@
   "status": "FAIL",
   "reviewer": "Codex v1-l1l10",
   "date": "2026-11-27",
-  "commit": "540ab32a79efd11134863f0c93bce83a606ccd7f",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "verdict": "FAIL",
-      "note": "Both tiers: spawned dog speed / survivor run speed 1.65 versus required 1.1. Repro: npm run qa:accept -- --level L10 --skip-browser --reuse; inspect native dog speed ratio in fixture receipts. Appearance and other clauses remain open."
+      "note": "Both tiers: spawned dog speed / survivor run speed 1.65 versus required 1.1. Repro: run L10 controlled acceptance fixtures and inspect native dog speed ratio. Attack fixture observes 0.65 s telegraph, 1.08 m reach, 10 HP damage and 2 s cooldown. Visual distinction remains unreviewed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/v1-l1l10/L10-native/L10-high-fixtures.json",
-      "sha256": "8537fe8668f73296a45de2a26dc456ca83418c01108d6acff6866585dc02b909",
-      "what": "Current controlled dog fixture speed ratio."
+      "file": "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
+      "sha256": "7867ab79d036e822544227575a868de98c77e341739dee7a1a290ceeaac593cd",
+      "what": "Current controlled dog attack and speed fixture."
     },
     {
-      "file": "docs/reports/v1-l1l10/L10-native/L10-low-fixtures.json",
-      "sha256": "11b37bca485c9c6261df54e618662c174fc5b6f686913ee6fbe4b7638f7186d7",
-      "what": "Current controlled dog fixture speed ratio."
+      "file": "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json",
+      "sha256": "77bec948078a0629e4ba63952208ae66c42b2a025a82b39732144ad055ca5283",
+      "what": "Current controlled dog attack and speed fixture."
     }
   ],
-  "notes": "Current controlled fixture; failing clause only.",
-  "sourceDigest": "f42e82d0fbeb0b8f2d7d4023a94d9be7553520956afc9c4833f19874b7fa115b"
+  "notes": "Current controlled fixture; visual clause remains open.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }
