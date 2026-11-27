@@ -155,3 +155,7 @@ High then low physical-input opening samples ran 60 wall seconds (54/53 simulati
 ## L10-01 review at 92c233e2
 
 **P** for PO composition: native 3600-tick census regular peak 8 high / 7 low, zero dogs and Alphas both. Four physical samples at quality high/low and requested zoom 1/1.5 covered 83–84 simulation seconds in each first segment. Eight cited start/~45 s frames opened: initial views show courier/corgi on broad grey surface, cropped truck and dark angular shapes; later views show sparse dark ground, corn at edge or barriers. PO: do these exact frames communicate a wreck beside dry corn, broken farms and dead livestock? The driver logs do not supply a full per-tick physical census, and visual composition remains open. [Review](../../qa/reviews/L10-01.json) has exact frame paths/hashes and summaries. No game change.
+
+## L1-17 at 92c233e2
+
+**P**: PO to inspect 12 cited morning/start, Annex and outbreak frames at both qualities and requested zooms 1/1.5. Morning views show a seated civilian or a pedestrian with a dog on warm streets; outbreak views show several pursuers, red attack rings and minimap contacts, including a tight group at the fire station. Do these convey an inhabited suburb and too many infected to fight? Morning samples show few nearby figures; the older failed-driver crowd frame is not current evidence. Physical mortal routes completed: zoom1.5 high/low deaths 0/1; zoom1 high/low 2/1, one assist each. [Review](../../qa/reviews/L1-17.json) records exact inspected frames and hashes. No game change; PO taste remains open.
