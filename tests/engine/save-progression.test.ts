@@ -82,7 +82,7 @@ test('L1–L10 starts clamp progressed saves and fresh handovers to story weapon
     { LEFT:['weapon.fists'], RIGHT:['weapon.kick'] }, { LEFT:[bat], RIGHT:['weapon.kick'] },
     { LEFT:[bat,axe], RIGHT:['weapon.kick'] }, { LEFT:[axe], RIGHT:[handgun] },
     { LEFT:[axe], RIGHT:[handgun,mg] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun] },
-    { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] },
+    { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] }, { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle,rocket] },
     { LEFT:[axe], RIGHT:[handgun,mg,shotgun,rifle] }, { LEFT:['weapon.fists'], RIGHT:['weapon.kick'] },
   ];
   const pickups: Record<number, string[]> = { 1:[bat], 2:[l2WeaponPickup], 3:[l3WeaponPickup], 4:[l4.machineGun.id], 5:[l5WeaponPickup], 7:[rifle, l7Rocket.action] }; // L5 dropped rifles are survivor-only (PO 11-26)
@@ -210,6 +210,8 @@ async function checkCheckpointRacks() {
   const l8Save = preset('L8-default');
   const l8 = await loadLevel('L8', 1, l8Save, 0, { quality: 'low' });
   try {
+    const opening = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.assault-rifle', 'weapon.rocket-launcher'] };
+    expect(ids(l8), 'the L8 opening keeps the authored launcher until the gate surrender').toEqual(opening);
     surrenderHeavyWeapons(l8, l8.missions!);
     l8.missions!.checkpoint('sanctuary');
     const expected = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.assault-rifle'] };
@@ -360,7 +362,7 @@ test('selection fallback: lost or empty weapons fall back to the best usable own
   expect(restoreSelectedAction(bottomless, mg)).toBe('weapon.army-mg');
 });
 
-test('bare hands are innate and hidden while carrying melee; the L8 sanctuary gate takes the launcher', async () => {
+test('bare hands are innate and hidden while carrying melee; L8 keeps the launcher until the gate breach', async () => {
   const save = preset('L8-default');
   expect([...save.racks.LEFT, ...save.racks.RIGHT]).not.toContain('weapon.fists');
   const live = campaignLoadout(save, 8), input = new Loadout(live.LEFT, live.RIGHT, undefined, live.size);
@@ -381,14 +383,14 @@ test('bare hands are innate and hidden while carrying melee; the L8 sanctuary ga
   expect(cureHangarWeapons).toContain(rocket);
   const world = await loadLevel('L8', 1, preset('L8-default'), 0, { quality: 'low' }), lines: string[] = [];
   try {
-    // The level start runs the gate beat: the soldier's line first, the HUD line naming the weapon four seconds later.
-    expect(world.missions!.state.subtitle?.id).toBe('L8.gate-soldier');
+    expect(world.entities.get(1)!.weapons!.RIGHT.rack.map(s => s.id)).toContain(rocket);
+    expect(world.missions!.state.subtitle?.id).not.toBe('L8.gate-soldier');
     world.events.on('dialogue.line', event => { if (event.type === 'dialogue.line') lines.push(event.id); });
-    for (let i = 0; i < 5 * 60; i++) world.update();
+    for (let i = 0; i < 25 * 60; i++) world.update();
     expect(world.entities.get(1)!.weapons!.RIGHT.rack.map(s => s.id)).not.toContain(rocket);
     expect([...world.entities.get(1)!.weapons!.LEFT.rack,...world.entities.get(1)!.weapons!.RIGHT.rack].map(s=>s.id).filter(id=>!['weapon.fists','weapon.kick'].includes(id)).sort()).toEqual(['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun','weapon.assault-rifle'].sort());
     expect(world.progression!.campaign!.ownedActions).not.toContain(rocket);
-    expect(lines).toContain('L8.gate-toast');
+    expect(lines).toContain('L8.gate-soldier'); expect(lines).toContain('L8.gate-toast');
   } finally { world.dispose?.(); }
 });
 
