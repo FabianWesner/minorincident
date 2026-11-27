@@ -46,6 +46,9 @@
       "moveStepIntent": [-4.239, -2.087],
       "moveStepBefore": [18.4069, 30.5735],
       "moveStepAfter": [18.3591, 30.5513],
+      "directGoalVisible": false,
+      "navigationWaypoint": [17.75, 30.25],
+      "afterSeparation": [18.3998, 30.6045],
       "reading": "navigation steers backwards despite the goal being ahead; no actor blocker is reported"
     },
     {
@@ -63,7 +66,9 @@
       "moveStepIntent": [-0.525, 4.696],
       "moveStepBefore": [18.2386, 29.8794],
       "moveStepAfter": [18.2301, 29.9570],
-      "reading": "navigation step advances about 0.078 m; a later tick stage reduces the final displacement; no actor blocker is reported"
+      "afterSeparation": [18.2196, 29.9159],
+      "separationWrites": 3,
+      "reading": "navigation step advances about 0.078 m; three cleanup.separation writes reduce final displacement; no actor blocker is reported"
     },
     {
       "tick": 8190,
