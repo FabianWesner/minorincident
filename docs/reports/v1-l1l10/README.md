@@ -171,3 +171,7 @@ High then low physical-input opening samples ran 60 wall seconds (54/53 simulati
 ## L1-02 at 92c233e2
 
 **PASS**: untouched stationary 3600-tick native census: 58 high / 51 low civilians, zero living infected and combat events, maximum unfaced idle 133 ticks (2.2167 s) each. Four broken/boundary controls pass. The facing measure uses authored target ahead and resets after >0.1 m travel; hidden interiors excluded. Two cited current physical opening frames opened: courier, corgi and seated civilian on warm street. [Review](../../qa/reviews/L1-02.json), [summary](L1-02/L1-02-current-review.json), [ledger](L1-02/L1-02-current-ledger.json.gz). No game change; no open measured clause.
+
+## L1-10 at 92c233e2
+
+**PASS** in production-camera native complete-input trials: same-ID warning before first offscreen actor appearance 10/10 high and 9/10 low, against ≥80%; low seed10 had no qualifying warning, and low seed5 warning preceded appearance by only 2 ticks. Seven proof controls pass. The selection excludes visible-first actors and offscreen candidates that never appear; this is an event/camera sample, not audio audibility or physical input. [Review](../../qa/reviews/L1-10.json), [ledger](L1-10/native.json.gz), [proof](L1-10/measurement.json). No game change; no open measured event clause.
