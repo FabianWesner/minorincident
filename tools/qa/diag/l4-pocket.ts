@@ -17,6 +17,6 @@ for (let z = p.z - 10; z <= p.z + 10; z += .5) {
 console.log(`x from ${(p.x - 14).toFixed(1)} to ${(p.x + 10).toFixed(1)}; @ courier; # solid; + not body-clear; . reachable from (-20,-6); o clear but unreachable`);
 console.log(out);
 for (const z of [-20, -16, -12.6, -9, -5]) console.log('solids at x=-11 z', z, JSON.stringify(w.solids.staticContacts({ x: -11, y: .7, z, yaw: 0 }, 1.5)));
-for (const id of [30, 31, 32]) { const e = w.entities.get(id); console.log('entity', id, e?.archetype, e?.appearance?.model ?? '', e?.transform.x.toFixed(1), e?.transform.z.toFixed(1), e?.transform.yaw?.toFixed(2)); }
+for (const id of [30, 31, 32]) { const e = w.entities.get(id); console.log('entity', id, e?.archetype, e?.transform.x.toFixed(1), e?.transform.z.toFixed(1), e?.transform.yaw?.toFixed(2)); }
 for (const e of w.entities.iterate()) if (e.vehicle && Math.abs(e.transform.x + 11) < 6 && Math.abs(e.transform.z + 12) < 14) console.log('vehicle', e.id, e.archetype, e.transform.x.toFixed(1), e.transform.z.toFixed(1), (e.transform.yaw ?? 0).toFixed(2));
 process.exit(0);
