@@ -612,10 +612,7 @@ export class InfectedSystem {
     const remaining = Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z);
     if (remaining > arrival) {
       if (!Status.stunned(e, this.world.tick)) {
-        if (l8GateApproach) {
-          const speed = b.l1?.runSpeed ?? b.speed;
-          moveAgent(e, (b.scripted.x - e.transform.x) / remaining * speed, (b.scripted.z - e.transform.z) / remaining * speed, this.infectedNav, this.world.tick, e.combat!.radius, true);
-        } else this.seek(e, b.scripted, scriptedSpeed);
+        this.seek(e, b.scripted, scriptedSpeed);
       }
     }
     else if (l8GateApproach && b.breachApproach === 'l8-north-gate') {

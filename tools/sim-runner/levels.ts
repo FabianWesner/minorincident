@@ -283,6 +283,10 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     if (report.completed) report.outcome = 'complete';
     report.time = mission.state.stats.time; report.deaths = mission.state.stats.deaths; report.kills = mission.state.stats.kills; report.damageTaken = mission.state.stats.damage;
     report.activeObjectives = mission.def.steps.filter(s => mission.state.steps[s.id].status === 'active').map(s => s.id);
+    if (level === 'L8' && report.completed && mission.state.result) {
+      report.survivorsSaved = mission.state.result.rescued;
+      report.survivorsTotal = mission.l8!.state.roster.length;
+    }
     report.furthestObjective = report.activeObjectives[0] ?? report.objectiveTimeline.at(-1)?.id ?? report.furthestObjective;
     if (!report.completed) {
       const step = mission.def.steps.find(s => s.id === report.furthestObjective), player = world.entities.get(1)!, anchor = step ? mission.def.anchors[step.anchor] : null;

@@ -43,13 +43,15 @@ export interface L8ZooState {
 /** One-way perimeter loop on the public lanes, ending at the ticket-gate approach. */
 const guideRoute: Point[] = [{ x: -24, z: 64 }, { x: -24, z: 0 }, { x: 24, z: 0 }, { x: 24, z: 64 }, { x: 0, z: 64 }, { x: 0, z: 70 }];
 const guideIntroTicks = 4 * 60, guideRestTicks = 15 * 60, guideMaxCalmTicks = 180 * 60;
+/** PO 2026-11-26 ("This 'follow Nadia' doesn't lead to anywhere. Just skip these non-sense first 2 minutes"): no guided tour; the gates break this long after arrival. */
+const arrivalCalmTicks = 20 * 60;
 const guideRemarks: { at: Point; radius: number; bit: number; line: string }[] = [
   { at: { x: 24, z: 32 }, radius: 18, bit: 8, line: 'L8.nadia-zebra-pass' },
   { at: { x: -24, z: 32 }, radius: 18, bit: 64, line: 'L8.nadia-elephant-pass' },
 ];
 const perimeterGates = [
   { x: 0, z: -86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: -115 } },
-  { x: 0, z: 86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: 89 } },
+  { x: 0, z: 86, halfX: 2.7, halfZ: .4, spawn: { x: 0, z: 108 } },
   { x: -116, z: 0, halfX: .4, halfZ: 2.7, spawn: { x: -126.8, z: 0 } },
   { x: 116, z: 80, halfX: .4, halfZ: 2.7, spawn: { x: 126.8, z: 80 } },
 ];
@@ -161,8 +163,8 @@ export class LevelEightZoo {
     // opening cohort and still rescuable through ordinary outbreak rules.
     w.entities.get(s.pondKeeperId)!.civilian!.l1!.haven = { ...pondPost, route: [], leg: 0 };
     for (const [key, x] of [['majorHale', -4], ['privateReyes', -2]] as const) {
-      const at = this.point({ x, z: 0 });
-      const id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', handProp: 'rifle', waypoints: [at, { x, z: 2 }] });
+      const at = this.point({ x, z: 64 });
+      const id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', handProp: 'rifle', waypoints: [at, { x, z: 66 }] });
       w.entities.get(id)!.civilian!.ally = { ...allyState('soldier', at), gun: { ...l3.soldiers.gun }, weapon: 'rifle' };
       this.mission.state.actors[key] = id;
       if (key === 'majorHale') s.haleId = id; else s.reyesId = id;
@@ -193,10 +195,8 @@ export class LevelEightZoo {
     s.startedAt = t; s.greetingAt = t + 9 * 60; s.lionSpoken = false;
     if (surrenderHeavyWeapons(this.w, this.mission).length) s.gateToastAt = t + gateToastDelay;
     s.broadcastAt = t + 20 * 60; s.haleGreetingAt = t + 38 * 60;
-    // PO 2026-11-22 "L8 is not starting. Nothing happened after the level started.": the courier starts at the entry gate,
-    // which is also the tour's last stop, so a ring there sat under her feet while Nadia walked off. The ring now marks
-    // Nadia's next stop (fixed until she reaches it), ending at the entry gate.
-    Object.assign(this.mission.def.anchors['l8-route'], { x: guideRoute[0].x, z: guideRoute[0].z });
+    // The guided tour is skipped; the opening objective points at the real breach gate.
+    Object.assign(this.mission.def.anchors['l8-route'], this.mission.def.anchors['zoo-gate']);
     this.mission.checkpoint('sanctuary');
   }
   door(): Point {
@@ -227,9 +227,14 @@ export class LevelEightZoo {
       // Keep the mission running and admit only the capacity that remains.
       if (ai.director.count + ai.director.pendingTurns >= ai.director.cap || !ai.pool.length) break;
       if (!ai.director.safe(archetype, at)) continue;
+      const target = targetId === 1 && this.protecting()
+        ? [...this.followers(), w.entities.get(1)!].filter(e => e.health.current > 0 && !e.infection && !e.infected)
+          .sort((a, b) => distance(at, a.transform) - distance(at, b.transform))[0]
+        : undefined;
+      const pursuedTarget = target?.id ?? targetId;
       const id = ai.spawn(archetype, at, { state: 'chase' });
       const entity = w.entities.get(id)!; if (targetId !== 1) entity.infected!.arenaCarrier = targetId;
-      ai.pursueTarget(id, targetId, targetId === 1 ? 30 : undefined);
+      ai.pursueTarget(id, pursuedTarget, pursuedTarget === 1 ? 30 : undefined);
       if (index === 0) {
         // The south cohort crosses the opened perimeter mouth before reacquiring its target.
         entity.infected!.scripted = { x: spread, z: -82 };
@@ -292,13 +297,11 @@ export class LevelEightZoo {
     return 0;
   }
   /** The opening shock keeps the group in the plaza before the APC route appears. */
-  protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60 + (this.state.protectAway ?? 0); }
-  /** r36-l8gates (QA P2 "the courier and some civilians can run far out of the plaza during 'Protect the group'"): the hold is
-   * fought in the plaza. Away from the cell (4 m grace) its 30 s pause and the objective calls her back. The group keeps
-   * following her: alone in the plaza it would face the two hatch cohorts without her. */
+  protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60; }
+  /** The opening hold is fought where the convoy unloads, beside Nadia at the zoo arrival gate. */
   awayFromPlaza(): boolean {
-    const p = this.w.entities.get(1)!.transform, c = l8PlazaCell;
-    return p.x < c.x0 - 4 || p.x > c.x1 + 4 || p.z < c.z0 - 4 || p.z > c.z1 + 4;
+    const p = this.w.entities.get(1)!.transform, c = this.mission.def.anchors.arrival;
+    return distance(p, c) > 12;
   }
   private passengersSeated(): boolean {
     const seats = this.w.entities.get(this.state.carId)!.vehicle!.passengers ?? [];
@@ -306,6 +309,7 @@ export class LevelEightZoo {
   }
   /** The calm lasts a minute, but never ends before Nadia has led the group into the plaza and they have had a moment to settle. */
   private calmTicks(): number {
+    if (arrivalCalmTicks) return arrivalCalmTicks;
     const s = this.state;
     if (s.guideDone === 0) return guideMaxCalmTicks;
     return s.guideDone === 2 ? Math.max(3600, s.guideArrivedAt - s.startedAt + guideRestTicks) : 3600;
@@ -315,7 +319,7 @@ export class LevelEightZoo {
     const s = this.state, w = this.w, t = w.tick;
     if (s.guideDone) return;
     const keeper = w.entities.get(s.keeperId), c = keeper?.civilian, player = w.entities.get(1)!;
-    if (!keeper || !c || keeper.infection || keeper.health.current <= 0 || c.state !== 'calm') {
+    if (arrivalCalmTicks || !keeper || !c || keeper.infection || keeper.health.current <= 0 || c.state !== 'calm') {
       s.guideDone = 1; const gate = guideRoute.at(-1)!; Object.assign(this.mission.def.anchors['l8-route'], { x: gate.x, z: gate.z }); return;
     }
     c.pauseUntil = t + 2; // the shared tour schedule stays suspended while she leads
@@ -537,25 +541,23 @@ export class LevelEightZoo {
       }
     }
     if (this.breached) this.reyesFallback();
-    if (this.protecting() && this.awayFromPlaza()) s.protectAway = (s.protectAway ?? 0) + 1;
     this.mission.setState('apc-destroyed', w.entities.get(s.carId)!.health.current <= 0);
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
     // r25-l8cues: while the group is under the opening shock the marker rings the plaza where they stand (it was blank for the first 30 s).
     if (!this.breached) {
-      const guide = w.entities.get(s.keeperId);
-      if (guide) {
-        // Nadia's next stop while she leads (fixed until she reaches it), then the entry gate.
-        const destination = s.guideDone ? guideRoute.at(-1)! : guideRoute[Math.min(s.guideLeg, guideRoute.length - 1)];
-        Object.assign(this.mission.def.anchors['l8-route'], { x: destination.x, z: destination.z });
-        const step = this.mission.def.steps.find(value => value.id === 'sanctuary');
-        if (step) { step.text = 'Follow Nadia'; step.anchor = 'l8-route'; step.waypoint = true; }
-        this.mission.state.marker = 'l8-route';
-      }
+      Object.assign(this.mission.def.anchors['l8-route'], this.mission.def.anchors['zoo-gate']);
+      const step = this.mission.def.steps.find(value => value.id === 'sanctuary');
+      if (step) { step.text = 'Clear the zoo'; step.anchor = 'l8-route'; step.waypoint = true; }
+      this.mission.state.marker = 'l8-route';
     }
     else if(seated)this.mission.state.marker=null;
     // PO 2026-11-18: "Back to the plaza!" must show the plaza on the radar, whichever step is active.
-    else if(this.protecting())this.mission.state.marker=this.mission.state.steps.escape.status==='active'||this.awayFromPlaza()?'central-plaza':null;
+    else if(this.protecting()) {
+      const arrival = this.mission.def.anchors.arrival;
+      Object.assign(this.mission.def.anchors['l8-route'], { x: arrival.x, z: arrival.z });
+      this.mission.state.marker = 'l8-route';
+    }
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active') {
       const next = s.arenas.find(a => a.phase !== 3);
       const step = this.mission.def.steps.find(value => value.id === 'escape');
@@ -619,7 +621,7 @@ export class LevelEightZoo {
     // The first time the courier crosses a region with tunnels (after the seal), a small cohort walks in from its outlets.
     const here = s.sealedAt ? this.region(w.entities.get(1)!.transform) : 0;
     // "Protect the group!" is a sustained fight: two more bursts come out of the plaza hatches at 12 s and 24 s of the 30 s hold.
-    if (this.protecting() && s.plazaBursts < 2 && t >= s.breachedAt + (s.protectAway ?? 0) + (s.plazaBursts + 1) * 12 * 60) {
+    if (this.protecting() && s.plazaBursts < 2 && t >= s.breachedAt + (s.plazaBursts + 1) * 12 * 60) {
       s.plazaBursts++;
       const burst = ai.director.tier === 'low' ? 1 : 2;
       this.releaseGate(0, burst); this.releaseGate(1, burst);
@@ -986,8 +988,9 @@ export class LevelEightZoo {
       // Nearby evacuees walk with the courier instead of repeatedly sprinting into their slots.
       // Keep R13's full catch-up outside the band and its boarding approach unchanged.
       const courierSpeed = Math.hypot(velocity.x, velocity.z);
-      const cap = !boarding && courierSpeed > .8 && distance(e.transform, p.transform) <= 10 ? courierSpeed * 1.05 : 6.4;
-      const speed = Math.min(cap, 4.5 + Math.max(0, distance(e.transform, target) - 2) * .6);
+      const gap = distance(e.transform, p.transform);
+      const cap = !boarding && courierSpeed > .8 && gap <= 10 ? courierSpeed * (gap > 5 ? 1.2 : 1.12) : 6.4;
+      const speed = Math.min(cap, 4.8 + Math.max(0, distance(e.transform, target) - 2) * .6);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
     if (c.ally && !boarding) {
@@ -1033,7 +1036,7 @@ export class LevelEightZoo {
       this.state.lionUntil = 0;
       this.state.guideRouteVersion = 6;
     }
-    if (!this.state.guideDone) { const stop = guideRoute[Math.min(this.state.guideLeg, guideRoute.length - 1)]; Object.assign(this.mission.def.anchors['l8-route'], { x: stop.x, z: stop.z }); }
+    if (!this.breached) Object.assign(this.mission.def.anchors['l8-route'], this.mission.def.anchors['zoo-gate']);
     for (const key of ['broadcastAt', 'greetingAt', 'haleGreetingAt', 'gateToastAt', 'departureAt', 'haleFallAt', 'guideArrivedAt', 'lionUntil'] as const) if (this.state[key]) this.state[key] += delta;
     if (this.state.departureFrom) this.state.chaseAt += delta;
     this.w.storyLock = this.state.departureFrom && !this.mission.state.states.departed ? { scripted: null, skip: false } : null;

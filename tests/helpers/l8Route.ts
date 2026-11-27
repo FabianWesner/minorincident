@@ -12,14 +12,13 @@ export async function checkL8Route(): Promise<void> {
     zoo.state.nextWave = Number.MAX_SAFE_INTEGER; w.combat!.damage.god = true;
     zoo.advance();
     const player = w.entities.get(1)!;
-    // r36-l8gates (QA P2 "the courier and some civilians can run far out of the plaza during 'Protect the group'"): with the courier
-    // kiting 40 m away the 30 s hold pauses and the objective calls her back to the plaza.
+    // The opening hold is anchored at arrival and runs for a fixed 30 s even if the courier leaves.
     zoo.followers().forEach((e, n) => w.solids.relocate(e, { x: (n % 6 - 2.5) * 1.5, z: 2 + Math.floor(n / 6) * 1.5, y: e.transform.y }, 'fixture.l8-route', 20, false));
     w.solids.relocate(player, { x: 0, z: 40, y: player.transform.y }, 'fixture.l8-route', 20, false);
-    for (let i = 0; i < 32 * 60; i++) { player.health.current = player.health.max; w.update(); }
-    expect(zoo.protecting(), 'the hold pauses while the courier is away from the plaza').toBe(true);
-    expect(objectiveText(mission, '')).toMatch(/^Back to the plaza/);
-    // Back at the plaza edge (inside the 4 m grace, outside the cell, so the doors cannot shut yet) the hold runs out.
+    for (let i = 0; i < 20 * 60; i++) { player.health.current = player.health.max; w.update(); }
+    expect(zoo.protecting(), 'the hold is still active before 30 s').toBe(true);
+    expect(['Stay with the group', 'Protect the group!']).toContain(objectiveText(mission, ''));
+    // The hold ends on schedule away from the arrival gate.
     w.solids.relocate(player, { x: 0, z: 9, y: player.transform.y }, 'fixture.l8-route', 20, false);
     for (let i = 0; i < 2400 && zoo.protecting(); i++) w.update();
     expect(zoo.protecting()).toBe(false);
@@ -96,8 +95,8 @@ export async function checkL8Route(): Promise<void> {
       let armedWith = -1;
       let stragglers = '';
       const entryNavId = 900840 + index * 2, previous = l8Route[index - 1], previousEntryNavId = index > 0 ? 900840 + (index - 1) * 2 : -1;
-      const closeTicks = new Map<number, number>();
-      w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed' && event.blocked) closeTicks.set(event.id, event.tick); });
+      const closeTicks = new Map<number, number>(), openTicks = new Map<number, number>();
+      w.events.on('world.blocker.changed', event => { if (event.type === 'world.blocker.changed') (event.blocked ? closeTicks : openTicks).set(event.id, event.tick); });
       for (let i = 0; i < 3600 && !arena.armed; i++) {
         w.update();
         if (arena.armed) {
@@ -131,7 +130,14 @@ export async function checkL8Route(): Promise<void> {
       stop();
       expect(shots, `${stage.id}: guards do not attack cage animals`).toEqual([]);
       expect(l8GateClosed(`${stage.id}.entry`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
-      expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true })).toBe(true);
+      expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${stage.id}: outlet admits outbreak only at the pond`).toBe(stage.id !== 'flamingo');
+      if (stage.id === 'flamingo') {
+        expect(l8GateClosed('path.0', { arenas: zoo.state.arenas, sealed: true })).toBe(false);
+        expect(openTicks.has(900841), 'pond exit physically opens when the fight begins').toBe(true);
+        expect(openTicks.has(900890), 'the outbreak path physically opens when the fight begins').toBe(true);
+        const birds = arena.ids.map(id => w.entities.get(id)).filter(e => e && e.health.current > 0);
+        expect(birds.every(e => inRect(e!.transform, stage.zone)), 'the active flock remains in the pond').toBe(true);
+      }
       if (stage.id === 'monkey') {
         const leader = w.entities.get(arena.ids.at(-1)!)!;
         if (!leader.infected) { w.npcs!.civilians.outbreak!.turnNow(leader); zoo.bosses.turned(leader.id); }
@@ -147,9 +153,15 @@ export async function checkL8Route(): Promise<void> {
         expect(l8GateClosed(`${previous.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${previous.id}: forward exit closes after ${stage.id} arms`).toBe(true);
       }
       arena.phase = 3; arena.armed = false; zoo.bosses.updateGates();
+      if (stage.id === 'flamingo') expect(closeTicks.has(900890), 'the path wall closes again on clear').toBe(true);
       expect(l8GateClosed(`${stage.id}.exit`, { arenas: zoo.state.arenas, sealed: true }), `${stage.id}: the exit opens on the clear`).toBe(false);
       w.update();
       expect(corgi.companion!.arenaWait, `${stage.id}: corgi rejoins after the cage clears`).toBeUndefined();
+      const next = l8Route[index + 1];
+      if (next) {
+        expect(mission.state.marker, `${stage.id}: marker advances after clear`).toBe('l8-route');
+        expect(markerAnchor(mission), `${stage.id}: marker points to ${next.id}`).toMatchObject(next.nodes.at(-1)!);
+      }
     }
     // The elephant yard has a south entry fence instead of an l8Route `entry`
     // box. Once the entire party has crossed it, both it and the gorilla return
@@ -187,5 +199,9 @@ export async function checkL8Route(): Promise<void> {
       expect(corgi.companion!.arenaWait, 'elephant: corgi retains its wait order').toBe(true);
       expect(inRect(corgi.transform, elephantZone), 'elephant: corgi remains outside').toBe(false);
     }
+    elephant.phase = 3; elephant.armed = false;
+    w.update();
+    expect(mission.state.marker, 'elephant clear points to the vehicle').toBe('exit');
+    expect(markerAnchor(mission), 'final marker uses the vehicle exit anchor').toMatchObject(mission.def.anchors.exit);
   } finally { w.dispose(); }
 }
