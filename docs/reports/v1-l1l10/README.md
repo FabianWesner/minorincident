@@ -91,3 +91,7 @@ Main advanced from `2f7ee5f0` to `540ab32a`; the lane was rebased. Earlier sourc
 ## L1-07 current-main refresh
 
 On `540ab32a`, the new both-tier fixture retains the preceding result: 5 initially, low 30/30 and high 44/50 at +120/+240 s, bite provenance for all additional turns, and zero observer damage/deaths/knockdowns/kills. Fresh **PASS**: [review](../../qa/reviews/L1-07.json), [high fixture](L1-07/high-fixtures.json), [low fixture](L1-07/low-fixtures.json). The controlled probe relocates the observer after the ordinary opening. No game changes; no open numeric clause for this row. Scoped command exit 1 reflects 12 incomplete L1 rows.
+
+## L1-09 current-main review
+
+**PASS** on both qualities: 300 production runner spawns per fixture, 100 per speed tier, all within 4.4 m/s and their tier's 1.04× upper bound; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s versus ≥85%. This is a deterministic equal-tier sample. [Review](../../qa/reviews/L1-09.json) hashes the retained L1-07 fixture receipts. No game changes; no open measured clause for this row.
