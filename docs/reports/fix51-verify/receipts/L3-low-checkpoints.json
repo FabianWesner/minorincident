@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L3",
   "tier": "low",
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "sourceHash": "f7b0130bf593de288a335e98a4a2cd11e2e0f1c3906d1ffaddc2e492a6fefc20",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
@@ -220,15 +220,15 @@
       "value": {
         "checkpoint": "segment-2",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "2585f57319f1d46aa46c2359f74bfa8086f37923dd4703e7e39f2e756bf6e88c",
+        "snapshotSha256": "8354506c46a4f944a849fe3263277756c09248ef68beb4ac947c9dbbb1df5a5d",
         "damage": 100,
         "expected": {
           "id": "segment-2",
           "anchor": {
-            "x": -39.99032974243164,
+            "x": -39.99000549316406,
             "y": 0.7099999785423279,
-            "z": 0.48009300231933594,
-            "yaw": 0.046843663420343816
+            "z": 0.47984904050827026,
+            "yaw": 0.046834964387891025
           },
           "gates": {},
           "racks": {
@@ -288,8 +288,8 @@
         "observed": {
           "id": "segment-2",
           "position": {
-            "x": -39.99032974243164,
-            "z": 0.48009300231933594
+            "x": -39.99000549316406,
+            "z": 0.47984904050827026
           },
           "gates": {},
           "racks": {
@@ -325,15 +325,15 @@
       "value": {
         "checkpoint": "segment-2b",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "395c3be861f1a379d483e3dffeaf94bae096e88db08682fe8b1a30d1549f268f",
+        "snapshotSha256": "24c2cf98901b38f58ef71b77f64285e72e821ae91336690863bc09d7b916b739",
         "damage": 100,
         "expected": {
           "id": "segment-2b",
           "anchor": {
-            "x": 8.010661125183105,
+            "x": 8.011877059936523,
             "y": 0.8500000238418579,
-            "z": -24.308320999145508,
-            "yaw": -0.10190227635853026
+            "z": -24.308568954467773,
+            "yaw": -0.10192642643453867
           },
           "gates": {},
           "racks": {
@@ -392,8 +392,8 @@
         "observed": {
           "id": "segment-2b",
           "position": {
-            "x": 8.010661125183105,
-            "z": -24.308320999145508
+            "x": 8.011877059936523,
+            "z": -24.308568954467773
           },
           "gates": {},
           "racks": {
@@ -429,15 +429,15 @@
       "value": {
         "checkpoint": "segment-3",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "12406185c32b957488ddb9a012167e6470d346070e585324eac979da984a9e05",
+        "snapshotSha256": "a9cd10010aa15ec2bc237c50e7268d01114c332bab5af427cf0d864a64813f46",
         "damage": 100,
         "expected": {
           "id": "segment-3",
           "anchor": {
-            "x": 51.892356872558594,
+            "x": 50.043670654296875,
             "y": 0.8500000238418579,
-            "z": -23.181550979614258,
-            "yaw": -0.005403939013642133
+            "z": -23.11189842224121,
+            "yaw": -0.004429225248231545
           },
           "gates": {},
           "racks": {
@@ -496,8 +496,8 @@
         "observed": {
           "id": "segment-3",
           "position": {
-            "x": 51.892356872558594,
-            "z": -23.181550979614258
+            "x": 50.043670654296875,
+            "z": -23.11189842224121
           },
           "gates": {},
           "racks": {
@@ -533,15 +533,15 @@
       "value": {
         "checkpoint": "segment-3b",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "09bc5aa38f502a91d91d1c06943fee444d9c18e78259e39025e804ee9b2a310b",
+        "snapshotSha256": "a2ff0d11fb1d23d23e8c11e52f19243f03cda07d1799918b3eb3e4c4b64a4537",
         "damage": 100,
         "expected": {
           "id": "segment-3b",
           "anchor": {
-            "x": 128.30499267578125,
-            "y": 0.7099999785423279,
-            "z": -12.378570556640625,
-            "yaw": -1.1819404468089831
+            "x": 117.1063003540039,
+            "y": 0.8500000238418579,
+            "z": -22.973663330078125,
+            "yaw": 1.3861980329392747
           },
           "gates": {},
           "racks": {
@@ -582,7 +582,6 @@
             91,
             92,
             93,
-            94,
             95,
             96,
             97,
@@ -600,8 +599,8 @@
         "observed": {
           "id": "segment-3b",
           "position": {
-            "x": 128.30499267578125,
-            "z": -12.378570556640625
+            "x": 117.1063003540039,
+            "z": -22.973663330078125
           },
           "gates": {},
           "racks": {
@@ -631,8 +630,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "98b54e68",
-    "control": "98b54e68",
+    "observed": "76ac0b43",
+    "control": "76ac0b43",
     "identical": true
   }
 }
