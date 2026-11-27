@@ -191,7 +191,7 @@ for (const tier of tiers) {
   rows.push(fixture);
   if (process.env.L10_STORY_SKIP_ROUTE === '1') continue;
   try {
-  const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
+  const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [], idleDetail: Record<string, unknown>[] = [], bornAt = new Map<number, { tick: number; d: number; inFrame: boolean }>();
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number; recentHits: unknown[] }[] = [];
   const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0 }));
@@ -365,13 +365,14 @@ for (const tier of tiers) {
         if (finaleStartTick === null && p.transform.x >= 2750) finaleStartTick = world.tick;
         if (finaleGateTick === null && p.transform.x >= 3755) finaleGateTick = world.tick;
         for (const e of world.infected!.active) {
+          if (!bornAt.has(e.id)) { const pl = world.entities.get(1)!.transform; bornAt.set(e.id, { tick: world.tick, d: Math.round(Math.hypot(e.transform.x - pl.x, e.transform.z - pl.z)), inFrame: world.infected!.director.inFrame(e.transform, 1, true) && !world.infected!.director.occluded(e.transform) }); }
           if ((e.motion?.speed ?? 0) > .1) moved.add(e.id);
           if (e.health.current <= 0 || e.hidden || e.infected?.hidden || !world.infected!.director.inFrame(e.transform, 1, true) || world.infected!.director.occluded(e.transform)) continue;
           if (e.infected?.pursuit) {
             firstMegaSeen ??= world.tick / 60;
             const d = Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), region = String(Math.floor(p.transform.x / 500));
             if (d < 30 && region !== lastRegion) { sightings.push({ tick: world.tick, region, distance: d }); lastRegion = region; }
-          } else if (!firstSeen.has(e.id)) { firstSeen.add(e.id); if (!moved.has(e.id)) idleEntries.push(e.id); }
+          } else if (!firstSeen.has(e.id)) { firstSeen.add(e.id); if (!moved.has(e.id)) { idleEntries.push(e.id); const pl = world.entities.get(1)!.transform; idleDetail.push({ id: e.id, tick: world.tick, archetype: e.archetype, state: e.infected?.state, at: { x: Math.round(e.transform.x), z: Math.round(e.transform.z) }, d: Math.round(Math.hypot(e.transform.x - pl.x, e.transform.z - pl.z)), checkpoint: world.missions?.state.checkpoint, born: bornAt.get(e.id), path: (() => { const nav = world.infected!.infectedNav, cells: number[] = []; return nav.path(nav.cell(e.transform.x, e.transform.z), nav.cell(pl.x, pl.z), cells, Infinity); })(), until: (e.infected?.until ?? 0) - world.tick, heard: e.infected?.heardTargetId, offNav: world.infected!.infectedNav.cell(e.transform.x, e.transform.z) < 0, motion: e.motion?.speed, stagger: e.combat?.staggerUntil, l1: e.infected?.l1?.mode }); } }
         }
         if (world.missions!.state.states['cure-carried']) {
           const ids = [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id);
@@ -414,7 +415,7 @@ for (const tier of tiers) {
   const finalePacing = { hangarToGateSeconds: finaleStartS === null || finaleGateS === null ? null : finaleGateS - finaleStartS, beatSeconds: finaleLines.map(tick => tick === null || finaleStartTick === null ? null : (tick - finaleStartTick) / 60), longestGapSeconds: longestGapS, storyMoments: routeMoments.filter(e => e.kind === 'story').length, fightMoments: routeMoments.filter(e => e.kind === 'fight').length };
   const beatIntervals = finalePacing.beatSeconds.slice(1).map((seconds, i) => seconds === null || finalePacing.beatSeconds[i] === null ? null : seconds - finalePacing.beatSeconds[i]);
   check(tier, 'finale story beats arrive in authored order', finaleLines.every((tick, i) => tick !== null && (i === 0 || (finaleLines[i - 1] !== null && tick > finaleLines[i - 1]!))), beatIntervals);
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, bikeRecovery, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, gateCrossings, roadblockEvents, underpassRecovery, clearanceTiming, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, bikeTicks, bikeTransitions, bikeRecovery, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, idleDetail, finalePacing, finaleMoments: routeMoments, overpassState, overpassProbeState, overpassThrows, gateCrossings, roadblockEvents, underpassRecovery, clearanceTiming, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { const detail = error instanceof Error ? error.stack ?? String(error) : String(error); check(tier, 'native route executes', false, detail); rows.push({ tier, routeError: detail }); }
 }
