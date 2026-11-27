@@ -215,7 +215,8 @@ export class LevelNineSetPieces {
           vehicle.attached.push(e.id); e.attachedTo = car.entity.id; if (vehicle.boardSpacing) vehicle.nextBoardAt = tick + vehicle.boardSpacing;
           (vehicle.apcBoarders ??= {})[e.id] = { startedAt: tick - 180, nextHit: tick + 60, side };
           w.events.emit({ type: 'vehicle.grabbed', tick, sourceId: car.entity.id, targetId: e.id });
-          this.hullHit(20, e.id); a.phase = 'hull'; a.nextStrike = tick + L.strikeTicks; this.signal('leaper-landed', a.id);
+          // PO durability billing treats a leaper landing as an attack transaction.
+          this.hullHit(10, e.id); a.phase = 'hull'; a.nextStrike = tick + L.strikeTicks; this.signal('leaper-landed', a.id);
         } else {
           e.transform.y = (w.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7;
           w.solids.admit(e, 'l9.leaper-landing', 3);
@@ -226,7 +227,7 @@ export class LevelNineSetPieces {
       }
       if (a.phase === 'hull') {
         if (e.attachedTo !== car.entity.id) { a.phase = 'cool'; a.at = tick + L.cooldownTicks; pursueCrossingVehicle(w, e.id); this.signal('leaper-shaken', a.id); return; }
-        if (tick >= (a.nextStrike ?? 0)) { this.hullHit(L.hullDamage, e.id); a.nextStrike = tick + L.strikeTicks; }
+        if (tick >= (a.nextStrike ?? 0)) { this.hullHit(10, e.id); a.nextStrike = tick + L.strikeTicks; }
       }
       if (a.phase === 'cool' && tick % 10 === 0) pursueCrossingVehicle(w, e.id);
       return;

@@ -41,6 +41,7 @@ export class AcceptanceObserver {
   private births: Record<string, number> = {};
   private l6RetreatDamage = 0;
   private birthIds = new Map<number, string>();
+  private birthLedger: { tick: number; id: number; archetype: string; pack: number; alphaType?: string; x: number; z: number }[] = [];
   private speed = { regularMax: 0, fasterThanPlayer: 0, regularSamples: 0, sprinters: 0 };
   private runOut: { tick: number; until: number; minimumInvulnerableUntil: number } | null = null;
   private regions: Record<string, Region> = {};
@@ -89,7 +90,11 @@ export class AcceptanceObserver {
       const id = spawn(...args);
       if (!args[3]) {
         const entity = world.entities.get(id);
-        if (entity?.infected) { this.births[entity.archetype] = (this.births[entity.archetype] ?? 0) + 1; this.birthIds.set(id, entity.archetype); }
+        if (entity?.infected) {
+          this.births[entity.archetype] = (this.births[entity.archetype] ?? 0) + 1; this.birthIds.set(id, entity.archetype);
+          if (entity.archetype === 'infected.alpha') this.birthLedger.push({ tick: world.tick, id, archetype: entity.archetype,
+            pack: entity.infected.pack, ...(entity.infected.alphaType ? { alphaType: entity.infected.alphaType } : {}), x: entity.transform.x, z: entity.transform.z });
+        }
       }
       return id;
     };
@@ -327,7 +332,7 @@ export class AcceptanceObserver {
     this.final = this.capture();
     return { initial: this.initial, final: this.final, eventCounts: this.eventCounts, ledger: this.ledger, pickups: this.pickups, duplicatePickups: this.duplicatePickups,
       peakAlive: this.peakAlive, peakCharacters: this.peakCharacters, firstMinute: this.firstMinute, markers: [...this.markers].map(([id, record]) => ({ id, ...record })), markerChanges: this.markerChanges, l5Formation: this.l5Formation.snapshot(), l4Scale: this.l4Scale,
-      corgi: { ...this.corgi, ids: [...this.corgi.ids] }, phaseStarts: this.phaseStarts, phasePeaks: this.phasePeaks, births: this.births, speed: this.speed, runOut: this.runOut, regions: this.regions,
+      corgi: { ...this.corgi, ids: [...this.corgi.ids] }, phaseStarts: this.phaseStarts, phasePeaks: this.phasePeaks, births: this.births, birthLedger: this.birthLedger, speed: this.speed, runOut: this.runOut, regions: this.regions,
       charge: this.charge, l10Story: this.l10Story, l10FirstSightings: this.l10FirstSightings, megaIntroduction: this.megaIntroduction, maxMegaStep: this.maxMegaStep, release: this.release, calm: this.calm, l6RetreatDamage: this.l6RetreatDamage,
       l2BeforeDoors: { ...this.l2BeforeDoors, nearest: Number.isFinite(this.l2BeforeDoors.nearest) ? this.l2BeforeDoors.nearest : null }, l2Contact: this.l2Contact, l2Maximum: this.l2Maximum, l2Route: { ...this.l2Route, encounterIds: [...this.l2EncounterIds] }, releaseFirstTick: this.releaseFirstTick, maxDetailedChunks: this.maxDetailedChunks,
       l5SearchRoute: { ...this.l5SearchRoute, encounters: [...this.l5SearchRoute.encounters.values()] } };
