@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L6",
   "tier": "low",
-  "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
-  "fixtureHash": "c3ab80190289023b361fa5790ffca54331148404be68f9215802c26085969a9c",
-  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
     {
       "id": "G-21",
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "shelter",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "ce25bf0ae111d0afdb477585788e41e4c78a1286e4720d875d74597dd2639fc6",
+        "snapshotSha256": "b8e369d10a2e9120e95ead520a1a6eded6dbd18bf47439bb1ff246cb71a11a5c",
         "damage": 100,
         "expected": {
           "id": "shelter",
@@ -28,13 +28,11 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -84,13 +82,11 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -117,26 +113,24 @@
       "value": {
         "checkpoint": "abandon",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "14e1781ed9f47994e8416bb65da86bf6f9b790e91b9e510d0b199a1e06929b63",
+        "snapshotSha256": "d2013aa5ca2185a0e689f4bb0bfbaf8a375634fb5ce6880e68b5f69a98a13d91",
         "damage": 100,
         "expected": {
           "id": "abandon",
           "anchor": {
-            "x": 0.33253079652786255,
+            "x": -6.2481689453125,
             "y": 1.3200000524520874,
-            "z": 3.5566253662109375,
-            "yaw": -0.11424668441281717
+            "z": -1.5779598951339722,
+            "yaw": -0.7287868280401067
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -146,6 +140,7 @@
             18,
             19,
             20,
+            21,
             22,
             23,
             24,
@@ -155,6 +150,7 @@
             28,
             29,
             30,
+            31,
             32,
             33,
             34,
@@ -163,7 +159,7 @@
             37,
             38,
             39,
-            41,
+            40,
             42,
             43,
             44
@@ -177,19 +173,17 @@
         "observed": {
           "id": "abandon",
           "position": {
-            "x": 0.33253079652786255,
-            "z": 3.5566253662109375
+            "x": -6.2481689453125,
+            "z": -1.5779598951339722
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -216,26 +210,24 @@
       "value": {
         "checkpoint": "gate-90",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "a3e559d78f157c511c132d53be38d5757b28e220cc38b4ae4190862ab423b710",
+        "snapshotSha256": "177e16f87158e954d95475d9cda67f991e24f1f27f9f6aa02b6f4522b4799156",
         "damage": 100,
         "expected": {
           "id": "gate-90",
           "anchor": {
             "x": 92.4,
-            "y": 1.4848624467849731,
+            "y": 1.590000033378601,
             "z": 17.3,
-            "yaw": 0.11751191696888538
+            "yaw": 3.4770940691044365
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -245,6 +237,7 @@
             18,
             19,
             20,
+            21,
             22,
             23,
             24,
@@ -252,7 +245,6 @@
             26,
             27,
             28,
-            29,
             30,
             32,
             33,
@@ -262,7 +254,7 @@
             37,
             38,
             39,
-            41,
+            40,
             42,
             43,
             44
@@ -276,19 +268,17 @@
         "observed": {
           "id": "gate-90",
           "position": {
-            "x": 92.65,
+            "x": 92.4,
             "z": 17.3
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -299,7 +289,7 @@
           "bossMode": null,
           "bossHp": null
         },
-        "positionError": 0.25,
+        "positionError": 0,
         "gateMatch": true,
         "rackMatch": true
       },
@@ -315,26 +305,24 @@
       "value": {
         "checkpoint": "mid-tunnel",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "c11749ffaf08c9354e5945417f0773c49b08f96567bbecee88b1ede8494d69fc",
+        "snapshotSha256": "ebe826485cd5c561280b88f1b16512f513b3f2f9c1ebb6853577ee1086a5186f",
         "damage": 100,
         "expected": {
           "id": "mid-tunnel",
           "anchor": {
-            "x": 150.02426147460938,
+            "x": 150.0643768310547,
             "y": 1.2699999809265137,
-            "z": 15.215095520019531,
-            "yaw": -0.4114812796932352
+            "z": 15.21585750579834,
+            "yaw": -0.4232849125112143
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -344,6 +332,7 @@
             18,
             19,
             20,
+            21,
             22,
             23,
             24,
@@ -351,7 +340,6 @@
             26,
             27,
             28,
-            29,
             30,
             32,
             33,
@@ -361,7 +349,7 @@
             37,
             38,
             39,
-            41,
+            40,
             42,
             43,
             44
@@ -375,19 +363,17 @@
         "observed": {
           "id": "mid-tunnel",
           "position": {
-            "x": 150.02426147460938,
-            "z": 15.215095520019531
+            "x": 150.0643768310547,
+            "z": 15.21585750579834
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -414,7 +400,7 @@
       "value": {
         "checkpoint": "gate-150",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "75e6a403ad61518aa86a84edf2e545ed31234d36c0ced66529906d67b050557f",
+        "snapshotSha256": "087fa4cffb791feeb3cf32aba5a559069292eeae2309fe752e1ed3c69bb26eeb",
         "damage": 100,
         "expected": {
           "id": "gate-150",
@@ -422,18 +408,16 @@
             "x": 152.4,
             "y": 1.590000033378601,
             "z": 17.3,
-            "yaw": -2.6780831114832013
+            "yaw": 3.5083479674238656
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -443,6 +427,7 @@
             18,
             19,
             20,
+            21,
             22,
             23,
             24,
@@ -450,7 +435,6 @@
             26,
             27,
             28,
-            29,
             30,
             32,
             33,
@@ -460,7 +444,7 @@
             37,
             38,
             39,
-            41,
+            40,
             42,
             43,
             44
@@ -480,13 +464,11 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -513,26 +495,24 @@
       "value": {
         "checkpoint": "gate-210",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "a488a781fba412559a6aec0a417b42bbe9aeb4917ad34814b4d469852d246a00",
+        "snapshotSha256": "463457bb35ddc6b022772ef76509369dfe4fe887ac7749b7a6515dd64cbf6df9",
         "damage": 100,
         "expected": {
           "id": "gate-210",
           "anchor": {
             "x": 212.4,
-            "y": 1.590000033378601,
+            "y": 1.2699999809265137,
             "z": 17.3,
-            "yaw": 3.801389255356217
+            "yaw": 3.1255639243361277
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -540,13 +520,16 @@
             16,
             17,
             18,
+            19,
+            20,
+            21,
+            22,
             23,
             24,
             25,
             26,
             27,
             28,
-            29,
             30,
             32,
             33,
@@ -556,9 +539,10 @@
             37,
             38,
             39,
-            41,
+            40,
             42,
-            43
+            43,
+            44
           ],
           "pickups": [
             56
@@ -575,13 +559,11 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -608,26 +590,24 @@
       "value": {
         "checkpoint": "exit-platform",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "7d0c266c182750b1fbecd1cee3bc685df7ce30b0b5f09386193ed5592a56c53c",
+        "snapshotSha256": "c72ab9a30d70d484e99df5a5d21f05fc20840fba3b4107e9b2014ec33d0f10d3",
         "damage": 100,
         "expected": {
           "id": "exit-platform",
           "anchor": {
-            "x": 246.64337158203125,
+            "x": 247.998291015625,
             "y": 1.3200000524520874,
-            "z": 14.976692199707031,
-            "yaw": -2.877338484681207
+            "z": 15.00011157989502,
+            "yaw": 0.00005569999699628157
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -635,13 +615,16 @@
             16,
             17,
             18,
+            19,
+            20,
+            21,
+            22,
             23,
             24,
             25,
             26,
             27,
             28,
-            29,
             30,
             32,
             33,
@@ -651,9 +634,10 @@
             37,
             38,
             39,
-            41,
+            40,
             42,
-            43
+            43,
+            44
           ],
           "pickups": [
             56
@@ -664,19 +648,17 @@
         "observed": {
           "id": "exit-platform",
           "position": {
-            "x": 246.64337158203125,
-            "z": 14.976692199707031
+            "x": 247.998291015625,
+            "z": 15.00011157989502
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -697,8 +679,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "fcc92418",
-    "control": "fcc92418",
+    "observed": "266904cf",
+    "control": "266904cf",
     "identical": true
   }
 }

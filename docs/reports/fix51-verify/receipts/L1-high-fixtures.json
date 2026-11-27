@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L1",
   "tier": "high",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checks": [
     {
       "id": "L1-07",
@@ -18,7 +18,7 @@
     {
       "id": "L1-07",
       "clause": "remote idle living infected at120s",
-      "value": 49,
+      "value": 44,
       "target": "≥15 at+120s",
       "status": "PASS",
       "tier": "high",
@@ -28,7 +28,7 @@
     {
       "id": "L1-07",
       "clause": "remote idle living infected at240s",
-      "value": 53,
+      "value": 50,
       "target": "≥25 at+240s",
       "status": "PASS",
       "tier": "high",
@@ -51,233 +51,218 @@
             "bitten": true
           },
           {
-            "id": 135,
-            "tick": 6153,
-            "bitten": true
-          },
-          {
-            "id": 134,
-            "tick": 6381,
-            "bitten": true
-          },
-          {
             "id": 109,
-            "tick": 6651,
-            "bitten": true
-          },
-          {
-            "id": 143,
-            "tick": 6858,
-            "bitten": true
-          },
-          {
-            "id": 110,
-            "tick": 7010,
-            "bitten": true
-          },
-          {
-            "id": 114,
-            "tick": 7124,
-            "bitten": true
-          },
-          {
-            "id": 113,
-            "tick": 7175,
-            "bitten": true
-          },
-          {
-            "id": 153,
-            "tick": 7181,
+            "tick": 6249,
             "bitten": true
           },
           {
             "id": 108,
-            "tick": 7236,
+            "tick": 6513,
+            "bitten": true
+          },
+          {
+            "id": 110,
+            "tick": 6588,
+            "bitten": true
+          },
+          {
+            "id": 143,
+            "tick": 6737,
+            "bitten": true
+          },
+          {
+            "id": 135,
+            "tick": 6771,
             "bitten": true
           },
           {
             "id": 144,
-            "tick": 7410,
+            "tick": 6829,
             "bitten": true
           },
           {
-            "id": 139,
-            "tick": 7631,
+            "id": 134,
+            "tick": 6987,
             "bitten": true
           },
           {
             "id": 140,
-            "tick": 7634,
+            "tick": 7158,
+            "bitten": true
+          },
+          {
+            "id": 113,
+            "tick": 7232,
             "bitten": true
           },
           {
             "id": 107,
-            "tick": 7779,
-            "bitten": true
-          },
-          {
-            "id": 138,
-            "tick": 7882,
+            "tick": 7244,
             "bitten": true
           },
           {
             "id": 106,
-            "tick": 7936,
+            "tick": 7287,
             "bitten": true
           },
           {
             "id": 105,
-            "tick": 8087,
+            "tick": 7324,
             "bitten": true
           },
           {
-            "id": 128,
-            "tick": 8360,
+            "id": 153,
+            "tick": 7391,
             "bitten": true
           },
           {
-            "id": 115,
-            "tick": 8406,
-            "bitten": true
-          },
-          {
-            "id": 103,
-            "tick": 8455,
-            "bitten": true
-          },
-          {
-            "id": 117,
-            "tick": 8469,
+            "id": 114,
+            "tick": 7483,
             "bitten": true
           },
           {
             "id": 146,
-            "tick": 8476,
+            "tick": 7584,
             "bitten": true
           },
           {
-            "id": 116,
-            "tick": 8548,
+            "id": 139,
+            "tick": 7723,
             "bitten": true
           },
           {
-            "id": 141,
-            "tick": 8687,
+            "id": 117,
+            "tick": 7908,
+            "bitten": true
+          },
+          {
+            "id": 103,
+            "tick": 7981,
             "bitten": true
           },
           {
             "id": 145,
-            "tick": 8709,
+            "tick": 8070,
             "bitten": true
           },
           {
             "id": 142,
-            "tick": 9070,
+            "tick": 8077,
             "bitten": true
           },
           {
             "id": 147,
-            "tick": 9092,
-            "bitten": true
-          },
-          {
-            "id": 122,
-            "tick": 9143,
+            "tick": 8402,
             "bitten": true
           },
           {
             "id": 148,
-            "tick": 9201,
+            "tick": 8509,
+            "bitten": true
+          },
+          {
+            "id": 122,
+            "tick": 8686,
             "bitten": true
           },
           {
             "id": 152,
-            "tick": 9439,
-            "bitten": true
-          },
-          {
-            "id": 96,
-            "tick": 9551,
+            "tick": 8733,
             "bitten": true
           },
           {
             "id": 123,
-            "tick": 9622,
-            "bitten": true
-          },
-          {
-            "id": 97,
-            "tick": 9639,
-            "bitten": true
-          },
-          {
-            "id": 101,
-            "tick": 9683,
-            "bitten": true
-          },
-          {
-            "id": 95,
-            "tick": 9797,
-            "bitten": true
-          },
-          {
-            "id": 99,
-            "tick": 9861,
-            "bitten": true
-          },
-          {
-            "id": 120,
-            "tick": 9868,
-            "bitten": true
-          },
-          {
-            "id": 100,
-            "tick": 9871,
-            "bitten": true
-          },
-          {
-            "id": 149,
-            "tick": 9882,
-            "bitten": true
-          },
-          {
-            "id": 98,
-            "tick": 9907,
+            "tick": 8902,
             "bitten": true
           },
           {
             "id": 136,
-            "tick": 10003,
+            "tick": 9130,
             "bitten": true
           },
           {
-            "id": 126,
-            "tick": 10669,
+            "id": 149,
+            "tick": 9187,
             "bitten": true
           },
           {
-            "id": 129,
-            "tick": 11142,
+            "id": 100,
+            "tick": 9313,
             "bitten": true
           },
           {
-            "id": 130,
-            "tick": 11554,
+            "id": 97,
+            "tick": 9361,
             "bitten": true
           },
           {
-            "id": 112,
-            "tick": 13142,
+            "id": 101,
+            "tick": 9376,
             "bitten": true
           },
           {
-            "id": 111,
-            "tick": 13181,
+            "id": 120,
+            "tick": 9458,
+            "bitten": true
+          },
+          {
+            "id": 95,
+            "tick": 9486,
+            "bitten": true
+          },
+          {
+            "id": 96,
+            "tick": 9530,
+            "bitten": true
+          },
+          {
+            "id": 125,
+            "tick": 9573,
+            "bitten": true
+          },
+          {
+            "id": 99,
+            "tick": 9639,
+            "bitten": true
+          },
+          {
+            "id": 98,
+            "tick": 9654,
+            "bitten": true
+          },
+          {
+            "id": 119,
+            "tick": 9849,
             "bitten": true
           },
           {
             "id": 121,
-            "tick": 13685,
+            "tick": 12349,
+            "bitten": true
+          },
+          {
+            "id": 112,
+            "tick": 12416,
+            "bitten": true
+          },
+          {
+            "id": 111,
+            "tick": 12678,
+            "bitten": true
+          },
+          {
+            "id": 126,
+            "tick": 17144,
+            "bitten": true
+          },
+          {
+            "id": 129,
+            "tick": 17623,
+            "bitten": true
+          },
+          {
+            "id": 130,
+            "tick": 18053,
             "bitten": true
           }
         ],
@@ -407,10 +392,10 @@
               "tick": 4309
             },
             "end": {
-              "x": 64.96703540007412,
-              "z": -9.982904813962229,
-              "tick": 4429,
-              "headingDeg": 109.92905491129727
+              "x": 64.98459668888164,
+              "z": -9.976437842516022,
+              "tick": 4427,
+              "headingDeg": 109.66280090435635
             }
           },
           {
@@ -435,10 +420,10 @@
               "tick": 4346
             },
             "end": {
-              "x": 65.14971784643436,
-              "z": -9.985119343079225,
-              "tick": 4464,
-              "headingDeg": 104.09116022054894
+              "x": 65.08176722722828,
+              "z": -10.00730196803407,
+              "tick": 4461,
+              "headingDeg": 105.10816925661034
             }
           }
         ],
@@ -2278,58 +2263,241 @@
     },
     {
       "id": "G-24",
-      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "clause": "production enemy-bar eligibility at interaction boundaries",
       "value": [
         {
+          "label": "alpha far/healthy",
           "archetype": "infected.alpha",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.lion",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "shielded riot infected far/healthy",
+          "archetype": "infected.riot",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
+          "label": "pursuing Mega far/healthy",
+          "archetype": "infected.alpha",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "engaged arena boss far/healthy",
           "archetype": "infected.gorilla",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.elephant",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "infected.runner far/healthy unengaged",
+          "archetype": "infected.runner",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.runner targeting player at 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner targeting player at 6.01 m",
+          "archetype": "infected.runner",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.runner player-hit at 40 m",
+          "archetype": "infected.runner",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner dead after player hit",
+          "archetype": "infected.runner",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion far/healthy unengaged",
+          "archetype": "infected.lion",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion targeting player at 6 m",
+          "archetype": "infected.lion",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion targeting player at 6.01 m",
+          "archetype": "infected.lion",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion player-hit at 40 m",
+          "archetype": "infected.lion",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion dead after player hit",
+          "archetype": "infected.lion",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla far/healthy unengaged",
+          "archetype": "infected.gorilla",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla targeting player at 6 m",
+          "archetype": "infected.gorilla",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla targeting player at 6.01 m",
+          "archetype": "infected.gorilla",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla player-hit at 40 m",
+          "archetype": "infected.gorilla",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla dead after player hit",
+          "archetype": "infected.gorilla",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra far/healthy unengaged",
           "archetype": "infected.zebra",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.zebra targeting player at 6 m",
+          "archetype": "infected.zebra",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra targeting player at 6.01 m",
+          "archetype": "infected.zebra",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra player-hit at 40 m",
+          "archetype": "infected.zebra",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra dead after player hit",
+          "archetype": "infected.zebra",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo far/healthy unengaged",
           "archetype": "infected.flamingo",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo targeting player at 6 m",
+          "archetype": "infected.flamingo",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo targeting player at 6.01 m",
+          "archetype": "infected.flamingo",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo player-hit at 40 m",
+          "archetype": "infected.flamingo",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo dead after player hit",
+          "archetype": "infected.flamingo",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "runner heard the player within 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "elephant waiting in its arena, player-hit",
+          "archetype": "infected.elephant",
+          "distance": 6,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "elephant engaged finale boss far/healthy",
+          "archetype": "infected.elephant",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "healthy zoo animal near",
+          "archetype": "animal.zebra",
+          "distance": 3,
+          "expected": false,
+          "eligible": false
         }
       ],
-      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "target": "PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off",
       "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
@@ -2526,11 +2694,11 @@
         ],
         "infectedAfterExit": {
           "0": 5,
-          "60": 19,
-          "120": 49,
-          "240": 53
+          "60": 23,
+          "120": 44,
+          "240": 50
         },
-        "maxInfected": 53,
+        "maxInfected": 50,
         "exitHeadingsDeg": [
           125,
           95,
@@ -2546,7 +2714,7 @@
           164
         ],
         "technicianId": 154,
-        "bites": 96
+        "bites": 90
       },
       "spreadTurns": [
         {
@@ -2560,233 +2728,218 @@
           "bitten": true
         },
         {
-          "id": 135,
-          "tick": 6153,
-          "bitten": true
-        },
-        {
-          "id": 134,
-          "tick": 6381,
-          "bitten": true
-        },
-        {
           "id": 109,
-          "tick": 6651,
-          "bitten": true
-        },
-        {
-          "id": 143,
-          "tick": 6858,
-          "bitten": true
-        },
-        {
-          "id": 110,
-          "tick": 7010,
-          "bitten": true
-        },
-        {
-          "id": 114,
-          "tick": 7124,
-          "bitten": true
-        },
-        {
-          "id": 113,
-          "tick": 7175,
-          "bitten": true
-        },
-        {
-          "id": 153,
-          "tick": 7181,
+          "tick": 6249,
           "bitten": true
         },
         {
           "id": 108,
-          "tick": 7236,
+          "tick": 6513,
+          "bitten": true
+        },
+        {
+          "id": 110,
+          "tick": 6588,
+          "bitten": true
+        },
+        {
+          "id": 143,
+          "tick": 6737,
+          "bitten": true
+        },
+        {
+          "id": 135,
+          "tick": 6771,
           "bitten": true
         },
         {
           "id": 144,
-          "tick": 7410,
+          "tick": 6829,
           "bitten": true
         },
         {
-          "id": 139,
-          "tick": 7631,
+          "id": 134,
+          "tick": 6987,
           "bitten": true
         },
         {
           "id": 140,
-          "tick": 7634,
+          "tick": 7158,
+          "bitten": true
+        },
+        {
+          "id": 113,
+          "tick": 7232,
           "bitten": true
         },
         {
           "id": 107,
-          "tick": 7779,
-          "bitten": true
-        },
-        {
-          "id": 138,
-          "tick": 7882,
+          "tick": 7244,
           "bitten": true
         },
         {
           "id": 106,
-          "tick": 7936,
+          "tick": 7287,
           "bitten": true
         },
         {
           "id": 105,
-          "tick": 8087,
+          "tick": 7324,
           "bitten": true
         },
         {
-          "id": 128,
-          "tick": 8360,
+          "id": 153,
+          "tick": 7391,
           "bitten": true
         },
         {
-          "id": 115,
-          "tick": 8406,
-          "bitten": true
-        },
-        {
-          "id": 103,
-          "tick": 8455,
-          "bitten": true
-        },
-        {
-          "id": 117,
-          "tick": 8469,
+          "id": 114,
+          "tick": 7483,
           "bitten": true
         },
         {
           "id": 146,
-          "tick": 8476,
+          "tick": 7584,
           "bitten": true
         },
         {
-          "id": 116,
-          "tick": 8548,
+          "id": 139,
+          "tick": 7723,
           "bitten": true
         },
         {
-          "id": 141,
-          "tick": 8687,
+          "id": 117,
+          "tick": 7908,
+          "bitten": true
+        },
+        {
+          "id": 103,
+          "tick": 7981,
           "bitten": true
         },
         {
           "id": 145,
-          "tick": 8709,
+          "tick": 8070,
           "bitten": true
         },
         {
           "id": 142,
-          "tick": 9070,
+          "tick": 8077,
           "bitten": true
         },
         {
           "id": 147,
-          "tick": 9092,
-          "bitten": true
-        },
-        {
-          "id": 122,
-          "tick": 9143,
+          "tick": 8402,
           "bitten": true
         },
         {
           "id": 148,
-          "tick": 9201,
+          "tick": 8509,
+          "bitten": true
+        },
+        {
+          "id": 122,
+          "tick": 8686,
           "bitten": true
         },
         {
           "id": 152,
-          "tick": 9439,
-          "bitten": true
-        },
-        {
-          "id": 96,
-          "tick": 9551,
+          "tick": 8733,
           "bitten": true
         },
         {
           "id": 123,
-          "tick": 9622,
-          "bitten": true
-        },
-        {
-          "id": 97,
-          "tick": 9639,
-          "bitten": true
-        },
-        {
-          "id": 101,
-          "tick": 9683,
-          "bitten": true
-        },
-        {
-          "id": 95,
-          "tick": 9797,
-          "bitten": true
-        },
-        {
-          "id": 99,
-          "tick": 9861,
-          "bitten": true
-        },
-        {
-          "id": 120,
-          "tick": 9868,
-          "bitten": true
-        },
-        {
-          "id": 100,
-          "tick": 9871,
-          "bitten": true
-        },
-        {
-          "id": 149,
-          "tick": 9882,
-          "bitten": true
-        },
-        {
-          "id": 98,
-          "tick": 9907,
+          "tick": 8902,
           "bitten": true
         },
         {
           "id": 136,
-          "tick": 10003,
+          "tick": 9130,
           "bitten": true
         },
         {
-          "id": 126,
-          "tick": 10669,
+          "id": 149,
+          "tick": 9187,
           "bitten": true
         },
         {
-          "id": 129,
-          "tick": 11142,
+          "id": 100,
+          "tick": 9313,
           "bitten": true
         },
         {
-          "id": 130,
-          "tick": 11554,
+          "id": 97,
+          "tick": 9361,
           "bitten": true
         },
         {
-          "id": 112,
-          "tick": 13142,
+          "id": 101,
+          "tick": 9376,
           "bitten": true
         },
         {
-          "id": 111,
-          "tick": 13181,
+          "id": 120,
+          "tick": 9458,
+          "bitten": true
+        },
+        {
+          "id": 95,
+          "tick": 9486,
+          "bitten": true
+        },
+        {
+          "id": 96,
+          "tick": 9530,
+          "bitten": true
+        },
+        {
+          "id": 125,
+          "tick": 9573,
+          "bitten": true
+        },
+        {
+          "id": 99,
+          "tick": 9639,
+          "bitten": true
+        },
+        {
+          "id": 98,
+          "tick": 9654,
+          "bitten": true
+        },
+        {
+          "id": 119,
+          "tick": 9849,
           "bitten": true
         },
         {
           "id": 121,
-          "tick": 13685,
+          "tick": 12349,
+          "bitten": true
+        },
+        {
+          "id": 112,
+          "tick": 12416,
+          "bitten": true
+        },
+        {
+          "id": 111,
+          "tick": 12678,
+          "bitten": true
+        },
+        {
+          "id": 126,
+          "tick": 17144,
+          "bitten": true
+        },
+        {
+          "id": 129,
+          "tick": 17623,
+          "bitten": true
+        },
+        {
+          "id": 130,
+          "tick": 18053,
           "bitten": true
         }
       ],
@@ -2813,11 +2966,11 @@
         "profile": "complete",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 115.08333333333333,
+        "simSeconds": 115.06666666666666,
         "deaths": 0,
         "kills": 0,
-        "knockdowns": 9,
-        "damage": 30,
+        "knockdowns": 6,
+        "damage": 40,
         "timeline": [
           {
             "id": "pickup",
@@ -2837,13 +2990,13 @@
           },
           {
             "id": "firestation",
-            "t": 110.08333333333333
+            "t": 110.06666666666666
           }
         ],
         "infectedAfterExit": {
           "0": 5
         },
-        "maxInfected": 57,
+        "maxInfected": 56,
         "exitHeadingsDeg": [
           125,
           95,

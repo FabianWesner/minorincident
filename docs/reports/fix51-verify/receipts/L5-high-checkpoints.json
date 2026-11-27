@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L5",
   "tier": "high",
-  "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
-  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
     {
       "id": "G-21",
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "outside",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "7f0e8e71027fceed1fa3ab3c4f474d5983ccbd26243062225821dbc198b18ec0",
+        "snapshotSha256": "9d5b99d1184984b566b33d6ce1cbb21a7968eb98495acd8bdb340f6eea944e25",
         "damage": 100,
         "expected": {
           "id": "outside",
@@ -30,13 +30,11 @@
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -50,13 +48,13 @@
             25,
             26,
             27,
-            382,
-            383,
-            384,
-            385,
-            386,
-            387,
-            388
+            316,
+            317,
+            318,
+            319,
+            320,
+            321,
+            322
           ],
           "removedPickups": [],
           "cure": false
@@ -72,13 +70,11 @@
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -105,28 +101,26 @@
       "value": {
         "checkpoint": "survivor-1",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "b4c95223cd784b597e285d861fba438c29a365237d6d15550f8c8d9b4de95ddf",
+        "snapshotSha256": "9aa10fce4cdf4c1e8ecbf0edc144e3f24539f5e28d98c58c431116398ab5b558",
         "damage": 100,
         "expected": {
           "id": "survivor-1",
           "anchor": {
-            "x": -32.36921310424805,
+            "x": -30.748353958129883,
             "y": 0.8500000238418579,
-            "z": -44.74876022338867,
-            "yaw": -0.5039162956562513
+            "z": -44.554534912109375,
+            "yaw": -0.38766521100530726
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -142,13 +136,13 @@
             25,
             26,
             27,
-            382,
-            383,
-            384,
-            385,
-            386,
-            387,
-            388
+            316,
+            317,
+            318,
+            319,
+            320,
+            321,
+            322
           ],
           "removedPickups": [],
           "cure": false
@@ -156,21 +150,19 @@
         "observed": {
           "id": "survivor-1",
           "position": {
-            "x": -32.36921310424805,
-            "z": -44.74876022338867
+            "x": -30.748353958129883,
+            "z": -44.554534912109375
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -197,28 +189,26 @@
       "value": {
         "checkpoint": "survivor-2",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "5ee4ca55963a9f48a582b8b8bd346d4cdc896f6d34c7cfe8ed960c5a48464a8a",
+        "snapshotSha256": "361275d36e0dc0f0cdbdf74ff9e26d570817e3b5a9cb2f2c382b5cb288130f2b",
         "damage": 100,
         "expected": {
           "id": "survivor-2",
           "anchor": {
-            "x": -33.18048858642578,
+            "x": -33.18183135986328,
             "y": 0.7089999914169312,
-            "z": -2.9600002765655518,
-            "yaw": -2.4585287381539453
+            "z": -2.9570915699005127,
+            "yaw": -2.4619726207316504
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -235,13 +225,13 @@
             25,
             26,
             27,
-            382,
-            383,
-            384,
-            385,
-            386,
-            387,
-            388
+            316,
+            317,
+            318,
+            319,
+            320,
+            321,
+            322
           ],
           "removedPickups": [],
           "cure": false
@@ -249,21 +239,19 @@
         "observed": {
           "id": "survivor-2",
           "position": {
-            "x": -33.18048858642578,
-            "z": -2.9600002765655518
+            "x": -33.18183135986328,
+            "z": -2.9570915699005127
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -290,28 +278,26 @@
       "value": {
         "checkpoint": "survivor-3",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "79c34777ae1cff794efda276dc6757981f942482a61754e605f80a57c3ccbb27",
+        "snapshotSha256": "e57275a9affdced5268824e42eb876973652612550ba324cc6d47a5f0b7eedfe",
         "damage": 100,
         "expected": {
           "id": "survivor-3",
           "anchor": {
-            "x": -45.39021682739258,
+            "x": -45.39508056640625,
             "y": 0.8500000238418579,
-            "z": 49.856361389160156,
-            "yaw": -0.35270907514046607
+            "z": 49.86629867553711,
+            "yaw": -0.32631296892505923
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -329,13 +315,13 @@
             25,
             26,
             27,
-            382,
-            383,
-            384,
-            385,
-            386,
-            387,
-            388
+            316,
+            317,
+            318,
+            319,
+            320,
+            321,
+            322
           ],
           "removedPickups": [],
           "cure": false
@@ -343,21 +329,19 @@
         "observed": {
           "id": "survivor-3",
           "position": {
-            "x": -45.39021682739258,
-            "z": 49.856361389160156
+            "x": -45.39508056640625,
+            "z": 49.86629867553711
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -384,28 +368,26 @@
       "value": {
         "checkpoint": "survivor-4",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6d2eca4572af42f04e2191431932bb8f6a18e095f00313cc56bc2b64fb027ec9",
+        "snapshotSha256": "f4c5a3b6d7f89b5ef5ab8c0d1c60c95e86f2febb2e60e10739e5f4bd968c1dbb",
         "damage": 100,
         "expected": {
           "id": "survivor-4",
           "anchor": {
-            "x": -4.810667991638184,
-            "y": 0.7089999914169312,
-            "z": 2.6968417167663574,
-            "yaw": 0.23203726258392748
+            "x": -6.590171813964844,
+            "y": 0.7049999833106995,
+            "z": 2.959487199783325,
+            "yaw": 0.8102601940223255
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -423,13 +405,13 @@
             25,
             26,
             27,
-            382,
-            383,
-            384,
-            385,
-            386,
-            387,
-            388
+            316,
+            317,
+            318,
+            319,
+            320,
+            321,
+            322
           ],
           "removedPickups": [],
           "cure": false
@@ -437,21 +419,19 @@
         "observed": {
           "id": "survivor-4",
           "position": {
-            "x": -4.810667991638184,
-            "z": 2.6968417167663574
+            "x": -6.590171813964844,
+            "z": 2.959487199783325
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -478,28 +458,26 @@
       "value": {
         "checkpoint": "survivor-5",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "480a4a2b8b5fa8053fc24ba8735cfc5a3001fbf40765ab848e3ac7eabd0799ef",
+        "snapshotSha256": "7ad5dab8e45b59df6e8bdecb3e5cd385dfdc6cead1ff0091e2fc9ca9ae5b43cb",
         "damage": 100,
         "expected": {
           "id": "survivor-5",
           "anchor": {
-            "x": 57.57326126098633,
+            "x": 57.575416564941406,
             "y": 0.8500000238418579,
-            "z": 41.2971076965332,
-            "yaw": -0.006778705297131706
+            "z": 41.29713821411133,
+            "yaw": -0.006741104654558064
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -518,12 +496,13 @@
             25,
             26,
             27,
-            382,
-            383,
-            384,
-            385,
-            386,
-            387
+            316,
+            317,
+            318,
+            319,
+            320,
+            321,
+            322
           ],
           "removedPickups": [],
           "cure": false
@@ -531,21 +510,19 @@
         "observed": {
           "id": "survivor-5",
           "position": {
-            "x": 57.57326126098633,
-            "z": 41.2971076965332
+            "x": 57.575416564941406,
+            "z": 41.29713821411133
           },
           "gates": {
             "l5-metro-shutter": true
           },
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
-              "weapon.army-mg",
               "weapon.handgun",
-              "weapon.kick",
+              "weapon.army-mg",
               "weapon.shotgun"
             ]
           },
@@ -566,8 +543,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "147553b8",
-    "control": "147553b8",
+    "observed": "c67cb79a",
+    "control": "c67cb79a",
     "identical": true
   }
 }

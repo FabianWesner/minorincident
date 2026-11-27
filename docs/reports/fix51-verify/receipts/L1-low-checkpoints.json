@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L1",
   "tier": "low",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
-  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
     {
       "id": "G-21",
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "accident",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "7544aa9ab088045a1bcfca25bf1b784b6006fdfbb54b1eaf9bf6b86c6c52633b",
+        "snapshotSha256": "8c9ce5a5e7f66ad4e73d4afe1dd98f8a99c222106b71e2dd8fbd40093f66c975",
         "damage": 100,
         "expected": {
           "id": "accident",
@@ -86,7 +86,7 @@
       "value": {
         "checkpoint": "bat",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "a37dc8992a90ca9b6a1e97958be86da5729bdfbd334ac9a93847481d30918a2c",
+        "snapshotSha256": "715b2cee9bd1f8d06a6cc359343eb39473b24292f420faa553427a4a07150f8c",
         "damage": 100,
         "expected": {
           "id": "bat",
@@ -94,7 +94,7 @@
             "x": 23.257389068603516,
             "y": 0.9649999737739563,
             "z": 37.310020446777344,
-            "yaw": 1.7596292420389532
+            "yaw": 2.288187321807013
           },
           "gates": {
             "fire-shutter": false
@@ -151,8 +151,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "b5e6a3be",
-    "control": "b5e6a3be",
+    "observed": "ee6a213d",
+    "control": "ee6a213d",
     "identical": true
   }
 }

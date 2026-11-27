@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L3",
   "tier": "high",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
-  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
     {
       "id": "G-21",
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "armory",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "ac2281a89e7be31f3ee370ec40b862f3cacaad809d56ee4f154c282ea430761f",
+        "snapshotSha256": "fbd2f0d3a1f0ecfd4205dbdc93c874b943254b9f39f6bf3137f47f59587afdc5",
         "damage": 100,
         "expected": {
           "id": "armory",
@@ -28,12 +28,12 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followers": [],
@@ -84,12 +84,12 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -115,7 +115,7 @@
       "value": {
         "checkpoint": "fallback",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "abc3872c7e56199cc69a7ca35a932e175964d8b657ec6207401ba1ebab69bf35",
+        "snapshotSha256": "a35f7697361c51db6f39bdf607dec1d89ff6db20a6fd4bc0673e9bc515bc5cd0",
         "damage": 100,
         "expected": {
           "id": "fallback",
@@ -123,17 +123,17 @@
             "x": -134.94863891601562,
             "y": 0.7049999833106995,
             "z": 0.6140632629394531,
-            "yaw": -2.418700655785962
+            "yaw": -1.886367910132934
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followers": [
@@ -189,12 +189,12 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -220,30 +220,34 @@
       "value": {
         "checkpoint": "segment-2",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "b8c9c97331e51615ccaa2246f24272c86f8d425e0159f2d20e5f809db657ba92",
+        "snapshotSha256": "985cba82f8cad78028f9aa2050ee770dfd913e3f5eff7b3263ae2ab4b8105fa9",
         "damage": 100,
         "expected": {
           "id": "segment-2",
           "anchor": {
-            "x": 17.928199768066406,
+            "x": -39.913204193115234,
             "y": 0.7099999785423279,
-            "z": -25.018583297729492,
-            "yaw": 2.8459023296957935
+            "z": 0.4746898412704468,
+            "yaw": 0.04677548500682026
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
-          "followers": [],
+          "followers": [
+            30,
+            31,
+            32,
+            33
+          ],
           "pickups": [
-            72,
             73,
             74,
             75,
@@ -253,6 +257,7 @@
             79,
             80,
             81,
+            82,
             83,
             84,
             85,
@@ -282,18 +287,18 @@
         "observed": {
           "id": "segment-2",
           "position": {
-            "x": 17.928199768066406,
-            "z": -25.018583297729492
+            "x": -39.913204193115234,
+            "z": 0.4746898412704468
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -319,30 +324,33 @@
       "value": {
         "checkpoint": "segment-2b",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "dd4d33ec9daf94739bbc8b97f2dc19027439cc5be9349e4ba13053f03a1b2638",
+        "snapshotSha256": "13520aabd0dfc77d0a774a9fe5140b9f61767021c3726d90cde0bbe69cfa2902",
         "damage": 100,
         "expected": {
           "id": "segment-2b",
           "anchor": {
-            "x": 17.928199768066406,
-            "y": 0.7099999785423279,
-            "z": -25.018583297729492,
-            "yaw": 2.8459023296957935
+            "x": 8.401341438293457,
+            "y": 0.8500000238418579,
+            "z": -24.266422271728516,
+            "yaw": -6.3849576838063955
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
-          "followers": [],
+          "followers": [
+            30,
+            31,
+            33
+          ],
           "pickups": [
-            72,
             73,
             74,
             75,
@@ -352,6 +360,7 @@
             79,
             80,
             81,
+            82,
             83,
             84,
             85,
@@ -381,18 +390,18 @@
         "observed": {
           "id": "segment-2b",
           "position": {
-            "x": 17.928199768066406,
-            "z": -25.018583297729492
+            "x": 8.401341438293457,
+            "z": -24.266422271728516
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -418,30 +427,33 @@
       "value": {
         "checkpoint": "segment-3",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "037cf2f9c22630fb381a248d1eec520430904f5a7e0bc80777e7c30b5fac0140",
+        "snapshotSha256": "396127372025d16d5b19382b1bb40637e61130250b81bf487f4d21ee2c09f3aa",
         "damage": 100,
         "expected": {
           "id": "segment-3",
           "anchor": {
-            "x": 171.08311462402344,
-            "y": 6.420000076293945,
-            "z": -0.7419186234474182,
-            "yaw": -0.048346729305835716
+            "x": 50.492130279541016,
+            "y": 0.8500000238418579,
+            "z": -23.195335388183594,
+            "yaw": -0.005480476836276466
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
-          "followers": [],
+          "followers": [
+            30,
+            31,
+            33
+          ],
           "pickups": [
-            72,
             73,
             74,
             75,
@@ -451,8 +463,10 @@
             79,
             80,
             81,
+            82,
             83,
             84,
+            85,
             86,
             87,
             88,
@@ -470,6 +484,7 @@
             100,
             101,
             102,
+            103,
             104
           ],
           "removedPickups": [],
@@ -478,18 +493,18 @@
         "observed": {
           "id": "segment-3",
           "position": {
-            "x": 171.08311462402344,
-            "z": -0.7419186234474182
+            "x": 50.492130279541016,
+            "z": -23.195335388183594
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -515,30 +530,33 @@
       "value": {
         "checkpoint": "segment-3b",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "a70f1d7636a6aecb2df3fc1e2310bcecf418928b6d6d0ef746e7ba279767748a",
+        "snapshotSha256": "8a4f9f23cb7eb5841137b29f7a892aa6d477b6cab04c18090b4773b1ccd5f94f",
         "damage": 100,
         "expected": {
           "id": "segment-3b",
           "anchor": {
-            "x": 171.08311462402344,
-            "y": 6.420000076293945,
-            "z": -0.7419186234474182,
-            "yaw": -0.048346729305835716
+            "x": 93.89604187011719,
+            "y": 0.8500000238418579,
+            "z": -22.957460403442383,
+            "yaw": 1.0583729066338807
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
-          "followers": [],
+          "followers": [
+            30,
+            31,
+            33
+          ],
           "pickups": [
-            72,
             73,
             74,
             75,
@@ -548,14 +566,15 @@
             79,
             80,
             81,
+            82,
             83,
             84,
+            85,
             86,
             87,
             88,
             89,
             90,
-            91,
             92,
             93,
             94,
@@ -567,6 +586,7 @@
             100,
             101,
             102,
+            103,
             104
           ],
           "removedPickups": [],
@@ -575,18 +595,18 @@
         "observed": {
           "id": "segment-3b",
           "position": {
-            "x": 171.08311462402344,
-            "z": -0.7419186234474182
+            "x": 93.89604187011719,
+            "z": -22.957460403442383
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat"
+              "weapon.bat",
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
-              "ability.corgi-lure"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -606,8 +626,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "9e71c96f",
-    "control": "9e71c96f",
+    "observed": "5a42d41e",
+    "control": "5a42d41e",
     "identical": true
   }
 }

@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L4",
   "tier": "high",
-  "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
-  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
     {
       "id": "G-21",
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "arrival",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "276c9089e955f9f3052e6d0acdae4d0ca4a12e70d9ddd8b3a6ffc43a5d8c2796",
+        "snapshotSha256": "ea9b3c0e3312481306197988852c1700eaa575bc73556f1fe0b86916d64a38ee",
         "damage": 100,
         "expected": {
           "id": "arrival",
@@ -28,9 +28,7 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat",
-              "weapon.kick"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
@@ -53,7 +51,11 @@
             137,
             138,
             139,
-            140
+            140,
+            141,
+            142,
+            143,
+            144
           ],
           "removedPickups": [],
           "cure": false
@@ -67,9 +69,7 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe",
-              "weapon.bat",
-              "weapon.kick"
+              "weapon.fire-axe"
             ],
             "RIGHT": [
               "weapon.handgun",
@@ -99,7 +99,7 @@
       "value": {
         "checkpoint": "turn",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "435fca42bcd72bc8bc7a2db7028d24aa91bf2794b2958282ba980ae0ce5d5eeb",
+        "snapshotSha256": "2507da94c005fb82f89b7fc669149336e2f24bb9fe5168e80985c9dc57007a1d",
         "damage": 100,
         "expected": {
           "id": "turn",
@@ -133,7 +133,11 @@
             137,
             138,
             139,
-            140
+            140,
+            141,
+            142,
+            143,
+            144
           ],
           "removedPickups": [
             126
@@ -178,15 +182,15 @@
       "value": {
         "checkpoint": "line-1",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "6397e7c8312ff2af3bd56527246b254c5f6521598cf9522124aa25e832197254",
+        "snapshotSha256": "9a142846483364c5fa9245fb38c2223fc4e026cc8ff34d4d541f5df9b5c229e1",
         "damage": 100,
         "expected": {
           "id": "line-1",
           "anchor": {
             "x": -20,
-            "y": 0.705094575881958,
+            "y": 0.7049999833106995,
             "z": -2,
-            "yaw": -1.6393254678847529
+            "yaw": -0.7582052959913059
           },
           "gates": {},
           "racks": {
@@ -199,6 +203,8 @@
           },
           "followers": [],
           "pickups": [
+            127,
+            128,
             129,
             130,
             131,
@@ -210,10 +216,14 @@
             137,
             138,
             139,
-            140
+            140,
+            141,
+            142,
+            143,
+            144
           ],
           "removedPickups": [
-            128
+            126
           ],
           "cure": false
         },
@@ -255,15 +265,15 @@
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "18fab06f892aca84f49b56979dd06eeae6bc79d0b652e5cf25babc8f80f51442",
+        "snapshotSha256": "4c5ff69b7108f742947378c8a476a62f96c373d05ce760270c1b0d5a3496fb11",
         "damage": 100,
         "expected": {
           "id": "nests",
           "anchor": {
-            "x": -11,
-            "y": 0.705094575881958,
-            "z": 16,
-            "yaw": 0.9829812581800634
+            "x": -9.8,
+            "y": 0.7049999833106995,
+            "z": -16.5,
+            "yaw": 0.839293482870295
           },
           "gates": {},
           "racks": {
@@ -276,6 +286,7 @@
           },
           "followers": [],
           "pickups": [
+            127,
             129,
             130,
             131,
@@ -287,18 +298,22 @@
             137,
             138,
             139,
-            140
+            140,
+            141,
+            142,
+            143,
+            144
           ],
           "removedPickups": [
-            128
+            126
           ],
           "cure": false
         },
         "observed": {
           "id": "nests",
           "position": {
-            "x": -11,
-            "z": 16
+            "x": -9.8,
+            "z": -16.5
           },
           "gates": {},
           "racks": {
@@ -332,15 +347,15 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "122689a8bd7aa8272361bcf442e3cd088954413cfe43ce56fb8946018eb6f9f8",
+        "snapshotSha256": "88db94f6fe962850c94c888901f65fabce35913874352dd1b27879e773d965bc",
         "damage": 100,
         "expected": {
           "id": "armor",
           "anchor": {
             "x": -11,
-            "y": 0.7099999785423279,
+            "y": 0.704999566078186,
             "z": 16,
-            "yaw": -1.1025900296742708
+            "yaw": 2.433082594247053
           },
           "gates": {},
           "racks": {
@@ -353,6 +368,7 @@
           },
           "followers": [],
           "pickups": [
+            127,
             129,
             130,
             131,
@@ -364,10 +380,14 @@
             137,
             138,
             139,
-            140
+            140,
+            141,
+            142,
+            143,
+            144
           ],
           "removedPickups": [
-            128
+            126
           ],
           "cure": false
         },
@@ -409,15 +429,15 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "1549c698298a2b54a2f7ce2439313db195576a4ed868432616c60fb9945ec719",
+        "snapshotSha256": "d0bbcfde3c3f00937caa9e42e458de5b804fa1f3f9244b80bd349a39204be98c",
         "damage": 100,
         "expected": {
           "id": "line-break",
           "anchor": {
-            "x": -4,
-            "y": 0.7049999833106995,
-            "z": 16,
-            "yaw": -2.9752592847323776
+            "x": -39.05454635620117,
+            "y": 0.7099999785423279,
+            "z": -37.398868560791016,
+            "yaw": 9.424548795721366
           },
           "gates": {},
           "racks": {
@@ -430,6 +450,7 @@
           },
           "followers": [],
           "pickups": [
+            127,
             129,
             130,
             131,
@@ -440,19 +461,22 @@
             136,
             137,
             138,
-            139,
-            140
+            140,
+            141,
+            142,
+            143,
+            144
           ],
           "removedPickups": [
-            128
+            126
           ],
           "cure": false
         },
         "observed": {
           "id": "line-break",
           "position": {
-            "x": -4,
-            "z": 16
+            "x": -39.05454635620117,
+            "z": -37.398868560791016
           },
           "gates": {},
           "racks": {
@@ -480,8 +504,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "765d2f4a",
-    "control": "765d2f4a",
+    "observed": "3a7f8c35",
+    "control": "3a7f8c35",
     "identical": true
   }
 }

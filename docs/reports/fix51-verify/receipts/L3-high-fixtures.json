@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L3",
   "tier": "high",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checks": [
     {
       "id": "L3-02",
@@ -11,98 +11,97 @@
       "value": [
         {
           "wave": 0,
-          "expected": 30,
-          "admitted": 30,
+          "expected": 15,
+          "admitted": 15,
           "byDirection": {
-            "river": 6,
-            "blvd": 6,
-            "oak": 6,
-            "commerce": 6,
-            "station": 6
+            "river": 3,
+            "blvd": 3,
+            "oak": 3,
+            "commerce": 3,
+            "station": 3
           },
           "bySource": {
-            "blvd": 5,
-            "commerce": 4,
-            "oak": 5,
-            "river": 4,
-            "station": 6,
-            "yard-cover": 6
+            "blvd": 2,
+            "commerce": 2,
+            "oak": 3,
+            "river": 2,
+            "station": 3,
+            "yard-cover": 3
           },
           "bySpecies": {
-            "npc.bathrobe-neighbor": 3,
+            "npc.bathrobe-neighbor": 2,
             "npc.bbq-dad": 3,
-            "npc.cashier": 4,
-            "npc.delivery-driver": 5,
-            "npc.jogger": 6,
-            "npc.officer": 6,
-            "npc.suburban-mom": 3
+            "npc.delivery-driver": 3,
+            "npc.jogger": 3,
+            "npc.officer": 3,
+            "npc.suburban-mom": 1
           },
-          "stationPoliceLook": 6,
-          "station": 6,
+          "stationPoliceLook": 3,
+          "station": 3,
           "missingAppearance": 0
         },
         {
           "wave": 1,
-          "expected": 60,
-          "admitted": 60,
+          "expected": 25,
+          "admitted": 25,
           "byDirection": {
-            "river": 12,
-            "blvd": 12,
-            "oak": 12,
-            "commerce": 12,
-            "station": 12
+            "river": 5,
+            "blvd": 5,
+            "oak": 5,
+            "commerce": 5,
+            "station": 5
           },
           "bySource": {
-            "blvd": 9,
-            "commerce": 9,
-            "oak": 9,
-            "river": 9,
-            "station": 12,
-            "yard-cover": 12
+            "blvd": 4,
+            "commerce": 3,
+            "oak": 4,
+            "river": 4,
+            "station": 5,
+            "yard-cover": 5
           },
           "bySpecies": {
-            "npc.bathrobe-neighbor": 13,
-            "npc.bbq-dad": 8,
-            "npc.cashier": 7,
-            "npc.delivery-driver": 5,
-            "npc.jogger": 9,
-            "npc.officer": 12,
-            "npc.suburban-mom": 6
+            "npc.bathrobe-neighbor": 2,
+            "npc.bbq-dad": 4,
+            "npc.cashier": 2,
+            "npc.delivery-driver": 1,
+            "npc.jogger": 8,
+            "npc.officer": 5,
+            "npc.suburban-mom": 3
           },
-          "stationPoliceLook": 12,
-          "station": 12,
+          "stationPoliceLook": 5,
+          "station": 5,
           "missingAppearance": 0
         },
         {
           "wave": 2,
-          "expected": 100,
-          "admitted": 100,
+          "expected": 35,
+          "admitted": 35,
           "byDirection": {
-            "river": 20,
-            "blvd": 20,
-            "oak": 20,
-            "commerce": 20,
-            "station": 20
+            "river": 7,
+            "blvd": 7,
+            "oak": 7,
+            "commerce": 7,
+            "station": 7
           },
           "bySource": {
-            "blvd": 15,
-            "commerce": 15,
-            "oak": 15,
-            "river": 15,
-            "station": 20,
-            "yard-cover": 20
+            "blvd": 5,
+            "commerce": 5,
+            "oak": 6,
+            "river": 5,
+            "station": 7,
+            "yard-cover": 7
           },
           "bySpecies": {
-            "npc.bathrobe-neighbor": 17,
-            "npc.bbq-dad": 15,
-            "npc.cashier": 10,
-            "npc.delivery-driver": 13,
-            "npc.jogger": 8,
-            "npc.officer": 20,
-            "npc.suburban-mom": 17
+            "npc.bathrobe-neighbor": 3,
+            "npc.bbq-dad": 5,
+            "npc.cashier": 5,
+            "npc.delivery-driver": 5,
+            "npc.jogger": 4,
+            "npc.officer": 7,
+            "npc.suburban-mom": 6
           },
-          "stationPoliceLook": 20,
-          "station": 20,
+          "stationPoliceLook": 7,
+          "station": 7,
           "missingAppearance": 0
         }
       ],
@@ -116,32 +115,14 @@
       "id": "L3-09",
       "clause": "native L3 human speed and admitted sprinter fraction",
       "value": {
-        "count": 2093,
-        "sprinters": 104,
-        "fraction": 0.049689440993788817,
-        "regularMax": 4,
+        "count": 920,
+        "sprinters": 46,
+        "fraction": 0.05,
+        "regularMax": 5.823837400916081,
         "outcome": "complete",
         "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
       },
-      "target": "regular≤4m/s; sprinters≤5% of actual admissions",
-      "status": "PASS",
-      "tier": "high",
-      "policy": "controlled-fixture",
-      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
-    },
-    {
-      "id": "L3-07",
-      "clause": "mortal segment1 officers land hits and player damage",
-      "value": {
-        "completed": true,
-        "officerHits": 31,
-        "officerKills": 3,
-        "playerKills": 0,
-        "damage": 0,
-        "deaths": 0,
-        "outcome": "complete"
-      },
-      "target": "officers land at least one hit; player damage<100HP",
+      "target": "regulars use shared tier speed bounds; sprinters≤5% of actual admissions",
       "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
@@ -151,35 +132,12 @@
       "id": "L3-08",
       "clause": "authored segment populations before admission/death relief",
       "value": [
-        250,
-        600,
-        1030
+        125,
+        240,
+        710
       ],
-      "target": "250/625/1000 each±20%; these are pending population slots, not simultaneous live entities",
+      "target": "125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities",
       "status": "PASS",
-      "tier": "high",
-      "policy": "controlled-fixture",
-      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
-    },
-    {
-      "id": "L3-08",
-      "clause": "median live within30m by traversed segment and concurrent cap",
-      "value": {
-        "prepopulated": [
-          250,
-          600,
-          1030
-        ],
-        "near30": [
-          72,
-          89,
-          79
-        ],
-        "maxConcurrent": 200,
-        "cap": 200
-      },
-      "target": "medianS1<S2<S3;max≤200high/100low",
-      "status": "FAIL",
       "tier": "high",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
@@ -192,16 +150,15 @@
           {
             "seed": 1,
             "outcome": "complete",
-            "deaths": 0,
+            "deaths": 3,
             "atFallback": 4,
-            "atCheckpoint": 0,
+            "atCheckpoint": 1,
             "segmentEnds": [
-              0,
-              0,
-              0
+              4,
+              3,
+              3
             ],
             "lossCauses": [
-              "bite",
               "bite",
               "bite",
               "bite"
@@ -210,17 +167,15 @@
           {
             "seed": 2,
             "outcome": "complete",
-            "deaths": 0,
+            "deaths": 3,
             "atFallback": 4,
-            "atCheckpoint": 0,
+            "atCheckpoint": 2,
             "segmentEnds": [
-              0,
-              0,
-              0
+              4,
+              3,
+              2
             ],
             "lossCauses": [
-              "bite",
-              "bite",
               "bite",
               "bite"
             ]
@@ -228,25 +183,127 @@
           {
             "seed": 3,
             "outcome": "complete",
-            "deaths": 0,
+            "deaths": 3,
             "atFallback": 4,
-            "atCheckpoint": 0,
+            "atCheckpoint": 1,
             "segmentEnds": [
-              0,
-              0,
-              0
+              4,
+              4,
+              4
             ],
             "lossCauses": [
               "bite",
-              "bite",
-              "bite",
-              "bite"
+              "kill",
+              "separated"
             ]
           }
         ],
-        "atArmyAtMost2": "3/3"
+        "atArmyAtLeast2": "1/3"
       },
-      "target": "forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
+      "target": "forms3–4;nonincreasing;≥2 atcheckpoint (PO 2026-11-07);loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
+      "status": "FAIL",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    },
+    {
+      "id": "L3-07",
+      "clause": "mortal segment1 officers land hits and player damage",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 260,
+            "officerKills": 52,
+            "playerKills": 19,
+            "damage": 20,
+            "deaths": 3
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 171,
+            "officerKills": 32,
+            "playerKills": 22,
+            "damage": 0,
+            "deaths": 3
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 217,
+            "officerKills": 41,
+            "playerKills": 28,
+            "damage": 20,
+            "deaths": 3
+          }
+        ],
+        "vote": "3/3"
+      },
+      "target": "officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    },
+    {
+      "id": "L3-08",
+      "clause": "median live within30m by traversed segment and concurrent cap",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "prepopulated": [
+              125,
+              240,
+              710
+            ],
+            "near30": [
+              10,
+              31,
+              43
+            ],
+            "maxConcurrent": 140,
+            "cap": 140
+          },
+          {
+            "seed": 2,
+            "prepopulated": [
+              125,
+              240,
+              710
+            ],
+            "near30": [
+              8,
+              34,
+              41
+            ],
+            "maxConcurrent": 140,
+            "cap": 140
+          },
+          {
+            "seed": 3,
+            "prepopulated": [
+              125,
+              240,
+              678
+            ],
+            "near30": [
+              14,
+              24,
+              43
+            ],
+            "maxConcurrent": 140,
+            "cap": 140
+          }
+        ],
+        "vote": "3/3"
+      },
+      "target": "medianS1<S2<S3;max≤140; 2 of 3 valid seeds pass",
       "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
@@ -290,12 +347,28 @@
       "id": "L3-11",
       "clause": "mortal newbie time below20percent HP",
       "value": {
-        "share": 0,
-        "outcome": "complete",
-        "deaths": 0,
-        "simulatedSeconds": 219.51666666666668
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "share": 0.012286890064667842
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "share": 0.010617185949593173
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "share": 0.012659798932605187
+          }
+        ],
+        "vote": "3/3",
+        "deaths": 3,
+        "simulatedSeconds": 289.48333333333335
       },
-      "target": "≤10% of alive samples; fullroute completed",
+      "target": "≤10% of alive samples; fullroute completed; 2 of 3 valid seeds pass",
       "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
@@ -307,13 +380,13 @@
       "value": {
         "fallbackBoundary": [
           {
-            "tick": 2892,
-            "firstEligibleTick": 2892,
-            "expectedCause": "turned",
-            "actualCause": "turned",
-            "inside": 6,
-            "turned": 3,
-            "elapsed": 492
+            "tick": 3082,
+            "firstEligibleTick": 3082,
+            "expectedCause": "inside",
+            "actualCause": "inside",
+            "inside": 8,
+            "turned": 2,
+            "elapsed": 682
           }
         ],
         "delayedFallback": false
@@ -336,10 +409,10 @@
           "blvd",
           "oak"
         ],
-        "turnedDuring": 3,
+        "turnedDuring": 2,
         "sameLook": true,
-        "fallbackCause": "turned",
-        "fallbackAfterS": 8.2
+        "fallbackCause": "inside",
+        "fallbackAfterS": 11.366666666666667
       },
       "target": "fallback≤60s afterattack;≥1 officer turns;uniform retained",
       "status": "PASS",
@@ -451,400 +524,470 @@
       "clause": "native idle pressure schedule and offscreen source band",
       "value": [
         {
-          "tick": 4313,
+          "tick": 4966,
           "afterLastAdvanceS": 20,
-          "furthest": -79.71852111816406,
+          "furthest": -79.76264953613281,
           "queued": [
             {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.930229263305677,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.53797888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-10",
-              "x": -101.95605346153847,
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 22.23753234337441,
+              "behindLineM": 32.25073161771334,
               "offscreen": true
             },
             {
               "door": "refuge-door-4",
               "x": -111.825,
               "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.656478881835938,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
+              "behindLineM": 32.06235046386719,
               "offscreen": true
             },
             {
               "door": "refuge-door-12",
               "x": -98.64875038146974,
               "z": -32.6,
-              "behindLineM": 18.930229263305677,
+              "behindLineM": 18.886100845336927,
               "offscreen": true
             },
             {
-              "door": "refuge-door-2",
-              "x": -112.01338115384615,
-              "z": 32,
-              "behindLineM": 32.29486003568209,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
+              "door": "refuge-door-11",
+              "x": -98.925,
               "z": -23.4,
-              "behindLineM": 25.656478881835938,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
+              "behindLineM": 19.162350463867185,
               "offscreen": true
             },
             {
               "door": "refuge-door-10",
               "x": -101.95605346153847,
               "z": 32,
-              "behindLineM": 22.23753234337441,
+              "behindLineM": 22.19340392540566,
               "offscreen": true
             },
             {
               "door": "refuge-door-7",
               "x": -107.79010000000001,
               "z": 24,
-              "behindLineM": 28.071578881835947,
+              "behindLineM": 28.027450463867197,
               "offscreen": true
             },
             {
               "door": "refuge-door-5",
               "x": -109.30000019073486,
               "z": -32.6,
-              "behindLineM": 29.5814790725708,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.162350463867185,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.027450463867197,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.25073161771334,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.19340392540566,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.162350463867185,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.25073161771334,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.25073161771334,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.19340392540566,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.162350463867185,
               "offscreen": true
             }
           ]
         },
         {
-          "tick": 4913,
+          "tick": 5566,
           "afterLastAdvanceS": 30,
-          "furthest": -79.71852111816406,
+          "furthest": -79.76264953613281,
           "queued": [
             {
-              "door": "refuge-door-4",
-              "x": -111.825,
+              "door": "refuge-door-15",
+              "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
+              "behindLineM": 16.49385046386719,
               "offscreen": true
             },
             {
               "door": "refuge-door-15",
               "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 16.53797888183594,
+              "behindLineM": 16.49385046386719,
               "offscreen": true
             },
             {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
               "z": -32.6,
-              "behindLineM": 18.930229263305677,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.29486003568209,
+              "behindLineM": 32.25073161771334,
               "offscreen": true
             },
             {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
               "z": -32.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-11",
-              "x": -98.925,
-              "z": -23.4,
-              "behindLineM": 19.206478881835935,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.656478881835938,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.53797888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-11",
-              "x": -98.925,
-              "z": -23.4,
-              "behindLineM": 19.206478881835935,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.5814790725708,
+              "behindLineM": 18.886100845336927,
               "offscreen": true
             },
             {
               "door": "refuge-door-13",
               "x": -98.64875038146974,
               "z": -3.6,
-              "behindLineM": 18.930229263305677,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
               "offscreen": true
             }
           ]
@@ -861,13 +1004,13 @@
       "clause": "native idle pressure actual admissions per full ten-second window",
       "value": [
         {
-          "tick": 4313,
+          "tick": 4966,
           "seconds": 10,
-          "actualAdmissions": 21
+          "actualAdmissions": 40
         }
       ],
       "target": "25–75 actual admissions per10s, distinct from pending demand",
-      "status": "FAIL",
+      "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
@@ -876,12 +1019,12 @@
       "id": "L3-10",
       "clause": "native pressure queued admissions stop on advance",
       "value": {
-        "tick": 5377,
+        "tick": 6028,
         "player": {
-          "x": -79.21354675292969,
-          "y": 0.7099999785423279,
-          "z": 28.245088577270508,
-          "yaw": -0.0012392784678453683
+          "x": -79.27266693115234,
+          "y": 0.8500000238418579,
+          "z": 24.223100662231445,
+          "yaw": -6.283111584510037
         },
         "pressureAt": 0,
         "queued": 0
@@ -894,58 +1037,241 @@
     },
     {
       "id": "G-24",
-      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "clause": "production enemy-bar eligibility at interaction boundaries",
       "value": [
         {
+          "label": "alpha far/healthy",
           "archetype": "infected.alpha",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.lion",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "shielded riot infected far/healthy",
+          "archetype": "infected.riot",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
+          "label": "pursuing Mega far/healthy",
+          "archetype": "infected.alpha",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "engaged arena boss far/healthy",
           "archetype": "infected.gorilla",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.elephant",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "infected.runner far/healthy unengaged",
+          "archetype": "infected.runner",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.runner targeting player at 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner targeting player at 6.01 m",
+          "archetype": "infected.runner",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.runner player-hit at 40 m",
+          "archetype": "infected.runner",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner dead after player hit",
+          "archetype": "infected.runner",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion far/healthy unengaged",
+          "archetype": "infected.lion",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion targeting player at 6 m",
+          "archetype": "infected.lion",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion targeting player at 6.01 m",
+          "archetype": "infected.lion",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion player-hit at 40 m",
+          "archetype": "infected.lion",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion dead after player hit",
+          "archetype": "infected.lion",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla far/healthy unengaged",
+          "archetype": "infected.gorilla",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla targeting player at 6 m",
+          "archetype": "infected.gorilla",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla targeting player at 6.01 m",
+          "archetype": "infected.gorilla",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla player-hit at 40 m",
+          "archetype": "infected.gorilla",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla dead after player hit",
+          "archetype": "infected.gorilla",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra far/healthy unengaged",
           "archetype": "infected.zebra",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.zebra targeting player at 6 m",
+          "archetype": "infected.zebra",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra targeting player at 6.01 m",
+          "archetype": "infected.zebra",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra player-hit at 40 m",
+          "archetype": "infected.zebra",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra dead after player hit",
+          "archetype": "infected.zebra",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo far/healthy unengaged",
           "archetype": "infected.flamingo",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo targeting player at 6 m",
+          "archetype": "infected.flamingo",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo targeting player at 6.01 m",
+          "archetype": "infected.flamingo",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo player-hit at 40 m",
+          "archetype": "infected.flamingo",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo dead after player hit",
+          "archetype": "infected.flamingo",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "runner heard the player within 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "elephant waiting in its arena, player-hit",
+          "archetype": "infected.elephant",
+          "distance": 6,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "elephant engaged finale boss far/healthy",
+          "archetype": "infected.elephant",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "healthy zoo animal near",
+          "archetype": "animal.zebra",
+          "distance": 3,
+          "expected": false,
+          "eligible": false
         }
       ],
-      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "target": "PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off",
       "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
@@ -1051,11 +1377,11 @@
         "street": "auto",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 206.95,
-        "deaths": 0,
+        "simSeconds": 318.93333333333334,
+        "deaths": 3,
         "kills": 0,
-        "knockdowns": 116,
-        "damage": 131,
+        "knockdowns": 132,
+        "damage": 510.1319999999989,
         "timeline": [
           {
             "type": "l3.handgun",
@@ -1075,35 +1401,19 @@
           },
           {
             "type": "l3.wave",
-            "t": 29.45
+            "t": 23.45
           },
           {
             "type": "l3.fallback",
-            "t": 32.25
+            "t": 30.133333333333333
           },
           {
             "type": "objective:defend",
-            "t": 32.25
+            "t": 30.133333333333333
           },
           {
             "type": "l3.segment",
-            "t": 34.766666666666666
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 37.5
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 38.03333333333333
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 38.03333333333333
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 39.3
+            "t": 45.38333333333333
           },
           {
             "type": "l3.wave",
@@ -1111,27 +1421,43 @@
           },
           {
             "type": "l3.segment",
-            "t": 66.38333333333334
+            "t": 87.81666666666666
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 136.85
           },
           {
             "type": "l3.segment",
-            "t": 129.36666666666667
+            "t": 211.9
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 246.26666666666668
           },
           {
             "type": "l3.segment",
-            "t": 151.5
+            "t": 269.5
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 272.05
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 287
           },
           {
             "type": "l3.crossed",
-            "t": 190.66666666666666
+            "t": 298.93333333333334
           },
           {
             "type": "objective:checkpoint",
-            "t": 206.95
+            "t": 313.93333333333334
           }
         ],
         "handgunS": 4.45,
-        "handgunShots": 95,
+        "handgunShots": 355,
         "attack": {
           "officers": 10,
           "directions": [
@@ -1144,170 +1470,182 @@
           "turnedDuring": 1,
           "sameLook": true,
           "fallbackCause": "inside",
-          "fallbackAfterS": 22.8
+          "fallbackAfterS": 20.683333333333334
         },
         "squad": {
           "atFallback": 4,
           "segmentEnds": [
-            0,
-            0,
-            0
+            4,
+            3,
+            3
           ],
-          "atCheckpoint": 0,
+          "atCheckpoint": 1,
           "losses": [
             {
               "cause": "bite",
-              "t": 37.5
+              "t": 136.85
             },
             {
               "cause": "bite",
-              "t": 38.03333333333333
+              "t": 272.05
             },
             {
               "cause": "bite",
-              "t": 38.03333333333333
-            },
-            {
-              "cause": "bite",
-              "t": 39.3
+              "t": 287
             }
           ],
-          "turnedInCorridor": 4,
+          "turnedInCorridor": 3,
           "protected": 0,
-          "maxJumpM": 0.10331994345945053,
+          "maxJumpM": 0.3639573666628439,
           "near8Share": 1,
           "followRange": []
         },
         "s1": {
           "completed": true,
-          "officerHits": 31,
-          "officerKills": 3,
-          "playerKills": 0,
-          "damage": 0
+          "officerHits": 260,
+          "officerKills": 52,
+          "playerKills": 19,
+          "damage": 20
         },
         "killDistances": {
           "gun": [
-            5.014727184702614,
-            4.745358825484413,
-            8.532750861779435,
-            8.34855455902094,
-            9.81934954081038,
-            8.085987159343698,
-            8.150791573180467,
-            8.580539554035322,
-            4.230700256416936,
-            3.901312763516944,
-            3.651072556425488,
-            3.6161012533182797,
-            3.9152314077830797,
-            3.5159254266849658,
-            3.5527259662569466,
-            3.9064867066308326,
-            7.252488158631409,
-            8.286571942572802,
-            7.757247144788416,
-            8.393243937016978,
-            2.428086839521287,
-            2.492439249849901,
-            2.648606024315552,
-            2.7299869703507285,
-            3.258724974024153,
-            2.542634783541284,
-            6.427771033047756,
-            6.021014841209385
+            5.215022497994966,
+            2.7086439447458477,
+            5.326863266568162,
+            8.715866134784502,
+            2.729497728476022,
+            3.241846958245009,
+            6.698800901108375,
+            7.844016148852752,
+            6.51859908964019,
+            7.193002310544407,
+            7.066586882830041,
+            6.674963067035475,
+            6.279207898140732,
+            6.049043987516967,
+            4.4360496068717,
+            6.151315705811957,
+            6.39018178817953,
+            6.986554047305066,
+            5.843250014232857,
+            6.489448703209345,
+            7.596526093534372,
+            3.1098608721943513,
+            3.8634049053342774,
+            2.8335788421066006,
+            7.327328923767091,
+            3.2150255299364816,
+            5.60332387347428,
+            4.635722615153698,
+            5.51776487356571,
+            3.8003329088786377,
+            7.1417123464496015,
+            7.1214112210903915,
+            4.03440404859159,
+            4.84334575761264,
+            4.55880178752494,
+            5.59607251317948,
+            5.253332157812105,
+            5.43098496310828,
+            4.590469832310111,
+            4.951870345080514,
+            5.6344196870459795,
+            7.560710136361799,
+            3.190135161656396,
+            4.645447058434352,
+            3.733444338366421,
+            8.141669798349822,
+            6.858038816648356,
+            4.979826506568247,
+            5.993186555842932,
+            3.1410486184033863,
+            6.606703529620199,
+            5.878869060999705,
+            6.272620422182424,
+            5.62518607836505,
+            4.7526403601292575,
+            3.782208584899587,
+            2.440077385633461,
+            6.733666001993797,
+            3.38700014533531,
+            4.046808205774035,
+            5.797273958546212,
+            5.599110321267179,
+            4.602175964394006,
+            3.4588788015165854,
+            2.6395523867781376,
+            8.132530742352222
           ],
           "melee": [
-            1.0800000000000007,
-            1.0254963343930956,
-            1.3257973379967904,
-            1.8185814959194324,
-            1.112773270576184,
-            1.6050743546144652,
-            1.0158243745595943,
-            1.2109101119878338,
-            1.6625224769997093,
-            1.4118402874763416,
-            1.396316031461487,
-            1.0995931020873675,
-            1.3295140532313428,
-            1.9511999330816687,
-            1.5701393547712006,
-            0.9771991597915344,
-            1.8406007053298288,
-            1.3388132584937225,
-            2.6958196830441303,
-            2.2935274853347454,
-            1.9680279136280827,
-            0.9934848855770384,
-            1.947869275563254,
-            0.9686939821278114,
-            1.6233925491682166,
-            2.36464873661684,
-            1.006096046306636,
-            1.2002212963565142,
-            2.4969358413938387,
-            1.490629160195574,
-            1.918540194888872,
-            2.0764184696043526,
-            1.9088455962518796,
-            2.0956433988808083,
-            1.8505861711395344,
-            1.0138030610019078,
-            2.33533376450339,
-            2.022344302909369,
-            1.358581099568511,
-            1.4759475570811353,
-            1.0067675104011242,
-            2.1573868414350867,
-            1.649264125010535,
-            1.0489015401319994,
-            2.360467964043096,
-            1.0677506214406074,
-            1.283670619195943,
-            1.0142868917236068,
-            1.6353712678960295,
-            2.821004076632692,
-            1.0176793947875449,
-            1.0167280127259242,
-            1.560829649106528,
-            2.459600863826646,
-            1.0112499029768711,
-            1.8198164091163866,
-            1.5971214482503957,
-            2.822906310602877,
-            2.15674424490632,
-            1.4442253217024321,
-            0.9927618743557264,
-            2.0807587417904054,
-            2.432667377236477,
-            2.369770469575152,
-            1.0196290184039412,
-            1.670803956774874,
-            1.000076428925232,
-            2.345464008825716,
-            1.292181674954663,
-            2.2223122600356113,
-            1.0230436149994044,
-            1.8669720875637317,
-            1.0134702942468907,
-            2.01497735012772,
-            1.7212681918902693,
-            1.0053489177271229,
-            2.319474329289545,
-            2.0775096348308986,
-            2.62562172411151,
-            1.3867835385916787,
-            2.270074772398128,
-            2.2370541166397144,
-            1.6374406528281713,
-            0.6999944700414744,
-            1.5676507437244631,
-            1.2995199516081977,
-            1.9318879407139857,
-            1.742239252238291
+            1.0869310574635065,
+            1.636931057463482,
+            1.0799999999999959,
+            1.0799999999999954,
+            1.718169397382849,
+            1.0800000000000105,
+            1.1580710219370556,
+            1.809005619494104,
+            1.1509335303264314,
+            1.080000000000003,
+            1.5800000000000232,
+            1.6775770328068802,
+            1.602841945428359,
+            1.8186315002549314,
+            1.5800000000000012,
+            1.3326666666666696,
+            1.1271390697186967,
+            1.3394919902773161,
+            1.1985907243959308,
+            1.283170060966054,
+            1.7825558721403951,
+            1.7867559587825652,
+            1.2240898312708228,
+            1.8771268668467866,
+            1.491461542789172,
+            1.864855999479838,
+            1.5799999999999943,
+            1.0991094685507274,
+            1.1436472040129635,
+            1.520924383308245,
+            1.3038685948386988,
+            1.532255384518531,
+            1.7799999999999987,
+            1.6956552334480006,
+            1.4320158702196635,
+            1.0693158777035843,
+            1.0907304480905615,
+            1.0618245011208831,
+            1.0570517017383876,
+            1.08,
+            1.0800000000000038,
+            1.0800000000000012,
+            1.3465661498146737,
+            1.449002945522191,
+            1.8599550717051299,
+            1.5312416865164087,
+            1.008284648198348,
+            1.1978072781037186,
+            1.0582618737095826,
+            1.8487874140902758,
+            1.4022854380055207,
+            1.657186225096267,
+            1.0786668239952344,
+            1.1001959319449346,
+            1.2055852748997642,
+            1.0439624181185616,
+            1.863068974998912,
+            1.3428261956884704,
+            1.6370226417985814,
+            0.731539548750802,
+            0.6261296113218199,
+            1.7057982486748642,
+            0.6381083017379959,
+            1.4564343353927005,
+            0.6608183426472884,
+            0.6389708887927488
           ]
         },
-        "regressionM": 6.342498779296875,
+        "regressionM": 5.7342376708984375,
         "streets": [
           "commerce",
           "oak",
@@ -1315,124 +1653,127 @@
         ],
         "density": {
           "prepopulated": [
-            250,
-            600,
-            1030
+            125,
+            240,
+            710
           ],
           "near30": [
-            72,
-            89,
-            79
+            10,
+            31,
+            43
           ],
-          "maxConcurrent": 200,
-          "cap": 200
+          "maxConcurrent": 140,
+          "cap": 140
         },
-        "medkits": 3,
-        "lowHpShare": 0,
+        "medkits": 6,
+        "lowHpShare": 0.01043830217819673,
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 2829,
-          "emerged": 1860,
+          "nonSightAlerts": 72,
+          "emerged": 461,
           "emergeSeen": 0
         },
-        "deathsAt": []
+        "deathsAt": [
+          "189s@36,-23/corridor",
+          "231s@86,-27/corridor",
+          "249s@104,-23/corridor"
+        ]
       }
     },
     "L3/wave-source-species-direction-census": [
       {
         "wave": 0,
-        "expected": 30,
-        "admitted": 30,
+        "expected": 15,
+        "admitted": 15,
         "byDirection": {
-          "river": 6,
-          "blvd": 6,
-          "oak": 6,
-          "commerce": 6,
-          "station": 6
+          "river": 3,
+          "blvd": 3,
+          "oak": 3,
+          "commerce": 3,
+          "station": 3
         },
         "bySource": {
-          "blvd": 5,
-          "commerce": 4,
-          "oak": 5,
-          "river": 4,
-          "station": 6,
-          "yard-cover": 6
+          "blvd": 2,
+          "commerce": 2,
+          "oak": 3,
+          "river": 2,
+          "station": 3,
+          "yard-cover": 3
         },
         "bySpecies": {
-          "npc.bathrobe-neighbor": 3,
+          "npc.bathrobe-neighbor": 2,
           "npc.bbq-dad": 3,
-          "npc.cashier": 4,
-          "npc.delivery-driver": 5,
-          "npc.jogger": 6,
-          "npc.officer": 6,
-          "npc.suburban-mom": 3
+          "npc.delivery-driver": 3,
+          "npc.jogger": 3,
+          "npc.officer": 3,
+          "npc.suburban-mom": 1
         },
-        "stationPoliceLook": 6,
-        "station": 6,
+        "stationPoliceLook": 3,
+        "station": 3,
         "missingAppearance": 0
       },
       {
         "wave": 1,
-        "expected": 60,
-        "admitted": 60,
+        "expected": 25,
+        "admitted": 25,
         "byDirection": {
-          "river": 12,
-          "blvd": 12,
-          "oak": 12,
-          "commerce": 12,
-          "station": 12
+          "river": 5,
+          "blvd": 5,
+          "oak": 5,
+          "commerce": 5,
+          "station": 5
         },
         "bySource": {
-          "blvd": 9,
-          "commerce": 9,
-          "oak": 9,
-          "river": 9,
-          "station": 12,
-          "yard-cover": 12
+          "blvd": 4,
+          "commerce": 3,
+          "oak": 4,
+          "river": 4,
+          "station": 5,
+          "yard-cover": 5
         },
         "bySpecies": {
-          "npc.bathrobe-neighbor": 13,
-          "npc.bbq-dad": 8,
-          "npc.cashier": 7,
-          "npc.delivery-driver": 5,
-          "npc.jogger": 9,
-          "npc.officer": 12,
-          "npc.suburban-mom": 6
+          "npc.bathrobe-neighbor": 2,
+          "npc.bbq-dad": 4,
+          "npc.cashier": 2,
+          "npc.delivery-driver": 1,
+          "npc.jogger": 8,
+          "npc.officer": 5,
+          "npc.suburban-mom": 3
         },
-        "stationPoliceLook": 12,
-        "station": 12,
+        "stationPoliceLook": 5,
+        "station": 5,
         "missingAppearance": 0
       },
       {
         "wave": 2,
-        "expected": 100,
-        "admitted": 100,
+        "expected": 35,
+        "admitted": 35,
         "byDirection": {
-          "river": 20,
-          "blvd": 20,
-          "oak": 20,
-          "commerce": 20,
-          "station": 20
+          "river": 7,
+          "blvd": 7,
+          "oak": 7,
+          "commerce": 7,
+          "station": 7
         },
         "bySource": {
-          "blvd": 15,
-          "commerce": 15,
-          "oak": 15,
-          "river": 15,
-          "station": 20,
-          "yard-cover": 20
+          "blvd": 5,
+          "commerce": 5,
+          "oak": 6,
+          "river": 5,
+          "station": 7,
+          "yard-cover": 7
         },
         "bySpecies": {
-          "npc.bathrobe-neighbor": 17,
-          "npc.bbq-dad": 15,
-          "npc.cashier": 10,
-          "npc.delivery-driver": 13,
-          "npc.jogger": 8,
-          "npc.officer": 20,
-          "npc.suburban-mom": 17
+          "npc.bathrobe-neighbor": 3,
+          "npc.bbq-dad": 5,
+          "npc.cashier": 5,
+          "npc.delivery-driver": 5,
+          "npc.jogger": 4,
+          "npc.officer": 7,
+          "npc.suburban-mom": 6
         },
-        "stationPoliceLook": 20,
-        "station": 20,
+        "stationPoliceLook": 7,
+        "station": 7,
         "missingAppearance": 0
       }
     ],
@@ -1440,90 +1781,143 @@
       {
         "seed": 1,
         "outcome": "complete",
-        "deaths": 0,
+        "deaths": 3,
         "atFallback": 4,
-        "atCheckpoint": 0,
+        "atCheckpoint": 1,
         "segmentEnds": [
-          0,
-          0,
-          0
+          4,
+          3,
+          3
         ],
         "losses": [
           {
             "cause": "bite",
-            "t": 37.5
+            "t": 136.85
           },
           {
             "cause": "bite",
-            "t": 38.03333333333333
+            "t": 272.05
           },
           {
             "cause": "bite",
-            "t": 38.03333333333333
-          },
-          {
-            "cause": "bite",
-            "t": 39.3
+            "t": 287
           }
-        ]
+        ],
+        "followRange": []
       },
       {
         "seed": 2,
         "outcome": "complete",
-        "deaths": 0,
+        "deaths": 3,
         "atFallback": 4,
-        "atCheckpoint": 0,
+        "atCheckpoint": 2,
         "segmentEnds": [
-          0,
-          0,
-          0
+          4,
+          3,
+          2
         ],
         "losses": [
           {
             "cause": "bite",
-            "t": 35.983333333333334
+            "t": 118.56666666666666
           },
           {
             "cause": "bite",
-            "t": 38.3
+            "t": 250.95
+          }
+        ],
+        "followRange": [
+          {
+            "id": 30,
+            "samples": 14,
+            "within3to6": 12,
+            "minM": 4.423892137164067,
+            "medianM": 4.824802006879684,
+            "maxM": 6.601106844273692
           },
           {
-            "cause": "bite",
-            "t": 41.766666666666666
+            "id": 31,
+            "samples": 14,
+            "within3to6": 14,
+            "minM": 3.362624559316565,
+            "medianM": 3.8657706539598244,
+            "maxM": 5.3449768431108255
           },
           {
-            "cause": "bite",
-            "t": 41.95
+            "id": 32,
+            "samples": 14,
+            "within3to6": 14,
+            "minM": 3.7040202140108054,
+            "medianM": 4.170278507329498,
+            "maxM": 4.780761502171468
+          },
+          {
+            "id": 33,
+            "samples": 14,
+            "within3to6": 14,
+            "minM": 4.0704173281049245,
+            "medianM": 4.561042359845745,
+            "maxM": 5.835096212634389
           }
         ]
       },
       {
         "seed": 3,
         "outcome": "complete",
-        "deaths": 0,
+        "deaths": 3,
         "atFallback": 4,
-        "atCheckpoint": 0,
+        "atCheckpoint": 1,
         "segmentEnds": [
-          0,
-          0,
-          0
+          4,
+          4,
+          4
         ],
         "losses": [
           {
             "cause": "bite",
-            "t": 35.56666666666667
+            "t": 265.4
           },
           {
-            "cause": "bite",
-            "t": 35.93333333333333
+            "cause": "kill",
+            "t": 267.93333333333334
           },
           {
-            "cause": "bite",
-            "t": 36.416666666666664
+            "cause": "separated",
+            "t": 270.3
+          }
+        ],
+        "followRange": [
+          {
+            "id": 30,
+            "samples": 7,
+            "within3to6": 7,
+            "minM": 4.3808543691020025,
+            "medianM": 4.402132590753539,
+            "maxM": 4.761812676430781
           },
           {
-            "cause": "bite",
-            "t": 39.21666666666667
+            "id": 31,
+            "samples": 7,
+            "within3to6": 7,
+            "minM": 3.6696779514063764,
+            "medianM": 3.973009530559701,
+            "maxM": 4.138471806961909
+          },
+          {
+            "id": 32,
+            "samples": 7,
+            "within3to6": 7,
+            "minM": 4.025788559406812,
+            "medianM": 4.135944219180664,
+            "maxM": 4.165754097011563
+          },
+          {
+            "id": 33,
+            "samples": 7,
+            "within3to6": 7,
+            "minM": 4.674913345192387,
+            "medianM": 4.789324683257785,
+            "maxM": 4.813982210582648
           }
         ]
       }
@@ -1540,11 +1934,11 @@
         "street": "auto",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 219.51666666666668,
-        "deaths": 0,
+        "simSeconds": 289.48333333333335,
+        "deaths": 3,
         "kills": 0,
-        "knockdowns": 230,
-        "damage": 110,
+        "knockdowns": 98,
+        "damage": 464.1686666666661,
         "timeline": [
           {
             "type": "l3.handgun",
@@ -1564,35 +1958,19 @@
           },
           {
             "type": "l3.wave",
-            "t": 29.516666666666666
+            "t": 23.516666666666666
           },
           {
             "type": "l3.fallback",
-            "t": 30.716666666666665
+            "t": 34.63333333333333
           },
           {
             "type": "objective:defend",
-            "t": 30.716666666666665
+            "t": 34.63333333333333
           },
           {
             "type": "l3.segment",
-            "t": 33.8
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 34.483333333333334
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 34.483333333333334
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 35.55
-          },
-          {
-            "type": "l3.squad-lost",
-            "t": 35.63333333333333
+            "t": 46.3
           },
           {
             "type": "l3.wave",
@@ -1600,27 +1978,87 @@
           },
           {
             "type": "l3.segment",
-            "t": 82.08333333333333
+            "t": 94.45
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 137
           },
           {
             "type": "l3.segment",
-            "t": 139.23333333333332
+            "t": 159.75
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 186.63333333333333
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 187.55
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 187.65
           },
           {
             "type": "l3.segment",
-            "t": 159.71666666666667
+            "t": 187.8
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 201.35
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 207.41666666666666
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 210.73333333333332
+          },
+          {
+            "type": "l3.segment",
+            "t": 212.25
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 212.63333333333333
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 225.5
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 231.3
+          },
+          {
+            "type": "l3.segment",
+            "t": 236.5
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 237.05
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 255
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 260.93333333333334
           },
           {
             "type": "l3.crossed",
-            "t": 204.51666666666668
+            "t": 269.48333333333335
           },
           {
             "type": "objective:checkpoint",
-            "t": 219.51666666666668
+            "t": 284.48333333333335
           }
         ],
         "handgunS": 4.516666666666667,
-        "handgunShots": 62,
+        "handgunShots": 212,
         "attack": {
           "officers": 10,
           "directions": [
@@ -1630,287 +2068,188 @@
             "blvd",
             "oak"
           ],
-          "turnedDuring": 3,
+          "turnedDuring": 2,
           "sameLook": true,
-          "fallbackCause": "turned",
-          "fallbackAfterS": 21.2
+          "fallbackCause": "inside",
+          "fallbackAfterS": 25.116666666666667
         },
         "squad": {
           "atFallback": 4,
           "segmentEnds": [
-            0,
-            0,
-            0
+            4,
+            4,
+            3
           ],
           "atCheckpoint": 0,
           "losses": [
             {
               "cause": "bite",
-              "t": 34.483333333333334
+              "t": 231.3
+            },
+            {
+              "cause": "kill",
+              "t": 237.05
             },
             {
               "cause": "bite",
-              "t": 34.483333333333334
+              "t": 255
             },
             {
               "cause": "bite",
-              "t": 35.55
-            },
-            {
-              "cause": "bite",
-              "t": 35.63333333333333
+              "t": 260.93333333333334
             }
           ],
-          "turnedInCorridor": 4,
+          "turnedInCorridor": 8,
           "protected": 0,
-          "maxJumpM": 0.10331994345945053,
+          "maxJumpM": 0.2091565519998553,
           "near8Share": 1,
-          "followRange": []
+          "followRange": [
+            {
+              "id": 30,
+              "samples": 7,
+              "within3to6": 7,
+              "minM": 4.615033663390033,
+              "medianM": 4.7800516068484535,
+              "maxM": 4.935304524276281
+            },
+            {
+              "id": 31,
+              "samples": 7,
+              "within3to6": 7,
+              "minM": 3.9990231544353856,
+              "medianM": 4.125691955379975,
+              "maxM": 4.280155187722821
+            },
+            {
+              "id": 32,
+              "samples": 7,
+              "within3to6": 7,
+              "minM": 3.4643792203507293,
+              "medianM": 3.7727590819932093,
+              "maxM": 4.4336491735552075
+            },
+            {
+              "id": 33,
+              "samples": 7,
+              "within3to6": 7,
+              "minM": 4.171663568131126,
+              "medianM": 4.646909592901657,
+              "maxM": 5.08772730921772
+            }
+          ]
         },
         "s1": {
           "completed": true,
-          "officerHits": 30,
-          "officerKills": 3,
-          "playerKills": 60,
-          "damage": 22
+          "officerHits": 277,
+          "officerKills": 56,
+          "playerKills": 22,
+          "damage": 10
         },
         "killDistances": {
           "gun": [
-            2.697950154515978,
-            2.762633841934676,
-            2.929355389802194,
-            4.461772703067088,
-            8.048467314595399,
-            8.89404829178189,
-            6.473086720843012,
-            7.46400393198154,
-            7.955201506124698,
-            6.452632072986777,
-            8.445453034086691,
-            8.72650773283059,
-            8.482265884708601,
-            3.5200523414001914,
-            4.715265561816575,
-            3.752122875523727,
-            4.4081069491128,
-            6.005231053224759
+            9.083981414239222,
+            8.586878548894003,
+            8.364910724004714,
+            8.071045335921179,
+            6.6454408888593255,
+            5.997918461780931,
+            4.608262582018891,
+            6.329981621772086,
+            8.337626190679089,
+            5.584619106896469,
+            6.697078612376028,
+            6.692383133241202,
+            6.321165913918631,
+            5.4210293061885,
+            4.8086364587646235,
+            2.63702503928498,
+            5.867426884340794,
+            5.4965920579725,
+            5.351937799978807,
+            6.281692459461386,
+            6.315707650087263,
+            6.468293298637205,
+            6.515075430662408,
+            7.647036330959768,
+            7.1530299719783965,
+            4.36124626181012,
+            7.6752887674738695,
+            5.735778648432426,
+            5.957264340869544,
+            2.423474276676658,
+            6.2764442885904055,
+            8.84891417231809,
+            5.4652708754016865,
+            4.652170588523654,
+            5.824311030192733,
+            4.910593350806623,
+            3.2706392652032514,
+            3.786937454364276,
+            4.976775572172787,
+            7.552527027658485,
+            5.375976953990137,
+            6.132792194086919,
+            4.749643977380362,
+            6.637966598340426,
+            6.889592281284911,
+            6.003117135530441,
+            2.4423999614257315,
+            7.163338439357031,
+            2.6506819172355853,
+            2.5991922924176314
           ],
           "melee": [
-            2.0746715646638867,
-            1.6706897029755339,
-            1.9788787232644984,
-            1.4080661194452997,
-            1.0854557801967877,
-            1.3916308808947608,
-            2.094501895390801,
-            1.388598714687942,
-            1.2064588569509216,
-            1.3036254905751563,
-            1.1001866506731375,
-            1.3893495604310162,
-            1.5009350102733465,
-            2.448997204785663,
-            1.8245470937035972,
-            1.811305311904449,
-            1.0094813841384918,
-            2.2545857417155406,
-            2.1841612293201713,
-            1.2859461139500397,
-            2.3671358281575485,
-            1.0012424423315645,
-            2.347363405729109,
-            2.188949795306591,
-            1.8580935359008883,
-            1.0184060331386464,
-            1.7282831000931569,
-            1.3309951163186515,
-            1.5050441833128154,
-            2.095493430529382,
-            2.1234269940499026,
-            1.9712412812112812,
-            1.9025776381152526,
-            1.0799999999999959,
-            0.9651874388254399,
-            1.278134387707455,
-            2.325548276276451,
-            1.3767920798320359,
-            2.671373838994144,
-            2.2181813178609247,
-            2.4401612183523467,
-            1.7924224140673841,
-            1.0236114914370187,
-            2.1758654811754776,
-            1.015354549839137,
-            2.1495624465673373,
-            2.193685073440383,
-            2.0970452574778493,
-            1.9117174066686777,
-            1.0203008164353338,
-            1.0200092123468336,
-            2.4229281113075922,
-            2.480336600301857,
-            2.144496126960173,
-            1.0290104997416167,
-            1.0196368989636757,
-            1.9515267152641709,
-            2.1831145122415045,
-            1.924859586389078,
-            1.0183659825772213,
-            0.9984036492511721,
-            1.0214760051941743,
-            2.1404465125389835,
-            1.6983485482508152,
-            1.8265127786569864,
-            1.1894488603911584,
-            2.3637345879798914,
-            2.48086740025734,
-            2.4387345029363288,
-            1.346822359173532,
-            1.0800000000000007,
-            1.7527145553891643,
-            1.0308896975813064,
-            1.0876406985911808,
-            1.012476132603731,
-            1.9707318657666668,
-            1.3360556605916232,
-            1.5268419940598594,
-            1.9860356967700985,
-            2.301948201244479,
-            2.1570047364322926,
-            1.9731068697012144,
-            1.0135511671053867,
-            1.8949712468084123,
-            1.9964006843103264,
-            1.2340907616445185,
-            2.46732665118552,
-            1.3530665765322953,
-            1.5030647628973433,
-            1.1249188819621936,
-            1.265993949352455,
-            1.0212151434785834,
-            1.1120624248921438,
-            1.7530616404502306,
-            2.212337583267517,
-            1.014565911149254,
-            1.6527945960846824,
-            1.0469738967035842,
-            2.091201013416363,
-            1.515275889286358,
-            1.2624465039140769,
-            1.850694705934804,
-            1.0204446405557897,
-            2.9345549600538114,
-            1.7082611480606058,
-            2.498177020635085,
-            1.1870613925415803,
-            1.2989283253452806,
-            1.928689260173311,
-            1.067984433151325,
-            1.7808067722420746,
-            1.3328699061042035,
-            2.0634760030302743,
-            1.080191469479227,
-            1.0157182843243107,
-            2.1971083202393458,
-            1.9816924378542826,
-            1.7057257667250914,
-            1.8859076054527026,
-            0.9884184683870764,
-            1.9532730992238305,
-            1.5774878836151913,
-            1.878203276482716,
-            1.0155530957267656,
-            1.0149622028642913,
-            1.0148445410851252,
-            1.9608444470404318,
-            1.1002294635506424,
-            1.2465266818058827,
-            1.5615766320825382,
-            0.9499708060823128,
-            1.9451563277602804,
-            2.098704241351533,
-            1.0436139820813848,
-            1.1313210684283679,
-            2.393282808152306,
-            1.0365200052601369,
-            2.559682013066901,
-            1.0052875813015454,
-            1.6018414656687157,
-            1.0336621730432347,
-            1.0349735477445994,
-            1.0520216079665055,
-            0.9629526303666504,
-            1.2256674876737494,
-            1.352940924326838,
-            2.7480526903924005,
-            1.0307920903942407,
-            1.1912367144662501,
-            1.9922649852446548,
-            1.0180155995490685,
-            2.2915700513637347,
-            1.4359677065324756,
-            2.1510564531619307,
-            1.4400729409515813,
-            2.438172560924447,
-            1.8840699268748373,
-            1.0152342436443214,
-            1.8853343293662894,
-            1.6637790701190205,
-            2.4869076739989167,
-            1.4274646700127043,
-            1.7696541472224347,
-            2.019215114302263,
-            1.0152309368919805,
-            1.6915209623921423,
-            1.0200048083843627,
-            2.033895356221652,
-            1.9311871528394222,
-            1.5736222661126773,
-            1.591260665934004,
-            1.5163712346522769,
-            1.824658894281087,
-            1.1554766389599365,
-            2.758568282644686,
-            0.9818298718050213,
-            1.6301783043838824,
-            1.8638149147610497,
-            1.7480065057921828,
-            2.223571344605811,
-            1.306504948087603,
-            1.841683115395773,
-            1.754896559838383,
-            1.0133666655589106,
-            2.010245001110535,
-            1.6407104114182844,
-            1.03050903265882,
-            1.822375039801271,
-            1.7170261790207455,
-            1.0800000000000034,
-            1.5789110536097095,
-            2.690923053940455,
-            1.8798189843585984,
-            1.1912652962933106,
-            1.0173499623335167,
-            1.7626084366131676,
-            0.712699173264337,
-            1.3715011707170113,
-            1.4475082833756923,
-            2.0313331727199104,
-            1.3713978769542183,
-            2.419532362596252,
-            1.0978242261749673,
-            0.69880248396179,
-            1.4431286312134448,
-            1.7972347475833061,
-            1.930863116445047,
-            1.9440528137446162,
-            1.9662325836660552,
-            0.7030246988704327,
-            0.8906376885324221,
-            1.6578088049384174
+            1.4329825593880388,
+            1.3378888888888985,
+            1.5026438324787958,
+            1.8843674392659306,
+            1.3326666666666644,
+            1.3224117202941108,
+            1.6365383315445872,
+            1.0568313339637727,
+            1.076557110601187,
+            1.0806062538039996,
+            1.0799999999999998,
+            1.7321146706827826,
+            1.80539285536064,
+            1.0805535913456021,
+            1.1141474207618454,
+            1.080000000000001,
+            1.1186544407194583,
+            1.4931017158395337,
+            1.3764798119069424,
+            0.9883202880573151,
+            0.9645925605388773,
+            1.2875945724710796,
+            0.9755021775286296,
+            1.037560798275952,
+            1.413946295054062,
+            1.0772046489573506,
+            1.0678733995039165,
+            1.0786710387501965,
+            1.0060846823876264,
+            1.2340920448913304,
+            1.0799999999999976,
+            1.0800000000000027,
+            1.080000000000002,
+            1.248656305513557,
+            1.7910042171819875,
+            1.3609807198763109,
+            1.4740000000000026,
+            1.0800000000000025,
+            1.4350191814040898,
+            1.0263026726320055,
+            1.824657364283985,
+            1.899782008224679,
+            1.7367777777777307,
+            1.703968281438857,
+            1.4928228283841234,
+            0.7000008723670668,
+            1.1958164967349707,
+            1.5256890705516284
           ]
         },
-        "regressionM": 5.287513732910156,
+        "regressionM": 8.11590576171875,
         "streets": [
           "commerce",
           "oak",
@@ -1918,27 +2257,31 @@
         ],
         "density": {
           "prepopulated": [
-            250,
-            600,
-            1030
+            125,
+            240,
+            710
           ],
           "near30": [
-            61,
-            75,
-            77
+            15,
+            37,
+            43
           ],
-          "maxConcurrent": 200,
-          "cap": 200
+          "maxConcurrent": 140,
+          "cap": 140
         },
-        "medkits": 3,
-        "lowHpShare": 0,
+        "medkits": 9,
+        "lowHpShare": 0.012286890064667842,
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 1075,
-          "emerged": 1601,
+          "nonSightAlerts": 105,
+          "emerged": 726,
           "emergeSeen": 0
         },
-        "deathsAt": []
+        "deathsAt": [
+          "141s@36,-10/corridor",
+          "205s@132,-3/corridor",
+          "229s@146,2/corridor"
+        ]
       }
     },
     "L3/idle": {
@@ -1954,10 +2297,10 @@
         "seed": 1,
         "outcome": "timeout",
         "simSeconds": 110,
-        "deaths": 1,
+        "deaths": 3,
         "kills": 0,
         "knockdowns": 0,
-        "damage": 138.29999999999782,
+        "damage": 300,
         "timeline": [
           {
             "type": "l3.attack",
@@ -1969,27 +2312,43 @@
           },
           {
             "type": "l3.fallback",
-            "t": 48.2
+            "t": 51.36666666666667
           },
           {
             "type": "objective:defend",
-            "t": 48.2
-          },
-          {
-            "type": "l3.wave",
-            "t": 60
+            "t": 53.36666666666667
           },
           {
             "type": "l3.squad-lost",
-            "t": 69.35
+            "t": 54.2
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 54.2
           },
           {
             "type": "l3.wave",
-            "t": 80
+            "t": 56
+          },
+          {
+            "type": "objective:defend",
+            "t": 69.38333333333334
+          },
+          {
+            "type": "l3.squad-lost",
+            "t": 70.21666666666667
           },
           {
             "type": "l3.wave",
-            "t": 98.4
+            "t": 72.01666666666667
+          },
+          {
+            "type": "objective:defend",
+            "t": 87.4
+          },
+          {
+            "type": "l3.wave",
+            "t": 90.03333333333333
           }
         ],
         "handgunS": null,
@@ -2003,10 +2362,10 @@
             "blvd",
             "oak"
           ],
-          "turnedDuring": 3,
+          "turnedDuring": 2,
           "sameLook": true,
-          "fallbackCause": "turned",
-          "fallbackAfterS": 8.2
+          "fallbackCause": "inside",
+          "fallbackAfterS": 11.366666666666667
         },
         "squad": {
           "atFallback": 4,
@@ -2017,28 +2376,28 @@
           ],
           "atCheckpoint": -1,
           "losses": [],
-          "turnedInCorridor": 1,
+          "turnedInCorridor": 3,
           "protected": 0,
-          "maxJumpM": 0.21951696618002756,
+          "maxJumpM": 0.10333919089786671,
           "near8Share": 1,
           "followRange": []
         },
         "s1": {
           "completed": false,
-          "officerHits": 538,
-          "officerKills": 101,
+          "officerHits": 312,
+          "officerKills": 50,
           "playerKills": 0,
-          "damage": 83.29999999999782
+          "damage": 200
         },
         "killDistances": {
           "gun": [],
           "melee": []
         },
-        "regressionM": 0.01220703125,
+        "regressionM": 0.018035888671875,
         "streets": [],
         "density": {
           "prepopulated": [
-            250,
+            125,
             0,
             0
           ],
@@ -2047,32 +2406,34 @@
             0,
             0
           ],
-          "maxConcurrent": 155,
-          "cap": 200
+          "maxConcurrent": 45,
+          "cap": 140
         },
         "medkits": 0,
-        "lowHpShare": 0.019598765432098767,
+        "lowHpShare": 0.020993589743589742,
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 38,
+          "nonSightAlerts": 7,
           "emerged": 0,
           "emergeSeen": 0
         },
         "deathsAt": [
-          "85s@-156,2/fallback"
+          "51s@-156,2/attack",
+          "67s@-156,2/fallback",
+          "85s@-155,2/fallback"
         ]
       }
     },
     "L3/fallback-boundary": {
       "fallbackBoundary": [
         {
-          "tick": 2892,
-          "firstEligibleTick": 2892,
-          "expectedCause": "turned",
-          "actualCause": "turned",
-          "inside": 6,
-          "turned": 3,
-          "elapsed": 492
+          "tick": 3082,
+          "firstEligibleTick": 3082,
+          "expectedCause": "inside",
+          "actualCause": "inside",
+          "inside": 8,
+          "turned": 2,
+          "elapsed": 682
         }
       ],
       "delayedFallback": false
@@ -2082,431 +2443,501 @@
       "protected": true,
       "countOnly": true,
       "start": {
-        "tick": 3096,
+        "tick": 3748,
         "player": {
-          "x": -79.94351959228516,
-          "y": 0.7099999785423279,
-          "z": 28.238216400146484,
-          "yaw": -0.0028101762900108866
+          "x": -79.92765045166016,
+          "y": 0.8500000238418579,
+          "z": 24.222734451293945,
+          "yaw": -0.0013186132085986257
         },
-        "furthest": -80.2435073852539,
-        "furthestAt": 3096
+        "furthest": -80.3026351928711,
+        "furthestAt": 3748
       },
       "holdStart": {
-        "tick": 3156,
+        "tick": 3808,
         "player": {
-          "x": -83.39338684082031,
-          "y": 0.7099999785423279,
-          "z": 28.23969078063965,
+          "x": -83.37751007080078,
+          "y": 0.8500000238418579,
+          "z": 24.223424911499023,
           "yaw": -3.141592653589793
         }
       },
       "afterHold": {
-        "tick": 5316,
+        "tick": 5968,
         "player": {
-          "x": -83.54338073730469,
-          "y": 0.7049999833106995,
-          "z": 28.23969078063965,
+          "x": -83.52750396728516,
+          "y": 0.8500000238418579,
+          "z": 24.223424911499023,
           "yaw": -3.141592653589793
         },
-        "pending": 4
+        "pending": 0
       },
       "batches": [
         {
-          "tick": 4313,
+          "tick": 4966,
           "afterLastAdvanceS": 20,
-          "furthest": -79.71852111816406,
+          "furthest": -79.76264953613281,
           "queued": [
             {
-              "door": "refuge-door-13",
-              "x": -98.64875038146974,
-              "z": -3.6,
-              "behindLineM": 18.930229263305677,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.53797888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-10",
-              "x": -101.95605346153847,
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 22.23753234337441,
+              "behindLineM": 32.25073161771334,
               "offscreen": true
             },
             {
               "door": "refuge-door-4",
               "x": -111.825,
               "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.656478881835938,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
+              "behindLineM": 32.06235046386719,
               "offscreen": true
             },
             {
               "door": "refuge-door-12",
               "x": -98.64875038146974,
               "z": -32.6,
-              "behindLineM": 18.930229263305677,
+              "behindLineM": 18.886100845336927,
               "offscreen": true
             },
             {
-              "door": "refuge-door-2",
-              "x": -112.01338115384615,
-              "z": 32,
-              "behindLineM": 32.29486003568209,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
+              "door": "refuge-door-11",
+              "x": -98.925,
               "z": -23.4,
-              "behindLineM": 25.656478881835938,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-14",
-              "x": -97.7401,
-              "z": 24,
-              "behindLineM": 18.021578881835936,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
+              "behindLineM": 19.162350463867185,
               "offscreen": true
             },
             {
               "door": "refuge-door-10",
               "x": -101.95605346153847,
               "z": 32,
-              "behindLineM": 22.23753234337441,
+              "behindLineM": 22.19340392540566,
               "offscreen": true
             },
             {
               "door": "refuge-door-7",
               "x": -107.79010000000001,
               "z": 24,
-              "behindLineM": 28.071578881835947,
+              "behindLineM": 28.027450463867197,
               "offscreen": true
             },
             {
               "door": "refuge-door-5",
               "x": -109.30000019073486,
               "z": -32.6,
-              "behindLineM": 29.5814790725708,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.162350463867185,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.027450463867197,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.25073161771334,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.19340392540566,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.162350463867185,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.25073161771334,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.25073161771334,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.19340392540566,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.162350463867185,
               "offscreen": true
             }
           ]
         },
         {
-          "tick": 4913,
+          "tick": 5566,
           "afterLastAdvanceS": 30,
-          "furthest": -79.71852111816406,
+          "furthest": -79.76264953613281,
           "queued": [
             {
-              "door": "refuge-door-4",
-              "x": -111.825,
+              "door": "refuge-door-15",
+              "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
+              "behindLineM": 16.49385046386719,
               "offscreen": true
             },
             {
               "door": "refuge-door-15",
               "x": -96.2565,
               "z": 3.6,
-              "behindLineM": 16.53797888183594,
+              "behindLineM": 16.49385046386719,
               "offscreen": true
             },
             {
-              "door": "refuge-door-12",
-              "x": -98.64875038146974,
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
               "z": -32.6,
-              "behindLineM": 18.930229263305677,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
               "offscreen": true
             },
             {
               "door": "refuge-door-2",
               "x": -112.01338115384615,
               "z": 32,
-              "behindLineM": 32.29486003568209,
+              "behindLineM": 32.25073161771334,
               "offscreen": true
             },
             {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-7",
-              "x": -107.79010000000001,
-              "z": 24,
-              "behindLineM": 28.071578881835947,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
               "z": -32.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-11",
-              "x": -98.925,
-              "z": -23.4,
-              "behindLineM": 19.206478881835935,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-8",
-              "x": -105.375,
-              "z": -23.4,
-              "behindLineM": 25.656478881835938,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-15",
-              "x": -96.2565,
-              "z": 3.6,
-              "behindLineM": 16.53797888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-9",
-              "x": -104.04075,
-              "z": 3.6,
-              "behindLineM": 24.32222888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-11",
-              "x": -98.925,
-              "z": -23.4,
-              "behindLineM": 19.206478881835935,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-3",
-              "x": -111.825,
-              "z": -23.4,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-4",
-              "x": -111.825,
-              "z": 3.6,
-              "behindLineM": 32.10647888183594,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-6",
-              "x": -109.30000019073486,
-              "z": -3.6,
-              "behindLineM": 29.5814790725708,
-              "offscreen": true
-            },
-            {
-              "door": "refuge-door-5",
-              "x": -109.30000019073486,
-              "z": -32.6,
-              "behindLineM": 29.5814790725708,
+              "behindLineM": 18.886100845336927,
               "offscreen": true
             },
             {
               "door": "refuge-door-13",
               "x": -98.64875038146974,
               "z": -3.6,
-              "behindLineM": 18.930229263305677,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.49385046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.27810046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.612350463867188,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.53735065460205,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.06235046386719,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.886100845336927,
               "offscreen": true
             }
           ]
@@ -2514,682 +2945,802 @@
       ],
       "admissions": [
         {
-          "tick": 4314,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 493,
-          "x": -98.64875038146974,
-          "z": -3.6,
-          "seen": false,
-          "behindLineM": 18.930229263305677,
-          "pending": 24,
-          "live": 125
-        },
-        {
-          "tick": 4317,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 495,
-          "x": -96.2565,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 16.53797888183594,
-          "pending": 23,
-          "live": 126
-        },
-        {
-          "tick": 4320,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 497,
-          "x": -111.825,
-          "z": -23.4,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 22,
-          "live": 127
-        },
-        {
-          "tick": 4323,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 499,
-          "x": -109.30000019073486,
-          "z": -3.6,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 21,
-          "live": 128
-        },
-        {
-          "tick": 4326,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 501,
-          "x": -109.30000019073486,
-          "z": -2.4000000000000004,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 20,
-          "live": 129
-        },
-        {
-          "tick": 4329,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 503,
-          "x": -101.95605346153847,
-          "z": 32,
-          "seen": false,
-          "behindLineM": 22.23753234337441,
-          "pending": 19,
-          "live": 130
-        },
-        {
-          "tick": 4332,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 505,
-          "x": -111.825,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 18,
-          "live": 131
-        },
-        {
-          "tick": 4335,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 507,
-          "x": -104.04075,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 24.32222888183594,
-          "pending": 17,
-          "live": 132
-        },
-        {
-          "tick": 4338,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 509,
-          "x": -111.825,
-          "z": -24.599999999999998,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 16,
-          "live": 133
-        },
-        {
-          "tick": 4341,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 511,
-          "x": -105.375,
-          "z": -23.4,
-          "seen": false,
-          "behindLineM": 25.656478881835938,
-          "pending": 15,
-          "live": 134
-        },
-        {
-          "tick": 4344,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 513,
-          "x": -107.79010000000001,
-          "z": 24,
-          "seen": false,
-          "behindLineM": 28.071578881835947,
-          "pending": 14,
-          "live": 135
-        },
-        {
-          "tick": 4347,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 515,
-          "x": -98.64875038146974,
-          "z": -32.6,
-          "seen": false,
-          "behindLineM": 18.930229263305677,
-          "pending": 13,
-          "live": 136
-        },
-        {
-          "tick": 4350,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 517,
-          "x": -112.01338115384615,
-          "z": 32,
-          "seen": false,
-          "behindLineM": 32.29486003568209,
-          "pending": 12,
-          "live": 137
-        },
-        {
-          "tick": 4353,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 519,
-          "x": -107.79010000000001,
-          "z": 22.8,
-          "seen": false,
-          "behindLineM": 28.071578881835947,
-          "pending": 11,
-          "live": 138
-        },
-        {
-          "tick": 4356,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 521,
-          "x": -109.30000019073486,
-          "z": -32.6,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 10,
-          "live": 139
-        },
-        {
-          "tick": 4359,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 523,
-          "x": -104.04075,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 24.32222888183594,
-          "pending": 9,
-          "live": 140
-        },
-        {
-          "tick": 4362,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 525,
-          "x": -104.66789321881345,
-          "z": -23.89289321881345,
-          "seen": false,
-          "behindLineM": 24.949372100649384,
-          "pending": 8,
-          "live": 141
-        },
-        {
-          "tick": 4365,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 527,
-          "x": -107.79010000000001,
-          "z": 25.2,
-          "seen": false,
-          "behindLineM": 28.071578881835947,
-          "pending": 7,
-          "live": 142
-        },
-        {
-          "tick": 4368,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 529,
-          "x": -101.95605346153847,
-          "z": 30.8,
-          "seen": false,
-          "behindLineM": 22.23753234337441,
-          "pending": 6,
-          "live": 143
-        },
-        {
-          "tick": 4371,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 531,
-          "x": -107.79010000000001,
-          "z": 26.4,
-          "seen": false,
-          "behindLineM": 28.071578881835947,
-          "pending": 5,
-          "live": 144
-        },
-        {
-          "tick": 4374,
-          "phase": "hold",
-          "batchTick": 4313,
-          "id": 533,
-          "x": -109.30000019073486,
-          "z": -33.800000000000004,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 4,
-          "live": 145
-        },
-        {
-          "tick": 4914,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 535,
-          "x": -111.825,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 33,
-          "live": 146
-        },
-        {
-          "tick": 4917,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 537,
-          "x": -109.30000019073486,
-          "z": -32.6,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 32,
-          "live": 147
-        },
-        {
-          "tick": 4920,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 539,
-          "x": -109.30000019073486,
-          "z": -3.6,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 31,
-          "live": 148
-        },
-        {
-          "tick": 4923,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 541,
-          "x": -96.2565,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 16.53797888183594,
-          "pending": 30,
-          "live": 149
-        },
-        {
-          "tick": 4926,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 543,
-          "x": -98.64875038146974,
-          "z": -32.6,
-          "seen": false,
-          "behindLineM": 18.930229263305677,
-          "pending": 29,
-          "live": 150
-        },
-        {
-          "tick": 4929,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 545,
-          "x": -112.01338115384615,
-          "z": 32,
-          "seen": false,
-          "behindLineM": 32.29486003568209,
-          "pending": 28,
-          "live": 151
-        },
-        {
-          "tick": 4932,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 547,
-          "x": -111.825,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 27,
-          "live": 152
-        },
-        {
-          "tick": 4935,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 549,
-          "x": -104.04075,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 24.32222888183594,
-          "pending": 26,
-          "live": 153
-        },
-        {
-          "tick": 4938,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 551,
-          "x": -111.825,
-          "z": 4.8,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 25,
-          "live": 154
-        },
-        {
-          "tick": 4941,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 553,
-          "x": -109.30000019073486,
-          "z": -4.8,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 24,
-          "live": 155
-        },
-        {
-          "tick": 4944,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 555,
-          "x": -104.04075,
-          "z": 2.4000000000000004,
-          "seen": false,
-          "behindLineM": 24.32222888183594,
-          "pending": 23,
-          "live": 156
-        },
-        {
-          "tick": 4947,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 557,
-          "x": -109.30000019073486,
-          "z": -2.4000000000000004,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 22,
-          "live": 157
-        },
-        {
-          "tick": 4950,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 559,
-          "x": -111.825,
-          "z": 1.2000000000000002,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 21,
-          "live": 158
-        },
-        {
-          "tick": 4953,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 561,
-          "x": -107.79010000000001,
-          "z": 24,
-          "seen": false,
-          "behindLineM": 28.071578881835947,
-          "pending": 20,
-          "live": 159
-        },
-        {
-          "tick": 4956,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 563,
-          "x": -107.79010000000001,
-          "z": 22.8,
-          "seen": false,
-          "behindLineM": 28.071578881835947,
-          "pending": 19,
-          "live": 160
-        },
-        {
-          "tick": 4959,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 565,
-          "x": -109.30000019073486,
-          "z": -33.800000000000004,
-          "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 18,
-          "live": 161
-        },
-        {
-          "tick": 4962,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 567,
-          "x": -98.925,
-          "z": -22.4,
-          "seen": false,
-          "behindLineM": 19.206478881835935,
-          "pending": 17,
-          "live": 162
-        },
-        {
-          "tick": 4965,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 569,
-          "x": -105.375,
-          "z": -23.4,
-          "seen": false,
-          "behindLineM": 25.656478881835938,
-          "pending": 16,
-          "live": 163
-        },
-        {
           "tick": 4968,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 571,
-          "x": -96.2565,
-          "z": 3.6,
+          "batchTick": 4966,
+          "id": 265,
+          "x": -112.01338115384615,
+          "z": 32,
           "seen": false,
-          "behindLineM": 16.53797888183594,
-          "pending": 15,
-          "live": 164
+          "behindLineM": 32.25073161771334,
+          "pending": 39,
+          "live": 31
         },
         {
           "tick": 4971,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 573,
-          "x": -104.04075,
-          "z": 1.2000000000000002,
+          "batchTick": 4966,
+          "id": 267,
+          "x": -111.825,
+          "z": 3.6,
           "seen": false,
-          "behindLineM": 24.32222888183594,
-          "pending": 14,
-          "live": 165
+          "behindLineM": 32.06235046386719,
+          "pending": 38,
+          "live": 32
         },
         {
           "tick": 4974,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 575,
-          "x": -111.47144660940673,
-          "z": 6.353553390593274,
+          "batchTick": 4966,
+          "id": 269,
+          "x": -98.64875038146974,
+          "z": -32.6,
           "seen": false,
-          "behindLineM": 31.752925491242664,
-          "pending": 13,
-          "live": 166
+          "behindLineM": 18.886100845336927,
+          "pending": 37,
+          "live": 33
         },
         {
           "tick": 4977,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 577,
-          "x": -99.38693976625564,
-          "z": -24.791341716182544,
+          "batchTick": 4966,
+          "id": 271,
+          "x": -98.925,
+          "z": -22.4,
           "seen": false,
-          "behindLineM": 19.668418648091574,
-          "pending": 12,
-          "live": 167
+          "behindLineM": 19.162350463867185,
+          "pending": 36,
+          "live": 34
         },
         {
           "tick": 4980,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 579,
-          "x": -111.825,
-          "z": -23.4,
+          "batchTick": 4966,
+          "id": 273,
+          "x": -101.95605346153847,
+          "z": 32,
           "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 11,
-          "live": 168
+          "behindLineM": 22.19340392540566,
+          "pending": 35,
+          "live": 35
         },
         {
           "tick": 4983,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 581,
-          "x": -111.825,
-          "z": -24.599999999999998,
+          "batchTick": 4966,
+          "id": 275,
+          "x": -107.79010000000001,
+          "z": 24,
           "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 10,
-          "live": 169
+          "behindLineM": 28.027450463867197,
+          "pending": 34,
+          "live": 36
         },
         {
           "tick": 4986,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 583,
+          "batchTick": 4966,
+          "id": 277,
           "x": -109.30000019073486,
-          "z": -1.2000000000000002,
+          "z": -32.6,
           "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 9,
-          "live": 170
+          "behindLineM": 29.53735065460205,
+          "pending": 33,
+          "live": 37
         },
         {
           "tick": 4989,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 585,
-          "x": -109.30000019073486,
-          "z": -31.400000000000002,
+          "batchTick": 4966,
+          "id": 279,
+          "x": -99.38693976625564,
+          "z": -24.791341716182544,
           "seen": false,
-          "behindLineM": 29.5814790725708,
-          "pending": 8,
-          "live": 171
+          "behindLineM": 19.624290230122824,
+          "pending": 32,
+          "live": 38
         },
         {
           "tick": 4992,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 587,
-          "x": -98.64875038146974,
-          "z": -3.6,
-          "seen": false,
-          "behindLineM": 18.930229263305677,
-          "pending": 7,
-          "live": 172
-        },
-        {
-          "tick": 5148,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 589,
-          "x": -111.825,
-          "z": 3.6,
-          "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 6,
-          "live": 173
-        },
-        {
-          "tick": 5166,
-          "phase": "hold",
-          "batchTick": 4913,
-          "id": 591,
+          "batchTick": 4966,
+          "id": 281,
           "x": -111.825,
           "z": 2.4000000000000004,
           "seen": false,
-          "behindLineM": 32.10647888183594,
-          "pending": 5,
-          "live": 174
+          "behindLineM": 32.06235046386719,
+          "pending": 31,
+          "live": 39
         },
         {
-          "tick": 5220,
+          "tick": 4995,
           "phase": "hold",
-          "batchTick": 4913,
-          "id": 593,
+          "batchTick": 4966,
+          "id": 283,
+          "x": -107.79010000000001,
+          "z": 22.8,
+          "seen": false,
+          "behindLineM": 28.027450463867197,
+          "pending": 30,
+          "live": 40
+        },
+        {
+          "tick": 4998,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 285,
+          "x": -109.30000019073486,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 29,
+          "live": 41
+        },
+        {
+          "tick": 5001,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 287,
+          "x": -111.825,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 28,
+          "live": 42
+        },
+        {
+          "tick": 5004,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 289,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.49385046386719,
+          "pending": 27,
+          "live": 43
+        },
+        {
+          "tick": 5007,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 291,
+          "x": -97.94164360028319,
+          "z": -33.09289321881346,
+          "seen": false,
+          "behindLineM": 18.178994064150373,
+          "pending": 26,
+          "live": 44
+        },
+        {
+          "tick": 5010,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 293,
           "x": -111.825,
           "z": 4.8,
           "seen": false,
-          "behindLineM": 32.10647888183594,
+          "behindLineM": 32.06235046386719,
+          "pending": 25,
+          "live": 45
+        },
+        {
+          "tick": 5013,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 295,
+          "x": -105.375,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 25.612350463867188,
+          "pending": 24,
+          "live": 46
+        },
+        {
+          "tick": 5016,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 297,
+          "x": -109.30000019073486,
+          "z": -4.8,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 23,
+          "live": 47
+        },
+        {
+          "tick": 5019,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 299,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.27810046386719,
+          "pending": 22,
+          "live": 48
+        },
+        {
+          "tick": 5022,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 301,
+          "x": -112.01338115384615,
+          "z": 30.8,
+          "seen": false,
+          "behindLineM": 32.25073161771334,
+          "pending": 21,
+          "live": 49
+        },
+        {
+          "tick": 5025,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 303,
+          "x": -111.825,
+          "z": -24.599999999999998,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 20,
+          "live": 50
+        },
+        {
+          "tick": 5028,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 305,
+          "x": -104.04075,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 24.27810046386719,
+          "pending": 19,
+          "live": 51
+        },
+        {
+          "tick": 5031,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 307,
+          "x": -111.825,
+          "z": 1.2000000000000002,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 18,
+          "live": 52
+        },
+        {
+          "tick": 5034,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 309,
+          "x": -109.30000019073486,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 17,
+          "live": 53
+        },
+        {
+          "tick": 5037,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 311,
+          "x": -104.66789321881345,
+          "z": -23.89289321881345,
+          "seen": false,
+          "behindLineM": 24.905243682680634,
+          "pending": 16,
+          "live": 54
+        },
+        {
+          "tick": 5040,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 313,
+          "x": -111.825,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 15,
+          "live": 55
+        },
+        {
+          "tick": 5043,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 315,
+          "x": -98.64875038146974,
+          "z": -31.400000000000002,
+          "seen": false,
+          "behindLineM": 18.886100845336927,
+          "pending": 14,
+          "live": 56
+        },
+        {
+          "tick": 5046,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 317,
+          "x": -96.2565,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 16.49385046386719,
+          "pending": 13,
+          "live": 57
+        },
+        {
+          "tick": 5049,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 319,
+          "x": -109.30000019073486,
+          "z": -1.2000000000000002,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 12,
+          "live": 58
+        },
+        {
+          "tick": 5052,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 321,
+          "x": -109.30000019073486,
+          "z": -33.800000000000004,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 11,
+          "live": 59
+        },
+        {
+          "tick": 5055,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 323,
+          "x": -101.95605346153847,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 22.19340392540566,
+          "pending": 10,
+          "live": 60
+        },
+        {
+          "tick": 5058,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 325,
+          "x": -98.64875038146974,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 18.886100845336927,
+          "pending": 9,
+          "live": 61
+        },
+        {
+          "tick": 5061,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 327,
+          "x": -98.925,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 19.162350463867185,
+          "pending": 8,
+          "live": 62
+        },
+        {
+          "tick": 5064,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 329,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.25073161771334,
+          "pending": 7,
+          "live": 63
+        },
+        {
+          "tick": 5067,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 331,
+          "x": -109.30000019073486,
+          "z": -31.400000000000002,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 6,
+          "live": 64
+        },
+        {
+          "tick": 5070,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 333,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.49385046386719,
+          "pending": 5,
+          "live": 65
+        },
+        {
+          "tick": 5073,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 335,
+          "x": -112.36693454443943,
+          "z": 32.846446609406726,
+          "seen": false,
+          "behindLineM": 32.60428500830662,
           "pending": 4,
-          "live": 175
+          "live": 66
         },
         {
-          "tick": 5322,
-          "phase": "advance",
-          "batchTick": 4313,
-          "id": 595,
-          "x": -97.7401,
-          "z": 24,
+          "tick": 5076,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 337,
+          "x": -101.95605346153847,
+          "z": 30.8,
           "seen": false,
-          "behindLineM": 18.021578881835936,
+          "behindLineM": 22.19340392540566,
           "pending": 3,
-          "live": 176
+          "live": 67
         },
         {
-          "tick": 5325,
-          "phase": "advance",
-          "batchTick": 4313,
-          "id": 597,
-          "x": -97.7401,
-          "z": 22.8,
+          "tick": 5079,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 339,
+          "x": -104.04075,
+          "z": 4.8,
           "seen": false,
-          "behindLineM": 18.021578881835936,
+          "behindLineM": 24.27810046386719,
           "pending": 2,
-          "live": 177
+          "live": 68
         },
         {
-          "tick": 5328,
-          "phase": "advance",
-          "batchTick": 4313,
-          "id": 599,
-          "x": -97.7401,
-          "z": 25.2,
+          "tick": 5082,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 341,
+          "x": -98.57144660940672,
+          "z": -20.646446609406727,
           "seen": false,
-          "behindLineM": 18.021578881835936,
+          "behindLineM": 18.808797073273908,
           "pending": 1,
-          "live": 178
+          "live": 69
         },
         {
-          "tick": 5340,
-          "phase": "advance",
-          "batchTick": 4313,
-          "id": 601,
-          "x": -97.7401,
-          "z": 26.4,
+          "tick": 5193,
+          "phase": "hold",
+          "batchTick": 4966,
+          "id": 343,
+          "x": -109.10865847455231,
+          "z": -5.538060233744357,
           "seen": false,
-          "behindLineM": 18.021578881835936,
+          "behindLineM": 29.3460089384195,
           "pending": 0,
-          "live": 179
+          "live": 70
+        },
+        {
+          "tick": 5568,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 345,
+          "x": -96.2565,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 16.49385046386719,
+          "pending": 24,
+          "live": 71
+        },
+        {
+          "tick": 5571,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 347,
+          "x": -96.2565,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 16.49385046386719,
+          "pending": 23,
+          "live": 72
+        },
+        {
+          "tick": 5574,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 349,
+          "x": -109.30000019073486,
+          "z": -32.6,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 22,
+          "live": 73
+        },
+        {
+          "tick": 5577,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 351,
+          "x": -111.825,
+          "z": -23.4,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 21,
+          "live": 74
+        },
+        {
+          "tick": 5580,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 353,
+          "x": -112.01338115384615,
+          "z": 32,
+          "seen": false,
+          "behindLineM": 32.25073161771334,
+          "pending": 20,
+          "live": 75
+        },
+        {
+          "tick": 5583,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 355,
+          "x": -98.64875038146974,
+          "z": -32.6,
+          "seen": false,
+          "behindLineM": 18.886100845336927,
+          "pending": 19,
+          "live": 76
+        },
+        {
+          "tick": 5586,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 357,
+          "x": -98.64875038146974,
+          "z": -3.6,
+          "seen": false,
+          "behindLineM": 18.886100845336927,
+          "pending": 18,
+          "live": 77
+        },
+        {
+          "tick": 5589,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 359,
+          "x": -111.825,
+          "z": -24.599999999999998,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 17,
+          "live": 78
+        },
+        {
+          "tick": 5592,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 361,
+          "x": -97.94164360028319,
+          "z": -33.09289321881346,
+          "seen": false,
+          "behindLineM": 18.178994064150373,
+          "pending": 16,
+          "live": 79
+        },
+        {
+          "tick": 5595,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 363,
+          "x": -96.2565,
+          "z": 4.8,
+          "seen": false,
+          "behindLineM": 16.49385046386719,
+          "pending": 15,
+          "live": 80
+        },
+        {
+          "tick": 5598,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 365,
+          "x": -97.94164360028319,
+          "z": -4.092893218813452,
+          "seen": false,
+          "behindLineM": 18.178994064150373,
+          "pending": 14,
+          "live": 81
+        },
+        {
+          "tick": 5601,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 367,
+          "x": -98.64875038146974,
+          "z": -2.4000000000000004,
+          "seen": false,
+          "behindLineM": 18.886100845336927,
+          "pending": 13,
+          "live": 82
+        },
+        {
+          "tick": 5604,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 369,
+          "x": -96.2565,
+          "z": 1.2000000000000002,
+          "seen": false,
+          "behindLineM": 16.49385046386719,
+          "pending": 12,
+          "live": 83
+        },
+        {
+          "tick": 5607,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 371,
+          "x": -105.375,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 25.612350463867188,
+          "pending": 11,
+          "live": 84
+        },
+        {
+          "tick": 5610,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 373,
+          "x": -109.30000019073486,
+          "z": -33.800000000000004,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 10,
+          "live": 85
+        },
+        {
+          "tick": 5613,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 375,
+          "x": -104.04075,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 24.27810046386719,
+          "pending": 9,
+          "live": 86
+        },
+        {
+          "tick": 5616,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 377,
+          "x": -95.90294660940673,
+          "z": 6.353553390593274,
+          "seen": false,
+          "behindLineM": 16.140297073273913,
+          "pending": 8,
+          "live": 87
+        },
+        {
+          "tick": 5619,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 379,
+          "x": -104.04075,
+          "z": 2.4000000000000004,
+          "seen": false,
+          "behindLineM": 24.27810046386719,
+          "pending": 7,
+          "live": 88
+        },
+        {
+          "tick": 5622,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 381,
+          "x": -109.30000019073486,
+          "z": -31.400000000000002,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 6,
+          "live": 89
+        },
+        {
+          "tick": 5625,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 383,
+          "x": -105.02144660940672,
+          "z": -20.646446609406727,
+          "seen": false,
+          "behindLineM": 25.25879707327391,
+          "pending": 5,
+          "live": 90
+        },
+        {
+          "tick": 5628,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 385,
+          "x": -111.825,
+          "z": -22.2,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 4,
+          "live": 91
+        },
+        {
+          "tick": 5631,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 387,
+          "x": -109.30000019073486,
+          "z": -30.200000000000003,
+          "seen": false,
+          "behindLineM": 29.53735065460205,
+          "pending": 3,
+          "live": 92
+        },
+        {
+          "tick": 5634,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 389,
+          "x": -111.825,
+          "z": 3.6,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 2,
+          "live": 93
+        },
+        {
+          "tick": 5637,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 391,
+          "x": -111.825,
+          "z": -25.799999999999997,
+          "seen": false,
+          "behindLineM": 32.06235046386719,
+          "pending": 1,
+          "live": 94
+        },
+        {
+          "tick": 5640,
+          "phase": "hold",
+          "batchTick": 5566,
+          "id": 393,
+          "x": -98.64875038146974,
+          "z": -1.2000000000000002,
+          "seen": false,
+          "behindLineM": 18.886100845336927,
+          "pending": 0,
+          "live": 95
         }
       ],
       "resumed": {
-        "tick": 5377,
+        "tick": 6028,
         "player": {
-          "x": -79.21354675292969,
-          "y": 0.7099999785423279,
-          "z": 28.245088577270508,
-          "yaw": -0.0012392784678453683
+          "x": -79.27266693115234,
+          "y": 0.8500000238418579,
+          "z": 24.223100662231445,
+          "yaw": -6.283111584510037
         },
         "pressureAt": 0,
         "queued": 0
       },
       "windows": [
         {
-          "tick": 4313,
+          "tick": 4966,
           "seconds": 10,
-          "actualAdmissions": 21
+          "actualAdmissions": 40
         }
       ],
       "queuedPass": true,

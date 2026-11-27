@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L10",
   "tier": "high",
-  "sourceHash": "eca9e19daf62c6c77c7372ea033a7412de5c62074e9838cc9a2a24fa26f22261",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
-  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
     {
       "id": "G-21",
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "cure-crash",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f",
+        "snapshotSha256": "fdb718a3a6b21ead501a222eed4ebc32d203deea17c9f3bb4f12434bd1990825",
         "damage": 100,
         "expected": {
           "id": "cure-crash",
@@ -28,10 +28,10 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe"
+              "weapon.kick"
             ]
           },
           "followers": [],
@@ -50,10 +50,10 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -79,7 +79,7 @@
       "value": {
         "checkpoint": "cure-crash",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f",
+        "snapshotSha256": "fdb718a3a6b21ead501a222eed4ebc32d203deea17c9f3bb4f12434bd1990825",
         "damage": 100,
         "expected": {
           "id": "cure-crash",
@@ -92,10 +92,10 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe"
+              "weapon.kick"
             ]
           },
           "followers": [],
@@ -114,10 +114,10 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -143,7 +143,7 @@
       "value": {
         "checkpoint": "cure-crash",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4511c021ebf99c3a6343758ef9b7ca9f8cc1ad00e64278b1c40c02917e20436f",
+        "snapshotSha256": "fdb718a3a6b21ead501a222eed4ebc32d203deea17c9f3bb4f12434bd1990825",
         "damage": 100,
         "expected": {
           "id": "cure-crash",
@@ -156,10 +156,10 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe"
+              "weapon.kick"
             ]
           },
           "followers": [],
@@ -178,10 +178,10 @@
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe"
+              "weapon.kick"
             ]
           },
           "followerMismatches": [],
@@ -207,58 +207,60 @@
       "value": {
         "checkpoint": "cure-residential",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397",
+        "snapshotSha256": "7842b61ba2b0dff104cd3686d2f2d732475b866490a462ec0b9601b72a210522",
         "damage": 100,
         "expected": {
           "id": "cure-residential",
           "anchor": {
-            "x": 765.1019897460938,
+            "x": 740.015625,
             "y": 0.7099999785423279,
-            "z": 24.9973201751709,
-            "yaw": -0.0014114016489564245
+            "z": 30.99859046936035,
+            "yaw": 6.1223226427149555
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle"
             ]
           },
           "followers": [],
           "pickups": [
-            100,
-            101,
-            109
+            104,
+            113,
+            114
           ],
           "removedPickups": [],
           "cure": false,
           "bossHp": 3000,
-          "bossMode": "dormant"
+          "bossMode": "recover"
         },
         "observed": {
           "id": "cure-residential",
           "position": {
-            "x": 765.1019897460938,
-            "z": 24.9973201751709
+            "x": 740.015625,
+            "z": 30.99859046936035
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle"
             ]
           },
           "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
-          "bossMode": "dormant",
+          "bossMode": "recover",
           "bossHp": 3000
         },
         "positionError": 0,
@@ -277,58 +279,60 @@
       "value": {
         "checkpoint": "cure-residential",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397",
+        "snapshotSha256": "7842b61ba2b0dff104cd3686d2f2d732475b866490a462ec0b9601b72a210522",
         "damage": 100,
         "expected": {
           "id": "cure-residential",
           "anchor": {
-            "x": 765.1019897460938,
+            "x": 740.015625,
             "y": 0.7099999785423279,
-            "z": 24.9973201751709,
-            "yaw": -0.0014114016489564245
+            "z": 30.99859046936035,
+            "yaw": 6.1223226427149555
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle"
             ]
           },
           "followers": [],
           "pickups": [
-            100,
-            101,
-            109
+            104,
+            113,
+            114
           ],
           "removedPickups": [],
           "cure": false,
           "bossHp": 3000,
-          "bossMode": "dormant"
+          "bossMode": "recover"
         },
         "observed": {
           "id": "cure-residential",
           "position": {
-            "x": 765.1019897460938,
-            "z": 24.9973201751709
+            "x": 740.015625,
+            "z": 30.99859046936035
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle"
             ]
           },
           "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
-          "bossMode": "dormant",
+          "bossMode": "recover",
           "bossHp": 3000
         },
         "positionError": 0,
@@ -347,58 +351,60 @@
       "value": {
         "checkpoint": "cure-residential",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "481f672fec955842ff9159ace361cea8ab8b211aec1dfda0255fcee720a40397",
+        "snapshotSha256": "7842b61ba2b0dff104cd3686d2f2d732475b866490a462ec0b9601b72a210522",
         "damage": 100,
         "expected": {
           "id": "cure-residential",
           "anchor": {
-            "x": 765.1019897460938,
+            "x": 740.015625,
             "y": 0.7099999785423279,
-            "z": 24.9973201751709,
-            "yaw": -0.0014114016489564245
+            "z": 30.99859046936035,
+            "yaw": 6.1223226427149555
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle"
             ]
           },
           "followers": [],
           "pickups": [
-            100,
-            101,
-            109
+            104,
+            113,
+            114
           ],
           "removedPickups": [],
           "cure": false,
           "bossHp": 3000,
-          "bossMode": "dormant"
+          "bossMode": "recover"
         },
         "observed": {
           "id": "cure-residential",
           "position": {
-            "x": 765.1019897460938,
-            "z": 24.9973201751709
+            "x": 740.015625,
+            "z": 30.99859046936035
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle"
             ]
           },
           "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
-          "bossMode": "dormant",
+          "bossMode": "recover",
           "bossHp": 3000
         },
         "positionError": 0,
@@ -417,30 +423,33 @@
       "value": {
         "checkpoint": "cure-industrial",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0",
+        "snapshotSha256": "6f63a23ff63385c7bc8c7d5f7c4411d7e414a9118d64b45b8e1655b718a4a6b8",
         "damage": 100,
         "expected": {
           "id": "cure-industrial",
           "anchor": {
-            "x": 1255.7462158203125,
+            "x": 1237.044921875,
             "y": 0.7099999785423279,
-            "z": 25.001005172729492,
-            "yaw": 0.0008009874263119481
+            "z": -9.626155853271484,
+            "yaw": 2.939982159470707
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followers": [],
           "pickups": [
-            129
+            121,
+            168,
+            177
           ],
           "removedPickups": [],
           "cure": false,
@@ -450,18 +459,19 @@
         "observed": {
           "id": "cure-industrial",
           "position": {
-            "x": 1255.7462158203125,
-            "z": 25.001005172729492
+            "x": 1237.044921875,
+            "z": -9.626155853271484
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followerMismatches": [],
@@ -487,30 +497,33 @@
       "value": {
         "checkpoint": "cure-industrial",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0",
+        "snapshotSha256": "6f63a23ff63385c7bc8c7d5f7c4411d7e414a9118d64b45b8e1655b718a4a6b8",
         "damage": 100,
         "expected": {
           "id": "cure-industrial",
           "anchor": {
-            "x": 1255.7462158203125,
+            "x": 1237.044921875,
             "y": 0.7099999785423279,
-            "z": 25.001005172729492,
-            "yaw": 0.0008009874263119481
+            "z": -9.626155853271484,
+            "yaw": 2.939982159470707
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followers": [],
           "pickups": [
-            129
+            121,
+            168,
+            177
           ],
           "removedPickups": [],
           "cure": false,
@@ -520,18 +533,19 @@
         "observed": {
           "id": "cure-industrial",
           "position": {
-            "x": 1255.7462158203125,
-            "z": 25.001005172729492
+            "x": 1237.044921875,
+            "z": -9.626155853271484
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followerMismatches": [],
@@ -557,30 +571,33 @@
       "value": {
         "checkpoint": "cure-industrial",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "09d24a8955684556014f3ec787168abcf01f14663668a3d611b1a8420ab1d3f0",
+        "snapshotSha256": "6f63a23ff63385c7bc8c7d5f7c4411d7e414a9118d64b45b8e1655b718a4a6b8",
         "damage": 100,
         "expected": {
           "id": "cure-industrial",
           "anchor": {
-            "x": 1255.7462158203125,
+            "x": 1237.044921875,
             "y": 0.7099999785423279,
-            "z": 25.001005172729492,
-            "yaw": 0.0008009874263119481
+            "z": -9.626155853271484,
+            "yaw": 2.939982159470707
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followers": [],
           "pickups": [
-            129
+            121,
+            168,
+            177
           ],
           "removedPickups": [],
           "cure": false,
@@ -590,18 +607,19 @@
         "observed": {
           "id": "cure-industrial",
           "position": {
-            "x": 1255.7462158203125,
-            "z": 25.001005172729492
+            "x": 1237.044921875,
+            "z": -9.626155853271484
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followerMismatches": [],
@@ -627,31 +645,32 @@
       "value": {
         "checkpoint": "cure-military",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2",
+        "snapshotSha256": "f2da97ba48fb094683f587af0b34673781873ed2630bc667a815435339154cd3",
         "damage": 100,
         "expected": {
           "id": "cure-military",
           "anchor": {
-            "x": 1855.1417236328125,
+            "x": 1837.0435791015625,
             "y": 0.7099999785423279,
-            "z": 25.002906799316406,
-            "yaw": 0.0015637813230164155
+            "z": 16.51117706298828,
+            "yaw": -0.40218317179331176
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followers": [],
           "pickups": [
-            189
+            285,
+            298
           ],
           "removedPickups": [],
           "cure": false,
@@ -661,19 +680,19 @@
         "observed": {
           "id": "cure-military",
           "position": {
-            "x": 1855.1417236328125,
-            "z": 25.002906799316406
+            "x": 1837.0435791015625,
+            "z": 16.51117706298828
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followerMismatches": [],
@@ -699,31 +718,32 @@
       "value": {
         "checkpoint": "cure-military",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2",
+        "snapshotSha256": "f2da97ba48fb094683f587af0b34673781873ed2630bc667a815435339154cd3",
         "damage": 100,
         "expected": {
           "id": "cure-military",
           "anchor": {
-            "x": 1855.1417236328125,
+            "x": 1837.0435791015625,
             "y": 0.7099999785423279,
-            "z": 25.002906799316406,
-            "yaw": 0.0015637813230164155
+            "z": 16.51117706298828,
+            "yaw": -0.40218317179331176
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followers": [],
           "pickups": [
-            189
+            285,
+            298
           ],
           "removedPickups": [],
           "cure": false,
@@ -733,19 +753,19 @@
         "observed": {
           "id": "cure-military",
           "position": {
-            "x": 1855.1417236328125,
-            "z": 25.002906799316406
+            "x": 1837.0435791015625,
+            "z": 16.51117706298828
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followerMismatches": [],
@@ -771,31 +791,32 @@
       "value": {
         "checkpoint": "cure-military",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "df6e4c36fbc863d60ae4a6264d90cdffb99b4486a7a2e4f30c44e07275d724e2",
+        "snapshotSha256": "f2da97ba48fb094683f587af0b34673781873ed2630bc667a815435339154cd3",
         "damage": 100,
         "expected": {
           "id": "cure-military",
           "anchor": {
-            "x": 1855.1417236328125,
+            "x": 1837.0435791015625,
             "y": 0.7099999785423279,
-            "z": 25.002906799316406,
-            "yaw": 0.0015637813230164155
+            "z": 16.51117706298828,
+            "yaw": -0.40218317179331176
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followers": [],
           "pickups": [
-            189
+            285,
+            298
           ],
           "removedPickups": [],
           "cure": false,
@@ -805,19 +826,19 @@
         "observed": {
           "id": "cure-military",
           "position": {
-            "x": 1855.1417236328125,
-            "z": 25.002906799316406
+            "x": 1837.0435791015625,
+            "z": 16.51117706298828
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov"
             ]
           },
           "followerMismatches": [],
@@ -843,31 +864,32 @@
       "value": {
         "checkpoint": "cure-research-entry",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74",
+        "snapshotSha256": "b32a925bccc9b9f9285bc45ef4962196a4dbdee2fabb70b6d84fb448718f91ab",
         "damage": 100,
         "expected": {
           "id": "cure-research-entry",
           "anchor": {
-            "x": 2465.0400390625,
+            "x": 2706.58154296875,
             "y": 0.7099999785423279,
-            "z": -5.045322895050049,
-            "yaw": -0.023120551286383816
+            "z": 57.051963806152344,
+            "yaw": 4.923923174206863
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle"
             ]
           },
           "followers": [],
           "pickups": [
-            254
+            459
           ],
           "removedPickups": [],
           "cure": false,
@@ -877,19 +899,20 @@
         "observed": {
           "id": "cure-research-entry",
           "position": {
-            "x": 2465.0400390625,
-            "z": -5.045322895050049
+            "x": 2706.58154296875,
+            "z": 57.051963806152344
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle"
             ]
           },
           "followerMismatches": [],
@@ -915,31 +938,32 @@
       "value": {
         "checkpoint": "cure-research-entry",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74",
+        "snapshotSha256": "b32a925bccc9b9f9285bc45ef4962196a4dbdee2fabb70b6d84fb448718f91ab",
         "damage": 100,
         "expected": {
           "id": "cure-research-entry",
           "anchor": {
-            "x": 2465.0400390625,
+            "x": 2706.58154296875,
             "y": 0.7099999785423279,
-            "z": -5.045322895050049,
-            "yaw": -0.023120551286383816
+            "z": 57.051963806152344,
+            "yaw": 4.923923174206863
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle"
             ]
           },
           "followers": [],
           "pickups": [
-            254
+            459
           ],
           "removedPickups": [],
           "cure": false,
@@ -949,19 +973,20 @@
         "observed": {
           "id": "cure-research-entry",
           "position": {
-            "x": 2465.0400390625,
-            "z": -5.045322895050049
+            "x": 2706.58154296875,
+            "z": 57.051963806152344
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle"
             ]
           },
           "followerMismatches": [],
@@ -987,31 +1012,32 @@
       "value": {
         "checkpoint": "cure-research-entry",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6d06438b7ea9d8766603c58ebddea99289541b977319181f642d30fa3e33dc74",
+        "snapshotSha256": "b32a925bccc9b9f9285bc45ef4962196a4dbdee2fabb70b6d84fb448718f91ab",
         "damage": 100,
         "expected": {
           "id": "cure-research-entry",
           "anchor": {
-            "x": 2465.0400390625,
+            "x": 2706.58154296875,
             "y": 0.7099999785423279,
-            "z": -5.045322895050049,
-            "yaw": -0.023120551286383816
+            "z": 57.051963806152344,
+            "yaw": 4.923923174206863
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle"
             ]
           },
           "followers": [],
           "pickups": [
-            254
+            459
           ],
           "removedPickups": [],
           "cure": false,
@@ -1021,667 +1047,26 @@
         "observed": {
           "id": "cure-research-entry",
           "position": {
-            "x": 2465.0400390625,
-            "z": -5.045322895050049
+            "x": 2706.58154296875,
+            "z": 57.051963806152344
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.fists"
             ],
             "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
+              "weapon.kick",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle"
             ]
           },
           "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "G-21",
-      "clause": "mortal checkpoint restore at L10/cure-research",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-research",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f",
-        "damage": 100,
-        "expected": {
-          "id": "cure-research",
-          "anchor": {
-            "x": 2805.040771484375,
-            "y": 0.7099999785423279,
-            "z": 44.92366027832031,
-            "yaw": 3.1076650246726945
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
-            ]
-          },
-          "followers": [],
-          "pickups": [
-            331
-          ],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-research",
-          "position": {
-            "x": 2805.040771484375,
-            "z": 44.92366027832031
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "L10-15",
-      "clause": "mortal regional checkpoint cure-research (cure/boss comparison still partial)",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-research",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f",
-        "damage": 100,
-        "expected": {
-          "id": "cure-research",
-          "anchor": {
-            "x": 2805.040771484375,
-            "y": 0.7099999785423279,
-            "z": 44.92366027832031,
-            "yaw": 3.1076650246726945
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
-            ]
-          },
-          "followers": [],
-          "pickups": [
-            331
-          ],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-research",
-          "position": {
-            "x": 2805.040771484375,
-            "z": 44.92366027832031
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "L10-15",
-      "clause": "cure and boss HP/death snapshot at cure-research",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-research",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "032f0570811e88c80711208f6f781099e3002615b06c1f58787d6b5765b2870f",
-        "damage": 100,
-        "expected": {
-          "id": "cure-research",
-          "anchor": {
-            "x": 2805.040771484375,
-            "y": 0.7099999785423279,
-            "z": 44.92366027832031,
-            "yaw": 3.1076650246726945
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
-            ]
-          },
-          "followers": [],
-          "pickups": [
-            331
-          ],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-research",
-          "position": {
-            "x": 2805.040771484375,
-            "z": 44.92366027832031
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.fire-axe",
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "G-21",
-      "clause": "mortal checkpoint restore at L10/cure-corridor",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-corridor",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "583c9e9c9e4f50051a780bc08d23c637c9a067625217e4340b39e066ba353f89",
-        "damage": 100,
-        "expected": {
-          "id": "cure-corridor",
-          "anchor": {
-            "x": 2935.12109375,
-            "y": 0.7099999785423279,
-            "z": -4.9975690841674805,
-            "yaw": 0.001293703592262905
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followers": [],
-          "pickups": [
-            331
-          ],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-corridor",
-          "position": {
-            "x": 2935.12109375,
-            "z": -4.9975690841674805
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "L10-15",
-      "clause": "mortal regional checkpoint cure-corridor (cure/boss comparison still partial)",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-corridor",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "583c9e9c9e4f50051a780bc08d23c637c9a067625217e4340b39e066ba353f89",
-        "damage": 100,
-        "expected": {
-          "id": "cure-corridor",
-          "anchor": {
-            "x": 2935.12109375,
-            "y": 0.7099999785423279,
-            "z": -4.9975690841674805,
-            "yaw": 0.001293703592262905
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followers": [],
-          "pickups": [
-            331
-          ],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-corridor",
-          "position": {
-            "x": 2935.12109375,
-            "z": -4.9975690841674805
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "L10-15",
-      "clause": "cure and boss HP/death snapshot at cure-corridor",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-corridor",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "583c9e9c9e4f50051a780bc08d23c637c9a067625217e4340b39e066ba353f89",
-        "damage": 100,
-        "expected": {
-          "id": "cure-corridor",
-          "anchor": {
-            "x": 2935.12109375,
-            "y": 0.7099999785423279,
-            "z": -4.9975690841674805,
-            "yaw": 0.001293703592262905
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followers": [],
-          "pickups": [
-            331
-          ],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-corridor",
-          "position": {
-            "x": 2935.12109375,
-            "z": -4.9975690841674805
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "captured cure flag, boss HP and dead/alive status restored; ready fixture kills boss with10 direct rockets before courier death",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "G-21",
-      "clause": "mortal checkpoint restore at L10/cure-complex",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-complex",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4da6f422c7c90fa3a0780cac7babe523d94fe161ba2d371169966abf297cf1d0",
-        "damage": 100,
-        "expected": {
-          "id": "cure-complex",
-          "anchor": {
-            "x": 3695.0439453125,
-            "y": 0.7099999785423279,
-            "z": -24.97415542602539,
-            "yaw": 0.0132116441097695
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followers": [],
-          "pickups": [],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-complex",
-          "position": {
-            "x": 3695.0439453125,
-            "z": -24.97415542602539
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "L10-15",
-      "clause": "mortal regional checkpoint cure-complex (cure/boss comparison still partial)",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-complex",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4da6f422c7c90fa3a0780cac7babe523d94fe161ba2d371169966abf297cf1d0",
-        "damage": 100,
-        "expected": {
-          "id": "cure-complex",
-          "anchor": {
-            "x": 3695.0439453125,
-            "y": 0.7099999785423279,
-            "z": -24.97415542602539,
-            "yaw": 0.0132116441097695
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followers": [],
-          "pickups": [],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-complex",
-          "position": {
-            "x": 3695.0439453125,
-            "z": -24.97415542602539
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
-          "bossMode": "coarse",
-          "bossHp": 3000
-        },
-        "positionError": 0,
-        "gateMatch": true,
-        "rackMatch": true
-      },
-      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-      "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
-    },
-    {
-      "id": "L10-15",
-      "clause": "cure and boss HP/death snapshot at cure-complex",
-      "tier": "high",
-      "policy": "checkpoint-death-fixture",
-      "status": "PASS",
-      "value": {
-        "checkpoint": "cure-complex",
-        "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "4da6f422c7c90fa3a0780cac7babe523d94fe161ba2d371169966abf297cf1d0",
-        "damage": 100,
-        "expected": {
-          "id": "cure-complex",
-          "anchor": {
-            "x": 3695.0439453125,
-            "y": 0.7099999785423279,
-            "z": -24.97415542602539,
-            "yaw": 0.0132116441097695
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followers": [],
-          "pickups": [],
-          "removedPickups": [],
-          "cure": true,
-          "bossHp": 3000,
-          "bossMode": "coarse"
-        },
-        "observed": {
-          "id": "cure-complex",
-          "position": {
-            "x": 3695.0439453125,
-            "z": -24.97415542602539
-          },
-          "gates": {},
-          "racks": {
-            "LEFT": [
-              "weapon.fire-axe"
-            ],
-            "RIGHT": [
-              "weapon.pistol",
-              "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
-            ]
-          },
-          "followerMismatches": [],
-          "missingPickups": [],
-          "unexpectedPickups": [],
-          "cure": true,
           "bossMode": "coarse",
           "bossHp": 3000
         },
@@ -1701,60 +1086,71 @@
       "value": {
         "checkpoint": "cure-disperse-ready",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "2bdc81dc7c2e4b2eb9fa9f6a760f965c2a02745af407c4d7e94e584ffe5370c4",
+        "snapshotSha256": "68467dd8b6b9c014df813a1af91baba1c99ed94fd749aa138609595c6afcadaa",
         "damage": 100,
         "expected": {
           "id": "cure-disperse-ready",
           "anchor": {
-            "x": 4002,
-            "y": 0,
-            "z": -27,
-            "yaw": 2.5327114871886103,
-            "radius": 2
+            "x": 3975.138427734375,
+            "y": 0.7099999785423279,
+            "z": -7.812593936920166,
+            "yaw": 0.025128583083078703
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.machete"
             ],
             "RIGHT": [
-              "weapon.pistol",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle",
+              "weapon.handgun",
               "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
+              "weapon.nail-gun",
+              "weapon.flamethrower",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb"
             ]
           },
           "followers": [],
           "pickups": [],
           "removedPickups": [],
           "cure": false,
-          "bossHp": 3000,
-          "bossMode": "coarse"
+          "bossHp": 1072.8151487356931,
+          "bossMode": "close"
         },
         "observed": {
           "id": "cure-disperse-ready",
           "position": {
-            "x": 4002,
-            "z": -27
+            "x": 3975.138427734375,
+            "z": -7.812593936920166
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.machete"
             ],
             "RIGHT": [
-              "weapon.pistol",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle",
+              "weapon.handgun",
               "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
+              "weapon.nail-gun",
+              "weapon.flamethrower",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb"
             ]
           },
           "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
-          "bossMode": "coarse",
-          "bossHp": 3000
+          "bossMode": "dead",
+          "bossHp": 0
         },
         "positionError": 0,
         "gateMatch": true,
@@ -1772,60 +1168,71 @@
       "value": {
         "checkpoint": "cure-disperse-ready",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "2bdc81dc7c2e4b2eb9fa9f6a760f965c2a02745af407c4d7e94e584ffe5370c4",
+        "snapshotSha256": "68467dd8b6b9c014df813a1af91baba1c99ed94fd749aa138609595c6afcadaa",
         "damage": 100,
         "expected": {
           "id": "cure-disperse-ready",
           "anchor": {
-            "x": 4002,
-            "y": 0,
-            "z": -27,
-            "yaw": 2.5327114871886103,
-            "radius": 2
+            "x": 3975.138427734375,
+            "y": 0.7099999785423279,
+            "z": -7.812593936920166,
+            "yaw": 0.025128583083078703
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.machete"
             ],
             "RIGHT": [
-              "weapon.pistol",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle",
+              "weapon.handgun",
               "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
+              "weapon.nail-gun",
+              "weapon.flamethrower",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb"
             ]
           },
           "followers": [],
           "pickups": [],
           "removedPickups": [],
           "cure": false,
-          "bossHp": 3000,
-          "bossMode": "coarse"
+          "bossHp": 1072.8151487356931,
+          "bossMode": "close"
         },
         "observed": {
           "id": "cure-disperse-ready",
           "position": {
-            "x": 4002,
-            "z": -27
+            "x": 3975.138427734375,
+            "z": -7.812593936920166
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.machete"
             ],
             "RIGHT": [
-              "weapon.pistol",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle",
+              "weapon.handgun",
               "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
+              "weapon.nail-gun",
+              "weapon.flamethrower",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb"
             ]
           },
           "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
-          "bossMode": "coarse",
-          "bossHp": 3000
+          "bossMode": "dead",
+          "bossHp": 0
         },
         "positionError": 0,
         "gateMatch": true,
@@ -1839,64 +1246,75 @@
       "clause": "cure and boss HP/death snapshot at cure-disperse-ready",
       "tier": "high",
       "policy": "checkpoint-death-fixture",
-      "status": "PASS",
+      "status": "FAIL",
       "value": {
         "checkpoint": "cure-disperse-ready",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "2bdc81dc7c2e4b2eb9fa9f6a760f965c2a02745af407c4d7e94e584ffe5370c4",
+        "snapshotSha256": "68467dd8b6b9c014df813a1af91baba1c99ed94fd749aa138609595c6afcadaa",
         "damage": 100,
         "expected": {
           "id": "cure-disperse-ready",
           "anchor": {
-            "x": 4002,
-            "y": 0,
-            "z": -27,
-            "yaw": 2.5327114871886103,
-            "radius": 2
+            "x": 3975.138427734375,
+            "y": 0.7099999785423279,
+            "z": -7.812593936920166,
+            "yaw": 0.025128583083078703
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.machete"
             ],
             "RIGHT": [
-              "weapon.pistol",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle",
+              "weapon.handgun",
               "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
+              "weapon.nail-gun",
+              "weapon.flamethrower",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb"
             ]
           },
           "followers": [],
           "pickups": [],
           "removedPickups": [],
           "cure": false,
-          "bossHp": 3000,
-          "bossMode": "coarse"
+          "bossHp": 1072.8151487356931,
+          "bossMode": "close"
         },
         "observed": {
           "id": "cure-disperse-ready",
           "position": {
-            "x": 4002,
-            "z": -27
+            "x": 3975.138427734375,
+            "z": -7.812593936920166
           },
           "gates": {},
           "racks": {
             "LEFT": [
-              "weapon.fire-axe"
+              "weapon.machete"
             ],
             "RIGHT": [
-              "weapon.pistol",
+              "weapon.machete",
+              "weapon.hunting-rifle",
+              "weapon.molotov",
+              "weapon.assault-rifle",
+              "weapon.handgun",
               "weapon.shotgun",
-              "weapon.army-mg",
-              "weapon.rocket-launcher"
+              "weapon.nail-gun",
+              "weapon.flamethrower",
+              "weapon.rocket-launcher",
+              "weapon.pipe-bomb"
             ]
           },
           "followerMismatches": [],
           "missingPickups": [],
           "unexpectedPickups": [],
           "cure": false,
-          "bossMode": "coarse",
-          "bossHp": 3000
+          "bossMode": "dead",
+          "bossHp": 0
         },
         "positionError": 0,
         "gateMatch": true,
@@ -1906,10 +1324,16 @@
       "receipt": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json"
     }
   ],
-  "errors": [],
+  "errors": [
+    "cure-research: TypeError: Cannot read properties of undefined (reading 'id')",
+    "cure-corridor: TypeError: Cannot read properties of undefined (reading 'id')",
+    "l10-quarantine-gate: TypeError: Cannot read properties of undefined (reading 'id')",
+    "l10-field-hospital: TypeError: Cannot read properties of undefined (reading 'id')",
+    "cure-complex: TypeError: Cannot read properties of undefined (reading 'id')"
+  ],
   "control": {
-    "observed": "586d721c",
-    "control": "586d721c",
+    "observed": "f888020e",
+    "control": "f888020e",
     "identical": true
   }
 }

@@ -4,10 +4,10 @@
   "tier": "low",
   "policy": "stationary",
   "seed": 1,
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-  "revision": "00cd9d78651481f20affb22ea2543e4e5ea17f6a",
-  "generatedAt": "2026-11-07T04:02:11.409Z",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "observerHash": "d5cde71e96dc06637bd84b03207ce9d21a5e36c5eb4d6f6d3c9313fff03b1431",
+  "revision": "4cd042a286a621f8266d79803741ce707b3bb26c",
+  "generatedAt": "2026-11-27T17:46:39.742Z",
   "run": {
     "level": "L1",
     "policy": "complete",
@@ -1244,7 +1244,7 @@
           "ax": 0,
           "az": 0,
           "omega": 0,
-          "updatedAt": -1
+          "updatedAt": 21600
         },
         "survivor": {
           "variant": "female",
@@ -1379,8 +1379,8 @@
         {
           "id": 83,
           "archetype": "char.corgi",
-          "x": 56.859928242220015,
-          "z": -19.38940178065861,
+          "x": 57.61472086458715,
+          "z": -20.721408771814556,
           "hp": 100,
           "maxHp": 100,
           "civilian": false,
@@ -1799,8 +1799,8 @@
         {
           "id": 124,
           "archetype": "npc.bbq-dad",
-          "x": 42.63469548099181,
-          "z": -27.771481817112193,
+          "x": 42.20590653651615,
+          "z": -28.219142356798802,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1813,8 +1813,8 @@
         {
           "id": 125,
           "archetype": "npc.dog",
-          "x": 43.323731888809384,
-          "z": -29.167673854584468,
+          "x": 41.63736904721612,
+          "z": -29.79227123690043,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -1883,8 +1883,8 @@
         {
           "id": 130,
           "archetype": "npc.jogger",
-          "x": 76.09929614058815,
-          "z": 3.9832798732058117,
+          "x": 76.12267686103344,
+          "z": 3.983103407940786,
           "hp": 100,
           "maxHp": 100,
           "civilian": true,
@@ -2121,8 +2121,8 @@
         {
           "id": 147,
           "archetype": "infected.runner",
-          "x": 64.24697349367855,
-          "z": -9.74771838541573,
+          "x": 64.24996225086342,
+          "z": -9.762379904981993,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2149,8 +2149,8 @@
         {
           "id": 151,
           "archetype": "infected.runner",
-          "x": 64.8501135582321,
-          "z": -10.518511009548725,
+          "x": 66.13869162312518,
+          "z": -8.850743531718775,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2163,8 +2163,8 @@
         {
           "id": 153,
           "archetype": "infected.runner",
-          "x": 65.81592995235921,
-          "z": -10.491731064376449,
+          "x": 64.85250954650486,
+          "z": -10.519194785598412,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2177,8 +2177,8 @@
         {
           "id": 155,
           "archetype": "infected.runner",
-          "x": 66.05671611054679,
-          "z": -8.76225839673653,
+          "x": 66.36516399664572,
+          "z": -9.753829544005718,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2191,8 +2191,8 @@
         {
           "id": 157,
           "archetype": "infected.runner",
-          "x": 66.38203140489472,
-          "z": -9.639415929275247,
+          "x": 65.80471419339328,
+          "z": -10.49764377920891,
           "hp": 60,
           "maxHp": 60,
           "civilian": false,
@@ -2247,9 +2247,9 @@
       "l1.infectedExit": 1,
       "checkpoint.set": 2,
       "ai.alerted": 5,
-      "telegraph": 1596,
-      "combat.hit": 1593,
-      "infected.attack": 1593
+      "telegraph": 1599,
+      "combat.hit": 1596,
+      "infected.attack": 1596
     },
     "ledger": [
       {
@@ -2490,6 +2490,16 @@
       "maximum": 0,
       "activeTicks": 0
     },
+    "l10Story": {
+      "firstMegaVisibleSeconds": null,
+      "closeSections": [],
+      "seen": 0,
+      "idleEntries": [],
+      "fullArsenal": false,
+      "outsideAssaultPeak": 0,
+      "assaultPeak": 0
+    },
+    "l10FirstSightings": [],
     "megaIntroduction": null,
     "maxMegaStep": 0,
     "release": null,
@@ -2532,17 +2542,196 @@
   },
   "threat": {
     "ticks": 21600,
+    "totalSpawned": 5,
+    "peakConcurrentInfected": 5,
     "followerWait": {
+      "windows": [
+        {
+          "key": "step/pickup|phase/morning",
+          "escortTicks": 927,
+          "stationaryFarTicks": 0,
+          "arenaWaitTicks": 0
+        },
+        {
+          "key": "step/deliver|phase/morning",
+          "escortTicks": 1574,
+          "stationaryFarTicks": 41,
+          "arenaWaitTicks": 0,
+          "first": {
+            "tick": 2639,
+            "playerX": 65.62980651855469,
+            "playerZ": -11.612318992614746,
+            "followerId": 83,
+            "followerX": 55.45485423973597,
+            "followerZ": -20.02399780706585
+          }
+        },
+        {
+          "key": "step/deliver|phase/handover",
+          "escortTicks": 143,
+          "stationaryFarTicks": 143,
+          "arenaWaitTicks": 0,
+          "first": {
+            "tick": 3184,
+            "playerX": 65.62980651855469,
+            "playerZ": -11.612318992614746,
+            "followerId": 83,
+            "followerX": 57.68787010247018,
+            "followerZ": -19.735976330815074
+          }
+        },
+        {
+          "key": "phase/calm",
+          "escortTicks": 284,
+          "stationaryFarTicks": 284,
+          "arenaWaitTicks": 0,
+          "first": {
+            "tick": 3327,
+            "playerX": 65.62980651855469,
+            "playerZ": -11.612318992614746,
+            "followerId": 83,
+            "followerX": 57.77769304892996,
+            "followerZ": -20.228984514136396
+          }
+        },
+        {
+          "key": "phase/accident",
+          "escortTicks": 556,
+          "stationaryFarTicks": 535,
+          "arenaWaitTicks": 0,
+          "first": {
+            "tick": 3611,
+            "playerX": 65.62980651855469,
+            "playerZ": -11.612318992614746,
+            "followerId": 83,
+            "followerX": 57.2594416649789,
+            "followerZ": -20.93399987671675
+          }
+        },
+        {
+          "key": "step/escape|phase/spread",
+          "escortTicks": 1,
+          "stationaryFarTicks": 1,
+          "arenaWaitTicks": 0,
+          "first": {
+            "tick": 4167,
+            "playerX": 65.30667877197266,
+            "playerZ": -9.539332389831543,
+            "followerId": 83,
+            "followerX": 56.8269499995235,
+            "followerZ": -19.783626592174265
+          }
+        },
+        {
+          "key": "step/weapon|phase/spread",
+          "escortTicks": 17433,
+          "stationaryFarTicks": 17433,
+          "arenaWaitTicks": 0,
+          "first": {
+            "tick": 4168,
+            "playerX": 65.30667877197266,
+            "playerZ": -9.539332389831543,
+            "followerId": 83,
+            "followerX": 56.850964714742396,
+            "followerZ": -19.757812939007028
+          }
+        }
+      ],
       "escortTicks": 20918,
-      "stationaryFarTicks": 18420,
-      "upperBoundPercent": 88.0581317525576,
+      "stationaryFarTicks": 18437,
+      "arenaWaitTicks": 0,
+      "upperBoundPercent": 88.1394014724161,
       "followers": [
         {
           "id": 83,
           "escortTicks": 20918,
-          "stationaryFarTicks": 18420
+          "stationaryFarTicks": 18437
         }
-      ]
+      ],
+      "paceWindows": [
+        {
+          "key": "step/pickup|phase/morning",
+          "samples": 30,
+          "p50GapM": 2.007030710220388,
+          "p90GapM": 6.600418034047493,
+          "maxGapM": 8.461888072211412,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/deliver|phase/morning",
+          "samples": 53,
+          "p50GapM": 25.559347338721306,
+          "p90GapM": 50.30566987209981,
+          "maxGapM": 61.543015096711926,
+          "waitingTicks": 41,
+          "backtrackTicks": 0,
+          "stuckFollowers": [
+            {
+              "id": 83,
+              "maxSeconds": 11.55,
+              "geometryContactTicks": 694,
+              "bodyContactTicks": 0
+            }
+          ]
+        },
+        {
+          "key": "step/deliver|phase/handover",
+          "samples": 4,
+          "p50GapM": 12.054421849299017,
+          "p90GapM": 12.891555094963742,
+          "maxGapM": 12.891555094963742,
+          "waitingTicks": 143,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "phase/calm",
+          "samples": 10,
+          "p50GapM": 11.782847322485114,
+          "p90GapM": 12.555117815885843,
+          "maxGapM": 12.75745504013529,
+          "waitingTicks": 284,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "phase/accident",
+          "samples": 18,
+          "p50GapM": 13.349760566917471,
+          "p90GapM": 14.127134072177945,
+          "maxGapM": 14.136699603431332,
+          "waitingTicks": 534,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/escape|phase/spread",
+          "samples": 0,
+          "p50GapM": null,
+          "p90GapM": null,
+          "maxGapM": null,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        },
+        {
+          "key": "step/weapon|phase/spread",
+          "samples": 582,
+          "p50GapM": 13.438016098078721,
+          "p90GapM": 14.120475641270342,
+          "maxGapM": 14.201929509487616,
+          "waitingTicks": 0,
+          "backtrackTicks": 0,
+          "stuckFollowers": []
+        }
+      ],
+      "prompts": {
+        "wait": 0,
+        "attack": 0,
+        "lost": 0
+      }
     },
     "phases": [
       {
@@ -2604,11 +2793,11 @@
           {
             "id": 83,
             "samples": 77,
-            "median": 0
+            "median": 4.154895478397934
           }
         ],
-        "followerMin": 0,
-        "followerMedian": 0,
+        "followerMin": 4.154895478397934,
+        "followerMedian": 4.154895478397934,
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
         "last": {
@@ -2744,7 +2933,7 @@
           {
             "id": 83,
             "samples": 1,
-            "median": 0.4119556753145347
+            "median": 1.8894678084615797
           }
         ],
         "followerMin": null,
@@ -2787,7 +2976,8 @@
           "worstTick": 4166,
           "nearby": 5,
           "reachable": 5,
-          "blockedIds": []
+          "blockedIds": [],
+          "blockedPositions": []
         },
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
@@ -2812,8 +3002,8 @@
         "observed": 5,
         "reachableEver": 5,
         "within2_5m": 5,
-        "attacks": 1596,
-        "attacksPerMinute": 329.5629230239761,
+        "attacks": 1599,
+        "attacksPerMinute": 330.18240220259264,
         "firstAttackSeconds": 2.316666666666667,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
@@ -2827,7 +3017,8 @@
           "worstTick": 21567,
           "nearby": 5,
           "reachable": 5,
-          "blockedIds": []
+          "blockedIds": [],
+          "blockedPositions": []
         },
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
@@ -2852,8 +3043,8 @@
         "observed": 5,
         "reachableEver": 5,
         "within2_5m": 5,
-        "attacks": 1596,
-        "attacksPerMinute": 329.5818275684048,
+        "attacks": 1599,
+        "attacksPerMinute": 330.2013422818792,
         "firstAttackSeconds": 2.3,
         "groupAttacks": 0,
         "groupAttacksPerMinute": 0,
@@ -2867,7 +3058,8 @@
           "worstTick": 21567,
           "nearby": 5,
           "reachable": 5,
-          "blockedIds": []
+          "blockedIds": [],
+          "blockedPositions": []
         },
         "maxBlockedSeconds": 0,
         "blockedEvidence": null,
@@ -2884,6 +3076,6 @@
     ],
     "waves": []
   },
-  "nativeStateHash": "9c98c50e",
+  "nativeStateHash": "25d94d1c",
   "error": null
 }

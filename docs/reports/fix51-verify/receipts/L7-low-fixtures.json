@@ -2,258 +2,261 @@
   "version": 1,
   "level": "L7",
   "tier": "low",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checks": [
     {
       "id": "L7-11",
       "clause": "actual uninterrupted departure duration and bus displacement",
       "value": {
-        "setup": "ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick",
+        "setup": "ordinary mortal native L7 input; capability fixture admits up to ten extra ordinary enemies elsewhere at boarding when the level leaves spare concurrency; read-only bus and passenger observations on every tick",
         "run": {
           "level": "L7",
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 138.83333333333334,
-          "deaths": 0,
+          "time": 164.98333333333332,
+          "deaths": 2,
           "kills": 0,
-          "damageTaken": 0,
+          "damageTaken": 537.7883333333352,
           "failures": {},
           "objectiveTimeline": [],
           "furthestObjective": "bus-departure",
           "activeObjectives": [],
           "outcome": "complete",
           "blocker": null,
+          "survivorsSaved": 24,
+          "survivorsTotal": 24,
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 264,
+            "admitted": 671,
             "deferred": 0,
             "requests": [],
             "offenders": []
           }
         },
         "first": {
-          "tick": 7790,
+          "tick": 9359,
           "x": -78.5,
           "z": 47,
-          "aliveElsewhere": 10
+          "aliveElsewhere": 10,
+          "livingElsewhere": 49
         },
         "last": {
-          "tick": 8330,
+          "tick": 9899,
           "x": 40,
           "z": 47,
-          "alive": 10
+          "alive": 66
         },
         "elsewhere": [
-          280,
-          281,
-          282,
-          283,
-          284,
-          285,
-          286,
-          287,
-          288,
-          289
+          388,
+          389,
+          390,
+          391,
+          392,
+          393,
+          394,
+          395,
+          396,
+          397
         ],
         "seconds": 9,
         "metres": 118.5,
         "entries": [
           {
-            "id": 56,
-            "tick": 5205
-          },
-          {
-            "id": 65,
-            "tick": 5220
-          },
-          {
-            "id": 64,
-            "tick": 5235
-          },
-          {
-            "id": 73,
-            "tick": 5250
-          },
-          {
-            "id": 51,
-            "tick": 5265
+            "id": 74,
+            "tick": 8902
           },
           {
             "id": 52,
-            "tick": 5280
+            "tick": 8917
           },
           {
             "id": 53,
-            "tick": 5295
+            "tick": 8932
           },
           {
-            "id": 54,
-            "tick": 5310
-          },
-          {
-            "id": 57,
-            "tick": 5325
-          },
-          {
-            "id": 58,
-            "tick": 5340
-          },
-          {
-            "id": 59,
-            "tick": 5355
-          },
-          {
-            "id": 60,
-            "tick": 5370
+            "id": 51,
+            "tick": 8947
           },
           {
             "id": 55,
-            "tick": 5385
+            "tick": 8962
+          },
+          {
+            "id": 54,
+            "tick": 8977
+          },
+          {
+            "id": 56,
+            "tick": 8992
+          },
+          {
+            "id": 57,
+            "tick": 9007
+          },
+          {
+            "id": 58,
+            "tick": 9022
+          },
+          {
+            "id": 59,
+            "tick": 9037
+          },
+          {
+            "id": 60,
+            "tick": 9052
           },
           {
             "id": 61,
-            "tick": 5400
-          },
-          {
-            "id": 63,
-            "tick": 5415
-          },
-          {
-            "id": 66,
-            "tick": 5430
-          },
-          {
-            "id": 67,
-            "tick": 5445
-          },
-          {
-            "id": 69,
-            "tick": 5460
-          },
-          {
-            "id": 70,
-            "tick": 5475
-          },
-          {
-            "id": 72,
-            "tick": 5490
-          },
-          {
-            "id": 74,
-            "tick": 5505
-          },
-          {
-            "id": 68,
-            "tick": 7664
+            "tick": 9067
           },
           {
             "id": 62,
-            "tick": 7679
+            "tick": 9082
+          },
+          {
+            "id": 63,
+            "tick": 9097
+          },
+          {
+            "id": 64,
+            "tick": 9112
+          },
+          {
+            "id": 65,
+            "tick": 9127
+          },
+          {
+            "id": 66,
+            "tick": 9142
+          },
+          {
+            "id": 67,
+            "tick": 9157
+          },
+          {
+            "id": 68,
+            "tick": 9172
+          },
+          {
+            "id": 69,
+            "tick": 9187
+          },
+          {
+            "id": 70,
+            "tick": 9202
           },
           {
             "id": 71,
-            "tick": 7694
+            "tick": 9217
+          },
+          {
+            "id": 73,
+            "tick": 9232
+          },
+          {
+            "id": 72,
+            "tick": 9263
           }
         ],
         "boarded": [
           {
-            "id": 56,
-            "tick": 5241
-          },
-          {
-            "id": 65,
-            "tick": 5256
-          },
-          {
-            "id": 64,
-            "tick": 5271
-          },
-          {
-            "id": 73,
-            "tick": 5286
-          },
-          {
-            "id": 51,
-            "tick": 5301
+            "id": 74,
+            "tick": 8938
           },
           {
             "id": 52,
-            "tick": 5316
+            "tick": 8953
           },
           {
             "id": 53,
-            "tick": 5331
+            "tick": 8968
           },
           {
-            "id": 54,
-            "tick": 5346
-          },
-          {
-            "id": 57,
-            "tick": 5361
-          },
-          {
-            "id": 58,
-            "tick": 5376
-          },
-          {
-            "id": 59,
-            "tick": 5391
-          },
-          {
-            "id": 60,
-            "tick": 5406
+            "id": 51,
+            "tick": 8983
           },
           {
             "id": 55,
-            "tick": 5421
+            "tick": 8998
+          },
+          {
+            "id": 54,
+            "tick": 9013
+          },
+          {
+            "id": 56,
+            "tick": 9028
+          },
+          {
+            "id": 57,
+            "tick": 9043
+          },
+          {
+            "id": 58,
+            "tick": 9058
+          },
+          {
+            "id": 59,
+            "tick": 9073
+          },
+          {
+            "id": 60,
+            "tick": 9088
           },
           {
             "id": 61,
-            "tick": 5436
-          },
-          {
-            "id": 63,
-            "tick": 5451
-          },
-          {
-            "id": 66,
-            "tick": 5466
-          },
-          {
-            "id": 67,
-            "tick": 5481
-          },
-          {
-            "id": 69,
-            "tick": 5496
-          },
-          {
-            "id": 70,
-            "tick": 5511
-          },
-          {
-            "id": 72,
-            "tick": 5526
-          },
-          {
-            "id": 74,
-            "tick": 5541
-          },
-          {
-            "id": 68,
-            "tick": 7700
+            "tick": 9103
           },
           {
             "id": 62,
-            "tick": 7715
+            "tick": 9118
+          },
+          {
+            "id": 63,
+            "tick": 9133
+          },
+          {
+            "id": 64,
+            "tick": 9148
+          },
+          {
+            "id": 65,
+            "tick": 9163
+          },
+          {
+            "id": 66,
+            "tick": 9178
+          },
+          {
+            "id": 67,
+            "tick": 9193
+          },
+          {
+            "id": 68,
+            "tick": 9208
+          },
+          {
+            "id": 69,
+            "tick": 9223
+          },
+          {
+            "id": 70,
+            "tick": 9238
           },
           {
             "id": 71,
-            "tick": 7730
+            "tick": 9253
+          },
+          {
+            "id": 73,
+            "tick": 9268
+          },
+          {
+            "id": 72,
+            "tick": 9299
           }
         ],
         "spacing": [
@@ -277,229 +280,229 @@
           15,
           15,
           15,
-          2159,
           15,
-          15
+          15,
+          31
         ],
         "trace": [
           {
-            "tick": 7800,
+            "tick": 9360,
             "phase": "departing",
-            "x": -78.37959152568206,
+            "x": -78.49878236930346,
             "z": 47
           },
           {
-            "tick": 7815,
+            "tick": 9375,
             "phase": "departing",
-            "x": -77.76155740359701,
+            "x": -78.19406614845298,
             "z": 47
           },
           {
-            "tick": 7830,
+            "tick": 9390,
             "phase": "departing",
-            "x": -76.64570949550374,
+            "x": -77.37324910455723,
             "z": 47
           },
           {
-            "tick": 7845,
+            "tick": 9405,
             "phase": "departing",
-            "x": -75.06252619646395,
+            "x": -76.06680963267794,
             "z": 47
           },
           {
-            "tick": 7860,
+            "tick": 9420,
             "phase": "departing",
-            "x": -73.0424859015394,
+            "x": -74.30522612787685,
             "z": 47
           },
           {
-            "tick": 7875,
+            "tick": 9435,
             "phase": "departing",
-            "x": -70.6160670057918,
+            "x": -72.11897698521567,
             "z": 47
           },
           {
-            "tick": 7890,
+            "tick": 9450,
             "phase": "departing",
-            "x": -67.81374790428288,
+            "x": -69.53854059975613,
             "z": 47
           },
           {
-            "tick": 7905,
+            "tick": 9465,
             "phase": "departing",
-            "x": -64.66600699207439,
+            "x": -66.59439536655998,
             "z": 47
           },
           {
-            "tick": 7920,
+            "tick": 9480,
             "phase": "departing",
-            "x": -61.20332266422802,
+            "x": -63.31701968068892,
             "z": 47
           },
           {
-            "tick": 7935,
+            "tick": 9495,
             "phase": "departing",
-            "x": -57.456173315805515,
+            "x": -59.7368919372047,
             "z": 47
           },
           {
-            "tick": 7950,
+            "tick": 9510,
             "phase": "departing",
-            "x": -53.45503734186862,
+            "x": -55.884490531169035,
             "z": 47
           },
           {
-            "tick": 7965,
+            "tick": 9525,
             "phase": "departing",
-            "x": -49.23039313747904,
+            "x": -51.79029385764365,
             "z": 47
           },
           {
-            "tick": 7980,
+            "tick": 9540,
             "phase": "departing",
-            "x": -44.81271909769852,
+            "x": -47.48478031169029,
             "z": 47
           },
           {
-            "tick": 7995,
+            "tick": 9555,
             "phase": "departing",
-            "x": -40.23249361758878,
+            "x": -42.99842828837066,
             "z": 47
           },
           {
-            "tick": 8010,
+            "tick": 9570,
             "phase": "departing",
-            "x": -35.52019509221156,
+            "x": -38.361716182746534,
             "z": 47
           },
           {
-            "tick": 8025,
+            "tick": 9585,
             "phase": "departing",
-            "x": -30.70630191662856,
+            "x": -33.6051223898796,
             "z": 47
           },
           {
-            "tick": 8040,
+            "tick": 9600,
             "phase": "departing",
-            "x": -25.821292485901544,
+            "x": -28.75912530483157,
             "z": 47
           },
           {
-            "tick": 8055,
+            "tick": 9615,
             "phase": "departing",
-            "x": -20.895645195092207,
+            "x": -23.85420332266422,
             "z": 47
           },
           {
-            "tick": 8070,
+            "tick": 9630,
             "phase": "departing",
-            "x": -15.959838439262313,
+            "x": -18.920834838439255,
             "z": 47
           },
           {
-            "tick": 8085,
+            "tick": 9645,
             "phase": "departing",
-            "x": -11.044350613473554,
+            "x": -13.989498247218407,
             "z": 47
           },
           {
-            "tick": 8100,
+            "tick": 9660,
             "phase": "departing",
-            "x": -6.179660112787687,
+            "x": -9.090671944063402,
             "z": 47
           },
           {
-            "tick": 8115,
+            "tick": 9675,
             "phase": "departing",
-            "x": -1.3962453322664174,
+            "x": -4.254834324035983,
             "z": 47
           },
           {
-            "tick": 8130,
+            "tick": 9690,
             "phase": "departing",
-            "x": 3.275415333028505,
+            "x": 0.48753621780215894,
             "z": 47
           },
           {
-            "tick": 8145,
+            "tick": 9705,
             "phase": "departing",
-            "x": 7.804843488035374,
+            "x": 5.10596128638926,
             "z": 47
           },
           {
-            "tick": 8160,
+            "tick": 9720,
             "phase": "departing",
-            "x": 12.16156073769244,
+            "x": 9.569962486663627,
             "z": 47
           },
           {
-            "tick": 8175,
+            "tick": 9735,
             "phase": "departing",
-            "x": 16.315088686937955,
+            "x": 13.849061423563484,
             "z": 47
           },
           {
-            "tick": 8190,
+            "tick": 9750,
             "phase": "departing",
-            "x": 20.234948940710254,
+            "x": 17.912779702027137,
             "z": 47
           },
           {
-            "tick": 8205,
+            "tick": 9765,
             "phase": "departing",
-            "x": 23.890663103947574,
+            "x": 21.730638926992853,
             "z": 47
           },
           {
-            "tick": 8220,
+            "tick": 9780,
             "phase": "departing",
-            "x": 27.25175278158818,
+            "x": 25.27216070339888,
             "z": 47
           },
           {
-            "tick": 8235,
+            "tick": 9795,
             "phase": "departing",
-            "x": 30.28773957857034,
+            "x": 28.506866636183503,
             "z": 47
           },
           {
-            "tick": 8250,
+            "tick": 9810,
             "phase": "departing",
-            "x": 32.96814509983234,
+            "x": 31.404278330285024,
             "z": 47
           },
           {
-            "tick": 8265,
+            "tick": 9825,
             "phase": "departing",
-            "x": 35.262490950312454,
+            "x": 33.93391739064165,
             "z": 47
           },
           {
-            "tick": 8280,
+            "tick": 9840,
             "phase": "departing",
-            "x": 37.14029873494894,
+            "x": 36.06530542219174,
             "z": 47
           },
           {
-            "tick": 8295,
+            "tick": 9855,
             "phase": "departing",
-            "x": 38.57109005868007,
+            "x": 37.7679640298735,
             "z": 47
           },
           {
-            "tick": 8310,
+            "tick": 9870,
             "phase": "departing",
-            "x": 39.52438652644413,
+            "x": 39.01141481862521,
             "z": 47
           },
           {
-            "tick": 8325,
+            "tick": 9885,
             "phase": "departing",
-            "x": 39.96970974317938,
+            "x": 39.765179393385154,
             "z": 47
           },
           {
-            "tick": 8330,
+            "tick": 9899,
             "phase": "done",
             "x": 40,
             "z": 47
@@ -518,198 +521,198 @@
       "value": {
         "entries": [
           {
-            "id": 56,
-            "tick": 5205
-          },
-          {
-            "id": 65,
-            "tick": 5220
-          },
-          {
-            "id": 64,
-            "tick": 5235
-          },
-          {
-            "id": 73,
-            "tick": 5250
-          },
-          {
-            "id": 51,
-            "tick": 5265
+            "id": 74,
+            "tick": 8902
           },
           {
             "id": 52,
-            "tick": 5280
+            "tick": 8917
           },
           {
             "id": 53,
-            "tick": 5295
+            "tick": 8932
           },
           {
-            "id": 54,
-            "tick": 5310
-          },
-          {
-            "id": 57,
-            "tick": 5325
-          },
-          {
-            "id": 58,
-            "tick": 5340
-          },
-          {
-            "id": 59,
-            "tick": 5355
-          },
-          {
-            "id": 60,
-            "tick": 5370
+            "id": 51,
+            "tick": 8947
           },
           {
             "id": 55,
-            "tick": 5385
+            "tick": 8962
+          },
+          {
+            "id": 54,
+            "tick": 8977
+          },
+          {
+            "id": 56,
+            "tick": 8992
+          },
+          {
+            "id": 57,
+            "tick": 9007
+          },
+          {
+            "id": 58,
+            "tick": 9022
+          },
+          {
+            "id": 59,
+            "tick": 9037
+          },
+          {
+            "id": 60,
+            "tick": 9052
           },
           {
             "id": 61,
-            "tick": 5400
-          },
-          {
-            "id": 63,
-            "tick": 5415
-          },
-          {
-            "id": 66,
-            "tick": 5430
-          },
-          {
-            "id": 67,
-            "tick": 5445
-          },
-          {
-            "id": 69,
-            "tick": 5460
-          },
-          {
-            "id": 70,
-            "tick": 5475
-          },
-          {
-            "id": 72,
-            "tick": 5490
-          },
-          {
-            "id": 74,
-            "tick": 5505
-          },
-          {
-            "id": 68,
-            "tick": 7664
+            "tick": 9067
           },
           {
             "id": 62,
-            "tick": 7679
+            "tick": 9082
+          },
+          {
+            "id": 63,
+            "tick": 9097
+          },
+          {
+            "id": 64,
+            "tick": 9112
+          },
+          {
+            "id": 65,
+            "tick": 9127
+          },
+          {
+            "id": 66,
+            "tick": 9142
+          },
+          {
+            "id": 67,
+            "tick": 9157
+          },
+          {
+            "id": 68,
+            "tick": 9172
+          },
+          {
+            "id": 69,
+            "tick": 9187
+          },
+          {
+            "id": 70,
+            "tick": 9202
           },
           {
             "id": 71,
-            "tick": 7694
+            "tick": 9217
+          },
+          {
+            "id": 73,
+            "tick": 9232
+          },
+          {
+            "id": 72,
+            "tick": 9263
           }
         ],
         "boarded": [
           {
-            "id": 56,
-            "tick": 5241
-          },
-          {
-            "id": 65,
-            "tick": 5256
-          },
-          {
-            "id": 64,
-            "tick": 5271
-          },
-          {
-            "id": 73,
-            "tick": 5286
-          },
-          {
-            "id": 51,
-            "tick": 5301
+            "id": 74,
+            "tick": 8938
           },
           {
             "id": 52,
-            "tick": 5316
+            "tick": 8953
           },
           {
             "id": 53,
-            "tick": 5331
+            "tick": 8968
           },
           {
-            "id": 54,
-            "tick": 5346
-          },
-          {
-            "id": 57,
-            "tick": 5361
-          },
-          {
-            "id": 58,
-            "tick": 5376
-          },
-          {
-            "id": 59,
-            "tick": 5391
-          },
-          {
-            "id": 60,
-            "tick": 5406
+            "id": 51,
+            "tick": 8983
           },
           {
             "id": 55,
-            "tick": 5421
+            "tick": 8998
+          },
+          {
+            "id": 54,
+            "tick": 9013
+          },
+          {
+            "id": 56,
+            "tick": 9028
+          },
+          {
+            "id": 57,
+            "tick": 9043
+          },
+          {
+            "id": 58,
+            "tick": 9058
+          },
+          {
+            "id": 59,
+            "tick": 9073
+          },
+          {
+            "id": 60,
+            "tick": 9088
           },
           {
             "id": 61,
-            "tick": 5436
-          },
-          {
-            "id": 63,
-            "tick": 5451
-          },
-          {
-            "id": 66,
-            "tick": 5466
-          },
-          {
-            "id": 67,
-            "tick": 5481
-          },
-          {
-            "id": 69,
-            "tick": 5496
-          },
-          {
-            "id": 70,
-            "tick": 5511
-          },
-          {
-            "id": 72,
-            "tick": 5526
-          },
-          {
-            "id": 74,
-            "tick": 5541
-          },
-          {
-            "id": 68,
-            "tick": 7700
+            "tick": 9103
           },
           {
             "id": 62,
-            "tick": 7715
+            "tick": 9118
+          },
+          {
+            "id": 63,
+            "tick": 9133
+          },
+          {
+            "id": 64,
+            "tick": 9148
+          },
+          {
+            "id": 65,
+            "tick": 9163
+          },
+          {
+            "id": 66,
+            "tick": 9178
+          },
+          {
+            "id": 67,
+            "tick": 9193
+          },
+          {
+            "id": 68,
+            "tick": 9208
+          },
+          {
+            "id": 69,
+            "tick": 9223
+          },
+          {
+            "id": 70,
+            "tick": 9238
           },
           {
             "id": 71,
-            "tick": 7730
+            "tick": 9253
+          },
+          {
+            "id": 73,
+            "tick": 9268
+          },
+          {
+            "id": 72,
+            "tick": 9299
           }
         ],
         "spacing": [
@@ -733,9 +736,9 @@
           15,
           15,
           15,
-          2159,
           15,
-          15
+          15,
+          31
         ]
       },
       "target": "one new passenger at most every15ticks; every entry finishes",
@@ -748,19 +751,21 @@
       "id": "L7-10",
       "clause": "living infected remaining when boarding has finished",
       "value": {
-        "tick": 7790,
+        "tick": 9359,
         "alive": 10,
+        "livingElsewhere": 49,
+        "seeded": 10,
         "ids": [
-          280,
-          281,
-          282,
-          283,
-          284,
-          285,
-          286,
-          287,
-          288,
-          289
+          388,
+          389,
+          390,
+          391,
+          392,
+          393,
+          394,
+          395,
+          396,
+          397
         ]
       },
       "target": "at least10 admitted living infected may remain elsewhere at departure start",
@@ -800,58 +805,241 @@
     },
     {
       "id": "G-24",
-      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "clause": "production enemy-bar eligibility at interaction boundaries",
       "value": [
         {
+          "label": "alpha far/healthy",
           "archetype": "infected.alpha",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.lion",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "shielded riot infected far/healthy",
+          "archetype": "infected.riot",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
+          "label": "pursuing Mega far/healthy",
+          "archetype": "infected.alpha",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "engaged arena boss far/healthy",
           "archetype": "infected.gorilla",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.elephant",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "infected.runner far/healthy unengaged",
+          "archetype": "infected.runner",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.runner targeting player at 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner targeting player at 6.01 m",
+          "archetype": "infected.runner",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.runner player-hit at 40 m",
+          "archetype": "infected.runner",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner dead after player hit",
+          "archetype": "infected.runner",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion far/healthy unengaged",
+          "archetype": "infected.lion",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion targeting player at 6 m",
+          "archetype": "infected.lion",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion targeting player at 6.01 m",
+          "archetype": "infected.lion",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion player-hit at 40 m",
+          "archetype": "infected.lion",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion dead after player hit",
+          "archetype": "infected.lion",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla far/healthy unengaged",
+          "archetype": "infected.gorilla",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla targeting player at 6 m",
+          "archetype": "infected.gorilla",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla targeting player at 6.01 m",
+          "archetype": "infected.gorilla",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla player-hit at 40 m",
+          "archetype": "infected.gorilla",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla dead after player hit",
+          "archetype": "infected.gorilla",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra far/healthy unengaged",
           "archetype": "infected.zebra",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.zebra targeting player at 6 m",
+          "archetype": "infected.zebra",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra targeting player at 6.01 m",
+          "archetype": "infected.zebra",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra player-hit at 40 m",
+          "archetype": "infected.zebra",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra dead after player hit",
+          "archetype": "infected.zebra",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo far/healthy unengaged",
           "archetype": "infected.flamingo",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo targeting player at 6 m",
+          "archetype": "infected.flamingo",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo targeting player at 6.01 m",
+          "archetype": "infected.flamingo",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo player-hit at 40 m",
+          "archetype": "infected.flamingo",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo dead after player hit",
+          "archetype": "infected.flamingo",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "runner heard the player within 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "elephant waiting in its arena, player-hit",
+          "archetype": "infected.elephant",
+          "distance": 6,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "elephant engaged finale boss far/healthy",
+          "archetype": "infected.elephant",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "healthy zoo animal near",
+          "archetype": "animal.zebra",
+          "distance": 3,
+          "expected": false,
+          "eligible": false
         }
       ],
-      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "target": "PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off",
       "status": "PASS",
       "tier": "low",
       "policy": "controlled-fixture",
@@ -924,251 +1112,254 @@
   "errors": [],
   "observations": {
     "L7/departure": {
-      "setup": "ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick",
+      "setup": "ordinary mortal native L7 input; capability fixture admits up to ten extra ordinary enemies elsewhere at boarding when the level leaves spare concurrency; read-only bus and passenger observations on every tick",
       "run": {
         "level": "L7",
         "policy": "complete",
         "seed": 1,
         "completed": true,
-        "time": 138.83333333333334,
-        "deaths": 0,
+        "time": 164.98333333333332,
+        "deaths": 2,
         "kills": 0,
-        "damageTaken": 0,
+        "damageTaken": 537.7883333333352,
         "failures": {},
         "objectiveTimeline": [],
         "furthestObjective": "bus-departure",
         "activeObjectives": [],
         "outcome": "complete",
         "blocker": null,
+        "survivorsSaved": 24,
+        "survivorsTotal": 24,
         "collision": {
           "failures": 0,
           "pending": 0,
-          "admitted": 264,
+          "admitted": 671,
           "deferred": 0,
           "requests": [],
           "offenders": []
         }
       },
       "first": {
-        "tick": 7790,
+        "tick": 9359,
         "x": -78.5,
         "z": 47,
-        "aliveElsewhere": 10
+        "aliveElsewhere": 10,
+        "livingElsewhere": 49
       },
       "last": {
-        "tick": 8330,
+        "tick": 9899,
         "x": 40,
         "z": 47,
-        "alive": 10
+        "alive": 66
       },
       "elsewhere": [
-        280,
-        281,
-        282,
-        283,
-        284,
-        285,
-        286,
-        287,
-        288,
-        289
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397
       ],
       "seconds": 9,
       "metres": 118.5,
       "entries": [
         {
-          "id": 56,
-          "tick": 5205
-        },
-        {
-          "id": 65,
-          "tick": 5220
-        },
-        {
-          "id": 64,
-          "tick": 5235
-        },
-        {
-          "id": 73,
-          "tick": 5250
-        },
-        {
-          "id": 51,
-          "tick": 5265
+          "id": 74,
+          "tick": 8902
         },
         {
           "id": 52,
-          "tick": 5280
+          "tick": 8917
         },
         {
           "id": 53,
-          "tick": 5295
+          "tick": 8932
         },
         {
-          "id": 54,
-          "tick": 5310
-        },
-        {
-          "id": 57,
-          "tick": 5325
-        },
-        {
-          "id": 58,
-          "tick": 5340
-        },
-        {
-          "id": 59,
-          "tick": 5355
-        },
-        {
-          "id": 60,
-          "tick": 5370
+          "id": 51,
+          "tick": 8947
         },
         {
           "id": 55,
-          "tick": 5385
+          "tick": 8962
+        },
+        {
+          "id": 54,
+          "tick": 8977
+        },
+        {
+          "id": 56,
+          "tick": 8992
+        },
+        {
+          "id": 57,
+          "tick": 9007
+        },
+        {
+          "id": 58,
+          "tick": 9022
+        },
+        {
+          "id": 59,
+          "tick": 9037
+        },
+        {
+          "id": 60,
+          "tick": 9052
         },
         {
           "id": 61,
-          "tick": 5400
-        },
-        {
-          "id": 63,
-          "tick": 5415
-        },
-        {
-          "id": 66,
-          "tick": 5430
-        },
-        {
-          "id": 67,
-          "tick": 5445
-        },
-        {
-          "id": 69,
-          "tick": 5460
-        },
-        {
-          "id": 70,
-          "tick": 5475
-        },
-        {
-          "id": 72,
-          "tick": 5490
-        },
-        {
-          "id": 74,
-          "tick": 5505
-        },
-        {
-          "id": 68,
-          "tick": 7664
+          "tick": 9067
         },
         {
           "id": 62,
-          "tick": 7679
+          "tick": 9082
+        },
+        {
+          "id": 63,
+          "tick": 9097
+        },
+        {
+          "id": 64,
+          "tick": 9112
+        },
+        {
+          "id": 65,
+          "tick": 9127
+        },
+        {
+          "id": 66,
+          "tick": 9142
+        },
+        {
+          "id": 67,
+          "tick": 9157
+        },
+        {
+          "id": 68,
+          "tick": 9172
+        },
+        {
+          "id": 69,
+          "tick": 9187
+        },
+        {
+          "id": 70,
+          "tick": 9202
         },
         {
           "id": 71,
-          "tick": 7694
+          "tick": 9217
+        },
+        {
+          "id": 73,
+          "tick": 9232
+        },
+        {
+          "id": 72,
+          "tick": 9263
         }
       ],
       "boarded": [
         {
-          "id": 56,
-          "tick": 5241
-        },
-        {
-          "id": 65,
-          "tick": 5256
-        },
-        {
-          "id": 64,
-          "tick": 5271
-        },
-        {
-          "id": 73,
-          "tick": 5286
-        },
-        {
-          "id": 51,
-          "tick": 5301
+          "id": 74,
+          "tick": 8938
         },
         {
           "id": 52,
-          "tick": 5316
+          "tick": 8953
         },
         {
           "id": 53,
-          "tick": 5331
+          "tick": 8968
         },
         {
-          "id": 54,
-          "tick": 5346
-        },
-        {
-          "id": 57,
-          "tick": 5361
-        },
-        {
-          "id": 58,
-          "tick": 5376
-        },
-        {
-          "id": 59,
-          "tick": 5391
-        },
-        {
-          "id": 60,
-          "tick": 5406
+          "id": 51,
+          "tick": 8983
         },
         {
           "id": 55,
-          "tick": 5421
+          "tick": 8998
+        },
+        {
+          "id": 54,
+          "tick": 9013
+        },
+        {
+          "id": 56,
+          "tick": 9028
+        },
+        {
+          "id": 57,
+          "tick": 9043
+        },
+        {
+          "id": 58,
+          "tick": 9058
+        },
+        {
+          "id": 59,
+          "tick": 9073
+        },
+        {
+          "id": 60,
+          "tick": 9088
         },
         {
           "id": 61,
-          "tick": 5436
-        },
-        {
-          "id": 63,
-          "tick": 5451
-        },
-        {
-          "id": 66,
-          "tick": 5466
-        },
-        {
-          "id": 67,
-          "tick": 5481
-        },
-        {
-          "id": 69,
-          "tick": 5496
-        },
-        {
-          "id": 70,
-          "tick": 5511
-        },
-        {
-          "id": 72,
-          "tick": 5526
-        },
-        {
-          "id": 74,
-          "tick": 5541
-        },
-        {
-          "id": 68,
-          "tick": 7700
+          "tick": 9103
         },
         {
           "id": 62,
-          "tick": 7715
+          "tick": 9118
+        },
+        {
+          "id": 63,
+          "tick": 9133
+        },
+        {
+          "id": 64,
+          "tick": 9148
+        },
+        {
+          "id": 65,
+          "tick": 9163
+        },
+        {
+          "id": 66,
+          "tick": 9178
+        },
+        {
+          "id": 67,
+          "tick": 9193
+        },
+        {
+          "id": 68,
+          "tick": 9208
+        },
+        {
+          "id": 69,
+          "tick": 9223
+        },
+        {
+          "id": 70,
+          "tick": 9238
         },
         {
           "id": 71,
-          "tick": 7730
+          "tick": 9253
+        },
+        {
+          "id": 73,
+          "tick": 9268
+        },
+        {
+          "id": 72,
+          "tick": 9299
         }
       ],
       "spacing": [
@@ -1192,229 +1383,229 @@
         15,
         15,
         15,
-        2159,
         15,
-        15
+        15,
+        31
       ],
       "trace": [
         {
-          "tick": 7800,
+          "tick": 9360,
           "phase": "departing",
-          "x": -78.37959152568206,
+          "x": -78.49878236930346,
           "z": 47
         },
         {
-          "tick": 7815,
+          "tick": 9375,
           "phase": "departing",
-          "x": -77.76155740359701,
+          "x": -78.19406614845298,
           "z": 47
         },
         {
-          "tick": 7830,
+          "tick": 9390,
           "phase": "departing",
-          "x": -76.64570949550374,
+          "x": -77.37324910455723,
           "z": 47
         },
         {
-          "tick": 7845,
+          "tick": 9405,
           "phase": "departing",
-          "x": -75.06252619646395,
+          "x": -76.06680963267794,
           "z": 47
         },
         {
-          "tick": 7860,
+          "tick": 9420,
           "phase": "departing",
-          "x": -73.0424859015394,
+          "x": -74.30522612787685,
           "z": 47
         },
         {
-          "tick": 7875,
+          "tick": 9435,
           "phase": "departing",
-          "x": -70.6160670057918,
+          "x": -72.11897698521567,
           "z": 47
         },
         {
-          "tick": 7890,
+          "tick": 9450,
           "phase": "departing",
-          "x": -67.81374790428288,
+          "x": -69.53854059975613,
           "z": 47
         },
         {
-          "tick": 7905,
+          "tick": 9465,
           "phase": "departing",
-          "x": -64.66600699207439,
+          "x": -66.59439536655998,
           "z": 47
         },
         {
-          "tick": 7920,
+          "tick": 9480,
           "phase": "departing",
-          "x": -61.20332266422802,
+          "x": -63.31701968068892,
           "z": 47
         },
         {
-          "tick": 7935,
+          "tick": 9495,
           "phase": "departing",
-          "x": -57.456173315805515,
+          "x": -59.7368919372047,
           "z": 47
         },
         {
-          "tick": 7950,
+          "tick": 9510,
           "phase": "departing",
-          "x": -53.45503734186862,
+          "x": -55.884490531169035,
           "z": 47
         },
         {
-          "tick": 7965,
+          "tick": 9525,
           "phase": "departing",
-          "x": -49.23039313747904,
+          "x": -51.79029385764365,
           "z": 47
         },
         {
-          "tick": 7980,
+          "tick": 9540,
           "phase": "departing",
-          "x": -44.81271909769852,
+          "x": -47.48478031169029,
           "z": 47
         },
         {
-          "tick": 7995,
+          "tick": 9555,
           "phase": "departing",
-          "x": -40.23249361758878,
+          "x": -42.99842828837066,
           "z": 47
         },
         {
-          "tick": 8010,
+          "tick": 9570,
           "phase": "departing",
-          "x": -35.52019509221156,
+          "x": -38.361716182746534,
           "z": 47
         },
         {
-          "tick": 8025,
+          "tick": 9585,
           "phase": "departing",
-          "x": -30.70630191662856,
+          "x": -33.6051223898796,
           "z": 47
         },
         {
-          "tick": 8040,
+          "tick": 9600,
           "phase": "departing",
-          "x": -25.821292485901544,
+          "x": -28.75912530483157,
           "z": 47
         },
         {
-          "tick": 8055,
+          "tick": 9615,
           "phase": "departing",
-          "x": -20.895645195092207,
+          "x": -23.85420332266422,
           "z": 47
         },
         {
-          "tick": 8070,
+          "tick": 9630,
           "phase": "departing",
-          "x": -15.959838439262313,
+          "x": -18.920834838439255,
           "z": 47
         },
         {
-          "tick": 8085,
+          "tick": 9645,
           "phase": "departing",
-          "x": -11.044350613473554,
+          "x": -13.989498247218407,
           "z": 47
         },
         {
-          "tick": 8100,
+          "tick": 9660,
           "phase": "departing",
-          "x": -6.179660112787687,
+          "x": -9.090671944063402,
           "z": 47
         },
         {
-          "tick": 8115,
+          "tick": 9675,
           "phase": "departing",
-          "x": -1.3962453322664174,
+          "x": -4.254834324035983,
           "z": 47
         },
         {
-          "tick": 8130,
+          "tick": 9690,
           "phase": "departing",
-          "x": 3.275415333028505,
+          "x": 0.48753621780215894,
           "z": 47
         },
         {
-          "tick": 8145,
+          "tick": 9705,
           "phase": "departing",
-          "x": 7.804843488035374,
+          "x": 5.10596128638926,
           "z": 47
         },
         {
-          "tick": 8160,
+          "tick": 9720,
           "phase": "departing",
-          "x": 12.16156073769244,
+          "x": 9.569962486663627,
           "z": 47
         },
         {
-          "tick": 8175,
+          "tick": 9735,
           "phase": "departing",
-          "x": 16.315088686937955,
+          "x": 13.849061423563484,
           "z": 47
         },
         {
-          "tick": 8190,
+          "tick": 9750,
           "phase": "departing",
-          "x": 20.234948940710254,
+          "x": 17.912779702027137,
           "z": 47
         },
         {
-          "tick": 8205,
+          "tick": 9765,
           "phase": "departing",
-          "x": 23.890663103947574,
+          "x": 21.730638926992853,
           "z": 47
         },
         {
-          "tick": 8220,
+          "tick": 9780,
           "phase": "departing",
-          "x": 27.25175278158818,
+          "x": 25.27216070339888,
           "z": 47
         },
         {
-          "tick": 8235,
+          "tick": 9795,
           "phase": "departing",
-          "x": 30.28773957857034,
+          "x": 28.506866636183503,
           "z": 47
         },
         {
-          "tick": 8250,
+          "tick": 9810,
           "phase": "departing",
-          "x": 32.96814509983234,
+          "x": 31.404278330285024,
           "z": 47
         },
         {
-          "tick": 8265,
+          "tick": 9825,
           "phase": "departing",
-          "x": 35.262490950312454,
+          "x": 33.93391739064165,
           "z": 47
         },
         {
-          "tick": 8280,
+          "tick": 9840,
           "phase": "departing",
-          "x": 37.14029873494894,
+          "x": 36.06530542219174,
           "z": 47
         },
         {
-          "tick": 8295,
+          "tick": 9855,
           "phase": "departing",
-          "x": 38.57109005868007,
+          "x": 37.7679640298735,
           "z": 47
         },
         {
-          "tick": 8310,
+          "tick": 9870,
           "phase": "departing",
-          "x": 39.52438652644413,
+          "x": 39.01141481862521,
           "z": 47
         },
         {
-          "tick": 8325,
+          "tick": 9885,
           "phase": "departing",
-          "x": 39.96970974317938,
+          "x": 39.765179393385154,
           "z": 47
         },
         {
-          "tick": 8330,
+          "tick": 9899,
           "phase": "done",
           "x": 40,
           "z": 47
