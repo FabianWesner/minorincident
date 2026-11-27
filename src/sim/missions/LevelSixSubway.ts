@@ -247,7 +247,11 @@ export class LevelSixSubway {
       // Story breaches use only their shelter doors. Tunnel pressure can route
       // to another live service mouth when its preferred hatch is closed; the
       // named hatch arrival (wave 4) must wait for that particular door.
-      const candidates=l6SpawnCandidates(requested,wave,(this.s.entries??[]).filter(e=>e.closedAt&&!e.brokenAt).map(e=>e.door));
+      let candidates=l6SpawnCandidates(requested,wave,(this.s.entries??[]).filter(e=>e.closedAt&&!e.brokenAt).map(e=>e.door));
+      if(wave===3){
+        const courier=w.entities.get(1)!.transform;
+        candidates=candidates.filter(index=>!this.s.gates.some(g=>!!g.closedAt&&g.x>l6Doors[index].x&&g.x<courier.x));
+      }
       if(!candidates.length){this.s.spawnRefusals.hatch=(this.s.spawnRefusals.hatch??0)+1;continue;}
       // Both tunnel walls emit inward. The old fixed -Z offset put north-side arrivals in the unbuilt void.
       const mouth=(index:number,breachOffset=20)=>{const original=l6Doors[index];
@@ -255,15 +259,16 @@ export class LevelSixSubway {
         // the corridor without appearing among the shelter residents.
         const base=wave===2&&index<2?{...original,z:-14}:original;
         const rank=wave===4?this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length%2:0;
-        const inward=wave===4?1.4+rank*1.4:1.4;
-        return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
+        const inward=wave===4?1.4+rank*1.4:wave===3?4.4:1.4;
+        const pressureLead=wave===3&&i===0?w.entities.get(1)!.transform.x-base.x:0;
+        return {x:base.x+(wave===4?[-3,3][rank]:wave===3?pressureLead+(i%2)*.8:(i%2)*.8),z:wave===3&&index<2?-13:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
       let door:number|undefined,at:Point|undefined,snapped=false;
       for(const index of candidates){
       // The first breach emerges on the corridor side of its service doors.
       // The former 20 m offset placed it among the shelter crowd, turning
       // residents before the retreat objective could begin. Both shelter
       // breaches emerge on the corridor side of their service doors.
-      const offsets=wave===1?[5,9,14,20]:wave===2?[9,14,20]:[20];
+      const offsets=wave===1?[14,20]:wave===2?[14,20]:[20];
       for(const offset of offsets){
           let candidate:Point;
           try{candidate=this.snap(mouth(index,offset),wave===4?w.entities.get(1)!.transform:undefined);snapped=true;}catch{continue;}
@@ -307,11 +312,15 @@ export class LevelSixSubway {
       const e=w.entities.get(id)!;
       // Opening arrivals converge on the protector from both accesses; later
       // arrivals take a short approach, then use ordinary human perception.
-      const groupTarget=wave===3?this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following').map(r=>w.entities.get(r.id)!).filter(Boolean)
+      const groupTarget=wave===3||wave===4?this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following').map(r=>w.entities.get(r.id)!).filter(Boolean)
         .sort((a,b)=>distance(a.transform,e.transform)-distance(b.transform,e.transform))[0]:undefined;
-      const target=groupTarget??w.entities.get(1)!;
-      const until=w.tick+ticks(wave===2||wave===3||wave===4?20:courierApproach?12:2);
-      ai.press(id,target.id,until,4);
+      // Recurring retreat pressure is meant to reach the covering courier.
+      // Targeting the nearest civilian let the pair peel off into the column
+      // and leave a competent player untouched even when the cohort arrived.
+      const playerTarget=wave===3&&this.s.spawnLog.filter(row=>row.wave===3).length+i<6&&i%l6.pressure.group===0;
+      const target=playerTarget?w.entities.get(1)!:groupTarget??w.entities.get(1)!;
+      const until=w.tick+ticks(wave===3?120:wave===2||wave===4?20:courierApproach?12:2);
+      ai.press(id,target.id,until,playerTarget?30:4);
       ai.rush(id,target.transform,until,true);
       spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at,.6)});
     }
@@ -344,7 +353,7 @@ export class LevelSixSubway {
     r.status='following';
     e.hidden=false; e.civilian.survivor!.mode='follow';
     leaveSeat(e); e.civilian.story=null; delete e.civilian.floorY;
-    if(e.civilian.ally){e.civilian.ally.post=null;e.civilian.ally.hold=false;e.civilian.ally.run={x:276,z:15};}
+    if(e.civilian.ally){e.civilian.ally.post=null;e.civilian.ally.hold=false;e.civilian.ally.run=null;e.civilian.ally.runSpeed=l6.follow.speed;}
   }
   private living() {return this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following');}
   /** A service gate can be closed once every living survivor is more than 2 m past its line (E24 §5: nobody trapped). */
@@ -384,12 +393,15 @@ export class LevelSixSubway {
     if(s.phase==='retreat'){
       // Q-305 + PO 10-31: the ring stays at the platform, the retreat's next
       // destination. Gate interaction prompts are spatially independent.
-      const gate=s.gates.find(g=>this.closable(g)&&p.x>=g.x-f.gateGroupM&&p.x<=g.x+f.columnM);
+      const gate=s.gates.find(g=>!g.passed&&this.closable(g)&&p.x>=g.x-f.gateGroupM&&p.x<=g.x+f.columnM);
       s.gateTargetId=gate?.id;
       const exit=anchors['exit-platform'];
-      // The ring stays at the next level destination. Gate closure prompts
-      // remain tied to each gate interaction and never drag the route marker.
-      anchors['l6-next'] ??= { ...exit, y: exit.y ?? .6, radius: 2 };
+      // When a gate is in reach and the whole column has crossed, keep the
+      // destination ring at its fixed wait spot. Otherwise it stays on the
+      // fixed exit platform; it never follows the courier or walking group.
+      anchors['l6-next'] = gate
+        ? { x: gate.x + 2.4, z: 17.3, y: .6, radius: 2 }
+        : { ...exit, y: exit.y ?? .6, radius: 2 };
     }
     // PO 10-31: the marker is a fixed destination, never a moving group
     // or survivor position. Regroup/rescue wording stays in the objective;
@@ -465,7 +477,7 @@ export class LevelSixSubway {
     // walkers make up contact instead of forcing the courier to fetch them.
     // A small distance ramp is enough for the long tunnel without changing
     // the pressure, damage, or survivor health rules.
-    const gapToSlot=distance(e.transform,goal), catchupSpeed=gapToSlot>1?Math.min(5.2,l6.follow.speed+(gapToSlot-1)*.4):l6.follow.speed;
+    const gapToSlot=distance(e.transform,goal), catchupSpeed=s.leaderX>=240?l6.follow.speed:gapToSlot>1?Math.min(5.2,l6.follow.speed+(gapToSlot-1)*.4):l6.follow.speed;
     if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,catchupSpeed,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&(returning||side>l6.tunnel.width/2))
       // A side room's long route can exceed the steering budget. Collected walkers
       // return to the nearby track; the unfetched group keeps its authored mouth approach.
@@ -571,7 +583,10 @@ export class LevelSixSubway {
       const ahead=serviceDoors.filter(({d})=>d.x>=tail+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x);
       // A door behind a closed service gate is sealed off from the column (gate-187 qa:threat: every
       // behind-spawn stranded, 0/5 reachable, 1 attack/min in the retreat). Use only reachable sources.
-      const sealed=(x:number)=>s.gates.some(g=>!!g.closedAt&&g.x>x&&g.x<tail);
+      // Pressure is directed at the courier, so a closed gate between the
+      // source and the courier seals that mouth even when the survivor tail
+      // has not crossed it yet.
+      const sealed=(x:number)=>s.gates.some(g=>!!g.closedAt&&g.x>x&&g.x<p.x);
       const behind=serviceDoors.filter(({d})=>d.x<=tail-l6.pressure.behindM&&!sealed(d.x)).sort((a,b)=>b.d.x-a.d.x);
       // With every reachable door shut, the next closed hatch ahead takes the cohort: it bashes the hatch open (8 s).
       const shutAhead=closed.map(i=>({d:l6Doors[i],i})).filter(({d})=>d.x>=tail+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x);
@@ -581,7 +596,19 @@ export class LevelSixSubway {
       const ordinal=this.s.spawnLog.filter(row=>row.wave===3).length/l6.pressure.group;
       const near=behind.filter(({d})=>d.x>=tail-30);
       const ahead2=[...ahead,...shutAhead].sort((a,b)=>a.d.x-b.d.x);
-      const source=(ordinal%2===1?near[0]??ahead2[0]:ahead2[0]??near[0])??serviceDoors.filter(({d})=>!sealed(d.x)&&d.x>=tail-30).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
+      const reachable=serviceDoors.filter(({d})=>!sealed(d.x)&&d.x>=tail-30);
+      // The healthy tail can be 25 m behind Marcus and the courier. Choosing
+      // the first door relative to that tail put both halves of some cohorts
+      // behind the player. Preserve the ahead/behind alternation around the
+      // column, but choose the nearest eligible service mouth to the courier
+      // within that half so each pair can actually join the retreat pressure.
+      const byCourier=(rows:typeof reachable)=>rows.slice().sort((a,b)=>Math.abs(a.d.x-p.x)-Math.abs(b.d.x-p.x));
+      const closest=byCourier(reachable)[0];
+      const preferred=ordinal%2===1?byCourier(near)[0]??byCourier(ahead2)[0]:byCourier(ahead2)[0]??byCourier(near)[0];
+      // Keep the authored alternating direction when its door is nearby. When
+      // the tail-relative band would select a much farther mouth, use the
+      // closest reachable service door so the pair arrives on the live route.
+      const source=preferred&&closest&&Math.abs(preferred.d.x-p.x)<=Math.abs(closest.d.x-p.x)+12?preferred:closest;
       const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
       if(sources.length){const admitted=this.spawn(sources.length,sources,3);if(admitted<sources.length)s.nextWave=t+ticks(5);}
     }
@@ -610,6 +637,10 @@ export class LevelSixSubway {
     // checkpoint was taken; every respawn at 152 had the ring lead 40 m back to that survivor through the horde and the
     // courier died again (~30 s loop). More than half of the living group must be through as well.
     const through=(x:number)=>live.filter(r=>w.entities.get(r.id)!.transform.x>x+2).length*2>live.length;
+    // The first authored gate is 90 m into the retreat. A mortal unarmed
+    // courier who reaches the middle of that leg should keep the gained ground
+    // on a retry, even if the group is still catching up to the gate.
+    if(s.phase==='retreat'&&!s.pressureCheckpoint&&p.x>=60){s.pressureCheckpoint=true;this.mission.requestCheckpoint('retreat-pressure',{x:60,z:17.3});}
     for(const gate of s.gates){
       const behindGate=live.some(r=>r.straggler&&!r.rejoined&&w.entities.get(r.id)!.transform.x<=gate.x+2);
       if(!gate.passed&&s.leaderZ>=l6.tunnel.z&&healthy.length&&tail>gate.x+2&&!behindGate&&through(gate.x)){gate.passed=true;this.mission.requestCheckpoint(`gate-${gate.x}`,LevelSixSubway.gateWait(gate.x));}
