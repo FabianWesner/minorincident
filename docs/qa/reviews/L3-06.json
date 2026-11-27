@@ -13,14 +13,9 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/L3.json",
-      "sha256": "ea931ad25c4686f9418f0d67c7e79350d5f493c8509e50b46ccd5dfb1dba5803",
-      "what": "Current-head report row L3-06: low calm follow-distance counterexamples above 6 m."
-    },
-    {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "6f23ac332dd145ef25263fd59742bc2f929ac21e9aed9b86ac59afa6978d81a0",
-      "what": "Current-head low/complete native follow-distance samples by officer ID."
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "5fe8603e11522b85490f5de36d76a5c811eab1f0484d39c294b8418b38fe14d1",
+      "what": "Current-head native receipt containing the measured L3-06 counterexample described in the clause."
     }
   ],
   "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
