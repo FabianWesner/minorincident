@@ -57,6 +57,8 @@ export interface MegaPursuitState {
   breach: { link: string; until: number } | null;
   stuck: { level: number; since: number; sampleAt: number; x: number; z: number; noPath: number; goal: { x: number; z: number } | null };
   lastDamage: { tick: number; amount: number; sourceId: number } | null;
+  /** L10-02: true once the Mega has stood unoccluded in the widest frame; until then it closes the gap faster (megaAlpha.firstSightingSurge). */
+  sighted?: boolean;
   /** Metres advanced while coarse (telemetry). */
   coarseM: number;
   introduced?: boolean;
@@ -84,7 +86,11 @@ export class MegaPursuit {
   private localGrid: NavGrid;
   get grid(): NavGrid { return this.localGrid; }
   /** Fleet-feet upgrades must not turn the terrain-escape stalker into a slower pursuer. */
-  private get cruiseSpeed(): number { return megaAlpha.cruiseMs * (this.world.scenario === 'L10' ? Math.max(1, this.world.player?.progressionSpeed ?? 1) : 1); }
+  private get cruiseSpeed(): number {
+    const l10 = this.world.scenario === 'L10';
+    const surge = l10 && this.state.id && !this.state.sighted ? megaAlpha.firstSightingSurge : 1;
+    return megaAlpha.cruiseMs * surge * (l10 ? Math.max(1, this.world.player?.progressionSpeed ?? 1) : 1);
+  }
   invalidateNavigation(): void {
     this.path.path.length = 0; this.path.goal = -1;
     if (!this.world.chunks) return;
@@ -182,6 +188,7 @@ export class MegaPursuit {
     if (e.health.current > 0 && e.health.current < e.health.max && !this.world.missions?.state.states['cure-installed']
       && tick - this.lastHurtTick >= megaAlpha.regenDelayTicks) e.health.current = Math.min(e.health.max, e.health.current + e.health.max * megaAlpha.regenPerSecond / 60);
     s.x = e.transform.x; s.z = e.transform.z; s.hp = e.health.current; s.maxHp = e.health.max;
+    if (!s.sighted && !e.infected!.hidden && this.world.infected!.director.inFrame(e.transform, 1, true) && !this.world.infected!.director.occluded(e.transform)) s.sighted = true;
     this.sound();
     if (tick - s.routeAt >= megaAlpha.routeTicks) this.refresh();
   }

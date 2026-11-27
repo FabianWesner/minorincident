@@ -77,7 +77,8 @@ for (const tier of tiers) {
     while (m.state.steps.research.status !== 'active') m.completeObjective();
     place(w, cureHangar.terminal.x + 2, cureHangar.terminal.z);
     const lines: string[] = [];
-    const stop = w.events.on('dialogue.line', e => { if (e.type === 'dialogue.line') lines.push(e.id); });
+    // The Mega reveal (L10.mega-*) is keyed to its first sighting and checked on the route; this fixture teleports into the hangar.
+    const stop = w.events.on('dialogue.line', e => { if (e.type === 'dialogue.line' && !e.id.startsWith('L10.mega-')) lines.push(e.id); });
     advance(w, cureHangarConversation.reduce((n, line) => n + line[1], 0) + 5); stop();
     check(tier, 'hangar conversation completes in order with Reyes fallback', cureHangarConversation.every(([id], i) => lines[i] === (id.startsWith('L10.sam-') ? `${id}.reyes` : id)), lines);
     const cast = Object.entries(m.state.actors).filter(([key]) => key.startsWith('hangar-')).map(([key, id]) => ({ key, id, model: w!.entities.get(id)?.civilian?.model, hp: w!.entities.get(id)?.health.current }));

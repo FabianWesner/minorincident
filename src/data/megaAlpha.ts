@@ -52,6 +52,9 @@ export const megaAlpha = {
   nodeReachM: 3,
   /** Introduction: begin walking outside the widest view at 0:45; the first sighting follows physical travel. */
   introduceS: 45,
+  /** L10-02 "first sighting by 3:00": until the Mega has been on screen once it travels this much faster than cruise. At plain cruise
+   * the route detours kept it 75-140 m behind a running courier and the first sighting came at 10-14 min (2026-11-27 l10-story). */
+  firstSightingSurge: 1.6,
   startBehindM: 24,
   walkStartBehindM: 60,
   /** Checkpoint/respawn fairness: a restored Mega stands at least this far from the restored player. */
