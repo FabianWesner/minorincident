@@ -34,17 +34,18 @@ function gatherAllies(world: SimWorld, at: Spot, escorts: boolean): void {
 }
 
 /** Clear the area around the anchor of infected and make pursuers lose the courier for a few seconds. */
-export function clearThreat(world: SimWorld, at: Spot): void {
+export function clearThreat(world: SimWorld, at: Spot, mercy?: { clearM: number; pursueM: number; delayS: number }): void {
   const ai = world.infected, r = respawnRule, tick = world.tick;
   if (!ai) return;
   // Returning L3 crowds need time to stand without immediately reacquiring the just-respawned courier.
-  const delay = ticks(world.scenario === 'L3' ? l3.mercy.respawnDelayS : r.delayS);
+  const clearM = mercy?.clearM ?? r.clearM, pursueM = mercy?.pursueM ?? r.pursueM;
+  const delay = ticks(world.scenario === 'L3' ? l3.mercy.respawnDelayS : mercy?.delayS ?? r.delayS);
   for (const e of ai.active) {
     const d = dist(e.transform, at);
     // E32 Mega Alpha: never pushed or blinded here; its pursuit seam already restored it ≥ respawnGapM away.
-    if (!e.infected || (e.health.current <= 0 && e.infected.recoverAt < 0) || e.corpse || e.infected.pursuit || d > r.pursueM) continue;
+    if (!e.infected || (e.health.current <= 0 && e.infected.recoverAt < 0) || e.corpse || e.infected.pursuit || d > pursueM) continue;
     // Downed infected that will recover are threats too: leaving their bodies inside the ring revived them beside the courier.
-    const pushed = d < r.clearM;
+    const pushed = d < clearM;
     if (pushed) {
       if (world.missions?.l9 && e.attachedTo !== undefined) {
         const vehicle = world.entities.get(e.attachedTo)?.vehicle;
@@ -61,7 +62,7 @@ export function clearThreat(world: SimWorld, at: Spot): void {
       let moved = false;
       for (let n = 0; n < 16 && !moved; n++) {
         const angle = (n % 2 ? 1 : -1) * Math.ceil(n / 2) * Math.PI / 8, c = Math.cos(angle), s = Math.sin(angle);
-        for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
+        for (let m = clearM; m <= clearM + 6; m += 1) {
           const to = { x: at.x + (dx * c - dz * s) * m, z: at.z + (dx * s + dz * c) * m };
           if (!ai.nav.clear(to.x, to.z, e.combat?.radius ?? .45) || !world.solids.clear({ ...to, y: e.transform.y }, e.combat?.radius ?? .45, e.id)) continue;
           Object.assign(e.transform, to); world.solids.remember(e, 'checkpoint.threat.clear'); world.spatial.set(e.id, to.x, to.z);
@@ -82,7 +83,7 @@ export function clearThreat(world: SimWorld, at: Spot): void {
       // A pushed body (or one whose goal is the respawn spot) forgets its walk goal: it kept walking to the old goal straight back across
       // the anchor (gate 10-13: four infected within 2-7 m of the bat pickup 3 s after the respawn). Free wanderers take the anchor as
       // home, so their next goals lead away from it; leashed street groups keep their block.
-      if (pushed || (brain.hasGoal && Math.hypot(brain.goalX - at.x, brain.goalZ - at.z) < r.clearM)) {
+      if (pushed || (brain.hasGoal && Math.hypot(brain.goalX - at.x, brain.goalZ - at.z) < clearM)) {
         brain.hasGoal = false;
         if (brain.mode === 'attracted' || brain.mode === 'search') { brain.mode = 'wander'; if (e.health.current > 0) e.infected.state = 'wander'; }
         if (!brain.leashM) { brain.homeX = at.x; brain.homeZ = at.z; }
@@ -103,7 +104,10 @@ export function clearThreat(world: SimWorld, at: Spot): void {
 /** `worldKept`: the level keeps its world on death (L1), so escorts are brought back; elsewhere the checkpoint snapshot restored them in formation. */
 export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = true): void {
   const player = world.entities.get(1)!;
-  if (world.missions?.state.checkpoint !== 'cure-disperse-ready') clearThreat(world, anchor);
+  const checkpoint = world.missions?.state.checkpoint;
+  const l10RetryMercy = world.scenario === 'L10' && ['l10-quarantine-gate', 'l10-convoy-7', 'cure-complex', 'cure-disperse-ready'].includes(checkpoint ?? '')
+    ? { clearM: 150, pursueM: 160, delayS: 15 } : undefined;
+  clearThreat(world, anchor, l10RetryMercy);
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
   if (world.missions?.l9?.state.phase === 'driving' && world.vehicles?.active != null) {
     // The checkpoint restored the occupied APC. An on-foot admission at the

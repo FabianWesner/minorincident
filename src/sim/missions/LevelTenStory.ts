@@ -5,7 +5,7 @@ import { l4 } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
 import { cureFinaleCheckpoints } from '../../levels/L10/mission';
-import { cureEncounterSlots, curePaceEncounters, cureWeaponPickups } from '../../levels/L10/encounters';
+import { cureEncounterSlots, cureEncounters, curePaceEncounters, cureWeaponPickups } from '../../levels/L10/encounters';
 
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
 export class LevelTenStory {
@@ -61,7 +61,7 @@ export class LevelTenStory {
     // The finale road uses four authored recovery points. A named point is
     // committed only after its set-piece cohort has been admitted and cleared.
     const setPieces = [
-      { flag: 'l10-gate-checkpoint', x: 3030, group: 'setpiece-quarantine-gate', id: cureFinaleCheckpoints[0] },
+      { flag: 'l10-gate-checkpoint', x: 3030, group: 'setpiece-quarantine-gate', id: cureFinaleCheckpoints[0], afterGroup: 'corridor-line' },
       { flag: 'l10-convoy-checkpoint', x: 3290, group: 'setpiece-burning-convoy', id: cureFinaleCheckpoints[1] },
       { flag: 'l10-hospital-checkpoint', x: 3530, group: 'setpiece-field-hospital', id: cureFinaleCheckpoints[2] },
     ];
@@ -76,6 +76,12 @@ export class LevelTenStory {
       // A downed cohort has lost the fight even if its members may later
       // recover. Their bodies and recovery timers remain in the world.
       if (slots.some(slot => (world.entities.get(spawned[`${slot.key}:0`])?.health.current ?? 0) > 0)) continue;
+      if (beat.afterGroup) {
+        const after = [...cureEncounters, ...curePaceEncounters].find(encounter => encounter.id === beat.afterGroup)!;
+        const afterSlots = cureEncounterSlots(after, world.infected!.director.tier);
+        if (afterSlots.some(slot => spawned[`${slot.key}:0`] === undefined ||
+            (world.entities.get(spawned[`${slot.key}:0`])?.health.current ?? 0) > 0)) continue;
+      }
       state.states[beat.flag] = true;
       this.mission.requestCheckpoint(beat.id);
     }
@@ -84,7 +90,7 @@ export class LevelTenStory {
     const finaleLines: readonly [number, string][] = [
       [2750, 'L10.finale-0'], [2800, 'L10.finale-1'], [2980, 'L10.finale-2'],
       [2980, 'L10.finale-3'], [3076, 'L10.finale-4'], [3190, 'L10.finale-5'],
-      [3235, 'L10.finale-6'], [3340, 'L10.finale-7'], [3480, 'L10.finale-8'], [3480, 'L10.finale-9'],
+      [3235, 'L10.finale-6'], [3380, 'L10.finale-7'], [3480, 'L10.finale-8'], [3480, 'L10.finale-9'],
     ];
     if (!state.states['l10-sinkhole-warning'] && p.transform.x >= 3300) {
       state.states['l10-sinkhole-warning'] = true;
@@ -93,8 +99,8 @@ export class LevelTenStory {
     const nextFinaleLine = finaleLines.findIndex(([x], index) => !state.states[`l10-finale-beat-${index}`] && p.transform.x >= x);
     // The line triggers mark the locations where the radio beats become
     // relevant, while this cadence keeps a fast ride from bunching them into
-    // one unreadable burst. Forty-five seconds leaves room for the roadblock fights
-    // and keeps the hangar-to-gate sequence inside its authored 7–9 minutes.
+    // one unreadable burst. Keep the beats close enough to land at their
+    // authored set-pieces even when roadblock fights consume time.
     // Direct scripted updates (such as teleport-based story tools) do not
     // advance the simulation clock. Keep those deterministic; live gameplay
     // still meters each radio cue against elapsed world ticks.
@@ -104,7 +110,7 @@ export class LevelTenStory {
       const key = `l10-finale-beat-${index}`;
       if (!state.states[key] && p.transform.x >= x) {
         state.states[key] = true;
-        state.counters['l10-finale-next-beat-tick'] = world.tick + 45 * 60;
+        state.counters['l10-finale-next-beat-tick'] = world.tick + 12 * 60;
         if (index === 2) state.counters['l10-reyes-loop-ticks'] = world.tick + 360;
         this.say(id, 300);
       }

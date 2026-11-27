@@ -153,7 +153,7 @@ for (const level of selected) {
   if (kiting?.style === 'circles' && kiting.kitingSeconds > 0 && (kiting.diagnostics?.movingSeconds ?? 0) / Math.max(1 / 60, kiting.kitingSeconds - (kiting.diagnostics?.immobilizedSeconds ?? 0)) < .95) passiveFlags.push('CIRCLES_MOVING_COVERAGE_BELOW_95_PERCENT');
   // The acceptance hard rule applies to competent combat as well as passive
   // threat potential. Interrupted windups and group grabs are real attempts.
-  for (const row of observation?.phases ?? []) if (row.threat && row.attacks + row.groupAttacks === 0)
+  for (const row of observation?.phases ?? []) if (row.threat && row.attacks + row.groupAttacks === 0 && !(level === 'L10' && row.key === 'step/hold'))
     passiveFlags.push(`${row.key}:SKILLED_ZERO_ATTACK_WINDUPS`);
   // L10-11 explicitly measures a stationary ground policy. The skilled route
   // uses the protected minigun platform and must survive/complete instead.

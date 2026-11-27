@@ -652,15 +652,17 @@ export class MegaPursuit {
   /** Respawn fairness: a restored Mega stands ≥ respawnGapM from the player (only at a checkpoint restore or respawn, never in play). */
   private keepGap(): void {
     const e = this.entity(); if (!e || !this.alive()) return;
-    const player = this.world.entities.get(1)!.transform, gap = megaAlpha.respawnGapM;
+    const player = this.world.entities.get(1)!.transform;
+    const l10 = this.world.scenario === 'L10';
+    const gap = l10 ? Math.max(megaAlpha.respawnGapM, 500) : megaAlpha.respawnGapM;
     if (dist(e.transform, player) >= gap) return;
     let spot: { x: number; z: number } | null = null;
     if (this.nodes.size) {
       let best = Infinity;
-      for (const node of this.nodes.values()) if (dist(node, player) >= gap && dist(node, e.transform) < best && (!this.resident(node.x, node.z) || this.grid.clear(node.x, node.z, this.radius))) { best = dist(node, e.transform); spot = node; }
+      for (const node of this.nodes.values()) if (dist(node, player) >= gap && (!l10 || node.x <= player.x - gap * .75) && dist(node, e.transform) < best && (!this.resident(node.x, node.z) || this.grid.clear(node.x, node.z, this.radius))) { best = dist(node, e.transform); spot = node; }
     }
     if (!spot) {
-      const d = dist(e.transform, player), dx = d > .1 ? (e.transform.x - player.x) / d : Math.cos(e.id), dz = d > .1 ? (e.transform.z - player.z) / d : Math.sin(e.id);
+      const d = dist(e.transform, player), dx = l10 ? -1 : d > .1 ? (e.transform.x - player.x) / d : Math.cos(e.id), dz = l10 ? 0 : d > .1 ? (e.transform.z - player.z) / d : Math.sin(e.id);
       for (let m = gap; m <= gap * 2 && !spot; m += 2) {
         const at = { x: player.x + dx * m, z: player.z + dz * m };
         spot = this.resident(at.x, at.z) ? this.clearNear(at, 4) : at;
