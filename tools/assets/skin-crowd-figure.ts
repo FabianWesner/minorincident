@@ -384,6 +384,20 @@ if (quadruped && bodyPath) {
   body.owner = weld.map(w => labels[w]); fit.animalOwnershipRepairs = repaired;
 }
 
+if (args.includes('--repair-flamingo-tail')) {
+  // The TRELLIS flamingo's rear plumage is nearest to the bent right leg in
+  // the old rigid template. Keep that surface on the tail chain before the
+  // welded geodesic weight blending, so a leg tuck cannot pull the body apart.
+  const tail = JOINTS.indexOf('tail');
+  if (tail < 0) throw Error('Flamingo tail repair requires the tail joint');
+  let repaired = 0;
+  for (let i = 0; i < body.owner.length; i++) {
+    const name = JOINTS[body.owner[i]], x = body.pos[i * 3], y = body.pos[i * 3 + 1];
+    if ((name === 'legR' || name === 'shinR' || name === 'footR') && x < -.32 && y > .64) { body.owner[i] = tail; repaired++; }
+  }
+  if (!repaired) throw Error('Flamingo tail repair found no misassigned vertices');
+  fit.flamingoTailRepairs = repaired;
+}
 const bodyBudget = Number(arg('--body-budget') ?? Infinity);
 const contactCaps: { centre: number[]; rim: number[][] }[] = [];
 

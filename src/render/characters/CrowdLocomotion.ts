@@ -117,6 +117,7 @@ export class CrowdLocomotion {
   private readonly paws = new Map<number, PawContacts>();
   private readonly animal: boolean;
   private readonly animalSkin: boolean;
+  private readonly openWingRest: boolean;
   private readonly fourLegs: boolean;
   private readonly groundedAnimal: boolean;
   private readonly preserveAnimalJoints: boolean;
@@ -127,6 +128,7 @@ export class CrowdLocomotion {
   private readonly solePoints?: Vector3[][];
   private readonly pawSoles: { node: Object3D; points: Vector3[] }[];
   constructor(private readonly model: Object3D, clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
+    this.openWingRest = model.getObjectByName('root')?.userData.openWingRest === true;
     this.fourLegs = !!model.getObjectByName('legFL');
     this.animalSkin = model.getObjectByName('root')?.userData.crowdQuadruped === true || !!model.getObjectByName('root')?.userData.animalSoles;
     this.animal = this.fourLegs || this.animalSkin;
@@ -198,6 +200,7 @@ export class CrowdLocomotion {
       this.rig.hip?.parent?.updateWorldMatrix(true, false);
       this.layer(layers, phase);
     }
+    if (this.openWingRest) this.foldFlamingoWings(layers?.animal);
     this.frame.updateMatrixWorld(true);
     if (layers?.bodyLean !== undefined && this.rig.hip && this.rig.armL && this.rig.armR) {
       const hip = this.rig.hip;
@@ -325,6 +328,22 @@ export class CrowdLocomotion {
       hip.position.x += x * .04 * flinch / parentScale; hip.position.z += z * .04 * flinch / parentScale;
     }
   }
+  /** The spread-wing bind has separate shoulder and outer-feather pivots.
+   * Fold the two joints on the ground and let the flight layer open and beat them. */
+  private foldFlamingoWings(animal?: AnimalPose): void {
+    const spread = Math.max(0, Math.min(1, animal?.wing ?? 0)), flap = animal?.flap ?? 0;
+    for (const side of ['L', 'R'] as const) {
+      const sign = side === 'L' ? -1 : 1;
+      const arm = this.rig[`arm${side}`], fore = this.rig[`foreArm${side}`], wing = (this.rig as unknown as Record<string, Object3D>)[`wing${side}`];
+      for (const joint of [arm, fore, wing]) {
+        const index = this.nodes.indexOf(joint);
+        if (index >= 0) joint.quaternion.copy(this.rest[index].quaternion);
+      }
+      arm?.quaternion.premultiply(this.rotation.setFromAxisAngle(X, sign * .8 * (1 - spread)));
+      fore?.quaternion.premultiply(this.rotation.setFromAxisAngle(X, sign * 3.1 * (1 - spread)));
+      wing?.quaternion.premultiply(this.rotation.setFromAxisAngle(X, -sign * flap));
+    }
+  }
   /** r32: species pose for the L8 animal moves. Joints are rotated in their parent's space; planted paws re-solve the legs. */
   private animalLayer(a: AnimalPose, parentScale: number): void {
     const rig = this.rig as unknown as Record<string, Object3D | undefined>, { hip, torso } = this.rig;
@@ -340,13 +359,20 @@ export class CrowdLocomotion {
       if (a.wing) {
         // Flamingo wings: swing out from the folded rest, then beat about the body's long axis.
         const out = side === 'L' ? -1 : 1;
-        turn(arm, Y, -out * 1.25 * a.wing); turn(arm, X, out * (a.flap - .15 * a.wing) * -1);
-        turn(fore, Y, -out * .35 * a.wing);
+        turn(arm, Y, out * 1.25 * a.wing); turn(arm, X, out * (a.flap - .15 * a.wing) * -1);
+        turn(fore, Y, out * .35 * a.wing);
+        // TRELLIS flamingos have dedicated feathered wing pivots below each arm.
+        // Driving both levels opens the silhouette instead of rotating only the shoulder.
+        turn(rig[`wing${side}`], Y, out * .35 * a.wing);
+        turn(rig[`wing${side}`], X, out * a.flap * -.8);
       } else {
         turn(arm, Z, a.front + (side === 'L' ? a.stamp * .75 : 0) + a.armsUp * 2.5);
         turn(fore, Z, -a.front * .45 - (side === 'L' ? a.stamp * 1.1 : 0) - a.armsUp * .6);
       }
       turn(leg, Z, a.hind); turn(shin, Z, -Math.max(0, a.hind) * .6);
+      // This source's right ankle pivot sits at the hock, halfway down the
+      // long leg. Fold that lower segment as the bird tucks for its dive.
+      if (this.openWingRest && side === 'R') turn(rig.footR, Z, -Math.max(0, a.hind) * 1.5);
     }
   }
   /** Legacy stance plants (mid band): world-space stance heels, no yaw lock or turn steps. */

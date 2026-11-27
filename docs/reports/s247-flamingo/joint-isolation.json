@@ -1,0 +1,84 @@
+{
+  "model": "public/assets/models/skinned/inf.flamingo.lod0.glb",
+  "method": "Each joint rotated locally by +1 radian about Z from rest; world-space CPU skinned vertex displacement; body region is rest y >= 0.65 m, low region is below. Count is vertices displaced >0.01 m. Means are normalized by total mesh vertex count.",
+  "results": [
+    {
+      "joint": "legL",
+      "low": {
+        "count": 241,
+        "max": 0.9001034532129563,
+        "mean": 0.07997485657027063
+      },
+      "body": {
+        "count": 58,
+        "max": 0.1859371431243304,
+        "mean": 0.0018191776482529944
+      }
+    },
+    {
+      "joint": "shinL",
+      "low": {
+        "count": 218,
+        "max": 0.588037982760135,
+        "mean": 0.0404263290182627
+      },
+      "body": {
+        "count": 0,
+        "max": 0.007523257437671099,
+        "mean": 1.5128955758819083e-05
+      }
+    },
+    {
+      "joint": "footL",
+      "low": {
+        "count": 171,
+        "max": 0.3556489199561926,
+        "mean": 0.014109949494258577
+      },
+      "body": {
+        "count": 0,
+        "max": 0,
+        "mean": 0
+      }
+    },
+    {
+      "joint": "legR",
+      "low": {
+        "count": 222,
+        "max": 0.8932370803545305,
+        "mean": 0.07118882337657077
+      },
+      "body": {
+        "count": 466,
+        "max": 0.425905328547075,
+        "mean": 0.04730319733557984
+      }
+    },
+    {
+      "joint": "shinR",
+      "low": {
+        "count": 224,
+        "max": 0.8633136421051667,
+        "mean": 0.06574129034626508
+      },
+      "body": {
+        "count": 435,
+        "max": 0.23251491173955746,
+        "mean": 0.021699160494707975
+      }
+    },
+    {
+      "joint": "footR",
+      "low": {
+        "count": 218,
+        "max": 0.533172120065749,
+        "mean": 0.033831054615765604
+      },
+      "body": {
+        "count": 23,
+        "max": 0.0814091677091756,
+        "mean": 0.0004092360684467854
+      }
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "fixture": "L8 mission, one same-ID converted flamingo; other birds/allies hidden or moved; courier moved at active tick; camera follows subject at game zoom",
+  "tiers": {
+    "high": {
+      "capture": [
+        {
+          "tick": 21,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "beat1"
+        },
+        {
+          "tick": 25,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "flight"
+        },
+        {
+          "tick": 28,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "beat2"
+        },
+        {
+          "tick": 39,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "telegraph"
+        },
+        {
+          "tick": 70,
+          "x": 0.012111361665113772,
+          "z": -26.608855026398757,
+          "stage": "active",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "dive"
+        },
+        {
+          "tick": 106,
+          "x": 0.023479806204260815,
+          "z": -34.52237938969101,
+          "stage": "active",
+          "start": 10,
+          "active": 46,
+          "impact": 98,
+          "recovery": 0,
+          "label": "impact"
+        },
+        {
+          "tick": 398,
+          "x": 10.486120421034109,
+          "z": -33.2813013849385,
+          "stage": "recovery",
+          "start": 10,
+          "active": 46,
+          "impact": 98,
+          "recovery": 518,
+          "label": "recovery"
+        }
+      ],
+      "walk_run": {
+        "frames": 360,
+        "checks": {
+          "pass": true,
+          "checks": [
+            {
+              "name": "travelM.bird.min",
+              "pass": true,
+              "value": 19.98555878817077,
+              "limit": 6
+            },
+            {
+              "name": "travelM.bird.max",
+              "pass": true,
+              "value": 19.98555878817077,
+              "limit": 100
+            },
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "footSlideP95MaxCm",
+              "pass": true,
+              "value": 0,
+              "limit": 3
+            },
+            {
+              "name": "footSlideP95Cm.bird",
+              "pass": true,
+              "value": 0,
+              "limit": 3
+            },
+            {
+              "name": "footWindowMotion.bird.60-180",
+              "pass": true,
+              "value": 11,
+              "limit": 6
+            },
+            {
+              "name": "footWindowP95Cm.bird.60-180",
+              "pass": true,
+              "value": 0,
+              "limit": 3
+            },
+            {
+              "name": "footWindowMotion.bird.230-350",
+              "pass": true,
+              "value": 11,
+              "limit": 6
+            },
+            {
+              "name": "footWindowP95Cm.bird.230-350",
+              "pass": true,
+              "value": 0,
+              "limit": 3
+            }
+          ]
+        }
+      }
+    },
+    "low": {
+      "capture": [
+        {
+          "tick": 21,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "beat1"
+        },
+        {
+          "tick": 25,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "flight"
+        },
+        {
+          "tick": 28,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "beat2"
+        },
+        {
+          "tick": 39,
+          "x": 0.025534411542847555,
+          "z": -19.525534411542854,
+          "stage": "telegraph",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "telegraph"
+        },
+        {
+          "tick": 70,
+          "x": 0.012111361665113772,
+          "z": -26.608855026398757,
+          "stage": "active",
+          "start": 10,
+          "active": 46,
+          "recovery": 0,
+          "label": "dive"
+        },
+        {
+          "tick": 106,
+          "x": 0.023479806204260815,
+          "z": -34.52237938969101,
+          "stage": "active",
+          "start": 10,
+          "active": 46,
+          "impact": 98,
+          "recovery": 0,
+          "label": "impact"
+        },
+        {
+          "tick": 398,
+          "x": 10.486120421034109,
+          "z": -33.2813013849385,
+          "stage": "recovery",
+          "start": 10,
+          "active": 46,
+          "impact": 98,
+          "recovery": 518,
+          "label": "recovery"
+        }
+      ],
+      "walk_run": {
+        "frames": 360,
+        "checks": {
+          "pass": true,
+          "checks": [
+            {
+              "name": "travelM.bird.min",
+              "pass": true,
+              "value": 19.98555878817077,
+              "limit": 6
+            },
+            {
+              "name": "travelM.bird.max",
+              "pass": true,
+              "value": 19.98555878817077,
+              "limit": 100
+            },
+            {
+              "name": "consoleErrors",
+              "pass": true,
+              "value": 0,
+              "limit": 0
+            },
+            {
+              "name": "footSlideP95MaxCm",
+              "pass": true,
+              "value": 0,
+              "limit": 3
+            },
+            {
+              "name": "footSlideP95Cm.bird",
+              "pass": true,
+              "value": 0,
+              "limit": 3
+            },
+            {
+              "name": "footWindowMotion.bird.60-180",
+              "pass": true,
+              "value": 11,
+              "limit": 6
+            },
+            {
+              "name": "footWindowP95Cm.bird.60-180",
+              "pass": true,
+              "value": 0,
+              "limit": 3
+            },
+            {
+              "name": "footWindowMotion.bird.230-350",
+              "pass": true,
+              "value": 11,
+              "limit": 6
+            },
+            {
+              "name": "footWindowP95Cm.bird.230-350",
+              "pass": true,
+              "value": 0.1,
+              "limit": 3
+            }
+          ]
+        }
+      }
+    }
+  },
+  "stretch": "LOD0/1/2: 0 edges over 4x rest at spread 0, .25, .5, .75, 1; spread .5 includes right leg tuck",
+  "threat_audit": "L8: 0 level flags; top-level PARTIAL_LEVEL_SELECTION excluded as requested"
+}
