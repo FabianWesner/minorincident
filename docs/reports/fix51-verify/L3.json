@@ -5,7 +5,7 @@
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:41:24.864Z",
+  "generatedAt": "2026-11-27T22:46:01.754Z",
   "policies": [
     {
       "tier": "low",
@@ -6540,14 +6540,13 @@
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (Codex/v2-l2l4): Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-        "docs/reports/fix51-verify/L3.json"
+        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
       ],
       "expected": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation.",
       "checks": [
@@ -6871,36 +6870,6 @@
         "tag": "O",
         "instruction": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation.",
         "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation."
-      },
-      "reviewDecision": {
-        "row": "L3-06",
-        "status": "FAIL",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-27",
-        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
-        "clauses": [
-          {
-            "clause": "Calm squad following distance by member",
-            "verdict": "FAIL",
-            "note": "Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/fix51-verify/L3.json",
-            "sha256": "ea931ad25c4686f9418f0d67c7e79350d5f493c8509e50b46ccd5dfb1dba5803",
-            "what": "Current-head report row L3-06: low calm follow-distance counterexamples above 6 m."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-            "sha256": "6f23ac332dd145ef25263fd59742bc2f929ac21e9aed9b86ac59afa6978d81a0",
-            "what": "Current-head low/complete native follow-distance samples by officer ID."
-          }
-        ],
-        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
-        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
@@ -7249,13 +7218,15 @@
     },
     {
       "id": "L3-09",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1069,\"sprinters\":53,\"fraction\":0.04957904583723106,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS)",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1069,\"sprinters\":53,\"fraction\":0.04957904583723106,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS) Manual review FAIL (Codex/v2-l2l4): Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike.; Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+        "docs/reports/v2-l2l4/L3-09-movement.json",
+        "tools/qa/accept/v2-l3-speed.ts"
       ],
       "expected": "Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
       "checks": [
@@ -7307,37 +7278,47 @@
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
       "reviewDecision": {
         "row": "L3-09",
-        "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
+            "clause": "Regular infected speed ≤ 4.0 m/s",
+            "verdict": "FAIL",
+            "note": "Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike."
+          },
+          {
+            "clause": "Sprinters ≤5%",
             "verdict": "PASS",
-            "note": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+            "note": "Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-09-native.json",
-            "sha256": "6b5c6c8cb7d37eae0482b1ca9e1c74fbcec153a912fae4c6b13032005fe1ce8b",
-            "what": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+            "file": "docs/reports/v2-l2l4/L3-09-movement.json",
+            "sha256": "fc845bb6c4a159893076c3361577d862c0fc880a33bb8f56a2ec2f0567c1b029",
+            "what": "Both-tier per-tick runner positions, actual displacements and run metadata."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
-            "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
-            "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "tools/qa/accept/v2-l3-speed.ts",
+            "sha256": "953a4c3f960f0eb710d003c6dfbf5bd587c03cf0aab73b7894720197b076afc0",
+            "what": "Read-only observer and exact reproduction command."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
-            "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
-            "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+            "sha256": "98754ea4223b1e90c9402514a76050dddbcac8c7cbe4222366ed69f8883701ba",
+            "what": "Current both-tier spawn census and sprinter fraction."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+            "sha256": "5697c684a9e5131b17dc4a0745844ef012e89566e9d52ad861aaa766e34c5e49",
+            "what": "Current both-tier spawn census and sprinter fraction."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Existing battery compares against L1 shared bound, not 4 m/s; checker correction remains open.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
