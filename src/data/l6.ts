@@ -6,7 +6,7 @@ export const l6 = {
   infected: { high: 33, low: 33 }, pressure: { group: 2, intervalS: 14, aheadM: 8, behindM: 8 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
   exit: { centerZ: 15.9, approachZ: 14.1 }, gates: [90, 150, 210],
   /** PO 10-20 #64: a closed entry hatch takes one bash per second from its waiting arrivals and breaks after `hits` (8 s). */
-  hatch: { hits: 8, hitS: 1, safeS: 15, promptM: 3.3, standM: .9 }, checkpoints: ['shelter', 'abandon', 'gate-90', 'mid-tunnel', 'gate-150', 'gate-210', 'exit-platform'], caption: 'Night. Still alive.',
+  hatch: { hits: 8, hitS: 1, safeS: 15, promptM: 3.3, standM: .9 }, checkpoints: ['shelter', 'abandon', 'retreat-pressure', 'gate-90', 'mid-tunnel', 'gate-150', 'gate-210', 'exit-platform'], caption: 'Night. Still alive.',
 } as const;
 /** Benches for the shelter's sitting routine, including slots for carried L5 survivors. */
 export const l6ShelterSeats = Array.from({ length: Math.ceil((l6.shelter.high + l5Survivors.length - 1) / 5) }, (_, k) => {

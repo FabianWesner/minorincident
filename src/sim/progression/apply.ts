@@ -65,6 +65,14 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
 export function campaignLoadout(save:CampaignSave,level:number):{size:number;LEFT:string[];RIGHT:string[]} {
   const authored=levelStartWeapons[level as keyof typeof levelStartWeapons];
   if(!authored)throw new RangeError(`Invalid campaign level ${level}`);
+  // A deliberately unarmed save (the L6 fists-only challenge) must remain
+  // unarmed at the level boundary. Authored campaign arsenals still apply to
+  // ordinary saves that own any other weapon.
+  if(level===6&&save.ownedActions.every(id=>id==='weapon.fists'||id==='weapon.kick')) {
+    const LEFT=save.racks.LEFT.filter(id=>id==='weapon.fists'||id==='weapon.kick');
+    const RIGHT=save.racks.RIGHT.filter(id=>id==='weapon.fists'||id==='weapon.kick');
+    return {size:Math.max(rackSize(level),LEFT.length,RIGHT.length),LEFT:LEFT.length?LEFT:['weapon.fists'],RIGHT:RIGHT.length?RIGHT:['weapon.kick']};
+  }
   const LEFT=[...authored.LEFT],RIGHT=[...authored.RIGHT];
   if(!LEFT.length)LEFT.push('weapon.fists');
   if(!RIGHT.length)RIGHT.push('weapon.kick');

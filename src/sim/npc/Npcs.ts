@@ -59,7 +59,10 @@ export class Npcs {
       // fix67-a (L3-06): a calm officer behind his slot gets headroom over her pace in proportion to the slot error;
       // capped at exactly her pace he could never close a gap once it opened.
       const leaderSpeed = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0);
-      const catchUp = e.civilian!.ally!.targetId ? 0 : Math.max(0, Math.hypot(target.x - e.transform.x, target.z - e.transform.z) - stop) * 2;
+      const slotError = Math.max(0, Math.hypot(target.x - e.transform.x, target.z - e.transform.z) - stop);
+      const catchUp = e.civilian!.ally!.targetId
+        ? this.world.missions?.def.l3 ? Math.min(1.5, slotError) : 0
+        : slotError * 2;
       if (leaderSpeed > .5 && Math.hypot(e.transform.x - leader.transform.x, e.transform.z - leader.transform.z) <= follow.maxM + 2)
         speed = Math.min(speed, leaderSpeed + catchUp);
     }

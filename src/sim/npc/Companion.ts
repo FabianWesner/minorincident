@@ -337,7 +337,7 @@ export class Companion {
           } else {
             this.target.x = player.transform.x + (velocity?.x ?? 0) * lead; this.target.z = player.transform.z + (velocity?.z ?? 0) * lead;
           }
-          const followPace = Math.max(this.world.scenario === 'L8' ? 4.8 : 4.5, playerSpeed + Math.max(0, distance - 2) * 3);
+          const followPace = this.world.scenario === 'L6' && mission?.state.l6?.phase === 'exit' && distance < 10 ? 2.2 : Math.max(this.world.scenario === 'L8' ? 4.8 : 4.5, playerSpeed + Math.max(0, distance - 2) * 3);
           // A separated L8 dog can need a long detour around the zoo's fixed
           // fences; the ordinary short search otherwise leaves it stationary.
           const budget = this.world.scenario === 'L8' && distance > 6 ? 16000 : 1600;
