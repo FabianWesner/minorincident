@@ -79,3 +79,7 @@ Fresh **FAIL**: the checkpoint death fixture saves a living Mega at 1116 HP low 
 ## L1-07 review
 
 Fresh **PASS**: remote idle spread starts at 5, reaches 30/30 low and 44/50 high at +120/+240 s; all additional turns follow bites and the observer takes no damage or action. The controlled probe uses an ordinary opening and one remote observer relocation. [Review JSON](../../qa/reviews/L1-07.json) records both fixture hashes. No game source changed; no regression cause or open clause was found for this row.
+
+## L10-10 review
+
+Fresh **PASS**: both complete native routes record 3600 eligible increments, zero invalid increments; high includes 120 dead ticks. Both tiers' controlled boundary probe pauses at 40.01 m with instruction, holds while dead and resumes inside. The minigun yields 20 rounds/s and 0.125 heat/s, locks at 1.0, remains locked at 0.4 and unlocks at 0.396667. [Review JSON](../../qa/reviews/L10-10.json) records four current receipt hashes. No game change or open numeric clause for this row.
