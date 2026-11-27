@@ -48,7 +48,7 @@ export async function l6Trajectories(tier: 'low'|'high') {
 }
 export function firstBreachPass(row: Awaited<ReturnType<typeof l6Trajectories>>) {
  const breach=row.events.filter(e=>e.type==='l6.breach1'),bang=row.events.filter(e=>e.type==='l6.bang'&&e.breach===1),second=row.events.find(e=>e.type==='l6.breach2');
- return row.run.completed&&breach.length===1&&bang.length===1&&breach[0].tick/60>=30&&breach[0].tick/60<=40&&(breach[0].tick-bang[0].tick)/60>=1.5&&!!second&&row.actors.filter(a=>a.wave===1&&a.firstShelterFloor!==null&&a.firstShelterFloor<second.tick).length>=6;
+ return row.run.completed&&breach.length===1&&bang.length===1&&breach[0].tick/60>=30&&breach[0].tick/60<=40&&(breach[0].tick-bang[0].tick)/60>=1.5&&!!second&&row.actors.filter(a=>a.wave===1&&a.firstShelterFloor!==null&&a.firstShelterFloor<second.tick).length>=3; // PO 2026-11-25 halved L6: all 4 authored, at least 3 on the floor (PO approved 2026-11-27)
 }
 export function sideEntriesPass(row: Awaited<ReturnType<typeof l6Trajectories>>) {
  const sides=row.actors.filter(a=>a.wave===4),doors=[...new Set(sides.map(a=>a.door))],signs=doors.map(d=>Math.sign(l6Doors[d].z-15));

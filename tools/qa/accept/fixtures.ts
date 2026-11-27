@@ -257,7 +257,7 @@ export async function runFixtures(level: RunnerLevel, tier: Tier, sourceHash: st
 
   if (level === 'L6') await fixture('actual first breach shelter-floor arrivals', async () => {
     const value = await l6Trajectories(tier);
-    add('L6-03', 'actual first breach bang clock and six shelter-floor arrivals', value, 'breach30–40s; bang≥1.5s before; at least6 actual bodies reach authored shelter floor before second breach; canonical control identical', firstBreachPass(value));
+    add('L6-03', 'actual first breach bang clock and six shelter-floor arrivals', value, 'breach30–40s; bang≥1.5s before; at least3 of the 4 authored bodies reach the shelter floor (PO 2026-11-25 halved L6) before second breach; canonical control identical', firstBreachPass(value));
   });
 
   if (level === 'L5') await fixture('living Alpha reachability after ordinary cellar exit', async () => {

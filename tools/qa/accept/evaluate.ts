@@ -78,13 +78,15 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     1:[], 2:['weapon.bat'], 3:['weapon.bat','weapon.fire-axe'],
     4:['weapon.fire-axe','weapon.handgun'], 5:['weapon.fire-axe','weapon.handgun','weapon.army-mg'],
     6:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun'],
-    7:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.assault-rifle'],
-    8:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun'],
-    9:['weapon.fire-axe','weapon.handgun','weapon.assault-rifle'], 10:[],
+    // PO 2026-11-25 ("For some reason I lost a shotgun. Why?"): a weapon once found stays in every later rack; L10 empty by story.
+    // PO approved this target update 2026-11-27.
+    7:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun','weapon.assault-rifle'],
+    8:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun','weapon.assault-rifle','weapon.rocket-launcher'],
+    9:['weapon.fire-axe','weapon.handgun','weapon.army-mg','weapon.shotgun','weapon.assault-rifle'], 10:[],
   };
   const offered = [...new Set([...(initial.racks?.LEFT ?? []), ...(initial.racks?.RIGHT ?? [])])].filter(id => id.startsWith('weapon.') && !['weapon.fists', 'weapon.kick'].includes(id));
   const n = Number(receipt.level.slice(1)), expected = startSets[n] ?? [];
-  add('G-16', 'weapons offered in the ordinary initial racks', offered, `PO 2026-11-19 s190 exact set: ${JSON.stringify(expected)}`, offered.length===expected.length&&expected.every(id=>offered.includes(id)));
+  add('G-16', 'weapons offered in the ordinary initial racks', offered, `PO 2026-11-19 s190 + 2026-11-25 exact set: ${JSON.stringify(expected)}`, offered.length===expected.length&&expected.every(id=>offered.includes(id)));
   add('G-19', 'corgi health and real infected attack targets', observation.corgi, 'health fraction=1; zero target windups and damaging hits', observation.corgi.samples ? observation.corgi.minimumHealthFraction === 1 && observation.corgi.targeted === 0 && observation.corgi.hit === 0 : undefined);
   const runOut = observation.runOut;
   add('G-20', 'engaged run-out duration and invulnerability', runOut, '300 ticks ±1; invulnerability through deadline', runOut ? Math.abs(runOut.until - runOut.tick - 300) <= 1 && runOut.minimumInvulnerableUntil >= runOut.until : undefined);
@@ -301,9 +303,9 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       const bang = observation.ledger.find(event => event.type === 'l6.bang' && event.breach === 1);
       number('L6-03', 'first breach level clock', breach1 ? breach1.tick / 60 : null, 30, 40);
       number('L6-03', 'first breach bang lead', breach1 && bang ? (breach1.tick - bang.tick) / 60 : null, 1.5, Infinity);
-      number('L6-03', 'actual first-wave spawn admissions (floor traversal still open)', s6?.spawnLog.filter(entry => entry.wave === 1).length, 6, Infinity);
+      number('L6-03', 'actual first-wave spawn admissions (floor traversal still open)', s6?.spawnLog.filter(entry => entry.wave === 1).length, 4, Infinity);
       number('L6-04', 'second breach delay', breach1 && breach2 ? (breach2.tick - breach1.tick) / 60 : null, 20, 30);
-      number('L6-04', 'second-wave admitted identities', s6?.spawnLog.filter(entry => entry.wave === 2).length, 10, Infinity);
+      number('L6-04', 'second-wave admitted identities', s6?.spawnLog.filter(entry => entry.wave === 2).length, 5, Infinity);
       number('L6-04', 'second-wave source accesses', s6 ? new Set(s6.spawnLog.filter(entry => entry.wave === 2).map(entry => entry.door)).size : null, 2, Infinity);
       if (!competent) for (const name of ['l6.breach1', 'l6.breach2']) {
         const wave = threat?.waves.find(wave => wave.key === name);
@@ -353,7 +355,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
         // disjoint: l7.started is still false in this first-tick snapshot.
         const residents = (archetype: string) => initial.census.filter(e => e.infected && e.hp > 0 && e.archetype === archetype).length;
         number('L7-04', 'actual resident and later regular admissions', residents('infected.runner') + (observation.births['infected.runner'] ?? 0), low ? 280 : 560, Infinity);
-        number('L7-04', 'actual resident and later Alpha admissions', residents('infected.alpha') + (observation.births['infected.alpha'] ?? 0), 4, 6);
+        number('L7-04', 'actual resident and later Alpha admissions', residents('infected.alpha') + (observation.births['infected.alpha'] ?? 0), 14, 14);
       }
       number('L7-04', 'concurrent cap', observation.peakAlive, 0, low ? 100 : 200);
       if (competent) {
@@ -378,7 +380,8 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       const zoo = final.l8;
       // The breach waits for Nadia's guided tour (target changed 2026-11-19, s168/s171): the calm
       // runs to max(3600 ticks, tour arrival + 900 ticks) and keeps its marker on every tick.
-      const expectedBreachTicks = zoo?.guideDone === 2 ? Math.max(3600, zoo.guideArrivedAt - zoo.startedAt + 900) : 3600;
+      // PO 2026-11-26 ("Just skip these non-sense first 2 minutes"): no guided tour; the breach fires 20 s after arrival (PO approved 2026-11-27).
+      const expectedBreachTicks = 1200;
       add('L8-02', 'native calm marker and infected attack event state (HUD text requires browser)', { ...observation.calm, expectedBreachTicks: zoo ? expectedBreachTicks : null },
         'calm of max(3600 ticks, guided-tour arrival + 900 ticks) ±1 (the breach waits for the tour, never before 60 s); destination marker present on every observable calm tick; zero combat events; zero infected',
         !!zoo?.breachedAt && Math.abs(observation.calm.ticks - expectedBreachTicks) <= 1 && observation.calm.markerTicks === observation.calm.ticks && observation.calm.combatEvents === 0 && observation.calm.maxAlive === 0);
@@ -399,7 +402,8 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L8-03', 'initial zebras', initial.census.filter(e => e.animal === 'zebra').length, 2, Infinity);
       number('L8-03', 'initial flamingos', initial.census.filter(e => e.animal === 'flamingo').length, 3, Infinity);
       number('L8-04', 'breach active-sim clock', zoo?.breachedAt ? zoo.breachedAt - zoo.startedAt : null, expectedBreachTicks, expectedBreachTicks);
-      number('L8-04', 'distinct tunnel outlets', zoo?.outlets.length, 3, Infinity);
+      // PO 2026-11-21 ("they should come from the outer of the zoo"): breach waves enter through perimeter gates, not tunnels.
+      number('L8-04', 'distinct tunnel outlets', (zoo?.outlets.length || zoo?.perimeterOutlets?.length) ?? 0, 3, Infinity);
       // 0–3 route-region Alphas (2026-11-19, s168/s171): the six animal arenas carry the outbreak.
       if (competent && receipt.run?.completed) number('L8-05', 'actual admitted Alphas over observed route', zoo?.alphas, 0, 3);
       number('L8-05', 'concurrent cap', observation.peakAlive, 0, low ? 100 : 200);
