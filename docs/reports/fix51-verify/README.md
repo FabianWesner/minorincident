@@ -1,6 +1,6 @@
 # fix51-verify acceptance automation
 
-**NO-GO; incomplete acceptance coverage.** 53/180 rows have current measured clauses; 5 have fresh FAILs. Status totals: NOT CHECKED: 163, PASS: 12, FAIL: 5. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.
+**NO-GO; incomplete acceptance coverage.** 53/180 rows have current measured clauses; 5 have fresh FAILs. Status totals: NOT CHECKED: 162, PASS: 13, FAIL: 5. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.
 
 ## Run
 
@@ -12,7 +12,7 @@ The command writes the level JSON, [global.json](global.json) and [acceptance tr
 
 Current receipts include 12 observed native routes, 6 uninstrumented control routes, 32 individual checkpoint deaths, and 0 physical browser runs. Each physical receipt states its backend, tier, completion, console errors and ordinary-input coverage. Browser completion metadata is kept under [receipts](receipts); raw screenshots and profiles are deleted. The full desktop backend matrix and separate quiet performance results are summarized in [fix51-r4](../fix51-r4/README.md); phone/zoom/visual coverage remains open.
 
-Fresh complete-row passes: L2-04, L2-07, L2-08, L2-10, L3-03, L3-04, L3-08, L3-11, L4-01, L4-04, L4-06, L4-09. Rows previously marked FAIL stay open until their failing clauses pass on current source; rows previously marked PASS keep only the measurements listed, not the old verdict. G-16 requires all20 level/quality starts with the exact PO 2026-11-19 s190 sets, including unarmed L10; a 19/20 matrix cannot pass.
+Fresh complete-row passes: L2-01, L2-04, L2-07, L2-08, L2-10, L3-03, L3-04, L3-08, L3-11, L4-01, L4-04, L4-06, L4-09. Rows previously marked FAIL stay open until their failing clauses pass on current source; rows previously marked PASS keep only the measurements listed, not the old verdict. G-16 requires all20 level/quality starts with the exact PO 2026-11-19 s190 sets, including unarmed L10; a 19/20 matrix cannot pass.
 
 [Audit](audit.json), [control proof](control-proof.json), [evaluator proof](evaluator-proof.json) and [fault proof](fault-proof.json) record the fix51-verify batch that built this tooling against its own source hashes; rerun them from their scripts after changing the evaluator. Final repository gates are recorded in [validation.json](validation.json). These tools are separate from the registered unit-test budget.
 
@@ -80,7 +80,6 @@ Every remaining row and next check is listed here. P preserves the exact PO-revi
 | L1-15 | NOT CHECKED | 0 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: The bay stays open; firefighter repeats "Get in!"; infected stay live until entry; shutter closes with the corgi inside. |
 | L1-16 | NOT CHECKED | 0 | Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/live.ts in screenshot-only mode from a fresh L1 save with no hidden navigation assists; time every lost interval and review its route decisions. O: Route readability: Luna reaches the depot, Annex and garage without > 60 s lost (tune). |
 | L1-17 | NOT CHECKED | 0 | Manual low/high, close/wide review, including the high crowd frame from the retained failed driver attempt; this is visual tone, not a competent-time qualification. P: Review the morning depot/Annex frames for an inhabited suburb, then the outbreak frames for the feeling that there are too many infected to fight. |
-| L2-01 | NOT CHECKED | 16 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Inspect four civilians seated on two benches in the current low/high opening frames; clocks and calm combat remain native checks. |
 | L2-02 | NOT CHECKED | 2 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Inspect the rack ring clear of the sign and bollards from the game camera in low/high; no-axe completion remains a native check. |
 | L2-03 | NOT CHECKED | 12 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Inspect crew and courier visibility during boarding, ride and market arrival in both qualities; opaque engine occlusion is an objective failure. |
 | L2-05 | NOT CHECKED | 10 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: 30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen. |
