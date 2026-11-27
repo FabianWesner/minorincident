@@ -252,10 +252,14 @@ function checkOrdinaryInfectedPresentation(): void {
   bird.infected!.specialAttack!.stage = 'active';
   bird.infected!.specialAttack!.impactTick = 236;
   const peck = flamingos.sample(bird, 236, 0, 0)!;
-  expect(peck.head).toBeLessThan(-.9); expect(peck.hind).toBeGreaterThan(1);
+  // The leg fold eases in over the peck window (an instant fold snapped the feet ~90 cm, scene flamingo-flock-contact).
+  expect(peck.head).toBeLessThan(-.9);
   const impactLift = flamingos.lift;
-  for (let tick = 237; tick <= 244; tick++) flamingos.sample(bird, tick, 0, 0);
+  let fold = peck.hind;
+  for (let tick = 237; tick <= 244; tick++) fold = Math.max(fold, flamingos.sample(bird, tick, 0, 0)?.hind ?? 0);
   expect(flamingos.lift).toBeLessThan(impactLift * .4);
+  for (let tick = 245; tick <= 248; tick++) fold = Math.max(fold, flamingos.sample(bird, tick, 0, 0)?.hind ?? 0);
+  expect(fold).toBeGreaterThan(1);
   const reaction = { index: 0, started: 100, until: 101, direction: { x: 1, z: 0 }, from: { x: 0, z: 0 }, to: { x: 0, z: 0 }, heavy: false };
   expect(InfectedMoves.flinch(entity('chase', reaction), 101)).toBeGreaterThan(.4);
   expect(InfectedMoves.flinch(entity('chase', reaction), 110)).toBeGreaterThan(.5);
