@@ -52,3 +52,14 @@ The story trace is `/private/tmp/s249-story-trace.jsonl`.
 The low seed 0 pre-finale stall remains an open acceptance limitation. The
 position-based diagnostic in `tools/qa/diag/s249-finale.ts` did not reproduce
 the story trace and is exploratory.
+
+## Low seed 0 route recovery
+
+The low seed 0 bot kept a road waypoint after a checkpoint retry displaced it
+south of the first roadblock, driving into the clinic annex repeatedly. The bot
+now rejoins the marked road after that low-tier retry. Final story results:
+
+- High seed 0: 50/51, 5 deaths, idle check passes; roadblock 3390 fails as on baseline. Receipt `/private/tmp/s249b-high-final.json`.
+- Low seed 0: 50/51, 4 deaths, idle check passes; roadblock 3502 fails. No check that passed on the parent baseline regressed. Receipt `/private/tmp/s249b-low0-final.json`.
+- Low seed 1: 51/51, 3 deaths, idle check passes. Receipt `/private/tmp/s249b-low1-route.json`.
+- `qa:threat`: 0 fail flags; L10 skilled complete, passive tick-budget, 0 passive flags. Log `/private/tmp/s249b-threat-final.log`.

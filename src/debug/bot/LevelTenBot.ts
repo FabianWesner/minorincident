@@ -42,13 +42,14 @@ export class LevelTenBot {
     const active = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
     if (this.finished || this.profile === 'idle' || !active || player.health.current <= 0 || mission.state.phase === 'retry') return f;
     const tick = w.tick - this.startTick, p = player.transform;
-    // The quarantine checkpoint can restore the bike west of the billboard
-    // after a later roadblock death. Rejoin the marked road there rather than
-    // steering directly at a stale waypoint past the intervening obstacles.
-    if (this.lastPosition && this.lastPosition.x > 3300 && p.x >= 3000 && p.x < 3150 && p.x < this.lastPosition.x - 100) {
+    // A roadblock retry can restore the bike south or west of its last position.
+    // Rejoin the marked road instead of steering through the clinic annex.
+    if (this.lastPosition && (this.lastPosition.x > 3300 && p.x >= 3000 && p.x < 3150 && p.x < this.lastPosition.x - 100 ||
+        w.infected!.director.tier === 'low' && this.lastPosition.x > 2900 && this.lastPosition.x < 3150 && p.x >= 2700 && p.x < 3150 &&
+        Math.hypot(p.x - this.lastPosition.x, p.z - this.lastPosition.z) > 60)) {
       let nearest = this.waypoint, best = Infinity;
       for (let i = 0; i < this.route.length; i++) {
-        if (this.route[i][0] < 2980 || this.route[i][0] > 3260) continue;
+        if (this.route[i][0] < (p.x < 3000 ? 2920 : 2980) || this.route[i][0] > 3260) continue;
         const d = Math.hypot(this.route[i][0] - p.x, this.route[i][1] - p.z);
         if (d < best) { best = d; nearest = i; }
       }
