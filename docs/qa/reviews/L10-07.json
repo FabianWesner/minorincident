@@ -1,58 +1,28 @@
 {
   "row": "L10-07",
-  "status": "PASS",
-  "reviewer": "Codex final-c",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "status": "FAIL",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-28",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
-      "clause": "Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 1.35× catch-up on the final delivery approach, sweep-c6 (was 6×)) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer.",
-      "verdict": "PASS",
-      "note": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+      "clause": "Mega pursues without LOS and takes longer routes around tight alleys, fence gaps, culverts and doorways; staying still draws it in. A red pulsing minimap dot shows its real position while near, with footsteps/roars between sightings.",
+      "verdict": "FAIL",
+      "note": "High seed1 tick 49647→49648: same Mega id 115 moved (2978.093,-4.771)→(3337.350,95.000), 372.853 m in one tick, player alive and no restore event. Low tick 44738→44739: same id moved (3136.142,61.850)→(3337.346,94.995), 203.916 m, player alive and no restore event. LevelTenStory stages the existing Mega beside the player for l10-overpass-mega, directly assigning its x/z. This breaks continuous pursuit around terrain. Other large displacements coincide with checkpoint restoration and are not counted as pursuit failures. Native complete-input runs; separate mortal physical playtest documented in lane report did not reach this point. Minimap and audio portions remain unreviewed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L10-07/high-presentation.json",
-      "sha256": "38843fd694e0fb96f015c8715ed7aea9dafdcfea06581bb16e925fa5f214e4cf",
-      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+      "file": "docs/reports/v1-l1l10/L10-07/jump-audit.json",
+      "sha256": "3f0eec1f3648f9d60f92a19a6afd11dcf586407bb174a57b4b9411548fbaade0",
+      "what": "Both-tier native complete-route per-tick Mega displacement and checkpoint event audit."
     },
     {
-      "file": "docs/reports/final-c/L10-07/native-pursuit.json.gz",
-      "sha256": "4c36925ba55dfd57747bffd18d856fe69c18f1f8f5c7ef851f6d39181ca27e15",
-      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
-    },
-    {
-      "file": "docs/reports/final-c/L10-07/sweep-c5-l10-presentation-producer.ts",
-      "sha256": "f1d26dd388eaf47f559e8a1dcfe4744ee2d3efa997be904e7c0c7d9d669152cd",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
-    },
-    {
-      "file": "docs/reports/final-c/L10-07/high-presentation-producer.ts",
-      "sha256": "0c2b0630b2bdaadf1bad4f0dabcfe67da678f5f9379d54e3ac1cb2be2d10485e",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
-    },
-    {
-      "file": "docs/reports/final-c/L10-07/low-presentation.json",
-      "sha256": "506929b61ac1dc892249a7f127a5142732c6d4237c20e4892f4a43acd704220b",
-      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
-    },
-    {
-      "file": "docs/reports/final-c/L10-07/coverage.json",
-      "sha256": "82fd2f0f94b941f3214a0999eacb6b8130b044b5ad3348dbf55d17d8cfb51ad1",
-      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
-    },
-    {
-      "file": "docs/reports/final-c/L10-07/fix55-l10-pursuit.ts",
-      "sha256": "616f1d5054017f6df7553aeca93e88d8cc4181fb1dbdbfcac21fe20d7da9a313",
-      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
-    },
-    {
-      "file": "docs/reports/final-c/L10-07/capture-review.json",
-      "sha256": "4455a34ce956a6a292dfea5266245522f4f9908549a5f95653a46cdceba5ac90",
-      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+      "file": "src/sim/missions/LevelTenStory.ts",
+      "sha256": "b335092a0926283d486a952ae29f8a7753029d5efc5b088a7010a8f6a84ac71a",
+      "what": "Overpass staging directly assigns the pursuing Mega position near the courier."
     }
   ],
-  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
-  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+  "notes": "Definitive pursuit discontinuity counterexample; failure does not imply completion of other row checks.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }
