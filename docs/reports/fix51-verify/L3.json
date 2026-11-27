@@ -5,7 +5,7 @@
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T21:47:52.664Z",
+  "generatedAt": "2026-11-27T22:41:24.864Z",
   "policies": [
     {
       "tier": "low",
@@ -6540,13 +6540,14 @@
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL)",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (Codex/v2-l2l4): Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+        "docs/reports/fix51-verify/L3.json"
       ],
       "expected": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation.",
       "checks": [
@@ -6874,46 +6875,31 @@
       "reviewDecision": {
         "row": "L3-06",
         "status": "FAIL",
-        "reviewer": "Codex rr-a2",
-        "date": "2026-11-07",
-        "commit": "696d3264a773668ecc5c41836bfd3781fbd4d894",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
         "clauses": [
           {
-            "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, ≤ 2 at the army line; every loss a bite/kill/separation.",
+            "clause": "Calm squad following distance by member",
             "verdict": "FAIL",
-            "note": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+            "note": "Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check."
           }
         ],
         "evidence": [
           {
-            "file": "test-results/rr-a2/L3-06-calm/result.json",
-            "sha256": "0acbb258b9d56dc321356d2a6778eb02b54d8a6e42873b82cd289f7aec63cacd",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+            "file": "docs/reports/fix51-verify/L3.json",
+            "sha256": "ea931ad25c4686f9418f0d67c7e79350d5f493c8509e50b46ccd5dfb1dba5803",
+            "what": "Current-head report row L3-06: low calm follow-distance counterexamples above 6 m."
           },
           {
-            "file": "test-results/rr-a2/L3-06-calm/formed.png",
-            "sha256": "84661b7ee9183115f73af71439f4f9faa57aa75b78fb88fb72a64552026d5852",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
-          },
-          {
-            "file": "test-results/rr-a2/L3-06-calm/moving.png",
-            "sha256": "c0496b8ac076dfde0994da49436d4eb6ddbcda5ae9b3539a393ac5db7e9e0f05",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
-          },
-          {
-            "file": "test-results/rr-a2/L3-06-calm/end.png",
-            "sha256": "0a3bd138aba263a2f0da0d02dae9adb41a011beff9f96b30247cf849fbf886a4",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
-          },
-          {
-            "file": "docs/reports/rr-a/evidence/L3-06.json",
-            "sha256": "be2f8f05332e7bb7abee472cb32f7d830a72e9054a1b08dedfec04b67e7b3325",
-            "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+            "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+            "sha256": "6f23ac332dd145ef25263fd59742bc2f929ac21e9aed9b86ac59afa6978d81a0",
+            "what": "Current-head low/complete native follow-distance samples by officer ID."
           }
         ],
-        "notes": "Current frozen-main source, fresh browser-pool evidence. Every cited capture personally opened at original resolution; controlled setup is disclosed in the observation.",
-        "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
-        "freshness": "STALE",
+        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -10258,11 +10244,14 @@
     },
     {
       "id": "L3-16",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (Codex/v2-l2l4): High tier, actual real-input L3 route, tick 5425: zero visible smoke columns in the full 1280×720 street frame; target at least two. Burning bus, officers and courier visible. Light/damage taste remains open.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/v2-l2l4/L3-16-high-t5425.jpg",
+        "docs/reports/v2-l2l4/L3-high-mortal-summary.json"
+      ],
       "expected": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
       "checks": [],
       "historical": {
@@ -10276,10 +10265,6 @@
         "method": "Manual full-resolution review of campaign-L3-checkpoint-t5257-low-z1-5.jpg, retained as a labelled sheet cell. A single street counterexample fails the universal visible-column clause; this is a visual count, not an authored emitter census."
       },
       "remaining": "Review current smoke counterexamples, then recapture all three streets at both zooms/qualities after a game fix. Light and distinct damage remain PO review; smoke count stays objective.",
-      "checkKinds": [
-        "browser-visual",
-        "PO"
-      ],
       "review": {
         "tag": "P",
         "instruction": "Review Boulevard, Commerce and Oak frames at both zooms/qualities: does the light read late afternoon, and does each street communicate its distinct damage? The required two smoke columns per frame remain an objective check."
@@ -10287,36 +10272,31 @@
       "reviewDecision": {
         "row": "L3-16",
         "status": "FAIL",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "8a4eb56af5da3a3d44d14cf9df1ad8a931709928",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
+            "clause": "At least two smoke columns in every street frame",
             "verdict": "FAIL",
-            "note": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+            "note": "High tier, actual real-input L3 route, tick 5425: zero visible smoke columns in the full 1280×720 street frame; target at least two. Burning bus, officers and courier visible. Light/damage taste remains open."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L3-16-browser-ledger.json.gz",
-            "sha256": "0781d49e8c30bcbcfc53609aa1d9d538a631104084388f67550ef0ed03c9b6fb",
-            "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+            "file": "docs/reports/v2-l2l4/L3-16-high-t5425.jpg",
+            "sha256": "b2c81b8dd7d7f9cfb8e8359f2d512ead963bc527fbc53a4bf264813543aa9652",
+            "what": "Personally inspected original high-tier street frame: zero visible smoke columns; fire under damaged bus."
           },
           {
-            "file": "docs/reports/final-a/L3-16-image-review.json",
-            "sha256": "8041380cc0bf496f0b5da9cfb1fa95e8fb5a5e8e71dbfe76b1359cd3239aac0b",
-            "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
-          },
-          {
-            "file": "docs/reports/final-a/L3-16-current-proof.json",
-            "sha256": "edfda862293b755057b3d643210a6c466d7290e4f62bf3269a626434af242444",
-            "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+            "file": "docs/reports/v2-l2l4/L3-high-mortal-summary.json",
+            "sha256": "0993033b1141ae1272df6ec146ad42a8e44b5e18dc6e862e8eb9154502ef794c",
+            "what": "Mortal real-input high-tier route completed with no skips; this frame is from that run."
           }
         ],
-        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
-        "freshness": "STALE",
+        "notes": "Repro: E2E_PORT=5411 SCENE_PORT=5412 node --import tsx/esm tools/playtest/play.ts --levels L3 --quality high --zoom 1.5 --capture-zooms 1,1.5 --no-skip --level-minutes 8 --out test-results/playtest/v2-l2l4-high-l3; inspect campaign-L3-t5425.jpg. One objective counterexample establishes FAIL; low tier and PO taste remain open.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     }
