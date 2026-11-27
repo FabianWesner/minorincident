@@ -1,0 +1,139 @@
+{
+  "mode": "campaign",
+  "acceptanceMode": "STANDARD",
+  "immortal": false,
+  "routeOnly": false,
+  "quality": "high",
+  "heroine": "female",
+  "zoom": 1,
+  "levels": [
+    "L10"
+  ],
+  "runs": [
+    {
+      "level": "L10",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 90,
+      "simSeconds": 83,
+      "maxNoProgressSeconds": 14.25,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.machete": 29,
+        "weapon.hunting-rifle": 12
+      },
+      "weaponsStart": [
+        "weapon.fists",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.machete",
+        "weapon.hunting-rifle"
+      ],
+      "steps": [
+        {
+          "id": "crash",
+          "text": "Get away from the river · 101 m",
+          "tick": 9,
+          "marker": {
+            "anchor": "river-exit",
+            "ring": {
+              "x": 647,
+              "y": 0,
+              "z": -12.5
+            },
+            "drawn": [
+              647,
+              0,
+              -12.5
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "farmstead",
+          "text": "Find a way through the farms · 64 m",
+          "tick": 2112,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 1857,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              698,
+              0,
+              25
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 90,
+      "simSeconds": 84,
+      "maxNoProgressSeconds": 1.1166666666666667,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.hunting-rifle": 15
+      },
+      "weaponsStart": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.machete",
+        "weapon.hunting-rifle"
+      ],
+      "weaponsEnd": [
+        "weapon.fists",
+        "weapon.kick",
+        "weapon.machete",
+        "weapon.hunting-rifle",
+        "weapon.molotov"
+      ],
+      "steps": [
+        {
+          "id": "farmstead",
+          "text": "Find a way through the farms · 346 m",
+          "tick": 0,
+          "marker": {
+            "anchor": "cure-military",
+            "ring": {
+              "x": 1857,
+              "y": 0,
+              "z": 25
+            },
+            "drawn": [
+              1165,
+              0,
+              -12
+            ],
+            "playerY": 0.7089999914169312,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": 0,
+  "bySeverity": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  }
+}
