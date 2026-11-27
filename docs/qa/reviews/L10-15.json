@@ -3,26 +3,26 @@
   "status": "FAIL",
   "reviewer": "Codex v1-l1l10",
   "date": "2026-11-27",
-  "commit": "2f7ee5f06bf5562305e17b787d3573d2ef9f4efd",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint.",
       "verdict": "FAIL",
-      "note": "At cure-disperse-ready the checkpoint has living boss HP 1116 low / 1072.8151 high; after fixture kills boss and causes ordinary player death, respawn reports boss dead at 0 HP in both tiers. Repro: npm run qa:accept -- --level L10 --skip-browser --reuse; inspect cure and boss HP/death snapshot at cure-disperse-ready in checkpoint receipts. Five other named checkpoint fixtures error per tier; their coverage remains open."
+      "note": "At cure-disperse-ready the saved boss is alive at 1116 HP low / 1072.8151 high; after fixture kills boss and causes ordinary player death, respawn reports boss dead at 0 HP in both tiers. Repro: npm run qa:accept -- --level L10 --skip-browser --reuse; inspect boss snapshot at cure-disperse-ready. Five other checkpoint fixtures error per tier; coverage remains open."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json",
-      "sha256": "e4aa68cde0eaa105f156f7d779f8fd339c84ebcefbf2ffe2e79265cde42fb36d",
-      "what": "Mortal checkpoint fixture records the saved boss state and observed respawn state at cure-disperse-ready."
+      "file": "docs/reports/v1-l1l10/L10-native/L10-high-checkpoints.json",
+      "sha256": "e64166fd32493c97e2d76d37ebfe0f1e68a93a853d075c6505781f247d267d67",
+      "what": "Current checkpoint fixture captures boss state and ordinary death respawn."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
-      "sha256": "ed24d0c4fbadf1e16c0947cd93a2a868bd1445fd4a87a4555ec0ecc12a4e1a82",
-      "what": "Mortal checkpoint fixture records the saved boss state and observed respawn state at cure-disperse-ready."
+      "file": "docs/reports/v1-l1l10/L10-native/L10-low-checkpoints.json",
+      "sha256": "593e60dc6470c52083b7112bd934a1baa1a5edbec7fae474a5f20e15e7fcdfa6",
+      "what": "Current checkpoint fixture captures boss state and ordinary death respawn."
     }
   ],
-  "notes": "Measured checkpoint boss-state mismatch; other regional coverage is incomplete.",
-  "sourceDigest": "d4b77aa1088e0d17ac55fcb11cdaa6989d940bcdc74422050d02e82389d133f1"
+  "notes": "Measured boss-state mismatch; other regional coverage incomplete. Receipts produced at a72c2770; intervening main changes only reports, with no src, public, layouts or acceptance-tool changes.",
+  "sourceDigest": "532060816d867b61ad7226aabbc9379127007acc046e6ab42cadd36a6ca80c96"
 }

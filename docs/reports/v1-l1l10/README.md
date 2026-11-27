@@ -99,3 +99,7 @@ On `540ab32a`, the new both-tier fixture retains the preceding result: 5 initial
 ## L10 current-main refresh
 
 On `540ab32a`, the scoped native run finished with seven machine FAIL rows and six incomplete rows; five checkpoint fixture errors per tier remain. **L10-06 FAIL** persists: dog speed ratio 1.65 vs 1.1 at both tiers. Repro: run `npm run qa:accept -- --level L10 --skip-browser --reuse`, inspect native dog speed ratio in the fixture receipts. Cause not isolated; appearance and other clauses remain open. [Review](../../qa/reviews/L10-06.json), [high fixture](L10-native/L10-high-fixtures.json), [low fixture](L10-native/L10-low-fixtures.json).
+
+## L10-15 on current main
+
+Fresh **FAIL**: on `a72c2770`, the checkpoint fixture again saved a living boss at 1116 HP low / 1072.8151 high and observed dead/0 HP on respawn after the fixture killed it and caused ordinary player death. Five other checkpoint fixtures error per tier. Repro: `npm run qa:accept -- --level L10 --skip-browser --reuse`, inspect cure-disperse-ready boss snapshot. The cause is unisolated. Main advanced to `92c233e2` during the run; its intervening commits change reports only, with no `src`, `public`, `layouts` or acceptance-tool changes. [Review](../../qa/reviews/L10-15.json), [high](L10-native/L10-high-checkpoints.json), [low](L10-native/L10-low-checkpoints.json).
