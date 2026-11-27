@@ -189,3 +189,11 @@ A second high route attempted a clearer lane but hit a hydrant and then frontage
 ### Latest aggregate diagnostic
 
 On main `92c233e2`, `npm run qa:accept -- --level L1 --skip-browser --reuse` exited 2 with 0 fresh machine-failing rows and 8 incomplete rows. The L10 command was stopped after low/complete finished and low/stationary began, because the sweep's three-hour time box had already been exceeded; it has no aggregate verdict. Both commands regenerated shared aggregate files, which were restored to their previous tracked contents so an incomplete `--skip-browser` run does not overwrite existing browser-policy data. L1-05's former quiet timing producer was not found among the preserved QA scripts; the ordinary accident script explicitly excludes frame performance. Its old timing measurements cannot establish performance on this head.
+
+## L1-13 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-13 | stale PASS → fresh PASS | Bat absent at start, first acquired at tick 5132, 0.992 m from the garage anchor (2 m radius); fists 7 hits, bat 2 hits against a 60 HP regular, both tiers. | [Review](../../qa/reviews/L1-13.json), [high fixture](L1-07/current-high-fixtures.json), [low fixture](L1-07/current-low-fixtures.json); L1 mission and district source establish the weapon objective and bat placement at the garage anchor. | — |
+
+Native bot route and isolated combat fixture, with separate mortal real-input L1 runs documented above. The L8-only source changes between the receipt's `92c233e2` and current main `233eab90` do not alter L1. No game change; no remaining measured clause.

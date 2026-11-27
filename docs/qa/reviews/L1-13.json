@@ -1,33 +1,43 @@
 {
   "row": "L1-13",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "reviewer": "Codex v1-l1l10",
+  "date": "2026-11-27",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
       "clause": "Bat only in the garage; unarmed needs 6–7 hits per infected, bat 2.",
       "verdict": "PASS",
-      "note": "6 current native checks PASS across low/high. low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS)"
+      "note": "Both high and low: no initial bat; first acquired at tick 5132, 0.992 m from garage-bat (2 m anchor radius), after weapon objective; route completed with 0 deaths. Controlled isolated 60 HP regular: fists 7 hits, bat 2. L1 mission maps weapon interaction and district bat to garage-bat, and L1 prepare clears the loadout. Native bot and isolated AI fixtures; separate mortal physical routes completed on the same L1/L10 code."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L1-13-native.json",
-      "sha256": "2f829d811d7e85eb644b77589a3ae62b4a347b7ba4e037ab292c5bcd6e6f2d54",
-      "what": "6 current native checks PASS across low/high. low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS)"
+      "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
+      "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
+      "what": "High controlled native route and isolated regular combat fixture"
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
-      "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
-      "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
+      "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
+      "what": "Low controlled native route and isolated regular combat fixture"
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
-      "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
-      "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "src/levels/missions.ts",
+      "sha256": "40e5684f7048503774fa06b50cfc1ca52f2e09f041dba7b5bbc82ebf878f2aad",
+      "what": "L1 weapon objective targets garage-bat"
+    },
+    {
+      "file": "src/levels/districts/D-GROVE.ts",
+      "sha256": "6d200b44b4d3b0f4951dae87f493bb021922895785ab173342c2df00f6575078",
+      "what": "Grove district places the bat at garage-bat"
+    },
+    {
+      "file": "src/sim/missions/LevelOneOutbreak.ts",
+      "sha256": "4cceb5e4a7de85b4a70ab4a21ee0f6b19de158039e480e04928ae33a104999d1",
+      "what": "L1 prepare clears loadout and weapon objective grants the bat"
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+  "notes": "Fixture receipts on 92c233e2; changes through main 233eab90 affect only L8-specific mission logic, reports and tests.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }
