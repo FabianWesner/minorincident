@@ -248,14 +248,17 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       for (const arena of zoo.state.arenas) arena.phase = 3;
       const hale = game.world.entities.get(zoo.state.haleId);
       if (hale?.civilian) { hale.health.current = 0; hale.civilian.state = 'finished'; }
-      const entry = vehicles.passengerDoor(zoo.state.carId), passengers = zoo.passengers();
-      for (const id of passengers) {
+      // s246: with the tour skipped Hale is already on the roster; he falls above, so count only the living boarders.
+      const entry = vehicles.passengerDoor(zoo.state.carId);
+      let boarded = 0;
+      for (const id of zoo.passengers()) {
         const actor = game.world.entities.get(id);
         if (!actor || actor.health.current <= 0 || actor.infected) continue;
         teleport(id, entry);
         if (!vehicles.boardPassenger(zoo.state.carId, id)) throw new Error(`L8 passenger ${id} could not enter the APC`);
+        boarded++;
       }
-      return passengers.length;
+      return boarded;
     } },
     cheats: { godAbsorbed: () => game.world.combat?.damage.godAbsorbed ?? 0, god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) {e.health.current = 0;e.infected!.recoverAt=-1;} }, downAll: () => { const damage = game.world.combat?.damage, player = game.world.entities.get(1); if (game.world.infected && damage && player) for (const e of [...game.world.infected.active]) if (e.health.current > 0 && !e.hidden && e.archetype !== 'infected.crow') damage.apply({ attackId: 0, actionId: 'weapon.bat', sourceId: 1, targetId: e.id, origin: player.transform, direction: { x: 1, z: 0 }, base: 1e6, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 }); }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { plan: () => {
