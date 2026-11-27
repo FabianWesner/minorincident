@@ -622,14 +622,24 @@ export class Outbreak {
     if (!this.aiBites() && this.world.tick % 2 === e.id % 2) this.contact(e);
   }
   /** At the infected cap a bite kills instead of turning (section 5.9). */
-  private canTurn(): boolean {
+  private canTurn(victim: EntitySnapshot): boolean {
     const ai = this.world.infected!; let turning = 0;
     for (const e of this.world.entities.iterate()) if (e.infection) turning++;
-    return ai.pool.length > turning && ai.director.count + turning < ai.director.cap - ai.director.reserved;
+    const l2 = this.world.missions?.state.l2;
+    const rescueTurns = !!l2?.doorsOpenAt && this.world.tick - l2.doorsOpenAt <= 90 * 60;
+    const crewTurns = rescueTurns ? l2!.crewIds.filter(id => {
+      const e = this.world.entities.get(id); return !!e?.infection || !!e?.infected;
+    }).length : 2;
+    // L2 reserves two of the already-authored rescue arrivals for firefighter
+    // conversions. Other pedestrians cannot consume that headroom first.
+    const crewSlots = rescueTurns ? Math.max(0, 2 - crewTurns) : 0;
+    const isFirefighter = rescueTurns && l2!.crewIds.includes(victim.id);
+    const reserved = rescueTurns && isFirefighter ? 0 : ai.director.reserved + crewSlots;
+    return ai.pool.length > turning && ai.director.count + turning < ai.director.cap - reserved;
   }
   private bite(e: EntitySnapshot, attacker: EntitySnapshot): void {
     if (!combatHeightReachable(attacker, e)) { this.rescued(e); return; }
-    const turns = this.canTurn(); this.state(e, 'bitten');
+    const turns = this.canTurn(e); this.state(e, 'bitten');
     this.world.npcs!.civilians.release(attacker.id);
     const event: BiteEvent = { tick: this.world.tick, type: 'outbreak.bite', sourceId: attacker.id, targetId: e.id, position: { x: e.transform.x, z: e.transform.z }, turns };
     this.stats.bites++; this.emitting = true; this.world.events.emit(event); this.emitting = false;
@@ -641,7 +651,7 @@ export class Outbreak {
     if (!e || isCorgi(e) || storyProtected(this.world, e) || !c?.l1 || e.infection || !(mobile.has(c.state) || c.state === 'grabbed')) return;
     this.stats.bites++;
     if (c.state === 'grabbed') this.world.npcs!.civilians.release(c.attacker);
-    if (event.turns && this.canTurn()) this.infect(e, event.sourceId); else this.kill(e);
+    if (event.turns && this.canTurn(e)) this.infect(e, event.sourceId); else this.kill(e);
   }
   private kill(e: EntitySnapshot): void {
     this.stats.killed++; this.dropProp(e); e.civilian!.eyesGlow = false;

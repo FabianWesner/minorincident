@@ -1556,7 +1556,16 @@ export class InfectedSystem {
     if (bitten && victim && (!target || !isCorgi(target) && !storyProtected(this.world, target))) {
       while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
       // At the cap a bite kills instead of turning (L1 section 5.9): L1/L2 60 high / 30 low; a strict level cap (L3: 80 / 40).
-      const cap = this.director.strict || target?.civilian?.zooAnimal ? this.director.cap : this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap - this.director.reserved;
+      const cap = this.director.strict || target?.civilian?.zooAnimal ? this.director.cap : this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh;
+      const l2 = this.world.missions?.state.l2;
+      const rescueTurns = !!l2?.doorsOpenAt && tick - l2.doorsOpenAt <= 90 * 60;
+      const crewTurns = rescueTurns ? l2!.crewIds.filter(id => {
+        const crew = this.world.entities.get(id); return !!crew?.infection || !!crew?.infected;
+      }).length : 2;
+      const crewSlots = rescueTurns ? Math.max(0, 2 - crewTurns) : 0;
+      const isFirefighter = rescueTurns && l2!.crewIds.includes(victimId);
+      const reserved = rescueTurns && isFirefighter ? 0 : this.director.reserved + crewSlots;
+      const turns = this.director.count + this.recentTurns.length < cap - reserved;
       if (turns) this.recentTurns.push(tick);
       if (this.l1!.humans instanceof WorldHumans) this.l1!.humans.bitten.add(victimId);
       this.world.events.emit({ type: 'outbreak.bite', tick, sourceId: e.id, targetId: victimId, position: { x: victim.x, z: victim.z }, turns });

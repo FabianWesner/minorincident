@@ -2,9 +2,9 @@
   "version": 1,
   "level": "L2",
   "tier": "high",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
-  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "sourceHash": "7bbfccaaab0189bffbbf48e77058ba39eab8d288742b7b9934f3490afa36cdb7",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
   "checks": [
     {
       "id": "G-21",
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "axe",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "6290373a410d9bea9203931fed576273511524c74b19074bc2ffe069e6d9c534",
+        "snapshotSha256": "989aa9b249cf158ead26fafde4c676ed49826df8a36ddc8e3007d58f75d2f5db",
         "damage": 100,
         "expected": {
           "id": "axe",
@@ -83,15 +83,15 @@
       "value": {
         "checkpoint": "doors",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "40ae1d5a6e3f5b0c576763391366065bf84c9c68a7392490b028c1c84ac0eccf",
+        "snapshotSha256": "d0a9725478b4105b6fcf4301b5a5af1b4b39c95f537529856fbd80a58f263b6e",
         "damage": 100,
         "expected": {
           "id": "doors",
           "anchor": {
-            "x": -45.97011184692383,
+            "x": -46.68324279785156,
             "y": 0.7049999833106995,
-            "z": -36.76974105834961,
-            "yaw": 1.977493168738604
+            "z": -36.73768615722656,
+            "yaw": 1.4266371514641984
           },
           "gates": {},
           "racks": {
@@ -115,8 +115,75 @@
         "observed": {
           "id": "doors",
           "position": {
-            "x": -45.97011184692383,
-            "z": -36.76974105834961
+            "x": -46.68324279785156,
+            "z": -36.73768615722656
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followerMismatches": [],
+          "missingPickups": [],
+          "unexpectedPickups": [],
+          "cure": false,
+          "bossMode": null,
+          "bossHp": null
+        },
+        "positionError": 0,
+        "gateMatch": true,
+        "rackMatch": true
+      },
+      "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-checkpoints.json"
+    },
+    {
+      "id": "G-21",
+      "clause": "mortal checkpoint restore at L2/escape",
+      "tier": "high",
+      "policy": "checkpoint-death-fixture",
+      "status": "PASS",
+      "value": {
+        "checkpoint": "escape",
+        "contract": "checkpoint snapshot restored",
+        "snapshotSha256": "3acb87c51d2e9b10958b18ae3b331c6e30048f16d7d4b6ce08f3db75c68c1d66",
+        "damage": 100,
+        "expected": {
+          "id": "escape",
+          "anchor": {
+            "x": -64.50546264648438,
+            "y": 0.7099999785423279,
+            "z": 30.22164535522461,
+            "yaw": 1.627148857877612
+          },
+          "gates": {},
+          "racks": {
+            "LEFT": [
+              "weapon.fire-axe",
+              "weapon.bat"
+            ],
+            "RIGHT": [
+              "weapon.kick"
+            ]
+          },
+          "followers": [],
+          "pickups": [
+            104,
+            105
+          ],
+          "removedPickups": [],
+          "cure": false
+        },
+        "observed": {
+          "id": "escape",
+          "position": {
+            "x": -64.50546264648438,
+            "z": 30.22164535522461
           },
           "gates": {},
           "racks": {
@@ -151,15 +218,15 @@
       "value": {
         "checkpoint": "cluster",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "e82bfcc75b36f23c0ddd6be3958ecd2b4f14fe7d06b8d77e0aa172f578a93813",
+        "snapshotSha256": "7645df9bdf8841a93bee976261b97d9c85bab2fa7b24aa32f966bc1be0aaea8c",
         "damage": 100,
         "expected": {
           "id": "cluster",
           "anchor": {
-            "x": 81.41925048828125,
+            "x": 24.206317901611328,
             "y": 0.7099999785423279,
-            "z": 37.554298400878906,
-            "yaw": -3.201527765829101
+            "z": 48.000125885009766,
+            "yaw": 0.000003509607817264772
           },
           "gates": {},
           "racks": {
@@ -174,8 +241,7 @@
           "followers": [],
           "pickups": [
             104,
-            105,
-            106
+            105
           ],
           "removedPickups": [],
           "cure": false
@@ -183,8 +249,8 @@
         "observed": {
           "id": "cluster",
           "position": {
-            "x": 81.41925048828125,
-            "z": 37.554298400878906
+            "x": 24.206317901611328,
+            "z": 48.000125885009766
           },
           "gates": {},
           "racks": {
@@ -213,8 +279,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "8c8b9c53",
-    "control": "8c8b9c53",
+    "observed": "a0dadfdf",
+    "control": "a0dadfdf",
     "identical": true
   }
 }

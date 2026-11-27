@@ -221,7 +221,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         // The L3 line protects the resting compound: a breach or a body getting up inside takes precedence over the
         // next outside pursuer. Visibility, cover, range and friendly-fire clearance still apply.
         const breach = compound && o.transform.x >= l3.map.zoneX;
-        const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0) - (breach ? l3.soldiers.coverM : 0);
+        const courierThreat = a.role === 'officer' && follower && world.missions?.def.l3
+          ? Math.max(0, 10 - dist(o.transform, leader!.transform)) * 3 : 0;
+        const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0)
+          - (breach ? l3.soldiers.coverM : 0) - courierThreat;
         const alpha = alphaPriority(o), bestAlpha = alphaPriority(best);
         // A candidate that cannot outrank the current visible choice needs no
         // cover rays. Keep the exact Alpha/rescue/current-target score and ties.
@@ -407,7 +410,10 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point, unt
     // her pace, i.e. stop + pace / 4 behind it (1.2 m at the street pace). Aim that far ahead of the slot so the officer
     // stands on it; Npcs.move grants the matching catch-up headroom. Fights keep the old movement.
     if (calm && moving && world.missions?.def.l3 && velocity && goal !== p) {
-      const v = Math.hypot(velocity.x, velocity.z), lead = Math.min(2, .5 + v / 4);
+      // A large lead shortens the actual courier-to-officer distance to about
+      // 2.8 m at walking pace, crossing the squad's 3 m minimum while the
+      // follower closes the old slot. Preserve room for the moving formation.
+      const v = Math.hypot(velocity.x, velocity.z), lead = Math.min(.6, .15 + v / 12);
       const ahead = { x: goal.x + velocity.x / v * lead, z: goal.z + velocity.z / v * lead };
       if (nav.clear(ahead.x, ahead.z, .4) && nav.visible(e.transform, ahead, .4)) goal = ahead;
     }

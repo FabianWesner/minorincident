@@ -66,12 +66,21 @@ export class LevelTwoRescue {
   private get s(): L2State { return this.mission.state.l2!; }
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
+  /** Two of the market wave's existing slots stay available for firefighter turns through +90 s. */
+  private firefighterTurnReserve(): number {
+    const s = this.s;
+    if (!s.doorsOpenAt || this.world.tick - s.doorsOpenAt > ticks(90)) return 0;
+    const turning = s.crewIds.filter(id => {
+      const e = this.world.entities.get(id); return !!e?.infection || !!e?.infected;
+    }).length;
+    return Math.max(0, 2 - turning);
+  }
   /** Pending arrivals own slots before bites. A later encounter reserves its
    * quota only once queued, so the rescue still has room for systemic turns. */
   private reserveArrivals(): void {
     const ai = this.world.infected!;
     // The finite market alarm owns its slots before ambient street arrivals or bites fill the cap.
-    let count = this.s.doorsOpenAt ? this.s.ambush.filter(a => !a.id).length : l2.rescue.ambushDoors.reduce((n, [, size]) => n + size, 0);
+    let count = this.s.doorsOpenAt ? Math.max(0, this.s.ambush.filter(a => !a.id).length - this.firefighterTurnReserve()) : l2.rescue.ambushDoors.reduce((n, [, size]) => n + size, 0);
     count += this.s.pending.filter(q => q.id === 0 && q.door.startsWith('l2-route-edge-')).length;
     if (this.s.escapeSpawned) for (const q of this.s.pending) if (q.id === -2) count++;
     ai.director.reserved += count - this.reservedArrivals;
@@ -429,6 +438,9 @@ export class LevelTwoRescue {
     for (const id of s.crewIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) { a.engaged = true; a.run = null; a.forceUntil = 0; a.post = { ...this.anchor('l2-forecourt') }; a.runSpeed = l2.allies.firefighter.moveMs; } }
     // The ambush, keyed to this exact moment: 24 infected from three building doors, >= 60 degrees apart.
     let k = 0;
+    // Keep all 24 authored infected and all three directions, but let the
+    // first firefighters reach infected before the wave consumes every live
+    // slot. Later admissions wait behind bites during the turn window.
     for (const [door, count] of l2.rescue.ambushDoors) for (let i = 0; i < count; i++) s.ambush.push({ id: 0, door, at: tick + ticks(.05 + i * .45 + (k++ % 3) * .1) });
     this.emergeAmbush(tick);
     if (!this.mission.state.states['doors-open']) this.mission.setState('doors-open', true);
@@ -446,6 +458,10 @@ export class LevelTwoRescue {
   private emergeAmbush(tick: number): void {
     const s = this.s;
     for (const a of s.ambush) if (!a.id && tick >= a.at) {
+      // Future arrivals wait behind two real conversion slots. Once firefighters
+      // turn, their freed reservation admits the deferred members of this same wave.
+      const turning = [...this.world.entities.iterate()].filter(e => !!e.infection).length;
+      if (this.world.infected!.director.count + turning >= this.world.infected!.director.cap - this.firefighterTurnReserve()) continue;
       // Each street runs at the exit nearest to it (the crowd streaming out), not at the courier.
       const [x, z] = l2.rescue.ambushRush[a.door] ?? [-46.5, -38], id = this.emerge(a.door, { x, z });
       // Cap/admission pressure defers this identity; it must not cancel an authored arrival.

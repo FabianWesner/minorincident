@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L2",
   "tier": "high",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "sourceHash": "7bbfccaaab0189bffbbf48e77058ba39eab8d288742b7b9934f3490afa36cdb7",
+  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checks": [
     {
       "id": "L2-02",
@@ -26,7 +26,7 @@
         "infectedMax": 0,
         "combatEvents": 0,
         "alarmS": 23.15,
-        "crewAtTruckS": 1.1333333333333333,
+        "crewAtTruckS": 4.866666666666666,
         "axeActive": true
       },
       "target": "0 infected/combat; alarm20–30s; crew seated≤8s later",
@@ -53,7 +53,7 @@
         "seconds": 24.316666666666666,
         "seatedEveryTick": true,
         "crewExitS": 0.8,
-        "controlS": 0
+        "controlS": 0.5
       },
       "target": "15–25s; all seated; exits≤4s; control≤0.5s",
       "status": "PASS",
@@ -76,10 +76,10 @@
         ],
         "rideTicks": 1459,
         "unseatedTicks": 0,
-        "allOutAt": 2965,
-        "controlAt": 2917,
-        "arrivedAt": 2916,
-        "allOutS": 0.8166666666666667,
+        "allOutAt": 3394,
+        "controlAt": 3166,
+        "arrivedAt": 3165,
+        "allOutS": 3.816666666666667,
         "controlS": 0.016666666666666666
       },
       "target": "7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s",
@@ -93,10 +93,10 @@
       "clause": "door order and four-second forcing clock",
       "value": {
         "order": [
-          48.6,
-          49.4,
-          54.15,
-          58.15
+          52.75,
+          53.55,
+          61.5,
+          65.5
         ],
         "nearBefore": 0
       },
@@ -121,10 +121,10 @@
       "clause": "native admitted ambush source counts and angular separation",
       "value": {
         "playerAtOpening": {
-          "x": -45.97011184692383,
+          "x": -46.68324279785156,
           "y": 0.7049999833106995,
-          "z": -36.76974105834961,
-          "yaw": 1.977493168738604
+          "z": -36.73768615722656,
+          "yaw": 1.4266371514641984
         },
         "sources": [
           {
@@ -132,27 +132,27 @@
             "count": 8,
             "x": -76.64875,
             "z": -37.5,
-            "angle": -3.1177936485067197
+            "angle": -3.1161584284883608
           },
           {
             "door": "refuge-door-17",
             "count": 8,
             "x": -19.615,
             "z": -35,
-            "angle": 0.06704916537786619
+            "angle": 0.06410851802791738
           },
           {
             "door": "refuge-door-9",
             "count": 8,
             "x": -47.3825,
             "z": -27,
-            "angle": 1.7143692401256314
+            "angle": 1.6424826564908932
           }
         ],
         "angles": [
-          177.52194835184412,
-          83.13746056162186,
-          94.38448779022224
+          177.78412623965977,
+          87.34994961313384,
+          90.43417662652594
         ]
       },
       "target": "3 admitted doors×8; pairwise source directions≥60deg from courier at opening; first pixel visibility remains separate",
@@ -166,47 +166,47 @@
       "clause": "native ordinary-route bridge-start population and route singles",
       "value": {
         "radio": {
-          "infected": 42,
-          "escapeArea": 34,
+          "infected": 55,
+          "escapeArea": 33,
           "groupsOf4": 4,
-          "chasingPlayer": 1,
-          "chasingFraction": 0.023809523809523808,
+          "chasingPlayer": 2,
+          "chasingFraction": 0.03636363636363636,
           "scatteredSingles": 6
         },
         "scatteredSingleAdmissions": [
           {
             "id": 274,
-            "tick": 4033,
+            "tick": 4471,
             "x": -33.5,
             "z": -14
           },
           {
             "id": 276,
-            "tick": 4033,
+            "tick": 4471,
             "x": -34,
             "z": 2
           },
           {
             "id": 278,
-            "tick": 4033,
+            "tick": 4471,
             "x": -27.2,
             "z": 19
           },
           {
             "id": 280,
-            "tick": 4033,
+            "tick": 4471,
             "x": -13,
             "z": 26.5
           },
           {
             "id": 282,
-            "tick": 4033,
+            "tick": 4471,
             "x": 6,
             "z": 26.5
           },
           {
             "id": 284,
-            "tick": 4033,
+            "tick": 4471,
             "x": 25,
             "z": 26.5
           }
@@ -223,14 +223,8 @@
       "clause": "gate close and post-close infected crossings",
       "value": {
         "closeS": 0.6,
-        "infectedInsideAfter": 5,
-        "infectedInsideAtClosure": [
-          290,
-          292,
-          294,
-          296,
-          304
-        ],
+        "infectedInsideAfter": 0,
+        "infectedInsideAtClosure": [],
         "crossingsAfterClosure": []
       },
       "target": "close≤1.5s;0 infected cross the gate after closure",
@@ -245,11 +239,11 @@
       "value": {
         "at60": {
           "all": 60,
-          "rescue": 40
+          "rescue": 25
         },
         "at120": {
-          "all": 60,
-          "rescue": 31
+          "all": 59,
+          "rescue": 25
         },
         "protected": true
       },
@@ -263,37 +257,17 @@
       "id": "L2-08",
       "clause": "idle firefighter combat and turns",
       "value": {
-        "hits": 43,
-        "turnedBy90": 6,
+        "hits": 46,
+        "turnedBy90": 2,
         "turns": [
           {
-            "id": 126,
-            "seconds": 2.683333333333333,
-            "sameAsset": true
-          },
-          {
-            "id": 121,
-            "seconds": 2.8833333333333333,
-            "sameAsset": true
-          },
-          {
             "id": 124,
-            "seconds": 2.9,
+            "seconds": 3.2333333333333334,
             "sameAsset": true
           },
           {
-            "id": 125,
-            "seconds": 2.75,
-            "sameAsset": true
-          },
-          {
-            "id": 122,
-            "seconds": 3.2,
-            "sameAsset": true
-          },
-          {
-            "id": 123,
-            "seconds": 2.6666666666666665,
+            "id": 126,
+            "seconds": 3.183333333333333,
             "sameAsset": true
           }
         ]
@@ -310,32 +284,32 @@
       "value": [
         {
           "id": 121,
-          "samples": 391,
+          "samples": 812,
           "protectedTicks": 0
         },
         {
           "id": 122,
-          "samples": 605,
+          "samples": 652,
           "protectedTicks": 0
         },
         {
           "id": 123,
-          "samples": 719,
+          "samples": 833,
           "protectedTicks": 0
         },
         {
           "id": 124,
-          "samples": 402,
+          "samples": 549,
           "protectedTicks": 0
         },
         {
           "id": 125,
-          "samples": 426,
+          "samples": 693,
           "protectedTicks": 0
         },
         {
           "id": 126,
-          "samples": 366,
+          "samples": 552,
           "protectedTicks": 0
         }
       ],
@@ -351,19 +325,19 @@
       "value": {
         "axe": true,
         "diedBy120": true,
-        "firstDeathS": 78.33333333333333,
+        "firstDeathS": 92.18333333333334,
         "infectedAt": {
           "0": {
             "all": 0,
             "rescue": 0
           },
           "10": {
-            "all": 16,
-            "rescue": 16
+            "all": 52,
+            "rescue": 17
           }
         },
         "deathsAt": [
-          "78s@-42,-37/collapse"
+          "92s@-50,-32/collapse"
         ]
       },
       "target": "player reaches0HP within120s after doors",
@@ -377,8 +351,8 @@
       "clause": "mortal aggressive live census at10/90s",
       "value": {
         "early": {
-          "all": 16,
-          "rescue": 16
+          "all": 52,
+          "rescue": 17
         },
         "stoppedAtFirstDeath": true
       },
@@ -390,84 +364,27 @@
     },
     {
       "id": "L2-09",
-      "clause": "uninterrupted protected aggressive live census at10/90s",
+      "clause": "uninterrupted protected camping live census at10/90s",
       "value": {
         "early": {
-          "all": 16,
-          "rescue": 16
+          "all": 58,
+          "rescue": 23
         },
         "late": {
-          "all": 48,
-          "rescue": 14
+          "all": 60,
+          "rescue": 25
         },
         "protected": true,
         "countOnly": true,
         "qualified": true,
         "route": {
           "samples": 5401,
-          "maxDoorDistanceM": 11.800666244822747,
+          "maxDoorDistanceM": 14.396180554999512,
           "outside15mTicks": 0
         },
         "deaths": 0
       },
       "target": "+90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only",
-      "status": "PASS",
-      "tier": "high",
-      "policy": "controlled-fixture",
-      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
-    },
-    {
-      "id": "L2-11",
-      "clause": "native axe-route bridge-start escape-area census, groups, chase share and scattered singles",
-      "value": {
-        "radio": {
-          "infected": 39,
-          "escapeArea": 37,
-          "groupsOf4": 4,
-          "chasingPlayer": 0,
-          "chasingFraction": 0,
-          "scatteredSingles": 6
-        },
-        "scatteredSingleAdmissions": [
-          {
-            "id": 274,
-            "tick": 4033,
-            "x": -33.5,
-            "z": -14
-          },
-          {
-            "id": 276,
-            "tick": 4033,
-            "x": -34,
-            "z": 2
-          },
-          {
-            "id": 278,
-            "tick": 4033,
-            "x": -27.2,
-            "z": 19
-          },
-          {
-            "id": 280,
-            "tick": 4033,
-            "x": -13,
-            "z": 26.5
-          },
-          {
-            "id": 282,
-            "tick": 4033,
-            "x": 6,
-            "z": 26.5
-          },
-          {
-            "id": 284,
-            "tick": 4033,
-            "x": 25,
-            "z": 26.5
-          }
-        ]
-      },
-      "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
       "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
@@ -486,8 +403,8 @@
           "size": 13
         },
         "size": 13,
-        "killed": 1,
-        "ratio": 0.07692307692307693,
+        "killed": 0,
+        "ratio": 0,
         "visitedSide": true,
         "alarms": []
       },
@@ -510,8 +427,8 @@
           "size": 13
         },
         "size": 13,
-        "killed": 14,
-        "ratio": 1.0769230769230769,
+        "killed": 49,
+        "ratio": 3.769230769230769,
         "visitedSide": false,
         "alarms": []
       },
@@ -625,58 +542,241 @@
     },
     {
       "id": "G-24",
-      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "clause": "production enemy-bar eligibility at interaction boundaries",
       "value": [
         {
+          "label": "alpha far/healthy",
           "archetype": "infected.alpha",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.lion",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "shielded riot infected far/healthy",
+          "archetype": "infected.riot",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
+          "label": "pursuing Mega far/healthy",
+          "archetype": "infected.alpha",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "engaged arena boss far/healthy",
           "archetype": "infected.gorilla",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 40,
+          "expected": true,
+          "eligible": true
         },
         {
-          "archetype": "infected.elephant",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "label": "infected.runner far/healthy unengaged",
+          "archetype": "infected.runner",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.runner targeting player at 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner targeting player at 6.01 m",
+          "archetype": "infected.runner",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.runner player-hit at 40 m",
+          "archetype": "infected.runner",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.runner dead after player hit",
+          "archetype": "infected.runner",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion far/healthy unengaged",
+          "archetype": "infected.lion",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion targeting player at 6 m",
+          "archetype": "infected.lion",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion targeting player at 6.01 m",
+          "archetype": "infected.lion",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.lion player-hit at 40 m",
+          "archetype": "infected.lion",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.lion dead after player hit",
+          "archetype": "infected.lion",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla far/healthy unengaged",
+          "archetype": "infected.gorilla",
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla targeting player at 6 m",
+          "archetype": "infected.gorilla",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla targeting player at 6.01 m",
+          "archetype": "infected.gorilla",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.gorilla player-hit at 40 m",
+          "archetype": "infected.gorilla",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.gorilla dead after player hit",
+          "archetype": "infected.gorilla",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra far/healthy unengaged",
           "archetype": "infected.zebra",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
         },
         {
+          "label": "infected.zebra targeting player at 6 m",
+          "archetype": "infected.zebra",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra targeting player at 6.01 m",
+          "archetype": "infected.zebra",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.zebra player-hit at 40 m",
+          "archetype": "infected.zebra",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.zebra dead after player hit",
+          "archetype": "infected.zebra",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo far/healthy unengaged",
           "archetype": "infected.flamingo",
-          "near": true,
-          "farHealthy": false,
-          "farDamaged": true,
-          "dead": false,
-          "healthyAnimal": false
+          "distance": 15,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo targeting player at 6 m",
+          "archetype": "infected.flamingo",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo targeting player at 6.01 m",
+          "archetype": "infected.flamingo",
+          "distance": 6.01,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "infected.flamingo player-hit at 40 m",
+          "archetype": "infected.flamingo",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "infected.flamingo dead after player hit",
+          "archetype": "infected.flamingo",
+          "distance": 2,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "runner heard the player within 6 m",
+          "archetype": "infected.runner",
+          "distance": 6,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "elephant waiting in its arena, player-hit",
+          "archetype": "infected.elephant",
+          "distance": 6,
+          "expected": false,
+          "eligible": false
+        },
+        {
+          "label": "elephant engaged finale boss far/healthy",
+          "archetype": "infected.elephant",
+          "distance": 40,
+          "expected": true,
+          "eligible": true
+        },
+        {
+          "label": "healthy zoo animal near",
+          "archetype": "animal.zebra",
+          "distance": 3,
+          "expected": false,
+          "eligible": false
         }
       ],
-      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "target": "PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off",
       "status": "PASS",
       "tier": "high",
       "policy": "controlled-fixture",
@@ -847,10 +947,10 @@
         "opening": "side",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 132.9,
+        "simSeconds": 138.08333333333334,
         "deaths": 0,
         "kills": 0,
-        "knockdowns": 10,
+        "knockdowns": 14,
         "damage": 0,
         "axe": false,
         "timeline": [
@@ -868,43 +968,43 @@
           },
           {
             "type": "l2.truckDeparted",
-            "t": 24.283333333333335
+            "t": 28.433333333333334
           },
           {
             "type": "l2.truckArrived",
-            "t": 48.6
+            "t": 52.75
           },
           {
             "type": "objective:ride",
-            "t": 48.6
+            "t": 52.75
           },
           {
             "type": "l2.crewExit",
-            "t": 49.4
+            "t": 53.55
           },
           {
             "type": "l2.firefightersAtDoors",
-            "t": 54.15
+            "t": 61.5
           },
           {
             "type": "l2.doorsOpen",
-            "t": 58.15
+            "t": 65.5
           },
           {
             "type": "objective:doors",
-            "t": 58.15
+            "t": 65.5
           },
           {
             "type": "l2.radio",
-            "t": 71.68333333333334
+            "t": 78.1
           },
           {
             "type": "l2.gateClosed",
-            "t": 125.9
+            "t": 131.08333333333334
           },
           {
             "type": "objective:bridge",
-            "t": 127.9
+            "t": 133.08333333333334
           }
         ],
         "infectedAt": {
@@ -913,18 +1013,18 @@
             "rescue": 0
           },
           "10": {
-            "all": 43,
-            "rescue": 8
+            "all": 58,
+            "rescue": 23
           },
           "60": {
-            "all": 60,
-            "rescue": 26
+            "all": 59,
+            "rescue": 25
           }
         },
         "firefighterHits": 11,
-        "firefightersTurnedBy90": 4,
+        "firefightersTurnedBy90": 3,
         "firstDeathS": null,
-        "killsNearDoors": 1,
+        "killsNearDoors": 2,
         "clusterKilled": 0,
         "clusterSize": 13,
         "minHp": 100,
@@ -933,7 +1033,7 @@
           "infectedMax": 0,
           "combatEvents": 0,
           "alarmS": 23.15,
-          "crewAtTruckS": 1.1333333333333333,
+          "crewAtTruckS": 4.866666666666666,
           "axeActive": true
         },
         "ride": {
@@ -941,7 +1041,7 @@
           "seconds": 24.316666666666666,
           "seatedEveryTick": true,
           "crewExitS": 0.8,
-          "controlS": 0
+          "controlS": 0.5
         },
         "doors": {
           "order": [
@@ -963,76 +1063,71 @@
             "refuge-door-17",
             "refuge-door-9"
           ],
-          "allOutS": 10.633333333333333,
+          "allOutS": 10.266666666666667,
           "nonBiteNearRescue": 0
         },
         "crewTurns": [
           {
-            "id": 125,
-            "seconds": 2.8,
-            "sameAsset": true
-          },
-          {
             "id": 126,
-            "seconds": 2.75,
+            "seconds": 2.683333333333333,
             "sameAsset": true
           },
           {
-            "id": 124,
-            "seconds": 2.9166666666666665,
+            "id": 123,
+            "seconds": 3.3666666666666667,
             "sameAsset": true
           },
           {
-            "id": 121,
-            "seconds": 3.1,
+            "id": 125,
+            "seconds": 2.566666666666667,
             "sameAsset": true
           }
         ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 702,
+            "samples": 704,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 1077,
+            "samples": 614,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 1103,
+            "samples": 364,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 593,
+            "samples": 534,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 474,
+            "samples": 878,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 494,
+            "samples": 288,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 26,
+          "nonSightAlerts": 29,
           "emergeFar": 0,
           "emergeSeen": 0,
           "emerged": 35
         },
         "radio": {
-          "infected": 42,
-          "escapeArea": 34,
+          "infected": 55,
+          "escapeArea": 33,
           "groupsOf4": 4,
-          "chasingPlayer": 1,
-          "chasingFraction": 0.023809523809523808,
+          "chasingPlayer": 2,
+          "chasingFraction": 0.03636363636363636,
           "scatteredSingles": 6
         },
         "cluster": {
@@ -1041,51 +1136,45 @@
         },
         "gate": {
           "closeS": 0.6,
-          "infectedInsideAfter": 5,
-          "infectedInsideAtClosure": [
-            290,
-            292,
-            294,
-            296,
-            304
-          ],
+          "infectedInsideAfter": 0,
+          "infectedInsideAtClosure": [],
           "crossingsAfterClosure": []
         },
         "diedBy120": false,
         "scatteredSingleAdmissions": [
           {
             "id": 274,
-            "tick": 4033,
+            "tick": 4471,
             "x": -33.5,
             "z": -14
           },
           {
             "id": 276,
-            "tick": 4033,
+            "tick": 4471,
             "x": -34,
             "z": 2
           },
           {
             "id": 278,
-            "tick": 4033,
+            "tick": 4471,
             "x": -27.2,
             "z": 19
           },
           {
             "id": 280,
-            "tick": 4033,
+            "tick": 4471,
             "x": -13,
             "z": 26.5
           },
           {
             "id": 282,
-            "tick": 4033,
+            "tick": 4471,
             "x": 6,
             "z": 26.5
           },
           {
             "id": 284,
-            "tick": 4033,
+            "tick": 4471,
             "x": 25,
             "z": 26.5
           }
@@ -1100,7 +1189,7 @@
         "opening": "side",
         "seed": 1,
         "outcome": "timeout",
-        "simSeconds": 181.88333333333333,
+        "simSeconds": 185.01666666666668,
         "deaths": 0,
         "kills": 0,
         "knockdowns": 0,
@@ -1125,72 +1214,72 @@
           },
           {
             "type": "l2.truckDeparted",
-            "t": 24.733333333333334
+            "t": 27.866666666666667
           },
           {
             "type": "l2.truckArrived",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "objective:ride",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "l2.crewExit",
-            "t": 49.85
+            "t": 52.983333333333334
           },
           {
             "type": "l2.firefightersAtDoors",
-            "t": 57.86666666666667
+            "t": 61
           },
           {
             "type": "l2.doorsOpen",
-            "t": 61.86666666666667
+            "t": 65
           },
           {
             "type": "objective:doors",
-            "t": 61.86666666666667
+            "t": 65
           },
           {
             "type": "l2.radio",
-            "t": 106.86666666666666
+            "t": 110
           }
         ],
         "infectedAt": {
           "0": {
-            "all": 0,
+            "all": 35,
             "rescue": 0
           },
           "10": {
-            "all": 30,
-            "rescue": 30
+            "all": 58,
+            "rescue": 23
           },
           "60": {
             "all": 60,
-            "rescue": 40
+            "rescue": 25
           },
           "90": {
             "all": 60,
-            "rescue": 37
+            "rescue": 25
           },
           "120": {
-            "all": 60,
-            "rescue": 31
+            "all": 59,
+            "rescue": 25
           }
         },
-        "firefighterHits": 43,
-        "firefightersTurnedBy90": 6,
+        "firefighterHits": 46,
+        "firefightersTurnedBy90": 2,
         "firstDeathS": null,
         "killsNearDoors": 0,
         "clusterKilled": 0,
-        "clusterSize": 7,
+        "clusterSize": 13,
         "minHp": 100,
         "deathsAt": [],
         "calm": {
           "infectedMax": 0,
           "combatEvents": 0,
           "alarmS": 23.15,
-          "crewAtTruckS": 1.5833333333333333,
+          "crewAtTruckS": 4.1,
           "axeActive": true
         },
         "ride": {
@@ -1198,7 +1287,7 @@
           "seconds": 24.316666666666666,
           "seatedEveryTick": true,
           "crewExitS": 0.8,
-          "controlS": 0
+          "controlS": 0.5
         },
         "doors": {
           "order": [
@@ -1224,120 +1313,100 @@
         },
         "crewTurns": [
           {
-            "id": 126,
-            "seconds": 2.683333333333333,
-            "sameAsset": true
-          },
-          {
-            "id": 121,
-            "seconds": 2.8833333333333333,
-            "sameAsset": true
-          },
-          {
             "id": 124,
-            "seconds": 2.9,
+            "seconds": 3.2333333333333334,
             "sameAsset": true
           },
           {
-            "id": 125,
-            "seconds": 2.75,
-            "sameAsset": true
-          },
-          {
-            "id": 122,
-            "seconds": 3.2,
-            "sameAsset": true
-          },
-          {
-            "id": 123,
-            "seconds": 2.6666666666666665,
+            "id": 126,
+            "seconds": 3.183333333333333,
             "sameAsset": true
           }
         ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 391,
+            "samples": 812,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 605,
+            "samples": 652,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 719,
+            "samples": 833,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 402,
+            "samples": 549,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 426,
+            "samples": 693,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 366,
+            "samples": 552,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 186,
+          "nonSightAlerts": 37,
           "emergeFar": 0,
           "emergeSeen": 0,
-          "emerged": 29
+          "emerged": 35
         },
         "radio": {
-          "infected": 60,
-          "escapeArea": 20,
-          "groupsOf4": 3,
-          "chasingPlayer": 31,
-          "chasingFraction": 0.5166666666666667,
-          "scatteredSingles": 3
+          "infected": 58,
+          "escapeArea": 37,
+          "groupsOf4": 4,
+          "chasingPlayer": 15,
+          "chasingFraction": 0.25862068965517243,
+          "scatteredSingles": 6
         },
         "cluster": null,
         "gate": null,
         "diedBy120": false,
         "scatteredSingleAdmissions": [
           {
-            "id": 308,
-            "tick": 6250,
+            "id": 225,
+            "tick": 3900,
             "x": -33.5,
             "z": -14
           },
           {
-            "id": 310,
-            "tick": 6290,
+            "id": 227,
+            "tick": 3900,
             "x": -34,
-            "z": 2
+            "z": 1.75
           },
           {
-            "id": 312,
-            "tick": 6330,
+            "id": 229,
+            "tick": 3900,
             "x": -27.2,
             "z": 19
           },
           {
-            "id": 314,
-            "tick": 7250,
+            "id": 231,
+            "tick": 3900,
             "x": -13,
             "z": 26.5
           },
           {
-            "id": 316,
-            "tick": 8160,
+            "id": 233,
+            "tick": 3900,
             "x": 6,
             "z": 26.5
           },
           {
-            "id": 318,
-            "tick": 8840,
+            "id": 235,
+            "tick": 3900,
             "x": 25,
             "z": 26.5
           }
@@ -1352,11 +1421,11 @@
         "opening": "side",
         "seed": 1,
         "outcome": "timeout",
-        "simSeconds": 78.33333333333333,
+        "simSeconds": 92.18333333333334,
         "deaths": 1,
         "kills": 0,
-        "knockdowns": 13,
-        "damage": 101,
+        "knockdowns": 29,
+        "damage": 108.39299999999855,
         "axe": true,
         "timeline": [
           {
@@ -1377,31 +1446,31 @@
           },
           {
             "type": "l2.truckDeparted",
-            "t": 24.733333333333334
+            "t": 27.866666666666667
           },
           {
             "type": "l2.truckArrived",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "objective:ride",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "l2.crewExit",
-            "t": 49.85
+            "t": 52.983333333333334
           },
           {
             "type": "l2.firefightersAtDoors",
-            "t": 54.6
+            "t": 60.93333333333333
           },
           {
             "type": "l2.doorsOpen",
-            "t": 58.6
+            "t": 64.93333333333334
           },
           {
             "type": "objective:doors",
-            "t": 58.6
+            "t": 64.93333333333334
           }
         ],
         "infectedAt": {
@@ -1410,25 +1479,25 @@
             "rescue": 0
           },
           "10": {
-            "all": 16,
-            "rescue": 16
+            "all": 52,
+            "rescue": 17
           }
         },
-        "firefighterHits": 22,
-        "firefightersTurnedBy90": 1,
-        "firstDeathS": 78.33333333333333,
-        "killsNearDoors": 13,
+        "firefighterHits": 5,
+        "firefightersTurnedBy90": 0,
+        "firstDeathS": 92.18333333333334,
+        "killsNearDoors": 29,
         "clusterKilled": 0,
-        "clusterSize": 0,
-        "minHp": 10,
+        "clusterSize": 13,
+        "minHp": 8.392999999998551,
         "deathsAt": [
-          "78s@-42,-37/collapse"
+          "92s@-50,-32/collapse"
         ],
         "calm": {
           "infectedMax": 0,
           "combatEvents": 0,
           "alarmS": 23.15,
-          "crewAtTruckS": 1.5833333333333333,
+          "crewAtTruckS": 4.1,
           "axeActive": true
         },
         "ride": {
@@ -1436,7 +1505,7 @@
           "seconds": 24.316666666666666,
           "seatedEveryTick": true,
           "crewExitS": 0.8,
-          "controlS": 0
+          "controlS": 0.5
         },
         "doors": {
           "order": [
@@ -1456,80 +1525,111 @@
             "refuge-door-17",
             "refuge-door-9"
           ],
-          "allOutS": 10.633333333333333,
+          "allOutS": 10.266666666666667,
           "nonBiteNearRescue": 0
         },
-        "crewTurns": [
-          {
-            "id": 124,
-            "seconds": 2.7,
-            "sameAsset": true
-          }
-        ],
+        "crewTurns": [],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 1184,
+            "samples": 968,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 1079,
+            "samples": 944,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 1061,
+            "samples": 940,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 870,
+            "samples": 1107,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 1053,
+            "samples": 812,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 323,
+            "samples": 742,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 16,
+          "nonSightAlerts": 11,
           "emergeFar": 0,
           "emergeSeen": 0,
-          "emerged": 0
+          "emerged": 35
         },
         "radio": null,
         "cluster": null,
         "gate": null,
         "diedBy120": true,
-        "scatteredSingleAdmissions": []
+        "scatteredSingleAdmissions": [
+          {
+            "id": 274,
+            "tick": 4486,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 276,
+            "tick": 4486,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 278,
+            "tick": 4486,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 280,
+            "tick": 4486,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 282,
+            "tick": 4486,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 284,
+            "tick": 4486,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
       }
     },
-    "L2/aggressive-uninterrupted-census": {
+    "L2/camping-uninterrupted-census": {
       "protected": true,
       "countOnly": true,
       "qualified": true,
       "route": {
         "samples": 5401,
-        "maxDoorDistanceM": 11.800666244822747,
+        "maxDoorDistanceM": 14.396180554999512,
         "outside15mTicks": 0
       },
       "report": {
-        "profile": "aggressive",
+        "profile": "idle",
         "opening": "side",
         "seed": 1,
         "outcome": "timeout",
-        "simSeconds": 148.61666666666667,
+        "simSeconds": 155.01666666666668,
         "deaths": 0,
         "kills": 0,
-        "knockdowns": 109,
+        "knockdowns": 0,
         "damage": 0,
         "axe": true,
         "timeline": [
@@ -1551,59 +1651,59 @@
           },
           {
             "type": "l2.truckDeparted",
-            "t": 24.733333333333334
+            "t": 27.866666666666667
           },
           {
             "type": "l2.truckArrived",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "objective:ride",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "l2.crewExit",
-            "t": 49.85
+            "t": 52.983333333333334
           },
           {
             "type": "l2.firefightersAtDoors",
-            "t": 54.6
+            "t": 61
           },
           {
             "type": "l2.doorsOpen",
-            "t": 58.6
+            "t": 65
           },
           {
             "type": "objective:doors",
-            "t": 58.6
+            "t": 65
           },
           {
             "type": "l2.radio",
-            "t": 103.6
+            "t": 110
           }
         ],
         "infectedAt": {
           "0": {
-            "all": 0,
+            "all": 35,
             "rescue": 0
           },
           "10": {
-            "all": 16,
-            "rescue": 16
+            "all": 58,
+            "rescue": 23
           },
           "60": {
-            "all": 50,
-            "rescue": 15
+            "all": 60,
+            "rescue": 25
           },
           "90": {
-            "all": 48,
-            "rescue": 14
+            "all": 60,
+            "rescue": 25
           }
         },
-        "firefighterHits": 32,
-        "firefightersTurnedBy90": 5,
+        "firefighterHits": 46,
+        "firefightersTurnedBy90": 2,
         "firstDeathS": null,
-        "killsNearDoors": 109,
+        "killsNearDoors": 0,
         "clusterKilled": 0,
         "clusterSize": 13,
         "minHp": 100,
@@ -1612,7 +1712,7 @@
           "infectedMax": 0,
           "combatEvents": 0,
           "alarmS": 23.15,
-          "crewAtTruckS": 1.5833333333333333,
+          "crewAtTruckS": 4.1,
           "axeActive": true
         },
         "ride": {
@@ -1620,7 +1720,7 @@
           "seconds": 24.316666666666666,
           "seatedEveryTick": true,
           "crewExitS": 0.8,
-          "controlS": 0
+          "controlS": 0.5
         },
         "doors": {
           "order": [
@@ -1647,75 +1747,60 @@
         "crewTurns": [
           {
             "id": 124,
-            "seconds": 2.7,
+            "seconds": 3.2333333333333334,
             "sameAsset": true
           },
           {
-            "id": 123,
-            "seconds": 2.9,
-            "sameAsset": true
-          },
-          {
-            "id": 125,
-            "seconds": 3.316666666666667,
-            "sameAsset": true
-          },
-          {
-            "id": 122,
-            "seconds": 3.35,
-            "sameAsset": true
-          },
-          {
-            "id": 121,
-            "seconds": 3.5,
+            "id": 126,
+            "seconds": 3.183333333333333,
             "sameAsset": true
           }
         ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 1474,
+            "samples": 812,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 1079,
+            "samples": 652,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 1061,
+            "samples": 833,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 870,
+            "samples": 549,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 1053,
+            "samples": 693,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 323,
+            "samples": 552,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 140,
+          "nonSightAlerts": 26,
           "emergeFar": 0,
           "emergeSeen": 0,
           "emerged": 35
         },
         "radio": {
-          "infected": 39,
+          "infected": 58,
           "escapeArea": 37,
           "groupsOf4": 4,
-          "chasingPlayer": 0,
-          "chasingFraction": 0,
+          "chasingPlayer": 15,
+          "chasingFraction": 0.25862068965517243,
           "scatteredSingles": 6
         },
         "cluster": null,
@@ -1723,38 +1808,38 @@
         "diedBy120": false,
         "scatteredSingleAdmissions": [
           {
-            "id": 307,
-            "tick": 5316,
+            "id": 225,
+            "tick": 3900,
             "x": -33.5,
             "z": -14
           },
           {
-            "id": 309,
-            "tick": 5316,
+            "id": 227,
+            "tick": 3900,
             "x": -34,
-            "z": 2
+            "z": 1.75
           },
           {
-            "id": 311,
-            "tick": 5316,
+            "id": 229,
+            "tick": 3900,
             "x": -27.2,
             "z": 19
           },
           {
-            "id": 313,
-            "tick": 5316,
+            "id": 231,
+            "tick": 3900,
             "x": -13,
             "z": 26.5
           },
           {
-            "id": 315,
-            "tick": 5316,
+            "id": 233,
+            "tick": 3900,
             "x": 6,
             "z": 26.5
           },
           {
-            "id": 317,
-            "tick": 5316,
+            "id": 235,
+            "tick": 3900,
             "x": 25,
             "z": 26.5
           }
@@ -1765,384 +1850,359 @@
       "protected": false,
       "trace": [
         {
-          "tick": 4320,
-          "x": -65.76296997070312,
-          "z": -18.647701263427734
-        },
-        {
-          "tick": 4380,
-          "x": -66.03350830078125,
-          "z": -14.155804634094238
-        },
-        {
-          "tick": 4440,
-          "x": -66.30384826660156,
-          "z": -9.663941383361816
-        },
-        {
-          "tick": 4500,
-          "x": -66.57415771484375,
-          "z": -5.1720781326293945
-        },
-        {
-          "tick": 4560,
-          "x": -66.79054260253906,
-          "z": -2.672008752822876
-        },
-        {
-          "tick": 4620,
-          "x": -67.84862518310547,
-          "z": -0.43459680676460266
-        },
-        {
           "tick": 4680,
-          "x": -68.27906799316406,
-          "z": 2.9437875747680664
+          "x": -65.61698150634766,
+          "z": -21.079809188842773
         },
         {
           "tick": 4740,
-          "x": -68.6064682006836,
-          "z": 7.431849002838135
+          "x": -65.8871841430664,
+          "z": -16.587888717651367
         },
         {
           "tick": 4800,
-          "x": -68.82046508789062,
-          "z": 11.256972312927246
+          "x": -66.1574935913086,
+          "z": -12.09601879119873
         },
         {
           "tick": 4860,
-          "x": -68.8447265625,
-          "z": 13.731871604919434
+          "x": -66.42780303955078,
+          "z": -7.604155540466309
         },
         {
           "tick": 4920,
-          "x": -68.86898803710938,
-          "z": 16.206769943237305
+          "x": -66.65196990966797,
+          "z": -3.879652261734009
         },
         {
           "tick": 4980,
-          "x": -68.89324951171875,
-          "z": 18.681669235229492
+          "x": -67.28662872314453,
+          "z": -1.6408648490905762
         },
         {
           "tick": 5040,
-          "x": -68.91751098632812,
-          "z": 21.15656852722168
+          "x": -68.13213348388672,
+          "z": 0.734348714351654
         },
         {
           "tick": 5100,
-          "x": -68.94192504882812,
-          "z": 23.631467819213867
+          "x": -68.44832611083984,
+          "z": 5.124218463897705
         },
         {
           "tick": 5160,
-          "x": -68.96641540527344,
-          "z": 26.106367111206055
+          "x": -68.76603698730469,
+          "z": 9.612985610961914
         },
         {
           "tick": 5220,
-          "x": -67.79963684082031,
-          "z": 27.83972930908203
+          "x": -68.82880401611328,
+          "z": 12.4315185546875
         },
         {
           "tick": 5280,
-          "x": -65.33871459960938,
-          "z": 28.01748275756836
+          "x": -68.85352325439453,
+          "z": 14.906417846679688
         },
         {
           "tick": 5340,
-          "x": -62.86781311035156,
-          "z": 28.160188674926758
+          "x": -68.87824249267578,
+          "z": 17.381317138671875
         },
         {
           "tick": 5400,
-          "x": -60.396812438964844,
-          "z": 28.28518295288086
+          "x": -68.8536605834961,
+          "z": 19.843883514404297
         },
         {
           "tick": 5460,
-          "x": -57.92582702636719,
-          "z": 28.410526275634766
+          "x": -67.71736145019531,
+          "z": 22.01198959350586
         },
         {
           "tick": 5520,
-          "x": -55.45502853393555,
-          "z": 28.537343978881836
+          "x": -66.52305603027344,
+          "z": 24.179729461669922
         },
         {
           "tick": 5580,
-          "x": -52.98427200317383,
-          "z": 28.665813446044922
+          "x": -65.32875061035156,
+          "z": 26.347469329833984
         },
         {
           "tick": 5640,
-          "x": -50.51372146606445,
-          "z": 28.796178817749023
+          "x": -63.801490783691406,
+          "z": 28.6213436126709
         },
         {
           "tick": 5700,
-          "x": -47.94967269897461,
-          "z": 28.929386138916016
+          "x": -61.79713439941406,
+          "z": 32.65025329589844
         },
         {
           "tick": 5760,
-          "x": -43.45870590209961,
-          "z": 29.20857048034668
+          "x": -64.78594970703125,
+          "z": 31.61577606201172
         },
         {
           "tick": 5820,
-          "x": -38.96781539916992,
-          "z": 29.493871688842773
+          "x": -66.08039855957031,
+          "z": 30.232059478759766
         },
         {
           "tick": 5880,
-          "x": -34.476924896240234,
-          "z": 29.77916145324707
+          "x": -61.58058166503906,
+          "z": 30.20230484008789
         },
         {
           "tick": 5940,
-          "x": -32.460941314697266,
-          "z": 32.69245147705078
+          "x": -57.08076477050781,
+          "z": 30.172550201416016
         },
         {
           "tick": 6000,
-          "x": -31.910728454589844,
-          "z": 37.15862274169922
+          "x": -52.58094787597656,
+          "z": 30.14279556274414
         },
         {
           "tick": 6060,
-          "x": -31.360610961914062,
-          "z": 41.624794006347656
+          "x": -48.08113098144531,
+          "z": 30.113040924072266
         },
         {
           "tick": 6120,
-          "x": -30.658458709716797,
-          "z": 45.94613265991211
+          "x": -43.58131408691406,
+          "z": 30.08328628540039
         },
         {
           "tick": 6180,
-          "x": -26.230588912963867,
-          "z": 46.63341522216797
+          "x": -39.08149719238281,
+          "z": 30.053531646728516
         },
         {
           "tick": 6240,
-          "x": -21.777143478393555,
-          "z": 47.2784538269043
+          "x": -34.58168029785156,
+          "z": 30.02372932434082
         },
         {
           "tick": 6300,
-          "x": -18.36713981628418,
-          "z": 47.565982818603516
+          "x": -32.480079650878906,
+          "z": 32.73078536987305
         },
         {
           "tick": 6360,
-          "x": -15.89258098602295,
-          "z": 47.61038589477539
+          "x": -31.92298126220703,
+          "z": 37.19626998901367
         },
         {
           "tick": 6420,
-          "x": -13.417967796325684,
-          "z": 47.654788970947266
+          "x": -31.365882873535156,
+          "z": 41.6617546081543
         },
         {
           "tick": 6480,
-          "x": -10.943354606628418,
-          "z": 47.69919204711914
+          "x": -30.657323837280273,
+          "z": 45.9817008972168
         },
         {
           "tick": 6540,
-          "x": -8.468741416931152,
-          "z": 47.743595123291016
+          "x": -26.227664947509766,
+          "z": 46.656192779541016
         },
         {
           "tick": 6600,
-          "x": -5.994056701660156,
-          "z": 47.7821044921875
+          "x": -21.77103614807129,
+          "z": 47.27920913696289
         },
         {
           "tick": 6660,
-          "x": -3.5191545486450195,
-          "z": 47.80293273925781
+          "x": -18.361032485961914,
+          "z": 47.56679916381836
         },
         {
           "tick": 6720,
-          "x": 0.7706966400146484,
-          "z": 47.83893966674805
+          "x": -15.886473655700684,
+          "z": 47.611202239990234
         },
         {
           "tick": 6780,
-          "x": 5.270541667938232,
-          "z": 47.876705169677734
+          "x": -13.411860466003418,
+          "z": 47.65560531616211
         },
         {
           "tick": 6840,
-          "x": 9.727896690368652,
-          "z": 47.823883056640625
+          "x": -10.937247276306152,
+          "z": 47.700008392333984
         },
         {
           "tick": 6900,
-          "x": 12.51969051361084,
-          "z": 44.30690002441406
+          "x": -8.462495803833008,
+          "z": 47.73412322998047
         },
         {
           "tick": 6960,
-          "x": 15.372071266174316,
-          "z": 40.82783126831055
+          "x": -5.98759651184082,
+          "z": 47.757240295410156
         },
         {
           "tick": 7020,
-          "x": 18.310468673706055,
-          "z": 37.419647216796875
+          "x": -3.512700080871582,
+          "z": 47.780357360839844
         },
         {
           "tick": 7080,
-          "x": 21.36103057861328,
-          "z": 36.873348236083984
+          "x": -1.0378122329711914,
+          "z": 47.80347442626953
         },
         {
           "tick": 7140,
-          "x": 18.909284591674805,
-          "z": 37.2677001953125
+          "x": 1.4370797872543335,
+          "z": 47.82659149169922
         },
         {
           "tick": 7200,
-          "x": 18.27994728088379,
-          "z": 41.7142333984375
+          "x": 3.911966323852539,
+          "z": 47.849708557128906
         },
         {
           "tick": 7260,
-          "x": 17.878280639648438,
-          "z": 46.06597137451172
+          "x": 6.386865139007568,
+          "z": 47.872825622558594
         },
         {
           "tick": 7320,
-          "x": 20.879117965698242,
-          "z": 47.09370422363281
+          "x": 8.861763954162598,
+          "z": 47.89594268798828
         },
         {
           "tick": 7380,
-          "x": 25.331327438354492,
-          "z": 47.747798919677734
+          "x": 12.881599426269531,
+          "z": 47.93355178833008
         },
         {
           "tick": 7440,
-          "x": 29.813997268676758,
-          "z": 48.00104522705078
+          "x": 17.38141632080078,
+          "z": 47.97555923461914
         },
         {
           "tick": 7500,
-          "x": 34.31404113769531,
-          "z": 48.000816345214844
+          "x": 21.88129425048828,
+          "z": 48.000125885009766
         },
         {
           "tick": 7560,
-          "x": 38.8140869140625,
-          "z": 48.000587463378906
+          "x": 26.38134002685547,
+          "z": 48.000125885009766
         },
         {
           "tick": 7620,
-          "x": 43.31413269042969,
-          "z": 48.000423431396484
+          "x": 30.881385803222656,
+          "z": 48.000125885009766
         },
         {
           "tick": 7680,
-          "x": 47.814178466796875,
-          "z": 48.000308990478516
+          "x": 35.381431579589844,
+          "z": 48.000125885009766
         },
         {
           "tick": 7740,
-          "x": 52.31422424316406,
-          "z": 48.00019454956055
+          "x": 39.88147735595703,
+          "z": 48.000125885009766
         },
         {
           "tick": 7800,
-          "x": 56.81427001953125,
-          "z": 48.00008010864258
+          "x": 44.38152313232422,
+          "z": 48.000125885009766
         },
         {
           "tick": 7860,
-          "x": 61.31431579589844,
-          "z": 48.00005340576172
+          "x": 48.881568908691406,
+          "z": 48.000125885009766
         },
         {
           "tick": 7920,
-          "x": 65.81427001953125,
-          "z": 48.00005340576172
+          "x": 53.381614685058594,
+          "z": 48.000125885009766
         },
         {
           "tick": 7980,
-          "x": 70.3140869140625,
-          "z": 48.00005340576172
+          "x": 57.88166046142578,
+          "z": 48.000057220458984
         },
         {
           "tick": 8040,
-          "x": 74.81390380859375,
-          "z": 48.00005340576172
+          "x": 62.38170623779297,
+          "z": 48.000057220458984
         },
         {
           "tick": 8100,
-          "x": 79.313720703125,
-          "z": 48.00005340576172
+          "x": 66.88160705566406,
+          "z": 48.000057220458984
         },
         {
           "tick": 8160,
-          "x": 81.19986724853516,
-          "z": 44.19986343383789
+          "x": 71.38142395019531,
+          "z": 48.000057220458984
         },
         {
           "tick": 8220,
-          "x": 81.39835357666016,
-          "z": 39.70885467529297
+          "x": 75.88124084472656,
+          "z": 48.000057220458984
         },
         {
           "tick": 8280,
-          "x": 81.42029571533203,
-          "z": 37.83429718017578
+          "x": 80.0472183227539,
+          "z": 47.374202728271484
         },
         {
           "tick": 8340,
-          "x": 81.42029571533203,
-          "z": 37.83429718017578
+          "x": 81.2782211303711,
+          "z": 43.11017608642578
         },
         {
           "tick": 8400,
-          "x": 81.40827941894531,
-          "z": 34.629268646240234
+          "x": 81.42176818847656,
+          "z": 38.612648010253906
         },
         {
           "tick": 8460,
-          "x": 81.40203094482422,
-          "z": 32.947509765625
+          "x": 81.40601348876953,
+          "z": 34.11260223388672
         },
         {
           "tick": 8520,
-          "x": 81.40203094482422,
-          "z": 32.947509765625
+          "x": 81.40193939208984,
+          "z": 32.9510612487793
         },
         {
           "tick": 8580,
-          "x": 81.40203094482422,
-          "z": 32.947509765625
+          "x": 81.40193939208984,
+          "z": 32.9510612487793
         },
         {
           "tick": 8640,
-          "x": 81.40203094482422,
-          "z": 32.947509765625
+          "x": 81.40193939208984,
+          "z": 32.9510612487793
         },
         {
           "tick": 8700,
-          "x": 83.18317413330078,
-          "z": 32.06049728393555
+          "x": 81.40193939208984,
+          "z": 32.9510612487793
         },
         {
           "tick": 8760,
-          "x": 81.95331573486328,
-          "z": 32.294647216796875
+          "x": 82.7845687866211,
+          "z": 31.918479919433594
         },
         {
           "tick": 8820,
-          "x": 81.95331573486328,
-          "z": 32.294647216796875
+          "x": 81.91175842285156,
+          "z": 32.222023010253906
+        },
+        {
+          "tick": 8880,
+          "x": 81.91175842285156,
+          "z": 32.222023010253906
         }
       ],
       "alarms": [],
@@ -2152,11 +2212,11 @@
         "opening": "side",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 147.45,
+        "simSeconds": 148.33333333333334,
         "deaths": 0,
         "kills": 0,
-        "knockdowns": 20,
-        "damage": 72,
+        "knockdowns": 24,
+        "damage": 130,
         "axe": true,
         "timeline": [
           {
@@ -2177,43 +2237,43 @@
           },
           {
             "type": "l2.truckDeparted",
-            "t": 24.733333333333334
+            "t": 27.866666666666667
           },
           {
             "type": "l2.truckArrived",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "objective:ride",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "l2.crewExit",
-            "t": 49.85
+            "t": 52.983333333333334
           },
           {
             "type": "l2.firefightersAtDoors",
-            "t": 54.6
+            "t": 60.93333333333333
           },
           {
             "type": "l2.doorsOpen",
-            "t": 58.6
+            "t": 64.93333333333334
           },
           {
             "type": "objective:doors",
-            "t": 58.6
+            "t": 64.93333333333334
           },
           {
             "type": "l2.radio",
-            "t": 71.21666666666667
+            "t": 77.86666666666666
           },
           {
             "type": "l2.gateClosed",
-            "t": 140.45
+            "t": 141.33333333333334
           },
           {
             "type": "objective:bridge",
-            "t": 142.45
+            "t": 143.33333333333334
           }
         ],
         "infectedAt": {
@@ -2222,27 +2282,27 @@
             "rescue": 0
           },
           "10": {
-            "all": 46,
-            "rescue": 11
+            "all": 55,
+            "rescue": 20
           },
           "60": {
             "all": 58,
-            "rescue": 28
+            "rescue": 25
           }
         },
-        "firefighterHits": 12,
-        "firefightersTurnedBy90": 3,
+        "firefighterHits": 23,
+        "firefightersTurnedBy90": 2,
         "firstDeathS": null,
-        "killsNearDoors": 3,
-        "clusterKilled": 1,
+        "killsNearDoors": 4,
+        "clusterKilled": 0,
         "clusterSize": 13,
-        "minHp": 64,
+        "minHp": 14.047999999999966,
         "deathsAt": [],
         "calm": {
           "infectedMax": 0,
           "combatEvents": 0,
           "alarmS": 23.15,
-          "crewAtTruckS": 1.5833333333333333,
+          "crewAtTruckS": 4.1,
           "axeActive": true
         },
         "ride": {
@@ -2250,7 +2310,7 @@
           "seconds": 24.316666666666666,
           "seatedEveryTick": true,
           "crewExitS": 0.8,
-          "controlS": 0
+          "controlS": 0.5
         },
         "doors": {
           "order": [
@@ -2272,71 +2332,66 @@
             "refuge-door-17",
             "refuge-door-9"
           ],
-          "allOutS": 10.633333333333333,
+          "allOutS": 10.266666666666667,
           "nonBiteNearRescue": 0
         },
         "crewTurns": [
           {
-            "id": 124,
-            "seconds": 2.9,
-            "sameAsset": true
-          },
-          {
-            "id": 121,
-            "seconds": 2.9166666666666665,
+            "id": 125,
+            "seconds": 2.683333333333333,
             "sameAsset": true
           },
           {
             "id": 126,
-            "seconds": 3.216666666666667,
+            "seconds": 2.9166666666666665,
             "sameAsset": true
           }
         ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 551,
+            "samples": 1598,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 1147,
+            "samples": 725,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 1076,
+            "samples": 1575,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 526,
+            "samples": 701,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 713,
+            "samples": 335,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 558,
+            "samples": 1529,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 47,
+          "nonSightAlerts": 15,
           "emergeFar": 0,
           "emergeSeen": 0,
           "emerged": 35
         },
         "radio": {
-          "infected": 46,
-          "escapeArea": 34,
+          "infected": 54,
+          "escapeArea": 33,
           "groupsOf4": 4,
-          "chasingPlayer": 0,
-          "chasingFraction": 0,
+          "chasingPlayer": 6,
+          "chasingFraction": 0.1111111111111111,
           "scatteredSingles": 6
         },
         "cluster": {
@@ -2352,38 +2407,38 @@
         "diedBy120": false,
         "scatteredSingleAdmissions": [
           {
-            "id": 273,
-            "tick": 4057,
+            "id": 274,
+            "tick": 4447,
             "x": -33.5,
             "z": -14
           },
           {
-            "id": 275,
-            "tick": 4057,
+            "id": 276,
+            "tick": 4447,
             "x": -34,
             "z": 2
           },
           {
-            "id": 277,
-            "tick": 4057,
+            "id": 278,
+            "tick": 4447,
             "x": -27.2,
             "z": 19
           },
           {
-            "id": 279,
-            "tick": 4057,
+            "id": 280,
+            "tick": 4447,
             "x": -13,
             "z": 26.5
           },
           {
-            "id": 281,
-            "tick": 4057,
+            "id": 282,
+            "tick": 4447,
             "x": 6,
             "z": 26.5
           },
           {
-            "id": 283,
-            "tick": 4057,
+            "id": 284,
+            "tick": 4447,
             "x": 25,
             "z": 26.5
           }
@@ -2394,334 +2449,849 @@
       "protected": false,
       "trace": [
         {
-          "tick": 4260,
-          "x": -27.102699279785156,
-          "z": -30.837188720703125
-        },
-        {
-          "tick": 4320,
-          "x": -22.603775024414062,
-          "z": -30.924663543701172
-        },
-        {
-          "tick": 4380,
-          "x": -18.103843688964844,
-          "z": -30.95661163330078
-        },
-        {
-          "tick": 4440,
-          "x": -13.60392951965332,
-          "z": -30.98509407043457
-        },
-        {
-          "tick": 4500,
-          "x": -9.103940963745117,
-          "z": -30.98704719543457
-        },
-        {
-          "tick": 4560,
-          "x": -4.603952407836914,
-          "z": -30.989049911499023
-        },
-        {
           "tick": 4620,
-          "x": -0.10395216196775436,
-          "z": -30.991052627563477
+          "x": -27.549747467041016,
+          "z": -30.710281372070312
         },
         {
           "tick": 4680,
-          "x": 4.396048545837402,
-          "z": -30.99305534362793
+          "x": -23.05050277709961,
+          "z": -30.794111251831055
         },
         {
           "tick": 4740,
-          "x": 8.896037101745605,
-          "z": -30.995058059692383
+          "x": -18.551258087158203,
+          "z": -30.877939224243164
         },
         {
           "tick": 4800,
-          "x": 13.396025657653809,
-          "z": -30.997060775756836
+          "x": -14.052000999450684,
+          "z": -30.960458755493164
         },
         {
           "tick": 4860,
-          "x": 17.896028518676758,
-          "z": -30.997859954833984
+          "x": -9.55201244354248,
+          "z": -30.965723037719727
         },
         {
           "tick": 4920,
-          "x": 22.3955020904541,
-          "z": -30.92761993408203
+          "x": -5.052023887634277,
+          "z": -30.97098731994629
         },
         {
           "tick": 4980,
-          "x": 26.894975662231445,
-          "z": -30.857410430908203
+          "x": -0.5520267486572266,
+          "z": -30.976219177246094
         },
         {
           "tick": 5040,
-          "x": 31.39444923400879,
-          "z": -30.787200927734375
+          "x": 3.947972536087036,
+          "z": -30.981426239013672
         },
         {
           "tick": 5100,
-          "x": 35.89382553100586,
-          "z": -30.716991424560547
+          "x": 8.447961807250977,
+          "z": -30.98663330078125
         },
         {
           "tick": 5160,
-          "x": 40.393184661865234,
-          "z": -30.64678382873535
+          "x": 12.94795036315918,
+          "z": -30.991840362548828
         },
         {
           "tick": 5220,
-          "x": 44.89254379272461,
-          "z": -30.576576232910156
+          "x": 17.44795799255371,
+          "z": -30.997047424316406
         },
         {
           "tick": 5280,
-          "x": 48.10740661621094,
-          "z": -29.14890480041504
+          "x": 21.947479248046875,
+          "z": -30.933279037475586
         },
         {
           "tick": 5340,
-          "x": 48.4202880859375,
-          "z": -24.65984535217285
+          "x": 26.44695281982422,
+          "z": -30.86324119567871
         },
         {
           "tick": 5400,
-          "x": 48.73316955566406,
-          "z": -20.170785903930664
+          "x": 30.946426391601562,
+          "z": -30.793231964111328
         },
         {
           "tick": 5460,
-          "x": 49.04606246948242,
-          "z": -15.681721687316895
+          "x": 35.4458122253418,
+          "z": -30.72325325012207
         },
         {
           "tick": 5520,
-          "x": 49.35905838012695,
-          "z": -11.192605018615723
+          "x": 39.94517135620117,
+          "z": -30.65327262878418
         },
         {
           "tick": 5580,
-          "x": 49.672054290771484,
-          "z": -6.703496932983398
+          "x": 44.44453048706055,
+          "z": -30.583293914794922
         },
         {
           "tick": 5640,
-          "x": 49.75896453857422,
-          "z": -2.211780548095703
+          "x": 48.0780143737793,
+          "z": -29.597700119018555
         },
         {
           "tick": 5700,
-          "x": 49.55022430419922,
-          "z": 2.2833778858184814
+          "x": 48.39066696166992,
+          "z": -25.1085262298584
         },
         {
           "tick": 5760,
-          "x": 49.351470947265625,
-          "z": 6.777787208557129
+          "x": 48.70331954956055,
+          "z": -20.619352340698242
         },
         {
           "tick": 5820,
-          "x": 46.95854187011719,
-          "z": 9.550838470458984
+          "x": 49.01597213745117,
+          "z": -16.130178451538086
         },
         {
           "tick": 5880,
-          "x": 46.34712219238281,
-          "z": 13.667877197265625
+          "x": 49.3286247253418,
+          "z": -11.641060829162598
         },
         {
           "tick": 5940,
-          "x": 43.09044647216797,
-          "z": 14.631479263305664
+          "x": 49.64127731323242,
+          "z": -7.151944160461426
         },
         {
           "tick": 6000,
-          "x": 44.57440948486328,
-          "z": 15.505034446716309
+          "x": 49.838077545166016,
+          "z": -2.6592273712158203
         },
         {
           "tick": 6060,
-          "x": 47.76641082763672,
-          "z": 17.17030906677246
+          "x": 49.803287506103516,
+          "z": 1.840638518333435
         },
         {
           "tick": 6120,
-          "x": 47.5470085144043,
-          "z": 21.664976119995117
+          "x": 49.7685661315918,
+          "z": 6.340506076812744
         },
         {
           "tick": 6180,
-          "x": 47.3276252746582,
-          "z": 26.159643173217773
+          "x": 50.10380935668945,
+          "z": 10.806267738342285
         },
         {
           "tick": 6240,
-          "x": 44.46834945678711,
-          "z": 28.14974021911621
+          "x": 50.0333137512207,
+          "z": 15.12898063659668
         },
         {
           "tick": 6300,
-          "x": 40.147518157958984,
-          "z": 29.40693473815918
+          "x": 45.88416290283203,
+          "z": 15.282999992370605
         },
         {
           "tick": 6360,
-          "x": 35.708580017089844,
-          "z": 29.915433883666992
+          "x": 41.932498931884766,
+          "z": 15.267352104187012
         },
         {
           "tick": 6420,
-          "x": 31.260194778442383,
-          "z": 29.516958236694336
+          "x": 46.281646728515625,
+          "z": 15.946158409118652
         },
         {
           "tick": 6480,
-          "x": 26.9271183013916,
-          "z": 28.30262565612793
+          "x": 47.70918655395508,
+          "z": 18.842424392700195
         },
         {
           "tick": 6540,
-          "x": 22.59404182434082,
-          "z": 27.088293075561523
+          "x": 47.47755813598633,
+          "z": 23.33640480041504
         },
         {
           "tick": 6600,
-          "x": 18.26096534729004,
-          "z": 25.87401008605957
+          "x": 47.12217330932617,
+          "z": 27.35489845275879
         },
         {
           "tick": 6660,
-          "x": 16.45538330078125,
-          "z": 22.01058006286621
+          "x": 42.80126190185547,
+          "z": 28.5655574798584
         },
         {
           "tick": 6720,
-          "x": 15.04072093963623,
-          "z": 17.73872947692871
+          "x": 38.45911407470703,
+          "z": 29.745115280151367
         },
         {
           "tick": 6780,
-          "x": 14.573171615600586,
-          "z": 20.206418991088867
+          "x": 33.99355697631836,
+          "z": 30.107954025268555
         },
         {
           "tick": 6840,
-          "x": 14.394529342651367,
-          "z": 24.702917098999023
+          "x": 29.70826530456543,
+          "z": 31.33570671081543
         },
         {
           "tick": 6900,
-          "x": 15.641495704650879,
-          "z": 27.977277755737305
+          "x": 25.670272827148438,
+          "z": 33.32177734375
         },
         {
           "tick": 6960,
-          "x": 20.11304473876953,
-          "z": 28.482648849487305
+          "x": 22.616554260253906,
+          "z": 36.346561431884766
         },
         {
           "tick": 7020,
-          "x": 24.5845947265625,
-          "z": 28.988019943237305
+          "x": 19.52467155456543,
+          "z": 35.726715087890625
         },
         {
           "tick": 7080,
-          "x": 29.05614471435547,
-          "z": 29.493391036987305
+          "x": 16.199199676513672,
+          "z": 32.95762252807617
         },
         {
           "tick": 7140,
-          "x": 33.53409957885742,
-          "z": 29.906110763549805
+          "x": 17.41695213317871,
+          "z": 30.988569259643555
         },
         {
           "tick": 7200,
-          "x": 38.03364181518555,
-          "z": 29.97357940673828
+          "x": 21.912649154663086,
+          "z": 30.791730880737305
         },
         {
           "tick": 7260,
-          "x": 42.53231430053711,
-          "z": 30.081382751464844
+          "x": 26.40834617614746,
+          "z": 30.594921112060547
         },
         {
           "tick": 7320,
-          "x": 47.03098678588867,
-          "z": 30.189186096191406
+          "x": 30.904043197631836,
+          "z": 30.39813995361328
         },
         {
           "tick": 7380,
-          "x": 51.529659271240234,
-          "z": 30.29698944091797
+          "x": 35.39973831176758,
+          "z": 30.201358795166016
         },
         {
           "tick": 7440,
-          "x": 56.0283317565918,
-          "z": 30.40479278564453
+          "x": 39.89698028564453,
+          "z": 30.130361557006836
         },
         {
           "tick": 7500,
-          "x": 60.52604293823242,
-          "z": 30.348630905151367
+          "x": 44.39611053466797,
+          "z": 30.213102340698242
         },
         {
           "tick": 7560,
-          "x": 65.02310943603516,
-          "z": 30.183149337768555
+          "x": 48.895240783691406,
+          "z": 30.29584312438965
         },
         {
           "tick": 7620,
-          "x": 69.02422332763672,
-          "z": 30.39944076538086
+          "x": 53.394371032714844,
+          "z": 30.378583908081055
         },
         {
           "tick": 7680,
-          "x": 69.02422332763672,
-          "z": 30.39944076538086
+          "x": 57.893463134765625,
+          "z": 30.457080841064453
         },
         {
           "tick": 7740,
-          "x": 69.02422332763672,
-          "z": 30.39944076538086
+          "x": 62.39030456542969,
+          "z": 30.28729820251465
         },
         {
           "tick": 7800,
-          "x": 69.02422332763672,
-          "z": 30.39944076538086
+          "x": 66.88700103759766,
+          "z": 30.117528915405273
         },
         {
           "tick": 7860,
-          "x": 69.02422332763672,
-          "z": 30.39944076538086
+          "x": 69.01611328125,
+          "z": 30.395370483398438
         },
         {
           "tick": 7920,
-          "x": 69.02422332763672,
-          "z": 30.39944076538086
+          "x": 69.01611328125,
+          "z": 30.395370483398438
         },
         {
           "tick": 7980,
-          "x": 71.27694702148438,
-          "z": 30.800600051879883
+          "x": 69.01611328125,
+          "z": 30.395370483398438
         },
         {
           "tick": 8040,
-          "x": 75.76463317871094,
-          "z": 30.485057830810547
+          "x": 69.01611328125,
+          "z": 30.395370483398438
         },
         {
           "tick": 8100,
-          "x": 78.12773895263672,
-          "z": 30.298994064331055
+          "x": 69.01611328125,
+          "z": 30.395370483398438
         },
         {
           "tick": 8160,
-          "x": 78.12773895263672,
-          "z": 30.298994064331055
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8220,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8280,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8340,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8400,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8460,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8520,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8580,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8640,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8700,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8760,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8820,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8880,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 8940,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9000,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9060,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9120,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9180,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9240,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9300,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9360,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9420,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9480,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9540,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9600,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9660,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9720,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9780,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9840,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9900,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 9960,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10020,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10080,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10140,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10200,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10260,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10320,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10380,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10440,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10500,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10560,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10620,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10680,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10740,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10800,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10860,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10920,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 10980,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11040,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11100,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11160,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11220,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11280,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11340,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11400,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11460,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11520,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11580,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11640,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11700,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11760,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11820,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11880,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 11940,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12000,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12060,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12120,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12180,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12240,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12300,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12360,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12420,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12480,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12540,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12600,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12660,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12720,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12780,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12840,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12900,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 12960,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13020,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13080,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13140,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13200,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13260,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13320,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13380,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13440,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13500,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13560,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13620,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13680,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13740,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13800,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13860,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13920,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 13980,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14040,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14100,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14160,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14220,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14280,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14340,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14400,
+          "x": 69.01611328125,
+          "z": 30.395370483398438
+        },
+        {
+          "tick": 14460,
+          "x": 69.50434875488281,
+          "z": 30.52440071105957
+        },
+        {
+          "tick": 14520,
+          "x": 73.9620132446289,
+          "z": 30.628389358520508
+        },
+        {
+          "tick": 14580,
+          "x": 78.1600112915039,
+          "z": 30.29662322998047
+        },
+        {
+          "tick": 14640,
+          "x": 78.1600112915039,
+          "z": 30.29662322998047
+        },
+        {
+          "tick": 14700,
+          "x": 78.1600112915039,
+          "z": 30.29662322998047
         }
       ],
       "alarms": [],
@@ -2731,11 +3301,11 @@
         "opening": "alarm",
         "seed": 1,
         "outcome": "complete",
-        "simSeconds": 136.78333333333333,
+        "simSeconds": 245.18333333333334,
         "deaths": 0,
         "kills": 0,
-        "knockdowns": 23,
-        "damage": 36,
+        "knockdowns": 83,
+        "damage": 220,
         "axe": true,
         "timeline": [
           {
@@ -2756,43 +3326,43 @@
           },
           {
             "type": "l2.truckDeparted",
-            "t": 24.733333333333334
+            "t": 27.866666666666667
           },
           {
             "type": "l2.truckArrived",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "objective:ride",
-            "t": 49.05
+            "t": 52.18333333333333
           },
           {
             "type": "l2.crewExit",
-            "t": 49.85
+            "t": 52.983333333333334
           },
           {
             "type": "l2.firefightersAtDoors",
-            "t": 54.6
+            "t": 60.93333333333333
           },
           {
             "type": "l2.doorsOpen",
-            "t": 58.6
+            "t": 64.93333333333334
           },
           {
             "type": "objective:doors",
-            "t": 58.6
+            "t": 64.93333333333334
           },
           {
             "type": "l2.radio",
-            "t": 70.7
+            "t": 76.61666666666666
           },
           {
             "type": "l2.gateClosed",
-            "t": 134.78333333333333
+            "t": 243.18333333333334
           },
           {
             "type": "objective:bridge",
-            "t": 136.78333333333333
+            "t": 245.18333333333334
           }
         ],
         "infectedAt": {
@@ -2801,27 +3371,35 @@
             "rescue": 0
           },
           "10": {
-            "all": 46,
-            "rescue": 11
+            "all": 58,
+            "rescue": 23
           },
           "60": {
-            "all": 60,
-            "rescue": 30
+            "all": 51,
+            "rescue": 24
+          },
+          "90": {
+            "all": 51,
+            "rescue": 24
+          },
+          "120": {
+            "all": 49,
+            "rescue": 23
           }
         },
-        "firefighterHits": 15,
-        "firefightersTurnedBy90": 5,
+        "firefighterHits": 20,
+        "firefightersTurnedBy90": 2,
         "firstDeathS": null,
-        "killsNearDoors": 4,
-        "clusterKilled": 14,
+        "killsNearDoors": 1,
+        "clusterKilled": 49,
         "clusterSize": 13,
-        "minHp": 82,
+        "minHp": 17.587999999996157,
         "deathsAt": [],
         "calm": {
           "infectedMax": 0,
           "combatEvents": 0,
           "alarmS": 23.15,
-          "crewAtTruckS": 1.5833333333333333,
+          "crewAtTruckS": 4.1,
           "axeActive": true
         },
         "ride": {
@@ -2829,7 +3407,7 @@
           "seconds": 24.316666666666666,
           "seatedEveryTick": true,
           "crewExitS": 0.8,
-          "controlS": 0
+          "controlS": 0.5
         },
         "doors": {
           "order": [
@@ -2851,81 +3429,66 @@
             "refuge-door-17",
             "refuge-door-9"
           ],
-          "allOutS": 10.633333333333333,
+          "allOutS": 10.266666666666667,
           "nonBiteNearRescue": 0
         },
         "crewTurns": [
           {
-            "id": 126,
-            "seconds": 2.9,
+            "id": 125,
+            "seconds": 2.683333333333333,
             "sameAsset": true
           },
           {
             "id": 123,
-            "seconds": 3.3,
-            "sameAsset": true
-          },
-          {
-            "id": 124,
-            "seconds": 3.466666666666667,
-            "sameAsset": true
-          },
-          {
-            "id": 121,
-            "seconds": 2.783333333333333,
-            "sameAsset": true
-          },
-          {
-            "id": 125,
-            "seconds": 2.6333333333333333,
+            "seconds": 3.1166666666666667,
             "sameAsset": true
           }
         ],
         "crewExposure": [
           {
             "id": 121,
-            "samples": 896,
+            "samples": 607,
             "protectedTicks": 0
           },
           {
             "id": 122,
-            "samples": 1050,
+            "samples": 957,
             "protectedTicks": 0
           },
           {
             "id": 123,
-            "samples": 854,
+            "samples": 876,
             "protectedTicks": 0
           },
           {
             "id": 124,
-            "samples": 850,
+            "samples": 966,
             "protectedTicks": 0
           },
           {
             "id": 125,
-            "samples": 941,
+            "samples": 335,
             "protectedTicks": 0
           },
           {
             "id": 126,
-            "samples": 530,
+            "samples": 938,
             "protectedTicks": 0
           }
         ],
         "audit": {
           "sightViolations": 0,
-          "nonSightAlerts": 30,
+          "nonSightAlerts": 58,
           "emergeFar": 0,
           "emergeSeen": 0,
           "emerged": 35
         },
         "radio": {
-          "infected": 41,
+          "infected": 56,
           "escapeArea": 34,
           "groupsOf4": 4,
-          "chasingPlayer": 0,
-          "chasingFraction": 0,
+          "chasingPlayer": 5,
+          "chasingFraction": 0.08928571428571429,
           "scatteredSingles": 6
         },
         "cluster": {
@@ -2942,37 +3505,37 @@
         "scatteredSingleAdmissions": [
           {
             "id": 273,
-            "tick": 3980,
+            "tick": 4341,
             "x": -33.5,
             "z": -14
           },
           {
             "id": 275,
-            "tick": 3980,
+            "tick": 4341,
             "x": -34,
-            "z": 2.5
+            "z": 2
           },
           {
             "id": 277,
-            "tick": 3980,
+            "tick": 4341,
             "x": -27.2,
             "z": 19
           },
           {
             "id": 279,
-            "tick": 3980,
+            "tick": 4341,
             "x": -13,
             "z": 26.5
           },
           {
             "id": 281,
-            "tick": 3980,
+            "tick": 4341,
             "x": 6,
             "z": 26.5
           },
           {
             "id": 283,
-            "tick": 3980,
+            "tick": 4341,
             "x": 25,
             "z": 26.5
           }
