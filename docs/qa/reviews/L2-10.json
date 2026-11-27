@@ -14,15 +14,15 @@
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-      "sha256": "0563412f16d22930bcc1526ac2a24b11ba5d6aec4a1fc5b63b93013f81fab335",
+      "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
       "what": "Current low-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-      "sha256": "acbdf8b5f2762349da30c7f13eeedb55f22836cf3b3c732efcd3615159bb9d37",
+      "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
       "what": "Current high-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
     }
   ],
-  "notes": "Both-tier current-head native acceptance evidence.",
+  "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
   "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd"
 }

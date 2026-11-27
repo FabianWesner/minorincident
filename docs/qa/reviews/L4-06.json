@@ -14,15 +14,15 @@
   "evidence": [
     {
       "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
-      "sha256": "4bef00316e5dc8117f92bae4abd7c3e59b0e16ce98c7a7a418c422c497517bc9",
+      "sha256": "9a439a08e3daa19392bb33a9e06263088061f93d6889c5aa21947c2937ba04fe",
       "what": "Current-head low-stationary: Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40)."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
-      "sha256": "ca75554da5208584c36038cc28486b2366daf92bdaf285c2550cfc76f9953b1d",
+      "sha256": "619b9ddff9dc79cac9e35c77309841ff081a2c1c7d4bb23f3e86287cf7173fd3",
       "what": "Current-head high-stationary: Stationary low/high: first physical breach at 51.0833 s (30–60 s), living infected at breach 65/64 (≥60), minimum plaza living after +45 s to line break 51/45 (≥40)."
     }
   ],
-  "notes": "Both-tier native current-head receipt; no visual taste judgement implied.",
+  "notes": "Both-tier native current-head receipt; no visual taste judgement implied. New main 233eab9: all native row check values/statuses identical; receipt hashes refreshed.",
   "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f"
 }

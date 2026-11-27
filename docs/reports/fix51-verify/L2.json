@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L2",
-  "sourceHash": "f7b0130bf593de288a335e98a4a2cd11e2e0f1c3906d1ffaddc2e492a6fefc20",
+  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:56:49.676Z",
+  "generatedAt": "2026-11-27T23:04:20.938Z",
   "policies": [
     {
       "tier": "low",
@@ -5006,36 +5006,36 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
-            "sha256": "f456165ca38b54422db21e5b315c4c21826b24f7501c28bd3e4c2575488b5962",
+            "sha256": "bf5c007d9a94a488bbb8e1cf0d66ba0b312b5e560f35304b2694afcb7078f23a",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
-            "sha256": "19a3c875009e580a0e0df9817e95dde261316fb5c95f8b9426dd283db80d28d3",
+            "sha256": "5d284dd070da31a6cd2d9c94f8de5e9bb3b93d2ddab44c96ce67ee551d5fec7a",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-            "sha256": "96235eaec881d155d0abb29a394e203949636b68f1c36664f16aea862a1b1ea5",
+            "sha256": "c6e7d8cb78fa0bc60fb0846d916213337c46740d283b66581674b4ace2e206bd",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
-            "sha256": "905e51ac20849a5ef2d5862d953bcd17a87d2784b194eab68bcd0d10caaf67a4",
+            "sha256": "2070be23e1db43a5797a70ee3bda7be3c791a4d8c879916789d731c159dad42d",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "0563412f16d22930bcc1526ac2a24b11ba5d6aec4a1fc5b63b93013f81fab335",
+            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "acbdf8b5f2762349da30c7f13eeedb55f22836cf3b3c732efcd3615159bb9d37",
+            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           }
         ],
-        "notes": "Current-head both-tier native acceptance refresh; real-input visual ride evidence is not required by this row.",
+        "notes": "Current-head both-tier native acceptance refresh; real-input visual ride evidence is not required by this row. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6037,16 +6037,16 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "0563412f16d22930bcc1526ac2a24b11ba5d6aec4a1fc5b63b93013f81fab335",
+            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
             "what": "Current low-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "acbdf8b5f2762349da30c7f13eeedb55f22836cf3b3c732efcd3615159bb9d37",
+            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
             "what": "Current high-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           }
         ],
-        "notes": "Both-tier current-head native acceptance evidence.",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6485,16 +6485,16 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "0563412f16d22930bcc1526ac2a24b11ba5d6aec4a1fc5b63b93013f81fab335",
+            "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
             "what": "Current low-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "acbdf8b5f2762349da30c7f13eeedb55f22836cf3b3c732efcd3615159bb9d37",
+            "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
             "what": "Current high-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           }
         ],
-        "notes": "Both-tier current-head native acceptance evidence.",
+        "notes": "Both-tier current-head native acceptance evidence. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -6855,11 +6855,11 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-            "sha256": "96235eaec881d155d0abb29a394e203949636b68f1c36664f16aea862a1b1ea5",
+            "sha256": "c6e7d8cb78fa0bc60fb0846d916213337c46740d283b66581674b4ace2e206bd",
             "what": "Current-head native receipt containing the measured L2-12 counterexample described in the clause."
           }
         ],
-        "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling.",
+        "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling. New main 233eab9: all row check values/statuses identical to previous receipts; evidence hashes refreshed.",
         "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"

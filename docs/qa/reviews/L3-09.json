@@ -29,15 +29,15 @@
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "5fe8603e11522b85490f5de36d76a5c811eab1f0484d39c294b8418b38fe14d1",
+      "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
       "what": "Current both-tier spawn census and sprinter fraction."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "103245f79cbfb2083bc0d64f0d1366a0a451c3e297f20851a464f4728c78bdf0",
+      "sha256": "d25877c4e432751fd72129a103ca0415f378929dabb73b133fdc0b8d18e1d3b9",
       "what": "Current both-tier spawn census and sprinter fraction."
     }
   ],
-  "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers.",
+  "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes.",
   "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }

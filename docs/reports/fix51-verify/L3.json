@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L3",
-  "sourceHash": "f7b0130bf593de288a335e98a4a2cd11e2e0f1c3906d1ffaddc2e492a6fefc20",
+  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:56:59.913Z",
+  "generatedAt": "2026-11-27T23:14:30.229Z",
   "policies": [
     {
       "tier": "low",
@@ -6887,11 +6887,11 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "5fe8603e11522b85490f5de36d76a5c811eab1f0484d39c294b8418b38fe14d1",
+            "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
             "what": "Current-head native receipt containing the measured L3-06 counterexample described in the clause."
           }
         ],
-        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
+        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
@@ -7332,16 +7332,16 @@
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "5fe8603e11522b85490f5de36d76a5c811eab1f0484d39c294b8418b38fe14d1",
+            "sha256": "3c4d2ebc4893d0d8a6e78dad103cf3886161babbbcd8ffdd00edb00c67b2bf2b",
             "what": "Current both-tier spawn census and sprinter fraction."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "103245f79cbfb2083bc0d64f0d1366a0a451c3e297f20851a464f4728c78bdf0",
+            "sha256": "d25877c4e432751fd72129a103ca0415f378929dabb73b133fdc0b8d18e1d3b9",
             "what": "Current both-tier spawn census and sprinter fraction."
           }
         ],
-        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers.",
+        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
