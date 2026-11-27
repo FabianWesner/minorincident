@@ -3,26 +3,26 @@
   "status": "PASS",
   "reviewer": "Codex v1-l1l10",
   "date": "2026-11-27",
-  "commit": "540ab32a79efd11134863f0c93bce83a606ccd7f",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Spread: infected 5 → **≥ 15 at +120 s** (floor 12) → **≥ 25 at +240 s** with an idle remote observer; every new one from a bite.",
       "verdict": "PASS",
-      "note": "Current remote idle fixture: initial 5; low 30/30 and high 44/50 at 120/240 seconds. All additional turns follow bites with no direct spawns; observer has zero deaths, damage, knockdowns and kills in each tier."
+      "note": "Both tiers start with 5; low 30/30 and high 44/50 at +120/+240 seconds. All additional turns follow bites, no direct additions; observer has zero deaths, damage, knockdowns and kills."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/v1-l1l10/L1-07/high-fixtures.json",
-      "sha256": "a49c11b6a5d283edcce844fc3f83910d46c319db7f0ad2afcea29acf3975b6d2",
-      "what": "Current main remote idle spread fixture and observer safety."
+      "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
+      "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
+      "what": "Current native L1 controlled fixture."
     },
     {
-      "file": "docs/reports/v1-l1l10/L1-07/low-fixtures.json",
-      "sha256": "7690f67204b5d6608adf2cbae2b2e801b4ceb1c539b6a0143560a87e2435d0cb",
-      "what": "Current main remote idle spread fixture and observer safety."
+      "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
+      "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
+      "what": "Current native L1 controlled fixture."
     }
   ],
-  "notes": "Native controlled remote-observer fixture; ordinary opening followed by one observer relocation.",
-  "sourceDigest": "98158a4535e7095a412aab4216827ca6901a057dc0891d876e102c38f65304f1"
+  "notes": "Native fixture uses ordinary opening then relocates observer remotely.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

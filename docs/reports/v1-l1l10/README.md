@@ -107,3 +107,7 @@ Fresh **FAIL**: on `a72c2770`, the checkpoint fixture again saved a living boss 
 ## L10-06 refresh at 92c233e2
 
 Both current controlled fixtures reproduce **FAIL**: dog run-speed ratio 1.65 vs 1.1. Attack observations pass: 0.65 s telegraph, 1.08 m reach, 10 HP bite, 2 s cooldown. Repro: run L10 acceptance fixtures and inspect native dog speed ratio; appearance remains unreviewed and cause unisolated. [Review](../../qa/reviews/L10-06.json), [high fixture](L10-native/current-high-fixtures.json), [low fixture](L10-native/current-low-fixtures.json). The previously copied route receipts are from the preceding source and do not establish current L10-10 charge behavior.
+
+## L1-07 refresh at 92c233e2
+
+Current controlled fixtures: **PASS**, 5 initial; low 30/30 and high 44/50 at +120/+240 s, all additional turns from bites and observer undisturbed. Ordinary opening then remote observer relocation. [Review](../../qa/reviews/L1-07.json), [high](L1-07/current-high-fixtures.json), [low](L1-07/current-low-fixtures.json). No game change; no open numeric clause.
