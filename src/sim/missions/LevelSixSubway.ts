@@ -207,9 +207,10 @@ export class LevelSixSubway {
     const w=this.w,ai=w.infected!,p=w.entities.get(1)!.transform,group=this.living().map(r=>w.entities.get(r.id)!).filter(Boolean);
     for(const e of [...ai.active]){
       const b=e.infected;
-      if(!b||e.health.current<=0||e.corpse||e.transform.x>=tail-45||this.s.survivors.some(r=>r.id===e.id))continue;
+      const sealed=this.s.gates.some(g=>g.closedAt&&e.transform.x<g.x&&p.x>g.x);
+      if(!b||e.health.current<=0||e.corpse||(!sealed&&e.transform.x>=tail-45)||this.s.survivors.some(r=>r.id===e.id))continue;
       if(e.combat?.attacking||b.specialAttack||b.l1?.mode==='bite'||e.infectionRise)continue;
-      if(distance(e.transform,p)<35||group.some(member=>distance(e.transform,member.transform)<25))continue;
+      if(distance(e.transform,p)<(sealed?12:35)||group.some(member=>distance(e.transform,member.transform)<(sealed?10:25)))continue;
       if(!ai.director.offscreen(e.transform,e.transform.y-.7))continue;
       ai.release(e);this.s.distantRecycled=(this.s.distantRecycled??0)+1;
     }
@@ -260,8 +261,7 @@ export class LevelSixSubway {
         const base=wave===2&&index<2?{...original,z:-14}:original;
         const rank=wave===4?this.s.spawnLog.filter(entry=>entry.wave===4&&entry.door===requested).length%2:0;
         const inward=wave===4?1.4+rank*1.4:wave===3?4.4:1.4;
-        const pressureLead=wave===3&&i===0?w.entities.get(1)!.transform.x-base.x:0;
-        return {x:base.x+(wave===4?[-3,3][rank]:wave===3?pressureLead+(i%2)*.8:(i%2)*.8),z:wave===3&&index<2?-13:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
+        return {x:base.x+(wave===4?[-3,3][rank]:(i%2)*.8),z:base.z+(wave===1||wave===2?breachOffset:index>1&&base.z<l6.tunnel.z?inward:-inward)};};
       let door:number|undefined,at:Point|undefined,snapped=false;
       for(const index of candidates){
       // The first breach emerges on the corridor side of its service doors.
@@ -353,7 +353,7 @@ export class LevelSixSubway {
     r.status='following';
     e.hidden=false; e.civilian.survivor!.mode='follow';
     leaveSeat(e); e.civilian.story=null; delete e.civilian.floorY;
-    if(e.civilian.ally){e.civilian.ally.post=null;e.civilian.ally.hold=false;e.civilian.ally.run=null;e.civilian.ally.runSpeed=l6.follow.speed;}
+    if(e.civilian.ally){e.civilian.ally.post=null;e.civilian.ally.hold=false;e.civilian.ally.run={x:276,z:15};}
   }
   private living() {return this.s.survivors.filter(r=>r.status==='shelter'||r.status==='following');}
   /** A service gate can be closed once every living survivor is more than 2 m past its line (E24 §5: nobody trapped). */
@@ -477,7 +477,7 @@ export class LevelSixSubway {
     // walkers make up contact instead of forcing the courier to fetch them.
     // A small distance ramp is enough for the long tunnel without changing
     // the pressure, damage, or survivor health rules.
-    const gapToSlot=distance(e.transform,goal), catchupSpeed=s.leaderX>=240?l6.follow.speed:gapToSlot>1?Math.min(5.2,l6.follow.speed+(gapToSlot-1)*.4):l6.follow.speed;
+    const gapToSlot=distance(e.transform,goal), catchupSpeed=gapToSlot>1?Math.min(5.2,l6.follow.speed+(gapToSlot-1)*.4):l6.follow.speed;
     if((around||distance(e.transform,goal)>reach+.15)&&!this.w.npcs!.move(e,around??goal,catchupSpeed,e.civilian!,around ? .05 : reach,1600,nav)&&!around&&(returning||side>l6.tunnel.width/2))
       // A side room's long route can exceed the steering budget. Collected walkers
       // return to the nearby track; the unfetched group keeps its authored mouth approach.
@@ -604,11 +604,10 @@ export class LevelSixSubway {
       // within that half so each pair can actually join the retreat pressure.
       const byCourier=(rows:typeof reachable)=>rows.slice().sort((a,b)=>Math.abs(a.d.x-p.x)-Math.abs(b.d.x-p.x));
       const closest=byCourier(reachable)[0];
-      const preferred=ordinal%2===1?byCourier(near)[0]??byCourier(ahead2)[0]:byCourier(ahead2)[0]??byCourier(near)[0];
       // Keep the authored alternating direction when its door is nearby. When
       // the tail-relative band would select a much farther mouth, use the
       // closest reachable service door so the pair arrives on the live route.
-      const source=preferred&&closest&&Math.abs(preferred.d.x-p.x)<=Math.abs(closest.d.x-p.x)+12?preferred:closest;
+      const source=ordinal%2===1?near[0]??ahead2[0]:ahead2[0]??near[0]??closest;
       const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
       if(sources.length){const admitted=this.spawn(sources.length,sources,3);if(admitted<sources.length)s.nextWave=t+ticks(5);}
     }
