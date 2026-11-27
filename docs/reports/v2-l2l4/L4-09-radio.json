@@ -1,0 +1,352 @@
+{
+  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+  "revision": "990d9ae762dd52aa374d44e5a3af369f240a0a6f",
+  "method": "Read-only dialogue.line event listener on ordinary complete native bot, seed 1, both tiers; captures subtitle state at emission.",
+  "cells": [
+    {
+      "tier": "high",
+      "outcome": "complete",
+      "deaths": 9,
+      "lines": [
+        {
+          "tick": 1919,
+          "id": "L4.welcome",
+          "text": "Welcome to Fairhaven. Please proceed to registration.",
+          "subtitle": {
+            "id": "L4.welcome",
+            "text": "Welcome to Fairhaven. Please proceed to registration.",
+            "until": 2219
+          }
+        },
+        {
+          "tick": 1969,
+          "id": "L4.gun",
+          "text": "It is yours. Short bursts, and stay with the line.",
+          "subtitle": {
+            "id": "L4.gun",
+            "text": "It is yours. Short bursts, and stay with the line.",
+            "until": 2269
+          }
+        },
+        {
+          "tick": 1969,
+          "id": "L4.perimeter-active",
+          "text": "Military perimeter secured. Stay behind the barriers. They are piling up at the wire!",
+          "subtitle": {
+            "id": "L4.perimeter-active",
+            "text": "Military perimeter secured. Stay behind the barriers. They are piling up at the wire!",
+            "until": 2269
+          }
+        },
+        {
+          "tick": 2329,
+          "id": "L4.alpha-west",
+          "text": "Alpha at the west wall! It is tearing at the wire!",
+          "subtitle": {
+            "id": "L4.alpha-west",
+            "text": "Alpha at the west wall! It is tearing at the wire!",
+            "until": 2629
+          }
+        },
+        {
+          "tick": 2449,
+          "id": "L4.war",
+          "text": "Contact! All sides! Hold the plaza!",
+          "subtitle": {
+            "id": "L4.war",
+            "text": "Contact! All sides! Hold the plaza!",
+            "until": 2749
+          }
+        },
+        {
+          "tick": 3005,
+          "id": "L4.breach-west",
+          "text": "The west wall is down! They are pouring in! Hold the breach!",
+          "subtitle": {
+            "id": "L4.breach-west",
+            "text": "The west wall is down! They are pouring in! Hold the breach!",
+            "until": 3305
+          }
+        },
+        {
+          "tick": 3889,
+          "id": "L4.alpha-north",
+          "text": "Alpha at the north wall, by the guns!",
+          "subtitle": {
+            "id": "L4.alpha-north",
+            "text": "Alpha at the north wall, by the guns!",
+            "until": 4189
+          }
+        },
+        {
+          "tick": 4553,
+          "id": "L4.breach-north",
+          "text": "North wall breached! Hold the gap!",
+          "subtitle": {
+            "id": "L4.breach-north",
+            "text": "North wall breached! Hold the gap!",
+            "until": 4853
+          }
+        },
+        {
+          "tick": 5689,
+          "id": "L4.line1",
+          "text": "They are inside the wire! Line one, fall back to the guns!",
+          "subtitle": {
+            "id": "L4.line1",
+            "text": "They are inside the wire! Line one, fall back to the guns!",
+            "until": 5989
+          }
+        },
+        {
+          "tick": 7129,
+          "id": "L4.alpha-south",
+          "text": "Alpha at the south wall! Lakeshore side!",
+          "subtitle": {
+            "id": "L4.alpha-south",
+            "text": "Alpha at the south wall! Lakeshore side!",
+            "until": 7429
+          }
+        },
+        {
+          "tick": 8129,
+          "id": "L4.breach-south",
+          "text": "South wall breached! Hold the gap!",
+          "subtitle": {
+            "id": "L4.breach-south",
+            "text": "South wall breached! Hold the gap!",
+            "until": 8429
+          }
+        },
+        {
+          "tick": 9409,
+          "id": "L4.nests",
+          "text": "The guns are down! Back to the trucks, move!",
+          "subtitle": {
+            "id": "L4.nests",
+            "text": "The guns are down! Back to the trucks, move!",
+            "until": 9709
+          }
+        },
+        {
+          "tick": 12250,
+          "id": "L4.perimeter",
+          "text": "Courier! Stay inside the perimeter. Nobody leaves the camp.",
+          "subtitle": {
+            "id": "L4.perimeter",
+            "text": "Courier! Stay inside the perimeter. Nobody leaves the camp.",
+            "until": 12550
+          }
+        },
+        {
+          "tick": 12889,
+          "id": "L4.armor",
+          "text": "The tank has gone quiet. They are all over it!",
+          "subtitle": {
+            "id": "L4.armor",
+            "text": "The tank has gone quiet. They are all over it!",
+            "until": 13189
+          }
+        },
+        {
+          "tick": 13369,
+          "id": "L4.fallback",
+          "text": "Fall back! Get to the cellar!",
+          "subtitle": {
+            "id": "L4.fallback",
+            "text": "Fall back! Get to the cellar!",
+            "until": 13669
+          }
+        },
+        {
+          "tick": 13549,
+          "id": "L4.break",
+          "text": "The cellar under Kessler’s Hardware, far end of Harbor Street! Take Lakeshore, then Metro Road north. Keep moving!",
+          "subtitle": {
+            "id": "L4.break",
+            "text": "The cellar under Kessler’s Hardware, far end of Harbor Street! Take Lakeshore, then Metro Road north. Keep moving!",
+            "until": 13849
+          }
+        },
+        {
+          "tick": 17944,
+          "id": "L4.twist",
+          "text": "Above, the war goes on. Down here, one bulb holds.",
+          "subtitle": {
+            "id": "L4.twist",
+            "text": "Above, the war goes on. Down here, one bulb holds.",
+            "until": 18244
+          }
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "outcome": "complete",
+      "deaths": 15,
+      "lines": [
+        {
+          "tick": 1919,
+          "id": "L4.welcome",
+          "text": "Welcome to Fairhaven. Please proceed to registration.",
+          "subtitle": {
+            "id": "L4.welcome",
+            "text": "Welcome to Fairhaven. Please proceed to registration.",
+            "until": 2219
+          }
+        },
+        {
+          "tick": 1969,
+          "id": "L4.gun",
+          "text": "It is yours. Short bursts, and stay with the line.",
+          "subtitle": {
+            "id": "L4.gun",
+            "text": "It is yours. Short bursts, and stay with the line.",
+            "until": 2269
+          }
+        },
+        {
+          "tick": 1969,
+          "id": "L4.perimeter-active",
+          "text": "Military perimeter secured. Stay behind the barriers. They are piling up at the wire!",
+          "subtitle": {
+            "id": "L4.perimeter-active",
+            "text": "Military perimeter secured. Stay behind the barriers. They are piling up at the wire!",
+            "until": 2269
+          }
+        },
+        {
+          "tick": 2329,
+          "id": "L4.alpha-west",
+          "text": "Alpha at the west wall! It is tearing at the wire!",
+          "subtitle": {
+            "id": "L4.alpha-west",
+            "text": "Alpha at the west wall! It is tearing at the wire!",
+            "until": 2629
+          }
+        },
+        {
+          "tick": 2449,
+          "id": "L4.war",
+          "text": "Contact! All sides! Hold the plaza!",
+          "subtitle": {
+            "id": "L4.war",
+            "text": "Contact! All sides! Hold the plaza!",
+            "until": 2749
+          }
+        },
+        {
+          "tick": 3756,
+          "id": "L4.breach-west",
+          "text": "The west wall is down! They are pouring in! Hold the breach!",
+          "subtitle": {
+            "id": "L4.breach-west",
+            "text": "The west wall is down! They are pouring in! Hold the breach!",
+            "until": 4056
+          }
+        },
+        {
+          "tick": 5689,
+          "id": "L4.line1",
+          "text": "They are inside the wire! Line one, fall back to the guns!",
+          "subtitle": {
+            "id": "L4.line1",
+            "text": "They are inside the wire! Line one, fall back to the guns!",
+            "until": 5989
+          }
+        },
+        {
+          "tick": 7129,
+          "id": "L4.alpha-south",
+          "text": "Alpha at the south wall! Lakeshore side!",
+          "subtitle": {
+            "id": "L4.alpha-south",
+            "text": "Alpha at the south wall! Lakeshore side!",
+            "until": 7429
+          }
+        },
+        {
+          "tick": 7489,
+          "id": "L4.alpha-north",
+          "text": "Alpha at the north wall, by the guns!",
+          "subtitle": {
+            "id": "L4.alpha-north",
+            "text": "Alpha at the north wall, by the guns!",
+            "until": 7789
+          }
+        },
+        {
+          "tick": 7971,
+          "id": "L4.breach-south",
+          "text": "South wall breached! Hold the gap!",
+          "subtitle": {
+            "id": "L4.breach-south",
+            "text": "South wall breached! Hold the gap!",
+            "until": 8271
+          }
+        },
+        {
+          "tick": 9409,
+          "id": "L4.nests",
+          "text": "The guns are down! Back to the trucks, move!",
+          "subtitle": {
+            "id": "L4.nests",
+            "text": "The guns are down! Back to the trucks, move!",
+            "until": 9709
+          }
+        },
+        {
+          "tick": 11785,
+          "id": "L4.breach-north",
+          "text": "North wall breached! Hold the gap!",
+          "subtitle": {
+            "id": "L4.breach-north",
+            "text": "North wall breached! Hold the gap!",
+            "until": 12085
+          }
+        },
+        {
+          "tick": 12889,
+          "id": "L4.armor",
+          "text": "The tank has gone quiet. They are all over it!",
+          "subtitle": {
+            "id": "L4.armor",
+            "text": "The tank has gone quiet. They are all over it!",
+            "until": 13189
+          }
+        },
+        {
+          "tick": 13369,
+          "id": "L4.fallback",
+          "text": "Fall back! Get to the cellar!",
+          "subtitle": {
+            "id": "L4.fallback",
+            "text": "Fall back! Get to the cellar!",
+            "until": 13669
+          }
+        },
+        {
+          "tick": 13549,
+          "id": "L4.break",
+          "text": "The cellar under Kessler’s Hardware, far end of Harbor Street! Take Lakeshore, then Metro Road north. Keep moving!",
+          "subtitle": {
+            "id": "L4.break",
+            "text": "The cellar under Kessler’s Hardware, far end of Harbor Street! Take Lakeshore, then Metro Road north. Keep moving!",
+            "until": 13849
+          }
+        },
+        {
+          "tick": 20177,
+          "id": "L4.twist",
+          "text": "Above, the war goes on. Down here, one bulb holds.",
+          "subtitle": {
+            "id": "L4.twist",
+            "text": "Above, the war goes on. Down here, one bulb holds.",
+            "until": 20477
+          }
+        }
+      ]
+    }
+  ]
+}
