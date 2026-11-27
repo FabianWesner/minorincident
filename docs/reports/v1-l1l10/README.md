@@ -197,3 +197,11 @@ On main `92c233e2`, `npm run qa:accept -- --level L1 --skip-browser --reuse` exi
 | L1-13 | stale PASS → fresh PASS | Bat absent at start, first acquired at tick 5132, 0.992 m from the garage anchor (2 m radius); fists 7 hits, bat 2 hits against a 60 HP regular, both tiers. | [Review](../../qa/reviews/L1-13.json), [high fixture](L1-07/current-high-fixtures.json), [low fixture](L1-07/current-low-fixtures.json); L1 mission and district source establish the weapon objective and bat placement at the garage anchor. | — |
 
 Native bot route and isolated combat fixture, with separate mortal real-input L1 runs documented above. The L8-only source changes between the receipt's `92c233e2` and current main `233eab90` do not alter L1. No game change; no remaining measured clause.
+
+## L1-14 on main 233eab90
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L1-14 | stale PASS → fresh PASS | 10 / 10 admitted; maximum first nonhidden distance from refuge door 0.9 / 0.9 m; at most 3 / 3 courier pursuers within 20 m; settled waiting minimum 17.467 / 17.454 m over 36,000 samples each. | [Review](../../qa/reviews/L1-14.json), [measurement](L1-14/measurement.json); raw ledger and 20 inspected captures are hashed in the review. | — |
+
+The existing native bot reached pickup at tick 5132, then empty input and damage suppression permitted a 150-second mechanical observation. Waiting distances are measured after the initial approach, from +90 seconds onward, and to both player and garage. Browser inspection used a fixed close camera: the opened captures show figures on the porch and pavement, though several sampled moments miss the doorway crossing. The 0.9 m is the logical first nonhidden position, not a pixel-onset measurement. Existing mortal physical L1 routes are documented above. The native script wrote its full ledger but its optional comparison step exited 1 because the older baseline file is absent; the new ledger was independently summarized. No game change.
