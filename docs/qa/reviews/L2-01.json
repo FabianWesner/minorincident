@@ -1,33 +1,38 @@
 {
   "row": "L2-01",
   "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "71b9c5d607d61b71784abbe7554b5f83bf605189",
+  "reviewer": "Codex/v2-l2l4",
+  "date": "2026-11-28",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
-      "clause": "0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches.",
+      "clause": "No infected or combat until alarm; alarm and crew timing",
       "verdict": "PASS",
-      "note": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+      "note": "Both tiers: zero infected/combat, alarm at 23.15 s and crew at truck 4.8667 s later."
+    },
+    {
+      "clause": "Four civilians on two benches",
+      "verdict": "PASS",
+      "note": "Both-tier fixture census is four. Four original real-input frames at logged actual zoom 1/1.5 show two seated pairs on two benches."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L2-01-browser-ledger.json.gz",
-      "sha256": "2e4bdca48fcd8b23f6ed15823686e8678ce1f020cbf4d492e32b7ee3d56f0af4",
-      "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+      "file": "docs/reports/v2-l2l4/L2-01-current-frames.json",
+      "sha256": "876d259ca8f794201d2e39228a00693102bca02e1beedec0b30d928697aa762b",
+      "what": "Four individually inspected actual-zoom capture hashes and concrete seat observation."
     },
     {
-      "file": "docs/reports/final-a/L2-01-image-review.json",
-      "sha256": "5e51033b51f74493f029291c4aab271851442a2b30baa3888d06323114241a3c",
-      "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "68b32c1d5c6589225957f5539cebdcc03518b80d3f244f34926b4594b9cd7727",
+      "what": "Current native fixture: calm census, alarm and crew clocks."
     },
     {
-      "file": "docs/reports/final-a/L2-01-current-proof.json",
-      "sha256": "35c176be9460913b71ce59b77149410514b7071d4b6ec1fcfd3befa6cd14cc50",
-      "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "01126f8b677a045564e90ac4760210d42d339d49e65f2f4b09b30505e6516a27",
+      "what": "Current native fixture: calm census, alarm and crew clocks."
     }
   ],
-  "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
-  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
+  "notes": "Current main; real-input opening frame matrix, plus current both-tier native timing. Frame paths and hashes are retained in the manifest.",
+  "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd"
 }
