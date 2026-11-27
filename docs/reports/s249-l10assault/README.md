@@ -49,9 +49,7 @@ The story trace is `/private/tmp/s249-story-trace.jsonl`.
 - Focused infected AI suite: 5/5; typecheck passes.
 - `qa:threat`: 0 fail flags; L10 skilled complete, passive tick-budget, 0 passive flags.
 
-The low seed 0 pre-finale stall remains an open acceptance limitation. The
-position-based diagnostic in `tools/qa/diag/s249-finale.ts` did not reproduce
-the story trace and is exploratory.
+The low seed 0 pre-finale stall was investigated in the following section.
 
 ## Low seed 0 route recovery
 
@@ -63,3 +61,9 @@ now rejoins the marked road after that low-tier retry. Final story results:
 - Low seed 0: 50/51, 4 deaths, idle check passes; roadblock 3502 fails. No check that passed on the parent baseline regressed. Receipt `/private/tmp/s249b-low0-final.json`.
 - Low seed 1: 51/51, 3 deaths, idle check passes. Receipt `/private/tmp/s249b-low1-route.json`.
 - `qa:threat`: 0 fail flags; L10 skilled complete, passive tick-budget, 0 passive flags. Log `/private/tmp/s249b-threat-final.log`.
+
+The completed `tools/qa/diag/s249-finale.ts` samples 120 ticks per cluster.
+On WIP commit `3de46811`, the sampled service, south and west actors were
+absent from the active entity store for 26, 25 and 119 ticks respectively.
+On the fixed commit all three remained present for all 120 ticks. Receipts:
+`/private/tmp/s249-finale-before.jsonl` and `/private/tmp/s249-finale-final.jsonl`.
