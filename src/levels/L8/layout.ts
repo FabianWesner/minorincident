@@ -25,16 +25,6 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Authored fallback colliders otherwise survive after their placement is
     // removed and leave invisible obstacles in the animal pens.
     layout.colliders = layout.colliders.filter(c => !removed.has(c.id) && ![...removed].some(id => c.id.startsWith(`${id}/`)));
-    // The gorilla's throw-rock prop is cover, but its authored ground-spanning
-    // collider traps infected on the north side of the active arena lane.
-    layout.colliders = layout.colliders.filter(c => c.id !== 'gorilla-throw-rock');
-    // The west primate-facing fence has no public gate; the breach tears one
-    // panel out at the gorilla approach so arrivals just outside can reach it.
-    const gorillaWestGap = layout.placements.filter(p => p.assetId === 'prop.crowd-fence'
-      && Math.abs(p.position[0] - 38) < .01 && Math.abs(p.position[2] + 32) < 8.5);
-    const gorillaWestGapIds = new Set(gorillaWestGap.map(p => p.id));
-    layout.placements = layout.placements.filter(p => !gorillaWestGapIds.has(p.id));
-    layout.colliders = layout.colliders.filter(c => !gorillaWestGapIds.has(c.id));
     // Keep planted bushes beside the yard, rather than creating elephant-sized charge stops in its wall-bait lanes.
     for (const [id, x, z] of [['prop.garden-bush:220', -85, 20], ['prop.garden-bush:222', -35, 44], ['prop.wheelbarrow:426', 112, 38], ['prop.crates:427', 112, 42], ['prop.hose-reel:425', 112, 34]] as const) {
       const bush = layout.placements.find(p => p.id === id); if (!bush) continue;
@@ -73,7 +63,7 @@ export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, [x, z]] of [[59, -29], [64, -35], [55, -34], [61, -40]].entries()) add(`l8-gorilla-throw-${i}`, 'prop.crates', x, z, [.85, .8, .85]);
     for (let i = 0; i < 2; i++) add(`l8-gorilla-log-${i}`, 'prop.tree.dead', 53 + i * 7, -24 - (i % 2) * 3, [.55, .6, .55], .4);
     // Along the north-east side, clear of the south entry and east exit.
-    add('l8-gorilla-climbing-frame', 'prop.zoo-climbing-frame', 69, -43);
+    add('l8-gorilla-climbing-frame', 'prop.zoo-climbing-frame', 69, -25);
     // Loose bags on the upper platform are reachable from the throwing perch.
     for (const [i, [x, z]] of [[68, -25], [69, -26], [70, -25]].entries())
       add(`l8-gorilla-ledge-prop-${i}`, 'prop.trash-bags', x, z, [.4, .4, .4], 0, undefined, 3);

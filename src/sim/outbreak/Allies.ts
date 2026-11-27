@@ -46,12 +46,9 @@ const runBudget = 48_000;
  * hits one target with a distance-dependent chance (deterministic per shooter and shot). Returns false when the ordinary
  * calm routine should run instead.
  */
-export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean, hatch = false, handleL8Follower = true): boolean {
+export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean, hatch = false): boolean {
   if (e.passengerOf !== undefined && !hatch) return true;
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
-  // L8 recruited guards use the same route, arena-wait and catch-up formation
-  // as rescued survivors. Run that controller before ordinary ally tactics.
-  if (handleL8Follower && c.survivor?.mode === 'follow' && world.missions?.l8) return world.missions.l8.follower(e);
   if (e.health.current <= 0 || tick < c.knockedUntil) { a.strikeAt = 0; return true; }
   const shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !a.gun);
   const travelFacing = shooter && !(world.missions?.def.l3 && a.follow) && c.state !== 'grabbed' && tick < (a.aimMoveRestUntil ?? 0) && Math.hypot(e.locomotion?.vx ?? 0, e.locomotion?.vz ?? 0) > .12;

@@ -40,7 +40,7 @@ export class L8Gates extends Group {
     fence(l8EncounterGates.elephantEntry, true, false, 'elephantEntry');
     fence(l8EncounterGates.elephantExit, true, false, 'elephantExit');
     fence({ x: 0, z: -86, halfX: 2.7, halfZ: .4 }, true, false, 'perimeter.0');
-    fence({ x: -18, z: 80, halfX: 2.7, halfZ: .4 }, true, false, 'perimeter.1');
+    fence({ x: 0, z: 86, halfX: 2.7, halfZ: .4 }, true, false, 'perimeter.1');
     fence({ x: -116, z: 0, halfX: .4, halfZ: 2.7 }, true, false, 'perimeter.2');
     fence({ x: 116, z: 80, halfX: .4, halfZ: 2.7 }, true, false, 'perimeter.3');
     this.mesh = new InstancedMesh(this.geometry, materials.fromColor('l8-keeper-fence', new Color('#b7a269'), 0, true), this.rods.length);
@@ -53,7 +53,7 @@ export class L8Gates extends Group {
     const finalApproachOpen = !!arenas && arenas.filter(a => a.id !== 'elephant').every(a => a.phase === 3);
     const eastBreakAt = this.world.missions?.l8?.state.perimeterGateBreaks?.[3];
     const eastBreachOpen = eastBreakAt != null && this.world.tick >= eastBreakAt;
-    const ctx = { arenas: arenas ?? [], sealed: !!this.world.missions?.l8?.state.sealedAt, breached: !!this.world.missions?.state.states.breached };
+    const ctx = { arenas: arenas ?? [], sealed: !!this.world.missions?.l8?.state.sealedAt };
     this.rods.forEach((rod, i) => {
       const outerIndex = rod.key?.startsWith('perimeter.') ? Number(rod.key.slice('perimeter.'.length)) : -1;
       const breakAt = outerIndex >= 0 ? this.world.missions?.l8?.state.perimeterGateBreaks?.[outerIndex] : undefined;
@@ -61,7 +61,7 @@ export class L8Gates extends Group {
       const collapsing = elapsed >= 0 && elapsed < 24;
       const hidden = outerIndex >= 0 ? elapsed >= 24
         : rod.key === 'elephant' ? !this.world.missions?.state.states.breached || arenas?.find(a => a.id === 'elephant')?.phase === 3 || eastBreachOpen
-        : rod.key === 'elephantEntry' ? finalApproachOpen
+        : rod.key === 'elephantEntry' ? finalApproachOpen && !arenas?.some(a => a.id === 'elephant' && a.phase > 0 && a.phase < 3 && a.armed)
         : rod.key === 'elephantExit' ? arenas?.find(a => a.id === 'elephant')?.phase === 3
         : rod.key?.startsWith('connector.') ? !arenas || !l8GateClosed(rod.key, ctx) || finalApproachOpen
         : rod.key ? !arenas || !l8GateClosed(rod.key, ctx)
