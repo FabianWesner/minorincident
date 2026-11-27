@@ -321,7 +321,7 @@ export interface L6State {
   phase: 'shelter'|'first'|'fails'|'retreat'|'exit'|'done';
   startAt:number; breach1At:number; breach2At:number; abandonAt:number; nextWave:number; firstBang:boolean; secondBang:boolean;
   leaderX:number; leaderZ:number; paused:boolean; flashlight:boolean; mainPower:boolean; emergency:boolean;
-  exitAt:number; gateAt:number; injuryLineAt:number; lastShot:number; mid:boolean; platform:boolean;
+  exitAt:number; gateAt:number; injuryLineAt:number; lastShot:number; mid:boolean; platform:boolean; pressureCheckpoint?:boolean;
   survivors:{key:string;id:number;injured:boolean;routine:'guard'|'sit'|'talk'|'treat'|'rest'|'share';status:'shelter'|'following'|'dead'|'turned'|'out';straggler:boolean;collected:boolean;rejoined:boolean;hold:number}[];
   /** `passed`: the walking column and a living majority went through, with no unrejoined straggler before this gate; its checkpoint was taken. */
   gates:{id:number;x:number;closedAt:number;hold:number;passed?:boolean;/** Q-305: the courier clicked the gate; she closes it on arrival without E. */requested?:boolean}[];
