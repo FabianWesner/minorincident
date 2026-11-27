@@ -13,19 +13,14 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/L4.json",
-      "sha256": "768edd5ddc39c3d3d266e29ce9719f25ec1e221b4f312a8eb68789cb1bd82348",
-      "what": "Current-head report row L4-07 with low/high reachable-share failures."
-    },
-    {
       "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
       "sha256": "3c77aee3ecf29c99f3ec58c2488419b5d8df415b95e48d3a049d1109c51e5804",
-      "what": "Current-head low/complete native census and bounded-path reachability."
+      "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
       "sha256": "6a1172341d5e3d09a2baa45db5fe79a5dd8e13387053af7be693d1c9729151fa",
-      "what": "Current-head high/complete native census and bounded-path reachability."
+      "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
     }
   ],
   "notes": "Fresh current-head measurement. Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks.",
