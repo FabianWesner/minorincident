@@ -13,14 +13,9 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/L2.json",
-      "sha256": "850553b660646a02d912e62b35497de896fd945ba3adb69cad8f4bc03fe39abe",
-      "what": "Current-head report row L2-12: high/complete bridge-phase attack rate is 31.377551/min (target maximum 30)."
-    },
-    {
       "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
       "sha256": "96235eaec881d155d0abb29a394e203949636b68f1c36664f16aea862a1b1ea5",
-      "what": "Current-head high/complete native receipt from the ordinary competent route; bridge-phase attack events and computed rate."
+      "what": "Current-head native receipt containing the measured L2-12 counterexample described in the clause."
     }
   ],
   "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling.",
