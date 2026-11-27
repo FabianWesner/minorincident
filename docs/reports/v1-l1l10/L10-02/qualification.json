@@ -1,0 +1,47 @@
+{
+  "head": "233eab905766440b4092ce718aa2191370de2b3c",
+  "rows": [
+    {
+      "tier": "high",
+      "immunityFixture": {
+        "hp": 3000,
+        "remaining": 1780.0996681894294
+      },
+      "sightingSeconds": 71.8,
+      "closeSections": [
+        1,
+        6,
+        7,
+        8
+      ],
+      "complete": true,
+      "deaths": 4,
+      "fixture": "docs/reports/v1-l1l10/L10-native/current-high-fixtures.json",
+      "fixtureSha256": "7867ab79d036e822544227575a868de98c77e341739dee7a1a290ceeaac593cd",
+      "route": "docs/reports/v1-l1l10/L10-native/current-high-complete.json",
+      "routeSha256": "7e0f512e52066f73dde20f45eeb230113edc5e4ad71117e35b184dc11aeea7a6"
+    },
+    {
+      "tier": "low",
+      "immunityFixture": {
+        "hp": 3000,
+        "remaining": 1780.0996681894294
+      },
+      "sightingSeconds": 69.53333333333333,
+      "closeSections": [
+        1,
+        6,
+        7,
+        8
+      ],
+      "complete": true,
+      "deaths": 3,
+      "fixture": "docs/reports/v1-l1l10/L10-native/current-low-fixtures.json",
+      "fixtureSha256": "77bec948078a0629e4ba63952208ae66c42b2a025a82b39732144ad055ca5283",
+      "route": "docs/reports/v1-l1l10/L10-native/current-low-complete.json",
+      "routeSha256": "1a3c1759588a07dad74a05d401b50e030f658138ea44074b685866538a3a7051"
+    }
+  ],
+  "damageFloor": 0.5,
+  "barConflict": "L10-02 says no HP bar before finale; G-24 states the pursuing Mega always keeps its bar. HealthBars.barEligible makes pursuit mandatory, whereas Hud boss bar is restricted to cure-installed. This is a conflict between overhead and no-bar language, subject to PO interpretation; no current physical on-screen bar image is claimed."
+}
