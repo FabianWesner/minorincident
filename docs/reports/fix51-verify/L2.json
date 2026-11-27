@@ -5,7 +5,7 @@
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:42:14.587Z",
+  "generatedAt": "2026-11-27T22:43:16.556Z",
   "policies": [
     {
       "tier": "low",
@@ -5825,7 +5825,7 @@
       "id": "L2-08",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":29,\"rescue\":21},\"at120\":{\"all\":30,\"rescue\":18},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":19,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":2.9833333333333334,\"sameAsset\":true},{\"id\":122,\"seconds\":3.4833333333333334,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":621,\"protectedTicks\":0},{\"id\":122,\"samples\":426,\"protectedTicks\":0},{\"id\":123,\"samples\":689,\"protectedTicks\":0},{\"id\":124,\"samples\":438,\"protectedTicks\":0},{\"id\":125,\"samples\":542,\"protectedTicks\":0},{\"id\":126,\"samples\":580,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":25},\"at120\":{\"all\":59,\"rescue\":25},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":46,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":3.2333333333333334,\"sameAsset\":true},{\"id\":126,\"seconds\":3.183333333333333,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":812,\"protectedTicks\":0},{\"id\":122,\"samples\":652,\"protectedTicks\":0},{\"id\":123,\"samples\":833,\"protectedTicks\":0},{\"id\":124,\"samples\":549,\"protectedTicks\":0},{\"id\":125,\"samples\":693,\"protectedTicks\":0},{\"id\":126,\"samples\":552,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS)",
+      "value": "low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":29,\"rescue\":21},\"at120\":{\"all\":30,\"rescue\":18},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":19,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":2.9833333333333334,\"sameAsset\":true},{\"id\":122,\"seconds\":3.4833333333333334,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":621,\"protectedTicks\":0},{\"id\":122,\"samples\":426,\"protectedTicks\":0},{\"id\":123,\"samples\":689,\"protectedTicks\":0},{\"id\":124,\"samples\":438,\"protectedTicks\":0},{\"id\":125,\"samples\":542,\"protectedTicks\":0},{\"id\":126,\"samples\":580,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":25},\"at120\":{\"all\":59,\"rescue\":25},\"protected\":true} (target ≥20 at+60s;≥30 at+120s; PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":46,\"turnedBy90\":2,\"turns\":[{\"id\":124,\"seconds\":3.2333333333333334,\"sameAsset\":true},{\"id\":126,\"seconds\":3.183333333333333,\"sameAsset\":true}]} (target ≥1 firefighter hit;≥2 turn by90s; PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":812,\"protectedTicks\":0},{\"id\":122,\"samples\":652,\"protectedTicks\":0},{\"id\":123,\"samples\":833,\"protectedTicks\":0},{\"id\":124,\"samples\":549,\"protectedTicks\":0},{\"id\":125,\"samples\":693,\"protectedTicks\":0},{\"id\":126,\"samples\":552,\"protectedTicks\":0}] (target all6 crew observed alive after opening; zero protected ticks; PASS) Manual review PASS (Codex/v2-l2l4): At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -6024,36 +6024,31 @@
       "reviewDecision": {
         "row": "L2-08",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Snowball: infected **≥ 20 at +60 s, ≥ 30 at +120 s** (idle bot); ≥ 2 firefighters turned by +90 s; firefighters fight (≥ 1 hit) and have no immunity.",
+            "clause": "Idle snowball and firefighter combat",
             "verdict": "PASS",
-            "note": "6 current native checks PASS across low/high. low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":30,\"rescue\":8},\"at120\":{\"all\":30,\"rescue\":7},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":111,\"turnedBy90\":4,\"turns\":[{\"id\":126,\"seconds\":3.3833333333333333,\"sameAsset\":true},{\"id\":125,\"seconds\":3.1333333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.6666666666666665,\"sameAsset\":true},{\"id\":124,\"seconds\":3.2,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":493,\"protectedTicks\":0},{\"id\":122,\"samples\":747,\"protectedTicks\":0},{\"id\":123,\"samples\":978,\"protectedTicks\":0},{\"id\":124,\"samples\":483,\"protectedTicks\":0},{\"id\":125,\"samples\":460,\"protectedTicks\":0},{\"id\":126,\"samples\":408,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":40},\"at120\":{\"all\":60,\"rescue\":31},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":43,\"turnedBy90\":6,\"turns\":[{\"id\":126,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.8833333333333333,\"sameAsset\":true},{\"id\":124,\"seconds\":2.9,\"sameAsset\":true},{\"id\":125,\"seconds\":2.75,\"sameAsset\":true},{\"id\":122,\"seconds\":3.2,\"sameAsset\":true},{\"id\":123,\"seconds\":2.6666666666666665,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":391,\"protectedTicks\":0},{\"id\":122,\"samples\":605,\"protectedTicks\":0},{\"id\":123,\"samples\":719,\"protectedTicks\":0},{\"id\":124,\"samples\":402,\"protectedTicks\":0},{\"id\":125,\"samples\":426,\"protectedTicks\":0},{\"id\":126,\"samples\":366,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS)"
+            "note": "At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-08-native.json",
-            "sha256": "09074d2654389d015ae92d3d0082e0f37dd2f1e14c2d8eb31d4c6a15d2cfa4c1",
-            "what": "6 current native checks PASS across low/high. low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":30,\"rescue\":8},\"at120\":{\"all\":30,\"rescue\":7},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":111,\"turnedBy90\":4,\"turns\":[{\"id\":126,\"seconds\":3.3833333333333333,\"sameAsset\":true},{\"id\":125,\"seconds\":3.1333333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.6666666666666665,\"sameAsset\":true},{\"id\":124,\"seconds\":3.2,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":493,\"protectedTicks\":0},{\"id\":122,\"samples\":747,\"protectedTicks\":0},{\"id\":123,\"samples\":978,\"protectedTicks\":0},{\"id\":124,\"samples\":483,\"protectedTicks\":0},{\"id\":125,\"samples\":460,\"protectedTicks\":0},{\"id\":126,\"samples\":408,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":40},\"at120\":{\"all\":60,\"rescue\":31},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":43,\"turnedBy90\":6,\"turns\":[{\"id\":126,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.8833333333333333,\"sameAsset\":true},{\"id\":124,\"seconds\":2.9,\"sameAsset\":true},{\"id\":125,\"seconds\":2.75,\"sameAsset\":true},{\"id\":122,\"seconds\":3.2,\"sameAsset\":true},{\"id\":123,\"seconds\":2.6666666666666665,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":391,\"protectedTicks\":0},{\"id\":122,\"samples\":605,\"protectedTicks\":0},{\"id\":123,\"samples\":719,\"protectedTicks\":0},{\"id\":124,\"samples\":402,\"protectedTicks\":0},{\"id\":125,\"samples\":426,\"protectedTicks\":0},{\"id\":126,\"samples\":366,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS)"
+            "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+            "sha256": "f4ef43239d5f9edb6368b2cd4b118ebe31e6254f9cb49dc29f9776b921eddacc",
+            "what": "Current low-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
-            "sha256": "2ae191d09dd6f71c03b5b425c37bc94d39927fc2c4254e3924c0495c7768ac94",
-            "what": "Frozen-head L2-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
-            "sha256": "31bb5cc70b62a6a5cbc38aa2e8eaef53b50262b9fa6c58437087aa18576ee86b",
-            "what": "Frozen-head L2-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+            "sha256": "66150cdbef118dd94ae52ced42d51d349a7c7fcc3bddca6bc374d97132d6b7e0",
+            "what": "Current high-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Both-tier current-head native acceptance evidence.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6270,7 +6265,7 @@
       "id": "L2-10",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS)",
+      "value": "low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitId… (full values in JSON) (target single swing with1–2 nearby; roundhouse hits all3; PASS); high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}] (target each of3 targets pushed≥2 m; PASS) Manual review PASS (Codex/v2-l2l4): Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
@@ -6477,36 +6472,31 @@
       "reviewDecision": {
         "row": "L2-10",
         "status": "PASS",
-        "reviewer": "Codex final-a",
-        "date": "2026-11-07",
-        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
         "clauses": [
           {
-            "clause": "Axe: single swing with 1–2 infected in 2.5 m; roundhouse hits all (≥ 3) and pushes ≥ 2 m with ≥ 3 in range.",
+            "clause": "Axe target selection and roundhouse push",
             "verdict": "PASS",
-            "note": "4 current native checks PASS across low/high. low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres\" [full value in proof]; low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres [full value in proof]; high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS)"
+            "note": "Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-a/L2-10-native.json",
-            "sha256": "09e1ea54747b82936861a64364ad4a979461c69ee42ee4eff6faac40f4ff5d32",
-            "what": "4 current native checks PASS across low/high. low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres\" [full value in proof]; low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres [full value in proof]; high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS)"
+            "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+            "sha256": "f4ef43239d5f9edb6368b2cd4b118ebe31e6254f9cb49dc29f9776b921eddacc",
+            "what": "Current low-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           },
           {
-            "file": "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
-            "sha256": "2ae191d09dd6f71c03b5b425c37bc94d39927fc2c4254e3924c0495c7768ac94",
-            "what": "Frozen-head L2-10 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-          },
-          {
-            "file": "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
-            "sha256": "31bb5cc70b62a6a5cbc38aa2e8eaef53b50262b9fa6c58437087aa18576ee86b",
-            "what": "Frozen-head L2-10 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+            "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+            "sha256": "66150cdbef118dd94ae52ced42d51d349a7c7fcc3bddca6bc374d97132d6b7e0",
+            "what": "Current high-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           }
         ],
-        "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-        "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-        "freshness": "STALE",
+        "notes": "Both-tier current-head native acceptance evidence.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
@@ -6686,12 +6676,11 @@
       "id": "L2-12",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "high/complete competent bridge player attack rate: 31.377551020408163 (target 2 ≤ value ≤ 30; FAIL) Manual review FAIL (Codex/v2-l2l4): Current high/complete native route measured 31.377551 attacks/min against the accepted maximum 30/min. Repro: npm run qa:accept -- --level L2 --skip-browser --reuse; inspect high/complete bridge-phase attack-rate check.",
+      "value": "high/complete competent bridge player attack rate: 31.377551020408163 (target 2 ≤ value ≤ 30; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
-        "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-        "docs/reports/fix51-verify/L2.json"
+        "docs/reports/fix51-verify/receipts/L2-high-complete.json"
       ],
       "expected": "combat: competent run meets ≥ 1 infected per 30 m of route (tune); attacks on the player ≥ 2/min, ≤ 30/min (tune; ceiling raised 2026-11-19 from 20 after the PO's 11-08/09/12 threat decisions: \"a bit more Zombie action\").",
       "checks": [
@@ -6849,37 +6838,7 @@
         ],
         "method": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target."
       },
-      "remaining": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target.",
-      "reviewDecision": {
-        "row": "L2-12",
-        "status": "FAIL",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-27",
-        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
-        "clauses": [
-          {
-            "clause": "Competent bridge player attack rate",
-            "verdict": "FAIL",
-            "note": "Current high/complete native route measured 31.377551 attacks/min against the accepted maximum 30/min. Repro: npm run qa:accept -- --level L2 --skip-browser --reuse; inspect high/complete bridge-phase attack-rate check."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/fix51-verify/L2.json",
-            "sha256": "850553b660646a02d912e62b35497de896fd945ba3adb69cad8f4bc03fe39abe",
-            "what": "Current-head report row L2-12: high/complete bridge-phase attack rate is 31.377551/min (target maximum 30)."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-            "sha256": "96235eaec881d155d0abb29a394e203949636b68f1c36664f16aea862a1b1ea5",
-            "what": "Current-head high/complete native receipt from the ordinary competent route; bridge-phase attack events and computed rate."
-          }
-        ],
-        "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling.",
-        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
-      }
+      "remaining": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target."
     },
     {
       "id": "L2-13",
