@@ -111,3 +111,7 @@ Both current controlled fixtures reproduce **FAIL**: dog run-speed ratio 1.65 vs
 ## L1-07 refresh at 92c233e2
 
 Current controlled fixtures: **PASS**, 5 initial; low 30/30 and high 44/50 at +120/+240 s, all additional turns from bites and observer undisturbed. Ordinary opening then remote observer relocation. [Review](../../qa/reviews/L1-07.json), [high](L1-07/current-high-fixtures.json), [low](L1-07/current-low-fixtures.json). No game change; no open numeric clause.
+
+## L1-09 refresh at 92c233e2
+
+**PASS** in both quality fixtures: 300 deterministic equal-tier spawns, all within tier bounds, range 4.40697–5.82185 m/s; 274/300 (91.33%) faster than 4.5 m/s. [Review](../../qa/reviews/L1-09.json) hashes the current L1-07 fixture receipts. No game change; no open sampled numeric clause.

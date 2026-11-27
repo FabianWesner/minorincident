@@ -3,26 +3,26 @@
   "status": "PASS",
   "reviewer": "Codex v1-l1l10",
   "date": "2026-11-27",
-  "commit": "540ab32a79efd11134863f0c93bce83a606ccd7f",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Infected speeds 4.4 m/s … tier × 1.04; ≥ 85 % faster than the 4.5 m/s run (\"should be a bit faster than me\").",
       "verdict": "PASS",
-      "note": "Both quality fixtures spawn 100 runners in each of three speed tiers. All 300 satisfy 4.4 m/s minimum and their tier-specific 1.04× maximum; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s. Equal tier mix, deterministic fixture sample."
+      "note": "Both quality fixtures spawn 100 runners in each of three tiers. All 300 meet 4.4 m/s minimum and their tier-specific 1.04× maximum; observed range 4.40697–5.82185 m/s. 274/300 (91.33%) exceed 4.5 m/s. Equal tier mix, deterministic sample."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/v1-l1l10/L1-07/high-fixtures.json",
-      "sha256": "a49c11b6a5d283edcce844fc3f83910d46c319db7f0ad2afcea29acf3975b6d2",
-      "what": "Current L1 production speed fixture, 100 spawned runners per tier."
+      "file": "docs/reports/v1-l1l10/L1-07/current-high-fixtures.json",
+      "sha256": "02fd418be794128f5293d0caf2cb8a1d8df9d9fc50a6af6ebea0c6fb5035a866",
+      "what": "Current production runner spawn-speed fixture."
     },
     {
-      "file": "docs/reports/v1-l1l10/L1-07/low-fixtures.json",
-      "sha256": "7690f67204b5d6608adf2cbae2b2e801b4ceb1c539b6a0143560a87e2435d0cb",
-      "what": "Current L1 production speed fixture, 100 spawned runners per tier."
+      "file": "docs/reports/v1-l1l10/L1-07/current-low-fixtures.json",
+      "sha256": "65bac188dd906069f1d7818f9c8e3d4829ecd6851b9ebadc34a25ed0c2257d0a",
+      "what": "Current production runner spawn-speed fixture."
     }
   ],
-  "notes": "Production spawn-speed values sampled in controlled fixture; equal tier mix is disclosed.",
-  "sourceDigest": "98158a4535e7095a412aab4216827ca6901a057dc0891d876e102c38f65304f1"
+  "notes": "Controlled production spawn-speed fixture; equal tier mix disclosed.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }
