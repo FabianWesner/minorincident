@@ -3,26 +3,26 @@
   "status": "PASS",
   "reviewer": "Codex v1-l1l10",
   "date": "2026-11-27",
-  "commit": "540ab32a79efd11134863f0c93bce83a606ccd7f",
+  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
   "clauses": [
     {
       "clause": "Mission graph completable, no fail timer; start loadout empty.",
       "verdict": "PASS",
-      "note": "Current native complete policy finishes at both tiers. Initial mission deadline is null and offered weapons are empty in each. Physical runs on preceding head also completed but are not claimed current."
+      "note": "Both current native complete policies finish. At initial observation deadline is null, weapon racks are absent and owned actions contain only fists and kick. No physical-input run on this head is claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/v1-l1l10/L1-01/high-complete.json",
-      "sha256": "fdf77f6196c07932badb9e1d0bca4c46fc69e04895eb09dff721a18ae8acf6ac",
-      "what": "Current main native complete route and initial mission state."
+      "file": "docs/reports/v1-l1l10/L1-01/current-high-complete.json",
+      "sha256": "4abca42732f602e703d4a92943fa00c13845f551c512cf0f7e206a34482a6038",
+      "what": "Current native complete route and initial state."
     },
     {
-      "file": "docs/reports/v1-l1l10/L1-01/low-complete.json",
-      "sha256": "893b5807a786951e96b9486e00be69e22a7b86651bd65a875815bc0637d62aac",
-      "what": "Current main native complete route and initial mission state."
+      "file": "docs/reports/v1-l1l10/L1-01/current-low-complete.json",
+      "sha256": "dd99d454dcd55b9b872386e032110466631b01b0db452657d064c3b1b03aa58f",
+      "what": "Current native complete route and initial state."
     }
   ],
-  "notes": "Current native simulation; no browser qualification claimed.",
-  "sourceDigest": "98158a4535e7095a412aab4216827ca6901a057dc0891d876e102c38f65304f1"
+  "notes": "Native simulation; fists and kick treated as unarmed per acceptance evaluator.",
+  "sourceDigest": "c29a11533e09bf3add921aa7ba3708833e93ef593c1bb98bd202d8f98e7bbee1"
 }

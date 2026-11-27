@@ -115,3 +115,7 @@ Current controlled fixtures: **PASS**, 5 initial; low 30/30 and high 44/50 at +1
 ## L1-09 refresh at 92c233e2
 
 **PASS** in both quality fixtures: 300 deterministic equal-tier spawns, all within tier bounds, range 4.40697–5.82185 m/s; 274/300 (91.33%) faster than 4.5 m/s. [Review](../../qa/reviews/L1-09.json) hashes the current L1-07 fixture receipts. No game change; no open sampled numeric clause.
+
+## L1-01 refresh at 92c233e2
+
+**PASS**: both current native complete policies finish. Initial deadline is null, racks absent and owned actions contain only fists/kick (unarmed). [Review](../../qa/reviews/L1-01.json), [high](L1-01/current-high-complete.json), [low](L1-01/current-low-complete.json). This is a native run, not current physical-input evidence. No game change or open numeric clause.
