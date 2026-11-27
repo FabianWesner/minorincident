@@ -630,6 +630,17 @@ test('every human and animal role validates and spawns with its catalog health a
 
 test('perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius', async () => {
   const w = await arena();
+  // L10 authored assault actors begin beyond ordinary hearing range, but their
+  // director press must keep them moving toward the courier until acquired.
+  const assault = await arena(); assault.scenario = 'L10';
+  const assaultCourier = assault.entities.get(1)!; assaultCourier.transform.x = 0; assaultCourier.transform.z = 0;
+  const entrant = assault.infected!.spawn('infected.runner', { x: -30, z: 0 }, { state: 'chase', cureRegion: 'dispersal-complex' });
+  const entrantEntity = assault.entities.get(entrant)!;
+  assault.infected!.pursueTarget(entrant, 1, undefined, true);
+  const startX = entrantEntity.transform.x;
+  step(assault, 90);
+  expect(entrantEntity.transform.x, 'a pressed finale entrant closes from outside hearing range').toBeGreaterThan(startX + 1);
+  expect(entrantEntity.infected!.pressureTarget?.id).toBe(1);
   // r31-aggro (PO 11-10): a courier hit outranks a director assignment (it used to be ignored while the infected was pressed at a survivor).
   const pressed = spawn(w, 'runner', 4);
   pressed.infected!.pressureTarget = { id: 999, until: w.tick + 600 };
