@@ -71,3 +71,7 @@ The matching low-tier command (`E2E_PORT=5402 npx tsx tools/playtest/play.ts --l
 ## L10-06 review
 
 Fresh **FAIL** replaces the stale PASS: the high and low controlled dog fixtures each report speed ratio `1.65` versus the `1.1` requirement. Repro: `npm run qa:accept -- --level L10 --skip-browser --reuse`, then inspect `native dog speed ratio` in each fixture receipt. The fixture divides spawned dog `infected.speed` by `survivor.speed`; the source of the changed ratio is not isolated. The other clauses and current dog/corgi appearance remain unreviewed. [Review JSON](../../qa/reviews/L10-06.json) records both receipt hashes and the observation.
+
+## L10-15 review
+
+Fresh **FAIL**: the checkpoint death fixture saves a living Mega at 1116 HP low / 1072.8151 HP high, kills it, then applies ordinary lethal player damage; respawn reports the boss dead at 0 HP in both tiers. Repro: `npm run qa:accept -- --level L10 --skip-browser --reuse`; inspect the `cure-disperse-ready` boss snapshot comparisons in both checkpoint receipts. The source of the restore mismatch is unisolated. Five other named checkpoint fixtures error per tier, so complete regional coverage remains open. [Review JSON](../../qa/reviews/L10-15.json) records the hashes and observation.
