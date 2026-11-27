@@ -407,8 +407,17 @@ export class Mission {
       arsenal.racks = { LEFT: weapons.LEFT.rack.map(s => s.id), RIGHT: weapons.RIGHT.rack.map(s => s.id) };
       arsenal.ownedActions = [...new Set([...arsenal.ownedActions, ...arsenal.racks.LEFT, ...arsenal.racks.RIGHT])];
     }
+    // The dispersal console is a retry point inside the final assault. Do not
+    // serialize a living ordinary pack on its doorstep: restoring that pack
+    // after every death recreated the same lethal camp. Keep the live encounter
+    // and corpses untouched; only this checkpoint's retry snapshot gets cleared.
+    const entities = this.world.entities.values();
+    const checkpointEntities = this.def.id === 'L10' && ['cure-complex', 'cure-disperse-ready'].includes(this.state.checkpoint ?? '')
+      ? entities.filter(entity => !entity.infected || entity.infected.pursuit || entity.health.current <= 0
+        || Math.hypot(entity.transform.x - this.world.entities.get(1)!.transform.x, entity.transform.z - this.world.entities.get(1)!.transform.z) > 30)
+      : entities;
     // perf-w5d: the same snapshot as query({}) (structuredClone of every entity), copied about 3x faster.
-    return { tick: this.world.tick, state: cloneData(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world), ...(this.world.hazards?.fieldFire ? { fieldFire: this.world.hazards.fieldFire.snapshot() } : {}), ...(this.world.hazards?.vegetationFire ? { vegetationFire: this.world.hazards.vegetationFire.snapshot() } : {}) };
+    return { tick: this.world.tick, state: cloneData(this.state), entities: cloneData(checkpointEntities), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world), ...(this.world.hazards?.fieldFire ? { fieldFire: this.world.hazards.fieldFire.snapshot() } : {}), ...(this.world.hazards?.vegetationFire ? { vegetationFire: this.world.hazards.vegetationFire.snapshot() } : {}) };
   }
   /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
   saveResume(atCheckpoint = false): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {

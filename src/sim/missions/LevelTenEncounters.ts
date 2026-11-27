@@ -236,8 +236,8 @@ export class LevelTenEncounters {
     // hospital beat, then returns them to ordinary pursuit and combat.
     const hospitalApproach = w.entities.get(1);
     if (mission.state.states['l10-finale-beat-8'] && this.state.hospitalOpenAt !== undefined && this.state.hospitalStageReleaseAt === undefined &&
-        hospitalApproach && hospitalApproach.transform.x > 3512) this.state.hospitalStageReleaseAt = w.tick + 90;
-    for (const [i, z] of [49, 53].entries()) {
+        hospitalApproach && hospitalApproach.transform.x > 3490) this.state.hospitalStageReleaseAt = w.tick + 30;
+    for (const [i, z] of [82, 88].entries()) {
       const key = `setpiece-field-hospital:stage:${i}:0`, at = { x: 3502.5, z };
       let id = this.state.spawned[key];
       if (id === undefined && hospitalApproach && hospitalApproach.transform.x > 3400 && hospitalApproach.transform.x < 3480 && ai.pool.length
@@ -420,6 +420,17 @@ export class LevelTenEncounters {
       if (assault && !assaultActive && !assaultApproach) continue;
       const paced = !assault && (pacedSetPieces as readonly string[]).includes(group.id);
       if (!assault && !released.includes(group.id)) {
+        // The corridor-line cohort sits beyond the quarantine-gate retry
+        // point. Admit it when the courier reaches the line, rather than
+        // streaming its Alpha into the 120 m approach window on every retry.
+        if (group.id === 'corridor-line' && player.transform.x < group.at[0] - 5) continue;
+        // `cure-complex` is the retry anchor at the edge of the dispersal
+        // arena. Keep its approach patrols dormant until the courier has left
+        // that forecourt; otherwise the checkpoint snapshot correctly drops
+        // nearby infected, but the encounter controller immediately recreates
+        // them on every retry.
+        if (group.region === 'dispersal-complex' && group.id.startsWith('complex-approach') &&
+            Math.hypot(player.transform.x - cure.anchors['cure-complex'][0], player.transform.z - cure.anchors['cure-complex'][1]) < 130) continue;
         const releaseRadius = group.setPiece === 'propaganda-billboard' ? 25 : group.setPiece === 'field-hospital' ? 60 : 35;
         if (group.setPiece ? Math.hypot(player.transform.x - group.at[0], player.transform.z - group.at[1]) > releaseRadius : Math.abs(player.transform.x - group.at[0]) > 120) continue;
         released.push(group.id);
@@ -434,7 +445,7 @@ export class LevelTenEncounters {
         let gateId = gates[group.id];
         if (gateId === undefined && chunks.resident(group.at[0], group.at[1])) {
           // Span the road and the underpass rim detour with the same barrier.
-          const gateZ = 95;
+          const gateZ = group.id === 'setpiece-dark-underpass' ? 74 : 95;
           const halfZ = roadblockHalfZ;
           gateId = w.interactables!.spawn('gate', { x: group.at[0], z: gateZ }, {
             halfX: .2, halfZ, radius: 2, label: 'Open roadblock',

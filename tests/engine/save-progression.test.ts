@@ -26,7 +26,7 @@ import { surrenderHeavyWeapons } from '../../src/sim/missions/L8Gate';
 import { weaponKey } from '../../src/data/weaponKeys';
 import { overlapsBuilding, overlapsPaving, overlapsRoad } from '../../src/levels/districts/validate';
 import { cureEvacuationLane } from '../../src/levels/L10/vignettes';
-import { cureEncounterSlots, curePaceEncounters } from '../../src/levels/L10/encounters';
+import { cureEncounterSlots, cureEncounters, curePaceEncounters } from '../../src/levels/L10/encounters';
 
 const result = { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] };
 function legacyL10PaceCheckpointsMigrate(): void {
@@ -293,6 +293,10 @@ async function checkCheckpointRacks() {
     l10.missions!.l10!.story.update();
     expect(l10.missions!.state.states['l10-gate-checkpoint'], 'standing defender prevents checkpoint').toBe(false);
     defender.health.current = 0; defender.infected!.recoverAt = l10.tick + 600;
+    l10.missions!.l10!.story.update();
+    expect(l10.missions!.state.states['l10-gate-checkpoint'], 'unadmitted corridor line prevents checkpoint').toBe(false);
+    const line = cureEncounters.find(g => g.id === 'corridor-line')!;
+    for (const slot of cureEncounterSlots(line, 'low')) ledger[`${slot.key}:0`] = defender.id;
     l10.missions!.l10!.story.update();
     expect(l10.missions!.state.states['l10-gate-checkpoint'], 'downed cohort permits checkpoint').toBe(true);
     expect(defender.infected!.recoverAt, 'checkpoint does not remove recovery').toBe(l10.tick + 600);
