@@ -3,9 +3,9 @@
   "level": "L3",
   "sourceHash": "f7b0130bf593de288a335e98a4a2cd11e2e0f1c3906d1ffaddc2e492a6fefc20",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
-  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:46:01.754Z",
+  "generatedAt": "2026-11-27T22:53:01.427Z",
   "policies": [
     {
       "tier": "low",
@@ -7220,8 +7220,8 @@
       "id": "L3-09",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1069,\"sprinters\":53,\"fraction\":0.04957904583723106,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars use shared tier speed bounds; sprinters≤5% of actual admissions; PASS) Manual review FAIL (Codex/v2-l2l4): Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike.; Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions.",
-      "automatedComplete": true,
+      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars≤4 m/s; sprinters≤5% of actual admissions; FAIL); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1069,\"sprinters\":53,\"fraction\":0.04957904583723106,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars≤4 m/s; sprinters≤5% of actual admissions; FAIL) Manual review FAIL (Codex/v2-l2l4): Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike.; Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions.",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
@@ -7241,8 +7241,8 @@
             "outcome": "complete",
             "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
           },
-          "target": "regulars use shared tier speed bounds; sprinters≤5% of actual admissions",
-          "status": "PASS",
+          "target": "regulars≤4 m/s; sprinters≤5% of actual admissions",
+          "status": "FAIL",
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
@@ -7259,8 +7259,8 @@
             "outcome": "complete",
             "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
           },
-          "target": "regulars use shared tier speed bounds; sprinters≤5% of actual admissions",
-          "status": "PASS",
+          "target": "regulars≤4 m/s; sprinters≤5% of actual admissions",
+          "status": "FAIL",
           "tier": "high",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
@@ -7275,7 +7275,7 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible)."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
       "reviewDecision": {
         "row": "L3-09",
         "status": "FAIL",
@@ -7307,16 +7307,16 @@
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "98754ea4223b1e90c9402514a76050dddbcac8c7cbe4222366ed69f8883701ba",
+            "sha256": "5fe8603e11522b85490f5de36d76a5c811eab1f0484d39c294b8418b38fe14d1",
             "what": "Current both-tier spawn census and sprinter fraction."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "5697c684a9e5131b17dc4a0745844ef012e89566e9d52ad861aaa766e34c5e49",
+            "sha256": "103245f79cbfb2083bc0d64f0d1366a0a451c3e297f20851a464f4728c78bdf0",
             "what": "Current both-tier spawn census and sprinter fraction."
           }
         ],
-        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Existing battery compares against L1 shared bound, not 4 m/s; checker correction remains open.",
+        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
         "freshness": "FRESH",
         "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"

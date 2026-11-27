@@ -29,15 +29,15 @@
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "98754ea4223b1e90c9402514a76050dddbcac8c7cbe4222366ed69f8883701ba",
+      "sha256": "5fe8603e11522b85490f5de36d76a5c811eab1f0484d39c294b8418b38fe14d1",
       "what": "Current both-tier spawn census and sprinter fraction."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "5697c684a9e5131b17dc4a0745844ef012e89566e9d52ad861aaa766e34c5e49",
+      "sha256": "103245f79cbfb2083bc0d64f0d1366a0a451c3e297f20851a464f4728c78bdf0",
       "what": "Current both-tier spawn census and sprinter fraction."
     }
   ],
-  "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Existing battery compares against L1 shared bound, not 4 m/s; checker correction remains open.",
+  "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers.",
   "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }
