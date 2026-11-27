@@ -167,3 +167,7 @@ High then low physical-input opening samples ran 60 wall seconds (54/53 simulati
 ## L1-04 Annex handover at 92c233e2
 
 **P** for PO quality comparison: both tiers retain same technician ID (154 high / 147 low) across 707 ticks, 364 transfer ticks with zero hidden transfer ticks, parcel transfer and return inside to z −16.5; six broken-data controls reject. Twelve selected frames and the archived labelled PROD comparison were opened. Current coat, goggles, gloves and parcel are visible; parcel appears offset from the hand in the selected signing/carry view and the return is partly occluded. PO: do the exact cited frames meet PROD quality? [Review](../../qa/reviews/L1-04.json), [ledger](L1-04/browser-ledger.json.gz), [proof](L1-04/L1-04-story-proof.json). Native bot reaches onset, then idle sequence; separate physical L1 routes completed both tiers. No game changes.
+
+## L1-02 at 92c233e2
+
+**PASS**: untouched stationary 3600-tick native census: 58 high / 51 low civilians, zero living infected and combat events, maximum unfaced idle 133 ticks (2.2167 s) each. Four broken/boundary controls pass. The facing measure uses authored target ahead and resets after >0.1 m travel; hidden interiors excluded. Two cited current physical opening frames opened: courier, corgi and seated civilian on warm street. [Review](../../qa/reviews/L1-02.json), [summary](L1-02/L1-02-current-review.json), [ledger](L1-02/L1-02-current-ledger.json.gz). No game change; no open measured clause.
