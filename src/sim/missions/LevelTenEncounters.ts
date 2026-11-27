@@ -356,7 +356,7 @@ export class LevelTenEncounters {
             const id = ai.spawn(archetype, { x, y: support + .7, z }, { state: 'chase' });
             const actor = w.entities.get(id)!;
             actor.transform.y = support + .7;
-            ai.pursueTarget(id, 1);
+            ai.pursueTarget(id, 1, undefined, true);
             if (actor.infected?.l1) { actor.infected.l1.mode = 'chase'; actor.infected.l1.targetId = 1; actor.infected.heardTargetId = 1; }
             actor.infected!.state = 'chase';
             entry.ids.push(id);
@@ -574,7 +574,7 @@ export class LevelTenEncounters {
         const id = ai.spawn(slot.archetype, at, { state: 'chase', yaw: Math.PI, cureRegion: group.region });
         this.state.spawned[key] = id;
         if (assault) this.state.lastAssaultAdmission = clock;
-        ai.pursueTarget(id, 1);
+        ai.pursueTarget(id, 1, undefined, assault);
         if (assault) break; // Bounded actor setup per director tick.
       }
     }
@@ -687,7 +687,7 @@ export class LevelTenEncounters {
       const id = ai.spawn(member.archetype, at, { state: 'chase', cureRegion: member.region });
       this.state.spawned[key] = id;
       this.carried.delete(key);
-      ai.pursueTarget(id, 1);
+      ai.pursueTarget(id, 1, undefined, member.group.startsWith('dispersal-assault'));
     }
   }
 }

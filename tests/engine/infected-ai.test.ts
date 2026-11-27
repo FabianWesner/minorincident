@@ -629,7 +629,33 @@ test('every human and animal role validates and spawns with its catalog health a
 });
 
 test('perception: sight cone, facing-independent gunshots, silent melee misses, bounded kill noise, screamer radius', async () => {
+  // Finale reservations must not sleep their own admitted members.
+  {
+    const w = await loadLevel('L10', 0, undefined, 0, { quality: 'high' }); worlds.push(w);
+    const ai = w.infected!, player = w.entities.get(1)!;
+    const x = player.transform.x, z = player.transform.z;
+    const assault = ai.spawn('infected.dog', { x: x + 12, z }, { state: 'chase' });
+    const ambient = ai.spawn('infected.runner', { x: x + 4, z }, { state: 'chase' });
+    w.missions!.state.states['cure-installed'] = true;
+    w.l10Encounters!.state.spawned['dispersal-assault:service:test'] = assault;
+    ai.director.reserved = ai.director.cap - 1;
+    w.chunks!.update();
+    expect(w.entities.get(assault), 'the reserved assault member stays simulated').toBeDefined();
+    expect(w.entities.get(ambient), 'excess ambient pressure yields its slot').toBeUndefined();
+  }
+
   const w = await arena();
+  // L10 authored assault actors begin beyond ordinary hearing range, but their
+  // director press must keep them moving toward the courier until acquired.
+  const assault = await arena(); assault.scenario = 'L10';
+  const assaultCourier = assault.entities.get(1)!; assaultCourier.transform.x = 0; assaultCourier.transform.z = 0;
+  const entrant = assault.infected!.spawn('infected.runner', { x: -30, z: 0 }, { state: 'chase', cureRegion: 'dispersal-complex' });
+  const entrantEntity = assault.entities.get(entrant)!;
+  assault.infected!.pursueTarget(entrant, 1, undefined, true);
+  const startX = entrantEntity.transform.x;
+  step(assault, 90);
+  expect(entrantEntity.transform.x, 'a pressed finale entrant closes from outside hearing range').toBeGreaterThan(startX + 1);
+  expect(entrantEntity.infected!.pressureTarget?.id).toBe(1);
   // r31-aggro (PO 11-10): a courier hit outranks a director assignment (it used to be ignored while the infected was pressed at a survivor).
   const pressed = spawn(w, 'runner', 4);
   pressed.infected!.pressureTarget = { id: 999, until: w.tick + 600 };

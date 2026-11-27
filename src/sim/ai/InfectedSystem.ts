@@ -413,7 +413,7 @@ export class InfectedSystem {
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   /** Mission-authored assaults can begin with actors outside perception range. Start an ordinary pursuit after their entrance route. */
-  pursueTarget(id: number, targetId: number, focusBiasM?: number): boolean {
+  pursueTarget(id: number, targetId: number, focusBiasM?: number, authoredAssault = false): boolean {
     const e = this.world.entities.get(id), target = this.world.entities.get(targetId), b = e?.infected;
     if (!e || !target || !b || e.health.current <= 0) return false;
     const brain = b.l1;
@@ -423,7 +423,7 @@ export class InfectedSystem {
     }
     delete b.scripted; delete b.breachApproach; delete b.investigate; delete e.noiseTarget;
     b.state = 'wander'; b.targetId = 0; b.heardTargetId = 0; e.combat!.attacking = false;
-    return this.press(id, targetId, this.world.tick + 3600, focusBiasM);
+    return this.press(id, targetId, this.world.tick + 3600, focusBiasM, authoredAssault);
   }
   /** One brain tick per active infected, in `active` order: pre-brain gates, pursuit/vault, far-crowd slot, script, perception,
    * special moves, roar/pin holds, then the L1 or archetype brain. Every phase returns true when it consumed the actor's tick. */
@@ -702,6 +702,7 @@ export class InfectedSystem {
     if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }
     const player = this.victim(e);
     if (this.world.scenario === 'L10' && b.cureRegion && !b.pursuit && b.state === 'chase' && player.id === 1 &&
+        !(b.pressureTarget?.id === 1 && this.world.tick < b.pressureTarget.until) &&
         player.transform.x - e.transform.x > this.hearing.rangeM && !this.hearing.tracks(e, player.transform, 1)) {
       b.heardTargetId = 0; delete b.pressureTarget; delete b.investigate;
       b.state = 'wander'; b.until = this.world.tick + 120; this.wanderDirection(b); e.combat!.attacking = false;
@@ -1195,17 +1196,20 @@ export class InfectedSystem {
     return sent;
   }
   /** Director pressure: direct an arrival at a human, retaining its archetype's movement and attacks. */
-  press(id: number, targetId: number, untilTick: number, focusBiasM?: number): boolean {
+  press(id: number, targetId: number, untilTick: number, focusBiasM?: number, authoredAssault = false): boolean {
     const target = this.world.entities.get(targetId), entity = this.world.entities.get(id), state = entity?.infected, brain = state?.l1;
     if (!target || !entity || !state || entity.health.current <= 0) return false;
+    if (this.world.scenario === 'L10' && authoredAssault) state.pressureTarget = { id: targetId, until: untilTick };
     if (!brain) {
       // The other humanoid archetypes use the native target/chase path rather
       // than the pedestrian search brain. Without a target they wander at distant mouths.
       if (state.state === 'attack' || state.specialAttack || state.grabUntil > this.world.tick) return false;
       state.heardTargetId = targetId;
-      if (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L6' || this.world.scenario === 'L8') state.pressureTarget = { id: targetId, until: untilTick };
+      if (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L6' || this.world.scenario === 'L8' || this.world.scenario === 'L10' && authoredAssault) state.pressureTarget = { id: targetId, until: untilTick };
       if (this.world.scenario === 'L4') state.l4ArmyApproach = targetId !== 1;
-      if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
+      if (this.world.scenario === 'L10' && authoredAssault) {
+        state.state = 'chase'; state.until = 0;
+      } else if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
         state.state = 'alerted'; state.until = this.world.tick + hearingReactionTicks;
       }
       return true;
@@ -1214,7 +1218,15 @@ export class InfectedSystem {
     // Keep the pressure preference even when its live chase owns movement.
     brain.focusId = targetId; brain.focusUntil = untilTick;
     if (focusBiasM !== undefined) brain.focusBiasM = focusBiasM; else delete brain.focusBiasM;
-    return this.rush(id, target.transform, untilTick);
+    const sent = this.rush(id, target.transform, untilTick);
+    if (sent && this.world.scenario === 'L10' && authoredAssault) {
+      // Finale arrivals are admitted out of frame specifically to run in;
+      // don't spend their entrance distance in the ordinary hearing windup.
+      brain.mode = 'chase'; brain.targetId = targetId; brain.pauseUntil = 0;
+      brain.looking = false; brain.hasGoal = false;
+      state.state = 'chase'; state.heardTargetId = targetId;
+    }
+    return sent;
   }
   private goTo(id: number, point: { x: number; z: number }, untilTick: number, distractionId: number): boolean {
     const e = this.world.entities.get(id), brain = e?.infected?.l1;
