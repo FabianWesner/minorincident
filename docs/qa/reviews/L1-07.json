@@ -3,26 +3,26 @@
   "status": "PASS",
   "reviewer": "Codex v1-l1l10",
   "date": "2026-11-27",
-  "commit": "2f7ee5f06bf5562305e17b787d3573d2ef9f4efd",
+  "commit": "540ab32a79efd11134863f0c93bce83a606ccd7f",
   "clauses": [
     {
       "clause": "Spread: infected 5 → **≥ 15 at +120 s** (floor 12) → **≥ 25 at +240 s** with an idle remote observer; every new one from a bite.",
       "verdict": "PASS",
-      "note": "Remote idle fixture: initial 5; low 30/30 and high 44/50 at 120/240 seconds. All additional turns follow bites with no direct spawns; observer has zero deaths, damage, knockdowns and kills in each tier."
+      "note": "Current remote idle fixture: initial 5; low 30/30 and high 44/50 at 120/240 seconds. All additional turns follow bites with no direct spawns; observer has zero deaths, damage, knockdowns and kills in each tier."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
-      "sha256": "47cc9d90bc665cf626a9aa2cd656b0dc33160c824d420a7195ee444f1e78c7a3",
-      "what": "Current remote idle spread fixture records counts, bite provenance and observer safety."
+      "file": "docs/reports/v1-l1l10/L1-07/high-fixtures.json",
+      "sha256": "a49c11b6a5d283edcce844fc3f83910d46c319db7f0ad2afcea29acf3975b6d2",
+      "what": "Current main remote idle spread fixture and observer safety."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
-      "sha256": "a01a0302e44c0f877e9775df56675331490a20c5d66016e6dde0f4bdee2b644e",
-      "what": "Current remote idle spread fixture records counts, bite provenance and observer safety."
+      "file": "docs/reports/v1-l1l10/L1-07/low-fixtures.json",
+      "sha256": "7690f67204b5d6608adf2cbae2b2e801b4ceb1c539b6a0143560a87e2435d0cb",
+      "what": "Current main remote idle spread fixture and observer safety."
     }
   ],
-  "notes": "Native controlled remote-observer fixture; ordinary opening followed by one disclosed observer relocation.",
-  "sourceDigest": "2e1554fc79a0d5c1619deeacb62b8dd26ed1942ed1315a2ac7a9d7ac82d97297"
+  "notes": "Native controlled remote-observer fixture; ordinary opening followed by one observer relocation.",
+  "sourceDigest": "98158a4535e7095a412aab4216827ca6901a057dc0891d876e102c38f65304f1"
 }
