@@ -6,14 +6,9 @@
   "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
-      "clause": "No infected or combat until alarm; alarm and crew timing",
+      "clause": "0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches.",
       "verdict": "PASS",
-      "note": "Both tiers: zero infected/combat, alarm at 23.15 s and crew at truck 4.8667 s later."
-    },
-    {
-      "clause": "Four civilians on two benches",
-      "verdict": "PASS",
-      "note": "Both-tier fixture census is four. Four original real-input frames at logged actual zoom 1/1.5 show two seated pairs on two benches."
+      "note": "Both tiers: zero infected/combat, alarm 23.15 s, crew at truck 4.8667 s later; four original physical-input frames at logged zoom 1/1.5 show two seated pairs on two benches."
     }
   ],
   "evidence": [
