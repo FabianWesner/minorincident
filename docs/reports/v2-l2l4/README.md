@@ -60,3 +60,7 @@ These three fresh FAIL reviews use `writeReview` metadata and SHA-256 evidence. 
 - Refreshed `docs/reports/fix51-verify/{L2,L3,L4}.json`, current native receipts, and `docs/qa/acceptance-status.md` through the prescribed acceptance command.
 - Added fresh review JSON for L2-12, L3-06 and L4-07. No game code or specs changed.
 - Open: browser pool / local preview access, high-then-low real-input runs at zoom 1.5/default and 0.5, image-by-image review, mortal deaths per level, all remaining row measurements, P frame notes, and per-row review commits.
+
+## Mortal L2 high run (continuation)
+
+The sandbox restriction was lifted and the pool was available. A headless real-input run on port 5411, high quality, zoom 1.5, completed L2 without skips in 258 wall seconds with **5 deaths**, 1 assist and 4 recorded bat attacks. The driver reported a 22.536 s maximum period without objective progress at the optional axe prompt; this observation alone does not establish a game defect or a competent-player difficulty verdict. The summary reports simSeconds 0, so it cannot establish level duration. [Summary](L2-high-mortal-summary.json), SHA-256 `5069d95341a28c12993cff840e7bb5774e2a9a03088fac71e42e4ad0496e5ce3`. Command: `E2E_PORT=5411 SCENE_PORT=5412 node --import tsx/esm tools/playtest/play.ts --levels L2 --quality high --zoom 1.5 --capture-zooms 1,1.5 --no-skip --level-minutes 8 --out test-results/playtest/v2-l2l4-high-l2`. Captures remain unreviewed and support no visual verdict yet. L3/L4 and low-tier mortal runs remain open.
