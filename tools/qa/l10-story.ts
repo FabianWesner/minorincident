@@ -194,7 +194,7 @@ for (const tier of tiers) {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [], idleDetail: Record<string, unknown>[] = [], bornAt = new Map<number, { tick: number; d: number; inFrame: boolean }>();
   const finaleMoments: { tick: number; kind: 'story' | 'fight'; id: string }[] = [];
   const bikeTransitions: { tick: number; riding: boolean; x: number; z: number; nearby: number; recentHits: unknown[] }[] = [];
-  const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0 }));
+  const roadblockRide = [3010, 3260, 3390, 3502].map(x => ({ x, arrived: 0, dismounted: 0, fight: 0, opened: 0, remounted: 0, crossed: 0, passedOpen: 0 }));
   const underpassRecovery: unknown[] = [], clearanceTiming: unknown[] = [];
   const cohortByActor = new Map<number, string>(), lastCohortKill = new Map<string, number>();
   const previousGateOpen = new Map<number, boolean>();
@@ -334,7 +334,10 @@ for (const tier of tiers) {
             const lastKill = group === undefined ? undefined : lastCohortKill.get(group);
             clearanceTiming.push({ group, opened: world.tick, lastKill, delayTicks: lastKill === undefined ? null : world.tick - lastKill });
           }
-          if (b.fight && gateOpen && previousGateOpen.get(b.x) === false && !b.opened) b.opened = world.tick;
+          // The gate opens when its cohort is cleared, whoever lands the last hit (fire, a prop, the Mega): count it once she has dismounted.
+          if (b.dismounted && gateOpen && previousGateOpen.get(b.x) === false && !b.opened) b.opened = world.tick;
+          // A retry can restore her behind a gate the respawn clearance already opened: riding through it open is a valid crossing.
+          if (riding && gateOpen && !b.dismounted && !b.crossed && !b.passedOpen && p.transform.x > b.x + 3 && Math.abs(p.transform.z - 95) <= 45) b.passedOpen = world.tick;
           if (gateOpen !== undefined) previousGateOpen.set(b.x, gateOpen);
           else previousGateOpen.delete(b.x);
           // A checkpoint can restore the mounted bike beyond this gate. That
@@ -397,7 +400,7 @@ for (const tier of tiers) {
     check(tier, 'billboard collapse triggers on the route', billboardFallTick !== undefined, billboardFallTick ?? null);
     check(tier, 'hospital tents open on the route', hospitalOpenTick !== undefined, hospitalOpenTick ?? null);
     check(tier, 'hospital figures stage in frame and return to infected AI', [...hospitalFigures.values()].some(v => v.held && v.visibleAtBeat && v.released), [...hospitalFigures]);
-    for (const b of roadblockRide) check(tier, `ride, fight, remount and cross roadblock ${b.x}`, !!b.crossed, b);
+    for (const b of roadblockRide) check(tier, `ride, fight, remount and cross roadblock ${b.x}`, !!b.crossed || !!b.passedOpen, b);
   }
   if (!finaleOnly) check(tier, 'overpass Mega throws the authored crate during beat 6', overpassThrows.some(e => e.move === 'alpha.grab-throw' && e.stage === 'prop-thrown' && e.propId !== undefined && authoredThrowCrateIds.has(e.propId) && e.playerX >= 3320 && e.playerX <= 3390 && beat6 !== undefined && beat7 !== undefined && e.tick >= beat6 && e.tick < beat7), { beat6, beat7, crates: [...authoredThrowCrateIds], throws: overpassThrows });
   if (!finaleOnly) check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);
