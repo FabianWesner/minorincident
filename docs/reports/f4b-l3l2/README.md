@@ -8,6 +8,7 @@ The retained game code is commit `3ed2af5b`. Its high/low acceptance measurement
 - Restoring the old shared bite logic while keeping the rescue changes gives high L2-12 30.50/min and zero firefighter turns. Restoring all three pre-fix rescue and bite files gives 26.52/min and zero turns. The interaction between those changes alters the route; the precise causal chain remains open.
 - Holding two ambush slots for the full 90-second rescue window gives high L2-12 31.38/min and 2 turns; rejected.
 - Increasing the L3 moving slot lead to at most 1 m produced high calm samples all in range (two per officer) and L3-11 3/3 in range, but army-line squad counts became 0/3/0, failing the 2/3 threshold. Rejected; the retained formation is unchanged.
+- Applying that larger lead only when unthreatened gave the same high 0/3/0 squad result and two calm samples per officer in range. An intermediate 0.75 m maximum gave high army-line 2/3/1 and all 16 calm samples in range, but attack rates 70.44/41.62/80.63 per minute fail all three seeds. Both variants were reverted; the three formation variants in this follow-up are exhausted.
 
 ## Verification and remaining work
 
