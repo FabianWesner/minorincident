@@ -1,0 +1,72 @@
+{
+  "head": "233eab905766440b4092ce718aa2191370de2b3c",
+  "method": "Physical protected research handoff, then god disabled outside; wait for natural enemy death and checkpoint restore. Spawn wrapper records each production spawn; hangar occupant census samples every 30 ticks.",
+  "rows": [
+    {
+      "tier": "high",
+      "file": "test-results/v1-l1l10/L10-09-high-mortal.json",
+      "sha256": "fa013393a703dd4b1c32dab40a30609b936d1f611a1e6e7da4d81b5da86496cc",
+      "errors": [],
+      "death": [
+        {
+          "tick": 5901
+        }
+      ],
+      "restores": [
+        {
+          "tick": 6021
+        }
+      ],
+      "births": 23,
+      "birthsInside": [],
+      "censusSamples": 201,
+      "occupiedSamples": [],
+      "after": {
+        "tick": 6048,
+        "carried": true,
+        "items": [
+          "cure-canister"
+        ],
+        "checkpoint": "cure-research"
+      },
+      "capture": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/v1-l1l10/test-results/sweep-c4/L10-09-high-1795823019000/high-post-mortal-wait-z1.5.jpg",
+        "sha256": "bab3f406a4fb1414d8bd3091db92dd1c9640cbfc6ae37042027f681530f4a741",
+        "observation": "Courier and corgi beside intersection after restore; cure cylinder visible on backpack, with enemies visible at a distance in low view."
+      }
+    },
+    {
+      "tier": "low",
+      "file": "test-results/v1-l1l10/L10-09-low-mortal.json",
+      "sha256": "64cf289449f38114dec428458f7f9db8dd8c324c8333aeb953ec54307394350f",
+      "errors": [],
+      "death": [
+        {
+          "tick": 5549
+        }
+      ],
+      "restores": [
+        {
+          "tick": 5669
+        }
+      ],
+      "births": 16,
+      "birthsInside": [],
+      "censusSamples": 190,
+      "occupiedSamples": [],
+      "after": {
+        "tick": 5712,
+        "carried": true,
+        "items": [
+          "cure-canister"
+        ],
+        "checkpoint": "cure-research"
+      },
+      "capture": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/v1-l1l10/test-results/sweep-c4/L10-09-low-1795823133132/low-post-mortal-wait-z1.5.jpg",
+        "sha256": "f54ce5809f4d94af7580317468f2d58e5cc5987a8f9842915062244e911ba388",
+        "observation": "Courier and corgi beside intersection after restore; cure cylinder visible on backpack, with enemies visible at a distance in low view."
+      }
+    }
+  ]
+}
