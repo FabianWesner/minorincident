@@ -25,7 +25,7 @@ export interface L8ZooState {
   roster: number[]; guards: number[]; animals: number[]; outlets: HouseEmergence[]; perimeterOutlets?: Point[];
   arrivals: { id: number; outlet: number; tick: number; alpha: boolean }[];
   escapeCheckpoint: boolean;
-  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number; gateToastAt?: number;
+  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number; gateToastAt?: number; heavyWeaponsSurrendered?: boolean;
   departureAt: number; chaseAt: number; departureFrom: Transform | null; haleFallAt: number; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
   /** Nadia's guided walk: 0 leading, 1 aborted (she is gone/turned), 2 arrived at the entry gate. */
   guideDone: number; guideLeg: number; guideArrivedAt: number; guideWaiting: boolean; lionUntil: number; guideRouteVersion?: number; guideAnimalLines?: number; infectionSetupAt?: number; infectionFeedLineAt?: number; infectionStoryLines?: number;
@@ -193,7 +193,6 @@ export class LevelEightZoo {
   begin(): void {
     const s = this.state, t = this.w.tick;
     s.startedAt = t; s.greetingAt = t + 9 * 60; s.lionSpoken = false;
-    if (surrenderHeavyWeapons(this.w, this.mission).length) s.gateToastAt = t + gateToastDelay;
     s.broadcastAt = t + 20 * 60; s.haleGreetingAt = t + 38 * 60;
     // The guided tour is skipped; the opening objective points at the real breach gate.
     Object.assign(this.mission.def.anchors['l8-route'], this.mission.def.anchors['zoo-gate']);
@@ -483,6 +482,10 @@ export class LevelEightZoo {
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
       this.mission.setState('breached', true);
+      if (!s.heavyWeaponsSurrendered) {
+        s.heavyWeaponsSurrendered = true;
+        if (surrenderHeavyWeapons(w, this.mission).length) s.gateToastAt = t + gateToastDelay;
+      }
       const door = this.door();
       for (const [i, id] of [s.haleId, s.reyesId, ...s.guards].entries()) {
         const guard = w.entities.get(id); if (!guard?.civilian?.ally || guard.health.current <= 0) continue;

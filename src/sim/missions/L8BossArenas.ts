@@ -188,8 +188,6 @@ export class L8BossArenas {
       // later bird turns without a collapse/rise once the encounter is active.
       const flockTurning = arena.id === 'flamingo' && arena.ids.some(id => !!w.entities.get(id)?.infection);
       if (arena.phase === 0 && routeOpen && live.length && deep && !followersInside && !flockTurning && !this.mission.l8!.protecting()) {
-        // The restore point is taken in phase 0 with the entry gate still open (the courier stands just outside it).
-        this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         arena.phase = 1; arena.startedAt = w.tick; arena.nextAt = w.tick + 90; arena.armed = false;
         // r42-arenas: the gorilla opens with a charge-and-pound (cycle 3), not a roar from across the house.
         if (arena.id === 'gorilla') { arena.cycle = 2; arena.nextAt = w.tick + 20; }
@@ -207,6 +205,8 @@ export class L8BossArenas {
           }
         }
         for (const e of live) e.infected!.arenaBoss!.engaged = !(arena.id === 'monkey' && e.infected!.arenaBoss!.slot === 6);
+        // Capture the committed encounter so restore does not recapture a dirty rack.
+        this.mission.checkpoint(`arena-${arena.id}`, def.entry);
         this.announce(`${def.name}: ${def.counter}`); this.signal(arena, 'engaged');
       }
       if (arena.phase > 0 && !arena.armed && !followersInside && inZone && entryGate && Math.hypot(player.transform.x - entryGate.x, player.transform.z - entryGate.z) >= 5) arena.armed = true;
