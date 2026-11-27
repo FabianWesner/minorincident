@@ -1,33 +1,28 @@
 {
   "row": "L2-12",
-  "status": "PASS",
-  "reviewer": "Codex final-a",
-  "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "status": "FAIL",
+  "reviewer": "Codex/v2-l2l4",
+  "date": "2026-11-27",
+  "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
   "clauses": [
     {
-      "clause": "combat: competent run meets ≥ 1 infected per 30 m of route (tune); attacks on the player ≥ 2/min, ≤ 20/min (tune).",
-      "verdict": "PASS",
-      "note": "4 current native checks PASS across low/high. low/complete competent bridge player attack rate: 10.376508737164475; target 2 ≤ value ≤ 20 (PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; complete [full value in proof]; high/complete competent bridge player attack rate: 15.742397137745975; target 2 ≤ value ≤ 20 (PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route [full value in proof]"
+      "clause": "Competent bridge player attack rate",
+      "verdict": "FAIL",
+      "note": "Current high/complete native route measured 31.377551 attacks/min against the accepted maximum 30/min. Repro: npm run qa:accept -- --level L2 --skip-browser --reuse; inspect high/complete bridge-phase attack-rate check."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L2-12-native.json",
-      "sha256": "1b35e1cd0d393a67c9bf356d57cdd35498845150eb5254564472d3f1e44db59c",
-      "what": "4 current native checks PASS across low/high. low/complete competent bridge player attack rate: 10.376508737164475; target 2 ≤ value ≤ 20 (PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; complete [full value in proof]; high/complete competent bridge player attack rate: 15.742397137745975; target 2 ≤ value ≤ 20 (PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route [full value in proof]"
+      "file": "docs/reports/fix51-verify/L2.json",
+      "sha256": "850553b660646a02d912e62b35497de896fd945ba3adb69cad8f4bc03fe39abe",
+      "what": "Current-head report row L2-12: high/complete bridge-phase attack rate is 31.377551/min (target maximum 30)."
     },
     {
-      "file": "docs/reports/final-a/native-receipts/L2-low-complete.json.gz",
-      "sha256": "d0b884e0602ceef5ef9631ae082a1ab9352582a0c6a95c4cb79c8cf8f873b64b",
-      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L2-high-complete.json.gz",
-      "sha256": "7853a2405a6a51a9207f11122053806542b1a655c78ef73f3a15fa7a31524afb",
-      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "96235eaec881d155d0abb29a394e203949636b68f1c36664f16aea862a1b1ea5",
+      "what": "Current-head high/complete native receipt from the ordinary competent route; bridge-phase attack events and computed rate."
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
+  "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling.",
+  "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd"
 }
