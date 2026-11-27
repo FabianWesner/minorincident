@@ -141,6 +141,8 @@ export class LevelNineCrash {
       // span tilts, gravity adds 3.5 m/s² down the broken deck.
       const afterLanding = Math.max(0, along - s.impactSpeed);
       s.approachTicks = Math.max(90, Math.ceil((1 + (-s.impactSpeed + Math.sqrt(s.impactSpeed ** 2 + 7 * afterLanding)) / 3.5) * 60));
+      // The bridge ending owns the screen: a pending school-bus ram warning must not linger over the crash.
+      this.driving.state.busRamAt = 0;
       w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.crash-approach', actorId: s.carId });
     }
     if (s.phase !== 'approach') this.collapseCull();
