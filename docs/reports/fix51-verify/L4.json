@@ -3,9 +3,9 @@
   "level": "L4",
   "sourceHash": "f7b0130bf593de288a335e98a4a2cd11e2e0f1c3906d1ffaddc2e492a6fefc20",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
-  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:44:17.791Z",
+  "generatedAt": "2026-11-27T22:59:14.126Z",
   "policies": [
     {
       "tier": "low",
@@ -5060,12 +5060,12 @@
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
-            "sha256": "7a8c54b029e9ca55cc98a8feadc49a6f6ec5eacf0fd59ccd69f4a4a1c2d6c43f",
+            "sha256": "cb0aa5206ce94b6868b6c6db1568fb5d5ddda0437d7aea219da28af6b3efc11d",
             "what": "Current low-fixtures receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
-            "sha256": "4e89cf7d009840c65a50e9be21fa0166336fc97ddbb4d6ac48d18a3b26eb2c5c",
+            "sha256": "96a7a9a051f08a814a002f2d0138b0aebe4ba7d4b034778bbe5f0ece3f4761d7",
             "what": "Current high-fixtures receipt: Both tiers and policies: five vehicles, 30.4833 s journey (20–35 s). Fixture control is restored at stop tick 1829 (0 s); full bus bounds fall within military-area bounds."
           }
         ],
@@ -6292,7 +6292,7 @@
       "id": "L4-07",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 66.15384615384615 (target 90 ≤ value ≤ 100; FAIL); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 69.76744186046511 (target 90 ≤ value ≤ 100; FAIL)",
+      "value": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 66.15384615384615 (target 90 ≤ value ≤ 100; FAIL); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 69.76744186046511 (target 90 ≤ value ≤ 100; FAIL) Manual review FAIL (Codex/v2-l2l4): Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -6594,7 +6594,37 @@
         ],
         "method": "Current-head native passive hold, actual windups and independent path snapshot; complete hold observed through line break. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope."
       },
-      "remaining": "Current-head native passive hold, actual windups and independent path snapshot; complete hold observed through line break. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope."
+      "remaining": "Current-head native passive hold, actual windups and independent path snapshot; complete hold observed through line break. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope.",
+      "reviewDecision": {
+        "row": "L4-07",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
+        "clauses": [
+          {
+            "clause": "Minimum bounded-path reachable share within 30 m (path ≤ 2.5× direct)",
+            "verdict": "FAIL",
+            "note": "Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+            "sha256": "3c77aee3ecf29c99f3ec58c2488419b5d8df415b95e48d3a049d1109c51e5804",
+            "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
+          },
+          {
+            "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+            "sha256": "6a1172341d5e3d09a2baa45db5fe79a5dd8e13387053af7be693d1c9729151fa",
+            "what": "Current-head native receipt containing the measured L4-07 counterexample described in the clause."
+          }
+        ],
+        "notes": "Fresh current-head measurement. Current native complete route reachability is 66.153846% low and 69.767442% high, below 90%. Repro: npm run qa:accept -- --level L4 --skip-browser --reuse; compare L4 low/high minimum reachable-share checks.",
+        "sourceDigest": "8d3b3d9f387952aa2e1fbc95a47bf3762e369e42c1c661ded46179eb89a2f69f",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+      }
     },
     {
       "id": "L4-08",

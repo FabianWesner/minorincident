@@ -3,9 +3,9 @@
   "level": "L2",
   "sourceHash": "f7b0130bf593de288a335e98a4a2cd11e2e0f1c3906d1ffaddc2e492a6fefc20",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
-  "fixtureHash": "b1d21037dcdd47fd9664409506d4e63ee758deb71dea4828192990773b8b86c6",
+  "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:43:16.556Z",
+  "generatedAt": "2026-11-27T22:56:49.676Z",
   "policies": [
     {
       "tier": "low",
@@ -5026,12 +5026,12 @@
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "f4ef43239d5f9edb6368b2cd4b118ebe31e6254f9cb49dc29f9776b921eddacc",
+            "sha256": "0563412f16d22930bcc1526ac2a24b11ba5d6aec4a1fc5b63b93013f81fab335",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "66150cdbef118dd94ae52ced42d51d349a7c7fcc3bddca6bc374d97132d6b7e0",
+            "sha256": "acbdf8b5f2762349da30c7f13eeedb55f22836cf3b3c732efcd3615159bb9d37",
             "what": "Current-head native route or independent fixture receipt; door event order, forcing interval and pre-open infected census."
           }
         ],
@@ -6037,12 +6037,12 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "f4ef43239d5f9edb6368b2cd4b118ebe31e6254f9cb49dc29f9776b921eddacc",
+            "sha256": "0563412f16d22930bcc1526ac2a24b11ba5d6aec4a1fc5b63b93013f81fab335",
             "what": "Current low-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "66150cdbef118dd94ae52ced42d51d349a7c7fcc3bddca6bc374d97132d6b7e0",
+            "sha256": "acbdf8b5f2762349da30c7f13eeedb55f22836cf3b3c732efcd3615159bb9d37",
             "what": "Current high-fixtures receipt: At +60/+120 s low has 29/30 living, high 60/59; ≥20/30 required. Two firefighters turn by +90 s in each tier; firefighters land 19/46 hits and all six have zero protected ticks in sampled time. Courier protected for the idle census."
           }
         ],
@@ -6485,12 +6485,12 @@
         "evidence": [
           {
             "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
-            "sha256": "f4ef43239d5f9edb6368b2cd4b118ebe31e6254f9cb49dc29f9776b921eddacc",
+            "sha256": "0563412f16d22930bcc1526ac2a24b11ba5d6aec4a1fc5b63b93013f81fab335",
             "what": "Current low-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           },
           {
             "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
-            "sha256": "66150cdbef118dd94ae52ced42d51d349a7c7fcc3bddca6bc374d97132d6b7e0",
+            "sha256": "acbdf8b5f2762349da30c7f13eeedb55f22836cf3b3c732efcd3615159bb9d37",
             "what": "Current high-fixtures receipt: Both tiers: 1 and 2 targets select single; 3 select roundhouse and all three move 2.5 m (≥2 m). Fixture sets walking speed to zero to isolate knockback."
           }
         ],
@@ -6676,7 +6676,7 @@
       "id": "L2-12",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "high/complete competent bridge player attack rate: 31.377551020408163 (target 2 ≤ value ≤ 30; FAIL)",
+      "value": "high/complete competent bridge player attack rate: 31.377551020408163 (target 2 ≤ value ≤ 30; FAIL) Manual review FAIL (Codex/v2-l2l4): Current high/complete native route measured 31.377551 attacks/min against the accepted maximum 30/min. Repro: npm run qa:accept -- --level L2 --skip-browser --reuse; inspect high/complete bridge-phase attack-rate check.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L2-low-complete.json",
@@ -6838,7 +6838,32 @@
         ],
         "method": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target."
       },
-      "remaining": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target."
+      "remaining": "Current-head complete policy, bridge-phase actual infected.attack rate; the skilled diagnostic is not a gating flag but still fails this absolute target.",
+      "reviewDecision": {
+        "row": "L2-12",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
+        "clauses": [
+          {
+            "clause": "Competent bridge player attack rate",
+            "verdict": "FAIL",
+            "note": "Current high/complete native route measured 31.377551 attacks/min against the accepted maximum 30/min. Repro: npm run qa:accept -- --level L2 --skip-browser --reuse; inspect high/complete bridge-phase attack-rate check."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+            "sha256": "96235eaec881d155d0abb29a394e203949636b68f1c36664f16aea862a1b1ea5",
+            "what": "Current-head native receipt containing the measured L2-12 counterexample described in the clause."
+          }
+        ],
+        "notes": "Fresh current-head measurement. Prior report recorded low 13.6788/min and high 26.5223/min as passing; current high run crosses the ceiling.",
+        "sourceDigest": "ca616a4730f3e5525c27d9f13ff4bcf1b94279b307540987f202b2fe81690bdd",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+      }
     },
     {
       "id": "L2-13",

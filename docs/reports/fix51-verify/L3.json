@@ -5,7 +5,7 @@
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-27T22:53:01.427Z",
+  "generatedAt": "2026-11-27T22:56:59.913Z",
   "policies": [
     {
       "tier": "low",
@@ -6540,7 +6540,7 @@
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL)",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (Codex/v2-l2l4): Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -6870,6 +6870,31 @@
         "tag": "O",
         "instruction": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation.",
         "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation."
+      },
+      "reviewDecision": {
+        "row": "L3-06",
+        "status": "FAIL",
+        "reviewer": "Codex/v2-l2l4",
+        "date": "2026-11-27",
+        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
+        "clauses": [
+          {
+            "clause": "Calm squad following distance by member",
+            "verdict": "FAIL",
+            "note": "Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+            "sha256": "5fe8603e11522b85490f5de36d76a5c811eab1f0484d39c294b8418b38fe14d1",
+            "what": "Current-head native receipt containing the measured L3-06 counterexample described in the clause."
+          }
+        ],
+        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
+        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
