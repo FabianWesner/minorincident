@@ -83,3 +83,7 @@ Fresh **PASS**: remote idle spread starts at 5, reaches 30/30 low and 44/50 high
 ## L10-10 review
 
 Fresh **PASS**: both complete native routes record 3600 eligible increments, zero invalid increments; high includes 120 dead ticks. Both tiers' controlled boundary probe pauses at 40.01 m with instruction, holds while dead and resumes inside. The minigun yields 20 rounds/s and 0.125 heat/s, locks at 1.0, remains locked at 0.4 and unlocks at 0.396667. [Review JSON](../../qa/reviews/L10-10.json) records four current receipt hashes. No game change or open numeric clause for this row.
+
+## Main advanced and L1-01 refresh
+
+Main advanced from `2f7ee5f0` to `540ab32a`; the lane was rebased. Earlier source-dependent reviews and playtests must be requalified on the new head. Fresh native L1 complete routes both finish, with null initial deadline and no offered starting weapons: **L1-01 PASS**. [Review](../../qa/reviews/L1-01.json), [high receipt](L1-01/high-complete.json), [low receipt](L1-01/low-complete.json). The scoped native run exited 1 for 12 incomplete L1 rows. No game source changed; no cause or open numeric clause for L1-01.
