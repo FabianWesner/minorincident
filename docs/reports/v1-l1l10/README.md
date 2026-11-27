@@ -57,3 +57,9 @@ The only remaining worktree change from this turn is this lane report. L1/L10 ag
 ## L1 mortal real-input runs (continuation)
 
 On the same head, the pooled headless playtest ran HIGH first, then LOW on port 5401, each with `--levels L1 --zoom 1.5 --capture-zooms 1,1.5 --level-minutes 8 --no-skip`. Both finished without skips: high 156 s with 1 death, low 148 s with 0 deaths. The driver reported zero issues and one assist in each run. Logs and captures are retained under `test-results/v1-l1l10/l1-high/` and `l1-low/`; captures have not yet been inspected, so they support no visual verdict. These runs do not establish the full clauses of any acceptance row. L10 mortal run remains open.
+
+## L10 high mortal run
+
+On the same source, `E2E_PORT=5402 npx tsx tools/playtest/play.ts --levels L10 --quality high --zoom 1.5 --capture-zooms 1,1.5 --level-minutes 18 --session-seconds 480 --no-skip --out test-results/v1-l1l10/l10-high` completed three bounded segments and exited 1: no level completion, no skips, 29 deaths (7 + 6 + 16), zero assists. The 18-minute deadline is checked between segments, so the third completed at 24 minutes of sampled time. The driver reported two P2 navigation stalls at farm objective distances 111 m and 183 m. These are observations of the driver, not yet diagnosed game defects. Logs, summaries and captures remain in the named ignored output directory. The low run and visual inspection remain open.
+
+Four L1 frames were opened: high/low `campaign-L1-t12.jpg` show warm pavement, courier, corgi and a seated civilian; high `campaign-L1-t5458.jpg` and low `campaign-L1-t5503.jpg` show the Annex under a large smoke plume obscuring much of its entrance. These frames alone do not establish the crowd or complete visual-tone criterion. Other captures remain unreviewed.
