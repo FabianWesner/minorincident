@@ -3,12 +3,12 @@
   "status": "FAIL",
   "reviewer": "Codex/v2-l2l4",
   "date": "2026-11-27",
-  "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
+  "commit": "233eab905766440b4092ce718aa2191370de2b3c",
   "clauses": [
     {
       "clause": "At least two smoke columns in every street frame",
       "verdict": "FAIL",
-      "note": "High tier, actual real-input L3 route, tick 5425: zero visible smoke columns in the full 1280×720 street frame; target at least two. Burning bus, officers and courier visible. Light/damage taste remains open."
+      "note": "Current-main high real-input street at tick 8595, actual zoom 1: at most one partial smoke plume visible (target ≥2). Same-pose zoom 1.5 frame shows smoke. Prior high frame also showed none; low tier and PO taste remain open."
     }
   ],
   "evidence": [
@@ -21,8 +21,13 @@
       "file": "docs/reports/v2-l2l4/L3-high-mortal-summary.json",
       "sha256": "0993033b1141ae1272df6ec146ad42a8e44b5e18dc6e862e8eb9154502ef794c",
       "what": "Mortal real-input high-tier route completed with no skips; this frame is from that run."
+    },
+    {
+      "file": "docs/reports/v2-l2l4/L3-16-current-high.json",
+      "sha256": "86a0b526bdf538c4e0a902b6c1221c062e0c40e9f09fc49b0c5e88b6b3ec3678",
+      "what": "Current-head, personally opened paired street frames with exact SHA256 and logged zoom; zoom 1 shows at most one smoke plume."
     }
   ],
-  "notes": "Repro: E2E_PORT=5411 SCENE_PORT=5412 node --import tsx/esm tools/playtest/play.ts --levels L3 --quality high --zoom 1.5 --capture-zooms 1,1.5 --no-skip --level-minutes 8 --out test-results/playtest/v2-l2l4-high-l3; inspect campaign-L3-t5425.jpg. One objective counterexample establishes FAIL; low tier and PO taste remain open.",
+  "notes": "Repro: E2E_PORT=5411 SCENE_PORT=5412 PLAYTEST_ACCEPTANCE_CAPTURES=1 PLAYTEST_ACCEPTANCE_CAPTURE_TIERS=single PLAYTEST_NO_FRAME_TIMING=1 node --import tsx/esm tools/playtest/play.ts --levels L3 --quality high --zoom 1.5 --capture-zooms 1,1.5 --no-skip --level-minutes 8 --out test-results/playtest/v2-main-high-l3; inspect checkpoint-t8594-high-z1. Low-tier and PO taste remain open.",
   "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239"
 }
