@@ -123,3 +123,9 @@ Current controlled fixtures: **PASS**, 5 initial; low 30/30 and high 44/50 at +1
 ## L1-08 at 92c233e2
 
 **PASS** in current native policies: both stationary tiers first player windup at 2.3167 s and 330.18 windups/min over 290.57 s; bounded-path minimum 100% across 147 samples each. Complete low/high rates 27.93/19.20 per minute and minimum 100% across 23 samples each. The rate counts player-target windup events, not damage; reachability samples actors within 30 m with path ≤2.5× direct. [Review](../../qa/reviews/L1-08.json), [high stationary](L1-08/high-stationary.json), [low stationary](L1-08/low-stationary.json), complete receipts under L1-01. No game change; no open native clause.
+
+## L10-10 refresh at 92c233e2
+
+**PASS**: both current native routes record 3600 eligible increments and zero invalid increments, high with 120 dead ticks. Both controlled fixtures pause outside 40 m with instruction, hold while dead and resume inside; minigun 20 rounds/s, 0.125 heat/s, lock at 1.0 and unlock below 0.4 (0.396667). [Review](../../qa/reviews/L10-10.json), [high route](L10-native/current-high-complete.json), [low route](L10-native/current-low-complete.json), current fixture receipts in the L10-06 entry. No game change; no open numeric clause.
+
+The same current routes released with prerequisites at 1.989 m high / 1.916 m low and the fixture rejects each missing prerequisite; L10-13 remains open for its requested physical-input release.
