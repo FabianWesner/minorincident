@@ -8,7 +8,7 @@
 | L6-10 markers | 12 / 12 gate branches failed | 0 / 12 branches failed; 0 trajectory offenders | The retreat ring stayed on the platform even when the next gate was the active destination. The ring now uses that gate's fixed wait point until the gate is passed, then returns to the fixed platform anchor. |
 | L6-13 fists only | 900 s, incomplete, 50 deaths / 900 s, incomplete, 50 deaths | 248.9 s, complete, 5 deaths / 248.9 s, complete, 5 deaths | The route had no retry checkpoint between the shelter and the first gate, so deaths repeatedly replayed the retreat opening. Add a fixed checkpoint at x=60. Preserve a deliberately unarmed L6 campaign loadout instead of restoring the authored weapons at the level boundary. Both tiers offered fists/kick and used fists only. |
 
-The targeted acceptance checks pass on both tiers. The full L6 report still has unrelated `NOT CHECKED` clauses because this run skipped browser review; the runner reported zero fresh failing rows on high and low.
+The measured damage, marker and fists checks pass on both tiers, but L6-07 as a whole remains open. The threat receipt records a wave 3 infected at x=-8.58 assigned to door 2 at x=54 (tick 3492): the courier-aligned spawn can place an arrival far from its service door. This violates the authored arrival placement even though the damage check passes. The full L6 report also has `NOT CHECKED` clauses because this run skipped browser review; the runner reported zero fresh failing rows on high and low.
 
 ## Open
 
