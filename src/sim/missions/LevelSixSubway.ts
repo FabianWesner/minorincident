@@ -208,11 +208,15 @@ export class LevelSixSubway {
     for(const e of [...ai.active]){
       const b=e.infected;
       const sealed=this.s.gates.some(g=>g.closedAt&&e.transform.x<g.x&&p.x>g.x);
-      if(!b||e.health.current<=0||e.corpse||(!sealed&&e.transform.x>=tail-45)||this.s.survivors.some(r=>r.id===e.id))continue;
+      const resident=this.s.survivors.find(r=>r.id===e.id);
+      if(!b||e.health.current<=0||e.corpse||(!sealed&&e.transform.x>=tail-45)||resident&&(!sealed||resident.status!=='turned'))continue;
       if(e.combat?.attacking||b.specialAttack||b.l1?.mode==='bite'||e.infectionRise)continue;
       if(distance(e.transform,p)<(sealed?12:35)||group.some(member=>distance(e.transform,member.transform)<(sealed?10:25)))continue;
       if(!ai.director.offscreen(e.transform,e.transform.y-.7))continue;
-      ai.release(e);this.s.distantRecycled=(this.s.distantRecycled??0)+1;
+      const retained=resident?structuredClone(e):undefined;
+      ai.release(e);
+      if(retained){retained.hidden=true;w.entities.replace(retained);}
+      this.s.distantRecycled=(this.s.distantRecycled??0)+1;
     }
   }
   private spawn(n:number,doors:number[],wave:number):number {
