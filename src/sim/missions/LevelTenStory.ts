@@ -1,4 +1,5 @@
 import { cureEscapeGaps, cureHangar, cureHangarConversation, insideCureHangar } from '../../data/l10Story';
+import { megaAlpha } from '../../data/megaAlpha';
 import { cure } from '../../levels/L10/district';
 import { allyState } from '../outbreak/Allies';
 import { l4 } from '../../data/l4';
@@ -27,6 +28,12 @@ export class LevelTenStory {
   update(): void {
     const { state, world } = this.mission, p = world.entities.get(1)!;
     if (state.phase !== 'playing' || p.health.current <= 0 || state.states['cure-released']) return;
+    const stuntId = state.actors['l10-overpass-stunt'];
+    if (stuntId && world.tick >= (state.counters['l10-overpass-stunt-cleanup'] ?? Infinity)) {
+      const stunt = world.entities.get(stuntId);
+      if (stunt) world.infected?.release(stunt);
+      delete state.actors['l10-overpass-stunt']; delete state.counters['l10-overpass-stunt-cleanup'];
+    }
     const sameTick = this.lastUpdateTick === world.tick;
     this.lastUpdateTick = world.tick;
     const mega = world.megaPursuit?.entity();
@@ -128,17 +135,38 @@ export class LevelTenStory {
     if (state.states['l10-finale-beat-6'] && !state.states['l10-overpass-mega'] && p.transform.x >= 3340 && p.transform.x < 3380) {
       const pursuit = world.megaPursuit;
       const id = pursuit?.state.id ? pursuit.state.id : pursuit?.introduce({ x: 3330, z: 111 });
-      const alpha = id ? world.entities.get(id) : undefined;
+      const pursuer = id ? world.entities.get(id) : undefined;
+      let alpha = pursuer;
+      let staged = false;
+      if (pursuer?.infected?.pursuit) {
+        const separation = Math.hypot(p.transform.x - pursuer.transform.x, p.transform.z - pursuer.transform.z);
+        // Hand off this one camera-side stunt only while the actual Mega is
+        // far away and offscreen. MegaPursuit retains the persistent actor.
+        if (separation > 35 && world.infected!.director.offscreen(pursuer.transform, pursuer.transform.y - .7)) {
+          const existing = state.actors['l10-overpass-stunt'];
+          alpha = existing ? world.entities.get(existing) : undefined;
+          if (!alpha?.infected) {
+            const crate = { x: 3336, z: 93 };
+            const offsets = [[0, -1], [-1, 0], [1, 0], [0, 1], [-1.5, -1], [1.5, -1], [-1.5, 1], [1.5, 1]] as const;
+            const spawn = offsets.map(([x, z]) => ({ x: crate.x + x, z: crate.z + z }))
+              .find(at => Math.hypot(at.x - crate.x, at.z - crate.z) <= 2.8 && world.infected!.nav.clear(at.x, at.z, .35));
+            if (!spawn) return;
+            const stuntId = world.infected!.spawn('infected.alpha', spawn, { state: 'chase', variant: megaAlpha.asset, alphaType: 'thrower' });
+            alpha = world.entities.get(stuntId)!;
+            alpha.infected!.pursuit = true;
+            state.actors['l10-overpass-stunt'] = stuntId;
+            state.counters['l10-overpass-stunt-cleanup'] = world.tick + 2400;
+          }
+          staged = true;
+        }
+      }
       if (alpha?.infected) {
-        // Stage once in the courier's current camera view. Repeating this setup
-        // every tick cancels the telegraph and continually restarts the Alpha's
-        // special cooldown before the throw can resolve.
+        // The persistent pursuer must walk into range unless the offscreen
+        // handoff above is safe; never assign a live pursuer's position.
+        const dx = p.transform.x - alpha.transform.x, dz = p.transform.z - alpha.transform.z;
+        if (!staged && Math.hypot(dx, dz) > 4) return;
         if (!state.states['l10-overpass-mega-staged']) {
-          const at = { x: p.transform.x - 2.7, z: p.transform.z };
-          alpha.transform.x = at.x; alpha.transform.z = at.z;
-          alpha.transform.y = (world.districts?.groundHeight(at.x, at.z) ?? 0) + .7;
           alpha.infected.hidden = false;
-          world.spatial?.set(alpha.id, at.x, at.z);
           alpha.infected.megaPhase = 2;
           alpha.infected.specialAttack = undefined;
           alpha.infected.state = 'chase';
@@ -150,14 +178,15 @@ export class LevelTenStory {
           alpha.infected.cooldown = world.tick;
           alpha.infected.alphaSpecialStarted = world.tick - 180;
           if (alpha.combat) { alpha.combat.attacking = false; alpha.combat.staggerUntil = world.tick; alpha.combat.statuses.length = 0; }
-          state.states['l10-overpass-mega-staged'] = true;
         }
-        const dx = p.transform.x - alpha.transform.x, dz = p.transform.z - alpha.transform.z, distance = Math.hypot(dx, dz) || 1;
+        const distance = Math.hypot(dx, dz) || 1;
         const thrown = world.infected!.startSpecial(alpha.id, 'alpha.grab-throw', { id: p.id, x: p.transform.x, z: p.transform.z }, {
           x: alpha.transform.x, z: alpha.transform.z, radius: 4, dx: dx / distance, dz: dz / distance,
         });
         if (!thrown) return;
+        state.states['l10-overpass-mega-staged'] = true;
         state.counters['l10-overpass-mega-attack'] = alpha.infected.specialAttack?.attackId ?? -1;
+        if (staged) state.counters['l10-overpass-stunt-cleanup'] = world.tick + 240;
         state.states['l10-overpass-mega'] = true;
         world.l10Encounters?.callWave();
       }

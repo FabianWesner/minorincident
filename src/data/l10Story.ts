@@ -22,9 +22,9 @@ export const cureEscapeGaps = [
 export const cureRackCapacity = 32;
 /** Exact line IDs from docs/design/story-script.md. Durations are active simulation ticks. */
 export const cureHangarConversation = [
-  ['L10.voss-intro', 240], ['L10.voss-sample', 660], ['L10.courier-carried', 150],
-  ['L10.voss-cure', 210], ['L10.voss-delivery', 780], ['L10.ruiz', 450],
-  ['L10.voss-prototype', 240], ['L10.sam-coming', 150], ['L10.voss-stay', 240], ['L10.sam-delivery', 240],
+  ['L10.voss-intro', 180], ['L10.voss-sample', 360], ['L10.courier-carried', 120],
+  ['L10.voss-cure', 180], ['L10.voss-delivery', 420], ['L10.ruiz', 300],
+  ['L10.voss-prototype', 180], ['L10.sam-coming', 120], ['L10.voss-stay', 180], ['L10.sam-delivery', 180],
 ] as const;
 
 /** Optional porch find in the dead R2 house; never an objective or weapon slot. */

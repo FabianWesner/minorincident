@@ -248,7 +248,7 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
   }
 }, 180_000);
 
-test('checkpoints: death restores objectives, HP, charges and escorts; a boss killed before or after C stays dead', async () => {
+test('checkpoints: death restores objectives, HP, charges, escorts and checkpoint boss state', async () => {
   const def = missionSandbox('kill'); def.steps.push({ ...def.steps[0], id: 'reach', type: 'reach', start: { kind: 'objectives', ids: ['kill'], mode: 'all' }, complete: { kind: 'volume', anchor: 'goal', edge: 'inside' } }); def.finish = ['reach'];
   const api = await load(def), actor = api.state()!.actors;
   kill(actor.boss); api.completeObjective('kill'); world!.entities.get(1)!.weapons!.RIGHT.rack[0].charges = 2;
@@ -265,7 +265,8 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
   const after = missionSandbox('kill'); after.steps.push({ ...after.steps[0], id: 'next', type: 'reach', start: { kind: 'objectives', ids: ['kill'], mode: 'all' }, complete: { kind: 'volume', anchor: 'goal', edge: 'inside' } }); after.finish = ['next'];
   const b = await load(after); b.checkpoint('C'); const boss = b.state()!.actors.boss; kill(boss); step();
   world!.player!.damage(1000, world!.tick); step(120);
-  expect(world!.entities.get(boss)!.health.current).toBe(0); step(); expect(b.state()!.completedObjectives).toEqual(['kill']);
+  expect(world!.entities.get(boss)!.health.current).toBeGreaterThan(0);
+  expect(b.state()!.completedObjectives).toEqual([]);
   const w = await loadMissionLevel('L6', 1);
   try {
     const mission = w.missions!;

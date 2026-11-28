@@ -560,6 +560,13 @@ export class InfectedSystem {
   }
   /** Phase 2: the Mega Alpha's proximity notice and global pursuit, then barricade vaults for everyone. */
   private pursuitOrVault(e: EntitySnapshot, b: InfectedState): boolean {
+    // The temporary L10 overpass stunt uses the Mega's special-move presentation,
+    // but MegaPursuit must continue owning the real actor's route and identity.
+    if (b.pursuit && this.world.missions?.state.actors['l10-overpass-stunt'] === e.id) {
+      this.updateSpecial(e);
+      e.combat!.attacking = false;
+      return true;
+    }
     // PO 10-16: Mega notices nearby humans too, while its E32 global target stays the courier.
     if (b.pursuit && !b.specialAttack && b.state !== 'attack' && b.state !== 'stagger' && b.grabUntil <= this.world.tick && this.world.tick >= (b.specialRecoveryUntil ?? 0) && !Status.stunned(e, this.world.tick)) {
       const heard = this.hearing.closestHeard(e);

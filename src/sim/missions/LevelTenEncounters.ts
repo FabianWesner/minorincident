@@ -634,7 +634,7 @@ export class LevelTenEncounters {
     }
     return false;
   }
-  /** Open on the first encounter update after the final cohort member dies. */
+  /** Open once the admitted cohort is down; recovering bodies remain in play. */
   private updateRoadblockClearance(): void {
     const w = this.world, tier = w.infected!.director.tier;
     for (const group of curePaceEncounters) {
@@ -649,9 +649,9 @@ export class LevelTenEncounters {
         if (actorId === undefined) continue;
         if (actorId === RETIRED_SLOT) continue;
         const actor = w.entities.get(actorId);
-        if (actor && actor.health.current <= 0 && (actor.infected?.recoverAt ?? -1) < 0)
-          this.state.spawned[key] = RETIRED_SLOT;
-        else cleared = false;
+        if (actor && actor.health.current <= 0) {
+          if ((actor.infected?.recoverAt ?? -1) < 0) this.state.spawned[key] = RETIRED_SLOT;
+        } else cleared = false;
       }
       if (cleared) {
         gate.interactable.open = true; gate.interactable.completed = true;
