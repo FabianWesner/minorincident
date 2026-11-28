@@ -368,7 +368,7 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, l2 = this.world.missions?.state.l2;
     const wanted: { actorId: number; seat: string; driver: boolean }[] = [];
     const transition = this.world.vehicles!.transition, elapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick : carTransitionTicks;
-    if (l2?.truckId !== id && transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: 'driverSeat', driver: true });
+    if (transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: l2?.truckId === id ? 'crewSeat0' : 'driverSeat', driver: l2?.truckId !== id });
     if (car.entity.vehicle!.driver !== null) wanted.push({ actorId: car.entity.vehicle!.driver!, seat: 'driverSeat', driver: true });
     for (const [i, passenger] of (car.entity.vehicle!.passengers ?? []).slice(0, car.physics.def.transport?.seats.length ?? 0).entries()) {
       if (this.world.entities.get(passenger.id)?.companion) continue; // Retained in the closed troop bay.
