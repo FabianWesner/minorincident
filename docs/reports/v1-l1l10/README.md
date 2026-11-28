@@ -365,3 +365,11 @@ High credits show the title, readable initial attribution lines, Pause and Skip 
 | L10-12 | stale PASS → fresh FAIL | One overhead HP bar in 2 / 2 inspected zoom frames before cure installation. Controlled finale diagnostics above remain separate and incomplete. | [Review](../../qa/reviews/L10-12.json), [same both-tier bar evidence](L10-02/bar-summary.json). | Product: reconcile finale-only row with G-24's explicit pursuit-bar requirement. |
 
 **Acceptance mismatch and repro:** Before installing the cure, encounter the pursuing Mega on the dispersal approach: its red overhead HP bar is already present. G-24 expressly requires this presentation, while L10-12 says the Mega health bar appears only for the finale. This is an explicitly qualified criterion conflict. The wide finale boss bar is a separate HUD element and is absent in these pre-finale frames. Mounted shield, stairs, gun and survivability are not established by this counterexample; their partial diagnostic is above. No game, spec or checker change.
+
+### L10-04 local moving census on main 4d3932b0
+
+| Row | Before → after | Numbers (high / low) | Evidence | P-note |
+|---|---|---|---|---|
+| L10-04 | stale PASS → still NOT CHECKED | Half-second samples before cure installation: 2,183 / 2,114. Within 20 m, median 0 / 1, p95 10 / 10, max 21 / 15; 13 / 0 samples exceed 15. Moving-only median 0 / 0, p95 10 / 9, max 16 / 12. | [Local census](L10-04/local-census.json), full compressed samples and producer under `test-results/v1-l1l10/`. | — |
+
+The earlier 68/57 whole-region peaks are not evidence that the player normally faces that many at once. This census counts admitted living ordinary infected in explicit 12 m and 20 m circles every 30 ticks, excluding the pursuing Mega; moving means displacement ≥0.05 m since the previous sample. Both read-only native complete routes match the prior final-state hashes; the intervening main change affects L9 driving. These are radius-based bot observations rather than visually partitioned groups or a physical run, and the row's quiet/scare classification and finale-only crowd-fight clause remain open. No game or checker change.
