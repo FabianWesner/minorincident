@@ -121,6 +121,20 @@ describe('L10 road camera (PO 10-30 "Wider L10 camera")', () => {
       expect(floor).toBe(0);
       expect(maxStep).toBeLessThanOrEqual(.75 / 60 + 1e-9);
     }
+    // L3 yard defense keeps the encounter's 1.5x pullback at each player zoom;
+    // ordinary scripted views still lock zoom, including after a reset.
+    view.framing = null; view.reset({ x: -139, z: -8 });
+    view.encounterScale = 1.5; view.pull(-130, 0, .55); view.encounterFreeZoom = true;
+    view.update({ x: -139, z: -8 }, 0);
+    expect(view.radius).toBeCloseTo(cameraFraming.radiusM * 1.5, 5);
+    view.zoom(Math.log(1.5), true);
+    expect(view.playerZoom).toBeCloseTo(1.5, 5);
+    expect(view.radius).toBeCloseTo(cameraFraming.radiusM * 2.25, 5);
+    view.reset({ x: -139, z: -8 });
+    view.encounterScale = 1.5; view.pull(-130, 0, .55);
+    view.zoom(Math.log(1.5), true);
+    expect(view.playerZoom).toBe(1);
+    expect(view.radius).toBeCloseTo(cameraFraming.radiusM * 1.5, 5);
   });
   it('snaps framing on level load, checkpoint/respawn poses and teleports before the first presented frame; the release/closing staging keeps a cured crowd and clears the Mega', async () => {
     const view = new View();
