@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L3",
-  "sourceHash": "88c98c862abb33c1438d5f47c207dd447a0bade85ae4ad1cac459300d027b26b",
+  "sourceHash": "2ef7ed1a31d78d5b106e9cf760b2928806b03c0784ea25dc3ad1d1e70a722466",
   "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
   "fixtureHash": "08bb0ce032dd609a0feceb9291f4e3f68a3b823a933dffd11e5f187508faf628",
   "checkpointHash": "d701c1c9b90095470e1463ca9e2b4818ccdf8f8f80a47e3e89a48152cade904b",
-  "generatedAt": "2026-11-28T02:01:31.278Z",
+  "generatedAt": "2026-11-28T03:37:30.153Z",
   "policies": [
     {
       "tier": "low",
@@ -43,25 +43,11 @@
       "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
     },
     {
-      "tier": "high",
-      "policy": "controlled-fixtures",
-      "outcome": "complete",
-      "error": null,
-      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
-    },
-    {
       "tier": "low",
       "policy": "checkpoint-death-control",
       "outcome": "complete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json"
-    },
-    {
-      "tier": "high",
-      "policy": "checkpoint-death-control",
-      "outcome": "complete",
-      "error": null,
-      "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json"
     }
   ],
   "globals": [
@@ -136,7 +122,7 @@
         "notes": "One valid counterexample rejects the universal six-second gate. No claim that later shared-load slow timings qualify. Confirmation PASS and lack of continuous sampling for initial cell are explicitly disclosed.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -348,7 +334,7 @@
         "notes": "PO: inspect low-L7-east-perimeter-z0.5.png at player center and the retained L1 Annex doorstep frame. Decide whether the stride/overlap reads as a coherent body. This is a visual-readability P, not a claim of a measured detached limb.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -417,7 +403,7 @@
         "notes": "The silhouette mechanism is directly measured and visibly reviewed. Pose-camera duplicate zoom requests and rejected APC fixture are excluded from additional coverage claims.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -706,7 +692,7 @@
         "notes": "PO decision: should the Kill-the-Mega objective ring follow the physically moving boss, or stay at the dispersal arena under the fixed-destination rule? Exact thing: cure-mega in L10/mega, source LevelTenFinale.update;510.898m observed span. L6 handoffs use fixed actionable gate spots, with the exit-platform fallback. This P concerns the moving target design, not missing performance evidence.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -763,22 +749,21 @@
         "notes": "PO: approve native story-camera zoom clamping and temporary direction-pin suppression while destination text remains. Retained exact full-size frames: L1-high/captures/accept-L1-deliver-t1030-high-z1.jpg (actual1.5) and accept-L1-escape-t5237-high-z1.jpg (actual1). Original firestation photo was inspected and then archived during raw cleanup; its digest/state remain in the receipt. No full five-step zoom1 PASS is claimed. Additional current-observer complete low repeat retains firestation-t6608-low-z1.jpg: requested zoom1, actual camera zoom/targetZoom1.5 at tick6609, fixed story framing. This supplies a new exact fire-station PO comparison; it does not claim unclamped zoom1 coverage.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "G-10",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":6240,\"id\":82,\"item\":null,\"collector\":null,\"distance\":0.8938132218080224,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":8324,\"id\":94,\"item\":null,\"collector\":null,\"distance\":0.8996732904267088,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":8522,\"id\":97,\"item\":null,\"collector\":null,\"distance\":0.8915142232995587,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":9078,\"id\":102,\"item\":null… (full values in JSON) (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":2540,\"id\":72,\"item\":null,\"collector\":null,\"distance\":0.8440306191734378,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":8037,\"id\":85,\"item\":null,\"collector\":null,\"distance\":0.8960611811400352,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":11259,\"id\":94,\"item\":null,\"collector\":null,\"distance\":0.8881314998808701,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":11450,\"id\":97,\"item\":nul… (full values in JSON) (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS); high/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
+      "value": "low/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":6240,\"id\":82,\"item\":null,\"collector\":null,\"distance\":0.8938132218080224,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":8324,\"id\":94,\"item\":null,\"collector\":null,\"distance\":0.8996732904267088,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":8522,\"id\":97,\"item\":null,\"collector\":null,\"distance\":0.8915142232995587,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":9078,\"id\":102,\"item\":null… (full values in JSON) (target ground ≤1.5 m; shelf ≤2.2 m; PASS); low/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); high/complete observed approach collection distances; E-free causality needs an input fixture: [{\"tick\":2540,\"id\":72,\"item\":null,\"collector\":null,\"distance\":0.8440306191734378,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":8037,\"id\":85,\"item\":null,\"collector\":null,\"distance\":0.8960611811400352,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":11259,\"id\":94,\"item\":null,\"collector\":null,\"distance\":0.8881314998808701,\"shelf\":false,\"interact\":false,\"speed\":0},{\"tick\":11450,\"id\":97,\"item\":nul… (full values in JSON) (target ground ≤1.5 m; shelf ≤2.2 m; PASS); high/stationary observed approach collection distances; E-free causality needs an input fixture: [] (target ground ≤1.5 m; shelf ≤2.2 m; NOT CHECKED); low/controlled-fixture isolated ground/shelf weapon approach with E continuously false: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one collection per specimen; ground≤1.5 m; shelf≤2.2 m; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Pickups (weapons, medkits, headlamp, rocket) are taken **on approach** (≤ 1.5 m ground, ≤ 2.2 m shelf), no E/click/standing still. PO: \"You should just take it when I come close to it\".",
       "checks": [
@@ -983,32 +968,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "G-10",
-          "clause": "isolated ground/shelf weapon approach with E continuously false",
-          "value": [
-            {
-              "shelf": false,
-              "distance": 1.4949994087219238,
-              "ePressed": false,
-              "collected": 1,
-              "originalEntityRemaining": false
-            },
-            {
-              "shelf": true,
-              "distance": 2.169999837875366,
-              "ePressed": false,
-              "collected": 1,
-              "originalEntityRemaining": false
-            }
-          ],
-          "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -1046,22 +1005,21 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "G-11",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS); high/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS)",
+      "value": "low/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/complete duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); high/stationary duplicate pickup transactions since the last restore: [] (target zero positive entity-ID duplicates on the same timeline; PASS); low/controlled-fixture pickup remains removed for 120 ticks after transaction: [{\"shelf\":false,\"distance\":1.4949994087219238,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false},{\"shelf\":true,\"distance\":2.169999837875366,\"ePressed\":false,\"collected\":1,\"originalEntityRemaining\":false}] (target one transaction and no original entity; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
       "checks": [
@@ -1134,32 +1092,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "G-11",
-          "clause": "pickup remains removed for 120 ticks after transaction",
-          "value": [
-            {
-              "shelf": false,
-              "distance": 1.4949994087219238,
-              "ePressed": false,
-              "collected": 1,
-              "originalEntityRemaining": false
-            },
-            {
-              "shelf": true,
-              "distance": 2.169999837875366,
-              "ePressed": false,
-              "collected": 1,
-              "originalEntityRemaining": false
-            }
-          ],
-          "target": "one transaction and no original entity",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -1217,18 +1149,17 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "G-12",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS); high/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS)",
+      "value": "low/controlled-fixture 35-follower production eligibility and cap: {\"eligible\":35,\"cap\":\"Infinity\"} (target 35/35 eligible; no finite follower cap (pixels still unreviewed); PASS)",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
       "checks": [
@@ -1244,20 +1175,6 @@
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "G-12",
-          "clause": "35-follower production eligibility and cap",
-          "value": {
-            "eligible": 35,
-            "cap": "Infinity"
-          },
-          "target": "35/35 eligible; no finite follower cap (pixels still unreviewed)",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
           "level": "L3"
         }
       ],
@@ -1311,7 +1228,7 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -1807,7 +1724,7 @@
         "notes": "Fresh complete native low/high, seeds1–3. Strict measured individual speed failures establish the global FAIL; no large visible babysitting or causal waiting failure is inferred from pace or stationary upper bounds.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -1919,7 +1836,7 @@
         "notes": "Fresh visual counterexample, not a PO taste deferral. No pile-height PASS is inferred from placement lift alone.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -1972,7 +1889,7 @@
         "notes": "Production courier/input/attack systems in an explicit isolated presentation fixture. Physical Playwright keys and pointer only; no injected input frames. Aim assist disabled for the test.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -2081,7 +1998,7 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -2141,7 +2058,7 @@
         "notes": "PO: judge whether woman-B aftermath wander reads as a walking infected or an exaggerated crouch. Exact evidence: test-results/final-g/G-17/body-strips.jpg, wander0–7 against chase0–7; original wander4 retained. The prior setup rejected a high-page→low-tier swap and is excluded from qualification.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -2198,7 +2115,7 @@
         "notes": "Explicit isolated perception fixtures, with courier/escort placement and paused director disclosed. Not a damage/difficulty or full-campaign console qualification. Prior finite-focus counterexample is freshly retested.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -2362,7 +2279,7 @@
         "notes": "PASS applies to measured health/target/bar/clearance/closure clauses. Hidden seated passengers are intentional and do not render embedded in the hull. No new game code or geometry fixes. Earlier APC setup rejection does not qualify boarding; actual production route provides that evidence. Later low L10 follow lag is separately recorded under G27; exact full-footprint static query remains clear despite nav blockage.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -2468,18 +2385,17 @@
         "notes": "Fixture setup is explicit; full campaign routes are separate. The cap-safe L5 producer is retained; the original setup errors remain in the first receipt.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L3/armory: {\"checkpoint\":\"armory\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fbd2f0d3a1f0ecfd4205dbdc93c874b943254b9f39f6bf3137f47f59587afdc5\",\"damage\":100,\"expected\":{\"id\":\"armory\",\"anchor\":{\"x\":-139.34352111816406,\"y\":0.7089999914169312,\"z\":-7.961522102355957,\"yaw\":1.2544760275990814},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"]},\"fol… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/fallback: {\"checkpoint\":\"fallback\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"68b2b834909de56955badd5192da625b4cc9e3a30e7f4b52807b0a496c77de98\",\"damage\":100,\"expected\":{\"id\":\"fallback\",\"anchor\":{\"x\":-134.94863891601562,\"y\":0.7049999833106995,\"z\":0.6140632629394531,\"yaw\":2.557727471052046},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"]},\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-2: {\"checkpoint\":\"segment-2\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"8354506c46a4f944a849fe3263277756c09248ef68beb4ac947c9dbbb1df5a5d\",\"damage\":100,\"expected\":{\"id\":\"segment-2\",\"anchor\":{\"x\":-39.99000549316406,\"y\":0.7099999785423279,\"z\":0.47984904050827026,\"yaw\":0.046834964387891025},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-2b: {\"checkpoint\":\"segment-2b\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"24c2cf98901b38f58ef71b77f64285e72e821ae91336690863bc09d7b916b739\",\"damage\":100,\"expected\":{\"id\":\"segment-2b\",\"anchor\":{\"x\":8.011877059936523,\"y\":0.8500000238418579,\"z\":-24.308568954467773,\"yaw\":-0.10192642643453867},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kic… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-3: {\"checkpoint\":\"segment-3\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a9cd10010aa15ec2bc237c50e7268d01114c332bab5af427cf0d864a64813f46\",\"damage\":100,\"expected\":{\"id\":\"segment-3\",\"anchor\":{\"x\":50.043670654296875,\"y\":0.8500000238418579,\"z\":-23.11189842224121,\"yaw\":-0.004429225248231545},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-3b: {\"checkpoint\":\"segment-3b\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a2ff0d11fb1d23d23e8c11e52f19243f03cda07d1799918b3eb3e4c4b64a4537\",\"damage\":100,\"expected\":{\"id\":\"segment-3b\",\"anchor\":{\"x\":117.1063003540039,\"y\":0.8500000238418579,\"z\":-22.973663330078125,\"yaw\":1.3861980329392747},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L3/armory: {\"checkpoint\":\"armory\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fbd2f0d3a1f0ecfd4205dbdc93c874b943254b9f39f6bf3137f47f59587afdc5\",\"damage\":100,\"expected\":{\"id\":\"armory\",\"anchor\":{\"x\":-139.34352111816406,\"y\":0.7089999914169312,\"z\":-7.961522102355957,\"yaw\":1.2544760275990814},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"]},\"fol… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L3/fallback: {\"checkpoint\":\"fallback\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a35f7697361c51db6f39bdf607dec1d89ff6db20a6fd4bc0673e9bc515bc5cd0\",\"damage\":100,\"expected\":{\"id\":\"fallback\",\"anchor\":{\"x\":-134.94863891601562,\"y\":0.7049999833106995,\"z\":0.6140632629394531,\"yaw\":-1.886367910132934},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"]},… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L3/segment-2: {\"checkpoint\":\"segment-2\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fb990fbbcbeb1726c576e0f9b7d33f4309d13504ad7bb168285b852ca08e3f1c\",\"damage\":100,\"expected\":{\"id\":\"segment-2\",\"anchor\":{\"x\":-39.91569900512695,\"y\":0.7099999785423279,\"z\":0.4765641689300537,\"yaw\":0.046842507972013295},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L3/segment-2b: {\"checkpoint\":\"segment-2b\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e756876e4e9a9b78bae93f938819db2044ded8ea6b226ac292952716e5c1110a\",\"damage\":100,\"expected\":{\"id\":\"segment-2b\",\"anchor\":{\"x\":10.038548469543457,\"y\":0.8500000238418579,\"z\":-24.10161018371582,\"yaw\":-0.10195125913007848},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kic… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L3/segment-3: {\"checkpoint\":\"segment-3\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"b72192958988b8038fed5ad7fb84406f80b9b1decf054e17b5b443018edfe342\",\"damage\":100,\"expected\":{\"id\":\"segment-3\",\"anchor\":{\"x\":50.59017562866211,\"y\":0.8500000238418579,\"z\":-23.108108520507812,\"yaw\":-0.004412346122534982},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L3/segment-3b: {\"checkpoint\":\"segment-3b\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"0c802d9a54ad27d1e0b8933a6fc089a3f1ffa19c137b4572720c1d8715f591d2\",\"damage\":100,\"expected\":{\"id\":\"segment-3b\",\"anchor\":{\"x\":115.83820343017578,\"y\":0.8500000238418579,\"z\":-22.820209503173828,\"yaw\":-0.004412330505007297},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.k… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L3/armory: {\"checkpoint\":\"armory\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"fbd2f0d3a1f0ecfd4205dbdc93c874b943254b9f39f6bf3137f47f59587afdc5\",\"damage\":100,\"expected\":{\"id\":\"armory\",\"anchor\":{\"x\":-139.34352111816406,\"y\":0.7089999914169312,\"z\":-7.961522102355957,\"yaw\":1.2544760275990814},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"]},\"fol… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/fallback: {\"checkpoint\":\"fallback\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"68b2b834909de56955badd5192da625b4cc9e3a30e7f4b52807b0a496c77de98\",\"damage\":100,\"expected\":{\"id\":\"fallback\",\"anchor\":{\"x\":-134.94863891601562,\"y\":0.7049999833106995,\"z\":0.6140632629394531,\"yaw\":2.557727471052046},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"]},\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-2: {\"checkpoint\":\"segment-2\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"8354506c46a4f944a849fe3263277756c09248ef68beb4ac947c9dbbb1df5a5d\",\"damage\":100,\"expected\":{\"id\":\"segment-2\",\"anchor\":{\"x\":-39.99000549316406,\"y\":0.7099999785423279,\"z\":0.47984904050827026,\"yaw\":0.046834964387891025},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-2b: {\"checkpoint\":\"segment-2b\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"24c2cf98901b38f58ef71b77f64285e72e821ae91336690863bc09d7b916b739\",\"damage\":100,\"expected\":{\"id\":\"segment-2b\",\"anchor\":{\"x\":8.011877059936523,\"y\":0.8500000238418579,\"z\":-24.308568954467773,\"yaw\":-0.10192642643453867},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kic… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-3: {\"checkpoint\":\"segment-3\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a9cd10010aa15ec2bc237c50e7268d01114c332bab5af427cf0d864a64813f46\",\"damage\":100,\"expected\":{\"id\":\"segment-3\",\"anchor\":{\"x\":50.043670654296875,\"y\":0.8500000238418579,\"z\":-23.11189842224121,\"yaw\":-0.004429225248231545},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L3/segment-3b: {\"checkpoint\":\"segment-3b\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a2ff0d11fb1d23d23e8c11e52f19243f03cda07d1799918b3eb3e4c4b64a4537\",\"damage\":100,\"expected\":{\"id\":\"segment-3b\",\"anchor\":{\"x\":117.1063003540039,\"y\":0.8500000238418579,\"z\":-22.973663330078125,\"yaw\":1.3861980329392747},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.kick\"… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json",
-        "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json"
+        "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json"
       ],
       "expected": "Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist.",
       "checks": [
@@ -3109,630 +3025,6 @@
           "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json",
           "level": "L3"
-        },
-        {
-          "id": "G-21",
-          "clause": "mortal checkpoint restore at L3/armory",
-          "tier": "high",
-          "policy": "checkpoint-death-fixture",
-          "status": "PASS",
-          "value": {
-            "checkpoint": "armory",
-            "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "fbd2f0d3a1f0ecfd4205dbdc93c874b943254b9f39f6bf3137f47f59587afdc5",
-            "damage": 100,
-            "expected": {
-              "id": "armory",
-              "anchor": {
-                "x": -139.34352111816406,
-                "y": 0.7089999914169312,
-                "z": -7.961522102355957,
-                "yaw": 1.2544760275990814
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followers": [],
-              "pickups": [
-                72,
-                73,
-                74,
-                75,
-                76,
-                77,
-                78,
-                79,
-                80,
-                81,
-                82,
-                83,
-                84,
-                85,
-                86,
-                87,
-                88,
-                89,
-                90,
-                91,
-                92,
-                93,
-                94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                100,
-                101,
-                102,
-                103,
-                104
-              ],
-              "removedPickups": [],
-              "cure": false
-            },
-            "observed": {
-              "id": "armory",
-              "position": {
-                "x": -139.34352111816406,
-                "z": -7.961522102355957
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followerMismatches": [],
-              "missingPickups": [],
-              "unexpectedPickups": [],
-              "cure": false,
-              "bossMode": null,
-              "bossHp": null
-            },
-            "positionError": 0,
-            "gateMatch": true,
-            "rackMatch": true
-          },
-          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
-          "level": "L3"
-        },
-        {
-          "id": "G-21",
-          "clause": "mortal checkpoint restore at L3/fallback",
-          "tier": "high",
-          "policy": "checkpoint-death-fixture",
-          "status": "PASS",
-          "value": {
-            "checkpoint": "fallback",
-            "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "a35f7697361c51db6f39bdf607dec1d89ff6db20a6fd4bc0673e9bc515bc5cd0",
-            "damage": 100,
-            "expected": {
-              "id": "fallback",
-              "anchor": {
-                "x": -134.94863891601562,
-                "y": 0.7049999833106995,
-                "z": 0.6140632629394531,
-                "yaw": -1.886367910132934
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followers": [
-                30,
-                31,
-                32,
-                33
-              ],
-              "pickups": [
-                72,
-                73,
-                74,
-                75,
-                76,
-                77,
-                78,
-                79,
-                80,
-                81,
-                82,
-                83,
-                84,
-                85,
-                86,
-                87,
-                88,
-                89,
-                90,
-                91,
-                92,
-                93,
-                94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                100,
-                101,
-                102,
-                103,
-                104
-              ],
-              "removedPickups": [],
-              "cure": false
-            },
-            "observed": {
-              "id": "fallback",
-              "position": {
-                "x": -134.94863891601562,
-                "z": 0.6140632629394531
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followerMismatches": [],
-              "missingPickups": [],
-              "unexpectedPickups": [],
-              "cure": false,
-              "bossMode": null,
-              "bossHp": null
-            },
-            "positionError": 0,
-            "gateMatch": true,
-            "rackMatch": true
-          },
-          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
-          "level": "L3"
-        },
-        {
-          "id": "G-21",
-          "clause": "mortal checkpoint restore at L3/segment-2",
-          "tier": "high",
-          "policy": "checkpoint-death-fixture",
-          "status": "PASS",
-          "value": {
-            "checkpoint": "segment-2",
-            "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "fb990fbbcbeb1726c576e0f9b7d33f4309d13504ad7bb168285b852ca08e3f1c",
-            "damage": 100,
-            "expected": {
-              "id": "segment-2",
-              "anchor": {
-                "x": -39.91569900512695,
-                "y": 0.7099999785423279,
-                "z": 0.4765641689300537,
-                "yaw": 0.046842507972013295
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followers": [
-                30,
-                31,
-                32,
-                33
-              ],
-              "pickups": [
-                73,
-                74,
-                75,
-                76,
-                77,
-                78,
-                79,
-                80,
-                81,
-                82,
-                83,
-                84,
-                85,
-                86,
-                87,
-                88,
-                89,
-                90,
-                91,
-                92,
-                93,
-                94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                100,
-                101,
-                102,
-                103,
-                104
-              ],
-              "removedPickups": [],
-              "cure": false
-            },
-            "observed": {
-              "id": "segment-2",
-              "position": {
-                "x": -39.91569900512695,
-                "z": 0.4765641689300537
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followerMismatches": [],
-              "missingPickups": [],
-              "unexpectedPickups": [],
-              "cure": false,
-              "bossMode": null,
-              "bossHp": null
-            },
-            "positionError": 0,
-            "gateMatch": true,
-            "rackMatch": true
-          },
-          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
-          "level": "L3"
-        },
-        {
-          "id": "G-21",
-          "clause": "mortal checkpoint restore at L3/segment-2b",
-          "tier": "high",
-          "policy": "checkpoint-death-fixture",
-          "status": "PASS",
-          "value": {
-            "checkpoint": "segment-2b",
-            "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "e756876e4e9a9b78bae93f938819db2044ded8ea6b226ac292952716e5c1110a",
-            "damage": 100,
-            "expected": {
-              "id": "segment-2b",
-              "anchor": {
-                "x": 10.038548469543457,
-                "y": 0.8500000238418579,
-                "z": -24.10161018371582,
-                "yaw": -0.10195125913007848
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followers": [
-                30,
-                31,
-                32,
-                33
-              ],
-              "pickups": [
-                73,
-                74,
-                75,
-                76,
-                77,
-                78,
-                79,
-                80,
-                81,
-                82,
-                83,
-                84,
-                85,
-                86,
-                87,
-                88,
-                89,
-                90,
-                91,
-                92,
-                93,
-                94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                100,
-                101,
-                102,
-                103,
-                104
-              ],
-              "removedPickups": [],
-              "cure": false
-            },
-            "observed": {
-              "id": "segment-2b",
-              "position": {
-                "x": 10.038548469543457,
-                "z": -24.10161018371582
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followerMismatches": [],
-              "missingPickups": [],
-              "unexpectedPickups": [],
-              "cure": false,
-              "bossMode": null,
-              "bossHp": null
-            },
-            "positionError": 0,
-            "gateMatch": true,
-            "rackMatch": true
-          },
-          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
-          "level": "L3"
-        },
-        {
-          "id": "G-21",
-          "clause": "mortal checkpoint restore at L3/segment-3",
-          "tier": "high",
-          "policy": "checkpoint-death-fixture",
-          "status": "PASS",
-          "value": {
-            "checkpoint": "segment-3",
-            "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "b72192958988b8038fed5ad7fb84406f80b9b1decf054e17b5b443018edfe342",
-            "damage": 100,
-            "expected": {
-              "id": "segment-3",
-              "anchor": {
-                "x": 50.59017562866211,
-                "y": 0.8500000238418579,
-                "z": -23.108108520507812,
-                "yaw": -0.004412346122534982
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followers": [
-                30,
-                31,
-                32,
-                33
-              ],
-              "pickups": [
-                73,
-                74,
-                75,
-                76,
-                77,
-                78,
-                79,
-                80,
-                81,
-                82,
-                83,
-                84,
-                86,
-                87,
-                88,
-                89,
-                90,
-                91,
-                92,
-                93,
-                94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                100,
-                101,
-                102,
-                103,
-                104
-              ],
-              "removedPickups": [],
-              "cure": false
-            },
-            "observed": {
-              "id": "segment-3",
-              "position": {
-                "x": 50.59017562866211,
-                "z": -23.108108520507812
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followerMismatches": [],
-              "missingPickups": [],
-              "unexpectedPickups": [],
-              "cure": false,
-              "bossMode": null,
-              "bossHp": null
-            },
-            "positionError": 0,
-            "gateMatch": true,
-            "rackMatch": true
-          },
-          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
-          "level": "L3"
-        },
-        {
-          "id": "G-21",
-          "clause": "mortal checkpoint restore at L3/segment-3b",
-          "tier": "high",
-          "policy": "checkpoint-death-fixture",
-          "status": "PASS",
-          "value": {
-            "checkpoint": "segment-3b",
-            "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "0c802d9a54ad27d1e0b8933a6fc089a3f1ffa19c137b4572720c1d8715f591d2",
-            "damage": 100,
-            "expected": {
-              "id": "segment-3b",
-              "anchor": {
-                "x": 115.83820343017578,
-                "y": 0.8500000238418579,
-                "z": -22.820209503173828,
-                "yaw": -0.004412330505007297
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followers": [
-                30,
-                31,
-                32,
-                33
-              ],
-              "pickups": [
-                73,
-                74,
-                75,
-                76,
-                77,
-                78,
-                79,
-                80,
-                81,
-                82,
-                83,
-                84,
-                86,
-                87,
-                88,
-                89,
-                90,
-                91,
-                92,
-                93,
-                95,
-                96,
-                97,
-                98,
-                99,
-                100,
-                101,
-                102,
-                103,
-                104
-              ],
-              "removedPickups": [],
-              "cure": false
-            },
-            "observed": {
-              "id": "segment-3b",
-              "position": {
-                "x": 115.83820343017578,
-                "z": -22.820209503173828
-              },
-              "gates": {},
-              "racks": {
-                "LEFT": [
-                  "weapon.bat",
-                  "weapon.fire-axe"
-                ],
-                "RIGHT": [
-                  "weapon.handgun",
-                  "weapon.kick"
-                ]
-              },
-              "followerMismatches": [],
-              "missingPickups": [],
-              "unexpectedPickups": [],
-              "cure": false,
-              "bossMode": null,
-              "bossHp": null
-            },
-            "positionError": 0,
-            "gateMatch": true,
-            "rackMatch": true
-          },
-          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -3770,7 +3062,7 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -4019,7 +3311,7 @@
         "notes": "Fresh measured FAIL; exact current native counterexample.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -4087,18 +3379,17 @@
         "notes": "PO: exact low-L7-east-perimeter-z1.5.png, dark area outside and alongside the raised wall. Judge boundary finish/readability, with its zero-failure physical sweep as context.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "G-24",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture production enemy-bar eligibility at interaction boundaries: [{\"label\":\"alpha far/healthy\",\"archetype\":\"infected.alpha\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"shielded riot infected far/healthy\",\"archetype\":\"infected.riot\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"pursuing Mega far/healthy\",\"archetype\":\"infected.alpha\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"engaged arena boss far/healthy\",\"archetype\":\"infec… (full values in JSON) (target PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off; PASS); high/controlled-fixture production enemy-bar eligibility at interaction boundaries: [{\"label\":\"alpha far/healthy\",\"archetype\":\"infected.alpha\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"shielded riot infected far/healthy\",\"archetype\":\"infected.riot\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"pursuing Mega far/healthy\",\"archetype\":\"infected.alpha\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"engaged arena boss far/healthy\",\"archetype\":\"infec… (full values in JSON) (target PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off; PASS)",
+      "value": "low/controlled-fixture production enemy-bar eligibility at interaction boundaries: [{\"label\":\"alpha far/healthy\",\"archetype\":\"infected.alpha\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"shielded riot infected far/healthy\",\"archetype\":\"infected.riot\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"pursuing Mega far/healthy\",\"archetype\":\"infected.alpha\",\"distance\":40,\"expected\":true,\"eligible\":true},{\"label\":\"engaged arena boss far/healthy\",\"archetype\":\"infec… (full values in JSON) (target PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off; PASS)",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Health bars (PO 2026-11-10 rule: \"Zombies: always show health bar when I shot at them; but hide for Zombies that are not in direct interaction with me\"): shielded riot infected, Alphas, the pursuing Mega and engaged arena bosses always keep the bar; every other infected (incl. infected zoo animals) shows it after a player hit or while targeting the player within ~6 m; dead ones show none; healthy animals none. (Was: damaged or ≤ 15 m; changed 2026-11-19, s166.)",
       "checks": [
@@ -4344,249 +3635,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "G-24",
-          "clause": "production enemy-bar eligibility at interaction boundaries",
-          "value": [
-            {
-              "label": "alpha far/healthy",
-              "archetype": "infected.alpha",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "shielded riot infected far/healthy",
-              "archetype": "infected.riot",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "pursuing Mega far/healthy",
-              "archetype": "infected.alpha",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "engaged arena boss far/healthy",
-              "archetype": "infected.gorilla",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.runner far/healthy unengaged",
-              "archetype": "infected.runner",
-              "distance": 15,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.runner targeting player at 6 m",
-              "archetype": "infected.runner",
-              "distance": 6,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.runner targeting player at 6.01 m",
-              "archetype": "infected.runner",
-              "distance": 6.01,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.runner player-hit at 40 m",
-              "archetype": "infected.runner",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.runner dead after player hit",
-              "archetype": "infected.runner",
-              "distance": 2,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.lion far/healthy unengaged",
-              "archetype": "infected.lion",
-              "distance": 15,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.lion targeting player at 6 m",
-              "archetype": "infected.lion",
-              "distance": 6,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.lion targeting player at 6.01 m",
-              "archetype": "infected.lion",
-              "distance": 6.01,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.lion player-hit at 40 m",
-              "archetype": "infected.lion",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.lion dead after player hit",
-              "archetype": "infected.lion",
-              "distance": 2,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.gorilla far/healthy unengaged",
-              "archetype": "infected.gorilla",
-              "distance": 15,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.gorilla targeting player at 6 m",
-              "archetype": "infected.gorilla",
-              "distance": 6,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.gorilla targeting player at 6.01 m",
-              "archetype": "infected.gorilla",
-              "distance": 6.01,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.gorilla player-hit at 40 m",
-              "archetype": "infected.gorilla",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.gorilla dead after player hit",
-              "archetype": "infected.gorilla",
-              "distance": 2,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.zebra far/healthy unengaged",
-              "archetype": "infected.zebra",
-              "distance": 15,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.zebra targeting player at 6 m",
-              "archetype": "infected.zebra",
-              "distance": 6,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.zebra targeting player at 6.01 m",
-              "archetype": "infected.zebra",
-              "distance": 6.01,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.zebra player-hit at 40 m",
-              "archetype": "infected.zebra",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.zebra dead after player hit",
-              "archetype": "infected.zebra",
-              "distance": 2,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.flamingo far/healthy unengaged",
-              "archetype": "infected.flamingo",
-              "distance": 15,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.flamingo targeting player at 6 m",
-              "archetype": "infected.flamingo",
-              "distance": 6,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.flamingo targeting player at 6.01 m",
-              "archetype": "infected.flamingo",
-              "distance": 6.01,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "infected.flamingo player-hit at 40 m",
-              "archetype": "infected.flamingo",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "infected.flamingo dead after player hit",
-              "archetype": "infected.flamingo",
-              "distance": 2,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "runner heard the player within 6 m",
-              "archetype": "infected.runner",
-              "distance": 6,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "elephant waiting in its arena, player-hit",
-              "archetype": "infected.elephant",
-              "distance": 6,
-              "expected": false,
-              "eligible": false
-            },
-            {
-              "label": "elephant engaged finale boss far/healthy",
-              "archetype": "infected.elephant",
-              "distance": 40,
-              "expected": true,
-              "eligible": true
-            },
-            {
-              "label": "healthy zoo animal near",
-              "archetype": "animal.zebra",
-              "distance": 3,
-              "expected": false,
-              "eligible": false
-            }
-          ],
-          "target": "PO 2026-11-10: shielded riot, Alpha, pursuing Mega and engaged arena bosses always on (far/healthy incl.); every other infected bar only after a player hit or targeting within ~6 m (6 m in, 6.01 m out); dead ones and healthy animals off",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -4639,7 +3687,7 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -4789,7 +3837,7 @@
         "notes": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -4861,7 +3909,7 @@
         "notes": "Current source, both render tiers, native-sized original images opened. Representative authored human/prop/hat/seat fixtures plus the explicit heroine/adult comparison; not an exhaustive census of every campaign frame.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -4933,7 +3981,7 @@
         "notes": "Measured Codex blocking babysitting finding; required Opus/PO taste signoff is separate and is not claimed. This is a failure of one ordinary tested boarding position, not a claim that every human route stalls.",
         "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -4986,15 +4034,14 @@
       "id": "L3-01",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/controlled-fixture actual first handgun acquisition clock: 4.45 (target ≤40s; PASS); low/controlled-fixture handgun hits versus40 HP specimen: {\"weapon\":\"weapon.handgun\",\"flank\":false,\"initialHp\":40,\"endHp\":0,\"hitCount\":2,\"seconds\":0.45,\"hpAmounts\":[20,20],\"isolatedAI\":true} (target 2 hits; PASS); high/controlled-fixture actual first handgun acquisition clock: 4.45 (target ≤40s; PASS); high/controlled-fixture handgun hits versus40 HP specimen: {\"weapon\":\"weapon.handgun\",\"flank\":false,\"initialHp\":40,\"endHp\":0,\"hitCount\":2,\"seconds\":0.45,\"hpAmounts\":[20,20],\"isolatedAI\":true} (target 2 hits; PASS)",
-      "automatedComplete": true,
+      "value": "low/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/complete actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); high/stationary actual handgun pickup clock: 4.45 (target 0 ≤ value ≤ 40; PASS); low/controlled-fixture actual first handgun acquisition clock: 4.45 (target ≤40s; PASS); low/controlled-fixture handgun hits versus40 HP specimen: {\"weapon\":\"weapon.handgun\",\"flank\":false,\"initialHp\":40,\"endHp\":0,\"hitCount\":2,\"seconds\":0.45,\"hpAmounts\":[20,20],\"isolatedAI\":true} (target 2 hits; PASS)",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Handgun only at the armory, within 40 s of start; no reload/ammo UI over 600 shots; 40 HP infected = 2 hits.",
       "checks": [
@@ -5075,40 +4122,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-01",
-          "clause": "actual first handgun acquisition clock",
-          "value": 4.45,
-          "target": "≤40s",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-01",
-          "clause": "handgun hits versus40 HP specimen",
-          "value": {
-            "weapon": "weapon.handgun",
-            "flank": false,
-            "initialHp": 40,
-            "endHp": 0,
-            "hitCount": 2,
-            "seconds": 0.45,
-            "hpAmounts": [
-              20,
-              20
-            ],
-            "isolatedAI": true
-          },
-          "target": "2 hits",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -5119,7 +4132,7 @@
         "evidence": [],
         "method": "NEXT: Record real armory pickup time and event location, fire 600 shots while observing UI, and check two native handgun hits against a 40 HP infected fixture."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "Fire600 real handgun shots and inspect reload/ammo UI; native acquisition clock and two-hit40HP fixture are measured.",
       "checkKinds": [
         "browser-visual"
       ],
@@ -5166,22 +4179,21 @@
         "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
         "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "L3-02",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); low/complete latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); low/complete wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); low/complete wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); low/complete wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); low/complete opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); low/complete wave 0 admitted station-door share: {\"admitted\":15,\"police\":3,\"percent\":20} (target exactly 20% of the full 15-infected wave emerges from the station door; PASS); low/complete wave 1 admitted station-door share: {\"admitted\":25,\"police\":5,\"percent\":20} (target exactly 20% of the full 25-infected wave emerges from the station door; PASS); low/complete wave 2 admitted station-door share: {\"admitted\":35,\"police\":7,\"percent\":20} (target exactly 20% of the full 35-infected wave emerges from the station door; PASS); low/stationary attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); low/stationary wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); low/stationary wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); low/stationary wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); low/stationary opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); high/complete attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); high/complete latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); high/complete wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); high/complete wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); high/complete wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); high/complete opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); high/complete wave 0 admitted station-door share: {\"admitted\":15,\"police\":3,\"percent\":20} (target exactly 20% of the full 15-infected wave emerges from the station door; PASS); high/complete wave 1 admitted station-door share: {\"admitted\":25,\"police\":5,\"percent\":20} (target exactly 20% of the full 25-infected wave emerges from the station door; PASS); high/complete wave 2 admitted station-door share: {\"admitted\":35,\"police\":7,\"percent\":20} (target exactly 20% of the full 35-infected wave emerges from the station door; PASS); high/stationary attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); high/stationary wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); high/stationary wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); high/stationary wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); high/stationary opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); low/controlled-fixture actual wave source, species, direction and police-look census: [{\"wave\":0,\"expected\":15,\"admitted\":15,\"byDirection\":{\"river\":3,\"blvd\":3,\"oak\":3,\"commerce\":3,\"station\":3},\"bySource\":{\"blvd\":2,\"commerce\":2,\"oak\":3,\"river\":2,\"station\":3,\"yard-cover\":3},\"bySpecies\":{\"npc.bathrobe-neighbor\":3,\"npc.bbq-dad\":3,\"npc.cashier\":1,\"npc.delivery-driver\":1,\"npc.jogger\":3,\"npc.officer\":3,\"npc.suburban-mom\":1},\"stationPoliceLook\":3,\"station\":3,\"missingAppearance\":0},{\"wave\":… (full values in JSON) (target each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look; PASS); high/controlled-fixture actual wave source, species, direction and police-look census: [{\"wave\":0,\"expected\":15,\"admitted\":15,\"byDirection\":{\"river\":3,\"blvd\":3,\"oak\":3,\"commerce\":3,\"station\":3},\"bySource\":{\"blvd\":2,\"commerce\":2,\"oak\":3,\"river\":2,\"station\":3,\"yard-cover\":3},\"bySpecies\":{\"npc.bathrobe-neighbor\":2,\"npc.bbq-dad\":3,\"npc.delivery-driver\":3,\"npc.jogger\":3,\"npc.officer\":3,\"npc.suburban-mom\":1},\"stationPoliceLook\":3,\"station\":3,\"missingAppearance\":0},{\"wave\":1,\"expected\":25,… (full values in JSON) (target each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look; PASS)",
+      "value": "low/complete attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); low/complete latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); low/complete wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); low/complete wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); low/complete wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); low/complete opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); low/complete wave 0 admitted station-door share: {\"admitted\":15,\"police\":3,\"percent\":20} (target exactly 20% of the full 15-infected wave emerges from the station door; PASS); low/complete wave 1 admitted station-door share: {\"admitted\":25,\"police\":5,\"percent\":20} (target exactly 20% of the full 25-infected wave emerges from the station door; PASS); low/complete wave 2 admitted station-door share: {\"admitted\":35,\"police\":7,\"percent\":20} (target exactly 20% of the full 35-infected wave emerges from the station door; PASS); low/stationary attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); low/stationary latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); low/stationary wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); low/stationary wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); low/stationary wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); low/stationary opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); high/complete attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); high/complete latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); high/complete wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); high/complete wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); high/complete wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); high/complete opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); high/complete wave 0 admitted station-door share: {\"admitted\":15,\"police\":3,\"percent\":20} (target exactly 20% of the full 15-infected wave emerges from the station door; PASS); high/complete wave 1 admitted station-door share: {\"admitted\":25,\"police\":5,\"percent\":20} (target exactly 20% of the full 25-infected wave emerges from the station door; PASS); high/complete wave 2 admitted station-door share: {\"admitted\":35,\"police\":7,\"percent\":20} (target exactly 20% of the full 35-infected wave emerges from the station door; PASS); high/stationary attack delay after handgun pickup: 5 (target 5 ≤ value ≤ 5; PASS); high/stationary latest attack clock: 9.45 (target 0 ≤ value ≤ 40; PASS); high/stationary wave 0 actual admissions: 15 (target 15 ≤ value ≤ 15; PASS); high/stationary wave 1 actual admissions: 25 (target 25 ≤ value ≤ 25; PASS); high/stationary wave 2 actual admissions: 35 (target 35 ≤ value ≤ 35; PASS); high/stationary opening wave visible within two seconds: {\"visible\":5,\"expected\":15} (target at least 25% of the opening wave in frame within two seconds; PASS); low/controlled-fixture actual wave source, species, direction and police-look census: [{\"wave\":0,\"expected\":15,\"admitted\":15,\"byDirection\":{\"river\":3,\"blvd\":3,\"oak\":3,\"commerce\":3,\"station\":3},\"bySource\":{\"blvd\":2,\"commerce\":2,\"oak\":3,\"river\":2,\"station\":3,\"yard-cover\":3},\"bySpecies\":{\"npc.bathrobe-neighbor\":3,\"npc.bbq-dad\":3,\"npc.cashier\":1,\"npc.delivery-driver\":1,\"npc.jogger\":3,\"npc.officer\":3,\"npc.suburban-mom\":1},\"stationPoliceLook\":3,\"station\":3,\"missingAppearance\":0},{\"wave\":… (full values in JSON) (target each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Attack starts 5 s after pickup (latest 40 s); waves **15 / 25 / 35** at 0 / 20 / 40 s on both quality tiers (PO 2026-11-07, was 30 / 60 / 100, low ×0.5), streamed over 18 s from 5 directions, 20 % as police zombies from the station door; a quarter on screen within 2 s.",
       "checks": [
@@ -5656,113 +4668,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-02",
-          "clause": "actual wave source, species, direction and police-look census",
-          "value": [
-            {
-              "wave": 0,
-              "expected": 15,
-              "admitted": 15,
-              "byDirection": {
-                "river": 3,
-                "blvd": 3,
-                "oak": 3,
-                "commerce": 3,
-                "station": 3
-              },
-              "bySource": {
-                "blvd": 2,
-                "commerce": 2,
-                "oak": 3,
-                "river": 2,
-                "station": 3,
-                "yard-cover": 3
-              },
-              "bySpecies": {
-                "npc.bathrobe-neighbor": 2,
-                "npc.bbq-dad": 3,
-                "npc.delivery-driver": 3,
-                "npc.jogger": 3,
-                "npc.officer": 3,
-                "npc.suburban-mom": 1
-              },
-              "stationPoliceLook": 3,
-              "station": 3,
-              "missingAppearance": 0
-            },
-            {
-              "wave": 1,
-              "expected": 25,
-              "admitted": 25,
-              "byDirection": {
-                "river": 5,
-                "blvd": 5,
-                "oak": 5,
-                "commerce": 5,
-                "station": 5
-              },
-              "bySource": {
-                "blvd": 4,
-                "commerce": 3,
-                "oak": 4,
-                "river": 4,
-                "station": 5,
-                "yard-cover": 5
-              },
-              "bySpecies": {
-                "npc.bathrobe-neighbor": 2,
-                "npc.bbq-dad": 4,
-                "npc.cashier": 2,
-                "npc.delivery-driver": 2,
-                "npc.jogger": 7,
-                "npc.officer": 5,
-                "npc.suburban-mom": 3
-              },
-              "stationPoliceLook": 5,
-              "station": 5,
-              "missingAppearance": 0
-            },
-            {
-              "wave": 2,
-              "expected": 35,
-              "admitted": 35,
-              "byDirection": {
-                "river": 7,
-                "blvd": 7,
-                "oak": 7,
-                "commerce": 7,
-                "station": 7
-              },
-              "bySource": {
-                "blvd": 5,
-                "commerce": 5,
-                "oak": 6,
-                "river": 5,
-                "station": 7,
-                "yard-cover": 7
-              },
-              "bySpecies": {
-                "npc.bathrobe-neighbor": 5,
-                "npc.bbq-dad": 6,
-                "npc.cashier": 4,
-                "npc.delivery-driver": 4,
-                "npc.jogger": 6,
-                "npc.officer": 7,
-                "npc.suburban-mom": 3
-              },
-              "stationPoliceLook": 7,
-              "station": 7,
-              "missingAppearance": 0
-            }
-          ],
-          "target": "each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -5807,14 +4712,14 @@
         ],
         "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "L3-03",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":19.566666666666666,\"playerWindups\":6,\"groupWindups\":0,\"attacksPerMinute\":18.398637137989777} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.398637137989777 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":16.983333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":38.86162904808636} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":16.983333333333334} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 38.86162904808636 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":20.683333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":31.909750201450443} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 31.909750201450443 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":15.316666666666666,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":47.0076169749728} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4,\"windowSeconds\":15.316666666666666} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 47.0076169749728 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (Codex/v2-l2l4): Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy.",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":19.566666666666666,\"playerWindups\":6,\"groupWindups\":0,\"attacksPerMinute\":18.398637137989777} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 18.398637137989777 (target 4 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":16.983333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":38.86162904808636} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":16.983333333333334} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 38.86162904808636 (target 4 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":20.683333333333334,\"playerWindups\":11,\"groupWindups\":0,\"attacksPerMinute\":31.909750201450443} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 31.909750201450443 (target 4 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":15.316666666666666,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":47.0076169749728} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4,\"windowSeconds\":15.316666666666666} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 47.0076169749728 (target 4 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS)",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
@@ -6015,59 +4920,18 @@
         ],
         "method": "Current-head passive native defend window, real attack events and independent path queries. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-      "reviewDecision": {
-        "row": "L3-03",
-        "status": "PASS",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
-        "clauses": [
-          {
-            "clause": "Yard combat reachability and attacks",
-            "verdict": "PASS",
-            "note": "Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-            "sha256": "3ef754c4095fc207e9c95a8e6661d28bdf7380bfd06ac77c81953d9beab69ba5",
-            "what": "Current low-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-            "sha256": "c827dbe4cf0b3c389140b37d811be57253cbfd373ba9639818d545ccc1ddf574",
-            "what": "Current low-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-            "sha256": "a1ab38b6b157c72da8572dd7c1a3fce1d66422464c3dd874bec7802978864f8d",
-            "what": "Current high-complete native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-            "sha256": "3d8962656cedc3eccca02eb597cfab0c0328b8ba2bed3d632de9a6dc2b957d22",
-            "what": "Current high-stationary native receipt. Low/high complete and stationary bounded-path reachable minimum 100%; passive first windup 2.417/2.400 s (≤10); passive player windups 38.86/47.01 per minute (≥4). Protected stationary policy."
-          }
-        ],
-        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
-        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
-      }
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
     },
     {
       "id": "L3-04",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/stationary fallback within sixty seconds without player fire: 16.983333333333334 (target 0 ≤ value ≤ 60; PASS); low/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); high/stationary fallback within sixty seconds without player fire: 15.316666666666666 (target 0 ≤ value ≤ 60; PASS); high/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3083,\"firstEligibleTick\":3083,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":2,\"elapsed\":683}],\"delayedFallback\":false} (target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback; PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":2,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":11.383333333333333} (target fallback≤60s afterattack;≥1 officer turns;uniform retained; PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three … (full values in JSON) (target 3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded; PASS); high/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3082,\"firstEligibleTick\":3082,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":2,\"elapsed\":682}],\"delayedFallback\":false} (target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback; PASS); high/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":2,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":11.366666666666667} (target fallback≤60s afterattack;≥1 officer turns;uniform retained; PASS); high/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three … (full values in JSON) (target 3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded; PASS) Manual review PASS (Codex/v2-l2l4): Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s.",
-      "automatedComplete": true,
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/stationary fallback within sixty seconds without player fire: 16.983333333333334 (target 0 ≤ value ≤ 60; PASS); low/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); high/stationary fallback within sixty seconds without player fire: 15.316666666666666 (target 0 ≤ value ≤ 60; PASS); high/stationary same-id turned officer ledger: 9 (target 1 ≤ value ≤ Infinity; PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3083,\"firstEligibleTick\":3083,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":2,\"elapsed\":683}],\"delayedFallback\":false} (target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback; PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":2,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":11.383333333333333} (target fallback≤60s afterattack;≥1 officer turns;uniform retained; PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three … (full values in JSON) (target 3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded; PASS)",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "The police lose without the player: fallback fires by its first-of rule (60 s / 3 turned / 8 inside) also with the idle bot; ≥ 1 officer turns (same id, uniform). PO: \"Ideally the Zombies will win against police when the player isn't doing anything\".",
       "checks": [
@@ -6262,154 +5126,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-04",
-          "clause": "exact first-of fallback boundary and cause",
-          "value": {
-            "fallbackBoundary": [
-              {
-                "tick": 3082,
-                "firstEligibleTick": 3082,
-                "expectedCause": "inside",
-                "actualCause": "inside",
-                "inside": 8,
-                "turned": 2,
-                "elapsed": 682
-              }
-            ],
-            "delayedFallback": false
-          },
-          "target": "first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-04",
-          "clause": "idle fallback deadline and officer identity/uniform",
-          "value": {
-            "officers": 10,
-            "directions": [
-              "station",
-              "commerce",
-              "river",
-              "blvd",
-              "oak"
-            ],
-            "turnedDuring": 2,
-            "sameLook": true,
-            "fallbackCause": "inside",
-            "fallbackAfterS": 11.366666666666667
-          },
-          "target": "fallback≤60s afterattack;≥1 officer turns;uniform retained",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-04",
-          "clause": "controlled first-of fallback boundaries",
-          "value": [
-            {
-              "name": "seven inside",
-              "inside": 7,
-              "turned": 0,
-              "elapsed": 1,
-              "station": false,
-              "expected": null,
-              "actual": null,
-              "calls": 0,
-              "pass": true
-            },
-            {
-              "name": "eight inside",
-              "inside": 8,
-              "turned": 0,
-              "elapsed": 1,
-              "station": false,
-              "expected": "inside",
-              "actual": "inside",
-              "calls": 1,
-              "pass": true
-            },
-            {
-              "name": "two turned",
-              "inside": 0,
-              "turned": 2,
-              "elapsed": 1,
-              "station": false,
-              "expected": null,
-              "actual": null,
-              "calls": 0,
-              "pass": true
-            },
-            {
-              "name": "three turned",
-              "inside": 0,
-              "turned": 3,
-              "elapsed": 1,
-              "station": false,
-              "expected": "turned",
-              "actual": "turned",
-              "calls": 1,
-              "pass": true
-            },
-            {
-              "name": "one tick before60s",
-              "inside": 0,
-              "turned": 0,
-              "elapsed": 3599,
-              "station": false,
-              "expected": null,
-              "actual": null,
-              "calls": 0,
-              "pass": true
-            },
-            {
-              "name": "exactly60s",
-              "inside": 0,
-              "turned": 0,
-              "elapsed": 3600,
-              "station": false,
-              "expected": "time",
-              "actual": "time",
-              "calls": 1,
-              "pass": true
-            },
-            {
-              "name": "simultaneous thresholds",
-              "inside": 8,
-              "turned": 3,
-              "elapsed": 3600,
-              "station": false,
-              "expected": "turned",
-              "actual": "turned",
-              "calls": 1,
-              "pass": true
-            },
-            {
-              "name": "station cohort excluded",
-              "inside": 8,
-              "turned": 0,
-              "elapsed": 1,
-              "station": true,
-              "expected": null,
-              "actual": null,
-              "calls": 0,
-              "pass": true
-            }
-          ],
-          "target": "3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -6420,58 +5136,18 @@
         "evidence": [],
         "method": "NEXT: Run idle native L3 through fallback; retain which first-of condition fired and a same-ID uniformed officer conversion."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-      "reviewDecision": {
-        "row": "L3-04",
-        "status": "PASS",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
-        "clauses": [
-          {
-            "clause": "Idle first-of fallback and same officer turns",
-            "verdict": "PASS",
-            "note": "Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-            "sha256": "c827dbe4cf0b3c389140b37d811be57253cbfd373ba9639818d545ccc1ddf574",
-            "what": "Current low-stationary native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-            "sha256": "3d8962656cedc3eccca02eb597cfab0c0328b8ba2bed3d632de9a6dc2b957d22",
-            "what": "Current high-stationary native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
-            "what": "Current low-fixtures native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
-            "what": "Current high-fixtures native receipt. Low/high idle first-of triggered by eight inside at 11.383/11.367 s; two officers turned with same appearance each. Controlled boundary cases check 7/8 inside, 2/3 turned and before/at 60 s. Stationary native fallback 16.983/15.317 s."
-          }
-        ],
-        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
-        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
-      }
+      "remaining": "Retain the exact first-of threshold ledger; qualify a natural same-ID uniformed officer conversion before fallback at both qualities.",
+      "checkKinds": [
+        "browser-input"
+      ]
     },
     {
       "id": "L3-05",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (Codex/v2-l2l4): High actual attack tick 827 (attack 763, fallback 1405), player in yard: the entire east gate projects below the 720px viewport; its nearest box corner is y=806.1px. Low frame also projects it below at y=805.1px, but its later retry prevents independent same-interval qualification. Radius reaches 1.493×/1.496× default in high/low samples.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "",
       "automatedComplete": true,
-      "receipt": [
-        "docs/reports/v2-l2l4/L3-05-gate-projection.json",
-        "docs/reports/v2-l2l4/L3-05-camera-radius.json"
-      ],
+      "receipt": [],
       "expected": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
       "checks": [],
       "historical": {
@@ -6485,6 +5161,9 @@
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame)."
       },
       "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "checkKinds": [
+        "browser-visual"
+      ],
       "review": {
         "tag": "O",
         "instruction": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
@@ -6517,21 +5196,20 @@
         ],
         "notes": "Repro: run the PLAYTEST_REVEAL_AUDIT/PLAYTEST_THREAT_AUDIT L3 high command in docs/reports/v2-l2l4/README.md, inspect campaign-L3-defend-high-z1 and its JSON; project L3_GATES[yard-east] through the recorded camera. Gate visibility fails at a sampled instant; continuous coverage and low-tier attack interval remain open.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "freshness": "STALE",
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "L3-06",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL) Manual review FAIL (Codex/v2-l2l4): Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check.",
+      "value": "low/controlled-fixture calm squad following distance by member: [{\"id\":30,\"samples\":27,\"within3to6\":25,\"minM\":4.80125573182049,\"medianM\":5.859623439118676,\"maxM\":6.513118622952191},{\"id\":31,\"samples\":27,\"within3to6\":26,\"minM\":3.8335832526309344,\"medianM\":4.96729280258753,\"maxM\":6.000659710744697},{\"id\":32,\"samples\":27,\"within3to6\":26,\"minM\":4.061430976366686,\"medianM\":5.184333508959155,\"maxM\":6.0293865470512955},{\"id\":33,\"samples\":27,\"within3to6\":26,\"minM\":4.7… (full values in JSON) (target every sampled living officer follows 3–6 m from the courier outside combat; FAIL)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation.",
       "checks": [
@@ -6764,80 +5442,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-06",
-          "clause": "native squad cardinality and loss causes (formation/teleport review open)",
-          "value": {
-            "seeds": [
-              {
-                "seed": 1,
-                "outcome": "complete",
-                "deaths": 1,
-                "atFallback": 4,
-                "atCheckpoint": 3,
-                "segmentEnds": [
-                  4,
-                  4,
-                  4
-                ],
-                "lossCauses": [
-                  "kill"
-                ]
-              },
-              {
-                "seed": 2,
-                "outcome": "complete",
-                "deaths": 0,
-                "atFallback": 4,
-                "atCheckpoint": 3,
-                "segmentEnds": [
-                  4,
-                  4,
-                  3
-                ],
-                "lossCauses": [
-                  "bite"
-                ]
-              },
-              {
-                "seed": 3,
-                "outcome": "complete",
-                "deaths": 5,
-                "atFallback": 4,
-                "atCheckpoint": 0,
-                "segmentEnds": [
-                  4,
-                  3,
-                  0
-                ],
-                "lossCauses": [
-                  "kill",
-                  "bite",
-                  "bite",
-                  "bite"
-                ]
-              }
-            ],
-            "atArmyAtLeast2": "2/3"
-          },
-          "target": "forms3–4;nonincreasing;≥2 atcheckpoint (PO 2026-11-07);loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-06",
-          "clause": "calm squad following distance by member",
-          "value": [],
-          "target": "every sampled living officer follows 3–6 m from the courier outside combat",
-          "status": "NOT CHECKED",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -6855,42 +5459,16 @@
         "tag": "O",
         "instruction": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation.",
         "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: \"The police crew that should follow me has zero chance to survive\"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation."
-      },
-      "reviewDecision": {
-        "row": "L3-06",
-        "status": "FAIL",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-27",
-        "commit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d",
-        "clauses": [
-          {
-            "clause": "Calm squad following distance by member",
-            "verdict": "FAIL",
-            "note": "Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
-            "what": "Current-head native receipt containing the measured L3-06 counterexample described in the clause."
-          }
-        ],
-        "notes": "Fresh current-head measurement. Current low-tier checkpoint follow samples fail the 3–6 m band: officer 30 max 6.5131 m, officer 31 min 3.8336 m/max 6.0007 m, officer 32 max 6.0294 m, officer 33 max 6.30498 m. Repro: npm run qa:accept -- --level L3 --skip-browser --reuse; inspect the low-tier calm-squad follow check. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
-        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
       }
     },
     {
       "id": "L3-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture mortal segment1 officers land hits and player damage: {\"seeds\":[{\"seed\":1,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":220,\"officerKills\":45,\"playerKills\":17,\"damage\":0,\"deaths\":0},{\"seed\":2,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":190,\"officerKills\":38,\"playerKills\":18,\"damage\":10,\"deaths\":0},{\"seed\":3,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":169,\"officerKills\":41,\"playerKills\":12,\"damage\":0,\"deaths\":0}],\"vote\":\"3/3\"} (target officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass; PASS); high/controlled-fixture mortal segment1 officers land hits and player damage: {\"seeds\":[{\"seed\":1,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":308,\"officerKills\":66,\"playerKills\":18,\"damage\":10,\"deaths\":1},{\"seed\":2,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":186,\"officerKills\":42,\"playerKills\":15,\"damage\":0,\"deaths\":0},{\"seed\":3,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":193,\"officerKills\":42,\"playerKills\":12,\"damage\":20,\"deaths\":5}],\"vote\":\"3/3\"} (target officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass; PASS)",
-      "automatedComplete": true,
+      "value": "low/controlled-fixture mortal segment1 officers land hits and player damage: {\"seeds\":[{\"seed\":1,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":220,\"officerKills\":45,\"playerKills\":17,\"damage\":0,\"deaths\":0},{\"seed\":2,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":190,\"officerKills\":38,\"playerKills\":18,\"damage\":10,\"deaths\":0},{\"seed\":3,\"outcome\":\"complete\",\"completed\":true,\"officerHits\":169,\"officerKills\":41,\"playerKills\":12,\"damage\":0,\"deaths\":0}],\"vote\":\"3/3\"} (target officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass; PASS)",
+      "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required); player damage < 100 HP (never a whole life). PO 2026-11-05 dropped the ≥ 60 % officer-kill share; PO 2026-11-07 supersedes \"overwhelmed is the point\": the squad must have a real chance (L3-06).",
       "checks": [
@@ -6938,51 +5516,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-07",
-          "clause": "mortal segment1 officers land hits and player damage",
-          "value": {
-            "seeds": [
-              {
-                "seed": 1,
-                "outcome": "complete",
-                "completed": true,
-                "officerHits": 308,
-                "officerKills": 66,
-                "playerKills": 18,
-                "damage": 10,
-                "deaths": 1
-              },
-              {
-                "seed": 2,
-                "outcome": "complete",
-                "completed": true,
-                "officerHits": 186,
-                "officerKills": 42,
-                "playerKills": 15,
-                "damage": 0,
-                "deaths": 0
-              },
-              {
-                "seed": 3,
-                "outcome": "complete",
-                "completed": true,
-                "officerHits": 193,
-                "officerKills": 42,
-                "playerKills": 12,
-                "damage": 20,
-                "deaths": 5
-              }
-            ],
-            "vote": "3/3"
-          },
-          "target": "officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -6993,7 +5526,7 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Segment 1: officers make ≥ 60 % of kills; player damage < 100 HP (never a whole life)."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "Measure squad gun hits from formation through segment1, including the yard retreat; kills are not required. Retain player damage for the entire same window and review visible firing. See fix64-a.",
       "checkKinds": [
         "browser-visual"
       ],
@@ -7025,18 +5558,17 @@
         ],
         "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "L3-08",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/controlled-fixture authored segment populations before admission/death relief: [125,240,710] (target 125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities; PASS); low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"seeds\":[{\"seed\":1,\"prepopulated\":[125,240,710],\"near30\":[7,22,31],\"maxConcurrent\":100,\"cap\":100},{\"seed\":2,\"prepopulated\":[125,240,710],\"near30\":[5,22,22],\"maxConcurrent\":100,\"cap\":100},{\"seed\":3,\"prepopulated\":[125,240,710],\"near30\":[6,23,31],\"maxConcurrent\":100,\"cap\":100}],\"vote\":\"2/3\"} (target medianS1<S2<S3;max≤100; 2 of 3 valid seeds pass; PASS); high/controlled-fixture authored segment populations before admission/death relief: [125,240,710] (target 125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities; PASS); high/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"seeds\":[{\"seed\":1,\"prepopulated\":[125,240,710],\"near30\":[11,37,43],\"maxConcurrent\":140,\"cap\":140},{\"seed\":2,\"prepopulated\":[125,240,710],\"near30\":[8,32,37],\"maxConcurrent\":140,\"cap\":140},{\"seed\":3,\"prepopulated\":[125,240,710],\"near30\":[6,33,37],\"maxConcurrent\":140,\"cap\":140}],\"vote\":\"3/3\"} (target medianS1<S2<S3;max≤140; 2 of 3 valid seeds pass; PASS) Manual review PASS (Codex/v2-l2l4): Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise.",
-      "automatedComplete": true,
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/controlled-fixture authored segment populations before admission/death relief: [125,240,710] (target 125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities; PASS); low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"seeds\":[{\"seed\":1,\"prepopulated\":[125,240,710],\"near30\":[7,22,31],\"maxConcurrent\":100,\"cap\":100},{\"seed\":2,\"prepopulated\":[125,240,710],\"near30\":[5,22,22],\"maxConcurrent\":100,\"cap\":100},{\"seed\":3,\"prepopulated\":[125,240,710],\"near30\":[6,23,31],\"maxConcurrent\":100,\"cap\":100}],\"vote\":\"2/3\"} (target medianS1<S2<S3;max≤100; 2 of 3 valid seeds pass; PASS)",
+      "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Pre-populated infected per segment **125 / 240 / 710 ±20 %** (PO 2026-11-07 \"Far too many Zombies\", was 250 / 625 / 1000; horde packs 2 × 60, spills 30 / 45); median live within 30 m rises from S1 to S3; live caps **140 high / 100 low** never exceeded (PO 2026-11-07, high was 200).",
       "checks": [
@@ -7114,81 +5646,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-08",
-          "clause": "authored segment populations before admission/death relief",
-          "value": [
-            125,
-            240,
-            710
-          ],
-          "target": "125/240/710 each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-08",
-          "clause": "median live within30m by traversed segment and concurrent cap",
-          "value": {
-            "seeds": [
-              {
-                "seed": 1,
-                "prepopulated": [
-                  125,
-                  240,
-                  710
-                ],
-                "near30": [
-                  11,
-                  37,
-                  43
-                ],
-                "maxConcurrent": 140,
-                "cap": 140
-              },
-              {
-                "seed": 2,
-                "prepopulated": [
-                  125,
-                  240,
-                  710
-                ],
-                "near30": [
-                  8,
-                  32,
-                  37
-                ],
-                "maxConcurrent": 140,
-                "cap": 140
-              },
-              {
-                "seed": 3,
-                "prepopulated": [
-                  125,
-                  240,
-                  710
-                ],
-                "near30": [
-                  6,
-                  33,
-                  37
-                ],
-                "maxConcurrent": 140,
-                "cap": 140
-              }
-            ],
-            "vote": "3/3"
-          },
-          "target": "medianS1<S2<S3;max≤140; 2 of 3 valid seeds pass",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -7199,49 +5656,19 @@
         "evidence": [],
         "method": "NEXT: Add a native per-segment population census and local-live median to tools/qa/threat-audit.ts; verify 250/625/1000 +/-20% and both quality caps."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-      "reviewDecision": {
-        "row": "L3-08",
-        "status": "PASS",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-28",
-        "commit": "233eab905766440b4092ce718aa2191370de2b3c",
-        "clauses": [
-          {
-            "clause": "Segment population, density progression and caps",
-            "verdict": "PASS",
-            "note": "Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
-            "what": "Current low-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
-            "what": "Current high-fixtures native receipt. Both tiers authored counts 125/240/710. Across seeds 1–3 low near30 medians [7,22,31], [5,22,22], [6,23,31]; high [11,37,43], [8,32,37], [6,33,37]. All S3 exceed S1; maximum concurrent low 100/high 140, within caps. Low seed 2 S2=S3; criterion requires S1→S3 rise."
-          }
-        ],
-        "notes": "Current-main both-tier native receipt. Observed numeric clauses are listed above. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
-        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
-      }
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Pre-populated infected per segment **125 / 240 / 710 ±20 %** (PO 2026-11-07 \"Far too many Zombies\", was 250 / 625 / 1000; horde packs 2 × 60, spills 30 / 45); median live within 30 m rises from S1 to S3; live caps **140 high / 100 low** never exceeded (PO 2026-11-07, high was 200).",
+      "checkKinds": [
+        "browser-input"
+      ]
     },
     {
       "id": "L3-09",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars≤4 m/s; sprinters≤5% of actual admissions; FAIL); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1069,\"sprinters\":53,\"fraction\":0.04957904583723106,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars≤4 m/s; sprinters≤5% of actual admissions; FAIL) Manual review FAIL (Codex/v2-l2l4): Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike.; Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions.",
+      "value": "low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1207,\"sprinters\":60,\"fraction\":0.04971002485501243,\"regularMax\":5.823837400916081,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"} (target regulars≤4 m/s; sprinters≤5% of actual admissions; FAIL)",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-        "docs/reports/v2-l2l4/L3-09-movement.json",
-        "tools/qa/accept/v2-l3-speed.ts"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
       "checks": [
@@ -7262,24 +5689,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-09",
-          "clause": "native L3 human speed and admitted sprinter fraction",
-          "value": {
-            "count": 1069,
-            "sprinters": 53,
-            "fraction": 0.04957904583723106,
-            "regularMax": 5.823837400916081,
-            "outcome": "complete",
-            "counting": "spawn transactions; checkpoint-reused IDs are separate admissions"
-          },
-          "target": "regulars≤4 m/s; sprinters≤5% of actual admissions",
-          "status": "FAIL",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -7290,62 +5699,16 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible)."
       },
-      "remaining": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
-      "reviewDecision": {
-        "row": "L3-09",
-        "status": "FAIL",
-        "reviewer": "Codex/v2-l2l4",
-        "date": "2026-11-27",
-        "commit": "92c233e2c2035ce7225977a513eff74da3ea8b6b",
-        "clauses": [
-          {
-            "clause": "Regular infected speed ≤ 4.0 m/s",
-            "verdict": "FAIL",
-            "note": "Read-only native per-tick chase positions: runner #131 moves 5.785–5.796 m/s on ticks 1531–1547 in both tiers; target ≤4.0 m/s. Consecutive positions show sustained motion, not a single displacement spike."
-          },
-          {
-            "clause": "Sprinters ≤5%",
-            "verdict": "PASS",
-            "note": "Low 60/1207 = 4.971%; high 53/1069 = 4.958% of admissions."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/v2-l2l4/L3-09-movement.json",
-            "sha256": "fc845bb6c4a159893076c3361577d862c0fc880a33bb8f56a2ec2f0567c1b029",
-            "what": "Both-tier per-tick runner positions, actual displacements and run metadata."
-          },
-          {
-            "file": "tools/qa/accept/v2-l3-speed.ts",
-            "sha256": "953a4c3f960f0eb710d003c6dfbf5bd587c03cf0aab73b7894720197b076afc0",
-            "what": "Read-only observer and exact reproduction command."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-            "sha256": "04814ee8292bec5b0bbdd8e1bc503b4473afd66b88c2064d403825aa10318261",
-            "what": "Current both-tier spawn census and sprinter fraction."
-          },
-          {
-            "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-            "sha256": "d5e732a0479c682d8c0611d26dbbed76058909157eb4967743268bb5ffe97e02",
-            "what": "Current both-tier spawn census and sprinter fraction."
-          }
-        ],
-        "notes": "Repro: node --import tsx/esm tools/qa/accept/v2-l3-speed.ts; inspect runner 131 ticks 1531–1547. Corrected checker applies 4 m/s and now reports FAIL in both tiers. New main 233eab9: native row checks identical; receipt hashes refreshed. Movement probe predates the L8-only changes. Main 4d3932b: numeric row checks identical to prior head; receipt hashes refreshed.",
-        "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
-      }
+      "remaining": "NEXT: Extend the existing L3 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible)."
     },
     {
       "id": "L3-10",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture native idle pressure schedule and offscreen source band: [{\"tick\":5197,\"afterLastAdvanceS\":20,\"furthest\":-79.71319580078125,\"queued\":[{\"door\":\"refuge-door-4\",\"x\":-111.825,\"z\":3.6,\"behindLineM\":32.11180419921875,\"offscreen\":true},{\"door\":\"refuge-door-5\",\"x\":-109.30000019073486,\"z\":-32.6,\"behindLineM\":29.586804389953613,\"offscreen\":true},{\"door\":\"refuge-door-6\",\"x\":-109.30000019073486,\"z\":-3.6,\"behindLineM\":29.586804389953613,\"offscreen\":true},{\"door\":\"re… (full values in JSON) (target idle≥20s;25–75 queued;source15–35m behind and offscreen; PASS); low/controlled-fixture native idle pressure actual admissions per full ten-second window: [{\"tick\":5197,\"seconds\":10,\"actualAdmissions\":53}] (target 25–75 actual admissions per10s, distinct from pending demand; PASS); low/controlled-fixture native pressure queued admissions stop on advance: {\"tick\":6259,\"player\":{\"x\":-79.20683288574219,\"y\":0.8500000238418579,\"z\":25.412822723388672,\"yaw\":6.2827310070824876},\"pressureAt\":0,\"queued\":0} (target pressure clock cleared and zero unadmitted pressure entries after advancing; PASS); high/controlled-fixture native idle pressure schedule and offscreen source band: [{\"tick\":5417,\"afterLastAdvanceS\":20,\"furthest\":-79.71331024169922,\"queued\":[{\"door\":\"refuge-door-7\",\"x\":-107.79010000000001,\"z\":24,\"behindLineM\":28.07678975830079,\"offscreen\":true},{\"door\":\"refuge-door-3\",\"x\":-111.825,\"z\":-23.4,\"behindLineM\":32.111689758300784,\"offscreen\":true},{\"door\":\"refuge-door-11\",\"x\":-98.925,\"z\":-23.4,\"behindLineM\":19.21168975830078,\"offscreen\":true},{\"door\":\"refuge-door-4\"… (full values in JSON) (target idle≥20s;25–75 queued;source15–35m behind and offscreen; PASS); high/controlled-fixture native idle pressure actual admissions per full ten-second window: [{\"tick\":5417,\"seconds\":10,\"actualAdmissions\":50}] (target 25–75 actual admissions per10s, distinct from pending demand; PASS); high/controlled-fixture native pressure queued admissions stop on advance: {\"tick\":6479,\"player\":{\"x\":-79.20629119873047,\"y\":0.8500000238418579,\"z\":25.411714553833008,\"yaw\":6.2826130112085234},\"pressureAt\":0,\"queued\":0} (target pressure clock cleared and zero unadmitted pressure entries after advancing; PASS)",
-      "automatedComplete": true,
+      "value": "low/controlled-fixture native idle pressure schedule and offscreen source band: [{\"tick\":5197,\"afterLastAdvanceS\":20,\"furthest\":-79.71319580078125,\"queued\":[{\"door\":\"refuge-door-4\",\"x\":-111.825,\"z\":3.6,\"behindLineM\":32.11180419921875,\"offscreen\":true},{\"door\":\"refuge-door-5\",\"x\":-109.30000019073486,\"z\":-32.6,\"behindLineM\":29.586804389953613,\"offscreen\":true},{\"door\":\"refuge-door-6\",\"x\":-109.30000019073486,\"z\":-3.6,\"behindLineM\":29.586804389953613,\"offscreen\":true},{\"door\":\"re… (full values in JSON) (target idle≥20s;25–75 queued;source15–35m behind and offscreen; PASS); low/controlled-fixture native idle pressure actual admissions per full ten-second window: [{\"tick\":5197,\"seconds\":10,\"actualAdmissions\":53}] (target 25–75 actual admissions per10s, distinct from pending demand; PASS); low/controlled-fixture native pressure queued admissions stop on advance: {\"tick\":6259,\"player\":{\"x\":-79.20683288574219,\"y\":0.8500000238418579,\"z\":25.412822723388672,\"yaw\":6.2827310070824876},\"pressureAt\":0,\"queued\":0} (target pressure clock cleared and zero unadmitted pressure entries after advancing; PASS)",
+      "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "Forward pressure: idle 20 s behind the progress line → 25–75 infected per 10 s from 15–35 m behind, off-screen; stops when the player advances.",
       "checks": [
@@ -8217,910 +6580,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-10",
-          "clause": "native idle pressure schedule and offscreen source band",
-          "value": [
-            {
-              "tick": 5417,
-              "afterLastAdvanceS": 20,
-              "furthest": -79.71331024169922,
-              "queued": [
-                {
-                  "door": "refuge-door-7",
-                  "x": -107.79010000000001,
-                  "z": 24,
-                  "behindLineM": 28.07678975830079,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-4",
-                  "x": -111.825,
-                  "z": 3.6,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-4",
-                  "x": -111.825,
-                  "z": 3.6,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-7",
-                  "x": -107.79010000000001,
-                  "z": 24,
-                  "behindLineM": 28.07678975830079,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-12",
-                  "x": -98.64875038146974,
-                  "z": -32.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-9",
-                  "x": -104.04075,
-                  "z": 3.6,
-                  "behindLineM": 24.327439758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-12",
-                  "x": -98.64875038146974,
-                  "z": -32.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-9",
-                  "x": -104.04075,
-                  "z": 3.6,
-                  "behindLineM": 24.327439758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-7",
-                  "x": -107.79010000000001,
-                  "z": 24,
-                  "behindLineM": 28.07678975830079,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-9",
-                  "x": -104.04075,
-                  "z": 3.6,
-                  "behindLineM": 24.327439758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-4",
-                  "x": -111.825,
-                  "z": 3.6,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-7",
-                  "x": -107.79010000000001,
-                  "z": 24,
-                  "behindLineM": 28.07678975830079,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                }
-              ]
-            },
-            {
-              "tick": 6017,
-              "afterLastAdvanceS": 30,
-              "furthest": -79.71331024169922,
-              "queued": [
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-12",
-                  "x": -98.64875038146974,
-                  "z": -32.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-4",
-                  "x": -111.825,
-                  "z": 3.6,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-9",
-                  "x": -104.04075,
-                  "z": 3.6,
-                  "behindLineM": 24.327439758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-12",
-                  "x": -98.64875038146974,
-                  "z": -32.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-12",
-                  "x": -98.64875038146974,
-                  "z": -32.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-9",
-                  "x": -104.04075,
-                  "z": 3.6,
-                  "behindLineM": 24.327439758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-12",
-                  "x": -98.64875038146974,
-                  "z": -32.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-4",
-                  "x": -111.825,
-                  "z": 3.6,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-9",
-                  "x": -104.04075,
-                  "z": 3.6,
-                  "behindLineM": 24.327439758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-7",
-                  "x": -107.79010000000001,
-                  "z": 24,
-                  "behindLineM": 28.07678975830079,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-13",
-                  "x": -98.64875038146974,
-                  "z": -3.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-4",
-                  "x": -111.825,
-                  "z": 3.6,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-3",
-                  "x": -111.825,
-                  "z": -23.4,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-4",
-                  "x": -111.825,
-                  "z": 3.6,
-                  "behindLineM": 32.111689758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-6",
-                  "x": -109.30000019073486,
-                  "z": -3.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-11",
-                  "x": -98.925,
-                  "z": -23.4,
-                  "behindLineM": 19.21168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-8",
-                  "x": -105.375,
-                  "z": -23.4,
-                  "behindLineM": 25.66168975830078,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-9",
-                  "x": -104.04075,
-                  "z": 3.6,
-                  "behindLineM": 24.327439758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-15",
-                  "x": -96.2565,
-                  "z": 3.6,
-                  "behindLineM": 16.543189758300784,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-10",
-                  "x": -101.95605346153847,
-                  "z": 32,
-                  "behindLineM": 22.242743219839255,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-5",
-                  "x": -109.30000019073486,
-                  "z": -32.6,
-                  "behindLineM": 29.586689949035645,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-7",
-                  "x": -107.79010000000001,
-                  "z": 24,
-                  "behindLineM": 28.07678975830079,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-7",
-                  "x": -107.79010000000001,
-                  "z": 24,
-                  "behindLineM": 28.07678975830079,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-12",
-                  "x": -98.64875038146974,
-                  "z": -32.6,
-                  "behindLineM": 18.93544013977052,
-                  "offscreen": true
-                },
-                {
-                  "door": "refuge-door-2",
-                  "x": -112.01338115384615,
-                  "z": 32,
-                  "behindLineM": 32.300070912146936,
-                  "offscreen": true
-                }
-              ]
-            }
-          ],
-          "target": "idle≥20s;25–75 queued;source15–35m behind and offscreen",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-10",
-          "clause": "native idle pressure actual admissions per full ten-second window",
-          "value": [
-            {
-              "tick": 5417,
-              "seconds": 10,
-              "actualAdmissions": 50
-            }
-          ],
-          "target": "25–75 actual admissions per10s, distinct from pending demand",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-10",
-          "clause": "native pressure queued admissions stop on advance",
-          "value": {
-            "tick": 6479,
-            "player": {
-              "x": -79.20629119873047,
-              "y": 0.8500000238418579,
-              "z": 25.411714553833008,
-              "yaw": 6.2826130112085234
-            },
-            "pressureAt": 0,
-            "queued": 0
-          },
-          "target": "pressure clock cleared and zero unadmitted pressure entries after advancing",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -9131,7 +6590,7 @@
         "evidence": [],
         "method": "NEXT: Hold the native courier 20 seconds behind each progress line, then advance; retain offscreen source distances, admission counts per ten seconds and shutdown behavior."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "NEXT: Hold the native courier 20 seconds behind each progress line, then advance; retain offscreen source distances, admission counts per ten seconds and shutdown behavior.",
       "checkKinds": [
         "browser-visual"
       ],
@@ -9163,22 +6622,21 @@
         ],
         "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "L3-11",
-      "status": "PASS",
-      "currentStatus": "PASS",
-      "value": "low/complete competent player attack rate on checkpoint route: {\"seeds\":[{\"seed\":1,\"attacksPerMinute\":18.953353690639148},{\"seed\":2,\"attacksPerMinute\":14.94706248702512},{\"seed\":3,\"attacksPerMinute\":14.354995150339477}],\"vote\":\"3/3\"} (target 3–40 infected attacks against player/min (ceiling raised 2026-11-19 from 25); 2 of 3 valid seeds pass; PASS); low/complete all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); low/stationary all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); high/complete competent player attack rate on checkpoint route: {\"seeds\":[{\"seed\":1,\"attacksPerMinute\":35.48254620123203},{\"seed\":2,\"attacksPerMinute\":14.199029126213592},{\"seed\":3,\"attacksPerMinute\":79.14645974781766}],\"vote\":\"2/3\"} (target 3–40 infected attacks against player/min (ceiling raised 2026-11-19 from 25); 2 of 3 valid seeds pass; PASS); high/complete all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); high/stationary all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); low/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9} (target ≥2 perstreet;≥7total; PASS); low/controlled-fixture mortal newbie time below20percent HP: {\"seeds\":[{\"seed\":1,\"outcome\":\"complete\",\"share\":0.02170357071613804},{\"seed\":2,\"outcome\":\"complete\",\"share\":0},{\"seed\":3,\"outcome\":\"complete\",\"share\":0}],\"vote\":\"3/3\",\"deaths\":5,\"simulatedSeconds\":427.73333333333335} (target ≤10% of alive samples; fullroute completed; 2 of 3 valid seeds pass; PASS); high/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9} (target ≥2 perstreet;≥7total; PASS); high/controlled-fixture mortal newbie time below20percent HP: {\"seeds\":[{\"seed\":1,\"outcome\":\"complete\",\"share\":0.015375673676423967},{\"seed\":2,\"outcome\":\"complete\",\"share\":0.01119533527696793},{\"seed\":3,\"outcome\":\"complete\",\"share\":0.015535393306513738}],\"vote\":\"3/3\",\"deaths\":3,\"simulatedSeconds\":321.4166666666667} (target ≤10% of alive samples; fullroute completed; 2 of 3 valid seeds pass; PASS)",
-      "automatedComplete": true,
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "low/complete competent player attack rate on checkpoint route: {\"seeds\":[{\"seed\":1,\"attacksPerMinute\":18.953353690639148},{\"seed\":2,\"attacksPerMinute\":14.94706248702512},{\"seed\":3,\"attacksPerMinute\":14.354995150339477}],\"vote\":\"3/3\"} (target 3–40 infected attacks against player/min (ceiling raised 2026-11-19 from 25); 2 of 3 valid seeds pass; PASS); low/complete all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); low/stationary all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); high/complete competent player attack rate on checkpoint route: {\"seeds\":[{\"seed\":1,\"attacksPerMinute\":35.48254620123203},{\"seed\":2,\"attacksPerMinute\":14.199029126213592},{\"seed\":3,\"attacksPerMinute\":79.14645974781766}],\"vote\":\"2/3\"} (target 3–40 infected attacks against player/min (ceiling raised 2026-11-19 from 25); 2 of 3 valid seeds pass; PASS); high/complete all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); high/stationary all-street medkit census (per-street split still open): 33 (target 7 ≤ value ≤ Infinity; PASS); low/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9} (target ≥2 perstreet;≥7total; PASS); low/controlled-fixture mortal newbie time below20percent HP: {\"seeds\":[{\"seed\":1,\"outcome\":\"complete\",\"share\":0.02170357071613804},{\"seed\":2,\"outcome\":\"complete\",\"share\":0},{\"seed\":3,\"outcome\":\"complete\",\"share\":0}],\"vote\":\"3/3\",\"deaths\":5,\"simulatedSeconds\":427.73333333333335} (target ≤10% of alive samples; fullroute completed; 2 of 3 valid seeds pass; PASS)",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L3-low-complete.json",
         "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L3-high-complete.json",
         "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
       ],
       "expected": "combat: attacks on the player ≥ 3/min, ≤ 40/min for the competent run, 2 of 3 valid seeds (tune; ceiling raised 2026-11-19 from 25 after the PO's 11-08/09/12 threat decisions and the frozen L3 counts, PO 11-08 \"don't change this police level in terms of nr of Zomies\"); medkits ≥ 2 per street (≥ 7 total), newbie below 20 % HP ≤ 10 % of the time. **Kiting is not a safe line** (PO 2026-11-07: \"I walk and shoot backwards, so no Zombie can attack me\"): a courier who runs the army route at full input while aiming and firing the handgun at the nearest infected (`tools/qa/r6-l3-kite.ts`, from the fallback to the army line) draws **≥ 5 infected windups/min** against her and **> 0 in segments 2–3**, ≥ 2 of 3 seeds per tier. The handgun never staggers or pushes back what it hits (PO 2026-11-07: \"just modify the effect of the hand gun\"); the retreat commit range (1.4 m) lies outside the 1.08 m melee separation ring.",
       "checks": [
@@ -9326,53 +6784,6 @@
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
           "level": "L3"
-        },
-        {
-          "id": "L3-11",
-          "clause": "initial authored medkit entities by street",
-          "value": {
-            "blvd": 9,
-            "commerce": 15,
-            "oak": 9
-          },
-          "target": "≥2 perstreet;≥7total",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
-        },
-        {
-          "id": "L3-11",
-          "clause": "mortal newbie time below20percent HP",
-          "value": {
-            "seeds": [
-              {
-                "seed": 1,
-                "outcome": "complete",
-                "share": 0.015375673676423967
-              },
-              {
-                "seed": 2,
-                "outcome": "complete",
-                "share": 0.01119533527696793
-              },
-              {
-                "seed": 3,
-                "outcome": "complete",
-                "share": 0.015535393306513738
-              }
-            ],
-            "vote": "3/3",
-            "deaths": 3,
-            "simulatedSeconds": 321.4166666666667
-          },
-          "target": "≤10% of alive samples; fullroute completed; 2 of 3 valid seeds pass",
-          "status": "PASS",
-          "tier": "high",
-          "policy": "controlled-fixture",
-          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-          "level": "L3"
         }
       ],
       "historical": {
@@ -9385,7 +6796,10 @@
         ],
         "method": "Native competent attack/damage ledger meets the rate clause. NEXT: census medkits by street and run the separate newbie health trace."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: combat: attacks on the player ≥ 3/min, ≤ 40/min for the competent run, 2 of 3 valid seeds (tune; ceiling raised 2026-11-19 from 25 after the PO's 11-08/09/12 threat decisions and the frozen L3 counts, PO 11-08 \"don't change this police level in terms of nr of Zomies\"); medkits ≥ 2 per street (≥ 7 total), newbie below 20 % HP ≤ 10 % of the time. **Kiting is not a safe line** (PO 2026-11-07: \"I walk and shoot backwards, so no Zombie can attack me\"): a courier who runs the army route at full input while aiming and firing the handgun at the nearest infected (`tools/qa/r6-l3-kite.ts`, from the fallback to the army line) draws **≥ 5 infected windups/min** against her and **> 0 in segments 2–3**, ≥ 2 of 3 seeds per tier. The handgun never staggers or pushes back what it hits (PO 2026-11-07: \"just modify the effect of the hand gun\"); the retreat commit range (1.4 m) lies outside the 1.08 m melee separation ring.",
+      "checkKinds": [
+        "perf-quiet-window"
+      ],
       "reviewDecision": {
         "row": "L3-11",
         "status": "PASS",
@@ -9409,7 +6823,7 @@
         ],
         "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence.",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -9693,7 +7107,7 @@
         "notes": "Current frozen-main source, fresh browser-pool evidence. Every cited capture personally opened at original resolution; controlled setup is disclosed in the observation.",
         "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -9947,7 +7361,7 @@
         "notes": "Current frozen-main source, fresh browser-pool evidence. Every cited capture personally opened at original resolution; controlled setup is disclosed in the observation.",
         "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
@@ -10095,20 +7509,16 @@
         "notes": "Fresh source4e570db. Shared ordinary-input handgun setup, not spawned horde; no performance or mortal-survival inference.",
         "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     },
     {
       "id": "L3-16",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (Codex/v2-l2l4): Current-main high real-input street at tick 8595, actual zoom 1: at most one partial smoke plume visible (target ≥2). Same-pose zoom 1.5 frame shows smoke. Prior high frame also showed none; low tier and PO taste remain open.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/v2-l2l4/L3-16-high-t5425.jpg",
-        "docs/reports/v2-l2l4/L3-high-mortal-summary.json",
-        "docs/reports/v2-l2l4/L3-16-current-high.json"
-      ],
+      "receipt": [],
       "expected": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
       "checks": [],
       "historical": {
@@ -10122,6 +7532,10 @@
         "method": "Manual full-resolution review of campaign-L3-checkpoint-t5257-low-z1-5.jpg, retained as a labelled sheet cell. A single street counterexample fails the universal visible-column clause; this is a visual count, not an authored emitter census."
       },
       "remaining": "Review current smoke counterexamples, then recapture all three streets at both zooms/qualities after a game fix. Light and distinct damage remain PO review; smoke count stays objective.",
+      "checkKinds": [
+        "browser-visual",
+        "PO"
+      ],
       "review": {
         "tag": "P",
         "instruction": "Review Boulevard, Commerce and Oak frames at both zooms/qualities: does the light read late afternoon, and does each street communicate its distinct damage? The required two smoke columns per frame remain an objective check."
@@ -10158,8 +7572,8 @@
         ],
         "notes": "Repro: E2E_PORT=5411 SCENE_PORT=5412 PLAYTEST_ACCEPTANCE_CAPTURES=1 PLAYTEST_ACCEPTANCE_CAPTURE_TIERS=single PLAYTEST_NO_FRAME_TIMING=1 node --import tsx/esm tools/playtest/play.ts --levels L3 --quality high --zoom 1.5 --capture-zooms 1,1.5 --no-skip --level-minutes 8 --out test-results/playtest/v2-main-high-l3; inspect checkpoint-t8594-high-z1. Low-tier and PO taste remain open.",
         "sourceDigest": "2b74350f564f7d0214f5bce1075b0112b1bcc5b7e55c9f012fb116710dd35239",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a72c2770a3de8aa82a94bad3d4f1cad92341d29d"
+        "freshness": "STALE",
+        "latestRelevantCommit": "a6f87e8f258bab3b998dae6e3578bf79675d35d1"
       }
     }
   ]
