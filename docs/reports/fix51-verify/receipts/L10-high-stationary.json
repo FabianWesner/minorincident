@@ -4,10 +4,10 @@
   "tier": "high",
   "policy": "stationary",
   "seed": 1,
-  "sourceHash": "f3e63a8397280ef0fb6707307079caeb58bca1b52fa7eb953ee3d0f36f2ca777",
-  "observerHash": "d5cde71e96dc06637bd84b03207ce9d21a5e36c5eb4d6f6d3c9313fff03b1431",
-  "revision": "4cd042a286a621f8266d79803741ce707b3bb26c",
-  "generatedAt": "2026-11-27T17:43:17.321Z",
+  "sourceHash": "8ec41ecf96d32d8be804d3a9d040fa9cd66c3bad549122b7e5e40d476b5ab400",
+  "observerHash": "6e1c5fac87d42bf2bed53fb2a9887cf45d9c828eceb5c7ff039c24c6acab9da6",
+  "revision": "cff0a0e68d7faae30e334736a6116eccfbc74b5d",
+  "generatedAt": "2026-11-28T00:12:15.409Z",
   "run": {
     "level": "L10",
     "policy": "complete",
@@ -2860,6 +2860,70 @@
       "infected.hazmat": 4,
       "infected.nurse": 2
     },
+    "birthLedger": [
+      {
+        "tick": 2700,
+        "id": 115,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "x": 667.6516723632812,
+        "z": 25
+      },
+      {
+        "tick": 12120,
+        "id": 229,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "armoured",
+        "x": 1472.210471101795,
+        "z": 99.10490253559898
+      },
+      {
+        "tick": 19520,
+        "id": 317,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "screamer",
+        "x": 2014.1192299752395,
+        "z": 16.841956994155524
+      },
+      {
+        "tick": 24570,
+        "id": 360,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "brute",
+        "x": 2316.0441679419887,
+        "z": -68.97910651804601
+      },
+      {
+        "tick": 35910,
+        "id": 442,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "screamer",
+        "x": 2852.8518367775796,
+        "z": 42.4208353831306
+      },
+      {
+        "tick": 41550,
+        "id": 506,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "thrower",
+        "x": 3176.605051302977,
+        "z": 88.94589076776948
+      },
+      {
+        "tick": 49310,
+        "id": 590,
+        "archetype": "infected.alpha",
+        "pack": 0,
+        "alphaType": "brute",
+        "x": 3614.6966064816206,
+        "z": 96.71519315437051
+      }
+    ],
     "speed": {
       "regularMax": 5.510995742504086,
       "fasterThanPlayer": 9357,
